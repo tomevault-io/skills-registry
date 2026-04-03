@@ -1,2 +1,4 @@
-# skills-registry
-AI instruction files in SKILL.md format — indexed by Skills.sh and SkillsMP
+# TomeVault Skills Registry
+
+AI instruction files in SKILL.md format.
+Indexed by [Skills.sh](https://skills.sh) and [SkillsMP](https://skillsmp.com).
