@@ -1,8 +1,10 @@
-# knowns-go - GitHub Copilot Instructions
+# GEMINI
 
-Compatibility entrypoint for runtimes that auto-detect `.github/copilot-instructions.md`.
+Compatibility entrypoint for runtimes that auto-detect `GEMINI.md`.
 
 <!-- KNOWNS GUIDELINES START -->
+
+@KNOWNS.md
 
 **CRITICAL: You MUST read and follow `KNOWNS.md` in the repository root before doing any work. It is the canonical source of truth for all agent behavior in this project.**
 
@@ -38,4 +40,4 @@ knowns guidelines --plain             # Full workflow reference
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/knowns-dev)
 > Context snippets also available to append to your CLAUDE.md, GEMINI.md, and copilot-instructions.md — [download at TomeVault](https://tomevault.io/claim/knowns-dev)
-<!-- tomevault:4.0:agents_md:2026-04-08 -->
+<!-- tomevault:4.0:agents_md:2026-04-09 -->
