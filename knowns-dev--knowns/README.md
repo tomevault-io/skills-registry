@@ -7,14 +7,14 @@ AI instruction files for knowns by knowns-dev
 ## Codex Config
 
 The `AGENTS.md` file in this directory is the project config converted for Codex.
-Original source: `copilot-instructions.md` in [knowns-dev/knowns](https://github.com/knowns-dev/knowns).
+Original source: `GEMINI.md` in [knowns-dev/knowns](https://github.com/knowns-dev/knowns).
 
 ## Also available for
 
 - **Claude Code** — `CLAUDE.md`
 - **Codex** — `AGENTS.md`
+- **GitHub Copilot** — `copilot-instructions.md`
 - **Cursor** — `project-config.mdc`
-- **Gemini CLI** — `GEMINI.md`
 
 Browse all formats: [https://tomevault.io/claim/knowns-dev](https://tomevault.io/claim/knowns-dev)
 
