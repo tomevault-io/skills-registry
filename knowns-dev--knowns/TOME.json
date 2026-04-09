@@ -4,7 +4,7 @@
   "repo": "knowns",
   "description": "AI instruction files for knowns by knowns-dev",
   "type": "tome",
-  "source_format": "copilot-instructions.md",
+  "source_format": "GEMINI.md",
   "formats": [
     {
       "format": "claude_md",
@@ -54,5 +54,5 @@
   ],
   "claim_url": "https://tomevault.io/claim/knowns-dev",
   "distributed_by": "TomeVault",
-  "distributed_at": "2026-04-08T19:49:42Z"
+  "distributed_at": "2026-04-09T01:50:24Z"
 }
