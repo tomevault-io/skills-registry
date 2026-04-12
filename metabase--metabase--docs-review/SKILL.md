@@ -1,7 +1,8 @@
 ---
 name: docs-review
-description: Review documentation changes for compliance with the Metabase writing style guide. Use when reviewing pull requests, files, or diffs containing documentation markdown files.
-allowed-tools: Read, Grep, Bash, Glob
+description: Review documentation changes for compliance with the Metabase writing style guide. Use when reviewing pull requests, files, or diffs containing documentation markdown files. Use when this capability is needed.
+metadata:
+  author: metabase
 ---
 
 # Documentation Review Skill
@@ -163,5 +164,5 @@ This could be more conversational. Consider: "You can't..." instead of "You cann
 4. **In PR mode**: Verify each issue was posted as a separate GitHub comment (not output to conversation).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/metabase/metabase)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/metabase) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
