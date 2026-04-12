@@ -1,6 +1,8 @@
 ---
 name: diffdock
-description: "Diffusion-based molecular docking. Predict protein-ligand binding poses from PDB/SMILES, confidence scores, virtual screening, for structure-based drug design. Not for affinity prediction."
+description: Diffusion-based molecular docking. Predict protein-ligand binding poses from PDB/SMILES, confidence scores, virtual screening, for structure-based drug design. Not for affinity prediction. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # DiffDock: Molecular Docking with Diffusion Models
@@ -477,5 +479,5 @@ ICLR 2023, arXiv:2210.01776
 - **Original Paper**: https://arxiv.org/abs/2210.01776
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
