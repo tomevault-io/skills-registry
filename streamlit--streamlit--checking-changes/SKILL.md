@@ -1,6 +1,8 @@
 ---
 name: checking-changes
 description: Validates all code changes before committing by running format, lint, type, and unit test checks. Use after making backend (Python) or frontend (TypeScript) changes, before committing or finishing a work session.
+metadata:
+  author: streamlit
 ---
 
 # Checking Changes
@@ -28,5 +30,5 @@ This runs formatting, linting, type checking, and unit tests on all uncommitted 
 - E2E snapshot mismatches can be ignored (they require manual updates)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/streamlit/streamlit)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/streamlit) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
