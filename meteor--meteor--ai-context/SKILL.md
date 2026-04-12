@@ -1,6 +1,8 @@
 ---
 name: ai-context
 description: Use when creating, updating, or maintaining AI documentation files (AGENTS.md, CLAUDE.md, skills). Covers file structure, conventions, and guidelines for evolving AI context.
+metadata:
+  author: meteor
 ---
 
 # AI Context Documentation
@@ -111,5 +113,5 @@ Keep these files very short — a few lines of context is often enough.
 4. **Cross-platform**: `AGENTS.md` + `.github/skills/` is the shared convention; `CLAUDE.md` bridges Claude Code which doesn't load `AGENTS.md` natively
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/meteor/meteor)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/meteor) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
