@@ -1,7 +1,8 @@
 ---
 name: agent-memory-mcp
-author: Amit Rathiesh
-description: A hybrid memory system that provides persistent, searchable knowledge management for AI agents (Architecture, Patterns, Decisions).
+description: Use when working with a hybrid memory system that provides persistent, searchable knowledge management for AI agents (Architecture, Patterns, Decisions).
+metadata:
+  author: davila7
 ---
 
 # Agent Memory Skill
@@ -82,5 +83,5 @@ npm run start-dashboard <absolute_path_to_target_workspace>
 Access at: `http://localhost:3333`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
