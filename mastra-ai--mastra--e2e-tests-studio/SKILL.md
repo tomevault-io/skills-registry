@@ -1,11 +1,8 @@
 ---
 name: e2e-tests-studio
-description: >
-  REQUIRED when modifying any file in packages/playground-ui or packages/playground.
-  Triggers on: React component creation/modification/refactoring, UI changes,
-  new playground features, bug fixes affecting studio UI. Generates Playwright E2E tests
-  that validate PRODUCT BEHAVIOR, not just UI states.
-model: claude-opus-4-5
+description: > Use when this capability is needed.
+metadata:
+  author: mastra-ai
 ---
 
 # E2E Behavior Validation for Frontend Modifications
@@ -391,5 +388,5 @@ Before considering tests complete, verify:
 | Assert element is visible          | Assert element contains expected data/state                  |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mastra-ai/mastra)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mastra-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
