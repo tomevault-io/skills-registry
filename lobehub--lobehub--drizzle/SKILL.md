@@ -1,6 +1,8 @@
 ---
 name: drizzle
-description: Drizzle ORM schema and database guide. Use when working with database schemas (src/database/schemas/*), defining tables, creating migrations, or database model code. Triggers on Drizzle schema definition, database migrations, or ORM usage questions.
+description: Drizzle ORM schema and database guide. Use when working with database schemas (src/database/schemas/*), defining tables, creating migrations, or database model code. Triggers on Drizzle schema definition, database migrations, or ORM usage questions. Use when this capability is needed.
+metadata:
+  author: lobehub
 ---
 
 # Drizzle ORM Schema Style Guide
@@ -205,5 +207,5 @@ return { ...dataset, testCases };
 See the `db-migrations` skill for the detailed migration guide.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/lobehub/lobehub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lobehub) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
