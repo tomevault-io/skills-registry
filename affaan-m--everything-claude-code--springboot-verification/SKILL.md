@@ -1,7 +1,8 @@
 ---
 name: springboot-verification
-description: "Verification loop for Spring Boot projects: build, static analysis, tests with coverage, security scans, and diff review before release or PR."
-origin: ECC
+description: Verification loop for Spring Boot projects: build, static analysis, tests with coverage, security scans, and diff review before release or PR. Use when this capability is needed.
+metadata:
+  author: affaan-m
 ---
 
 # Spring Boot Verification Loop
@@ -231,5 +232,5 @@ Issues to Fix:
 **Remember**: Fast feedback beats late surprises. Keep the gate strict—treat warnings as defects in production systems.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/affaan-m/everything-claude-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
