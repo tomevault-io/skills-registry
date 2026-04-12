@@ -1,6 +1,8 @@
 ---
 name: ccxt-csharp
-description: CCXT cryptocurrency exchange library for C# and .NET developers. Covers both REST API (standard) and WebSocket API (real-time). Helps install CCXT, connect to exchanges, fetch market data, place orders, stream live tickers/orderbooks, handle authentication, and manage errors in .NET projects. Use when working with crypto exchanges in C# applications, trading systems, or financial software. Supports .NET Standard 2.0+.
+description: CCXT cryptocurrency exchange library for C# and .NET developers. Covers both REST API (standard) and WebSocket API (real-time). Helps install CCXT, connect to exchanges, fetch market data, place orders, stream live tickers/orderbooks, handle authentication, and manage errors in .NET projects. Use when working with crypto exchanges in C# applications, trading systems, or financial software. Supports .NET Standard 2.0+. Use when this capability is needed.
+metadata:
+  author: ccxt
 ---
 
 # CCXT for C#
@@ -937,5 +939,5 @@ Console.WriteLine(exchange.LastJsonResponse);
 - [GitHub Repository](https://github.com/ccxt/ccxt)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ccxt/ccxt)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ccxt) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
