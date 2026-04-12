@@ -1,8 +1,8 @@
 ---
 name: fetch-unresolved-comments
-description: Fetch unresolved PR review comments using GitHub GraphQL API, filtering out resolved feedback.
-allowed-tools:
-  - Bash(uv run skills fetch-unresolved-comments:*)
+description: Fetch unresolved PR review comments using GitHub GraphQL API, filtering out resolved feedback. Use when this capability is needed.
+metadata:
+  author: mlflow
 ---
 
 # Fetch Unresolved PR Review Comments
@@ -89,5 +89,5 @@ Uses GitHub's GraphQL API to fetch only unresolved review thread comments from a
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mlflow/mlflow)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mlflow) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
