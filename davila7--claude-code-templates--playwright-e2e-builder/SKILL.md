@@ -1,7 +1,8 @@
 ---
 name: playwright-e2e-builder
-description: Plan and build comprehensive Playwright E2E test suites with Page Object Model, authentication state persistence, custom fixtures, visual regression, and CI integration. Uses interview-driven planning to clarify critical user flows, auth strategy, test data approach, and parallelization before writing any tests.
-tags: [playwright, e2e, testing, automation, typescript, ci, visual-regression]
+description: Plan and build comprehensive Playwright E2E test suites with Page Object Model, authentication state persistence, custom fixtures, visual regression, and CI integration. Uses interview-driven planning to clarify critical user flows, auth strategy, test data approach, and parallelization before writing any tests. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Playwright E2E Test Suite Builder
@@ -676,5 +677,5 @@ blob-report/
 - [ ] `npx playwright test` passes locally before pushing
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
