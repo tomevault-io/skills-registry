@@ -1,6 +1,8 @@
 ---
 name: vscode-ext-localization
-description: 'Guidelines for proper localization of VS Code extensions, following VS Code extension development guidelines, libraries and good practices'
+description: Guidelines for proper localization of VS Code extensions, following VS Code extension development guidelines, libraries and good practices Use when this capability is needed.
+metadata:
+  author: github
 ---
 
 # VS Code extension localization
@@ -25,5 +27,5 @@ VS Code localization is composed by three different approaches, depending on the
   -> An exclusive `bundle.l10n.pt-br.json` for Brazilian Portuguese localization
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
