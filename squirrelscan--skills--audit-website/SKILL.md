@@ -1,12 +1,8 @@
 ---
 name: audit-website
-description: Audit websites for SEO, performance, security, technical, content, and 15 other issue cateories with 230+ rules using the squirrelscan CLI. Returns LLM-optimized reports with health scores, broken links, meta tag analysis, and actionable recommendations. Use to discover and asses website or webapp issues and health.
-license: See LICENSE file in repository root
-compatibility: Requires squirrel CLI installed and accessible in PATH
+description: Audit websites for SEO, performance, security, technical, content, and 15 other issue cateories with 230+ rules using the squirrelscan CLI. Returns LLM-optimized reports with health scores, broken links, meta tag analysis, and actionable recommendations. Use to discover and asses website or webapp issues and health. Use when this capability is needed.
 metadata:
   author: squirrelscan
-  version: "1.22"
-allowed-tools: Bash(squirrel:*) Read Edit Grep Glob
 ---
 
 # Website Audit Skill
@@ -470,5 +466,5 @@ The audit is stored in a local database and can be retrieved later with `squirre
 - **CLI Help**: `squirrel audit --help`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/squirrelscan/skills)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/squirrelscan) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
