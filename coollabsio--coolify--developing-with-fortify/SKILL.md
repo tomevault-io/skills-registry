@@ -1,6 +1,8 @@
 ---
 name: developing-with-fortify
-description: Laravel Fortify headless authentication backend development. Activate when implementing authentication features including login, registration, password reset, email verification, two-factor authentication (2FA/TOTP), profile updates, headless auth, authentication scaffolding, or auth guards in Laravel applications.
+description: Laravel Fortify headless authentication backend development. Activate when implementing authentication features including login, registration, password reset, email verification, two-factor authentication (2FA/TOTP), profile updates, headless auth, authentication scaffolding, or auth guards in Laravel applications. Use when this capability is needed.
+metadata:
+  author: coollabsio
 ---
 
 # Laravel Fortify Development
@@ -116,5 +118,5 @@ Configure via `fortify.limiters.login` in config. Default configuration throttle
 | Recovery Codes         | GET/POST | `/user/two-factor-recovery-codes`           |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/coollabsio/coolify)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/coollabsio) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
