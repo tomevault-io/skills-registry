@@ -1,9 +1,8 @@
 ---
 name: code-reviewer
-description:
-  Use this skill to review code. It supports both local changes (staged or working tree)
-  and remote Pull Requests (by ID or URL). It focuses on correctness, maintainability,
-  and adherence to project standards.
+description: This skill guides the agent in conducting professional and thorough code reviews for both local development and remote Pull Requests. Use when this capability is needed.
+metadata:
+  author: google-gemini
 ---
 
 # Code Reviewer
@@ -65,5 +64,5 @@ Analyze the code changes based on the following pillars:
 *   After the review, ask the user if they want to switch back to the default branch (e.g., `main` or `master`).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/google-gemini/gemini-cli)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/google-gemini) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
