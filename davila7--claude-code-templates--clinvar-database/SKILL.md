@@ -1,6 +1,8 @@
 ---
 name: clinvar-database
-description: "Query NCBI ClinVar for variant clinical significance. Search by gene/position, interpret pathogenicity classifications, access via E-utilities API or FTP, annotate VCFs, for genomic medicine."
+description: Query NCBI ClinVar for variant clinical significance. Search by gene/position, interpret pathogenicity classifications, access via E-utilities API or FTP, annotate VCFs, for genomic medicine. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # ClinVar Database
@@ -356,5 +358,5 @@ This skill includes comprehensive reference documentation:
 For questions about ClinVar or data submission: clinvar@ncbi.nlm.nih.gov
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
