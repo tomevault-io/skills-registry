@@ -1,11 +1,8 @@
 ---
 name: pr-status-triage
-description: >
-  Triage CI failures and PR review comments using scripts/pr-status.js.
-  Use when investigating failing CI jobs, flaky tests, or PR review feedback.
-  Covers blocker-first prioritization (build > lint > types > tests),
-  CI env var matching for local reproduction, and the Known Flaky Tests
-  distinction.
+description: > Use when this capability is needed.
+metadata:
+  author: vercel
 ---
 
 # PR Status Triage
@@ -37,5 +34,5 @@ node scripts/pr-status.js --skip-flaky-check  # skip flaky test detection
 - [local-repro.md](./local-repro.md) — mode/env matching and isolation guidance
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/vercel/next.js)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vercel) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
