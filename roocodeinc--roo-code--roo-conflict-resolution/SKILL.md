@@ -1,6 +1,8 @@
 ---
 name: roo-conflict-resolution
 description: Provides comprehensive guidelines for resolving merge conflicts intelligently using git history and commit context. Use when tasks involve merge conflicts, rebasing, PR conflicts, or git conflict resolution. This skill analyzes commit messages, git blame, and code intent to make intelligent resolution decisions.
+metadata:
+  author: roocodeinc
 ---
 
 # Roo Code Conflict Resolution Skill
@@ -256,5 +258,5 @@ All conflicts have been resolved and files have been staged for commit.
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/roocodeinc/roo-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/roocodeinc) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
