@@ -1,6 +1,8 @@
 ---
 name: dispatching-parallel-agents
 description: Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies
+metadata:
+  author: obra
 ---
 
 # Dispatching Parallel Agents
@@ -182,5 +184,5 @@ From debugging session (2025-10-03):
 - Zero conflicts between agent changes
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/obra/superpowers)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/obra) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
