@@ -1,6 +1,8 @@
 ---
 name: navigator
-description: Quick codebase orientation for Resume Matcher. Points to key directories, architecture docs, and available skills. Use as a starting point before diving into code. For advanced search, use the codebase-navigator skill.
+description: Quick codebase orientation for Resume Matcher. Points to key directories, architecture docs, and available skills. Use as a starting point before diving into code. For advanced search, use the codebase-navigator skill. Use when this capability is needed.
+metadata:
+  author: srbhr
 ---
 
 # Navigator
@@ -48,5 +50,5 @@ For advanced code search with ripgrep scripts, use the **codebase-navigator** sk
 | **nextjs-performance** | Next.js critical performance fixes |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
