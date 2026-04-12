@@ -1,7 +1,8 @@
 ---
 name: desktop
-description: Electron desktop development guide. Use when implementing desktop features, IPC handlers, controllers, preload scripts, window management, menu configuration, or Electron-specific functionality. Triggers on desktop app development, Electron IPC, or desktop local tools implementation.
-disable-model-invocation: true
+description: Electron desktop development guide. Use when implementing desktop features, IPC handlers, controllers, preload scripts, window management, menu configuration, or Electron-specific functionality. Triggers on desktop app development, Electron IPC, or desktop local tools implementation. Use when this capability is needed.
+metadata:
+  author: lobehub
 ---
 
 # Desktop Development Guide
@@ -89,5 +90,5 @@ See `references/` for specific topics:
 4. **Code organization**: Follow existing patterns, add documentation
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/lobehub/lobehub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lobehub) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
