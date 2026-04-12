@@ -1,7 +1,8 @@
 ---
 name: mobile-games
-description: Mobile game development principles. Touch input, battery, performance, app stores.
-allowed-tools: Read, Write, Edit, Glob, Grep
+description: Mobile game development principles. Touch input, battery, performance, app stores. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Mobile Game Development
@@ -108,5 +109,5 @@ allowed-tools: Read, Write, Edit, Glob, Grep
 > **Remember:** Mobile is the most constrained platform. Respect battery and attention.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
