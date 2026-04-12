@@ -1,6 +1,8 @@
 ---
 name: playwright-dev
-description: Explains how to develop Playwright - add APIs, MCP tools, CLI commands, and vendor dependencies.
+description: Explains how to develop Playwright - add APIs, MCP tools, CLI commands, and vendor dependencies. Use when this capability is needed.
+metadata:
+  author: microsoft
 ---
 
 # Playwright Development Guide
@@ -16,5 +18,5 @@ See [CLAUDE.md](../../../CLAUDE.md) for monorepo structure, build/test/lint comm
 - [Updating WebKit Safari Version](webkit-safari-version.md) — update the Safari version string in the WebKit user-agent
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/microsoft/playwright)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/microsoft) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
