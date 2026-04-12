@@ -1,7 +1,8 @@
 ---
 name: clojure-review
-description: Review Clojure and ClojureScript code changes for compliance with Metabase coding standards, style violations, and code quality issues. Use when reviewing pull requests or diffs containing Clojure/ClojureScript code.
-allowed-tools: Read, Grep, Bash, Glob
+description: Review Clojure and ClojureScript code changes for compliance with Metabase coding standards, style violations, and code quality issues. Use when reviewing pull requests or diffs containing Clojure/ClojureScript code. Use when this capability is needed.
+metadata:
+  author: metabase
 ---
 
 # Clojure Code Review Skill
@@ -144,5 +145,5 @@ Quick scan for common issues:
 > Query parameters should use kebab-case. Change `user_id` to `user-id`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/metabase/metabase)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/metabase) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
