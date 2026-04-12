@@ -1,14 +1,8 @@
 ---
 name: technical-writer
-description: |
-  Creates clear documentation, API references, guides, and technical content for developers and users.
-  Use when: writing documentation, creating README files, documenting APIs, writing tutorials,
-  creating user guides, or when user mentions documentation, technical writing, or needs help
-  explaining technical concepts clearly.
-license: MIT
+description: | Use when this capability is needed.
 metadata:
-  author: awesome-llm-apps
-  version: "1.0.0"
+  author: shubhamsaboo
 ---
 
 # Technical Writer
@@ -351,5 +345,5 @@ MIT
 - Progressive complexity (basic → advanced)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/shubhamsaboo/awesome-llm-apps)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shubhamsaboo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
