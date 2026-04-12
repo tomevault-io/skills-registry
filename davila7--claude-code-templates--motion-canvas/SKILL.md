@@ -1,12 +1,8 @@
 ---
 name: motion-canvas
-description: Complete production-ready guide for Motion Canvas with ESM/CommonJS workarounds, full setup templates, and troubleshooting for programmatic video creation using TypeScript
-version: 2.0.0
-author: motion-canvas
-repo: https://github.com/motion-canvas/motion-canvas
-license: MIT
-tags: [Video, TypeScript, Animation, Motion Canvas, Signals, Generators, Canvas API, Vector, Audio Sync, Vite, ESM]
-dependencies: [@motion-canvas/core>=3.0.0, @motion-canvas/2d>=3.0.0, @motion-canvas/ui>=3.0.0, @motion-canvas/vite-plugin>=3.0.0]
+description: Complete production-ready guide for Motion Canvas with ESM/CommonJS workarounds, full setup templates, and troubleshooting for programmatic video creation using TypeScript Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Motion Canvas - Production-Ready Video Creation with TypeScript
@@ -359,5 +355,5 @@ my-motion-canvas-project/
 - **License**: MIT
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
