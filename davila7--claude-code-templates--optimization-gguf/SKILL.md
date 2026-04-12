@@ -1,11 +1,8 @@
 ---
 name: gguf-quantization
-description: GGUF format and llama.cpp quantization for efficient CPU/GPU inference. Use when deploying models on consumer hardware, Apple Silicon, or when needing flexible quantization from 2-8 bit without GPU requirements.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [GGUF, Quantization, llama.cpp, CPU Inference, Apple Silicon, Model Compression, Optimization]
-dependencies: [llama-cpp-python>=0.2.0]
+description: GGUF format and llama.cpp quantization for efficient CPU/GPU inference. Use when deploying models on consumer hardware, Apple Silicon, or when needing flexible quantization from 2-8 bit without GPU requirements. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # GGUF - Quantization Format for llama.cpp
@@ -427,5 +424,5 @@ python server.py --model model-q4_k_m.gguf --loader llama.cpp --n-gpu-layers 35
 - **License**: MIT
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
