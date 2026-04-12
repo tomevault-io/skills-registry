@@ -1,7 +1,8 @@
 ---
 name: biome-developer
-description: General development best practices and common gotchas when working on Biome. Use for avoiding common mistakes, understanding Biome-specific patterns (AST, syntax nodes, string extraction, embedded languages), and learning technical tips.
-compatibility: Designed for coding agents working on the Biome codebase (github.com/biomejs/biome).
+description: General development best practices and common gotchas when working on Biome. Use for avoiding common mistakes, understanding Biome-specific patterns (AST, syntax nodes, string extraction, embedded languages), and learning technical tips. Use when this capability is needed.
+metadata:
+  author: biomejs
 ---
 
 ## Purpose
@@ -331,5 +332,5 @@ Load this skill when:
 - Writing or updating markdown documentation
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/biomejs/biome)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/biomejs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
