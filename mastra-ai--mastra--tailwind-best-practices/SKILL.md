@@ -1,6 +1,8 @@
 ---
 name: tailwind-best-practices
-description: Tailwind CSS styling guidelines for Mastra Playground UI. This skill should be used when writing, reviewing, or refactoring styling code in packages/playground-ui and packages/playground to ensure design system consistency. Triggers on tasks involving Tailwind classes, component styling, or design tokens.
+description: Tailwind CSS styling guidelines for Mastra Playground UI. This skill should be used when writing, reviewing, or refactoring styling code in packages/playground-ui and packages/playground to ensure design system consistency. Triggers on tasks involving Tailwind classes, component styling, or design tokens. Use when this capability is needed.
+metadata:
+  author: mastra-ai
 ---
 
 # Tailwind Best Practices
@@ -76,5 +78,5 @@ grep -l "className" references/rules/
 - `classname-*` - ClassName usage rules (2 rules)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mastra-ai/mastra)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mastra-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
