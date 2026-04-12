@@ -1,9 +1,8 @@
 ---
 name: azure-resource-visualizer
-description: Analyze Azure resource groups and generate detailed Mermaid architecture diagrams showing the relationships between individual resources. Use this skill when the user asks for a diagram of their Azure resources or help in understanding how the resources relate to each other.
-license: Complete terms in LICENSE.txt
+description: Analyze Azure resource groups and generate detailed Mermaid architecture diagrams showing the relationships between individual resources. Use this skill when the user asks for a diagram of their Azure resources or help in understanding how the resources relate to each other. Use when this capability is needed.
 metadata:
-  author: Tom Meschter (tom.meschter@microsoft.com)
+  author: github
 ---
 
 # Azure Resource Visualizer - Architecture Diagram Generator
@@ -233,5 +232,5 @@ A successful analysis includes:
 Your goal is to provide clarity and insight into Azure architectures, making complex resource relationships easy to understand through excellent visualization.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
