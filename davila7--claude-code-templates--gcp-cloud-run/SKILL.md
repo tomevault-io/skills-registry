@@ -1,7 +1,8 @@
 ---
 name: gcp-cloud-run
-description: "Specialized skill for building production-ready serverless applications on GCP. Covers Cloud Run services (containerized), Cloud Run Functions (event-driven), cold start optimization, and event-driven architecture with Pub/Sub."
-source: vibeship-spawner-skills (Apache 2.0)
+description: Specialized skill for building production-ready serverless applications on GCP. Covers Cloud Run services (containerized), Cloud Run Functions (event-driven), cold start optimization, and event-driven architecture with Pub/Sub. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # GCP Cloud Run
@@ -288,5 +289,5 @@ requests. Background tasks will be extremely slow or stall.
 | Issue | medium | ## Set consistent timeouts |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
