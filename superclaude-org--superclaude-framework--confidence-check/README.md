@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [superclaude-org/superclaude_framework](https://github.com/superclaude-org/superclaude_framework/tree/main/skills/confidence-check)
+Original source: [superclaude-org/superclaude_framework](https://github.com/superclaude-org/superclaude_framework/tree/main/src/superclaude/skills/confidence-check)
 
 ---
 
