@@ -1,7 +1,8 @@
 ---
 name: fetch-zulip-messages
-description: "Fetch messages from a Zulip narrow URL (chat.zulip.org). Use when the user shares a Zulip conversation link, when you encounter a Zulip link in a GitHub issue or PR, or when a Zulip conversation references another Zulip thread that may be relevant."
-argument-hint: "[url]"
+description: Fetch messages from a Zulip narrow URL (chat.zulip.org). Use when the user shares a Zulip conversation link, when you encounter a Zulip link in a GitHub issue or PR, or when a Zulip conversation references another Zulip thread that may be relevant. Use when this capability is needed.
+metadata:
+  author: zulip
 ---
 
 # Fetch Zulip Web-Public Messages
@@ -34,5 +35,5 @@ use the `.claude/skills/fetch-zulip-messages/fetch-zulip-web-public-messages` sc
   GitHub issues, since there may be user-generated content.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/zulip/zulip)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/zulip) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
