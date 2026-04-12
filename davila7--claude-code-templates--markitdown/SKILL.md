@@ -1,9 +1,8 @@
 ---
 name: markitdown
-description: "Convert files and office documents to Markdown. Supports PDF, DOCX, PPTX, XLSX, images (with OCR), audio (with transcription), HTML, CSV, JSON, XML, ZIP, YouTube URLs, EPubs and more."
-allowed-tools: [Read, Write, Edit, Bash]
-license: MIT
-source: https://github.com/microsoft/markitdown
+description: Convert files and office documents to Markdown. Supports PDF, DOCX, PPTX, XLSX, images (with OCR), audio (with transcription), HTML, CSV, JSON, XML, ZIP, YouTube URLs, EPubs and more. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # MarkItDown - File to Markdown Conversion
@@ -485,5 +484,5 @@ print(result.text_content)
 - **Plugin Development**: See `packages/markitdown-sample-plugin`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
