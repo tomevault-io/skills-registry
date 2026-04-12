@@ -62,5 +62,5 @@ When creating a new Angular application for a user, always follow the following 
 _IMPORTANT_: There are best practices available for building outstanding Angular applications via the MCP server that is bundled with the Angular CLI. Available through `npx ng mcp` and the `get_best_practices`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/angular/angular)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/angular) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
