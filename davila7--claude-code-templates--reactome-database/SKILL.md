@@ -1,6 +1,8 @@
 ---
 name: reactome-database
-description: "Query Reactome REST API for pathway analysis, enrichment, gene-pathway mapping, disease pathways, molecular interactions, expression analysis, for systems biology studies."
+description: Query Reactome REST API for pathway analysis, enrichment, gene-pathway mapping, disease pathways, molecular interactions, expression analysis, for systems biology studies. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Reactome Database
@@ -272,5 +274,5 @@ For comprehensive API endpoint documentation, see `references/api_reference.md` 
 - 41,373 literature references
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
