@@ -1,7 +1,8 @@
 ---
 name: skill-creator
-description: Create, install, or update skills in the workspace. Use when (1) installing a skill from a URL or remote source, (2) creating a new skill from scratch, (3) updating or restructuring existing skills. Always use this skill for any skill installation or creation task.
-license: Complete terms in LICENSE.txt
+description: Create, install, or update skills in the workspace. Use when (1) installing a skill from a URL or remote source, (2) creating a new skill from scratch, (3) updating or restructuring existing skills. Always use this skill for any skill installation or creation task. Use when this capability is needed.
+metadata:
+  author: zhayujie
 ---
 
 # Skill Creator
@@ -418,5 +419,5 @@ cloud-deploy/
 When user chooses AWS, agent only reads aws.md.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/zhayujie/chatgpt-on-wechat)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/zhayujie) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
