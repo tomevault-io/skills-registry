@@ -1,6 +1,8 @@
 ---
 name: firecrawl-scraper
-description: Deep web scraping, screenshots, PDF parsing, and website crawling using Firecrawl API
+description: Deep web scraping, screenshots, PDF parsing, and website crawling using Firecrawl API Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # firecrawl-scraper
@@ -37,5 +39,5 @@ See the GitHub repository for troubleshooting guides.
 - context7-auto-research, tavily-web, exa-search, codex-review
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
