@@ -1,7 +1,8 @@
 ---
 name: coding-standards
-description: Universal coding standards, best practices, and patterns for TypeScript, JavaScript, React, and Node.js development.
-origin: ECC
+description: Universal coding standards, best practices, and patterns for TypeScript, JavaScript, React, and Node.js development. Use when this capability is needed.
+metadata:
+  author: affaan-m
 ---
 
 # Coding Standards & Best Practices
@@ -530,5 +531,5 @@ setTimeout(callback, DEBOUNCE_DELAY_MS)
 **Remember**: Code quality is not negotiable. Clear, maintainable code enables rapid development and confident refactoring.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/affaan-m/everything-claude-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
