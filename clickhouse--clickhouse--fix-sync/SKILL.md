@@ -1,9 +1,8 @@
 ---
 name: fix-sync
-description: Fix the "CH Inc sync" job in a pull request by resolving conflicts in the corresponding clickhouse-private sync PR.
-argument-hint: <pr-number-or-url>
-disable-model-invocation: false
-allowed-tools: Task, Bash(gh:*), Bash(cd:*), Bash(git:*), Bash(ls:*), Bash(pwd:*), Bash(mktemp:*), Read, Grep, Glob, AskUserQuestion
+description: Fix the "CH Inc sync" job in a pull request by resolving conflicts in the corresponding clickhouse-private sync PR. Use when this capability is needed.
+metadata:
+  author: clickhouse
 ---
 
 # Fix CH Inc Sync Skill
@@ -141,5 +140,5 @@ Provide the sync PR URL for the user to check.
 - After pushing, it may take a few minutes for the GitHub check to update
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/clickhouse/clickhouse)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/clickhouse) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
