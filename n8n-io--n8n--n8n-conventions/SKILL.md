@@ -1,6 +1,8 @@
 ---
 name: n8n-conventions
-description: Quick reference for n8n patterns. Full docs /AGENTS.md
+description: Quick reference for n8n patterns. Full docs /AGENTS.md Use when this capability is needed.
+metadata:
+  author: n8n-io
 ---
 
 # n8n Quick Reference
@@ -98,5 +100,5 @@ export class MyService {
 📖 **Need more details?** Read `/AGENTS.md` and `/packages/frontend/AGENTS.md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/n8n-io/n8n)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/n8n-io) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
