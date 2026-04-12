@@ -1,8 +1,8 @@
 ---
 name: analyze-ci
-description: Analyze failed GitHub Action jobs for a pull request.
-allowed-tools:
-  - Bash(uv run skills analyze-ci:*)
+description: Analyze failed GitHub Action jobs for a pull request. Use when this capability is needed.
+metadata:
+  author: mlflow
 ---
 
 # Analyze CI Failures
@@ -47,5 +47,5 @@ uv run skills analyze-ci 'https://github.com/mlflow/mlflow/actions/runs/12345/jo
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mlflow/mlflow)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mlflow) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
