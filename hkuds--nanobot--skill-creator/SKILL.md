@@ -1,6 +1,8 @@
 ---
 name: skill-creator
-description: Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.
+description: Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets. Use when this capability is needed.
+metadata:
+  author: hkuds
 ---
 
 # Skill Creator
@@ -374,5 +376,5 @@ After testing the skill, users may request improvements. Often this happens righ
 4. Implement changes and test again
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/hkuds/nanobot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hkuds) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
