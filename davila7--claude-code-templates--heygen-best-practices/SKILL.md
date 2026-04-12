@@ -1,8 +1,8 @@
 ---
 name: heygen-best-practices
-description: Best practices for HeyGen - AI avatar video creation API
+description: Best practices for HeyGen - AI avatar video creation API Use when this capability is needed.
 metadata:
-  tags: heygen, video, avatar, ai, api, text-to-video
+  author: davila7
 ---
 
 ## When to use
@@ -43,5 +43,5 @@ Read individual rule files for detailed explanations and code examples:
 - [rules/remotion-integration.md](rules/remotion-integration.md) - Using HeyGen avatar videos in Remotion compositions
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
