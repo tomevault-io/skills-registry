@@ -1,7 +1,8 @@
 ---
 name: backend-dev
-description: |
-  Backend development skill for Resume Matcher. Handles FastAPI endpoints, Pydantic schemas, TinyDB operations, LiteLLM integration, and Python service logic. Use when creating or modifying backend code.
+description: | Use when this capability is needed.
+metadata:
+  author: srbhr
 ---
 
 # Backend Development
@@ -130,5 +131,5 @@ except Exception as e:
 - [ ] API keys passed via `api_key=` parameter
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
