@@ -1,6 +1,8 @@
 ---
 name: add-sgl-kernel
-description: Step-by-step tutorial for adding a heavyweight AOT CUDA/C++ kernel to sgl-kernel (including tests & benchmarks)
+description: Step-by-step tutorial for adding a heavyweight AOT CUDA/C++ kernel to sgl-kernel (including tests & benchmarks) Use when this capability is needed.
+metadata:
+  author: sgl-project
 ---
 
 # Tutorial: Adding a New Kernel to `sgl-kernel` (AOT / Heavyweight)
@@ -363,5 +365,5 @@ sgl-kernel/benchmark/bench_scale.py           # NEW: benchmark
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sgl-project/sglang)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sgl-project) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
