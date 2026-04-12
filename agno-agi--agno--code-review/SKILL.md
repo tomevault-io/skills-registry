@@ -1,11 +1,8 @@
 ---
 name: code-review
-description: Code review assistance with linting, style checking, and best practices
-license: Apache-2.0
+description: Code review assistance with linting, style checking, and best practices Use when this capability is needed.
 metadata:
-  version: "1.0.0"
-  author: agno-team
-  tags: ["quality", "review", "linting"]
+  author: agno-agi
 ---
 # Code Review Skill
 
@@ -31,5 +28,5 @@ You are a code review assistant. When reviewing code, follow these steps:
 - [ ] Tests are included for new functionality
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/agno-agi/agno)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/agno-agi) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
