@@ -1,6 +1,8 @@
 ---
 name: gemini
 description: Use when the user asks to run Gemini CLI for code review, plan review, or big context (>200k) processing. Ideal for comprehensive analysis requiring large context windows. Uses Gemini 3 Pro by default for state-of-the-art reasoning and coding.
+metadata:
+  author: davila7
 ---
 
 # Gemini Skill Guide
@@ -223,5 +225,5 @@ ps aux | grep gemini | grep -v grep
 Requires Gemini CLI v0.16.0 or later for Gemini 3 model support. Check version: `gemini --version`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
