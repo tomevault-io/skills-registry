@@ -1,11 +1,8 @@
 ---
 name: nemo-evaluator-sdk
-description: Evaluates LLMs across 100+ benchmarks from 18+ harnesses (MMLU, HumanEval, GSM8K, safety, VLM) with multi-backend execution. Use when needing scalable evaluation on local Docker, Slurm HPC, or cloud platforms. NVIDIA's enterprise-grade platform with container-first architecture for reproducible benchmarking.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Evaluation, NeMo, NVIDIA, Benchmarking, MMLU, HumanEval, Multi-Backend, Slurm, Docker, Reproducible, Enterprise]
-dependencies: [nemo-evaluator-launcher>=0.1.25, docker]
+description: Evaluates LLMs across 100+ benchmarks from 18+ harnesses (MMLU, HumanEval, GSM8K, safety, VLM) with multi-backend execution. Use when needing scalable evaluation on local Docker, Slurm HPC, or cloud platforms. NVIDIA's enterprise-grade platform with container-first architecture for reproducible benchmarking. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # NeMo Evaluator SDK - Enterprise LLM Benchmarking
@@ -494,5 +491,5 @@ result = evaluate(eval_cfg=eval_config, target_cfg=target_config)
 - **Documentation**: https://github.com/NVIDIA-NeMo/Evaluator/tree/main/docs
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
