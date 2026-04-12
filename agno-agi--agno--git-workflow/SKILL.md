@@ -1,11 +1,8 @@
 ---
 name: git-workflow
-description: Git workflow guidance for commits, branches, and pull requests
-license: Apache-2.0
+description: Git workflow guidance for commits, branches, and pull requests Use when this capability is needed.
 metadata:
-  version: "1.0.0"
-  author: agno-team
-  tags: ["git", "version-control", "workflow"]
+  author: agno-agi
 ---
 # Git Workflow Skill
 
@@ -116,5 +113,5 @@ git push -u origin feature/TICKET-123-description
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/agno-agi/agno)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/agno-agi) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
