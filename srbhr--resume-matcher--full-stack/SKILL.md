@@ -1,7 +1,8 @@
 ---
 name: full-stack
-description: |
-  Full-stack development skill that coordinates backend and frontend changes together. Use for features that span both layers: new API endpoint + UI, data model changes, end-to-end flows.
+description: | Use when this capability is needed.
+metadata:
+  author: srbhr
 ---
 
 # Full-Stack Development
@@ -76,5 +77,5 @@ Response:  { id: string, result: ... }
 - Style guide: `docs/agent/design/style-guide.md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
