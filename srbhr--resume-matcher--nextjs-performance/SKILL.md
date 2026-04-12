@@ -1,7 +1,8 @@
 ---
 name: nextjs-performance
-description: |
-  Next.js critical performance fixes. Prevents async waterfalls, reduces bundle size, secures Server Actions, and ensures correct production builds. Use when writing React components, data fetching, Server Actions, or optimizing bundle size.
+description: | Use when this capability is needed.
+metadata:
+  author: srbhr
 ---
 
 # Next.js Performance
@@ -61,5 +62,5 @@ const HeavyEditor = dynamic(() => import('./HeavyEditor'), { ssr: false });
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
