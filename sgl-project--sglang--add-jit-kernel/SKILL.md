@@ -1,6 +1,8 @@
 ---
 name: add-jit-kernel
-description: Step-by-step tutorial for adding a new lightweight JIT CUDA kernel to sglang's jit_kernel module
+description: Step-by-step tutorial for adding a new lightweight JIT CUDA kernel to sglang's jit_kernel module Use when this capability is needed.
+metadata:
+  author: sgl-project
 ---
 
 # Tutorial: Adding a New JIT Kernel to SGLang
@@ -607,5 +609,5 @@ python/sglang/jit_kernel/benchmark/bench_scale.py     # NEW: Benchmark
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sgl-project/sglang)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sgl-project) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
