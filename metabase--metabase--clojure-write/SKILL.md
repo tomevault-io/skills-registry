@@ -1,6 +1,8 @@
 ---
 name: clojure-write
-description: Guide Clojure and ClojureScript development using REPL-driven workflow, coding conventions, and best practices. Use when writing, developing, or refactoring Clojure/ClojureScript code.
+description: Guide Clojure and ClojureScript development using REPL-driven workflow, coding conventions, and best practices. Use when writing, developing, or refactoring Clojure/ClojureScript code. Use when this capability is needed.
+metadata:
+  author: metabase
 ---
 
 # Clojure Development Skill
@@ -69,5 +71,5 @@ Only fall back to `./bin/mage` commands when clojure-mcp is not available.
 - Spaces on a line with nothing after it is not allowed
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/metabase/metabase)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/metabase) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
