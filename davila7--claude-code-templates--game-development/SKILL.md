@@ -1,7 +1,8 @@
 ---
 name: game-development
-description: Game development orchestrator. Routes to platform-specific skills based on project needs.
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+description: Game development orchestrator. Routes to platform-specific skills based on project needs. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Game Development
@@ -167,5 +168,5 @@ Abstract input into ACTIONS, not raw keys:
 > **Remember:** Great games come from iteration, not perfection. Prototype fast, then polish.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
