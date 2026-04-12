@@ -1,6 +1,8 @@
 ---
 name: implementing-jsc-classes-zig
 description: Creates JavaScript classes using Bun's Zig bindings generator (.classes.ts). Use when implementing new JS APIs in Zig with JSC integration.
+metadata:
+  author: oven-sh
 ---
 
 # Bun's JavaScriptCore Class Bindings Generator
@@ -206,5 +208,5 @@ pub const MyClass = struct {
 - **Zig Bindings**: External function declarations, cached value accessors
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/oven-sh/bun)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/oven-sh) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
