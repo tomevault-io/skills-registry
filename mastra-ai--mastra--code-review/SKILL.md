@@ -1,7 +1,8 @@
 ---
 name: code-review
 description: Provides structured code review guidelines for TypeScript projects. Use when reviewing pull requests, analyzing code quality, or suggesting improvements.
-license: MIT
+metadata:
+  author: mastra-ai
 ---
 
 # Code Review Guidelines
@@ -132,5 +133,5 @@ Always flag:
 - Documentation could be clearer
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mastra-ai/mastra)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mastra-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
