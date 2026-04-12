@@ -1,11 +1,8 @@
 ---
 name: phoenix-observability
-description: Open-source AI observability platform for LLM tracing, evaluation, and monitoring. Use when debugging LLM applications with detailed traces, running evaluations on datasets, or monitoring production AI systems with real-time insights.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Observability, Phoenix, Arize, Tracing, Evaluation, Monitoring, LLM Ops, OpenTelemetry]
-dependencies: [arize-phoenix>=12.0.0]
+description: Open-source AI observability platform for LLM tracing, evaluation, and monitoring. Use when debugging LLM applications with detailed traces, running evaluations on datasets, or monitoring production AI systems with real-time insights. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Phoenix - AI Observability Platform
@@ -475,5 +472,5 @@ phoenix serve --log-level debug
 - **License**: Apache 2.0
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
