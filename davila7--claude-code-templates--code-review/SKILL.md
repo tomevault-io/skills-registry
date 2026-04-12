@@ -1,6 +1,8 @@
 ---
 name: code-review
-description: Perform code reviews following Sentry engineering practices. Use when reviewing pull requests, examining code changes, or providing feedback on code quality. Covers security, performance, testing, and design review.
+description: Perform code reviews following Sentry engineering practices. Use when reviewing pull requests, examining code changes, or providing feedback on code quality. Covers security, performance, testing, and design review. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Sentry Code Review
@@ -102,5 +104,5 @@ cursor.execute("SELECT * FROM users WHERE id = %s", [user_id])
 - [Sentry Code Review Guidelines](https://develop.sentry.dev/engineering-practices/code-review/)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
