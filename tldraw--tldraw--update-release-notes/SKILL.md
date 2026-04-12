@@ -1,7 +1,8 @@
 ---
 name: update-release-notes
-description: Update the release notes file at `apps/docs/content/releases/next.mdx` in the tldraw/tldraw repo based on PRs since the previous release, or archive `next.mdx` to a versioned file when a new version is published.
-allowed-tools: Bash(git:*), Bash(gh:*)
+description: Update the release notes file at `apps/docs/content/releases/next.mdx` in the tldraw/tldraw repo based on PRs since the previous release, or archive `next.mdx` to a versioned file when a new version is published. Use when this capability is needed.
+metadata:
+  author: tldraw
 ---
 
 # Update release notes
@@ -199,5 +200,5 @@ After the second run, the docs site reflects the published release and `next.mdx
 - **Scripts**: See `scripts/` for automation helpers
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tldraw/tldraw)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tldraw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
