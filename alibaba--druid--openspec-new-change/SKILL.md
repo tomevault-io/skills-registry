@@ -1,12 +1,8 @@
 ---
 name: openspec-new-change
-description: Start a new OpenSpec change using the experimental artifact workflow. Use when the user wants to create a new feature, fix, or modification with a structured step-by-step approach.
-license: MIT
-compatibility: Requires openspec CLI.
+description: Start a new OpenSpec change using the experimental artifact workflow. Use when the user wants to create a new feature, fix, or modification with a structured step-by-step approach. Use when this capability is needed.
 metadata:
-  author: openspec
-  version: "1.0"
-  generatedBy: "1.1.1"
+  author: alibaba
 ---
 
 Start a new change using the experimental artifact-driven approach.
@@ -74,5 +70,5 @@ After completing the steps, summarize:
 - Pass --schema if using a non-default workflow
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/alibaba/druid)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/alibaba) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
