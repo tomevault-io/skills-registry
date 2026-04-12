@@ -1,7 +1,8 @@
 ---
 name: brand-guidelines
-description: Applies Mastra's brand colors, typography, and writing style to documentation, code examples, or artifacts. Use when brand colors, style guidelines, visual formatting, or company design standards apply.
-license: Apache-2.0
+description: Applies Mastra's brand colors, typography, and writing style to documentation, code examples, or artifacts. Use when brand colors, style guidelines, visual formatting, or company design standards apply. Use when this capability is needed.
+metadata:
+  author: mastra-ai
 ---
 
 # Mastra Brand Guidelines
@@ -295,5 +296,5 @@ When describing Mastra features, use these technical, factual descriptions:
 - User-facing error messages (prioritize clarity)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mastra-ai/mastra)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mastra-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
