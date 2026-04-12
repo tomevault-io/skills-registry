@@ -1,6 +1,8 @@
 ---
 name: metabolomics-workbench-database
-description: "Access NIH Metabolomics Workbench via REST API (4,200+ studies). Query metabolites, RefMet nomenclature, MS/NMR data, m/z searches, study metadata, for metabolomics and biomarker discovery."
+description: Access NIH Metabolomics Workbench via REST API (4,200+ studies). Query metabolites, RefMet nomenclature, MS/NMR data, m/z searches, study metadata, for metabolomics and biomarker discovery. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Metabolomics Workbench Database
@@ -253,5 +255,5 @@ Detailed API reference documentation is available in `references/api_reference.m
 Load this reference file when detailed API specifications are needed or when working with less common endpoints.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
