@@ -1,7 +1,8 @@
 ---
 name: continuous-learning
-description: Automatically extract reusable patterns from Claude Code sessions and save them as learned skills for future use.
-origin: ECC
+description: Automatically extract reusable patterns from Claude Code sessions and save them as learned skills for future use. Use when this capability is needed.
+metadata:
+  author: affaan-m
 ---
 
 # Continuous Learning Skill
@@ -119,5 +120,5 @@ Homunculus v2 takes a more sophisticated approach:
 See: `docs/continuous-learning-v2-spec.md` for full spec.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/affaan-m/everything-claude-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
