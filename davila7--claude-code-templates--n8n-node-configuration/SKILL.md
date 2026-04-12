@@ -1,6 +1,8 @@
 ---
 name: n8n-node-configuration
-description: Operation-aware node configuration guidance. Use when configuring nodes, understanding property dependencies, determining required fields, choosing between get_node_essentials and get_node_info, or learning common configuration patterns by node type.
+description: Operation-aware node configuration guidance. Use when configuring nodes, understanding property dependencies, determining required fields, choosing between get_node_essentials and get_node_info, or learning common configuration patterns by node type. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # n8n Node Configuration
@@ -774,5 +776,5 @@ For comprehensive guides on specific topics:
 - **n8n Workflow Patterns** - Apply patterns with proper configuration
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
