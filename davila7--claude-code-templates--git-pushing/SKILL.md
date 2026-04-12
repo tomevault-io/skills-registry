@@ -1,6 +1,8 @@
 ---
 name: git-pushing
-description: Stage, commit, and push git changes with conventional commit messages. Use when user wants to commit and push changes, mentions pushing to remote, or asks to save and push their work. Also activates when user says "push changes", "commit and push", "push this", "push to github", or similar git workflow requests.
+description: Stage, commit, and push git changes with conventional commit messages. Use when user wants to commit and push changes, mentions pushing to remote, or asks to save and push their work. Also activates when user says "push changes", "commit and push", "push this", "push to github", or similar git workflow requests. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Git Push Workflow
@@ -33,5 +35,5 @@ bash skills/git-pushing/scripts/smart_commit.sh "feat: add feature"
 Script handles: staging, conventional commit message, Claude footer, push with -u flag.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
