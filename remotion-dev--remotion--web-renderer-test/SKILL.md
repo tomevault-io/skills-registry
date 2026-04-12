@@ -1,6 +1,8 @@
 ---
 name: web-renderer-test
-description: Add a test case to the web renderer
+description: Add a test case to the web renderer Use when this capability is needed.
+metadata:
+  author: remotion-dev
 ---
 
 The web renderer is in `packages/web-renderer` and the test suite is in `packages/web-renderer/src/test`.
@@ -79,5 +81,5 @@ test('should render background-color', async () => {
 5. **Important**: Update `packages/docs/docs/client-side-rendering/limitations.mdx` to reflect the newly supported property.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/remotion-dev/remotion)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/remotion-dev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
