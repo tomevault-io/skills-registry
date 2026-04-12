@@ -1,6 +1,8 @@
 ---
 name: python-project-structure
-description: Python project organization, module architecture, and public API design. Use when setting up new projects, organizing modules, defining public interfaces with __all__, or planning directory layouts.
+description: Python project organization, module architecture, and public API design. Use when setting up new projects, organizing modules, defining public interfaces with __all__, or planning directory layouts. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Python Project Structure & Module Architecture
@@ -252,5 +254,5 @@ Relative imports can break when modules are moved or reorganized.
 8. **Document your structure** - Include a README explaining the organization
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
