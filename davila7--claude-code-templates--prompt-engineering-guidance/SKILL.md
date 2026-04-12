@@ -1,11 +1,8 @@
 ---
 name: guidance
-description: Control LLM output with regex and grammars, guarantee valid JSON/XML/code generation, enforce structured formats, and build multi-step workflows with Guidance - Microsoft Research's constrained generation framework
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Prompt Engineering, Guidance, Constrained Generation, Structured Output, JSON Validation, Grammar, Microsoft Research, Format Enforcement, Multi-Step Workflows]
-dependencies: [guidance, transformers]
+description: Control LLM output with regex and grammars, guarantee valid JSON/XML/code generation, enforce structured formats, and build multi-step workflows with Guidance - Microsoft Research's constrained generation framework Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Guidance: Constrained LLM Generation
@@ -570,5 +567,5 @@ lm += gen("name", regex=r"^(John|Jane)$", max_tokens=10)
 - `references/examples.md` - Production-ready examples
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
