@@ -1,6 +1,8 @@
 ---
 name: hotkey
-description: Guide for adding keyboard shortcuts. Use when implementing new hotkeys, registering shortcuts, or working with keyboard interactions. Triggers on hotkey implementation or keyboard shortcut tasks.
+description: Guide for adding keyboard shortcuts. Use when implementing new hotkeys, registering shortcuts, or working with keyboard interactions. Triggers on hotkey implementation or keyboard shortcut tasks. Use when this capability is needed.
+metadata:
+  author: lobehub
 ---
 
 # Adding Keyboard Shortcuts Guide
@@ -90,5 +92,5 @@ const clearChatHotkey = useUserStore(settingsSelectors.getHotkeyById(HotkeyEnum.
 - **Page-specific**: Ensure correct scope activation
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/lobehub/lobehub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lobehub) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
