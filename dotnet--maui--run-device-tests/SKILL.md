@@ -1,10 +1,8 @@
 ---
 name: run-device-tests
-description: "Build and run .NET MAUI device tests locally with category filtering. Supports iOS, MacCatalyst, Android on macOS; Android, Windows on Windows. Use TestFilter to run specific test categories."
+description: Build and run .NET MAUI device tests locally with category filtering. Supports iOS, MacCatalyst, Android on macOS; Android, Windows on Windows. Use TestFilter to run specific test categories. Use when this capability is needed.
 metadata:
-  author: dotnet-maui
-  version: "2.1"
-compatibility: Requires xharness CLI (for iOS/MacCatalyst/Android), Xcode (for Apple platforms), Android SDK (for Android), and .NET SDK with platform workloads.
+  author: dotnet
 ---
 
 # Run Device Tests Skill
@@ -300,5 +298,5 @@ dotnet xharness android test \
 This ensures tests run on the correct device with proper version targeting and filtering.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/dotnet/maui)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
