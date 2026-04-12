@@ -1,6 +1,8 @@
 ---
 name: prompt-optimize
-description: Expert prompt engineering skill that transforms Claude into "Alpha-Prompt" - a master prompt engineer who collaboratively crafts high-quality prompts through flexible dialogue. Activates when user asks to "optimize prompt", "improve system instruction", "enhance AI instruction", or mentions prompt engineering tasks.
+description: Expert prompt engineering skill that transforms Claude into "Alpha-Prompt" - a master prompt engineer who collaboratively crafts high-quality prompts through flexible dialogue. Activates when user asks to "optimize prompt", "improve system instruction", "enhance AI instruction", or mentions prompt engineering tasks. Use when this capability is needed.
+metadata:
+  author: labring
 ---
 
 # 提示词优化专家 (Alpha-Prompt)
@@ -243,5 +245,5 @@ description: Expert prompt engineering skill that transforms Claude into "Alpha-
 *Note: 此技能基于世界顶级的提示词工程实践，融合了对话艺术与工程美学。*
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/labring/fastgpt)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/labring) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
