@@ -1,10 +1,8 @@
 ---
 name: web-design-guidelines
-description: Review UI code for Web Interface Guidelines compliance. Use when asked to "review my UI", "check accessibility", "audit design", "review UX", or "check my site against best practices".
+description: Review UI code for Web Interface Guidelines compliance. Use when asked to "review my UI", "check accessibility", "audit design", "review UX", or "check my site against best practices". Use when this capability is needed.
 metadata:
-  author: vercel
-  version: "1.0.0"
-  argument-hint: <file-or-pattern>
+  author: vercel-labs
 ---
 
 # Web Interface Guidelines
@@ -39,5 +37,5 @@ When a user provides a file or pattern argument:
 If no files specified, ask the user which files to review.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/vercel-labs/agent-skills)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vercel-labs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
