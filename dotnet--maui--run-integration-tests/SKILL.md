@@ -1,10 +1,8 @@
 ---
 name: run-integration-tests
-description: "Build, pack, and run .NET MAUI integration tests locally. Validates templates, samples, and end-to-end scenarios using the local workload."
+description: Build, pack, and run .NET MAUI integration tests locally. Validates templates, samples, and end-to-end scenarios using the local workload. Use when this capability is needed.
 metadata:
-  author: dotnet-maui
-  version: "1.0"
-compatibility: Requires Windows for WindowsTemplates category. macOS for macOSTemplates, RunOniOS, RunOnAndroid.
+  author: dotnet
 ---
 
 # Run Integration Tests Skill
@@ -199,5 +197,5 @@ foreach ($test in $iosTests) {
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/dotnet/maui)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
