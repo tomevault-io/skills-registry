@@ -1,6 +1,8 @@
 ---
 name: writing-bundler-tests
-description: Guides writing bundler tests using itBundled/expectBundled in test/bundler/. Use when creating or modifying bundler, transpiler, or code transformation tests.
+description: Guides writing bundler tests using itBundled/expectBundled in test/bundler/. Use when creating or modifying bundler, transpiler, or code transformation tests. Use when this capability is needed.
+metadata:
+  author: oven-sh
 ---
 
 # Writing Bundler Tests
@@ -222,5 +224,5 @@ BUN_BUNDLER_TEST_DEBUG=1 bun bd test bundler_minify.test.ts
 - Pass array to `run` for multiple test scenarios
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/oven-sh/bun)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/oven-sh) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
