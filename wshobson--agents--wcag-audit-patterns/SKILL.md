@@ -1,6 +1,8 @@
 ---
 name: wcag-audit-patterns
-description: Conduct WCAG 2.2 accessibility audits with automated testing, manual verification, and remediation guidance. Use when auditing websites for accessibility, fixing WCAG violations, or implementing accessible design patterns.
+description: Conduct WCAG 2.2 accessibility audits with automated testing, manual verification, and remediation guidance. Use when auditing websites for accessibility, fixing WCAG violations, or implementing accessible design patterns. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # WCAG Audit Patterns
@@ -548,5 +550,5 @@ class AccessibleDropdown extends HTMLElement {
 - **Don't use color alone** - Multiple indicators needed
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
