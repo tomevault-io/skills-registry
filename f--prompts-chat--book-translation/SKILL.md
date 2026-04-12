@@ -1,6 +1,8 @@
 ---
 name: book-translation
-description: Translate "The Interactive Book of Prompting" chapters and UI strings to a new language
+description: Translate "The Interactive Book of Prompting" chapters and UI strings to a new language Use when this capability is needed.
+metadata:
+  author: f
 ---
 
 # Book Translation Skill
@@ -213,5 +215,5 @@ The English (`en`) translation is complete and serves as the **base template** f
 - **Natural language**: Prioritize natural-sounding translations over literal ones
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/f/prompts.chat)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/f) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
