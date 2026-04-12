@@ -1,6 +1,8 @@
 ---
-name: Home Assistant Integration knowledge
-description: Everything you need to know to build, test and review Home Assistant Integrations. If you're looking at an integration, you must use this as your primary reference.
+name: home-assistant-integration-knowledge
+description: Everything you need to know to build, test and review Home Assistant Integrations. If you're looking at an integration, you must use this as your primary reference. Use when this capability is needed.
+metadata:
+  author: home-assistant
 ---
 
 ## File Locations
@@ -40,5 +42,5 @@ Template scale file: `./script/scaffold/templates/integration/integration/qualit
 - Tests should avoid interacting or mocking internal integration details. For more info, see https://developers.home-assistant.io/docs/development_testing/#writing-tests-for-integrations
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/home-assistant/core)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/home-assistant) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
