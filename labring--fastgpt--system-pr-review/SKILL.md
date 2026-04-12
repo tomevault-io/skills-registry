@@ -1,6 +1,8 @@
 ---
 name: pr-review
-description: 当用户传入一个 review 的 pr 链接时候，触发该 skill，对 pr 进行代码审查。
+description: 当用户传入一个 review 的 pr 链接时候，触发该 skill，对 pr 进行代码审查。 Use when this capability is needed.
+metadata:
+  author: labring
 ---
 
 # When to Use This Skill
@@ -258,5 +260,5 @@ gh api repos/$REPO/pulls/<number>/reviews \
 | 撤销审查 | `gh pr review <number> --dismiss` |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/labring/fastgpt)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/labring) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
