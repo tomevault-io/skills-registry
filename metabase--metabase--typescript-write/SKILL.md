@@ -1,6 +1,8 @@
 ---
 name: typescript-write
-description: Write TypeScript and JavaScript code following Metabase coding standards and best practices. Use when developing or refactoring TypeScript/JavaScript code.
+description: Write TypeScript and JavaScript code following Metabase coding standards and best practices. Use when developing or refactoring TypeScript/JavaScript code. Use when this capability is needed.
+metadata:
+  author: metabase
 ---
 
 # TypeScript/JavaScript Development Skill
@@ -9,5 +11,5 @@ description: Write TypeScript and JavaScript code following Metabase coding stan
 @./../_shared/typescript-commands.md
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/metabase/metabase)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/metabase) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
