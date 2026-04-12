@@ -1,9 +1,8 @@
 ---
 name: review-docs
-description: Review and improve documentation with parallel evaluation and iterative improvement loop.
-argument-hint: <path to document>
-model: opus
-disable-model-invocation: true
+description: Review and improve documentation with parallel evaluation and iterative improvement loop. Use when this capability is needed.
+metadata:
+  author: tldraw
 ---
 
 # Review documentation
@@ -390,5 +389,5 @@ Continue the loop until:
 - Style and content evaluations always run in parallel for efficiency
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tldraw/tldraw)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tldraw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
