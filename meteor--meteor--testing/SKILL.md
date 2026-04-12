@@ -1,6 +1,8 @@
 ---
 name: testing
 description: Use when writing tests, debugging test failures, running the test suite, or setting up test infrastructure. Covers self-test, package tests, and modern E2E tests.
+metadata:
+  author: meteor
 ---
 
 # Testing
@@ -147,5 +149,5 @@ Tinytest.add('MyPackage - basic functionality', function (test) {
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/meteor/meteor)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/meteor) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
