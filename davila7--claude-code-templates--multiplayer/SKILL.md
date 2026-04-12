@@ -1,7 +1,8 @@
 ---
 name: multiplayer
-description: Multiplayer game development principles. Architecture, networking, synchronization.
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+description: Multiplayer game development principles. Architecture, networking, synchronization. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Multiplayer Game Development
@@ -132,5 +133,5 @@ Server: Validate → did projectile actually hit?
 > **Remember:** Never trust the client. The server is the source of truth.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
