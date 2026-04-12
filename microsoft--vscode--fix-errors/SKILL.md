@@ -1,6 +1,8 @@
 ---
 name: fix-errors
-description: Guidelines for fixing unhandled errors from the VS Code error telemetry dashboard. Use when investigating error-telemetry issues with stack traces, error messages, and hit/user counts. Covers tracing data flow through call stacks, identifying producers of invalid data vs. consumers that crash, enriching error messages for telemetry diagnosis, and avoiding common anti-patterns like silently swallowing errors.
+description: Guidelines for fixing unhandled errors from the VS Code error telemetry dashboard. Use when investigating error-telemetry issues with stack traces, error messages, and hit/user counts. Covers tracing data flow through call stacks, identifying producers of invalid data vs. consumers that crash, enriching error messages for telemetry diagnosis, and avoiding common anti-patterns like silently swallowing errors. Use when this capability is needed.
+metadata:
+  author: microsoft
 ---
 
 When fixing an unhandled error from the telemetry dashboard, the issue typically contains an error message, a stack trace, hit count, and affected user count.
@@ -99,5 +101,5 @@ This analysis came from reading the construction code, not from memorized rules 
 - Check for compilation errors via the build task before declaring work complete
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/microsoft/vscode)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/microsoft) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
