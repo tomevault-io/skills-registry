@@ -1,6 +1,8 @@
 ---
 name: appinsights-instrumentation
-description: 'Instrument a webapp to send useful telemetry data to Azure App Insights'
+description: Instrument a webapp to send useful telemetry data to Azure App Insights Use when this capability is needed.
+metadata:
+  author: github
 ---
 
 # AppInsights instrumentation
@@ -48,5 +50,5 @@ No matter which option you choose, recommend the user to create the App Insights
 - If the app is a Python app, see [PYTHON guide](references/PYTHON.md) for how to modify the Python code.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
