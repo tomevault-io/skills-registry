@@ -1,10 +1,8 @@
 ---
 name: add-review-comment
-description: Add a review comment to a GitHub pull request.
-allowed-tools:
-  - Bash(gh api:*)
-  - Bash(gh pr view:*)
-  - Bash(uv run skills fetch-diff:*)
+description: Add a review comment to a GitHub pull request. Use when this capability is needed.
+metadata:
+  author: mlflow
 ---
 
 # Add Review Comment
@@ -67,5 +65,5 @@ gh api repos/<owner>/<repo>/pulls/<pr_number>/comments \
 - For bugs, explain the potential problem and suggested fix clearly
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mlflow/mlflow)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mlflow) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
