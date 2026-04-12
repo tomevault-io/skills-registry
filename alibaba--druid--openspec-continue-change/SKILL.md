@@ -1,12 +1,8 @@
 ---
 name: openspec-continue-change
-description: Continue working on an OpenSpec change by creating the next artifact. Use when the user wants to progress their change, create the next artifact, or continue their workflow.
-license: MIT
-compatibility: Requires openspec CLI.
+description: Continue working on an OpenSpec change by creating the next artifact. Use when the user wants to progress their change, create the next artifact, or continue their workflow. Use when this capability is needed.
 metadata:
-  author: openspec
-  version: "1.0"
-  generatedBy: "1.1.1"
+  author: alibaba
 ---
 
 Continue working on a change by creating the next artifact.
@@ -118,5 +114,5 @@ For other schemas, follow the `instruction` field from the CLI output.
   - These guide what you write, but should never appear in the output
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/alibaba/druid)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/alibaba) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
