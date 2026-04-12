@@ -1,6 +1,8 @@
 ---
 name: event-store-design
-description: Design and implement event stores for event-sourced systems. Use when building event sourcing infrastructure, choosing event store technologies, or implementing event persistence patterns.
+description: Design and implement event stores for event-sourced systems. Use when building event sourcing infrastructure, choosing event store technologies, or implementing event persistence patterns. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Event Store Design
@@ -431,5 +433,5 @@ Capacity: On-demand or provisioned based on throughput needs
 - **Don't ignore backpressure** - Handle slow consumers
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
