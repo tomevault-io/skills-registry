@@ -1,6 +1,8 @@
 ---
 name: pathml
-description: Computational pathology toolkit for analyzing whole-slide images (WSI) and multiparametric imaging data. Use this skill when working with histopathology slides, H&E stained images, multiplex immunofluorescence (CODEX, Vectra), spatial proteomics, nucleus detection/segmentation, tissue graph construction, or training ML models on pathology data. Supports 160+ slide formats including Aperio SVS, NDPI, DICOM, OME-TIFF for digital pathology workflows.
+description: Computational pathology toolkit for analyzing whole-slide images (WSI) and multiparametric imaging data. Use this skill when working with histopathology slides, H&E stained images, multiplex immunofluorescence (CODEX, Vectra), spatial proteomics, nucleus detection/segmentation, tissue graph construction, or training ML models on pathology data. Supports 160+ slide formats including Aperio SVS, NDPI, DICOM, OME-TIFF for digital pathology workflows. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # PathML
@@ -160,5 +162,5 @@ Documentation files providing in-depth coverage of PathML capabilities:
 Load these references as needed when working on specific computational pathology tasks.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
