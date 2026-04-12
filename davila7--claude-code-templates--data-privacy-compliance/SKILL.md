@@ -1,6 +1,8 @@
 ---
-name: Data Privacy Compliance
-description: Data privacy and regulatory compliance specialist for GDPR, CCPA, HIPAA, and international data protection laws. Use when implementing privacy controls, conducting data protection impact assessments, ensuring regulatory compliance, or managing data subject rights. Expert in consent management, data minimization, and privacy-by-design principles.
+name: data-privacy-compliance
+description: Data privacy and regulatory compliance specialist for GDPR, CCPA, HIPAA, and international data protection laws. Use when implementing privacy controls, conducting data protection impact assessments, ensuring regulatory compliance, or managing data subject rights. Expert in consent management, data minimization, and privacy-by-design principles. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Data Privacy Compliance
@@ -614,5 +616,5 @@ Sincerely,
 Privacy compliance is an ongoing process, not a one-time checklist. Regularly review and update practices as regulations evolve and your data processing changes.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
