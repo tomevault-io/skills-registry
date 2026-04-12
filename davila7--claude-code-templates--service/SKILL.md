@@ -1,12 +1,8 @@
 ---
 name: railway-service
-description: Check service status, rename services, change service icons, link services, or create services with Docker images. For creating services with local code, prefer railway-new skill. For GitHub repo sources, use railway-new skill to create empty service then railway-environment skill to configure source.
-version: 1.0.0
-author: Railway
-license: MIT
-tags: [Railway, Service, Status, Docker, Container, Infrastructure, Management]
-dependencies: [railway-cli]
-allowed-tools: Bash(railway:*)
+description: Check service status, rename services, change service icons, link services, or create services with Docker images. For creating services with local code, prefer railway-new skill. For GitHub repo sources, use railway-new skill to create empty service then railway-environment skill to configure source. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Railway Service Management
@@ -252,5 +248,5 @@ User needs at least DEVELOPER role to create services.
 Docker image must be accessible (public or with registry credentials).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
