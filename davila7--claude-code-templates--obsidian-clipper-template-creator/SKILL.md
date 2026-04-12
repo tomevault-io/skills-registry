@@ -1,6 +1,8 @@
 ---
 name: obsidian-clipper-template-creator
-description: Guide for creating templates for the Obsidian Web Clipper. Use when you want to create a new clipping template, understand available variables, or format clipped content.
+description: Guide for creating templates for the Obsidian Web Clipper. Use when you want to create a new clipping template, understand available variables, or format clipped content. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Obsidian Web Clipper Template Creator
@@ -54,5 +56,5 @@ This skill helps you create importable JSON templates for the Obsidian Web Clipp
 See [assets/](assets/) for JSON examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
