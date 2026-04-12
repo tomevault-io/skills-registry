@@ -325,5 +325,5 @@ Before running `verify-tests-fail.ps1`, confirm:
 - **Example tests:** `src/Controls/tests/TestCases.Shared.Tests/Tests/Issues/`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/dotnet/maui)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
