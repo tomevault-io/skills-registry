@@ -1,11 +1,8 @@
 ---
 name: dspy
-description: Build complex AI systems with declarative programming, optimize prompts automatically, create modular RAG systems and agents with DSPy - Stanford NLP's framework for systematic LM programming
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Prompt Engineering, DSPy, Declarative Programming, RAG, Agents, Prompt Optimization, LM Programming, Stanford NLP, Automatic Optimization, Modular AI]
-dependencies: [dspy, openai, anthropic]
+description: Build complex AI systems with declarative programming, optimize prompts automatically, create modular RAG systems and agents with DSPy - Stanford NLP's framework for systematic LM programming Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # DSPy: Declarative Language Model Programming
@@ -588,5 +585,5 @@ for call in dspy.settings.trace:
 - `references/examples.md` - Real-world examples (RAG, agents, classifiers)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
