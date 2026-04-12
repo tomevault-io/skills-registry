@@ -1,6 +1,8 @@
 ---
 name: make-plan
-description: Create a detailed, phased implementation plan with documentation discovery. Use when asked to plan a feature, task, or multi-step implementation — especially before executing with do.
+description: Create a detailed, phased implementation plan with documentation discovery. Use when asked to plan a feature, task, or multi-step implementation — especially before executing with do. Use when this capability is needed.
+metadata:
+  author: thedotmack
 ---
 
 # Make Plan
@@ -63,5 +65,5 @@ The orchestrator consolidates findings into a single Phase 0 output.
 - Assuming structure without checking examples
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/thedotmack/claude-mem)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/thedotmack) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
