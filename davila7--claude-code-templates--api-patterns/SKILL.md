@@ -1,7 +1,8 @@
 ---
 name: api-patterns
-description: API design principles and decision-making. REST vs GraphQL vs tRPC selection, response formats, versioning, pagination.
-allowed-tools: Read, Write, Edit, Glob, Grep
+description: API design principles and decision-making. REST vs GraphQL vs tRPC selection, response formats, versioning, pagination. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # API Patterns
@@ -80,5 +81,5 @@ Before designing an API:
 | `scripts/api_validator.py` | API endpoint validation | `python scripts/api_validator.py <project_path>` |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
