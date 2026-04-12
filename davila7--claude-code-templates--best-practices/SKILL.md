@@ -1,10 +1,8 @@
 ---
 name: best-practices
-description: Apply modern web development best practices for security, compatibility, and code quality. Use when asked to "apply best practices", "security audit", "modernize code", "code quality review", or "check for vulnerabilities".
-license: MIT
+description: Apply modern web development best practices for security, compatibility, and code quality. Use when asked to "apply best practices", "security audit", "modernize code", "code quality review", or "check for vulnerabilities". Use when this capability is needed.
 metadata:
-  author: web-quality-skills
-  version: "1.0"
+  author: davila7
 ---
 
 # Best practices
@@ -583,5 +581,5 @@ findNearbyButton.addEventListener('click', async () => {
 - [Web Quality Audit](../web-quality-audit/SKILL.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
