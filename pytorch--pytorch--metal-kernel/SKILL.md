@@ -1,6 +1,8 @@
 ---
 name: metal-kernel
-description: Write Metal/MPS kernels for PyTorch operators. Use when adding MPS device support to operators, implementing Metal shaders, or porting CUDA kernels to Apple Silicon. Covers native_functions.yaml dispatch, host-side operators, and Metal kernel implementation.
+description: Write Metal/MPS kernels for PyTorch operators. Use when adding MPS device support to operators, implementing Metal shaders, or porting CUDA kernels to Apple Silicon. Covers native_functions.yaml dispatch, host-side operators, and Metal kernel implementation. Use when this capability is needed.
+metadata:
+  author: pytorch
 ---
 
 # Metal Kernel Writing Guide
@@ -414,5 +416,5 @@ This isolates which kernel in the pipeline is broken, rather than debugging the 
 - [ ] Removed skip/xfail decorators from OpInfo (if applicable)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/pytorch/pytorch)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/pytorch) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
