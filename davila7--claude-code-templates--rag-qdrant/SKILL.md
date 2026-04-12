@@ -1,11 +1,8 @@
 ---
 name: qdrant-vector-search
-description: High-performance vector similarity search engine for RAG and semantic search. Use when building production RAG systems requiring fast nearest neighbor search, hybrid search with filtering, or scalable vector storage with Rust-powered performance.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [RAG, Vector Search, Qdrant, Semantic Search, Embeddings, Similarity Search, HNSW, Production, Distributed]
-dependencies: [qdrant-client>=1.12.0]
+description: High-performance vector similarity search engine for RAG and semantic search. Use when building production RAG systems requiring fast nearest neighbor search, hybrid search with filtering, or scalable vector storage with Rust-powered performance. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Qdrant - Vector Similarity Search Engine
@@ -493,5 +490,5 @@ client = QdrantClient(
 - **License**: Apache 2.0
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
