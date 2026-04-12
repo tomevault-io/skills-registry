@@ -1,6 +1,8 @@
 ---
 name: flow
 description: Use when you need to run Flow type checking, or when seeing Flow type errors in React code.
+metadata:
+  author: facebook
 ---
 
 # Flow Type Checking
@@ -30,5 +32,5 @@ Arguments:
 - **Missing type imports** - Ensure types are imported from the correct package
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/facebook/react)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/facebook) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
