@@ -1,8 +1,8 @@
 ---
 name: docs-changelog
-description: >-
-  Generates and formats changelog files for a new release based on provided
-  version and raw changelog data.
+description: >- Use when this capability is needed.
+metadata:
+  author: google-gemini
 ---
 
 # Procedure: Updating Changelog for New Releases
@@ -166,5 +166,5 @@ instructions for the other section.
 - Delete any temporary files created during the process.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/google-gemini/gemini-cli)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/google-gemini) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
