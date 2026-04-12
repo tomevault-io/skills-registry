@@ -1,6 +1,8 @@
 ---
 name: code-review-checklist
-description: "Comprehensive checklist for conducting thorough code reviews covering functionality, security, performance, and maintainability"
+description: Comprehensive checklist for conducting thorough code reviews covering functionality, security, performance, and maintainability Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Code Review Checklist
@@ -444,5 +446,5 @@ This is great because [explain why]
 **Pro Tip:** Use a checklist template for every review to ensure consistency and thoroughness. Customize it for your team's specific needs!
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
