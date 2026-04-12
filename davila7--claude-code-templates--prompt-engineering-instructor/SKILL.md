@@ -1,11 +1,8 @@
 ---
 name: instructor
-description: Extract structured data from LLM responses with Pydantic validation, retry failed extractions automatically, parse complex JSON with type safety, and stream partial results with Instructor - battle-tested structured output library
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Prompt Engineering, Instructor, Structured Output, Pydantic, Data Extraction, JSON Parsing, Type Safety, Validation, Streaming, OpenAI, Anthropic]
-dependencies: [instructor, pydantic, openai, anthropic]
+description: Extract structured data from LLM responses with Pydantic validation, retry failed extractions automatically, parse complex JSON with type safety, and stream partial results with Instructor - battle-tested structured output library Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Instructor: Structured LLM Outputs
@@ -738,5 +735,5 @@ class PartialData(BaseModel):
 - `references/examples.md` - Real-world use cases
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
