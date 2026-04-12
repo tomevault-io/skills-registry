@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [srbhr/resume-matcher](https://github.com/srbhr/resume-matcher/tree/main/.claude/skills/react-patterns)
+Original source: [srbhr/resume-matcher](https://github.com/srbhr/resume-matcher/tree/main/.github/skills/react-patterns)
 
 ---
 
