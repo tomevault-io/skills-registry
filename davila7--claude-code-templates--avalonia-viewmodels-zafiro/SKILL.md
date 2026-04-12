@@ -1,6 +1,8 @@
 ---
 name: avalonia-viewmodels-zafiro
-description: Optimal ViewModel and Wizard creation patterns for Avalonia using Zafiro and ReactiveUI.
+description: Optimal ViewModel and Wizard creation patterns for Avalonia using Zafiro and ReactiveUI. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Avalonia ViewModels with Zafiro
@@ -29,5 +31,5 @@ For real-world implementations, refer to the **Angor** project:
 - `HomeViewModel.cs`: Simple section ViewModel using functional-reactive commands.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
