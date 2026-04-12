@@ -1,6 +1,8 @@
 ---
 name: better-auth-best-practices
-description: Skill for integrating Better Auth - the comprehensive TypeScript authentication framework.
+description: Skill for integrating Better Auth - the comprehensive TypeScript authentication framework. Use when this capability is needed.
+metadata:
+  author: novuhq
 ---
 
 # Better Auth Integration Guide
@@ -166,5 +168,5 @@ For separate client/server projects: `createAuthClient<typeof auth>()`.
 - [Init Options Source](https://github.com/better-auth/better-auth/blob/main/packages/core/src/types/init-options.ts)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/novuhq/novu)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/novuhq) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
