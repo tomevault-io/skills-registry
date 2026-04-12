@@ -1,6 +1,8 @@
 ---
 name: quality-documentation-manager
-description: Senior Quality Documentation Manager for comprehensive documentation control and regulatory document review. Provides document management system design, change control, configuration management, and regulatory documentation oversight. Use for document control system implementation, regulatory document review, change management, and documentation compliance verification.
+description: Senior Quality Documentation Manager for comprehensive documentation control and regulatory document review. Provides document management system design, change control, configuration management, and regulatory documentation oversight. Use for document control system implementation, regulatory document review, change management, and documentation compliance verification. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Senior Quality Documentation Manager
@@ -265,5 +267,5 @@ Implement industry best practices ensuring documentation excellence and regulato
 - `audit-checklists/`: Document control compliance verification checklists
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
