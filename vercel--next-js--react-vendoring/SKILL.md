@@ -1,13 +1,8 @@
 ---
 name: react-vendoring
-description: >
-  React vendoring and react-server layer boundaries. Use when editing
-  entry-base.ts, $$compiled.internal.d.ts, compiled/react* packages,
-  or taskfile.js copy_vendor_react. Covers the entry-base.ts boundary
-  (all react-server-dom-webpack/* imports must go through it), vendored
-  React channels, type declarations, Turbopack remap to
-  react-server-dom-turbopack, ComponentMod access patterns, and ESLint
-  suppression for guarded requires.
+description: > Use when this capability is needed.
+metadata:
+  author: vercel
 ---
 
 # React Vendoring
@@ -70,5 +65,5 @@ For guarded runtime `require()` blocks that need `import/no-extraneous-dependenc
 - `$runtime-debug` - reproduction and verification workflow
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/vercel/next.js)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vercel) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
