@@ -1,6 +1,8 @@
 ---
 name: make-pr
-description: Open a pull request for the current feature
+description: Open a pull request for the current feature Use when this capability is needed.
+metadata:
+  author: remotion-dev
 ---
 
 Ensure we are not on the main branch, make a branch if necessary.  
@@ -24,5 +26,5 @@ Push the changes to the remote branch.
 Use the `gh` CLI to create a pull request and use the same format as above for the title.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/remotion-dev/remotion)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/remotion-dev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
