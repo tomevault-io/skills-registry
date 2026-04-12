@@ -1,6 +1,6 @@
 ---
 name: hugging-face-model-trainer
-description: name: hugging-face-model-trainer
+description: name: hugging-face-model-trainer Use when this capability is needed.
 metadata:
   author: patchy631
 ---
@@ -712,5 +712,5 @@ Add to PEP 723 header:
 10. **Choose appropriate hardware** for model size; use LoRA for models >7B
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/patchy631/ai-engineering-hub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/patchy631) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
