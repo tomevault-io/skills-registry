@@ -1,7 +1,8 @@
 ---
 name: frontend-dev
-description: |
-  Frontend development skill for Resume Matcher. Handles Next.js pages, React components, Tailwind CSS with Swiss International Style, API integration, hooks, and i18n. Use when creating or modifying frontend code.
+description: | Use when this capability is needed.
+metadata:
+  author: srbhr
 ---
 
 # Frontend Development
@@ -118,5 +119,5 @@ const [resumes, jobs] = await Promise.all([
 - [ ] Independent fetches use `Promise.all()`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
