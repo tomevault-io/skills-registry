@@ -1,7 +1,8 @@
 ---
 name: cpp-coding-standards
-description: C++ coding standards based on the C++ Core Guidelines (isocpp.github.io). Use when writing, reviewing, or refactoring C++ code to enforce modern, safe, and idiomatic practices.
-origin: ECC
+description: C++ coding standards based on the C++ Core Guidelines (isocpp.github.io). Use when writing, reviewing, or refactoring C++ code to enforce modern, safe, and idiomatic practices. Use when this capability is needed.
+metadata:
+  author: affaan-m
 ---
 
 # C++ Coding Standards (C++ Core Guidelines)
@@ -723,5 +724,5 @@ Before marking C++ work complete:
 - [ ] No magic numbers (ES.45)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/affaan-m/everything-claude-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
