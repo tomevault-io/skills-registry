@@ -1,6 +1,6 @@
 ---
 name: hugging-face-cli
-description: name: hugging-face-cli
+description: name: hugging-face-cli Use when this capability is needed.
 metadata:
   author: patchy631
 ---
@@ -192,5 +192,5 @@ hf cache rm model/gpt2           # Remove a repo from cache
 - **Workflow examples**: See [references/examples.md](references/examples.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/patchy631/ai-engineering-hub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/patchy631) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
