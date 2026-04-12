@@ -1,9 +1,8 @@
 ---
-name: Red Team Tools and Methodology
-description: This skill should be used when the user asks to "follow red team methodology", "perform bug bounty hunting", "automate reconnaissance", "hunt for XSS vulnerabilities", "enumerate subdomains", or needs security researcher techniques and tool configurations from top bug bounty hunters.
+name: red-team-tools-and-methodology
+description: This skill should be used when the user asks to "follow red team methodology", "perform bug bounty hunting", "automate reconnaissance", "hunt for XSS vulnerabilities", "enumerate subdomains", or needs security researcher techniques and tool configurations from top bug bounty hunters. Use when this capability is needed.
 metadata:
-  author: zebbern
-  version: "1.1"
+  author: davila7
 ---
 
 # Red Team Tools and Methodology
@@ -310,5 +309,5 @@ amass enum -d target.com | httpx | nuclei -t ~/nuclei-templates/
 | Tools not found | Install Go tools with `go install` |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
