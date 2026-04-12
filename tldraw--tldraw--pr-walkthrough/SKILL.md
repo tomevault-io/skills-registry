@@ -1,8 +1,8 @@
 ---
 name: pr-walkthrough
-description: Create a narrated video walkthrough of a pull request with code slides and audio narration. Use when asked to create a PR walkthrough, PR video, or walkthrough video.
-argument-hint: <pr-url>
-disable-model-invocation: true
+description: Create a narrated video walkthrough of a pull request with code slides and audio narration. Use when asked to create a PR walkthrough, PR video, or walkthrough video. Use when this capability is needed.
+metadata:
+  author: tldraw
 ---
 
 # PR walkthrough video
@@ -351,5 +351,5 @@ Manifest slide type: `outro` with `durationInSeconds: 3`.
 - [ ] Verify final output: 1600x900, audio synced, outro present
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tldraw/tldraw)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tldraw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
