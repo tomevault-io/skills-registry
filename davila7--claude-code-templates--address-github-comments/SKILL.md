@@ -1,6 +1,8 @@
 ---
 name: address-github-comments
 description: Use when you need to address review or issue comments on an open GitHub Pull Request using the gh CLI.
+metadata:
+  author: davila7
 ---
 
 # Address GitHub Comments
@@ -55,5 +57,5 @@ gh pr comment <PR_NUMBER> --body "Addressed in latest commit."
 - **Not verifying auth**: Check `gh auth status` before starting.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
