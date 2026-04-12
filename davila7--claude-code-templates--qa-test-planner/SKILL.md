@@ -1,7 +1,8 @@
 ---
 name: qa-test-planner
-description: Generate comprehensive test plans, manual test cases, regression test suites, and bug reports for QA engineers. Includes Figma MCP integration for design validation.
-trigger: explicit
+description: Generate comprehensive test plans, manual test cases, regression test suites, and bug reports for QA engineers. Includes Figma MCP integration for design validation. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # QA Test Planner
@@ -757,5 +758,5 @@ Verify navigation menu works correctly on mobile devices
 **"Quality is not an act, it is a habit." - Aristotle**
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
