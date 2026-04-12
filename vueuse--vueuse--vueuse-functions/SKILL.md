@@ -1,11 +1,8 @@
 ---
 name: vueuse-functions
-description: Apply VueUse composables where appropriate to build concise, maintainable Vue.js / Nuxt features.
-license: MIT
+description: Apply VueUse composables where appropriate to build concise, maintainable Vue.js / Nuxt features. Use when this capability is needed.
 metadata:
-    author: SerKo <https://github.com/serkodev>
-    version: "1.0"
-compatibility: Requires Vue 3 (or above) or Nuxt 3 (or above) project
+  author: vueuse
 ---
 
 # VueUse Functions
@@ -417,5 +414,5 @@ IMPORTANT: Each function entry includes a short `Description` and a detailed `Re
 | [`useSound`](https://github.com/vueuse/sound#examples) | Play sound effects reactively. | EXTERNAL |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/vueuse/vueuse)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vueuse) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
