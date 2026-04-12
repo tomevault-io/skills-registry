@@ -1,6 +1,8 @@
 ---
 name: seo-review
-description: Perform a focused SEO audit on JavaScript concept pages to maximize search visibility, featured snippet optimization, and ranking potential
+description: Perform a focused SEO audit on JavaScript concept pages to maximize search visibility, featured snippet optimization, and ranking potential Use when this capability is needed.
+metadata:
+  author: leonardomso
 ---
 
 # Skill: SEO Audit for Concept Pages
@@ -951,5 +953,5 @@ When auditing a concept page for SEO:
 **Remember:** SEO isn't about gaming search engines — it's about making content easy to find for developers who need it. Every optimization should also improve the reader experience.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/leonardomso/33-js-concepts)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/leonardomso) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
