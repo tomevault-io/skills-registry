@@ -1,10 +1,8 @@
 ---
 name: pest-testing
-description: >-
-  Tests applications using the Pest 4 PHP framework. Activates when writing tests, creating unit or feature
-  tests, adding assertions, testing Livewire components, browser testing, debugging test failures,
-  working with datasets or mocking; or when the user mentions test, spec, TDD, expects, assertion,
-  coverage, or needs to verify functionality works.
+description: >- Use when this capability is needed.
+metadata:
+  author: coollabsio
 ---
 
 # Pest Testing 4
@@ -174,5 +172,5 @@ arch('controllers')
 - Forgetting `assertNoJavaScriptErrors()` in browser tests
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/coollabsio/coolify)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/coollabsio) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
