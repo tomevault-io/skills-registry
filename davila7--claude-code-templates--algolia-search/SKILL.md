@@ -1,7 +1,8 @@
 ---
 name: algolia-search
-description: "Expert patterns for Algolia search implementation, indexing strategies, React InstantSearch, and relevance tuning Use when: adding search to, algolia, instantsearch, search api, search functionality."
-source: vibeship-spawner-skills (Apache 2.0)
+description: Expert patterns for Algolia search implementation, indexing strategies, React InstantSearch, and relevance tuning Use when: adding search to, algolia, instantsearch, search api, search functionality. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Algolia Search Integration
@@ -66,5 +67,5 @@ Best practices:
 | Issue | medium | See docs |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
