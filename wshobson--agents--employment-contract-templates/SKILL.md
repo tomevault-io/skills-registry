@@ -1,6 +1,8 @@
 ---
 name: employment-contract-templates
-description: Create employment contracts, offer letters, and HR policy documents following legal best practices. Use when drafting employment agreements, creating HR policies, or standardizing employment documentation.
+description: Create employment contracts, offer letters, and HR policy documents following legal best practices. Use when drafting employment agreements, creating HR policies, or standardizing employment documentation. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Employment Contract Templates
@@ -520,5 +522,5 @@ Date: ************\_************
 - **Don't skip review** - Have legal counsel review all documents
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
