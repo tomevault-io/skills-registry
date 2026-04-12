@@ -1,6 +1,8 @@
 ---
 name: write-docs
-description: Writing SDK documentation for tldraw. Use when creating new documentation articles, updating existing docs, or when documentation writing guidance is needed. Applies to docs in apps/docs/content/.
+description: Writing SDK documentation for tldraw. Use when creating new documentation articles, updating existing docs, or when documentation writing guidance is needed. Applies to docs in apps/docs/content/. Use when this capability is needed.
+metadata:
+  author: tldraw
 ---
 
 # Write documentation
@@ -124,5 +126,5 @@ Check that:
 - **Style guide**: See `../shared/docs-guide.md` for voice, tone, and formatting conventions.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tldraw/tldraw)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tldraw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
