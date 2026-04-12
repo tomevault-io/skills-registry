@@ -1,6 +1,8 @@
 ---
 name: conventions
 description: Use when writing new packages, adding CLI commands, creating build plugins, or following Meteor code patterns. Covers package.js structure, file naming, and common code patterns.
+metadata:
+  author: meteor
 ---
 
 # Code Conventions
@@ -188,5 +190,5 @@ Meteor uses `X.Y.Z-rcN.M` versioning where:
 - `M` - Package-specific revision
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/meteor/meteor)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/meteor) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
