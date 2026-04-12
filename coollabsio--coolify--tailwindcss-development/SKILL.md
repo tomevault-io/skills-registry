@@ -1,10 +1,8 @@
 ---
 name: tailwindcss-development
-description: >-
-  Styles applications using Tailwind CSS v4 utilities. Activates when adding styles, restyling components,
-  working with gradients, spacing, layout, flex, grid, responsive design, dark mode, colors,
-  typography, or borders; or when the user mentions CSS, styling, classes, Tailwind, restyle,
-  hero section, cards, buttons, or any visual/UI changes.
+description: >- Use when this capability is needed.
+metadata:
+  author: coollabsio
 ---
 
 # Tailwind CSS Development
@@ -124,5 +122,5 @@ If existing pages and components support dark mode, new pages and components mus
 - Forgetting to add dark mode variants when the project uses dark mode
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/coollabsio/coolify)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/coollabsio) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
