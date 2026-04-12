@@ -1,6 +1,8 @@
 ---
 name: backend-to-frontend-handoff-docs
-description: Create API handoff documentation for frontend developers. Use when backend work is complete and needs to be documented for frontend integration, or user says 'create handoff', 'document API', 'frontend handoff', or 'API documentation'.
+description: Create API handoff documentation for frontend developers. Use when backend work is complete and needs to be documented for frontend integration, or user says 'create handoff', 'document API', 'frontend handoff', or 'API documentation'. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # API Handoff Mode
@@ -122,5 +124,5 @@ interface ExampleDto {
 Write the final markdown into the handoff file only—do not echo it in chat. (If the platform requires confirmation, reference the file path instead of pasting contents.)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
