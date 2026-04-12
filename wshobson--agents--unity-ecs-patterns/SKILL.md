@@ -1,6 +1,8 @@
 ---
 name: unity-ecs-patterns
-description: Master Unity ECS (Entity Component System) with DOTS, Jobs, and Burst for high-performance game development. Use when building data-oriented games, optimizing performance, or working with large entity counts.
+description: Master Unity ECS (Entity Component System) with DOTS, Jobs, and Burst for high-performance game development. Use when building data-oriented games, optimizing performance, or working with large entity counts. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Unity ECS Patterns
@@ -622,5 +624,5 @@ public struct Disabled : IComponentData, IEnableableComponent { }
 - **Don't forget disposal** - Native collections leak
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
