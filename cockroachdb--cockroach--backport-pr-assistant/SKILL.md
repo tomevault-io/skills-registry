@@ -1,6 +1,8 @@
 ---
 name: backport-pr-assistant
-description: Help backport PRs to release branches using the backport CLI tool. Use when backporting changes that have merge conflicts requiring manual resolution.
+description: Help backport PRs to release branches using the backport CLI tool. Use when backporting changes that have merge conflicts requiring manual resolution. Use when this capability is needed.
+metadata:
+  author: cockroachdb
 ---
 
 # CockroachDB Backport Assistant
@@ -141,5 +143,5 @@ gh pr create \
 4. **After resolving**: `git add <files>` then `backport --continue`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/cockroachdb/cockroach)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/cockroachdb) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
