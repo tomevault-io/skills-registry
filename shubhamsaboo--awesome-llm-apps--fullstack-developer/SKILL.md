@@ -1,14 +1,8 @@
 ---
 name: fullstack-developer
-description: |
-  Modern web development expertise covering React, Node.js, databases, and full-stack architecture.
-  Use when: building web applications, developing APIs, creating frontends, setting up databases,
-  deploying web apps, or when user mentions React, Next.js, Express, REST API, GraphQL, MongoDB,
-  PostgreSQL, or full-stack development.
-license: MIT
+description: | Use when this capability is needed.
 metadata:
-  author: awesome-llm-apps
-  version: "1.0.0"
+  author: shubhamsaboo
 ---
 
 # Full-Stack Developer
@@ -298,5 +292,5 @@ npx prisma generate
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/shubhamsaboo/awesome-llm-apps)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shubhamsaboo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
