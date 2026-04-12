@@ -1,8 +1,8 @@
 ---
 name: clawhub
-description: Search and install agent skills from ClawHub, the public skill registry.
-homepage: https://clawhub.ai
-metadata: {"nanobot":{"emoji":"🦞"}}
+description: Search and install agent skills from ClawHub, the public skill registry. Use when this capability is needed.
+metadata:
+  author: hkuds
 ---
 
 # ClawHub
@@ -53,5 +53,5 @@ npx --yes clawhub@latest list --workdir ~/.nanobot/workspace
 - After install, remind the user to start a new session to load the skill.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/hkuds/nanobot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hkuds) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
