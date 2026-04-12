@@ -33,5 +33,5 @@ If the communication type doesn't match any existing guideline, ask for clarific
 3P updates, company newsletter, company comms, weekly update, faqs, common questions, updates, internal comms
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/anthropics/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/anthropics) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
