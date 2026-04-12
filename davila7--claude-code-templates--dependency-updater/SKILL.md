@@ -1,9 +1,8 @@
 ---
 name: dependency-updater
-description: Smart dependency management for any language. Auto-detects project type, applies safe updates automatically, prompts for major versions, diagnoses and fixes dependency issues.
-license: MIT
+description: Smart dependency management for any language. Auto-detects project type, applies safe updates automatically, prompts for major versions, diagnoses and fixes dependency issues. Use when this capability is needed.
 metadata:
-  version: 1.0.0
+  author: davila7
 ---
 
 # Dependency Updater
@@ -491,5 +490,5 @@ pip install -c constraints.txt -r requirements.txt
 | [bundler-audit](https://github.com/rubysec/bundler-audit) | Ruby | Security auditing |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
