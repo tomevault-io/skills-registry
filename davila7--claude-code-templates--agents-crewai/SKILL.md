@@ -1,11 +1,8 @@
 ---
 name: crewai-multi-agent
-description: Multi-agent orchestration framework for autonomous AI collaboration. Use when building teams of specialized agents working together on complex tasks, when you need role-based agent collaboration with memory, or for production workflows requiring sequential/hierarchical execution. Built without LangChain dependencies for lean, fast execution.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Agents, CrewAI, Multi-Agent, Orchestration, Collaboration, Role-Based, Autonomous, Workflows, Memory, Production]
-dependencies: [crewai>=1.2.0, crewai-tools>=1.2.0]
+description: Multi-agent orchestration framework for autonomous AI collaboration. Use when building teams of specialized agents working together on complex tasks, when you need role-based agent collaboration with memory, or for production workflows requiring sequential/hierarchical execution. Built without LangChain dependencies for lean, fast execution. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # CrewAI - Multi-Agent Orchestration Framework
@@ -498,5 +495,5 @@ os.environ["CREWAI_STORAGE_DIR"] = "./my_storage"
 - **License**: MIT
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
