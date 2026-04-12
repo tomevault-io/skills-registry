@@ -1,7 +1,8 @@
 ---
 name: run-nx-generator
-description: Run Nx generators with prioritization for workspace-plugin generators. Use this when generating code, scaffolding new features, or automating repetitive tasks in the monorepo.
-allowed-tools: Bash, Read, Glob, Grep, mcp__nx-mcp__nx_generators, mcp__nx-mcp__nx_generator_schema
+description: Run Nx generators with prioritization for workspace-plugin generators. Use this when generating code, scaffolding new features, or automating repetitive tasks in the monorepo. Use when this capability is needed.
+metadata:
+  author: nrwl
 ---
 
 # Run Nx Generator
@@ -87,5 +88,5 @@ Use this skill when you need to:
 - Create migrations or version updates
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/nrwl/nx)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nrwl) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
