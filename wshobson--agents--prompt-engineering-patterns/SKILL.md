@@ -1,6 +1,8 @@
 ---
 name: prompt-engineering-patterns
-description: Master advanced prompt engineering techniques to maximize LLM performance, reliability, and controllability in production. Use when optimizing prompts, improving LLM outputs, or designing production prompt templates.
+description: Master advanced prompt engineering techniques to maximize LLM performance, reliability, and controllability in production. Use when optimizing prompts, improving LLM outputs, or designing production prompt templates. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Prompt Engineering Patterns
@@ -473,5 +475,5 @@ Track these KPIs for your prompts:
 - **User Satisfaction**: Ratings and feedback
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
