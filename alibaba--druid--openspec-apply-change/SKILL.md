@@ -1,12 +1,8 @@
 ---
 name: openspec-apply-change
-description: Implement tasks from an OpenSpec change. Use when the user wants to start implementing, continue implementation, or work through tasks.
-license: MIT
-compatibility: Requires openspec CLI.
+description: Implement tasks from an OpenSpec change. Use when the user wants to start implementing, continue implementation, or work through tasks. Use when this capability is needed.
 metadata:
-  author: openspec
-  version: "1.0"
-  generatedBy: "1.1.1"
+  author: alibaba
 ---
 
 Implement tasks from an OpenSpec change.
@@ -156,5 +152,5 @@ This skill supports the "actions on a change" model:
 - **Allows artifact updates**: If implementation reveals design issues, suggest updating artifacts - not phase-locked, work fluidly
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/alibaba/druid)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/alibaba) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
