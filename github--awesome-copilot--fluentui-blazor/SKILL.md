@@ -1,13 +1,8 @@
 ---
 name: fluentui-blazor
-description: >
-  Guide for using the Microsoft Fluent UI Blazor component library
-  (Microsoft.FluentUI.AspNetCore.Components NuGet package) in Blazor applications.
-  Use this when the user is building a Blazor app with Fluent UI components,
-  setting up the library, using FluentUI components like FluentButton, FluentDataGrid,
-  FluentDialog, FluentToast, FluentNavMenu, FluentTextField, FluentSelect,
-  FluentAutocomplete, FluentDesignTheme, or any component prefixed with "Fluent".
-  Also use when troubleshooting missing providers, JS interop issues, or theming.
+description: > Use when this capability is needed.
+metadata:
+  author: github
 ---
 
 # Fluent UI Blazor — Consumer Usage Guide
@@ -231,5 +226,5 @@ For detailed guidance on specific topics, see:
 - [Theming](references/THEMING.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
