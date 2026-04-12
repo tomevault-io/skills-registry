@@ -1,12 +1,8 @@
 ---
 name: go
-description: >
-  Best practices for working with Go codebases. Use when writing, debugging,
-  or exploring Go code, including reading dependency sources and documentation.
-allowed-tools: "Read,Bash(go:*)"
-version: "1.0.0"
-author: "User"
-license: "MIT"
+description: > Use when this capability is needed.
+metadata:
+  author: grafana
 ---
 
 # Go Programming Language
@@ -42,5 +38,5 @@ go run ./cmd/foo     # Run a specific command
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/grafana/loki)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/grafana) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
