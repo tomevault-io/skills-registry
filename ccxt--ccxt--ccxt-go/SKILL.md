@@ -1,6 +1,8 @@
 ---
 name: ccxt-go
-description: CCXT cryptocurrency exchange library for Go developers. Covers both REST API (standard) and WebSocket API (real-time). Helps install CCXT, connect to exchanges, fetch market data, place orders, stream live tickers/orderbooks, handle authentication, and manage errors in Go projects. Use when working with crypto exchanges in Go applications, microservices, or trading systems.
+description: CCXT cryptocurrency exchange library for Go developers. Covers both REST API (standard) and WebSocket API (real-time). Helps install CCXT, connect to exchanges, fetch market data, place orders, stream live tickers/orderbooks, handle authentication, and manage errors in Go projects. Use when working with crypto exchanges in Go applications, microservices, or trading systems. Use when this capability is needed.
+metadata:
+  author: ccxt
 ---
 
 # CCXT for Go
@@ -948,5 +950,5 @@ fmt.Println(exchange.LastJsonResponse)
 - [GitHub Repository](https://github.com/ccxt/ccxt)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ccxt/ccxt)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ccxt) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
