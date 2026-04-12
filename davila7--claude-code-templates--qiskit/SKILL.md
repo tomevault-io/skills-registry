@@ -1,6 +1,8 @@
 ---
 name: qiskit
-description: Comprehensive quantum computing toolkit for building, optimizing, and executing quantum circuits. Use when working with quantum algorithms, simulations, or quantum hardware including (1) Building quantum circuits with gates and measurements, (2) Running quantum algorithms (VQE, QAOA, Grover), (3) Transpiling/optimizing circuits for hardware, (4) Executing on IBM Quantum or other providers, (5) Quantum chemistry and materials science, (6) Quantum machine learning, (7) Visualizing circuits and results, or (8) Any quantum computing development task.
+description: Comprehensive quantum computing toolkit for building, optimizing, and executing quantum circuits. Use when working with quantum algorithms, simulations, or quantum hardware including (1) Building quantum circuits with gates and measurements, (2) Running quantum algorithms (VQE, QAOA, Grover), (3) Transpiling/optimizing circuits for hardware, (4) Executing on IBM Quantum or other providers, (5) Quantum chemistry and materials science, (6) Quantum machine learning, (7) Visualizing circuits and results, or (8) Any quantum computing development task. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Qiskit
@@ -269,5 +271,5 @@ with Session(backend=backend) as session:
 - **Patterns Guide**: https://quantum.cloud.ibm.com/docs/en/guides/intro-to-patterns
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
