@@ -1,7 +1,8 @@
 ---
 name: avalonia-layout-zafiro
-description: Guidelines for modern Avalonia UI layout using Zafiro.Avalonia, emphasizing shared styles, generic components, and avoiding XAML redundancy.
-allowed-tools: Read, Write, Edit, Glob, Grep
+description: Guidelines for modern Avalonia UI layout using Zafiro.Avalonia, emphasizing shared styles, generic components, and avoiding XAML redundancy. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Avalonia Layout with Zafiro.Avalonia
@@ -59,5 +60,5 @@ For a real-world example, refer to the **Angor** project:
 - Leverage `Zafiro.Avalonia` specific panels like `EdgePanel` for common UI patterns.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
