@@ -1,6 +1,8 @@
 ---
 name: postmortem-writing
-description: Write effective blameless postmortems with root cause analysis, timelines, and action items. Use when conducting incident reviews, writing postmortem documents, or improving incident response processes.
+description: Write effective blameless postmortems with root cause analysis, timelines, and action items. Use when conducting incident reviews, writing postmortem documents, or improving incident response processes. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Postmortem Writing
@@ -390,5 +392,5 @@ Don't full-flush cache in production; use targeted invalidation.
 - **Don't skip follow-up** - Verify actions completed
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
