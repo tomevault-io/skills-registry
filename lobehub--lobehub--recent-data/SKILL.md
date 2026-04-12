@@ -1,7 +1,8 @@
 ---
 name: recent-data
-description: Guide for using Recent Data (topics, resources, pages). Use when working with recently accessed items, implementing recent lists, or accessing session store recent data. Triggers on recent data usage or implementation tasks.
-user-invocable: false
+description: Guide for using Recent Data (topics, resources, pages). Use when working with recently accessed items, implementing recent lists, or accessing session store recent data. Triggers on recent data usage or implementation tasks. Use when this capability is needed.
+metadata:
+  author: lobehub
 ---
 
 # Recent Data Usage Guide
@@ -114,5 +115,5 @@ const isInit = useSessionStore(recentSelectors.isRecentPagesInit);
 4. Use selectors for render optimization
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/lobehub/lobehub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lobehub) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
