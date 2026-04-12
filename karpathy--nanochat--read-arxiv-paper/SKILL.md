@@ -1,6 +1,8 @@
 ---
 name: read-arxiv-paper
 description: Use this skill when asked to read an arxiv paper given an arxiv URL
+metadata:
+  author: karpathy
 ---
 
 You will be given a URL of an arxiv paper, for example:
@@ -40,5 +42,5 @@ Once you've read the paper, produce a summary of the paper into a markdown file 
 As for the summary itself, remember that you're processing this paper within the context of the nanochat repository, so most often we will be interested in how to apply the paper and its lessons to the nanochat project. Therefore, you should feel free to "remind yourself" of the related nanochat code by reading the relevant parts, and then explicitly make the connection of how this paper might relate to nanochat or what are things we might be inspired about or try.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/karpathy/nanochat)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/karpathy) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
