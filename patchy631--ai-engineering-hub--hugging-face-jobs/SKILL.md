@@ -1,6 +1,6 @@
 ---
 name: hugging-face-jobs
-description: name: hugging-face-jobs
+description: name: hugging-face-jobs Use when this capability is needed.
 metadata:
   author: patchy631
 ---
@@ -1042,5 +1042,5 @@ Add to PEP 723 header:
 
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/patchy631/ai-engineering-hub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/patchy631) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
