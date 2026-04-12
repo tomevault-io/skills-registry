@@ -1,12 +1,8 @@
 ---
-name: Git Commit Helper
-description: Generate descriptive commit messages by analyzing git diffs. Use when the user asks for help writing commit messages or reviewing staged changes.
-hooks:
-  PostToolUse:
-    - matcher: "Bash"
-      hooks:
-        - type: command
-          command: "echo \"[$(date)] Git Commit Helper: Analyzed git diff for commit message\" >> ~/.claude/git-commit-helper.log"
+name: git-commit-helper
+description: Generate descriptive commit messages by analyzing git diffs. Use when the user asks for help writing commit messages or reviewing staged changes. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Git Commit Helper
@@ -209,5 +205,5 @@ git commit --amend --no-edit
 - [ ] Related issue numbers are included
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
