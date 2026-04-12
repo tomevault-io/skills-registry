@@ -1,6 +1,8 @@
 ---
 name: write-issue
-description: Writing and maintaining GitHub issues for the tldraw repository. Use when creating new issues, editing issue titles/bodies, triaging issues, or cleaning up issue metadata (types, labels).
+description: Writing and maintaining GitHub issues for the tldraw repository. Use when creating new issues, editing issue titles/bodies, triaging issues, or cleaning up issue metadata (types, labels). Use when this capability is needed.
+metadata:
+  author: tldraw
 ---
 
 # Writing and maintaining GitHub issues
@@ -113,5 +115,5 @@ Use sparingly (1-2 per issue) for metadata, not categorization.
 - Never use title case for descriptions - use sentence case
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tldraw/tldraw)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tldraw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
