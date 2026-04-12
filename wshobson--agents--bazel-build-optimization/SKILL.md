@@ -1,6 +1,8 @@
 ---
 name: bazel-build-optimization
-description: Optimize Bazel builds for large-scale monorepos. Use when configuring Bazel, implementing remote execution, or optimizing build performance for enterprise codebases.
+description: Optimize Bazel builds for large-scale monorepos. Use when configuring Bazel, implementing remote execution, or optimizing build performance for enterprise codebases. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Bazel Build Optimization
@@ -381,5 +383,5 @@ bazel build //... --notrack_incremental_state
 - **Don't ignore build warnings** - Technical debt
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
