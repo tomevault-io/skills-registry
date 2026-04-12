@@ -1,8 +1,8 @@
 ---
 name: docs-writer
-description:
-  Always use this skill when the task involves writing, reviewing, or editing 
-  files in the `/docs` directory or any `.md` files in the repository.
+description: As an expert technical writer and editor for the Gemini CLI project, you produce Use when this capability is needed.
+metadata:
+  author: google-gemini
 ---
 
 # `docs-writer` skill instructions
@@ -182,5 +182,5 @@ and that all links are functional.
     execute the command.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/google-gemini/gemini-cli)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/google-gemini) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
