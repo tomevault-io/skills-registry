@@ -1,8 +1,8 @@
 ---
 name: weather
-description: Get current weather and forecasts (no API key required).
-homepage: https://wttr.in/:help
-metadata: {"nanobot":{"emoji":"🌤️","requires":{"bins":["curl"]}}}
+description: Get current weather and forecasts (no API key required). Use when this capability is needed.
+metadata:
+  author: hkuds
 ---
 
 # Weather
@@ -49,5 +49,5 @@ Find coordinates for a city, then query. Returns JSON with temp, windspeed, weat
 Docs: https://open-meteo.com/en/docs
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/hkuds/nanobot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hkuds) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
