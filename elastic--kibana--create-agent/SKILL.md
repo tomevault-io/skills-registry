@@ -1,8 +1,8 @@
 ---
 name: create-agent
 description: Creates an Agent Builder agent in a running Kibana instance, wired to data source tools. Use when asked to create, set up, or configure an AI agent in Kibana.
-allowed-tools: Bash, Read, Glob, Grep
-argument-hint: [agent-name]
+metadata:
+  author: elastic
 ---
 
 # Create an Agent Builder Agent in Kibana
@@ -92,5 +92,5 @@ Show the user the newly created agent entry. If it appears, report success. If n
 - To override auto-detection, set `KIBANA_URL` and/or `KIBANA_AUTH` environment variables, or pass `--kibana-url` to the scripts
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elastic/kibana)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elastic) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
