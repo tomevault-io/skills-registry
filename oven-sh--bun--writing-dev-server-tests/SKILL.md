@@ -1,6 +1,8 @@
 ---
 name: writing-dev-server-tests
-description: Guides writing HMR/Dev Server tests in test/bake/. Use when creating or modifying dev server, hot reloading, or bundling tests.
+description: Guides writing HMR/Dev Server tests in test/bake/. Use when creating or modifying dev server, hot reloading, or bundling tests. Use when this capability is needed.
+metadata:
+  author: oven-sh
 ---
 
 # Writing HMR/Dev Server Tests
@@ -94,5 +96,5 @@ await dev.delete("other.ts", {
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/oven-sh/bun)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/oven-sh) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
