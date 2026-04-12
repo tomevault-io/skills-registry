@@ -1,6 +1,8 @@
 ---
 name: pymoo
-description: "Multi-objective optimization framework. NSGA-II, NSGA-III, MOEA/D, Pareto fronts, constraint handling, benchmarks (ZDT, DTLZ), for engineering design and optimization problems."
+description: Multi-objective optimization framework. NSGA-II, NSGA-III, MOEA/D, Pareto fronts, constraint handling, benchmarks (ZDT, DTLZ), for engineering design and optimization problems. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Pymoo - Multi-Objective Optimization in Python
@@ -565,5 +567,5 @@ uv pip install pymoo
 - Use appropriate termination: `('n_gen', N)` or `get_termination("f_tol", tol=0.001)`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
