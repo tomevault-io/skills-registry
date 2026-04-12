@@ -1,8 +1,8 @@
 ---
 name: eval-harness
-description: Formal evaluation framework for Claude Code sessions implementing eval-driven development (EDD) principles
-origin: ECC
-tools: Read, Write, Edit, Bash, Grep, Glob
+description: Formal evaluation framework for Claude Code sessions implementing eval-driven development (EDD) principles Use when this capability is needed.
+metadata:
+  author: affaan-m
 ---
 
 # Eval Harness Skill
@@ -270,5 +270,5 @@ Recommended thresholds:
 - `docs/releases/<version>/eval-summary.md` release snapshot
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/affaan-m/everything-claude-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
