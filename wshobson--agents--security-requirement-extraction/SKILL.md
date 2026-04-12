@@ -1,6 +1,8 @@
 ---
 name: security-requirement-extraction
-description: Derive security requirements from threat models and business context. Use when translating threats into actionable requirements, creating security user stories, or building security test cases.
+description: Derive security requirements from threat models and business context. Use when translating threats into actionable requirements, creating security user stories, or building security test cases. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Security Requirement Extraction
@@ -673,5 +675,5 @@ This epic covers all security requirements related to {domain.value.replace('_',
 - **Don't work in isolation** - Involve stakeholders
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
