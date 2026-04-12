@@ -75,5 +75,5 @@ To test/visualize the artifact, use available tools (including other Skills or b
 - **shadcn/ui components**: https://ui.shadcn.com/docs/components
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/anthropics/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/anthropics) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
