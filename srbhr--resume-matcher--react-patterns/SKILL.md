@@ -1,7 +1,8 @@
 ---
 name: react-patterns
-description: |
-  React and Next.js performance optimization guidelines from Vercel Engineering, tuned for local/offline or Docker-deployed apps. Eliminates async waterfalls, reduces bundle size, optimizes server and client performance.
+description: | Use when this capability is needed.
+metadata:
+  author: srbhr
 ---
 
 # React Performance Patterns (Local/Docker)
@@ -72,5 +73,5 @@ Complete guide: `.claude/skills/react-patterns/SKILL.md`
 Condensed guide: `.claude/skills/react-patterns/REACT_PATTERNS.md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
