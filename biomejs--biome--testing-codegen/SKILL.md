@@ -1,7 +1,8 @@
 ---
 name: testing-codegen
-description: Guide for testing workflows and code generation commands in Biome. Use when running snapshot tests for lint rules, managing insta snapshots, or regenerating analyzer/parser/formatter code after changes.
-compatibility: Designed for coding agents working on the Biome codebase (github.com/biomejs/biome).
+description: Guide for testing workflows and code generation commands in Biome. Use when running snapshot tests for lint rules, managing insta snapshots, or regenerating analyzer/parser/formatter code after changes. Use when this capability is needed.
+metadata:
+  author: biomejs
 ---
 
 ## Purpose
@@ -428,5 +429,5 @@ fn quick_test() {
 - Changeset guide: `../changeset/SKILL.md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/biomejs/biome)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/biomejs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
