@@ -1,6 +1,8 @@
 ---
 name: json-canvas
-description: Create and edit JSON Canvas files (.canvas) with nodes, edges, groups, and connections. Use when working with .canvas files, creating visual canvases, mind maps, flowcharts, or when the user mentions Canvas files in Obsidian.
+description: Create and edit JSON Canvas files (.canvas) with nodes, edges, groups, and connections. Use when working with .canvas files, creating visual canvases, mind maps, flowcharts, or when the user mentions Canvas files in Obsidian. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # JSON Canvas Skill
@@ -642,5 +644,5 @@ This format is a 16-character lowercase hex string (64-bit random value).
 - [JSON Canvas GitHub](https://github.com/obsidianmd/jsoncanvas)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
