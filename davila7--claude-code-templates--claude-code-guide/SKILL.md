@@ -1,6 +1,8 @@
 ---
-name: Claude Code Guide
-description: Master guide for using Claude Code effectively. Includes configuration templates, prompting strategies "Thinking" keywords, debugging techniques, and best practices for interacting with the agent.
+name: claude-code-guide
+description: Master guide for using Claude Code effectively. Includes configuration templates, prompting strategies "Thinking" keywords, debugging techniques, and best practices for interacting with the agent. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Claude Code Guide
@@ -68,5 +70,5 @@ If the agent is stuck or behaving unexpectedly:
 Based on [Claude Code Guide by zebbern](https://github.com/zebbern/claude-code-guide).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
