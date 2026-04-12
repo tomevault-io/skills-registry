@@ -1,6 +1,8 @@
 ---
 name: payload
 description: Use when working with Payload CMS projects (payload.config.ts, collections, fields, hooks, access control, Payload API). Use when debugging validation errors, security issues, relationship queries, transactions, or hook behavior.
+metadata:
+  author: payloadcms
 ---
 
 # Payload CMS Application Development
@@ -393,5 +395,5 @@ import type { Post, User } from '@/payload-types'
 - Templates: <https://github.com/payloadcms/payload/tree/main/templates>
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/payloadcms/payload)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/payloadcms) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
