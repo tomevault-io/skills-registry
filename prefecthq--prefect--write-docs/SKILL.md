@@ -1,6 +1,8 @@
 ---
 name: write-docs
-description: Comprehensive guide for writing and updating Prefect documentation. Use when creating new doc pages, updating existing docs, or working with Mintlify components and code example testing.
+description: Comprehensive guide for writing and updating Prefect documentation. Use when creating new doc pages, updating existing docs, or working with Mintlify components and code example testing. Use when this capability is needed.
+metadata:
+  author: prefecthq
 ---
 
 # Writing Prefect Documentation
@@ -349,5 +351,5 @@ Before considering a page complete, verify:
 - Overusing `<Note>`/`<Tip>`/`<Warning>` — reserve for genuinely important callouts, not every paragraph.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/prefecthq/prefect)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/prefecthq) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
