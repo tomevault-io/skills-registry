@@ -1,7 +1,8 @@
 ---
 name: debug
-description: Debug package usage guide. Use when adding debug logging, understanding log namespaces, or implementing debugging features. Triggers on debug logging requests or logging implementation.
-user-invocable: false
+description: Debug package usage guide. Use when adding debug logging, understanding log namespaces, or implementing debugging features. Triggers on debug logging requests or logging implementation. Use when this capability is needed.
+metadata:
+  author: lobehub
 ---
 
 # Debug Package Usage Guide
@@ -66,5 +67,5 @@ log('getAgent input: %O', input);
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/lobehub/lobehub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lobehub) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
