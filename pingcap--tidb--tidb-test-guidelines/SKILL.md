@@ -1,6 +1,8 @@
 ---
 name: tidb-test-guidelines
-description: Decide where to place TiDB tests and how to write them (basic structure, naming, testdata usage). Use when asked about test locations, writing conventions, shard_count limits, casetest categorization, or when reviewing test changes in code review.
+description: Decide where to place TiDB tests and how to write them (basic structure, naming, testdata usage). Use when asked about test locations, writing conventions, shard_count limits, casetest categorization, or when reviewing test changes in code review. Use when this capability is needed.
+metadata:
+  author: pingcap
 ---
 
 # TiDB Test Placement and Writing
@@ -49,5 +51,5 @@ description: Decide where to place TiDB tests and how to write them (basic struc
 - For Bazel validation prerequisites and failpoint-aware execution, use `.agents/skills/tidb-bazel-prepare-gate` and `docs/agents/testing-flow.md`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/pingcap/tidb)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/pingcap) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
