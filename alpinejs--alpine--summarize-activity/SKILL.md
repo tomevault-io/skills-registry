@@ -1,9 +1,8 @@
 ---
 name: summarize-activity
-description: Summarize recent GitHub activity — discussions, PRs, issues, events, traffic — into an actionable report so you can stay on top of the project without reading everything.
-disable-model-invocation: true
-allowed-tools: Bash, Read, Task
-argument-hint: "[timeframe: 24h (default), 48h, 7d, 1w]"
+description: Summarize recent GitHub activity — discussions, PRs, issues, events, traffic — into an actionable report so you can stay on top of the project without reading everything. Use when this capability is needed.
+metadata:
+  author: alpinejs
 ---
 
 # /summarize-activity - GitHub activity digest
@@ -202,5 +201,5 @@ _{start date} to {end date}_
 - Don't editorialize beyond what's helpful for triage. Be practical, not chatty.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/alpinejs/alpine)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/alpinejs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
