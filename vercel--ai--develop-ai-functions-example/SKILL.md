@@ -1,8 +1,8 @@
 ---
 name: develop-ai-functions-example
-description: Develop examples for AI SDK functions. Use when creating, running, or modifying examples under examples/ai-functions/src to validate provider support, demonstrate features, or create test fixtures.
+description: Develop examples for AI SDK functions. Use when creating, running, or modifying examples under examples/ai-functions/src to validate provider support, demonstrate features, or create test fixtures. Use when this capability is needed.
 metadata:
-  internal: true
+  author: vercel
 ---
 
 ## AI Functions Examples
@@ -225,5 +225,5 @@ const result = await generateText({
 6. **Reuse tools when appropriate**: Use `weatherTool` or create new reusable tools in `tools/`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/vercel/ai)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vercel) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
