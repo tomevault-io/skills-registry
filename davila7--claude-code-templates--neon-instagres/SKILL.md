@@ -1,8 +1,8 @@
 ---
 name: neon-instagres
-description: Instantly provision production-ready Postgres databases with Neon Instagres. Use when setting up databases, when users mention PostgreSQL/Postgres, database setup, or need a development database. Works with Drizzle, Prisma, raw SQL.
-allowed-tools: Read, Write, Bash, Grep, Glob
-user-invocable: true
+description: Instantly provision production-ready Postgres databases with Neon Instagres. Use when setting up databases, when users mention PostgreSQL/Postgres, database setup, or need a development database. Works with Drizzle, Prisma, raw SQL. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Neon Instagres - Instant Postgres Provisioning
@@ -279,5 +279,5 @@ npx get-db claim
 - **Delegate to specialist agents** for complex workflows
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
