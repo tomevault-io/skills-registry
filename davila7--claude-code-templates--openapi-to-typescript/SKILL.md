@@ -1,6 +1,8 @@
 ---
 name: openapi-to-typescript
 description: Converts OpenAPI 3.0 JSON/YAML to TypeScript interfaces and type guards. This skill should be used when the user asks to generate types from OpenAPI, convert schema to TS, create API interfaces, or generate TypeScript types from an API specification.
+metadata:
+  author: davila7
 ---
 
 # OpenAPI to TypeScript
@@ -344,5 +346,5 @@ export function isApiError(value: unknown): value is ApiError {
 | Circular reference | Use type alias with lazy reference |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
