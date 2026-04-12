@@ -1,7 +1,8 @@
 ---
 name: cost-aware-llm-pipeline
-description: Cost optimization patterns for LLM API usage — model routing by task complexity, budget tracking, retry logic, and prompt caching.
-origin: ECC
+description: Cost optimization patterns for LLM API usage — model routing by task complexity, budget tracking, retry logic, and prompt caching. Use when this capability is needed.
+metadata:
+  author: affaan-m
 ---
 
 # Cost-Aware LLM Pipeline
@@ -183,5 +184,5 @@ def process(text: str, config: Config, tracker: CostTracker) -> tuple[Result, Co
 - Production systems that need budget guardrails
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/affaan-m/everything-claude-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
