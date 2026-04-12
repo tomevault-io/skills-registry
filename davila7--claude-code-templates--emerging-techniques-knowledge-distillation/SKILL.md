@@ -1,11 +1,8 @@
 ---
 name: knowledge-distillation
-description: Compress large language models using knowledge distillation from teacher to student models. Use when deploying smaller models with retained performance, transferring GPT-4 capabilities to open-source models, or reducing inference costs. Covers temperature scaling, soft targets, reverse KLD, logit distillation, and MiniLLM training strategies.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Emerging Techniques, Knowledge Distillation, Model Compression, Teacher-Student, MiniLLM, Reverse KLD, Soft Targets, Temperature Scaling, Logit Distillation, Model Transfer]
-dependencies: [transformers, torch, datasets]
+description: Compress large language models using knowledge distillation from teacher to student models. Use when deploying smaller models with retained performance, transferring GPT-4 capabilities to open-source models, or reducing inference costs. Covers temperature scaling, soft targets, reverse KLD, logit distillation, and MiniLLM training strategies. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Knowledge Distillation: Compressing LLMs
@@ -456,5 +453,5 @@ for prompt in prompts:
 - **MiniLLM GitHub**: https://github.com/microsoft/LMOps/tree/main/minillm
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
