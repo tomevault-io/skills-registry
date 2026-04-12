@@ -1,6 +1,8 @@
 ---
 name: context7-auto-research
-description: Automatically fetch latest library/framework documentation for Claude Code via Context7 API
+description: Automatically fetch latest library/framework documentation for Claude Code via Context7 API Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # context7-auto-research
@@ -36,5 +38,5 @@ See the GitHub repository for troubleshooting guides.
 - tavily-web, exa-search, firecrawl-scraper, codex-review
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
