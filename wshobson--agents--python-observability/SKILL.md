@@ -1,6 +1,8 @@
 ---
 name: python-observability
-description: Python observability patterns including structured logging, metrics, and distributed tracing. Use when adding logging, implementing metrics collection, setting up tracing, or debugging production systems.
+description: Python observability patterns including structured logging, metrics, and distributed tracing. Use when adding logging, implementing metrics collection, setting up tracing, or debugging production systems. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Python Observability
@@ -400,5 +402,5 @@ async def process_order(order_id: str) -> Order:
 10. **Set up alerts** - Metrics are useless without alerting
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
