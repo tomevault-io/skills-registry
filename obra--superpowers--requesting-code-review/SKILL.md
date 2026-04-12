@@ -1,6 +1,8 @@
 ---
 name: requesting-code-review
 description: Use when completing tasks, implementing major features, or before merging to verify work meets requirements
+metadata:
+  author: obra
 ---
 
 # Requesting Code Review
@@ -105,5 +107,5 @@ You: [Fix progress indicators]
 See template at: requesting-code-review/code-reviewer.md
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/obra/superpowers)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/obra) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
