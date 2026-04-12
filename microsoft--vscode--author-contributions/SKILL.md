@@ -1,6 +1,8 @@
 ---
 name: author-contributions
-description: Identify all files a specific author contributed to on a branch vs its upstream, tracing code through renames. Use when asked who edited what, what code an author contributed, or to audit authorship before a merge. This skill should be run as a subagent — it performs many git operations and returns a concise table.
+description: Identify all files a specific author contributed to on a branch vs its upstream, tracing code through renames. Use when asked who edited what, what code an author contributed, or to audit authorship before a merge. This skill should be run as a subagent — it performs many git operations and returns a concise table. Use when this capability is needed.
+metadata:
+  author: microsoft
 ---
 
 When asked to find all files a specific author contributed to on a branch (compared to main or another upstream), follow this procedure. The goal is to produce a simple table that both humans and LLMs can consume.
@@ -186,5 +188,5 @@ git log main...HEAD --author="$AUTHOR" --format="%H" \
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/microsoft/vscode)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/microsoft) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
