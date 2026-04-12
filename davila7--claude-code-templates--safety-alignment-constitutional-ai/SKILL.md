@@ -1,11 +1,8 @@
 ---
 name: constitutional-ai
-description: Anthropic's method for training harmless AI through self-improvement. Two-phase approach - supervised learning with self-critique/revision, then RLAIF (RL from AI Feedback). Use for safety alignment, reducing harmful outputs without human labels. Powers Claude's safety system.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Safety Alignment, Constitutional AI, RLAIF, Self-Critique, Harmlessness, Anthropic, AI Safety, RL From AI Feedback, Claude]
-dependencies: [transformers, torch, trl]
+description: Anthropic's method for training harmless AI through self-improvement. Two-phase approach - supervised learning with self-critique/revision, then RLAIF (RL from AI Feedback). Use for safety alignment, reducing harmful outputs without human labels. Powers Claude's safety system. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Constitutional AI - Harmlessness from AI Feedback
@@ -287,5 +284,5 @@ final_preference = majority_vote(prefs_1, prefs_2, prefs_3)
 - Claude: Uses Constitutional AI for safety
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
