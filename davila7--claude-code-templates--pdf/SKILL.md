@@ -1,7 +1,8 @@
 ---
 name: pdf
-description: "PDF manipulation toolkit. Extract text/tables, create PDFs, merge/split, fill forms, for programmatic document processing and analysis."
-license: Proprietary. LICENSE.txt has complete terms
+description: PDF manipulation toolkit. Extract text/tables, create PDFs, merge/split, fill forms, for programmatic document processing and analysis. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # PDF Processing Guide
@@ -327,5 +328,5 @@ with open("encrypted.pdf", "wb") as output:
 - For troubleshooting guides, see reference.md
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
