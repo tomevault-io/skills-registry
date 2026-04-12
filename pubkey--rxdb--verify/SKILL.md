@@ -1,6 +1,8 @@
 ---
 name: verify
-description: Verifies code changes by running tests and generation scripts
+description: Verifies code changes by running tests and generation scripts Use when this capability is needed.
+metadata:
+  author: pubkey
 ---
 
 # Verify Changes
@@ -22,5 +24,5 @@ This skill verifies that recent code changes are correct and do not break existi
    ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/pubkey/rxdb)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/pubkey) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
