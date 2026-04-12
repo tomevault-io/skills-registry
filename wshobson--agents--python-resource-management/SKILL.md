@@ -1,6 +1,8 @@
 ---
 name: python-resource-management
-description: Python resource management with context managers, cleanup patterns, and streaming. Use when managing connections, file handles, implementing cleanup logic, or building streaming responses with accumulated state.
+description: Python resource management with context managers, cleanup patterns, and streaming. Use when managing connections, file handles, implementing cleanup logic, or building streaming responses with accumulated state. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Python Resource Management
@@ -421,5 +423,5 @@ async def process_connections(hosts: list[str]) -> list[dict]:
 10. **Test cleanup paths** - Verify resources are released on errors
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
