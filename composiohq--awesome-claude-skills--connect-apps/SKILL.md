@@ -1,6 +1,8 @@
 ---
 name: connect-apps
-description: Connect Claude to external apps like Gmail, Slack, GitHub. Use this skill when the user wants to send emails, create issues, post messages, or take actions in external services.
+description: Connect Claude to external apps like Gmail, Slack, GitHub. Use this skill when the user wants to send emails, create issues, post messages, or take actions in external services. Use when this capability is needed.
+metadata:
+  author: composiohq
 ---
 
 # Connect Apps
@@ -80,5 +82,5 @@ If it works, you're connected!
 </p>
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/composiohq/awesome-claude-skills)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/composiohq) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
