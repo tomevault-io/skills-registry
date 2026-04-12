@@ -1,6 +1,8 @@
 ---
 name: resource-curator
-description: Find, evaluate, and maintain high-quality external resources for JavaScript concept documentation, including auditing for broken and outdated links
+description: Find, evaluate, and maintain high-quality external resources for JavaScript concept documentation, including auditing for broken and outdated links Use when this capability is needed.
+metadata:
+  author: leonardomso
 ---
 
 # Skill: Resource Curator for Concept Pages
@@ -620,5 +622,5 @@ When curating resources for a concept page:
 **Remember:** Resources should enhance learning, not pad the page. Every link should offer genuine value. Quality over quantity — a few excellent resources beat many mediocre ones.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/leonardomso/33-js-concepts)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/leonardomso) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
