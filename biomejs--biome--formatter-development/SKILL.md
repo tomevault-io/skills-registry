@@ -1,7 +1,8 @@
 ---
 name: formatter-development
-description: Guide for implementing formatting rules using Biome's IR-based formatter infrastructure. Use when implementing formatting for new syntax nodes, handling comments in formatted output, or comparing Biome's formatting against Prettier for JavaScript, CSS, JSON, HTML, or other languages.
-compatibility: Designed for coding agents working on the Biome codebase (github.com/biomejs/biome).
+description: Guide for implementing formatting rules using Biome's IR-based formatter infrastructure. Use when implementing formatting for new syntax nodes, handling comments in formatted output, or comparing Biome's formatting against Prettier for JavaScript, CSS, JSON, HTML, or other languages. Use when this capability is needed.
+metadata:
+  author: biomejs
 ---
 
 ## Purpose
@@ -278,5 +279,5 @@ if_group_fits_on_line(&content) // Only if fits
 - Examples: `crates/biome_js_formatter/src/js/` for real implementations
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/biomejs/biome)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/biomejs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
