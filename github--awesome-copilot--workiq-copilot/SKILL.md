@@ -1,6 +1,8 @@
 ---
 name: workiq-copilot
-description: 'Guides the Copilot CLI on how to use the WorkIQ CLI/MCP server to query Microsoft 365 Copilot data (emails, meetings, docs, Teams, people) for live context, summaries, and recommendations.'
+description: Guides the Copilot CLI on how to use the WorkIQ CLI/MCP server to query Microsoft 365 Copilot data (emails, meetings, docs, Teams, people) for live context, summaries, and recommendations. Use when this capability is needed.
+metadata:
+  author: github
 ---
 
 # WorkIQ Copilot Skill
@@ -98,5 +100,5 @@ WorkIQ (Public Preview) lets Copilot query Microsoft 365 data with natural langu
 - Run additional WorkIQ queries (by project, stakeholder, time range) for deeper analysis.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
