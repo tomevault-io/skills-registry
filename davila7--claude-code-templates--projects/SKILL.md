@@ -1,12 +1,8 @@
 ---
 name: railway-projects
-description: List, switch, and configure Railway projects. Use when user wants to list all projects, switch projects, rename a project, enable/disable PR deploys, make a project public/private, or modify project settings.
-version: 1.0.0
-author: Railway
-license: MIT
-tags: [Railway, Projects, Workspace, Management, Settings, Infrastructure]
-dependencies: [railway-cli]
-allowed-tools: Bash(railway:*)
+description: List, switch, and configure Railway projects. Use when user wants to list all projects, switch projects, rename a project, enable/disable PR deploys, make a project public/private, or modify project settings. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Railway Project Management
@@ -147,5 +143,5 @@ Project "foo" not found. Run `railway list` to see available projects.
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
