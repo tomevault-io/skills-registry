@@ -1,6 +1,8 @@
 ---
 name: debug-node-coverage
-description: "Debug node test coverage failures. Use when ./tools/test-js-with-node --coverage reports lines missing coverage."
+description: Debug node test coverage failures. Use when ./tools/test-js-with-node --coverage reports lines missing coverage. Use when this capability is needed.
+metadata:
+  author: zulip
 ---
 
 # Debugging Node Test Coverage Failures
@@ -83,5 +85,5 @@ coverage output files to see whether it covered a target line.
   you can also access in var/node-coverage/.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/zulip/zulip)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/zulip) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
