@@ -1,6 +1,8 @@
 ---
 name: alphafold-database
-description: "Access AlphaFold's 200M+ AI-predicted protein structures. Retrieve structures by UniProt ID, download PDB/mmCIF files, analyze confidence metrics (pLDDT, PAE), for drug discovery and structural biology."
+description: Access AlphaFold's 200M+ AI-predicted protein structures. Retrieve structures by UniProt ID, download PDB/mmCIF files, analyze confidence metrics (pLDDT, PAE), for drug discovery and structural biology. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # AlphaFold Database
@@ -500,5 +502,5 @@ Consult this reference for detailed API information, bulk download strategies, o
 - **GitHub Repository:** https://github.com/google-deepmind/alphafold
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
