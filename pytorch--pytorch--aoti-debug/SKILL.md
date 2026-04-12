@@ -1,6 +1,8 @@
 ---
 name: aoti-debug
-description: Debug AOTInductor (AOTI) errors and crashes. Use when encountering AOTI segfaults, device mismatch errors, constant loading failures, or runtime errors from aot_compile, aot_load, aoti_compile_and_package, or aoti_load_package.
+description: Debug AOTInductor (AOTI) errors and crashes. Use when encountering AOTI segfaults, device mismatch errors, constant loading failures, or runtime errors from aot_compile, aot_load, aoti_compile_and_package, or aoti_load_package. Use when this capability is needed.
+metadata:
+  author: pytorch
 ---
 
 # AOTI Debugging Guide
@@ -178,5 +180,5 @@ The new API stores device metadata in the package, so `aoti_load_package()` auto
 | `TORCH_SHOW_CPP_STACKTRACES=1` | Runtime | Show C++ stack traces |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/pytorch/pytorch)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/pytorch) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
