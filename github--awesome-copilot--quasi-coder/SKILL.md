@@ -1,6 +1,8 @@
 ---
 name: quasi-coder
-description: 'Expert 10x engineer skill for interpreting and implementing code from shorthand, quasi-code, and natural language descriptions. Use when collaborators provide incomplete code snippets, pseudo-code, or descriptions with potential typos or incorrect terminology. Excels at translating non-technical or semi-technical descriptions into production-quality code.'
+description: Expert 10x engineer skill for interpreting and implementing code from shorthand, quasi-code, and natural language descriptions. Use when collaborators provide incomplete code snippets, pseudo-code, or descriptions with potential typos or incorrect terminology. Excels at translating non-technical or semi-technical descriptions into production-quality code. Use when this capability is needed.
+metadata:
+  author: github
 ---
 
 # Quasi-Coder Skill
@@ -369,5 +371,5 @@ The Quasi-Coder skill enables expert-level interpretation and implementation of 
 **Remember**: Always remove shorthand lines starting with `()=>` and replace them with functional, production-ready implementations that fulfill the collaborator's intent with expert-level quality.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
