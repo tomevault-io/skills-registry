@@ -1,8 +1,8 @@
 ---
 name: frontend-patterns
-description: Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices.
-author: affaan-m
-version: "1.0"
+description: Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Frontend Development Patterns
@@ -633,5 +633,5 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 **Remember**: Modern frontend patterns enable maintainable, performant user interfaces. Choose patterns that fit your project complexity.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
