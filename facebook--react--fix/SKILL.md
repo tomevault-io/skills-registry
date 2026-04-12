@@ -1,6 +1,8 @@
 ---
 name: fix
 description: Use when you have lint errors, formatting issues, or before committing code to ensure it passes CI.
+metadata:
+  author: facebook
 ---
 
 # Fix Lint and Formatting
@@ -17,5 +19,5 @@ description: Use when you have lint errors, formatting issues, or before committ
 - **Ignoring linc errors** - These will fail CI, fix them before committing
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/facebook/react)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/facebook) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
