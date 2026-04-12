@@ -1,14 +1,8 @@
 ---
 name: nano-banana-pro-openrouter
-description: 'Generate or edit images via OpenRouter with the Gemini 3 Pro Image model. Use for prompt-only image generation, image edits, and multi-image compositing; supports 1K/2K/4K output.'
+description: Generate or edit images via OpenRouter with the Gemini 3 Pro Image model. Use for prompt-only image generation, image edits, and multi-image compositing; supports 1K/2K/4K output. Use when this capability is needed.
 metadata:
-  emoji: 🍌
-  requires:
-    bins:
-      - uv
-    env:
-      - OPENROUTER_API_KEY
-  primaryEnv: OPENROUTER_API_KEY
+  author: github
 ---
 
 
@@ -74,5 +68,5 @@ If the script exits non-zero, check stderr against these common blockers:
 For transient errors (HTTP 429, network timeouts), retry once after 30 seconds. Do not retry the same error more than twice — surface the issue to the user instead.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
