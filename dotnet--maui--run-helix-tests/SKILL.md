@@ -1,10 +1,8 @@
 ---
 name: run-helix-tests
-description: "Submit and monitor .NET MAUI unit tests on Helix infrastructure. Supports running XAML, Resizetizer, Core, Essentials, and other unit test projects on distributed Helix queues."
+description: Submit and monitor .NET MAUI unit tests on Helix infrastructure. Supports running XAML, Resizetizer, Core, Essentials, and other unit test projects on distributed Helix queues. Use when this capability is needed.
 metadata:
-  author: dotnet-maui
-  version: "1.0"
-compatibility: Requires local .dotnet SDK provisioned (run `dotnet cake` first if missing).
+  author: dotnet
 ---
 
 # Run Helix Tests Skill
@@ -170,5 +168,5 @@ For **device tests** (iOS, Android, MacCatalyst emulators/simulators), use:
 See `.github/instructions/helix-device-tests.instructions.md` for device test guidance.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/dotnet/maui)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
