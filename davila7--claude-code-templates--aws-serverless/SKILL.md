@@ -1,7 +1,8 @@
 ---
 name: aws-serverless
-description: "Specialized skill for building production-ready serverless applications on AWS. Covers Lambda functions, API Gateway, DynamoDB, SQS/SNS event-driven patterns, SAM/CDK deployment, and cold start optimization."
-source: vibeship-spawner-skills (Apache 2.0)
+description: Specialized skill for building production-ready serverless applications on AWS. Covers Lambda functions, API Gateway, DynamoDB, SQS/SNS event-driven patterns, SAM/CDK deployment, and cold start optimization. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # AWS Serverless
@@ -323,5 +324,5 @@ Blocking DNS lookups or connections worsen cold starts.
 | Issue | high | ## Use different buckets/prefixes |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
