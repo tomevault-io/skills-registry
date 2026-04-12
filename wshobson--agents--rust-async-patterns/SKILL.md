@@ -1,6 +1,8 @@
 ---
 name: rust-async-patterns
-description: Master Rust async programming with Tokio, async traits, error handling, and concurrent patterns. Use when building async Rust applications, implementing concurrent systems, or debugging async code.
+description: Master Rust async programming with Tokio, async traits, error handling, and concurrent patterns. Use when building async Rust applications, implementing concurrent systems, or debugging async code. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Rust Async Patterns
@@ -513,5 +515,5 @@ tokio::spawn(async move {
 - **Don't forget Send bounds** - For spawned futures
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
