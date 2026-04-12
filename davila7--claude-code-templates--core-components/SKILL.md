@@ -1,6 +1,8 @@
 ---
 name: core-components
-description: Core component library and design system patterns. Use when building UI, using design tokens, or working with the component library.
+description: Core component library and design system patterns. Use when building UI, using design tokens, or working with the component library. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Core Components
@@ -264,5 +266,5 @@ const Card = ({ padding = '$4', variant = 'elevated', children }: CardProps) => 
 - **storybook**: Document component variants
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
