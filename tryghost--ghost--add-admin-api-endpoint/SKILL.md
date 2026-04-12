@@ -1,6 +1,8 @@
 ---
-name: Add Admin API Endpoint
-description: Add a new endpoint or endpoints to Ghost's Admin API at `ghost/api/admin/**`.
+name: add-admin-api-endpoint
+description: Add a new endpoint or endpoints to Ghost's Admin API at `ghost/api/admin/**`. Use when this capability is needed.
+metadata:
+  author: tryghost
 ---
 
 # Create Admin API Endpoint
@@ -17,5 +19,5 @@ description: Add a new endpoint or endpoints to Ghost's Admin API at `ghost/api/
 For a detailed reference on Ghost's API framework and how to create API controllers, see [reference.md](reference.md).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tryghost/ghost)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tryghost) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
