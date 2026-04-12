@@ -1,7 +1,8 @@
 ---
 name: skill-share
-description: A skill that creates new Claude skills and automatically shares them on Slack using Rube for seamless team collaboration and skill discovery.
-license: Complete terms in LICENSE.txt
+description: Use when working with a skill that creates new Claude skills and automatically shares them on Slack using Rube for seamless team collaboration and skill discovery.
+metadata:
+  author: composiohq
 ---
 
 ## When to use this skill
@@ -80,5 +81,5 @@ This skill leverages Rube for:
 - Target Slack channel for skill notifications
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/composiohq/awesome-claude-skills)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/composiohq) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
