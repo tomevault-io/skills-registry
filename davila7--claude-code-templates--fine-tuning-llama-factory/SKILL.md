@@ -1,11 +1,8 @@
 ---
 name: llama-factory
-description: Expert guidance for fine-tuning LLMs with LLaMA-Factory - WebUI no-code, 100+ models, 2/3/4/5/6/8-bit QLoRA, multimodal support
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Fine-Tuning, LLaMA Factory, LLM, WebUI, No-Code, QLoRA, LoRA, Multimodal, HuggingFace, Llama, Qwen, Gemma]
-dependencies: [llmtuner, torch, transformers, datasets, peft, accelerate, gradio]
+description: Expert guidance for fine-tuning LLMs with LLaMA-Factory - WebUI no-code, 100+ models, 2/3/4/5/6/8-bit QLoRA, multimodal support Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Llama-Factory Skill
@@ -78,5 +75,5 @@ To refresh this skill with updated documentation:
 2. The skill will be rebuilt with the latest information
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
