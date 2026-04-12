@@ -1,6 +1,8 @@
 ---
 name: accessibility-compliance
-description: Implement WCAG 2.2 compliant interfaces with mobile accessibility, inclusive design patterns, and assistive technology support. Use when auditing accessibility, implementing ARIA patterns, building for screen readers, or ensuring inclusive user experiences.
+description: Implement WCAG 2.2 compliant interfaces with mobile accessibility, inclusive design patterns, and assistive technology support. Use when auditing accessibility, implementing ARIA patterns, building for screen readers, or ensuring inclusive user experiences. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Accessibility Compliance
@@ -412,5 +414,5 @@ const CONTRAST_REQUIREMENTS = {
 - **Simulators**: NoCoffee (vision), Silktide (various disabilities)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
