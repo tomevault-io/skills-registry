@@ -1,10 +1,8 @@
 ---
 name: accessibility
-description: Audit and improve web accessibility following WCAG 2.1 guidelines. Use when asked to "improve accessibility", "a11y audit", "WCAG compliance", "screen reader support", "keyboard navigation", or "make accessible".
-license: MIT
+description: Audit and improve web accessibility following WCAG 2.1 guidelines. Use when asked to "improve accessibility", "a11y audit", "WCAG compliance", "screen reader support", "keyboard navigation", or "make accessible". Use when this capability is needed.
 metadata:
-  author: web-quality-skills
-  version: "1.0"
+  author: davila7
 ---
 
 # Accessibility (a11y)
@@ -522,5 +520,5 @@ axe https://example.com
 - [Web Quality Audit](../web-quality-audit/SKILL.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
