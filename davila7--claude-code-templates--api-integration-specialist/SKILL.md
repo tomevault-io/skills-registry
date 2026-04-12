@@ -1,6 +1,8 @@
 ---
-name: API Integration Specialist
-description: Expert in integrating third-party APIs with proper authentication, error handling, rate limiting, and retry logic. Use when integrating REST APIs, GraphQL endpoints, webhooks, or external services. Specializes in OAuth flows, API key management, request/response transformation, and building robust API clients.
+name: api-integration-specialist
+description: Expert in integrating third-party APIs with proper authentication, error handling, rate limiting, and retry logic. Use when integrating REST APIs, GraphQL endpoints, webhooks, or external services. Specializes in OAuth flows, API key management, request/response transformation, and building robust API clients. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # API Integration Specialist
@@ -376,5 +378,5 @@ async function sendSMS(to, body) {
 When integrating APIs, prioritize security, reliability, and maintainability. Always test error scenarios and edge cases before production deployment.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
