@@ -1,6 +1,8 @@
 ---
 name: react-native-design
-description: Master React Native styling, navigation, and Reanimated animations for cross-platform mobile development. Use when building React Native apps, implementing navigation patterns, or creating performant animations.
+description: Master React Native styling, navigation, and Reanimated animations for cross-platform mobile development. Use when building React Native apps, implementing navigation patterns, or creating performant animations. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # React Native Design
@@ -432,5 +434,5 @@ const styles = StyleSheet.create({
 - **Safe Area Issues**: Test on notched devices (iPhone, Android with cutouts)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
