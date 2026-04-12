@@ -1,6 +1,8 @@
 ---
 name: commit-helper
-description: Help create git commits and PRs with properly formatted messages and release notes following CockroachDB conventions. Use when committing changes or creating pull requests.
+description: Help create git commits and PRs with properly formatted messages and release notes following CockroachDB conventions. Use when committing changes or creating pull requests. Use when this capability is needed.
+metadata:
+  author: cockroachdb
 ---
 
 # CockroachDB Commit Helper
@@ -122,5 +124,5 @@ a much shorter window than the previous 48 seconds.
 - **Multi-commit PRs**: The body should summarize the end goal that the set of commits achieves and give the reader the context necessary to review the PR commit by commit (for example, the first commits might get refactors out of the way so that the last commit can hook everything up). When there isn't an overarching connection between the commits (maybe the PR groups a few mechanical changes that are not related) it is fine to say that the individual commits speak for themselves.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/cockroachdb/cockroach)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/cockroachdb) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
