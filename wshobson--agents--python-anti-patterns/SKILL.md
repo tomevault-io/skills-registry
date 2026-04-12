@@ -1,6 +1,8 @@
 ---
 name: python-anti-patterns
 description: Use this skill when reviewing Python code for common anti-patterns to avoid. Use as a checklist when reviewing code, before finalizing implementations, or when debugging issues that might stem from known bad practices.
+metadata:
+  author: wshobson
 ---
 
 # Python Anti-Patterns Checklist
@@ -349,5 +351,5 @@ Before finalizing code, verify:
 | Only happy path tests | Test errors and edge cases |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
