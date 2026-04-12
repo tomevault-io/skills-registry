@@ -1,7 +1,8 @@
 ---
 name: triage-ci-flake
 description: Use when CI tests fail on main branch after PR merge, or when investigating flaky test failures in CI environments
-allowed-tools: Write, Bash(date:*), Bash(mkdir -p *)
+metadata:
+  author: payloadcms
 ---
 
 # Triage CI Failure
@@ -420,5 +421,5 @@ Summary of changes:
 This ensures the user has visibility and control over what gets submitted for review.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/payloadcms/payload)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/payloadcms) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
