@@ -1,6 +1,8 @@
 ---
 name: plotly
-description: Interactive scientific and statistical data visualization library for Python. Use when creating charts, plots, or visualizations including scatter plots, line charts, bar charts, heatmaps, 3D plots, geographic maps, statistical distributions, financial charts, and dashboards. Supports both quick visualizations (Plotly Express) and fine-grained customization (graph objects). Outputs interactive HTML or static images (PNG, PDF, SVG).
+description: Interactive scientific and statistical data visualization library for Python. Use when creating charts, plots, or visualizations including scatter plots, line charts, bar charts, heatmaps, 3D plots, geographic maps, statistical distributions, financial charts, and dashboards. Supports both quick visualizations (Plotly Express) and fine-grained customization (graph objects). Outputs interactive HTML or static images (PNG, PDF, SVG). Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Plotly
@@ -261,5 +263,5 @@ app.run_server(debug=True)
 - Community forum: https://community.plotly.com/
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
