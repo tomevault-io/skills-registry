@@ -1,7 +1,8 @@
 ---
 name: swift-actor-persistence
-description: Thread-safe data persistence in Swift using actors — in-memory cache with file-backed storage, eliminating data races by design.
-origin: ECC
+description: Thread-safe data persistence in Swift using actors — in-memory cache with file-backed storage, eliminating data races by design. Use when this capability is needed.
+metadata:
+  author: affaan-m
 ---
 
 # Swift Actors for Thread-Safe Persistence
@@ -143,5 +144,5 @@ final class QuestionListViewModel {
 - Replacing legacy `DispatchQueue`-based thread safety with modern Swift concurrency
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/affaan-m/everything-claude-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
