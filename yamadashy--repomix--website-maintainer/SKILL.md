@@ -1,6 +1,8 @@
 ---
 name: website-maintainer
 description: Use this skill when working on the Repomix documentation website in `website/` directory, including VitePress configuration, multi-language content, or translation workflows.
+metadata:
+  author: yamadashy
 ---
 
 # Website Maintainer
@@ -40,5 +42,5 @@ website/client/
 - Translate UI labels in config file (nav, sidebar, search modal)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/yamadashy/repomix)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/yamadashy) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
