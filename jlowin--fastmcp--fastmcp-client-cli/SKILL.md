@@ -1,6 +1,8 @@
 ---
 name: fastmcp-client-cli
-description: Query and invoke tools on MCP servers using fastmcp list and fastmcp call. Use when you need to discover what tools a server offers, call tools, or integrate MCP servers into workflows.
+description: Query and invoke tools on MCP servers using fastmcp list and fastmcp call. Use when you need to discover what tools a server offers, call tools, or integrate MCP servers into workflows. Use when this capability is needed.
+metadata:
+  author: jlowin
 ---
 
 # FastMCP CLI: List and Call
@@ -114,5 +116,5 @@ fastmcp call weather get_forecast city=London
 If you call a nonexistent tool, FastMCP suggests close matches.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/jlowin/fastmcp)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/jlowin) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
