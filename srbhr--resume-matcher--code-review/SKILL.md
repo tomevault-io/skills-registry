@@ -1,7 +1,8 @@
 ---
 name: code-review
-description: |
-  Review code for correctness, security, performance, and Resume Matcher conventions. Use when receiving code review feedback or before submitting PRs. Requires technical rigor, not performative agreement.
+description: | Use when this capability is needed.
+metadata:
+  author: srbhr
 ---
 
 # Code Review
@@ -82,5 +83,5 @@ WHEN receiving feedback:
 - Style guide: `docs/agent/design/style-guide.md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
