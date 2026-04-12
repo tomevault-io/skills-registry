@@ -1,11 +1,8 @@
 ---
 name: huggingface-tokenizers
-description: Fast tokenizers optimized for research and production. Rust-based implementation tokenizes 1GB in <20 seconds. Supports BPE, WordPiece, and Unigram algorithms. Train custom vocabularies, track alignments, handle padding/truncation. Integrates seamlessly with transformers. Use when you need high-performance tokenization or custom tokenizer training.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Tokenization, HuggingFace, BPE, WordPiece, Unigram, Fast Tokenization, Rust, Custom Tokenizer, Alignment Tracking, Production]
-dependencies: [tokenizers, transformers, datasets]
+description: Fast tokenizers optimized for research and production. Rust-based implementation tokenizes 1GB in <20 seconds. Supports BPE, WordPiece, and Unigram algorithms. Train custom vocabularies, track alignments, handle padding/truncation. Integrates seamlessly with transformers. Use when you need high-performance tokenization or custom tokenizer training. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # HuggingFace Tokenizers - Fast Tokenization for NLP
@@ -514,5 +511,5 @@ Browse all: https://huggingface.co/models?library=tokenizers
 - **Paper**: BPE (Sennrich et al., 2016), WordPiece (Schuster & Nakajima, 2012)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
