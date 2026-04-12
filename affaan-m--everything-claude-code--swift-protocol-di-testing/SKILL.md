@@ -1,7 +1,8 @@
 ---
 name: swift-protocol-di-testing
-description: Protocol-based dependency injection for testable Swift code — mock file system, network, and external APIs using focused protocols and Swift Testing.
-origin: ECC
+description: Protocol-based dependency injection for testable Swift code — mock file system, network, and external APIs using focused protocols and Swift Testing. Use when this capability is needed.
+metadata:
+  author: affaan-m
 ---
 
 # Swift Protocol-Based Dependency Injection for Testing
@@ -190,5 +191,5 @@ func testReadError() async {
 - Apps using Swift concurrency (actors, structured concurrency) that need testable architecture
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/affaan-m/everything-claude-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
