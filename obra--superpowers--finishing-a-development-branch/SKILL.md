@@ -1,6 +1,8 @@
 ---
 name: finishing-a-development-branch
 description: Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup
+metadata:
+  author: obra
 ---
 
 # Finishing a Development Branch
@@ -200,5 +202,5 @@ git worktree remove <worktree-path>
 - **using-git-worktrees** - Cleans up worktree created by that skill
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/obra/superpowers)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/obra) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
