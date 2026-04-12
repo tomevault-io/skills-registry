@@ -1,7 +1,8 @@
 ---
 name: react-class-to-functional
-description: Convert React class components to functional components with hooks
-argument-hint: <file-path>
+description: Convert React class components to functional components with hooks Use when this capability is needed.
+metadata:
+  author: cockroachdb
 ---
 
 # React Class to Functional Component Converter
@@ -92,5 +93,5 @@ useEffect(() => {
 - [ ] Within the appropriate directory with `package.json`, run ESLint (fix) and Tests
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/cockroachdb/cockroach)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/cockroachdb) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
