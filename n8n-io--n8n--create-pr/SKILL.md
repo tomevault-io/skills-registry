@@ -1,7 +1,8 @@
 ---
 name: create-pr
 description: Creates GitHub pull requests with properly formatted titles that pass the check-pr-title CI validation. Use when creating PRs, submitting changes for review, or when the user says /pr or asks to create a pull request.
-allowed-tools: Bash(git:*), Bash(gh:*), Read, Grep, Glob
+metadata:
+  author: n8n-io
 ---
 
 # Create Pull Request
@@ -196,5 +197,5 @@ Describe **what the code does**, not what threat it prevents.
 PR body, Linear URL, test name, or code comment hints at the vulnerability.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/n8n-io/n8n)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/n8n-io) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
