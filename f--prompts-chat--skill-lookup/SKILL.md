@@ -1,10 +1,8 @@
 ---
 name: skill-lookup
-description: >
-  Search, retrieve, and install Agent Skills from the prompts.chat registry using MCP tools.
-  Use when the user asks to find skills, browse skill catalogs, install a skill for Claude,
-  or extend Claude's capabilities with reusable AI agent components.
-license: MIT
+description: > Use when this capability is needed.
+metadata:
+  author: f
 ---
 
 ## Workflow
@@ -76,5 +74,5 @@ When the user asks to install a skill:
 - Explain what the skill does and when it activates
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/f/prompts.chat)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/f) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
