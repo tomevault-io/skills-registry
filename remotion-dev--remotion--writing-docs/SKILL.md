@@ -1,6 +1,8 @@
 ---
 name: writing-docs
-description: Guides for writing and editing Remotion documentation. Use when adding docs pages, editing MDX files in packages/docs, or writing documentation content.
+description: Guides for writing and editing Remotion documentation. Use when adding docs pages, editing MDX files in packages/docs, or writing documentation content. Use when this capability is needed.
+metadata:
+  author: remotion-dev
 ---
 
 # Writing Remotion Documentation
@@ -208,5 +210,5 @@ bun run build-docs
 This validates MDX syntax, twoslash snippets, and broken links.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/remotion-dev/remotion)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/remotion-dev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
