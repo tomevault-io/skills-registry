@@ -1,7 +1,8 @@
 ---
 name: customer-support
-description: Guidelines for handling customer support interactions. Use when responding to user inquiries, troubleshooting issues, or escalating problems.
-license: MIT
+description: Guidelines for handling customer support interactions. Use when responding to user inquiries, troubleshooting issues, or escalating problems. Use when this capability is needed.
+metadata:
+  author: mastra-ai
 ---
 
 # Customer Support Guidelines
@@ -172,5 +173,5 @@ Your reference number is [ticket ID]. You can reply to this thread for updates.
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mastra-ai/mastra)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mastra-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
