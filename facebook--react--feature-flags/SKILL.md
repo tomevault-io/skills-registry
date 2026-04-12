@@ -1,6 +1,8 @@
 ---
 name: feature-flags
 description: Use when feature flag tests fail, flags need updating, understanding @gate pragmas, debugging channel-specific test failures, or adding new flags to React.
+metadata:
+  author: facebook
 ---
 
 # React Feature Flags
@@ -79,5 +81,5 @@ Flags set to `__VARIANT__` simulate gatekeepers - tested twice (true and false):
 - **Wrong gate syntax** - It's `gate(flags => flags.name)`, not `gate('name')`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/facebook/react)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/facebook) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
