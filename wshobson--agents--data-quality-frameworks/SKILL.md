@@ -1,6 +1,8 @@
 ---
 name: data-quality-frameworks
-description: Implement data quality validation with Great Expectations, dbt tests, and data contracts. Use when building data quality pipelines, implementing validation rules, or establishing data contracts.
+description: Implement data quality validation with Great Expectations, dbt tests, and data contracts. Use when building data quality pipelines, implementing validation rules, or establishing data contracts. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Data Quality Frameworks
@@ -583,5 +585,5 @@ if not all(r.passed for r in results.values()):
 - **Don't test in isolation** - Test relationships too
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
