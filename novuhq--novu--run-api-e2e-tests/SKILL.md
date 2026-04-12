@@ -1,6 +1,8 @@
 ---
 name: run-api-e2e-tests
-description: Run e2e tests for the API service. Use when the user wants to run API E2E tests.
+description: Run e2e tests for the API service. Use when the user wants to run API E2E tests. Use when this capability is needed.
+metadata:
+  author: novuhq
 ---
 
 # Run API E2E Tests
@@ -58,5 +60,5 @@ pnpm exec cross-env NODE_ENV=test CI_EE_TEST=true CLERK_ENABLED=true NODE_OPTION
 - Report test results clearly to the user
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/novuhq/novu)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/novuhq) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
