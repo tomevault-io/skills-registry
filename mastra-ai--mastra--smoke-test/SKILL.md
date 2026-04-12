@@ -1,7 +1,8 @@
 ---
 name: smoke-test
-description: Create a Mastra project using create-mastra and smoke test the studio in Chrome
-model: claude-opus-4-5
+description: Create a Mastra project using create-mastra and smoke test the studio in Chrome Use when this capability is needed.
+metadata:
+  author: mastra-ai
 ---
 
 # Smoke Test Skill
@@ -370,5 +371,5 @@ After completing all tests, provide a summary:
 - Observability traces appear automatically after running agents or workflows
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mastra-ai/mastra)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mastra-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
