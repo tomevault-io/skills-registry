@@ -1,13 +1,8 @@
 ---
 name: editor
-description: |
-  Professional editing and proofreading for clarity, grammar, style, and readability improvements.
-  Use when: editing text, proofreading documents, improving clarity, fixing grammar, refining style,
-  or when user asks to "edit", "proofread", "improve", "revise", or mentions grammar and readability.
-license: MIT
+description: | Use when this capability is needed.
 metadata:
-  author: awesome-llm-apps
-  version: "1.0.0"
+  author: shubhamsaboo
 ---
 
 # Editor
@@ -212,5 +207,5 @@ Depending on desired tone:
 - Trust simple, direct language - complexity doesn't equal professionalism
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/shubhamsaboo/awesome-llm-apps)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shubhamsaboo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
