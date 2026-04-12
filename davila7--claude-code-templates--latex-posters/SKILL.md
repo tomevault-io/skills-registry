@@ -1,7 +1,8 @@
 ---
 name: latex-posters
-description: "Create professional research posters in LaTeX using beamerposter, tikzposter, or baposter. Support for conference presentations, academic posters, and scientific communication. Includes layout design, color schemes, multi-column formats, figure integration, and poster-specific best practices for visual communication."
-allowed-tools: [Read, Write, Edit, Bash]
+description: Create professional research posters in LaTeX using beamerposter, tikzposter, or baposter. Support for conference presentations, academic posters, and scientific communication. Includes layout design, color schemes, multi-column formats, figure integration, and poster-specific best practices for visual communication. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # LaTeX Research Posters
@@ -957,5 +958,5 @@ Ready-to-use poster templates in `assets/` directory:
 Load these templates and customize for your specific research and conference requirements.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
