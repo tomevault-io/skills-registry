@@ -1,6 +1,8 @@
 ---
 name: codex
 description: Use when the user asks to run Codex CLI (codex exec, codex resume) or references OpenAI Codex for code analysis, refactoring, or automated editing. Uses GPT-5.2 by default for state-of-the-art software engineering.
+metadata:
+  author: davila7
 ---
 
 # Codex Skill Guide
@@ -66,5 +68,5 @@ Requires Codex CLI v0.57.0 or later for GPT-5.2 model support. The CLI defaults 
 Use `/model` slash command within a Codex session to switch models, or configure default in `~/.codex/config.toml`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
