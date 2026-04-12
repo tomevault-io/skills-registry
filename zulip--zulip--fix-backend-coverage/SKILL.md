@@ -1,7 +1,8 @@
 ---
 name: fix-backend-coverage
-description: Fix backend test coverage gaps. Use when CI output or test-backend --coverage reports missing lines, like "ERROR: path/to/file.py no longer has complete backend test coverage".
-argument-hint: "[test_module_or_file]"
+description: Fix backend test coverage gaps. Use when CI output or test-backend --coverage reports missing lines, like "ERROR: path/to/file.py no longer has complete backend test coverage". Use when this capability is needed.
+metadata:
+  author: zulip
 ---
 
 # Fix Backend Coverage
@@ -101,5 +102,5 @@ Confirm 0 missing lines, then lint:
   you check with targeted runs + `analyze-coverage`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/zulip/zulip)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/zulip) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
