@@ -1,6 +1,8 @@
 ---
 name: zig-system-calls
-description: Guides using bun.sys for system calls and file I/O in Zig. Use when implementing file operations instead of std.fs or std.posix.
+description: Guides using bun.sys for system calls and file I/O in Zig. Use when implementing file operations instead of std.fs or std.posix. Use when this capability is needed.
+metadata:
+  author: oven-sh
 ---
 
 # System Calls & File I/O in Zig
@@ -268,5 +270,5 @@ err.path       // Optional: path string
 - For sockets, use `uws.Socket` not `bun.sys`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/oven-sh/bun)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/oven-sh) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
