@@ -1,6 +1,8 @@
 ---
 name: test-tui
-description: Guide for testing Codex TUI interactively
+description: Guide for testing Codex TUI interactively Use when this capability is needed.
+metadata:
+  author: openai
 ---
 
 You can start and use Codex TUI to verify changes. 
@@ -14,5 +16,5 @@ When sending a test message programmatically, send text first, then send Enter i
 Use `just codex` target to run - `just codex -c ...`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openai/codex)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
