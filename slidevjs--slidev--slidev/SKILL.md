@@ -1,6 +1,8 @@
 ---
 name: slidev
-description: Create and present web-based slidedecks for developers using Slidev with Markdown, Vue components, code highlighting, animations, and interactive features. Use when building technical presentations, conference talks, code walkthroughs, teaching materials, or developer decks.
+description: Create and present web-based slidedecks for developers using Slidev with Markdown, Vue components, code highlighting, animations, and interactive features. Use when building technical presentations, conference talks, code walkthroughs, teaching materials, or developer decks. Use when this capability is needed.
+metadata:
+  author: slidevjs
 ---
 
 # Slidev - Presentation Slides for Developers
@@ -189,5 +191,5 @@ Presenter notes go here
 - Showcases: https://sli.dev/resources/showcases
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/slidevjs/slidev)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/slidevjs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
