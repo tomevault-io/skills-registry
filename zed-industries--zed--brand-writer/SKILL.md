@@ -1,8 +1,8 @@
 ---
 name: brand-writer
-description: Write clear, developer-first copy for Zed — leading with facts, grounded in craft.
-allowed-tools: Read, Write, Edit, Glob, Grep, AskUserQuestion, WebFetch
-user-invocable: true
+description: Write clear, developer-first copy for Zed — leading with facts, grounded in craft. Use when this capability is needed.
+metadata:
+  author: zed-industries
 ---
 
 # Zed Brand Writer
@@ -279,5 +279,5 @@ When invoked with `--review`:
 > Zed is a new kind of editor, built from scratch for speed. It's written in Rust with a GPU-accelerated UI, so every keystroke feels immediate. We designed it for developers who notice when their tools get in the way.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/zed-industries/zed)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/zed-industries) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
