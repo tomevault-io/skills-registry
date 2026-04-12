@@ -1,6 +1,8 @@
 ---
 name: agent-browser
 description: Automates browser interactions for web testing, form filling, screenshots, and data extraction. Use when the user needs to navigate websites, interact with web pages, fill forms, take screenshots, test web applications, or extract information from web pages.
+metadata:
+  author: code-yeongyu
 ---
 
 # Browser Automation with agent-browser
@@ -450,5 +452,5 @@ agent-browser --native open example.com
 Install: `bun add -g agent-browser && agent-browser install`. Run `agent-browser --help` for all commands. Repo: https://github.com/vercel-labs/agent-browser
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/code-yeongyu/oh-my-opencode)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/code-yeongyu) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
