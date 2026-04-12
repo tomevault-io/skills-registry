@@ -1,6 +1,8 @@
 ---
 name: python-packaging
-description: Create distributable Python packages with proper project structure, setup.py/pyproject.toml, and publishing to PyPI. Use when packaging Python libraries, creating CLI tools, or distributing Python code.
+description: Create distributable Python packages with proper project structure, setup.py/pyproject.toml, and publishing to PyPI. Use when packaging Python libraries, creating CLI tools, or distributing Python code. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Python Packaging
@@ -510,5 +512,5 @@ jobs:
 For advanced patterns including data files, namespace packages, C extensions, version management, testing installation, documentation templates, and distribution workflows, see [references/advanced-patterns.md](references/advanced-patterns.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
