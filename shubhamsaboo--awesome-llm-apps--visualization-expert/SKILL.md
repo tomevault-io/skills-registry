@@ -1,13 +1,8 @@
 ---
 name: visualization-expert
-description: |
-  Chart selection and data visualization guidance for effective data communication.
-  Use when: creating visualizations, choosing chart types, designing dashboards, or when user
-  mentions data visualization, charts, graphs, or needs help presenting data visually.
-license: MIT
+description: | Use when this capability is needed.
 metadata:
-  author: awesome-llm-apps
-  version: "1.0.0"
+  author: shubhamsaboo
 ---
 
 # Visualization Expert
@@ -51,5 +46,5 @@ Provide visualization recommendations with:
 *Created for data visualization and chart selection*
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/shubhamsaboo/awesome-llm-apps)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shubhamsaboo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
