@@ -1,7 +1,8 @@
 ---
 name: browser-use
 description: Automates browser interactions for web testing, form filling, screenshots, and data extraction. Use when the user needs to navigate websites, interact with web pages, fill forms, take screenshots, or extract information from web pages.
-allowed-tools: Bash(browser-use:*)
+metadata:
+  author: browser-use
 ---
 
 # Browser Automation with browser-use CLI
@@ -219,5 +220,5 @@ browser-use tunnel stop --all             # Stop tunnels (if any)
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/browser-use/browser-use)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/browser-use) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
