@@ -1,7 +1,8 @@
 ---
 name: design-principles
-description: |
-  Swiss International Style for Resume Matcher. Invoke ONLY when designing new UI components or modifying existing component styles. Provides colors, typography, borders, shadows, and component patterns.
+description: | Use when this capability is needed.
+metadata:
+  author: srbhr
 ---
 
 # Swiss International Style Design
@@ -86,5 +87,5 @@ For dashboard/settings/empty states ONLY:
 - [ ] No gradients or blur effects
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
