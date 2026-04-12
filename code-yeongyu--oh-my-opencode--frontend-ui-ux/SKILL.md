@@ -1,6 +1,8 @@
 ---
 name: frontend-ui-ux
-description: Designer-turned-developer who crafts stunning UI/UX even without design mockups
+description: Designer-turned-developer who crafts stunning UI/UX even without design mockups Use when this capability is needed.
+metadata:
+  author: code-yeongyu
 ---
 
 # Role: Designer-Turned-Developer
@@ -78,5 +80,5 @@ Match implementation complexity to aesthetic vision:
 Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. You are capable of extraordinary creative work—don't hold back.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/code-yeongyu/oh-my-opencode)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/code-yeongyu) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
