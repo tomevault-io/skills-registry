@@ -1,11 +1,8 @@
 ---
 name: codebase-navigator
-description: |
-  Navigate, search, and understand the Resume Matcher codebase using ripgrep, ack, or grep. Find functions, classes, components, API endpoints, trace data flows, and understand architecture. Use FIRST when exploring code, finding files, or understanding project structure.
+description: | Use when this capability is needed.
 metadata:
-  author: resume-matcher
-  version: "1.0.0"
-allowed-tools: Bash(rg:*) Bash(ack:*) Bash(grep:*) Bash(find:*) Bash(tree:*) Read
+  author: srbhr
 ---
 
 # Codebase Navigator
@@ -128,5 +125,5 @@ apps/
 See `references/REFERENCE.md` for the full ripgrep cheat sheet and advanced search patterns.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
