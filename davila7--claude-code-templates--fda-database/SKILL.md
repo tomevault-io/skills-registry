@@ -1,6 +1,8 @@
 ---
 name: fda-database
-description: "Query openFDA API for drugs, devices, adverse events, recalls, regulatory submissions (510k, PMA), substance identification (UNII), for FDA regulatory data analysis and safety research."
+description: Query openFDA API for drugs, devices, adverse events, recalls, regulatory submissions (510k, PMA), substance identification (UNII), for FDA regulatory data analysis and safety research. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # FDA Database Access
@@ -512,5 +514,5 @@ python scripts/fda_examples.py
 - **Email**: open-fda@fda.hhs.gov
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
