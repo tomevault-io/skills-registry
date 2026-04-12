@@ -1,6 +1,8 @@
 ---
 name: embedding-strategies
-description: Select and optimize embedding models for semantic search and RAG applications. Use when choosing embedding models, implementing chunking strategies, or optimizing embedding quality for specific domains.
+description: Select and optimize embedding models for semantic search and RAG applications. Use when choosing embedding models, implementing chunking strategies, or optimizing embedding quality for specific domains. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Embedding Strategies
@@ -600,5 +602,5 @@ def compare_embedding_models(
 - **Don't forget metadata**: Essential for filtering and debugging
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
