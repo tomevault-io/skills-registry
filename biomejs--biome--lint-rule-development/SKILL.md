@@ -1,7 +1,8 @@
 ---
 name: lint-rule-development
-description: Step-by-step guide for creating and implementing lint rules in Biome's analyzer. Use when implementing rules like noVar, useConst, or any custom lint/assist rule, adding code actions to fix diagnostics, implementing semantic analysis for binding references, or adding configurable options to rules.
-compatibility: Designed for coding agents working on the Biome codebase (github.com/biomejs/biome).
+description: Step-by-step guide for creating and implementing lint rules in Biome's analyzer. Use when implementing rules like noVar, useConst, or any custom lint/assist rule, adding code actions to fix diagnostics, implementing semantic analysis for binding references, or adding configurable options to rules. Use when this capability is needed.
+metadata:
+  author: biomejs
 ---
 
 ## Purpose
@@ -325,5 +326,5 @@ type Query = Semantic<AnyFunctionLike>;
 - Testing guide: Main `CONTRIBUTING.md` testing section
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/biomejs/biome)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/biomejs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
