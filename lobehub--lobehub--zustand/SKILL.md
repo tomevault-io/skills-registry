@@ -1,6 +1,8 @@
 ---
 name: zustand
-description: Zustand state management guide. Use when working with store code (src/store/**), implementing actions, managing state, or creating slices. Triggers on Zustand store development, state management questions, or action implementation.
+description: Zustand state management guide. Use when working with store code (src/store/**), implementing actions, managing state, or creating slices. Triggers on Zustand store development, state management questions, or action implementation. Use when this capability is needed.
+metadata:
+  author: lobehub
 ---
 
 # LobeHub Zustand State Management
@@ -179,5 +181,5 @@ export const chatGroupAction: StateCreator<
 - **Don't**: keep both old slice objects and class actions active at the same time.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/lobehub/lobehub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lobehub) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
