@@ -1,12 +1,8 @@
 ---
 name: railway-status
-description: Check current Railway project status for this directory. Use when user asks "railway status", "is it running", "what's deployed", "deployment status", or about uptime. NOT for variables or configuration queries - use railway-environment skill for those.
-version: 1.0.0
-author: Railway
-license: MIT
-tags: [Railway, Status, Project, Environment, Deployment, Infrastructure]
-dependencies: [railway-cli]
-allowed-tools: Bash(railway:*), Bash(which:*), Bash(command:*)
+description: Check current Railway project status for this directory. Use when user asks "railway status", "is it running", "what's deployed", "deployment status", or about uptime. NOT for variables or configuration queries - use railway-environment skill for those. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Railway Status
@@ -96,5 +92,5 @@ The `activeDeployments` array on each service shows currently running deployment
 with their status (building, deploying, etc.).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
