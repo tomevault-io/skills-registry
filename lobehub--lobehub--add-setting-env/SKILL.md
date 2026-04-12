@@ -1,6 +1,8 @@
 ---
 name: add-setting-env
-description: Guide for adding environment variables to configure user settings. Use when implementing server-side environment variables that control default values for user settings. Triggers on env var configuration or setting default value tasks.
+description: Guide for adding environment variables to configure user settings. Use when implementing server-side environment variables that control default values for user settings. Triggers on env var configuration or setting default value tasks. Use when this capability is needed.
+metadata:
+  author: lobehub
 ---
 
 # Adding Environment Variable for User Settings
@@ -106,5 +108,5 @@ image: serverConfig.image,
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/lobehub/lobehub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lobehub) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
