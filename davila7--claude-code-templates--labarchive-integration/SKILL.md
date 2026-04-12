@@ -1,6 +1,8 @@
 ---
 name: labarchive-integration
-description: "Electronic lab notebook API integration. Access notebooks, manage entries/attachments, backup notebooks, integrate with Protocols.io/Jupyter/REDCap, for programmatic ELN workflows."
+description: Electronic lab notebook API integration. Access notebooks, manage entries/attachments, backup notebooks, integrate with Protocols.io/Jupyter/REDCap, for programmatic ELN workflows. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # LabArchives Integration
@@ -262,5 +264,5 @@ This skill includes bundled resources to support LabArchives API integration:
 - `integrations.md`: Third-party integration setup guides and use cases
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
