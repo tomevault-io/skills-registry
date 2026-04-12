@@ -1,6 +1,8 @@
 ---
 name: brenda-database
-description: "Access BRENDA enzyme database via SOAP API. Retrieve kinetic parameters (Km, kcat), reaction equations, organism data, and substrate-specific enzyme information for biochemical research and metabolic pathway analysis."
+description: Access BRENDA enzyme database via SOAP API. Retrieve kinetic parameters (Km, kcat), reaction equations, organism data, and substrate-specific enzyme information for biochemical research and metabolic pathway analysis. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # BRENDA Database
@@ -714,5 +716,5 @@ For detailed BRENDA documentation, see `references/api_reference.md`. This inclu
 - Enzyme Nomenclature: https://www.iubmb.org/enzyme/
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
