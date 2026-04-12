@@ -1,8 +1,8 @@
 ---
 name: fetch-diff
-description: Fetch PR diff with filtering and line numbers for code review.
-allowed-tools:
-  - Bash(uv run skills fetch-diff:*)
+description: Fetch PR diff with filtering and line numbers for code review. Use when this capability is needed.
+metadata:
+  author: mlflow
 ---
 
 # Fetch PR Diff
@@ -79,5 +79,5 @@ Each line is annotated as `old_line new_line | <marker> content`:
 - No marker (both numbers) -> unchanged line, `side=RIGHT`, `line=new_line`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mlflow/mlflow)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mlflow) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
