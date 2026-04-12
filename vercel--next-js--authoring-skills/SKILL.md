@@ -1,12 +1,8 @@
 ---
 name: authoring-skills
-description: >
-  How to create and maintain agent skills in .agents/skills/. Use when
-  creating a new SKILL.md, writing skill descriptions, choosing frontmatter
-  fields, or deciding what content belongs in a skill vs AGENTS.md.
-  Covers the supported spec fields, description writing, naming conventions,
-  and the relationship between always-loaded AGENTS.md and on-demand skills.
-user-invocable: false
+description: > Use when this capability is needed.
+metadata:
+  author: vercel
 ---
 
 # Authoring Skills
@@ -114,5 +110,5 @@ pr-status-triage/
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/vercel/next.js)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vercel) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
