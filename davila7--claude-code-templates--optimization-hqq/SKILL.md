@@ -1,11 +1,8 @@
 ---
 name: hqq-quantization
-description: Half-Quadratic Quantization for LLMs without calibration data. Use when quantizing models to 4/3/2-bit precision without needing calibration datasets, for fast quantization workflows, or when deploying with vLLM or HuggingFace Transformers.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Quantization, HQQ, Optimization, Memory Efficiency, Inference, Model Compression]
-dependencies: [hqq>=0.2.0, torch>=2.0.0]
+description: Half-Quadratic Quantization for LLMs without calibration data. Use when quantizing models to 4/3/2-bit precision without needing calibration datasets, for fast quantization workflows, or when deploying with vLLM or HuggingFace Transformers. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # HQQ - Half-Quadratic Quantization
@@ -445,5 +442,5 @@ config = BaseQuantizeConfig(
 - **License**: Apache 2.0
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
