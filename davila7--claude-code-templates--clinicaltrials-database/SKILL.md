@@ -1,6 +1,8 @@
 ---
 name: clinicaltrials-database
-description: "Query ClinicalTrials.gov via API v2. Search trials by condition, drug, location, status, or phase. Retrieve trial details by NCT ID, export data, for clinical research and patient matching."
+description: Query ClinicalTrials.gov via API v2. Search trials by condition, drug, location, status, or phase. Retrieve trial details by NCT ID, export data, for clinical research and patient matching. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # ClinicalTrials.gov Database
@@ -501,5 +503,5 @@ if 'resultsSection' in study:
 For complete technical details, see `references/api_reference.md`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
