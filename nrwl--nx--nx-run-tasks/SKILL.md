@@ -1,6 +1,8 @@
 ---
 name: nx-run-tasks
 description: Helps with running tasks in an Nx workspace. USE WHEN the user wants to execute build, test, lint, serve, or run any other tasks defined in the workspace.
+metadata:
+  author: nrwl
 ---
 
 You can run tasks with Nx in the following way.
@@ -58,5 +60,5 @@ These flags work with `run`, `run-many`, and `affected`:
 - `--configuration=<name>` — use a specific configuration (e.g. `production`)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/nrwl/nx)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nrwl) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
