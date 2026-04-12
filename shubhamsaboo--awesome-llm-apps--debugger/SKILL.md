@@ -1,13 +1,8 @@
 ---
 name: debugger
-description: |
-  Systematic debugging and root cause analysis for identifying and fixing software issues.
-  Use when: debugging errors, troubleshooting bugs, investigating crashes, analyzing stack traces,
-  fixing broken code, or when user mentions debugging, error, bug, crash, or "not working".
-license: MIT
+description: | Use when this capability is needed.
 metadata:
-  author: awesome-llm-apps
-  version: "1.0.0"
+  author: shubhamsaboo
 ---
 
 # Debugger
@@ -230,5 +225,5 @@ Deploy logging changes and monitor for patterns in:
 - Server resource usage (CPU, memory, connections)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/shubhamsaboo/awesome-llm-apps)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shubhamsaboo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
