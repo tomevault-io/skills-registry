@@ -1,6 +1,8 @@
 ---
 name: pr-finalize
-description: Finalizes any PR for merge by verifying title/description match implementation AND performing code review for best practices. Use when asked to "finalize PR", "check PR description", "review commit message", before merging any PR, or when PR implementation changed during review. Do NOT use for extracting lessons (use learn-from-pr), writing tests (use write-tests-agent), or investigating build failures (use azdo-build-investigator and ci-analysis).
+description: Finalizes any PR for merge by verifying title/description match implementation AND performing code review for best practices. Use when asked to "finalize PR", "check PR description", "review commit message", before merging any PR, or when PR implementation changed during review. Do NOT use for extracting lessons (use learn-from-pr), writing tests (use write-tests-agent), or investigating build failures (use azdo-build-investigator and ci-analysis). Use when this capability is needed.
+metadata:
+  author: dotnet
 ---
 
 # PR Finalize
@@ -377,5 +379,5 @@ The user controls when comments are posted. Your job is to analyze and present f
 See [references/complete-example.md](references/complete-example.md) for a full agent-optimized PR description showing all elements above applied to a real SafeArea fix.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/dotnet/maui)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
