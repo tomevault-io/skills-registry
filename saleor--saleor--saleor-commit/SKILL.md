@@ -1,6 +1,8 @@
 ---
 name: saleor-commit
-description: Commit changes in the Saleor codebase with pre-commit hook error handling. Use when asked to "commit", "commit changes", "make a commit", or any git commit task in the Saleor project. Handles virtual env activation, staging, commit message writing, and automatic resolution of pre-commit hook failures (ruff, mypy, schema, migrations).
+description: Commit changes in the Saleor codebase with pre-commit hook error handling. Use when asked to "commit", "commit changes", "make a commit", or any git commit task in the Saleor project. Handles virtual env activation, staging, commit message writing, and automatic resolution of pre-commit hook failures (ruff, mypy, schema, migrations). Use when this capability is needed.
+metadata:
+  author: saleor
 ---
 
 # Saleor Commit
@@ -68,5 +70,5 @@ git add saleor/**/migrations/*.py
 - **uv-lock**: Stage the updated `uv.lock` file.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/saleor/saleor)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/saleor) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
