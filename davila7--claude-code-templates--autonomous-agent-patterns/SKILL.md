@@ -1,6 +1,8 @@
 ---
 name: autonomous-agent-patterns
-description: "Design patterns for building autonomous coding agents. Covers tool integration, permission systems, browser automation, and human-in-the-loop workflows. Use when building AI agents, designing tool APIs, implementing permission systems, or creating autonomous coding assistants."
+description: Design patterns for building autonomous coding agents. Covers tool integration, permission systems, browser automation, and human-in-the-loop workflows. Use when building AI agents, designing tool APIs, implementing permission systems, or creating autonomous coding assistants. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # 🕹️ Autonomous Agent Patterns
@@ -761,5 +763,5 @@ class MCPAgent:
 - [Anthropic Tool Use](https://docs.anthropic.com/claude/docs/tool-use)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
