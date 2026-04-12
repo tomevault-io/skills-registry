@@ -1,6 +1,8 @@
 ---
 name: move-code-quality
 description: Analyzes Move language packages against the official Move Book Code Quality Checklist. Use this skill when reviewing Move code, checking Move 2024 Edition compliance, or analyzing Move packages for best practices. Activates automatically when working with .move files or Move.toml manifests.
+metadata:
+  author: davila7
 ---
 
 # Move Code Quality Checker
@@ -415,5 +417,5 @@ After presenting findings:
 - Sui Framework: Modern patterns for Sui blockchain development
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
