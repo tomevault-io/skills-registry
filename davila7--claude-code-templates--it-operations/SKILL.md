@@ -1,6 +1,8 @@
 ---
 name: it-operations
 description: Manages IT infrastructure, monitoring, incident response, and service reliability. Provides frameworks for ITIL service management, observability strategies, automation, backup/recovery, capacity planning, and operational excellence practices.
+metadata:
+  author: davila7
 ---
 
 # IT Operations Expert
@@ -420,5 +422,5 @@ For detailed technical guidance, see:
 5. **For DR Planning**: Consult [reference/backup-recovery.md](reference/backup-recovery.md) for recovery strategies
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
