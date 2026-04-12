@@ -1,6 +1,8 @@
 ---
 name: pytest-runner
-description: Run pytest tests with automatic virtual environment activation. Use this skill whenever running tests, executing pytest, or when asked to "run tests", "test this", or any test execution task. Ensures venv is always activated before pytest runs.
+description: Run pytest tests with automatic virtual environment activation. Use this skill whenever running tests, executing pytest, or when asked to "run tests", "test this", or any test execution task. Ensures venv is always activated before pytest runs. Use when this capability is needed.
+metadata:
+  author: saleor
 ---
 
 # Pytest Runner
@@ -31,5 +33,5 @@ Always pass `--reuse-db` — unless you made model (database) changes beforehand
 - **8+ tests**: omit `-n` entirely
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/saleor/saleor)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/saleor) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
