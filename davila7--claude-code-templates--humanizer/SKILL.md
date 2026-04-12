@@ -1,22 +1,8 @@
 ---
 name: humanizer
-version: 2.1.1
-description: |
-  Remove signs of AI-generated writing from text. Use when editing or reviewing
-  text to make it sound more natural and human-written. Based on Wikipedia's
-  comprehensive "Signs of AI writing" guide. Detects and fixes patterns including:
-  inflated symbolism, promotional language, superficial -ing analyses, vague
-  attributions, em dash overuse, rule of three, AI vocabulary words, negative
-  parallelisms, and excessive conjunctive phrases.
-
-  Credits: Original skill by @blader - https://github.com/blader/humanizer
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Grep
-  - Glob
-  - AskUserQuestion
+description: | Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Humanizer: Remove AI Writing Patterns
@@ -439,5 +425,5 @@ This skill is based on [Wikipedia:Signs of AI writing](https://en.wikipedia.org/
 Key insight from Wikipedia: "LLMs use statistical algorithms to guess what should come next. The result tends toward the most statistically likely result that applies to the widest variety of cases."
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
