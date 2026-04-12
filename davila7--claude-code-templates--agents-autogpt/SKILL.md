@@ -1,11 +1,8 @@
 ---
 name: autogpt-agents
-description: Autonomous AI agent platform for building and deploying continuous agents. Use when creating visual workflow agents, deploying persistent autonomous agents, or building complex multi-step AI automation systems.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Agents, AutoGPT, Autonomous Agents, Workflow Automation, Visual Builder, AI Platform]
-dependencies: [autogpt-platform>=0.4.0]
+description: Autonomous AI agent platform for building and deploying continuous agents. Use when creating visual workflow agents, deploying persistent autonomous agents, or building complex multi-step AI automation systems. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # AutoGPT - Autonomous AI Agent Platform
@@ -403,5 +400,5 @@ docker compose restart executor
 - **License**: MIT (Classic) / Polyform Shield (Platform)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
