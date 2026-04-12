@@ -1,7 +1,8 @@
 ---
 name: track-management
 description: Use this skill when creating, managing, or working with Conductor tracks - the logical work units for features, bugs, and refactors. Applies to spec.md, plan.md, and track lifecycle operations.
-version: 1.0.0
+metadata:
+  author: wshobson
 ---
 
 # Track Management
@@ -593,5 +594,5 @@ Phase 3: Cleanup
 10. **Clear acceptance criteria**: Every requirement must be testable
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
