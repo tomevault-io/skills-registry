@@ -1,9 +1,8 @@
 ---
 name: clean-code
-description: Pragmatic coding standards - concise, direct, no over-engineering, no unnecessary comments
-allowed-tools: Read, Write, Edit
-version: 2.0
-priority: CRITICAL
+description: Pragmatic coding standards - concise, direct, no over-engineering, no unnecessary comments Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Clean Code - Pragmatic AI Coding Standards
@@ -200,5 +199,5 @@ File to edit: UserService.ts
 > 🔴 **Rule:** Always READ output → SUMMARIZE → ASK → then fix.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
