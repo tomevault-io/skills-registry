@@ -1,6 +1,8 @@
 ---
 name: visual-test
-description: "Visually verify UI changes using Puppeteer screenshots. Use when you need to check layout, colors, positioning, or other visual aspects of a UI change."
+description: Visually verify UI changes using Puppeteer screenshots. Use when you need to check layout, colors, positioning, or other visual aspects of a UI change. Use when this capability is needed.
+metadata:
+  author: zulip
 ---
 
 # Visual Test
@@ -347,5 +349,5 @@ files. Do not commit them.
 | `common.select_item_via_typeahead(page, ...)` | Type into a field and select a typeahead |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/zulip/zulip)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/zulip) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
