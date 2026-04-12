@@ -1,6 +1,8 @@
 ---
 name: meeting-minutes
-description: 'Generate concise, actionable meeting minutes for internal meetings. Includes metadata, attendees, agenda, decisions, action items (owner + due date), and follow-up steps.'
+description: Generate concise, actionable meeting minutes for internal meetings. Includes metadata, attendees, agenda, decisions, action items (owner + due date), and follow-up steps. Use when this capability is needed.
+metadata:
+  author: github
 ---
 
 # Meeting Minutes Skill — Short Internal Meetings
@@ -235,5 +237,5 @@ A generated minutes document is acceptable if:
 - The document is factual; uncertain items are labeled `TBD`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
