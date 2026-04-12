@@ -1,11 +1,8 @@
 ---
 name: mamba-architecture
-description: State-space model with O(n) complexity vs Transformers' O(n²). 5× faster inference, million-token sequences, no KV cache. Selective SSM with hardware-aware design. Mamba-1 (d_state=16) and Mamba-2 (d_state=128, multi-head). Models 130M-2.8B on HuggingFace.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Model Architecture, Mamba, State Space Models, SSM, Linear Complexity, Long Context, Efficient Inference, Hardware-Aware, Alternative To Transformers]
-dependencies: [mamba-ssm, torch, transformers, causal-conv1d]
+description: State-space model with O(n) complexity vs Transformers' O(n²). 5× faster inference, million-token sequences, no KV cache. Selective SSM with hardware-aware design. Mamba-1 (d_state=16) and Mamba-2 (d_state=128, multi-head). Models 130M-2.8B on HuggingFace. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Mamba - Selective State Space Models
@@ -258,5 +255,5 @@ model = MambaLMHeadModel.from_pretrained("state-spaces/mamba-2.8b")
 - Docs: Repository README and wiki
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
