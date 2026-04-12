@@ -1,6 +1,8 @@
 ---
 name: react-useeffect
-description: React useEffect best practices from official docs. Use when writing/reviewing useEffect, useState for derived values, data fetching, or state synchronization. Teaches when NOT to use Effect and better alternatives.
+description: React useEffect best practices from official docs. Use when writing/reviewing useEffect, useState for derived values, data fetching, or state synchronization. Teaches when NOT to use Effect and better alternatives. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # You Might Not Need an Effect
@@ -53,5 +55,5 @@ Need to respond to something?
 - [Better Alternatives](./alternatives.md) - useMemo, key prop, lifting state, useSyncExternalStore
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
