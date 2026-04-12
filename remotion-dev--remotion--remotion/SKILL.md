@@ -1,8 +1,8 @@
 ---
 name: remotion-best-practices
-description: Best practices for Remotion - Video creation in React
+description: Best practices for Remotion - Video creation in React Use when this capability is needed.
 metadata:
-  tags: remotion, video, react, animation, composition
+  author: remotion-dev
 ---
 
 ## When to use
@@ -66,5 +66,5 @@ Read individual rule files for detailed explanations and code examples:
 - [rules/voiceover.md](rules/voiceover.md) - Adding AI-generated voiceover to Remotion compositions using ElevenLabs TTS
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/remotion-dev/remotion)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/remotion-dev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
