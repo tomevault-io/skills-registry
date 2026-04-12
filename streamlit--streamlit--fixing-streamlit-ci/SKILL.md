@@ -1,6 +1,8 @@
 ---
 name: fixing-streamlit-ci
-description: Analyze and fix failed GitHub Actions CI jobs for the current branch/PR. Use when CI checks fail, PR checks show failures, or you need to diagnose lint/type/test errors and verify fixes locally.
+description: Analyze and fix failed GitHub Actions CI jobs for the current branch/PR. Use when CI checks fail, PR checks show failures, or you need to diagnose lint/type/test errors and verify fixes locally. Use when this capability is needed.
+metadata:
+  author: streamlit
 ---
 
 # Fix CI Failures
@@ -265,5 +267,5 @@ gh run rerun {RUN_ID} --failed
 | Flaky test | Re-run: `gh run rerun {RUN_ID} --failed` |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/streamlit/streamlit)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/streamlit) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
