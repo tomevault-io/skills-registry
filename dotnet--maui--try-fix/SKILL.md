@@ -1,7 +1,8 @@
 ---
 name: try-fix
-description: Attempts ONE alternative fix for a bug, tests it empirically, and reports results. ALWAYS explores a DIFFERENT approach from existing PR fixes. Use when CI or an agent needs to try independent fix alternatives. Invoke with problem description, test command, target files, and optional hints.
-compatibility: Requires PowerShell, git, .NET MAUI build environment, Android/iOS device or emulator
+description: Attempts ONE alternative fix for a bug, tests it empirically, and reports results. ALWAYS explores a DIFFERENT approach from existing PR fixes. Use when CI or an agent needs to try independent fix alternatives. Invoke with problem description, test command, target files, and optional hints. Use when this capability is needed.
+metadata:
+  author: dotnet
 ---
 
 # Try Fix Skill
@@ -378,5 +379,5 @@ Provide structured output to the invoker:
 See [references/example-invocation.md](references/example-invocation.md) for a complete example with sample inputs.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/dotnet/maui)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
