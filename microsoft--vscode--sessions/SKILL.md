@@ -1,6 +1,8 @@
 ---
 name: sessions
-description: Agents window architecture — covers the agents-first app, layering, folder structure, chat widget, menus, contributions, entry points, and development guidelines. Use when implementing features or fixing issues in the Agents window.
+description: Agents window architecture — covers the agents-first app, layering, folder structure, chat widget, menus, contributions, entry points, and development guidelines. Use when implementing features or fixing issues in the Agents window. Use when this capability is needed.
+metadata:
+  author: microsoft
 ---
 
 When working on the Agents window (`src/vs/sessions/`), always follow these guidelines:
@@ -309,5 +311,5 @@ Views and contributions that should only appear in the agents window (not in reg
 5. Test sidebar footer renders with account widget
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/microsoft/vscode)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/microsoft) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
