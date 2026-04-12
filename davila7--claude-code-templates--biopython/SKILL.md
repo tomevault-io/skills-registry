@@ -1,6 +1,8 @@
 ---
 name: biopython
-description: "Primary Python toolkit for molecular biology. Preferred for Python-based PubMed/NCBI queries (Bio.Entrez), sequence manipulation, file parsing (FASTA, GenBank, FASTQ, PDB), advanced BLAST workflows, structures, phylogenetics. For quick BLAST, use gget. For direct REST API, use pubmed-database."
+description: Primary Python toolkit for molecular biology. Preferred for Python-based PubMed/NCBI queries (Bio.Entrez), sequence manipulation, file parsing (FASTA, GenBank, FASTQ, PDB), advanced BLAST workflows, structures, phylogenetics. For quick BLAST, use gget. For direct REST API, use pubmed-database. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Biopython: Computational Molecular Biology in Python
@@ -437,5 +439,5 @@ Biopython provides comprehensive tools for computational molecular biology. When
 The modular reference documentation ensures detailed, searchable information for every major Biopython capability.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
