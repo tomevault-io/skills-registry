@@ -1,11 +1,8 @@
 ---
 name: langsmith-observability
-description: LLM observability platform for tracing, evaluation, and monitoring. Use when debugging LLM applications, evaluating model outputs against datasets, monitoring production systems, or building systematic testing pipelines for AI applications.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Observability, LangSmith, Tracing, Evaluation, Monitoring, Debugging, Testing, LLM Ops, Production]
-dependencies: [langsmith>=0.2.0]
+description: LLM observability platform for tracing, evaluation, and monitoring. Use when debugging LLM applications, evaluating model outputs against datasets, monitoring production systems, or building systematic testing pipelines for AI applications. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # LangSmith - LLM Observability Platform
@@ -422,5 +419,5 @@ def my_function(data):
 - **License**: MIT
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
