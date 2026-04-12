@@ -1,6 +1,8 @@
 ---
 name: test-writer
-description: Generate comprehensive Vitest tests for code examples in JavaScript concept documentation pages, following project conventions and referencing source lines
+description: Generate comprehensive Vitest tests for code examples in JavaScript concept documentation pages, following project conventions and referencing source lines Use when this capability is needed.
+metadata:
+  author: leonardomso
 ---
 
 # Skill: Test Writer for Concept Pages
@@ -940,5 +942,5 @@ When writing tests for a concept page:
 Every testable code example in the documentation should have a corresponding test. If an example can't be tested, document why.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/leonardomso/33-js-concepts)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/leonardomso) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
