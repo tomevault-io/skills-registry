@@ -1,7 +1,8 @@
 ---
 name: ui-review
-description: |
-  Review UI changes against Swiss International Style design system. Checks colors, typography, borders, shadows, spacing, and anti-patterns. Use before committing any frontend UI changes.
+description: | Use when this capability is needed.
+metadata:
+  author: srbhr
 ---
 
 # UI Review
@@ -77,5 +78,5 @@ Flag immediately if found in changed files:
 Full design system: `docs/agent/design/style-guide.md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
