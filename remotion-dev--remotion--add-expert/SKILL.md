@@ -1,6 +1,8 @@
 ---
 name: add-expert
-description: Add a new expert to the Remotion experts page
+description: Add a new expert to the Remotion experts page Use when this capability is needed.
+metadata:
+  author: remotion-dev
 ---
 
 ## Steps
@@ -48,5 +50,5 @@ description: Add a new expert to the Remotion experts page
    This generates `packages/docs/static/generated/experts-<slug>.png`. Verify it says "Rendered experts-\<slug\>" (not "Existed").
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/remotion-dev/remotion)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/remotion-dev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
