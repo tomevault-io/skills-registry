@@ -1,10 +1,8 @@
 ---
 name: verify-tests-fail-without-fix
-description: Verifies UI tests catch the bug. Supports two modes - verify failure only (test creation) or full verification (test + fix validation).
+description: Verifies UI tests catch the bug. Supports two modes - verify failure only (test creation) or full verification (test + fix validation). Use when this capability is needed.
 metadata:
-  author: dotnet-maui
-  version: "1.0"
-compatibility: Requires git, PowerShell, and .NET SDK for building and running tests.
+  author: dotnet
 ---
 
 # Verify Tests Fail Without Fix
@@ -176,5 +174,5 @@ CustomAgentLogsTmp/
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/dotnet/maui)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
