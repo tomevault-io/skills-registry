@@ -1,17 +1,8 @@
 ---
 name: triaging-issues
-description: Triages GitHub issues by routing to oncall teams, applying labels, and closing questions. Use when processing new PyTorch issues or when asked to triage an issue.
-hooks:
-  PreToolUse:
-    - matcher: "mcp__github__issue_write|mcp__github__update_issue"
-      hooks:
-        - type: command
-          command: "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/skills/triaging-issues/scripts/validate_labels.py"
-  PostToolUse:
-    - matcher: "mcp__github__issue_write|mcp__github__update_issue|mcp__github__add_issue_comment|mcp__github__transfer_issue"
-      hooks:
-        - type: command
-          command: "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/skills/triaging-issues/scripts/add_bot_triaged.py"
+description: Triages GitHub issues by routing to oncall teams, applying labels, and closing questions. Use when processing new PyTorch issues or when asked to triage an issue. Use when this capability is needed.
+metadata:
+  author: pytorch
 ---
 
 # PyTorch Issue Triage Skill
@@ -258,5 +249,5 @@ If not transferred/redirected and not flagged for review, add `triaged`.
 **Note:** `bot-triaged` is automatically applied by a post-hook after any issue mutation.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/pytorch/pytorch)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/pytorch) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
