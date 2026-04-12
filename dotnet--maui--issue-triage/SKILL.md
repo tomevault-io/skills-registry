@@ -1,10 +1,8 @@
 ---
 name: issue-triage
-description: Queries and triages open GitHub issues that need attention. Helps identify issues needing milestones, labels, or investigation.
+description: Queries and triages open GitHub issues that need attention. Helps identify issues needing milestones, labels, or investigation. Use when this capability is needed.
 metadata:
-  author: dotnet-maui
-  version: "2.3"
-compatibility: Requires GitHub CLI (gh) installed and authenticated. Run `gh auth login` before using.
+  author: dotnet
 ---
 
 # Issue Triage Skill
@@ -243,5 +241,5 @@ cat CustomAgentLogsTmp/Triage/triage-*.json | jq '.Stats'
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/dotnet/maui)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
