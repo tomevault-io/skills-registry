@@ -1,13 +1,8 @@
 ---
 name: meeting-notes
-description: |
-  Structured meeting summaries with action items, decisions, and key discussion points.
-  Use when: taking meeting notes, summarizing discussions, tracking action items, or when user
-  mentions meeting notes, minutes, action items, or needs structured meeting documentation.
-license: MIT
+description: | Use when this capability is needed.
 metadata:
-  author: awesome-llm-apps
-  version: "1.0.0"
+  author: shubhamsaboo
 ---
 
 # Meeting Notes
@@ -77,5 +72,5 @@ Use this skill when:
 *Created for meeting documentation and action tracking*
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/shubhamsaboo/awesome-llm-apps)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shubhamsaboo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
