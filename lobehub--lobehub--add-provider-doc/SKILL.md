@@ -1,6 +1,8 @@
 ---
 name: add-provider-doc
-description: Guide for adding new AI provider documentation. Use when adding documentation for a new AI provider (like OpenAI, Anthropic, etc.), including usage docs, environment variables, Docker config, and image resources. Triggers on provider documentation tasks.
+description: Guide for adding new AI provider documentation. Use when adding documentation for a new AI provider (like OpenAI, Anthropic, etc.), including usage docs, environment variables, Docker config, and image resources. Triggers on provider documentation tasks. Use when this capability is needed.
+metadata:
+  author: lobehub
 ---
 
 # Adding New AI Provider Documentation
@@ -92,5 +94,5 @@ Update all Dockerfiles at the **end** of ENV section:
 - [ ] No real API keys in docs
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/lobehub/lobehub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lobehub) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
