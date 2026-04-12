@@ -1,6 +1,8 @@
 ---
 name: python-background-jobs
-description: Python background job patterns including task queues, workers, and event-driven architecture. Use when implementing async task processing, job queues, long-running operations, or decoupling work from request/response cycles.
+description: Python background job patterns including task queues, workers, and event-driven architecture. Use when implementing async task processing, job queues, long-running operations, or decoupling work from request/response cycles. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Python Background Jobs & Task Queues
@@ -364,5 +366,5 @@ def send_email(to: str, subject: str, body: str) -> None:
 10. **Monitor queue depth** - Alert on backlog growth
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
