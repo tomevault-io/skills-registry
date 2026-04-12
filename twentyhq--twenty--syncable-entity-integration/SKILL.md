@@ -1,6 +1,8 @@
 ---
 name: syncable-entity-integration
-description: Wire syncable entity services into NestJS modules, create service layer and resolvers for Twenty entities. Use when registering builders, validators, and action handlers in modules, creating business services, or exposing entities via GraphQL API with proper exception handling.
+description: Wire syncable entity services into NestJS modules, create service layer and resolvers for Twenty entities. Use when registering builders, validators, and action handlers in modules, creating business services, or exposing entities via GraphQL API with proper exception handling. Use when this capability is needed.
+metadata:
+  author: twentyhq
 ---
 
 # Syncable Entity: Integration (Step 5/6)
@@ -326,5 +328,5 @@ Once integration is complete, proceed to (**MANDATORY**):
 For complete workflow, see `@creating-syncable-entity` rule.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/twentyhq/twenty)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/twentyhq) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
