@@ -1,15 +1,8 @@
 ---
 name: ceo-advisor
-description: Executive leadership guidance for strategic decision-making, organizational development, and stakeholder management. Includes strategy analyzer, financial scenario modeling, board governance frameworks, and investor relations playbooks. Use when planning strategy, preparing board presentations, managing investors, developing organizational culture, making executive decisions, or when user mentions CEO, strategic planning, board meetings, investor updates, organizational leadership, or executive strategy.
-license: MIT
+description: Executive leadership guidance for strategic decision-making, organizational development, and stakeholder management. Includes strategy analyzer, financial scenario modeling, board governance frameworks, and investor relations playbooks. Use when planning strategy, preparing board presentations, managing investors, developing organizational culture, making executive decisions, or when user mentions CEO, strategic planning, board meetings, investor updates, organizational leadership, or executive strategy. Use when this capability is needed.
 metadata:
-  version: 1.0.0
-  author: Alireza Rezvani
-  category: c-level
-  domain: ceo-leadership
-  updated: 2025-10-20
-  python-tools: strategy_analyzer.py, financial_scenario_analyzer.py
-  frameworks: executive-decision-framework, board-governance, investor-relations
+  author: davila7
 ---
 
 # CEO Advisor
@@ -517,5 +510,5 @@ From `references/board_governance_investor_relations.md`:
 ⚠️ Personal burnout signs
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
