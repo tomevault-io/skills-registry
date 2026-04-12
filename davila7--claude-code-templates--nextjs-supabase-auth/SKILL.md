@@ -1,7 +1,8 @@
 ---
 name: nextjs-supabase-auth
-description: "Expert integration of Supabase Auth with Next.js App Router Use when: supabase auth next, authentication next.js, login supabase, auth middleware, protected route."
-source: vibeship-spawner-skills (Apache 2.0)
+description: Expert integration of Supabase Auth with Next.js App Router Use when: supabase auth next, authentication next.js, login supabase, auth middleware, protected route. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Next.js + Supabase Auth
@@ -56,5 +57,5 @@ Handle OAuth callback and exchange code for session
 Works well with: `nextjs-app-router`, `supabase-backend`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
