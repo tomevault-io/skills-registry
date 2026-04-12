@@ -1,7 +1,8 @@
 ---
 name: documentation-templates
-description: Documentation templates and structure guidelines. README, API docs, code comments, and AI-friendly documentation.
-allowed-tools: Read, Glob, Grep
+description: Documentation templates and structure guidelines. README, API docs, code comments, and AI-friendly documentation. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Documentation Templates
@@ -194,5 +195,5 @@ For RAG indexing:
 > **Remember:** Templates are starting points. Adapt to your project's needs.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
