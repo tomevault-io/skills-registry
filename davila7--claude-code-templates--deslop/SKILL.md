@@ -1,6 +1,8 @@
 ---
 name: deslop
-description: Remove AI-generated code slop from a branch. Use when cleaning up AI-generated code, removing unnecessary comments, defensive checks, or type casts. Checks diff against main and fixes style inconsistencies.
+description: Remove AI-generated code slop from a branch. Use when cleaning up AI-generated code, removing unnecessary comments, defensive checks, or type casts. Checks diff against main and fixes style inconsistencies. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Remove AI Code Slop
@@ -23,5 +25,5 @@ Check the diff against main and remove all AI-generated slop introduced in this 
 4. Report a 1-3 sentence summary of what was changed
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
