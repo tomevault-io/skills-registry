@@ -1,7 +1,8 @@
 ---
 name: fastapi
-description: |
-  Build Python APIs with FastAPI, Pydantic v2, and async patterns. Covers project structure, JWT auth, validation, database integration, and 7 documented error preventions. Use when creating Python APIs, implementing auth, or troubleshooting 422 validation, CORS, async blocking, or schema errors.
+description: | Use when this capability is needed.
+metadata:
+  author: srbhr
 ---
 
 # FastAPI Skill
@@ -66,5 +67,5 @@ Use `async def` + `await` for I/O. Use plain `def` for CPU-bound (runs in thread
 Complete skill with all code examples: `.claude/skills/fastapi/SKILL.md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
