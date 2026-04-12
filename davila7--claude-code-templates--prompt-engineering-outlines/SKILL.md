@@ -1,11 +1,8 @@
 ---
 name: outlines
-description: Guarantee valid JSON/XML/code structure during generation, use Pydantic models for type-safe outputs, support local models (Transformers, vLLM), and maximize inference speed with Outlines - dottxt.ai's structured generation library
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Prompt Engineering, Outlines, Structured Generation, JSON Schema, Pydantic, Local Models, Grammar-Based Generation, vLLM, Transformers, Type Safety]
-dependencies: [outlines, transformers, vllm, pydantic]
+description: Guarantee valid JSON/XML/code structure during generation, use Pydantic models for type-safe outputs, support local models (Transformers, vLLM), and maximize inference speed with Outlines - dottxt.ai's structured generation library Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Outlines: Structured Text Generation
@@ -650,5 +647,5 @@ class Article(BaseModel):
 - `references/examples.md` - Production-ready examples
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
