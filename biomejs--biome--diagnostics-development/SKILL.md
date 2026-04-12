@@ -1,7 +1,8 @@
 ---
 name: diagnostics-development
-description: Guide for creating high-quality, user-friendly diagnostics in Biome. Use when creating diagnostics for lint rules, adding helpful advice to error messages, implementing code frame displays, or improving diagnostic quality.
-compatibility: Designed for coding agents working on the Biome codebase (github.com/biomejs/biome).
+description: Guide for creating high-quality, user-friendly diagnostics in Biome. Use when creating diagnostics for lint rules, adding helpful advice to error messages, implementing code frame displays, or improving diagnostic quality. Use when this capability is needed.
+metadata:
+  author: biomejs
 ---
 
 ## Purpose
@@ -381,5 +382,5 @@ impl Advices for MyAdvice {
 - Examples: Search for `#[derive(Diagnostic)]` in codebase
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/biomejs/biome)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/biomejs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
