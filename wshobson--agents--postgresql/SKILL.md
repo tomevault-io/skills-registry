@@ -1,6 +1,8 @@
 ---
 name: postgresql-table-design
 description: Use this skill when designing or reviewing a PostgreSQL-specific schema. Covers best-practices, data types, indexing, constraints, performance patterns, and advanced features
+metadata:
+  author: wshobson
 ---
 
 # PostgreSQL Table Design
@@ -202,5 +204,5 @@ CREATE INDEX profiles_attrs_gin ON profiles USING GIN (attrs);
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
