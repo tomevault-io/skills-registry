@@ -1,6 +1,8 @@
 ---
 name: testing-python
-description: Write and evaluate effective Python tests using pytest. Use when writing tests, reviewing test code, debugging test failures, or improving test coverage. Covers test design, fixtures, parameterization, mocking, and async testing.
+description: Write and evaluate effective Python tests using pytest. Use when writing tests, reviewing test code, debugging test failures, or improving test coverage. Covers test design, fixtures, parameterization, mocking, and async testing. Use when this capability is needed.
+metadata:
+  author: jlowin
 ---
 
 # Writing Effective Python Tests
@@ -220,5 +222,5 @@ Before submitting tests:
 - [ ] Separate tests for different behaviors
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/jlowin/fastmcp)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/jlowin) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
