@@ -1,7 +1,8 @@
 ---
 name: jpa-patterns
-description: JPA/Hibernate patterns for entity design, relationships, query optimization, transactions, auditing, indexing, pagination, and pooling in Spring Boot.
-origin: ECC
+description: JPA/Hibernate patterns for entity design, relationships, query optimization, transactions, auditing, indexing, pagination, and pooling in Spring Boot. Use when this capability is needed.
+metadata:
+  author: affaan-m
 ---
 
 # JPA/Hibernate Patterns
@@ -151,5 +152,5 @@ spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
 **Remember**: Keep entities lean, queries intentional, and transactions short. Prevent N+1 with fetch strategies and projections, and index for your read/write paths.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/affaan-m/everything-claude-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
