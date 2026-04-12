@@ -1,7 +1,8 @@
 ---
 name: peer-review
-description: "Systematic peer review toolkit. Evaluate methodology, statistics, design, reproducibility, ethics, figure integrity, reporting standards, for manuscript and grant review across disciplines."
-allowed-tools: [Read, Write, Edit, Bash]
+description: Systematic peer review toolkit. Evaluate methodology, statistics, design, reproducibility, ethics, figure integrity, reporting standards, for manuscript and grant review across disciplines. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Scientific Critical Evaluation and Peer Review
@@ -565,5 +566,5 @@ Before finalizing the review, verify:
 - [ ] Recommendation is consistent with identified issues
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
