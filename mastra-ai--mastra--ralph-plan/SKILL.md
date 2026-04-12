@@ -1,7 +1,8 @@
 ---
 name: ralph-plan
-description: Interactive planning assistant that helps create focused, well-structured ralph-loop commands through collaborative conversation
-model: claude-opus-4-5
+description: Interactive planning assistant that helps create focused, well-structured ralph-loop commands through collaborative conversation Use when this capability is needed.
+metadata:
+  author: mastra-ai
 ---
 
 # Ralph Plan - Interactive Ralph Command Builder
@@ -165,5 +166,5 @@ Output <promise>COMPLETE</promise> when all tasks are done.
 Begin by asking the user what they want to accomplish. Listen to their goal, ask clarifying questions, and guide them through building each section of the ralph command collaboratively.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mastra-ai/mastra)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mastra-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
