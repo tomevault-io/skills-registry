@@ -1,6 +1,8 @@
 ---
 name: feature-design-assistant
-description: "Turn ideas into fully formed designs and specs through natural collaborative dialogue. Use when planning new features, designing architecture, or making significant changes to the codebase."
+description: Turn ideas into fully formed designs and specs through natural collaborative dialogue. Use when planning new features, designing architecture, or making significant changes to the codebase. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Feature Design Assistant
@@ -368,5 +370,5 @@ Write to `docs/designs/YYYY-MM-DD-<topic>-design.md`:
 - **YAGNI ruthlessly** - Remove unnecessary features from designs
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
