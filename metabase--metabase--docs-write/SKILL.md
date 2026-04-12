@@ -1,7 +1,8 @@
 ---
 name: docs-write
-description: Write documentation following Metabase's conversational, clear, and user-focused style. Use when creating or editing documentation files (markdown, MDX, etc.).
-allowed-tools: Read, Write, Grep, Bash, Glob
+description: Write documentation following Metabase's conversational, clear, and user-focused style. Use when creating or editing documentation files (markdown, MDX, etc.). Use when this capability is needed.
+metadata:
+  author: metabase
 ---
 
 # Documentation Writing Skill
@@ -96,5 +97,5 @@ Not: "(remember to run X before Y...)" buried in a paragraph.
 | Check out [the docs](link) | Click [here](link) |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/metabase/metabase)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/metabase) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
