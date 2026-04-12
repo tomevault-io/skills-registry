@@ -1,11 +1,8 @@
 ---
 name: content-design
-description: >
-  Product content designer for UI copy. Use when writing, reviewing, or auditing
-  user-facing text: button labels, error messages, tooltips, empty states, modal copy,
-  placeholder text, confirmation dialogs, onboarding flows, or i18n strings.
-  Also use when the user says /copy, /content, or /ux-copy.
-allowed-tools: Read, Grep, Glob, Edit
+description: > Use when this capability is needed.
+metadata:
+  author: n8n-io
 ---
 
 # n8n content design
@@ -330,5 +327,5 @@ Before finalizing any copy, verify:
 - [ ] Placeholders use realistic examples, not label echoes
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/n8n-io/n8n)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/n8n-io) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
