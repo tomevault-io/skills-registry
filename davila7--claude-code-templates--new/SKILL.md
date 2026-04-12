@@ -1,12 +1,8 @@
 ---
 name: railway-new
-description: Create Railway projects, services, and databases with proper configuration. Use when user says "setup", "deploy to railway", "initialize", "create project", "create service", or wants to deploy from GitHub. Handles initial setup AND adding services to existing projects. For databases, use railway-railway-database skill instead.
-version: 1.0.0
-author: Railway
-license: MIT
-tags: [Railway, Project, Service, Setup, Initialize, Deploy, Infrastructure, Scaffolding]
-dependencies: [railway-cli]
-allowed-tools: Bash(railway:*), Bash(which:*), Bash(command:*), Bash(npm:*), Bash(npx:*)
+description: Create Railway projects, services, and databases with proper configuration. Use when user says "setup", "deploy to railway", "initialize", "create project", "create service", or wants to deploy from GitHub. Handles initial setup AND adding services to existing projects. For databases, use railway-railway-database skill instead. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # New Project / Service / Database
@@ -494,5 +490,5 @@ CWD: ~/projects/my-project/my-app (parent already linked to "my-project")
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
