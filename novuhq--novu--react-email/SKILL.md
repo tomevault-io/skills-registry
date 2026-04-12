@@ -518,5 +518,5 @@ See [references/PATTERNS.md](references/PATTERNS.md) for complete examples inclu
 - Common Patterns: [references/PATTERNS.md](references/PATTERNS.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/novuhq/novu)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/novuhq) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
