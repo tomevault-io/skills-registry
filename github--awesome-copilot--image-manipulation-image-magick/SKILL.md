@@ -1,7 +1,8 @@
 ---
 name: image-manipulation-image-magick
-description: Process and manipulate images using ImageMagick. Supports resizing, format conversion, batch processing, and retrieving image metadata. Use when working with images, creating thumbnails, resizing wallpapers, or performing batch image operations.
-compatibility: Requires ImageMagick installed and available as `magick` on PATH. Cross-platform examples provided for PowerShell (Windows) and Bash (Linux/macOS).
+description: Process and manipulate images using ImageMagick. Supports resizing, format conversion, batch processing, and retrieving image metadata. Use when working with images, creating thumbnails, resizing wallpapers, or performing batch image operations. Use when this capability is needed.
+metadata:
+  author: github
 ---
 
 # Image Manipulation with ImageMagick
@@ -252,5 +253,5 @@ magick "$img" -resize 427x240 "thumbnails/thumb_$filename"
 - On older Linux systems, use `convert` instead of `magick` (ImageMagick 6.x vs 7.x)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
