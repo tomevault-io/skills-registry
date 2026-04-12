@@ -1,7 +1,8 @@
 ---
 name: terraform-azurerm-set-diff-analyzer
-description: Analyze Terraform plan JSON output for AzureRM Provider to distinguish between false-positive diffs (order-only changes in Set-type attributes) and actual resource changes. Use when reviewing terraform plan output for Azure resources like Application Gateway, Load Balancer, Firewall, Front Door, NSG, and other resources with Set-type attributes that cause spurious diffs due to internal ordering changes.
-license: MIT
+description: Analyze Terraform plan JSON output for AzureRM Provider to distinguish between false-positive diffs (order-only changes in Set-type attributes) and actual resource changes. Use when reviewing terraform plan output for Azure resources like Application Gateway, Load Balancer, Firewall, Front Door, NSG, and other resources with Set-type attributes that cause spurious diffs due to internal ordering changes. Use when this capability is needed.
+metadata:
+  author: github
 ---
 
 # Terraform AzureRM Set Diff Analyzer
@@ -48,5 +49,5 @@ python scripts/analyze_plan.py plan.json
 - [references/azurerm_set_attributes.md](references/azurerm_set_attributes.md) - Supported resources and attributes
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
