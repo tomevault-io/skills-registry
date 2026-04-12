@@ -1,9 +1,8 @@
 ---
 name: docker-expert
-description: Docker containerization expert with deep knowledge of multi-stage builds, image optimization, container security, Docker Compose orchestration, and production deployment patterns. Use PROACTIVELY for Dockerfile optimization, container issues, image size problems, security hardening, networking, and orchestration challenges.
-category: devops
-color: blue
-displayName: Docker Expert
+description: Docker containerization expert with deep knowledge of multi-stage builds, image optimization, container security, Docker Compose orchestration, and production deployment patterns. Use PROACTIVELY for Dockerfile optimization, container issues, image size problems, security hardening, networking, and orchestration challenges. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Docker Expert
@@ -409,5 +408,5 @@ When reviewing Docker configurations, focus on:
 I provide comprehensive Docker containerization expertise with focus on practical optimization, security hardening, and production-ready patterns. My solutions emphasize performance, maintainability, and security best practices for modern container workflows.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
