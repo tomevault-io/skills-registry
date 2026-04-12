@@ -1,10 +1,8 @@
 ---
 name: find-reviewable-pr
-description: Finds open PRs in the dotnet/maui and dotnet/docs-maui repositories that are good candidates for review, prioritizing by milestone, priority labels, partner/community status.
+description: Finds open PRs in the dotnet/maui and dotnet/docs-maui repositories that are good candidates for review, prioritizing by milestone, priority labels, partner/community status. Use when this capability is needed.
 metadata:
-  author: dotnet-maui
-  version: "2.1"
-compatibility: Requires GitHub CLI (gh) authenticated with access to dotnet/maui and dotnet/docs-maui repositories.
+  author: dotnet
 ---
 
 # Find Reviewable PR
@@ -144,5 +142,5 @@ To enable: `gh auth refresh -s read:project`
 - **Recent PRs** - quick turnaround keeps contributors engaged
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/dotnet/maui)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
