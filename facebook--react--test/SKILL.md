@@ -1,6 +1,8 @@
 ---
 name: test
 description: Use when you need to run tests for React core. Supports source, www, stable, and experimental channels.
+metadata:
+  author: facebook
 ---
 
 Run tests for the React codebase.
@@ -46,5 +48,5 @@ Common Mistakes:
 - **Test skipped unexpectedly** - Check for `@gate` pragma; see `feature-flags` skill.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/facebook/react)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/facebook) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
