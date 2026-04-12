@@ -1,6 +1,8 @@
 ---
 name: test-skill
-description: 当用户需要编写一个单元测试时，触发该 skill，编写单元测试。
+description: 当用户需要编写一个单元测试时，触发该 skill，编写单元测试。 Use when this capability is needed.
+metadata:
+  author: labring
 ---
 
 ## When to Use This Skill
@@ -100,5 +102,5 @@ pnpm test <file-path> <test-name>
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/labring/fastgpt)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/labring) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
