@@ -1,6 +1,8 @@
 ---
 name: mutation-testing
-description: Run mutation testing on a Clojure namespace, generate tests to kill surviving mutations, and open draft PRs with Linear issue tracking.
+description: Run mutation testing on a Clojure namespace, generate tests to kill surviving mutations, and open draft PRs with Linear issue tracking. Use when this capability is needed.
+metadata:
+  author: metabase
 ---
 
 # Mutation Testing Skill
@@ -114,5 +116,5 @@ To inspect what Claude will see without invoking it:
 - **Project ID**: If set (via `set-config!` or `run!` opts), `run!` reuses the existing Linear project instead of creating a new one
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/metabase/metabase)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/metabase) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
