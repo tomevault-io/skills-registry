@@ -1,6 +1,8 @@
 ---
 name: agent-sessions-layout
-description: Agents workbench layout — covers the fixed layout structure, grid configuration, part visibility, editor modal, titlebar, sidebar footer, and implementation requirements. Use when implementing features or fixing issues in the Agents workbench layout.
+description: Agents workbench layout — covers the fixed layout structure, grid configuration, part visibility, editor modal, titlebar, sidebar footer, and implementation requirements. Use when implementing features or fixing issues in the Agents workbench layout. Use when this capability is needed.
+metadata:
+  author: microsoft
 ---
 
 When working on the Agents workbench layout, always follow these guidelines:
@@ -83,5 +85,5 @@ After modifying layout code:
 5. Verify sidebar footer renders with account widget
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/microsoft/vscode)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/microsoft) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
