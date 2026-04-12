@@ -1,6 +1,8 @@
 ---
 name: competitive-ads-extractor
 description: Extracts and analyzes competitors' ads from ad libraries (Facebook, LinkedIn, etc.) to understand what messaging, problems, and creative approaches are working. Helps inspire and improve your own ad campaigns.
+metadata:
+  author: composiohq
 ---
 
 # Competitive Ads Extractor
@@ -292,5 +294,5 @@ Which gets more engagement? (if data available)
 - Inspiring social media content
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/composiohq/awesome-claude-skills)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/composiohq) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
