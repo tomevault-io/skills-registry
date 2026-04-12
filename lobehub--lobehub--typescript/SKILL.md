@@ -1,6 +1,8 @@
 ---
 name: typescript
-description: TypeScript code style and optimization guidelines. MUST READ before writing or modifying any TypeScript code (.ts, .tsx, .mts files). Also use when reviewing code quality or implementing type-safe patterns. Triggers on any TypeScript file edit, code style discussions, or type safety questions.
+description: TypeScript code style and optimization guidelines. MUST READ before writing or modifying any TypeScript code (.ts, .tsx, .mts files). Also use when reviewing code quality or implementing type-safe patterns. Triggers on any TypeScript file edit, code style discussions, or type safety questions. Use when this capability is needed.
+metadata:
+  author: lobehub
 ---
 
 # TypeScript Code Style Guide
@@ -67,5 +69,5 @@ description: TypeScript code style and optimization guidelines. MUST READ before
 - Always log the error in `.catch()` callbacks — silent `.catch(() => fallback)` swallows failures and makes debugging impossible
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/lobehub/lobehub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lobehub) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
