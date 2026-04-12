@@ -1,6 +1,8 @@
 ---
 name: python-code-style
-description: Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards.
+description: Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Python Code Style & Documentation
@@ -360,5 +362,5 @@ pytest
 10. **Target Python 3.10+** - For new projects, Python 3.12+ is recommended for modern language features
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
