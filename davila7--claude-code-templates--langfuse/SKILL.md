@@ -1,7 +1,8 @@
 ---
 name: langfuse
-description: "Expert in Langfuse - the open-source LLM observability platform. Covers tracing, prompt management, evaluation, datasets, and integration with LangChain, LlamaIndex, and OpenAI. Essential for debugging, monitoring, and improving LLM applications in production. Use when: langfuse, llm observability, llm tracing, prompt management, llm evaluation."
-source: vibeship-spawner-skills (Apache 2.0)
+description: Expert in Langfuse - the open-source LLM observability platform. Covers tracing, prompt management, evaluation, datasets, and integration with LangChain, LlamaIndex, and OpenAI. Essential for debugging, monitoring, and improving LLM applications in production. Use when: langfuse, llm observability, llm tracing, prompt management, llm evaluation. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Langfuse
@@ -238,5 +239,5 @@ Add relevant metadata.
 Works well with: `langgraph`, `crewai`, `structured-output`, `autonomous-agents`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
