@@ -1,6 +1,8 @@
 ---
 name: verify
 description: Use when you want to validate changes before committing, or when you need to check all React contribution requirements.
+metadata:
+  author: facebook
 ---
 
 # Verification
@@ -24,5 +26,5 @@ Then run these with subagents in parallel:
 If all pass, show success summary. On failure, stop immediately and report the issue with suggested fixes.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/facebook/react)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/facebook) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
