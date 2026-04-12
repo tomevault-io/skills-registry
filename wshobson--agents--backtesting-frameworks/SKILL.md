@@ -1,6 +1,8 @@
 ---
 name: backtesting-frameworks
-description: Build robust backtesting systems for trading strategies with proper handling of look-ahead bias, survivorship bias, and transaction costs. Use when developing trading algorithms, validating strategies, or building backtesting infrastructure.
+description: Build robust backtesting systems for trading strategies with proper handling of look-ahead bias, survivorship bias, and transaction costs. Use when developing trading algorithms, validating strategies, or building backtesting infrastructure. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Backtesting Frameworks
@@ -657,5 +659,5 @@ def calculate_metrics(returns: pd.Series, rf_rate: float = 0.02) -> Dict[str, fl
 - **Don't ignore capacity** - Market impact matters
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
