@@ -1,12 +1,8 @@
 ---
 name: railway-environment
-description: Query, stage, and apply configuration changes for Railway environments. Use for ANY variable or env var operations, service configuration (source, build settings, deploy settings), lifecycle (delete service), and applying changes. Prefer over railway-status skill for any configuration or variable queries.
-version: 1.0.0
-author: Railway
-license: MIT
-tags: [Railway, Environment, Configuration, Variables, Build, Deploy, Infrastructure, Settings]
-dependencies: [railway-cli]
-allowed-tools: Bash(railway:*)
+description: Query, stage, and apply configuration changes for Railway environments. Use for ANY variable or env var operations, service configuration (source, build settings, deploy settings), lifecycle (delete service), and applying changes. Prefer over railway-status skill for any configuration or variable queries. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Environment Configuration
@@ -401,5 +397,5 @@ No project linked. Run `railway link` to link a project.
 - **Deploy local code**: Use railway-deploy skill
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
