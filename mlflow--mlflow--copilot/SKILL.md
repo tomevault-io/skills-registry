@@ -1,13 +1,8 @@
 ---
 name: copilot
-description: Hand off a task to GitHub Copilot.
-allowed-tools:
-  - Bash(gh agent-task create:*)
-  - Bash(gh agent-task list:*)
-  - Bash(gh agent-task view:*)
-  - Bash(bash .claude/skills/copilot/poll.sh *)
-  - Bash(bash .claude/skills/copilot/approve.sh *)
-  - Bash(gh api:*)
+description: Hand off a task to GitHub Copilot. Use when this capability is needed.
+metadata:
+  author: mlflow
 ---
 
 ## Examples
@@ -70,5 +65,5 @@ bash .claude/skills/copilot/approve.sh "<owner>/<repo>" <pr_number>
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mlflow/mlflow)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mlflow) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
