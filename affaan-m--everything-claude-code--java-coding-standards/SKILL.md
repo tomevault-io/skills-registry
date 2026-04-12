@@ -1,7 +1,8 @@
 ---
 name: java-coding-standards
-description: "Java coding standards for Spring Boot services: naming, immutability, Optional usage, streams, exceptions, generics, and project layout."
-origin: ECC
+description: Java coding standards for Spring Boot services: naming, immutability, Optional usage, streams, exceptions, generics, and project layout. Use when this capability is needed.
+metadata:
+  author: affaan-m
 ---
 
 # Java Coding Standards
@@ -147,5 +148,5 @@ log.error("failed_fetch_market slug={}", slug, ex);
 **Remember**: Keep code intentional, typed, and observable. Optimize for maintainability over micro-optimizations unless proven necessary.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/affaan-m/everything-claude-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
