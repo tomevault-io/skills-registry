@@ -1,8 +1,8 @@
 ---
 name: quality-bun-feature-delivery
-description: Enforce tight Codex/Claude delivery loop with Bun-first testing, skill sync/reload, and commit quality gates.
-version: 2
-source: flow-default
+description: Enforce tight Codex/Claude delivery loop with Bun-first testing, skill sync/reload, and commit quality gates. Use when this capability is needed.
+metadata:
+  author: nikivdev
 ---
 
 # Quality Bun Feature Delivery
@@ -80,5 +80,5 @@ quality-bun-feature-delivery = 2
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/nikivdev/flow)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nikivdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
