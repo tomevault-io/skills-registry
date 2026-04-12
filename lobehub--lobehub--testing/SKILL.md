@@ -1,6 +1,8 @@
 ---
 name: testing
-description: Testing guide using Vitest. Use when writing tests (.test.ts, .test.tsx), fixing failing tests, improving test coverage, or debugging test issues. Triggers on test creation, test debugging, mock setup, or test-related questions.
+description: Testing guide using Vitest. Use when writing tests (.test.ts, .test.tsx), fixing failing tests, improving test coverage, or debugging test issues. Triggers on test creation, test debugging, mock setup, or test-related questions. Use when this capability is needed.
+metadata:
+  author: lobehub
 ---
 
 # LobeHub Testing Guide
@@ -119,5 +121,5 @@ When tests fail due to implementation changes (not bugs), evaluate before blindl
 4. **Async issues**: Wrap state changes in `act()` for React hooks
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/lobehub/lobehub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lobehub) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
