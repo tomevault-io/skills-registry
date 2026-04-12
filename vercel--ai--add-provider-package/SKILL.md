@@ -1,8 +1,8 @@
 ---
 name: add-provider-package
-description: Guide for adding new AI provider packages to the AI SDK. Use when creating a new @ai-sdk/<provider> package to integrate an AI service into the SDK.
+description: Guide for adding new AI provider packages to the AI SDK. Use when creating a new @ai-sdk/<provider> package to integrate an AI service into the SDK. Use when this capability is needed.
 metadata:
-  internal: true
+  author: vercel
 ---
 
 ## Adding a New Provider Package
@@ -364,5 +364,5 @@ If `main` is set up to publish `beta` releases, no further action is necessary. 
 - [Capture API Response Test Fixture](../capture-api-response-test-fixture/SKILL.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/vercel/ai)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vercel) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
