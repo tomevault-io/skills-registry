@@ -1,6 +1,8 @@
 ---
 name: modern-tools
 description: Use when working with tools-core utilities, rspack integration, or modern tooling. Covers logging, npm management, process spawning, git helpers, and Meteor app configuration APIs.
+metadata:
+  author: meteor
 ---
 
 # Modern Tools
@@ -246,5 +248,5 @@ WebApp.onListening(() => console.log('Server ready'));
 **Dependencies:** express@5.1.0, cookie-parser@1.4.6, compression@1.7.4, errorhandler@1.5.1
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/meteor/meteor)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/meteor) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
