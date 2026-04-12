@@ -1,6 +1,8 @@
 ---
 name: quality-manager-qms-iso13485
-description: ISO 13485 Quality Management System specialist for medical device companies. Provides QMS implementation, maintenance, process optimization, and compliance expertise. Use for QMS design, documentation control, management review, internal auditing, corrective actions, and ISO 13485 certification activities.
+description: ISO 13485 Quality Management System specialist for medical device companies. Provides QMS implementation, maintenance, process optimization, and compliance expertise. Use for QMS design, documentation control, management review, internal auditing, corrective actions, and ISO 13485 certification activities. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Senior Quality Manager - QMS ISO 13485 Specialist
@@ -186,5 +188,5 @@ Monitor these critical quality metrics:
 - `process-flowcharts/`: Visual process documentation templates
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
