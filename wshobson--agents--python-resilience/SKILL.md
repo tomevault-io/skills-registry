@@ -1,6 +1,8 @@
 ---
 name: python-resilience
-description: Python resilience patterns including automatic retries, exponential backoff, timeouts, and fault-tolerant decorators. Use when adding retry logic, implementing timeouts, building fault-tolerant services, or handling transient failures.
+description: Python resilience patterns including automatic retries, exponential backoff, timeouts, and fault-tolerant decorators. Use when adding retry logic, implementing timeouts, building fault-tolerant services, or handling transient failures. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Python Resilience Patterns
@@ -376,5 +378,5 @@ async def get_recommendations(user_id: str) -> list[str]:
 10. **Monitor retry rates** - High retry rates indicate underlying issues
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
