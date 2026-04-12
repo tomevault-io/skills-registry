@@ -1,14 +1,8 @@
 ---
 name: content-creator
-description: |
-  Creates engaging content for blogs, social media, and marketing materials with audience focus.
-  Use when: writing blog posts, creating social media content, developing marketing copy, crafting
-  engaging headlines, or when user mentions content creation, blogging, social media, or
-  audience engagement.
-license: MIT
+description: | Use when this capability is needed.
 metadata:
-  author: awesome-llm-apps
-  version: "1.0.0"
+  author: shubhamsaboo
 ---
 
 # Content Creator
@@ -237,5 +231,5 @@ What's your #1 remote productivity hack? Drop it below 👇
 - Appropriate hashtags for reach
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/shubhamsaboo/awesome-llm-apps)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shubhamsaboo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
