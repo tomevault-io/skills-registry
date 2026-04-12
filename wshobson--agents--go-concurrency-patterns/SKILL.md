@@ -1,6 +1,8 @@
 ---
 name: go-concurrency-patterns
-description: Master Go concurrency with goroutines, channels, sync primitives, and context. Use when building concurrent Go applications, implementing worker pools, or debugging race conditions.
+description: Master Go concurrency with goroutines, channels, sync primitives, and context. Use when building concurrent Go applications, implementing worker pools, or debugging race conditions. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Go Concurrency Patterns
@@ -651,5 +653,5 @@ go run -race main.go
 - **Don't use time.Sleep for sync** - Use proper primitives
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
