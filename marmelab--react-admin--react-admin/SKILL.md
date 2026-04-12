@@ -1,6 +1,8 @@
 ---
 name: react-admin
-description: This skill should be used when building, modifying, or debugging a react-admin application — including creating resources, lists, forms, data fetching, authentication, relationships between entities, custom pages, or any CRUD admin interface built with react-admin.
+description: This skill should be used when building, modifying, or debugging a react-admin application — including creating resources, lists, forms, data fetching, authentication, relationships between entities, custom pages, or any CRUD admin interface built with react-admin. Use when this capability is needed.
+metadata:
+  author: marmelab
 ---
 
 # React-Admin Development Guide
@@ -227,5 +229,5 @@ refresh();                         // Invalidate all queries
 - Prefer `<CanAccess>` and `useCanAccess` for authorization checks
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/marmelab/react-admin)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/marmelab) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
