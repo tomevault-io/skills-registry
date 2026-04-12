@@ -1,8 +1,8 @@
 ---
 name: capture-api-response-test-fixture
-description: Capture API response test fixture.
+description: Capture API response test fixture. Use when this capability is needed.
 metadata:
-  internal: true
+  author: vercel
 ---
 
 ### API Response Test Fixtures
@@ -54,5 +54,5 @@ run(async () => {
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/vercel/ai)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vercel) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
