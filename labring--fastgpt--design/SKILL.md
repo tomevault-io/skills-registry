@@ -1,6 +1,8 @@
 ---
 name: fastgpt-design-skill
-description: 当用户需要设计 FastGPT 的代码时，可调用此 Skill。
+description: 当用户需要设计 FastGPT 的代码时，可调用此 Skill。 Use when this capability is needed.
+metadata:
+  author: labring
 ---
 
 ## 目录
@@ -29,5 +31,5 @@ description: 当用户需要设计 FastGPT 的代码时，可调用此 Skill。
 * [日志记录设计文档](./common/logger/index.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/labring/fastgpt)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/labring) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
