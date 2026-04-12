@@ -1,7 +1,8 @@
 ---
 name: prettier-compare
-description: Compares code formatting and formatting IR between Biome and Prettier to ensure that Biome's formatting is consistent and correct. Use when validating formatter changes, debugging formatting differences, or comparing output for JavaScript, TypeScript, CSS, or other languages.
-compatibility: Designed for coding agents working on the Biome codebase (github.com/biomejs/biome). Requires bun and wasm-bindgen-cli.
+description: Compares code formatting and formatting IR between Biome and Prettier to ensure that Biome's formatting is consistent and correct. Use when validating formatter changes, debugging formatting differences, or comparing output for JavaScript, TypeScript, CSS, or other languages. Use when this capability is needed.
+metadata:
+  author: biomejs
 ---
 
 ## Purpose
@@ -49,5 +50,5 @@ echo 'const x = 1' | bun packages/prettier-compare/bin/prettier-compare.js --reb
 - "\n" does not get escaped into a newline when passed as a CLI argument. You should write a literal newline or use a file instead.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/biomejs/biome)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/biomejs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
