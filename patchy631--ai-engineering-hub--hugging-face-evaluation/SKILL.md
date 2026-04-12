@@ -1,6 +1,6 @@
 ---
 name: hugging-face-evaluation
-description: This skill provides tools to add structured evaluation results to Hugging Face model cards. It supports multiple methods for adding evaluation data:
+description: This skill provides tools to add structured evaluation results to Hugging Face model cards. It supports multiple methods for adding evaluation data: Use when this capability is needed.
 metadata:
   author: patchy631
 ---
@@ -651,5 +651,5 @@ def update_model_evaluations(repo_id, readme_content):
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/patchy631/ai-engineering-hub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/patchy631) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
