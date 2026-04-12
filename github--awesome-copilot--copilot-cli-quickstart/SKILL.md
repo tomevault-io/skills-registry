@@ -1,12 +1,8 @@
 ---
 name: copilot-cli-quickstart
-description: >
-  Use this skill when someone wants to learn GitHub Copilot CLI from scratch.
-  Offers interactive step-by-step tutorials with separate Developer and
-  Non-Developer tracks, plus on-demand Q&A. Just say "start tutorial" or
-  ask a question! Note: This skill targets GitHub Copilot CLI specifically
-  and uses CLI-specific tools (ask_user, sql, fetch_copilot_cli_documentation).
-allowed-tools: ask_user, sql, fetch_copilot_cli_documentation
+description: > Use when this capability is needed.
+metadata:
+  author: github
 ---
 
 # 🚀 Copilot CLI Quick Start — Your Friendly Terminal Tutor
@@ -774,5 +770,5 @@ Always use the **plain English** version first, then mention the technical term:
 - 🛤️ **Respect the track** — don't show developer-only content to non-developers (and vice versa) unless they ask
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
