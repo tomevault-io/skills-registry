@@ -1,6 +1,8 @@
 ---
 name: api-development
-description: FastGPT API 开发规范。重点强调使用 zod schema 定义入参和出参,在 API 文档中声明路由信息,编写对应的 OpenAPI 文档,以及在 API 路由中使用 schema.parse 进行验证。
+description: FastGPT API 开发规范。重点强调使用 zod schema 定义入参和出参,在 API 文档中声明路由信息,编写对应的 OpenAPI 文档,以及在 API 路由中使用 schema.parse 进行验证。 Use when this capability is needed.
+metadata:
+  author: labring
 ---
 
 # FastGPT API 开发规范
@@ -757,5 +759,5 @@ export type UserType = z.infer<typeof UserSchema>;
 **Maintainer**: FastGPT Development Team
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/labring/fastgpt)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/labring) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
