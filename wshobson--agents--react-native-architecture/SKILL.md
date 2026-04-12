@@ -1,6 +1,8 @@
 ---
 name: react-native-architecture
-description: Build production React Native apps with Expo, navigation, native modules, offline sync, and cross-platform patterns. Use when developing mobile apps, implementing native integrations, or architecting React Native projects.
+description: Build production React Native apps with Expo, navigation, native modules, offline sync, and cross-platform patterns. Use when developing mobile apps, implementing native integrations, or architecting React Native projects. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # React Native Architecture
@@ -666,5 +668,5 @@ eas update --branch production --message "Bug fixes"
 - **Don't skip error boundaries** - Mobile crashes are unforgiving
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
