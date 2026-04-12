@@ -1,8 +1,8 @@
 ---
 name: chat-with-agent
-description: Sends a message to an Agent Builder agent and displays the response including reasoning and tool calls. Use when asked to chat with, test, or talk to a Kibana agent.
-allowed-tools: Bash, Read, Glob, Grep
-argument-hint: [agent-id-or-name]
+description: Sends a message to an Agent Builder agent and displays the response including reasoning and tool calls. Use when asked to chat with, test, or talk to a Kibana agent. Use when this capability is needed.
+metadata:
+  author: elastic
 ---
 
 # Chat with an Agent Builder Agent
@@ -63,5 +63,5 @@ Relay the agent's response to the user. Highlight:
 - To override auto-detection, pass `--kibana-url` to the chat script
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elastic/kibana)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elastic) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
