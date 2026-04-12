@@ -1,6 +1,8 @@
 ---
 name: fact-check
-description: Verify technical accuracy of JavaScript concept pages by checking code examples, MDN/ECMAScript compliance, and external resources to prevent misinformation
+description: Verify technical accuracy of JavaScript concept pages by checking code examples, MDN/ECMAScript compliance, and external resources to prevent misinformation Use when this capability is needed.
+metadata:
+  author: leonardomso
 ---
 
 # Skill: JavaScript Fact Checker
@@ -649,5 +651,5 @@ When fact-checking a concept page:
 **Remember:** Our readers trust us to teach them correct JavaScript. A single piece of misinformation can create confusion that takes years to unlearn. Take fact-checking seriously.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/leonardomso/33-js-concepts)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/leonardomso) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
