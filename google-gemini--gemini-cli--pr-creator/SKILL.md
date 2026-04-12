@@ -1,8 +1,8 @@
 ---
 name: pr-creator
-description:
-  Use this skill when asked to create a pull request (PR). It ensures all PRs
-  follow the repository's established templates and standards.
+description: This skill guides the creation of high-quality Pull Requests that adhere to the Use when this capability is needed.
+metadata:
+  author: google-gemini
 ---
 
 # Pull Request Creator
@@ -93,5 +93,5 @@ Follow these steps to create a Pull Request:
 - **Accuracy**: Don't check boxes for tasks you haven't done.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/google-gemini/gemini-cli)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/google-gemini) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
