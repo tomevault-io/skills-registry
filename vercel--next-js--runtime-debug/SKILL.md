@@ -1,12 +1,8 @@
 ---
 name: runtime-debug
-description: >
-  Debug and verification workflow for runtime-bundle and module-resolution
-  regressions. Use when diagnosing unexpected module inclusions, bundle
-  size regressions, or CI failures related to NEXT_SKIP_ISOLATE, nft.json
-  traces, or runtime bundle selection (module.compiled.js). Covers CI env
-  mirroring, full stack traces via __NEXT_SHOW_IGNORE_LISTED, route trace
-  inspection, and webpack stats diffing.
+description: > Use when this capability is needed.
+metadata:
+  author: vercel
 ---
 
 # Runtime Debug
@@ -54,5 +50,5 @@ Then use `stats.toJson({ modules: true, chunks: true, reasons: true })` and diff
 - `$react-vendoring` - entry-base boundaries and vendored React
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/vercel/next.js)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vercel) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
