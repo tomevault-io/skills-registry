@@ -1,6 +1,8 @@
 ---
 name: write-concept
-description: Write or review JavaScript concept documentation pages for the 33 JavaScript Concepts project, following strict structure and quality guidelines
+description: Write or review JavaScript concept documentation pages for the 33 JavaScript Concepts project, following strict structure and quality guidelines Use when this capability is needed.
+metadata:
+  author: leonardomso
 ---
 
 # Skill: Write JavaScript Concept Documentation
@@ -1444,5 +1446,5 @@ Verify these elements before publishing any concept page:
 - [ ] **MDN links are current** (check they resolve)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/leonardomso/33-js-concepts)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/leonardomso) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
