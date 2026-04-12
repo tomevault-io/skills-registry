@@ -1,7 +1,8 @@
 ---
 name: modal
-description: Modal imperative API guide. Use when creating modal dialogs using createModal from @lobehub/ui. Triggers on modal component implementation or dialog creation tasks.
-user-invocable: false
+description: Modal imperative API guide. Use when creating modal dialogs using createModal from @lobehub/ui. Triggers on modal component implementation or dialog creation tasks. Use when this capability is needed.
+metadata:
+  author: lobehub
 ---
 
 # Modal Imperative API Guide
@@ -102,5 +103,5 @@ const { close, setCanDismissByClickOutside } = useModalContext();
 - `src/features/LibraryModal/CreateNew/index.tsx`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/lobehub/lobehub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lobehub) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
