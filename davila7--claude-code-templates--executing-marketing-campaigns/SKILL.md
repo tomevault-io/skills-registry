@@ -1,6 +1,8 @@
 ---
 name: executing-marketing-campaigns
-description: Plans, creates, and optimizes marketing campaigns including content strategy, social media, email, and analytics. Helps develop go-to-market strategies, campaign messaging, and performance measurement.
+description: Plans, creates, and optimizes marketing campaigns including content strategy, social media, email, and analytics. Helps develop go-to-market strategies, campaign messaging, and performance measurement. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Executing Marketing Campaigns
@@ -120,5 +122,5 @@ When developing a marketing campaign, follow this structured approach:
 **Note**: Always verify current marketing performance, budget constraints, and competitive landscape before starting. This Skill provides frameworks and best practices but should be adapted to your company's specific situation.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
