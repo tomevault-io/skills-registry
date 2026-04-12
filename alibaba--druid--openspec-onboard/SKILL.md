@@ -1,12 +1,8 @@
 ---
 name: openspec-onboard
-description: Guided onboarding for OpenSpec - walk through a complete workflow cycle with narration and real codebase work.
-license: MIT
-compatibility: Requires openspec CLI.
+description: Guided onboarding for OpenSpec - walk through a complete workflow cycle with narration and real codebase work. Use when this capability is needed.
 metadata:
-  author: openspec
-  version: "1.0"
-  generatedBy: "1.1.1"
+  author: alibaba
 ---
 
 Guide the user through their first complete OpenSpec workflow cycle. This is a teaching experience—you'll do real work in their codebase while explaining each step.
@@ -529,5 +525,5 @@ Exit gracefully.
 - **Adjust scope gently**—guide toward smaller tasks but respect user choice
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/alibaba/druid)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/alibaba) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
