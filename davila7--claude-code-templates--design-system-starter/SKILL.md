@@ -1,10 +1,8 @@
 ---
 name: design-system-starter
-description: Create and evolve design systems with design tokens, component architecture, accessibility guidelines, and documentation templates. Ensures consistent, scalable, and accessible UI across products.
-license: MIT
+description: Create and evolve design systems with design tokens, component architecture, accessibility guidelines, and documentation templates. Ensures consistent, scalable, and accessible UI across products. Use when this capability is needed.
 metadata:
-  version: 1.0.0
-  tags: [design-system, ui, components, design-tokens, accessibility, frontend]
+  author: davila7
 ---
 
 # Design System Starter
@@ -603,5 +601,5 @@ When creating a new design system:
 - [ ] Create migration guides for adopting teams
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
