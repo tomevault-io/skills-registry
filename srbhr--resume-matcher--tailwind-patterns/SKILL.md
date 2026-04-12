@@ -1,7 +1,8 @@
 ---
 name: tailwind-patterns
-description: |
-  Production-ready Tailwind CSS patterns for responsive layouts, cards, navigation, forms, buttons, and typography. Includes spacing scale, breakpoints, mobile-first patterns, dark mode, and Swiss International Style overrides for Resume Matcher.
+description: | Use when this capability is needed.
+metadata:
+  author: srbhr
 ---
 
 # Tailwind CSS Component Patterns
@@ -81,5 +82,5 @@ Complete patterns: `.claude/skills/tailwind-pattern/SKILL.md`
 Swiss design: `docs/agent/design/style-guide.md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/srbhr/resume-matcher)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srbhr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
