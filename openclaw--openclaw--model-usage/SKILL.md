@@ -52,5 +52,5 @@ cat /tmp/cost.json | python {baseDir}/scripts/model_usage.py --input - --mode cu
 - Read `references/codexbar-cli.md` for CLI flags and cost JSON fields.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/openclaw)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
