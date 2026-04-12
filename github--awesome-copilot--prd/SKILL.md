@@ -1,7 +1,8 @@
 ---
 name: prd
-description: 'Generate high-quality Product Requirements Documents (PRDs) for software systems and AI-powered features. Includes executive summaries, user stories, technical specifications, and risk analysis.'
-license: MIT
+description: Generate high-quality Product Requirements Documents (PRDs) for software systems and AI-powered features. Includes executive summaries, user stories, technical specifications, and risk analysis. Use when this capability is needed.
+metadata:
+  author: github
 ---
 
 # Product Requirements Document (PRD)
@@ -143,5 +144,5 @@ You **MUST** follow this exact structure for the output:
 - **Pass Rate**: 90% must match expected citations.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/github/awesome-copilot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/github) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
