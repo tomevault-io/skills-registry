@@ -1,6 +1,8 @@
 ---
 name: developer-growth-analysis
 description: Analyzes your recent Claude Code chat history to identify coding patterns, development gaps, and areas for improvement, curates relevant learning resources from HackerNews, and automatically sends a personalized growth report to your Slack DMs.
+metadata:
+  author: composiohq
 ---
 
 # Developer Growth Analysis
@@ -322,5 +324,5 @@ This skill:
 - Prioritizes areas that will have the most impact on your development velocity
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/composiohq/awesome-claude-skills)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/composiohq) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
