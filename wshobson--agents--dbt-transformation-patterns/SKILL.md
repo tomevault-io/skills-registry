@@ -1,6 +1,8 @@
 ---
 name: dbt-transformation-patterns
-description: Master dbt (data build tool) for analytics engineering with model organization, testing, documentation, and incremental strategies. Use when building data transformations, creating data models, or implementing analytics engineering best practices.
+description: Master dbt (data build tool) for analytics engineering with model organization, testing, documentation, and incremental strategies. Use when building data transformations, creating data models, or implementing analytics engineering best practices. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # dbt Transformation Patterns
@@ -556,5 +558,5 @@ dbt ls --select tag:critical     # List models by tag
 - **Don't ignore freshness** - Monitor source data
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
