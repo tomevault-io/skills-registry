@@ -1,13 +1,8 @@
 ---
 name: context-driven-development
-description: >-
-  Creates and maintains project context artifacts (product.md, tech-stack.md, workflow.md, tracks.md)
-  in a `conductor/` directory. Scaffolds new projects from scratch, extracts context from existing
-  codebases, validates artifact consistency before implementation, and synchronizes documents as the
-  project evolves. Use when setting up a project, creating or updating product docs, managing a tech
-  stack file, defining development workflows, tracking work units, onboarding to an existing codebase,
-  or running project scaffolding.
-version: 1.0.0
+description: >- Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Context-Driven Development
@@ -393,5 +388,5 @@ If interrupted mid-task:
 10. **Keep it actionable**: Every context item should inform a decision or behavior
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
