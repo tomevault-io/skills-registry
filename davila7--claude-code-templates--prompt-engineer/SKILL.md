@@ -1,7 +1,8 @@
 ---
 name: prompt-engineer
-description: "Expert in designing effective prompts for LLM-powered applications. Masters prompt structure, context management, output formatting, and prompt evaluation. Use when: prompt engineering, system prompt, few-shot, chain of thought, prompt design."
-source: vibeship-spawner-skills (Apache 2.0)
+description: Expert in designing effective prompts for LLM-powered applications. Masters prompt structure, context management, output formatting, and prompt evaluation. Use when: prompt engineering, system prompt, few-shot, chain of thought, prompt design. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Prompt Engineer
@@ -93,5 +94,5 @@ Request step-by-step reasoning
 Works well with: `ai-agents-architect`, `rag-engineer`, `backend`, `product-manager`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
