@@ -1,6 +1,8 @@
 ---
 name: commit
-description: Create commit messages following Sentry conventions. Use when committing code changes, writing commit messages, or formatting git history. Follows conventional commits with Sentry-specific issue references.
+description: Create commit messages following Sentry conventions. Use when committing code changes, writing commit messages, or formatting git history. Follows conventional commits with Sentry-specific issue references. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Sentry Commit Messages
@@ -131,5 +133,5 @@ Reason: Caused performance regression in production.
 - [Sentry Commit Messages](https://develop.sentry.dev/engineering-practices/commit-messages/)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
