@@ -1,7 +1,8 @@
 ---
 name: docker-patterns
-description: Docker and Docker Compose patterns for local development, container security, networking, volume strategies, and multi-service orchestration.
-origin: ECC
+description: Docker and Docker Compose patterns for local development, container security, networking, volume strategies, and multi-service orchestration. Use when this capability is needed.
+metadata:
+  author: affaan-m
 ---
 
 # Docker Patterns
@@ -364,5 +365,5 @@ docker network inspect <project>_default
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/affaan-m/everything-claude-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
