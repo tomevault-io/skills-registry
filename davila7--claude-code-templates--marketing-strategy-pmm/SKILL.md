@@ -1,15 +1,8 @@
 ---
 name: marketing-strategy-pmm
-description: Product marketing, positioning, GTM strategy, and competitive intelligence. Includes ICP definition, April Dunford positioning methodology, launch playbooks, competitive battlecards, and international market entry guides. Use when developing positioning, planning product launches, creating messaging, analyzing competitors, entering new markets, enabling sales, or when user mentions product marketing, positioning, GTM, go-to-market, competitive analysis, market entry, or sales enablement.
-license: MIT
+description: Product marketing, positioning, GTM strategy, and competitive intelligence. Includes ICP definition, April Dunford positioning methodology, launch playbooks, competitive battlecards, and international market entry guides. Use when developing positioning, planning product launches, creating messaging, analyzing competitors, entering new markets, enabling sales, or when user mentions product marketing, positioning, GTM, go-to-market, competitive analysis, market entry, or sales enablement. Use when this capability is needed.
 metadata:
-  version: 1.0.0
-  author: Alireza Rezvani
-  category: marketing
-  domain: product-marketing
-  updated: 2025-10-20
-  frameworks: April-Dunford-positioning, ICP-definition, messaging-hierarchy
-  target-market: B2B-SaaS, international-expansion, Series-A+
+  author: davila7
 ---
 
 # Marketing Strategy & Product Marketing
@@ -1163,5 +1156,5 @@ Headcount: +1 PMM, +1 Content Marketer
 **Last Updated**: October 2025 | **Version**: 1.0
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
