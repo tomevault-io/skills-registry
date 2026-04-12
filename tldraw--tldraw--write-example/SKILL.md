@@ -1,6 +1,8 @@
 ---
 name: write-example
-description: Writing examples for the tldraw SDK examples app. Use when creating new examples, adding SDK demonstrations, or writing example code in apps/examples.
+description: Writing examples for the tldraw SDK examples app. Use when creating new examples, adding SDK demonstrations, or writing example code in apps/examples. Use when this capability is needed.
+metadata:
+  author: tldraw
 ---
 
 # Writing tldraw examples
@@ -201,5 +203,5 @@ Pass component overrides via the components prop.
 - Keep examples minimal and focused
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tldraw/tldraw)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tldraw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
