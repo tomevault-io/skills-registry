@@ -1,6 +1,8 @@
 ---
 name: python-configuration
-description: Python configuration management via environment variables and typed settings. Use when externalizing config, setting up pydantic-settings, managing secrets, or implementing environment-specific behavior.
+description: Python configuration management via environment variables and typed settings. Use when externalizing config, setting up pydantic-settings, managing secrets, or implementing environment-specific behavior. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Python Configuration Management
@@ -368,5 +370,5 @@ class Settings(BaseSettings):
 10. **Use secrets_dir** - Support mounted secrets in containers
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
