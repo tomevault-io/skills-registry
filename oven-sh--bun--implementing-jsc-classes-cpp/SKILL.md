@@ -1,6 +1,8 @@
 ---
 name: implementing-jsc-classes-cpp
-description: Implements JavaScript classes in C++ using JavaScriptCore. Use when creating new JS classes with C++ bindings, prototypes, or constructors.
+description: Implements JavaScript classes in C++ using JavaScriptCore. Use when creating new JS classes with C++ bindings, prototypes, or constructors. Use when this capability is needed.
+metadata:
+  author: oven-sh
 ---
 
 # Implementing JavaScript Classes in C++
@@ -184,5 +186,5 @@ extern "C" EncodedJSValue Bun__Foo__toJS(Zig::GlobalObject* globalObject, Foo* f
 Include `#include "root.h"` at the top of C++ files.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/oven-sh/bun)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/oven-sh) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
