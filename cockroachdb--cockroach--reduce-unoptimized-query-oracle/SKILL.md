@@ -1,7 +1,8 @@
 ---
 name: reduce-unoptimized-query-oracle
-description: Reduce an unoptimized-query-oracle test failure log to the simplest possible reproduction case. Use when you have unoptimized-query-oracle*.log files from a failed roachtest and need to find the minimal SQL to reproduce the bug.
-disable-model-invocation: true
+description: Reduce an unoptimized-query-oracle test failure log to the simplest possible reproduction case. Use when you have unoptimized-query-oracle*.log files from a failed roachtest and need to find the minimal SQL to reproduce the bug. Use when this capability is needed.
+metadata:
+  author: cockroachdb
 ---
 
 # Reduce Unoptimized Query Oracle Test Failure
@@ -491,5 +492,5 @@ go back further than 1 year.
 the user.**
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/cockroachdb/cockroach)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/cockroachdb) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
