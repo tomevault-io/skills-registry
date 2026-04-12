@@ -1,6 +1,8 @@
 ---
 name: histolab
-description: Digital pathology image processing toolkit for whole slide images (WSI). Use this skill when working with histopathology slides, processing H&E or IHC stained tissue images, extracting tiles from gigapixel pathology images, detecting tissue regions, segmenting tissue masks, or preparing datasets for computational pathology deep learning pipelines. Applies to WSI formats (SVS, TIFF, NDPI), tile-based analysis, and histological image preprocessing workflows.
+description: Digital pathology image processing toolkit for whole slide images (WSI). Use this skill when working with histopathology slides, processing H&E or IHC stained tissue images, extracting tiles from gigapixel pathology images, detecting tissue regions, segmenting tissue masks, or preparing datasets for computational pathology deep learning pipelines. Applies to WSI formats (SVS, TIFF, NDPI), tile-based analysis, and histological image preprocessing workflows. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Histolab
@@ -672,5 +674,5 @@ Comprehensive visualization guide:
 **Usage pattern:** Reference files contain in-depth information to support workflows described in this main skill document. Load specific reference files as needed for detailed implementation guidance, troubleshooting, or advanced features.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
