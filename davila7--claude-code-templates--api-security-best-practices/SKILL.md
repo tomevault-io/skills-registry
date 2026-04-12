@@ -1,6 +1,8 @@
 ---
 name: api-security-best-practices
-description: "Implement secure API design patterns including authentication, authorization, input validation, rate limiting, and protection against common API vulnerabilities"
+description: Implement secure API design patterns including authentication, authorization, input validation, rate limiting, and protection against common API vulnerabilities Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # API Security Best Practices
@@ -907,5 +909,5 @@ app.post('/api/users', async (req, res) => {
 **Pro Tip:** Security is not a one-time task - regularly audit your APIs, keep dependencies updated, and stay informed about new vulnerabilities!
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
