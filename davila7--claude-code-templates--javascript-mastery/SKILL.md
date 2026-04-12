@@ -1,6 +1,8 @@
 ---
 name: javascript-mastery
-description: "Comprehensive JavaScript reference covering 33+ essential concepts every developer should know. From fundamentals like primitives and closures to advanced patterns like async/await and functional programming. Use when explaining JS concepts, debugging JavaScript issues, or teaching JavaScript fundamentals."
+description: Comprehensive JavaScript reference covering 33+ essential concepts every developer should know. From fundamentals like primitives and closures to advanced patterns like async/await and functional programming. Use when explaining JS concepts, debugging JavaScript issues, or teaching JavaScript fundamentals. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # 🧠 JavaScript Mastery
@@ -645,5 +647,5 @@ const value2 = 0 || "default"; // "default" (0 is falsy)
 - [You Don't Know JS](https://github.com/getify/You-Dont-Know-JS)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
