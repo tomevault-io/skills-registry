@@ -1,6 +1,8 @@
 ---
 name: debugging-streamlit
-description: Debug Streamlit frontend and backend changes using make debug with hot-reload. Use when testing code changes, investigating bugs, checking UI behavior, or needing screenshots of the running app.
+description: Debug Streamlit frontend and backend changes using make debug with hot-reload. Use when testing code changes, investigating bugs, checking UI behavior, or needing screenshots of the running app. Use when this capability is needed.
+metadata:
+  author: streamlit
 ---
 
 # Debugging Streamlit Apps
@@ -201,5 +203,5 @@ After debugging is complete, remove temporary scripts and screenshots from `work
 - [understanding-streamlit-architecture skill](../understanding-streamlit-architecture/SKILL.md): For deeper understanding of backend/frontend internals when debugging cross-layer issues
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/streamlit/streamlit)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/streamlit) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
