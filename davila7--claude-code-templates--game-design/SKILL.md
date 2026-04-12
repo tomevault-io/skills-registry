@@ -1,7 +1,8 @@
 ---
 name: game-design
-description: Game design principles. GDD structure, balancing, player psychology, progression.
-allowed-tools: Read, Glob, Grep
+description: Game design principles. GDD structure, balancing, player psychology, progression. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Game Design Principles
@@ -129,5 +130,5 @@ Just Right → Flow → Engagement
 > **Remember:** Fun is discovered through iteration, not designed on paper.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
