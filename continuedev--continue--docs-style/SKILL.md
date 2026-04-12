@@ -1,6 +1,8 @@
 ---
 name: docs-style
-description: Style guidelines for writing and updating documentation. Use when writing new docs, updating existing docs, or reviewing docs for quality.
+description: Style guidelines for writing and updating documentation. Use when writing new docs, updating existing docs, or reviewing docs for quality. Use when this capability is needed.
+metadata:
+  author: continuedev
 ---
 
 # Docs Style Guide
@@ -41,5 +43,5 @@ description: Style guidelines for writing and updating documentation. Use when w
 - **Scannable over descriptive** — skimming the TOC should reveal the page structure at a glance. Keep headings short and plain.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/continuedev/continue)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/continuedev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
