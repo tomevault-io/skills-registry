@@ -1,6 +1,8 @@
 ---
 name: discovering-make-commands
-description: Lists available make commands for Streamlit development. Use for build, test, lint, or format tasks.
+description: Lists available make commands for Streamlit development. Use for build, test, lint, or format tasks. Use when this capability is needed.
+metadata:
+  author: streamlit
 ---
 
 # Available `make` commands
@@ -55,5 +57,5 @@ package                   Create Python wheel files in `dist/`.
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/streamlit/streamlit)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/streamlit) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
