@@ -1,19 +1,8 @@
 ---
 name: calcom-api
-description: Interact with the Cal.com API v2 to manage scheduling, bookings, event types, availability, and calendars. Use this skill when building integrations that need to create or manage bookings, check availability, configure event types, or sync calendars with Cal.com's scheduling infrastructure.
-env:
-  CAL_API_KEY:
-    description: "Cal.com API key (prefixed with cal_live_ or cal_test_). Required for all API requests."
-    required: true
-  CAL_CLIENT_ID:
-    description: "OAuth client ID for platform integrations managing users on behalf of others. Sent as x-cal-client-id header."
-    required: false
-  CAL_SECRET_KEY:
-    description: "OAuth client secret for platform integrations. Sent as x-cal-secret-key header."
-    required: false
-  CAL_WEBHOOK_SECRET:
-    description: "Secret used to verify webhook payload signatures via X-Cal-Signature-256 header."
-    required: false
+description: Secret used to verify webhook payload signatures via X-Cal-Signature-256 header. Use when this capability is needed.
+metadata:
+  author: calcom
 ---
 
 # Cal.com API v2
@@ -139,5 +128,5 @@ See `references/webhooks.md` for available triggers and payload formats.
 - [OpenAPI Specification](https://api.cal.com/v2/docs)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/calcom/cal.com)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/calcom) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
