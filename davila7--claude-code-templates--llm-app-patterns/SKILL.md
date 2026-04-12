@@ -1,6 +1,8 @@
 ---
 name: llm-app-patterns
-description: "Production-ready patterns for building LLM applications. Covers RAG pipelines, agent architectures, prompt IDEs, and LLMOps monitoring. Use when designing AI applications, implementing RAG, building agents, or setting up LLM observability."
+description: Production-ready patterns for building LLM applications. Covers RAG pipelines, agent architectures, prompt IDEs, and LLMOps monitoring. Use when designing AI applications, implementing RAG, building agents, or setting up LLM observability. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # 🤖 LLM Application Patterns
@@ -760,5 +762,5 @@ llm_client = LLMWithFallback(
 - [Anthropic Cookbook](https://github.com/anthropics/anthropic-cookbook)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
