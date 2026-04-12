@@ -1,6 +1,8 @@
 ---
 name: architecture-decision-records
-description: Write and maintain Architecture Decision Records (ADRs) following best practices for technical decision documentation. Use when documenting significant technical decisions, reviewing past architectural choices, or establishing decision processes.
+description: Write and maintain Architecture Decision Records (ADRs) following best practices for technical decision documentation. Use when documenting significant technical decisions, reviewing past architectural choices, or establishing decision processes. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Architecture Decision Records
@@ -441,5 +443,5 @@ adr link 2 "Complements" 1 "Is complemented by"
 - **Don't forget implementation** - ADR without action is waste
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
