@@ -1,11 +1,8 @@
 ---
 name: lambda-labs-gpu-cloud
-description: Reserved and on-demand GPU cloud instances for ML training and inference. Use when you need dedicated GPU instances with simple SSH access, persistent filesystems, or high-performance multi-node clusters for large-scale training.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Infrastructure, GPU Cloud, Training, Inference, Lambda Labs]
-dependencies: [lambda-cloud-client>=1.0.0]
+description: Reserved and on-demand GPU cloud instances for ML training and inference. Use when you need dedicated GPU instances with simple SSH access, persistent filesystems, or high-performance multi-node clusters for large-scale training. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Lambda Labs GPU Cloud
@@ -545,5 +542,5 @@ python inference.py \
 - **Blog**: https://lambda.ai/blog
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
