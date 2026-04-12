@@ -1,6 +1,8 @@
 ---
 name: web-component-design
-description: Master React, Vue, and Svelte component patterns including CSS-in-JS, composition strategies, and reusable component architecture. Use when building UI component libraries, designing component APIs, or implementing frontend design systems.
+description: Master React, Vue, and Svelte component patterns including CSS-in-JS, composition strategies, and reusable component architecture. Use when building UI component libraries, designing component APIs, or implementing frontend design systems. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Web Component Design
@@ -271,5 +273,5 @@ const isActive = computed(() => tabs?.activeTab.value === props.id);
 - **Bundle Size**: Tree-shake unused component variants
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
