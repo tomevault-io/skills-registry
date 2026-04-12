@@ -1,7 +1,8 @@
 ---
 name: tmux
-description: Remote-control tmux sessions for interactive CLIs by sending keystrokes and scraping pane output.
-metadata: {"nanobot":{"emoji":"🧵","os":["darwin","linux"],"requires":{"bins":["tmux"]}}}
+description: Remote-control tmux sessions for interactive CLIs by sending keystrokes and scraping pane output. Use when this capability is needed.
+metadata:
+  author: hkuds
 ---
 
 # tmux Skill
@@ -121,5 +122,5 @@ tmux -S "$SOCKET" capture-pane -p -t agent-1 -S -500
 - `-l` history lines to search (integer, default 1000)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/hkuds/nanobot)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hkuds) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
