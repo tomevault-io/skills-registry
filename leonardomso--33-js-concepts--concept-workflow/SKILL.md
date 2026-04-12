@@ -1,6 +1,8 @@
 ---
 name: concept-workflow
-description: End-to-end workflow for creating complete JavaScript concept documentation, orchestrating all skills from research to final review
+description: End-to-end workflow for creating complete JavaScript concept documentation, orchestrating all skills from research to final review Use when this capability is needed.
+metadata:
+  author: leonardomso
 ---
 
 # Skill: Complete Concept Workflow
@@ -513,5 +515,5 @@ To start the workflow for a new concept:
 This will trigger the full end-to-end workflow, creating a complete, tested, verified, and SEO-optimized concept page.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/leonardomso/33-js-concepts)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/leonardomso) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
