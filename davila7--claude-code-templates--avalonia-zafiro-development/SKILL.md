@@ -1,6 +1,8 @@
 ---
 name: avalonia-zafiro-development
-description: Mandatory skills, conventions, and behavioral rules for Avalonia UI development using the Zafiro toolkit.
+description: Mandatory skills, conventions, and behavioral rules for Avalonia UI development using the Zafiro toolkit. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Avalonia Zafiro Development
@@ -29,5 +31,5 @@ This skill defines the mandatory conventions and behavioral rules for developing
 3.  **Reactive Pipelines**: Ensure DynamicData operators are used instead of plain Rx where applicable.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
