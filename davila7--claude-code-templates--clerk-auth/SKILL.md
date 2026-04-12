@@ -1,7 +1,8 @@
 ---
 name: clerk-auth
-description: "Expert patterns for Clerk auth implementation, middleware, organizations, webhooks, and user sync Use when: adding authentication, clerk auth, user authentication, sign in, sign up."
-source: vibeship-spawner-skills (Apache 2.0)
+description: Expert patterns for Clerk auth implementation, middleware, organizations, webhooks, and user sync Use when: adding authentication, clerk auth, user authentication, sign in, sign up. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Clerk Authentication
@@ -56,5 +57,5 @@ Key functions:
 | Issue | medium | See docs |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
