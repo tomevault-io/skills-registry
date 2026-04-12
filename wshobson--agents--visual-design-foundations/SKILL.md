@@ -1,6 +1,8 @@
 ---
 name: visual-design-foundations
-description: Apply typography, color theory, spacing systems, and iconography principles to create cohesive visual designs. Use when establishing design tokens, building style guides, or improving visual hierarchy and consistency.
+description: Apply typography, color theory, spacing systems, and iconography principles to create cohesive visual designs. Use when establishing design tokens, building style guides, or improving visual hierarchy and consistency. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Visual Design Foundations
@@ -318,5 +320,5 @@ export function Icon({ name, size = "md", className }: IconProps) {
 - **No Dark Mode Plan**: Retrofitting is harder than planning
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
