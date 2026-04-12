@@ -1,6 +1,8 @@
 ---
 name: roo-translation
 description: Provides comprehensive guidelines for translating and localizing Roo Code extension strings. Use when tasks involve i18n, translation, localization, adding new languages, or updating existing translation files. This skill covers both core extension (src/i18n/locales/) and WebView UI (webview-ui/src/i18n/locales/) localization.
+metadata:
+  author: roocodeinc
 ---
 
 # Roo Code Translation Skill
@@ -151,5 +153,5 @@ Address any missing translations identified by the script to ensure complete cov
 - ✓ Ran the missing translations script to validate completeness
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/roocodeinc/roo-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/roocodeinc) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
