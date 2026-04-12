@@ -1,11 +1,8 @@
 ---
 name: pytorch-lightning
-description: High-level PyTorch framework with Trainer class, automatic distributed training (DDP/FSDP/DeepSpeed), callbacks system, and minimal boilerplate. Scales from laptop to supercomputer with same code. Use when you want clean training loops with built-in best practices.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [PyTorch Lightning, Training Framework, Distributed Training, DDP, FSDP, DeepSpeed, High-Level API, Callbacks, Best Practices, Scalable]
-dependencies: [lightning, torch, transformers]
+description: High-level PyTorch framework with Trainer class, automatic distributed training (DDP/FSDP/DeepSpeed), callbacks system, and minimal boilerplate. Scales from laptop to supercomputer with same code. Use when you want clean training loops with built-in best practices. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # PyTorch Lightning - High-Level Training Framework
@@ -344,5 +341,5 @@ trainer = L.Trainer(accelerator='gpu', devices=1)
 - Used by: Kaggle winners, research labs, production teams
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
