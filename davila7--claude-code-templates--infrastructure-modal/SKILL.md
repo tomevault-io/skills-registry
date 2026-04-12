@@ -1,11 +1,8 @@
 ---
 name: modal-serverless-gpu
-description: Serverless GPU cloud platform for running ML workloads. Use when you need on-demand GPU access without infrastructure management, deploying ML models as APIs, or running batch jobs with automatic scaling.
-version: 1.0.0
-author: Orchestra Research
-license: MIT
-tags: [Infrastructure, Serverless, GPU, Cloud, Deployment, Modal]
-dependencies: [modal>=0.64.0]
+description: Serverless GPU cloud platform for running ML workloads. Use when you need on-demand GPU access without infrastructure management, deploying ML models as APIs, or running batch jobs with automatic scaling. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Modal Serverless GPU
@@ -341,5 +338,5 @@ if __name__ == "__main__":
 - **Discord**: https://discord.gg/modal
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
