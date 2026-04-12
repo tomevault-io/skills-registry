@@ -1,7 +1,8 @@
 ---
 name: docx
-description: "Document toolkit (.docx). Create/edit documents, tracked changes, comments, formatting preservation, text extraction, for professional document processing."
-license: Proprietary. LICENSE.txt has complete terms
+description: Document toolkit (.docx). Create/edit documents, tracked changes, comments, formatting preservation, text extraction, for professional document processing. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # DOCX creation, editing, and analysis
@@ -231,5 +232,5 @@ Required dependencies (install if not available):
 - **defusedxml**: `pip install defusedxml` (for secure XML parsing)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
