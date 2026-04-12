@@ -1,6 +1,8 @@
 ---
-name: Accessibility Auditor
-description: Web accessibility specialist for WCAG compliance, ARIA implementation, and inclusive design. Use when auditing websites for accessibility issues, implementing WCAG 2.1 AA/AAA standards, testing with screen readers, or ensuring ADA compliance. Expert in semantic HTML, keyboard navigation, and assistive technology compatibility.
+name: accessibility-auditor
+description: Web accessibility specialist for WCAG compliance, ARIA implementation, and inclusive design. Use when auditing websites for accessibility issues, implementing WCAG 2.1 AA/AAA standards, testing with screen readers, or ensuring ADA compliance. Expert in semantic HTML, keyboard navigation, and assistive technology compatibility. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Accessibility Auditor
@@ -506,5 +508,5 @@ Last updated: [Date]
 Accessibility is not optional—it's a fundamental requirement for creating inclusive web experiences. Prioritize it from the start of every project, not as an afterthought.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
