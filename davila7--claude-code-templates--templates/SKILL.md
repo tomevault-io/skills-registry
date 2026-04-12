@@ -1,7 +1,8 @@
 ---
 name: templates
-description: Project scaffolding templates for new applications. Use when creating new projects from scratch. Contains 12 templates for various tech stacks.
-allowed-tools: Read, Glob, Grep
+description: Project scaffolding templates for new applications. Use when creating new projects from scratch. Contains 12 templates for various tech stacks. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Project Templates
@@ -39,5 +40,5 @@ allowed-tools: Read, Glob, Grep
 4. Follow its tech stack and structure
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
