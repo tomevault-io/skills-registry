@@ -1,6 +1,8 @@
 ---
 name: pr-review
-description: Review PyTorch pull requests for code quality, test coverage, security, and backward compatibility. Use when reviewing PRs, when asked to review code changes, or when the user mentions "review PR", "code review", or "check this PR".
+description: Review PyTorch pull requests for code quality, test coverage, security, and backward compatibility. Use when reviewing PRs, when asked to review code changes, or when the user mentions "review PR", "code review", or "check this PR". Use when this capability is needed.
+metadata:
+  author: pytorch
 ---
 
 # PyTorch PR Review Skill
@@ -220,5 +222,5 @@ When reviewing, consult these project files for context — read them rather tha
 - `aten/src/ATen/native/tags.yaml` - Operator semantic tags
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/pytorch/pytorch)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/pytorch) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
