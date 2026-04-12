@@ -1,6 +1,8 @@
 ---
 name: error-handling-patterns
-description: Master error handling patterns across languages including exceptions, Result types, error propagation, and graceful degradation to build resilient applications. Use when implementing error handling, designing APIs, or improving application reliability.
+description: Master error handling patterns across languages including exceptions, Result types, error propagation, and graceful degradation to build resilient applications. Use when implementing error handling, designing APIs, or improving application reliability. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Error Handling Patterns
@@ -632,5 +634,5 @@ def process_order(order_id: str) -> Order:
 - **Ignoring Async Errors**: Unhandled promise rejections
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
