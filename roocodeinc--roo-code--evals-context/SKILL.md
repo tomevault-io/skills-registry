@@ -1,6 +1,8 @@
 ---
 name: evals-context
 description: Provides context about the Roo Code evals system structure in this monorepo. Use when tasks mention "evals", "evaluation", "eval runs", "eval exercises", or working with the evals infrastructure. Helps distinguish between the evals execution system (packages/evals, apps/web-evals) and the public website evals display page (apps/web-roo-code/src/app/evals).
+metadata:
+  author: roocodeinc
 ---
 
 # Evals Codebase Context
@@ -188,5 +190,5 @@ The package exports are defined in [`packages/evals/src/index.ts`](packages/eval
 - Used by both `apps/web-evals` and `apps/web-roo-code`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/roocodeinc/roo-code)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/roocodeinc) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
