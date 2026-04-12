@@ -1,6 +1,8 @@
 ---
 name: pennylane
-description: Cross-platform Python library for quantum computing, quantum machine learning, and quantum chemistry. Enables building and training quantum circuits with automatic differentiation, seamless integration with PyTorch/JAX/TensorFlow, and device-independent execution across simulators and quantum hardware (IBM, Amazon Braket, Google, Rigetti, IonQ, etc.). Use when working with quantum circuits, variational quantum algorithms (VQE, QAOA), quantum neural networks, hybrid quantum-classical models, molecular simulations, quantum chemistry calculations, or any quantum computing tasks requiring gradient-based optimization, hardware-agnostic programming, or quantum machine learning workflows.
+description: Cross-platform Python library for quantum computing, quantum machine learning, and quantum chemistry. Enables building and training quantum circuits with automatic differentiation, seamless integration with PyTorch/JAX/TensorFlow, and device-independent execution across simulators and quantum hardware (IBM, Amazon Braket, Google, Rigetti, IonQ, etc.). Use when working with quantum circuits, variational quantum algorithms (VQE, QAOA), quantum neural networks, hybrid quantum-classical models, molecular simulations, quantum chemistry calculations, or any quantum computing tasks requiring gradient-based optimization, hardware-agnostic programming, or quantum machine learning workflows. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # PennyLane
@@ -220,5 +222,5 @@ For comprehensive coverage of specific topics, consult the reference files:
 - GitHub: https://github.com/PennyLaneAI/pennylane
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
