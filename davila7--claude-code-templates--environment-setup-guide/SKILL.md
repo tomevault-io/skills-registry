@@ -1,6 +1,8 @@
 ---
 name: environment-setup-guide
-description: "Guide developers through setting up development environments with proper tools, dependencies, and configurations"
+description: Guide developers through setting up development environments with proper tools, dependencies, and configurations Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Environment Setup Guide
@@ -479,5 +481,5 @@ echo "✅ Setup complete! Run 'npm run dev' to start"
 **Pro Tip:** Create a `setup.sh` or `setup.ps1` script to automate the entire setup process. Test it on a clean system to ensure it works!
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
