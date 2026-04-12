@@ -1,6 +1,8 @@
 ---
 name: python-type-safety
-description: Python type safety with type hints, generics, protocols, and strict type checking. Use when adding type annotations, implementing generic classes, defining structural interfaces, or configuring mypy/pyright.
+description: Python type safety with type hints, generics, protocols, and strict type checking. Use when adding type annotations, implementing generic classes, defining structural interfaces, or configuring mypy/pyright. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Python Type Safety
@@ -432,5 +434,5 @@ For existing codebases, enable strict mode per-module using `# mypy: strict` or 
 10. **Document with types** - Types are enforceable documentation
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
