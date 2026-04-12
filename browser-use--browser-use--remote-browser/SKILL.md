@@ -1,7 +1,8 @@
 ---
 name: remote-browser
-description: Controls a local browser from a sandboxed remote machine. Use when the agent is running in a sandbox (no GUI) and needs to navigate websites, interact with web pages, fill forms, take screenshots, or expose local dev servers via tunnels.
-allowed-tools: Bash(browser-use:*)
+description: Controls a local browser from a sandboxed remote machine. Use when the agent is running in a sandbox (no GUI) and needs to navigate websites, interact with web pages, fill forms, take screenshots, or expose local dev servers via tunnels. Use when this capability is needed.
+metadata:
+  author: browser-use
 ---
 
 # Browser Automation for Sandboxed Agents
@@ -179,5 +180,5 @@ browser-use tunnel stop --all             # Stop tunnels (if any)
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/browser-use/browser-use)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/browser-use) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
