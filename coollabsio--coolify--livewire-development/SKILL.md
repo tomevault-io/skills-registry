@@ -1,10 +1,8 @@
 ---
 name: livewire-development
-description: >-
-  Develops reactive Livewire 3 components. Activates when creating, updating, or modifying
-  Livewire components; working with wire:model, wire:click, wire:loading, or any wire: directives;
-  adding real-time updates, loading states, or reactivity; debugging component behavior;
-  writing Livewire tests; or when the user mentions Livewire, component, counter, or reactive UI.
+description: >- Use when this capability is needed.
+metadata:
+  author: coollabsio
 ---
 
 # Livewire Development
@@ -131,5 +129,5 @@ $this->get('/posts/create')
 - Including Alpine.js separately when it's already bundled with Livewire 3
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/coollabsio/coolify)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/coollabsio) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
