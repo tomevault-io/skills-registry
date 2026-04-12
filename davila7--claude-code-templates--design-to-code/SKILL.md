@@ -1,6 +1,8 @@
 ---
 name: design-to-code
-description: Pixel-perfect Figma to React conversion using coderio. Generates production-ready code (TypeScript, Vite, TailwindCSS V4) with high visual fidelity. Features robust error handling, checkpoint recovery, and streamlined execution via helper script.
+description: Pixel-perfect Figma to React conversion using coderio. Generates production-ready code (TypeScript, Vite, TailwindCSS V4) with high visual fidelity. Features robust error handling, checkpoint recovery, and streamlined execution via helper script. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Design to Code
@@ -158,5 +160,5 @@ Inject the root component into `App.tsx`. Use the path found in the last task of
 - **"Visuals don't match"**: Did you attach the thumbnail? The AI relies on it for spacing and layout nuances not present in the raw data.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
