@@ -1,6 +1,8 @@
 ---
 name: accessibility
-description: Primary accessibility skill for VS Code. REQUIRED for new feature and contribution work, and also applies to updates of existing UI. Covers accessibility help dialogs, accessible views, verbosity settings, signals, ARIA announcements, keyboard navigation, and ARIA labels/roles.
+description: Primary accessibility skill for VS Code. REQUIRED for new feature and contribution work, and also applies to updates of existing UI. Covers accessibility help dialogs, accessible views, verbosity settings, signals, ARIA announcements, keyboard navigation, and ARIA labels/roles. Use when this capability is needed.
+metadata:
+  author: microsoft
 ---
 
 ## When to Use This Skill
@@ -302,5 +304,5 @@ All interactive UI elements must have appropriate ARIA attributes so screen read
 - `src/vs/base/browser/ui/aria/aria.ts` — `alert()`, `status()` for ARIA live region announcements
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/microsoft/vscode)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/microsoft) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
