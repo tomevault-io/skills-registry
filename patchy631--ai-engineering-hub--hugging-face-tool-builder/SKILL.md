@@ -1,6 +1,6 @@
 ---
 name: hugging-face-tool-builder
-description: name: hugging-face-tool-builder
+description: name: hugging-face-tool-builder Use when this capability is needed.
 metadata:
   author: patchy631
 ---
@@ -116,5 +116,5 @@ Commands:
 The `hf` CLI command has replaced the now deprecated `huggingface_hub` CLI command.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/patchy631/ai-engineering-hub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/patchy631) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
