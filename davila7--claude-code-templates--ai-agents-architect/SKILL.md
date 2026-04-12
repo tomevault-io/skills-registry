@@ -1,7 +1,8 @@
 ---
 name: ai-agents-architect
-description: "Expert in designing and building autonomous AI agents. Masters tool use, memory systems, planning strategies, and multi-agent orchestration. Use when: build agent, AI agent, autonomous agent, tool use, function calling."
-source: vibeship-spawner-skills (Apache 2.0)
+description: Expert in designing and building autonomous AI agents. Masters tool use, memory systems, planning strategies, and multi-agent orchestration. Use when: build agent, AI agent, autonomous agent, tool use, function calling. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # AI Agents Architect
@@ -90,5 +91,5 @@ Dynamic tool discovery and management
 Works well with: `rag-engineer`, `prompt-engineer`, `backend`, `mcp-builder`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
