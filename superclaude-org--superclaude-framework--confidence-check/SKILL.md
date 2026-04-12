@@ -1,6 +1,8 @@
 ---
-name: Confidence Check
-description: Pre-implementation confidence assessment (≥90% required). Use before starting any implementation to verify readiness with duplicate check, architecture compliance, official docs verification, OSS references, and root cause identification.
+name: confidence-check
+description: Pre-implementation confidence assessment (≥90% required). Use before starting any implementation to verify readiness with duplicate check, architecture compliance, official docs verification, OSS references, and root cause identification. Use when this capability is needed.
+metadata:
+  author: superclaude-org
 ---
 
 # Confidence Check Skill
@@ -124,5 +126,5 @@ The TypeScript implementation is available in `confidence.ts` for reference, con
 **Success Rate**: 100% precision and recall in production testing.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/superclaude-org/superclaude_framework)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/superclaude-org) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
