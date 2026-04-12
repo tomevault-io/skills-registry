@@ -1,6 +1,6 @@
 ---
 name: brightdata-web-mcp
-description: name: brightdata-web-mcp
+description: name: brightdata-web-mcp Use when this capability is needed.
 metadata:
   author: patchy631
 ---
@@ -247,5 +247,5 @@ For detailed documentation, see:
 - [references/examples.md](references/examples.md) - Usage examples
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/patchy631/ai-engineering-hub)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/patchy631) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
