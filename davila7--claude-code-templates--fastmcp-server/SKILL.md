@@ -1,11 +1,8 @@
 ---
 name: fastmcp-server
-description: Complete guide for building MCP servers with FastMCP 3.0 - tools, resources, authentication, providers, middleware, and deployment. Use when creating Python MCP servers or integrating AI models with external tools and data.
-version: 1.0.0
-author: FastMCP Community
-license: MIT
-tags: [FastMCP, MCP, Python, AI, Tools, Server, Authentication, Providers]
-dependencies: []
+description: Complete guide for building MCP servers with FastMCP 3.0 - tools, resources, authentication, providers, middleware, and deployment. Use when creating Python MCP servers or integrating AI models with external tools and data. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # FastMCP 3.0 Server Development
@@ -192,5 +189,5 @@ Detailed documentation is organized in the `references/` folder:
 - Complete coverage of tools, resources, context, auth, providers, and features
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
