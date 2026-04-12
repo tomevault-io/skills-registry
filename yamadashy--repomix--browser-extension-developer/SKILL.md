@@ -1,6 +1,8 @@
 ---
 name: browser-extension-developer
 description: Use this skill when developing or maintaining browser extension code in the `browser/` directory, including Chrome/Firefox/Edge compatibility, content scripts, background scripts, or i18n updates.
+metadata:
+  author: yamadashy
 ---
 
 # Browser Extension Developer
@@ -36,5 +38,5 @@ New language: Create `public/_locales/[code]/messages.json` with keys: appDescri
 - Run lint and tests before completion
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/yamadashy/repomix)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/yamadashy) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
