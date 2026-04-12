@@ -1,9 +1,8 @@
 ---
-name: Network 101
-description: This skill should be used when the user asks to "set up a web server", "configure HTTP or HTTPS", "perform SNMP enumeration", "configure SMB shares", "test network services", or needs guidance on configuring and testing network services for penetration testing labs.
+name: network-101
+description: This skill should be used when the user asks to "set up a web server", "configure HTTP or HTTPS", "perform SNMP enumeration", "configure SMB shares", "test network services", or needs guidance on configuring and testing network services for penetration testing labs. Use when this capability is needed.
 metadata:
-  author: zebbern
-  version: "1.1"
+  author: davila7
 ---
 
 # Network 101
@@ -342,5 +341,5 @@ smbclient //localhost/anonymous -N
 | Cannot connect remotely | Bind service to 0.0.0.0 instead of localhost |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
