@@ -1,6 +1,8 @@
 ---
 name: write-e2e-tests
-description: Writing Playwright E2E tests for tldraw. Use when creating browser tests, testing UI interactions, or adding E2E coverage in apps/examples/e2e or apps/dotcom/client/e2e.
+description: Writing Playwright E2E tests for tldraw. Use when creating browser tests, testing UI interactions, or adding E2E coverage in apps/examples/e2e or apps/dotcom/client/e2e. Use when this capability is needed.
+metadata:
+  author: tldraw
 ---
 
 # Writing E2E tests
@@ -288,5 +290,5 @@ yarn e2e -- --grep "toolbar"  # Filter by pattern
 - Test against `localhost:5420/end-to-end` example
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tldraw/tldraw)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tldraw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
