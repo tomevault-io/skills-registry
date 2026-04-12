@@ -1,12 +1,8 @@
 ---
 name: dce-edge
-description: >
-  DCE-safe require() patterns and edge runtime constraints. Use when writing
-  conditional require() calls, guarding Node-only imports (node:stream etc.),
-  or editing define-env-plugin.ts / app-render / stream-utils for edge builds.
-  Covers if/else branching for webpack DCE, TypeScript definite assignment,
-  the NEXT_RUNTIME vs real feature flag distinction, and forcing flags false
-  for edge in define-env.ts.
+description: > Use when this capability is needed.
+metadata:
+  author: vercel
 ---
 
 # DCE + Edge
@@ -66,5 +62,5 @@ Edge routes do NOT use pre-compiled runtime bundles. They are compiled by the us
 - `$runtime-debug` - reproduction and verification workflow
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/vercel/next.js)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vercel) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
