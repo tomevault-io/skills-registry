@@ -1,7 +1,8 @@
 ---
 name: parser-development
-description: Guide for implementing parsers with error recovery for new languages in Biome. Use when adding parsing support for a new language, implementing error recovery in a parser, or writing grammar definitions in .ungram format for JavaScript, CSS, JSON, HTML, GraphQL, or other languages.
-compatibility: Designed for coding agents working on the Biome codebase (github.com/biomejs/biome).
+description: Guide for implementing parsers with error recovery for new languages in Biome. Use when adding parsing support for a new language, implementing error recovery in a parser, or writing grammar definitions in .ungram format for JavaScript, CSS, JSON, HTML, GraphQL, or other languages. Use when this capability is needed.
+metadata:
+  author: biomejs
 ---
 
 ## Purpose
@@ -346,5 +347,5 @@ if parse_something(p).is_absent() {
 - Error recovery: Search for `ParseRecoveryTokenSet` in existing parsers
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/biomejs/biome)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/biomejs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
