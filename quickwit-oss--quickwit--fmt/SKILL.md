@@ -1,6 +1,8 @@
 ---
 name: fmt
-description: Run `make fmt` to check the code format.
+description: Run `make fmt` to check the code format. Use when this capability is needed.
+metadata:
+  author: quickwit-oss
 ---
 
 # Format Check
@@ -23,4 +25,5 @@ If there are log format issues, fix them by:
 Fix any issues found and re-run until clean.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/quickwit-oss/quickwit)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/quickwit-oss) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
