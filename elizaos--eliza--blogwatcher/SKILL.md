@@ -1,25 +1,8 @@
 ---
 name: blogwatcher
-description: Monitor blogs and RSS/Atom feeds for updates using the blogwatcher CLI. Use when the user wants to subscribe to blogs, track news feeds, manage a feed reader, scan for new articles, add or remove RSS or Atom subscriptions, or mark posts as read.
-homepage: https://github.com/Hyaxia/blogwatcher
+description: Monitor blogs and RSS/Atom feeds for updates using the blogwatcher CLI. Use when the user wants to subscribe to blogs, track news feeds, manage a feed reader, scan for new articles, add or remove RSS or Atom subscriptions, or mark posts as read. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "📰",
-        "requires": { "bins": ["blogwatcher"] },
-        "install":
-          [
-            {
-              "id": "go",
-              "kind": "go",
-              "module": "github.com/Hyaxia/blogwatcher/cmd/blogwatcher@latest",
-              "bins": ["blogwatcher"],
-              "label": "Install blogwatcher (go)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # blogwatcher
@@ -69,4 +52,5 @@ Notes
 - Use `blogwatcher <command> --help` to discover flags and options.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
