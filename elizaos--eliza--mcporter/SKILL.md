@@ -1,25 +1,8 @@
 ---
 name: mcporter
-description: Use the mcporter CLI to list, configure, auth, and call MCP servers/tools directly (HTTP or stdio), including ad-hoc servers, config edits, and CLI/type generation. Use when the user needs to interact with MCP servers, call remote tools, manage server authentication or OAuth flows, inspect available MCP tools and their schemas, generate CLI wrappers or TypeScript types from MCP servers, or manage the mcporter daemon and configuration.
-homepage: http://mcporter.dev
+description: Use the mcporter CLI to list, configure, auth, and call MCP servers/tools directly (HTTP or stdio), including ad-hoc servers, config edits, and CLI/type generation. Use when the user needs to interact with MCP servers, call remote tools, manage server authentication or OAuth flows, inspect available MCP tools and their schemas, generate CLI wrappers or TypeScript types from MCP servers, or manage the mcporter daemon and configuration. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "📦",
-        "requires": { "bins": ["mcporter"] },
-        "install":
-          [
-            {
-              "id": "node",
-              "kind": "node",
-              "package": "mcporter",
-              "bins": ["mcporter"],
-              "label": "Install mcporter (node)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # mcporter
@@ -61,4 +44,5 @@ Notes
 - Prefer `--output json` for machine-readable results.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
