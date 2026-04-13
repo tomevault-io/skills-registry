@@ -1,32 +1,8 @@
 ---
 name: wacli
-description: Send WhatsApp messages to other people or search/sync WhatsApp history via the wacli CLI (not for normal user chats). Use when the user asks to send a WhatsApp message, text someone on WhatsApp, search WhatsApp chat history, sync WhatsApp conversations, backfill message history, or forward a file via WhatsApp to a third party.
-homepage: https://wacli.sh
+description: Send WhatsApp messages to other people or search/sync WhatsApp history via the wacli CLI (not for normal user chats). Use when the user asks to send a WhatsApp message, text someone on WhatsApp, search WhatsApp chat history, sync WhatsApp conversations, backfill message history, or forward a file via WhatsApp to a third party. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "📱",
-        "requires": { "bins": ["wacli"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "steipete/tap/wacli",
-              "bins": ["wacli"],
-              "label": "Install wacli (brew)",
-            },
-            {
-              "id": "go",
-              "kind": "go",
-              "module": "github.com/steipete/wacli/cmd/wacli@latest",
-              "bins": ["wacli"],
-              "label": "Install wacli (go)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # wacli
@@ -72,4 +48,5 @@ Notes
 - JIDs: direct chats look like `<number>@s.whatsapp.net`; groups look like `<id>@g.us` (use `wacli chats list` to find).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
