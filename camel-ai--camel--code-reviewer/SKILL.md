@@ -1,6 +1,8 @@
 ---
 name: code-reviewer
-description: Review code for quality, bugs, and improvements. Use when user wants code review or quality assessment.
+description: Review code for quality, bugs, and improvements. Use when user wants code review or quality assessment. Use when this capability is needed.
+metadata:
+  author: camel-ai
 ---
 
 # Code Reviewer
@@ -43,4 +45,5 @@ Perform thorough code reviews focusing on quality and correctness.
 - **Low**: Style issues, minor improvements
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/camel-ai/camel)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/camel-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
