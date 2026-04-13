@@ -1,26 +1,8 @@
 ---
 name: things-mac
-description: Manage Things 3 via the `things` CLI on macOS (add/update projects+todos via URL scheme; read/search/list from the local Things database). Use when a user asks Otto to add a task to Things, list inbox/today/upcoming, search tasks, or inspect projects/areas/tags.
-homepage: https://github.com/ossianhempel/things3-cli
+description: Manage Things 3 via the `things` CLI on macOS (add/update projects+todos via URL scheme; read/search/list from the local Things database). Use when a user asks Otto to add a task to Things, list inbox/today/upcoming, search tasks, or inspect projects/areas/tags. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "✅",
-        "os": ["darwin"],
-        "requires": { "bins": ["things"] },
-        "install":
-          [
-            {
-              "id": "go",
-              "kind": "go",
-              "module": "github.com/ossianhempel/things3-cli/cmd/things@latest",
-              "bins": ["things"],
-              "label": "Install things3-cli (go)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # Things 3 CLI
@@ -86,4 +68,5 @@ Notes
 - `--dry-run` prints the URL and does not open Things.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
