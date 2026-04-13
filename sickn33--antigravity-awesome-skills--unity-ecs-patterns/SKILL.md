@@ -1,9 +1,8 @@
 ---
 name: unity-ecs-patterns
-description: "Production patterns for Unity's Data-Oriented Technology Stack (DOTS) including Entity Component System, Job System, and Burst Compiler."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Production patterns for Unity's Data-Oriented Technology Stack (DOTS) including Entity Component System, Job System, and Burst Compiler. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Unity ECS Patterns
@@ -36,4 +35,5 @@ Production patterns for Unity's Data-Oriented Technology Stack (DOTS) including 
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
