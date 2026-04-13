@@ -1,9 +1,8 @@
 ---
 name: bats-testing-patterns
-description: "Master Bash Automated Testing System (Bats) for comprehensive shell script testing. Use when writing tests for shell scripts, CI/CD pipelines, or requiring test-driven development of shell utilities."
-risk: unknown
-source: community
-date_added: "2026-02-27"
+description: Master Bash Automated Testing System (Bats) for comprehensive shell script testing. Use when writing tests for shell scripts, CI/CD pipelines, or requiring test-driven development of shell utilities. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Bats Testing Patterns
@@ -37,4 +36,5 @@ Comprehensive guidance for writing comprehensive unit tests for shell scripts us
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
