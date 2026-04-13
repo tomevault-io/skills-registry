@@ -1,6 +1,8 @@
 ---
 name: report-writer
-description: Generate professional reports from analysis results. Use when user needs to create formatted documents summarizing findings.
+description: Generate professional reports from analysis results. Use when user needs to create formatted documents summarizing findings. Use when this capability is needed.
+metadata:
+  author: camel-ai
 ---
 
 # Report Writer
@@ -46,4 +48,5 @@ Transform analysis results into professional reports.
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/camel-ai/camel)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/camel-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
