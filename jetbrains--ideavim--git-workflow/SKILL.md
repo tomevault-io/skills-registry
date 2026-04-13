@@ -1,6 +1,8 @@
 ---
 name: git-workflow
-description: IdeaVim git workflow conventions covering commits, branches, PRs, and CI. Use when creating commits, managing branches, creating pull requests, reviewing git history, or any git-related activity in the IdeaVim project.
+description: IdeaVim git workflow conventions covering commits, branches, PRs, and CI. Use when creating commits, managing branches, creating pull requests, reviewing git history, or any git-related activity in the IdeaVim project. Use when this capability is needed.
+metadata:
+  author: jetbrains
 ---
 
 # Git Workflow
@@ -47,4 +49,5 @@ fix(VIM-XXXX): Description of the fix
 - URL: https://youtrack.jetbrains.com/issues/VIM
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/jetbrains/ideavim)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/jetbrains) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
