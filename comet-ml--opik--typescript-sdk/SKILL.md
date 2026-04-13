@@ -1,6 +1,8 @@
 ---
 name: typescript-sdk
-description: TypeScript SDK patterns for Opik. Use when working in sdks/typescript.
+description: TypeScript SDK patterns for Opik. Use when working in sdks/typescript. Use when this capability is needed.
+metadata:
+  author: comet-ml
 ---
 
 # TypeScript SDK
@@ -64,4 +66,5 @@ import { TracesApi } from 'opik/rest_api';  // Internal!
 - [testing.md](testing.md) - Vitest patterns, mocking, flush timing
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/comet-ml/opik)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/comet-ml) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
