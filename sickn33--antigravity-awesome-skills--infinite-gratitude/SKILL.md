@@ -1,9 +1,8 @@
 ---
 name: infinite-gratitude
-description: "Multi-agent research skill for parallel research execution (10 agents, battle-tested with real case studies)."
-risk: safe
-source: "https://github.com/sstklen/infinite-gratitude"
-date_added: "2026-02-27"
+description: Multi-agent research skill for parallel research execution (10 agents, battle-tested with real case studies). Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Infinite Gratitude
@@ -26,4 +25,5 @@ git clone https://github.com/sstklen/infinite-gratitude
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
