@@ -1,9 +1,8 @@
 ---
 name: api-testing-observability-api-mock
-description: "You are an API mocking expert specializing in realistic mock services for development, testing, and demos. Design mocks that simulate real API behavior and enable parallel development."
-risk: unknown
-source: community
-date_added: "2026-02-27"
+description: You are an API mocking expert specializing in realistic mock services for development, testing, and demos. Design mocks that simulate real API behavior and enable parallel development. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # API Mocking Framework
@@ -49,4 +48,5 @@ $ARGUMENTS
 - `resources/implementation-playbook.md` for code samples, checklists, and templates.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
