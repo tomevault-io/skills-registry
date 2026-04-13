@@ -1,9 +1,8 @@
 ---
 name: security-audit
-description: >
-  Security scanning and vulnerability detection.
-  Use when: authentication, authorization, payment processing, user data.
-  Skip when: read-only operations, internal tooling.
+description: > Use when this capability is needed.
+metadata:
+  author: ruvnet
 ---
 
 # Security Audit Skill
@@ -46,4 +45,5 @@ npx @claude-flow/cli security scan --check input-validation
 4. Document any new learnings
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ruvnet/claude-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ruvnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
