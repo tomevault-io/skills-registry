@@ -1,6 +1,8 @@
 ---
 name: fix-clippy
-description: Fix all clippy lint warnings in the project
+description: Fix all clippy lint warnings in the project Use when this capability is needed.
+metadata:
+  author: quickwit-oss
 ---
 
 # Fix Clippy
@@ -26,4 +28,5 @@ cargo clippy --tests 2>&1 | grep "^warning:" | sort -u
 For each remaining warning, find the exact location and fix it manually.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/quickwit-oss/quickwit)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/quickwit-oss) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
