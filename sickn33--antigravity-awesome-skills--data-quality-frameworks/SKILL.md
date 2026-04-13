@@ -1,9 +1,8 @@
 ---
 name: data-quality-frameworks
-description: "Implement data quality validation with Great Expectations, dbt tests, and data contracts. Use when building data quality pipelines, implementing validation rules, or establishing data contracts."
-risk: unknown
-source: community
-date_added: "2026-02-27"
+description: Implement data quality validation with Great Expectations, dbt tests, and data contracts. Use when building data quality pipelines, implementing validation rules, or establishing data contracts. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Data Quality Frameworks
@@ -43,4 +42,5 @@ Production patterns for implementing data quality with Great Expectations, dbt t
 - `resources/implementation-playbook.md` for detailed frameworks, templates, and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
