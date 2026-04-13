@@ -1,6 +1,8 @@
 ---
 name: woocommerce-dev-cycle
-description: Run tests, linting, and quality checks for WooCommerce development. Use when running tests, fixing code style, or following the development workflow.
+description: Run tests, linting, and quality checks for WooCommerce development. Use when running tests, fixing code style, or following the development workflow. Use when this capability is needed.
+metadata:
+  author: woocommerce
 ---
 
 # WooCommerce Development Cycle
@@ -36,4 +38,5 @@ The standard development workflow:
 - The test environment handles WordPress/WooCommerce setup automatically
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/woocommerce/woocommerce)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/woocommerce) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
