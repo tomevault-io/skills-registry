@@ -1,6 +1,8 @@
 ---
 name: upgrade-oxc
-description: 'Upgrade oxc, run codegen, and fix any breaking changes.'
+description: Upgrade oxc, run codegen, and fix any breaking changes. Use when this capability is needed.
+metadata:
+  author: rolldown
 ---
 
 # Upgrade OXC
@@ -27,4 +29,5 @@ CRITICAL: Run each step sequentially ONE AT A TIME. Wait for each command to FUL
 16. Summarize the upgrade by reporting: (a) the old and new versions, (b) number of files changed, (c) any breaking changes that were fixed, and (d) notable changes in the diff
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/rolldown/rolldown)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/rolldown) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
