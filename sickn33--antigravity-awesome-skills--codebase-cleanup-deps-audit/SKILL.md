@@ -1,9 +1,8 @@
 ---
 name: codebase-cleanup-deps-audit
-description: "You are a dependency security expert specializing in vulnerability scanning, license compliance, and supply chain security. Analyze project dependencies for known vulnerabilities, licensing issues, outdated packages, and provide actionable remediation strategies."
-risk: unknown
-source: community
-date_added: "2026-02-27"
+description: You are a dependency security expert specializing in vulnerability scanning, license compliance, and supply chain security. Analyze project dependencies for known vulnerabilities, licensing issues, outdated packages, and provide actionable remediation strategies. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Dependency Audit and Security Analysis
@@ -54,4 +53,5 @@ $ARGUMENTS
 - `resources/implementation-playbook.md` for detailed tooling and templates.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
