@@ -1,6 +1,8 @@
 ---
 name: coingecko
-description: CoinGecko API documentation - cryptocurrency market data API, price feeds, market cap, volume, historical data. Use when integrating CoinGecko API, building crypto price trackers, or accessing cryptocurrency market data.
+description: CoinGecko API documentation - cryptocurrency market data API, price feeds, market cap, volume, historical data. Use when integrating CoinGecko API, building crypto price trackers, or accessing cryptocurrency market data. Use when this capability is needed.
+metadata:
+  author: 2025emma
 ---
 
 # Coingecko Skill
@@ -80,4 +82,5 @@ To refresh this skill with updated documentation:
 2. The skill will be rebuilt with the latest information
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/2025emma/vibe-coding-cn)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/2025emma) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
