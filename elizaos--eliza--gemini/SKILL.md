@@ -1,25 +1,8 @@
 ---
 name: gemini
-description: Gemini CLI for one-shot Q&A, summaries, and generation. Use when the user asks to query Gemini, generate text with Google AI, summarize content using Gemini, run a one-shot prompt, get a Gemini response, or produce JSON output via the Gemini CLI. Supports model selection, output formatting, and extension management.
-homepage: https://ai.google.dev/
+description: Gemini CLI for one-shot Q&A, summaries, and generation. Use when the user asks to query Gemini, generate text with Google AI, summarize content using Gemini, run a one-shot prompt, get a Gemini response, or produce JSON output via the Gemini CLI. Supports model selection, output formatting, and extension management. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "♊️",
-        "requires": { "bins": ["gemini"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "gemini-cli",
-              "bins": ["gemini"],
-              "label": "Install Gemini CLI (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # Gemini CLI
@@ -43,4 +26,5 @@ Notes
 - Avoid `--yolo` for safety.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
