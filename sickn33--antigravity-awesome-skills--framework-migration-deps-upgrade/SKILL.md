@@ -1,9 +1,8 @@
 ---
 name: framework-migration-deps-upgrade
-description: "You are a dependency management expert specializing in safe, incremental upgrades of project dependencies. Plan and execute dependency updates with minimal risk, proper testing, and clear migration pa"
-risk: critical
-source: community
-date_added: "2026-02-27"
+description: You are a dependency management expert specializing in safe, incremental upgrades of project dependencies. Plan and execute dependency updates with minimal risk, proper testing, and clear migration pa Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Dependency Upgrade Strategy
@@ -51,4 +50,5 @@ Focus on safe, incremental upgrades that maintain system stability while keeping
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
