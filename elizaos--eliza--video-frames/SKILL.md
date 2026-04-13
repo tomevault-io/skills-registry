@@ -1,25 +1,8 @@
 ---
 name: video-frames
-description: Extract frames or short clips from videos using ffmpeg. Use when the user asks to grab a frame, capture a screenshot from a video, extract a thumbnail, pull a still image from footage, or snapshot a specific timestamp in a video file.
-homepage: https://ffmpeg.org
+description: Extract frames or short clips from videos using ffmpeg. Use when the user asks to grab a frame, capture a screenshot from a video, extract a thumbnail, pull a still image from footage, or snapshot a specific timestamp in a video file. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🎞️",
-        "requires": { "bins": ["ffmpeg"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "ffmpeg",
-              "bins": ["ffmpeg"],
-              "label": "Install ffmpeg (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # Video Frames (ffmpeg)
@@ -46,4 +29,5 @@ At a timestamp:
 - Use a `.jpg` for quick share; use `.png` for crisp UI frames.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
