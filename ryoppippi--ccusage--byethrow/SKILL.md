@@ -1,7 +1,8 @@
 ---
 name: byethrow
-description: Reference the byethrow documentation to understand and use the Result type library for error handling in JavaScript/TypeScript. Access detailed API references, practical usage examples, and best practice guides.
-allowed-tools: Read, Grep, Glob
+description: Reference the byethrow documentation to understand and use the Result type library for error handling in JavaScript/TypeScript. Access detailed API references, practical usage examples, and best practice guides. Use when this capability is needed.
+metadata:
+  author: ryoppippi
 ---
 
 ## About byethrow
@@ -65,4 +66,5 @@ npx @praha/byethrow-docs toc path/to/document.md
 - `path`: Path to the documentation file (required)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ryoppippi/ccusage)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ryoppippi) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
