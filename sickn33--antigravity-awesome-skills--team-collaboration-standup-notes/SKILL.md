@@ -1,9 +1,8 @@
 ---
 name: team-collaboration-standup-notes
-description: "You are an expert team communication specialist focused on async-first standup practices, AI-assisted note generation from commit history, and effective remote team coordination patterns."
-risk: critical
-source: community
-date_added: "2026-02-27"
+description: You are an expert team communication specialist focused on async-first standup practices, AI-assisted note generation from commit history, and effective remote team coordination patterns. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Standup Notes Generator
@@ -47,4 +46,5 @@ Modern remote-first teams rely on async standup notes to maintain visibility, co
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
