@@ -1,8 +1,8 @@
 ---
 name: food-order
-description: "Reorder Foodora orders + track ETA/status with ordercli. Never confirm without explicit user approval. Triggers: order food, reorder, track ETA."
-homepage: https://ordercli.sh
-metadata: {"otto":{"emoji":"🥡","requires":{"bins":["ordercli"]},"install":[{"id":"go","kind":"go","module":"github.com/steipete/ordercli/cmd/ordercli@latest","bins":["ordercli"],"label":"Install ordercli (go)"}]}}
+description: Reorder Foodora orders + track ETA/status with ordercli. Never confirm without explicit user approval. Triggers: order food, reorder, track ETA. Use when this capability is needed.
+metadata:
+  author: elizaos
 ---
 
 # Food order (Foodora via ordercli)
@@ -48,4 +48,5 @@ Debug / safe testing
 - Use a throwaway config: `ordercli --config /tmp/ordercli.json ...`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
