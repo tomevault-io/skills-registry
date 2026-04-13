@@ -1,9 +1,8 @@
 ---
 name: x-article-publisher-skill
-description: "Publish articles to X/Twitter"
-risk: safe
-source: "https://github.com/wshuyi/x-article-publisher-skill"
-date_added: "2026-02-27"
+description: Publish articles to X/Twitter Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # X Article Publisher Skill
@@ -23,4 +22,5 @@ This skill provides guidance and patterns for publish articles to x/twitter.
 For more information, see the [source repository](https://github.com/wshuyi/x-article-publisher-skill).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
