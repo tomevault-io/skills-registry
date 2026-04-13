@@ -1,9 +1,8 @@
 ---
 name: claims
-description: >
-  Claims-based authorization for agents and operations. Grant, revoke, and verify permissions for secure multi-agent coordination.
-  Use when: permission management, access control, secure operations, authorization checks.
-  Skip when: open access, no security requirements, single-agent local work.
+description: > Use when this capability is needed.
+metadata:
+  author: ruvnet
 ---
 
 # Claims Authorization Skill
@@ -70,4 +69,5 @@ npx claude-flow claims list --agent agent-123
 4. Revoke claims when no longer needed
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ruvnet/claude-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ruvnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
