@@ -1,6 +1,8 @@
 ---
 name: write-script-java
-description: MUST use when writing Java scripts.
+description: MUST use when writing Java scripts. Use when this capability is needed.
+metadata:
+  author: windmill-labs
 ---
 
 ## CLI Commands
@@ -53,4 +55,5 @@ public class Main {
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/windmill-labs/windmill)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/windmill-labs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
