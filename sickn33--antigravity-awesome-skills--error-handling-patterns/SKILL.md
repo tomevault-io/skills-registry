@@ -1,9 +1,8 @@
 ---
 name: error-handling-patterns
-description: "Build resilient applications with robust error handling strategies that gracefully handle failures and provide excellent debugging experiences."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Build resilient applications with robust error handling strategies that gracefully handle failures and provide excellent debugging experiences. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Error Handling Patterns
@@ -38,4 +37,5 @@ Build resilient applications with robust error handling strategies that graceful
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
