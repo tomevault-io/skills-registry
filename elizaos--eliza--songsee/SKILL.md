@@ -1,25 +1,8 @@
 ---
 name: songsee
-description: Generate spectrograms and feature-panel visualizations from audio with the songsee CLI. Use when the user wants to visualize an audio file, create a spectrogram image, render mel or chroma panels, analyze frequency content, or produce a multi-panel audio feature grid from MP3 or WAV files.
-homepage: https://github.com/steipete/songsee
+description: Generate spectrograms and feature-panel visualizations from audio with the songsee CLI. Use when the user wants to visualize an audio file, create a spectrogram image, render mel or chroma panels, analyze frequency content, or produce a multi-panel audio feature grid from MP3 or WAV files. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🌊",
-        "requires": { "bins": ["songsee"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "steipete/tap/songsee",
-              "bins": ["songsee"],
-              "label": "Install songsee (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # songsee
@@ -49,4 +32,5 @@ Notes
 - Multiple `--viz` renders a grid.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
