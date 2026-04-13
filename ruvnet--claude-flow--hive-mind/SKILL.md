@@ -1,9 +1,8 @@
 ---
 name: hive-mind
-description: >
-  Byzantine fault-tolerant consensus and distributed coordination. Queen-led hierarchical swarm management with multiple consensus strategies.
-  Use when: distributed coordination, fault-tolerant operations, multi-agent consensus, collective decision making.
-  Skip when: single-agent tasks, simple operations, local-only work.
+description: > Use when this capability is needed.
+metadata:
+  author: ruvnet
 ---
 
 # Hive-Mind Skill
@@ -65,4 +64,5 @@ npx claude-flow hive-mind sessions --active
 4. Run frequent checkpoints
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ruvnet/claude-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ruvnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
