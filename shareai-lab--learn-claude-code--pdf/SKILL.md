@@ -1,6 +1,8 @@
 ---
 name: pdf
-description: Process PDF files - extract text, create PDFs, merge documents. Use when user asks to read PDF, create PDF, or work with PDF files.
+description: Process PDF files - extract text, create PDFs, merge documents. Use when user asks to read PDF, create PDF, or work with PDF files. Use when this capability is needed.
+metadata:
+  author: shareai-lab
 ---
 
 # PDF Processing Skill
@@ -112,4 +114,5 @@ for i in range(len(doc)):
 4. **OCR for scanned PDFs**: Use `pytesseract` if text extraction returns empty
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/shareai-lab/learn-claude-code)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shareai-lab) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
