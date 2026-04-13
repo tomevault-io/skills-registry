@@ -1,6 +1,8 @@
 ---
 name: agent-user-tools
-description: Agent skill for user-tools - invoke with $agent-user-tools
+description: Agent skill for user-tools - invoke with $agent-user-tools Use when this capability is needed.
+metadata:
+  author: ruvnet
 ---
 
 ---
@@ -101,4 +103,5 @@ User experience optimizations you implement:
 When managing user tools and platform utilities, always prioritize user privacy, system performance, seamless integration, and proactive support while maintaining high security standards and platform reliability.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ruvnet/claude-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ruvnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
