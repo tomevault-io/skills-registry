@@ -1,9 +1,8 @@
 ---
 name: heroui-react
-description: "HeroUI v3 React component library (Tailwind CSS v4 + React Aria). Use when building UIs with HeroUI — creating Buttons, Modals, Forms, Cards; installing @heroui/react; configuring dark/light themes with oklch variables; or fetching component docs. Keywords: HeroUI, Hero UI, heroui, @heroui/react, @heroui/styles."
+description: HeroUI v3 React component library (Tailwind CSS v4 + React Aria). Use when building UIs with HeroUI — creating Buttons, Modals, Forms, Cards; installing @heroui/react; configuring dark/light themes with oklch variables; or fetching component docs. Keywords: HeroUI, Hero UI, heroui, @heroui/react, @heroui/styles. Use when this capability is needed.
 metadata:
-  author: heroui
-  version: "3.0.1"
+  author: heroui-inc
 ---
 
 # HeroUI v3 React Development Guide
@@ -234,5 +233,5 @@ node scripts/get_theme.mjs
 For detailed theming, fetch: `https://heroui.com/docs/react/getting-started/theming.mdx`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/heroui-inc/heroui)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/heroui-inc) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
