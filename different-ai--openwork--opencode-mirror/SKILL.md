@@ -1,6 +1,8 @@
 ---
 name: opencode-mirror
-description: Maintain the local OpenCode mirror for self-reference
+description: Maintain the local OpenCode mirror for self-reference Use when this capability is needed.
+metadata:
+  author: different-ai
 ---
 
 ## Quick Usage (Already Configured)
@@ -23,4 +25,5 @@ git clone https://github.com/anomalyco/opencode vendor/opencode
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/different-ai/openwork)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/different-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
