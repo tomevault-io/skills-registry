@@ -1,11 +1,8 @@
 ---
 name: roier-seo
-description: Technical SEO auditor and fixer. Runs Lighthouse/PageSpeed audits on websites or local dev servers, analyzes SEO/performance/accessibility scores, and automatically implements fixes for meta tags, structured data, Core Web Vitals, and accessibility issues.
-version: 1.0.0
-author: Kemeny Studio
-license: MIT
-tags: [SEO, Lighthouse, PageSpeed, Accessibility, Performance, Meta Tags, Structured Data, Core Web Vitals, WCAG, Next.js, React, Vue]
-dependencies: [lighthouse, chrome-launcher]
+description: Technical SEO auditor and fixer. Runs Lighthouse/PageSpeed audits on websites or local dev servers, analyzes SEO/performance/accessibility scores, and automatically implements fixes for meta tags, structured data, Core Web Vitals, and accessibility issues. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Roier SEO - Technical SEO Auditor & Fixer
@@ -458,5 +455,5 @@ Run the audit again to verify improvements.
 - Framework support for Next.js, React, Vue, Nuxt
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
