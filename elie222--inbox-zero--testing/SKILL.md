@@ -1,6 +1,8 @@
 ---
 name: testing
-description: Guidelines for testing the application with Vitest, including unit tests, integration tests (emulator), AI tests, and eval suites for LLM features
+description: Guidelines for testing the application with Vitest, including unit tests, integration tests (emulator), AI tests, and eval suites for LLM features Use when this capability is needed.
+metadata:
+  author: elie222
 ---
 # Testing
 
@@ -28,4 +30,5 @@ EVAL_MODELS=all pnpm test-ai eval/your-feature  # Eval across models
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elie222/inbox-zero)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elie222) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
