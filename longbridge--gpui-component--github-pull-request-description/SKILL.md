@@ -1,6 +1,8 @@
 ---
 name: github-pull-request-description
-description: Write a description to description GitHub Pull Request.
+description: Write a description to description GitHub Pull Request. Use when this capability is needed.
+metadata:
+  author: longbridge
 ---
 
 ## Description
@@ -44,4 +46,5 @@ We pefer the following format for breaking changes descriptions:
 ````
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/longbridge/gpui-component)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/longbridge) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
