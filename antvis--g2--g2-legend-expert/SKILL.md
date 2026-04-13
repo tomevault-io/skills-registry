@@ -1,6 +1,8 @@
 ---
-name: G2 Legend Expert
-description: Expert skill for G2 legend development - provides comprehensive knowledge about legend rendering implementation, component architecture, layout algorithms, and interaction handling. Use when implementing, customizing, or debugging legend functionality in G2 visualizations.
+name: g2-legend-expert
+description: Expert skill for G2 legend development - provides comprehensive knowledge about legend rendering implementation, component architecture, layout algorithms, and interaction handling. Use when implementing, customizing, or debugging legend functionality in G2 visualizations. Use when this capability is needed.
+metadata:
+  author: antvis
 ---
 
 # G2 Legend Expert Skill
@@ -193,4 +195,5 @@ For more detailed information on legend layout mechanisms and related topics, se
   - Layout Calculation Logic: The core algorithm in `computePadding` function
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/antvis/g2)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/antvis) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
