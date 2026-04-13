@@ -1,6 +1,8 @@
 ---
-name: "AgentDB Memory Patterns"
-description: "Implement persistent memory patterns for AI agents using AgentDB. Includes session memory, long-term storage, pattern learning, and context management. Use when building stateful agents, chat systems, or intelligent assistants."
+name: agentdb-memory-patterns
+description: Implement persistent memory patterns for AI agents using AgentDB. Includes session memory, long-term storage, pattern learning, and context management. Use when building stateful agents, chat systems, or intelligent assistants. Use when this capability is needed.
+metadata:
+  author: ruvnet
 ---
 
 # AgentDB Memory Patterns
@@ -339,4 +341,5 @@ npx agentdb@latest migrate --source .swarm$memory.db
 - Website: https:/$agentdb.ruv.io
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ruvnet/claude-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ruvnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
