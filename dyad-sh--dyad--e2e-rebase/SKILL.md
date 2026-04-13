@@ -1,6 +1,8 @@
 ---
-name: dyad:e2e-rebase
-description: Rebase E2E test snapshots based on failed tests from the PR comments.
+name: dyade2e-rebase
+description: Rebase E2E test snapshots based on failed tests from the PR comments. Use when this capability is needed.
+metadata:
+  author: dyad-sh
 ---
 
 # E2E Snapshot Rebase
@@ -56,4 +58,5 @@ Rebase E2E test snapshots based on failed tests from the PR comments.
 10. Inform the user that the snapshots have been updated and pushed to the PR.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/dyad-sh/dyad)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dyad-sh) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
