@@ -1,9 +1,8 @@
 ---
 name: screen-reader-testing
-description: "Practical guide to testing web applications with screen readers for comprehensive accessibility validation."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Practical guide to testing web applications with screen readers for comprehensive accessibility validation. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Screen Reader Testing
@@ -36,4 +35,5 @@ Practical guide to testing web applications with screen readers for comprehensiv
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
