@@ -1,9 +1,8 @@
 ---
 name: workflow-patterns
 description: Use this skill when implementing tasks according to Conductor's TDD workflow, handling phase checkpoints, managing git commits for tasks, or understanding the verification protocol.
-risk: safe
-source: community
-date_added: '2026-02-27'
+metadata:
+  author: sickn33
 ---
 
 # Workflow Patterns
@@ -37,4 +36,5 @@ Guide for implementing tasks using Conductor's TDD workflow, managing phase chec
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
