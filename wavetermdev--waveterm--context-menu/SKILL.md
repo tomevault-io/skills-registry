@@ -1,6 +1,8 @@
 ---
 name: context-menu
-description: Guide for creating and displaying context menus in Wave Terminal. Use when implementing right-click menus, adding context menu items, creating submenus, or handling menu interactions with checkboxes and separators.
+description: Guide for creating and displaying context menus in Wave Terminal. Use when implementing right-click menus, adding context menu items, creating submenus, or handling menu interactions with checkboxes and separators. Use when this capability is needed.
+metadata:
+  author: wavetermdev
 ---
 
 # Context Menu Quick Reference
@@ -160,4 +162,5 @@ Use `submenu` to organize related options hierarchically, keeping the top-level 
 Use the `visible` and `enabled` properties to dynamically show or disable menu items based on the current state.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wavetermdev/waveterm)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wavetermdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
