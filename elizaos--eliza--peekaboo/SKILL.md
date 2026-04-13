@@ -1,26 +1,8 @@
 ---
 name: peekaboo
-description: Capture and automate macOS UI with the Peekaboo CLI. Provides screenshot capture, screen recording, click automation, keyboard input, window management, menu interaction, and accessibility-driven element targeting on macOS. Use when the user asks to take a screenshot, capture the screen, click a UI element, automate mouse or keyboard input, manage application windows, interact with menus or the Dock, scroll, drag, swipe, type text into fields, or inspect on-screen elements.
-homepage: https://peekaboo.boo
+description: Capture and automate macOS UI with the Peekaboo CLI. Provides screenshot capture, screen recording, click automation, keyboard input, window management, menu interaction, and accessibility-driven element targeting on macOS. Use when the user asks to take a screenshot, capture the screen, click a UI element, automate mouse or keyboard input, manage application windows, interact with menus or the Dock, scroll, drag, swipe, type text into fields, or inspect on-screen elements. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "👀",
-        "os": ["darwin"],
-        "requires": { "bins": ["peekaboo"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "steipete/tap/peekaboo",
-              "bins": ["peekaboo"],
-              "label": "Install Peekaboo (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # Peekaboo
@@ -190,4 +172,5 @@ Notes
 - Use `peekaboo see --annotate` to identify targets before clicking.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
