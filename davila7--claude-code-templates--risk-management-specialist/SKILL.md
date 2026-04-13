@@ -1,6 +1,8 @@
 ---
 name: risk-management-specialist
-description: Senior Risk Management specialist for medical device companies implementing ISO 14971 risk management throughout product lifecycle. Provides risk analysis, risk evaluation, risk control, and post-production information analysis. Use for risk management planning, risk assessments, risk control verification, and risk management file maintenance.
+description: Senior Risk Management specialist for medical device companies implementing ISO 14971 risk management throughout product lifecycle. Provides risk analysis, risk evaluation, risk control, and post-production information analysis. Use for risk management planning, risk assessments, risk control verification, and risk management file maintenance. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Senior Risk Management Specialist
@@ -225,5 +227,5 @@ Integrate risk management with clinical evaluation and post-market surveillance 
 - `training-materials/`: Risk management training and competency programs
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
