@@ -1,12 +1,8 @@
 ---
 name: notion
-description: Notion API for creating and managing pages, databases, and blocks. Use when the user wants to create a Notion page, query a Notion database, update Notion properties, search Notion, add content to Notion, manage Notion blocks, or interact with Notion data sources and workspaces via the API.
-homepage: https://developers.notion.com
+description: Notion API for creating and managing pages, databases, and blocks. Use when the user wants to create a Notion page, query a Notion database, update Notion properties, search Notion, add content to Notion, manage Notion blocks, or interact with Notion data sources and workspaces via the API. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      { "emoji": "📝", "requires": { "env": ["NOTION_API_KEY"] }, "primaryEnv": "NOTION_API_KEY" },
-  }
+  author: elizaos
 ---
 
 # notion
@@ -172,4 +168,5 @@ Common property formats for database items:
 - Use `is_inline: true` when creating data sources to embed them in pages
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
