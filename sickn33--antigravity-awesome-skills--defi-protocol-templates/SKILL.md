@@ -1,9 +1,8 @@
 ---
 name: defi-protocol-templates
-description: "Implement DeFi protocols with production-ready templates for staking, AMMs, governance, and lending systems. Use when building decentralized finance applications or smart contract protocols."
-risk: unknown
-source: community
-date_added: "2026-02-27"
+description: Implement DeFi protocols with production-ready templates for staking, AMMs, governance, and lending systems. Use when building decentralized finance applications or smart contract protocols. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # DeFi Protocol Templates
@@ -469,4 +468,5 @@ contract FlashLoanReceiver is IFlashLoanReceiver {
 - **Timelocks**: Delay execution of governance decisions
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
