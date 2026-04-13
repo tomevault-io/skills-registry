@@ -1,6 +1,8 @@
 ---
 name: pr-submit
-description: Create and submit a GitHub PR from the current branch
+description: Create and submit a GitHub PR from the current branch Use when this capability is needed.
+metadata:
+  author: pipecat-ai
 ---
 
 Submit the current changes as a GitHub pull request.
@@ -28,4 +30,5 @@ Submit the current changes as a GitHub pull request.
 5. Return the PR URL to the user.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/pipecat-ai/pipecat)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/pipecat-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
