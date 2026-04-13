@@ -1,6 +1,8 @@
 ---
 name: tavily-web
-description: Web search, content extraction, crawling, and research capabilities using Tavily API
+description: Web search, content extraction, crawling, and research capabilities using Tavily API Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # tavily-web
@@ -36,4 +38,5 @@ See the GitHub repository for troubleshooting guides.
 - context7-auto-research, exa-search, firecrawl-scraper, codex-review
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
