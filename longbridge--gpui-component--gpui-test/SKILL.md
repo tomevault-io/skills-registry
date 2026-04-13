@@ -1,6 +1,8 @@
 ---
 name: gpui-test
-description: Writing tests for GPUI applications. Use when testing components, async operations, or UI behavior.
+description: Writing tests for GPUI applications. Use when testing components, async operations, or UI behavior. Use when this capability is needed.
+metadata:
+  author: longbridge
 ---
 
 ## Overview
@@ -94,4 +96,5 @@ fn test_with_window(cx: &mut TestAppContext) {
 - For best practices and running tests, see [examples.md](examples.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/longbridge/gpui-component)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/longbridge) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
