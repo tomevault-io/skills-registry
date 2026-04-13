@@ -1,6 +1,8 @@
 ---
 name: read-docs
 description: Enables efficient, accurate retrieval of content from Fumadocs-powered documentation sites.
+metadata:
+  author: fuma-nama
 ---
 
 A specialized skill for exploring and retrieving accurate, clean content from documentation websites built with Fumadocs.
@@ -35,4 +37,5 @@ When a user query involves a library, tool, framework, or project whose official
 Prioritize these endpoints over scraping rendered HTML to minimize noise and maximize accuracy.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/fuma-nama/fumadocs)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/fuma-nama) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
