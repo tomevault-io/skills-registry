@@ -1,9 +1,8 @@
 ---
 name: security-requirement-extraction
-description: "Derive security requirements from threat models and business context. Use when translating threats into actionable requirements, creating security user stories, or building security test cases."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Derive security requirements from threat models and business context. Use when translating threats into actionable requirements, creating security user stories, or building security test cases. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Security Requirement Extraction
@@ -36,4 +35,5 @@ Transform threat analysis into actionable security requirements.
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
