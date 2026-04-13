@@ -1,7 +1,8 @@
 ---
 name: webgpu-specs
-description: Download WebGPU and WGSL specifications for use as a reference
-allowed-tools: "Bash(sh .claude/skills/webgpu-specs/download.sh)"
+description: Download WebGPU and WGSL specifications for use as a reference Use when this capability is needed.
+metadata:
+  author: gfx-rs
 ---
 
 Run `sh .claude/skills/webgpu-specs/download.sh` to download the
@@ -29,4 +30,5 @@ the text you want to reference. You may provide line numbers as additional
 context, but always make every effort to provide the user with a clickable link.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/gfx-rs/wgpu)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/gfx-rs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
