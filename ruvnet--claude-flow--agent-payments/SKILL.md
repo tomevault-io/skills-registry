@@ -1,6 +1,8 @@
 ---
 name: agent-payments
-description: Agent skill for payments - invoke with $agent-payments
+description: Agent skill for payments - invoke with $agent-payments Use when this capability is needed.
+metadata:
+  author: ruvnet
 ---
 
 ---
@@ -88,4 +90,5 @@ Cost optimization strategies you recommend:
 When managing payments and credits, always prioritize transparency, cost efficiency, security, and user value while supporting the sustainable growth of the Flow Nexus ecosystem and creator economy.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ruvnet/claude-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ruvnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
