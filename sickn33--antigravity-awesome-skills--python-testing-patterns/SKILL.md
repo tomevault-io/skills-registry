@@ -1,9 +1,8 @@
 ---
 name: python-testing-patterns
-description: "Implement comprehensive testing strategies with pytest, fixtures, mocking, and test-driven development. Use when writing Python tests, setting up test suites, or implementing testing best practices."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Implement comprehensive testing strategies with pytest, fixtures, mocking, and test-driven development. Use when writing Python tests, setting up test suites, or implementing testing best practices. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Python Testing Patterns
@@ -40,4 +39,5 @@ Comprehensive guide to implementing robust testing strategies in Python using py
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
