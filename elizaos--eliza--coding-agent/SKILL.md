@@ -1,10 +1,8 @@
 ---
 name: coding-agent
-description: Run Codex CLI, Claude Code, OpenCode, or Pi Coding Agent via background process for programmatic control. Use when the agent needs to spawn, monitor, or orchestrate coding agents in a terminal session, delegate programming tasks to a sub-agent, review pull requests with an external CLI tool, or run parallel background coding workflows across git worktrees.
+description: Run Codex CLI, Claude Code, OpenCode, or Pi Coding Agent via background process for programmatic control. Use when the agent needs to spawn, monitor, or orchestrate coding agents in a terminal session, delegate programming tasks to a sub-agent, review pull requests with an external CLI tool, or run parallel background coding workflows across git worktrees. Use when this capability is needed.
 metadata:
-  {
-    "otto": { "emoji": "🧩", "requires": { "anyBins": ["claude", "codex", "opencode", "pi"] } },
-  }
+  author: elizaos
 ---
 
 # Coding Agent (bash-first)
@@ -284,4 +282,5 @@ This triggers an immediate wake event — Skippy gets pinged in seconds, not 10 
 - **Sass works:** Codex responds well to playful prompts. Try asking it for a haiku about your project.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
