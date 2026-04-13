@@ -1,7 +1,8 @@
 ---
 name: vercel-deployment
-description: "Expert knowledge for deploying to Vercel with Next.js Use when: vercel, deploy, deployment, hosting, production."
-source: vibeship-spawner-skills (Apache 2.0)
+description: Expert knowledge for deploying to Vercel with Next.js Use when: vercel, deploy, deployment, hosting, production. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Vercel Deployment
@@ -69,4 +70,5 @@ Optimize build for faster deployments and smaller bundles
 Works well with: `nextjs-app-router`, `supabase-backend`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
