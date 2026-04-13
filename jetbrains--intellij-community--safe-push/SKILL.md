@@ -1,6 +1,8 @@
 ---
 name: safe-push
-description: Safe Push process for pushing changes to the IntelliJ repository. Use when pushing code changes to remote.
+description: Safe Push process for pushing changes to the IntelliJ repository. Use when pushing code changes to remote. Use when this capability is needed.
+metadata:
+  author: jetbrains
 ---
 
 # Safe Push Guide for AI Agents
@@ -119,4 +121,5 @@ The Bazel sandbox does NOT inherit environment variables by default. Use `env_in
 - Slack: `#patronus-support`, `#ij-builds`, `#ij-qa-watch`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/jetbrains/intellij-community)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/jetbrains) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
