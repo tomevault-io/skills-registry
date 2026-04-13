@@ -1,6 +1,8 @@
 ---
 name: pdf-processing
-description: Extract text and tables from PDF files, fill forms, merge documents. Use when working with PDF files or when the user mentions PDFs, forms, or document extraction.
+description: Extract text and tables from PDF files, fill forms, merge documents. Use when working with PDF files or when the user mentions PDFs, forms, or document extraction. Use when this capability is needed.
+metadata:
+  author: tencent
 ---
 # PDF Processing
 
@@ -40,4 +42,5 @@ with pdfplumber.open("document.pdf") as pdf:
 3. Check for scanned PDFs that may require OCR
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tencent/weknora)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tencent) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
