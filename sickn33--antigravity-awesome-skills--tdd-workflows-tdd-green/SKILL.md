@@ -1,9 +1,8 @@
 ---
 name: tdd-workflows-tdd-green
-description: "Implement the minimal code needed to make failing tests pass in the TDD green phase."
-risk: unknown
-source: community
-date_added: "2026-02-27"
+description: Implement the minimal code needed to make failing tests pass in the TDD green phase. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Green Phase: Simple function
@@ -76,4 +75,5 @@ app.post('/api/users',
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
