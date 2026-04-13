@@ -1,33 +1,8 @@
 ---
 name: bird
-description: X/Twitter CLI for reading, searching, posting, and engagement via cookies. Provides direct access to tweets, timelines, social media feeds, bookmarks, lists, and trending topics through GraphQL and cookie-based authentication. Use when the user wants to tweet, read a tweet, search Twitter, check their timeline, browse social media, view replies, follow or unfollow accounts, manage bookmarks, or interact with X/Twitter from the command line.
-homepage: https://bird.fast
+description: X/Twitter CLI for reading, searching, posting, and engagement via cookies. Provides direct access to tweets, timelines, social media feeds, bookmarks, lists, and trending topics through GraphQL and cookie-based authentication. Use when the user wants to tweet, read a tweet, search Twitter, check their timeline, browse social media, view replies, follow or unfollow accounts, manage bookmarks, or interact with X/Twitter from the command line. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🐦",
-        "requires": { "bins": ["bird"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "steipete/tap/bird",
-              "bins": ["bird"],
-              "label": "Install bird (brew)",
-              "os": ["darwin"],
-            },
-            {
-              "id": "npm",
-              "kind": "node",
-              "package": "@steipete/bird",
-              "bins": ["bird"],
-              "label": "Install bird (npm)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # bird 🐦
@@ -224,4 +199,5 @@ bird query-ids --fresh
 **TL;DR**: Read/search/engage with CLI. Post carefully or use browser. 🐦
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
