@@ -1,9 +1,8 @@
 ---
 name: heroui-native
-description: "HeroUI Native component library for React Native (Tailwind v4 via Uniwind). Use when building mobile UIs with HeroUI Native — creating Buttons, Cards, TextFields, Dialogs; installing heroui-native; configuring dark/light themes; or fetching component docs. Keywords: HeroUI Native, heroui-native, React Native UI, Uniwind, mobile components."
+description: HeroUI Native component library for React Native (Tailwind v4 via Uniwind). Use when building mobile UIs with HeroUI Native — creating Buttons, Cards, TextFields, Dialogs; installing heroui-native; configuring dark/light themes; or fetching component docs. Keywords: HeroUI Native, heroui-native, React Native UI, Uniwind, mobile components. Use when this capability is needed.
 metadata:
-  author: heroui
-  version: "2.0.1"
+  author: heroui-inc
 ---
 
 # HeroUI Native Development Guide
@@ -229,5 +228,5 @@ Uniwind.setTheme(theme === "light" ? "dark" : "light");
 For detailed theming, fetch: `https://heroui.com/docs/native/getting-started/theming.mdx`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/heroui-inc/heroui)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/heroui-inc) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
