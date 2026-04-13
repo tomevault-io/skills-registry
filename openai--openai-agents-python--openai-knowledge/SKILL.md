@@ -1,6 +1,8 @@
 ---
 name: openai-knowledge
 description: Use when working with the OpenAI API (Responses API) or OpenAI platform features (tools, streaming, Realtime API, auth, models, rate limits, MCP) and you need authoritative, up-to-date documentation (schemas, examples, limits, edge cases). Prefer the OpenAI Developer Documentation MCP server tools when available; otherwise guide the user to enable `openaiDeveloperDocs`.
+metadata:
+  author: openai
 ---
 
 # OpenAI Knowledge
@@ -44,4 +46,5 @@ Provide one of these setup options, then ask the user to restart the Codex sessi
 Also point to: https://developers.openai.com/resources/docs-mcp#quickstart
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openai/openai-agents-python)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
