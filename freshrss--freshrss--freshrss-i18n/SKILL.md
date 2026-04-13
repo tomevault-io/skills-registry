@@ -1,7 +1,8 @@
 ---
 name: freshrss-i18n
-description: Add, move, or format translation strings in FreshRSS. Use when modifying UI text that needs translation (i18n). Handles all supported languages automatically.
-allowed-tools: Bash(php:*) Bash(composer:*) Bash(make:*) Read Grep
+description: Add, move, or format translation strings in FreshRSS. Use when modifying UI text that needs translation (i18n). Handles all supported languages automatically. Use when this capability is needed.
+metadata:
+  author: freshrss
 ---
 
 # FreshRSS translation management (i18n)
@@ -33,4 +34,5 @@ When adding a new UI element:
 	```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/freshrss/freshrss)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/freshrss) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
