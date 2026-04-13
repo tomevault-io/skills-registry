@@ -1,26 +1,8 @@
 ---
 name: apple-reminders
-description: Manage Apple Reminders via the `remindctl` CLI on macOS (list, add, edit, complete, delete). Supports lists, date filters, and JSON/plain output. Use when the user asks about reminders, todos, tasks, to-do lists, "remind me", scheduling tasks, checking what is due today, completing or deleting reminders, or managing reminder lists on macOS.
-homepage: https://github.com/steipete/remindctl
+description: Manage Apple Reminders via the `remindctl` CLI on macOS (list, add, edit, complete, delete). Supports lists, date filters, and JSON/plain output. Use when the user asks about reminders, todos, tasks, to-do lists, "remind me", scheduling tasks, checking what is due today, completing or deleting reminders, or managing reminder lists on macOS. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "⏰",
-        "os": ["darwin"],
-        "requires": { "bins": ["remindctl"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "steipete/tap/remindctl",
-              "bins": ["remindctl"],
-              "label": "Install remindctl via Homebrew",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # Apple Reminders CLI (remindctl)
@@ -96,4 +78,5 @@ Notes
 - If running over SSH, grant access on the Mac that runs the command.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
