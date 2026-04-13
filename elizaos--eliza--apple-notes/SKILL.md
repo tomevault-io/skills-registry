@@ -1,26 +1,8 @@
 ---
 name: apple-notes
-description: Manage Apple Notes via the `memo` CLI on macOS (create, view, edit, delete, search, move, and export notes). Use when a user asks Otto to add a note, list notes, search notes, or manage note folders.
-homepage: https://github.com/antoniorodr/memo
+description: Manage Apple Notes via the `memo` CLI on macOS (create, view, edit, delete, search, move, and export notes). Use when a user asks Otto to add a note, list notes, search notes, or manage note folders. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "📝",
-        "os": ["darwin"],
-        "requires": { "bins": ["memo"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "antoniorodr/memo/memo",
-              "bins": ["memo"],
-              "label": "Install memo via Homebrew",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # Apple Notes CLI
@@ -77,4 +59,5 @@ Notes
 - For automation, grant permissions in System Settings > Privacy & Security > Automation.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
