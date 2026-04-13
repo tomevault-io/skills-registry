@@ -1,25 +1,8 @@
 ---
 name: openhue
-description: Controls Philips Hue smart lights, rooms, and scenes via the OpenHue CLI and a Hue Bridge. Use when the user asks to turn lights on or off, change brightness or color, activate a scene, list rooms, discover bridges, or manage smart lighting. Handles setup, querying light state, and adjusting individual or grouped lights by name or ID.
-homepage: https://www.openhue.io/cli
+description: Controls Philips Hue smart lights, rooms, and scenes via the OpenHue CLI and a Hue Bridge. Use when the user asks to turn lights on or off, change brightness or color, activate a scene, list rooms, discover bridges, or manage smart lighting. Handles setup, querying light state, and adjusting individual or grouped lights by name or ID. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "💡",
-        "requires": { "bins": ["openhue"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "openhue/cli/openhue-cli",
-              "bins": ["openhue"],
-              "label": "Install OpenHue CLI (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # OpenHue CLI
@@ -51,4 +34,5 @@ Notes
 - Use `--room "Room Name"` when light names are ambiguous.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
