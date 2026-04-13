@@ -1,31 +1,8 @@
 ---
 name: github
-description: "Interact with GitHub using the `gh` CLI to manage repositories, issues, pull requests, CI/CD workflow runs, and API queries. Use when the user asks to create, list, view, merge, or close pull requests and issues; check CI status or workflow run logs; query the GitHub API for repository data; or perform any GitHub operation from the command line. Covers `gh issue`, `gh pr`, `gh run`, `gh repo`, and `gh api` subcommands."
+description: Interact with GitHub using the `gh` CLI to manage repositories, issues, pull requests, CI/CD workflow runs, and API queries. Use when the user asks to create, list, view, merge, or close pull requests and issues; check CI status or workflow run logs; query the GitHub API for repository data; or perform any GitHub operation from the command line. Covers `gh issue`, `gh pr`, `gh run`, `gh repo`, and `gh api` subcommands. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🐙",
-        "requires": { "bins": ["gh"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "gh",
-              "bins": ["gh"],
-              "label": "Install GitHub CLI (brew)",
-            },
-            {
-              "id": "apt",
-              "kind": "apt",
-              "package": "gh",
-              "bins": ["gh"],
-              "label": "Install GitHub CLI (apt)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # GitHub Skill
@@ -77,4 +54,5 @@ gh issue list --repo owner/repo --json number,title --jq '.[] | "\(.number): \(.
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
