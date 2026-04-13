@@ -1,9 +1,8 @@
 ---
 name: claude-ally-health
-description: "A health assistant skill for medical information analysis, symptom tracking, and wellness guidance."
-risk: safe
-source: "https://github.com/huifer/Claude-Ally-Health"
-date_added: "2026-02-27"
+description: Use when working with a health assistant skill for medical information analysis, symptom tracking, and wellness guidance.
+metadata:
+  author: sickn33
 ---
 
 # Claude Ally Health
@@ -23,4 +22,5 @@ This skill provides guidance and patterns for a health assistant skill for medic
 For more information, see the [source repository](https://github.com/huifer/Claude-Ally-Health).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
