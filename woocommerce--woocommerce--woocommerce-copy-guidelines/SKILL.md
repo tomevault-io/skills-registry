@@ -1,6 +1,8 @@
 ---
 name: woocommerce-copy-guidelines
-description: Guidelines for UI text and copy in WooCommerce. Use when writing user-facing text, labels, buttons, or messages.
+description: Guidelines for UI text and copy in WooCommerce. Use when writing user-facing text, labels, buttons, or messages. Use when this capability is needed.
+metadata:
+  author: woocommerce
 ---
 
 # WooCommerce Copy Guidelines
@@ -21,4 +23,5 @@ Follow these guidelines when writing any user-facing text:
 - Be consistent with existing WooCommerce copy patterns
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/woocommerce/woocommerce)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/woocommerce) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
