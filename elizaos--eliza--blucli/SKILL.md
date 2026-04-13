@@ -1,25 +1,8 @@
 ---
 name: blucli
-description: BluOS CLI (blu) for discovery, playback, grouping, and volume control of Bluesound and NAD speakers. Use when the user wants to play music, stream audio, control speakers, adjust volume, group or ungroup Bluesound players, search TuneIn radio, or manage multi-room streaming setups.
-homepage: https://blucli.sh
+description: BluOS CLI (blu) for discovery, playback, grouping, and volume control of Bluesound and NAD speakers. Use when the user wants to play music, stream audio, control speakers, adjust volume, group or ungroup Bluesound players, search TuneIn radio, or manage multi-room streaming setups. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🫐",
-        "requires": { "bins": ["blu"] },
-        "install":
-          [
-            {
-              "id": "go",
-              "kind": "go",
-              "module": "github.com/steipete/blucli/cmd/blu@latest",
-              "bins": ["blu"],
-              "label": "Install blucli (go)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # blucli (blu)
@@ -47,4 +30,5 @@ Common tasks
 Prefer `--json` for scripts. Confirm the target device before changing playback.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
