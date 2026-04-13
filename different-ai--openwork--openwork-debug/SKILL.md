@@ -1,6 +1,8 @@
 ---
 name: openwork-debug
-description: Debug OpenWork sidecars, config, and audit trail
+description: Debug OpenWork sidecars, config, and audit trail Use when this capability is needed.
+metadata:
+  author: different-ai
 ---
 
 ## Credential check
@@ -59,4 +61,5 @@ sqlite3 ~/.opencode/opencode.db "select role, content from messages order by cre
 - OpenWork server writes only within approved workspace roots.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/different-ai/openwork)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/different-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
