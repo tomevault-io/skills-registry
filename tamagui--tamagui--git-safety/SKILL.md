@@ -1,6 +1,8 @@
 ---
 name: git-safety
-description: Git safety rules. INVOKE WHEN: git push, force push, git reset, git clean, destructive git, push force, reset hard. NEVER force push or do destructive git operations.
+description: Git safety rules. INVOKE WHEN: git push, force push, git reset, git clean, destructive git, push force, reset hard. NEVER force push or do destructive git operations. Use when this capability is needed.
+metadata:
+  author: tamagui
 ---
 
 # git safety
@@ -45,4 +47,5 @@ instead of force push:
 6. `git push` (no force flags)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tamagui/tamagui)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tamagui) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
