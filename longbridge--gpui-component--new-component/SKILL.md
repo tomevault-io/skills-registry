@@ -1,6 +1,8 @@
 ---
 name: new-component
-description: Create new GPUI components. Use when building components, writing UI elements, or creating new component implementations.
+description: Create new GPUI components. Use when building components, writing UI elements, or creating new component implementations. Use when this capability is needed.
+metadata:
+  author: longbridge
 ---
 
 ## Instructions
@@ -215,4 +217,5 @@ on_confirm: Option<Rc<dyn Fn(&ClickEvent, &mut Window, &mut App) -> bool + 'stat
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/longbridge/gpui-component)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/longbridge) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
