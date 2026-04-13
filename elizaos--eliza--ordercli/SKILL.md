@@ -1,32 +1,8 @@
 ---
 name: ordercli
-description: Foodora-only CLI for checking past orders and active order status (Deliveroo WIP). Use when the user asks to check food delivery orders, track a Foodora delivery, view order history, reorder a meal, look up past food orders, check delivery status, or manage Foodora sessions and authentication.
-homepage: https://ordercli.sh
+description: Foodora-only CLI for checking past orders and active order status (Deliveroo WIP). Use when the user asks to check food delivery orders, track a Foodora delivery, view order history, reorder a meal, look up past food orders, check delivery status, or manage Foodora sessions and authentication. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🛵",
-        "requires": { "bins": ["ordercli"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "steipete/tap/ordercli",
-              "bins": ["ordercli"],
-              "label": "Install ordercli (brew)",
-            },
-            {
-              "id": "go",
-              "kind": "go",
-              "module": "github.com/steipete/ordercli/cmd/ordercli@latest",
-              "bins": ["ordercli"],
-              "label": "Install ordercli (go)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # ordercli
@@ -78,4 +54,5 @@ Notes
 - Confirm before any reorder or cart-changing action.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
