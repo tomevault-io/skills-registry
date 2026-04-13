@@ -1,7 +1,8 @@
 ---
-targets: ['*']
 name: dev-server
-description: 'Development server setup and build watch monitoring. Use when starting dev work, checking build status, or troubleshooting the dev server.'
+description: Development server setup and build watch monitoring. Use when starting dev work, checking build status, or troubleshooting the dev server. Use when this capability is needed.
+metadata:
+  author: ag-grid
 ---
 
 # Development Server Guide
@@ -63,4 +64,5 @@ If the dev server shows errors:
 -   Run `yarn nx clean` if builds behave unexpectedly after branch switches
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ag-grid/ag-grid)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ag-grid) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
