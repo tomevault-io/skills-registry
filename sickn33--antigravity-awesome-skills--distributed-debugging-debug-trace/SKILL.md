@@ -1,9 +1,8 @@
 ---
 name: distributed-debugging-debug-trace
-description: "You are a debugging expert specializing in setting up comprehensive debugging environments, distributed tracing, and diagnostic tools. Configure debugging workflows, implement tracing solutions, and establish troubleshooting practices for development and production environments."
-risk: unknown
-source: community
-date_added: "2026-02-27"
+description: You are a debugging expert specializing in setting up comprehensive debugging environments, distributed tracing, and diagnostic tools. Configure debugging workflows, implement tracing solutions, and establish troubleshooting practices for development and production environments. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Debug and Trace Configuration
@@ -47,4 +46,5 @@ $ARGUMENTS
 - `resources/implementation-playbook.md` for detailed tooling and configuration patterns.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
