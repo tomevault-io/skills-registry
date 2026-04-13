@@ -1,7 +1,8 @@
 ---
 name: scientific-critical-thinking
-description: "Evaluate research rigor. Assess methodology, experimental design, statistical validity, biases, confounding, evidence quality (GRADE, Cochrane ROB), for critical analysis of scientific claims."
-allowed-tools: [Read, Write, Edit, Bash]
+description: Evaluate research rigor. Assess methodology, experimental design, statistical validity, biases, confounding, evidence quality (GRADE, Cochrane ROB), for critical analysis of scientific claims. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Scientific Critical Thinking
@@ -566,5 +567,5 @@ This skill includes comprehensive reference materials that provide detailed fram
 5. Advance scientific understanding
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
