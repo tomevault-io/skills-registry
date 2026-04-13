@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ruvnet/claude-flow](https://github.com/ruvnet/claude-flow/tree/main/v3/@claude-flow/codex/.agents/skills/sparc-methodology)
+Original source: [ruvnet/claude-flow](https://github.com/ruvnet/claude-flow/tree/main/v3/@claude-flow/mcp/.claude/skills/sparc-methodology)
 
 ---
 
