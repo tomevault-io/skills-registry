@@ -1,6 +1,8 @@
 ---
 name: ui-components
-description: UI component and styling guidelines using Shadcn UI, Radix UI, and Tailwind
+description: UI component and styling guidelines using Shadcn UI, Radix UI, and Tailwind Use when this capability is needed.
+metadata:
+  author: elie222
 ---
 # UI Components and Styling
 
@@ -69,4 +71,5 @@ Use the `LoadingContent` component to handle loading states:
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elie222/inbox-zero)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elie222) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
