@@ -1,26 +1,8 @@
 ---
 name: sag
-description: ElevenLabs text-to-speech with mac-style say UX. Use when the user asks to convert text to speech, generate voice audio, speak text aloud, read aloud, produce TTS output, create a voice generation, or synthesize spoken audio using ElevenLabs.
-homepage: https://sag.sh
+description: ElevenLabs text-to-speech with mac-style say UX. Use when the user asks to convert text to speech, generate voice audio, speak text aloud, read aloud, produce TTS output, create a voice generation, or synthesize spoken audio using ElevenLabs. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🗣️",
-        "requires": { "bins": ["sag"], "env": ["ELEVENLABS_API_KEY"] },
-        "primaryEnv": "ELEVENLABS_API_KEY",
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "steipete/tap/sag",
-              "bins": ["sag"],
-              "label": "Install sag (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # sag
@@ -87,4 +69,5 @@ Voice character tips:
 Default voice for Clawd: `lj2rcrvANS3gaWWnczSX` (or just `-v Clawd`)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
