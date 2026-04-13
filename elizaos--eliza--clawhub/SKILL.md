@@ -1,23 +1,8 @@
 ---
 name: clawhub
-description: Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.
+description: Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "requires": { "bins": ["clawhub"] },
-        "install":
-          [
-            {
-              "id": "node",
-              "kind": "node",
-              "package": "clawhub",
-              "bins": ["clawhub"],
-              "label": "Install ClawHub CLI (npm)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # ClawHub CLI
@@ -77,4 +62,5 @@ Notes
 - Update command hashes local files, resolves matching version, and upgrades to latest unless --version is set
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
