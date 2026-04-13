@@ -1,9 +1,8 @@
 ---
 name: embeddings
-description: >
-  Vector embeddings with HNSW indexing, sql.js persistence, and hyperbolic support. 75x faster with agentic-flow integration.
-  Use when: semantic search, pattern matching, similarity queries, knowledge retrieval.
-  Skip when: exact text matching, simple lookups, no semantic understanding needed.
+description: > Use when this capability is needed.
+metadata:
+  author: ruvnet
 ---
 
 # Embeddings Skill
@@ -69,4 +68,5 @@ npx claude-flow memory search --query "related patterns" --semantic
 4. Normalize embeddings for consistency
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ruvnet/claude-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ruvnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
