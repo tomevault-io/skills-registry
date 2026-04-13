@@ -1,6 +1,8 @@
 ---
 name: rust-backend
-description: Rust coding guidelines for the Windmill backend. MUST use when writing or modifying Rust code in the backend directory.
+description: Rust coding guidelines for the Windmill backend. MUST use when writing or modifying Rust code in the backend directory. Use when this capability is needed.
+metadata:
+  author: windmill-labs
 ---
 
 # Windmill Rust Patterns
@@ -107,4 +109,5 @@ async fn process_job(
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/windmill-labs/windmill)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/windmill-labs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
