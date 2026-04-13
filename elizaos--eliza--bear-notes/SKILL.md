@@ -1,26 +1,8 @@
 ---
 name: bear-notes
-description: Create, search, read, tag, and append to Bear app notes on macOS via the grizzly CLI. Use when the user wants to create a new note in Bear, search Bear notes by tag, read or open a Bear note by ID, append text to an existing Bear note, list Bear tags, or automate note-taking in Bear. Requires the grizzly binary and Bear app running on macOS.
-homepage: https://bear.app
+description: Create, search, read, tag, and append to Bear app notes on macOS via the grizzly CLI. Use when the user wants to create a new note in Bear, search Bear notes by tag, read or open a Bear note by ID, append text to an existing Bear note, list Bear tags, or automate note-taking in Bear. Requires the grizzly binary and Bear app running on macOS. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🐻",
-        "os": ["darwin"],
-        "requires": { "bins": ["grizzly"] },
-        "install":
-          [
-            {
-              "id": "go",
-              "kind": "go",
-              "module": "github.com/tylerwince/grizzly/cmd/grizzly@latest",
-              "bins": ["grizzly"],
-              "label": "Install grizzly (go)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # Bear Notes
@@ -107,4 +89,5 @@ timeout = "5s"
 - Some operations require a valid token (add-text, tags, open-note --selected)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
