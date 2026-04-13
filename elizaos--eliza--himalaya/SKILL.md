@@ -1,25 +1,8 @@
 ---
 name: himalaya
-description: "CLI to manage emails via IMAP/SMTP. Use `himalaya` to list, read, write, reply, forward, search, and organize emails from the terminal. Supports multiple accounts and message composition with MML (MIME Meta Language). Use when the user wants to check email, read mail, send email, compose a message, search inbox, reply to a message, forward mail, manage folders, download attachments, or organize messages from the command line."
-homepage: https://github.com/pimalaya/himalaya
+description: CLI to manage emails via IMAP/SMTP. Use `himalaya` to list, read, write, reply, forward, search, and organize emails from the terminal. Supports multiple accounts and message composition with MML (MIME Meta Language). Use when the user wants to check email, read mail, send email, compose a message, search inbox, reply to a message, forward mail, manage folders, download attachments, or organize messages from the command line. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "📧",
-        "requires": { "bins": ["himalaya"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "himalaya",
-              "bins": ["himalaya"],
-              "label": "Install Himalaya (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # Himalaya Email CLI
@@ -257,4 +240,5 @@ RUST_LOG=trace RUST_BACKTRACE=1 himalaya envelope list
 - Store passwords securely using `pass`, system keyring, or a command that outputs the password.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
