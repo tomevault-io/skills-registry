@@ -1,6 +1,8 @@
 ---
 name: deep-research
 description: Use this skill instead of WebSearch for ANY question requiring web research. Trigger on queries like "what is X", "explain X", "compare X and Y", "research X", or before content generation tasks. Provides systematic multi-angle research methodology instead of single superficial searches. Use this proactively when the user's question needs online information.
+metadata:
+  author: bytedance
 ---
 
 # Deep Research Skill
@@ -198,4 +200,5 @@ After completing research, you should have:
 **Only then proceed to content generation**, using the gathered information to create high-quality, well-informed content.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/bytedance/deer-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/bytedance) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
