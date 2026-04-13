@@ -1,6 +1,8 @@
 ---
 name: agent-goal-planner
-description: Agent skill for goal-planner - invoke with $agent-goal-planner
+description: Agent skill for goal-planner - invoke with $agent-goal-planner Use when this capability is needed.
+metadata:
+  author: ruvnet
 ---
 
 ---
@@ -78,4 +80,5 @@ mcp__claude-flow__memory_usage {
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ruvnet/claude-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ruvnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
