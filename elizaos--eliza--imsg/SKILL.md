@@ -1,26 +1,8 @@
 ---
 name: imsg
-description: iMessage/SMS CLI for listing chats, fetching history, watching conversations, and sending messages on macOS via the Messages app. Use when the user wants to send a text message, read iMessages, check recent texts, reply to a conversation, send an SMS, or interact with the Messages app from the terminal. Supports texting contacts by phone number or email, attaching files, and streaming incoming messages in real time.
-homepage: https://imsg.to
+description: iMessage/SMS CLI for listing chats, fetching history, watching conversations, and sending messages on macOS via the Messages app. Use when the user wants to send a text message, read iMessages, check recent texts, reply to a conversation, send an SMS, or interact with the Messages app from the terminal. Supports texting contacts by phone number or email, attaching files, and streaming incoming messages in real time. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "📨",
-        "os": ["darwin"],
-        "requires": { "bins": ["imsg"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "steipete/tap/imsg",
-              "bins": ["imsg"],
-              "label": "Install imsg (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # imsg Actions
@@ -74,4 +56,5 @@ imsg send --to "+14155551212" --text "hi" --file /path/pic.jpg
 - Watch a high-signal chat to stream incoming messages.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
