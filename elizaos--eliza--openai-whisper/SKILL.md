@@ -1,25 +1,8 @@
 ---
 name: openai-whisper
-description: Local speech-to-text with the Whisper CLI (no API key). Use when the user needs to transcribe audio, convert speech to text, generate subtitles, translate spoken language, or produce SRT/VTT captions from mp3, m4a, or wav files using the local Whisper model.
-homepage: https://openai.com/research/whisper
+description: Local speech-to-text with the Whisper CLI (no API key). Use when the user needs to transcribe audio, convert speech to text, generate subtitles, translate spoken language, or produce SRT/VTT captions from mp3, m4a, or wav files using the local Whisper model. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🎙️",
-        "requires": { "bins": ["whisper"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "openai-whisper",
-              "bins": ["whisper"],
-              "label": "Install OpenAI Whisper (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # Whisper (CLI)
@@ -38,4 +21,5 @@ Notes
 - Use smaller models for speed, larger for accuracy.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
