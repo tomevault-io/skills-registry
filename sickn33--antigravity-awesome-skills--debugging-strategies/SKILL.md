@@ -1,9 +1,8 @@
 ---
 name: debugging-strategies
-description: "Transform debugging from frustrating guesswork into systematic problem-solving with proven strategies, powerful tools, and methodical approaches."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Transform debugging from frustrating guesswork into systematic problem-solving with proven strategies, powerful tools, and methodical approaches. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Debugging Strategies
@@ -37,4 +36,5 @@ Transform debugging from frustrating guesswork into systematic problem-solving w
 - `resources/implementation-playbook.md` for detailed debugging patterns and checklists.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
