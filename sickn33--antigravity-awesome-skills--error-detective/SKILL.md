@@ -1,9 +1,8 @@
 ---
 name: error-detective
-description: Search logs and codebases for error patterns, stack traces, and anomalies. Correlates errors across systems and identifies root causes.
-risk: safe
-source: community
-date_added: '2026-02-27'
+description: Search logs and codebases for error patterns, stack traces, and anomalies. Correlates errors across systems and identifies root causes. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 ## Use this skill when
@@ -51,4 +50,5 @@ You are an error detective specializing in log analysis and pattern recognition.
 Focus on actionable findings. Include both immediate fixes and prevention strategies.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
