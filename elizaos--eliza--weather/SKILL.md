@@ -1,8 +1,8 @@
 ---
 name: weather
-description: Get current weather and forecasts (no API key required). Use when the user asks about the weather, temperature, forecast, wind, humidity, or climate conditions for a city or location. Fetches real-time weather data from free services using curl.
-homepage: https://wttr.in/:help
-metadata: { "otto": { "emoji": "🌤️", "requires": { "bins": ["curl"] } } }
+description: Get current weather and forecasts (no API key required). Use when the user asks about the weather, temperature, forecast, wind, humidity, or climate conditions for a city or location. Fetches real-time weather data from free services using curl. Use when this capability is needed.
+metadata:
+  author: elizaos
 ---
 
 # Weather
@@ -54,4 +54,5 @@ Find coordinates for a city, then query. Returns JSON with temp, windspeed, weat
 Docs: https://open-meteo.com/en/docs
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
