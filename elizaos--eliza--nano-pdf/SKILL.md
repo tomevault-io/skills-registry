@@ -1,25 +1,8 @@
 ---
 name: nano-pdf
-description: Edits PDF files using natural-language instructions via the nano-pdf CLI. Supports modifying text, changing titles, fixing typos, and updating content on specific pages. Use when the user wants to edit a PDF, modify PDF content, update PDF text, fix a typo in a PDF, change a PDF title, or rewrite part of a PDF page.
-homepage: https://pypi.org/project/nano-pdf/
+description: Edits PDF files using natural-language instructions via the nano-pdf CLI. Supports modifying text, changing titles, fixing typos, and updating content on specific pages. Use when the user wants to edit a PDF, modify PDF content, update PDF text, fix a typo in a PDF, change a PDF title, or rewrite part of a PDF page. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "📄",
-        "requires": { "bins": ["nano-pdf"] },
-        "install":
-          [
-            {
-              "id": "uv",
-              "kind": "uv",
-              "package": "nano-pdf",
-              "bins": ["nano-pdf"],
-              "label": "Install nano-pdf (uv)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # nano-pdf
@@ -38,4 +21,5 @@ Notes:
 - Always sanity-check the output PDF before sending it out.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
