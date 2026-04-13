@@ -1,26 +1,8 @@
 ---
 name: openai-image-gen
-description: Batch-generate images via the OpenAI Images API using DALL-E 2, DALL-E 3, or GPT image models. Produces random-but-structured prompts, renders them, and outputs a browsable `index.html` gallery. Use when the user asks to generate AI images, create pictures with DALL-E, batch-produce image assets, render AI art, or build an image gallery from text prompts.
-homepage: https://platform.openai.com/docs/api-reference/images
+description: Batch-generate images via the OpenAI Images API using DALL-E 2, DALL-E 3, or GPT image models. Produces random-but-structured prompts, renders them, and outputs a browsable `index.html` gallery. Use when the user asks to generate AI images, create pictures with DALL-E, batch-produce image assets, render AI art, or build an image gallery from text prompts. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🖼️",
-        "requires": { "bins": ["python3"], "env": ["OPENAI_API_KEY"] },
-        "primaryEnv": "OPENAI_API_KEY",
-        "install":
-          [
-            {
-              "id": "python-brew",
-              "kind": "brew",
-              "formula": "python",
-              "bins": ["python3"],
-              "label": "Install Python (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # OpenAI Image Gen
@@ -89,4 +71,5 @@ Different models support different parameter values. The script automatically se
 - `index.html` (thumbnail gallery)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
