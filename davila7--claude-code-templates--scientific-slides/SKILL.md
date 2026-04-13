@@ -1,7 +1,8 @@
 ---
 name: scientific-slides
-description: "Build slide decks and presentations for research talks. Use this for making PowerPoint slides, conference presentations, seminar talks, research presentations, thesis defense slides, or any scientific talk. Provides slide structure, design templates, timing guidance, and visual validation. Works with PowerPoint and LaTeX Beamer."
-allowed-tools: [Read, Write, Edit, Bash]
+description: Build slide decks and presentations for research talks. Use this for making PowerPoint slides, conference presentations, seminar talks, research presentations, thesis defense slides, or any scientific talk. Provides slide structure, design templates, timing guidance, and visual validation. Works with PowerPoint and LaTeX Beamer. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Scientific Slides
@@ -1150,5 +1151,5 @@ See `document-skills/pptx/SKILL.md` for complete PowerPoint workflow.
 - **You are the presentation, slides are visual support**: They should enhance, not replace your talk
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
