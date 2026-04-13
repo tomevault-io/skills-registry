@@ -1,6 +1,8 @@
 ---
 name: gpui-entity
-description: Entity management and state handling in GPUI. Use when working with entities, managing component state, coordinating between components, handling async operations with state updates, or implementing reactive patterns. Entities provide safe concurrent access to application state.
+description: Entity management and state handling in GPUI. Use when working with entities, managing component state, coordinating between components, handling async operations with state updates, or implementing reactive patterns. Entities provide safe concurrent access to application state. Use when this capability is needed.
+metadata:
+  author: longbridge
 ---
 
 ## Overview
@@ -168,4 +170,5 @@ entity1.update(cx, |_, cx| {
   - Entity snapshots, transactions, pools
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/longbridge/gpui-component)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/longbridge) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
