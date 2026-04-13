@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ruvnet/claude-flow](https://github.com/ruvnet/claude-flow/tree/main/v3/@claude-flow/mcp/.claude/skills/agentdb-optimization)
+Original source: [ruvnet/claude-flow](https://github.com/ruvnet/claude-flow/tree/main/.agents/skills/agentdb-optimization)
 
 ---
 
