@@ -1,9 +1,8 @@
 ---
 name: python-performance-optimization
-description: "Profile and optimize Python code using cProfile, memory profilers, and performance best practices. Use when debugging slow Python code, optimizing bottlenecks, or improving application performance."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Profile and optimize Python code using cProfile, memory profilers, and performance best practices. Use when debugging slow Python code, optimizing bottlenecks, or improving application performance. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Python Performance Optimization
@@ -39,4 +38,5 @@ Comprehensive guide to profiling, analyzing, and optimizing Python code for bett
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
