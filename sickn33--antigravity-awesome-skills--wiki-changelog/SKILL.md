@@ -1,9 +1,8 @@
 ---
 name: wiki-changelog
-description: "Generate structured changelogs from git history. Use when user asks \"what changed recently\", \"generate a changelog\", \"summarize commits\" or user wants to understand recent development activity."
-risk: unknown
-source: community
-date_added: "2026-02-27"
+description: Generate structured changelogs from git history. Use when user asks \"what changed recently\", \"generate a changelog\", \"summarize commits\" or user wants to understand recent development activity. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Wiki Changelog
@@ -32,4 +31,5 @@ Generate structured changelogs from git history.
 This skill is applicable to execute the workflow or actions described in the overview.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
