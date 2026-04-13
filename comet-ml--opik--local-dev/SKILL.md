@@ -1,6 +1,8 @@
 ---
 name: local-dev
-description: Local development environment setup and commands. Use when helping with dev server, Docker, or local testing.
+description: Local development environment setup and commands. Use when helping with dev server, Docker, or local testing. Use when this capability is needed.
+metadata:
+  author: comet-ml
 ---
 
 # Local Development
@@ -75,4 +77,5 @@ cd apps/opik-frontend && rm -rf node_modules && npm install
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/comet-ml/opik)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/comet-ml) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
