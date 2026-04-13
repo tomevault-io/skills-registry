@@ -1,9 +1,8 @@
 ---
 name: accessibility-compliance-accessibility-audit
-description: "You are an accessibility expert specializing in WCAG compliance, inclusive design, and assistive technology compatibility. Conduct audits, identify barriers, and provide remediation guidance."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: You are an accessibility expert specializing in WCAG compliance, inclusive design, and assistive technology compatibility. Conduct audits, identify barriers, and provide remediation guidance. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Accessibility Audit and Testing
@@ -45,4 +44,5 @@ $ARGUMENTS
 - `resources/implementation-playbook.md` for detailed audit steps, tooling, and remediation examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
