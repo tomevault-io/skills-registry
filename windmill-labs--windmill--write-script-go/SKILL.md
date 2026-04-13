@@ -1,6 +1,8 @@
 ---
 name: write-script-go
-description: MUST use when writing Go scripts.
+description: MUST use when writing Go scripts. Use when this capability is needed.
+metadata:
+  author: windmill-labs
 ---
 
 ## CLI Commands
@@ -73,4 +75,5 @@ func main(value int) (string, error) {
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/windmill-labs/windmill)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/windmill-labs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
