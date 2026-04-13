@@ -1,12 +1,8 @@
 ---
 name: remotion
-description: Best practices and comprehensive guide for Remotion - programmatic video creation in React with animations, compositions, and media handling
-version: 1.0.0
-author: remotion-dev
-repo: https://github.com/remotion-dev/skills
-license: MIT
-tags: [Video, React, Animation, Remotion, Composition, Media, 3D, Audio, Captions, Charts, Lottie, Tailwind]
-dependencies: [remotion>=4.0.0, react>=18.0.0]
+description: Best practices and comprehensive guide for Remotion - programmatic video creation in React with animations, compositions, and media handling Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Remotion - Video Creation in React
@@ -135,5 +131,5 @@ export const MyComposition = () => {
 - **License**: MIT
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
