@@ -1,9 +1,8 @@
 ---
 name: anti-reversing-techniques
-description: "AUTHORIZED USE ONLY: This skill contains dual-use security techniques. Before proceeding with any bypass or analysis: > 1."
-risk: offensive
-source: community
-date_added: "2026-02-27"
+description: AUTHORIZED USE ONLY: This skill contains dual-use security techniques. Before proceeding with any bypass or analysis: > 1. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 > **AUTHORIZED USE ONLY**: This skill contains dual-use security techniques. Before proceeding with any bypass or analysis:
@@ -45,4 +44,5 @@ Refer to `resources/implementation-playbook.md` for detailed techniques and exam
 - `resources/implementation-playbook.md` for detailed techniques and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
