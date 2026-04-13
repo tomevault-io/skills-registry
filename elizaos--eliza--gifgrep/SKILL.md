@@ -1,32 +1,8 @@
 ---
 name: gifgrep
-description: Search GIF providers with CLI/TUI, download results, and extract stills/sheets. Use when the user wants to find a GIF, search for animated images, browse GIFs by keyword, download a GIF from Tenor or Giphy, extract a still frame from a GIF, create a contact sheet of GIF frames, or preview GIFs in the terminal.
-homepage: https://gifgrep.com
+description: Search GIF providers with CLI/TUI, download results, and extract stills/sheets. Use when the user wants to find a GIF, search for animated images, browse GIFs by keyword, download a GIF from Tenor or Giphy, extract a still frame from a GIF, create a contact sheet of GIF frames, or preview GIFs in the terminal. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🧲",
-        "requires": { "bins": ["gifgrep"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "steipete/tap/gifgrep",
-              "bins": ["gifgrep"],
-              "label": "Install gifgrep (brew)",
-            },
-            {
-              "id": "go",
-              "kind": "go",
-              "module": "github.com/steipete/gifgrep/cmd/gifgrep@latest",
-              "bins": ["gifgrep"],
-              "label": "Install gifgrep (go)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # gifgrep
@@ -79,4 +55,5 @@ Environment tweaks
 - `GIFGREP_CELL_ASPECT=0.5` to tweak preview geometry
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
