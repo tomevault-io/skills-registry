@@ -1,7 +1,8 @@
 ---
 name: shopify-apps
-description: "Expert patterns for Shopify app development including Remix/React Router apps, embedded apps with App Bridge, webhook handling, GraphQL Admin API, Polaris components, billing, and app extensions. Use when: shopify app, shopify, embedded app, polaris, app bridge."
-source: vibeship-spawner-skills (Apache 2.0)
+description: Expert patterns for Shopify app development including Remix/React Router apps, embedded apps with App Bridge, webhook handling, GraphQL Admin API, Polaris components, billing, and app extensions. Use when: shopify app, shopify, embedded app, polaris, app bridge. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Shopify Apps
@@ -42,4 +43,5 @@ Secure webhook processing with HMAC verification
 | Issue | high | ## Implement all GDPR handlers |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
