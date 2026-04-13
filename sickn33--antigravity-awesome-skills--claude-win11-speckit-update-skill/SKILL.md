@@ -1,9 +1,8 @@
 ---
 name: claude-win11-speckit-update-skill
-description: "Windows 11 system management"
-risk: safe
-source: "https://github.com/NotMyself/claude-win11-speckit-update-skill"
-date_added: "2026-02-27"
+description: Windows 11 system management Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Claude Win11 Speckit Update Skill
@@ -23,4 +22,5 @@ This skill provides guidance and patterns for windows 11 system management.
 For more information, see the [source repository](https://github.com/NotMyself/claude-win11-speckit-update-skill).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
