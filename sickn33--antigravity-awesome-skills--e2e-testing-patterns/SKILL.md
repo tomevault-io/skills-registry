@@ -1,9 +1,8 @@
 ---
 name: e2e-testing-patterns
-description: "Build reliable, fast, and maintainable end-to-end test suites that provide confidence to ship code quickly and catch regressions before users do."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Build reliable, fast, and maintainable end-to-end test suites that provide confidence to ship code quickly and catch regressions before users do. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # E2E Testing Patterns
@@ -44,4 +43,5 @@ Build reliable, fast, and maintainable end-to-end test suites that provide confi
 - `resources/implementation-playbook.md` for detailed E2E patterns and templates.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
