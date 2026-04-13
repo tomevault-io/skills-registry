@@ -1,7 +1,8 @@
 ---
 name: prd
-description: "Generate a Product Requirements Document (PRD) for a new feature. Use when planning a feature, starting a new project, or when asked to create a PRD. Triggers on: create a prd, write prd for, plan this feature, requirements for, spec out."
-user-invocable: true
+description: Generate a Product Requirements Document (PRD) for a new feature. Use when planning a feature, starting a new project, or when asked to create a PRD. Triggers on: create a prd, write prd for, plan this feature, requirements for, spec out. Use when this capability is needed.
+metadata:
+  author: snarktank
 ---
 
 # PRD Generator
@@ -241,4 +242,5 @@ Before saving the PRD:
 - [ ] Saved to `tasks/prd-[feature-name].md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/snarktank/ralph)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/snarktank) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
