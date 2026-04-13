@@ -1,6 +1,8 @@
 ---
 name: fix-members-short-description
 description: Use when asked to fix short descriptions of Python type members.
+metadata:
+  author: flet-dev
 ---
 
 ## Inputs
@@ -47,4 +49,5 @@ Apply the fix regardless of whether the first sentence starts on the same line a
 Ensure every docstring line is at most 88 characters long (including any trailing `\`). If a line cannot be wrapped without breaking a single unbreakable token (e.g., a long URL or Windows registry path like `HKEY_LOCAL_MACHINE\\...`), add `# noqa: E501` to the docstring closing `"""` line instead of the long line.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/flet-dev/flet)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/flet-dev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
