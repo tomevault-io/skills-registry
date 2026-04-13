@@ -1,7 +1,8 @@
 ---
 name: review
-description: Review code for common issues. Use when reviewing PRs, suggesting code changes, or when user asks to review code.
-allowed-tools: Read, Grep, Glob
+description: Review code for common issues. Use when reviewing PRs, suggesting code changes, or when user asks to review code. Use when this capability is needed.
+metadata:
+  author: temporalio
 ---
 
 # Code Review Skill
@@ -18,4 +19,5 @@ When reviewing, organize feedback by priority:
 3. **Nit**: Style preferences, minor improvements
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/temporalio/temporal)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/temporalio) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
