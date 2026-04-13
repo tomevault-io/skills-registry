@@ -1,16 +1,8 @@
 ---
 name: local-places
-description: Searches for local businesses and points of interest via a Google Places API proxy running on localhost. Resolves vague locations, applies filters for type, rating, and price, and returns structured place details. Use when the user asks to find restaurants, nearby places, coffee shops, business search, local recommendations, or anything involving place discovery by location.
-homepage: https://github.com/Hyaxia/local_places
+description: Searches for local businesses and points of interest via a Google Places API proxy running on localhost. Resolves vague locations, applies filters for type, rating, and price, and returns structured place details. Use when the user asks to find restaurants, nearby places, coffee shops, business search, local recommendations, or anything involving place discovery by location. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "📍",
-        "requires": { "bins": ["uv"], "env": ["GOOGLE_PLACES_API_KEY"] },
-        "primaryEnv": "GOOGLE_PLACES_API_KEY",
-      },
-  }
+  author: elizaos
 ---
 
 # 📍 Local Places
@@ -102,4 +94,5 @@ curl http://127.0.0.1:8000/places/{place_id}
 Use `next_page_token` as `page_token` in next request for more results.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
