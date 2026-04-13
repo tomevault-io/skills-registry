@@ -1,16 +1,8 @@
 ---
 name: openai-whisper-api
-description: Transcribe audio via OpenAI Audio Transcriptions API (Whisper). Use when the user wants to transcribe, convert speech to text, extract words from audio or voice recordings, generate a transcript from an audio file, or perform speech recognition on m4a, ogg, or wav files using the Whisper model.
-homepage: https://platform.openai.com/docs/guides/speech-to-text
+description: Transcribe audio via OpenAI Audio Transcriptions API (Whisper). Use when the user wants to transcribe, convert speech to text, extract words from audio or voice recordings, generate a transcript from an audio file, or perform speech recognition on m4a, ogg, or wav files using the Whisper model. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "☁️",
-        "requires": { "bins": ["curl"], "env": ["OPENAI_API_KEY"] },
-        "primaryEnv": "OPENAI_API_KEY",
-      },
-  }
+  author: elizaos
 ---
 
 # OpenAI Whisper API (curl)
@@ -52,4 +44,5 @@ Set `OPENAI_API_KEY`, or configure it in `~/.otto/otto.json`:
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
