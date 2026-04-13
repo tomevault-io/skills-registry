@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [elizaos/eliza](https://github.com/elizaos/eliza/tree/main/packages/skills/skills/spec-to-code-compliance/skills/spec-to-code-compliance)
+Original source: [elizaos/eliza](https://github.com/elizaos/eliza/tree/main/packages/skills/skills/spec-to-code-compliance)
 
 ---
 
