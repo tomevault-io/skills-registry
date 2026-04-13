@@ -1,25 +1,8 @@
 ---
 name: obsidian
-description: Work with Obsidian vaults (plain Markdown notes) and automate via obsidian-cli. Use when the user asks about notes, vault management, PKM, knowledge base organization, wikilinks, or personal knowledge management in Obsidian.
-homepage: https://help.obsidian.md
+description: Work with Obsidian vaults (plain Markdown notes) and automate via obsidian-cli. Use when the user asks about notes, vault management, PKM, knowledge base organization, wikilinks, or personal knowledge management in Obsidian. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "💎",
-        "requires": { "bins": ["obsidian-cli"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "yakitrak/yakitrak/obsidian-cli",
-              "bins": ["obsidian-cli"],
-              "label": "Install obsidian-cli (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # Obsidian
@@ -81,4 +64,5 @@ Delete
 Prefer direct edits when appropriate: open the `.md` file and change it; Obsidian will pick it up.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
