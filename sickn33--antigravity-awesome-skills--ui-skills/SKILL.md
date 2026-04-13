@@ -1,9 +1,8 @@
 ---
 name: ui-skills
-description: "Opinionated, evolving constraints to guide agents when building interfaces"
-risk: safe
-source: "https://github.com/ibelick/ui-skills"
-date_added: "2026-02-27"
+description: Opinionated, evolving constraints to guide agents when building interfaces Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Ui Skills
@@ -23,4 +22,5 @@ This skill provides guidance and patterns for opinionated, evolving constraints 
 For more information, see the [source repository](https://github.com/ibelick/ui-skills).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
