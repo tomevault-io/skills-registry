@@ -1,25 +1,8 @@
 ---
 name: gog
-description: Google Workspace CLI for Gmail, Calendar, Drive, Contacts, Sheets, and Docs. Use when the user asks to send an email, check inbox, search Gmail, create or list calendar events, search Google Drive files, look up contacts, read or update spreadsheets, or export Google Docs. Handles OAuth-authenticated access to Google services via the gog command-line tool.
-homepage: https://gogcli.sh
+description: Google Workspace CLI for Gmail, Calendar, Drive, Contacts, Sheets, and Docs. Use when the user asks to send an email, check inbox, search Gmail, create or list calendar events, search Google Drive files, look up contacts, read or update spreadsheets, or export Google Docs. Handles OAuth-authenticated access to Google services via the gog command-line tool. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "🎮",
-        "requires": { "bins": ["gog"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "steipete/tap/gogcli",
-              "bins": ["gog"],
-              "label": "Install gog (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # gog
@@ -116,4 +99,5 @@ Notes
 - `gog gmail search` returns one row per thread; use `gog gmail messages search` when you need every individual email returned separately.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
