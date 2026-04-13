@@ -1,6 +1,8 @@
 ---
-name: "Swarm Orchestration"
-description: "Orchestrate multi-agent swarms with agentic-flow for parallel task execution, dynamic topology, and intelligent coordination. Use when scaling beyond single agents, implementing complex workflows, or building distributed AI systems."
+name: swarm-orchestration
+description: Orchestrate multi-agent swarms with agentic-flow for parallel task execution, dynamic topology, and intelligent coordination. Use when scaling beyond single agents, implementing complex workflows, or building distributed AI systems. Use when this capability is needed.
+metadata:
+  author: ruvnet
 ---
 
 # Swarm Orchestration
@@ -179,4 +181,5 @@ npx agentic-flow hooks session-restore --session-id "swarm-001"
 - Hooks Integration: docs/hooks/coordination.md
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ruvnet/claude-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ruvnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
