@@ -1,6 +1,8 @@
 ---
 name: gpui-element
-description: Implementing custom elements using GPUI's low-level Element API (vs. high-level Render/RenderOnce APIs). Use when you need maximum control over layout, prepaint, and paint phases for complex, performance-critical custom UI components that cannot be achieved with Render/RenderOnce traits.
+description: Implementing custom elements using GPUI's low-level Element API (vs. high-level Render/RenderOnce APIs). Use when you need maximum control over layout, prepaint, and paint phases for complex, performance-critical custom UI components that cannot be achieved with Render/RenderOnce traits. Use when this capability is needed.
+metadata:
+  author: longbridge
 ---
 
 ## When to Use
@@ -126,4 +128,5 @@ State flows in one direction through associated types, passed as mutable referen
   - Async updates, memoization, virtual lists
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/longbridge/gpui-component)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/longbridge) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
