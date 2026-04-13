@@ -1,6 +1,8 @@
 ---
 name: claude-cookbooks
-description: Claude AI cookbooks - code examples, tutorials, and best practices for using Claude API. Use when learning Claude API integration, building Claude-powered applications, or exploring Claude capabilities.
+description: Claude AI cookbooks - code examples, tutorials, and best practices for using Claude API. Use when learning Claude API integration, building Claude-powered applications, or exploring Claude capabilities. Use when this capability is needed.
+metadata:
+  author: 2025emma
 ---
 
 # Claude Cookbooks Skill
@@ -313,4 +315,5 @@ https://github.com/anthropics/claude-cookbooks
 Repository cloned and processed on: 2025-10-29
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/2025emma/vibe-coding-cn)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/2025emma) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
