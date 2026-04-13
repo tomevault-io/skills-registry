@@ -1,6 +1,8 @@
 ---
 name: gpui-global
-description: Global state management in GPUI. Use when implementing global state, app-wide configuration, or shared resources.
+description: Global state management in GPUI. Use when implementing global state, app-wide configuration, or shared resources. Use when this capability is needed.
+metadata:
+  author: longbridge
 ---
 
 ## Overview
@@ -204,4 +206,5 @@ let user_entity = cx.new(|_| UserState { ... });
   - Best practices and anti-patterns
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/longbridge/gpui-component)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/longbridge) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
