@@ -1,9 +1,8 @@
 ---
 name: openapi-spec-generation
-description: "Generate and maintain OpenAPI 3.1 specifications from code, design-first specs, and validation patterns. Use when creating API documentation, generating SDKs, or ensuring API contract compliance."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Generate and maintain OpenAPI 3.1 specifications from code, design-first specs, and validation patterns. Use when creating API documentation, generating SDKs, or ensuring API contract compliance. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # OpenAPI Spec Generation
@@ -36,4 +35,5 @@ Comprehensive patterns for creating, maintaining, and validating OpenAPI 3.1 spe
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
