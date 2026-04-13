@@ -1,6 +1,8 @@
 ---
 name: add-new-jit-ee-api
-description: Add a new API to the JIT-VM (aka JIT-EE) interface in the codebase.
+description: Add a new API to the JIT-VM (aka JIT-EE) interface in the codebase. Use when this capability is needed.
+metadata:
+  author: dotnet
 ---
 
 # JIT-EE Interface extension
@@ -226,4 +228,5 @@ Consider other similar methods in the file for reference. Do not change implemen
 * [ ] All TODO/UNREACHABLE markers remain for future functional implementation.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/dotnet/runtime)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
