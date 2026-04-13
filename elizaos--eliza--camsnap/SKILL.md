@@ -1,25 +1,8 @@
 ---
 name: camsnap
-description: Capture frames or clips from RTSP/ONVIF cameras. Grabs snapshots, video clips, and motion events from IP cameras, security cameras, and video streams. Use when the user wants to take a snapshot from a camera, record a clip from an RTSP stream, monitor motion on a security camera, discover ONVIF devices on the network, or configure camera access for automated surveillance capture.
-homepage: https://camsnap.ai
+description: Capture frames or clips from RTSP/ONVIF cameras. Grabs snapshots, video clips, and motion events from IP cameras, security cameras, and video streams. Use when the user wants to take a snapshot from a camera, record a clip from an RTSP stream, monitor motion on a security camera, discover ONVIF devices on the network, or configure camera access for automated surveillance capture. Use when this capability is needed.
 metadata:
-  {
-    "otto":
-      {
-        "emoji": "📸",
-        "requires": { "bins": ["camsnap"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "steipete/tap/camsnap",
-              "bins": ["camsnap"],
-              "label": "Install camsnap (brew)",
-            },
-          ],
-      },
-  }
+  author: elizaos
 ---
 
 # camsnap
@@ -45,4 +28,5 @@ Notes
 - Prefer a short test capture before longer clips.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
