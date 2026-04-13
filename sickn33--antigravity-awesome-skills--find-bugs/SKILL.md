@@ -1,8 +1,8 @@
 ---
 name: find-bugs
-description: Find bugs, security vulnerabilities, and code quality issues in local branch changes. Use when asked to review changes, find bugs, security review, or audit code on the current branch.
-risk: unknown
-source: community
+description: Find bugs, security vulnerabilities, and code quality issues in local branch changes. Use when asked to review changes, find bugs, security review, or audit code on the current branch. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Find Bugs
@@ -77,4 +77,5 @@ If you find nothing significant, say so - don't invent issues.
 Do not make changes - just report findings. I'll decide what to address.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
