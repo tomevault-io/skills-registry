@@ -1,14 +1,8 @@
 ---
 name: cargo-lock-manager
-description: |
-  Manages Cargo.lock file updates and resolves --locked flag issues in CI/CD.
-
-  Triggers when user mentions:
-  - "cargo test --locked failed"
-  - "cannot update the lock file"
-  - "Cargo.lock is out of date"
-  - "PR failed with --locked error"
-  - "fix Cargo.lock"
+description: | Use when this capability is needed.
+metadata:
+  author: different-ai
 ---
 
 ## Quick Usage (Already Configured)
@@ -67,4 +61,5 @@ No setup required. This skill assumes:
 - Consider adding a pre-commit hook to verify lock file is up to date
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/different-ai/openwork)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/different-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
