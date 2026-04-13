@@ -1,9 +1,8 @@
 ---
 name: sql-optimization-patterns
-description: "Transform slow database queries into lightning-fast operations through systematic optimization, proper indexing, and query plan analysis."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Transform slow database queries into lightning-fast operations through systematic optimization, proper indexing, and query plan analysis. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # SQL Optimization Patterns
@@ -38,4 +37,5 @@ Transform slow database queries into lightning-fast operations through systemati
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
