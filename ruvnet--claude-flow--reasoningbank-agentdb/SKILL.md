@@ -1,6 +1,8 @@
 ---
-name: "ReasoningBank with AgentDB"
-description: "Implement ReasoningBank adaptive learning with AgentDB's 150x faster vector database. Includes trajectory tracking, verdict judgment, memory distillation, and pattern recognition. Use when building self-learning agents, optimizing decision-making, or implementing experience replay systems."
+name: reasoningbank-with-agentdb
+description: Implement ReasoningBank adaptive learning with AgentDB's 150x faster vector database. Includes trajectory tracking, verdict judgment, memory distillation, and pattern recognition. Use when building self-learning agents, optimizing decision-making, or implementing experience replay systems. Use when this capability is needed.
+metadata:
+  author: ruvnet
 ---
 
 # ReasoningBank with AgentDB
@@ -446,4 +448,5 @@ await rb.optimize();
 **Estimated Time**: 20-30 minutes
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ruvnet/claude-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ruvnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
