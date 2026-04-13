@@ -1,6 +1,8 @@
 ---
-name: "AgentDB Vector Search"
-description: "Implement semantic vector search with AgentDB for intelligent document retrieval, similarity matching, and context-aware querying. Use when building RAG systems, semantic search engines, or intelligent knowledge bases."
+name: agentdb-vector-search
+description: Implement semantic vector search with AgentDB for intelligent document retrieval, similarity matching, and context-aware querying. Use when building RAG systems, semantic search engines, or intelligent knowledge bases. Use when this capability is needed.
+metadata:
+  author: ruvnet
 ---
 
 # AgentDB Vector Search
@@ -339,4 +341,5 @@ npx agentdb@latest stats ./vectors.db
 - Command Help: `npx agentdb@latest help <command>`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/ruvnet/claude-flow)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ruvnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
