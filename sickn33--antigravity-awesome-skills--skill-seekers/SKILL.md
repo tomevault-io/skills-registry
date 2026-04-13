@@ -1,9 +1,8 @@
 ---
 name: skill-seekers
-description: "-Automatically convert documentation websites, GitHub repositories, and PDFs into Claude AI skills in minutes."
-risk: safe
-source: "https://github.com/yusufkaraaslan/Skill_Seekers"
-date_added: "2026-02-27"
+description: -Automatically convert documentation websites, GitHub repositories, and PDFs into Claude AI skills in minutes. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Skill Seekers
@@ -23,4 +22,5 @@ This skill provides guidance and patterns for -automatically convert documentati
 For more information, see the [source repository](https://github.com/yusufkaraaslan/Skill_Seekers).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
