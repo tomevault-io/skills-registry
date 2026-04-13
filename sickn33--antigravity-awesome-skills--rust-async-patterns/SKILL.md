@@ -1,9 +1,8 @@
 ---
 name: rust-async-patterns
-description: "Master Rust async programming with Tokio, async traits, error handling, and concurrent patterns. Use when building async Rust applications, implementing concurrent systems, or debugging async code."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Master Rust async programming with Tokio, async traits, error handling, and concurrent patterns. Use when building async Rust applications, implementing concurrent systems, or debugging async code. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Rust Async Patterns
@@ -36,4 +35,5 @@ Production patterns for async Rust programming with Tokio runtime, including tas
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
