@@ -1,6 +1,8 @@
 ---
 name: playwright-e2e-tests
-description: Write and maintain Playwright end-to-end tests for the Onyx application. Use when creating new E2E tests, debugging test failures, adding test coverage, or when the user mentions Playwright, E2E tests, or browser testing.
+description: Write and maintain Playwright end-to-end tests for the Onyx application. Use when creating new E2E tests, debugging test failures, adding test coverage, or when the user mentions Playwright, E2E tests, or browser testing. Use when this capability is needed.
+metadata:
+  author: onyx-dot-app
 ---
 
 # Playwright E2E Tests
@@ -248,4 +250,5 @@ await page.waitForResponse(resp => resp.url().includes("/api/chat") && resp.stat
 10. **Minimal comments** — only comment to clarify non-obvious intent; never restate what the next line of code does
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/onyx-dot-app/onyx)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/onyx-dot-app) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
