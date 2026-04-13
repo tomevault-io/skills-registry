@@ -1,9 +1,8 @@
 ---
 name: stride-analysis-patterns
-description: "Apply STRIDE methodology to systematically identify threats. Use when analyzing system security, conducting threat modeling sessions, or creating security documentation."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Apply STRIDE methodology to systematically identify threats. Use when analyzing system security, conducting threat modeling sessions, or creating security documentation. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # STRIDE Analysis Patterns
@@ -36,4 +35,5 @@ Systematic threat identification using the STRIDE methodology.
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
