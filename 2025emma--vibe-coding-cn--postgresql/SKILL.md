@@ -1,6 +1,8 @@
 ---
 name: postgresql
-description: PostgreSQL database documentation - SQL queries, database design, administration, performance tuning, and advanced features. Use when working with PostgreSQL databases, writing SQL, or managing database systems.
+description: PostgreSQL database documentation - SQL queries, database design, administration, performance tuning, and advanced features. Use when working with PostgreSQL databases, writing SQL, or managing database systems. Use when this capability is needed.
+metadata:
+  author: 2025emma
 ---
 
 # Postgresql Skill
@@ -143,4 +145,5 @@ To refresh this skill with updated documentation:
 2. The skill will be rebuilt with the latest information
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/2025emma/vibe-coding-cn)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/2025emma) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
