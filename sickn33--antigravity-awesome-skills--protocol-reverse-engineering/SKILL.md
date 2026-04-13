@@ -1,9 +1,8 @@
 ---
 name: protocol-reverse-engineering
-description: "Comprehensive techniques for capturing, analyzing, and documenting network protocols for security research, interoperability, and debugging."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Comprehensive techniques for capturing, analyzing, and documenting network protocols for security research, interoperability, and debugging. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Protocol Reverse Engineering
@@ -32,4 +31,5 @@ Comprehensive techniques for capturing, analyzing, and documenting network proto
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
