@@ -1,7 +1,8 @@
 ---
 name: render-deploy
-description: Deploy applications to Render by analyzing codebases, generating render.yaml Blueprints, and providing Dashboard deeplinks. Use when the user wants to deploy, host, publish, or set up their application on Render's cloud platform.
-author: openai
+description: Deploy applications to Render by analyzing codebases, generating render.yaml Blueprints, and providing Dashboard deeplinks. Use when the user wants to deploy, host, publish, or set up their application on Render's cloud platform. Use when this capability is needed.
+metadata:
+  author: davila7
 ---
 
 # Deploy to Render
@@ -480,5 +481,5 @@ Optional: If you need deeper diagnostics (metrics/DB checks/error catalog), sugg
 `render-debug` skill. It is not required for the core deploy flow.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
