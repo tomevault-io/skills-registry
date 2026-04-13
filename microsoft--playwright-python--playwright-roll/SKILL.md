@@ -1,6 +1,8 @@
 ---
 name: playwright-roll
-description: Roll Playwright Python to a new version
+description: Roll Playwright Python to a new version Use when this capability is needed.
+metadata:
+  author: microsoft
 ---
 
 Help the user roll to a new version of Playwright.
@@ -23,4 +25,5 @@ Rolling includes:
 - use the "gh" cli to interact with GitHub
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/microsoft/playwright-python)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/microsoft) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
