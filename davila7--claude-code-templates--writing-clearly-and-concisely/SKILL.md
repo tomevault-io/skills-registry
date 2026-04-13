@@ -1,6 +1,8 @@
 ---
 name: writing-clearly-and-concisely
 description: Use when writing prose humans will read—documentation, commit messages, error messages, explanations, reports, or UI text. Applies Strunk's timeless rules for clearer, stronger, more professional writing.
+metadata:
+  author: davila7
 ---
 
 # Writing Clearly and Concisely
@@ -93,4 +95,5 @@ For comprehensive research on why these patterns occur, see `signs-of-ai-writing
 Writing for humans? Load the relevant section from `elements-of-style/` and apply the rules. For most tasks, `03-elementary-principles-of-composition.md` covers what matters most.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davila7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
