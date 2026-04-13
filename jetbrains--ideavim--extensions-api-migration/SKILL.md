@@ -1,6 +1,8 @@
 ---
 name: extensions-api-migration
-description: Migrates IdeaVim extensions from the old VimExtensionFacade API to the new @VimPlugin annotation-based API. Use when converting existing extensions to use the new API patterns.
+description: Migrates IdeaVim extensions from the old VimExtensionFacade API to the new @VimPlugin annotation-based API. Use when converting existing extensions to use the new API patterns. Use when this capability is needed.
+metadata:
+  author: jetbrains
 ---
 
 # Extensions API Migration
@@ -206,4 +208,5 @@ After migration, verify that no old API is used by checking imports for `com.mad
 Any other `com.maddyhome` imports indicate incomplete migration.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/jetbrains/ideavim)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/jetbrains) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
