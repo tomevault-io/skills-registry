@@ -1,7 +1,8 @@
 ---
 name: ralph
-description: "Convert PRDs to prd.json format for the Ralph autonomous agent system. Use when you have an existing PRD and need to convert it to Ralph's JSON format. Triggers on: convert this prd, turn this into ralph format, create prd.json from this, ralph json."
-user-invocable: true
+description: Convert PRDs to prd.json format for the Ralph autonomous agent system. Use when you have an existing PRD and need to convert it to Ralph's JSON format. Triggers on: convert this prd, turn this into ralph format, create prd.json from this, ralph json. Use when this capability is needed.
+metadata:
+  author: snarktank
 ---
 
 # Ralph PRD Converter
@@ -258,4 +259,5 @@ Before writing prd.json, verify:
 - [ ] No story depends on a later story
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/snarktank/ralph)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/snarktank) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
