@@ -1,6 +1,8 @@
 ---
 name: linkerd-patterns
-description: Implement Linkerd service mesh patterns for lightweight, security-focused service mesh deployments. Use when setting up Linkerd, configuring traffic policies, or implementing zero-trust networking with minimal overhead.
+description: Implement Linkerd service mesh patterns for lightweight, security-focused service mesh deployments. Use when setting up Linkerd, configuring traffic policies, or implementing zero-trust networking with minimal overhead. Use when this capability is needed.
+metadata:
+  author: wshobson
 ---
 
 # Linkerd Patterns
@@ -305,5 +307,5 @@ linkerd viz tap deploy/my-app --to deploy/my-backend
 - **Don't forget timeouts** - Set appropriate values per route
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wshobson/agents)
-<!-- tomevault:2.0:skill_md:2026-04-05 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wshobson) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
