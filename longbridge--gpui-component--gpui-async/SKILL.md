@@ -1,6 +1,8 @@
 ---
 name: gpui-async
-description: Async operations and background tasks in GPUI. Use when working with async, spawn, background tasks, or concurrent operations. Essential for handling async I/O, long-running computations, and coordinating between foreground UI updates and background work.
+description: Async operations and background tasks in GPUI. Use when working with async, spawn, background tasks, or concurrent operations. Essential for handling async I/O, long-running computations, and coordinating between foreground UI updates and background work. Use when this capability is needed.
+metadata:
+  author: longbridge
 ---
 
 ## Overview
@@ -177,4 +179,5 @@ cx.background_spawn(async move { data })
   - Common pitfalls and solutions
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/longbridge/gpui-component)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/longbridge) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
