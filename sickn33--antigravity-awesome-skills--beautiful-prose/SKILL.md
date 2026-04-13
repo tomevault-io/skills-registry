@@ -1,8 +1,8 @@
 ---
 name: beautiful-prose
-description: A hard-edged writing style contract for timeless, forceful English prose without modern AI tics. Use when users ask for prose or rewrites that must be clean, exact, concrete, and free of AI cadence, filler, or therapeutic tone.
-risk: unknown
-source: community
+description: Use when working with a hard-edged writing style contract for timeless, forceful English prose without modern AI tics. Use when users ask for prose or rewrites that must be clean, exact, concrete, and free of AI cadence, filler, or therapeutic tone.
+metadata:
+  author: sickn33
 ---
 
 # Beautiful Prose (Claude Skill)
@@ -191,4 +191,5 @@ Fail the output if any are true:
 See `references/test-cases.md`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
