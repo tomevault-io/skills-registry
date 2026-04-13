@@ -1,6 +1,8 @@
 ---
 name: gpui-context
-description: Context management in GPUI including App, Window, and AsyncApp. Use when working with contexts, entity updates, or window operations. Different context types provide different capabilities for UI rendering, entity management, and async operations.
+description: Context management in GPUI including App, Window, and AsyncApp. Use when working with contexts, entity updates, or window operations. Different context types provide different capabilities for UI rendering, entity management, and async operations. Use when this capability is needed.
+metadata:
+  author: longbridge
 ---
 
 ## Overview
@@ -161,4 +163,5 @@ App (Global)
   - Async contexts, best practices
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/longbridge/gpui-component)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/longbridge) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
