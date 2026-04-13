@@ -1,9 +1,8 @@
 ---
 name: fp-ts-pragmatic
-description: "A practical, jargon-free guide to fp-ts functional programming - the 80/20 approach that gets results without the academic overhead. Use when writing TypeScript with fp-ts library."
-risk: safe
-source: "https://github.com/whatiskadudoing/fp-ts-skills"
-date_added: "2026-02-27"
+description: Use when working with a practical, jargon-free guide to fp-ts functional programming - the 80/20 approach that gets results without the academic overhead. Use when writing TypeScript with fp-ts library.
+metadata:
+  author: sickn33
 ---
 
 # Pragmatic Functional Programming
@@ -599,4 +598,5 @@ But don't rush. The basics here will handle 80% of real-world scenarios. Get com
 7. **Keep it simple** - if your team can't read it, it's not good code
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
