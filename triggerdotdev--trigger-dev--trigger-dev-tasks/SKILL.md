@@ -1,7 +1,8 @@
 ---
 name: trigger-dev-tasks
 description: Use this skill when writing, designing, or optimizing Trigger.dev background tasks and workflows. This includes creating reliable async tasks, implementing AI workflows, setting up scheduled jobs, structuring complex task hierarchies with subtasks, configuring build extensions for tools like ffmpeg or Puppeteer/Playwright, and handling task schemas with Zod validation.
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+metadata:
+  author: triggerdotdev
 ---
 
 # Trigger.dev Task Expert
@@ -200,4 +201,5 @@ For detailed documentation on specific topics, read these files:
 - `config.md` - trigger.config.ts, build extensions (Prisma, Playwright, FFmpeg, etc.)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/triggerdotdev/trigger.dev)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/triggerdotdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
