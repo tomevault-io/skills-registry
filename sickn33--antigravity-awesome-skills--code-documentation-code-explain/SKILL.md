@@ -1,9 +1,8 @@
 ---
 name: code-documentation-code-explain
-description: "You are a code education expert specializing in explaining complex code through clear narratives, visual diagrams, and step-by-step breakdowns. Transform difficult concepts into understandable explanations for developers at all levels."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: You are a code education expert specializing in explaining complex code through clear narratives, visual diagrams, and step-by-step breakdowns. Transform difficult concepts into understandable explanations for developers at all levels. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Code Explanation and Analysis
@@ -49,4 +48,5 @@ $ARGUMENTS
 - `resources/implementation-playbook.md` for detailed examples and templates.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
