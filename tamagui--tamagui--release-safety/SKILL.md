@@ -1,6 +1,8 @@
 ---
 name: release-safety
-description: Release safety rules. INVOKE WHEN: yarn release, npm publish, release canary, release packages, publishing, skip checks, skip tests. NEVER skip checks or tests without explicit permission.
+description: Release safety rules. INVOKE WHEN: yarn release, npm publish, release canary, release packages, publishing, skip checks, skip tests. NEVER skip checks or tests without explicit permission. Use when this capability is needed.
+metadata:
+  author: tamagui
 ---
 
 # release safety
@@ -36,4 +38,5 @@ dangerous flags (require explicit permission):
 - `--skip-build` - skips building packages
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tamagui/tamagui)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tamagui) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
