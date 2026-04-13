@@ -1,6 +1,8 @@
 ---
 name: changelog
-description: Create changelog files for important commits in a PR
+description: Create changelog files for important commits in a PR Use when this capability is needed.
+metadata:
+  author: pipecat-ai
 ---
 
 Create changelog files for the important commits in this PR. The PR number is provided as an argument.
@@ -61,4 +63,5 @@ For PR #3519 with a new feature and a bug fix:
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/pipecat-ai/pipecat)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/pipecat-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
