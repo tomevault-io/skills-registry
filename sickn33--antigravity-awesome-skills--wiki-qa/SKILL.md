@@ -1,9 +1,8 @@
 ---
 name: wiki-qa
-description: "Answer repository questions grounded entirely in source code evidence. Use when user asks a question about the codebase, user wants to understand a specific file, function, or component, or user asks \"how does X work\" or \"where is Y defined\"."
-risk: safe
-source: community
-date_added: "2026-02-27"
+description: Answer repository questions grounded entirely in source code evidence. Use when user asks a question about the codebase, user wants to understand a specific file, function, or component, or user asks \"how does X work\" or \"where is Y defined\". Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Wiki Q&A
@@ -39,4 +38,5 @@ Answer repository questions grounded entirely in source code evidence.
 This skill is applicable to execute the workflow or actions described in the overview.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
