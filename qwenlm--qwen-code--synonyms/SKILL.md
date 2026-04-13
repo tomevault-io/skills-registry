@@ -1,7 +1,8 @@
 ---
 name: synonyms
-description: Generate synonyms for words or phrases. Use this skill when the user needs alternative words with similar meanings, wants to expand vocabulary, or seeks varied expressions for writing.
-license: Complete terms in LICENSE.txt
+description: Generate synonyms for words or phrases. Use this skill when the user needs alternative words with similar meanings, wants to expand vocabulary, or seeks varied expressions for writing. Use when this capability is needed.
+metadata:
+  author: qwenlm
 ---
 
 This skill helps generate synonyms and alternative expressions for given words or phrases. It provides contextually appropriate alternatives to enhance vocabulary and improve writing variety.
@@ -48,4 +49,5 @@ For each input word or phrase, provide:
   - _cheerful_ - outwardly expressing happiness
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/qwenlm/qwen-code)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/qwenlm) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
