@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ag-grid/ag-grid](https://github.com/ag-grid/ag-grid/tree/main/external/ag-shared/prompts/skills/dev-server)
+Original source: [ag-grid/ag-grid](https://github.com/ag-grid/ag-grid/tree/main/.rulesync/skills/dev-server)
 
 ---
 
