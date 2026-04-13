@@ -1,9 +1,8 @@
 ---
 name: fastapi-templates
-description: "Create production-ready FastAPI projects with async patterns, dependency injection, and comprehensive error handling. Use when building new FastAPI applications or setting up backend API projects."
-risk: unknown
-source: community
-date_added: "2026-02-27"
+description: Create production-ready FastAPI projects with async patterns, dependency injection, and comprehensive error handling. Use when building new FastAPI applications or setting up backend API projects. Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # FastAPI Project Templates
@@ -35,4 +34,5 @@ Production-ready FastAPI project structures with async patterns, dependency inje
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
