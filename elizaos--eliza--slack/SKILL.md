@@ -1,7 +1,8 @@
 ---
 name: slack
 description: Use when the agent needs to send, edit, delete, or read Slack messages, add or list emoji reactions, pin or unpin messages, fetch member info, or list custom emoji in Slack channels and DMs. Handles all Slack workspace interactions including message management, reaction workflows, pinned-item management, and user lookups via the configured bot token.
-metadata: { "otto": { "emoji": "💬", "requires": { "config": ["channels.slack"] } } }
+metadata:
+  author: elizaos
 ---
 
 # Slack Actions
@@ -144,4 +145,5 @@ Message context lines include `slack message id` and `channel` fields you can re
 - Pin key decisions or weekly status updates.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/elizaos/eliza)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/elizaos) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
