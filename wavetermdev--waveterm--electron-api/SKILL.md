@@ -1,6 +1,8 @@
 ---
 name: electron-api
-description: Guide for adding new Electron APIs to Wave Terminal. Use when implementing new frontend-to-electron communications via preload/IPC.
+description: Guide for adding new Electron APIs to Wave Terminal. Use when implementing new frontend-to-electron communications via preload/IPC. Use when this capability is needed.
+metadata:
+  author: wavetermdev
 ---
 
 # Adding Electron APIs
@@ -182,4 +184,5 @@ webContents.send("zoom-factor-change", newZoomFactor);
 - [ ] Test end-to-end
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/wavetermdev/waveterm)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wavetermdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
