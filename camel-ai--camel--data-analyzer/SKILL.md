@@ -1,6 +1,8 @@
 ---
 name: data-analyzer
-description: Analyze datasets and extract insights. Use when user needs to understand data patterns, statistics, or trends.
+description: Analyze datasets and extract insights. Use when user needs to understand data patterns, statistics, or trends. Use when this capability is needed.
+metadata:
+  author: camel-ai
 ---
 
 # Data Analyzer
@@ -40,4 +42,5 @@ Provide analysis in this structure:
 - Report confidence levels for statistical claims
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/camel-ai/camel)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/camel-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
