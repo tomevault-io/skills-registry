@@ -1,6 +1,8 @@
 ---
 name: get-started
-description: Guide users through the get started setup and Chrome DevTools demo.
+description: Guide users through the get started setup and Chrome DevTools demo. Use when this capability is needed.
+metadata:
+  author: different-ai
 ---
 
 ## When to use
@@ -22,4 +24,5 @@ description: Guide users through the get started setup and Chrome DevTools demo.
 - After the navigation completes, reply: "I'm on <site>" where <site> is the final URL or page title they asked for.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/different-ai/openwork)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/different-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
