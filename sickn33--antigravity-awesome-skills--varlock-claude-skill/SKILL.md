@@ -1,9 +1,8 @@
 ---
 name: varlock-claude-skill
-description: "Secure environment variable management ensuring secrets are never exposed in Claude sessions, terminals, logs, or git commits"
-risk: safe
-source: "https://github.com/wrsmith108/varlock-claude-skill"
-date_added: "2026-02-27"
+description: Secure environment variable management ensuring secrets are never exposed in Claude sessions, terminals, logs, or git commits Use when this capability is needed.
+metadata:
+  author: sickn33
 ---
 
 # Varlock Claude Skill
@@ -23,4 +22,5 @@ This skill provides guidance and patterns for secure environment variable manage
 For more information, see the [source repository](https://github.com/wrsmith108/varlock-claude-skill).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/sickn33/antigravity-awesome-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
