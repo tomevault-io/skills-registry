@@ -1,0 +1,58 @@
+---
+name: code-standards
+description: TypeScript, React, and JavaScript best practices enforced by Ultracite/Biome. Use when this capability is needed.
+metadata:
+  author: redpanda-data
+---
+
+# Code Standards
+
+Write code that is accessible, performant, type-safe, and maintainable.
+
+## Activation Conditions
+
+- Linting errors need fixing
+- Code formatting issues
+- Code review feedback
+- Questions about style guidelines
+
+## Quick Reference
+
+| Action | Rule |
+|--------|------|
+| Write components | `react-functional-only.md` |
+| Async code | `async-await-promises.md` |
+| Avoid legacy libs | `no-legacy.md` |
+
+`any` types and top-level regex are enforced by Biome (`noExplicitAny`, `useTopLevelRegex`).
+
+## Commands
+
+```bash
+bun x ultracite fix     # Format and fix
+bun x ultracite check   # Check for issues
+bun x ultracite doctor  # Diagnose setup
+```
+
+## Quick Fix
+
+Most issues are auto-fixed:
+
+```bash
+bun x ultracite fix
+```
+
+## Console Logging
+
+- **Never** use `console.log`, `console.debug`, or `console.info` in production code
+- Only use `console.error` and `console.warn` for actionable errors
+- For debug logging, wrap in `if (IsDev) { ... }`
+- Don't use `biome-ignore` to suppress console warnings - remove the logs instead
+
+## Rules
+
+See `rules/` directory for detailed guidance.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/redpanda-data) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
