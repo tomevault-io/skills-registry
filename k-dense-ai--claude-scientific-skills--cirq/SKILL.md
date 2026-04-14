@@ -1,9 +1,8 @@
 ---
 name: cirq
-description: Google quantum computing framework. Use when targeting Google Quantum AI hardware, designing noise-aware circuits, or running quantum characterization experiments. Best for Google hardware, noise modeling, and low-level circuit design. For IBM hardware use qiskit; for quantum ML with autodiff use pennylane; for physics simulations use qutip.
-license: Apache-2.0 license
+description: Google quantum computing framework. Use when targeting Google Quantum AI hardware, designing noise-aware circuits, or running quantum characterization experiments. Best for Google hardware, noise modeling, and low-level circuit design. For IBM hardware use qiskit; for quantum ML with autodiff use pennylane; for physics simulations use qutip. Use when this capability is needed.
 metadata:
-    skill-author: K-Dense Inc.
+  author: k-dense-ai
 ---
 
 # Cirq - Quantum Computing with Python
@@ -343,4 +342,5 @@ results = noise_comparison_study(circuit, noise_levels)
 - See `simulation.md` for performance optimization
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/k-dense-ai/claude-scientific-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/k-dense-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
