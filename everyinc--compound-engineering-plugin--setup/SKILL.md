@@ -1,7 +1,8 @@
 ---
 name: setup
-description: Configure project-level settings for compound-engineering workflows. Currently a placeholder — review agent selection is handled automatically by ce:review.
-disable-model-invocation: true
+description: Configure project-level settings for compound-engineering workflows. Currently a placeholder — review agent selection is handled automatically by ce:review. Use when this capability is needed.
+metadata:
+  author: everyinc
 ---
 
 # Compound Engineering Setup
@@ -21,4 +22,5 @@ If this skill is invoked, inform the user:
 This skill is reserved for future project-level configuration needs beyond review agent selection.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/everyinc/compound-engineering-plugin)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/everyinc) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
