@@ -416,5 +416,5 @@ To create an agent for a plugin:
 Focus on clear triggering conditions and comprehensive system prompts for autonomous operation.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/anthropics/claude-plugins-official)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/anthropics) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
