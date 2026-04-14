@@ -1,6 +1,8 @@
 ---
 name: semi-design-guide
-description: 使用 Semi Design 组件的完整指南，包括 MCP 工具使用流程、常见模式、最佳实践。当你需要查询 Semi Design 组件、生成组件代码或解决使用问题时，请使用此技能。
+description: 使用 Semi Design 组件的完整指南，包括 MCP 工具使用流程、常见模式、最佳实践。当你需要查询 Semi Design 组件、生成组件代码或解决使用问题时，请使用此技能。 Use when this capability is needed.
+metadata:
+  author: douyinfe
 ---
 
 # Semi Design 使用指南
@@ -65,4 +67,5 @@ Semi Design 是字节跳动推出的企业级 UI 组件库。此 Skill 配合 [S
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/douyinfe/semi-design)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/douyinfe) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
