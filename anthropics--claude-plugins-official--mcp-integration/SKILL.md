@@ -555,5 +555,5 @@ To add MCP integration to a plugin:
 Focus on stdio for custom/local servers, SSE for hosted services with OAuth.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/anthropics/claude-plugins-official)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/anthropics) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
