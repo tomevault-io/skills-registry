@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [netalertx/netalertx](https://github.com/netalertx/netalertx/tree/main/.github/skills/mcp-activation)
+Original source: [netalertx/netalertx](https://github.com/netalertx/netalertx/tree/main/.gemini/skills/mcp-activation)
 
 ---
 
