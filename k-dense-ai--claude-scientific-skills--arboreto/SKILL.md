@@ -1,9 +1,8 @@
 ---
 name: arboreto
-description: Infer gene regulatory networks (GRNs) from gene expression data using scalable algorithms (GRNBoost2, GENIE3). Use when analyzing transcriptomics data (bulk RNA-seq, single-cell RNA-seq) to identify transcription factor-target gene relationships and regulatory interactions. Supports distributed computation for large-scale datasets.
-license: BSD-3-Clause license
+description: Infer gene regulatory networks (GRNs) from gene expression data using scalable algorithms (GRNBoost2, GENIE3). Use when analyzing transcriptomics data (bulk RNA-seq, single-cell RNA-seq) to identify transcription factor-target gene relationships and regulatory interactions. Supports distributed computation for large-scale datasets. Use when this capability is needed.
 metadata:
-    skill-author: K-Dense Inc.
+  author: k-dense-ai
 ---
 
 # Arboreto
@@ -240,4 +239,5 @@ if __name__ == '__main__':
 **Empty results**: Check data format (genes as columns), verify TF names match gene names
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/k-dense-ai/claude-scientific-skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/k-dense-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
