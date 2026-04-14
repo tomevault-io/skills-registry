@@ -1,0 +1,88 @@
+---
+name: netalertx-code-standards
+description: NetAlertX coding standards and conventions. Use this when writing code, reviewing code, or implementing features. Use when this capability is needed.
+metadata:
+  author: netalertx
+---
+
+# Code Standards
+
+- ask me to review before going to each next step (mention n step out of x)  (AI only)
+- before starting, prepare implementation plan  (AI only)
+- ask me to review it and ask any clarifying questions first
+- add test creation as last step - follow repo architecture patterns - do not place in the root of /test
+- code has to be maintainable, no duplicate code
+- follow DRY principle - maintainability of code is more important than speed of implementation
+- code files should be less than 500 LOC for better maintainability
+- DB columns must not contain underscores, use camelCase instead (e.g., deviceInstanceId, not device_instance_id)
+- treat DB as temporary storage for stats, long term configuration should be stored in the /config folder, the /config folder should allow you to restore most of your functionality (excluding historical data)
+
+## File Length
+
+Keep code files under 500 lines. Split larger files into modules.
+
+## DRY Principle
+
+Do not re-implement functionality. Reuse existing methods or refactor to create shared methods.
+
+## Database Access
+
+- Never access DB directly from application layers
+- Use `server/db/db_helper.py` functions (e.g., `get_table_json`)
+- Implement new functionality in handlers (e.g., `DeviceInstance` in `server/models/device_instance.py`)
+
+## MAC Address Handling
+
+Always validate and normalize MACs before DB writes:
+
+```python
+from plugin_helper import normalize_mac
+
+mac = normalize_mac(raw_mac)
+```
+
+## Subprocess Safety
+
+**MANDATORY:** All subprocess calls must set explicit timeouts.
+
+```python
+result = subprocess.run(cmd, timeout=60)  # Minimum 60s
+```
+
+Nested subprocess calls need their own timeout—outer timeout won't save you.
+
+## Time Utilities
+
+```python
+from utils.datetime_utils import timeNowUTC
+
+timestamp = timeNowUTC()
+```
+
+This is the ONLY function that calls datetime.datetime.now() in the entire codebase.
+
+⚠️ CRITICAL: ALL database timestamps MUST be stored in UTC
+This is the SINGLE SOURCE OF TRUTH for current time in NetAlertX
+Use timeNowUTC() for DB writes (returns UTC string by default)
+Use timeNowUTC(as_string=False) for datetime operations (scheduling, comparisons, logging)
+
+## String Sanitization
+
+Use sanitizers from `server/helper.py` before storing user input. MAC addresses are always lowercased and normalized. IP addresses should be validated.
+
+## Devcontainer Constraints
+
+- Never `chmod` or `chown` during operations
+- Everything is already writable
+- If permissions needed, fix `.devcontainer/scripts/setup.sh`
+
+## Path Hygiene
+
+- Use environment variables for runtime paths
+- `/data` for persistent config/db
+- `/tmp` for runtime logs/api/nginx state
+- Never hardcode `/data/db` or use relative paths
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/netalertx) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
