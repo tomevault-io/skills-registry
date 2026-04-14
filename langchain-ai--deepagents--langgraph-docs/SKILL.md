@@ -1,6 +1,8 @@
 ---
 name: langgraph-docs
-description: Fetches and references LangGraph Python documentation to build stateful agents, create multi-agent workflows, and implement human-in-the-loop patterns. Use when the user asks about LangGraph, graph agents, state machines, agent orchestration, LangGraph API, or needs LangGraph implementation guidance.
+description: Fetches and references LangGraph Python documentation to build stateful agents, create multi-agent workflows, and implement human-in-the-loop patterns. Use when the user asks about LangGraph, graph agents, state machines, agent orchestration, LangGraph API, or needs LangGraph implementation guidance. Use when this capability is needed.
+metadata:
+  author: langchain-ai
 ---
 
 # langgraph-docs
@@ -28,4 +30,5 @@ Use `fetch_url` on the selected URLs, then complete the user's request using the
 If `fetch_url` fails or returns empty content, retry once. If it fails again, inform the user and suggest checking https://langchain-ai.github.io/langgraph/ directly.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/langchain-ai/deepagents)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/langchain-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
