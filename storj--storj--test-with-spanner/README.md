@@ -1,0 +1,13 @@
+# test-with-spanner
+
+> Skill by [storj](https://github.com/storj/storj) — distributed by [TomeVault](https://tomevault.io/claim/storj)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [storj/storj](https://github.com/storj/storj/tree/main/.claude/skills/test-with-spanner)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/storj) to manage distribution.
