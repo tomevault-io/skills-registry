@@ -1,8 +1,8 @@
 ---
 name: skill-installer
-description: Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).
+description: Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos). Use when this capability is needed.
 metadata:
-  short-description: Install curated skills from openai/skills or other repos
+  author: openai
 ---
 
 # Skill Installer
@@ -58,4 +58,5 @@ All of these scripts use network, so when running in the sandbox, request escala
 - Installed annotations come from `$CODEX_HOME/skills`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openai/skills)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
