@@ -1,12 +1,8 @@
 ---
 name: qmd
-description: Search markdown knowledge bases, notes, and documentation using QMD. Use when users ask to search notes, find documents, or look up information.
-license: MIT
-compatibility: Requires qmd CLI or MCP server. Install via `npm install -g @tobilu/qmd`.
+description: Search markdown knowledge bases, notes, and documentation using QMD. Use when users ask to search notes, find documents, or look up information. Use when this capability is needed.
 metadata:
   author: tobi
-  version: "2.0.0"
-allowed-tools: Bash(qmd:*), mcp__qmd__*
 ---
 
 # QMD - Quick Markdown Search
@@ -144,4 +140,5 @@ qmd embed
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/tobi/qmd)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tobi) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
