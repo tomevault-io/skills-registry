@@ -1,6 +1,8 @@
 ---
 name: arxiv-search
-description: Searches arXiv for preprints and academic papers, retrieves abstracts, and filters by topic. Use when the user asks to find research papers, search arXiv, look up preprints, find academic articles in physics, math, CS, biology, statistics, or related fields.
+description: Searches arXiv for preprints and academic papers, retrieves abstracts, and filters by topic. Use when the user asks to find research papers, search arXiv, look up preprints, find academic articles in physics, math, CS, biology, statistics, or related fields. Use when this capability is needed.
+metadata:
+  author: langchain-ai
 ---
 
 # arXiv Search Skill
@@ -33,4 +35,5 @@ Requires the `arxiv` Python package. If missing, install with:
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/langchain-ai/deepagents)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/langchain-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
