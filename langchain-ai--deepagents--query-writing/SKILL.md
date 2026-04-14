@@ -1,6 +1,8 @@
 ---
 name: query-writing
-description: Writes and executes SQL queries from simple SELECTs to complex multi-table JOINs, aggregations, and subqueries. Use when the user asks to query a database, write SQL, run a SELECT statement, retrieve data, filter records, or generate reports from database tables.
+description: Writes and executes SQL queries from simple SELECTs to complex multi-table JOINs, aggregations, and subqueries. Use when the user asks to query a database, write SQL, run a SELECT statement, retrieve data, filter records, or generate reports from database tables. Use when this capability is needed.
+metadata:
+  author: langchain-ai
 ---
 
 # Query Writing Skill
@@ -68,4 +70,5 @@ If a query fails or returns unexpected results:
 - Never use DML statements (INSERT, UPDATE, DELETE, DROP)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/langchain-ai/deepagents)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/langchain-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
