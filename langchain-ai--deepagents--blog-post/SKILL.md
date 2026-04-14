@@ -1,6 +1,8 @@
 ---
 name: blog-post
-description: Writes and structures long-form blog posts, creates tutorial outlines, and optimizes content for SEO with cover image generation. Use when the user asks to write a blog post, article, how-to guide, tutorial, technical writeup, thought leadership piece, or long-form content.
+description: Writes and structures long-form blog posts, creates tutorial outlines, and optimizes content for SEO with cover image generation. Use when the user asks to write a blog post, article, how-to guide, tutorial, technical writeup, thought leadership piece, or long-form content. Use when this capability is needed.
+metadata:
+  author: langchain-ai
 ---
 
 # Blog Post Writing Skill
@@ -134,4 +136,5 @@ Before finishing:
 - [ ] CTA tells reader what to do next
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/langchain-ai/deepagents)
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/langchain-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
