@@ -1,0 +1,13 @@
+# typescript-circular-dependency
+
+> Skill by [blader](https://github.com/blader/claudeception) — distributed by [TomeVault](https://tomevault.io/claim/blader)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [blader/claudeception](https://github.com/blader/claudeception/tree/main/examples/typescript-circular-dependency)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/blader) to manage distribution.
