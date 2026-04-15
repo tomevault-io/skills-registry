@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jeremylongshore/claude-code-plugins-plus-skills](https://github.com/jeremylongshore/claude-code-plugins-plus-skills/tree/main/backups/skills-migration-20251108-070147/plugins/performance/network-latency-analyzer/skills/network-latency-analyzer)
+Original source: [jeremylongshore/claude-code-plugins-plus-skills](https://github.com/jeremylongshore/claude-code-plugins-plus-skills/tree/main/backups/skill-structure-cleanup-20251108-073936/plugins/performance/network-latency-analyzer/skills/network-latency-analyzer)
 
 ---
 
