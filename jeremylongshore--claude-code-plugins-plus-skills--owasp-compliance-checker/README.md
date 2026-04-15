@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jeremylongshore/claude-code-plugins-plus-skills](https://github.com/jeremylongshore/claude-code-plugins-plus-skills/tree/main/backups/skills-migration-20251108-070147/plugins/security/owasp-compliance-checker/skills/owasp-compliance-checker)
+Original source: [jeremylongshore/claude-code-plugins-plus-skills](https://github.com/jeremylongshore/claude-code-plugins-plus-skills/tree/main/backups/skills-batch-20251204-000554/plugins/security/owasp-compliance-checker/skills/owasp-compliance-checker)
 
 ---
 
