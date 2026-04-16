@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bfly123/claude_code_bridge](https://github.com/bfly123/claude_code_bridge/tree/main/droid_skills/all-plan)
+Original source: [bfly123/claude_code_bridge](https://github.com/bfly123/claude_code_bridge/tree/main/codex_skills/all-plan)
 
 ---
 
