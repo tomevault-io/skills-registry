@@ -422,5 +422,5 @@ curl -s https://api.minimaxi.com/v1/chat/completions \
 | 2026-02-09 | v2.0 | 新增 Coding Plan 额度管理专节；更新额度信息 (1500/5h 滑动窗口)；额度 API 不可信警告；多 Agent 消耗建议 | ConfigBot (via OpenClaw with Qwen3-30B) |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
