@@ -303,5 +303,5 @@ npm install @abstract-foundation/agw-client@1.10.0
 **⚠️ agw-client version warning:** Newer versions may use different factory contracts, computing different AGW addresses for the same EOA. If you change versions, verify your AGW address hasn't changed before sending funds!
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
