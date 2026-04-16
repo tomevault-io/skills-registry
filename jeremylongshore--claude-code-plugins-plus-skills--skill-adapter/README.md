@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jeremylongshore/claude-code-plugins-plus-skills](https://github.com/jeremylongshore/claude-code-plugins-plus-skills/tree/main/backups/plugin-enhancements/plugin-backups/performance-optimization-advisor_20251020_072427/skills/skill-adapter)
+Original source: [jeremylongshore/claude-code-plugins-plus-skills](https://github.com/jeremylongshore/claude-code-plugins-plus-skills/tree/main/backups/plugin-enhancements/plugin-backups/security-incident-responder_20251019_134003/skills/skill-adapter)
 
 ---
 
