@@ -318,6 +318,5 @@ echo "$AZURE_ACCESS_TOKEN" | az login --service-principal -u $AZURE_CLIENT_ID --
 **Compatible with:** Azure CLI v2.50+, Azure Subscription
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw)
-> Context snippets also available to append to your CLAUDE.md, GEMINI.md, and copilot-instructions.md — [download at TomeVault](https://tomevault.io/claim/openclaw)
-<!-- tomevault:4.0:skill_md:2026-04-08 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
