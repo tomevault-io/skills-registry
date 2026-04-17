@@ -510,5 +510,5 @@ echo "$TOKEN" | cut -d. -f2 | base64 -d 2>/dev/null | jq .
 - For WebSocket testing: `npx wscat -c ws://localhost:3000/ws`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
