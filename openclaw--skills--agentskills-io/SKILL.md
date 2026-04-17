@@ -113,5 +113,5 @@ Share skills across Claude Code, Cursor, VS Code: `ln -s /path/to/skills ~/.curs
 - [best-practices.md](references/best-practices.md) - Advanced patterns, symlink setup
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
