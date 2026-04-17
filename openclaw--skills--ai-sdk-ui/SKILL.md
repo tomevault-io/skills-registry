@@ -555,5 +555,5 @@ See `references/` for:
 **Last verified**: 2026-01-20 | **Skill version**: 3.1.0 | **Changes**: Updated to AI SDK v6.0.42 (+19 patches). Added React Strict Mode section. Expanded Issue #7 (stale body) with 3 workarounds. Added 6 new issues: TypeError with resume+onFinish (#13), concurrent sendMessage state corruption (#14), tool approval callback edge case (#15), ZodError on early stop (#16), convertToModelMessages tool approval bug (#17), undefined id infinite loop (#18). Error count: 12→18.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
