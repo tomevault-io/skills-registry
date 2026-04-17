@@ -1,43 +1,64 @@
 ---
 name: apollo-io
-description: Access sales intelligence and engagement via Apollo.io API. Find leads and manage sequences. Use when this capability is needed.
+description: Apollo.io sales intelligence integration for lead discovery, contact enrichment, and company research. Search 210M+ contacts and 35M+ companies. Use when finding prospects, enriching contact data, or researching companies. Keywords: apollo, sales intelligence, lead gen, prospecting, contact enrichment, email finder, company search. Use when this capability is needed.
 metadata:
   author: openclaw
 ---
-# Apollo.io
-Sales intelligence platform.
-## Environment
+
+# Apollo.io Skill
+
+Sales intelligence and lead discovery via Apollo.io's REST API.
+
+## Setup
+
+1. Get your API key from [Apollo Settings → API](https://apollo.io/settings/api)
+2. Set environment variable: `export APOLLO_API_KEY=your_key_here`
+
+## Capabilities
+
+### People Search
+Find prospects by job title, location, company, and more.
+
 ```bash
-export APOLLO_API_KEY="xxxxxxxxxx"
+python <skill>/scripts/search_people.py --title "VP Engineering" --company Stripe
 ```
-## Search People
+
+### Person Enrichment
+Enrich a person's data from email or LinkedIn URL.
+
 ```bash
-curl -X POST "https://api.apollo.io/v1/mixed_people/search" \
-  -H "Content-Type: application/json" \
-  -d '{"api_key": "'$APOLLO_API_KEY'", "person_titles": ["CEO", "CTO"], "organization_num_employees_ranges": ["1,50"]}'
+python <skill>/scripts/enrich_person.py --email john@example.com
+python <skill>/scripts/enrich_person.py --linkedin https://linkedin.com/in/johndoe
 ```
-## Search Organizations
+
+### Company Search
+Find companies by industry, size, location.
+
 ```bash
-curl -X POST "https://api.apollo.io/v1/mixed_companies/search" \
-  -H "Content-Type: application/json" \
-  -d '{"api_key": "'$APOLLO_API_KEY'", "organization_num_employees_ranges": ["1,50"]}'
+python <skill>/scripts/search_companies.py --industry "Software" --size "50-200"
 ```
-## Enrich Person
+
+### Company Enrichment
+Enrich company data by domain or name.
+
 ```bash
-curl -X POST "https://api.apollo.io/v1/people/match" \
-  -H "Content-Type: application/json" \
-  -d '{"api_key": "'$APOLLO_API_KEY'", "email": "ceo@example.com"}'
+python <skill>/scripts/enrich_company.py --domain stripe.com
 ```
-## Create Contact
-```bash
-curl -X POST "https://api.apollo.io/v1/contacts" \
-  -H "Content-Type: application/json" \
-  -d '{"api_key": "'$APOLLO_API_KEY'", "first_name": "John", "last_name": "Doe", "email": "john@example.com"}'
-```
-## Links
-- Dashboard: https://app.apollo.io
-- Docs: https://apolloio.github.io/apollo-api-docs/
+
+## Usage
+
+The agent will use these scripts automatically when you ask about:
+- Finding contacts at specific companies
+- Looking up email addresses or phone numbers
+- Researching company details
+- Prospecting by job title/industry
+
+## API Reference
+
+- [Apollo API Docs](https://docs.apollo.io/)
+- Base URL: `https://api.apollo.io/v1`
+- Auth: `X-Api-Key` header
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
