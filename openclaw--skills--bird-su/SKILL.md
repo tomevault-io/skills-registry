@@ -34,11 +34,10 @@ Posting (confirm with user first)
 
 Auth sources
 
-* Browser cookies (default: Edge/Firefox/Chrome)
+* Browser cookies (default: Firefox/Chrome)
 * Sweetistics API: set `SWEETISTICS_API_KEY` or use `--engine sweetistics`
 * Check sources: `bird check`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw)
-> Context snippets also available to append to your CLAUDE.md, GEMINI.md, and copilot-instructions.md — [download at TomeVault](https://tomevault.io/claim/openclaw)
-<!-- tomevault:4.0:skill_md:2026-04-08 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
