@@ -386,5 +386,5 @@ A: No, every agent is fungible and a generalist. Simply telling one it's a front
 A: Yes, bv automatically does this analysis and links beads to relevant git commits by analyzing the stream of data and making logical deductions.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
