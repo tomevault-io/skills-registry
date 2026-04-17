@@ -319,5 +319,5 @@ SiliconFlow 有 98+ 个 chat 模型。如需添加更多，先用模型列表 AP
 **注册链接**：https://cloud.siliconflow.cn/i/ihj5inat （邀请注册双方均获赠额度）
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
