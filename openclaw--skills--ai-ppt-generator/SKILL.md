@@ -86,5 +86,5 @@ python3 scripts/random_ppt_theme.py --query "企业年度总结" --category "企
 - **Streaming**: Uses streaming API, wait for `is_end: true` before considering complete
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
