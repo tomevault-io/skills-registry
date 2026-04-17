@@ -10,11 +10,18 @@ metadata:
 Scrape leads from multiple platforms using Apify Actors.
 
 ## Prerequisites
-(No need to check it upfront)
 
-- `.env` file with `APIFY_TOKEN`
-- Node.js 20.6+ (for native `--env-file` support)
-- `mcpc` CLI tool (for fetching Actor schemas)
+- `APIFY_TOKEN` configured in OpenClaw settings
+- Node.js 20.6+
+- `mcpc` CLI (auto-installed via skill metadata)
+
+## Input Sanitization Rules
+
+Before substituting any value into a bash command:
+- **ACTOR_ID**: Must be either a technical name (`owner/actor-name` — alphanumeric, hyphens, dots, one slash) or a raw ID (exactly 17 alphanumeric characters, e.g., `oeiQgfg5fsmIJB7Cn`). Reject values containing shell metacharacters (`` ; | & $ ` ( ) { } < > ! \n ``).
+- **SEARCH_KEYWORDS**: Plain text words only. Reject shell metacharacters.
+- **JSON_INPUT**: Must be valid JSON. Must not contain single quotes (use escaped double quotes). Validate structure before use.
+- **Output filenames**: Must match `YYYY-MM-DD_descriptive-name.{csv,json}`. No path separators (`/`, `..`), no spaces, no metacharacters.
 
 ## Workflow
 
@@ -58,7 +65,7 @@ Select the appropriate Actor based on user needs:
 Fetch the Actor's input schema and details dynamically using mcpc:
 
 ```bash
-export $(grep APIFY_TOKEN .env | xargs) && mcpc --json mcp.apify.com --header "Authorization: Bearer $APIFY_TOKEN" tools-call fetch-actor-details actor:="ACTOR_ID" | jq -r ".content"
+mcpc --json mcp.apify.com --header "Authorization: Bearer $APIFY_TOKEN" tools-call fetch-actor-details actor:="ACTOR_ID" | jq -r ".content"
 ```
 
 Replace `ACTOR_ID` with the selected Actor (e.g., `compass/crawler-google-places`).
@@ -81,26 +88,26 @@ Before running, ask:
 
 **Quick answer (display in chat, no file):**
 ```bash
-node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
-  --actor "ACTOR_ID" \
+node {baseDir}/reference/scripts/run_actor.js \
+  --actor 'ACTOR_ID' \
   --input 'JSON_INPUT'
 ```
 
 **CSV:**
 ```bash
-node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
-  --actor "ACTOR_ID" \
+node {baseDir}/reference/scripts/run_actor.js \
+  --actor 'ACTOR_ID' \
   --input 'JSON_INPUT' \
-  --output YYYY-MM-DD_OUTPUT_FILE.csv \
+  --output 'YYYY-MM-DD_OUTPUT_FILE.csv' \
   --format csv
 ```
 
 **JSON:**
 ```bash
-node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
-  --actor "ACTOR_ID" \
+node {baseDir}/reference/scripts/run_actor.js \
+  --actor 'ACTOR_ID' \
   --input 'JSON_INPUT' \
-  --output YYYY-MM-DD_OUTPUT_FILE.json \
+  --output 'YYYY-MM-DD_OUTPUT_FILE.json' \
   --format json
 ```
 
@@ -113,14 +120,20 @@ After completion, report:
 - Suggested next steps (filtering, enrichment)
 
 
+## Security & Data Privacy
+
+This skill instructs the agent to select an Apify Actor, fetch its schema (via mcpc), and run scrapers. The included script communicates only with api.apify.com and writes outputs to files under the current working directory; it does not access unrelated system files or other environment variables.
+
+Apify Actors only scrape publicly available data and do not collect private or personally identifiable information beyond what is openly accessible on the target platforms. For additional security assurance, you can check an Actor's permission level by querying `https://api.apify.com/v2/acts/:actorId` — an Actor with `LIMITED_PERMISSIONS` operates in a restricted sandbox, while `FULL_PERMISSIONS` indicates broader system access. For full details, see [Apify's General Terms and Conditions](https://docs.apify.com/legal/general-terms-and-conditions).
+
 ## Error Handling
 
-`APIFY_TOKEN not found` - Ask user to create `.env` with `APIFY_TOKEN=your_token`
-`mcpc not found` - Ask user to install `npm install -g @apify/mcpc`
+`APIFY_TOKEN not found` - Ask user to configure `APIFY_TOKEN` in OpenClaw settings
+`mcpc not found` - Run `npm install -g @apify/mcpc`
 `Actor not found` - Check Actor ID spelling
 `Run FAILED` - Ask user to check Apify console link in error output
 `Timeout` - Reduce input size or increase `--timeout`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
