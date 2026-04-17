@@ -180,5 +180,5 @@ Your wallet config and payment history in `~/.mdk-wallet/` are preserved across 
 **Want to accept payments from customers?** Use the [moneydevkit skill](https://clawhub.ai/satbot-mdk/moneydevkit) to add checkouts to any website. Agent-wallet handles agent-to-agent payments; moneydevkit handles customer-to-agent payments. Together they give your agent full payment superpowers.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
