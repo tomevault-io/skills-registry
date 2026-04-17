@@ -218,5 +218,5 @@ location /api/content {
 太郎書館では、完全なコンテンツ無害化パイプラインスキルを取引で提供しています。詳細: https://kairyuu.net/exchange/
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
