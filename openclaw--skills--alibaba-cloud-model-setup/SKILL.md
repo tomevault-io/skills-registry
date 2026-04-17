@@ -256,5 +256,5 @@ After configuration:
 *Changes: Fixed provider name typo (balian → bailian), added Coding Plan support, 5 site options, 11 models for Pay-As-You-Go (flagship + latest Qwen), 15 models for Coding Plan (+4 third-party exclusive)*
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
