@@ -1,39 +1,64 @@
 ---
 name: ansible
-description: Run Ansible playbooks and manage AWX/Tower via API. Automate infrastructure configuration. Use when this capability is needed.
+description: Avoid common Ansible mistakes — YAML syntax traps, variable precedence, idempotence failures, and handler gotchas. Use when this capability is needed.
 metadata:
   author: openclaw
 ---
-# Ansible / AWX
-Infrastructure automation.
-## Environment
-```bash
-export AWX_URL="https://awx.example.com"
-export AWX_TOKEN="xxxxxxxxxx"
-```
-## List Job Templates
-```bash
-curl "$AWX_URL/api/v2/job_templates/" -H "Authorization: Bearer $AWX_TOKEN"
-```
-## Launch Job
-```bash
-curl -X POST "$AWX_URL/api/v2/job_templates/{id}/launch/" \
-  -H "Authorization: Bearer $AWX_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"extra_vars": {"host": "webserver"}}'
-```
-## Get Job Status
-```bash
-curl "$AWX_URL/api/v2/jobs/{jobId}/" -H "Authorization: Bearer $AWX_TOKEN"
-```
-## Run Ansible CLI
-```bash
-ansible-playbook -i inventory.yml playbook.yml
-ansible all -m ping -i inventory.yml
-```
-## Links
-- Docs: https://docs.ansible.com
+
+## YAML Syntax Traps
+- Jinja2 in value needs quotes — `"{{ variable }}"` not `{{ variable }}`
+- `:` in string needs quotes — `msg: "Note: this works"` not `msg: Note: this`
+- Boolean strings: `yes`, `no`, `true`, `false` parsed as bool — quote if literal string
+- Indentation must be consistent — 2 spaces standard, tabs forbidden
+
+## Variable Precedence
+- Extra vars (`-e`) override everything — highest precedence
+- Host vars beat group vars — more specific wins
+- `vars:` in playbook beats inventory vars — order: inventory < playbook < extra vars
+- Undefined variable fails — use `{{ var | default('fallback') }}`
+
+## Idempotence
+- `command`/`shell` modules aren't idempotent — always "changed", use `creates:` or specific module
+- Use `apt`, `yum`, `copy` etc. — designed for idempotence
+- `changed_when: false` for commands that don't change state — like queries
+- `creates:`/`removes:` for command idempotence — skips if file exists/doesn't
+
+## Handlers
+- Handlers only run if task reports changed — not on "ok"
+- Handlers run once at end of play — not immediately after notify
+- Multiple notifies to same handler = one run — deduplicated
+- `--force-handlers` to run even on failure — or `meta: flush_handlers`
+
+## Become (Privilege Escalation)
+- `become: yes` to run as root — `become_user:` for specific user
+- `become_method: sudo` is default — use `su` or `doas` if needed
+- Password needed for sudo — `--ask-become-pass` or in ansible.cfg
+- Some modules need become at task level — even if playbook has `become: yes`
+
+## Conditionals
+- `when:` without Jinja2 braces — `when: ansible_os_family == "Debian"` not `when: "{{ ... }}"`
+- Multiple conditions use `and`/`or` — or list for implicit `and`
+- `is defined`, `is not defined` for optional vars — `when: my_var is defined`
+- Boolean variables: `when: my_bool` — don't compare `== true`
+
+## Loops
+- `loop:` is modern, `with_items:` is legacy — both work, loop preferred
+- `loop_control.loop_var` for nested loops — avoids variable collision
+- `item` is the loop variable — use `loop_control.label` for cleaner output
+- `until:` for retry loops — `until: result.rc == 0 retries: 5 delay: 10`
+
+## Facts
+- `gather_facts: no` speeds up play — but can't use `ansible_*` variables
+- Facts cached with `fact_caching` — persists across runs
+- Custom facts in `/etc/ansible/facts.d/*.fact` — JSON or INI, available as `ansible_local`
+
+## Common Mistakes
+- `register:` captures output even on failure — check `result.rc` or `result.failed`
+- `ignore_errors: yes` continues but doesn't change result — task still "failed" in register
+- `delegate_to: localhost` for local commands — but `local_action` is cleaner
+- Vault password for encrypted files — `--ask-vault-pass` or vault password file
+- `--check` (dry run) not supported by all modules — `command`, `shell` always skip
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
