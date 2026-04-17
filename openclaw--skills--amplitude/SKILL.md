@@ -1,75 +1,169 @@
 ---
 name: amplitude
-description: Track events and analyze product usage via Amplitude API. Query user behavior, cohorts, and funnels. Use when this capability is needed.
+description: Amplitude product analytics — track events, analyze user behavior, run cohort analysis, manage user properties, and query funnel/retention data via the Amplitude API. Understand product usage, measure feature adoption, and analyze user journeys. Built for AI agents — Python stdlib only, zero dependencies. Use for product analytics, user behavior tracking, funnel analysis, retention analysis, and cohort segmentation. Use when this capability is needed.
 metadata:
   author: openclaw
 ---
 
-# Amplitude
+# 📉 Amplitude
 
-Product analytics platform.
+Amplitude product analytics — track events, analyze user behavior, run cohort analysis, manage user properties, and query funnel/retention data via the Amplitude API.
 
-## Environment
+## Features
 
-```bash
-export AMPLITUDE_API_KEY="xxxxxxxxxx"
-export AMPLITUDE_SECRET_KEY="xxxxxxxxxx"
-```
+- **Event tracking** — log user events with properties
+- **User analytics** — active users, sessions, engagement
+- **Funnel analysis** — conversion through event sequences
+- **Retention analysis** — user return rates over time
+- **Cohort management** — create and manage user cohorts
+- **User properties** — set and query user attributes
+- **Revenue analytics** — LTV, ARPU, revenue tracking
+- **Segmentation** — query by properties and events
+- **Event segmentation** — event counts and breakdowns
+- **Dashboard export** — export chart data
 
-## Track Event (HTTP API)
+## Requirements
 
-```bash
-curl -X POST "https://api2.amplitude.com/2/httpapi" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "api_key": "'$AMPLITUDE_API_KEY'",
-    "events": [{
-      "user_id": "user123",
-      "event_type": "Button Clicked",
-      "event_properties": {"button_name": "signup"}
-    }]
-  }'
-```
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `AMPLITUDE_API_KEY` | ✅ | API key/token for Amplitude |
+| `AMPLITUDE_SECRET_KEY` | ✅ | Amplitude secret key for Export/Dashboard APIs |
 
-## Batch Track Events
+## Quick Start
 
 ```bash
-curl -X POST "https://api2.amplitude.com/batch" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "api_key": "'$AMPLITUDE_API_KEY'",
-    "events": [
-      {"user_id": "user1", "event_type": "Page View"},
-      {"user_id": "user2", "event_type": "Page View"}
-    ]
-  }'
+# Track an event
+python3 {baseDir}/scripts/amplitude.py track '{"user_id":"user123","event_type":"purchase","event_properties":{"amount":29.99}}'
 ```
-
-## Export Events (Dashboard API)
 
 ```bash
-curl -u "$AMPLITUDE_API_KEY:$AMPLITUDE_SECRET_KEY" \
-  "https://amplitude.com/api/2/export?start=20240101T00&end=20240102T00"
+# Track batch events
+python3 {baseDir}/scripts/amplitude.py track-batch events.json
 ```
-
-## Get User Activity
 
 ```bash
-curl -u "$AMPLITUDE_API_KEY:$AMPLITUDE_SECRET_KEY" \
-  "https://amplitude.com/api/2/useractivity?user=user123"
+# Set user properties
+python3 {baseDir}/scripts/amplitude.py identify '{"user_id":"user123","user_properties":{"plan":"pro","company":"Acme"}}'
 ```
-
-## Get Active Users
 
 ```bash
-curl -u "$AMPLITUDE_API_KEY:$AMPLITUDE_SECRET_KEY" \
-  "https://amplitude.com/api/2/users/list?start=20240101&end=20240131"
+# Get active user counts
+python3 {baseDir}/scripts/amplitude.py active-users --start 2026-01-01 --end 2026-02-01
 ```
 
-## Links
-- Dashboard: https://analytics.amplitude.com
-- Docs: https://www.docs.developers.amplitude.com
+
+
+## Commands
+
+### `track`
+Track an event.
+```bash
+python3 {baseDir}/scripts/amplitude.py track '{"user_id":"user123","event_type":"purchase","event_properties":{"amount":29.99}}'
+```
+
+### `track-batch`
+Track batch events.
+```bash
+python3 {baseDir}/scripts/amplitude.py track-batch events.json
+```
+
+### `identify`
+Set user properties.
+```bash
+python3 {baseDir}/scripts/amplitude.py identify '{"user_id":"user123","user_properties":{"plan":"pro","company":"Acme"}}'
+```
+
+### `active-users`
+Get active user counts.
+```bash
+python3 {baseDir}/scripts/amplitude.py active-users --start 2026-01-01 --end 2026-02-01
+```
+
+### `events`
+Get event data.
+```bash
+python3 {baseDir}/scripts/amplitude.py events --start 2026-01-01 --end 2026-02-01 --event purchase
+```
+
+### `funnel`
+Run funnel analysis.
+```bash
+python3 {baseDir}/scripts/amplitude.py funnel '{"events":[{"event_type":"page_view"},{"event_type":"signup"},{"event_type":"purchase"}]}' --start 2026-01-01 --end 2026-02-01
+```
+
+### `retention`
+Retention analysis.
+```bash
+python3 {baseDir}/scripts/amplitude.py retention --start 2026-01-01 --end 2026-02-01
+```
+
+### `cohorts`
+List cohorts.
+```bash
+python3 {baseDir}/scripts/amplitude.py cohorts
+```
+
+### `cohort-get`
+Get cohort details.
+```bash
+python3 {baseDir}/scripts/amplitude.py cohort-get abc123
+```
+
+### `revenue`
+Revenue analysis.
+```bash
+python3 {baseDir}/scripts/amplitude.py revenue --start 2026-01-01 --end 2026-02-01
+```
+
+### `user-search`
+Search for a user.
+```bash
+python3 {baseDir}/scripts/amplitude.py user-search "user@example.com"
+```
+
+### `user-activity`
+Get user activity.
+```bash
+python3 {baseDir}/scripts/amplitude.py user-activity user123
+```
+
+### `segments`
+Event segmentation query.
+```bash
+python3 {baseDir}/scripts/amplitude.py segments --event purchase --group-by platform --start 2026-01-01 --end 2026-02-01
+```
+
+
+## Output Format
+
+All commands output JSON by default. Add `--human` for readable formatted output.
+
+```bash
+# JSON (default, for programmatic use)
+python3 {baseDir}/scripts/amplitude.py track --limit 5
+
+# Human-readable
+python3 {baseDir}/scripts/amplitude.py track --limit 5 --human
+```
+
+## Script Reference
+
+| Script | Description |
+|--------|-------------|
+| `{baseDir}/scripts/amplitude.py` | Main CLI — all Amplitude operations |
+
+## Data Policy
+
+This skill **never stores data locally**. All requests go directly to the Amplitude API and results are returned to stdout. Your data stays on Amplitude servers.
+
+## Credits
+---
+Built by [M. Abidi](https://www.linkedin.com/in/mohammad-ali-abidi) | [agxntsix.ai](https://www.agxntsix.ai)
+[YouTube](https://youtube.com/@aiwithabidi) | [GitHub](https://github.com/aiwithabidi)
+Part of the **AgxntSix Skill Suite** for OpenClaw agents.
+
+📅 **Need help setting up OpenClaw for your business?** [Book a free consultation](https://cal.com/agxntsix/abidi-openclaw)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
