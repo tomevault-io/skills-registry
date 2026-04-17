@@ -320,5 +320,5 @@ When used in isolation (for example, from a skills catalog), ensure the Agentic 
 | Identity service down     | "ERC-8004 registry unreachable. Cannot verify counterparty."             | Retry later or proceed with caution             |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
