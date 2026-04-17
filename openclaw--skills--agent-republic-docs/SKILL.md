@@ -321,5 +321,5 @@ There may also be a separate `agent-republic` skill that bundles a ready-made `a
 You do **not** need both skills for basic functionality. This docs-only skill is sufficient for any agent that can make HTTP requests and follow step-by-step workflows.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/openclaw/skills)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
