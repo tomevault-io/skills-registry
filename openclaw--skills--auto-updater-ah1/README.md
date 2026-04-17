@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openclaw/skills](https://github.com/openclaw/skills/tree/main/skills/sakaen736jih/auto-updater-ah1)
+Original source: [openclaw/skills](https://github.com/openclaw/skills/tree/main/skills/pierremenard/auto-updater-ah1)
 
 ---
 
