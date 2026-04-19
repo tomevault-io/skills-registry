@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [skillrecordings/adr-skill](https://github.com/skillrecordings/adr-skill/tree/main/skills/adr-skill)
+Original source: [skillrecordings/adr-skill](https://github.com/skillrecordings/adr-skill/tree/main/.agents/skills/adr-skill)
 
 ---
 
