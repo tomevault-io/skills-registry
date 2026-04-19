@@ -64,5 +64,5 @@ $ARGUMENTS
 - 创始人是最终决策者，Agent 提供建议但不替代决策
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/nicepkg/ctxport)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nicepkg) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
