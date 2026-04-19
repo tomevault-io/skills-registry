@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [williamalmeida/wootban-manager](https://github.com/williamalmeida/wootban-manager/tree/main/.agent/skills/chatwoot)
+Original source: [williamalmeida/wootban-manager](https://github.com/williamalmeida/wootban-manager/tree/main/.agents/skills/chatwoot)
 
 ---
 
