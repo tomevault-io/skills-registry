@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [apieceofcoding/springboot-sns-sample](https://github.com/apieceofcoding/springboot-sns-sample/tree/main/.gemini/skills/spring-api-rules)
+Original source: [apieceofcoding/springboot-sns-sample](https://github.com/apieceofcoding/springboot-sns-sample/tree/main/.claude/skills/spring-api-rules)
 
 ---
 
