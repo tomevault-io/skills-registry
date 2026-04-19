@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cheezy/kanban](https://github.com/cheezy/kanban/tree/main/docs/multi-agent-instructions/stride-development-guidelines)
+Original source: [cheezy/kanban](https://github.com/cheezy/kanban/tree/main/.claude/skills/stride-development-guidelines)
 
 ---
 
