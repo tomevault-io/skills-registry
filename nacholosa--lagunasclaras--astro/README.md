@@ -1,0 +1,13 @@
+# astro
+
+> Skill by [nacholosa](https://github.com/nacholosa/lagunasclaras) — distributed by [TomeVault](https://tomevault.io/claim/nacholosa)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [nacholosa/lagunasclaras](https://github.com/nacholosa/lagunasclaras/tree/main/.agents/skills/astro)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/nacholosa) to manage distribution.
