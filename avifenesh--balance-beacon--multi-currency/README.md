@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [avifenesh/balance-beacon](https://github.com/avifenesh/balance-beacon/tree/main/.claude/skills/multi-currency)
+Original source: [avifenesh/balance-beacon](https://github.com/avifenesh/balance-beacon/tree/main/.claude/.claude/skills/multi-currency)
 
 ---
 
