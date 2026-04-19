@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hortus-edenensis/x64dbgmcp](https://github.com/hortus-edenensis/x64dbgmcp/tree/main/.codex/skills/x64dbg-commands-agent)
+Original source: [hortus-edenensis/x64dbgmcp](https://github.com/hortus-edenensis/x64dbgmcp/tree/main/.opencode/skills/x64dbg-commands-agent)
 
 ---
 
