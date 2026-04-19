@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [madappgang/claudish](https://github.com/madappgang/claudish/tree/main/packages/cli/skills/claudish-usage)
+Original source: [madappgang/claudish](https://github.com/madappgang/claudish/tree/main/skills/claudish-usage)
 
 ---
 
