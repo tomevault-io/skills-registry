@@ -1,0 +1,13 @@
+# multi-agent-programmer
+
+> Skill by [zsutxz](https://github.com/zsutxz/claudelearning) — distributed by [TomeVault](https://tomevault.io/claim/zsutxz)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [zsutxz/claudelearning](https://github.com/zsutxz/claudelearning/tree/main/.claude/skills/multi-agent-programmer)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/zsutxz) to manage distribution.
