@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [adminturneddevops/agentic-demo-repo](https://github.com/adminturneddevops/agentic-demo-repo/tree/main/agentregistry/gke-expert/gke-expert/skills/gke-expert)
+Original source: [adminturneddevops/agentic-demo-repo](https://github.com/adminturneddevops/agentic-demo-repo/tree/main/agentregistry/gke-expert/gke-expert)
 
 ---
 
