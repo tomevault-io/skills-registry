@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [funkymonkeymonk/repo-template](https://github.com/funkymonkeymonk/repo-template/tree/main/.opencode/skills/devenv)
+Original source: [funkymonkeymonk/repo-template](https://github.com/funkymonkeymonk/repo-template/tree/main/.claude/skills/devenv)
 
 ---
 
