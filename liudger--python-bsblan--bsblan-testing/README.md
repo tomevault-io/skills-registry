@@ -1,0 +1,13 @@
+# bsblan-testing
+
+> Skill by [liudger](https://github.com/liudger/python-bsblan) — distributed by [TomeVault](https://tomevault.io/claim/liudger)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [liudger/python-bsblan](https://github.com/liudger/python-bsblan/tree/main/.github/skills/bsblan-testing)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/liudger) to manage distribution.
