@@ -1,0 +1,13 @@
+# eddo-work
+
+> Skill by [walterra](https://github.com/walterra/eddoapp) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [walterra/eddoapp](https://github.com/walterra/eddoapp/tree/main/packages/chat-agent/skills/eddo-work)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
