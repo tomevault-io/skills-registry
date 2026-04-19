@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [0xsequence-demos/trails-skills](https://github.com/0xsequence-demos/trails-skills/tree/main/.agents/skills/trails)
+Original source: [0xsequence-demos/trails-skills](https://github.com/0xsequence-demos/trails-skills/tree/main/plugins/trails)
 
 ---
 
