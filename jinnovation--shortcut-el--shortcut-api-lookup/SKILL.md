@@ -1,0 +1,17 @@
+---
+name: shortcut-api-lookup
+description: Look up Shortcut REST API methods, schemas, and signatures. Use this instead of fetching the documentation webpages. Use when this capability is needed.
+metadata:
+  author: jinnovation
+---
+
+# Shortcut API Lookup
+
+1. Download the Shortcut REST API OpenAPI spec from here:
+   https://developer.shortcut.com/api/rest/v3/shortcut.openapi.json. Save it in a temporary location
+   on the local filesystem.
+2. Use `jq` to filter for the fields, endpoints, etc. that you are interested in.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/jinnovation) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
