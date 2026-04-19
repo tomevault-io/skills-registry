@@ -1,0 +1,235 @@
+---
+name: config
+description: This skill should be used when the user asks to "configure learn quest", "change learn quest settings", "show learn quest config", "reset learn quest settings", or wants to modify learning level, language, or feature preferences. Use when this capability is needed.
+metadata:
+  author: gilverse-icn
+---
+
+# Learn Quest Configuration Management
+
+The user wants to view or modify Learn Quest settings.
+
+## Configuration File Handling
+
+### File Locations
+- **Local storage**: `~/.learn-quest/config.json`
+- **Project storage**: `./.learn-quest/config.json`
+
+### If Config File Doesn't Exist
+
+1. **Create the directory** if `~/.learn-quest/` doesn't exist
+2. **Create config file** with default values
+3. **Notify user**:
+
+```
+📝 No configuration found. Created default config at ~/.learn-quest/config.json
+
+Tip: Run /learn-quest:setup for interactive configuration!
+```
+
+4. **Continue** with the requested operation using defaults
+
+## Default Values
+
+```json
+{
+  "level": "silver",
+  "language": "en",
+  "trigger": {
+    "on_code_write": true,
+    "on_task_complete": true,
+    "on_question": false,
+    "on_all": false
+  },
+  "features": {
+    "info": true,
+    "direction": true,
+    "cs_knowledge": true,
+    "quiz": false
+  },
+  "stash": {
+    "enabled": true,
+    "prompt_on_complete": true
+  },
+  "storage": "local"
+}
+```
+
+### Learning Triggers
+
+Controls **when** learning points are provided. Multiple triggers can be enabled simultaneously.
+
+- **on_code_write**: When Claude writes or modifies code
+- **on_task_complete**: When a task or feature is completed
+- **on_question**: When Claude answers questions
+- **on_all**: Always provide learning points (overrides other triggers)
+
+If all triggers are `false`, learning points are only shown with `/learn-quest:explain`.
+
+### Stash Mode
+
+Save learning points when busy, study them later with `/learn-quest:study`.
+
+- **enabled**: When true, stash features are available
+- **prompt_on_complete**: When true, suggests saving after task completion
+  - Detects completion signals: "고마워", "됐어", "done", "thanks", etc.
+  - Shows: "지금은 바쁘시죠? 학습 포인트만 저장해두고, 나중에 천천히 공부하세요."
+
+## Command Handling
+
+### No arguments (`/learn-quest:config`)
+
+Display an interactive settings menu:
+
+```
+🎮 LEARN QUEST Settings
+
+Current configuration:
+• Level: [current level]
+• Learning triggers:
+  - On code write: [ON/OFF]
+  - On task complete: [ON/OFF]
+  - On question: [ON/OFF]
+  - On all responses: [ON/OFF]
+• Stash mode: [ON/OFF] (prompt on complete: [ON/OFF])
+• Features:
+  - Info: [ON/OFF]
+  - Direction: [ON/OFF] (includes alternative suggestions)
+  - CS Knowledge: [ON/OFF]
+  - Quiz: [ON/OFF]
+• Language: [en/ko]
+• Storage: [local/project]
+
+What would you like to change?
+1) Change level (Bronze/Silver/Gold/Platinum/Diamond)
+2) Configure learning triggers
+3) Configure stash mode
+4) Configure individual features
+5) Change language
+6) Change storage location
+7) Reset to defaults
+
+> Enter a number
+```
+
+### `show` argument (`/learn-quest:config show`)
+
+Display current settings in JSON format.
+
+### `reset` argument (`/learn-quest:config reset`)
+
+Reset all settings to default values.
+
+### `<key> <value>` arguments (`/learn-quest:config level gold`)
+
+Directly change a specific setting.
+
+**Supported keys and values:**
+
+| Key | Description | Valid Values |
+|-----|-------------|--------------|
+| `level` | Learning level | bronze, silver, gold, platinum, diamond |
+| `trigger_code_write` | Learn when writing code | on, off |
+| `trigger_task_complete` | Learn when completing tasks | on, off |
+| `trigger_question` | Learn when answering questions | on, off |
+| `trigger_all` | Learn on all responses | on, off |
+| `stash` | Save for later (stash learning) | on, off |
+| `stash_prompt` | Suggest saving on task complete | on, off |
+| `info` | What & why explanations | on, off |
+| `direction` | Improvement suggestions (includes alternatives) | on, off |
+| `cs_knowledge` | Related CS concepts | on, off |
+| `quiz` | Understanding quizzes | on, off |
+| `language` | Display language | en, ko |
+| `storage` | Config file location | local, project |
+
+## Error Handling
+
+### Invalid Key
+
+If user provides an unknown key:
+
+```
+❌ Unknown setting: "[key]"
+
+Available settings:
+• level (bronze/silver/gold/platinum/diamond) - Learning level
+• trigger_code_write (on/off) - Learn when writing code
+• trigger_task_complete (on/off) - Learn when completing tasks
+• trigger_question (on/off) - Learn when answering questions
+• trigger_all (on/off) - Learn on all responses
+• stash (on/off) - Save for later (stash learning)
+• stash_prompt (on/off) - Suggest saving on task complete
+• info (on/off) - What & why explanations
+• direction (on/off) - Improvement suggestions (includes alternatives)
+• cs_knowledge (on/off) - Related CS concepts
+• quiz (on/off) - Understanding quizzes
+• language (en/ko) - Display language
+• storage (local/project) - Config file location
+
+Example: /learn-quest:config level gold
+Example: /learn-quest:config direction on
+```
+
+### Invalid Value
+
+If user provides an invalid value:
+
+```
+❌ Invalid value for [key]: "[value]"
+
+Valid values: [list of valid values]
+
+Example: /learn-quest:config [key] [valid_example]
+```
+
+### File Permission Error
+
+If cannot write to config file:
+
+```
+❌ Cannot write to config file: [path]
+
+Please check file permissions or try:
+/learn-quest:config storage project
+```
+
+## Level Descriptions
+
+When the user changes their level, explain what each level means:
+
+| Level | Experience | Learning Focus |
+|-------|------------|----------------|
+| **Bronze** | 0-2 years | Basic syntax, fundamental concepts |
+| **Silver** | 2-4 years | Implementation patterns, best practices |
+| **Gold** | 4-7 years | Optimization, trade-offs |
+| **Platinum** | 7-10 years | Architecture, system design |
+| **Diamond** | 10+ years | Technical strategy, organizational impact |
+
+## Language Support
+
+Output in the language specified by current `config.language`:
+- `en`: English (default)
+- `ko`: Korean (한국어)
+
+## Response Format
+
+### Success
+```
+✅ Settings updated successfully.
+
+Changed:
+• [key]: [old value] → [new value]
+```
+
+### Multiple Changes
+```
+✅ Settings updated successfully.
+
+Changed:
+• [key1]: [old] → [new]
+• [key2]: [old] → [new]
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/gilverse-icn) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
