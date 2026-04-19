@@ -1,0 +1,113 @@
+---
+name: update-docs
+description: Sync documentation with code changes. Use on every PR that touches library code to keep docs accurate and consistent. Use when this capability is needed.
+metadata:
+  author: acartag7
+---
+
+# Update Docs
+
+Ensures documentation stays in sync with code changes. Run before or during every PR that touches library code.
+
+## Before anything else
+
+1. **Read CLAUDE.md** — understand boundaries (core vs server), dropped features, and session model
+2. **Read .docs-style-guide.md** — binding terminology reference
+
+## Step 1: Detect what changed
+
+```bash
+git diff main...HEAD --name-only
+```
+
+Map changes to affected docs:
+
+| Source file | Affected doc pages |
+|---|---|
+| `src/edictum/pipeline.py`, `rules.py` | concepts/how-it-works.md, architecture.md |
+| `src/edictum/yaml_engine/` | rules/yaml-reference.md, rules/operators.md |
+| `src/edictum/adapters/*.py` | corresponding adapters/*.md page |
+| `src/edictum/session.py`, `limits.py` | concepts/rules.md, architecture.md |
+| `src/edictum/audit.py`, `telemetry.py` | audit/sinks.md, audit/telemetry.md |
+| `src/edictum/cli/` | cli.md |
+| `src/edictum/envelope.py` | concepts/principals.md, architecture.md |
+| `pyproject.toml` (version) | install commands across docs |
+| `src/edictum/__init__.py` (API) | quickstart.md, all adapter pages |
+
+If no library code changed (docs-only PR), skip to Step 4.
+
+## Step 2: Read the changed code
+
+For each changed file:
+1. Read the file and the diff (`git diff main...HEAD -- <file>`)
+2. Identify: new public APIs, changed signatures, new classes, removed exports, changed behavior
+
+## Step 3: Update affected docs
+
+For each affected page:
+1. Read the current doc
+2. Skip if already correct
+3. Update code examples, descriptions, YAML examples
+4. **Verify "When to use this" section** exists (see .docs-style-guide.md page structure pattern step 3):
+   - Every page MUST have a `## When to use this` section after the opening/example and before the main content
+   - If missing, add one with: 2-4 concrete scenarios (real situations, not abstract descriptions), user personas who benefit, and how this feature relates to other Edictum features
+   - If new code adds a feature, update the scenarios to cover the new capability
+   - Read the ACTUAL SOURCE CODE for the feature before writing scenarios — reference real method names, real classes, real behavior
+5. **Verify terminology** against .docs-style-guide.md:
+   - "rules" not "policies", "contracts", or "guards"
+   - Use `blocked` (see .docs-style-guide.md for banned alternatives)
+   - Use `enforces` (not "governs")
+   - Use `pipeline` (not "engine")
+   - Use `tool call` (not "function call")
+   - Use `adapter` (not "integration" or "plugin")
+   - Use `observe mode` (see .docs-style-guide.md for banned alternatives)
+   - Use `violation` / `violations` (not "finding" or "alert")
+6. **Verify core vs server boundaries** against CLAUDE.md:
+   - All rule evaluation (check, check_output, session, sandbox) is core
+   - StdoutAuditSink, FileAuditSink, OTel are core
+   - Production approval workflows (ServerApprovalBackend) require the server
+   - Centralized audit dashboards require the server
+   - Multi-process session tracking requires the server
+   - MemoryBackend is the only local StorageBackend (no Redis/DB)
+   - No references to dropped features or ee/ tier
+
+## Step 3.5: Update repo-level markdown files
+
+These files live outside `docs/` but track code changes:
+
+1. **CHANGELOG.md** — if the PR introduces user-visible changes (fixes, features, breaking changes), add an entry under the current version heading. Use the existing entry format. Keep descriptions neutral (no exploit details for security fixes).
+2. **CLAUDE.md "What's Shipped" section** — if this is a new version, add a one-line entry to the version history list matching the existing format.
+
+## Step 4: Update README if needed
+
+If public API, install extras, framework support, or version changed:
+1. Read README.md
+2. Update affected sections
+3. Ensure README matches docs/index.md positioning
+
+## Step 5: Verify
+
+```bash
+pytest tests/test_docs_sync.py -v
+```
+
+## Step 6: Report
+
+Summarize:
+- Which code files changed
+- Which doc pages were updated (and what changed)
+- Which doc pages were checked but needed no changes
+- Build verification result
+
+## Rules
+
+- **Don't rewrite for the sake of rewriting.** Only update what the code change actually affects.
+- **Don't add features that don't exist.** If code was added but not released, note it as unreleased.
+- **Don't reference dropped features.** No Redis/DB StorageBackend, no reset_session().
+- **Preserve the voice.** Match existing style — problem first, short paragraphs, code examples.
+- **Check cross-links.** Verify links in updated pages still work.
+- **README and homepage must stay aligned.** If you update one, check the other.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/acartag7) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
