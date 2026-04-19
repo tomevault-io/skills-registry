@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [formthefog/stratus-skills](https://github.com/formthefog/stratus-skills/tree/main/codex/stratus)
+Original source: [formthefog/stratus-skills](https://github.com/formthefog/stratus-skills/tree/main/claude/stratus)
 
 ---
 
