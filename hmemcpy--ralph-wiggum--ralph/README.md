@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hmemcpy/ralph-wiggum](https://github.com/hmemcpy/ralph-wiggum/tree/main/skills/ralph)
+Original source: [hmemcpy/ralph-wiggum](https://github.com/hmemcpy/ralph-wiggum/tree/main/agents/ralph)
 
 ---
 
