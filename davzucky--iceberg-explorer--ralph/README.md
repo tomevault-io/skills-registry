@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [davzucky/iceberg-explorer](https://github.com/davzucky/iceberg-explorer/tree/main/.agents/skills/ralph)
+Original source: [davzucky/iceberg-explorer](https://github.com/davzucky/iceberg-explorer/tree/main/.opencode/skill/ralph)
 
 ---
 
