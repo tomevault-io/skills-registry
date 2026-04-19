@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vuetifyjs/0](https://github.com/vuetifyjs/0/tree/main/skills/vuetify0)
+Original source: [vuetifyjs/0](https://github.com/vuetifyjs/0/tree/main/packages/0)
 
 ---
 
