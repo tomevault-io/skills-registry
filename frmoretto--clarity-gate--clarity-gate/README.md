@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [frmoretto/clarity-gate](https://github.com/frmoretto/clarity-gate/tree/main/skills/clarity-gate)
+Original source: [frmoretto/clarity-gate](https://github.com/frmoretto/clarity-gate/tree/main/.claude/skills/clarity-gate)
 
 ---
 
