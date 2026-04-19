@@ -711,7 +711,7 @@ See [Complete Example](./example-input.md) for a full implementation of a text i
 
 ## Resources
 
-- **CLI Development Guide**: [cli/CLAUDE.md](https://github.com/openwebf/webf/blob/main/cli/CLAUDE.md)
+- **CLI Development Guide**: [cli/AGENTS.md](https://github.com/openwebf/webf/blob/main/cli/AGENTS.md)
 - **TypeScript Guide**: [CLI TYPING_GUIDE.md](https://github.com/openwebf/webf/blob/main/cli/TYPING_GUIDE.md)
 - **Example Package**: [native_uis/webf_cupertino_ui](https://github.com/openwebf/webf/tree/main/native_uis/webf_cupertino_ui)
 - **WebF Architecture**: [docs/ARCHITECTURE.md](https://github.com/openwebf/webf/blob/main/docs/ARCHITECTURE.md)
@@ -739,4 +739,4 @@ After creating your native UI library:
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/openwebf) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
