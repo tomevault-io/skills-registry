@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [maxgiu67/openclaw-e2e-orchestrator](https://github.com/maxgiu67/openclaw-e2e-orchestrator/tree/main/workspace/skills/e2e-test)
+Original source: [maxgiu67/openclaw-e2e-orchestrator](https://github.com/maxgiu67/openclaw-e2e-orchestrator/tree/main/openclaw-e2e-orchestrator/workspace/skills/e2e-test)
 
 ---
 
