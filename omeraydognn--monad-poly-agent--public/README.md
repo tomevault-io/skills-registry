@@ -1,0 +1,13 @@
+# public
+
+> Skill by [omeraydognn](https://github.com/omeraydognn/monad-poly-agent) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [omeraydognn/monad-poly-agent](https://github.com/omeraydognn/monad-poly-agent/tree/main/client/public)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
