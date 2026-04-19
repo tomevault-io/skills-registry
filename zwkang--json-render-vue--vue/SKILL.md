@@ -2,7 +2,7 @@
 name: vue
 description: Vue 3 Composition API, script setup macros, reactivity system, and built-in components. Use when writing Vue SFCs, defineProps/defineEmits/defineModel, watchers, or using Transition/Teleport/Suspense/KeepAlive. Use when this capability is needed.
 metadata:
-  author: ZWkang
+  author: zwkang
 ---
 
 # Vue
@@ -94,5 +94,5 @@ import {
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/ZWkang) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/zwkang) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
