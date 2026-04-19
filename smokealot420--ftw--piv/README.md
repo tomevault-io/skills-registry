@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [smokealot420/ftw](https://github.com/smokealot420/ftw/tree/main/openclaw-skill/piv)
+Original source: [smokealot420/ftw](https://github.com/smokealot420/ftw/tree/main/claude-code-plugin/skills/piv)
 
 ---
 
