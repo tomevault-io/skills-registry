@@ -1,11 +1,11 @@
 # chart-visualization
 
-> Skill by [antvis](https://github.com/antvis/gpt-vis) — distributed by [TomeVault](https://tomevault.io/claim/antvis)
+> Skill by [antvis](https://github.com/antvis/GPT-Vis) — distributed by [TomeVault](https://tomevault.io/claim/antvis)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [antvis/gpt-vis](https://github.com/antvis/gpt-vis/tree/main/skills/chart-visualization)
+Original source: [antvis/GPT-Vis](https://github.com/antvis/GPT-Vis/tree/main/skills/chart-visualization)
 
 ---
 
