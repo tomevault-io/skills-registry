@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [brian-mwirigi/codesession-cli](https://github.com/brian-mwirigi/codesession-cli/tree/main/skills/codesession)
+Original source: [brian-mwirigi/codesession-cli](https://github.com/brian-mwirigi/codesession-cli/tree/main/plugin/skills/codesession)
 
 ---
 
