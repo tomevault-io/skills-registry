@@ -1,0 +1,28 @@
+---
+name: web
+description: Search the web and fetch page content. Use when this capability is needed.
+metadata:
+  author: ggozad
+---
+
+# Web
+
+Use the **search** tool to find current information on the web using Brave Search.
+Use the **fetch_page** tool to visit a URL and extract its readable content.
+
+## Workflow
+
+1. Start with `search` to find relevant URLs.
+2. Use `fetch_page` to read the full content of promising results.
+3. Summarize findings and cite sources with URLs.
+
+Use a maximum of 3 search queries per task.
+
+## Guidelines
+
+- Always cite sources with URLs when presenting findings.
+- Prefer specific search queries over broad ones.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ggozad) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
