@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jbmiller10/semantik-plugin-template](https://github.com/jbmiller10/semantik-plugin-template/tree/main/.codex/skills/semantik-plugin-development)
+Original source: [jbmiller10/semantik-plugin-template](https://github.com/jbmiller10/semantik-plugin-template/tree/main/.claude/skills/semantik-plugin-development)
 
 ---
 
