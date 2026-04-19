@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kuchida1981/comic-viewer-helper](https://github.com/kuchida1981/comic-viewer-helper/tree/main/.claude/skills/development-workflow)
+Original source: [kuchida1981/comic-viewer-helper](https://github.com/kuchida1981/comic-viewer-helper/tree/main/.gemini/skills/development-workflow)
 
 ---
 
