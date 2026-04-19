@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mem0ai/mem0](https://github.com/mem0ai/mem0/tree/main/mem0-plugin/skills/mem0)
+Original source: [mem0ai/mem0](https://github.com/mem0ai/mem0/tree/main/skills/mem0)
 
 ---
 
