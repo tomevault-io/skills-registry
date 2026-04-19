@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tengjiaozhai/douya](https://github.com/tengjiaozhai/douya/tree/main/src/main/resources/daily-assistant/skills)
+Original source: [tengjiaozhai/douya](https://github.com/tengjiaozhai/douya/tree/main/src/main/resources/eating-master/skills)
 
 ---
 
