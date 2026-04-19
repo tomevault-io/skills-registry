@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dv0x/creative-ad-agent](https://github.com/dv0x/creative-ad-agent/tree/main/creative-agent-cf/agent/.claude/skills/hook-methodology)
+Original source: [dv0x/creative-ad-agent](https://github.com/dv0x/creative-ad-agent/tree/main/agent/.claude/skills/hook-methodology)
 
 ---
 
