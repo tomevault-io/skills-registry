@@ -1,0 +1,13 @@
+# skrive-krav
+
+> Skill by [sikt-no](https://github.com/sikt-no/fs) — distributed by [TomeVault](https://tomevault.io/claim/sikt-no)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [sikt-no/fs](https://github.com/sikt-no/fs/tree/main/.claude/skills/skrive-krav)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/sikt-no) to manage distribution.
