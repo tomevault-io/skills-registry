@@ -1,0 +1,776 @@
+---
+name: daily-steering
+description: Daily morning report — model health, signal health, best bets performance, and actionable recommendations Use when this capability is needed.
+metadata:
+  author: najicham
+---
+
+# Daily Steering Report
+
+You are generating a concise daily steering report for the NBA prediction system. This is a **read-only** diagnostic — no writes, no deployments.
+
+## Your Mission
+
+Produce a single, actionable morning report that answers:
+1. Is the model healthy enough to bet today?
+2. Are signals working or degraded?
+3. How are best bets performing recently?
+4. What action (if any) should the user take?
+5. Are there any upcoming risk factors (trade deadline, All-Star break, schedule gaps)?
+
+## Step 1: Model Health State
+
+Query `model_performance_daily` for the latest date. Show each model's decay state, rolling HR, and staleness.
+
+```bash
+bq query --use_legacy_sql=false --format=pretty "
+SELECT
+  game_date,
+  model_id,
+  state,
+  ROUND(rolling_hr_7d, 1) AS hr_7d,
+  ROUND(rolling_hr_14d, 1) AS hr_14d,
+  rolling_n_7d AS n_7d,
+  -- Session 366: Directional splits
+  ROUND(rolling_hr_over_7d, 1) AS over_7d,
+  rolling_n_over_7d AS n_over,
+  ROUND(rolling_hr_under_7d, 1) AS under_7d,
+  rolling_n_under_7d AS n_under,
+  -- Session 366: Best-bets post-filter HR
+  ROUND(best_bets_hr_21d, 1) AS bb_hr_21d,
+  best_bets_n_21d AS bb_n,
+  days_since_training,
+  consecutive_days_below_watch AS days_below_watch,
+  consecutive_days_below_alert AS days_below_alert
+FROM \`nba-props-platform.nba_predictions.model_performance_daily\`
+WHERE game_date = (
+  SELECT MAX(game_date) FROM \`nba-props-platform.nba_predictions.model_performance_daily\`
+)
+ORDER BY rolling_hr_7d DESC
+"
+```
+
+Also check which model is currently driving best bets:
+
+```bash
+gcloud run services describe prediction-worker --region=us-west2 \
+  --format="value(spec.template.spec.containers[0].env)" 2>/dev/null | tr ',' '\n' | grep -E 'BEST_BETS|MODEL'
+```
+
+**Present this as:**
+
+```
+MODEL HEALTH (as of YYYY-MM-DD):
+  <model_id>: <STATE>  <hr_7d>% HR 7d (N=<n_7d>, <days_since_training> days stale) <icon>
+    OVER: <over_7d>% (N=<n_over>), UNDER: <under_7d>% (N=<n_under>)
+    Best Bets: <bb_hr_21d>% (N=<bb_n>) [if available]
+  ...
+  Best Bets Model: <current_best_bets_model>
+```
+
+State icons: HEALTHY -> OK, WATCH -> eye, DEGRADING -> warning, BLOCKED -> stop, INSUFFICIENT_DATA -> question
+
+## Step 1.5: Edge 5+ Model Health — Best Bets Eligible (Session 335)
+
+Overall model health (edge 3+ HR) can diverge from high-edge performance. A model may be BLOCKED overall but still profitable at edge 5+, or vice versa. This check specifically monitors the best-bets-eligible population.
+
+```bash
+bq query --use_legacy_sql=false --format=pretty "
+WITH edge5_health AS (
+  SELECT
+    system_id,
+    COUNTIF(prediction_correct) AS wins,
+    COUNTIF(NOT prediction_correct) AS losses,
+    COUNT(*) AS total,
+    ROUND(100.0 * COUNTIF(prediction_correct) / NULLIF(COUNT(*), 0), 1) AS hr_edge5_14d,
+    ROUND(AVG(ABS(predicted_points - line_value)), 2) AS avg_edge
+  FROM \`nba-props-platform.nba_predictions.prediction_accuracy\`
+  WHERE game_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY)
+    AND ABS(predicted_points - line_value) >= 5.0
+    AND prediction_correct IS NOT NULL
+    AND is_voided IS NOT TRUE
+    AND (system_id LIKE 'catboost_v9%' OR system_id LIKE 'catboost_v12%')
+  GROUP BY 1
+  HAVING COUNT(*) >= 5
+),
+model_state AS (
+  SELECT model_id, state, ROUND(rolling_hr_7d, 1) AS overall_hr_7d
+  FROM \`nba-props-platform.nba_predictions.model_performance_daily\`
+  WHERE game_date = (
+    SELECT MAX(game_date) FROM \`nba-props-platform.nba_predictions.model_performance_daily\`
+  )
+  QUALIFY ROW_NUMBER() OVER (PARTITION BY model_id ORDER BY rolling_n_7d DESC) = 1
+),
+replacements AS (
+  SELECT model_family, COUNT(*) AS family_models,
+    MAX(created_at) AS newest_created
+  FROM \`nba-props-platform.nba_predictions.model_registry\`
+  WHERE enabled = TRUE AND model_family IS NOT NULL
+  GROUP BY 1
+)
+SELECT
+  e.system_id,
+  ms.state AS overall_state,
+  ms.overall_hr_7d,
+  e.hr_edge5_14d,
+  ROUND(e.hr_edge5_14d - COALESCE(ms.overall_hr_7d, 0), 1) AS edge5_premium,
+  e.total AS edge5_n,
+  e.avg_edge,
+  CASE
+    WHEN e.hr_edge5_14d >= 60 THEN 'PROFITABLE'
+    WHEN e.hr_edge5_14d >= 52.4 THEN 'MARGINAL'
+    ELSE 'LOSING'
+  END AS edge5_status
+FROM edge5_health e
+LEFT JOIN model_state ms ON e.system_id = ms.model_id
+ORDER BY e.hr_edge5_14d DESC
+"
+```
+
+**Present as:**
+
+```
+EDGE 5+ MODEL HEALTH (14d, best-bets eligible):
+  <system_id>: <edge5_status> <hr_edge5_14d>% (N=<n>, avg edge <avg_edge>) | Overall: <overall_state> <overall_hr_7d>% | Premium: <+/- edge5_premium>pp
+  ...
+  [If any model is LOSING at edge 5+:]
+    WARNING: <model> edge 5+ HR below breakeven — high-edge picks are actively losing money
+  [If edge5_premium is negative by 5+ points:]
+    NOTE: <model> performs WORSE at high edge than overall — edge magnitude is not a quality signal for this model
+```
+
+**Thresholds:**
+
+| Edge 5+ HR | Status | Interpretation |
+|------------|--------|---------------|
+| >= 60% | PROFITABLE | High-edge picks making money, model safe for best bets |
+| 52.4-60% | MARGINAL | Barely profitable, monitor closely |
+| < 52.4% | LOSING | High-edge picks losing money, consider excluding from multi-model selection |
+
+**Key insight:** If a model is BLOCKED overall but PROFITABLE at edge 5+, the best-bets filters are working. If a model is LOSING at edge 5+, no amount of filtering will save it — it should be excluded from multi-model selection once a replacement exists.
+
+## Step 2: Signal Health Summary
+
+Query `signal_health_daily` for the latest date. Count regimes and flag COLD model-dependent signals (these are zeroed to 0.0x weight).
+
+```bash
+bq query --use_legacy_sql=false --format=pretty "
+SELECT
+  signal_tag,
+  regime,
+  ROUND(hr_7d, 1) AS hr_7d,
+  ROUND(hr_30d, 1) AS hr_30d,
+  ROUND(hr_season, 1) AS hr_season,
+  ROUND(divergence_7d_vs_season, 1) AS divergence,
+  picks_7d,
+  -- Directional splits (Session 398)
+  ROUND(hr_over_7d, 1) AS over_7d,
+  picks_over_7d AS n_over_7d,
+  ROUND(hr_under_7d, 1) AS under_7d,
+  picks_under_7d AS n_under_7d,
+  ROUND(hr_over_30d, 1) AS over_30d,
+  picks_over_30d AS n_over_30d,
+  ROUND(hr_under_30d, 1) AS under_30d,
+  picks_under_30d AS n_under_30d,
+  is_model_dependent,
+  days_in_current_regime,
+  status
+FROM \`nba-props-platform.nba_predictions.signal_health_daily\`
+WHERE game_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 3 DAY)
+ORDER BY game_date DESC, regime DESC, signal_tag
+"
+```
+
+Note: Use `game_date >= DATE_SUB(...)` not a subquery — `signal_health_daily` requires a literal partition filter. Results will include multiple dates; use only the most recent game_date rows.
+
+**Present as:**
+
+```
+SIGNAL HEALTH:
+  N signals tracked: X HOT, Y NORMAL, Z COLD
+  COLD: <signal_tag> (model-dependent, zeroed at 0.0x) [if any]
+  HOT: <signal_tag> (1.2x), ... [if any]
+
+  Per-Signal 30d HR (ranked, with OVER/UNDER split):
+    <signal_tag>: <hr_30d>% (N=<picks_30d>) | OVER: <over_30d>% (N=<n_over_30d>) | UNDER: <under_30d>% (N=<n_under_30d>)
+    ...
+  [Flag any signal with directional HR < 50% on 15+ picks:]
+    WARNING: <signal_tag> <direction> HR below breakeven (<hr>% on N=<n>) — investigate
+```
+
+Flag COLD model-dependent signals specifically since they're effectively disabled (0.0x weight per Session 264).
+
+## Step 2.25: Signal Firing Audit (Session 397)
+
+Check which signals actually fire and appear in best bets picks. Signals can die silently when supplemental data goes NULL or thresholds don't match.
+
+```bash
+bq query --use_legacy_sql=false --format=pretty "
+WITH signal_firings AS (
+  SELECT
+    signal_tag,
+    COUNTIF(game_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)) as fires_7d,
+    COUNTIF(game_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)) as fires_30d,
+    COUNT(*) as fires_total
+  FROM \`nba-props-platform.nba_predictions.signal_best_bets_picks\`,
+  UNNEST(signal_tags) as signal_tag
+  WHERE game_date >= '2025-12-01'
+  GROUP BY 1
+),
+-- All registered signals (expected to fire)
+expected_signals AS (
+  SELECT signal_tag FROM UNNEST([
+    'model_health', 'high_edge', 'edge_spread_optimal',
+    'combo_he_ms', 'combo_3way', '3pt_bounce',
+    'bench_under', 'book_disagreement', 'ft_rate_bench_over',
+    'home_under', 'scoring_cold_streak_over',
+    'extended_rest_under', 'starter_under',
+    'high_scoring_environment_over', 'fast_pace_over',
+    'low_line_over', 'line_rising_over',
+    'self_creation_over', 'sharp_line_move_over',
+    'sharp_line_drop_under', 'b2b_boost_over', 'q4_scorer_over'
+  ]) as signal_tag
+)
+SELECT
+  e.signal_tag,
+  COALESCE(s.fires_7d, 0) as fires_7d,
+  COALESCE(s.fires_30d, 0) as fires_30d,
+  COALESCE(s.fires_total, 0) as fires_total,
+  CASE
+    WHEN s.fires_total IS NULL OR s.fires_total = 0 THEN 'NEVER_FIRED'
+    WHEN COALESCE(s.fires_7d, 0) = 0 AND s.fires_total > 0 THEN 'DEAD'
+    WHEN COALESCE(s.fires_7d, 0) > 0 THEN 'ACTIVE'
+    ELSE 'UNKNOWN'
+  END as signal_status
+FROM expected_signals e
+LEFT JOIN signal_firings s ON e.signal_tag = s.signal_tag
+ORDER BY fires_7d DESC, fires_total DESC
+"
+```
+
+**Present as:**
+
+```
+SIGNAL FIRING AUDIT:
+  ACTIVE (7d): <list of signals with fires_7d > 0>
+  DEAD (0 fires 7d, but fired before): <list>
+  NEVER_FIRED (0 fires all-time): <list>
+  [If any DEAD or NEVER_FIRED:]
+    WARNING: <count> signals not contributing. Common causes:
+    - NULL supplemental data (dk_line_move, self_creation_rate)
+    - Narrow thresholds (implied_team_total >= 120)
+    - Upstream filters killing qualifying picks
+```
+
+**Known silent signals (Session 397 analysis):** starter_under, high_scoring_environment_over, fast_pace_over, self_creation_over, sharp_line_move_over, sharp_line_drop_under, line_rising_over. These fail due to NULL data or narrow conditions, NOT signal_density filter.
+
+## Step 2.5b: Signal Rescue Performance (Session 398)
+
+Picks below edge 3.0 (or OVER below 5.0) can bypass edge floors via validated high-HR signals. Track their performance separately.
+
+```bash
+bq query --use_legacy_sql=false --format=pretty "
+WITH rescued AS (
+  SELECT
+    bb.rescue_signal,
+    bb.recommendation,
+    COUNT(*) as picks,
+    COUNTIF(pa.prediction_correct) as wins,
+    COUNTIF(NOT pa.prediction_correct) as losses,
+    ROUND(100.0 * SAFE_DIVIDE(COUNTIF(pa.prediction_correct), COUNTIF(pa.prediction_correct IS NOT NULL)), 1) as hr,
+    ROUND(AVG(ABS(bb.edge)), 1) as avg_edge
+  FROM \`nba-props-platform.nba_predictions.signal_best_bets_picks\` bb
+  LEFT JOIN \`nba-props-platform.nba_predictions.prediction_accuracy\` pa
+    ON bb.player_lookup = pa.player_lookup
+    AND bb.game_date = pa.game_date
+    AND bb.system_id = pa.system_id
+  WHERE bb.game_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY)
+    AND bb.signal_rescued = TRUE
+    AND pa.prediction_correct IS NOT NULL
+  GROUP BY 1, 2
+),
+summary AS (
+  SELECT
+    COUNTIF(bb.signal_rescued = TRUE) as rescued_total,
+    COUNTIF(bb.signal_rescued IS NOT TRUE) as normal_total,
+    ROUND(100.0 * SAFE_DIVIDE(
+      COUNTIF(bb.signal_rescued = TRUE AND pa.prediction_correct),
+      NULLIF(COUNTIF(bb.signal_rescued = TRUE AND pa.prediction_correct IS NOT NULL), 0)
+    ), 1) as rescued_hr,
+    ROUND(100.0 * SAFE_DIVIDE(
+      COUNTIF(bb.signal_rescued IS NOT TRUE AND pa.prediction_correct),
+      NULLIF(COUNTIF(bb.signal_rescued IS NOT TRUE AND pa.prediction_correct IS NOT NULL), 0)
+    ), 1) as normal_hr
+  FROM \`nba-props-platform.nba_predictions.signal_best_bets_picks\` bb
+  LEFT JOIN \`nba-props-platform.nba_predictions.prediction_accuracy\` pa
+    ON bb.player_lookup = pa.player_lookup
+    AND bb.game_date = pa.game_date
+    AND bb.system_id = pa.system_id
+  WHERE bb.game_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY)
+    AND pa.prediction_correct IS NOT NULL
+)
+SELECT * FROM rescued
+UNION ALL
+SELECT 'TOTAL_RESCUED' as rescue_signal, '' as recommendation,
+  rescued_total as picks, NULL as wins, NULL as losses, rescued_hr as hr, NULL as avg_edge
+FROM summary
+UNION ALL
+SELECT 'TOTAL_NORMAL' as rescue_signal, '' as recommendation,
+  normal_total as picks, NULL as wins, NULL as losses, normal_hr as hr, NULL as avg_edge
+FROM summary
+ORDER BY rescue_signal
+"
+```
+
+**Present as:**
+
+```
+SIGNAL RESCUE PERFORMANCE (14d):
+  Rescued: W-L (HR%) | Normal: W-L (HR%)
+  [Per rescue signal:]
+    <rescue_signal>: <direction> W-L (<hr>%) avg edge <avg_edge>
+  [If rescued HR < 50% on N >= 5:]
+    WARNING: Signal rescue underperforming — consider disabling <rescue_signal>
+  [If rescued_total = 0 for 7+ days:]
+    WARNING: Signal rescue not firing — check aggregator rescue_tags
+```
+
+## Step 2.5a: League Macro Trends (Session 435)
+
+Check league-level macro trends from `league_macro_daily`. These are leading indicators — tightening lines or scoring shifts show up here before they affect BB HR.
+
+```bash
+bq query --use_legacy_sql=false --format=pretty "
+SELECT
+  game_date,
+  ROUND(vegas_mae_7d, 2) AS vegas_mae_7d,
+  ROUND(model_mae_7d, 2) AS model_mae_7d,
+  ROUND(mae_gap_7d, 2) AS mae_gap_7d,
+  ROUND(league_avg_ppg_7d, 1) AS scoring_7d,
+  ROUND(avg_edge_7d, 2) AS edge_7d,
+  ROUND(bb_hr_7d, 1) AS bb_hr_7d,
+  bb_n_7d,
+  market_regime
+FROM \`nba-props-platform.nba_predictions.league_macro_daily\`
+WHERE game_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 10 DAY)
+ORDER BY game_date DESC
+"
+```
+
+**Present as:**
+
+```
+LEAGUE MACRO TRENDS:
+  Vegas MAE (7d): <val> (<TIGHT/NORMAL/LOOSE>) — <lower = harder to beat>
+  Model MAE (7d): <val> — MAE gap: <val> (<positive = model worse>)
+  Scoring env:    <val> ppg (7d avg) — <trend vs prior week>
+  Edge supply:    <val> avg edge (7d) — <shrinking/stable/growing>
+  BB HR (7d):     <val>% (N=<n>)
+
+  [If vegas_mae_7d < 4.5:]
+    WARNING: Market TIGHT — Vegas very accurate, edge harder to find
+  [If mae_gap_7d > 0.5:]
+    WARNING: Model falling behind Vegas — consider retrain
+  [If league_avg_ppg_7d drops >0.5 from prior week:]
+    NOTE: Scoring environment cooling — bench_under may improve, combo signals may weaken
+```
+
+**Thresholds:**
+
+| Metric | TIGHT/Concern | NORMAL | LOOSE/Good |
+|--------|---------------|--------|------------|
+| Vegas MAE 7d | < 4.5 | 4.5-5.5 | > 5.5 |
+| MAE gap 7d | > 0.5 | -0.3 to 0.5 | < -0.3 |
+| League PPG 7d | N/A (directional) | 9.5-11.0 | N/A |
+
+## Step 2.5: Market Regime Early Warning (Session 318)
+
+Detect market compression, edge distribution shifts, and directional imbalances BEFORE they show up in W-L record. This is the leading indicator; best bets HR is the lagging indicator.
+
+```bash
+bq query --use_legacy_sql=false --format=pretty "
+WITH daily_edge_stats AS (
+  SELECT
+    game_date,
+    MAX(ABS(edge)) AS max_edge,
+    COUNTIF(ABS(edge) >= 5.0) AS edge_5plus_count,
+    COUNTIF(ABS(edge) >= 3.0) AS edge_3plus_count,
+    COUNT(*) AS total_predictions
+  FROM \`nba-props-platform.nba_predictions.player_prop_predictions\`
+  WHERE game_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 35 DAY)
+    AND system_id = 'catboost_v12'
+    AND is_active = TRUE
+  GROUP BY game_date
+),
+-- Market compression: 7d avg max edge / 30d avg max edge
+compression AS (
+  SELECT
+    ROUND(AVG(CASE WHEN game_date > DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) THEN max_edge END), 2) AS avg_max_edge_7d,
+    ROUND(AVG(CASE WHEN game_date > DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY) THEN max_edge END), 2) AS avg_max_edge_30d,
+    ROUND(
+      SAFE_DIVIDE(
+        AVG(CASE WHEN game_date > DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) THEN max_edge END),
+        AVG(CASE WHEN game_date > DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY) THEN max_edge END)
+      ), 3
+    ) AS market_compression,
+    -- Pick volume trend
+    ROUND(AVG(CASE WHEN game_date > DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) THEN edge_5plus_count END), 1) AS avg_picks_7d,
+    ROUND(AVG(CASE WHEN game_date > DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY) THEN edge_5plus_count END), 1) AS avg_picks_30d
+  FROM daily_edge_stats
+),
+-- Directional HR split: trailing 14d
+direction_hr AS (
+  SELECT
+    ROUND(100.0 * COUNTIF(pa.prediction_correct AND p.recommendation = 'OVER')
+      / NULLIF(COUNTIF(p.recommendation = 'OVER' AND pa.prediction_correct IS NOT NULL), 0), 1) AS over_hr_14d,
+    ROUND(100.0 * COUNTIF(pa.prediction_correct AND p.recommendation = 'UNDER')
+      / NULLIF(COUNTIF(p.recommendation = 'UNDER' AND pa.prediction_correct IS NOT NULL), 0), 1) AS under_hr_14d,
+    COUNTIF(p.recommendation = 'OVER' AND pa.prediction_correct IS NOT NULL) AS over_n,
+    COUNTIF(p.recommendation = 'UNDER' AND pa.prediction_correct IS NOT NULL) AS under_n
+  FROM \`nba-props-platform.nba_predictions.signal_best_bets_picks\` p
+  LEFT JOIN \`nba-props-platform.nba_predictions.prediction_accuracy\` pa
+    ON p.player_lookup = pa.player_lookup
+    AND p.game_date = pa.game_date
+    AND p.system_id = pa.system_id
+  WHERE p.game_date > DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY)
+),
+-- Model residual bias: avg(predicted - actual) over 7d
+residual AS (
+  SELECT
+    ROUND(AVG(pa.predicted_points - pa.actual_points), 2) AS residual_bias_7d,
+    COUNT(*) AS residual_n
+  FROM \`nba-props-platform.nba_predictions.prediction_accuracy\` pa
+  WHERE pa.game_date > DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+    AND pa.system_id = 'catboost_v12'
+    AND pa.predicted_points IS NOT NULL
+    AND pa.actual_points IS NOT NULL
+),
+-- 3d rolling HR (best bets)
+rolling_3d AS (
+  SELECT
+    ROUND(100.0 * COUNTIF(pa.prediction_correct) / NULLIF(COUNT(*), 0), 1) AS hr_3d,
+    COUNT(*) AS n_3d
+  FROM \`nba-props-platform.nba_predictions.signal_best_bets_picks\` p
+  LEFT JOIN \`nba-props-platform.nba_predictions.prediction_accuracy\` pa
+    ON p.player_lookup = pa.player_lookup
+    AND p.game_date = pa.game_date
+    AND p.system_id = pa.system_id
+  WHERE p.game_date > DATE_SUB(CURRENT_DATE(), INTERVAL 3 DAY)
+    AND pa.prediction_correct IS NOT NULL
+)
+SELECT
+  c.market_compression,
+  c.avg_max_edge_7d,
+  c.avg_max_edge_30d,
+  c.avg_picks_7d,
+  c.avg_picks_30d,
+  d.over_hr_14d,
+  d.under_hr_14d,
+  d.over_n,
+  d.under_n,
+  ABS(COALESCE(d.over_hr_14d, 0) - COALESCE(d.under_hr_14d, 0)) AS direction_divergence,
+  r.residual_bias_7d,
+  r.residual_n,
+  r3.hr_3d,
+  r3.n_3d
+FROM compression c, direction_hr d, residual r, rolling_3d r3
+"
+```
+
+**Present as:**
+
+```
+MARKET REGIME:
+  Compression: <ratio> (<GREEN/YELLOW/RED>)  — 7d avg max edge: <val> / 30d: <val>
+  Edge 5+ supply: <7d avg> picks/day (30d: <val>) <GREEN/YELLOW/RED>
+  3d rolling HR: <val>% (N=<n>) <GREEN/YELLOW/RED>
+  Direction split: OVER <val>% (N=<n>) | UNDER <val>% (N=<n>) — divergence: <val>pp <GREEN/YELLOW/RED>
+  Residual bias: <val> pts (7d, N=<n>)
+```
+
+**Thresholds:**
+
+| Metric | GREEN | YELLOW | RED |
+|--------|-------|--------|-----|
+| Market compression | >= 0.85 | 0.65-0.85 | < 0.65 |
+| 7d avg max edge | >= 7.0 | 5.0-7.0 | < 5.0 |
+| 3d rolling HR | >= 65% | 55-65% | < 55% |
+| Daily pick count (7d avg) | >= 3 | 1-3 | < 1 |
+| OVER/UNDER HR divergence | <= 15pp | 15-25pp | > 25pp |
+
+**Interpretation:**
+- Multiple RED = market is compressed, consider pausing or reducing activity
+- Compression RED + HR still GREEN = leading indicator, prepare for downturn
+- Direction divergence RED = one direction carrying all the weight, fragile
+- Residual bias > +2 or < -2 = model systematically over/under-predicting, may need retrain
+
+## Step 3: Best Bets Performance
+
+Check recent best bets results from `signal_best_bets_picks` joined with `prediction_accuracy`.
+
+```bash
+bq query --use_legacy_sql=false --format=pretty "
+WITH best_bets AS (
+  SELECT game_date, player_lookup, system_id
+  FROM \`nba-props-platform.nba_predictions.signal_best_bets_picks\`
+  WHERE game_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY)
+)
+SELECT
+  bb.game_date,
+  COUNT(*) AS picks,
+  COUNTIF(pa.prediction_correct) AS wins,
+  COUNTIF(NOT pa.prediction_correct) AS losses,
+  ROUND(100.0 * COUNTIF(pa.prediction_correct) / NULLIF(COUNT(*), 0), 1) AS hr
+FROM best_bets bb
+LEFT JOIN \`nba-props-platform.nba_predictions.prediction_accuracy\` pa
+  ON bb.player_lookup = pa.player_lookup
+  AND bb.game_date = pa.game_date
+  AND bb.system_id = pa.system_id
+WHERE pa.prediction_correct IS NOT NULL
+GROUP BY 1
+ORDER BY 1 DESC
+"
+```
+
+Also get a rolling summary:
+
+```bash
+bq query --use_legacy_sql=false --format=pretty "
+WITH best_bets AS (
+  SELECT game_date, player_lookup, system_id
+  FROM \`nba-props-platform.nba_predictions.signal_best_bets_picks\`
+  WHERE game_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+)
+SELECT
+  'Last 7d' AS period,
+  COUNT(*) AS picks,
+  COUNTIF(pa.prediction_correct) AS wins,
+  COUNTIF(NOT pa.prediction_correct) AS losses,
+  ROUND(100.0 * COUNTIF(pa.prediction_correct) / NULLIF(COUNT(*), 0), 1) AS hr
+FROM best_bets bb
+JOIN \`nba-props-platform.nba_predictions.prediction_accuracy\` pa
+  ON bb.player_lookup = pa.player_lookup
+  AND bb.game_date = pa.game_date
+  AND bb.system_id = pa.system_id
+WHERE pa.prediction_correct IS NOT NULL
+  AND bb.game_date > DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+
+UNION ALL
+
+SELECT
+  'Last 14d' AS period,
+  COUNT(*) AS picks,
+  COUNTIF(pa.prediction_correct) AS wins,
+  COUNTIF(NOT pa.prediction_correct) AS losses,
+  ROUND(100.0 * COUNTIF(pa.prediction_correct) / NULLIF(COUNT(*), 0), 1) AS hr
+FROM best_bets bb
+JOIN \`nba-props-platform.nba_predictions.prediction_accuracy\` pa
+  ON bb.player_lookup = pa.player_lookup
+  AND bb.game_date = pa.game_date
+  AND bb.system_id = pa.system_id
+WHERE pa.prediction_correct IS NOT NULL
+  AND bb.game_date > DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY)
+
+UNION ALL
+
+SELECT
+  'Last 30d' AS period,
+  COUNT(*) AS picks,
+  COUNTIF(pa.prediction_correct) AS wins,
+  COUNTIF(NOT pa.prediction_correct) AS losses,
+  ROUND(100.0 * COUNTIF(pa.prediction_correct) / NULLIF(COUNT(*), 0), 1) AS hr
+FROM best_bets bb
+JOIN \`nba-props-platform.nba_predictions.prediction_accuracy\` pa
+  ON bb.player_lookup = pa.player_lookup
+  AND bb.game_date = pa.game_date
+  AND bb.system_id = pa.system_id
+WHERE pa.prediction_correct IS NOT NULL
+"
+```
+
+**Present as:**
+
+```
+BEST BETS TRACK RECORD:
+  Last 7d:  W-L (HR%)
+  Last 14d: W-L (HR%)
+  Last 30d: W-L (HR%)
+```
+
+If no data, note "No best bets data yet — backfill needed or data not graded yet."
+
+## Step 4: Decision Recommendation
+
+Based on the data gathered, recommend ONE of these actions. Reference the steering playbook at `docs/02-operations/runbooks/model-steering-playbook.md` for full decision logic.
+
+### Decision Tree
+
+1. **Is the best bets model BLOCKED?**
+   - Yes: Is there a HEALTHY challenger with 56%+ HR 7d and N >= 30?
+     - Yes -> **SWITCH** recommendation + command
+     - No -> **BLOCKED** — all picks auto-blocked, consider retrain
+
+2. **Is the best bets model DEGRADING?**
+   - Yes: Is there a viable challenger?
+     - Yes -> **SWITCH** recommendation
+     - No -> **RETRAIN** if 30+ days stale, else **WATCH**
+
+3. **Is the best bets model in WATCH?**
+   - Yes -> **WATCH** — monitor 2-3 more days, WATCH often self-corrects
+
+4. **Is the best bets model HEALTHY?**
+   - Yes, but 30+ days stale -> **RETRAIN** recommended (monthly freshness)
+   - Yes, fresh -> **ALL CLEAR**
+
+5. **Cross-model crash?** (2+ models below 40% on same day)
+   - Yes -> **MARKET DISRUPTION** — do NOT switch, pause 1 day
+
+### Output Format
+
+```
+RECOMMENDATION: <icon> <ACTION>
+  <1-2 sentence explanation>
+  [If SWITCH:]
+    gcloud run services update prediction-worker --region=us-west2 \
+      --update-env-vars="BEST_BETS_MODEL_ID=<challenger_id>"
+    To validate first: /replay --compare (last 30 days)
+  [If RETRAIN:]
+    PYTHONPATH=. python ml/experiments/quick_retrain.py \
+      --name "V9_<MONTH>_RETRAIN" \
+      --train-start 2025-11-02 \
+      --train-end <today>
+```
+
+## Step 5: Upcoming Risk Factors
+
+Check for schedule gaps, All-Star break, or trade deadline proximity.
+
+```bash
+bq query --use_legacy_sql=false --format=pretty "
+-- Check upcoming game schedule (next 7 days)
+SELECT
+  game_date,
+  COUNT(*) AS games
+FROM \`nba-props-platform.nba_reference.nba_schedule\`
+WHERE game_date BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), INTERVAL 7 DAY)
+GROUP BY 1
+ORDER BY 1
+"
+```
+
+**Risk factors to flag:**
+- No games scheduled for 2+ consecutive days -> break/off-day
+- Games resuming after break -> first-day variance may be higher
+- Trade deadline proximity (check if within 5 days of mid-February)
+- Model staleness approaching 30 days
+
+**Present as:**
+
+```
+RISK FACTORS:
+  <risk description or "None detected">
+  Games schedule: <next 7 days summary>
+```
+
+## Step 5.5: MLB League Macro (if in-season: Apr-Oct)
+
+If MLB season is active (April through October), check MLB macro trends from `mlb_predictions.league_macro_daily`.
+
+```bash
+bq query --use_legacy_sql=false --format=pretty "
+SELECT
+  game_date,
+  ROUND(vegas_mae_7d, 2) AS vegas_mae_7d,
+  ROUND(model_mae_7d, 2) AS model_mae_7d,
+  ROUND(mae_gap_7d, 2) AS mae_gap_7d,
+  ROUND(avg_k_per_game_7d, 1) AS avg_k_7d,
+  ROUND(vegas_bias_7d, 2) AS vegas_bias_7d,
+  ROUND(model_hr_7d, 1) AS model_hr_7d,
+  ROUND(bb_hr_7d, 1) AS bb_hr_7d,
+  bb_n_7d,
+  market_regime
+FROM \`nba-props-platform.mlb_predictions.league_macro_daily\`
+WHERE game_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 10 DAY)
+ORDER BY game_date DESC
+"
+```
+
+**Present as:**
+
+```
+MLB LEAGUE MACRO (K props):
+  Vegas MAE (7d): <val> (<TIGHT/NORMAL/LOOSE>) — books accuracy on K lines
+  Model MAE (7d): <val> — MAE gap: <val> (<positive = model worse>)
+  K environment: <val> K/game (7d avg)
+  Vegas bias:    <val> (7d) — positive = books underestimate Ks
+  Model HR (7d): <val>%
+  BB HR (7d):    <val>% (N=<n>)
+
+  [If vegas_mae_7d < 1.7:]
+    WARNING: K market TIGHT — Vegas very accurate on strikeout lines
+  [If mae_gap_7d > 0.3:]
+    WARNING: Model falling behind Vegas on K props
+  [If bb_hr_7d < 52.4 on N >= 10:]
+    WARNING: MLB best bets below breakeven
+```
+
+**Thresholds (K props — narrower than NBA points):**
+
+| Metric | TIGHT/Concern | NORMAL | LOOSE/Good |
+|--------|---------------|--------|------------|
+| Vegas MAE 7d | < 1.7 | 1.7-2.0 | > 2.0 |
+| MAE gap 7d | > 0.3 | -0.2 to 0.3 | < -0.2 |
+| K/game 7d | N/A (directional) | 5.0-7.0 | N/A |
+
+Skip this section outside MLB season (Nov-Mar).
+
+## Step 6: Assemble Final Report
+
+Combine all sections into a clean, scannable report:
+
+```
+=== Daily Steering Report ===
+
+MODEL HEALTH (as of YYYY-MM-DD):
+  <model lines>
+  Best Bets Model: <model_id>
+
+EDGE 5+ MODEL HEALTH (14d):
+  <per-model edge-5+ status, premium, warnings>
+
+MARKET REGIME:
+  <compression, edge supply, direction split, bias>
+
+RECOMMENDATION: <icon> <ACTION>
+  <explanation>
+  <commands if applicable>
+
+SIGNAL HEALTH:
+  <summary>
+
+BEST BETS TRACK RECORD:
+  <W-L summary>
+
+RISK FACTORS:
+  <risks or "None detected">
+
+MLB LEAGUE MACRO (if in-season):
+  <K environment, Vegas accuracy, BB HR, or "Off-season">
+
+NEXT STEPS:
+  1. <primary action>
+  2. Run /validate-daily for full pipeline check
+  3. <additional context-specific step>
+```
+
+## Key Reference
+
+- **Steering playbook:** `docs/02-operations/runbooks/model-steering-playbook.md`
+- **Thresholds:** WATCH < 58%, DEGRADING < 55%, BLOCKED < 52.4%
+- **Challenger viability:** 56%+ HR 7d, N >= 30
+- **Retrain staleness:** 30+ days since training
+- **Signal weights:** HOT=1.2x, NORMAL=1.0x, COLD behavioral=0.5x, COLD model-dependent=0.0x
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/najicham) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
