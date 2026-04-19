@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nowledge-co/community](https://github.com/nowledge-co/community/tree/main/nowledge-mem-npx-skills/skills/distill-memory)
+Original source: [nowledge-co/community](https://github.com/nowledge-co/community/tree/main/nowledge-mem-claude-code-plugin/skills/distill-memory)
 
 ---
 
