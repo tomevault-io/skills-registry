@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rollercoaster-dev/monorepo](https://github.com/rollercoaster-dev/monorepo/tree/main/apps/native-rd/.agents/skills/neo-brutalist-design)
+Original source: [rollercoaster-dev/monorepo](https://github.com/rollercoaster-dev/monorepo/tree/main/.claude/skills/neo-brutalist-design)
 
 ---
 
