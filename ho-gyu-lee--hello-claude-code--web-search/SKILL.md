@@ -1,0 +1,47 @@
+---
+name: web-search
+description: 웹 검색 가이드. "검색해줘", "찾아봐", "최신 정보", "공식 문서 확인", 버전/날짜/수치 확인이 필요한 질문 시 자동 활성화. 검색 결과 검증 프로토콜 제공. Use when this capability is needed.
+metadata:
+  author: ho-gyu-lee
+---
+
+# 웹 검색 가이드
+
+MCP 웹 검색 도구가 연결되어 있으면 우선 사용.
+미연결 시 내장 WebSearch/WebFetch로 폴백.
+
+## 검색 전
+
+1. 핵심 키워드 3개 이내로 정리
+2. "이 검색으로 무엇을 확인하려는가?" 명확히
+
+## 검색 후 검증 (결과 사용 전 필수)
+
+```
+[ ] 관련성: 원래 질문과 직접 연관되는가?
+[ ] 시의성: 정보 날짜가 맥락에 적합한가?
+[ ] 신뢰성: 공식 문서/1차 출처인가?
+[ ] 일관성: 기존 컨텍스트와 충돌하지 않는가?
+
+2개 이상 불충족 → 해당 결과 폐기
+```
+
+## 결과 우선순위
+
+1. 공식 문서/릴리즈 노트 (최우선)
+2. 공식 블로그/GitHub
+3. 신뢰 커뮤니티 (StackOverflow 고득표)
+4. 일반 블로그/뉴스 (보조만)
+
+## freshness 필터
+
+| 값 | 의미 |
+|----|------|
+| pd | 24시간 이내 |
+| pw | 7일 이내 |
+| pm | 31일 이내 |
+| py | 365일 이내 |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ho-gyu-lee) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
