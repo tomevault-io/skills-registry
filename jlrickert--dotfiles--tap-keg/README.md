@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jlrickert/dotfiles](https://github.com/jlrickert/dotfiles/tree/main/pkg/claude/skills/tap-keg)
+Original source: [jlrickert/dotfiles](https://github.com/jlrickert/dotfiles/tree/main/pkg/codex/skills/tap-keg)
 
 ---
 
