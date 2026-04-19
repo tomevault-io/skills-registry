@@ -1,0 +1,13 @@
+# updating-gitattributes-file
+
+> Skill by [raphaelstolt](https://github.com/raphaelstolt/lean-package-validator) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [raphaelstolt/lean-package-validator](https://github.com/raphaelstolt/lean-package-validator/tree/main/resources/boost/skills/updating-gitattributes-file)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
