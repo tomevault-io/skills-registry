@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bcnelson/nix-config](https://github.com/bcnelson/nix-config/tree/main/home-manager/bcnelson/_mixins/claude/skill/init-devenv/src)
+Original source: [bcnelson/nix-config](https://github.com/bcnelson/nix-config/tree/main/home-manager/bcnelson/_mixins/claude/skill/pr-review-response/src)
 
 ---
 
