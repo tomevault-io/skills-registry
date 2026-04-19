@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vintasoftware/django-ai-plugins](https://github.com/vintasoftware/django-ai-plugins/tree/main/plugins/django-celery-expert/skills)
+Original source: [vintasoftware/django-ai-plugins](https://github.com/vintasoftware/django-ai-plugins/tree/main/plugins/django-expert/skills)
 
 ---
 
