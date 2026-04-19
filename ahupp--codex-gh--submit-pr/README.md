@@ -1,0 +1,13 @@
+# submit-pr
+
+> Skill by [ahupp](https://github.com/ahupp/codex-gh) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ahupp/codex-gh](https://github.com/ahupp/codex-gh/tree/main/skills/submit-pr)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
