@@ -1,0 +1,13 @@
+# xben-deploy
+
+> Skill by [keygraphhq](https://github.com/keygraphhq/xbow-validation-benchmarks) — distributed by [TomeVault](https://tomevault.io/claim/keygraphhq)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [keygraphhq/xbow-validation-benchmarks](https://github.com/keygraphhq/xbow-validation-benchmarks/tree/main/.claude/skills/xben-deploy)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/keygraphhq) to manage distribution.
