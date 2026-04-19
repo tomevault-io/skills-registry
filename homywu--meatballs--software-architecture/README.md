@@ -1,0 +1,13 @@
+# software-architecture
+
+> Skill by [homywu](https://github.com/homywu/meatballs) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [homywu/meatballs](https://github.com/homywu/meatballs/tree/main/.agent/skills/software-architecture)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
