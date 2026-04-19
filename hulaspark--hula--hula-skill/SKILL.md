@@ -2,7 +2,7 @@
 name: hula-skill
 description: HuLa project skill for frontend (Vue 3 + Vite + UnoCSS + Naive UI/Vant), backend (Tauri v2 + Rust + SeaORM/SQLite), full-stack flows, and build/release work. Use when the user mentions hula or HuLa or requests changes in this repository; after triggering, ask which scope (frontend/backend/fullstack/build-release) to enable. Use when this capability is needed.
 metadata:
-  author: hulaspark
+  author: HuLaSpark
 ---
 
 # HuLa Skill
@@ -42,5 +42,5 @@ Use `references/overview.md` for stack, directories, aliases, and global convent
 Use `references/checklists.md` for per-scope checklists.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/hulaspark) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/HuLaSpark) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
