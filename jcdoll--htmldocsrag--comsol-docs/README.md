@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jcdoll/htmldocsrag](https://github.com/jcdoll/htmldocsrag/tree/main/.claude/skills/comsol-docs)
+Original source: [jcdoll/htmldocsrag](https://github.com/jcdoll/htmldocsrag/tree/main/.codex/skills/comsol-docs)
 
 ---
 
