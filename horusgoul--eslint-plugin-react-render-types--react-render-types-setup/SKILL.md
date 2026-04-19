@@ -2,7 +2,7 @@
 name: react-render-types-setup
 description: Install and configure eslint-plugin-react-render-types in a TypeScript React project. Use when: (1) adding eslint-plugin-react-render-types to a project, (2) configuring ESLint flat config with typed linting for @renders support, (3) troubleshooting typed linting errors or plugin configuration, (4) setting up projectService or tsconfig for the plugin, (5) understanding which rules to enable and what they do, or (6) setting up the IDE language service plugin for @renders features (unused import suppression, go-to-definition, hover, completions, find references, rename, diagnostics). Use when this capability is needed.
 metadata:
-  author: HorusGoul
+  author: horusgoul
 ---
 
 # React Render Types — Setup
@@ -212,5 +212,5 @@ Then restart the TypeScript server (VS Code: `Ctrl+Shift+P` → "TypeScript: Res
 | Performance issues | Run `TIMING=1 eslint .` — see [typescript-eslint perf docs](https://typescript-eslint.io/troubleshooting/typed-linting/performance/) |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/HorusGoul) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/horusgoul) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
