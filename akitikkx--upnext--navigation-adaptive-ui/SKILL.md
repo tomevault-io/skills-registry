@@ -1,0 +1,109 @@
+---
+name: navigation-adaptive-ui
+description: Best practices for Type-Safe Navigation (Nav 3) and Adaptive Layouts in Upnext. Use when this capability is needed.
+metadata:
+  author: akitikkx
+---
+
+# Navigation & Adaptive UI Skill
+
+This skill encapsulates the critical patterns for implementing adaptive layouts and navigation in the Upnext application. It specifically addresses "Gotchas" related to `ListDetailPaneScaffold` and Compose Navigation 3.
+
+## 📱 Adaptive Layouts (List-Detail)
+
+Upnext uses `NavigableListDetailPaneScaffold` to support phones, tablets, and foldables.
+> [!NOTE]
+> Adaptive UI utilities, such as `WindowSizeClassUtil` and the `@ReferenceDevices` Preview annotation, are now centralized in the `:core:designsystem` module to prevent circular dependencies. Ensure feature modules depend on `:core:designsystem` to use them.
+
+### ⚠️ Critical Rule: Navigator Mismatch
+**NEVER** use `rememberSupportingPaneScaffoldNavigator` with `NavigableListDetailPaneScaffold`. This causes back navigation conflicts and UI flickering.
+
+**✅ Correct Usage:**
+```kotlin
+// MainScreen.kt
+val listDetailNavigator = rememberListDetailPaneScaffoldNavigator<Any>()
+
+NavigableListDetailPaneScaffold(
+    navigator = listDetailNavigator,
+    defaultBackBehavior = BackNavigationBehavior.PopUntilScaffoldValueChange, // Let scaffold handle pane back
+    // ...
+)
+```
+
+### Back Navigation
+The scaffold handles back navigation between panes (Detail -> List) automatically if `defaultBackBehavior` is set correctly.
+*   **Do NOT** manually intercept back presses for pane navigation using `BackHandler` if the scaffold can handle it.
+*   **Do** use `BackHandler` only for top-level destination changes (e.g., Explore -> Dashboard).
+
+### Resetting Pane State (OAuth / Deep Links)
+When returning to the list view from an external intent (like an OAuth browser callback), the navigation graphs may become out of sync, leading to `IllegalArgumentException: Destination with route cannot be found`.
+*   **Fix:** Route the detail pane to the `EmptyDetail` destination to gracefully clear the view. The scaffold will interpret the empty detail state and automatically jump back to the list cleanly logic!
+```kotlin
+// Example callback reset
+mainNavController.navigate(Destinations.EmptyDetail) {
+    popUpTo(Destinations.EmptyDetail) { inclusive = true }
+}
+```
+
+---
+
+## 🧭 Type-Safe Navigation (Nav 3)
+
+We use the official [Compose Navigation 3](https://developer.android.com/guide/navigation/design/type-safety) with Kotlin Serialization.
+
+### 1. Defining Routes
+Routes are defined in `Destinations.kt` as `@Serializable` classes or objects.
+
+```kotlin
+@Serializable
+object Dashboard : Destinations
+
+@Serializable
+data class ShowDetail(
+    val showId: Long,
+    val showTitle: String?
+) : Destinations
+```
+
+### 2. Navigating
+```kotlin
+navController.navigate(Destinations.ShowDetail(showId = 123, showTitle = "Arcane"))
+```
+
+### 3. Extracting Arguments (The "Title Unknown" Fix)
+To extract arguments (e.g., for a TopBar title), use `toRoute<T>()` on the `NavBackStackEntry`.
+
+**✅ Correct Pattern:**
+```kotlin
+// AppNavigation.kt
+val currentEntry = navBackStackEntry
+val showTitle = if (currentEntry?.destination?.hasRoute<Destinations.ShowDetail>() == true) {
+    try {
+        currentEntry.toRoute<Destinations.ShowDetail>().showTitle
+    } catch (e: Exception) { null }
+} else { null }
+```
+
+---
+
+## 🔧 Common Pitfalls
+
+### "Title Unknown"
+*   **Cause:** Hardcoding titles or failing to parse args from the current route.
+*   **Fix:** Always attempt to extract the specific route args (like `ShowDetail`) when the destination matches.
+
+### Infinite Navigation Loops
+*   **Cause:** Updating state (like `isDetailFlowActive`) inside a `LaunchedEffect` that observes that same state without proper checks.
+*   **Fix:** Ensure state updates only happen when the *target* state differs from *current* state.
+
+### Lazy Grid Null Pointer Exceptions (Stream Drops)
+*   **Cause:** Using aggressive non-null assertions (`!!`) on `LazyRow` or `LazyVerticalGrid` `items(list!!)` when the underlying data stream is briefly interrupted (e.g. during a Trakt logout where the Database momentarily clears its snapshot before the Viewmodel drops the authorization state).
+*   **Fix:** Always use safe-unwrapping `.orEmpty()` on Compose list arguments, like `items(list.orEmpty())`, ensuring Compose safely renders zero items instead of instantly crashing the active Activity during auth transitions.
+
+### Bottom Bar Visibility
+*   **Rule:** The `NavigationSuiteScaffold` (Bottom Bar / Rail) should wrap the content.
+*   **Logic:** The list-detail scaffold lives *inside* the navigation suite.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/akitikkx) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
