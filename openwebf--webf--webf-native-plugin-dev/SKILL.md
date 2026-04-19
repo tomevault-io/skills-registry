@@ -1429,7 +1429,7 @@ See the complete implementation in the WebF repository at [native_plugins/share]
 
 ## Resources
 
-- **CLI Development Guide**: [cli/CLAUDE.md](https://github.com/openwebf/webf/blob/main/cli/CLAUDE.md)
+- **CLI Development Guide**: [cli/AGENTS.md](https://github.com/openwebf/webf/blob/main/cli/AGENTS.md)
 - **Module System Docs**: [webf/lib/src/module/](https://github.com/openwebf/webf/tree/main/webf/lib/src/module/)
 - **Example Plugin**: [native_plugins/share](https://github.com/openwebf/webf/tree/main/native_plugins/share)
 - **WebF Architecture**: [docs/ARCHITECTURE.md](https://github.com/openwebf/webf/blob/main/docs/ARCHITECTURE.md)
@@ -1471,4 +1471,4 @@ See the complete implementation in the WebF repository at [native_plugins/share]
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/openwebf) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
