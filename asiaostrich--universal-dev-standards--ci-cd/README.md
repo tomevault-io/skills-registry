@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AsiaOstrich/universal-dev-standards](https://github.com/AsiaOstrich/universal-dev-standards/tree/main/.claude/skills/ci-cd-assistant)
+Original source: [AsiaOstrich/universal-dev-standards](https://github.com/AsiaOstrich/universal-dev-standards/tree/main/skills/ci-cd-assistant)
 
 ---
 
