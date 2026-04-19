@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [reez/bitcoinui](https://github.com/reez/bitcoinui/tree/main/site/skills/bitcoinui)
+Original source: [reez/bitcoinui](https://github.com/reez/bitcoinui/tree/main/skills/bitcoinui)
 
 ---
 
