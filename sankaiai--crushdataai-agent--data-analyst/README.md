@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sankaiai/crushdataai-agent](https://github.com/sankaiai/crushdataai-agent/tree/main/.claude/skills/data-analyst)
+Original source: [sankaiai/crushdataai-agent](https://github.com/sankaiai/crushdataai-agent/tree/main/cli/assets/.claude/skills/data-analyst)
 
 ---
 
