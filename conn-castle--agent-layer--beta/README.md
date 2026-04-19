@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [conn-castle/agent-layer](https://github.com/conn-castle/agent-layer/tree/main/internal/sync/testdata/fixture-repo/expected/.codex/skills/beta)
+Original source: [conn-castle/agent-layer](https://github.com/conn-castle/agent-layer/tree/main/internal/sync/testdata/fixture-repo/expected/.agent/skills/beta)
 
 ---
 
