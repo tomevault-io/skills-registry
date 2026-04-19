@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jcdoll/agents](https://github.com/jcdoll/agents/tree/main/.cursor/skills/code-review)
+Original source: [jcdoll/agents](https://github.com/jcdoll/agents/tree/main/.codex/skills/code-review)
 
 ---
 
