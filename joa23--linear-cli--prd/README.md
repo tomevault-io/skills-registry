@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [joa23/linear-cli](https://github.com/joa23/linear-cli/tree/main/internal/skills/prd)
+Original source: [joa23/linear-cli](https://github.com/joa23/linear-cli/tree/main/.claude/skills/prd)
 
 ---
 
