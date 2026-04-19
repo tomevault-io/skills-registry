@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [imjszhang/deepseek-cowork](https://github.com/imjszhang/deepseek-cowork/tree/main/deploy/skills/js-skills/skills/browser-control)
+Original source: [imjszhang/deepseek-cowork](https://github.com/imjszhang/deepseek-cowork/tree/main/deploy/skills/i18n/zh/js-skills/skills/browser-control)
 
 ---
 
