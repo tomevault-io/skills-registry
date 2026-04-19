@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hpvideolab/hpvideo](https://github.com/hpvideolab/hpvideo/tree/main/.claude/skills/my skill)
+Original source: [hpvideolab/hpvideo](https://github.com/hpvideolab/hpvideo/tree/main/backend/degpt-nest/degpt-nest/.claude/skills/my skill)
 
 ---
 
