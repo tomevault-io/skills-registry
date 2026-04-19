@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cruellacodes/escrowagent](https://github.com/cruellacodes/escrowagent/tree/main/.claude/skills/escrow-agent)
+Original source: [cruellacodes/escrowagent](https://github.com/cruellacodes/escrowagent/tree/main/skills/escrow-agent)
 
 ---
 
