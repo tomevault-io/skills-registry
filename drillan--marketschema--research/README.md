@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [drillan/marketschema](https://github.com/drillan/marketschema/tree/main/.claude/skills/research)
+Original source: [drillan/marketschema](https://github.com/drillan/marketschema/tree/main/.claude/skills/tavily/research)
 
 ---
 
