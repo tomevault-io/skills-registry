@@ -1,0 +1,96 @@
+---
+name: creating-rules
+description: Claude Code用のRuleを作成。新しいRule作成、コーディング規約追加、ファイル固有ルールの設定時に使用。「ルールを作りたい」「この規約を追加して」「特定ファイルにルールを適用したい」等の依頼で必ず使用。 Use when this capability is needed.
+metadata:
+  author: ryomamoyr
+---
+
+# Rule作成
+
+Ruleは特定のファイルやプロジェクト全体に常時適用されるガイドライン。Skillと違い、明示的なトリガーなしで自動的にコンテキストに読み込まれる。
+
+## 配置場所
+
+```
+.claude/rules/<rule-name>.md
+```
+
+## フロントマター（任意）
+
+pathsを指定すると、そのグロブパターンに一致するファイルを編集するときだけルールが適用される。全ファイルに適用したい場合はフロントマターを省略する。
+
+```yaml
+---
+paths:
+  - "src/**/*.py"
+  - "tests/**/*.py"
+---
+```
+
+グロブパターンはクォートで囲む（YAMLの特殊文字 `*` がパースエラーになるため）。
+
+## 構成例
+
+```
+.claude/rules/
+├── python.md           # Python全般
+├── testing.md          # テスト規約
+├── security.md         # セキュリティ
+└── frontend/
+    ├── react.md        # React用
+    └── styles.md       # CSS用
+```
+
+サブディレクトリで分類すると見通しが良くなる。
+
+## テンプレート
+
+### 全ファイル適用（pathsなし）
+
+```markdown
+# コードスタイル
+
+## 規則
+- インデント: スペース2つ
+- 行長: 100文字以内
+- 命名: スネークケース（Python）
+```
+
+### 特定ファイル適用（pathsあり）
+
+```markdown
+---
+paths:
+  - "**/*.py"
+  - "**/*.ipynb"
+---
+
+# Python開発ルール
+
+## 環境
+- 実行: `uv run`
+- 依存追加: `uv add`
+
+## 禁止
+- Pandas使用禁止（Polars使用）
+- try-exceptの乱用禁止
+```
+
+## よいRuleの書き方
+
+- 1ファイルに1つの関心事をまとめる（「Python全般」と「セキュリティ」は分ける）
+- 理由（why）を添えると、Claudeが文脈に応じて適切に判断できる
+- 具体的に書く — 「きれいなコードを書く」より「関数は30行以内、ネストは3段まで」
+
+## Skills vs Rules 判断基準
+
+| 条件 | 選択 |
+|------|------|
+| 常に適用したい | Rules |
+| 特定ファイル編集時のみ | Rules + paths |
+| タスク実行時のみ（コミット、PR等） | Skills |
+| スクリプト実行を伴う | Skills |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ryomamoyr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
