@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [coldieart/artist-portfolio](https://github.com/coldieart/artist-portfolio/tree/main/portrait-agent/skill)
+Original source: [coldieart/artist-portfolio](https://github.com/coldieart/artist-portfolio/tree/main/portrait-series/skill)
 
 ---
 
