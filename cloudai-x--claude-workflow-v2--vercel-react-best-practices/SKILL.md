@@ -2,7 +2,7 @@
 name: vercel-react-best-practices
 description: React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements. Use when this capability is needed.
 metadata:
-  author: cloudai-x
+  author: CloudAI-X
 ---
 
 # Vercel React Best Practices
@@ -120,5 +120,5 @@ Each rule contains:
 - Additional context and references
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/cloudai-x) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/CloudAI-X) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
