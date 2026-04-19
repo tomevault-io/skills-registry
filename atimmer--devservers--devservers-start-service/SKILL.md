@@ -1,0 +1,62 @@
+---
+name: devservers-start-service
+description: Start, restart, or stop a dev server managed by the local Devservers Manager using the CLI. Use when this capability is needed.
+metadata:
+  author: atimmer
+---
+
+# Devservers Start Service
+
+## Overview
+
+Start, restart, or stop a configured service using the CLI.
+Rule: Use CLI only. Do not edit config files directly or interact with internal services.
+
+## Workflow
+
+Quick overview of available CLI commands:
+
+```
+devservers --help
+```
+
+### 1) Start or restart the service
+
+```
+devservers start <name>
+```
+
+Restart if already running:
+
+```
+devservers restart <name>
+```
+
+### 2) Stop a service (optional)
+
+```
+devservers stop <name>
+```
+
+### 3) Verify status
+
+```
+devservers status
+```
+
+The status output includes the current port when known (e.g. `service: running (port 3000)`).
+For `detect` or `registry` modes, the port appears once it is discovered/assigned.
+
+### 4) Get the full local URL
+
+```
+devservers url <name>
+```
+
+## Notes
+
+- If a CLI call fails due to connectivity, ask the user to start the manager and retry.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/atimmer) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
