@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gestrich/xcode-sim-automation](https://github.com/gestrich/xcode-sim-automation/tree/main/.claude/skills/creating-automated-screenshots)
+Original source: [gestrich/xcode-sim-automation](https://github.com/gestrich/xcode-sim-automation/tree/main/plugin/skills/creating-automated-screenshots)
 
 ---
 
