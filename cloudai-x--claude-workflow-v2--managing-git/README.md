@@ -1,13 +1,13 @@
 # managing-git
 
-> Skill by [cloudai-x](https://github.com/cloudai-x/claude-workflow-v2) — distributed by [TomeVault](https://tomevault.io/claim/cloudai-x)
+> Skill by [CloudAI-X](https://github.com/CloudAI-X/claude-workflow-v2) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cloudai-x/claude-workflow-v2](https://github.com/cloudai-x/claude-workflow-v2/tree/main/skills/managing-git)
+Original source: [CloudAI-X/claude-workflow-v2](https://github.com/CloudAI-X/claude-workflow-v2/tree/main/skills/managing-git)
 
 ---
 
 Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
-Is this your repo? [Claim it](https://tomevault.io/claim/cloudai-x) to manage distribution.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
