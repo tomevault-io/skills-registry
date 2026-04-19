@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hsabalqrt/sys4_antigravity2](https://github.com/hsabalqrt/sys4_antigravity2/tree/main/.ai/skills/filament-development)
+Original source: [hsabalqrt/sys4_antigravity2](https://github.com/hsabalqrt/sys4_antigravity2/tree/main/.gemini/skills/filament-development)
 
 ---
 
