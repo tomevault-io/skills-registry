@@ -1,0 +1,42 @@
+---
+name: codex-remote-troubleshoot
+description: Diagnose common codex-remote and codexd execution failures. Use when start/result/logs commands fail with reset, timeout, unauthorized, unknown machine, or missing exec_id errors. Use when this capability is needed.
+metadata:
+  author: erix025
+---
+
+# codex-remote-troubleshoot
+
+Use this skill for fast triage when command execution fails.
+
+## Triage Order
+
+1. Validate machine profile exists in local config.
+2. Run `machine check`.
+3. Interpret check result: `daemon_ok=true` means runnable (even if `ssh_ok=false` in addr-only mode).
+4. Verify local direct addr vs SSH forwarding path only when `daemon_ok=false`.
+5. Retry with a tiny command (`hostname`).
+6. Inspect remote daemon logs if available.
+
+## Common Errors And Fixes
+
+- `unknown machine`
+  - Fix `~/.config/codex-remote/config.yaml` machine name.
+- `connection reset by peer`
+  - Usually forwarding/daemon lifecycle issue; check daemon health first.
+- `unauthorized`
+  - Verify token in local machine profile and remote `auth_token`.
+- `exec_id not found`
+  - Ensure querying the same `machine` where command was submitted.
+
+## Minimal Verification Command
+
+```bash
+codex-remote exec start --machine "$MACHINE" --cmd "hostname"
+```
+
+If submission succeeds, use result/logs to complete chain.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/erix025) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
