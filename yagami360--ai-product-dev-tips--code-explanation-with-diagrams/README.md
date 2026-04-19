@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yagami360/ai-product-dev-tips](https://github.com/yagami360/ai-product-dev-tips/tree/main/nlp_processing/56/.cursor/skills/code-explanation-with-diagrams)
+Original source: [yagami360/ai-product-dev-tips](https://github.com/yagami360/ai-product-dev-tips/tree/main/nlp_processing/55/.claude/skills/code-explanation-with-diagrams)
 
 ---
 
