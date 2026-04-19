@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheBeardedBearSAS/claude-craft](https://github.com/TheBeardedBearSAS/claude-craft/tree/main/Dev/i18n/base/Common/skills/git-workflow)
+Original source: [TheBeardedBearSAS/claude-craft](https://github.com/TheBeardedBearSAS/claude-craft/tree/main/.claude/skills/git-workflow)
 
 ---
 
