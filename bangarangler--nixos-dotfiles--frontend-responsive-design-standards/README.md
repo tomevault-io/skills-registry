@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bangarangler/nixos-dotfiles](https://github.com/bangarangler/nixos-dotfiles/tree/main/opencode/skill/frontend-responsive-design-standards)
+Original source: [bangarangler/nixos-dotfiles](https://github.com/bangarangler/nixos-dotfiles/tree/main/crush/.config/crush/skills/frontend-responsive-design-standards)
 
 ---
 
