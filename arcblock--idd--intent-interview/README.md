@@ -1,0 +1,13 @@
+# intent-interview
+
+> Skill by [arcblock](https://github.com/arcblock/idd) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [arcblock/idd](https://github.com/arcblock/idd/tree/main/skills/intent-interview)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
