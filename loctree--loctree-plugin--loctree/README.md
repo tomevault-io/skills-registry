@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [loctree/loctree-plugin](https://github.com/loctree/loctree-plugin/tree/main/claude/skills/loctree)
+Original source: [loctree/loctree-plugin](https://github.com/loctree/loctree-plugin/tree/main/codex/skills/loctree)
 
 ---
 
