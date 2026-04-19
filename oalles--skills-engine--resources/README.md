@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oalles/skills-engine](https://github.com/oalles/skills-engine/tree/main/examples/distributed-skill/minimal-helpdesk-skill/src/main/resources)
+Original source: [oalles/skills-engine](https://github.com/oalles/skills-engine/tree/main/examples/full-example/system-health-skill/src/main/resources)
 
 ---
 
