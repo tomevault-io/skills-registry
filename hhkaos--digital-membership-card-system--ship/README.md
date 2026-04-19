@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hhkaos/digital-membership-card-system](https://github.com/hhkaos/digital-membership-card-system/tree/main/.codex/skills/ship)
+Original source: [hhkaos/digital-membership-card-system](https://github.com/hhkaos/digital-membership-card-system/tree/main/.claude/skills/ship)
 
 ---
 
