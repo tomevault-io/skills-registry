@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rika-labs/sgrep](https://github.com/rika-labs/sgrep/tree/main/.factory/skills/sgrep)
+Original source: [rika-labs/sgrep](https://github.com/rika-labs/sgrep/tree/main/plugins/sgrep/skills/sgrep)
 
 ---
 
