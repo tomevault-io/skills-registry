@@ -2,7 +2,7 @@
 name: managing-git
 description: Manages Git workflows including branching, commits, and pull requests. Use when working with Git, creating commits, opening PRs, managing branches, resolving conflicts, or when asked about version control best practices.
 metadata:
-  author: cloudai-x
+  author: CloudAI-X
 ---
 
 # Managing Git
@@ -229,5 +229,5 @@ Commit Validation:
 If validation fails, use `git rebase -i` to clean up commit history before pushing.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/cloudai-x) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/CloudAI-X) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
