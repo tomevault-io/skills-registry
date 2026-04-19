@@ -1,0 +1,154 @@
+---
+name: design
+description: Plans, designs, or architects a feature — breaks down a task into steps, compares approaches, and defines scope before coding. Use when asked to plan a feature, design a system, architect a solution, scope work, or evaluate approaches. Use when this capability is needed.
+metadata:
+  author: drimchansky
+---
+
+This skill guides structured planning and design of software features. It produces an implementation plan — not code. The output is a clear analysis of what to build, how to build it, and what risks exist.
+
+The user provides a task or feature request. They may include context about constraints, preferences, or prior discussion.
+
+## Workflow Context
+
+This skill complements — not replaces — an agent's planning mode, if one exists:
+
+- **Planning mode** — Conversational alignment on direction and scope.
+- **This skill** — Structured and methodical. Formal analysis with scope, steps, risks, and open questions documented.
+
+Typical flow: planning (align on direction) → **design skill** (structured analysis) → execution.
+
+For simpler tasks, skip straight to whichever step matches the complexity.
+
+## When to Design (and When Not To)
+
+**Plan when:**
+
+- Task spans multiple files or modules
+- Multiple viable approaches exist with meaningful trade-offs
+- Changes affect shared code with wide blast radius
+- Requirements are ambiguous and need decomposition
+- High-risk changes to critical paths
+
+**Skip planning when:**
+
+- Single-file change with obvious implementation
+- Bug fix with clear root cause and location
+- User has already specified the exact approach
+- The task is smaller than the plan would be
+
+If the task doesn't warrant a full plan, say so and suggest proceeding directly with implementation.
+
+## Planning Process
+
+### 1. Clarify Requirements
+
+- Restate the task to confirm understanding; separate explicit requirements from assumptions
+- List ambiguities — ask before proceeding if critical
+- Identify what "done" looks like for this task
+
+### 2. Explore the Codebase
+
+**CRITICAL**: Always ground the plan in what already exists. Read before designing.
+
+- Search for related implementations to use as models; map affected files and shared code in the blast radius
+- Note existing constraints (tech debt, API contracts, performance budgets)
+
+### 3. Evaluate Approaches
+
+Compare viable approaches — and actively look for ones the user may not have considered.
+
+Even when the user suggests a specific approach, consider whether a different solution would be more optimal. The goal is to arrive at the best implementation, not just validate the first idea. If an alternative is clearly better, recommend it with a clear explanation of why.
+
+**However**, don't fabricate alternatives to fill a comparison table when one approach is clearly right. State it and explain why alternatives don't apply.
+
+For each approach, assess:
+
+- **Alignment** — How well does it match existing codebase patterns?
+- **Simplicity** — What's the minimum complexity to meet requirements?
+- **Risk** — What could go wrong? How reversible is it?
+- **Effort** — Relative size (S/M/L)
+
+### 4. Define Scope
+
+Explicitly state:
+
+- **In scope** — What will be changed
+- **Out of scope** — What will NOT be changed, even if related
+- **Boundaries** — Where this work ends and future work begins
+
+**IMPORTANT**: Scope definition prevents creep during implementation. Be precise. A vague scope produces vague work.
+
+### 5. Break Down Steps
+
+Create an ordered list of implementation steps. Each step should be independently verifiable — either testable or reviewable on its own.
+
+For each step: brief description, dependencies on prior steps, and risk level if elevated.
+
+Step sizing:
+
+- Too coarse: "Implement the feature" — not actionable
+- Too fine: "Add import statement" — noise
+- Right size: "Add validation hook with error state for the form fields" — one concern, verifiable result
+
+### 6. Identify Risks
+
+Only flag risks that are **specific to this task** — not generic checklists.
+
+For each real risk:
+
+- What could go wrong (concrete scenario, not vague category)
+- How likely it is given what you found in exploration
+- How to mitigate or investigate before it becomes a problem
+
+### 7. Flag Open Questions
+
+If the plan has assumptions that could invalidate the approach, surface them explicitly. A plan with known unknowns is more useful than one that hides them.
+
+## Scaling Plan Depth
+
+Match the plan's detail to the task's complexity:
+
+- **Medium** (2-5 files, clear pattern) — Steps 1, 4, 5 — skip approach comparison, light on risks
+- **Large** (5-15 files, some ambiguity) — All steps, moderate detail
+- **Complex** (architectural, cross-cutting) — All steps, deep exploration, multiple approaches compared
+
+## Updating the Plan
+
+Plans are living documents. During implementation:
+
+- If a step reveals the approach won't work, revisit step 3 before continuing
+- If scope changes, update step 4 explicitly
+- If new risks emerge, add them — don't silently absorb surprises
+
+## Don't Rationalize
+
+- "I already know the codebase well enough" — Read the code anyway. Memory drifts; the code is the truth.
+- "There's only one way to do this" — If you haven't explored alternatives, you don't know that.
+- "The risks are obvious, no need to list them" — Generic risk awareness is not risk identification. Be specific or admit there are none.
+- "This is too simple to plan" — If the user asked for a plan, the task warranted one.
+- "I'll figure out the scope during implementation" — Undefined scope produces undefined work. Bound it now.
+
+## Verification
+
+- [ ] Plan is grounded in actual code exploration, not assumptions
+- [ ] Each step is independently verifiable
+- [ ] Scope boundaries are explicit (in/out of scope stated)
+- [ ] Risks are specific to this task, not generic checklists
+- [ ] Open questions that could invalidate the approach are surfaced
+
+## Output Structure
+
+Adapt to task size — not every plan needs every section:
+
+- **Task Understanding** — Restatement and clarifying questions
+- **Exploration Findings** — Key patterns, affected files, constraints discovered
+- **Approach** — Recommended approach with rationale (comparison table only if multiple viable options)
+- **Scope** — In scope / out of scope
+- **Steps** — Ordered implementation steps with dependencies and risk flags
+- **Risks** — Specific risks with mitigation strategies
+- **Open Questions** — Assumptions that need validation before or during implementation
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/drimchansky) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
