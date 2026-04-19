@@ -1,0 +1,67 @@
+---
+name: commit
+description: | Use when this capability is needed.
+metadata:
+  author: koki-develop
+---
+
+# Commit
+
+Create a git commit with intelligent file selection and style-consistent messages.
+
+## Current git state
+
+Staged files:
+!`git diff --staged --name-only --relative`
+
+Unstaged changes:
+!`git diff --name-only --relative`
+
+Untracked files:
+!`git ls-files --others --exclude-standard`
+
+Recent commit messages (for style reference):
+!`git log --format="%s" -20`
+
+## Step 1: Determine commit targets
+
+Select files using this priority:
+
+1. **Explicit targets** — if the user specified files in `$ARGUMENTS`, use exactly those.
+2. **Session-changed files** — files you (Claude) modified during this conversation (via any tool — Edit, Write, Bash, NotebookEdit, etc.). Cross-reference your memory of which files you touched against the git state above. Include both staged and unstaged changes for those files.
+3. **Already staged files** — if you didn't modify any files this session (e.g., the user invoked /commit after staging manually), use whatever is already staged.
+
+If none of these produce any files, tell the user there's nothing to commit and stop.
+
+## Step 2: Stage the files
+
+The file lists above use `--relative`, so paths are already relative to cwd. Pass them directly to `git add` — never `cd` to the repo root.
+
+Run `git add` with each file path specified individually. Never use `git add .`, `git add --all`, or `git add -A`.
+
+The sandbox blocks `.git/` writes, so run `git add` with `dangerouslyDisableSandbox: true`.
+
+After staging, verify with `git diff --staged --name-only --relative` that all intended files are included.
+
+## Step 3: Generate the commit message
+
+Write a commit message that:
+- Follows the style and conventions visible in the recent commit messages above (tense, capitalization, length, format)
+- Summarizes what changed and why in a way that's useful to someone reading the log later
+- Uses a single line unless the change is complex enough to warrant a body
+
+## Step 4: Commit
+
+The sandbox blocks access to `~/.gnupg`, which is required for GPG-signed commits. Run `git commit` with `dangerouslyDisableSandbox: true`.
+
+## Step 5: Output the result
+
+After a successful commit, run `git log -1 --format="%H"` and report:
+
+- **Commit message** — the message you wrote
+- **SHA** — the full commit hash
+- **Files** — list of all committed files
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/koki-develop) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
