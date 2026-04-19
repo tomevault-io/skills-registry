@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [draculabo/antigravitymanager](https://github.com/draculabo/antigravitymanager/tree/main/.agent/skills/ui-ux-pro-max)
+Original source: [draculabo/antigravitymanager](https://github.com/draculabo/antigravitymanager/tree/main/.codex/skills/ui-ux-pro-max)
 
 ---
 
