@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [santosrai/santosrai.github.io](https://github.com/santosrai/santosrai.github.io/tree/main/.codex/skills/blog-post-formatter)
+Original source: [santosrai/santosrai.github.io](https://github.com/santosrai/santosrai.github.io/tree/main/.claude/skills/blog-post-formatter)
 
 ---
 
