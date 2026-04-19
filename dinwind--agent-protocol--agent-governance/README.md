@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dinwind/agent_protocol](https://github.com/dinwind/agent_protocol/tree/main/cokodo-agent/src/cokodo_agent/bundled/agent/skills/agent-governance)
+Original source: [dinwind/agent_protocol](https://github.com/dinwind/agent_protocol/tree/main/.agent_cn/skills/agent-governance)
 
 ---
 
