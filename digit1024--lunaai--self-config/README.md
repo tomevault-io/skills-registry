@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [digit1024/lunaai](https://github.com/digit1024/lunaai/tree/main/packaging/luna-ai-quick-setup/usr/share/luna-ai-quick-setup/self_config)
+Original source: [digit1024/lunaai](https://github.com/digit1024/lunaai/tree/main/quick_setup/self_config)
 
 ---
 
