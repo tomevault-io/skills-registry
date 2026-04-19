@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hoangsonww/estatewise-chapel-hill-chatbot](https://github.com/hoangsonww/estatewise-chapel-hill-chatbot/tree/main/.agents/skills/estatewise-engineering)
+Original source: [hoangsonww/estatewise-chapel-hill-chatbot](https://github.com/hoangsonww/estatewise-chapel-hill-chatbot/tree/main/.claude/skills/estatewise-engineering)
 
 ---
 
