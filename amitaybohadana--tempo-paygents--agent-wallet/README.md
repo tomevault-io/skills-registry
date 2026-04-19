@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [amitaybohadana/tempo-paygents](https://github.com/amitaybohadana/tempo-paygents/tree/main/openclaw-plugin-agent-wallet/skills/agent-wallet)
+Original source: [amitaybohadana/tempo-paygents](https://github.com/amitaybohadana/tempo-paygents/tree/main/skills/agent-wallet)
 
 ---
 
