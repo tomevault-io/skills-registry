@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sperekrestova/interactive-leetcode-mcp](https://github.com/sperekrestova/interactive-leetcode-mcp/tree/main/skills/interactive-leetcode-mcp)
+Original source: [sperekrestova/interactive-leetcode-mcp](https://github.com/sperekrestova/interactive-leetcode-mcp/tree/main/clawhub-skill/interactive-leetcode-mcp)
 
 ---
 
