@@ -1,0 +1,13 @@
+# component-scaffold
+
+> Skill by [drivenets](https://github.com/drivenets/design-system) — distributed by [TomeVault](https://tomevault.io/claim/drivenets)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [drivenets/design-system](https://github.com/drivenets/design-system/tree/main/.cursor/skills/component-scaffold)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/drivenets) to manage distribution.
