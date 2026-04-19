@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alibaba/opc-starter](https://github.com/alibaba/opc-starter/tree/main/.qoder/skills/auto-develop)
+Original source: [alibaba/opc-starter](https://github.com/alibaba/opc-starter/tree/main/.claude/skills/auto-develop)
 
 ---
 
