@@ -2,7 +2,7 @@
 name: freshrss-git
 description: FreshRSS version control, git workflow, branching strategy (edge/latest), diff/compare, PR changes. Use when this capability is needed.
 metadata:
-  author: freshrss
+  author: FreshRSS
 ---
 
 # FreshRSS working with version control (git)
@@ -28,5 +28,5 @@ make test-all
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/freshrss) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/FreshRSS) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
