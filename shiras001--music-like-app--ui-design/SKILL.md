@@ -1,0 +1,40 @@
+---
+name: ui-design
+description: UI 実装やスタイリング、アクセシビリティに関する方針を示します。 Use when this capability is needed.
+metadata:
+  author: shiras001
+---
+---
+name: ui-design
+description: |
+  UI 実装やスタイリング、アクセシビリティに関する方針を示します。
+  コンポーネント設計や配色、フォント、スクリーンレイアウトの判断時に参照されます。
+---
+
+要点:
+- コントラストと可読性を重視する。背景画像使用時はテキストの可読性を担保するオーバーレイを使用する。
+- 共通コンポーネント（ボタン、リストタイル、ダイアログ）は `lib/widgets/` に配置する。
+- 日本語のコメントを入れること。UI の文言は必ず `AppLocalizations` を使用する。
+
+アクセシビリティ:
+- タップ領域は最低44x44 dp を確保する。
+- 色覚多様性にも配慮する（色だけに依存した情報表現を避ける）。
+---
+name: ui-design
+description: |
+  UI 実装やスタイリング、アクセシビリティに関する方針を示します。
+  コンポーネント設計や配色、フォント、スクリーンレイアウトの判断時に参照されます。
+---
+
+要点:
+- コントラストと可読性を重視する。背景画像使用時はテキストの可読性を担保するオーバーレイを使用する。
+- 共通コンポーネント（ボタン、リストタイル、ダイアログ）は `lib/widgets/` に配置する。
+- 日本語のコメントを入れること。UI の文言は必ず `AppLocalizations` を使用する。
+
+アクセシビリティ:
+- タップ領域は最低44x44 dp を確保する。
+- 色覚多様性にも配慮する（色だけに依存した情報表現を避ける）。
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shiras001) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
