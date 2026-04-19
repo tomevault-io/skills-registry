@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [azidan/codemap](https://github.com/azidan/codemap/tree/main/plugin/skills/codemap)
+Original source: [azidan/codemap](https://github.com/azidan/codemap/tree/main/.claude/skills/codemap)
 
 ---
 
