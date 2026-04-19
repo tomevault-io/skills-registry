@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [specture-system/specture](https://github.com/specture-system/specture/tree/main/.agents/skills/specture)
+Original source: [specture-system/specture](https://github.com/specture-system/specture/tree/main/internal/templates/files/skills/specture)
 
 ---
 
