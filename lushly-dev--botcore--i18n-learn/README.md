@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lushly-dev/botcore](https://github.com/lushly-dev/botcore/tree/main/.claude/skills/i18n-learn)
+Original source: [lushly-dev/botcore](https://github.com/lushly-dev/botcore/tree/main/src/botcore/skills/i18n-learn)
 
 ---
 
