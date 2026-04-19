@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [omeraydognn/monad-poly-agent](https://github.com/omeraydognn/monad-poly-agent/tree/main/client/public)
+Original source: [omeraydognn/monad-poly-agent](https://github.com/omeraydognn/monad-poly-agent/tree/main/public)
 
 ---
 
