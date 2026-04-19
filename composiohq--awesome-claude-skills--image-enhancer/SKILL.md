@@ -2,7 +2,7 @@
 name: image-enhancer
 description: Improves the quality of images, especially screenshots, by enhancing resolution, sharpness, and clarity. Perfect for preparing images for presentations, documentation, or social media posts. Use when this capability is needed.
 metadata:
-  author: composiohq
+  author: ComposioHQ
 ---
 
 # Image Enhancer
@@ -100,5 +100,5 @@ Original preserved as: screenshot-2024-original.png
 - **Print Materials**: Increase resolution for physical media
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/composiohq) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ComposioHQ) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
