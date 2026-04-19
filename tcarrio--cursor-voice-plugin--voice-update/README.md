@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tcarrio/cursor-voice-plugin](https://github.com/tcarrio/cursor-voice-plugin/tree/main/skills/voice-update)
+Original source: [tcarrio/cursor-voice-plugin](https://github.com/tcarrio/cursor-voice-plugin/tree/main/.cursor/skills/voice-update)
 
 ---
 
