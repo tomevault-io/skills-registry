@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chroma-core/agent-skills](https://github.com/chroma-core/agent-skills/tree/main/skills/chroma)
+Original source: [chroma-core/agent-skills](https://github.com/chroma-core/agent-skills/tree/main/src/chroma)
 
 ---
 
