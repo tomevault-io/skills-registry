@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [smileynet/line-cook](https://github.com/smileynet/line-cook/tree/main/plugins/kiro/skills/line-cook)
+Original source: [smileynet/line-cook](https://github.com/smileynet/line-cook/tree/main/plugins/opencode/skills/line-cook)
 
 ---
 
