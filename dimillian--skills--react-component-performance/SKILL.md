@@ -2,7 +2,7 @@
 name: react-component-performance
 description: Analyze and optimize React component performance issues (slow renders, re-render thrash, laggy lists, expensive computations). Use when asked to profile or improve a React component, reduce re-renders, or speed up UI updates in React apps. Use when this capability is needed.
 metadata:
-  author: dimillian
+  author: Dimillian
 ---
 
 # React Component Performance
@@ -129,5 +129,5 @@ function Summary({ orders }: { orders: Order[] }) {
 Load `references/examples.md` when the user wants a concrete refactor example.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/dimillian) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Dimillian) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
