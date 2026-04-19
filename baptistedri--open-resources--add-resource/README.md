@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [baptistedri/open-resources](https://github.com/baptistedri/open-resources/tree/main/.cursor/skills/add-resource)
+Original source: [baptistedri/open-resources](https://github.com/baptistedri/open-resources/tree/main/.claude/skills/add-resource)
 
 ---
 
