@@ -2,7 +2,7 @@
 name: stac-quickstart
 description: Help initialize and validate a Stac-enabled Flutter project and ship a first server-driven screen. Use when users ask to set up Stac CLI, run stac init/build/deploy, verify project prerequisites, or troubleshoot first-run setup and missing configuration files. Use when this capability is needed.
 metadata:
-  author: StacDev
+  author: stacdev
 ---
 
 # Stac Quickstart
@@ -44,5 +44,5 @@ Use this skill to set up Stac in a Flutter project, verify required files, and c
 - `scripts/validate_project_layout.py`: validates required Stac project files.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/StacDev) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/stacdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
