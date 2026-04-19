@@ -1,0 +1,13 @@
+# tauri-native-menus
+
+> Skill by [stefkors](https://github.com/stefkors/commitment-tauri) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [stefkors/commitment-tauri](https://github.com/stefkors/commitment-tauri/tree/main/.cursor/skills/tauri-native-menus)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
