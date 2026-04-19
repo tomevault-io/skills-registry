@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yeachan-heo/my-jogyo](https://github.com/yeachan-heo/my-jogyo/tree/main/skills/experiment-design)
+Original source: [yeachan-heo/my-jogyo](https://github.com/yeachan-heo/my-jogyo/tree/main/src/skill/experiment-design)
 
 ---
 
