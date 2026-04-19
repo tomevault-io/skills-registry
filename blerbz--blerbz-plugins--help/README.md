@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [blerbz/blerbz-plugins](https://github.com/blerbz/blerbz-plugins/tree/main/inference-confidenz/skills/help)
+Original source: [blerbz/blerbz-plugins](https://github.com/blerbz/blerbz-plugins/tree/main/inference-planz/skills/help)
 
 ---
 
