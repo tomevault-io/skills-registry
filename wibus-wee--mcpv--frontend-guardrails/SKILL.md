@@ -1,0 +1,46 @@
+---
+name: frontend-guardrails
+description: Frontend development guardrails for this repo. Use when editing or adding frontend code to ensure consistency and maintainability. Use when this capability is needed.
+metadata:
+  author: wibus-wee
+---
+
+# Goals
+
+- Keep SWR keys and config centralized
+- Enforce UI settings access through the hook
+
+# SWR keys / config
+
+- When adding a key or config, update `frontend/src/lib/swr-keys.ts` and/or `frontend/src/lib/swr-config.ts`
+- When using SWR, always import keys/config from those files; never define inline keys or configs elsewhere
+- If reusable logic is needed, extend those files instead of duplicating
+
+# UI settings
+
+- When reading or writing UI settings, use `frontend/src/hooks/use-ui-settings.ts`
+- When adding a UI setting, extend the hook's types, defaults, and persistence logic; do not add a new store or access storage directly
+
+# Settings
+
+You should use `help` prop of the form components to provide users with information about what a setting does. If the setting is not self-explanatory, you should also provide a link to the documentation.
+
+The content of the `help` you provide should be stored in a split file.
+
+- example: `frontend/src/modules/servers/lib/server-form-content.ts`
+
+# Example
+
+```ts
+import { swrKeys } from "@/lib/swr-keys";
+import { swrConfig } from "@/lib/swr-config";
+import { useUiSettings } from "@/hooks/use-ui-settings";
+
+const settings = useUiSettings();
+const key = swrKeys.userProfile();
+const config = swrConfig.default;
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wibus-wee) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
