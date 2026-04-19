@@ -1,0 +1,13 @@
+# dotnet-api-generator
+
+> Skill by [tsubakimoto](https://github.com/tsubakimoto/github-copilot-agent-skills-playground) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [tsubakimoto/github-copilot-agent-skills-playground](https://github.com/tsubakimoto/github-copilot-agent-skills-playground/tree/main/.github/skills/dotnet-api-generator)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
