@@ -1,0 +1,166 @@
+---
+name: draft-organizer
+description: 自动整理 docs/draft/ 草稿目录。This skill should be used when the user wants to organize drafts from docs/draft/readme.md into the appropriate website section (tech/life/essay). It reads keywords/URLs/text from readme.md, researches and analyzes each topic, generates complete articles with proper frontmatter, and places them in the target directory. Use when this capability is needed.
+metadata:
+  author: hailaz
+---
+
+# Draft Organizer - 草稿自动整理
+
+## Purpose
+
+Read `docs/draft/readme.md`, parse the draft entries (keywords, URLs, or short text), research and analyze each topic, generate complete well-structured articles, and place them in the correct directory within the Docusaurus site.
+
+## When to Use
+
+- When the user mentions organizing, sorting, or categorizing drafts
+- When the user says "整理", "整理草稿", "归类", "整理 draft" or similar phrases
+- When the user adds new entries to `docs/draft/readme.md` and wants them turned into articles
+
+## Site Structure
+
+The website has three content sections under `docs/`:
+
+| Section | Directory | Description | Example Topics |
+|---------|-----------|-------------|----------------|
+| 技术 (Tech) | `docs/tech/` | Technical articles, tutorials, and tool guides | Go, MySQL, Web dev, Network/OpenWrt, Bash, Git, DevOps, Windows tips, Hardware repair |
+| 生活 (Life) | `docs/life/` | Daily life content | Music, Movies/TV, Toys/DIY, Cleaning tips |
+| 随笔 (Essay) | `docs/essay/` | Personal thoughts and reading notes | Book notes, Quotes, Reflections |
+
+### Existing Subdirectories
+
+```
+docs/tech/: go/, go/文章摘录/, go/示例/, database/, web/, network/, devtools/, devtools/fix/, devtools/windows/
+docs/life/: music/, music/ukulele/, toy/
+docs/essay/: reading/
+```
+
+### _category_.json Format
+
+When creating a new subdirectory, add a `_category_.json`:
+
+```json
+{
+  "label": "分类中文名",
+  "position": 数字
+}
+```
+
+## Draft Entry Format
+
+`docs/draft/readme.md` contains a list of draft entries under the `## 草稿` heading. Each entry is a list item (`- `) that can be:
+
+1. **A keyword or short phrase**: e.g. `- Chrome DevTools MCP`
+2. **A URL**: e.g. `- https://github.com/user/repo`
+3. **A keyword + URL combination**: e.g. `- Superpowers https://example.com`
+4. **A short paragraph of text**: brief notes or thoughts to be expanded
+
+**IMPORTANT**: The line `不要删除当前文件，只整理并删除已经整理的草稿` in `readme.md` must always be preserved.
+
+## Workflow
+
+### Step 1: Parse Draft Entries
+
+Read `docs/draft/readme.md` and extract all list items under `## 草稿`. If no entries exist, inform the user and exit.
+
+### Step 2: Research & Analyze Each Entry
+
+For each draft entry:
+
+1. **If it's a URL**: Use `web_fetch` to fetch the page content, understand the project/topic.
+2. **If it's a keyword/phrase**: Use `web_search` to research the topic and gather key information.
+3. **If it's short text**: Analyze the content directly and expand as needed.
+
+Determine for each entry:
+- **Topic summary**: What is this about?
+- **Target section**: Which site section (tech/life/essay) it belongs to
+- **Target subdirectory**: Best-fit existing subdirectory, or propose a new one
+- **Whether to create a new file or append to an existing file**: If an existing file covers the same topic area (e.g. tips, tools list), prefer appending a new section
+
+### Step 3: Present Plan to User
+
+Display a summary table:
+
+```
+| Entry | Topic Summary | Target | File | Action |
+|-------|--------------|--------|------|--------|
+| Chrome DevTools MCP | Chrome 开发者工具 MCP 协议支持 | tech/devtools/ | mcp.md | Create new file |
+| Superpowers | ... | tech/web/ | ... | Append to existing |
+```
+
+Ask the user to confirm before proceeding. The user may:
+- Confirm all changes
+- Modify individual destinations or actions
+- Skip specific entries
+
+### Step 4: Generate Content
+
+After user confirmation, for each entry generate a complete article following the site's writing style:
+
+#### Frontmatter
+
+```yaml
+---
+title: "文章标题"
+tags: [tag1, tag2]
+---
+```
+
+- `title`: Concise and descriptive, in Chinese (unless the topic is inherently English-only)
+- `tags`: 1-5 relevant lowercase tags
+- `sidebar_position`: Only add if needed to control ordering
+
+#### Content Style Rules
+
+Follow the site's established writing patterns:
+
+1. **笔记体风格**: Write like personal knowledge notes, concise and practical, not formal academic articles
+2. **中文为主**: Use Chinese for prose, keep English for technical terms, code, and proper nouns
+3. **结构清晰**: Use `##` / `###` headings to organize sections
+4. **实操导向**: Include code blocks, commands, configuration examples where applicable
+5. **外部链接**: Reference source materials, official docs, useful articles
+6. **图片**: If the topic benefits from diagrams, note where images should be added with placeholder comments
+7. **适度篇幅**: Not too long, not too short. Cover the essentials without filler. Aim for the depth level seen in existing articles (typically 50-300 lines)
+
+#### Content Structure Template
+
+For **tech** articles:
+```markdown
+## 简介 / 是什么
+Brief introduction to the topic.
+
+## 核心概念 / 使用方法
+Main content with code examples, commands, configurations.
+
+## 示例 / 实践
+Practical examples or step-by-step guides.
+
+## 参考
+- [Source 1](url)
+- [Source 2](url)
+```
+
+For **life** articles: Lighter structure, list-based, resource collection style.
+
+For **essay** articles: Quote-heavy, use `----` separators between sections, `-- [Source](url)` attribution format.
+
+### Step 5: Execute Changes
+
+1. Create or update the target `.md` file with generated content
+2. If a new subdirectory is needed, create it with `_category_.json`
+3. Remove the processed entries from `docs/draft/readme.md` (keep the file and its header intact)
+4. Report results
+
+## Important Notes
+
+- **NEVER delete `docs/draft/readme.md`** — only remove processed entries from it
+- Preserve the `# 说明` header and the instruction line in `readme.md`
+- If a file with the same name exists in the target directory, either append content or use a different filename
+- When appending to an existing file, add content as a new section with appropriate heading level
+- Use `web_fetch` and `web_search` tools to research topics thoroughly before writing
+- Generated content should provide genuine value — not just superficial overviews
+- If a topic is too niche or unclear to write about meaningfully, flag it for the user instead of generating low-quality content
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hailaz) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
