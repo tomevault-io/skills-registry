@@ -133,5 +133,5 @@ For other languages, use the REST API directly at `https://api.skyll.app`.
 - GitHub: https://github.com/assafelovic/skyll
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/assafelovic/skyll)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/assafelovic) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
