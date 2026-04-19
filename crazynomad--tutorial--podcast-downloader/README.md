@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [crazynomad/tutorial](https://github.com/crazynomad/tutorial/tree/main/02-podcast-downloader/artifact/podcast-downloader)
+Original source: [crazynomad/tutorial](https://github.com/crazynomad/tutorial/tree/main/notebooklm/.claude/skills/podcast-downloader)
 
 ---
 
