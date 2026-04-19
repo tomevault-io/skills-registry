@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aniket-a14/sra](https://github.com/aniket-a14/sra/tree/main/.agents/skills/mermaid-diagrams)
+Original source: [aniket-a14/sra](https://github.com/aniket-a14/sra/tree/main/.agent/skills/mermaid-diagrams)
 
 ---
 
