@@ -1,0 +1,13 @@
+# version-upgrade
+
+> Skill by [jorgeavaldez](https://github.com/jorgeavaldez/pi-config) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [jorgeavaldez/pi-config](https://github.com/jorgeavaldez/pi-config/tree/main/.pi/skills/version-upgrade)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
