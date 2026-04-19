@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [clmc2025/vignette](https://github.com/clmc2025/vignette/tree/main/.trae/skills/arkts-code-linter)
+Original source: [clmc2025/vignette](https://github.com/clmc2025/vignette/tree/main/.agents/skills/arkts-code-linter)
 
 ---
 
