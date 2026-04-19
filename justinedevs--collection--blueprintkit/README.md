@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [justinedevs/collection](https://github.com/justinedevs/collection/tree/main/blueprintkit)
+Original source: [justinedevs/collection](https://github.com/justinedevs/collection/tree/main/blueprintkit/.claude/skills/blueprintkit)
 
 ---
 
