@@ -1,0 +1,65 @@
+---
+name: codex-remote-result
+description: Query execution status and logs from codex-remote by exec_id. Use when user asks to check progress, inspect stdout/stderr, read tail logs, or fetch final exit_code. Use when this capability is needed.
+metadata:
+  author: erix025
+---
+
+# codex-remote-result
+
+Use this skill after an async execution has been submitted and `exec_id` is known.
+Do not use it for `exec run` synchronous streaming.
+
+## Inputs To Confirm
+
+- `machine` (required)
+- `exec_id` (required)
+- `stream` (optional: `stdout` or `stderr`, default `stdout`)
+- `tail-lines` (optional, default `200`)
+
+## Status Query
+
+```bash
+codex-remote exec result --machine "$MACHINE" --id "$EXEC_ID"
+```
+
+Interpretation:
+
+- `status=running`: command is still executing.
+- `status=finished`: check `exit_code`.
+
+## Logs Query
+
+```bash
+codex-remote exec logs --machine "$MACHINE" --id "$EXEC_ID" --stream stdout --tail-lines 200
+```
+
+Notes:
+
+- Output is JSONL (`{"type":"log","stream":"...","line":"..."}` per line).
+- For stderr, set `--stream stderr`.
+- Optional time windows: `--since 10m --until 1m`.
+
+Unified mode:
+
+```bash
+codex-remote exec watch --machine "$MACHINE" --id "$EXEC_ID" --stream both --poll 1s
+```
+
+Add `--full` to stream all logs from the beginning instead of just the tail:
+
+```bash
+codex-remote exec watch --machine "$MACHINE" --id "$EXEC_ID" --stream both --poll 1s --full
+```
+
+## Cancel
+
+```bash
+codex-remote exec cancel --machine "$MACHINE" --id "$EXEC_ID"
+```
+
+Use only when user explicitly asks to stop the command.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/erix025) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
