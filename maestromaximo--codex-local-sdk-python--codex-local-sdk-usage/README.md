@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [maestromaximo/codex-local-sdk-python](https://github.com/maestromaximo/codex-local-sdk-python/tree/main/codex-local-sdk-python/src/codex_sdk_python/data/skills/codex-local-sdk-usage)
+Original source: [maestromaximo/codex-local-sdk-python](https://github.com/maestromaximo/codex-local-sdk-python/tree/main/.agents/skills/codex-local-sdk-usage)
 
 ---
 
