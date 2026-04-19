@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jlevy/tbd](https://github.com/jlevy/tbd/tree/main/.claude/skills/tbd)
+Original source: [jlevy/tbd](https://github.com/jlevy/tbd/tree/main/packages/tbd/.claude/skills/tbd)
 
 ---
 
