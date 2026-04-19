@@ -1,0 +1,13 @@
+# context-engineering
+
+> Skill by [thangchung](https://github.com/thangchung/agent-engineering-experiment) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [thangchung/agent-engineering-experiment](https://github.com/thangchung/agent-engineering-experiment/tree/main/foundry-local-agent-fx/.github/skills/context-engineering)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
