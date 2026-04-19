@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [qtzx06/clawcraft](https://github.com/qtzx06/clawcraft/tree/main/skills/clawcraft)
+Original source: [qtzx06/clawcraft](https://github.com/qtzx06/clawcraft/tree/main/openclaw/workspaces/drill-sergeant/skills/clawcraft)
 
 ---
 
