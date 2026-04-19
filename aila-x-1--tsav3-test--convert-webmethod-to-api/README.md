@@ -1,0 +1,13 @@
+# convert-webmethod-to-api
+
+> Skill by [aila-x-1](https://github.com/aila-x-1/tsav3-test) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [aila-x-1/tsav3-test](https://github.com/aila-x-1/tsav3-test/tree/main/.claude/skills/convert-webmethod-to-api)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
