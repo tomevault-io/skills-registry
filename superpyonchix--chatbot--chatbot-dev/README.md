@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [superpyonchix/chatbot](https://github.com/superpyonchix/chatbot/tree/main/.github/skills/chatbot-dev)
+Original source: [superpyonchix/chatbot](https://github.com/superpyonchix/chatbot/tree/main/.claude/skills/chatbot-dev)
 
 ---
 
