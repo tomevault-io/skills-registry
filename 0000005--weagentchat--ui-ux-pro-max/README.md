@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [0000005/weagentchat](https://github.com/0000005/weagentchat/tree/main/.claude/skills/ui-ux-pro-max)
+Original source: [0000005/weagentchat](https://github.com/0000005/weagentchat/tree/main/.codex/skills/ui-ux-pro-max)
 
 ---
 
