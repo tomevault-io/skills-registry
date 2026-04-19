@@ -1,0 +1,27 @@
+---
+name: sync-with-swift
+description: Guide for syncing with upstream Swift compiler demangling changes Use when this capability is needed.
+metadata:
+  author: oozoofrog
+---
+
+# sync-with-swift
+
+This project is a pure Swift port of the Swift compiler's `swift-demangle`. When syncing with a new Swift version:
+
+## Checklist
+
+1. **Node.Kind**: Check for new enum cases in `Node.swift` `Kind` enum
+2. **Demangler**: Check for new operators in `demangleOperator()` in `Demangler.swift`
+3. **NodePrinter**: Add corresponding print rules in `printNode()` in `NodePrinter.swift`
+4. **DemangleOptions**: Check for new options in `DemangleOptions.swift`
+5. **Test data**: Update `Tests/SwiftDemangleTests/Resources/manglings.txt` with new test cases
+
+## Reference
+
+- Upstream source: https://github.com/swiftlang/swift/tree/main/lib/Demangling
+- Diff guide: `Diff.md` in project root tracks differences from upstream
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/oozoofrog) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
