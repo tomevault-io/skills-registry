@@ -1,0 +1,48 @@
+---
+name: checkpoint
+description: Create a safe checkpoint git commit on the current branch (avoid competition data, runs, artifacts, secrets). Use when this capability is needed.
+metadata:
+  author: mykolapinchuk
+---
+
+When invoked (or when the user says `checkpoint`), do this in order.
+
+## 1) Preflight (must do; show output)
+- `git status`
+- `git diff --stat`
+- Verify `agent_logs/current.md` `id:` is synced to the kickoff `AgentNN` for this chat. If stale, fix `current.md` before commit.
+
+## 2) Sanity guardrails (must do)
+- Never run: `git push`, `git commit --amend`, `git rebase`, `git reset --hard`, `git clean -fdx`, or modify git remotes.
+- Never stage/commit secrets/credentials: `.env*`, `*.pem`, `*.key`, `id_rsa*`, `id_ed25519*`, tokens.
+- Never stage/commit competition data or run artifacts:
+  - `competitions/**/{public,private,raw,downloads}/**`
+  - `runs/**`
+  - sqlite/db files
+
+## 3) Stage (default: include safe tracked files)
+Stage only source/docs/config files and small markdown:
+- root `*.md`, `*.yml`
+- `docs/**`
+- `local_context_enrichments/**`
+- `.codex/**`
+
+If anything looks suspicious (bulk files, data-like payloads), stop and report before staging.
+
+Before committing, show:
+- `git diff --cached --stat`
+
+## 4) Commit (auto message)
+- Create a structured message that includes the agent id:
+  - `agentNN: checkpoint(<area>): <short summary>`
+  - Derive `agentNN` from kickoff-synced `agent_logs/current.md` (field `id:`). If missing/ambiguous, stop and ask the human.
+  - Choose `<area>` from: `workflow`, `docs`, `orchestrator`, `competitions`, `prompts`, `ci`, `misc`.
+- Run `git commit -m "<message>"`.
+
+## 5) Postflight (must do; show output)
+- `git status`
+- Report the commit hash.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mykolapinchuk) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
