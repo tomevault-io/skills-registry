@@ -2,7 +2,7 @@
 name: typescript
 description: TypeScript code style, type co-location, naming conventions (including acronym casing), and arktype patterns. Use when the user mentions TypeScript types, naming conventions, or when writing .ts files, defining types, naming variables/functions, or organizing test files. Use when this capability is needed.
 metadata:
-  author: epicenterhq
+  author: EpicenterHQ
 ---
 
 # TypeScript Guidelines
@@ -336,5 +336,5 @@ If an ID doesn't survive a full cycle, every system that references it by ID is 
 When designing parse/serialize pairs, decide which fields are **identity** (must survive round-trips) vs **derived** (can be recomputed). Persist identity fields explicitly—don't rely on matching by secondary keys to recover them.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/epicenterhq) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/EpicenterHQ) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
