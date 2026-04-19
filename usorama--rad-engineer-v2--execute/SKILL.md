@@ -1,0 +1,898 @@
+---
+name: execute
+description: Deterministic plan execution with mathematical certainty. Use for implementing IMPLEMENTATION-PLAN.md files with triple verification, git workflow, and cross-session context sharing. Works with any project that has an implementation plan. Use when this capability is needed.
+metadata:
+  author: usorama
+---
+
+# Deterministic Plan Execution Skill
+
+## Purpose
+
+Execute implementation plans with **mathematical certainty**:
+- Triple verification on every task
+- Same inputs → Same outputs (drift rate 0%)
+- Evidence-based completion proofs
+- Cross-session context sharing via files + memory-keeper
+
+**Works with any project** that has an IMPLEMENTATION-PLAN.md file
+
+---
+
+## Core Protocol: Validate-Execute-Verify Loop
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                 DETERMINISTIC EXECUTION LOOP                    │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   START                                                         │
+│     │                                                           │
+│     ▼                                                           │
+│   ┌─────────────────┐                                          │
+│   │ 1. VALIDATE     │ ◄── Check preconditions                  │
+│   │    Preconditions│     Files exist? Deps met? Env ready?    │
+│   └────────┬────────┘                                          │
+│            │ PASS                                               │
+│            ▼                                                    │
+│   ┌─────────────────┐                                          │
+│   │ 2. CREATE TEST  │ ◄── TDD: Write failing test first        │
+│   │    (TDD Red)    │                                          │
+│   └────────┬────────┘                                          │
+│            │                                                    │
+│            ▼                                                    │
+│   ┌─────────────────┐                                          │
+│   │ 3. EXECUTE      │ ◄── Implement to pass test               │
+│   │    Implementation│     Capture all outputs                  │
+│   └────────┬────────┘                                          │
+│            │                                                    │
+│            ▼                                                    │
+│   ┌─────────────────┐     ┌─────────────────┐                  │
+│   │ 4. VERIFY       │ NO  │ 5. FIX & RETRY  │                  │
+│   │    Postconditions├───►│    (max 3)      │                  │
+│   └────────┬────────┘     └────────┬────────┘                  │
+│            │ PASS                  │                            │
+│            │◄──────────────────────┘                            │
+│            ▼                                                    │
+│   ┌─────────────────┐                                          │
+│   │ 6. CAPTURE      │ ◄── Evidence + Git commit                │
+│   │    Evidence     │                                          │
+│   └────────┬────────┘                                          │
+│            │                                                    │
+│            ▼                                                    │
+│   ┌─────────────────┐                                          │
+│   │ 7. UPDATE       │ ◄── Progress file + memory-keeper        │
+│   │    Progress     │                                          │
+│   └────────┬────────┘                                          │
+│            │                                                    │
+│            ▼                                                    │
+│        NEXT TASK                                                │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Startup Protocol
+
+### Step 1: Identify Project Context
+
+```bash
+# Auto-detect project context
+# 1. Find IMPLEMENTATION-PLAN.md in common locations
+PLAN_FILE=$(find . -name "IMPLEMENTATION-PLAN.md" -o -name "*-IMPLEMENTATION-PLAN.md" 2>/dev/null | head -1)
+
+# 2. Detect project name from directory or git
+PROJECT=$(basename $(git rev-parse --show-toplevel 2>/dev/null || pwd))
+
+# 3. Detect test command from package.json or common patterns
+if [[ -f "package.json" ]]; then
+  if grep -q '"test"' package.json; then
+    TEST_CMD="bun test"  # or npm test / pnpm test based on lockfile
+  fi
+  if grep -q '"typecheck"' package.json; then
+    TYPECHECK_CMD="bun run typecheck"
+  fi
+elif [[ -f "pyproject.toml" ]] || [[ -f "setup.py" ]]; then
+  TEST_CMD="pytest"
+  TYPECHECK_CMD="mypy ."
+fi
+
+# 4. Default working directory is current
+WORKING_DIR="."
+
+# Known project overrides (optional)
+case "$PROJECT" in
+  "rad-engineer-v2")
+    PLAN_FILE="${PLAN_FILE:-docs/platform-foundation/RAD-ENGINEER-IMPLEMENTATION-PLAN.md}"
+    WORKING_DIR="rad-engineer"
+    ;;
+  "engg-support-system")
+    TEST_CMD="bun test && pytest"
+    ;;
+esac
+```
+
+### Step 2: Load Required Context
+
+```markdown
+Required reads (in order):
+1. ${PLAN_FILE} → Implementation plan with tasks
+2. docs/platform-foundation/PLAN-EXECUTION-DETERMINISM.md → Verification protocol
+3. docs/platform-foundation/INTEGRATION-DEPENDENCIES.md → Cross-system deps
+4. docs/platform-foundation/ANALYSIS-MEMORY.yaml → Current progress
+5. mcp_context_get(category: "progress") → Memory-keeper state
+```
+
+### Step 3: Determine Current State
+
+```markdown
+Parse from ANALYSIS-MEMORY.yaml and memory-keeper:
+- Current phase number
+- Last completed task
+- Any blocked tasks
+- Next task to execute
+```
+
+### Step 4: Check Integration Dependencies (if applicable)
+
+```markdown
+If task has ESS dependency:
+1. Read docs/platform-foundation/engg-support-system/INTEGRATION-STATUS.md
+2. Check if required checkpoint is COMPLETE
+3. If not complete: Skip to independent task OR wait
+
+If executing ESS:
+1. After phase completion, update INTEGRATION-STATUS.md
+2. Signal rad-engineer-v2 session via file update
+```
+
+### Step 5: Report Status Before Execution
+
+```markdown
+## Execution Status
+
+**Project**: ${PROJECT}
+**Current Phase**: [N] - [Name]
+**Tasks**: [Complete]/[Total] in this phase
+
+### Ready to Execute
+| Task | Description | Preconditions | Estimated |
+|------|-------------|---------------|-----------|
+| X.Y.Z | [Description] | [Status] | [Time] |
+
+### Dependencies
+| Task | Depends On | Status |
+|------|------------|--------|
+| [task] | [dependency] | [ready/blocked] |
+
+Proceeding with execution...
+```
+
+---
+
+## Task Execution Protocol
+
+### For Each Task
+
+#### 1. VALIDATE Preconditions
+
+```bash
+# Check file existence
+for file in ${REQUIRED_FILES}; do
+  if [[ ! -f "$file" ]]; then
+    echo "PRECONDITION FAILED: $file does not exist"
+    exit 1
+  fi
+done
+
+# Check environment
+if [[ -z "${REQUIRED_ENV_VAR}" ]]; then
+  echo "PRECONDITION FAILED: $REQUIRED_ENV_VAR not set"
+  exit 1
+fi
+
+# Check dependencies (from INTEGRATION-DEPENDENCIES.md)
+if [[ "$DEPENDS_ON_ESS" == "true" ]]; then
+  grep -q "Phase ${REQUIRED_PHASE}.*COMPLETE" docs/platform-foundation/engg-support-system/INTEGRATION-STATUS.md
+  if [[ $? -ne 0 ]]; then
+    echo "PRECONDITION FAILED: ESS Phase ${REQUIRED_PHASE} not complete"
+    echo "Skip to independent task or wait for ESS"
+    exit 1
+  fi
+fi
+
+echo "All preconditions PASSED"
+```
+
+#### 2. CREATE Test (TDD Red Phase)
+
+```markdown
+**MANDATORY**: Write failing test BEFORE implementation
+
+1. Create test file if not exists
+2. Write test cases for:
+   - Each acceptance criterion
+   - Edge cases
+   - Error conditions
+3. Run tests - MUST FAIL
+4. Log test output as evidence
+```
+
+#### 3. EXECUTE Implementation
+
+```markdown
+**Agent spawning for implementation**:
+
+Task(
+  subagent_type="developer",
+  description="Implement task ${TASK_ID}",
+  prompt="""
+Task: ${TASK_DESCRIPTION}
+Files: ${FILES_TO_CREATE_OR_MODIFY}
+Output: JSON {filesModified, summary, errors, testsPassing}
+
+## Preconditions (Already Verified)
+${PRECONDITION_EVIDENCE}
+
+## Test File (Already Created - Make These Pass)
+${TEST_FILE_PATH}
+
+## TDD Workflow
+1. Run tests - confirm they fail
+2. Implement minimum code to pass
+3. Refactor while keeping tests green
+
+## Quality Gates (Before Completion)
+${TEST_CMD}
+${TYPECHECK_CMD}
+
+## Evidence Required
+Include in response:
+- Command outputs for all quality gates
+- Files created/modified with line counts
+- Test results (passing/failing)
+"""
+)
+```
+
+#### 4. VERIFY Postconditions
+
+```bash
+# Run quality gates
+cd ${WORKING_DIR}
+
+echo "Running typecheck..."
+${TYPECHECK_CMD}
+TYPECHECK_RESULT=$?
+
+echo "Running tests..."
+${TEST_CMD}
+TEST_RESULT=$?
+
+# Check success criteria from plan
+if [[ $TYPECHECK_RESULT -ne 0 ]]; then
+  echo "POSTCONDITION FAILED: Typecheck errors"
+  exit 1
+fi
+
+if [[ $TEST_RESULT -ne 0 ]]; then
+  echo "POSTCONDITION FAILED: Tests failing"
+  exit 1
+fi
+
+# Verify files exist (from task spec)
+for file in ${EXPECTED_FILES}; do
+  if [[ ! -f "$file" ]]; then
+    echo "POSTCONDITION FAILED: Expected file $file not created"
+    exit 1
+  fi
+done
+
+echo "All postconditions PASSED"
+```
+
+#### 5. FIX & RETRY (if failed)
+
+```markdown
+Retry Protocol (max 3 attempts):
+
+Attempt 1: Re-run with error context
+  - Include previous error message
+  - Same agent, same approach
+
+Attempt 2: Alternative approach
+  - Analyze failure pattern
+  - Try different implementation strategy
+
+Attempt 3: Escalate
+  - Use higher-capability model
+  - Or mark as BLOCKED with detailed reason
+
+After 3 failures:
+  - Mark task as BLOCKED in progress file
+  - Continue with independent tasks
+  - Alert user if on critical path
+```
+
+#### 6. CAPTURE Evidence
+
+```markdown
+## Task Completion Proof: ${TASK_ID}
+
+### Preconditions Verified
+- [x] File A exists: `ls -la path/to/file` ✓
+- [x] Dependency B met: [evidence]
+
+### Implementation Evidence
+- Files created: [list with line counts]
+- Test coverage: [percentage]
+- Quality gates: all pass
+
+### Postconditions Verified
+```
+$ ${TYPECHECK_CMD}
+[actual output - 0 errors]
+
+$ ${TEST_CMD}
+[actual output - all pass]
+```
+
+### Git Commit
+```
+$ git add -A && git commit -m "${COMMIT_MSG}"
+[commit hash]
+```
+
+### Timestamp
+${ISO_TIMESTAMP}
+```
+
+#### 7. UPDATE Progress
+
+```bash
+# Update ANALYSIS-MEMORY.yaml
+cat >> docs/platform-foundation/ANALYSIS-MEMORY.yaml << EOF
+    - timestamp: "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+      task_id: "${TASK_ID}"
+      action: "VERIFIED"
+      summary: "${SUMMARY}"
+      evidence:
+        typecheck: "0 errors"
+        tests: "${TESTS_PASSING} passed"
+        files: ${FILES_LIST}
+EOF
+
+# Update memory-keeper
+mcp_context_save(
+  category: "progress",
+  key: "task-${TASK_ID}-complete",
+  value: "${COMPLETION_PROOF_JSON}",
+  priority: "high"
+)
+
+# Git commit for progress
+git add docs/platform-foundation/ANALYSIS-MEMORY.yaml
+git commit -m "progress: Complete ${TASK_ID}"
+```
+
+---
+
+## Git Workflow
+
+### Commit Protocol
+
+```markdown
+Every task completion gets a git commit:
+
+1. **Implementation commit**:
+   git commit -m "feat(${COMPONENT}): ${TASK_DESCRIPTION}
+
+   Task: ${TASK_ID}
+   Phase: ${PHASE_NUMBER}
+
+   - Files: ${FILES_LIST}
+   - Tests: ${TEST_COUNT} passing
+   - Coverage: ${COVERAGE}%
+
+   Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>"
+
+2. **Progress commit**:
+   git commit -m "progress: Complete ${TASK_ID}
+
+   Verification evidence captured.
+   Next: ${NEXT_TASK_ID}"
+```
+
+### Checkpoint Protocol
+
+```markdown
+After each PHASE completion:
+
+1. Create git tag:
+   git tag -a "phase-${PHASE_NUMBER}-complete" -m "Phase ${PHASE_NUMBER} verified"
+
+2. Create memory-keeper checkpoint:
+   mcp_context_checkpoint(name: "phase-${PHASE_NUMBER}-complete")
+
+3. Update integration status (if ESS):
+   Edit docs/platform-foundation/engg-support-system/INTEGRATION-STATUS.md
+   Mark phase as COMPLETE with timestamp
+```
+
+### Push Protocol
+
+```markdown
+Push to remote after:
+- Each phase completion
+- Before stopping work
+- After any significant milestone
+
+git push origin ${BRANCH}
+git push --tags  # for checkpoints
+```
+
+---
+
+## Cross-Session Context Sharing
+
+### File-Based Sharing
+
+```markdown
+Both sessions share these files (via git):
+
+1. INTEGRATION-DEPENDENCIES.md
+   - What rad-engineer needs from ESS
+   - Updated by orchestrator
+
+2. engg-support-system/INTEGRATION-STATUS.md
+   - Phase completion status
+   - Updated by ESS session
+
+3. ANALYSIS-MEMORY.yaml
+   - Per-project progress
+   - Updated by both sessions
+
+Sync protocol:
+- Before starting: git pull
+- After phase: git push
+- Check for updates: git fetch && git diff origin/main
+```
+
+### Memory-Keeper Sharing
+
+```markdown
+Use channels for cross-session context:
+
+# ESS session saves:
+mcp_context_save(
+  category: "progress",
+  channel: "ess-integration",
+  key: "phase-2-http-gateway",
+  value: "COMPLETE - endpoint /query working"
+)
+
+# rad-engineer session reads:
+mcp_context_get(channel: "ess-integration")
+```
+
+---
+
+## Metrics Collection
+
+### Per-Task Metrics
+
+```yaml
+task_metrics:
+  task_id: "1.1.1"
+  start_time: "2026-01-13T10:00:00Z"
+  end_time: "2026-01-13T10:45:00Z"
+  duration_minutes: 45
+  attempts: 1
+  first_pass: true
+  typecheck_errors: 0
+  tests_passing: 12
+  tests_total: 12
+  files_created: 2
+  files_modified: 0
+  lines_added: 245
+```
+
+### Per-Phase Metrics
+
+```yaml
+phase_metrics:
+  phase: 1
+  name: "Hierarchical Memory"
+  start_time: "2026-01-13T10:00:00Z"
+  end_time: "2026-01-13T16:00:00Z"
+  tasks_total: 12
+  tasks_complete: 12
+  tasks_blocked: 0
+  first_pass_rate: 0.83
+  total_attempts: 15
+  test_coverage: 0.87
+  verification_pass_rate: 1.0
+```
+
+### Drift Detection (Optional)
+
+```markdown
+After critical tasks, optionally run drift check:
+
+1. Capture task input hash
+2. Run task 3 times
+3. Compare AST of outputs
+4. Log variance
+
+Target: 0% drift (identical outputs)
+```
+
+---
+
+## Error Recovery
+
+### Task Failure
+
+```markdown
+On postcondition failure:
+
+1. Log error details
+2. Increment attempt counter
+3. If attempt < 3:
+   - Analyze failure pattern
+   - Adjust approach
+   - Retry
+4. If attempt >= 3:
+   - Mark as BLOCKED
+   - Document reason
+   - Continue with independent tasks
+```
+
+### Integration Failure
+
+```markdown
+If ESS is unavailable when rad-engineer needs it:
+
+1. Check INTEGRATION-STATUS.md
+2. If ESS phase not complete:
+   - Skip dependent tasks
+   - Work on independent tasks
+   - Save state for later
+3. Document in progress file
+```
+
+### Session Interruption
+
+```markdown
+On session end (graceful or crash):
+
+1. Save all state to memory-keeper
+2. Update progress files
+3. Commit to git
+
+On session resume:
+1. Read memory-keeper state
+2. Read progress files
+3. Identify last completed task
+4. Resume from next task
+```
+
+---
+
+## Usage Examples
+
+### Execute Next Task
+
+```
+/execute
+```
+Automatically identifies next task and executes with full verification.
+
+### Execute Specific Phase
+
+```
+/execute phase 2
+```
+Executes all tasks in Phase 2.
+
+### Execute Specific Task
+
+```
+/execute task 1.1.3
+```
+Executes task 1.1.3 with full verification.
+
+### Check Status Only
+
+```
+/execute status
+```
+Reports current progress without executing.
+
+### Resume After Interruption
+
+```
+/execute resume
+```
+Recovers state and continues from last checkpoint.
+
+---
+
+## Quality Standards (Non-Negotiable)
+
+These apply to ALL tasks in ALL projects:
+
+- [ ] No `any` types in TypeScript
+- [ ] All tests passing
+- [ ] Typecheck clean (0 errors)
+- [ ] Evidence captured for every task
+- [ ] Git commit after every task
+- [ ] Progress file updated after every task
+- [ ] Memory-keeper checkpoint after every phase
+
+---
+
+## Integration with Other Skills
+
+| Skill | When to Use |
+|-------|-------------|
+| `/verify-task` | Verify specific task completion |
+| `/plan` | Generate execution plan before this skill |
+| `/code-review` | After implementation, before commit |
+| `/progress-tracker` | Quick status check |
+
+### Gap Analysis Skill Integration
+
+When comparing plan vs actual implementation:
+1. Use the **Implementation Verification Protocol** (see section above)
+2. Run verification commands BEFORE marking anything as a gap
+3. Document all evidence with file:line references
+4. Include grep/glob outputs in the analysis
+
+---
+
+## CRITICAL: Continue Until Complete Protocol
+
+**MANDATORY**: When executing with `/execute full` or similar comprehensive execution requests:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  NEVER STOP UNTIL ALL TASKS ARE COMPLETE                       │
+│                                                                 │
+│  After each task completion, AUTOMATICALLY:                    │
+│  1. Check TodoWrite for remaining tasks                        │
+│  2. If pending tasks exist → Continue to next task             │
+│  3. If all completed → Report final summary                    │
+│                                                                 │
+│  DO NOT:                                                        │
+│  - Ask "should I continue?" - just continue                    │
+│  - Stop after one phase - complete all phases                  │
+│  - Wait for user input between tasks                           │
+│                                                                 │
+│  The execution is complete when:                               │
+│  - All TodoWrite items show "completed"                        │
+│  - All phases in the plan are implemented                      │
+│  - All tests pass and typecheck is clean                       │
+│  - Final verification commit is made                           │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Auto-Continuation Check
+
+After every task completion:
+
+```typescript
+// Pseudo-code for continuation logic
+function shouldContinue(): boolean {
+  const todos = getCurrentTodos();
+  const pendingTasks = todos.filter(t => t.status !== 'completed');
+
+  if (pendingTasks.length > 0) {
+    // Mark next pending task as in_progress
+    // Continue execution without asking
+    return true;
+  }
+
+  return false; // All done, report final summary
+}
+```
+
+### Full Execution Mode
+
+When user says "execute full" or "complete all phases":
+1. Load the complete implementation plan
+2. Create todos for ALL phases and tasks
+3. Execute each task in sequence
+4. Update progress after each completion
+5. Continue until all todos are completed
+6. Report comprehensive final summary
+
+---
+
+## MANDATORY: Implementation Verification Protocol
+
+> **CRITICAL**: This section prevents FALSE GAP ANALYSIS by requiring code verification before claiming anything is missing or incomplete.
+
+### The Problem This Solves
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  FAILURE MODE: False Gap Analysis                               │
+│                                                                 │
+│  Symptom: Claiming features are missing when they exist        │
+│  Cause: Reading plan without verifying code                    │
+│                                                                 │
+│  Example (WRONG):                                               │
+│  Plan says: "Implement LinuxMonitor"                           │
+│  Without verification: "LinuxMonitor is missing" (GAP!)        │
+│                                                                 │
+│  Example (CORRECT):                                             │
+│  Plan says: "Implement LinuxMonitor"                           │
+│  Verification: grep -r "class LinuxMonitor" src/               │
+│  Result: src/sdk/monitors/LinuxMonitor.ts (EXISTS!)            │
+│  Conclusion: No gap - already implemented                       │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### NEVER Claim Something is Missing Without These Steps
+
+```markdown
+BEFORE claiming ANY feature is missing or incomplete:
+
+1. SEARCH for it first:
+   ```bash
+   # Search by class/function name
+   grep -r "class FeatureName" src/
+   grep -r "function featureName" src/
+   grep -r "FeatureName" src/ --include="*.ts"
+
+   # Search by file pattern
+   find . -name "*FeatureName*" -type f
+   glob "**/*feature*"
+   ```
+
+2. CHECK alternative implementations:
+   - Different naming (compact vs compactState)
+   - Different location (src/ vs lib/ vs test/)
+   - Different pattern (class vs function vs module)
+
+3. READ the actual file if found:
+   ```bash
+   # Verify implementation exists
+   cat src/path/to/File.ts | head -100
+   ```
+
+4. ONLY THEN conclude:
+   - If code found: "Verified - already implemented at {path}:{line}"
+   - If not found: "Verified missing - needs implementation"
+```
+
+### Gap Analysis Verification Checklist
+
+For every item in a plan vs actual comparison:
+
+```markdown
+| Plan Item | Verification Command | Result | Status |
+|-----------|---------------------|--------|--------|
+| LinuxMonitor | `grep -r "class LinuxMonitor" src/` | Found: src/sdk/monitors/LinuxMonitor.ts | ✅ Exists |
+| StateManager.compact() | `grep -r "compact" src/advanced/StateManager.ts` | Found: compactState() at line 329 | ✅ Exists (different name) |
+| Security Audit | `find docs -name "*SECURITY*"` | Found: docs/SECURITY-AUDIT.md | ✅ Exists |
+| Missing Feature | `grep -r "MissingClass" src/` | No results | ❌ Actually missing |
+```
+
+### Acceptance Criteria Verification Protocol
+
+For each story/task in the implementation plan:
+
+```markdown
+## Verification: Story W2-S1 (Real agent spawning)
+
+### Planned Acceptance Criteria:
+1. WaveOrchestrator has mock/real toggle
+2. Integration tests exist
+3. Config supports useRealAgents flag
+
+### Verification Commands:
+```bash
+# Criterion 1: mock/real toggle
+grep -r "mock\|real" src/advanced/WaveOrchestrator.ts
+→ Found: "Initialized with MOCK agents" at line 45
+
+# Criterion 2: Integration tests
+ls test/integration/*agent*.test.ts
+→ Found: real-agent-flow.test.ts
+
+# Criterion 3: Config flag
+grep -r "useRealAgents" src/config/
+→ Found: src/config/schema.ts:12
+```
+
+### Verdict:
+ALL acceptance criteria verified ✅
+Status: COMPLETE (not a gap)
+```
+
+### BEFORE Generating Any Gap Analysis
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  MANDATORY VERIFICATION SEQUENCE                                │
+│                                                                 │
+│  1. Read the plan file                                          │
+│  2. For EACH planned feature/story:                             │
+│     a. Run grep/glob to search for implementation               │
+│     b. Check alternative names/patterns                         │
+│     c. Read actual files if found                               │
+│     d. Document evidence with file:line references              │
+│  3. ONLY mark as "gap" if verification confirms missing         │
+│  4. Include verification evidence in gap analysis               │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Evidence Template for Plan vs Actual
+
+```markdown
+## Plan vs Actual: [Story ID]
+
+**Planned**: [Description from plan]
+**Verification**:
+```bash
+$ grep -r "[keyword]" src/
+[actual output]
+```
+**Evidence**: [file:line reference or "Not found"]
+**Status**: [VERIFIED COMPLETE | VERIFIED MISSING | NEEDS INVESTIGATION]
+**Notes**: [Any naming differences or implementation details]
+```
+
+### Anti-Pattern Detection
+
+If you find yourself writing ANY of these without verification commands, STOP:
+
+- ❌ "This feature is missing"
+- ❌ "Gap: X not implemented"
+- ❌ "Status: PARTIAL - needs work"
+- ❌ "Not found in codebase"
+
+Replace with:
+
+- ✅ "Verification: `grep -r 'X' src/` returned [output]"
+- ✅ "Found at src/path/file.ts:123"
+- ✅ "Not found after searching: [commands run]"
+
+---
+
+## Mathematical Certainty Definition
+
+A task is **mathematically complete** when:
+
+```
+COMPLETE(task) ⟺
+  ∀ precondition ∈ task.preconditions: precondition = TRUE
+  ∧ ∀ postcondition ∈ task.postconditions: postcondition = TRUE
+  ∧ tests.all_pass = TRUE
+  ∧ typecheck.errors = 0
+  ∧ evidence.captured = TRUE
+  ∧ git.committed = TRUE
+  ∧ progress.updated = TRUE
+```
+
+This is verified by the skill for every task execution.
+
+---
+
+**Version**: 1.2.0 (Global)
+**Created**: 2026-01-13
+**Updated**: 2026-01-14
+**Changelog**:
+- 1.2.0: Added MANDATORY Implementation Verification Protocol to prevent false gap analysis
+- 1.1.0: Made skill generic for any project with IMPLEMENTATION-PLAN.md
+- 1.0.0: Initial version for rad-engineer-v2
+
+**Works With**: Any project with an IMPLEMENTATION-PLAN.md file
+**Location**: ~/.claude/skills/execute/ (global) or .claude/skills/execute/ (project)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/usorama) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
