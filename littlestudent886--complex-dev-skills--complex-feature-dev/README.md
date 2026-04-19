@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [littlestudent886/complex-dev-skills](https://github.com/littlestudent886/complex-dev-skills/tree/main/codex/skills/complex-feature-dev)
+Original source: [littlestudent886/complex-dev-skills](https://github.com/littlestudent886/complex-dev-skills/tree/main/claude/plugins/complex-feature-dev/skills/complex-feature-dev)
 
 ---
 
