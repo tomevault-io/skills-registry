@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cybertheory/clrun](https://github.com/cybertheory/clrun/tree/main/skills/clrun)
+Original source: [cybertheory/clrun](https://github.com/cybertheory/clrun/tree/main/website/public/skills/clrun)
 
 ---
 
