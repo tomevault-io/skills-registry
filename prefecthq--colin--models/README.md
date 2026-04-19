@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [prefecthq/colin](https://github.com/prefecthq/colin/tree/main/src/colin/blueprints/mcp-guide/models)
+Original source: [prefecthq/colin](https://github.com/prefecthq/colin/tree/main/src/colin/blueprints/quickstart/models)
 
 ---
 
