@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hejhi/rimitive](https://github.com/hejhi/rimitive/tree/main/plugins/rimitive-behavior/skills)
+Original source: [hejhi/rimitive](https://github.com/hejhi/rimitive/tree/main/plugins/rimitive-view/skills)
 
 ---
 
