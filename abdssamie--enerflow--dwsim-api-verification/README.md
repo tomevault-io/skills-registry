@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [abdssamie/enerflow](https://github.com/abdssamie/enerflow/tree/main/.agent/skills/dwsim-api-verification)
+Original source: [abdssamie/enerflow](https://github.com/abdssamie/enerflow/tree/main/.opencode/skill/dwsim-api-verification)
 
 ---
 
