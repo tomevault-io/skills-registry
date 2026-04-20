@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [elab-development/internet-tehnologije-2025-vebservisieuprave_2022_0031](https://github.com/elab-development/internet-tehnologije-2025-vebservisieuprave_2022_0031/tree/main/backend/vendor/laravel/boost/.ai/tailwindcss/4/skill/tailwindcss-development)
+Original source: [elab-development/internet-tehnologije-2025-vebservisieuprave_2022_0031](https://github.com/elab-development/internet-tehnologije-2025-vebservisieuprave_2022_0031/tree/main/backend/vendor/laravel/boost/.ai/tailwindcss/3/skill/tailwindcss-development)
 
 ---
 
