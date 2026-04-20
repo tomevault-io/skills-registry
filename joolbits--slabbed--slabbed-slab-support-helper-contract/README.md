@@ -1,0 +1,13 @@
+# slabbed-slab-support-helper-contract
+
+> Skill by [joolbits](https://github.com/joolbits/slabbed) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [joolbits/slabbed](https://github.com/joolbits/slabbed/tree/main/.windsurf/skills/slabbed-slab-support-helper-contract)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
