@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [theofernandezz/ai-library](https://github.com/theofernandezz/ai-library/tree/main/skills/generic/nextjs-core)
+Original source: [theofernandezz/ai-library](https://github.com/theofernandezz/ai-library/tree/main/.opencode/skills/generic/nextjs-core)
 
 ---
 
