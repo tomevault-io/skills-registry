@@ -1,0 +1,119 @@
+---
+name: unit-test-creator
+description: Unit test creation conventions using Vitest. Use when writing tests, creating test files, or setting up test structure. Enforces local setup (no beforeEach), co-located test files, nested describe blocks, and using 'any' type for TypeScript test errors. Use when this capability is needed.
+metadata:
+  author: tksaeku
+---
+
+# Unit Test Conventions
+
+## Framework & Files
+- Vitest
+- Co-located: `foo.ts` → `foo.test.ts` same directory
+- Extension: `.test.ts`
+
+## Structure
+- Nested `describe` blocks for grouping
+- Clear, descriptive test names
+
+```typescript
+describe('calculateWeeklyPay', () => {
+  describe('when given valid inputs', () => {
+    it('calculates pay from hours and rate', () => {
+      const hours = 40;
+      const rate = 25;
+      expect(calculatePay(hours, rate)).toBe(1000);
+    });
+  });
+});
+```
+
+## Setup - CRITICAL
+
+**NO `beforeEach` for test setup.** Each test sets up its own data locally.
+
+```typescript
+// WRONG
+describe('calculatePay', () => {
+  let hours: number;
+  beforeEach(() => { hours = 40; });
+  it('calculates', () => { ... });
+});
+
+// CORRECT
+describe('calculatePay', () => {
+  it('calculates correctly', () => {
+    const hours = 40;
+    const rate = 25;
+    expect(calculatePay(hours, rate)).toBe(1000);
+  });
+});
+```
+
+## Mocking
+- Avoid mocking whenever possible
+- If required, set up mocks locally within the specific test
+- Never mock setup in `beforeEach`
+
+## TypeScript in Tests
+
+**ALWAYS use `any` type to resolve TypeScript errors in tests.**
+
+```typescript
+const mockData: any = { ... };
+const result: any = someComplexFunction();
+```
+
+## Independence
+- Each test completely independent
+- Tests run in any order
+- No shared state
+
+## React Component Props
+Use factory functions for props with mocks - prevents shared mock state between tests:
+
+```typescript
+// WRONG - shared mocks can leak between tests
+const defaultProps = {
+  onAdd: vi.fn(),
+  onDelete: vi.fn()
+};
+
+// CORRECT - fresh mocks for each test
+const createDefaultProps = () => ({
+  data: mockData,
+  onAdd: vi.fn().mockResolvedValue(undefined),
+  onEdit: vi.fn().mockResolvedValue(undefined),
+  onDelete: vi.fn().mockResolvedValue(undefined)
+});
+
+it('calls onAdd when submitted', async () => {
+  const props = createDefaultProps();
+  render(<MyComponent {...props} />);
+  // ...
+  expect(props.onAdd).toHaveBeenCalledWith(expect.objectContaining({ id: 1 }));
+});
+```
+
+## Testing Async Callbacks
+Use `waitFor` when testing callbacks that trigger async operations:
+
+```typescript
+it('calls onDelete when confirmed', async () => {
+  const props = createDefaultProps();
+  vi.spyOn(window, 'confirm').mockReturnValue(true);
+
+  render(<MyComponent {...props} />);
+  fireEvent.click(screen.getByRole('button', { name: /delete/i }));
+
+  await waitFor(() => {
+    expect(props.onDelete).toHaveBeenCalledTimes(1);
+  });
+
+  vi.restoreAllMocks();
+});
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tksaeku) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
