@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zhuanggenhua/boardgame](https://github.com/zhuanggenhua/boardgame/tree/main/.windsurf/skills/ui-ux-pro-max)
+Original source: [zhuanggenhua/boardgame](https://github.com/zhuanggenhua/boardgame/tree/main/.agent/skills/ui-ux-pro-max)
 
 ---
 
