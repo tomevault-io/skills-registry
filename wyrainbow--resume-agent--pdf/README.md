@@ -1,0 +1,13 @@
+# pdf
+
+> Skill by [wyrainbow](https://github.com/wyrainbow/resume-agent) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [wyrainbow/resume-agent](https://github.com/wyrainbow/resume-agent/tree/main/backend/agent/skills/office-files/pdf)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
