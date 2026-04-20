@@ -1,0 +1,75 @@
+---
+name: ask-codex
+description: Asks Codex CLI for coding assistance. Use for getting a second opinion, code generation, debugging, or delegating coding tasks. Use when this capability is needed.
+metadata:
+  author: hiroro-work
+---
+
+# Ask Codex
+
+Executes the local `codex` CLI to get coding assistance.
+
+**Note:** This skill requires the `codex` CLI to be installed and available in your system's PATH.
+
+## Quick start
+
+Run a single query with `codex exec`:
+
+```bash
+codex exec "Your question or task here"
+```
+
+## Common options
+
+| Option | Description |
+|--------|-------------|
+| `-m MODEL` | Specify model |
+| `-C DIR` | Set working directory |
+| `--full-auto` | Enable automatic execution with workspace-write sandbox |
+
+> For all available options, run `codex exec --help`
+
+## Resume a session
+
+Use `exec resume --last` to continue the most recent session with a follow-up prompt:
+
+```bash
+codex exec resume --last "Your follow-up prompt"
+```
+
+## Examples
+
+**Ask a coding question:**
+
+```bash
+codex exec "How do I implement a binary search in Python?"
+```
+
+**Analyze code in a specific directory:**
+
+```bash
+codex exec -C /path/to/project "Explain the architecture of this codebase"
+```
+
+**Use a specific model:**
+
+```bash
+codex exec -m gpt-5.3-codex "Write a function that validates email addresses"
+```
+
+**Let Codex make changes automatically:**
+
+```bash
+codex exec --full-auto "Add error handling to all API endpoints"
+```
+
+## Notes
+
+- Codex runs non-interactively with `exec` subcommand
+- By default, output goes to stdout and no files are modified without approval
+- Use `--full-auto` for automatic execution within sandbox constraints
+- The command inherits the current working directory unless `-C` is specified
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hiroro-work) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
