@@ -2,7 +2,7 @@
 name: technical-writer
 description: | Use when this capability is needed.
 metadata:
-  author: shubhamsaboo
+  author: Shubhamsaboo
 ---
 
 # Technical Writer
@@ -345,5 +345,5 @@ MIT
 - Progressive complexity (basic → advanced)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/shubhamsaboo) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Shubhamsaboo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
