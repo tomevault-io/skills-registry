@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ninjasitm/ai-assisted-dev-toolkit](https://github.com/ninjasitm/ai-assisted-dev-toolkit/tree/main/src/repo/.agents/skills/logging)
+Original source: [ninjasitm/ai-assisted-dev-toolkit](https://github.com/ninjasitm/ai-assisted-dev-toolkit/tree/main/src/monorepo/.agents/skills/logging)
 
 ---
 
