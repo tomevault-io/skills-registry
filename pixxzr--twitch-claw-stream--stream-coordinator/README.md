@@ -1,0 +1,13 @@
+# stream-coordinator
+
+> Skill by [pixxzr](https://github.com/pixxzr/twitch-claw-stream) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [pixxzr/twitch-claw-stream](https://github.com/pixxzr/twitch-claw-stream/tree/main/skills/stream-coordinator)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
