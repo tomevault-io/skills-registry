@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [szejing/wemotoo-crm-portal](https://github.com/szejing/wemotoo-crm-portal/tree/main/.cursor/skills/nuxt-ui-usage)
+Original source: [szejing/wemotoo-crm-portal](https://github.com/szejing/wemotoo-crm-portal/tree/main/.agent/skills/nuxt-ui-usage)
 
 ---
 
