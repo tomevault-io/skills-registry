@@ -1,0 +1,77 @@
+---
+name: talentfilter-architecture-scalability
+description: Master architectural patterns for both Frontend (Next.js) and Backend (FastAPI), ensuring a clean, modular, and testable codebase. Use when this capability is needed.
+metadata:
+  author: krasimir-hristov
+---
+
+# TalentFilter Architecture & Scalability Skill
+
+This skill governs the structural integrity of the TalentFilter monorepo. It ensures that the project remains manageable as it grows from MVP to a full SaaS platform.
+
+## 1. Frontend Architecture (Feature-Sliced Design Lite)
+
+To avoid a "component junk drawer," we organize the `src` directory by feature.
+
+### Directory Structure:
+
+- `src/app/`: Next.js App Router (pages and layouts only).
+- `src/features/`: The core of the application logic. Each feature (e.g., `interview-room`, `job-builder`, `dashboard-stats`) contains:
+  - `/components`: Feature-specific UI components.
+  - `/hooks`: Custom React hooks for this feature.
+  - `/services`: API call abstractions.
+  - `/types`: TypeScript definitions.
+  - `/store`: If it needs a dedicated Zustand slice.
+- `src/components/ui/`: Shared Shadcn primitives.
+- `src/lib/`: Shared utilities, API clients (Axios/Supabase), and global constants.
+
+### Unified Wizard Pattern (Job Creation):
+
+The Job Creation Wizard follows a **single-path, AI-first approach** with human refinement:
+
+1. **Input Stage**: Recruiter provides Title, Description, and optional Notes.
+2. **AI Generation**: Backend returns structured JSON (questions array with all fields).
+3. **Dynamic Rendering**: Frontend maps the array to question cards (no fixed count).
+4. **Real-Time Assistance**:
+   - "Suggest Question" button adds new AI-generated questions based on current context.
+   - "Generate Answer" button per question fills the `ideal_answer` field.
+5. **State Management**: Use React `useState` for the questions array. TanStack Query for AI calls. No complex state machines needed.
+
+## 2. Backend Architecture (Layered FastAPI)
+
+The backend follows a strict separation of concerns to ensure business logic is decoupled from the API layer.
+
+### Directory Structure:
+
+- `app/api/v1/`: **Routers**. Only handle request parsing, calling services, and returning responses. No business logic here.
+- `app/services/`: **Business Logic**. The "Service Layer." This is where AI calls, complex calculations, and multi-table transactions happen.
+- `app/repositories/`: **Data Access**. Direct database interactions using the Supabase client.
+- `app/schemas/`: **Pydantic Models**. Request/Response validation.
+- `app/models/`: **DB Entities**. Internal representations if needed (SQLModel/SQLAlchemy).
+- `app/core/`: Security, config, and global dependencies.
+
+## 3. Dependency Injection (DI)
+
+- **Backend**: Use FastAPI's `Depends` for passing the database client or the `AIService` into routers. This makes testing and mocking easier.
+- **Frontend**: Centralize API clients in `src/lib/api`. Use TanStack Query hooks as the primary way to "inject" server data into components.
+
+## 4. Naming Conventions
+
+- **Frontend**:
+  - Components: `PascalCase.tsx` (e.g., `QuestionCard.tsx`).
+  - Hooks: `camelCase.ts` (e.g., `useTimer.ts`).
+  - Feature folders: `kebab-case`.
+- **Backend**:
+  - Files: `snake_case.py`.
+  - Classes: `PascalCase`.
+  - Functions: `snake_case`.
+
+## 5. Scalability Principles
+
+- **DRY (Don't Repeat Yourself)**: If a piece of logic (like score calculation) is used in multiple places, it MUST live in a service.
+- **Single Responsibility**: Each component/function should do one thing well.
+- **Async First**: All I/O operations (DB, AI, Webhooks) must be `async/await` to maximize FastAPI's performance.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/krasimir-hristov) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
