@@ -1,0 +1,13 @@
+# impl
+
+> Skill by [hrntknr](https://github.com/hrntknr/dotfiles) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [hrntknr/dotfiles](https://github.com/hrntknr/dotfiles/tree/main/files/.claude/skills/impl)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
