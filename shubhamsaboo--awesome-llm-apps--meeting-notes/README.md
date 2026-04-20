@@ -1,13 +1,13 @@
 # meeting-notes
 
-> Skill by [shubhamsaboo](https://github.com/shubhamsaboo/awesome-llm-apps) — distributed by [TomeVault](https://tomevault.io/claim/shubhamsaboo)
+> Skill by [Shubhamsaboo](https://github.com/Shubhamsaboo/awesome-llm-apps) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shubhamsaboo/awesome-llm-apps](https://github.com/shubhamsaboo/awesome-llm-apps/tree/main/awesome_agent_skills/meeting-notes)
+Original source: [Shubhamsaboo/awesome-llm-apps](https://github.com/Shubhamsaboo/awesome-llm-apps/tree/main/awesome_agent_skills/meeting-notes)
 
 ---
 
 Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
-Is this your repo? [Claim it](https://tomevault.io/claim/shubhamsaboo) to manage distribution.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
