@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [matochu/pythia](https://github.com/matochu/pythia/tree/main/.claude/skills/skill-sync-cursor-to-claude)
+Original source: [matochu/pythia](https://github.com/matochu/pythia/tree/main/.agents/skills/skill-sync-cursor-to-claude)
 
 ---
 
