@@ -1,0 +1,13 @@
+# youtube-history-markdown-triage
+
+> Skill by [dudarev](https://github.com/dudarev/ai-assisted-software-development) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [dudarev/ai-assisted-software-development](https://github.com/dudarev/ai-assisted-software-development/tree/main/.agents/skills/youtube-history-markdown-triage)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
