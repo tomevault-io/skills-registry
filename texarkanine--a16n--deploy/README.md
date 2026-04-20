@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [texarkanine/a16n](https://github.com/texarkanine/a16n/tree/main/packages/plugin-cursor/test/fixtures/cursor-skills/from-cursor/.cursor/skills/deploy)
+Original source: [texarkanine/a16n](https://github.com/texarkanine/a16n/tree/main/packages/plugin-cursor/test/fixtures/cursor-skills-complex/from-cursor/.cursor/skills/deploy)
 
 ---
 
