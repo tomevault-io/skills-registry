@@ -1,0 +1,76 @@
+---
+name: component-organization
+description: Enforces single-component-per-file pattern for React feature pages. Use when creating new pages, refactoring page.tsx files, or when components are mixed in a single file. Use when this capability is needed.
+metadata:
+  author: dinogit
+---
+
+# Component Organization
+
+When creating React components for a feature page, **never** put multiple component functions in a single `page.tsx` file.
+
+## Pattern
+
+### Instead of this (BAD):
+```
+features/analytics/
+  page.tsx  <- Contains Page + SummaryCard + DailyActivityChart + etc.
+```
+
+### Do this (GOOD):
+```
+features/analytics/
+  page.tsx           <- Only imports and composes components
+  components/
+    summary-card.tsx
+    daily-activity-chart.tsx
+    hourly-activity-chart.tsx
+    tokens-chart.tsx
+    model-usage-card.tsx
+```
+
+## Implementation
+
+1. **page.tsx** should only contain:
+   - Imports from `./components/`
+   - The main `Page` function that composes the imported components
+   - Data fetching/loader logic if needed
+
+2. **components/** folder should contain:
+   - One component per file
+   - File names in kebab-case matching the component name
+   - Each file exports a single named component
+
+## Example
+
+**page.tsx:**
+```tsx
+import { SummaryCard } from './components/summary-card'
+import { DailyActivityChart } from './components/daily-activity-chart'
+
+export function Page() {
+  return (
+    <div>
+      <SummaryCard />
+      <DailyActivityChart />
+    </div>
+  )
+}
+```
+
+**components/summary-card.tsx:**
+```tsx
+export function SummaryCard({ title, value, icon }: SummaryCardProps) {
+  return (...)
+}
+```
+
+## When to Apply
+
+- Creating a new feature page with 2+ custom components
+- Refactoring an existing page with inline components
+- The page.tsx file exceeds ~100 lines
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dinogit) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
