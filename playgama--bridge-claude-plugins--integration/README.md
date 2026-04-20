@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [playgama/bridge-claude-plugins](https://github.com/playgama/bridge-claude-plugins/tree/main/plugins/playgama-bridge-defold/skills/integration)
+Original source: [playgama/bridge-claude-plugins](https://github.com/playgama/bridge-claude-plugins/tree/main/plugins/playgama-bridge-godot/skills/integration)
 
 ---
 
