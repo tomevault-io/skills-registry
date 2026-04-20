@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alexalchemy/aphebis-world-builder-claude](https://github.com/alexalchemy/aphebis-world-builder-claude/tree/main/.claude/skills/pso)
+Original source: [alexalchemy/aphebis-world-builder-claude](https://github.com/alexalchemy/aphebis-world-builder-claude/tree/main/skills/pso)
 
 ---
 
