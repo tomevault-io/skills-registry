@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [amiable-dev/llm-council](https://github.com/amiable-dev/llm-council/tree/main/src/llm_council/skills/bundled/council-gate)
+Original source: [amiable-dev/llm-council](https://github.com/amiable-dev/llm-council/tree/main/.github/skills/council-gate)
 
 ---
 
