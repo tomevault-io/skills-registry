@@ -1,0 +1,44 @@
+---
+name: pr-create
+description: GitHub PR 作成スキル。現在のブランチのコミット履歴を分析して PR タイトルと説明文を自動生成し、gh pr create を実行します。 Use when this capability is needed.
+metadata:
+  author: naopoyo
+---
+
+# GitHub プルリクエスト作成
+
+## ワークフロー
+
+### 1. 事前確認
+
+- コミットされていない変更がある場合は、先にコミットする
+- main ブランチにいる場合は、適切な名前のブランチを作成する
+
+### 2. PR コンテンツ生成
+
+`git log --oneline origin/main..HEAD` でコミット履歴を取得し、以下を生成：
+
+- **タイトル**: 最初のコミットメッセージの 1 行目
+- **説明文**: `references/pr-template.md` のテンプレートに従う
+
+### 3. プロジェクトルール確認
+
+プロジェクトに `.claude/CLAUDE.md` が存在する場合、そこに記載された PR 作成ルールを確認し、適用してください。
+
+特に以下の指定がないか確認：
+- タイトル・本文の言語指定
+- ラベル付与ルール
+- PR 作成後のブランチ操作
+- その他の PR 関連ルール
+
+### 4. gh pr create 実行
+
+ブランチが push されているか確認後、プロジェクトルール（CLAUDE.md がある場合）に従いながら `gh pr create` を実行。
+
+## PR 説明文テンプレート
+
+詳細は `references/pr-template.md` を参照。
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/naopoyo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
