@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aaravjj2/tradingview-recreation](https://github.com/aaravjj2/tradingview-recreation/tree/main/.agent/skills/ui-ux-pro-max)
+Original source: [aaravjj2/tradingview-recreation](https://github.com/aaravjj2/tradingview-recreation/tree/main/.codebuddy/skills/ui-ux-pro-max)
 
 ---
 
