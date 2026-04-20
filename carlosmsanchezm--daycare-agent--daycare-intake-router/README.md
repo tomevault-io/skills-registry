@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [carlosmsanchezm/daycare-agent](https://github.com/carlosmsanchezm/daycare-agent/tree/main/workspaces/teacher-ops/skills/daycare_intake_router)
+Original source: [carlosmsanchezm/daycare-agent](https://github.com/carlosmsanchezm/daycare-agent/tree/main/workspaces/parent-ops/skills/daycare_intake_router)
 
 ---
 
