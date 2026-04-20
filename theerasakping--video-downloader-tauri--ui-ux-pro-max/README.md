@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [theerasakping/video-downloader-tauri](https://github.com/theerasakping/video-downloader-tauri/tree/main/.gemini/skills/ui-ux-pro-max)
+Original source: [theerasakping/video-downloader-tauri](https://github.com/theerasakping/video-downloader-tauri/tree/main/.codex/skills/ui-ux-pro-max)
 
 ---
 
