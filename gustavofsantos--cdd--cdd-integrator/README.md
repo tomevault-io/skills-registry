@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gustavofsantos/cdd](https://github.com/gustavofsantos/cdd/tree/main/.agents/skills/cdd-integrator)
+Original source: [gustavofsantos/cdd](https://github.com/gustavofsantos/cdd/tree/main/.agent/skills/cdd-integrator)
 
 ---
 
