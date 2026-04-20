@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mir/maratai](https://github.com/mir/maratai/tree/main/claude-maratai-manager/skills/google-docs-sheets)
+Original source: [mir/maratai](https://github.com/mir/maratai/tree/main/agentskills/skill/google-docs-sheets)
 
 ---
 
