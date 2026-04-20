@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mzf11125/lews-research-binus](https://github.com/mzf11125/lews-research-binus/tree/main/.continue/skills/ui-ux-pro-max)
+Original source: [mzf11125/lews-research-binus](https://github.com/mzf11125/lews-research-binus/tree/main/.claude/skills/ui-ux-pro-max)
 
 ---
 
