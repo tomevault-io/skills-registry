@@ -1,0 +1,13 @@
+# work-item-planning
+
+> Skill by [okurawave](https://github.com/okurawave/expo-browser) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [okurawave/expo-browser](https://github.com/okurawave/expo-browser/tree/main/.github/skills/work-item-planning)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
