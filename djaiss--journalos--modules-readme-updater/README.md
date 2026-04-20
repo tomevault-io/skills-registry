@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [djaiss/journalos](https://github.com/djaiss/journalos/tree/main/.codex/skills/modules-readme-updater)
+Original source: [djaiss/journalos](https://github.com/djaiss/journalos/tree/main/.github/skills/modules-readme-updater)
 
 ---
 
