@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [feniix/kinemotion](https://github.com/feniix/kinemotion/tree/main/.gemini/skills/video-analysis-workflow)
+Original source: [feniix/kinemotion](https://github.com/feniix/kinemotion/tree/main/.claude/skills/video-analysis-workflow)
 
 ---
 
