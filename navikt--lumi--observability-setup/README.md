@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [navikt/lumi](https://github.com/navikt/lumi/tree/main/apps/lumi-api/.github/skills/observability-setup)
+Original source: [navikt/lumi](https://github.com/navikt/lumi/tree/main/apps/lumi-dashboard/.github/skills/observability-setup)
 
 ---
 
