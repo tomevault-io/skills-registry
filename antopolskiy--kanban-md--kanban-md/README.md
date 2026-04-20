@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [antopolskiy/kanban-md](https://github.com/antopolskiy/kanban-md/tree/main/internal/skill/skills/kanban-md)
+Original source: [antopolskiy/kanban-md](https://github.com/antopolskiy/kanban-md/tree/main/.claude/skills/kanban-md)
 
 ---
 
