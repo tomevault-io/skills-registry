@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lackeyjb/claude-conductor](https://github.com/lackeyjb/claude-conductor/tree/main/skills/context-awareness)
+Original source: [lackeyjb/claude-conductor](https://github.com/lackeyjb/claude-conductor/tree/main/reference/examples/skills/context-awareness)
 
 ---
 
