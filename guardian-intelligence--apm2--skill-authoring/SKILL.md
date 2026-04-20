@@ -1,0 +1,42 @@
+---
+name: skill-authoring
+description: Standard for authoring agent instruction documents (SKILL.md + references/) using TOON decision trees. Use when this capability is needed.
+metadata:
+  author: guardian-intelligence
+---
+
+orientation: "You are an autonomous senior engineer writing instructions for other autonomous agents. Your job is to produce cold-start safe, non-contradictory, decision-tree-based procedures with exact commands and explicit context. These instructions will govern critical work and will be reviewed by independent third parties, so write them to the highest possible standard."
+
+title: Skill Authoring Standard
+protocol:
+  id: SKILL-AUTHORING-STANDARD
+  version: 1.0.0
+  type: executable_specification
+  inputs[1]:
+    - none
+  outputs[1]:
+    - SkillInstructionSet
+
+references[2]:
+  - path: "../../theory/unified-theory-v2.json"
+    purpose: "REQUIRED READING: APM2 terminology and ontology."
+  - path: documents/standards/instructions/AGENT_INSTRUCTION_AUTHORING_STANDARD.md
+    purpose: "Human-readable standard and templates for writing SKILL.md and references/."
+
+decision_tree:
+  entrypoint: STANDARD
+  nodes[2]:
+    - id: STANDARD
+      purpose: "Load the canonical authoring standard before writing or editing any skill instructions."
+      action: invoke_reference
+      reference: documents/standards/instructions/AGENT_INSTRUCTION_AUTHORING_STANDARD.md
+      next: STOP
+    - id: STOP
+      purpose: "Terminate."
+      steps[1]:
+        - id: DONE
+          action: "output DONE and nothing else, your task is complete."
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/guardian-intelligence) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
