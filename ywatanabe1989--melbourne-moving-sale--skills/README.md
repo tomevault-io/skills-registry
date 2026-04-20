@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ywatanabe1989/melbourne-moving-sale](https://github.com/ywatanabe1989/melbourne-moving-sale/tree/main/.claude/skills)
+Original source: [ywatanabe1989/melbourne-moving-sale](https://github.com/ywatanabe1989/melbourne-moving-sale/tree/main/docs/to_claude/skills)
 
 ---
 
