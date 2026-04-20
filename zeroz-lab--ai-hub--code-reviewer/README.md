@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zeroz-lab/ai-hub](https://github.com/zeroz-lab/ai-hub/tree/main/claude_agent_course/module_04_skills/projects/project_01_code_reviewer/.claude/skills/code_reviewer)
+Original source: [zeroz-lab/ai-hub](https://github.com/zeroz-lab/ai-hub/tree/main/claude_agent_course/module_04_skills/projects/project_01_code_reviewer/solution/.claude/skills/code_reviewer)
 
 ---
 
