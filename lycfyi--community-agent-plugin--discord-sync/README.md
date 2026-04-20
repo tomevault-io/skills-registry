@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lycfyi/community-agent-plugin](https://github.com/lycfyi/community-agent-plugin/tree/main/plugins/discord-bot-connector/skills/discord-sync)
+Original source: [lycfyi/community-agent-plugin](https://github.com/lycfyi/community-agent-plugin/tree/main/plugins/discord-user-connector/skills/discord-sync)
 
 ---
 
