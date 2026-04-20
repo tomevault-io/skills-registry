@@ -1,0 +1,54 @@
+---
+name: doc-query
+description: Query up-to-date documentation for tools and SDKs via Context7 API. Use for C++20, NDK, Gradle, CMake, OpenXR, and Meta XR SDK references. Use when this capability is needed.
+metadata:
+  author: asterkin
+---
+
+# Documentation Query Skill
+
+Query up-to-date documentation for tools and SDKs via Context7 API.
+
+## When to Use
+
+Invoke this skill when:
+- Using C++ 20, NDK, Gradle, CMake features beyond training cutoff
+- Working with OpenXR or Meta XR SDK APIs
+- Encountering errors with configured tools
+- User asks "How do I..." questions about configured tools
+
+## Usage
+
+```bash
+# List available documentation sources
+python .claude/skills/doc-query/scripts/list-sources.py
+
+# Query documentation
+python .claude/skills/doc-query/scripts/query.py <source> "<topic>" [max_tokens]
+```
+
+## Examples
+
+```bash
+# Query C++ 20 ranges
+python .claude/skills/doc-query/scripts/query.py cpp "std::ranges views"
+
+# Query OpenXR extension
+python .claude/skills/doc-query/scripts/query.py openxr "XR_FB_passthrough"
+
+# Query Gradle Kotlin DSL
+python .claude/skills/doc-query/scripts/query.py gradle "kotlin dsl android"
+```
+
+## Configuration
+
+Documentation sources are defined in `.claude/doc-sources.toml`.
+
+## Requirements
+
+- Python 3.14+
+- `CONTEXT7_API_KEY` environment variable
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/asterkin) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
