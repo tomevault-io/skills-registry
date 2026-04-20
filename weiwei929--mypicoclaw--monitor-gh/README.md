@@ -1,0 +1,13 @@
+# monitor-gh
+
+> Skill by [weiwei929](https://github.com/weiwei929/mypicoclaw) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [weiwei929/mypicoclaw](https://github.com/weiwei929/mypicoclaw/tree/main/skills/monitor-gh)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
