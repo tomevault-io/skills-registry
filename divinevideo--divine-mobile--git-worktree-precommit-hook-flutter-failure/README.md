@@ -1,0 +1,13 @@
+# git-worktree-precommit-hook-flutter-failure
+
+> Skill by [divinevideo](https://github.com/divinevideo/divine-mobile) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [divinevideo/divine-mobile](https://github.com/divinevideo/divine-mobile/tree/main/.claude/skills/git-worktree-precommit-hook-flutter-failure)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
