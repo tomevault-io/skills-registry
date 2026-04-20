@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tgalioautomation/ai-agent-control-kit-for-django-premium-ui](https://github.com/tgalioautomation/ai-agent-control-kit-for-django-premium-ui/tree/main/integrations/antigravity_packet/.agent/skills/code-search)
+Original source: [tgalioautomation/ai-agent-control-kit-for-django-premium-ui](https://github.com/tgalioautomation/ai-agent-control-kit-for-django-premium-ui/tree/main/skills/code-search)
 
 ---
 
