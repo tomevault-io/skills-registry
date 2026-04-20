@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [liqiongyu/agentpack](https://github.com/liqiongyu/agentpack/tree/main/templates/claude/skills/agentpack-operator)
+Original source: [liqiongyu/agentpack](https://github.com/liqiongyu/agentpack/tree/main/templates/codex/skills/agentpack-operator)
 
 ---
 
