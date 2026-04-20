@@ -1,0 +1,13 @@
+# recompile-workflows
+
+> Skill by [github](https://github.com/github/gh-aw-firewall) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [github/gh-aw-firewall](https://github.com/github/gh-aw-firewall/tree/main/.claude/skills/recompile-workflows)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
