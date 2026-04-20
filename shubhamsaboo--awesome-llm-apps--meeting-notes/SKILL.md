@@ -2,7 +2,7 @@
 name: meeting-notes
 description: | Use when this capability is needed.
 metadata:
-  author: shubhamsaboo
+  author: Shubhamsaboo
 ---
 
 # Meeting Notes
@@ -72,5 +72,5 @@ Use this skill when:
 *Created for meeting documentation and action tracking*
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/shubhamsaboo) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Shubhamsaboo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
