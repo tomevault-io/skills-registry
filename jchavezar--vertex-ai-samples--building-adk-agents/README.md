@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jchavezar/vertex-ai-samples](https://github.com/jchavezar/vertex-ai-samples/tree/main/antigravity/.agent/skills/building-adk-agents)
+Original source: [jchavezar/vertex-ai-samples](https://github.com/jchavezar/vertex-ai-samples/tree/main/.agent/skills/building-adk-agents)
 
 ---
 
