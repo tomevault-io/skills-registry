@@ -1,0 +1,168 @@
+---
+name: tool-preferences
+description: | Use when this capability is needed.
+metadata:
+  author: anras573
+---
+
+# Tool Selection Preferences
+
+This skill provides guidance on choosing between equivalent tools when multiple options are available. Following these preferences ensures consistent behavior, better performance, and predictable output across all agents.
+
+## GitHub Operations
+
+**Prefer `gh` CLI (via Bash) over GitHub MCP tools.**
+
+| Operation | Preferred | Avoid |
+|-----------|-----------|-------|
+| View PR details | `gh pr view` | GitHub MCP `pull_request_read` |
+| Get PR diff | `gh pr diff` | GitHub MCP `get_commit` |
+| List PRs | `gh pr list` | GitHub MCP `list_pull_requests` |
+| Search PRs | `gh pr list --search "query"` | GitHub MCP `search_pull_requests` |
+| Post PR comment | `gh pr comment` | GitHub MCP `add_issue_comment` |
+| View issues | `gh issue view` | GitHub MCP `issue_read` |
+| List issues | `gh issue list` | GitHub MCP `list_issues` |
+| Create issues | `gh issue create` | GitHub MCP `issue_write` |
+| Search code | `gh search code "query"` | GitHub MCP `search_code` |
+
+### Why Prefer `gh` CLI
+
+1. **Already authenticated** - Uses user's existing git/GitHub credentials
+2. **Less indirection** - Avoids an extra MCP/tooling hop by talking directly to GitHub APIs
+3. **Predictable output** - Consistent format with `--json` flag
+4. **Better errors** - Clear, actionable error messages
+5. **Uses local repo state** - Can operate directly on the checked-out repository when appropriate
+
+### When GitHub MCP Tools ARE Appropriate
+
+Use GitHub MCP tools only when they provide functionality the CLI lacks:
+
+| Use Case | Reason |
+|----------|--------|
+| Inline PR review comments | CLI doesn't support line-specific review comments |
+| Pending review management | Creating/submitting pending reviews with multiple comments |
+| File contents at specific ref | When you need content without cloning the repo |
+
+### Common `gh` CLI Patterns
+
+```bash
+# View PR with specific fields
+gh pr view --json number,title,body,baseRefName,headRefName
+
+# Get PR diff
+gh pr diff
+
+# List PRs with filters
+gh pr list --state open --author @me
+
+# View issue details
+gh issue view 123 --json title,body,state,labels
+
+# Search issues
+gh issue list --search "bug in:title"
+
+# Post comment to PR
+gh pr comment 123 --body "Comment text"
+
+# Get repo info
+gh repo view --json nameWithOwner,defaultBranchRef
+
+# Search code across repos
+gh search code "pattern" --repo owner/repo
+```
+
+## Git Operations
+
+**Prefer native git commands over any wrapper or MCP tool.**
+
+| Operation | Preferred | Avoid |
+|-----------|-----------|-------|
+| Check status | `git status` | Any wrapper |
+| View diff | `git diff` | GitHub MCP diff tools |
+| Create branch | `git checkout -b name` | GitHub MCP `create_branch` |
+| Commit changes | `git commit` | Any remote commit API |
+| Push changes | `git push` | GitHub MCP `push_files` |
+
+### Rationale
+
+Git operations should be local-first. Using MCP tools for git operations:
+- Bypasses local hooks (pre-commit, pre-push)
+- Doesn't update local repository state
+- May cause sync issues between local and remote
+
+## Atlassian/Jira Operations
+
+**Prefer Atlassian MCP tools (the supported integration in this repo).**
+
+The Atlassian MCP server (`atlassian/*` tools) is the preferred choice for Jira and Confluence operations in this environment. See the Jira skill for detailed guidance.
+
+## Browser Automation
+
+**Prefer `playwright-cli` (via Bash) over Playwright MCP.**
+
+| Reason | Detail |
+|--------|--------|
+| Token-efficient | Avoids loading large tool schemas and accessibility trees into context |
+| Better for coding agents | Concise CLI commands fit within limited context windows alongside codebases |
+
+### When Playwright MCP IS Appropriate
+
+- Exploratory automation requiring persistent state and rich introspection
+- Long-running autonomous workflows where continuous browser context outweighs token cost
+
+### Common playwright-cli Patterns
+
+```bash
+# Open a page and snapshot for element refs
+playwright-cli open https://example.com
+playwright-cli snapshot
+
+# Interact using refs from the snapshot
+playwright-cli fill e12 "text"
+playwright-cli click e5
+playwright-cli press Enter
+
+# Capture output
+playwright-cli screenshot --filename=result.png
+playwright-cli console error
+
+# Named sessions for parallel work
+playwright-cli -s=myapp open https://example.com
+```
+
+## Documentation Lookups
+
+**Prefer MCP tools** for documentation:
+
+| Source | Tool |
+|--------|------|
+| Library docs | Context7 (`context7/*`) |
+| .NET/Microsoft docs | Microsoft Learn (`microsoft-docs/*`) |
+
+These MCP tools provide curated, up-to-date documentation that's more reliable than web searches.
+
+## Decision Framework
+
+When unsure which tool to use, apply this framework:
+
+```
+1. Is this a documentation lookup?
+   YES → Prefer MCP documentation tools (Context7, Microsoft Learn)
+   NO  → Continue to step 2
+
+2. Is there a local CLI tool that does this?
+   YES → Use the CLI (gh, git, npm, dotnet, etc.)
+   NO  → Continue to step 3
+
+3. Does the MCP tool provide unique functionality?
+   YES → Use the MCP tool
+   NO  → Prefer CLI if available
+
+4. Does the operation need to respect local state/hooks?
+   YES → Must use local tools (git commit, npm install)
+   NO  → Either is acceptable
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/anras573) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
