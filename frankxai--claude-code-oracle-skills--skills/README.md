@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [frankxai/claude-code-oracle-skills](https://github.com/frankxai/claude-code-oracle-skills/tree/main/plugins/oracle-agent-spec/skills)
+Original source: [frankxai/claude-code-oracle-skills](https://github.com/frankxai/claude-code-oracle-skills/tree/main/plugins/oracle-infogenius/skills)
 
 ---
 
