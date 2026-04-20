@@ -1,0 +1,25 @@
+---
+name: img-test
+description: Test image generation API with optional username (default nabondance) Use when this capability is needed.
+metadata:
+  author: nabondance
+---
+
+# Image Generation Test
+
+Test the image generation API endpoint with a Trailhead username.
+
+Run the image test script which will:
+
+1. Check if dev server is running (required)
+2. Call POST /api/banner/standard with username (default: nabondance)
+3. Show response status, timing, and key details
+4. Validate image generation succeeded
+
+Usage: `/img-test` (uses default username) or `/img-test <username>`
+
+Execute: `bash ../img-test.sh "$@"`
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nabondance) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
