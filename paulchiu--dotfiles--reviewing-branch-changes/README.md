@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [paulchiu/dotfiles](https://github.com/paulchiu/dotfiles/tree/main/.config/opencode/skills/reviewing-branch-changes)
+Original source: [paulchiu/dotfiles](https://github.com/paulchiu/dotfiles/tree/main/.openpackage/packages/paul/skills/reviewing-branch-changes)
 
 ---
 
