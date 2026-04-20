@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [syntaxasspiral/consensus](https://github.com/syntaxasspiral/consensus/tree/main/workshop/staging/skill/mcp-builder)
+Original source: [syntaxasspiral/consensus](https://github.com/syntaxasspiral/consensus/tree/main/skills/mcp-builder)
 
 ---
 
