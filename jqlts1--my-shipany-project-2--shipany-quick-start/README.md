@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jqlts1/my-shipany-project-2](https://github.com/jqlts1/my-shipany-project-2/tree/main/.claude/skills/shipany-quick-start)
+Original source: [jqlts1/my-shipany-project-2](https://github.com/jqlts1/my-shipany-project-2/tree/main/.agent/skills/shipany-quick-start)
 
 ---
 
