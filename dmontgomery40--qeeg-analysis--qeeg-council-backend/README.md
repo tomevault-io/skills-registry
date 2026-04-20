@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dmontgomery40/qeeg-analysis](https://github.com/dmontgomery40/qeeg-analysis/tree/main/.claude/skills/qeeg-council-backend)
+Original source: [dmontgomery40/qeeg-analysis](https://github.com/dmontgomery40/qeeg-analysis/tree/main/.codex/skills/qeeg-council-backend)
 
 ---
 
