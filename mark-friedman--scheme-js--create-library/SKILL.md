@@ -74,5 +74,5 @@ If using `(include "feature.scm")`, create the corresponding `.scm` file in the 
 *   Run `node run_tests_node.js`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/mark-friedman/scheme-js)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mark-friedman) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
