@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nullpond/minimax-skill-analysis](https://github.com/nullpond/minimax-skill-analysis/tree/main/minimax/original/minimax-docx)
+Original source: [nullpond/minimax-skill-analysis](https://github.com/nullpond/minimax-skill-analysis/tree/main/minimax/current/minimax-docx)
 
 ---
 
