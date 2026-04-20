@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [webrenew/unicon](https://github.com/webrenew/unicon/tree/main/skills/unicon)
+Original source: [webrenew/unicon](https://github.com/webrenew/unicon/tree/main/.claude/skills/unicon)
 
 ---
 
