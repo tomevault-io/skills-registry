@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [goondocks-co/open-agent-kit](https://github.com/goondocks-co/open-agent-kit/tree/main/.claude/skills/context-engineering)
+Original source: [goondocks-co/open-agent-kit](https://github.com/goondocks-co/open-agent-kit/tree/main/src/open_agent_kit/features/context_engineering/skills/context-engineering)
 
 ---
 
