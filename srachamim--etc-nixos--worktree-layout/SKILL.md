@@ -1,0 +1,40 @@
+---
+name: worktree-layout
+description: Conventions for git worktree paths and branch naming. Use whenever the agent creates, navigates, or removes worktrees. Use when this capability is needed.
+metadata:
+  author: srachamim
+---
+
+# Worktree Layout
+
+This skill operates within the broader **gitflow-branching** model. It overrides Gitflow's defaults for physical layout and starting-point branch.
+
+## Branch Naming
+
+- Features: `feature/<work-item-id>`
+
+## Worktree Paths
+
+- Resolve the **bare root** or **main worktree** via `git worktree list`. This is the `<root-repo>`.
+- Feature worktrees live at: `<root-repo>/feature/<work-item-id>`
+
+## Creation
+
+- Never overwrite an existing worktree or branch. If either exists, inform the user and stop.
+- Determine the **starting ref**:
+  - For the `fgrepo` repository, always use `origin/latest-stable`.
+  - For all other repositories, determine the default branch (e.g. `main`, `master`) via `git remote show origin` or equivalent and use `origin/<default-branch>`.
+- Fetch the latest state of that ref before branching: `git fetch origin <branch>`.
+- Create the worktree from the fetched ref: `git worktree add -b "feature/<id>" "<root-repo>/feature/<id>" "<starting-ref>"`.
+- If the user explicitly requests a different starting point, use that instead of the default branch.
+
+## Cleanup
+
+- Remove the worktree first: `git worktree remove "<root-repo>/feature/<id>"`.
+- Then delete the branch: `git branch -d "feature/<id>"`.
+- Use `-d` (not `-D`) so git refuses if the branch has unmerged changes.
+- If the current directory is inside the worktree being removed, switch to the main worktree first.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/srachamim) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
