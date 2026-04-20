@@ -1,0 +1,13 @@
+# gpui-async
+
+> Skill by [cnwzhu](https://github.com/cnwzhu/gpui-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [cnwzhu/gpui-skills](https://github.com/cnwzhu/gpui-skills/tree/main/gpui-async)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
