@@ -1,0 +1,13 @@
+# self-test-skill-invocation
+
+> Skill by [konflux-ci](https://github.com/konflux-ci/skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [konflux-ci/skills](https://github.com/konflux-ci/skills/tree/main/skills/self-test-skill-invocation)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
