@@ -1,0 +1,13 @@
+# bootstrapping-design-docs
+
+> Skill by [stevebronder](https://github.com/stevebronder/skillrena) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [stevebronder/skillrena](https://github.com/stevebronder/skillrena/tree/main/skillrena/bootstrapping-design-docs)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
