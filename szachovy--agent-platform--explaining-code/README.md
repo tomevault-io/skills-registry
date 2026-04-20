@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [szachovy/agent-platform](https://github.com/szachovy/agent-platform/tree/main/.devcontainer/config/codex/skills/public/explaining_code)
+Original source: [szachovy/agent-platform](https://github.com/szachovy/agent-platform/tree/main/.devcontainer/config/claude/skills/public/explaining_code)
 
 ---
 
