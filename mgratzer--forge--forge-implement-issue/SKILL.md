@@ -1,0 +1,27 @@
+---
+name: forge-implement-issue
+description: ⚠️ Renamed to forge-implement. This stub exists for migration — remove it and install forge-implement instead. Use when this capability is needed.
+metadata:
+  author: mgratzer
+---
+
+# ⚠️ Renamed to `forge-implement`
+
+This skill was renamed to **`forge-implement`** — it now accepts GitHub issues, plan files, and free-text descriptions.
+
+**Tell the user:**
+
+> `forge-implement-issue` has been renamed to `forge-implement`. Please update your installation:
+>
+> ```bash
+> npx skills remove forge-implement-issue
+> npx skills add mgratzer/forge --skill forge-implement
+> ```
+>
+> Then re-run your request with `/forge-implement`.
+
+Do not proceed with implementation. Wait for the user to update.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mgratzer) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
