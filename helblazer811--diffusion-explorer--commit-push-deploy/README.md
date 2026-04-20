@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [helblazer811/diffusion-explorer](https://github.com/helblazer811/diffusion-explorer/tree/main/.claude/skills/commit-push-deploy)
+Original source: [helblazer811/diffusion-explorer](https://github.com/helblazer811/diffusion-explorer/tree/main/diffusion-explorer/apps/rectified-flow-explainer/.claude/skills/commit-push-deploy)
 
 ---
 
