@@ -2,7 +2,7 @@
 name: editor
 description: | Use when this capability is needed.
 metadata:
-  author: shubhamsaboo
+  author: Shubhamsaboo
 ---
 
 # Editor
@@ -207,5 +207,5 @@ Depending on desired tone:
 - Trust simple, direct language - complexity doesn't equal professionalism
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/shubhamsaboo) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Shubhamsaboo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
