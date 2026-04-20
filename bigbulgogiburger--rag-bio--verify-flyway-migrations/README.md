@@ -1,0 +1,13 @@
+# verify-flyway-migrations
+
+> Skill by [bigbulgogiburger](https://github.com/bigbulgogiburger/rag-bio) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [bigbulgogiburger/rag-bio](https://github.com/bigbulgogiburger/rag-bio/tree/main/.claude/skills/verify-flyway-migrations)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
