@@ -1,10 +1,9 @@
 ---
 name: microsoft-docs
-description: Query official Microsoft documentation to find concepts, tutorials, and code examples across Azure, .NET, Agent Framework, Aspire, VS Code, GitHub, and more. Uses Microsoft Learn MCP as the default, with Context7 and Aspire MCP for content that lives outside learn.microsoft.com. Use when this capability is needed.
+description: Query official Microsoft documentation to find concepts, tutorials, and Use when this capability is needed.
 metadata:
   author: microsoft
 ---
-
 # Microsoft Docs
 
 Research skill for the Microsoft technology ecosystem. Covers learn.microsoft.com and documentation that lives outside it (VS Code, GitHub, Aspire, Agent Framework repos).
@@ -115,5 +114,12 @@ Include context:
 - **Language** for polyglot docs (`Python`, `TypeScript`, `C#`)
 
 ---
+
+<!-- CO-OP TRANSLATOR DISCLAIMER START -->
+Disclaimer:
+This document has been translated using AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). While we strive for accuracy, please be aware that automated translations may contain errors or inaccuracies. The original document in its native language should be considered the authoritative source. For critical information, professional human translation is recommended. We are not liable for any misunderstandings or misinterpretations arising from the use of this translation.
+<!-- CO-OP TRANSLATOR DISCLAIMER END -->
+
+---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/microsoft) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
