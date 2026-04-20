@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [takumiyoshikawa/skill-loop](https://github.com/takumiyoshikawa/skill-loop/tree/main/e2e/.agents/skills/1-impl)
+Original source: [takumiyoshikawa/skill-loop](https://github.com/takumiyoshikawa/skill-loop/tree/main/e2e/.claude/skills/1-impl)
 
 ---
 
