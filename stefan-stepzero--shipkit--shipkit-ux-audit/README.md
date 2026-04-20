@@ -1,0 +1,13 @@
+# shipkit-ux-audit
+
+> Skill by [stefan-stepzero](https://github.com/stefan-stepzero/shipkit) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [stefan-stepzero/shipkit](https://github.com/stefan-stepzero/shipkit/tree/main/install/skills/shipkit-ux-audit)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
