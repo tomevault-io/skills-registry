@@ -1,0 +1,13 @@
+# writing-changelogs
+
+> Skill by [stabilefrisur](https://github.com/stabilefrisur/metapyle) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [stabilefrisur/metapyle](https://github.com/stabilefrisur/metapyle/tree/main/.github/skills/writing-changelogs)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
