@@ -1,0 +1,13 @@
+# knowledge-graph-builder
+
+> Skill by [context-is-everything](https://github.com/context-is-everything/skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [context-is-everything/skills](https://github.com/context-is-everything/skills/tree/main/knowledge-graph-builder)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
