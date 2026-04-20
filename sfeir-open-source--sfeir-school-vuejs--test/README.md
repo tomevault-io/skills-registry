@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sfeir-open-source/sfeir-school-vuejs](https://github.com/sfeir-open-source/sfeir-school-vuejs/tree/main/.claude/skills/test)
+Original source: [sfeir-open-source/sfeir-school-vuejs](https://github.com/sfeir-open-source/sfeir-school-vuejs/tree/main/.codex/skills/test)
 
 ---
 
