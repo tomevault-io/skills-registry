@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [olijboyd/fiddlybiscuitybits](https://github.com/olijboyd/fiddlybiscuitybits/tree/main/.claude/skills/data-fetching/SKILL.md)
+Original source: [olijboyd/fiddlybiscuitybits](https://github.com/olijboyd/fiddlybiscuitybits/tree/main/.claude/skills/react-charts/SKILL.md)
 
 ---
 
