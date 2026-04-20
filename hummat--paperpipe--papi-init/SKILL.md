@@ -1,0 +1,33 @@
+---
+name: papi-init
+description: Setup paperpipe agent integration. Use when user wants to add papi to a project's CLAUDE.md/AGENTS.md or initialize paper support. Use when this capability is needed.
+metadata:
+  author: hummat
+---
+
+# Initialize PaperPipe Integration
+
+Task: Initialize or update PaperPipe integration in this project's agent instructions.
+
+## Steps
+
+1. Run `papi docs` to get the current agent integration snippet
+2. Find the agent instructions file in the repo root (check in order: AGENTS.md, CLAUDE.md, GEMINI.md)
+   - If none exist, create AGENTS.md
+3. Look for an existing `## Paper References (PaperPipe)` section in the file
+4. If the section exists: replace it entirely (from `## Paper References (PaperPipe)` up to the next `##` heading or end of file)
+5. If no such section exists: append the snippet at the end of the file
+6. Show the user what changed (diff or summary)
+
+## Notes
+
+- The snippet from `papi docs` starts with introductory text and a markdown code block containing `## Paper References (PaperPipe)`
+- Extract only the content inside the code block (lines between the triple backticks)
+- Do NOT include the `<details>` glossary section from `papi docs` output
+- Preserve all existing content in the agent instructions file
+
+For general CLI commands, see `/papi`.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hummat) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
