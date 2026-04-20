@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dreamlx/codeindex](https://github.com/dreamlx/codeindex/tree/main/.claude/skills/mo-index)
+Original source: [dreamlx/codeindex](https://github.com/dreamlx/codeindex/tree/main/skills/src/mo-index)
 
 ---
 
