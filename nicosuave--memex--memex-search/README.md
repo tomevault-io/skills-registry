@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nicosuave/memex](https://github.com/nicosuave/memex/tree/main/skills/opencode/memex-search)
+Original source: [nicosuave/memex](https://github.com/nicosuave/memex/tree/main/skills/codex/memex-search)
 
 ---
 
