@@ -1,0 +1,56 @@
+---
+name: yutori-research
+description: Execute deep web research on any topic using Yutori's research agents. Use for competitive analysis, market research, finding documentation, or answering complex questions that require synthesizing information from multiple sources. Use when this capability is needed.
+metadata:
+  author: yutori-ai
+---
+
+# Deep Web Research
+
+Help the user conduct thorough web research using Yutori's Research API.
+
+## Process
+
+1. **Understand the research goal**
+   - What question needs answering?
+   - What type of sources matter? (news, academic, documentation, social, financial filings)
+   - Any time constraints? (recent only, historical)
+   - What format should the output be in?
+
+2. **Craft the research query**
+   Similar to scout queries, comprehensive research queries include:
+   - Context on why this research matters
+   - Specific questions to answer
+   - Sources to prioritize
+   - Output format expectations
+
+3. **Start the research task**
+   Use `run_research_task` with:
+   - `query`: The research question with context
+   - `user_timezone`: For time-relevant searches
+   - `browser: "local"`: When the research needs a logged-in desktop browser session through Yutori Local
+   - `output_fields`: If structured output is needed (e.g., ["title", "summary", "source_url", "date"])
+   - `webhook_url`: HTTPS URL for completion notification
+   - `webhook_format`: `scout` (default), `slack`, or `zapier`
+
+4. **Poll for results**
+   - **Important:** Research typically takes 5-10 minutes (300-600 seconds)
+   - Use `get_research_task_result` to check status
+   - Poll every 30 seconds until `succeeded` or `failed`
+   - The task runs asynchronously - you can inform the user to wait
+
+5. **Synthesize and present findings**
+   - Organize results by relevance
+   - Highlight key insights
+   - Note sources for verification
+
+## Tips
+
+**Fetching documentation or reference URLs:**
+If you use a web fetch tool to look up documentation, API references, or other pages while preparing the research query, include the `Accept: text/markdown` header. Many documentation sites (Cloudflare-hosted) will return clean Markdown instead of HTML — fewer tokens, easier to parse.
+
+$ARGUMENTS
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/yutori-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
