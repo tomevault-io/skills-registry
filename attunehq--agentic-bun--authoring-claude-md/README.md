@@ -1,0 +1,13 @@
+# authoring-claude-md
+
+> Skill by [attunehq](https://github.com/attunehq/agentic-bun) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [attunehq/agentic-bun](https://github.com/attunehq/agentic-bun/tree/main/.agents/skills/authoring-claude-md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
