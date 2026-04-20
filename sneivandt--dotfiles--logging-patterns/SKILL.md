@@ -1,0 +1,253 @@
+---
+name: logging-patterns
+description: > Use when this capability is needed.
+metadata:
+  author: sneivandt
+---
+
+# Logging Patterns
+
+All logging is via `Logger` in `cli/src/logging/`, passed to tasks through `Context`.
+`Logger` emits [`tracing`](https://docs.rs/tracing) events internally; a
+`DotfilesFormatter` subscriber (initialised in `main.rs`) formats them for the
+console.
+
+## Initialisation
+
+Call `logging::init_subscriber(verbose, command)` **once** at program startup,
+then create the `Logger` and sync its verbose flag:
+
+```rust
+// main.rs
+logging::init_subscriber(args.verbose, command_name);
+let mut log = logging::Logger::new(command_name);
+log.set_verbose(args.verbose);
+let log = Arc::new(log);
+```
+
+`set_verbose` updates both the `Logger` field and the global `AtomicBool` in
+the subscriber module so that the console formatter and the logger stay in sync.
+
+The subscriber routes `WARN`/`ERROR` to stderr and `INFO`/`DEBUG` to stdout.
+When `verbose=false` the subscriber filters out `DEBUG` events on the terminal;
+debug messages are **always** written to the log file regardless.
+
+## Logger API
+
+`ctx.log` is an `Arc<dyn Log>`. The `Log` trait is composed from two sub-traits:
+
+- **`Output`** — user-facing display methods (`stage`, `info`, `debug`, `warn`,
+  `error`, `dry_run`, `always`, `task_result`, `emit_task_result`, `is_verbose`,
+  `diagnostic`)
+- **`TaskRecorder`** — structured task result recording (`record_task`)
+
+`Log` is defined as `Log: Output + TaskRecorder` with a blanket implementation
+(`impl<T: Output + TaskRecorder> Log for T {}`), so concrete types only implement
+the two sub-traits.
+
+Both `Logger` (sequential) and `BufferedLog` (parallel) implement `Output` and
+`TaskRecorder`, and therefore automatically implement `Log`.
+
+**When to use each trait:**
+- Accept `&dyn Log` (or `Arc<dyn Log>`) when you need both display and task
+  recording (e.g., `Context`, `execute()`).
+- Accept `&dyn Output` when you only need display methods and not task recording
+  (e.g., `resolve_profile()`, `load_config()`).
+
+```rust
+ctx.log.stage(msg);       // Bold blue "==>" header (verbose-only on console)
+ctx.log.info(msg);        // Indented message (verbose-only on console)
+ctx.log.debug(msg);       // Only when verbose=true on terminal
+ctx.log.warn(msg);        // Yellow to stderr
+ctx.log.error(msg);       // Red to stderr
+ctx.log.dry_run(msg);     // Dry-run preview line
+ctx.log.always(msg);      // Always visible on console AND log file
+ctx.log.task_result(msg);  // Always visible on console, omitted from log file
+ctx.log.emit_task_result(name, &status, message);  // Formatted task-result line
+ctx.log.is_verbose();     // Check current verbose mode
+ctx.log.record_task(name, phase, status, message);  // Record task result for summary
+ctx.log.diagnostic();     // Access high-precision diagnostic log (if available)
+```
+
+All messages (including `debug`) are always written to a persistent log file at
+`$XDG_CACHE_HOME/dotfiles/<command>.log` (default `~/.cache/dotfiles/<command>.log`,
+e.g. `install.log`, `uninstall.log`, `test.log`) with timestamps and ANSI codes
+stripped. On Windows, when `XDG_CACHE_HOME` is not set, the path falls back to
+`%USERPROFILE%\.cache\dotfiles\<command>.log`. The log file is always written
+in verbose mode — all messages appear regardless of the console verbose flag.
+The log file path is shown in the summary.
+
+| Method | Console (verbose) | Console (non-verbose) | Log file |
+|--------|-------------------|----------------------|----------|
+| `stage` | Shown | Suppressed | Always |
+| `info` | Shown | Suppressed | Always |
+| `debug` | Shown | Suppressed | Always |
+| `warn` | Shown | Shown | Always |
+| `error` | Shown | Shown | Always |
+| `dry_run` | Shown | Shown | Always |
+| `always` | Shown | Shown | Always |
+| `task_result` | Shown | Shown | Omitted |
+
+## Task Recording & Summary
+
+`tasks::execute()` automatically records each task result:
+
+```rust
+pub fn execute(task: &dyn Task, ctx: &Context) {
+    if !task.should_run(ctx) {
+        ctx.log.debug(&format!("skipping task: {} (not applicable)", task.name()));
+        ctx.log.record_task(task.name(), task.phase(), TaskStatus::NotApplicable, None);
+        return;
+    }
+    ctx.log.stage(task.name());
+    match task.run(ctx) {
+        Ok(TaskResult::Ok) => ctx.log.record_task(task.name(), task.phase(), TaskStatus::Ok, None),
+        // ... Skipped, DryRun, Err handled similarly
+    }
+}
+```
+
+`log.print_summary()` shows totals at end of run. In verbose mode the summary
+includes a full per-task breakdown grouped by phase; in non-verbose mode only
+the totals line is shown (individual results were already emitted inline as
+tasks completed). Don't call `record_task` inside tasks.
+
+## Pattern in Task::run()
+
+```rust
+fn run(&self, ctx: &Context) -> Result<TaskResult> {
+    let items = ctx.config_read().items.clone();
+    let mut count = 0u32;
+    for item in &items {
+        if ctx.dry_run {
+            ctx.log.dry_run(&format!("would process {}", item.name));
+            count += 1;
+            continue;
+        }
+        ctx.log.debug(&format!("processing {}", item.name));
+        count += 1;
+    }
+    if ctx.dry_run { return Ok(TaskResult::DryRun); }
+    ctx.log.info(&format!("{count} items processed"));
+    Ok(TaskResult::Ok)
+}
+```
+
+## Verbose vs Non-Verbose Mode
+
+When `verbose=false`:
+- `stage` and `info` messages are suppressed on the console
+- `tasks::execute()` emits compact inline task-result lines via `emit_task_result()`
+- The summary shows only totals (no per-phase task breakdown)
+- The progress line shows a count ("3 tasks running…") instead of task names
+
+When `verbose=true`:
+- All messages appear on the console as usual
+- The summary includes a full per-task breakdown grouped by phase
+- The progress line shows individual task names
+
+The **log file** always receives full output regardless of the verbose setting.
+The **`task_result`** target is the exception: it is console-only and never
+written to the log file (since the `stage` headers and detail lines already
+provide this information in the file).
+
+## Rules
+
+1. Access logger via `ctx.log` — never create a second `Logger`
+2. Use `debug` for per-item detail; `info` for summary counts
+3. Use `always` for structural output that must appear regardless of verbose mode
+   (version, profile, summary totals)
+4. Use `task_result` (via `emit_task_result`) for inline task completion lines
+   (console-only)
+5. Check `ctx.dry_run` before side effects; use `ctx.log.dry_run()` for preview
+6. Return `TaskResult::DryRun` in dry-run mode
+7. Task recording is automatic via `tasks::execute()` — don't call `record_task` in tasks
+
+## Parallel Task Logging
+
+When parallel execution is enabled, each task receives a `BufferedLog` that
+captures output in memory while the task runs.
+
+- **On task start**: `Logger::notify_task_start(name)` adds the task name to
+  the active set and prints a dim status line (`▹ task1, task2, ...`)
+- **On task complete**: `BufferedLog::flush_and_complete(name)` atomically
+  replays all buffered entries (stage, info, debug, etc.) to the real Logger,
+  removes the task from the active set, and prints the updated status line
+- **Flush lock**: A `Mutex<()>` on Logger serializes flushes so output from
+  different tasks never interleaves
+- **Task recording**: `record_task()` is forwarded immediately to the Logger
+  (not buffered), since it's already thread-safe via its own Mutex
+
+Tasks do **not** need to be aware of buffering — they log via `ctx.log` as
+normal, and the `Log` trait dispatches to either `Logger` (sequential) or
+`BufferedLog` (parallel) transparently.
+
+## Diagnostic Log
+
+A high-precision diagnostic log captures the **real-time** sequence of all
+events — including parallel execution — at microsecond resolution.  Unlike
+the main log file (which replays buffered output per-task), the diagnostic
+log writes every event **immediately** with the true wall-clock time.
+
+Written to `$XDG_CACHE_HOME/dotfiles/<command>.diag.log` (shown in the
+summary alongside the main log path).
+
+### Line Format
+
+```
++<elapsed_us> <wall_utc_us> [<thread>] <TAG>         <message>
+```
+
+Example:
+```
++       123 2026-02-25T10:30:00.000123Z [main]     STAGE        Resolving profile
++      5678 2026-02-25T10:30:00.005678Z [thread-2] TASK_WAIT    [Install symlinks] waiting for: Update repository
++     50123 2026-02-25T10:30:00.050123Z [thread-3] RES_CHECK    ~/.bashrc state=Missing
++     51456 2026-02-25T10:30:00.051456Z [thread-3] RES_APPLY    link ~/.bashrc
++     52789 2026-02-25T10:30:00.052789Z [thread-3] RES_RESULT   ~/.bashrc applied
+```
+
+### Event Tags
+
+| Tag | Origin | Meaning |
+|---|---|---|
+| `STAGE` | Logger/BufferedLog | Major section header |
+| `INFO` | Logger/BufferedLog | Informational message |
+| `DEBUG` | Logger/BufferedLog | Debug detail |
+| `WARN` | Logger/BufferedLog | Warning |
+| `ERROR` | Logger/BufferedLog | Error |
+| `DRYRUN` | Logger/BufferedLog | Dry-run preview |
+| `TASK_WAIT` | Parallel scheduler | Task spawned, waiting for deps |
+| `TASK_START` | Parallel scheduler | Deps satisfied, execution begins |
+| `TASK_DONE` | Parallel scheduler | Task finished |
+| `TASK_SKIP` | Task execute | Task skipped (not applicable) |
+| `RES_CHECK` | `process_single()` | Resource state checked |
+| `RES_APPLY` | `apply_resource()` | Resource mutation started |
+| `RES_RESULT` | `apply_resource()` | Resource mutation result |
+| `RES_REMOVE` | `remove_single()` | Resource removal |
+
+### Accessing the Diagnostic Log
+
+The `Log` trait exposes `diagnostic()` which returns `Option<&DiagnosticLog>`.
+Both `Logger` and `BufferedLog` implement this (BufferedLog delegates to its
+inner Logger).
+
+```rust
+if let Some(diag) = ctx.log.diagnostic() {
+    diag.emit(DiagEvent::ResourceCheck, "checking state");
+    diag.emit_task(DiagEvent::TaskStart, "my task", "starting");
+}
+```
+
+### Key Design Points
+
+- `BufferedLog` writes to the diagnostic log **immediately** (bypassing the
+  buffer) so parallel events have true timestamps
+- All display methods (`stage`, `info`, `debug`, etc.) emit to both the
+  tracing subscriber (for console + main log) and the diagnostic log
+- The diagnostic log file is created by `Logger::new()` alongside the main log
+- Thread names from `std::thread::current().name()` identify parallel threads
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sneivandt) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
