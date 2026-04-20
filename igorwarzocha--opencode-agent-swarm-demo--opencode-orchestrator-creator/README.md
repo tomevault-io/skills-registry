@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [igorwarzocha/opencode-agent-swarm-demo](https://github.com/igorwarzocha/opencode-agent-swarm-demo/tree/main/.claude/skills/opencode-orchestrator-creator)
+Original source: [igorwarzocha/opencode-agent-swarm-demo](https://github.com/igorwarzocha/opencode-agent-swarm-demo/tree/main/opencode-agents/.claude/skills/opencode-orchestrator-creator)
 
 ---
 
