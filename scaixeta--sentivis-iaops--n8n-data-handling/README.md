@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [scaixeta/sentivis-iaops](https://github.com/scaixeta/sentivis-iaops/tree/main/.agents/skills/n8n-data-handling)
+Original source: [scaixeta/sentivis-iaops](https://github.com/scaixeta/sentivis-iaops/tree/main/.agents/skills/n8n-data-handling/n8n-data-handling)
 
 ---
 
