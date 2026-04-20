@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [reinforcenow/reinforcenow-cli](https://github.com/reinforcenow/reinforcenow-cli/tree/main/project8/.claude/skills/rnow-train-jsonl)
+Original source: [reinforcenow/reinforcenow-cli](https://github.com/reinforcenow/reinforcenow-cli/tree/main/rnow/skills/rnow-train-jsonl)
 
 ---
 
