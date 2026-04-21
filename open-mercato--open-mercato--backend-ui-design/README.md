@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [open-mercato/open-mercato](https://github.com/open-mercato/open-mercato/tree/main/.ai/skills/codex/backend-ui-design)
+Original source: [open-mercato/open-mercato](https://github.com/open-mercato/open-mercato/tree/main/.ai/skills/backend-ui-design)
 
 ---
 
