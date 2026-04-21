@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [atifertugrul-kan/havsan-ai-coding-mimari-app](https://github.com/atifertugrul-kan/havsan-ai-coding-mimari-app/tree/main/gemini/antigravity/skills)
+Original source: [atifertugrul-kan/havsan-ai-coding-mimari-app](https://github.com/atifertugrul-kan/havsan-ai-coding-mimari-app/tree/main/.agent/skills)
 
 ---
 
