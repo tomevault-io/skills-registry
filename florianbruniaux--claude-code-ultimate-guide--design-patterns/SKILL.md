@@ -2,7 +2,7 @@
 name: design-patterns
 description: Detect, suggest, and evaluate GoF design patterns in TypeScript/JavaScript codebases. Use when refactoring code, applying singleton/factory/observer/strategy patterns, reviewing pattern quality, or finding stack-native alternatives for React, Angular, NestJS, and Vue. Use when this capability is needed.
 metadata:
-  author: FlorianBruniaux
+  author: florianbruniaux
 ---
 
 # Design Patterns Analyzer Skill
@@ -564,5 +564,5 @@ This skill can be inherited by:
 **Last Updated**: 2026-01-21
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/FlorianBruniaux) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/florianbruniaux) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
