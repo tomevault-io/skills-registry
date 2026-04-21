@@ -1,0 +1,44 @@
+---
+name: slack-operations
+description: Slack API operations for messages, channels, threads, and notifications. Use when posting messages to Slack, replying in threads, sending notifications, or managing Slack communications. Use when this capability is needed.
+metadata:
+  author: rom-orlovich
+---
+
+Slack operations using MCP tools for all API interactions.
+
+## Quick Reference
+
+- **Workflow**: See [flow.md](flow.md) for complete workflow guide and templates
+
+## Key Principles
+
+1. **Always use MCP tools** (`slack:send_slack_message`) for API operations
+2. **Reply in thread** using `thread_ts` when responding to messages
+3. **Use rich blocks** for interactive notifications (approval buttons)
+4. **Post responses** using MCP tools after task completion
+
+## Environment
+
+- `SLACK_BOT_TOKEN` - Slack bot token (xoxb-...)
+- `SLACK_APP_TOKEN` - Slack app token (xapp-...) for socket mode
+
+## MCP Operations
+
+**Always use MCP tools for Slack API operations:**
+
+- `slack:send_slack_message` - Send messages, reply in threads, use rich blocks
+
+See [flow.md](flow.md) for complete workflow examples.
+
+## Response Posting
+
+**IMPORTANT**: Always post responses after task completion using `slack:send_slack_message`.
+
+**For webhook tasks:** Always reply in thread using `thread_ts` from task metadata.
+
+See [flow.md](flow.md) for workflow examples including job notifications and [templates.md](templates.md) for response templates.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/rom-orlovich) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
