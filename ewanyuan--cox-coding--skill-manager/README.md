@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ewanyuan/cox-coding](https://github.com/ewanyuan/cox-coding/tree/main/cn/skill-manager)
+Original source: [ewanyuan/cox-coding](https://github.com/ewanyuan/cox-coding/tree/main/en/skill-manager)
 
 ---
 
