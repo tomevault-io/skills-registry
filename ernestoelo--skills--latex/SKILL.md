@@ -1,0 +1,62 @@
+---
+name: latex
+description: Use when the user asks to "compile LaTeX", "create PDF from .tex", "format a .tex file", mentions "LaTeX", "Beamer", "pdflatex", or discusses LaTeX compilation and academic document formatting.
+metadata:
+  author: ernestoelo
+---
+
+# LaTeX Compilation Skill
+
+This skill provides tools and workflows for compiling LaTeX documents in VS Code with specific formatting standards. It focuses on academic and technical document compilation, supporting integration with document processing skills for output conversion.
+
+## When to Use
+- Compiling LaTeX documents to PDF in VS Code
+- Applying predefined formats (academic reports, technical informes)
+- Generating documents integrable with PDF/docx/xlsx processing
+
+## Usage Guide
+1. Open LaTeX file in VS Code with LaTeX Workshop extension
+2. Use `scripts/compile_latex.sh <file.tex>` for compilation
+3. Optional: Use pandoc via `scripts/integrate_docs.sh` for conversion to docx
+
+## Integrations
+- Generates PDFs usable by @pdf skill for text extraction/OCR
+- Can convert to docx with pandoc for @docx processing
+- Supports basic export for @xlsx if tables are included
+
+## Best Practices
+- Use provided templates in assets/
+- Follow VS Code integration guidelines in references/
+- Validate LaTeX syntax before compilation
+
+
+### Important Warnings
+- **Never use straight double quotes (`"`) in LaTeX or Beamer documents.** They can break the text rendering. Use `` (two backticks) for opening quotes and '' (two single quotes) for closing quotes, or use the appropriate LaTeX quote commands.
+- **Always check the size of created tables.** Tables that are too wide may overflow the page in both standard LaTeX and Beamer presentations. Adjust table width or use packages like `tabularx` or `resizebox` to ensure tables fit within the page or slide boundaries.
+- **When using `tabularx`, always load the package in the preamble (`\usepackage{tabularx}`) and use only `X` columns for text.** Do not use `booktabs` commands (`\toprule`, `\midrule`, `\bottomrule`) inside `tabularx` unless you know they are supported by your LaTeX distribution. Prefer standard `\hline` for compatibility.
+
+#### Example: Safe `tabularx` Table
+```latex
+\usepackage{tabularx}
+...
+\begin{table}[h!]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\hline
+Header 1 & Header 2 & Header 3 \\
+\hline
+Text 1 & Text 2 & Text 3 \\
+\hline
+\end{tabularx}
+\end{table}
+```
+
+See [@architect](../architect/SKILL.md) and [@dev-workflow](../dev-workflow/SKILL.md) for structure, validation, and reproducibility standards.
+
+## References
+- [references/latex-formats.md](references/latex-formats.md): Formatting guidelines
+- [references/vscode-integration.md](references/vscode-integration.md): VS Code setup
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ernestoelo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
