@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [diegopacheco/ai-playground](https://github.com/diegopacheco/ai-playground/tree/main/pocs/claude-agents-deployer/sample/skills/workflow-skill)
+Original source: [diegopacheco/ai-playground](https://github.com/diegopacheco/ai-playground/tree/main/pocs/claude-agents-deployer/workflow-skill)
 
 ---
 
