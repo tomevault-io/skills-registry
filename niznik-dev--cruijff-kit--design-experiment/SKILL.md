@@ -1,0 +1,173 @@
+---
+name: design-experiment
+description: Plan LLM fine-tuning and evaluation experiments. Use when the user wants to design a new experiment, plan training runs, or create an experiment_summary.yaml file. Use when this capability is needed.
+metadata:
+  author: niznik-dev
+---
+
+# Design Experiment
+
+You help users plan experiments for fine-tuning and evaluating LLMs. Create a plan that specifies the complete workflow from training through evaluation, verifies resources, and documents all steps in a structured YAML configuration.
+
+## Your Task
+
+Guide the user through designing their experiment by asking questions, verifying resources, and creating a comprehensive `experiment_summary.yaml` file that documents the complete plan.
+
+## Prerequisites Check
+
+**Before starting the workflow**, verify the user's environment is configured:
+
+### 1. Check for claude.local.md
+
+```bash
+ls -la claude.local.md
+```
+
+**If missing**, stop and inform the user:
+
+```
+⚠️ Missing claude.local.md
+
+Before designing experiments, you need to configure your local environment:
+
+1. Copy the template:
+   cp claude.local.md.template claude.local.md
+
+2. Edit claude.local.md with your settings:
+   - HPC username and group
+   - Scratch directory paths
+   - SLURM account
+   - Conda environment name
+
+3. Run /design-experiment again
+
+See claude.local.md.template for a complete example.
+```
+
+### 2. Validate key fields
+
+If `claude.local.md` exists, check for placeholder values that haven't been replaced:
+
+```bash
+grep -n '<[^>]*>' claude.local.md
+```
+
+Review any matches. Lines in example commands (Quick Commands, etc.) will legitimately contain angle brackets — ignore those. But any angle-bracketed values in the **settings sections** (HPC Environment, SLURM Defaults, Common Paths) indicate unresolved placeholders. If found, warn the user that some fields may need updating before proceeding.
+
+## Workflow
+
+Follow the three-stage process:
+
+### 1. Parameter Selection → `param_selection.md`
+
+Guide the user through 9 interactive steps to gather all experiment parameters:
+1. Determine experiment purpose and location (sanity check vs research experiment)
+2. Understand the experiment (scientific question, variables)
+3. Confirm tool choices (torchtune for preparation, inspect-ai for evaluation)
+4. Design training runs (models, datasets, hyperparameters)
+5. Design evaluation runs (tasks, epochs, evaluation matrix)
+6. Establish naming (experiment name, run names)
+7. Verify resources (models, datasets, eval scripts exist)
+8. Get approval (validate first, then present)
+9. Create files (proceed to generation stage)
+
+**See `param_selection.md` for:**
+- Complete question flow for each step
+- Auto-detection logic for experiment location
+- Resource verification commands
+- Conversation patterns
+
+### 2. Validation → `validation.md`
+
+Before presenting plan to user (step 8), validate completeness:
+- ✓ All YAML sections present and properly structured
+- ✓ All run names follow convention
+- ✓ All parameters documented (variables and controls)
+- ✓ Evaluation plan is consistent (0-indexed epochs, base vs fine-tuned)
+- ✓ **System prompt matches between training and evaluation** (critical!)
+- ✓ All resources verified (or noted as prerequisites)
+
+**See `validation.md` for:**
+- Complete validation checklist
+- Common issues to check
+- How to handle missing prerequisites
+
+### 3. Experiment Generation → `experiment_generation.md`
+
+After user approves, create output files:
+1. `experiment_summary.yaml` - Structured experiment configuration (use `templates/experiment_summary.yaml`)
+2. `logs/design-experiment.log` - Human-readable audit trail (see `logging.md`)
+
+Then ask about next steps (scaffold-experiment?).
+
+**See `experiment_generation.md` for:**
+- File creation instructions
+- YAML formatting guidance
+- Next steps conversation pattern
+- Prerequisites handling
+
+---
+
+## Cross-Cutting Concerns
+
+### Logging → `logging.md`
+
+**IMPORTANT:** Throughout param_selection and generation, create detailed log at `{experiment_dir}/logs/design-experiment.log`.
+
+**What to log:**
+- ✓ Resource verification (ls, du, df commands and results)
+- ✓ Prior run searches (if performed)
+- ✓ Decisions (naming, recipe, configuration)
+- ✓ File creation
+
+**Format:** Plain text with timestamped action entries
+
+**See `logging.md` for:**
+- Complete log format specification
+- All action types with examples
+- Entry structure and timestamp format
+- When to log during workflow
+
+### Templates → `templates/`
+
+Reference materials for output generation:
+- `templates/experiment_summary.yaml` - YAML schema and structure for experiment plan
+
+---
+
+## Important Reminders
+
+- **BEFORE generating experiment_summary.yaml:** You MUST read `templates/experiment_summary.yaml` first. Do not freestyle the YAML structure — use the template schema exactly.
+- **vis_label is required** in evaluation matrix entries for visualization support (see param_selection.md Step 5)
+- **Dataset format terminology:** Describe JSON datasets as "JSON with input/output keys" - never invent format type names
+- **Use paths from `claude.local.md`** for models, datasets, scratch directories
+- **Always verify resources** exist before finalizing plan (log all verification)
+- **System prompt consistency is critical** - must match between training and evaluation for inspect-ai
+- **Epochs are 0-indexed** - Use [0, 1, 2] in evaluation matrix
+- **Base models** use `epochs: null`, **fine-tuned models** use `epochs: [0, 1]`
+- **Document tool choices** in YAML - torchtune for training, inspect-ai for evaluation
+- **Handle missing resources gracefully** - note as prerequisites, don't block the plan
+- **If inspect-ai task doesn't exist** - note that `create-inspect-task` skill should be run first
+- **Generate YAML, not Markdown** - Use structured YAML format with proper indentation
+
+---
+
+## Module Organization
+
+This skill uses the **param_selection → validation → generation** pattern:
+
+| Module | Purpose | Lines |
+|--------|---------|-------|
+| param_selection.md | 9-step interactive workflow | ~340 |
+| validation.md | Completeness checklist | ~140 |
+| experiment_generation.md | Create YAML and log files | ~125 |
+| logging.md | Plain text audit trail specification | ~340 |
+| templates/experiment_summary.yaml | YAML schema and structure | ~150 |
+
+**Pattern:** Three action verbs (selection, validation, generation) matching scaffold/run skills, plus cross-cutting logging and templates.
+
+**See `README.md` for:** Complete pattern documentation and rationale.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/niznik-dev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
