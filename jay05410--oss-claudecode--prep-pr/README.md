@@ -1,0 +1,13 @@
+# prep-pr
+
+> Skill by [jay05410](https://github.com/jay05410/oss-claudecode) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [jay05410/oss-claudecode](https://github.com/jay05410/oss-claudecode/tree/main/skills/prep-pr)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
