@@ -1,0 +1,72 @@
+---
+name: ui-design
+description: UI design system and visual patterns for the Sentient Alpha cockpit Use when this capability is needed.
+metadata:
+  author: juelhossain
+---
+
+# UI Design System for Sentient Alpha
+
+All new UI components must follow these standards to maintain the "Cinematic Terminal" aesthetic and consistent state logic.
+
+## Core Design Principles
+
+- **Framework**: React + Vite + Shadcn UI.
+- **State**: **Zustand** (`src/store/useStore.ts`) for all global logic and log buffering.
+- **Aesthetic**: Dark theme, glassmorphism, high-contrast monospace data.
+- **Responsiveness**: Recharts adaptivity and grid-based layout.
+
+## Component Standards
+
+### Layout Components
+- Use **Shadcn UI** `Card` and `Button` as the base.
+- **Glass Panel Variant**: Semi-transparent, backdrop-blur, subtle white border.
+
+### State & Communication
+- **API Standard**: All network calls must use the relative `/api` proxy.
+- **SSE Integration**: Subscriptions to `/api/stream` must be buffered in the Zustand store to allow for high-frequency log updates without UI jitter.
+- **Real-time Status**: Green pulse for connected/online, red for disconnect/offline.
+
+## Naming & Style
+
+- **Components**: PascalCase (e.g., `LogTerminal.tsx`).
+- **Icons**: Lucide-react for standard actions.
+- **Colors**: Blue-400 (Active), Emerald-400 (Success), Red-500 (Fatal), Gray-600 (Dim).
+
+## Implementation
+- Zustand for state centralized container.
+- Shadcn for accessible UI primitives.
+- Tailwind CSS for all utility styling.
+
+## Testing
+- Verify responsive layout on mobile/desktop.
+- Ensure log streaming doesn't freeze the main thread.
+- Confirm `/api` proxy works without CORS errors.
+
+## Evolution Context
+### Evolution Entry [2026-01-29 20:34]
+- **Trigger**: Code changes detected
+- **Files**: `frontend/src/components/ErrorBoundary.tsx`, `frontend/src/components/Login.test.tsx`, `frontend/src/components/Login.tsx`
+- **Additional**: 14 more files
+
+
+### Evolution Entry [2026-01-29 20:34]
+- **Trigger**: Code changes detected
+- **Files**: `frontend/src/components/ErrorBoundary.tsx`, `frontend/src/components/Login.test.tsx`, `frontend/src/components/Login.tsx`
+- **Additional**: 14 more files
+
+
+### Evolution Entry [2026-01-29 20:34]
+- **Trigger**: Code changes detected
+- **Files**: `frontend/src/components/ErrorBoundary.tsx`, `frontend/src/components/Login.test.tsx`, `frontend/src/components/Login.tsx`
+- **Additional**: 14 more files
+
+
+### Evolution Entry [2026-01-29 20:34]
+- **Trigger**: Code changes detected
+- **Files**: `frontend/src/components/ErrorBoundary.tsx`, `frontend/src/components/Login.test.tsx`, `frontend/src/components/Login.tsx`
+- **Additional**: 14 more files
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/juelhossain) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
