@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lidr-academy/ai4devs-lti-extended](https://github.com/lidr-academy/ai4devs-lti-extended/tree/main/.cursor/skills/openspec-apply-change)
+Original source: [lidr-academy/ai4devs-lti-extended](https://github.com/lidr-academy/ai4devs-lti-extended/tree/main/.claude/skills/openspec-apply-change)
 
 ---
 
