@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [manuelkugelmann/bitbot](https://github.com/manuelkugelmann/bitbot/tree/main/.bitbot/internal/bitbot-config/.claude/skills/claude-allow-stop)
+Original source: [manuelkugelmann/bitbot](https://github.com/manuelkugelmann/bitbot/tree/main/.claude/skills/claude-allow-stop)
 
 ---
 
