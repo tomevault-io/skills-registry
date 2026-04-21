@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ref-docs/sdd-stl](https://github.com/ref-docs/sdd-stl/tree/main/.claude/skills/steering)
+Original source: [ref-docs/sdd-stl](https://github.com/ref-docs/sdd-stl/tree/main/src/templates/agents/claude-code/skills/steering)
 
 ---
 
