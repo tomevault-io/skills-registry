@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lattice-technologies-inc/harness-engineering](https://github.com/lattice-technologies-inc/harness-engineering/tree/main/skills/harness-engineering/assets/skills/git-worktree)
+Original source: [lattice-technologies-inc/harness-engineering](https://github.com/lattice-technologies-inc/harness-engineering/tree/main/skills/git-worktree)
 
 ---
 
