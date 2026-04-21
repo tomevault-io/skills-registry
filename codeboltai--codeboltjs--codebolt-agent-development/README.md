@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [codeboltai/codeboltjs](https://github.com/codeboltai/codeboltjs/tree/main/skills/codebolt-agent-development)
+Original source: [codeboltai/codeboltjs](https://github.com/codeboltai/codeboltjs/tree/main/skills/skilloptimizationscript/testingarena/.claude/skills/codebolt-agent-development)
 
 ---
 
