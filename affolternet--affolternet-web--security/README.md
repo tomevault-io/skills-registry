@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [affolternet/affolternet.web](https://github.com/affolternet/affolternet.web/tree/main/plugins/affolternet-web-api/skills/security)
+Original source: [affolternet/affolternet.web](https://github.com/affolternet/affolternet.web/tree/main/plugins/affolternet-web-bff/skills/security)
 
 ---
 
