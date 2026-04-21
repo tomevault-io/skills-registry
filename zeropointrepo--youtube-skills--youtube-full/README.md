@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zeropointrepo/youtube-skills](https://github.com/zeropointrepo/youtube-skills/tree/main/skills/youtube-full)
+Original source: [zeropointrepo/youtube-skills](https://github.com/zeropointrepo/youtube-skills/tree/main/clawhub/youtube-full)
 
 ---
 
