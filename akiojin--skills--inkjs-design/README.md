@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [akiojin/skills](https://github.com/akiojin/skills/tree/main/cli-design/skills/inkjs-design)
+Original source: [akiojin/skills](https://github.com/akiojin/skills/tree/main/cli-inkjs/skills/inkjs-design)
 
 ---
 
