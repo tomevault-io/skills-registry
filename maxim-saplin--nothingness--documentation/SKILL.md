@@ -1,0 +1,36 @@
+---
+name: documentation
+description: Guidelines for creating and maintaining documentation in the Nothingness project. Use when adding architecture docs, design docs, or complex logic explanations. Use when this capability is needed.
+metadata:
+  author: maxim-saplin
+---
+# Documentation Standards
+
+## When to Document
+- **Architecture Changes**: Whenever a new major component (service, screen, complex widget) is added or refactored.
+- **Complex Logic**: Algorithms (like FFT processing or Auto-Scaling) require a design doc.
+- **Standards**: When establishing new team rules (testing, naming, etc.).
+
+## Where to Document
+- All documentation lives in the `docs/` directory.
+- `docs/architecture/`: System design, data flow, component interaction.
+
+## Format
+- **Markdown**: Use standard GFM.
+- **Mermaid**: Use Mermaid diagrams for all visual flows (graphs, sequences, class diagrams).
+- **Links**: Use relative links to other docs (e.g., `[Overview](architecture/overview.md)`).
+
+## Style
+Keep docs straightforward—no marketing fluff or filler:
+- State what the component does and how to run it.
+- Avoid buzzwords ("reporting surface", "purpose-built", etc.).
+- Prefer short, direct sentences; skip padding and restatements.
+
+## Agent Behavior
+- **Do not pollute context**: Do not read all docs into context unless specifically asked.
+- **Update Index**: Always update `docs/README.md` when adding a new file.
+- **Reference**: When explaining a complex topic to the user, reference the existing doc rather than re-explaining from scratch, unless asked for a summary.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/maxim-saplin) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
