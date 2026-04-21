@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [muheun/claude-code-marketplace](https://github.com/muheun/claude-code-marketplace/tree/main/plugins/smart-git-commit/skills)
+Original source: [muheun/claude-code-marketplace](https://github.com/muheun/claude-code-marketplace/tree/main/plugins/smart-linear-issue/skills)
 
 ---
 
