@@ -1,0 +1,70 @@
+---
+name: ctx-agent
+description: Load full context packet. Use at session start or when context seems stale or incomplete. Use when this capability is needed.
+metadata:
+  author: activememory
+---
+
+Load the full context packet for AI consumption.
+
+## When to Use
+
+- At the start of a session to load all context
+- When context seems stale or incomplete
+- When switching between different areas of work
+
+## When NOT to Use
+
+- The PreToolUse hook already runs `ctx agent` automatically with a cooldown:
+  you rarely need to invoke this manually
+- Don't run it just to "refresh" if you already have the context loaded in
+  this session
+
+## After Loading
+
+**Read the files listed in "Read These Files (in order)"**: the packet is a
+summary, not a substitute. In particular, read CONVENTIONS.md before writing
+any code.
+
+Confirm to the user: "I have read the required context files and I'm
+following project conventions." Read and confirm before beginning
+implementation.
+
+## Flags
+
+| Flag         | Default | Description                                       |
+|--------------|---------|---------------------------------------------------|
+| `--budget`   | 8000    | Token budget for context packet                   |
+| `--format`   | md      | Output format: `md` or `json`                     |
+| `--cooldown` | 10m     | Suppress repeated output within this duration     |
+| `--session`  | (none)  | Session ID for cooldown isolation (e.g., `$PPID`) |
+
+## Execution
+
+```bash
+ctx agent $ARGUMENTS
+```
+
+**Example: default load:**
+```bash
+ctx agent
+```
+
+**Example: smaller packet for limited contexts:**
+```bash
+ctx agent --budget 4000
+```
+
+**Example: with cooldown (how the PreToolUse hook invokes it):**
+```bash
+ctx agent --budget 4000 --session $PPID
+```
+
+**Example: JSON for programmatic use:**
+```bash
+ctx agent --format json --budget 8000
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/activememory) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
