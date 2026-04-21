@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tsgcfo/logibill-frontend](https://github.com/tsgcfo/logibill-frontend/tree/main/.agent/skills/rulesync)
+Original source: [tsgcfo/logibill-frontend](https://github.com/tsgcfo/logibill-frontend/tree/main/.rulesync/skills/rulesync)
 
 ---
 
