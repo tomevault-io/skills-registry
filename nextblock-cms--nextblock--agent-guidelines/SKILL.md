@@ -1,0 +1,52 @@
+---
+name: agent-guidelines
+description: When you need to understand the project's core mandate, operational rules, or "Constitution". Use this skill to align with the project's identity and strict coding standards. Use when this capability is needed.
+metadata:
+  author: nextblock-cms
+---
+
+# Agent Guidelines & Operational Rules
+
+## 1. The "Constitution" & Project Identity
+
+**Project Name:** NextBlock CMS
+**Mandate:** Build a premium, Open-Core Next.js CMS.
+**Core Stack:** Next.js (App Router), Supabase, Tailwind CSS, Tiptap v3.
+
+### Critical Rules
+
+1.  **Strict Separation:** `libs/ui` and `libs/db` must be publishable as standalone packages. They cannot depend on `apps/nextblock`.
+2.  **Open-Core Model:** The core is open-source (AGPL); premium extensions (like E-Commerce) are source-available but license-gated.
+3.  **Distribution:** Users get a standalone app via `npm create nextblock`.
+
+## 2. Operational Rules (Global Context)
+
+- **Context First:** Before answering complex questions, always check `docs/ARCHITECTURE.md`, `docs/README.md` and relevant linked docs.
+- **Strict Types:** Always use `strict: true` TypeScript. No `any` unless absolutely unavoidable and documented.
+- **Target the App, Not the Template:** NEVER edit files in `apps/create-nextblock/templates/nextblock-template` directly. Always make changes in `apps/nextblock` (the core app). The template is synced from the core app via scripts.
+
+## 3. Documentation Access
+
+- Use the **`context7` MCP tool** to fetch the latest documentation for Next.js, Supabase, Nx, Tailwind, etc.
+- Do not guess about API updates; verify with `context7` if unsure.
+
+## 5. Project Knowledge Source (NotebookLM)
+
+> [!TIP]
+> **Use this for:** High-level roadmap, monetization strategy, and architectural "why" questions.
+> **Notebook:** NextBlock CMS: Roadmap and Monetization Strategy
+
+When you need deep context about the project's direction or specific architectural decisions not explained in the code:
+
+1. **Query the Notebook:**
+
+   ```bash
+   python scripts/run.py ask_question.py --notebook-id nextblock-cms-roadmap-and-mone --question "Your question here"
+   ```
+
+2. **Wait for the answer:** It may take 10-20 seconds.
+3. **Cite the source:** Mention that the info came from the project roadmap notebook.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nextblock-cms) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
