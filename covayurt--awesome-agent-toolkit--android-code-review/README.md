@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [covayurt/awesome-agent-toolkit](https://github.com/covayurt/awesome-agent-toolkit/tree/main/adapters/claude/android-code-review/skills/android-code-review)
+Original source: [covayurt/awesome-agent-toolkit](https://github.com/covayurt/awesome-agent-toolkit/tree/main/adapters/codex/skills/android-code-review)
 
 ---
 
