@@ -1,0 +1,13 @@
+# multi-search
+
+> Skill by [cat-xierluo](https://github.com/cat-xierluo/legal-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [cat-xierluo/legal-skills](https://github.com/cat-xierluo/legal-skills/tree/main/skills/multi-search)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
