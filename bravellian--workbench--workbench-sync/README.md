@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bravellian/workbench](https://github.com/bravellian/workbench/tree/main/skills/workbench-sync)
+Original source: [bravellian/workbench](https://github.com/bravellian/workbench/tree/main/.codex/skills/workbench-sync)
 
 ---
 
