@@ -1,0 +1,49 @@
+---
+name: add-doc-page
+description: Create a new documentation page in both EN and RU with proper frontmatter, sidebar registration, and automatic Russian translation. Use when this capability is needed.
+metadata:
+  author: gramiojs
+---
+
+# Add Documentation Page
+
+You are adding a new documentation page to the GramIO docs site.
+
+## Arguments
+
+The user provides `[section/page-name]` — e.g., `guides/webhooks` or `plugins/official/my-plugin`.
+
+## Steps
+
+1. **Read AGENTS.md** for conventions (frontmatter, bilingual sync, image rules).
+
+2. **Create the English page** at `docs/{section}/{page-name}.md`:
+   - Add YAML frontmatter with `title`, `description` meta, and `keywords` meta.
+   - Add an H1 heading matching the title.
+   - Add a brief introductory paragraph placeholder.
+   - Follow existing page patterns in the same section (read a sibling page for reference).
+
+3. **Create the Russian translation** at `docs/ru/{section}/{page-name}.md`:
+   - Translate the frontmatter (`title`, `description`, `keywords`) to Russian.
+   - Translate the H1 heading and all body content to Russian.
+   - Preserve code blocks, twoslash annotations, and markdown structure exactly.
+   - Use the `/translate-page` skill conventions for translation quality.
+
+4. **Register in EN sidebar** — edit `docs/.vitepress/config/locales/en.locale.ts`:
+   - Find the appropriate section in the sidebar config.
+   - Add the new page link following existing patterns.
+
+5. **Register in RU sidebar** — edit `docs/.vitepress/config/locales/ru.locale.ts`:
+   - Find the matching section.
+   - Add the new page link with `/ru/` prefix.
+
+6. **Update `public/_redirects`** if the page was moved or renamed from a previous location:
+   - Add a `301!` redirect from the old path to the new path.
+   - Add a corresponding `/ru/` redirect if the RU page also moved.
+   - Note: `_redirects` is Netlify-specific; GitHub Pages does not support it.
+
+7. **Report** what was created and where the user should add content.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/gramiojs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
