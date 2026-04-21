@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hoang130203/moonplaymovie](https://github.com/hoang130203/moonplaymovie/tree/main/.claude/skills/skill-creator)
+Original source: [hoang130203/moonplaymovie](https://github.com/hoang130203/moonplaymovie/tree/main/.opencode/skills/skill-creator)
 
 ---
 
