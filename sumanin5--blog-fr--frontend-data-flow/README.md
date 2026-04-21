@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sumanin5/blog_fr](https://github.com/sumanin5/blog_fr/tree/main/.agent/skills/frontend-data-flow)
+Original source: [sumanin5/blog_fr](https://github.com/sumanin5/blog_fr/tree/main/.github/skills/frontend-data-flow)
 
 ---
 
