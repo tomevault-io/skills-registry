@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [noirj0e/tsrpc-ecommerce-admin-example](https://github.com/noirj0e/tsrpc-ecommerce-admin-example/tree/main/.trae/skills/tsrpc-api)
+Original source: [noirj0e/tsrpc-ecommerce-admin-example](https://github.com/noirj0e/tsrpc-ecommerce-admin-example/tree/main/.claude/skills/tsrpc-api)
 
 ---
 
