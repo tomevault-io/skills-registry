@@ -1,0 +1,42 @@
+---
+name: create-pr
+description: GitHubでPull Request（PR）を作成します。PRのdescriptionには指定されたテンプレートを使用し、必要な情報を記載します。PR作成後、PRのURLを報告します。 Use when this capability is needed.
+metadata:
+  author: getty104
+---
+
+# Create Pull Request
+
+このスキルは、GitHubでPull Request（PR）を作成するためのスキルです。
+このスキルが呼び出された際には、Instructionsに従って、PRの作成を行ってください。
+
+# Instructions
+
+PRは以下のルールで作成します。
+
+- PRのdescriptionのテンプレートは`.github/PULL_REQUEST_TEMPLATE.md`を参照し、それに従うこと
+- PRのdescriptionのテンプレート内でコメントアウトされている箇所は必ず削除すること
+- PRのdescriptionには`Closes [Issue番号]`と記載すること
+- `gh api user --jq '.login'`で取得したユーザーをAssigneesに追加すること
+- PRのベースブランチはデフォルトブランチにすること
+
+## Command Examples
+
+### PR作成の基本コマンド
+
+```bash
+
+gh pr create --title "PRタイトル" --body "PRの本文" --base main --assignee "$(gh api user --jq '.login')"
+
+```
+
+### triage-scopeラベルを付与する場合
+```bash
+gh api user --jq '.login'
+
+gh pr create --title "PRタイトル" --body "PRの本文" --base main --assignee "$(gh api user --jq '.login')" --label "cc-triage-scope"
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/getty104) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
