@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [scaleto/antigravity-super-skill-architecture](https://github.com/scaleto/antigravity-super-skill-architecture/tree/main/skills/70-docs-group/communicator)
+Original source: [scaleto/antigravity-super-skill-architecture](https://github.com/scaleto/antigravity-super-skill-architecture/tree/main/skills/20-frontend-group/communicator)
 
 ---
 
