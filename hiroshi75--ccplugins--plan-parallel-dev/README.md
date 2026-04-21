@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hiroshi75/ccplugins](https://github.com/hiroshi75/ccplugins/tree/main/parallel-dev-plugin/skills/plan-parallel-dev)
+Original source: [hiroshi75/ccplugins](https://github.com/hiroshi75/ccplugins/tree/main/plan-parallel-dev-plugin/skills/plan-parallel-dev)
 
 ---
 
