@@ -1,11 +1,11 @@
 # vue-best-practices
 
-> Skill by [ShenQingchuan](https://github.com/ShenQingchuan/val.dokduk) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [shenqingchuan](https://github.com/shenqingchuan/val.dokduk) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ShenQingchuan/val.dokduk](https://github.com/ShenQingchuan/val.dokduk/tree/main/.agents/skills/vue-best-practices)
+Original source: [shenqingchuan/val.dokduk](https://github.com/shenqingchuan/val.dokduk/tree/main/.agents/skills/vue-best-practices)
 
 ---
 
