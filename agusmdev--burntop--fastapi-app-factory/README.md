@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agusmdev/burntop](https://github.com/agusmdev/burntop/tree/main/packages/.claude/skills/fastapi-app-factory)
+Original source: [agusmdev/burntop](https://github.com/agusmdev/burntop/tree/main/.claude/skills/fastapi-app-factory)
 
 ---
 
