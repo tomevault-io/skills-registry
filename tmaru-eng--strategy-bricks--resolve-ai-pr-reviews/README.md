@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tmaru-eng/strategy-bricks](https://github.com/tmaru-eng/strategy-bricks/tree/main/.claude/skills/resolve-ai-pr-reviews)
+Original source: [tmaru-eng/strategy-bricks](https://github.com/tmaru-eng/strategy-bricks/tree/main/.agent/skills/resolve-ai-pr-reviews)
 
 ---
 
