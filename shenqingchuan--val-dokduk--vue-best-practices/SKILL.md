@@ -2,7 +2,7 @@
 name: vue-best-practices
 description: Vue 3 and Vue.js best practices for TypeScript, vue-tsc, and Volar. This skill should be used when writing, reviewing, or refactoring Vue components to ensure correct typing patterns. Triggers on tasks involving Vue components, props extraction, wrapper components, template type checking, or Volar configuration. Use when this capability is needed.
 metadata:
-  author: ShenQingchuan
+  author: shenqingchuan
 ---
 
 ## Capability Rules
@@ -36,5 +36,5 @@ metadata:
 - [Vue 3 Documentation](https://vuejs.org/)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/ShenQingchuan) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shenqingchuan) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
