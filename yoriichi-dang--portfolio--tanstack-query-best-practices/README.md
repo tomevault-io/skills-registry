@@ -1,0 +1,13 @@
+# tanstack-query-best-practices
+
+> Skill by [yoriichi-dang](https://github.com/yoriichi-dang/portfolio) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [yoriichi-dang/portfolio](https://github.com/yoriichi-dang/portfolio/tree/main/.agents/skills/tanstack-query-best-practices)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
