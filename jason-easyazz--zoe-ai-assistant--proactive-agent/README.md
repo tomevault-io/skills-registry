@@ -1,0 +1,13 @@
+# proactive-agent
+
+> Skill by [jason-easyazz](https://github.com/jason-easyazz/zoe-ai-assistant) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [jason-easyazz/zoe-ai-assistant](https://github.com/jason-easyazz/zoe-ai-assistant/tree/main/skills/proactive-agent)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
