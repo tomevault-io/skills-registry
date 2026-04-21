@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nhile-team-webs/nedu](https://github.com/nhile-team-webs/nedu/tree/main/.agent/skills/ui-ux-pro-max)
+Original source: [nhile-team-webs/nedu](https://github.com/nhile-team-webs/nedu/tree/main/.agent/.shared/ui-ux-pro-max)
 
 ---
 
