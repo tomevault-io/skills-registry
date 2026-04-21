@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [runtime-env/runtime-env](https://github.com/runtime-env/runtime-env/tree/main/.opencode/skills/openspec-apply-change)
+Original source: [runtime-env/runtime-env](https://github.com/runtime-env/runtime-env/tree/main/.gemini/skills/openspec-apply-change)
 
 ---
 
