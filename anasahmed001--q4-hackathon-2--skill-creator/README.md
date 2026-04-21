@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [anasahmed001/q4-hackathon-2](https://github.com/anasahmed001/q4-hackathon-2/tree/main/phase-2-fullstack-todo-app/.claude/skills/skill-creator)
+Original source: [anasahmed001/q4-hackathon-2](https://github.com/anasahmed001/q4-hackathon-2/tree/main/phase-3-todo-chatbot/.claude/skills/skill-creator)
 
 ---
 
