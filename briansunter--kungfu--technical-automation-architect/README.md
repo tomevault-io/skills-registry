@@ -1,0 +1,13 @@
+# technical-automation-architect
+
+> Skill by [briansunter](https://github.com/briansunter/kungfu) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [briansunter/kungfu](https://github.com/briansunter/kungfu/tree/main/skills/technical-automation-architect)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
