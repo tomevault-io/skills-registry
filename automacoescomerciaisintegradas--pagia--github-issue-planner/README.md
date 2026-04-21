@@ -1,0 +1,13 @@
+# github-issue-planner
+
+> Skill by [automacoescomerciaisintegradas](https://github.com/automacoescomerciaisintegradas/pagia) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [automacoescomerciaisintegradas/pagia](https://github.com/automacoescomerciaisintegradas/pagia/tree/main/.pagia/skills/github-issue-planner)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
