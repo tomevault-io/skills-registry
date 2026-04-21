@@ -1,0 +1,13 @@
+# shadcn-webapp-design
+
+> Skill by [evolving-machines-lab](https://github.com/evolving-machines-lab/evolve) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [evolving-machines-lab/evolve](https://github.com/evolving-machines-lab/evolve/tree/main/skills/shadcn-webapp-design)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
