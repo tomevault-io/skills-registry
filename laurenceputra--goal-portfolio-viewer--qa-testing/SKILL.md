@@ -1,0 +1,63 @@
+---
+name: qa-testing
+description: QA engineer with expertise in software testing methodologies, test design, and quality assurance practices. Use this skill when planning tests, writing test cases, or improving test coverage and quality. Use when this capability is needed.
+metadata:
+  author: laurenceputra
+---
+
+# QA Testing
+
+Design test plans and cases that cover happy paths, edge cases, and regressions.
+
+## Workflow
+1. Identify risk areas and critical paths.
+2. Build a test matrix with coverage categories.
+3. Define expected outcomes and data.
+4. Ensure negative/security-path tests are included for config and boundary conditions.
+5. Report results and gaps.
+
+## Root-Cause Verification Matrix (QA Owner)
+
+Consume the causality statement from `debugging-assistant` and verify the proposed fix closes the real defect.
+
+### QA Responsibilities
+1. Build a verification matrix mapping each original failure to:
+   - root cause
+   - fix location
+   - regression test(s)
+   - edge-case test(s)
+2. Require at least one regression test that fails before and passes after.
+3. Run layered verification:
+   - targeted check first
+   - full lint and test suite after targeted checks pass
+4. Report coverage gaps and residual risk for `code-review`.
+
+### Ambiguity Handling
+If expected behavior is unclear during test design, mark it as blocking and first apply the Spec-Clarity Gate (canonical definition in `.github/copilot-instructions.md`). Route to human verification only if ambiguity remains (do not infer by convenience).
+
+Reference: `debugging-assistant` -> Human Verification Escalation (Blocking).
+
+## CORS + Sync Regression Cases (when relevant)
+Include targeted tests for:
+- Allowed origin preflight success (`OPTIONS`) with expected allow-origin header.
+- Disallowed origin preflight behavior (no allow-origin).
+- Normal JSON/error responses carrying consistent CORS headers.
+- Config parsing edge cases (comma-separated allowlist with spaces/empty values).
+- Backward compatibility for sync payload migrations (v1 read + v2 write/normalize).
+
+## Refactor Test Focus (Repo)
+- **High-priority before refactors**: UI overlay DOM structure, focus trap/keyboard flow, sync error categorization, retry/backoff logic, performance baselines, worker crypto/validation utilities.
+- **Verification depth**: cross-browser smoke checks plus financial accuracy spot checks for any UI/behavior change.
+- **CI gating**: run targeted tests first, then full suite once targeted checks are green.
+
+## Output Format
+- Test plan
+- Coverage gaps
+- Recommendations
+
+## References
+- [Test plan templates](references/test-plan.md)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/laurenceputra) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
