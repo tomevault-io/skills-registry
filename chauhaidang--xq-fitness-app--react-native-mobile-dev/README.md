@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chauhaidang/xq-fitness-app](https://github.com/chauhaidang/xq-fitness-app/tree/main/.agent/skills/react-native-mobile-dev)
+Original source: [chauhaidang/xq-fitness-app](https://github.com/chauhaidang/xq-fitness-app/tree/main/.cursor/skills/react-native-mobile-dev)
 
 ---
 
