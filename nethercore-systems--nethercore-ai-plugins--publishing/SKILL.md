@@ -1,0 +1,74 @@
+---
+name: publishing
+description: >- Use when this capability is needed.
+metadata:
+  author: nethercore-systems
+---
+
+# Nethercore Publishing
+
+## Build Commands
+
+| Command | Purpose |
+|---------|---------|
+| `nether build` | compile + pack (development) |
+| `nether build --release` | Optimized release build |
+| `nether pack` | Bundle WASM + assets into ROM |
+
+## Upload to nethercore.systems
+
+**Required:**
+| File | Format |
+|------|--------|
+| Game | `.wasm` or `.nczx` |
+| Icon | 64x64 PNG |
+
+**Optional:**
+- Screenshots (PNG, up to 5)
+- Banner (1280x720 PNG)
+
+**Process:**
+1. Create account at nethercore.systems
+2. Dashboard -> "Upload New Game"
+3. Fill metadata, upload files
+4. Publish
+
+## Pre-Release Checklist
+
+- [ ] `nether build --release` succeeds
+- [ ] `nether run --sync-test` passes
+- [ ] ROM under 16MB
+- [ ] Icon is 64x64 PNG
+- [ ] Description is compelling
+- [ ] Version updated in nether.toml
+
+## Versioning
+
+Semantic versioning in `nether.toml`:
+
+```toml
+[game]
+version = "1.2.3"
+```
+
+**Update process:**
+1. Bump version in nether.toml
+2. Update CHANGELOG.md
+3. Commit, tag, push
+4. Re-upload to platform
+
+## CI/CD Quick Reference
+
+| Gate | Command | Purpose |
+|------|---------|---------|
+| Format | `cargo fmt --check` | Code style |
+| Lint | `cargo clippy -- -D warnings` | Static analysis |
+| Test | `cargo test` | Logic correctness |
+| Build | `nether build --release` | WASM compilation |
+| Sync | `nether run --sync-test --frames 1000` | Determinism |
+
+See `references/ci-workflows.md` for GitHub Actions templates.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nethercore-systems) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
