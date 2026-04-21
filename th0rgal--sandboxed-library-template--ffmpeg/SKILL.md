@@ -1,0 +1,58 @@
+---
+name: ffmpeg
+description: Extract audio and transcode MP4 to WebM using ffmpeg. Use when this capability is needed.
+metadata:
+  author: th0rgal
+---
+
+# ffmpeg
+
+## Use when
+- Extract audio from a video file.
+- Transcode an MP4 video to WebM.
+
+## Don't use when
+- A higher-level video-editing skill or tool is already in use for complex edits.
+- The task is purely file transfer or metadata inspection (no transcoding needed).
+
+## Outputs
+- Output files should be written to `artifacts/` when possible (e.g., `artifacts/output.webm`).
+
+## Templates or Examples
+- Use the command blocks below as templates, swapping inputs/outputs and codecs as needed.
+
+## Requirements
+- Prefer safe defaults and explicit codecs.
+- Keep commands minimal and reproducible.
+- Use ASCII-only output unless file already uses Unicode.
+
+## Commands
+
+### Extract audio (MP4 → MP3)
+```
+ffmpeg -y -i input.mp4 -vn -c:a libmp3lame -q:a 2 output.mp3
+```
+
+### Extract audio (MP4 → WAV, lossless)
+```
+ffmpeg -y -i input.mp4 -vn -c:a pcm_s16le -ar 44100 -ac 2 output.wav
+```
+
+### Transcode MP4 → WebM (VP9 + Opus)
+```
+ffmpeg -y -i input.mp4 -c:v libvpx-vp9 -crf 32 -b:v 0 -row-mt 1 -c:a libopus -b:a 128k output.webm
+```
+
+### Transcode MP4 → WebM (VP8 + Vorbis)
+```
+ffmpeg -y -i input.mp4 -c:v libvpx -crf 10 -b:v 1M -c:a libvorbis -b:a 128k output.webm
+```
+
+## Notes
+- `-y` overwrites output files. Remove if you want interactive prompts.
+- Lower `-crf` means higher quality (and larger files).
+- If audio-only extraction is desired, use `-vn` to drop video.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/th0rgal) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
