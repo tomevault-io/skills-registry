@@ -1,0 +1,117 @@
+---
+name: update-docs
+description: Scan repo docs and source to generate docs/specs/*, prioritized todos (todos.json), and machine-readable reports; safe, non-destructive by default (scripts/docs.sh). Use when this capability is needed.
+metadata:
+  author: p3ngu1nzz
+---
+
+# SKILL: update-docs
+
+## Summary
+
+Review all files in the repository and the current documentation under `docs/` and cross-reference them with source files and helper scripts. Produce a structured set of todos to fix, enhance, remove, add, or modify documentation and specifications, and generate or update `docs/specs/*` markdown files that mirror the layout of `scripts/` and `src/` (when `src/` exists).
+
+The skill is intended to be deterministic, non-destructive by default, and to produce machine-readable outputs that downstream skills (e.g., `next-steps`) can consume.
+
+## When to run
+
+- During planning cycles, before releases, or when documentation drift is suspected.
+- After code or script changes that may require documentation/spec updates.
+
+## Inputs
+
+- `allow_run` (bool, default: false) — allow safe runtime checks (e.g., `--help`) on scripts; do NOT run network installs or actions that modify system state.
+- `include_globs` (array) — limit the review to specific path globs.
+- `update_specs` (bool, default: true) — whether to write/modify files under `docs/specs/`.
+- `allow_insert_todos` (bool, default: false) — when true, insert resulting todos into the `todos` SQL table.
+- `output_format` (string): `text` or `json`.
+
+## Outputs
+
+- `run/skills/update-docs/<timestamp>/report.txt` — readable summary of findings (informational only).
+- `run/skills/update-docs/<timestamp>/report.json` — structured summary with counts and references.
+- `run/skills/update-docs/<timestamp>/todos.json` — JSON array of todo items (id, title, description, files, acceptance_criteria, complexity, impact, priority, suggested branch/commit).
+- `run/skills/update-docs/<timestamp>/created_specs.txt` — list of newly created spec files (one per line).
+- `docs/specs/...` — generated spec files mirroring `scripts/` and `src/` when `update_specs=true` (only new files are created; existing files are not overwritten).
+- Raw captures under `run/skills/update-docs/<timestamp>/raw/` (file lists, help outputs, top-of-file comments, TODOs found, git metadata).
+
+## Task / todo JSON schema (recommended fields)
+
+{
+  "id":"kebab-case-id",
+  "title":"Short, actionable title",
+  "description":"Detailed description of the change",
+  "files":["path/to/file", "glob/*"],
+  "acceptance_criteria":["criteria 1","criteria 2"],
+  "complexity":1-5,
+  "impact":"low|medium|high",
+  "priority":1,
+  "suggested_branch":"chore/update-docs-xyz",
+  "commit_msg":"docs(specs): update ...",
+  "requires_approval":true|false
+}
+
+## Collection and generation steps
+
+1. Capture git metadata (HEAD, last 50 commits, author churn) and top-level layout.
+2. Collect all documentation: `README.md`, `AGENT.md`, `docs/`, `.github/skills/*/SKILL.md`, `.github/agents/*`, and per-package READMEs.
+3. Collect scripts and helpers: `scripts/`, `scripts/skills/`, and any executable files; capture shebangs and top-of-file comments.
+4. Collect source files under `src/` (if present) and other languages; parse top-of-file docstrings and exported symbols where feasible.
+5. Detect and capture TODO/FIXME occurrences across the codebase.
+6. For each script and source file, attempt to extract usage information:
+   - Top-of-file comment, CLI `--help`/`-h` output (only if `allow_run=true` and the invocation appears safe), example invocations, environment variables, config file names, and any documented side effects.
+7. Cross-reference documentation vs. code:
+   - Identify missing, stale, or contradictory docs (e.g., README describes a flag that no longer exists).
+   - Detect duplicated docs that should be consolidated.
+8. Map files to `docs/specs/` paths:
+   - `scripts/foo/bar.sh` -> `docs/specs/scripts/foo/bar.md`
+   - `src/lib/module.ext` -> `docs/specs/src/lib/module.md`
+   - Preserve directory structure; create intermediate index pages as needed (e.g., `docs/specs/scripts/README.md`).
+9. For each target spec file, generate a well-structured markdown document containing:
+   - YAML header: name, generated_by, generated_at, source_paths
+   - Purpose / summary
+   - Synopsis / usage examples
+   - Public API or CLI surface (functions, commands, flags)
+   - Inputs, outputs, side effects, environment variables, config options
+   - External dependencies and required runtime (e.g., interpreter, packages)
+   - Known TODOs and references to source lines or existing docs
+   - Suggested acceptance criteria for documentation PRs
+10. Produce a prioritized list of todos (see schema) for doc/spec fixes, with complexity (1–5) and impact (low/medium/high). Prefer smaller, PR-sized items but include larger refactors when necessary; cap the list at 100 generated todos in raw output and write the top N (configurable, default 20) into todos.json.
+11. When `update_specs=true`, create new files under `docs/specs/` only if they do not already exist; do not overwrite existing files. Record newly created spec paths to `run/skills/update-docs/<timestamp>/created_specs.txt`. Agents invoking this skill should post-process and enrich newly created spec files with factual information (purpose, synopsis, usage, references) following the `docs/specs/_template.md` structure.
+12. If `allow_insert_todos=true`, insert todos into the `todos` SQL table; otherwise only write `run/skills/update-docs/<timestamp>/todos.json`.
+
+## Quality rules
+
+- Do not execute scripts that perform system changes, network activity, or long-running operations. Only run `--help`/`-h` style invocations when `allow_run=true` and the invocation returns quickly.
+- Do not overwrite human-authored documentation unless explicitly allowed; always create a `.bak` or `.orig` copy and annotate autogenerated content.
+- Each generated spec must contain a metadata header and a References section that points to the exact source lines or doc files used to produce the spec.
+- Each todo must include clear acceptance criteria and required files to change.
+
+## References and evidence gathering
+
+- Primary: repository tree and `git` history (HEAD and recent commits).
+- Docs: `README.md`, `AGENT.md`, `docs/`, `.github/skills/*/SKILL.md`, `.github/agents/*`.
+- Scripts: `scripts/`, `scripts/skills/` (use shebangs, top comments, and `--help` outputs).
+- Source: `src/` (when present), public function signatures, module docstrings, and file-level comments.
+- Use grep for TODO/FIXME and the domain keywords: `agent`, `swarm`, `autonom`, `self[- ]?improv`, `optimi`, `evolv`, `decentral`, `secure`, `copilot`, `supervisor`, `daemon`, `director`.
+
+## Implementation notes
+
+- Recommended helper script: `scripts/docs.sh` (should call a safe scanner/transformer). If no helper exists, use this SKILL instruction to implement tooling.
+- After updating or generating specs, run `scripts/docs.sh --build` (or let the update-docs skill invoke it) to compile the project design/user guide; this produces `docs/v-daemon-user-design-guide.md` and `docs/v-daemon-user-design-guide.pdf` (PDF generated only when `pandoc` is available).
+- When generating specs, aim to mirror the runtime layout: `docs/specs/<top-level>/*` -> maps from `scripts/` and `src/` directories.
+- Provide small examples in generated spec files to make them actionable for contributors.
+
+## Outputs and acceptance
+
+- The skill must write the readable report (informational only) and structured JSON/todos under `run/skills/update-docs/<timestamp>/`.
+- Acceptance: `run/skills/update-docs/<timestamp>/report.json`, `run/skills/update-docs/<timestamp>/todos.json`, and a set of `docs/specs/*` files (if `update_specs=true`) are produced; todos are actionable and include complexity and impact.
+
+## Safety
+
+- Avoid running any command that modifies remote systems, installs packages, or sends network requests.
+- If uncertain whether a script invocation is safe, skip runtime execution and record a note in raw captures explaining why.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/p3ngu1nzz) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
