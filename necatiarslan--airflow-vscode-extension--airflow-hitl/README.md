@@ -1,0 +1,13 @@
+# airflow-hitl
+
+> Skill by [necatiarslan](https://github.com/necatiarslan/airflow-vscode-extension) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [necatiarslan/airflow-vscode-extension](https://github.com/necatiarslan/airflow-vscode-extension/tree/main/skills/airflow-hitl)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
