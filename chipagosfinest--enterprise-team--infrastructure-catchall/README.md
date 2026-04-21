@@ -1,0 +1,13 @@
+# infrastructure-catchall
+
+> Skill by [chipagosfinest](https://github.com/chipagosfinest/enterprise-team) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [chipagosfinest/enterprise-team](https://github.com/chipagosfinest/enterprise-team/tree/main/enterprise-team/skills/infrastructure-catchall)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
