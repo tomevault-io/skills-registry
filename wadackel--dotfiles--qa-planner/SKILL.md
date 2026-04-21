@@ -1,0 +1,253 @@
+---
+name: qa-planner
+description: Designs and executes QA test cases. Use for "テストして", "QA観点で確認", "動作確認して", "検証して", "QAして", "test this", "QA check", "merge前に確認", or after feature implementation / dependency updates. Also use in plan mode when designing QA or verification plans to apply risk-based prioritization and systematic test design techniques. Use when this capability is needed.
+metadata:
+  author: wadackel
+---
+
+# QA Planner
+
+Design test cases and execute them. Claude runs all tests directly -- only delegate to the user when Claude genuinely cannot execute (physical devices, paid services requiring unavailable credentials, visual design judgment).
+
+**Prerequisite**: The application under test must already be running. This skill does not handle server startup.
+
+## Workflow
+
+### Step 1: Determine Mode
+
+- **Mode A (Plan Review QA)**: Called during plan mode or "what should we test?"
+  -> Output: test case list to append to the plan. No execution.
+- **Mode B (Post-Implementation Verification)**: Feature is implemented, user wants verification
+  -> Output: executed test results with pass/fail status.
+- **Mode C (Agent Team QA)**: Large-scale verification where parallel execution is beneficial.
+  Use when: 3+ pages or 4+ independent test phases, bug fix + re-verification cycle is expected,
+  or user explicitly requests a team structure.
+  -> Output: same as Mode B, but orchestrated via a QA Tester agent.
+
+  **Mode C structure (Lead + QA Tester as base):**
+  1. `TeamCreate` -> spawn QA Tester (general-purpose) for Chrome MCP testing
+  2. Lead (self) handles triage: receives bug reports and decides repair strategy
+  3. **Simple bugs** (1-3 lines, location is obvious): Lead fixes directly
+  4. **Complex bugs** (root-cause investigation needed, multiple files): spawn Fixer on demand
+  5. After fix: `SendMessage` to QA Tester for re-verification
+  6. Shutdown order: `SendMessage(shutdown_request)` to all members -> wait for all terminated -> `TeamDelete`
+
+### Step 2: Understand the Target
+
+1. Read the feature description, PR diff (`git diff`), or plan document
+2. Identify the application type:
+
+| Signal | Type |
+|--------|------|
+| Routes, pages, UI components, HTML/CSS/JSX | **WebApp** |
+| Endpoint handlers, REST/GraphQL, OpenAPI spec | **API Server** |
+| CLI argument parsing, subcommands, `process.argv`/`clap`/`argparse` | **CLI Tool** |
+| Cron jobs, queue workers, event handlers | **Background Service** |
+| Library exports, no main entry point | **Library** |
+
+3. Identify the tech stack (framework, language, existing test runner)
+4. Read relevant source files to understand the feature's behavior
+5. Assess risk areas: what parts of this change are most likely to break, and what is the business impact if they do?
+6. **If using AskUserQuestion and user selects verbal explanation option** (e.g., "口頭で説明"), provide structured guidance on what information is needed:
+
+   ```
+   次の情報を教えてください：
+
+   - **機能の目的**: この機能は何をするものですか？
+   - **主要なユースケース**: ユーザーはどのようにこの機能を使いますか？
+   - **入力/パラメータ**: どのような入力フィールドやパラメータがありますか？
+   - **検証ルール**: 入力に対してどのような検証が必要ですか？（例: 必須項目、形式、長さ制限）
+   - **期待される動作**: 成功時と失敗時の動作は？
+   - **特別な考慮事項**: セキュリティ、パフォーマンス、エッジケースなど
+   ```
+
+   After receiving this information, proceed with Step 3 (Design Test Cases).
+
+### Step 3: Design Test Cases
+
+#### Risk-Based Prioritization
+
+Assess each test scenario using a risk matrix (Impact x Likelihood):
+
+| | Low Likelihood | Medium Likelihood | High Likelihood |
+|---|---|---|---|
+| **High Impact** (auth, data loss, crash) | Medium | High | Critical |
+| **Medium Impact** (UX degradation, perf) | Low | Medium | High |
+| **Low Impact** (cosmetic, minor) | Skip | Low | Medium |
+
+- **Critical**: Must test first. Block release if failing.
+- **High**: Test in current cycle.
+- **Medium**: Test if time permits.
+- **Low/Skip**: Document but deprioritize.
+
+Factors increasing **likelihood**: new/modified code, complex logic, external dependencies, concurrency, prior defect history.
+Factors increasing **impact**: auth/authz, payment, data mutation, public-facing features, security boundaries.
+
+#### Test Design Techniques
+
+Apply systematically per application type. See [references/test-patterns.md](references/test-patterns.md) for detailed guidance and examples.
+
+| Technique | Best For | Example |
+|-----------|----------|---------|
+| **Equivalence Partitioning** | Input validation (all types) | Valid/invalid email classes for a form field |
+| **Boundary Value Analysis** | Numeric limits, string lengths | Password 7/8/16/17 chars for 8-16 range |
+| **State Transition** | Workflows, lifecycles | Order: draft->submitted->approved->shipped |
+| **Pairwise Testing** | Multi-parameter interactions | Browser x OS x user role combinations |
+
+#### Test Case Format
+
+```
+[ID] [Risk: Critical/High/Medium/Low] Description
+  Given: precondition
+  When: action
+  Then: expected result
+  Design: [technique applied: EP/BVA/STT/Pairwise]
+```
+
+Category coverage checklist:
+- [ ] Happy path (critical path works)
+- [ ] Input validation (EP + BVA)
+- [ ] State transitions (if applicable)
+- [ ] Error handling & edge cases
+- [ ] Security (injection, access control)
+- [ ] Regression (existing features unbroken)
+
+### Step 4: Execute Tests (Mode B only)
+
+#### Tool Selection
+
+| Type | Approach |
+|------|----------|
+| WebApp | Use **agent-browser** CLI for browser automation (open, fill, click, snapshot, screenshot, console/network checks) |
+| API Server | Use `curl -s -w "\n%{http_code}"` to capture response body and status code |
+| CLI Tool | Execute commands directly via `Bash`, verify stdout, stderr, and exit codes |
+| Background Service | Combine `curl` (trigger/check endpoints) + log inspection |
+| Library | Run existing test suite (`vitest`, `jest`, `pytest`, `cargo test`, `go test`) or write inline test scripts |
+
+#### Execution Rules
+
+- Execute Critical and High risk tests first. If Critical fails, stop and report.
+- Record each test as PASS / FAIL / SKIP
+- On FAIL: capture actual vs. expected, include evidence (screenshot, response body)
+- On SKIP: document reason (user action required? environment missing?)
+- If an existing test suite covers a case, run it instead of duplicating
+
+#### Evidence Recording (WebApp)
+
+Record evidence to prove test execution results. Commands reference `agent-browser` skill.
+
+**Video recording workflow:**
+1. Before executing the first test case: `agent-browser record start /tmp/qa-test-evidence.webm`
+2. Execute all test cases sequentially
+3. After the last test case completes: `agent-browser record stop`
+
+One continuous recording captures the entire session. Do not start/stop per test case.
+
+**Screenshot rules:**
+- Take a screenshot **after each test action** that produces a visible result
+- Also capture **important intermediate states** (modal open, preview displayed, loading complete)
+- On FAIL: always capture the error state screenshot
+- Naming: `qa-{test-id}-{description}.png` (e.g., `qa-t1-home.png`, `qa-t4-upload-preview.png`)
+- Save to `/tmp/` (temporary files, not committed)
+
+**WebApp timing caveat**: Apps that populate UI via WebSocket or async fetch may appear blank immediately after navigation -- the data hasn't arrived yet, not a bug. Always use `agent-browser wait` to wait for expected content before screenshotting. If `wait_for` times out, inspect network requests to verify data was actually received before assuming a rendering failure.
+
+**Can Claude execute this?**
+
+```
+UI rendering/interaction?  → agent-browser        → EXECUTE
+HTTP endpoint?             → curl                 → EXECUTE
+CLI command?               → Bash                 → EXECUTE
+Library function?          → test suite           → EXECUTE
+Needs hardware/paid creds? →                      → ASK USER
+Otherwise?                 → Find a way           → EXECUTE
+```
+
+#### Exploratory Testing (Optional, Mode B)
+
+After structured tests pass, run a brief exploratory session focused on high-risk areas:
+
+1. Define a charter: "Explore [feature] to discover issues with [risk area]"
+2. Time-box: 5-10 interactions
+3. Focus on unexpected states, unusual input combinations, rapid repeated actions
+4. Document any anomalies found
+
+### Step 5: Report Results
+
+**Mode A output:**
+
+```
+## QA Test Plan
+
+### Risk Assessment
+- High risk areas: [identified risk areas with reasoning]
+- Change scope: [files/components affected]
+
+### Test Cases (N cases: X Critical, Y High, Z Medium)
+
+| ID | Risk | Category | Description | Technique | Given | When | Then |
+|----|------|----------|-------------|-----------|-------|------|------|
+| T1 | Critical | Happy path | ... | - | ... | ... | ... |
+| T2 | High | Input validation | ... | BVA | ... | ... | ... |
+
+### Testing Approach
+- Tools: [which tools/skills will be used]
+- Scope: [N automated / M manual tests]
+- Coverage: [which categories are covered]
+```
+
+**Mode B output:**
+
+```
+## QA Verification Results
+
+### Summary
+- **Result**: X/Y passed, Z failed, W skipped
+- **Risk coverage**: N/N Critical passed, M/M High passed
+- **Categories tested**: [list]
+
+### Results
+
+| ID | Risk | Description | Result | Notes |
+|----|------|-------------|--------|-------|
+| T1 | Critical | ... | PASS | ... |
+| T2 | High | ... | FAIL | ... |
+
+### Failed Tests
+
+#### T2: [description]
+- **Severity**: [Critical/High/Medium/Low — based on actual impact observed]
+- **Expected**: ...
+- **Actual**: ...
+- **Evidence**: [screenshot path or response body]
+- **Root cause**: [analysis if determinable]
+- **Suggested fix**: [specific code change if identifiable]
+
+### Issues Found
+[bugs, concerns, or observations discovered during testing]
+
+### Evidence
+- **Video**: `/tmp/qa-test-evidence.webm`
+- **Screenshots**:
+  - `/tmp/qa-t1-home.png` - T1: [description]
+  - `/tmp/qa-t2-error.png` - T2: [description]
+  - ...
+
+### Recommendations
+[next steps: fix critical issues, add regression tests, etc.]
+```
+
+## Tips
+
+- When an existing test suite exists, run it first -- it may already cover many cases.
+- If the project has a CLAUDE.md with test commands, use those.
+- Apply BVA at every input boundary: min-1, min, max, max+1.
+- For stateful features (e.g., workflows), always test invalid state transitions too.
+
+## Resources
+
+- [references/test-patterns.md](references/test-patterns.md): Test design technique examples and application-type-specific test scenarios.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wadackel) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
