@@ -1,0 +1,13 @@
+# refactoring-expert
+
+> Skill by [thiagobfb](https://github.com/thiagobfb/guitar-gpt) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [thiagobfb/guitar-gpt](https://github.com/thiagobfb/guitar-gpt/tree/main/.codex/skills/refactoring-expert)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
