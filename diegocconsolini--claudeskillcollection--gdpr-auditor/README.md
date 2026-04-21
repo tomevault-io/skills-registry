@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [diegocconsolini/claudeskillcollection](https://github.com/diegocconsolini/claudeskillcollection/tree/main/gdpr-auditor)
+Original source: [diegocconsolini/claudeskillcollection](https://github.com/diegocconsolini/claudeskillcollection/tree/main/claude-desktop-skills/gdpr-auditor)
 
 ---
 
