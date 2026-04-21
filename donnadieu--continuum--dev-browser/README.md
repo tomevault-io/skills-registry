@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [donnadieu/continuum](https://github.com/donnadieu/continuum/tree/main/.claude/skills/dev-browser)
+Original source: [donnadieu/continuum](https://github.com/donnadieu/continuum/tree/main/.claude/plugins/ralph-advanced/skills/dev-browser)
 
 ---
 
