@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [okeysir198/p20251122-claude-skills](https://github.com/okeysir198/p20251122-claude-skills/tree/main/tts-livekit-plugin)
+Original source: [okeysir198/p20251122-claude-skills](https://github.com/okeysir198/p20251122-claude-skills/tree/main/skills-reference/tts-livekit-plugin)
 
 ---
 
