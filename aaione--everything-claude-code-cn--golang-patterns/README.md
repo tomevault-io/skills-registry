@@ -1,0 +1,13 @@
+# golang-patterns
+
+> Skill by [aaione](https://github.com/aaione/everything-claude-code-cn) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [aaione/everything-claude-code-cn](https://github.com/aaione/everything-claude-code-cn/tree/main/skills/golang-patterns)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
