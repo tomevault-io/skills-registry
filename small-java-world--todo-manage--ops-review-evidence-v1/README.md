@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [small-java-world/todo-manage](https://github.com/small-java-world/todo-manage/tree/main/todo-api-client-sample/.claude/skills/ops.review.evidence-v1)
+Original source: [small-java-world/todo-manage](https://github.com/small-java-world/todo-manage/tree/main/todo-api-skills/ops.review.evidence-v1)
 
 ---
 
