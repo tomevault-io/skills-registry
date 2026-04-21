@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [julianoczkowski/create-trimble-app](https://github.com/julianoczkowski/create-trimble-app/tree/main/templates/react/.cursor/skills/run-lint-checks)
+Original source: [julianoczkowski/create-trimble-app](https://github.com/julianoczkowski/create-trimble-app/tree/main/templates/angular/.cursor/skills/run-lint-checks)
 
 ---
 
