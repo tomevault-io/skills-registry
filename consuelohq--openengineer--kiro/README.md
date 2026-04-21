@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [consuelohq/openengineer](https://github.com/consuelohq/openengineer/tree/main/.opencode/skills/kiro)
+Original source: [consuelohq/openengineer](https://github.com/consuelohq/openengineer/tree/main/.kiro/skills/kiro)
 
 ---
 
