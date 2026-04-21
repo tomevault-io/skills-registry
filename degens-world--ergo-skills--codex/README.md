@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [degens-world/ergo-skills](https://github.com/degens-world/ergo-skills/tree/main/skills/ergo-eip-004/codex)
+Original source: [degens-world/ergo-skills](https://github.com/degens-world/ergo-skills/tree/main/skills/ergo-fleet-sdk/codex)
 
 ---
 
