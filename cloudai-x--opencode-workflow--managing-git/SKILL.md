@@ -2,7 +2,7 @@
 name: managing-git
 description: Guides git workflows, branching strategies, commit conventions, and version control best practices. Use when managing repositories, creating branches, or handling merges. Use when this capability is needed.
 metadata:
-  author: CloudAI-X
+  author: cloudai-x
 ---
 
 # Managing Git
@@ -466,5 +466,5 @@ VERSIONING:
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/CloudAI-X) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/cloudai-x) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
