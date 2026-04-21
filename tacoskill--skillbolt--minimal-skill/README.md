@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tacoskill/skillbolt](https://github.com/tacoskill/skillbolt/tree/main/packages/core/tests/fixtures/minimal-skill)
+Original source: [tacoskill/skillbolt](https://github.com/tacoskill/skillbolt/tree/main/packages/doc/tests/fixtures/minimal-skill)
 
 ---
 
