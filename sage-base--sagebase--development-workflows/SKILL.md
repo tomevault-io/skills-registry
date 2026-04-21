@@ -1,0 +1,266 @@
+---
+name: development-workflows
+description: Polibaseの開発ワークフローとパターンを説明します。Docker-first開発、環境変数管理、新機能追加手順など、日常的な開発作業のベストプラクティスをカバーします。 Use when this capability is needed.
+metadata:
+  author: sage-base
+---
+
+# Development Workflows（開発ワークフロー）
+
+## 目的
+Polibaseの開発パターン、ワークフロー、ベストプラクティスを理解し、効率的で一貫性のある開発を実現します。
+
+## いつアクティベートするか
+このスキルは以下の場合に自動的にアクティベートされます：
+- 新機能の実装を開始する時
+- ユーザーが「新機能」「フィーチャー追加」「開発フロー」と言った時
+- セットアップや環境構築時
+- Docker関連の作業時
+
+## 開発パターン
+
+### 1. Docker-first開発
+
+**すべてのコマンドはDockerコンテナ内で実行します**
+
+#### 基本パターン
+```bash
+# コマンド実行の基本形
+docker compose -f docker/docker-compose.yml [-f docker/docker-compose.override.yml] exec sagebase <command>
+
+# 例: Pythonスクリプト実行
+docker compose -f docker/docker-compose.yml [-f docker/docker-compose.override.yml] exec sagebase uv run python src/script.py
+
+# 例: テスト実行
+docker compose -f docker/docker-compose.yml [-f docker/docker-compose.override.yml] exec sagebase uv run pytest
+
+# 例: データベース接続
+docker compose -f docker/docker-compose.yml [-f docker/docker-compose.override.yml] exec postgres psql -U sagebase_user -d sagebase_db
+```
+
+#### ショートカット（just コマンド）
+```bash
+# just を使った短縮形
+just exec uv run python src/script.py
+just test
+just db
+```
+
+#### ⚠️ バインドマウントの範囲
+
+Dockerコンテナにバインドマウントされているのは以下のディレクトリ/ファイルのみです：
+
+- `src/` → `/app/src/`
+- `tests/` → `/app/tests/`
+- `baml_src/` → `/app/baml_src/`
+- `pyproject.toml` → `/app/pyproject.toml`
+- `.streamlit/` → `/app/.streamlit/`
+
+**`scripts/` はマウントされていません。** `scripts/` 配下のファイルを変更した場合は、コンテナの再ビルドが必要です：
+
+```bash
+docker compose -f docker/docker-compose.yml up -d --build sagebase
+```
+
+#### 理由
+- 環境の一貫性
+- 依存関係の管理
+- CI/CDとの整合性
+- チーム全体で同じ環境
+
+### worktree環境でのDocker操作
+
+git worktree内でDocker操作を行う場合、**mainリポジトリのコンテナを直接触らず、worktree専用のコンテナを使用すること**。
+
+#### 基本ルール
+
+1. **worktree内では `just up-detached` でworktree専用コンテナを起動する**
+   - worktreeのコードが反映されたイメージがビルドされる
+   - mainリポジトリとはポートが分離される
+
+2. **操作は `just exec` / `just down` を使う**
+   ```bash
+   # worktree内でのコマンド実行
+   just exec uv run python scripts/my_script.py
+
+   # worktree内のコンテナを停止
+   just down
+   ```
+
+3. **`docker exec docker-sagebase-1` を直接使わない**
+   - `docker-sagebase-1` はmainリポジトリのコンテナであり、worktreeのコードが反映されていない
+   - mainのDBを意図せず汚染するリスクがある
+
+#### ⚠️ 注意事項
+
+- `sagebase_db` ボリュームは全worktreeで共有されている。他のworktreeのコンテナを停止してもデータは失われない
+- 同一ホストで複数のsagebaseコンテナは共存できない（ポート競合）。他のworktreeのコンテナは事前に停止すること
+- `scripts/` はバインドマウントされていないため、変更後は `docker compose -f docker/docker-compose.yml up -d --build sagebase` で再ビルドが必要
+
+### 2. Multi-phase Processing
+
+**処理は必ず決められた順序で実行します**
+
+#### 議事録処理の順序
+```bash
+# ステップ1: 議事録を分割
+docker compose -f docker/docker-compose.yml [-f docker/docker-compose.override.yml] exec sagebase uv run sagebase process-minutes
+
+# ステップ2: 話者を抽出
+docker compose -f docker/docker-compose.yml [-f docker/docker-compose.override.yml] exec sagebase uv run python src/extract_speakers_from_minutes.py
+
+# ステップ3: 話者をマッチング
+docker compose -f docker/docker-compose.yml [-f docker/docker-compose.override.yml] exec sagebase uv run python update_speaker_links_llm.py
+```
+
+**⚠️ この順序を変更しないこと！**
+
+#### Web Scraping → GCS → Processing
+```bash
+# ステップ1: スクレイピング + GCS アップロード
+docker compose -f docker/docker-compose.yml [-f docker/docker-compose.override.yml] exec sagebase uv run sagebase scrape-minutes --upload-to-gcs
+
+# ステップ2: GCSから処理
+docker compose -f docker/docker-compose.yml [-f docker/docker-compose.override.yml] exec sagebase uv run sagebase process-minutes --meeting-id <id>
+
+# ステップ3: 以降は標準フローと同じ
+```
+
+### 3. 環境変数の使い分け
+
+#### Docker環境
+```bash
+# docker-compose.yml で定義
+DATABASE_URL=postgresql://sagebase_user:sagebase_password@postgres:5432/sagebase_db
+GOOGLE_API_KEY=${GOOGLE_API_KEY}
+```
+
+#### ローカル環境
+```bash
+# .env ファイルで定義
+DATABASE_URL=postgresql://sagebase_user:sagebase_password@localhost:5432/sagebase_db
+GOOGLE_API_KEY=your-api-key-here
+```
+
+**注意:** DATABASE_URLのホスト名が異なります
+- Docker: `postgres` (サービス名)
+- ローカル: `localhost`
+
+### 4. 新機能追加の手順
+
+Clean Architectureに従って、内側から外側へ実装します：
+
+#### ステップ1: Domain層
+```bash
+# Entity定義
+src/domain/entities/new_entity.py
+
+# Repository Interface定義
+src/domain/repositories/new_entity_repository.py
+
+# Domain Service（必要な場合）
+src/domain/services/new_entity_domain_service.py
+```
+
+**⚠️ `__init__.py`の更新を忘れないこと:**
+- `src/domain/entities/__init__.py` にエンティティのimport + `__all__`追加
+- `src/domain/repositories/__init__.py` にリポジトリIFのimport + `__all__`追加
+
+#### ステップ2: Application層
+```bash
+# UseCase実装
+src/application/usecases/manage_new_entity_usecase.py
+
+# DTO定義
+src/application/dtos/new_entity_dto.py
+```
+
+#### ステップ3: Infrastructure層
+```bash
+# Repository実装
+src/infrastructure/persistence/new_entity_repository_impl.py
+
+# マイグレーション作成
+database/migrations/XXX_create_new_entity.sql
+```
+
+#### ステップ4: Interfaces層
+```bash
+# CLI追加（必要な場合）
+src/interfaces/cli/new_entity_commands.py
+
+# Web UI追加（必要な場合）
+src/interfaces/web/streamlit/views/new_entity_view.py
+```
+
+#### ステップ5: テスト
+```bash
+# 各層のテスト作成
+tests/unit/domain/test_new_entity.py
+tests/unit/application/test_manage_new_entity_usecase.py
+tests/integration/test_new_entity_repository.py
+```
+
+### 5. RepositoryAdapter の使い方
+
+`RepositoryAdapter` は async リポジトリを sync コンテキストから透過的に使うためのブリッジです。
+呼び出し元のコンテキストを自動検出し、sync/async を適切に処理します。
+
+```python
+# ✅ CORRECT: RepositoryAdapterは同期コンテキストで直接呼べる
+repo = RepositoryAdapter(ElectionRepositoryImpl)
+elections = repo.get_by_governing_body(governing_body_id)
+
+# ❌ WRONG: asyncio.run()で包むとTypeError（結果は既に同期的に返されている）
+repo = RepositoryAdapter(ElectionRepositoryImpl)
+elections = asyncio.run(repo.get_by_governing_body(governing_body_id))
+# → TypeError: An asyncio.Future, a coroutine or an awaitable is required
+```
+
+**DIコンテナ経由のリポジトリ**は `RepositoryAdapter` を通さず直接 async メソッドを返すため、
+Presenter では `self._run_async()` でラップする必要があります。
+
+```python
+# DIコンテナ経由（Presenter内）
+self.repo = self.container.repositories.some_repository()
+result = self._run_async(self.repo.get_all())  # asyncメソッドを_run_asyncでラップ
+```
+
+## クイックチェックリスト
+
+### 環境セットアップ
+- [ ] **Dockerが起動しているか**
+- [ ] **`.env` ファイルが存在するか** (`cp .env.example .env`)
+- [ ] **GOOGLE_API_KEYが設定されているか**
+- [ ] **コンテナが起動しているか** (`docker compose -f docker/docker-compose.yml [-f docker/docker-compose.override.yml] up -d`)
+
+### 新機能実装前
+- [ ] **Domain層から開始するか**
+- [ ] **Repository Interfaceを定義したか**
+- [ ] **DTOを定義したか**
+- [ ] **マイグレーションファイルを作成したか**
+
+### 実装中
+- [ ] **Docker内でコマンド実行しているか**
+- [ ] **処理順序を守っているか**
+- [ ] **環境変数を正しく使い分けているか**
+
+### 実装後
+- [ ] **各層のテストを書いたか**
+- [ ] **ドキュメントを更新したか**
+- [ ] **マイグレーションをテストしたか** (`./reset-database.sh`)
+
+## 詳細リファレンス
+
+詳細なワークフローとトラブルシューティングは [reference.md](reference.md) を参照してください。
+
+## 関連スキル
+
+- [clean-architecture-checker](../clean-architecture-checker/): アーキテクチャガイド
+- [test-writer](../test-writer/): テスト作成ガイド
+- [migration-helper](../migration-helper/): データベース移行ガイド
+- [data-processing-workflows](../data-processing-workflows/): データ処理フロー
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sage-base) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
