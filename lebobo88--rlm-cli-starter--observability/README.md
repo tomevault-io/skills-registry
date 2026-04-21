@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lebobo88/rlm-cli-starter](https://github.com/lebobo88/rlm-cli-starter/tree/main/.claude/skills/observability)
+Original source: [lebobo88/rlm-cli-starter](https://github.com/lebobo88/rlm-cli-starter/tree/main/.gemini/skills/observability)
 
 ---
 
