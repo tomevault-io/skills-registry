@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [seoulmomenttech/seoul-moment-fe](https://github.com/seoulmomenttech/seoul-moment-fe/tree/main/.gemini/skills/api-to-hook)
+Original source: [seoulmomenttech/seoul-moment-fe](https://github.com/seoulmomenttech/seoul-moment-fe/tree/main/.codex/skills/api-to-hook)
 
 ---
 
