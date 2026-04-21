@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pianzhu/my-claude-skills](https://github.com/pianzhu/my-claude-skills/tree/main/deep-analysis)
+Original source: [pianzhu/my-claude-skills](https://github.com/pianzhu/my-claude-skills/tree/main/skills/deep-analysis)
 
 ---
 
