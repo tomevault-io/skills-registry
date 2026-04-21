@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [code-sensei/artemiskit](https://github.com/code-sensei/artemiskit/tree/main/.claude/skills/remotion-best-practices)
+Original source: [code-sensei/artemiskit](https://github.com/code-sensei/artemiskit/tree/main/.agents/skills/remotion-best-practices)
 
 ---
 
