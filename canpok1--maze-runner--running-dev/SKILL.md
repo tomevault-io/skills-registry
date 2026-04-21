@@ -1,0 +1,54 @@
+---
+name: running-dev
+description: タスクIssueの実装からPR作成・レビュー対応・振り返りまでを一括実行します。タスクIssueを自動的に完了させる場合に使用してください。 Use when this capability is needed.
+metadata:
+  author: canpok1
+---
+## 手順
+
+このチェックリストをコピーし、進行状況の追跡に使用してください：
+
+タスク進捗：
+- [ ] ステップ1：GitHub Issueの番号を決定する
+- [ ] ステップ2：`in-progress-by-claude` ラベルを付与する
+- [ ] ステップ3：Issueの有効性チェックを行う
+- [ ] ステップ4：`/solving-issue` コマンドの手順を実行する（実装・レビュー・PR作成・マージ）
+- [ ] ステップ5：`/running-retro` コマンドの手順を実行する（振り返り）
+
+1. GitHub Issueの番号を決定する。
+    - 引数でIssue番号が指定されていればそれを使用。
+    - 引数がIssue URLならURLから番号を抽出。
+    - 引数未指定の場合、以下の条件でIssueを自動選択:
+        - `assign-to-claude` ラベルが付いている
+        - `in-progress-by-claude` ラベルが付いていない
+        - open状態である
+        - 上記条件に合致する最も古いIssueを1件選択
+    - 自動選択の対象がなければ処理を終了。
+2. 対象Issueに `in-progress-by-claude` ラベルを付与する。
+    - ラベル付与は冪等であり、既にラベルが付与されている場合はこの手順をスキップする
+    - **注記**: `scripts/schedule.sh` から呼び出される場合は、呼び出し元で事前にラベルが付与されているため、このケースに該当する（`schedule.sh` の `lock_task` 関数で付与済み）
+3. Issueの有効性チェックを行う。
+    - **親Issueの状態確認**: 親Issueがクローズ済みなら「対応不要」と判断する。
+    - **マージ済みPRの確認**: Issue番号に関連するマージ済みPRを検索し、同等の変更が既にマージされている場合は「対応不要」と判断する。
+    - **コードベースとの整合性**: 変更対象が既に存在しない、または期待通りの状態なら「対応不要」と判断する。
+    - **判定**: 「対応不要」と判断された場合、`assign-to-claude` ラベルと `in-progress-by-claude` ラベルを自動的に削除し、理由をコメントとしてIssueに追加して終了する。有効なら手順4へ。
+4. `/solving-issue` コマンドを実行（実装・レビュー・PR作成・マージ）。
+5. `/running-retro` コマンドを実行（振り返り）。
+
+## エージェント利用ルール
+
+- 会話セッション終了時に `/running-retro` コマンドで振り返りを実行すること
+    - 振り返りで改善点が見つかった場合はGitHub Issueを作成すること
+    - 改善不要と判断した場合はIssueを作成しないこと
+
+## ラベルの説明
+
+- `assign-to-claude`: Claudeに自動対応させるために付与するラベル。Issue自動選択時の条件として使用される
+- `in-progress-by-claude`: Claudeが対応中であることを示すラベル。対応開始時に付与し、重複対応を防止する
+
+## 注意点
+- エラー発生時は報告し作業を中断する。
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/canpok1) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
