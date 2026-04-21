@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bizcad/roadtrip](https://github.com/bizcad/roadtrip/tree/main/.claude/skills/git-push-autonomous)
+Original source: [bizcad/roadtrip](https://github.com/bizcad/roadtrip/tree/main/.github/skills/git-push-autonomous)
 
 ---
 
