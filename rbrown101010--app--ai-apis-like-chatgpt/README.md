@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rbrown101010/app](https://github.com/rbrown101010/app/tree/main/webapp/skills/ai-apis-like-chatgpt)
+Original source: [rbrown101010/app](https://github.com/rbrown101010/app/tree/main/.claude/skills/ai-apis-like-chatgpt)
 
 ---
 
