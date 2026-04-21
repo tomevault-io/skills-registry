@@ -1,0 +1,34 @@
+---
+name: pr-review-handler
+description: GitHub PR のレビュー指摘（自動レビューボット含む）を gh コマンドで取得・分析し、対応要否の判断、コード修正、不要な指摘への返信を一括で行うワークフロー。 Use when this capability is needed.
+metadata:
+  author: hiroky1983
+---
+
+# PR Review Handler (Claude Code Reference)
+
+このスキルは、プロジェクトルートにあるメインのスキルディレクトリを参照するためのものです。
+
+## 参照先
+
+詳細は以下のディレクトリにあるファイルを確認してください。
+
+- **メインディレクトリ**: `/Users/yamadahiroki/myspace/talk/docs/skills/pr-review-handler`
+- **主要なファイル**: `/Users/yamadahiroki/myspace/talk/docs/skills/pr-review-handler/SKILL.md`
+
+## 指示 (For Claude Code)
+
+Claude Code がこのスキルを介してレビュー対応を行う際は、必ず上記のメインディレクトリ内にある `references/` の内容を読み込み、そこに記載されているワークフロー、判断基準、および実装ルールを遵守してください。
+
+### 主要なワークフロー
+
+1. **レビューコメントの取得**: `gh` コマンドで PR のレビューとコメントを一括取得
+2. **指摘内容の分類**: 指摘元・重要度・内容をテーブルに整理
+3. **対応要否の判断**: プロジェクトのコンテキストを考慮して判断
+4. **コード修正**: 対応が必要な指摘に対してコードを修正しコミット
+5. **返信投稿**: 対応不要の指摘に対して理由を添えて返信
+6. **完了報告**: 対応結果のサマリーをテーブル形式で提示
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hiroky1983) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
