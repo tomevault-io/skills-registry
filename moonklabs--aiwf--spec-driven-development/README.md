@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [moonklabs/aiwf](https://github.com/moonklabs/aiwf/tree/main/skills/spec-driven-development)
+Original source: [moonklabs/aiwf](https://github.com/moonklabs/aiwf/tree/main/claude-code/aiwf/ko/.claude/skills/spec-driven-development)
 
 ---
 
