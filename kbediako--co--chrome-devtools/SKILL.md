@@ -1,0 +1,45 @@
+---
+name: chrome-devtools
+description: Control and inspect Chrome via the Chrome DevTools MCP server (navigate, interact, screenshots, console, network, perf). Use when this capability is needed.
+metadata:
+  author: kbediako
+---
+
+# Chrome DevTools (MCP)
+
+Use this skill when you need browser-grounded evidence (UI screenshots, console errors, network failures, perf traces) or when a task requires real page interaction.
+
+## Preflight
+
+- Ensure the MCP server is configured: `codex-orchestrator devtools setup --yes`.
+- If tools are missing in the current run, enable the server and restart the run:
+  - `codex -c 'mcp_servers.chrome-devtools.enabled=true' ...`
+
+## Default Workflow
+
+1. Open a new page and navigate to the target URL.
+2. Wait for the page to be stable (avoid racing async renders).
+3. Interact with the UI (click/fill/press) to reproduce the behavior.
+4. Collect evidence:
+   - Screenshot(s) for visual state
+   - Console messages for runtime errors
+   - Network requests for failed/slow calls
+5. Close pages when finished.
+
+## Evidence Discipline
+
+- Always capture at least one screenshot when validating UI behavior.
+- When debugging, always include:
+  - `list_console_messages`
+  - `list_network_requests` (and fetch details for failures)
+
+## Related skills
+
+- `standalone-review`: route ad-hoc review checks through a manifest-backed review loop when findings need auditability.
+- `collab-subagents-first`: isolate heavy browser exploration in a dedicated subagent stream to protect parent context.
+- `frontend-design-review`: optional global skill (not bundled in CO release); use when the task emphasis is structured UI/UX critique with evidence-backed recommendations.
+- `long-poll-wait`: monitor long-running browser-driven checks or CI replay loops to terminal state.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/kbediako) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
