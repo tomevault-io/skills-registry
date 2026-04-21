@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [akiojin/llmlb](https://github.com/akiojin/llmlb/tree/main/.claude-plugin/plugins/llmlb-cli/skills/llmlb-cli-usage)
+Original source: [akiojin/llmlb](https://github.com/akiojin/llmlb/tree/main/.codex/skills/llmlb-cli-usage)
 
 ---
 
