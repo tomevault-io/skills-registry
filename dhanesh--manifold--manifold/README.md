@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dhanesh/manifold](https://github.com/dhanesh/manifold/tree/main/plugin/skills/manifold)
+Original source: [dhanesh/manifold](https://github.com/dhanesh/manifold/tree/main/install/manifold)
 
 ---
 
