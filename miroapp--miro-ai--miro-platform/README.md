@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [miroapp/miro-ai](https://github.com/miroapp/miro-ai/tree/main/skills/miro-platform)
+Original source: [miroapp/miro-ai](https://github.com/miroapp/miro-ai/tree/main/claude-plugins/miro-solutions/skills/miro-platform)
 
 ---
 
