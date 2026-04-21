@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bluefa/pii-agent-demo](https://github.com/bluefa/pii-agent-demo/tree/main/.claude/skills/worktree)
+Original source: [bluefa/pii-agent-demo](https://github.com/bluefa/pii-agent-demo/tree/main/.codex/skills/worktree)
 
 ---
 
