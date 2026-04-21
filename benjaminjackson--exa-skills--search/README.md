@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [benjaminjackson/exa-skills](https://github.com/benjaminjackson/exa-skills/tree/main/exa-core/skills/search)
+Original source: [benjaminjackson/exa-skills](https://github.com/benjaminjackson/exa-skills/tree/main/exa-websets/skills/search)
 
 ---
 
