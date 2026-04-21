@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [superpyonchix/vscodeenv](https://github.com/superpyonchix/vscodeenv/tree/main/.claude/skills/copilot-customization)
+Original source: [superpyonchix/vscodeenv](https://github.com/superpyonchix/vscodeenv/tree/main/.github/skills/copilot-customization)
 
 ---
 
