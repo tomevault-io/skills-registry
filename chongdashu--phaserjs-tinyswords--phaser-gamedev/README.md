@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chongdashu/phaserjs-tinyswords](https://github.com/chongdashu/phaserjs-tinyswords/tree/main/.claude/skills/phaser-gamedev)
+Original source: [chongdashu/phaserjs-tinyswords](https://github.com/chongdashu/phaserjs-tinyswords/tree/main/.codex/skills/phaser-gamedev)
 
 ---
 
