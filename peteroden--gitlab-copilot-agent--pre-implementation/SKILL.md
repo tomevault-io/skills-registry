@@ -1,0 +1,75 @@
+---
+name: pre-implementation
+description: Mandatory checklist before starting implementation. Use this before writing code for any non-trivial task. Use when this capability is needed.
+metadata:
+  author: peteroden
+---
+
+Run through this checklist before writing any code. Skip a step only if it genuinely does not apply (e.g., no UI = skip designer).
+
+## 1. Requirements Validated
+
+Invoke `@product` to confirm:
+- [ ] The task has a clear problem statement
+- [ ] Acceptance criteria are defined and testable
+- [ ] Scope boundaries are explicit (what's in, what's out)
+
+If the repo is on GitHub, a GitHub Issue must exist with acceptance criteria before proceeding.
+
+## 2. Design Reviewed (if applicable)
+
+Invoke `@architect` if the task involves:
+- New services, APIs, or system boundaries
+- Technology choices or new dependencies
+- Data model changes
+- Non-trivial integration patterns
+
+Confirm:
+- [ ] Approach is sound and consistent with existing architecture
+- [ ] Trade-offs are documented (ADR if decision is hard to reverse)
+
+## 3. UX Reviewed (if applicable)
+
+Invoke `@designer` if the task involves:
+- User-facing UI or interaction changes
+- Developer experience changes (CLI, config, error messages)
+- New workflows that humans will interact with
+
+Confirm:
+- [ ] Interaction patterns are defined
+- [ ] Accessibility requirements are addressed
+
+## 4. Work Tracked
+
+- [ ] GitHub Issue exists with acceptance criteria (or local tracking if repo is unpublished)
+- [ ] Branch created from the issue: `<type>/<issue-number>-<short-description>`
+
+## 5. Implementation Plan
+
+- [ ] Task is ≤200 diff lines (split into stacked PRs if larger)
+- [ ] Devcontainer is running and commands will execute inside it
+
+## 6. Verification Strategy (if applicable)
+
+For infrastructure, security, or integration-heavy tasks:
+- [ ] E2E test approach defined (manual, automated, or gate issue)
+- [ ] Required infrastructure identified (tunnels, sidecars, test accounts)
+- [ ] Platform constraints documented (e.g., Docker Desktop vs Linux differences)
+
+## When to Skip
+
+- **Single-line fixes** (typos, config tweaks): skip entirely.
+- **Documentation-only changes** (README updates, comment fixes): skip steps 2 and 3. Note: new skills, instructions, or agent files are NOT documentation-only — they define process and require product/architecture review.
+- **Exploratory/spike work**: skip, but re-run before converting to a real PR.
+
+## Fast Path
+
+For issues that already have testable acceptance criteria in the GitHub Issue AND the expected diff is ≤100 lines:
+
+- Skip steps 1–3 (requirements, design, and UX are already validated).
+- Start at step 4 (Work Tracked).
+- Still complete steps 5 and 6.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/peteroden) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
