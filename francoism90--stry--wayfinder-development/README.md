@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [francoism90/stry](https://github.com/francoism90/stry/tree/main/.github/skills/wayfinder-development)
+Original source: [francoism90/stry](https://github.com/francoism90/stry/tree/main/.github/copilot/skills/wayfinder-development)
 
 ---
 
