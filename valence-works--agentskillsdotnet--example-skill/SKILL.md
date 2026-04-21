@@ -1,0 +1,38 @@
+---
+name: example-skill
+description: Use when working with an example skill for testing and demonstration
+metadata:
+  author: valence-works
+---
+
+# Example Skill
+
+This is an example skill that demonstrates the structure of a skill definition.
+
+## Instructions
+
+When this skill is activated, the agent should:
+
+1. Read the skill metadata to understand its purpose
+2. Parse the YAML frontmatter for configuration
+3. Load these instructions from the Markdown body
+4. Access any resources in the skill directory if needed
+
+## Usage
+
+This skill is intended for testing and demonstration purposes. It shows:
+
+- YAML frontmatter with metadata
+- Markdown body with instructions
+- Proper structure for skill definitions
+
+## Resources
+
+Skills may include additional resources in subdirectories:
+- `scripts/` - For script files (not executed by default)
+- `references/` - For reference documentation
+- `assets/` - For any other supporting files
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/valence-works) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
