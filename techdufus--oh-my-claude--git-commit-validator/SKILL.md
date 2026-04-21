@@ -2,7 +2,7 @@
 name: git-commit-validator
 description: MUST be used for ANY git workflow that involves committing code. This includes explicit commit requests AND implicit ones like 'ship it', 'wrap it up', or finishing implementation work. Handles staging, message generation, validation, and commit execution with conventional commit format. Use when this capability is needed.
 metadata:
-  author: TechDufus
+  author: techdufus
 ---
 
 # Git Commit Validator
@@ -231,7 +231,7 @@ Problem: Agents were receiving prompts without project context,
 leading to inconsistent code style and missed conventions.
 
 Solution: SessionStart hook now injects a delegation template
-into Claude's context that gets included with every Agent() call.
+into Claude's context that gets included with every Task() call.
 
 Template includes:
 - 7 sections covering task, context, expected output
@@ -255,5 +255,5 @@ The human owns the commit. The tool is irrelevant.
 **Note:** This skill handles COMMIT only. Push must be requested separately.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/TechDufus) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/techdufus) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
