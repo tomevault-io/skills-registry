@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [solidcitadel/uniplan](https://github.com/solidcitadel/uniplan/tree/main/.claude/skills/adr-management)
+Original source: [solidcitadel/uniplan](https://github.com/solidcitadel/uniplan/tree/main/.agent/skills/adr-management)
 
 ---
 
