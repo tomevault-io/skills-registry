@@ -1,0 +1,56 @@
+---
+name: redsub-deploy
+description: Deployment workflow for dev/prod environments. Use when this capability is needed.
+metadata:
+  author: redsub-captain
+---
+
+# Deployment
+
+## Input
+
+`$ARGUMENTS`: `dev` or `prod`.
+
+## Command Resolution
+
+Determine the project's deploy commands:
+1. Check project CLAUDE.md for explicit deploy commands
+2. If not found, read `package.json` scripts for deploy-related scripts (e.g., `deploy`, `deploy:dev`, `deploy:prod`)
+3. If ambiguous, ask the user
+
+## Dev deployment
+
+1. Deploy current branch to dev environment.
+2. Use resolved deploy commands.
+3. Guide user to verify functionality.
+
+## Prod deployment (safety enforced)
+
+### 1. Pre-checks
+- Verify on `main` branch
+- Run `/redsub-validate` if not already validated in this session
+
+### 2. Dev confirmation
+Use `AskUserQuestion` tool:
+- question: "Have you finished testing in the dev environment?"
+- header: "Dev test"
+- options: ["Yes, tested" (proceed to next step), "No, skip" (warn and continue)]
+
+### 3. User approval
+Use `AskUserQuestion` tool:
+- question: "Deploy to PRODUCTION?"
+- header: "Deploy"
+- options: ["Deploy to prod" (execute deployment), "Cancel" (stop pipeline)]
+
+### 4. Execute
+Only after approval. Use resolved deploy commands.
+
+### 5. Verify deployment status.
+
+## Important
+- **Prod deployment ALWAYS requires explicit user approval.**
+- Warn if deploying to prod without prior dev testing.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/redsub-captain) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
