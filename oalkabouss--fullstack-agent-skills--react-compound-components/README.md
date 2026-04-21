@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oalkabouss/fullstack-agent-skills](https://github.com/oalkabouss/fullstack-agent-skills/tree/main/.opencode/skills/react-compound-components)
+Original source: [oalkabouss/fullstack-agent-skills](https://github.com/oalkabouss/fullstack-agent-skills/tree/main/.claude/skills/react-compound-components)
 
 ---
 
