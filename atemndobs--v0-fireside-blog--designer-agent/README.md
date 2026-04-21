@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [atemndobs/v0-fireside-blog](https://github.com/atemndobs/v0-fireside-blog/tree/main/.claude/skills/designer-agent)
+Original source: [atemndobs/v0-fireside-blog](https://github.com/atemndobs/v0-fireside-blog/tree/main/.gemini/skills/designer-agent)
 
 ---
 
