@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [qingj01/axiom](https://github.com/qingj01/axiom/tree/main/.agent/skills/product-design-expert)
+Original source: [qingj01/axiom](https://github.com/qingj01/axiom/tree/main/.agent/skills/_archive/product-design-expert)
 
 ---
 
