@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [schmug/karkinos](https://github.com/schmug/karkinos/tree/main/src/karkinos/data/skills/worker)
+Original source: [schmug/karkinos](https://github.com/schmug/karkinos/tree/main/.claude/skills/worker)
 
 ---
 
