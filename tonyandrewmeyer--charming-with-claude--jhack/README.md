@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tonyandrewmeyer/charming-with-claude](https://github.com/tonyandrewmeyer/charming-with-claude/tree/main/claude-instructions/.claude/skills/jhack)
+Original source: [tonyandrewmeyer/charming-with-claude](https://github.com/tonyandrewmeyer/charming-with-claude/tree/main/experiments/2025-12-28-sungather-k8s-operator/.claude/skills/jhack)
 
 ---
 
