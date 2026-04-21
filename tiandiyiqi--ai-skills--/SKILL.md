@@ -1,103 +1,84 @@
 ---
-name: image-enhancer
-description: Improves the quality of images, especially screenshots, by enhancing resolution, sharpness, and clarity. Perfect for preparing images for presentations, documentation, or social media posts. Use when this capability is needed.
+name: skill-share
+description: Use when working with a skill that creates new Claude skills and automatically shares them on Slack using Rube for seamless team collaboration and skill discovery.
 metadata:
   author: tiandiyiqi
 ---
 
-# 图片增强
-
-此技能可以让您的图像和截图看起来更好——更清晰、更专业。
-
 ## 何时使用此技能
 
-- 改进博客文章或文档的截图质量
-- 在分享到社交媒体之前增强图像
-- 准备用于演示文稿或报告的图像
-- 放大低分辨率图像
-- 锐化模糊照片
-- 清理压缩图像
+当您需要以下操作时使用此技能：
+- **创建新的Claude技能**，具有正确的结构和元数据
+- **生成可分发的技能包**
+- **自动在Slack上分享创建的技能**，以便团队可见
+- **分享前验证技能结构**
+- **打包并分发技能**给您的团队
 
-## 此技能的功能
+ также在以下情况下使用此技能：
+- **用户说他想要创建/分享他的技能**
 
-1. **分析图像质量**：检查分辨率、锐度和压缩伪影
-2. **增强分辨率**：智能放大图像
-3. **改善锐度**：增强边缘和细节
-4. **减少伪影**：清理压缩伪影和噪点
-5. **优化用例**：根据预期用途调整（网络、打印、社交媒体）
+此技能适用于：
+- 在团队工作流程中创建技能
+- 构建需要技能创建+团队通知的内部工具
+- 自动化技能开发流程
+- 协作创建技能并通知团队
 
-## 如何使用
+## 主要功能
 
-### 基本增强
+### 1. 技能创建
+- 创建结构正确的技能目录，包含SKILL.md
+- 生成标准化的scripts/、references/和assets/目录
+- 自动生成带有必需元数据的YAML frontmatter
+- 强制执行命名约定（连字符分隔）
+
+### 2. 技能验证
+- 验证SKILL.md格式和必需字段
+- 检查命名约定
+- 确保打包前的元数据完整性
+
+### 3. 技能打包
+- 创建可分发的zip文件
+- 包含所有技能资产和文档
+- 打包前自动运行验证
+
+### 4. 通过Rube集成Slack
+- 自动将创建的技能信息发送到指定的Slack频道
+- 分享技能元数据（名称、描述、链接）
+- 发布技能摘要以便团队发现
+- 提供技能文件的直接链接
+
+## 工作原理
+
+1. **初始化**：提供技能名称和描述
+2. **创建**：创建具有正确结构的技能目录
+3. **验证**：验证技能元数据的正确性
+4. **打包**：将技能打包成可分发的格式
+5. **Slack通知**：将技能详情发布到团队的Slack频道
+
+## 使用示例
 
 ```
-改进 screenshot.png 的图像质量
+当您要求Claude创建一个名为"pdf-analyzer"的技能时：
+1. 创建/skill-pdf-analyzer/，包含SKILL.md模板
+2. 生成结构化目录（scripts/、references/、assets/）
+3. 验证技能结构
+4. 将技能打包成zip文件
+5. 发布到Slack："新技能已创建：pdf-analyzer - 高级PDF分析和提取功能"
 ```
 
-```
-增强此文件夹中的所有图像
-```
+## 与Rube的集成
 
-### 具体改进
+此技能利用Rube实现：
+- **SLACK_SEND_MESSAGE**：向团队频道发布技能信息
+- **SLACK_POST_MESSAGE_WITH_BLOCKS**：分享格式丰富的技能元数据
+- **SLACK_FIND_CHANNELS**：发现技能公告的目标频道
 
-```
-将此图像放大到4K分辨率
-```
+## 要求
 
-```
-锐化此模糊截图
-```
-
-```
-减少此图像中的压缩伪影
-```
-
-### 批量处理
-
-```
-改进此目录中所有PNG文件的质量
-```
-
-## 示例
-
-**用户**："改进 screenshot-2024.png 的图像质量"
-
-**输出**：
-```
-分析 screenshot-2024.png...
-
-当前规格：
-- 分辨率：1920x1080
-- 格式：PNG
-- 质量：良好，但略有模糊
-
-应用的增强：
-✓ 放大到2560x1440（视网膜）
-✓ 锐化边缘
-✓ 增强文字清晰度
-✓ 优化文件大小
-
-保存为：screenshot-2024-enhanced.png
-原始保留为：screenshot-2024-original.png
-```
-
-**灵感来源：** Lenny Rachitsky的工作流程，来自他的通讯——用于文章中的截图
-
-## 提示
-
-- 始终保留原始文件作为备份
-- 最适合截图和数字图像
-- 可以批量处理整个文件夹
-- 如需要指定输出格式（PNG用于质量，JPG用于更小尺寸）
-- 对于社交媒体，提及平台以获得最佳尺寸
-
-## 常见用例
-
-- **博客文章**：发布前增强截图
-- **文档**：使UI截图清晰无比
-- **社交媒体**：优化Twitter、LinkedIn、Instagram图像
-- **演示文稿**：为大型屏幕放大图像
-- **印刷材料**：增加物理媒体的分辨率
+- 通过Rube连接Slack工作区
+- 对技能创建目录的写入权限
+- Python 3.7+用于技能创建脚本
+- 用于技能通知的目标Slack频道
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/tiandiyiqi) — claim your Tome and manage your conversions.
