@@ -1,11 +1,11 @@
-# 域名头脑风暴
+# 图片增强
 
 > Skill by [tiandiyiqi](https://github.com/tiandiyiqi/ai-skills) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tiandiyiqi/ai-skills](https://github.com/tiandiyiqi/ai-skills/tree/main/社交媒体/域名头脑风暴)
+Original source: [tiandiyiqi/ai-skills](https://github.com/tiandiyiqi/ai-skills/tree/main/设计与创意/图片增强)
 
 ---
 
