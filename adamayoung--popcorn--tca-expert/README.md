@@ -1,0 +1,13 @@
+# tca-expert
+
+> Skill by [adamayoung](https://github.com/adamayoung/popcorn) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [adamayoung/popcorn](https://github.com/adamayoung/popcorn/tree/main/.claude/skills/tca-expert)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
