@@ -1,0 +1,175 @@
+---
+name: archrip-scan
+description: Scan codebase and generate architecture diagram data Use when this capability is needed.
+metadata:
+  author: yida29
+---
+
+# archrip scan — Analyze codebase architecture
+
+Analyze the current codebase and generate `.archrip/architecture.json`.
+
+**Language rule:** Respond in the same language as the user's message or `$ARGUMENTS`. If no user text is available, detect the project's primary language from README/docs and match it. The `architecture.json` fields (labels, descriptions) should also use that language.
+
+## Phase 1: Project Discovery
+1. Read top-level files (package.json, composer.json, go.mod, Cargo.toml, pom.xml, pyproject.toml, etc.)
+2. Identify language, framework, source root
+3. List directory structure (2 levels deep)
+4. Auto-detect `sourceUrl`: Run `git remote get-url origin` and convert to browse URL:
+   - `git@github.com:org/repo.git` → `https://github.com/org/repo/blob/main/{filePath}`
+   - `https://github.com/org/repo.git` → `https://github.com/org/repo/blob/main/{filePath}`
+   - `git@gitlab.com:org/repo.git` → `https://gitlab.com/org/repo/-/blob/main/{filePath}`
+   - If no git remote, leave empty (ask in Phase 7)
+
+## Phase 2: Documentation Discovery
+Read existing documentation to understand architecture context:
+1. Check for: README.md, CLAUDE.md, docs/, doc/, wiki/, ARCHITECTURE.md, CONTRIBUTING.md, ADR/
+2. For each document, extract and take notes on:
+   - **Business context**: What problem does this system solve? Who are the users?
+   - **Component responsibilities**: What each module/service does and why it exists
+   - **Design decisions & constraints**: Why certain patterns/libraries were chosen, known limitations
+   - **Data flow**: How data moves through the system (request lifecycle, event flow, etc.)
+   - **External integrations**: What external services are used, why, and how
+   - **Non-functional requirements**: SLAs, performance targets, security policies
+   - **Deployment & infrastructure**: Hosting, CI/CD, environment details
+3. Keep these notes — you will use them in Phase 4 to write rich node/edge descriptions and metadata
+
+## Phase 3: Layer Identification
+Assign each component a `layer` integer. The rule: **higher layer = closer to domain core (more stable, fewer external dependencies). Lower layer = closer to external world (more volatile, I/O-bound).**
+
+**Reference mappings** (layer numbers in parentheses — adapt to actual project structure):
+
+MVC / Layered:
+- Laravel: External(0) → Controllers(1) → Services(2) → Domain(3)
+- Rails: External(0) → Controllers(1) → Services(2) → Domain(3)
+- Django: External(0) → Views(1) → Serializers(2) → Services(3) → Domain(4)
+- Spring Boot: External(0) → Controllers(1) → Services(2) → Repositories(3) → Domain(4)
+- NestJS: External(0) → Controllers(1) → Services(2) → Repositories(3) → Domain(4)
+- Next.js App Router: External(0) → Route Handlers/Pages(1) → Components(2) → Hooks/Services(3) → Data Access(4)
+- FastAPI: External(0) → Routers(1) → Services(2) → Repositories(3) → Domain(4)
+
+DDD / Clean Architecture / Hexagonal (use `"layout": "concentric"`):
+- Generic: External(0) → Adapters(1) [Inbound (HTTP handlers, CLI), Outbound (DB impl, API clients)] → Application Core(2) [Use Cases / Application Services, Ports] → Domain(3)
+- Go (Hex): External(0) → Adapters(1) [Handlers, Repositories] → Application Core(2) [Use Cases, Ports] → Domain(3)
+- Flutter (Clean): External(0) → Data Sources(1) → Repositories(2) → Use Cases(3) → Domain(4)
+- Note: Ports are interfaces owned by the **application core** (use cases / application services; sometimes placed in domain, but not required). Adapters implement outbound Ports and call inbound Ports. For layering, Ports should be at the same layer as the application core (or 1 step closer to Domain), never at the adapter layer.
+
+CQRS / Event-Driven:
+- CQRS: External(0) → Command Handlers / Query Handlers(1) → Application Services(2) → Domain(3). Command and Query sides share the same layer structure but separate models
+- Event Sourcing: External(0) → Command Handlers(1) → Event Store(2) → Projections(3) → Read Models(4)
+- Event-Driven (Motia, Temporal, etc.): External(0) → API Steps(1) → Event Steps(2) → Services(3) → Domain(4)
+
+Serverless / Microservices:
+- SST/Lambda: External(0) → Infrastructure(1) [sst.config.ts, CloudFormation] → API Gateway(2) → Lambda Handlers(3) → Services(4) → Domain(5)
+- Microservices: External(0) → Infrastructure(1) [Terraform, Pulumi, K8s manifests] → Gateway/BFF(2) → Service Boundaries(3) → Internal Services(4) → Shared Domain(5)
+
+Modular Monolith:
+- Generic: External(0) → Module APIs(1) [public interfaces] → Module Internal Services(2) → Shared Kernel / Domain(3)
+
+For unlisted frameworks: group by directory responsibility and apply the abstract rule above.
+
+## Phase 4: Read Key Files
+For each layer, read representative files to extract:
+- Component names and purposes
+- Dependencies (imports, injections)
+- Public methods/routes
+- Database schemas (from migrations or entity definitions)
+- SQL queries / ORM operations (from repositories, DAOs, or query builders)
+
+**Enrich descriptions from documentation:** Cross-reference code with your Phase 2 notes.
+For each component, compose a `description` (1-3 sentences) that covers:
+- **What**: Its responsibility (from code analysis)
+- **Why**: Business context or design rationale (from docs)
+- **How**: Key implementation details, constraints, or patterns worth noting
+
+A good description tells the reader something they cannot see from the label alone.
+- BAD: "User service" (just echoes the label)
+- GOOD: "Handles user registration, login, and profile management. Uses JWT for session tokens with 24h expiry. Password hashing via bcrypt (cost=12)."
+
+Also identify metadata candidates:
+- SLA/performance notes → `metadata` with `type: "list"`
+- Related doc links → `metadata` with `type: "link"`
+- Infrastructure details (Lambda ARN, DB engine, etc.) → `metadata` with `type: "code"` or `"text"`
+- SQL queries or ORM operations → edge `metadata` with `type: "code"` or `"list"` (see Phase 5)
+
+**Do NOT read every file.** Focus on entry points, core logic, interfaces, and data models.
+
+## Phase 5: Map Relationships
+For each component, identify:
+- What it depends on (imports, constructor injection)
+- What depends on it
+- External service connections
+
+**Connectivity check:** After mapping, verify every node has at least one edge. If a node is orphaned:
+- DTOs/entities → connect to the service or adapter that references them
+- External services → connect to the adapter/controller that integrates with them
+- Entities → connect to the repository/adapter that references them
+- Database nodes → connect to the adapter/repository that queries them
+- Infrastructure nodes → connect to the adapter/service they provision
+
+**Edge enrichment — SQL / query details:**
+For edges connecting a service/adapter/repository to a database or entity node, include query information:
+- `description`: summarize what data operation this edge performs (e.g., "Queries active users by email with JOIN on roles")
+- `metadata`: include representative SQL or ORM queries found in the source code
+
+Example:
+```json
+{
+  "source": "adpt-user-repo",
+  "target": "db-users",
+  "type": "dependency",
+  "description": "CRUD operations on users table; filters by email and status with role JOIN",
+  "metadata": [
+    { "label": "Queries", "value": ["SELECT u.*, r.name FROM users u JOIN roles r ON u.role_id = r.id WHERE u.email = ?", "INSERT INTO users (name, email, role_id) VALUES (?, ?, ?)"], "type": "list" },
+    { "label": "ORM", "value": "User::with('role')->where('email', $email)->first()", "type": "code" }
+  ]
+}
+```
+
+Guidelines:
+- Include the most representative 2-3 queries (not every query)
+- For ORMs (Eloquent, Drizzle, Prisma, etc.), use `type: "code"` with the ORM syntax
+- For raw SQL, use `type: "list"` with individual queries
+- Parameterize values (use `?` or `:param` placeholders, not literals)
+
+## Phase 6: Identify Use Cases
+Group related components into user-facing features.
+
+## Phase 7: Draft Review — STOP and ask the developer
+
+**IMPORTANT: Do NOT proceed to Phase 8 until the developer responds. You MUST stop here and wait for input.**
+
+Present a summary of what you found:
+- **Documents read**: List all docs you read in Phase 2 (e.g., README.md, CLAUDE.md, docs/architecture.md)
+- List of discovered nodes (grouped by layer/category)
+- List of discovered use cases
+- External services found
+
+Then ask:
+- Are there other documents you should read? (e.g., docs/, wiki/, design docs)
+- Are there missing components, external services, or use cases?
+- Should anything be excluded?
+- `sourceUrl` auto-detected as: `<detected-url>` — correct? (If not detected, ask for the `sourceUrl` template, e.g., `https://github.com/org/repo/blob/main/{filePath}`)
+
+End your message with: **"Please review and reply with corrections, or type 'go' to generate."**
+
+**Do NOT write architecture.json yet. Wait for the developer to respond.**
+
+If the developer replies with corrections, apply them and present the updated summary. Repeat until they say "go" / "ok" / "skip".
+
+## Phase 8: Generate architecture.json
+Only run this phase AFTER the developer has approved the draft in Phase 7.
+
+Create `.archrip/` directory if it doesn't exist, then write the complete `.archrip/architecture.json` following the schema, incorporating developer feedback.
+
+For the complete schema specification (field names, node/edge rules, layout selection), see [schema-reference.md](schema-reference.md).
+
+After writing the file:
+1. Run `npx archrip serve` in the terminal (auto-builds if needed, opens browser)
+2. Tell the developer: Run `/archrip-update` to make further adjustments (add/remove nodes, fix relationships, etc.)
+
+$ARGUMENTS
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/yida29) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
