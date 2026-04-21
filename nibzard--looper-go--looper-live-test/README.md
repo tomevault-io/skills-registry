@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nibzard/looper-go](https://github.com/nibzard/looper-go/tree/main/.claude/skills/looper-live-test)
+Original source: [nibzard/looper-go](https://github.com/nibzard/looper-go/tree/main/.codex/skills/looper-live-test)
 
 ---
 
