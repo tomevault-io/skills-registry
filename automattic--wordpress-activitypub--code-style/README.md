@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [automattic/wordpress-activitypub](https://github.com/automattic/wordpress-activitypub/tree/main/.agents/skills/code-style)
+Original source: [automattic/wordpress-activitypub](https://github.com/automattic/wordpress-activitypub/tree/main/.claude/skills/code-style)
 
 ---
 
