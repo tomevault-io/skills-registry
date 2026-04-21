@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [davidkelley/searchlite](https://github.com/davidkelley/searchlite/tree/main/.agents/skills/notify-on-completion)
+Original source: [davidkelley/searchlite](https://github.com/davidkelley/searchlite/tree/main/.codex/skills/notify-on-completion)
 
 ---
 
