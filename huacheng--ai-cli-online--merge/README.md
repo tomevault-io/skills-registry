@@ -1,0 +1,13 @@
+# merge
+
+> Skill by [huacheng](https://github.com/huacheng/ai-cli-online) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [huacheng/ai-cli-online](https://github.com/huacheng/ai-cli-online/tree/main/ai-cli-task/skills/merge)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
