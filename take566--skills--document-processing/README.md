@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [take566/skills](https://github.com/take566/skills/tree/main/_archive/mnt-outputs/user-data/outputs/skills/document-processing)
+Original source: [take566/skills](https://github.com/take566/skills/tree/main/document-processing)
 
 ---
 
