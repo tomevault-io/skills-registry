@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marcusglee11/lifeos](https://github.com/marcusglee11/lifeos/tree/main/.claude/skills/handoff-pack)
+Original source: [marcusglee11/lifeos](https://github.com/marcusglee11/lifeos/tree/main/.claude/skills/lifeos-workflow/skills/handoff-pack)
 
 ---
 
