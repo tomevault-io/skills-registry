@@ -1,0 +1,13 @@
+# daily-writing-friends-design
+
+> Skill by [bumgeunsong](https://github.com/bumgeunsong/daily-writing-friends) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [bumgeunsong/daily-writing-friends](https://github.com/bumgeunsong/daily-writing-friends/tree/main/.claude/skills/daily-writing-friends-design)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
