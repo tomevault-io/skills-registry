@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [keshav55/writing_team](https://github.com/keshav55/writing_team/tree/main/skills/copy-editor)
+Original source: [keshav55/writing_team](https://github.com/keshav55/writing_team/tree/main/atris/skills/copy-editor)
 
 ---
 
