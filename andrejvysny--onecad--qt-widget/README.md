@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [andrejvysny/onecad](https://github.com/andrejvysny/onecad/tree/main/.cursor/skills/qt-widget)
+Original source: [andrejvysny/onecad](https://github.com/andrejvysny/onecad/tree/main/.opencode/skills/qt-widget)
 
 ---
 
