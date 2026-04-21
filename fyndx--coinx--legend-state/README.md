@@ -1,0 +1,13 @@
+# legend-state
+
+> Skill by [fyndx](https://github.com/fyndx/coinx) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [fyndx/coinx](https://github.com/fyndx/coinx/tree/main/skills/legend-state)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
