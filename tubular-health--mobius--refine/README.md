@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tubular-health/mobius](https://github.com/tubular-health/mobius/tree/main/.claude/skills/refine)
+Original source: [tubular-health/mobius](https://github.com/tubular-health/mobius/tree/main/.opencode/skills/refine)
 
 ---
 
