@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tzachbon/smart-ralph](https://github.com/tzachbon/smart-ralph/tree/main/plugins/ralph-specum/skills/smart-ralph)
+Original source: [tzachbon/smart-ralph](https://github.com/tzachbon/smart-ralph/tree/main/plugins/ralph-speckit/skills/smart-ralph)
 
 ---
 
