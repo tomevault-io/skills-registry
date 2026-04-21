@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jshmllr/tokyn](https://github.com/jshmllr/tokyn/tree/main/.cursor/skills/frontend-design)
+Original source: [jshmllr/tokyn](https://github.com/jshmllr/tokyn/tree/main/.claude/skills/frontend-design)
 
 ---
 
