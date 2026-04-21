@@ -1,0 +1,163 @@
+---
+name: web-research
+description: Perform web research using OpenAI APIs. Fast mode uses gpt-5 with web_search and low reasoning for quick lookups (~1-2 min). Normal/deep modes use o3-deep-research model for comprehensive multi-step research with code interpreter. Invoke when user needs current web information or thorough research on a topic. Use when this capability is needed.
+metadata:
+  author: dimitri-vs
+---
+
+# Web Research Skill
+
+Perform web research at three depth levels using OpenAI's APIs.
+
+## Choosing the Right Depth
+
+> **IMPORTANT — Interpreting depth when the user asks for "deep research":**
+>
+> "Deep research" is the name of the feature — it does **not** automatically mean deep *depth*. When the user says "do deep research", the decision between **normal** and **deep** depth is on a razor's edge — it could genuinely go either way, and it's up to the agent to judge.
+>
+> The baseline when nothing else is said is **normal**. But the bar to tip into **deep** is very low — any additional language like "thorough", "deep-level", "comprehensive", "exhaustive", "leave no stone unturned", or anything at all hinting the user wants more than a standard research pass, immediately means **deep** depth.
+>
+> - "Do deep research on X" → **normal**
+> - "Do some really thorough deep research on X" → **deep**
+> - "I need a comprehensive look at X" → **deep**
+> - "Research X in depth, cover every angle" → **deep**
+>
+> **Fast mode should only be used when** the user asks for a quick lookup, or doesn't specify any depth preference and the query is clearly a simple factual retrieval.
+
+The key question: **Are you retrieving information or exploring a topic?**
+
+### Fast (~1-2 min) — Retrieval
+
+Uses gpt-5 via the Responses API with `web_search` tool and low reasoning effort. Searches the web then synthesizes results with lightweight reasoning — substantially better than a raw search snippet. Use when you'd normally Google something, open a few links, and get your answer.
+
+**Good for:**
+- Current facts (prices, dates, events)
+- Quick verifications ("Does X support Y?")
+- Simple lookups where you know the answer exists
+- Low-stakes decisions
+
+**Query detail matters even in fast mode.** Don't write terse Google-style keyword queries — write 1-3 sentences that give the model enough context to search effectively and synthesize a useful answer. Include what you're trying to accomplish, relevant specifics (model numbers, sizes, versions), and what kind of answer you're looking for.
+
+**Examples:**
+- "What version of Python does Django 5.0 require? I'm setting up a new project and want to confirm minimum and recommended versions."
+- "I'm trying to price a used 6-foot Green Giant Arborvitae for a local sale. What do established arborvitae this size typically sell for secondhand vs. retail nursery pricing? Looking for Craigslist, eBay, and garden forum comps."
+- "When is the next Apple event scheduled for 2026? I'm deciding whether to wait for a new MacBook announcement or buy now."
+
+### Normal (2-6 min) — Moderate Research
+
+Use when you need more than a quick lookup but don't need exhaustive coverage. Good for comparisons, how-to questions, and understanding a topic at a moderate depth.
+
+**Good for:**
+- Feature comparisons (without needing every detail)
+- How-to guides and best practices
+- Understanding a topic you're somewhat familiar with
+- Questions where you want synthesized information, not just raw facts
+
+**Examples:**
+- "What are the best practices for Python async programming in 2026?"
+- "Compare Tailwind CSS vs vanilla CSS for a small project"
+- "How do I set up GitHub Actions for a Python project?"
+
+### Deep (6-14 min) — Exploratory Research
+
+Use when you're genuinely exploring—you don't have certainty, the topic is niche, or you need the model to follow leads and check multiple sources. Also use when your research might require data analysis (reading PDFs, spreadsheets, doing calculations).
+
+**Good for:**
+- Niche or specialized topics
+- Multi-faceted questions requiring synthesis
+- Research that needs data analysis (trends, comparisons over time)
+- Critical decisions where you want thorough source-checking
+- Topics where information might be in PDFs or require calculations
+
+**Examples:**
+- "Compare US-SK105 Midea Wi-Fi dongle vs ESPHome for Carrier mini-split Home Assistant integration. Include compatibility, setup reliability, and reported issues."
+- "Analyze electricity price trends with Peco Electric over the last 10 years"
+- "Research the economic impact of semaglutide on global healthcare systems with specific figures and statistics"
+
+## Structuring Your Query
+
+Unlike ChatGPT's Deep Research (which asks clarifying questions), the API expects **fully-formed prompts**. The model won't ask for clarification—it just starts researching.
+
+**Tips for better results:**
+- State your goal explicitly ("I'm trying to decide between X and Y for Z use case")
+- Include what you already know or have tried
+- Specify constraints (budget, timeline, technical requirements)
+- Ask for specific deliverables ("Include a comparison table", "List pros and cons")
+- For deep research, mention if you need data analysis or source verification
+
+## Configuration
+
+| Depth | Model | Time | Max Tool Calls |
+|-------|-------|------|----------------|
+| **fast** | gpt-5 + web_search | ~1-2 min | — |
+| **normal** | o3-deep-research | 2-6 min | 25 |
+| **deep** | o3-deep-research | 6-14 min | unlimited |
+
+**Note:** `o4-mini-deep-research` is available as a faster/cheaper alternative to o3, but produces lower quality output.
+
+## Usage
+
+**Important (Windows):** Always quote paths containing backslashes or spaces.
+
+> **CRITICAL — Bash timeout:** The default Bash timeout (2 min) is too short for research calls. You MUST:
+> - **Fast:** Set `timeout: 300000` (5 min) or use `run_in_background: true`
+> - **Normal / Deep:** Use `run_in_background: true`
+
+```bash
+# Fast lookup (default) — 1-3 sentences with context
+cd "<skill-directory>" && uv run research.py "I'm trying to price a used 6-foot Green Giant Arborvitae for a local sale. What do established arborvitae this size typically sell for secondhand vs. retail nursery pricing? Looking for Craigslist, eBay, and garden forum comps."
+
+# Normal research — roughly a paragraph of context
+# ⚠️ Use timeout: 600000 or run_in_background: true
+cd "<skill-directory>" && uv run research.py -d normal "I'm building a FastAPI app and trying to decide on an async database approach. What are the current best practices for async database connections with SQLAlchemy 2.0? I'm particularly interested in connection pooling, session management, and whether to use encode/databases or native SQLAlchemy async."
+
+# Deep research — two paragraphs of detailed context
+# ⚠️ Use timeout: 600000 or run_in_background: true
+cd "<skill-directory>" && uv run research.py -d deep "I have a Carrier 40MHHQ09 mini-split (which is a rebadged Midea unit) and want to integrate it with Home Assistant. I've seen mentions of the US-SK105 Midea Wi-Fi dongle and ESPHome-based solutions but I'm not sure which approach is more reliable or if they even work with Carrier-branded units. [...]
+
+Compare these options and include: (1) compatibility confirmation for Carrier 40MHH series, (2) Midea AC LAN HACS integration setup and reliability, (3) ESPHome alternatives, (4) USB port location, and (5) whether the solution reads actual unit state vs just sending commands. [...]"
+```
+
+## Arguments
+
+- `--depth` / `-d`: Research depth - `fast`, `normal`, or `deep` (default: `fast`)
+- `--no-save`: Don't save results to `~/research/`
+- `query` (required): The research question or topic
+
+## Output
+
+Returns markdown-formatted results with:
+- Main content answering the query
+- Inline citations where applicable
+- Source URLs listed at the end
+
+## Saved Research
+
+All research results are automatically saved to `~/research/` as markdown files. Each file contains YAML frontmatter (working directory, date, depth, model, metrics) followed by the original query and the full response with sources.
+
+**Before running new research**, check if relevant past research already exists — especially for normal/deep depths which are expensive. Search by keyword or by project directory:
+
+```bash
+# Find past research containing a keyword
+grep -rl "keyword" ~/research/
+
+# Find past research done from the current project directory
+grep -rl "directory: <current-working-directory>" ~/research/
+
+# Read a past result
+cat ~/research/2026-02-04_some-query.md
+```
+
+If a relevant past result exists, read it and present it to the user instead of re-running the research.
+
+## Credentials
+
+The script looks for `OPENAI_API_KEY` in:
+1. Local `.env` file in current directory
+2. User home `~/.env` file
+3. Skill directory `.env` file
+4. System environment variables
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dimitri-vs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
