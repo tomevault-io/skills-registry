@@ -1,0 +1,32 @@
+---
+name: tasks
+description: Open the tasks database in DB Browser for SQLite GUI Use when this capability is needed.
+metadata:
+  author: gioe
+---
+
+# Tasks Skill
+
+Opens the project task database (via `tusk` CLI) in DB Browser for SQLite for visual browsing and querying.
+
+## Usage
+
+When this skill is invoked, run:
+
+```bash
+open -a "DB Browser for SQLite" "$(tusk path)"
+```
+
+Then confirm to the user that the database has been opened in DB Browser for SQLite.
+
+## Quick Stats
+
+Before opening, show a quick summary:
+
+```bash
+tusk "SELECT status, COUNT(*) as count FROM tasks GROUP BY status ORDER BY count DESC"
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/gioe) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
