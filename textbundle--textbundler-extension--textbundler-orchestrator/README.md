@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [textbundle/textbundler-extension](https://github.com/textbundle/textbundler-extension/tree/main/.claude/skills/textbundler-orchestrator)
+Original source: [textbundle/textbundler-extension](https://github.com/textbundle/textbundler-extension/tree/main/.codex/skills/textbundler-orchestrator)
 
 ---
 
