@@ -1,0 +1,13 @@
+# documentation-sync
+
+> Skill by [nikhillinit](https://github.com/nikhillinit/updog_restore) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [nikhillinit/updog_restore](https://github.com/nikhillinit/updog_restore/tree/main/.claude/skills/workflow-engine/documentation-sync)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
