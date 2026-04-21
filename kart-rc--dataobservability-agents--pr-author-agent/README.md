@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kart-rc/dataobservability-agents](https://github.com/kart-rc/dataobservability-agents/tree/main/docs/autopilot-agent-expert/skills/pr-author-agent)
+Original source: [kart-rc/dataobservability-agents](https://github.com/kart-rc/dataobservability-agents/tree/main/docs/pr-author-agent)
 
 ---
 
