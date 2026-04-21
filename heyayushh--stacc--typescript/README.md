@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [heyayushh/stacc](https://github.com/heyayushh/stacc/tree/main/configs/stacks/typescript)
+Original source: [heyayushh/stacc](https://github.com/heyayushh/stacc/tree/main/configs/stacks/typescript/typescript)
 
 ---
 
