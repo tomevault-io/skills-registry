@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oimiragieo/omega-gemini-cli](https://github.com/oimiragieo/omega-gemini-cli/tree/main/.claude/skills/omega-gemini-cli)
+Original source: [oimiragieo/omega-gemini-cli](https://github.com/oimiragieo/omega-gemini-cli/tree/main/.agent/skills/omega-gemini-cli)
 
 ---
 
