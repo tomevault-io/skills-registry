@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [radiants-dao/radtools](https://github.com/radiants-dao/radtools/tree/main/.archive/docs-review/skills/packages-devtools/skills/radflow-component-create)
+Original source: [radiants-dao/radtools](https://github.com/radiants-dao/radtools/tree/main/.archive/docs-review/skills/radflow-component-create)
 
 ---
 
