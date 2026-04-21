@@ -1,0 +1,31 @@
+---
+name: check-tavily-credits
+description: Tavily APIキーの残りクレジットを確認（.envから取得）。※アプリの利用統計は /check-app-stats を使用 Use when this capability is needed.
+metadata:
+  author: minorun365
+---
+
+# Tavily APIキー残量チェック
+
+プロジェクトの `.env` ファイルにあるすべてのTavily APIキーの使用量・残量を確認してください。
+
+## 手順
+
+1. `.env` ファイルを読み込む
+   - $ARGUMENTS が指定されていればそのパスを使用
+   - 指定がなければカレントディレクトリの `.env` を使用
+2. `TAVILY_API_KEY` を含む環境変数をすべて抽出する（`TAVILY_API_KEY`, `TAVILY_API_KEY2`, `TAVILY_API_KEY3` など）
+3. 各キーに対して `curl -s "https://api.tavily.com/usage" -H "Authorization: Bearer {キー}"` を実行
+4. 結果を以下の表形式でまとめる
+
+## 出力形式
+
+| # | 環境変数名 | プラン | 使用量 | 上限 | 残り |
+|---|-----------|--------|--------|------|------|
+
+- 枯渇（残り0）のキーには警告マークをつける
+- 余裕があるキーには正常マークをつける
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/minorun365) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
