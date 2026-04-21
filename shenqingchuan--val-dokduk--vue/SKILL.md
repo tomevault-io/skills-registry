@@ -2,7 +2,7 @@
 name: vue
 description: Vue.js progressive JavaScript framework. Use when building Vue components, working with reactivity (ref, reactive, computed, watch), or implementing Vue Composition API patterns. Use when this capability is needed.
 metadata:
-  author: ShenQingchuan
+  author: shenqingchuan
 ---
 
 # Vue
@@ -61,5 +61,5 @@ Vue is a progressive JavaScript framework for building user interfaces. It build
 - **Extract composables** for reusable stateful logic
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/ShenQingchuan) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shenqingchuan) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
