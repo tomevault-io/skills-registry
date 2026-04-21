@@ -1,0 +1,181 @@
+---
+name: how-to-documentation
+description: This skill should be used when creating documentation, writing instructions, capturing reusable procedures, or when the user asks to 'create a how-to' or 'document a procedure'. Provides guidance for creating effective how-to documentation. Use when this capability is needed.
+metadata:
+  author: drmaciver
+---
+
+# Writing How-To Guides
+
+## When to Write a How-To
+
+Create a how-to when you:
+- Do something more than once
+- Figure out a non-obvious procedure
+- Want to standardize a workflow
+- Document a fix that might recur
+
+## Structure of a Good How-To
+
+### 1. Clear Title
+Start with "How to..." and be specific:
+- Good: "How to deploy to production"
+- Bad: "Deployment"
+
+### 2. Context
+Brief explanation of when to use this guide:
+```markdown
+Use this guide when you need to release a new version to production.
+Prerequisites: All tests passing, version bumped.
+```
+
+### 3. Step-by-Step Instructions
+Numbered steps, each doing one thing:
+```markdown
+1. Ensure all tests pass: `just test`
+2. Bump the version in Cargo.toml
+3. Create a git tag: `git tag v1.2.3`
+4. Push with tags: `git push --tags`
+5. Wait for CI to publish
+```
+
+### 4. Troubleshooting (Optional)
+Common problems and solutions:
+```markdown
+## Troubleshooting
+
+### CI fails on publish
+- Check if version already exists on registry
+- Verify credentials are not expired
+```
+
+## Creating How-Tos
+
+```bash
+claude-reliability howto create \
+  -t "How to add a new API endpoint" \
+  -i "... markdown content ..."
+```
+
+## Linking to Tasks
+
+When a task needs to follow a procedure:
+```bash
+claude-reliability work link-howto <work-item-id> --howto-id <howto-id>
+```
+
+Now when viewing the task, the guidance is visible.
+
+## Searching How-Tos
+
+Find relevant guides:
+```bash
+claude-reliability howto search "deploy"
+claude-reliability howto list  # See all
+```
+
+## Maintaining How-Tos
+
+### Update When Procedures Change
+```bash
+claude-reliability howto update <id> -i "... new content ..."
+```
+
+### Delete Obsolete Guides
+```bash
+claude-reliability howto delete <id>
+```
+
+### Review Periodically
+- Are the steps still accurate?
+- Has the tooling changed?
+- Can any steps be simplified?
+
+## Example: Complete How-To
+
+```markdown
+# How to Add a New Database Migration
+
+Use this guide when adding a new table or modifying the schema.
+
+## Prerequisites
+- Database access configured
+- Migration tool installed
+
+## Steps
+
+1. Create a new migration file:
+   ```
+   sqlx migrate add <migration_name>
+   ```
+
+2. Edit the generated file in `migrations/` with your SQL
+
+3. Test locally:
+   ```
+   sqlx migrate run
+   ```
+
+4. Verify the changes work:
+   ```
+   cargo test
+   ```
+
+5. Commit the migration file
+
+## Troubleshooting
+
+### "migration failed: relation already exists"
+The migration may have partially run. Check the database state and either:
+- Drop the partial changes manually, or
+- Adjust the migration to be idempotent (IF NOT EXISTS)
+
+### "cannot find migration"
+Ensure the migration file is in the correct directory and has the `.sql` extension.
+```
+
+## Documenting Decisions (ADRs)
+
+When making architecture or design decisions, record the rationale alongside the decision. Without recorded rationale, future developers face a dilemma: blindly accept past decisions or blindly reverse them.
+
+**What to capture:**
+- What forces were in tension?
+- What was decided?
+- What alternatives were considered and why rejected?
+- What are the consequences?
+
+**Format:** Keep it lightweight — a short paragraph in a commit message, a comment block at the top of a module, or a dedicated decision record. The key is that the rationale is captured somewhere durable and discoverable.
+
+ADRs are particularly valuable for decisions that seem arbitrary or surprising. If you chose a less obvious approach for a good reason, that reason must be written down or it will be lost.
+
+## The GHC Notes Pattern
+
+When a non-obvious decision or constraint affects multiple locations in the codebase, write the detailed explanation once in a canonical location with a clear heading, and reference it elsewhere with a short comment.
+
+**Example:**
+```rust
+// In the canonical location:
+// Note [Why we validate before serializing]
+// We must validate all fields before serializing because the serializer
+// assumes well-formed input and will produce corrupt output otherwise.
+// This was discovered in issue #42 when partial records caused silent
+// data corruption.
+
+// In other files that relate to this:
+// See Note [Why we validate before serializing] in validator.rs
+```
+
+This prevents comment duplication and drift while keeping code well-documented. Write the explanation once, reference it everywhere.
+
+## Tips
+
+1. **Be specific** - Vague instructions lead to mistakes
+2. **Include commands** - Copy-pasteable commands save time
+3. **Note prerequisites** - What must be true before starting?
+4. **Add troubleshooting** - Document problems you encountered
+5. **Keep updated** - Outdated how-tos are worse than none
+6. **Record the "why"** - Decision rationale is as important as the decision itself
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/drmaciver) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
