@@ -1,85 +1,105 @@
 ---
-name: skill-share
-description: Use when working with a skill that creates new Claude skills and automatically shares them on Slack using Rube for seamless team collaboration and skill discovery.
+name: youtube-downloader
+description: 下载 YouTube 视频，支持自定义质量和格式选项。当用户要求下载、保存或获取 YouTube 视频时使用此技能。支持多种质量设置（最佳、1080p、720p、480p、360p）、多种格式（mp4、webm、mkv）以及仅音频下载为 MP3。 Use when this capability is needed.
 metadata:
   author: tiandiyiqi
 ---
 
-## 何时使用此技能
+# YouTube 视频下载器
 
-当您需要以下操作时使用此技能：
-- **创建新的Claude技能**，具有正确的结构和元数据
-- **生成可分发的技能包**
-- **自动在Slack上分享创建的技能**，以便团队可见
-- **分享前验证技能结构**
-- **打包并分发技能**给您的团队
+完全控制质量和格式设置下载 YouTube 视频。
 
- также在以下情况下使用此技能：
-- **用户说他想要创建/分享他的技能**
+## 快速开始
 
-此技能适用于：
-- 在团队工作流程中创建技能
-- 构建需要技能创建+团队通知的内部工具
-- 自动化技能开发流程
-- 协作创建技能并通知团队
+下载视频的最简单方法：
 
-## 主要功能
+```bash
+python scripts/download_video.py "https://www.youtube.com/watch?v=VIDEO_ID"
+```
 
-### 1. 技能创建
-- 创建结构正确的技能目录，包含SKILL.md
-- 生成标准化的scripts/、references/和assets/目录
-- 自动生成带有必需元数据的YAML frontmatter
-- 强制执行命名约定（连字符分隔）
+这会将视频以最佳可用质量下载为 MP4 到 `/mnt/user-data/outputs/`。
 
-### 2. 技能验证
-- 验证SKILL.md格式和必需字段
-- 检查命名约定
-- 确保打包前的元数据完整性
+## 选项
 
-### 3. 技能打包
-- 创建可分发的zip文件
-- 包含所有技能资产和文档
-- 打包前自动运行验证
+### 质量设置
 
-### 4. 通过Rube集成Slack
-- 自动将创建的技能信息发送到指定的Slack频道
-- 分享技能元数据（名称、描述、链接）
-- 发布技能摘要以便团队发现
-- 提供技能文件的直接链接
+使用 `-q` 或 `--quality` 指定视频质量：
+
+- `best`（默认）：最高可用质量
+- `1080p`：全高清
+- `720p`：高清
+- `480p`：标清
+- `360p`：较低质量
+- `worst`：最低可用质量
+
+示例：
+```bash
+python scripts/download_video.py "URL" -q 720p
+```
+
+### 格式选项
+
+使用 `-f` 或 `--format` 指定输出格式（仅视频下载）：
+
+- `mp4`（默认）：兼容性最好
+- `webm`：现代格式
+- `mkv`：Matroska 容器
+
+示例：
+```bash
+python scripts/download_video.py "URL" -f webm
+```
+
+### 仅音频
+
+使用 `-a` 或 `--audio-only` 仅下载音频为 MP3：
+
+```bash
+python scripts/download_video.py "URL" -a
+```
+
+### 自定义输出目录
+
+使用 `-o` 或 `--output` 指定不同的输出目录：
+
+```bash
+python scripts/download_video.py "URL" -o /path/to/directory
+```
+
+## 完整示例
+
+1. 以 1080p 下载视频为 MP4：
+```bash
+python scripts/download_video.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" -q 1080p
+```
+
+2. 仅下载音频为 MP3：
+```bash
+python scripts/download_video.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" -a
+```
+
+3. 以 720p 下载为 WebM 到自定义目录：
+```bash
+python scripts/download_video.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" -q 720p -f webm -o /custom/path
+```
 
 ## 工作原理
 
-1. **初始化**：提供技能名称和描述
-2. **创建**：创建具有正确结构的技能目录
-3. **验证**：验证技能元数据的正确性
-4. **打包**：将技能打包成可分发的格式
-5. **Slack通知**：将技能详情发布到团队的Slack频道
+该技能使用 `yt-dlp`，这是一个强大的 YouTube 下载器，它：
+- 如果不存在自动安装自身
+- 在下载前获取视频信息
+- 选择符合你标准的最佳可用流
+- 在需要时合并视频和音频流
+- 支持广泛的 YouTube 视频格式
 
-## 使用示例
+## 重要说明
 
-```
-当您要求Claude创建一个名为"pdf-analyzer"的技能时：
-1. 创建/skill-pdf-analyzer/，包含SKILL.md模板
-2. 生成结构化目录（scripts/、references/、assets/）
-3. 验证技能结构
-4. 将技能打包成zip文件
-5. 发布到Slack："新技能已创建：pdf-analyzer - 高级PDF分析和提取功能"
-```
-
-## 与Rube的集成
-
-此技能利用Rube实现：
-- **SLACK_SEND_MESSAGE**：向团队频道发布技能信息
-- **SLACK_POST_MESSAGE_WITH_BLOCKS**：分享格式丰富的技能元数据
-- **SLACK_FIND_CHANNELS**：发现技能公告的目标频道
-
-## 要求
-
-- 通过Rube连接Slack工作区
-- 对技能创建目录的写入权限
-- Python 3.7+用于技能创建脚本
-- 用于技能通知的目标Slack频道
+- 默认情况下下载保存到 `/mnt/user-data/outputs/`
+- 视频文件名根据视频标题自动生成
+- 脚本自动处理 yt-dlp 的安装
+- 仅下载单个视频（默认跳过播放列表）
+- 较高质量的视频可能需要更长时间下载并使用更多磁盘空间
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/tiandiyiqi) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-15 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
