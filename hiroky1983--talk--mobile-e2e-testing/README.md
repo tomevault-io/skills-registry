@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hiroky1983/talk](https://github.com/hiroky1983/talk/tree/main/docs/skills/mobile-e2e-testing)
+Original source: [hiroky1983/talk](https://github.com/hiroky1983/talk/tree/main/.claude/skills/mobile-e2e-testing)
 
 ---
 
