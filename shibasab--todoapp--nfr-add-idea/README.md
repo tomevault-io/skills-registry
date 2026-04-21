@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shibasab/todoapp](https://github.com/shibasab/todoapp/tree/main/.codex/skills/nfr-add-idea)
+Original source: [shibasab/todoapp](https://github.com/shibasab/todoapp/tree/main/.cursor/skills/nfr-add-idea)
 
 ---
 
