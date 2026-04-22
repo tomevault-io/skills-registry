@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fcakyon/claude-codex-settings](https://github.com/fcakyon/claude-codex-settings/tree/main/plugins/paper-search-tools/skills/setup)
+Original source: [fcakyon/claude-codex-settings](https://github.com/fcakyon/claude-codex-settings/tree/main/plugins/tavily-tools/skills/setup)
 
 ---
 
