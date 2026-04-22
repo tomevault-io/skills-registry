@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [toddward/devx-claude-skills-workshop](https://github.com/toddward/devx-claude-skills-workshop/tree/main/demo-3-multi-skill/.claude/skills/runbook-crossref)
+Original source: [toddward/devx-claude-skills-workshop](https://github.com/toddward/devx-claude-skills-workshop/tree/main/solutions/demo-3/.claude/skills/runbook-crossref)
 
 ---
 
