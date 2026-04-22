@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cleanexpo/ato](https://github.com/cleanexpo/ato/tree/main/docs-backup-20260213-150302/.agent/skills/work-queue-processor)
+Original source: [cleanexpo/ato](https://github.com/cleanexpo/ato/tree/main/.agent/skills/work-queue-processor)
 
 ---
 
