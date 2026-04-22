@@ -1,0 +1,13 @@
+# sync-steering
+
+> Skill by [lira-tron](https://github.com/lira-tron/dotfiles) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [lira-tron/dotfiles](https://github.com/lira-tron/dotfiles/tree/main/home/.gemini/skills/sync-steering)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
