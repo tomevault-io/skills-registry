@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jdereklomas/claude-code-skills](https://github.com/jdereklomas/claude-code-skills/tree/main/skills/card-deck-creation)
+Original source: [jdereklomas/claude-code-skills](https://github.com/jdereklomas/claude-code-skills/tree/main/card-deck-creation)
 
 ---
 
