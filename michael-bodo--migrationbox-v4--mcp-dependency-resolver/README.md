@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [michael-bodo/migrationbox-v4](https://github.com/michael-bodo/migrationbox-v4/tree/main/.agent/skills/mcp-dependency-resolver/mcp-dependency-resolver)
+Original source: [michael-bodo/migrationbox-v4](https://github.com/michael-bodo/migrationbox-v4/tree/main/.agent/skills/mcp-dependency-resolver)
 
 ---
 
