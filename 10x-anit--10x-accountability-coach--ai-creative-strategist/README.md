@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [10x-anit/10x-accountability-coach](https://github.com/10x-anit/10x-accountability-coach/tree/main/skills/ai-creative-strategist)
+Original source: [10x-anit/10x-accountability-coach](https://github.com/10x-anit/10x-accountability-coach/tree/main/.opencode/skills/ai-creative-strategist)
 
 ---
 
