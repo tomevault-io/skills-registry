@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dorgonman/kano-agent-backlog-skill-demo](https://github.com/dorgonman/kano-agent-backlog-skill-demo/tree/main/.agent/skills/kano-agent-backlog-skill)
+Original source: [dorgonman/kano-agent-backlog-skill-demo](https://github.com/dorgonman/kano-agent-backlog-skill-demo/tree/main/.github/skills/kano-agent-backlog-skill)
 
 ---
 
