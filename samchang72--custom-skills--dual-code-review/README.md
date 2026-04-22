@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [samchang72/custom-skills](https://github.com/samchang72/custom-skills/tree/main/dual-code-review)
+Original source: [samchang72/custom-skills](https://github.com/samchang72/custom-skills/tree/main/gemini/skills/dual-code-review)
 
 ---
 
