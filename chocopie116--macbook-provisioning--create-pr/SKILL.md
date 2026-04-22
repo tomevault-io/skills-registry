@@ -1,0 +1,35 @@
+---
+name: create-pr
+description: - 未コミットの変更やunpushの状態があれば、Skill ツールを使って `/ok` コマンドを先に呼び出してください Use when this capability is needed.
+metadata:
+  author: chocopie116
+---
+
+# Create PR
+
+- 未コミットの変更やunpushの状態があれば、Skill ツールを使って `/ok` コマンドを先に呼び出してください
+- gh pr create で PR を作成してください
+- 作成した PR を open コマンドで開いてください
+
+## PR のフォーマット
+
+```
+## 影響範囲
+このPRをマージした場合の影響範囲を端的に説明します
+
+## 変更概要
+- Xについて変更(なるべく具体的で端的に)
+- Yについて変更
+
+## AIが確認したこと
+- [ ] A
+- [ ] B
+
+## 人間に確認してほしいこと
+- [ ] A
+- [ ] B
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/chocopie116) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
