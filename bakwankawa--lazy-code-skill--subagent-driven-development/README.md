@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bakwankawa/lazy-code-skill](https://github.com/bakwankawa/lazy-code-skill/tree/main/.cursor/skills/superpowers/subagent-driven-development)
+Original source: [bakwankawa/lazy-code-skill](https://github.com/bakwankawa/lazy-code-skill/tree/main/.claude/skills/subagent-driven-development)
 
 ---
 
