@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hhhh124hhhh/godot-mcp](https://github.com/hhhh124hhhh/godot-mcp/tree/main/server/.claude/skills/context7-auto-research)
+Original source: [hhhh124hhhh/godot-mcp](https://github.com/hhhh124hhhh/godot-mcp/tree/main/.claude/skills/godot-skills/sub-skills/context7-auto-research)
 
 ---
 
