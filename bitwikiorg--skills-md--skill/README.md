@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bitwikiorg/skills.md](https://github.com/bitwikiorg/skills.md/tree/main/sources/vercel/skill)
+Original source: [bitwikiorg/skills.md](https://github.com/bitwikiorg/skills.md/tree/main/sources/openai/skill)
 
 ---
 
