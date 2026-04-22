@@ -1,0 +1,48 @@
+---
+name: coding
+description: This skill should be used when writing or reviewing code in any language. Provides language-agnostic coding conventions for code quality, comments, error handling, and formatting. Project-specific conventions always take priority. Use when this capability is needed.
+metadata:
+  author: sorah
+---
+
+# General Coding Guidelines
+
+Language-agnostic coding conventions applicable across all projects. Project-specific conventions (CLAUDE.md, style guides) always take priority over this guidance.
+
+## Code Quality
+
+- Do not leave empty lines containing only whitespace
+- Write clean, readable code that follows the language's established conventions
+- Use consistent indentation and formatting
+
+## Code Comments
+
+Comments must not repeat what the code already expresses. Use comments for explaining **why** something is done, or to provide context not obvious from the code itself.
+
+**When to comment:**
+
+- To explain why a particular approach or workaround was chosen
+- To clarify intent when the code could be misread or misunderstood
+- To provide context from external systems, specs, or requirements
+- To document assumptions, edge cases, or limitations
+
+**When not to comment:**
+
+- Do not narrate what the code is doing — the code already says that
+- Do not duplicate function or variable names in plain English
+- Do not leave stale comments that contradict the code
+- Do not reference removed or obsolete code paths
+
+## Error Handling
+
+- Avoid blanket exception handling unless absolutely necessary — error logging is typically handled by the runtime or framework
+- Prefer letting exceptions propagate up the call stack
+- Only catch specific exceptions when there is a meaningful reason:
+  - Adding context to the error
+  - Performing cleanup operations
+  - Converting one exception type to another with additional information
+  - Recovering from expected error conditions
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sorah) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
