@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pixb/pixai](https://github.com/pixb/pixai/tree/main/.trae/skills/pix-chat-save)
+Original source: [pixb/pixai](https://github.com/pixb/pixai/tree/main/skills/pix-chat-save)
 
 ---
 
