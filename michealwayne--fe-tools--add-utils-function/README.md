@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [michealwayne/fe-tools](https://github.com/michealwayne/fe-tools/tree/main/utils/.cursor/skills/add-utils-function)
+Original source: [michealwayne/fe-tools](https://github.com/michealwayne/fe-tools/tree/main/utils/skills/add-utils-function)
 
 ---
 
