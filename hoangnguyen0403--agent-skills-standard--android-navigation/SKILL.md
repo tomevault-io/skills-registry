@@ -1,0 +1,33 @@
+---
+name: android-navigation
+description: Implement navigation with Jetpack Compose Navigation and App Links on Android. Use when implementing navigation flows, deep links, or backstack handling in Android. (triggers: **/*Screen.kt, **/*Activity.kt, **/NavGraph.kt, NavController, NavHost, composable, navArgument, deepLinks) Use when this capability is needed.
+metadata:
+  author: hoangnguyen0403
+---
+
+# Android Navigation (Jetpack Compose)
+
+## **Priority: P2 (OPTIONAL)**
+
+Navigation and deep linking using Jetpack Compose Navigation.
+
+## Guidelines
+
+- **Library**: Use `androidx.navigation:navigation-compose`.
+- **Type Safety**: Use sealed classes for routes, never raw strings.
+- **Deep Links**: Configure `intent-filter` in Manifest and `deepLinks` in NavHost.
+- **Validation**: Validate arguments (e.g., proper IDs) before loading content.
+
+## Anti-Patterns
+
+- **No String Routes**: Use `Screen.Product.route` instead of `"product/$id"`.
+- **No Unvalidated Deep Links**: Check resource existence before rendering.
+- **No Missing Manifest**: Deep links require `autoVerify=true` intent filters.
+
+## References
+
+- [Navigation Patterns](references/navigation-patterns.md)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hoangnguyen0403) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
