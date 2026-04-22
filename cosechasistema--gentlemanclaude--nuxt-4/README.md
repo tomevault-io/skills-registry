@@ -1,0 +1,13 @@
+# nuxt-4
+
+> Skill by [cosechasistema](https://github.com/cosechasistema/gentlemanclaude) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [cosechasistema/gentlemanclaude](https://github.com/cosechasistema/gentlemanclaude/tree/main/skills/nuxt-4)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
