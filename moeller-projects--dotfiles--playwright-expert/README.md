@@ -1,0 +1,13 @@
+# playwright-expert
+
+> Skill by [moeller-projects](https://github.com/moeller-projects/dotfiles) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [moeller-projects/dotfiles](https://github.com/moeller-projects/dotfiles/tree/main/dotfiles/ai-agents/codex/skills/playwright-expert)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
