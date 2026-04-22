@@ -1,0 +1,13 @@
+# zeus-graphql
+
+> Skill by [aexol-studio](https://github.com/aexol-studio/axolotl) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [aexol-studio/axolotl](https://github.com/aexol-studio/axolotl/tree/main/examples/new/.opencode/skills/zeus-graphql)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
