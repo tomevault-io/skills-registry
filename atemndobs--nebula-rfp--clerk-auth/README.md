@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [atemndobs/nebula-rfp](https://github.com/atemndobs/nebula-rfp/tree/main/.claude/skills/clerk-auth)
+Original source: [atemndobs/nebula-rfp](https://github.com/atemndobs/nebula-rfp/tree/main/.gemini/skills/clerk-auth)
 
 ---
 
