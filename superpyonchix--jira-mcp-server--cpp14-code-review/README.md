@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [superpyonchix/jira_mcp_server](https://github.com/superpyonchix/jira_mcp_server/tree/main/.github/skills/cpp14-code-review)
+Original source: [superpyonchix/jira_mcp_server](https://github.com/superpyonchix/jira_mcp_server/tree/main/.claude/skills/cpp14-code-review)
 
 ---
 
