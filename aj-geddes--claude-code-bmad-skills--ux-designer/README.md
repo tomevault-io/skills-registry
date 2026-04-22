@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aj-geddes/claude-code-bmad-skills](https://github.com/aj-geddes/claude-code-bmad-skills/tree/main/bmad-skills/ux-designer)
+Original source: [aj-geddes/claude-code-bmad-skills](https://github.com/aj-geddes/claude-code-bmad-skills/tree/main/bmad-v6/skills/bmm/ux-designer)
 
 ---
 
