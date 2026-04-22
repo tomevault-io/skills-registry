@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [user-no-found/ai-synergy](https://github.com/user-no-found/ai-synergy/tree/main/claude/skills/revision-confirm)
+Original source: [user-no-found/ai-synergy](https://github.com/user-no-found/ai-synergy/tree/main/claude/agents/analysis-agent/skills/revision-confirm)
 
 ---
 
