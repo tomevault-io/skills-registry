@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hktitan/fedichess](https://github.com/hktitan/fedichess/tree/main/.agents/skills/next-best-practices/next-best-practices/next-best-practices/next-best-practices/next-best-practices/next-best-practices/next-best-practices)
+Original source: [hktitan/fedichess](https://github.com/hktitan/fedichess/tree/main/.agents/skills/next-best-practices/next-best-practices/next-best-practices/next-best-practices/next-best-practices)
 
 ---
 
