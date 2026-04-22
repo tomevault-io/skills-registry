@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dkyazzentwatwa/supernavigator](https://github.com/dkyazzentwatwa/supernavigator/tree/main/skills/os-layer/core/nav-init)
+Original source: [dkyazzentwatwa/supernavigator](https://github.com/dkyazzentwatwa/supernavigator/tree/main/navigator-main/skills/nav-init)
 
 ---
 
