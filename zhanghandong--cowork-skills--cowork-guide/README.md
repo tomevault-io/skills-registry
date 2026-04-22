@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zhanghandong/cowork-skills](https://github.com/zhanghandong/cowork-skills/tree/main/cli/builtin-skills/cowork-guide)
+Original source: [zhanghandong/cowork-skills](https://github.com/zhanghandong/cowork-skills/tree/main/.claude/skills/cowork-guide)
 
 ---
 
