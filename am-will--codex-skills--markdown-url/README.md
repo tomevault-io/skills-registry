@@ -1,0 +1,13 @@
+# markdown-url
+
+> Skill by [am-will](https://github.com/am-will/codex-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [am-will/codex-skills](https://github.com/am-will/codex-skills/tree/main/skills/markdown-url)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
