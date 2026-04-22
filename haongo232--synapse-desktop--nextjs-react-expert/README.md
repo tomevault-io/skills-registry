@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [haongo232/synapse-desktop](https://github.com/haongo232/synapse-desktop/tree/main/.agent/skills/nextjs-react-expert)
+Original source: [haongo232/synapse-desktop](https://github.com/haongo232/synapse-desktop/tree/main/.kiro/skills/nextjs-react-expert)
 
 ---
 
