@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bakwankawa/lazy-code-skill](https://github.com/bakwankawa/lazy-code-skill/tree/main/.claude/skills/pre-commit-docs-sync)
+Original source: [bakwankawa/lazy-code-skill](https://github.com/bakwankawa/lazy-code-skill/tree/main/.cursor/skills/lazy-code-skill/pre-commit-docs-sync)
 
 ---
 
