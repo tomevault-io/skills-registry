@@ -1,0 +1,13 @@
+# adk-studio
+
+> Skill by [zavora-ai](https://github.com/zavora-ai/adk-rust) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [zavora-ai/adk-rust](https://github.com/zavora-ai/adk-rust/tree/main/.skills/skills/adk-studio)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
