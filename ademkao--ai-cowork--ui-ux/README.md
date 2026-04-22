@@ -1,0 +1,13 @@
+# ui-ux
+
+> Skill by [ademkao](https://github.com/ademkao/ai-cowork) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ademkao/ai-cowork](https://github.com/ademkao/ai-cowork/tree/main/.ai/skills/ui-ux)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
