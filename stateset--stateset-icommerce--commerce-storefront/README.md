@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stateset/stateset-icommerce](https://github.com/stateset/stateset-icommerce/tree/main/cli/skills/commerce-storefront)
+Original source: [stateset/stateset-icommerce](https://github.com/stateset/stateset-icommerce/tree/main/cli/.claude/skills/commerce-storefront)
 
 ---
 
