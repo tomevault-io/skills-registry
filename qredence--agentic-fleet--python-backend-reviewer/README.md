@@ -1,0 +1,13 @@
+# python-backend-reviewer
+
+> Skill by [qredence](https://github.com/qredence/agentic-fleet) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [qredence/agentic-fleet](https://github.com/qredence/agentic-fleet/tree/main/.github/skills/python-backend-reviewer)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
