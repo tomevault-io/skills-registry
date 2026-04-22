@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [superpyonchix/jira_mcp_server](https://github.com/superpyonchix/jira_mcp_server/tree/main/.github/skills/markdown-documentation)
+Original source: [superpyonchix/jira_mcp_server](https://github.com/superpyonchix/jira_mcp_server/tree/main/.claude/skills/markdown-documentation)
 
 ---
 
