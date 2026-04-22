@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tacogips/ign-template](https://github.com/tacogips/ign-template/tree/main/rust-v1/.agents/skills/design-doc)
+Original source: [tacogips/ign-template](https://github.com/tacogips/ign-template/tree/main/bun-ts-v1/.agents/skills/design-doc)
 
 ---
 
