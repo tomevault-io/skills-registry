@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pithecene-io/bonsai](https://github.com/pithecene-io/bonsai/tree/main/internal/assets/data/skills/repo-convention-enforcer/v1)
+Original source: [pithecene-io/bonsai](https://github.com/pithecene-io/bonsai/tree/main/internal/assets/data/skills/test-coverage-regression-detector/v1)
 
 ---
 
