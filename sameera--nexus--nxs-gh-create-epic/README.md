@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sameera/nexus](https://github.com/sameera/nexus/tree/main/claude/.claude/skills/nxs-gh-create-epic)
+Original source: [sameera/nexus](https://github.com/sameera/nexus/tree/main/gemini/.gemini/skills/nxs-gh-create-epic)
 
 ---
 
