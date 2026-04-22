@@ -1,0 +1,13 @@
+# duckdb-motherduck-parquet
+
+> Skill by [securityronin](https://github.com/securityronin/ronin-marketplace) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [securityronin/ronin-marketplace](https://github.com/securityronin/ronin-marketplace/tree/main/plugins/data-skills/skills/duckdb-motherduck-parquet)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
