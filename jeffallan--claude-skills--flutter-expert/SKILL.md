@@ -138,5 +138,5 @@ When implementing Flutter features, provide:
 4. Test file structure
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/jeffallan) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Jeffallan) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
