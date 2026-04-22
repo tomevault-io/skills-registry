@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jbuckmccready/dotfiles](https://github.com/jbuckmccready/dotfiles/tree/main/opencode/.config/opencode/skill/spec-flow-instructions)
+Original source: [jbuckmccready/dotfiles](https://github.com/jbuckmccready/dotfiles/tree/main/claude/.claude/skills/spec-flow-instructions)
 
 ---
 
