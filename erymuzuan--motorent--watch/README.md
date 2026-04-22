@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [erymuzuan/motorent](https://github.com/erymuzuan/motorent/tree/main/.claude/skills/watch)
+Original source: [erymuzuan/motorent](https://github.com/erymuzuan/motorent/tree/main/.gemini/skills/watch)
 
 ---
 
