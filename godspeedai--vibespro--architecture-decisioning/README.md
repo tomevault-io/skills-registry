@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [godspeedai/vibespro](https://github.com/godspeedai/vibespro/tree/main/.github/skills/architecture-decisioning)
+Original source: [godspeedai/vibespro](https://github.com/godspeedai/vibespro/tree/main/context-kit/.github/skills/architecture-decisioning)
 
 ---
 
