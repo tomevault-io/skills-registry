@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pcortes/swarm-attack](https://github.com/pcortes/swarm-attack/tree/main/swarm_attack/default_skills/feature-spec-author)
+Original source: [pcortes/swarm-attack](https://github.com/pcortes/swarm-attack/tree/main/swarm_attack/skills/feature-spec-author)
 
 ---
 
