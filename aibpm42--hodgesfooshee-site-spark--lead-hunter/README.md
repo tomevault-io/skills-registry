@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aibpm42/hodgesfooshee-site-spark](https://github.com/aibpm42/hodgesfooshee-site-spark/tree/main/.claude/skills/lead-hunter)
+Original source: [aibpm42/hodgesfooshee-site-spark](https://github.com/aibpm42/hodgesfooshee-site-spark/tree/main/.claude/skills-reference/lead-hunter)
 
 ---
 
