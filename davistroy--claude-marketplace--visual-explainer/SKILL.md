@@ -1,0 +1,497 @@
+---
+name: visual-explainer
+description: Transform text or documents into AI-generated infographic pages that explain concepts visually using Gemini Pro 3 for generation and Claude Vision for quality evaluation Use when this capability is needed.
+metadata:
+  author: davistroy
+---
+
+# Visual Concept Explainer
+
+You are orchestrating a visual concept explanation workflow that transforms text or documents into AI-generated infographic pages. The tool uses Gemini Pro 3 (via google-genai SDK) for 4K image generation and Claude Sonnet Vision for quality evaluation with iterative refinement.
+
+## Proactive Triggers
+
+Suggest this skill when:
+1. User has a document, report, or concept they want visualized as infographic pages
+2. After generating a report or analysis that would benefit from a visual summary
+3. User mentions creating infographics, visual explanations, or concept diagrams
+4. User asks to make a document more visually appealing or presentation-ready
+5. User wants to transform a whitepaper, guide, or technical document into visual content
+
+## Infographic Mode (Recommended)
+
+The `--infographic` flag enables information-dense infographic generation optimized for 11x17 inch printing at 4K resolution. This mode:
+
+- **Adaptive page count (1-6 pages)** based on document complexity, word count, and content types
+- **Zone-based layouts** with explicit text placement, typography specifications, and content zones
+- **8 page types**: Hero Summary, Problem Landscape, Framework Overview, Framework Deep-Dive, Comparison Matrix, Dimensions/Variations, Reference/Action, Data/Evidence
+- **Information density**: Each page can hold 800-2000 words of readable text plus diagrams, tables, and charts
+
+### Page Type Selection
+
+The system automatically selects appropriate page types based on content:
+
+| Content Pattern | Page Type | Purpose |
+|----------------|-----------|---------|
+| Executive summary needed | Hero Summary | One-page overview with key stats |
+| Challenges, pain points | Problem Landscape | Issues visualization with severity |
+| Multi-step processes | Framework Overview | Visual framework with connections |
+| Deep component analysis | Framework Deep-Dive | Detailed component exploration |
+| Multiple options to compare | Comparison Matrix | Side-by-side analysis table |
+| Variations, types, categories | Dimensions/Variations | Category breakdown visualization |
+| Statistics, research data | Data/Evidence | Charts and data visualization |
+| Action items, checklists | Reference/Action | Actionable takeaways and guides |
+
+## Technical Notes
+
+**Image Generation:**
+- Uses `google-genai` SDK with model from `$GOOGLE_IMAGE_MODEL` env var, falling back to `gemini-3-pro-image-preview` (default as of 2026-03-31 — verify with provider if errors occur)
+- Configuration: `response_modalities=["IMAGE"]` with `ImageConfig` for aspect ratio/size
+- 4K images are approximately 6-7.5MB each (JPEG format)
+
+**Image Evaluation:**
+- Claude Vision API has 5MB limit for base64-encoded images
+- Tool automatically resizes images >3.5MB before evaluation (accounts for base64 overhead)
+- Uses PIL/Pillow for high-quality LANCZOS resampling
+
+**Platform Compatibility:**
+- Windows: Folder names are sanitized to remove invalid characters (`:`, `*`, `?`, `"`, `<`, `>`, `|`)
+- All platforms: Full Unicode support in Rich terminal UI
+
+**Tested Results (4 documents, 17 images):**
+- Formats tested: URL (Substack), Markdown, DOCX
+- Average scores: 0.76-0.88 (all passing with threshold 0.75)
+- Generation time: 5-10 minutes per document (~2 min/image including analysis)
+- Only 1 retry needed across 17 images (image scored 0.72 → refined to 0.82)
+- Recommended pass threshold: 0.75-0.85 for good quality without excessive refinement
+
+## Input Validation
+
+**Required Arguments:**
+- Input content (one of the following):
+  - Raw text (pasted directly)
+  - Document path (`.md`, `.txt`, `.docx`, `.pdf`)
+  - URL (to fetch and extract content)
+
+**Optional Arguments:**
+| Parameter | Default | Options | Description |
+|-----------|---------|---------|-------------|
+| `--infographic` | false | flag | **Recommended.** Generate information-dense infographic pages (11x17 format) |
+| `--max-iterations` | 5 | 1-10 | Max refinement attempts per image |
+| `--aspect-ratio` | 16:9 | 16:9, 1:1, 4:3, 9:16, 3:4 | Image aspect ratio |
+| `--resolution` | high | low, medium, high | Image quality (high=4K/3200x1800) |
+| `--style` | professional-clean | professional-clean, professional-sketch, or path | Visual style |
+| `--output-dir` | ./output | path | Output directory |
+| `--pass-threshold` | 0.85 | 0.0-1.0 | Score required to pass evaluation |
+| `--concurrency` | 3 | 1-10 | Max concurrent image generations |
+| `--no-cache` | false | flag | Force fresh concept analysis |
+| `--resume` | null | path | Resume from checkpoint file |
+| `--dry-run` | false | flag | Show plan without generating |
+| `--setup-keys` | false | flag | Force re-check of API key availability (use `/unlock` to load keys) |
+| `--json` | false | flag | Output results as JSON (for programmatic use). Returns structured metadata including image paths, scores, concept mappings, and generation statistics. Useful for downstream automation or integration with other tools. |
+
+**Input Format Handling:**
+
+| Format | Handling |
+|--------|----------|
+| `.md`, `.txt` | Direct text extraction |
+| `.docx` | Requires `python-docx` - extracts paragraphs preserving headings |
+| `.pdf` | Requires `PyPDF2` - extracts text content |
+| URL | Requires `beautifulsoup4` - fetches and extracts main content |
+| Web content | **Best practice**: Save as markdown first for reproducibility and future reference |
+
+**DOCX Conversion Tip:**
+For best results with DOCX files, pre-convert to markdown:
+```python
+from docx import Document
+doc = Document('document.docx')
+with open('document.md', 'w') as f:
+    for para in doc.paragraphs:
+        style = para.style.name if para.style else ''
+        if style.startswith('Heading'):
+            level = int(style[-1]) if style[-1].isdigit() else 1
+            f.write('#' * level + ' ' + para.text + '\n\n')
+        else:
+            f.write(para.text + '\n\n')
+```
+
+**Environment Requirements (Secrets Policy):**
+API keys must be loaded into the environment before use. The primary method is the `/unlock` skill, which loads secrets from Bitwarden Secrets Manager via the `bws` CLI (see CLAUDE.md Secrets Management Policy):
+- `GOOGLE_API_KEY` - For Gemini Pro 3 image generation
+- `ANTHROPIC_API_KEY` - For Claude concept analysis and image evaluation
+
+**Optional Model Configuration (non-sensitive, safe for .env):**
+- `GOOGLE_IMAGE_MODEL` - Override Gemini image model (default: `gemini-3-pro-image-preview`, as of 2026-03-31 — verify with provider if errors occur)
+
+If keys are not in the environment, suggest running `/unlock` before proceeding. **Secrets policy compliance:**
+- Do NOT write API keys to `.env` files or any configuration files
+- Do NOT guide users through creating `.env` files with API key values
+- Do NOT hardcode API keys in commands or scripts
+- Always direct users to `/unlock` or the Bitwarden Secrets Manager workflow
+
+## Tool vs Claude Responsibilities
+
+Understanding what the Python tool handles vs what you (Claude) must do:
+
+| Component | Responsibility | What It Does |
+|-----------|----------------|--------------|
+| **visual-explainer (Python tool)** | Core pipeline | Concept analysis, prompt generation, Gemini API calls, evaluation, refinement loop, output organization |
+| **You (Claude)** | Input collection | Gather input text/path/URL from user |
+| **You (Claude)** | Interactive confirmation | Style selection, image count confirmation |
+| **You (Claude)** | Progress display | Show generation progress to user |
+| **You (Claude)** | Results presentation | Display completion summary |
+
+## Workflow
+
+### Phase 1: Setup and Dependency Check
+
+The tool is bundled at `../tools/visual-explainer/` relative to this skill file.
+
+**Step 1: Set Up Tool Path**
+
+```bash
+# Determine the plugin directory
+PLUGIN_DIR="${CLAUDE_PLUGIN_ROOT:-/path/to/plugins/personal-plugin}"
+TOOL_SRC="$PLUGIN_DIR/tools/visual-explainer/src"
+```
+
+**Step 2: Check Dependencies**
+
+The tool automatically checks dependencies when run. You can also do a dry-run to verify setup:
+
+```bash
+PYTHONPATH="$TOOL_SRC" python -m visual_explainer --dry-run --input "test content"
+```
+
+Required packages:
+- Core: `google-genai`, `anthropic`, `httpx`, `python-dotenv`, `pydantic`, `aiofiles`, `rich`, `pillow`
+- Optional (format-specific): `python-docx` (DOCX), `PyPDF2` (PDF), `beautifulsoup4` (URLs)
+
+**If packages are missing, install them:**
+```bash
+pip install google-genai anthropic httpx python-dotenv pydantic aiofiles rich pillow
+pip install python-docx PyPDF2 beautifulsoup4  # Optional, for specific formats
+```
+
+### Phase 2: API Key Setup (if needed)
+
+**If API keys are missing:**
+
+```text
+API Key Setup Required
+======================
+
+This tool requires two API keys:
+- GOOGLE_API_KEY - for Gemini Pro 3 image generation
+- ANTHROPIC_API_KEY - for Claude concept analysis and image evaluation
+
+Missing keys detected:
+  - GOOGLE_API_KEY - not found
+  - ANTHROPIC_API_KEY - not found
+
+To load API keys from Bitwarden, run: /unlock
+This loads secrets from Bitwarden Secrets Manager into the current environment.
+
+See CLAUDE.md Secrets Management Policy for details on storing and retrieving secrets.
+```
+
+If keys are still missing after `/unlock`, ask the user to verify the secrets are stored in their Bitwarden vault. Do NOT offer to write keys to `.env` files or guide users through creating `.env` files with API keys.
+
+### Phase 3: Input Collection
+
+If no input was provided in arguments, prompt:
+
+```text
+I'll help you create visual explanations for your content.
+
+Please provide your input in one of these formats:
+1. Paste text directly
+2. Provide a file path (e.g., ./docs/concept.md)
+3. Provide a URL to fetch content from
+```
+
+### Phase 4: Content Analysis
+
+After receiving input, run concept analysis:
+
+```bash
+PYTHONPATH="$TOOL_SRC" python -m visual_explainer analyze \
+  --input "<input_text_or_path>" \
+  --output-json
+```
+
+Display the analysis summary:
+
+```text
+Content Analysis
+================
+Document: "Understanding Quantum Entanglement"
+Word Count: 1,847 words
+Key Concepts: 5 concepts identified
+Recommended Images: 3 images
+
+Concept Flow:
+1. Classical Physics Background
+   -> 2. Quantum Superposition
+   -> 3. Entanglement Phenomenon
+   -> 4. Applications
+   -> 5. Future Implications
+```
+
+### Phase 5: Style Selection (Interactive)
+
+Prompt for style selection:
+
+```text
+Visual Style Selection
+======================
+What style would you prefer?
+
+1. Professional Clean (Recommended)
+   - Clean, corporate-ready with warm accents
+   - Best for: Business, presentations, reports
+
+2. Professional Sketch
+   - Hand-drawn sketch aesthetic
+   - Best for: Creative, educational, informal
+
+3. Custom
+   - Provide path to your own style JSON
+
+4. Skip (use Professional Clean default)
+
+Select style [1-4]:
+```
+
+### Phase 6: Image Count Confirmation
+
+```text
+Image Generation Plan
+=====================
+Based on analysis, I recommend 3 images:
+
+Image 1: "The Classical Foundation"
+  - Covers: Classical Physics Background
+  - Intent: Establish baseline understanding
+
+Image 2: "Quantum Superposition"
+  - Covers: Superposition, probability states
+  - Intent: Introduce quantum concepts
+
+Image 3: "Entanglement Synthesis"
+  - Covers: Entanglement, applications, future
+  - Intent: Tie concepts together
+
+Would you like to:
+1. Proceed with 3 images (Recommended)
+2. Use fewer images (condense concepts)
+3. Use more images (expand detail)
+4. Adjust settings (aspect ratio, iterations)
+```
+
+### Phase 7: Generation Execution
+
+Execute the full generation pipeline:
+
+```bash
+PYTHONPATH="$TOOL_SRC" python -m visual_explainer generate \
+  --input "<input_text_or_path>" \
+  --style "<selected_style>" \
+  --max-iterations <n> \
+  --aspect-ratio "<ratio>" \
+  --resolution "<level>" \
+  --output-dir "<output_path>" \
+  --pass-threshold <threshold> \
+  --concurrency <n>
+```
+
+**Progress Display Format:**
+
+```text
+Starting Image Generation
+=========================
+
+Image 1 of 3: "The Classical Foundation"
+----------------------------------------
+
+Attempt 1/5:
+  [=========>         ] Generating... (4.2s)
+  Generated
+  Evaluating...
+    - Concept clarity: 72%
+    - Visual appeal: 85%
+    - Flow continuity: 60%
+  Overall: 72% - NEEDS_REFINEMENT
+
+Attempt 2/5:
+  Refining: Adding visual flow indicators
+  [=========>         ] Generating... (3.8s)
+  Generated
+  Evaluating...
+    - Concept clarity: 91%
+    - Visual appeal: 88%
+    - Flow continuity: 85%
+  Overall: 88% - PASS
+
+Image 1 complete. Best version: Attempt 2
+
+Image 2 of 3: "Quantum Superposition"
+-------------------------------------
+...
+```
+
+### Phase 8: Completion Summary
+
+```text
+Generation Complete
+===================
+
+Results:
+  - Images generated: 3 of 3
+  - Total attempts: 7
+  - Average quality score: 89%
+  - Estimated cost: $0.70
+
+Output saved to:
+  ./output/visual-explainer-quantum-entanglement-20260118-143052/
+
+Final Images:
+  1. 01-classical-foundation.jpg (Score: 88%)
+  2. 02-quantum-superposition.jpg (Score: 91%)
+  3. 03-entanglement-synthesis.jpg (Score: 88%)
+
+Output Structure:
+  metadata.json          # Full generation metadata
+  concepts.json          # Extracted concepts
+  summary.md             # Human-readable summary
+  all-images/            # Final images only
+    01-classical-foundation.jpg
+    02-quantum-superposition.jpg
+    03-entanglement-synthesis.jpg
+  image-01/              # All attempts for image 1
+    final.jpg
+    prompt-v1.txt
+    attempt-01.jpg
+    evaluation-01.json
+    ...
+
+Would you like to:
+1. View the summary report
+2. Regenerate a specific image
+3. Open output folder
+```
+
+## Resume from Checkpoint
+
+If generation was interrupted, resume with:
+
+```bash
+PYTHONPATH="$TOOL_SRC" python -m visual_explainer generate \
+  --resume "./output/visual-explainer-[topic]-[timestamp]/checkpoint.json"
+```
+
+The checkpoint contains:
+- Generation state
+- Completed images
+- Current progress
+- Configuration used
+
+## Cost Estimation
+
+**Estimated costs per session:**
+
+| Scenario | Images | Avg Attempts | Est. Total |
+|----------|--------|--------------|------------|
+| Simple doc, 1 image | 1 | 2 | ~$0.28 |
+| Medium doc, 3 images | 3 | 2.3 | ~$0.95 |
+| Complex doc, 5 images | 5 | 3 | ~$2.10 |
+
+**Component costs:**
+- Gemini image generation: ~$0.10 per image
+- Claude concept analysis: ~$0.02 per document
+- Claude image evaluation: ~$0.03 per evaluation
+
+## Performance
+
+| Scenario | Images | Expected Duration | Estimated API Cost |
+|----------|--------|-------------------|--------------------|
+| Simple document, 1 image | 1 | 2-4 minutes | ~$0.28 |
+| Medium document, 3 images | 3 | 5-10 minutes | ~$0.95 |
+| Complex document, 5 images | 5 | 12-20 minutes | ~$2.10 |
+| Infographic mode, 3 pages | 3 | 8-15 minutes | ~$1.20 |
+| Infographic mode, 6 pages | 6 | 15-30 minutes | ~$2.80 |
+
+Duration scales linearly with image count. Each image takes approximately 2 minutes including Gemini generation, Claude evaluation, and potential refinement. Refinement retries (when score < pass threshold) add ~1.5 minutes per retry.
+
+**API cost breakdown per image:** Gemini Pro 3 generation ~$0.10, Claude concept analysis ~$0.02/document (one-time), Claude image evaluation ~$0.03/evaluation. Costs increase with refinement retries. At default settings (max 5 iterations, 0.85 threshold), typical cost is $0.15-0.25 per final image. Use `--dry-run` to preview the generation plan without incurring any API costs.
+
+## Error Handling
+
+| Error | Response |
+|-------|----------|
+| Missing API key | Suggest running `/unlock` to load keys from Bitwarden |
+| Rate limit (429) | Exponential backoff, respect Retry-After header |
+| Safety filter | Log, skip to next attempt with modified prompt |
+| Timeout | Retry with increased timeout (up to 5 min) |
+| All attempts exhausted | Select best attempt, report scores |
+| Network error | Retry up to 3 times with backoff |
+
+## Examples
+
+**Infographic mode (recommended for complex documents):**
+```text
+/visual-explainer --input docs/architecture-overview.md --infographic
+```
+
+**Infographic with dry-run preview:**
+```text
+/visual-explainer --input whitepaper.md --infographic --dry-run
+```
+
+**Basic usage (interactive):**
+```text
+/visual-explainer
+```
+
+**With document path:**
+```text
+/visual-explainer --input docs/architecture-overview.md
+```
+
+**Custom settings:**
+```text
+/visual-explainer --input concept.txt --style professional-sketch --max-iterations 3 --aspect-ratio 1:1
+```
+
+**High quality infographic:**
+```text
+/visual-explainer --input whitepaper.md --infographic --resolution high --max-iterations 7 --pass-threshold 0.90
+```
+
+**Dry run (plan only):**
+```text
+/visual-explainer --input document.md --dry-run
+```
+
+**Resume interrupted generation:**
+```text
+/visual-explainer --resume ./output/visual-explainer-topic-20260118/checkpoint.json
+```
+
+## Execution Summary
+
+Follow these steps in order:
+
+1. **Setup** - Parse arguments, set up tool path
+2. **Dependency Check** - Verify packages and API keys
+3. **API Key Setup** - If missing, guide user through setup wizard
+4. **Input Collection** - Get text/path/URL from user (if not provided)
+5. **Content Analysis** - Extract concepts, determine image count
+6. **Style Selection** - Let user choose or use default
+7. **Image Count Confirmation** - Confirm plan with user
+8. **Generation Execution** - Run full pipeline with progress display
+9. **Completion Summary** - Display results and output locations
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/davistroy) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
