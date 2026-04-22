@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hookvibe/hookcode](https://github.com/hookvibe/hookcode/tree/main/.gemini/skills/hookcode-yml-generator)
+Original source: [hookvibe/hookcode](https://github.com/hookvibe/hookcode/tree/main/.codex/skills/hookcode-yml-generator)
 
 ---
 
