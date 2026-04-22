@@ -1,0 +1,318 @@
+---
+name: user-guide
+description: User-facing features, menus, keyboard shortcuts, and functionality overview. Use when documenting features, understanding user workflows, or explaining capabilities to users. Use when this capability is needed.
+metadata:
+  author: ad-repo
+---
+
+# NullPlayer User Guide
+
+A faithful recreation of Winamp 2.x for macOS with Plex/Jellyfin/Subsonic integration, ProjectM visualizations, and casting support.
+
+## System Requirements
+
+- **macOS 14.0 (Sonoma)** or later
+- Internet connection (for streaming and skin downloads)
+
+## Core Features
+
+### Windows
+
+| Window | Description | Toggle |
+|--------|-------------|--------|
+| **Main Window** | Primary player with transport controls | Always visible |
+| **Playlist Editor** | Track list and playlist management | PL button or context menu |
+| **Equalizer** | Classic 10-band EQ or modern 21-band EQ with presets | EQ button or context menu |
+| **Spectrum Analyzer** | Large spectrum visualization | Context menu or Window menu |
+| **Library Browser** | Browse Plex/Jellyfin/Subsonic/Emby and local media | Logo button or context menu |
+| **ProjectM** | Real-time audio visualizations | Menu button or context menu |
+
+In modern UI, **Windows > Play History** opens the **Data** tab inside the Library Browser instead of a separate window.
+
+### Top Menu Bar
+
+Global controls are also available from the macOS top menu bar:
+
+- `Windows`
+- `UI`
+- `Playback`
+- `Visuals`
+- `Libraries`
+- `Output`
+
+`Output > Sonos` supports persistent-open room checkbox selection (same behavior as the context menu Sonos submenu).
+
+### Window Docking
+
+Windows automatically snap together when dragged near each other:
+- Edge-to-edge snapping
+- Screen edge snapping
+- Group minimize (attached windows minimize together)
+- **Lock Connected Windows / Unlock Connected Windows** toggle (context menu) controls whether connected windows always move as a group
+- **Snap to Default** (context menu) resets all windows
+
+**Drag behaviour:**
+- **Quick drag** (release mouse within ~400 ms of clicking): the dragged window detaches from its group and moves alone; other connected windows stay put
+- **Hold then drag** (hold ≥ 400 ms before moving): all connected windows move together as a group
+- **When connected windows are locked**: hold timing is bypassed and drags always move the whole connected group
+- Connected peers show a brief highlight overlay at mouseDown to preview which windows will move together
+
+### Main Window Elements
+
+| Element | Description |
+|---------|-------------|
+| **Time Display** | Elapsed/remaining time (click to toggle) |
+| **Track Marquee** | Scrolling song title/artist |
+| **Bitrate** | Track bitrate in kbps |
+| **Sample Rate** | Audio sample rate in kHz |
+| **Stereo Indicator** | Shows mono/stereo status |
+| **Cast Indicator** | Shows when casting to external device |
+| **Spectrum Analyzer** | Real-time frequency visualization |
+
+### Sliders
+
+- **Position Bar**: Seek through track
+- **Volume Slider**: Adjust playback volume (0-100%)
+- **Balance Slider**: Pan audio left/right
+
+### Transport Buttons
+
+Previous, Play, Pause, Stop, Next, Eject (open file dialog)
+
+### Toggle Buttons
+
+- **Shuffle**: Random playback order
+- **Repeat**: Loop playlist
+- **EQ**: Show/hide Equalizer
+- **PL**: Show/hide Playlist
+
+Modern UI adds: **HT** (Hide Title Bars), **CA** (Cast), **pM** (ProjectM), **SP** (Spectrum), **WV** (Waveform), **LB** (Library)
+
+## Media Sources
+
+### Plex Integration
+- Browse music, movies, and TV shows
+- Album artwork and metadata
+- Radio features (Track/Artist/Album/Genre/Decade/Rating/Hits/Deep Cuts)
+- Automatic scrobbling (90% or end, min 30s)
+- Video playback with casting
+
+### Jellyfin Integration
+- Browse music and video libraries
+- **Library selector** in status bar: click "Lib:" to switch library. Mode-aware — shows music library picker in music tabs (Artists/Albums/Tracks/Plists) and video library picker in Movies/Shows tabs. "All" option browses across all libraries.
+- Rating scale: 0-100% (0-10 internal)
+- Scrobbling (50% or 4 minutes for audio, 90% for video)
+
+### Navidrome/Subsonic
+- Browse artists, albums, playlists
+- **Music folder selector** in status bar: click "Lib:" to filter by music folder. "All" shows content from all folders.
+- Token authentication
+- Scrobbling (50% or 4 minutes)
+- Casting support via proxy
+
+### Emby Integration
+- Browse music and video libraries
+- **Library selector** in status bar: click "Lib:" to switch library. "All" browses across all libraries.
+- Rating scale: 0-100% (0-10 internal, multiply/divide by 10; 1 star = 20)
+- Scrobbling (50% or 4 minutes for audio, 90% for video)
+- Casting support via proxy (stream URLs have no file extension)
+
+### Internet Radio
+- Shoutcast/Icecast streaming
+- Live song metadata (ICY + SomaFM fallback when ICY is missing)
+- Auto-reconnect on disconnect
+- Large bundled global station catalog (including full SomaFM channel set)
+- Curated regional additions (African, Caribbean, South American, European, Indian, Thai) plus expanded jazz streams
+- Station management (add/edit/delete/import)
+- Internet-radio-only folder organization (smart folders + custom folders)
+- 5-star station ratings (persisted per station URL)
+- Casting to Sonos
+- Playback Options now groups all source histories under a single **Radio History** submenu
+
+### Local Files
+Drag & drop or use File menu. Supports: MP3, M4A, AAC, WAV, AIFF, FLAC, OGG, ALAC
+
+### Local Library Browser
+Switch the Library Browser source to "Local" to manage a persistent media library.
+
+**+ADD menu** (three options):
+- **Add Files...** — file picker filtered to audio formats
+- **Add Video Files...** — file picker filtered to video formats (`.mp4`, `.mkv`, `.mov`, etc.); files are classified as movies or TV episodes automatically (SxxExx naming / iTunes metadata)
+- **Add Folder...** — folder picker; scans immediately for audio and video files, and saves the folder as a "remembered folder"
+
+**Watch folders (remembered folders):**
+- Folders added via "Add Folder..." are persisted in the library database
+- They are **not** monitored automatically — there is no filesystem watcher
+- Press the **⟳ refresh button** to run an **incremental** re-scan of all remembered folders (new/changed/removed files only)
+- Fast ingest behavior: newly discovered files appear quickly with filename/basic info, then metadata (duration/tags/sample rate) fills in asynchronously
+- Duplicate detection and per-file signatures prevent unnecessary metadata re-parse for unchanged files
+- Progress updates are throttled/coarse during large imports to keep UI responsive
+
+**Tabs:** Artists, Albums, Playlists (`Plists` in the UI), Movies, Shows, Search, Radio, Data
+
+### Drag/Drop + Folder Import Behavior (Local/NAS)
+
+Import discovery is now unified across classic + modern entry points (main window, playlist windows, library browsers):
+
+- Directory traversal runs in background (no synchronous recursive UI-thread scans)
+- Extension filtering is consistent across add-folder and drag/drop paths
+- Supported content checks are shared before accepting a drop
+- Works for large local sets and NAS paths (SMB/AFP) with less UI churn during import
+
+## Output Devices & Casting
+
+### Sonos
+- Multi-room casting
+- Group management while casting
+- Local file streaming via embedded server
+- Network stream proxying for Subsonic/Jellyfin
+
+### Chromecast
+- Audio and video casting
+- Position synchronization
+- Buffering state handling
+
+### DLNA
+- UPnP device discovery
+- Video casting to TVs
+
+### AirPlay
+- Native macOS AirPlay support
+- Auto-detected output devices
+
+## Audio Features
+
+### Equalizer
+- **Classic UI**: 10-band graphic EQ (-12dB to +12dB per band)
+- **Modern UI**: 21-band graphic EQ (-12dB to +12dB per band)
+- Preamp control
+- Anti-clipping limiter
+- **Modern UI**: 7 compact preset toggle buttons in the button row (FLAT, ROCK, POP, ELEC, HIP, JAZZ, CLSC); clicking a preset auto-enables EQ if off; clicking the active preset deactivates it (reverts to flat); dragging any fader clears the active preset
+- **Modern UI**: integrated glowing `PRE` control in the graph strip replaces the old preamp slider; drag to adjust preamp, double-click to reset to `0 dB`
+- **Modern UI**: double-click a fader to reset that band only to `0 dB`
+- **Modern UI**: AUTO button applies genre-based preset for the current track and auto-enables EQ if off
+- **Modern UI**: all 21 frequency labels are visible in-window, using compact labels like `1K`, `1.4K`, `2K`, `11.2K`
+- **Classic UI**: PRESETS dropdown with all presets including "I'm Old" / "I'm Young"
+
+### Playback Options
+- **Gapless Playback**: Seamless track transitions (local files)
+- **Sweet Fades**: Crossfade between tracks (1-10s duration)
+- **Volume Normalization**: Consistent loudness (-14dB target)
+- **Remember State on Quit**: Restore session on launch
+
+### Spectrum Modes
+- **Accurate**: True signal levels (40dB range)
+- **Adaptive**: Global adaptive normalization
+- **Dynamic**: Per-region normalization (bass/mid/treble)
+
+## Visualizations
+
+### Main Window GPU Modes
+Spectrum, vis_classic, Fire, Enhanced, Ultra, JWST, Lightning, Matrix, Snow (double-click to cycle)
+
+### Album Art Visualizer
+30 effects transforming album artwork based on audio
+
+### ProjectM/MilkDrop
+100+ bundled presets, OpenGL rendering, fullscreen support
+
+### Spectrum Analyzer Window
+55 bars, 9 quality modes (Winamp/vis_classic/Enhanced/Ultra/Fire/JWST/Lightning/Matrix/Snow)
+
+## Skins
+
+### Loading Skins
+- **Skins > Load Skin...** to open `.wsz` file
+- Place in `~/Library/Application Support/NullPlayer/Skins/` for auto-discovery
+- Bundled skins: Silver (default), Classic, Dark, Light
+
+### Modern UI Mode
+- **Options > Use Modern UI** to enable modern skin engine
+- Requires restart to switch modes
+- Modern skins use `skin.json` format
+- Portable modern skin bundles use `.nsz` (ZIP) and can be imported via **UI > Modern > Load Skin...**
+- Bundled modern skins: NeonWave (default), Skulls
+
+### Large UI Mode
+- **Modern UI**: toggle via context menu → **Large UI**
+- **Classic UI**: toggle via **2X button** or context menu → **Large UI**
+- Scales all windows by 1.5x
+- Persists across restarts
+- **Modern UI**: toggles live instantly
+- **Classic UI**: requires a restart (dialog appears before any UI change)
+
+### Hide Title Bars (Modern UI)
+- Toggle via context menu or HT button on the main window
+- **HT Off (default)**: EQ/Playlist/Spectrum hide titlebars when docked — this is always active, even with HT off
+- **HT On**: All 6 windows (main, EQ, playlist, spectrum, ProjectM, library browser) hide titlebars; the main window keeps the same outer size while its internal layout expands to fill the reclaimed space
+- Preserves the border line (titlebar area collapses to border width, not 0)
+
+## Keyboard Shortcuts
+
+### Playback
+- **Space**: Play/Pause
+- **V**: Stop
+- **B**: Next track
+- **Z**: Previous track
+- **←/→**: Seek backward/forward 5s
+- **↑/↓**: Volume up/down
+
+### vis_classic Profiles
+- **Main window**: **, / .** previous/next profile
+- **Spectrum window**: **[ / ]** previous/next profile (left/right also cycle profiles in vis_classic mode)
+- **Transparent Background**: right-click in vis_classic mode and toggle per window (main and spectrum persist separately)
+
+### Windows
+- **Cmd+L**: Show/hide Playlist
+- **Cmd+G**: Show/hide Equalizer
+- **Cmd+S**: Show/hide Spectrum Analyzer (modern UI) or Library Browser (classic UI)
+- **Cmd+K**: Show/hide ProjectM
+- **Cmd+J**: Jump to current track in playlist
+
+### Playlist
+- **Enter**: Play selected track
+- **Delete**: Remove selected tracks
+- **Cmd+A**: Select all
+
+### Library Browser
+- **Enter**: Play Now (insert and play)
+- **Shift+Enter**: Play Next (insert after current, no auto-play if empty)
+- **Option+Enter**: Add to Queue (append, no auto-play if empty)
+- **Right Arrow**: Expand item (artists, albums, playlists, shows, seasons); if already expanded, move to first child
+- **Left Arrow**: Collapse expanded item; if not expanded, jump to parent item
+- **Tab / Shift+Tab**: Cycle forward/backward through tabs (Artists → Albums → Playlists (Plists in the UI) → Movies → Shows → Search → Radio → Data)
+- **Space**: Play/Pause
+- **Type letters**: Jump to first matching item by name (type-ahead, clears after ~1s); Backspace removes last character, Escape clears immediately
+- **Cmd+F**: Focus search field
+- **Escape**: Clear search (in search tab) or clear type-ahead buffer
+
+## Data Storage
+
+| Data | Location |
+|------|----------|
+| Playlists | `~/Library/Application Support/NullPlayer/Playlists/` |
+| Skins | `~/Library/Application Support/NullPlayer/Skins/` |
+| ProjectM Presets | `~/Library/Application Support/NullPlayer/Presets/` |
+| Settings | `~/Library/Preferences/com.nullplayer.NullPlayer.plist` |
+| Credentials | macOS Keychain |
+| Local Library DB | `~/Library/Application Support/NullPlayer/library.db` |
+
+## Additional Documentation
+
+For comprehensive documentation, see:
+- [features-reference.md](features-reference.md) - Detailed window/feature documentation
+- [keyboard-shortcuts.md](keyboard-shortcuts.md) - Complete keyboard shortcut reference
+
+## Quick Tips
+
+- **Drag & drop** files/folders onto the player to add them
+- **Right-click** anywhere for the context menu
+- **Double-click** title bars for shade mode
+- **Shift+Click** for multi-select in playlist/browser
+- **Cmd+J** to jump to currently playing track
+- Windows **dock automatically** when dragged near each other
+- **Large UI** (1.5x) is available in both modern and classic UI; classic requires restart
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ad-repo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
