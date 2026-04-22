@@ -1,0 +1,13 @@
+# gpt-researcher
+
+> Skill by [yudame](https://github.com/yudame/research) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [yudame/research](https://github.com/yudame/research/tree/main/.claude/skills/gpt-researcher)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
