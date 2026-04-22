@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [settlemint-archive/agent-marketplace](https://github.com/settlemint-archive/agent-marketplace/tree/main/.agents/skills/git-workflow)
+Original source: [settlemint-archive/agent-marketplace](https://github.com/settlemint-archive/agent-marketplace/tree/main/.agents/skills-local/git-workflow)
 
 ---
 
