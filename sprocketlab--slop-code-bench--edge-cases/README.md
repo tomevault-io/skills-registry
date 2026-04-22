@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sprocketlab/slop-code-bench](https://github.com/sprocketlab/slop-code-bench/tree/main/.claude/skills/edge-cases)
+Original source: [sprocketlab/slop-code-bench](https://github.com/sprocketlab/slop-code-bench/tree/main/.codex/skills/edge-cases)
 
 ---
 
