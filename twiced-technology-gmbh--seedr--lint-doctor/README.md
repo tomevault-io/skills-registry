@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [twiced-technology-gmbh/seedr](https://github.com/twiced-technology-gmbh/seedr/tree/main/registry/skills/lint-doctor)
+Original source: [twiced-technology-gmbh/seedr](https://github.com/twiced-technology-gmbh/seedr/tree/main/.claude/skills/lint-doctor)
 
 ---
 
