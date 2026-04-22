@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [naokirin/room-based-multiplayer-poc](https://github.com/naokirin/room-based-multiplayer-poc/tree/main/.claude/skills/rails-refactor)
+Original source: [naokirin/room-based-multiplayer-poc](https://github.com/naokirin/room-based-multiplayer-poc/tree/main/.cursor/skills/rails-refactor)
 
 ---
 
