@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ericoo0/stock-trading-platform](https://github.com/ericoo0/stock-trading-platform/tree/main/.coco/superpowers/skills/brainstorming)
+Original source: [ericoo0/stock-trading-platform](https://github.com/ericoo0/stock-trading-platform/tree/main/.codex/superpowers/skills/brainstorming)
 
 ---
 
