@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ohadf2015/boggle-new](https://github.com/ohadf2015/boggle-new/tree/main/fe-next/.claude/skills/ux-writer)
+Original source: [ohadf2015/boggle-new](https://github.com/ohadf2015/boggle-new/tree/main/.claude/skills/ux-writer)
 
 ---
 
