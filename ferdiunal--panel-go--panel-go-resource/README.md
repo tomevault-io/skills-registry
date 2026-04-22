@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ferdiunal/panel.go](https://github.com/ferdiunal/panel.go/tree/main/.claude/skills/panel-go-resource)
+Original source: [ferdiunal/panel.go](https://github.com/ferdiunal/panel.go/tree/main/examples/cargo.go/.claude/skills/panel-go-resource)
 
 ---
 
