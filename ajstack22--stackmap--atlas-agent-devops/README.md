@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ajstack22/stackmap](https://github.com/ajstack22/stackmap/tree/main/atlas-skills/atlas-agent-devops)
+Original source: [ajstack22/stackmap](https://github.com/ajstack22/stackmap/tree/main/atlas-skills-generic/atlas-agent-devops)
 
 ---
 
