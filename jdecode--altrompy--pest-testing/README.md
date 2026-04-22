@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jdecode/altrompy](https://github.com/jdecode/altrompy/tree/main/.junie/skills/pest-testing)
+Original source: [jdecode/altrompy](https://github.com/jdecode/altrompy/tree/main/.agents/skills/pest-testing)
 
 ---
 
