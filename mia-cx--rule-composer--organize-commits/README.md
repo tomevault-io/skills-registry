@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mia-cx/rule-composer](https://github.com/mia-cx/rule-composer/tree/main/coding-tools/aider/skills/organize-commits)
+Original source: [mia-cx/rule-composer](https://github.com/mia-cx/rule-composer/tree/main/coding-tools/amazonq/skills/organize-commits)
 
 ---
 
