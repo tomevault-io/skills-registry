@@ -1,0 +1,362 @@
+---
+name: rastreando-odoo
+description: >- Use when this capability is needed.
+metadata:
+  author: rafael-2109
+---
+
+
+## Quando NAO Usar Esta Skill
+
+| Situacao | Skill Correta | Por que? |
+|----------|--------------|----------|
+| Match NF x PO especifico | **validacao-nf-po** | Fase 2 do recebimento, nao rastreamento geral |
+| Split/consolidar PO | **conciliando-odoo-po** | Fase 3, operacao de escrita em POs |
+| Recebimento fisico (lotes/quality check) | **recebimento-fisico-odoo** | Fase 4, operacao no armazem |
+| Criar pagamento ou reconciliar extrato | **executando-odoo-financeiro** | Operacao financeira de escrita |
+| Explorar modelo Odoo desconhecido | **descobrindo-odoo-estrutura** | Esta skill usa modelos ja mapeados |
+| Criar integracao/service | **integracao-odoo** | Esta skill consulta, nao desenvolve |
+| Exportar razao geral | **razao-geral-odoo** | Relatorio contabil, nao rastreamento |
+
+---
+
+# Rastreando Odoo
+
+Rastreia fluxo completo de documentos e executa auditorias financeiras.
+
+## DECISION TREE — Qual Script Usar?
+
+### Mapeamento Rapido
+
+| Se a pergunta menciona... | Script | Parametros |
+|----------------------------|--------|------------|
+| **NF, nota fiscal, chave NF-e** | `rastrear.py` | `"NF 12345"` ou `"3525..."` |
+| **PO, pedido de compra** | `rastrear.py` | `"PO00789"` ou `"C2513147"` |
+| **VCD, VFB, VSC, pedido de venda** | `rastrear.py` | `"VCD123"` |
+| **Parceiro, fornecedor, cliente** | `rastrear.py` | `"Atacadao"` ou CNPJ |
+| **Apenas normalizar/detectar tipo** | `normalizar.py` | `"NF 12345" --json` |
+| **Auditoria faturas de compra** | `auditoria_faturas_compra.py` | `--mes 11 --ano 2025` |
+| **Extrato bancario, conciliacao** | `auditoria_extrato_bancario.py` | `--inicio ... --fim ...` |
+| **Extratos sem vinculo, titulos soltos** | `mapeamento_vinculos_completo.py` | `--inicio ... --fim ...` |
+| **Auditoria conciliacao, vinculos documentados** | `auditoria_conciliacao.py` | `--inicio ... --fim ...` |
+| **Relatorio DFE, NFs recebidas no periodo** | `relatorio_dfe.py` | `--inicio ... --fim ...` |
+| **Vincular extrato via planilha** | `vincular_extrato_fatura_excel.py` | `-a planilha.xlsx` |
+
+### Regras de Decisao
+
+1. **Rastreamento de documento unico** → `rastrear.py` (aceita qualquer entrada)
+2. **Apenas identificar tipo** → `normalizar.py --detectar` (NAO requer conexao Odoo)
+3. **Auditoria faturas por mes** → `auditoria_faturas_compra.py`
+4. **Auditoria extrato bancario** → `auditoria_extrato_bancario.py`
+5. **Auditoria conciliacao documentada** (vinculos A/B) → `auditoria_conciliacao.py`
+6. **Relatorio DFEs recebidas** → `relatorio_dfe.py`
+7. **Mapeamento de registros soltos** → `mapeamento_vinculos_completo.py`
+8. **Vinculacao bulk via Excel** → `vincular_extrato_fatura_excel.py`
+
+### Quando usar --excel
+
+Todos os scripts de auditoria suportam `--excel` para exportar dados tabulares. Usar `--excel` quando o usuario pedir planilha ou exportacao. Combinar com skill `exportando-arquivos` para gerar download.
+
+## Regras de Negocio (Anti-Alucinacao)
+
+### O Agente PODE Afirmar
+- Fluxo documental completo (DFE → PO → Fatura → Titulos)
+- Status de pagamento (paid/not_paid/partial)
+- Status de conciliacao (reconciled=True/False)
+- Dados de auditoria (valores, datas, parceiros)
+
+### O Agente NAO PODE Inventar
+- Motivos de nao-pagamento sem evidencia no Odoo
+- Status de documentos nao consultados
+- Vinculos entre documentos sem navegacao real
+- Previsoes de pagamento ou conciliacao
+- Cruzamento de dados entre visoes diferentes do mapeamento_vinculos sem evidencia explicita no JSON
+
+### Regra de Fidelidade ao Output
+
+**OBRIGATORIO**: Valores numericos (R$, quantidades), datas, IDs e nomes de documentos DEVEM ser COPIADOS do output JSON do script, NAO reformulados ou arredondados. Exemplo:
+- Script retorna `"amount_total": 12345.67` → Apresentar "R$ 12.345,67" (formatacao BR OK, valor EXATO)
+- Script retorna `"date_maturity": "2025-01-15"` → Apresentar "15/01/2025" (formato BR OK, data EXATA)
+- Script retorna `"name": "BILL/2025/0001"` → Usar "BILL/2025/0001" (NAO "Fatura 1 de 2025")
+
+### Tratamento de Erros e Resultados Vazios
+
+| Situacao | Acao Correta |
+|----------|-------------|
+| Script retorna `"sucesso": false` | Reportar EXATAMENTE a mensagem de erro do JSON |
+| Erro de conexao Odoo | Dizer "Nao foi possivel conectar ao Odoo" — NAO inventar dados |
+| Lista vazia (`"faturas": []`) | Dizer "Nenhuma fatura encontrada no periodo" — NAO especular motivo |
+| Campos null no JSON | Dizer "Campo X nao disponivel" — NAO preencher com suposicao |
+| Timeout do script | Reportar timeout e sugerir filtro menor (periodo, limite) |
+
+### Modelo de Conciliacao (2 Camadas)
+
+O Odoo usa reconciliacao em 2 etapas:
+- **Conciliacao A**: Extrato bancario ↔ Payment (account.payment)
+- **Conciliacao B**: Payment ↔ Titulo (account.move.line com account_type payable/receivable)
+
+NAO confundir: um extrato reconciliado (Conc. A) NAO significa que o titulo esta pago (precisa Conc. B tambem).
+
+---
+
+## Fluxos Suportados
+
+| Fluxo | Caminho |
+|-------|---------|
+| **Compra** | DFE → Requisicao → PO → Fatura → Titulos → Conciliacao |
+| **Venda** | SO (VCD/VFB/VSC) → Picking → Fatura → Titulos → Conciliacao |
+| **Devolucao** | DFE (finnfe=4) → Nota Credito → NF Original → Pedido Original |
+
+## Workflow
+
+1. **Normalizar entrada** → Transforma texto humano em ID Odoo
+2. **Detectar tipo** → Identifica se e compra, venda ou devolucao
+3. **Rastrear fluxo** → Navega pelos relacionamentos
+4. **Retornar JSON** → Estrutura completa com todos os documentos
+
+## Scripts
+
+**Para parametros completos e retornos JSON**: LER `SCRIPTS.md`
+
+### [normalizar.py](scripts/normalizar.py)
+
+Transforma mencoes humanas em identificadores Odoo.
+
+```bash
+source .venv/bin/activate
+
+# Por nome de parceiro
+python .claude/skills/rastreando-odoo/scripts/normalizar.py "Atacadao" --json
+
+# Por CNPJ
+python .claude/skills/rastreando-odoo/scripts/normalizar.py "18467441" --json
+
+# Por numero de NF
+python .claude/skills/rastreando-odoo/scripts/normalizar.py "NF 12345" --json
+
+# Por PO (formatos: PO00123, C2513147)
+python .claude/skills/rastreando-odoo/scripts/normalizar.py "PO00789" --json
+
+# Por SO (prefixos: VCD, VFB, VSC)
+python .claude/skills/rastreando-odoo/scripts/normalizar.py "VCD123" --json
+
+# Apenas detectar tipo (sem buscar)
+python .claude/skills/rastreando-odoo/scripts/normalizar.py "VCD123" --detectar
+```
+
+### [rastrear.py](scripts/rastrear.py)
+
+Rastreia fluxo completo a partir de qualquer entrada.
+
+```bash
+source .venv/bin/activate
+
+# Por chave NF-e
+python .claude/skills/rastreando-odoo/scripts/rastrear.py "35251218467441..." --json
+
+# Por numero de NF
+python .claude/skills/rastreando-odoo/scripts/rastrear.py "NF 12345" --json
+
+# Por PO ou SO
+python .claude/skills/rastreando-odoo/scripts/rastrear.py "PO00789" --json
+python .claude/skills/rastreando-odoo/scripts/rastrear.py "VCD123" --json
+
+# Por parceiro
+python .claude/skills/rastreando-odoo/scripts/rastrear.py "Atacadao" --json
+
+# Forcar tipo de fluxo
+python .claude/skills/rastreando-odoo/scripts/rastrear.py "12345" --fluxo compra --json
+```
+
+### [auditoria_faturas_compra.py](scripts/auditoria_faturas_compra.py)
+
+Extrai auditoria completa de faturas de compra com titulos, pagamentos e conciliacoes.
+
+```bash
+source .venv/bin/activate
+
+# Auditoria de mes especifico
+python .claude/skills/rastreando-odoo/scripts/auditoria_faturas_compra.py --mes 11 --ano 2025
+
+# Todo o periodo disponivel
+python .claude/skills/rastreando-odoo/scripts/auditoria_faturas_compra.py --all
+
+# Exportar para JSON
+python .claude/skills/rastreando-odoo/scripts/auditoria_faturas_compra.py --mes 11 --ano 2025 --json
+
+# Exportar formato tabular (para Excel via skill exportando-arquivos)
+python .claude/skills/rastreando-odoo/scripts/auditoria_faturas_compra.py --mes 11 --ano 2025 --excel
+```
+
+**Dados extraidos**: fatura, fornecedor, CNPJ, parcelas, vencimentos, pagamentos, conciliacao bancaria, notas de credito/estornos.
+
+### [auditoria_extrato_bancario.py](scripts/auditoria_extrato_bancario.py)
+
+Extrai auditoria de extrato bancario com status de conciliacao.
+
+```bash
+source .venv/bin/activate
+
+# Extrato de periodo
+python .claude/skills/rastreando-odoo/scripts/auditoria_extrato_bancario.py --inicio 2024-07-01 --fim 2025-12-31
+
+# Exportar para JSON
+python .claude/skills/rastreando-odoo/scripts/auditoria_extrato_bancario.py --inicio 2024-07-01 --fim 2025-12-31 --json
+
+# Exportar formato tabular (para Excel)
+python .claude/skills/rastreando-odoo/scripts/auditoria_extrato_bancario.py --inicio 2024-07-01 --fim 2025-12-31 --excel
+```
+
+**Dados extraidos**: data, referencia, valor, parceiro, conta bancaria, status conciliacao.
+
+### [mapeamento_vinculos_completo.py](scripts/mapeamento_vinculos_completo.py)
+
+Extrai 5 visoes cruzadas para identificar registros "soltos" (sem vinculo):
+
+```bash
+source .venv/bin/activate
+
+# Mapeamento de pagamentos (extratos < 0)
+python .claude/skills/rastreando-odoo/scripts/mapeamento_vinculos_completo.py --inicio 2024-07-01 --fim 2025-12-31 --pagamentos
+
+# Exportar JSON completo
+python .claude/skills/rastreando-odoo/scripts/mapeamento_vinculos_completo.py --inicio 2024-07-01 --fim 2025-12-31 --json
+
+# Exportar formato tabular (para Excel)
+python .claude/skills/rastreando-odoo/scripts/mapeamento_vinculos_completo.py --inicio 2024-07-01 --fim 2025-12-31 --excel
+```
+
+**Visoes extraidas**:
+- EXTRATOS: titulo_ids, fatura_ids, nc_ids, payment_ids, CNPJ, conta_bancaria
+- TITULOS: extrato_ids, fatura_id, nc_ids, payment_ids, parcela, CNPJ
+- FATURAS: titulo_ids, extrato_ids, nc_ids, chave_nfe, CNPJ
+- NOTAS_CREDITO: fatura_origem_id, titulo_ids, extrato_ids, CNPJ
+- PAGAMENTOS: extrato_ids, titulo_ids, CNPJ
+
+### [auditoria_conciliacao.py](scripts/auditoria_conciliacao.py)
+
+Extrai vinculos documentados via account.partial.reconcile. Classifica em Conciliacao A e B.
+
+```bash
+source .venv/bin/activate
+
+# Auditoria de conciliacao por periodo
+python .claude/skills/rastreando-odoo/scripts/auditoria_conciliacao.py --inicio 2024-07-01 --fim 2025-12-31
+
+# Exportar para JSON
+python .claude/skills/rastreando-odoo/scripts/auditoria_conciliacao.py --inicio 2024-07-01 --fim 2025-12-31 --json
+
+# Exportar formato tabular (para Excel)
+python .claude/skills/rastreando-odoo/scripts/auditoria_conciliacao.py --inicio 2024-07-01 --fim 2025-12-31 --excel
+```
+
+**Visoes extraidas**: faturas (com titulos e reconciliacoes), extratos (com links a payments), notas_credito, vinculos_fatura_extrato (cadeia completa fatura→titulo→payment→extrato).
+
+### [relatorio_dfe.py](scripts/relatorio_dfe.py)
+
+Relatorio de DFEs (documentos fiscais eletronicos) recebidos no periodo, com itens detalhados.
+
+```bash
+source .venv/bin/activate
+
+# DFEs de periodo
+python .claude/skills/rastreando-odoo/scripts/relatorio_dfe.py --inicio 2025-01-01 --fim 2025-01-31
+
+# Limitar quantidade
+python .claude/skills/rastreando-odoo/scripts/relatorio_dfe.py --inicio 2025-01-01 --fim 2025-01-31 --limit 50
+
+# Exportar para JSON
+python .claude/skills/rastreando-odoo/scripts/relatorio_dfe.py --inicio 2025-01-01 --fim 2025-01-31 --json
+
+# Exportar formato tabular (para Excel)
+python .claude/skills/rastreando-odoo/scripts/relatorio_dfe.py --inicio 2025-01-01 --fim 2025-01-31 --excel
+```
+
+**Dados extraidos**: numero NF, chave NFe, fornecedor, CNPJ, data emissao, valor total, itens (produto, NCM, CFOP, quantidade, valor unitario).
+
+### [vincular_extrato_fatura_excel.py](scripts/vincular_extrato_fatura_excel.py)
+
+Processa planilha Excel para vincular extratos com faturas automaticamente.
+
+```bash
+source .venv/bin/activate
+
+# Simular (dry-run)
+python .claude/skills/rastreando-odoo/scripts/vincular_extrato_fatura_excel.py -a planilha.xlsx --dry-run
+
+# Executar modo otimizado (3-4x mais rapido)
+python .claude/skills/rastreando-odoo/scripts/vincular_extrato_fatura_excel.py -a planilha.xlsx --otimizado
+
+# Executar em lotes de 500
+python .claude/skills/rastreando-odoo/scripts/vincular_extrato_fatura_excel.py -a planilha.xlsx --otimizado -o 0 -b 500
+```
+
+**Colunas esperadas na planilha**:
+- A (0): ID do extrato
+- H (7): FATURA (name)
+- I (8): CNPJ
+- K (10): FATURA.1 (ID)
+- L (11): PARCELA
+- M (12): VALOR
+- T (19): Movimento
+
+**Processo**: Cria account.payment, posta, reconcilia com titulo e extrato.
+
+## Estrutura JSON de Saida
+
+### Fluxo de Compra
+
+```json
+{
+  "entrada": "NF 12345",
+  "sucesso": true,
+  "fluxo": {
+    "tipo": "compra",
+    "dfe": { "id": 1234, "nfe_infnfe_ide_nnf": "12345" },
+    "pedido_compra": { "id": 789, "name": "PO00789", "amount_total": 10000.00 },
+    "fatura": { "id": 456, "name": "BILL/2025/0001", "payment_state": "paid" },
+    "titulos": [{ "date_maturity": "2025-01-15", "debit": 10000.00, "reconciled": true }]
+  }
+}
+```
+
+### Fluxo de Venda
+
+```json
+{
+  "fluxo": {
+    "tipo": "venda",
+    "pedido_venda": { "id": 500, "name": "VCD123", "state": "sale" },
+    "pickings": [{ "name": "WH/OUT/00600", "state": "done" }],
+    "faturas": [...],
+    "titulos": [...]
+  }
+}
+```
+
+## References
+
+| Arquivo | Conteudo |
+|---------|----------|
+| [relacionamentos.md](references/relacionamentos.md) | Mapeamento de campos, relacionamentos entre tabelas, estrategias de navegacao |
+| [troubleshooting.md](references/troubleshooting.md) | Solucoes para problemas comuns de busca e rastreamento |
+
+## Prefixos de Pedido de Venda
+
+| Prefixo | Filial |
+|---------|--------|
+| VCD | Centro de Distribuicao |
+| VFB | Filial FB |
+| VSC | Filial SC |
+
+## Skills Relacionadas
+
+| Skill | Quando usar |
+|-------|-------------|
+| [descobrindo-odoo-estrutura](../descobrindo-odoo-estrutura/SKILL.md) | Descobrir campos de modelos nao mapeados |
+| [integracao-odoo](../integracao-odoo/SKILL.md) | Criar novos lancamentos fiscais (CTe, despesas) |
+| [exportando-arquivos](../exportando-arquivos/SKILL.md) | Exportar resultados de auditoria para Excel |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/rafael-2109) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
