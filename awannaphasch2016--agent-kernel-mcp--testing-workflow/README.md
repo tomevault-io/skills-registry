@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [awannaphasch2016/agent-kernel-mcp](https://github.com/awannaphasch2016/agent-kernel-mcp/tree/main/resources/.claude/skills/testing-workflow)
+Original source: [awannaphasch2016/agent-kernel-mcp](https://github.com/awannaphasch2016/agent-kernel-mcp/tree/main/assets/skills/testing-workflow)
 
 ---
 
