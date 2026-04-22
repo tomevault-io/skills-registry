@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [toshi-hm/dialy](https://github.com/toshi-hm/dialy/tree/main/.claude/skills/unit-test)
+Original source: [toshi-hm/dialy](https://github.com/toshi-hm/dialy/tree/main/.agent/skills/unit-test)
 
 ---
 
