@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jakewaldrip/.dotfiles](https://github.com/jakewaldrip/.dotfiles/tree/main/misc/commons/.opencode/skills/react-component-writing)
+Original source: [jakewaldrip/.dotfiles](https://github.com/jakewaldrip/.dotfiles/tree/main/.config/opencode/skill/react-component-writing)
 
 ---
 
