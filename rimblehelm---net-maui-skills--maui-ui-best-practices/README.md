@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rimblehelm/.net-maui-skills](https://github.com/rimblehelm/.net-maui-skills/tree/main/skills/maui-ui-best-practices)
+Original source: [rimblehelm/.net-maui-skills](https://github.com/rimblehelm/.net-maui-skills/tree/main/maui-ui-best-practices)
 
 ---
 
