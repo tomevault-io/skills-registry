@@ -1,0 +1,390 @@
+---
+name: developing-claude-plugins
+description: Develops, optimizes, and validates Claude Code plugins, skills (SKILL.md), commands, agents, hooks (hooks.json), and scripts. Ensures consistency with official best practices. Activates when creating, editing, or reviewing files in plugins/ directory, .claude-plugin/, plugin.json, permissions.json, or marketplace.json. Covers YAML frontmatter, element structure, cross-references, naming conventions, and plugin manifest validation. NOT for application development (use domain-specific skills). Use when this capability is needed.
+metadata:
+  author: lennetech
+---
+
+# Claude Code Plugin & Marketplace Expert
+
+You are an expert in developing Claude Code marketplaces and plugins. This skill ensures that all elements in this package follow current best practices, maintain consistency, and are optimally structured.
+
+## When This Skill Activates
+
+**File patterns that trigger this skill:**
+- `plugins/**/*` - Any file in the plugins directory
+- `**/SKILL.md` - Skill definition files
+- `**/commands/**/*.md` - Command files
+- `**/agents/**/*.md` - Agent files
+- `**/hooks/**/*` - Hook configurations and scripts
+- `marketplace.json` - Marketplace definition
+- `plugin.json` - Plugin manifests
+
+**Actions that trigger this skill:**
+- Creating new plugins, agents, commands, hooks, skills, or scripts
+- Modifying existing plugin elements
+- Reviewing or optimizing plugin structure
+- Discussing Claude Code extension development
+
+## Mandatory Pre-Work: Documentation Review
+
+**CRITICAL:** Before ANY implementation or optimization, fetch the latest official documentation.
+
+### Primary Sources (GitHub - always available)
+
+Fetch these GitHub sources first:
+```
+WebFetch: https://github.com/anthropics/claude-code/blob/main/plugins/README.md
+WebFetch: https://github.com/anthropics/skills/blob/main/README.md
+```
+
+### Secondary Sources (WebSearch)
+
+For specific topics, use targeted searches:
+```
+WebSearch: "Claude Code [topic] documentation site:claude.com"
+```
+
+Topics to search when relevant:
+- Plugins & plugin.json structure
+- Skills & SKILL.md frontmatter
+- Slash commands & command frontmatter
+- Subagents & agent configuration
+- Hooks & hooks.json structure
+
+Apply the patterns and requirements from these sources.
+
+---
+
+## Element Types Reference
+
+### Skills
+**Purpose:** Provide contextual expertise that enhances Claude's capabilities in specific domains.
+
+**Structure:**
+```
+skills/
+└── skill-name/
+    ├── SKILL.md           # Main skill definition (REQUIRED)
+    ├── reference.md       # Detailed reference documentation
+    ├── examples.md        # Usage examples
+    └── [topic].md         # Additional topic-specific files
+```
+
+**SKILL.md Template:**
+```yaml
+---
+name: skill-name-kebab-case
+description: Concise description (max 1024 chars, ideal 500-700). Formula: [What it does] + [When to use it] + [Key capabilities]. Must trigger auto-detection correctly.
+---
+
+# Skill Title
+
+[Introductory paragraph explaining the skill's purpose]
+
+## When to Use This Skill
+
+- [Trigger condition 1]
+- [Trigger condition 2]
+
+## Core Capabilities
+
+[Main content organized by capability]
+
+## Related Skills
+
+- `related-skill-1` - [relationship]
+- `related-skill-2` - [relationship]
+```
+
+**Key Principles:**
+- Description must answer "WHEN should Claude use this skill?"
+- Avoid overlap with other skills
+- Include clear boundary definitions
+- Reference related skills explicitly
+
+---
+
+### Commands
+**Purpose:** User-triggered actions invoked via `/command-name`.
+
+**Structure:**
+```
+commands/
+├── simple-command.md
+└── category/
+    ├── sub-command-1.md
+    └── sub-command-2.md
+```
+
+**Template:**
+```yaml
+---
+description: What this command does (shown in /help and command list)
+argument-hint: "[optional-args]"   # Optional: shown in autocomplete (MUST quote if value contains brackets)
+allowed-tools: Read, Grep, Bash   # Optional: restrict tool access
+model: claude-3-5-sonnet-20241022 # Optional: force specific model
+---
+
+# Command Title
+
+[Brief description of what this command accomplishes]
+
+## When to Use This Command
+
+- [Use case 1]
+- [Use case 2]
+
+## Workflow
+
+### Step 1: [Action]
+[Instructions]
+
+### Step 2: [Action]
+[Instructions]
+
+## Examples
+
+[Practical examples of command usage]
+```
+
+**Naming:** Use kebab-case, e.g., `create-story.md`, `git/commit-message.md`
+
+---
+
+### Agents
+**Purpose:** Autonomous agents that handle complex, multi-step tasks with specific tool access.
+
+**File:** `agents/agent-name.md`
+
+**Template:**
+```yaml
+---
+name: agent-name
+description: When to use this agent and what tasks it handles autonomously
+model: sonnet | opus | haiku
+tools: Bash, Read, Grep, Glob, Write, Edit
+permissionMode: default | bypassPermissions
+skills: optional-comma-separated-skills
+---
+
+[Agent persona and mission]
+
+## Use Cases
+
+- [When to spawn this agent]
+- [Specific task types it handles]
+
+## Execution Protocol
+
+[Detailed workflow and phases]
+
+## Output Format
+
+[Expected output structure]
+```
+
+**Key Principles:**
+- Define clear tool restrictions
+- Specify appropriate model (haiku for simple, sonnet for complex, opus for critical)
+- Include self-verification checklists
+
+---
+
+### Hooks
+**Purpose:** Automated responses to Claude Code events.
+
+**Structure:**
+```
+hooks/
+├── hooks.json    # Hook definitions
+└── scripts/      # Hook handler scripts
+    └── handler.ts
+```
+
+**hooks.json Template:**
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/path/to/script.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+**Fields:**
+| Field | Type | Description |
+|-------|------|-------------|
+| `matcher` | string | Tool filter: `"Write"`, `"Write\|Edit"`, `"Bash(npm test*)"`, or omit for all |
+| `type` | string | `"command"` (shell) or `"prompt"` (Claude evaluation) |
+| `command` | string | Shell command (for type="command") |
+| `timeout` | number | Seconds before timeout (default: 60, optional) |
+
+**Events:**
+- `PreToolUse` - Before a tool executes
+- `PostToolUse` - After a tool executes
+- `PermissionRequest` - When permission is requested
+- `UserPromptSubmit` - When user submits a prompt
+- `SessionStart` - Session initialization
+- `SessionEnd` - Session teardown
+- `Stop` - When main agent finishes
+- `SubagentStart` - When subagent starts
+- `SubagentStop` - When subagent finishes
+- `TeammateIdle` - Agent Teams: teammate waiting for work
+- `TaskCompleted` - Agent Teams: task finished
+- `PreCompact` - Before context compaction
+
+---
+
+## Quality Checklist
+
+### Before Creating Any Element
+
+- [ ] Fetched latest documentation from official sources
+- [ ] Identified correct element type for the use case
+- [ ] Checked for existing similar elements (avoid duplication)
+- [ ] Determined relationships with existing elements
+
+### Element Quality Standards
+
+- [ ] YAML frontmatter is correct and complete
+- [ ] Description is concise and actionable
+- [ ] Structure follows established patterns in this package
+- [ ] Markdown is clean and well-organized
+- [ ] Examples are included where helpful
+- [ ] Related elements are cross-referenced
+
+### Consistency Checks
+
+- [ ] Naming follows kebab-case convention
+- [ ] Heading hierarchy is consistent (# for title, ## for sections)
+- [ ] Language is English (except user-facing German content)
+- [ ] No orphaned references to non-existent elements
+
+---
+
+## Optimization Workflow
+
+When optimizing existing elements:
+
+### 1. Analysis Phase
+```
+1. Read the element completely
+2. Identify the element type and purpose
+3. Fetch current best practices from documentation
+4. Compare against other elements in the same category
+5. List specific issues and improvements
+```
+
+### 2. Proposal Phase
+```
+1. Present findings to the user
+2. Propose specific changes with rationale
+3. Highlight any breaking changes or dependencies
+4. Get approval before implementation
+```
+
+### 3. Implementation Phase
+```
+1. Make changes incrementally
+2. Maintain backwards compatibility where possible
+3. Update cross-references in related elements
+4. Verify no broken references
+```
+
+### 4. Verification Phase
+```
+1. Validate YAML frontmatter syntax
+2. Check markdown rendering
+3. Verify all cross-references work
+4. Test any commands or workflows
+```
+
+---
+
+## Common Patterns in This Package
+
+### Skill Organization
+- Main SKILL.md with overview and triggers
+- Separate files for detailed topics (reference.md, examples.md)
+- Clear "When to Use" sections with bullet points
+
+### Command Organization
+- Grouped by category in subdirectories
+- Step-by-step workflows with clear phases
+- German output for user-facing commands where appropriate
+
+### Agent Organization
+- Detailed execution protocols with phases
+- Self-verification checklists
+- Comprehensive output format specifications
+
+---
+
+## Content Standards
+
+### No History References
+- **Never use** "new", "updated", "changed from", or version-specific markers
+- **Never include** "since v2.1", "added in version X", "previously"
+- **Write timelessly** as if features always existed
+- **Remove** any existing history references when optimizing
+
+### Token Efficiency
+- Keep content concise but complete
+- Avoid redundant explanations
+- Use tables and lists over prose where appropriate
+- Don't sacrifice clarity for brevity
+- **Never remove important information for token savings**
+
+---
+
+## Anti-Patterns to Avoid
+
+1. **Overlapping Skills**: Two skills that trigger on the same conditions
+2. **Monolithic Commands**: Commands that try to do too much
+3. **Vague Descriptions**: Descriptions that don't help auto-detection
+4. **Missing Cross-References**: Elements that should reference each other but don't
+5. **Inconsistent Structure**: Elements that don't follow established patterns
+6. **Outdated Best Practices**: Not checking current documentation before changes
+7. **History References**: Adding "new", "updated", version markers to content
+
+---
+
+## Skill Boundaries
+
+| User Intent | Correct Skill |
+|------------|---------------|
+| "Create a new skill" | **THIS SKILL** |
+| "Optimize plugin.json" | **THIS SKILL** |
+| "Add a hook for validation" | **THIS SKILL** |
+| "Create a NestJS module" | generating-nest-servers |
+| "Build a Vue component" | developing-lt-frontend |
+| "Update npm packages" | maintaining-npm-packages |
+
+## Reference Files
+
+- For complete reference documentation and schemas, see [reference.md](${CLAUDE_SKILL_DIR}/reference.md)
+- For practical examples and templates, see [examples.md](${CLAUDE_SKILL_DIR}/examples.md)
+
+## Related Skills
+
+**Works closely with:**
+- `using-lt-cli` skill - For Git operations in this package
+- `generating-nest-servers` skill - When adding NestJS-related commands or skills
+- `developing-lt-frontend` skill - When adding Nuxt-related commands or skills
+- `maintaining-npm-packages` skill - When adding maintenance-related commands
+
+When modifying any skill, command, or agent in this package, this expertise should inform the changes.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lennetech) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
