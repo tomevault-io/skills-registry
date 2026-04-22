@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [imankha/video-editor](https://github.com/imankha/video-editor/tree/main/src/frontend/.claude/skills/type-safety)
+Original source: [imankha/video-editor](https://github.com/imankha/video-editor/tree/main/src/backend/.claude/skills/type-safety)
 
 ---
 
