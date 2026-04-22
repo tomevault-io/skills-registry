@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [doccker/cc-use-exp](https://github.com/doccker/cc-use-exp/tree/main/.gemini/skills/python-dev)
+Original source: [doccker/cc-use-exp](https://github.com/doccker/cc-use-exp/tree/main/.cursor/skills/python-dev)
 
 ---
 
