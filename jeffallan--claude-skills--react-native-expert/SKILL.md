@@ -185,5 +185,5 @@ When implementing React Native features, deliver:
 React Native 0.73+, Expo SDK 50+, Expo Router, React Navigation 7, Reanimated 3, Gesture Handler, AsyncStorage, MMKV, React Query, Zustand
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/jeffallan) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Jeffallan) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
