@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [doravidan/supreme-ralph](https://github.com/doravidan/supreme-ralph/tree/main/.claude/skills/setup-project)
+Original source: [doravidan/supreme-ralph](https://github.com/doravidan/supreme-ralph/tree/main/templates/global/skills/setup-project)
 
 ---
 
