@@ -1,0 +1,106 @@
+---
+name: compound-docs
+description: | Use when this capability is needed.
+metadata:
+  author: stevengonsalvez
+---
+
+> **Internal Module**: Called by `/reflect` for knowledge capture.
+> Use `/reflect` directly, or `/reflect --knowledge` for knowledge-only capture.
+
+# Compound-Docs — Knowledge Note Generator
+
+## Purpose
+
+Generate structured learning documents from solved problems. This module handles:
+1. Context gathering (problem, root cause, solution, files, tags)
+2. Category auto-detection
+3. Learning document generation (YAML frontmatter + markdown)
+4. Entity sidecar generation for GraphRAG indexing
+5. Saving to `docs/solutions/` and promoting to global KB
+
+## Context to Gather
+
+1. **Problem**: Error message, observed vs expected behavior
+2. **Root Cause**: What actually caused it, why
+3. **Solution**: What fixed it, key insight, steps
+4. **Files**: Which files were modified or had the bug
+5. **Tags**: Technologies involved, searchable keywords
+
+## Category Auto-Detection
+
+| Category | Indicators |
+|----------|------------|
+| `build-errors` | Compile errors, CI failures, bundling |
+| `performance-issues` | Slowdowns, memory leaks, optimization |
+| `security-fixes` | Vulnerabilities, auth issues, secrets |
+| `testing-patterns` | Test strategies, flaky tests |
+| `debugging-sessions` | Complex investigations |
+| `architecture-decisions` | Design choices, patterns |
+| `api-integrations` | Third-party APIs, SDKs |
+| `dependency-issues` | Package conflicts, upgrades |
+| `deployment-fixes` | Production incidents |
+| `database-migrations` | Schema changes, data fixes |
+| `ui-patterns` | Frontend patterns, CSS |
+| `tooling-setup` | Dev environment, configs |
+
+## Learning Document Format
+
+```yaml
+---
+title: "[Brief descriptive title]"
+category: [auto-detected or specified]
+tags: [extracted tags]
+symptoms:
+  - "[Error message or behavior]"
+root_cause: "[What actually caused it]"
+key_insight: "[THE ONE THING that fixes it]"
+created: [today's date]
+confidence: [high|medium|low]
+language: [if applicable]
+framework: [if applicable]
+---
+
+## Problem
+[Description]
+
+## Solution
+[Steps with code examples]
+
+## Context
+[Why it happened, how to prevent]
+```
+
+## Entity Extraction
+
+For GraphRAG indexing, extract entities and relationships.
+See `reflect/references/knowledge_format.md` for entity types,
+relationship types, extraction guidelines, and sidecar format.
+
+## Saving
+
+```bash
+# Project-local
+mkdir -p docs/solutions/[category]
+# Save: docs/solutions/[category]/[filename].md
+
+# Global promotion (via CLI)
+LEARNINGS_CLI="$LEARNINGS_HOME/cli/learnings"
+if [[ -x "$LEARNINGS_CLI" ]]; then
+    "$LEARNINGS_CLI" add docs/solutions/[category]/[filename].md \
+        --entities docs/solutions/[category]/[filename].entities.yaml
+fi
+```
+
+## Quality Checklist
+
+- [ ] Title is descriptive (searchable)
+- [ ] Key insight is THE ONE THING (not a summary)
+- [ ] Symptoms include actual error messages
+- [ ] Tags cover relevant technologies
+- [ ] Category is correct
+- [ ] Confidence reflects certainty
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/stevengonsalvez) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
