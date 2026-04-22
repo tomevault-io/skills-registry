@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hktitan/fedichess](https://github.com/hktitan/fedichess/tree/main/.agents/skills/frontend-design/frontend-design/frontend-design/frontend-design)
+Original source: [hktitan/fedichess](https://github.com/hktitan/fedichess/tree/main/.agents/skills/frontend-design)
 
 ---
 
