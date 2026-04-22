@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hr-ar/project-conductor](https://github.com/hr-ar/project-conductor/tree/main/.claude/skills/meta/skill-generator)
+Original source: [hr-ar/project-conductor](https://github.com/hr-ar/project-conductor/tree/main/.claude/skills/skill-generator)
 
 ---
 
