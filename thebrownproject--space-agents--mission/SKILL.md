@@ -1,0 +1,39 @@
+---
+name: mission
+description: Select feature, select mode, delegate to execution skill. Use when this capability is needed.
+metadata:
+  author: thebrownproject
+---
+
+# /mission - Execution Mode Router
+
+Route to the appropriate execution mode for a feature.
+
+## The Process
+
+1. **Read last commit** - Run `git log -1 --format=%B` to get commit message from previous session
+2. **Select feature** - Run `bd list -t feature --status open`, ask user with AskUserQuestion
+3. **Select mode** - Ask user with AskUserQuestion
+4. **Delegate** - Invoke skill with feature ID
+
+## Modes
+
+| Mode | Skill | Best For |
+|------|-------|----------|
+| Solo | `mission-solo` | Small (1-3 tasks) |
+| Orchestrated | `mission-orchestrated` | Medium (4-10 tasks) |
+| Ralph | `mission-ralph` | Large (10+ tasks) |
+
+**Note:** Ralph runs lightweight by default (~50k tokens/task). Use `--pod` flag for full crew execution (~150k+ tokens/task) when tasks need deeper analysis.
+
+Invoke with: `Skill: mission-solo, args: "FEATURE_ID"` (or `mission-orchestrated`, `mission-ralph`)
+
+## If No Features
+
+```
+HOUSTON: No features ready. Use /exploration to plan a feature first.
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/thebrownproject) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
