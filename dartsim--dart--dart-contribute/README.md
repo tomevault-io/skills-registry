@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dartsim/dart](https://github.com/dartsim/dart/tree/main/.claude/skills/dart-contribute)
+Original source: [dartsim/dart](https://github.com/dartsim/dart/tree/main/.codex/skills/dart-contribute)
 
 ---
 
