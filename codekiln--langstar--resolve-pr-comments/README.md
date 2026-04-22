@@ -1,0 +1,13 @@
+# resolve-pr-comments
+
+> Skill by [codekiln](https://github.com/codekiln/langstar) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [codekiln/langstar](https://github.com/codekiln/langstar/tree/main/.claude/skills/resolve-pr-comments)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
