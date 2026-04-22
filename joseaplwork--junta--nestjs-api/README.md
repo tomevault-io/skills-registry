@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [joseaplwork/junta](https://github.com/joseaplwork/junta/tree/main/.github/skills/nestjs-api)
+Original source: [joseaplwork/junta](https://github.com/joseaplwork/junta/tree/main/.cursor/skills/nestjs-api)
 
 ---
 
