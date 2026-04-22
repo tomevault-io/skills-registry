@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lira-tron/dotfiles](https://github.com/lira-tron/dotfiles/tree/main/home/.gemini/skills/sync-steering)
+Original source: [lira-tron/dotfiles](https://github.com/lira-tron/dotfiles/tree/main/home/.kiro/skills/sync-steering)
 
 ---
 
