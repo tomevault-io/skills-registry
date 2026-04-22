@@ -2,7 +2,7 @@
 name: typescript-pro
 description: Implements advanced TypeScript type systems, creates custom type guards, utility types, and branded types, and configures tRPC for end-to-end type safety. Use when building TypeScript applications requiring advanced generics, conditional or mapped types, discriminated unions, monorepo setup, or full-stack type safety with tRPC. Use when this capability is needed.
 metadata:
-  author: jeffallan
+  author: Jeffallan
 ---
 
 # TypeScript Pro
@@ -137,5 +137,5 @@ When implementing TypeScript features, provide:
 TypeScript 5.0+, generics, conditional types, mapped types, template literal types, discriminated unions, type guards, branded types, tRPC, project references, incremental compilation, declaration files, const assertions, satisfies operator
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/jeffallan) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Jeffallan) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
