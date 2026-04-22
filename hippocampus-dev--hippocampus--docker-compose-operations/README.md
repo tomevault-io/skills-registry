@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hippocampus-dev/hippocampus](https://github.com/hippocampus-dev/hippocampus/tree/main/.codex/skills/docker-compose-operations)
+Original source: [hippocampus-dev/hippocampus](https://github.com/hippocampus-dev/hippocampus/tree/main/.claude/skills/docker-compose-operations)
 
 ---
 
