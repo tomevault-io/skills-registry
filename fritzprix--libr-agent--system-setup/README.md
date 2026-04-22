@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fritzprix/libr-agent](https://github.com/fritzprix/libr-agent/tree/main/.github/skills/system-setup)
+Original source: [fritzprix/libr-agent](https://github.com/fritzprix/libr-agent/tree/main/src-tauri/bundled_skills/system-setup)
 
 ---
 
