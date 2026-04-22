@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [qredence/agentic-fleet](https://github.com/qredence/agentic-fleet/tree/main/.github/skills/python-backend-reviewer)
+Original source: [qredence/agentic-fleet](https://github.com/qredence/agentic-fleet/tree/main/.claude/skills/python-backend-reviewer)
 
 ---
 
