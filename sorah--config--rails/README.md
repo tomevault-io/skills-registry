@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sorah/config](https://github.com/sorah/config/tree/main/claude/marketplace/plugins/sorah-guides/skills/rails)
+Original source: [sorah/config](https://github.com/sorah/config/tree/main/claude/marketplace/plugins/sorah-spec/skills/rails)
 
 ---
 
