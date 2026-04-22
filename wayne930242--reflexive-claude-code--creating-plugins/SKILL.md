@@ -1,0 +1,206 @@
+---
+name: creating-plugins
+description: Use when creating a new Claude Code plugin package. Use when user says "create plugin", "new plugin", "scaffold plugin", "plugin template".
+metadata:
+  author: wayne930242
+---
+
+# Creating Plugins
+
+## Overview
+
+**Creating plugins IS scaffolding a distributable agent engineering package.**
+
+A plugin is the distribution unit for agent engineering — it bundles skills, commands, agents, hooks, MCP servers, and LSP configs into a single installable package. Plugins are not just "skill containers" — they can provide complete workflows with automated enforcement (hooks), external tool access (MCP), and language intelligence (LSP).
+
+**Core principle:** Plugins are reusable across projects. Keep them focused and well-documented.
+
+**Violating the letter of the rules is violating the spirit of the rules.**
+
+## Routing
+
+**Pattern:** Skill Steps
+**Handoff:** none
+**Next:** none
+
+## Task Initialization (MANDATORY)
+
+Before ANY action, create task list using TaskCreate:
+
+```
+TaskCreate for EACH task below:
+- Subject: "[creating-plugins] Task N: <action>"
+- ActiveForm: "<doing action>"
+```
+
+**Tasks:**
+1. Gather requirements
+2. Create directory structure
+3. Generate plugin manifest
+4. Create initial skill
+5. Write README
+6. Test installation
+
+Announce: "Created 6 tasks. Starting execution..."
+
+**Execution rules:**
+1. `TaskUpdate status="in_progress"` BEFORE starting each task
+2. `TaskUpdate status="completed"` ONLY after verification passes
+3. If task fails → stay in_progress, diagnose, retry
+4. NEVER skip to next task until current is completed
+5. At end, `TaskList` to confirm all completed
+
+## Task 1: Gather Requirements
+
+**Goal:** Understand what the plugin should contain.
+
+**Questions to ask:**
+- What is the plugin name? (kebab-case)
+- What capability does it provide?
+- What skills should it include?
+- Who is the author?
+
+**Naming rules:**
+- Kebab-case only: `my-plugin`
+- Avoid: `helper`, `utils`, `anthropic`, `claude`
+- Max 64 characters
+
+**Verification:** Can state plugin name and purpose in one sentence.
+
+## Task 2: Create Directory Structure
+
+**Goal:** Scaffold the plugin directory.
+
+### Plugin Structure
+
+```
+<plugin-name>/
+├── .claude-plugin/
+│   └── plugin.json      # Manifest
+├── skills/              # Capabilities (auto-discovered)
+│   └── <skill-name>/
+│       ├── SKILL.md
+│       └── references/  # On-demand loaded docs
+├── commands/            # Slash command aliases (auto-discovered)
+│   └── <command>.md
+├── agents/              # Subagent definitions (auto-discovered)
+│   └── <agent>.md
+├── hooks/               # Lifecycle hooks (auto-discovered)
+│   └── hooks.json
+├── .mcp.json            # MCP server configs (auto-discovered)
+├── .lsp.json            # Language server configs (auto-discovered)
+└── README.md
+```
+
+### Key Variables for Plugin Skills
+
+Skills inside a plugin can reference these variables (substituted at runtime):
+
+| Variable | Purpose |
+|----------|---------|
+| `${CLAUDE_SKILL_DIR}` | This skill's directory — reference bundled scripts/data |
+| `${CLAUDE_PLUGIN_ROOT}` | Plugin install directory (changes on update) |
+| `${CLAUDE_PLUGIN_DATA}` | Persistent data directory (survives updates) |
+| `$ARGUMENTS` / `$N` | Arguments passed when invoking the skill |
+
+Skills can also inject live data using shell commands:
+- Inline: `` !`git status` `` (runs before Claude sees the content)
+- Multi-line: `` ```! `` code block
+- PowerShell: set `shell: powershell` in frontmatter (user must have `CLAUDE_CODE_USE_POWERSHELL_TOOL=1`)
+
+**Verification:** Directory structure created with all required paths.
+
+## Task 3: Generate Plugin Manifest
+
+**Goal:** Create the plugin.json manifest file.
+
+**CRITICAL:** Read [references/plugin-templates.md](references/plugin-templates.md) for manifest format, required fields, and marketplace structure.
+
+**Verification:** plugin.json is valid JSON with required fields.
+
+## Task 4: Create Initial Skill
+
+**Goal:** Create the first skill using the writing-skills workflow.
+
+**CRITICAL: Invoke the `writing-skills` skill.**
+
+Do not write SKILL.md directly. The writing-skills skill ensures:
+- Proper frontmatter format
+- TDD baseline testing
+- Quality review via skill-reviewer
+
+**Verification:** Initial skill created and passes skill-reviewer.
+
+## Task 5: Write README
+
+**Goal:** Document the plugin for users.
+
+**CRITICAL:** Read [references/plugin-templates.md](references/plugin-templates.md) for README template.
+
+**Verification:** README has installation instructions and skill list.
+
+## Task 6: Test Installation
+
+**Goal:** Verify the plugin installs and works correctly.
+
+Install locally (`claude plugin add <path>`), verify skills are discoverable and load correctly, then clean up (`claude plugin remove <name>`).
+
+**Verification:** Plugin installs without errors, skills are discoverable and load correctly.
+
+## Red Flags - STOP
+
+| Thought | Reality |
+|---------|---------|
+| "Add skills later" | Empty plugins are useless. Ship with at least one. |
+| "Skip README" | Undocumented plugins don't get used. |
+| "Skip testing" | Broken installs frustrate users. Test it. |
+| "One big skill" | Multiple focused skills > one bloated skill. |
+| "Version later" | Version from day 1. Semantic versioning matters. |
+
+## Flowchart: Plugin Creation
+
+```dot
+digraph plugin_creation {
+    rankdir=TB;
+
+    start [label="Create plugin", shape=doublecircle];
+    gather [label="Task 1: Gather\nrequirements", shape=box];
+    structure [label="Task 2: Create\ndirectory structure", shape=box];
+    manifest [label="Task 3: Generate\nmanifest", shape=box];
+    skill [label="Task 4: Create\ninitial skill", shape=box];
+    readme [label="Task 5: Write\nREADME", shape=box];
+    test [label="Task 6: Test\ninstallation", shape=box];
+    test_pass [label="Install\nworks?", shape=diamond];
+    done [label="Plugin complete", shape=doublecircle];
+
+    start -> gather;
+    gather -> structure;
+    structure -> manifest;
+    manifest -> skill;
+    skill -> readme;
+    readme -> test;
+    test -> test_pass;
+    test_pass -> done [label="yes"];
+    test_pass -> manifest [label="no"];
+}
+```
+
+## Publishing
+
+Once your plugin is ready:
+
+1. **Local sharing:** Share the directory path
+2. **Git hosting:** Push to GitHub/GitLab
+   ```bash
+   /plugin marketplace add username/repo
+   /plugin install plugin-name@marketplace-name
+   ```
+3. **npm (if applicable):** Publish to npm registry
+
+## References
+
+- [references/plugin-templates.md](references/plugin-templates.md) — Manifest format, marketplace structure, README template
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wayne930242) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
