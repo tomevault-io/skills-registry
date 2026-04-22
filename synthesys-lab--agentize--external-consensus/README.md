@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [synthesys-lab/agentize](https://github.com/synthesys-lab/agentize/tree/main/.claude-plugin/skills/external-consensus)
+Original source: [synthesys-lab/agentize](https://github.com/synthesys-lab/agentize/tree/main/.opencode/skills/external-consensus)
 
 ---
 
