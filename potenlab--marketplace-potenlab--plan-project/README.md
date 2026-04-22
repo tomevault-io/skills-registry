@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [potenlab/marketplace-potenlab](https://github.com/potenlab/marketplace-potenlab/tree/main/reference/high-project/skills/plan-project)
+Original source: [potenlab/marketplace-potenlab](https://github.com/potenlab/marketplace-potenlab/tree/main/plugins/potenlab-workflow/skills/plan-project)
 
 ---
 
