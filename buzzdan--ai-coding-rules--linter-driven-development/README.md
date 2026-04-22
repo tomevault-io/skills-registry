@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [buzzdan/ai-coding-rules](https://github.com/buzzdan/ai-coding-rules/tree/main/ts-react-linter-driven-development/skills/linter-driven-development)
+Original source: [buzzdan/ai-coding-rules](https://github.com/buzzdan/ai-coding-rules/tree/main/go-linter-driven-development/skills/linter-driven-development)
 
 ---
 
