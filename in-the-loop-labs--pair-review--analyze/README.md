@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [in-the-loop-labs/pair-review](https://github.com/in-the-loop-labs/pair-review/tree/main/plugin-code-critic/skills/analyze)
+Original source: [in-the-loop-labs/pair-review](https://github.com/in-the-loop-labs/pair-review/tree/main/plugin/skills/analyze)
 
 ---
 
