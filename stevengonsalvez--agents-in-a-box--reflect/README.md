@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stevengonsalvez/agents-in-a-box](https://github.com/stevengonsalvez/agents-in-a-box/tree/main/toolkit/packages/skills/reflect)
+Original source: [stevengonsalvez/agents-in-a-box](https://github.com/stevengonsalvez/agents-in-a-box/tree/main/toolkit/clawdhub-skills/reflect)
 
 ---
 
