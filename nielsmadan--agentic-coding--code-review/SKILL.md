@@ -1,0 +1,168 @@
+---
+name: code-review
+description: Code review workflow. Use when reviewing code changes, PRs, or specific files for quality, bugs, and best practices. Use when this capability is needed.
+metadata:
+  author: nielsmadan
+---
+
+# Code Review: $ARGUMENTS
+
+Review the code related to: **$ARGUMENTS**
+
+## Usage
+
+```
+/code-review <target>           # Claude-only review (8 parallel agents)
+/code-review --multi <target>   # Also get reviews from Gemini and Codex
+```
+
+## Gotchas
+- Sub-agents 5, 6, 7, and 8 invoke `review-comments`, `test --review --staged`, `review-interfaces --staged`, and `review-cleancode --staged` — if no files are staged, they return nothing and the review silently has empty agent results.
+- The 80-point confidence threshold silently drops findings. A legitimate 75/100 security issue is filtered out with no trace.
+
+## Step 1: Locate and Read Project Guidelines
+First, find and read any CLAUDE.md files in the repository root and relevant directories to understand project-specific conventions and rules.
+
+## Step 2: Identify Relevant Code
+Search for and identify all files related to "$ARGUMENTS". Use Glob and Grep to find:
+- Direct implementations
+- Related tests
+- Usages/consumers of this code
+
+## Step 3: Parallel Review Agents
+Launch the following review perspectives IN PARALLEL:
+
+Each agent should output a list of issues. For each issue, include: what the problem is, where it is (file + line), and why it matters. Do NOT assign confidence scores — scoring happens in a separate pass.
+
+### Agent 1: Bug & Logic Review
+- Look for potential bugs, edge cases, race conditions
+- Check null/undefined handling
+- Verify error handling completeness
+- Look for off-by-one errors
+
+### Agent 2: Architecture & Patterns Review
+- Check compliance with CLAUDE.md rules
+- Search `docs/` for documented patterns related to this code area
+- Verify code follows existing codebase patterns
+
+### Agent 3: Security & Performance Review
+- Check for injection vulnerabilities
+- Verify input validation
+- Look for sensitive data exposure
+- Identify performance bottlenecks (N+1 queries, unnecessary loops)
+- Check for memory leaks
+
+### Agent 4: Historical Context Review
+- Use git blame to understand code evolution
+- Check for TODO/FIXME comments that need addressing
+- Identify code that may be stale or unused
+
+### Agent 5: Comment Quality Review
+Invoke `review-comments --staged --changed` to review comment quality in changed files.
+- Identify "what" comments that should be "why" comments
+- Flag comments that could be replaced with better naming
+- Ensure comments add value, not noise
+
+### Agent 6: Test Quality Review
+Invoke `test --review --staged` to review test quality in changed test files.
+- Check for missing edge cases and coverage gaps
+- Identify brittle or flaky test patterns
+- Flag over-mocking and testing implementation instead of behavior
+- Ensure tests have meaningful assertions
+
+### Agent 7: Interface Design Review
+Invoke `review-interfaces --staged` to review the design quality of functions, classes, and components.
+- Check for pit-of-success violations (multiple ways to do the same thing, easy to misuse)
+- Flag poor naming, inconsistent vocabulary, weak types
+- Identify over-engineered or YAGNI interfaces
+- Check encapsulation and public surface area
+
+### Agent 8: Clean Code Review
+Invoke `review-cleancode --staged` to review code against clean code principles.
+- Check SOLID principles (SRP, OCP, LSP, ISP, DIP)
+- Flag DRY violations, YAGNI, unnecessary complexity (KISS)
+- Identify code smells (god classes, long methods, feature envy, primitive obsession, shotgun surgery)
+- Check design principles (Law of Demeter, separation of concerns, composition over inheritance)
+
+## Step 3.5: External Advisor Reviews (--multi only)
+
+If `--multi` flag is present in $ARGUMENTS, also get external opinions:
+
+Use the **Skill tool** to invoke `second-opinion --quick` with this prompt:
+
+```
+Read-only code review. Review the staged changes (git diff --cached) in this repository. Provide a focused code review in 300 words or less covering: potential bugs or edge cases, security concerns, performance issues, and architecture/pattern violations.
+```
+
+**IMPORTANT:** Do NOT proceed to Step 4 until the second-opinion results (both Gemini and Codex) have been fully received. Wait for all background commands to complete and collect their output before continuing. This prevents completion notifications from appearing after the review summary.
+
+## Step 4: Independent Confidence Scoring
+
+Collect all issues from the review agents. Then launch **parallel scorer agents** — one per issue (or batch small groups if there are many). Each scorer receives:
+- The issue description and location
+- The relevant code context (read the file around the reported lines)
+- The CLAUDE.md guidelines
+
+Each scorer independently assigns a confidence score 0-100:
+- **0**: False positive, not a real issue
+- **25**: Might be real but unlikely
+- **50**: Plausible but minor or uncertain
+- **75**: Likely real and worth noting
+- **100**: Certain, clear problem
+
+The scorer should NOT know which agent found the issue. It evaluates purely based on the code and the claim.
+
+**Filter**: Only issues scoring >= 80 pass through to the output.
+
+## Step 5: Format Output
+
+### Critical Issues (Must Fix)
+[List issues that could cause bugs, security vulnerabilities, or data loss]
+
+### Improvements (Should Fix)
+[List issues that violate patterns, reduce maintainability, or hurt performance]
+
+### Suggestions (Nice to Have)
+[List minor style issues, potential refactors, or enhancements]
+
+### External Advisor Reviews (--multi only)
+
+If `--multi` was used, include:
+
+#### Gemini
+{gemini_code_review}
+
+#### Codex
+{codex_code_review}
+
+#### Cross-Model Agreement
+{note areas where external advisors agree/disagree with Claude agents - highlight consensus issues as higher confidence}
+
+## Examples
+
+**Review staged PR changes with 8 agents:**
+> /code-review
+
+Runs 8 parallel review agents (bug/logic, architecture, security/performance, historical context, comment quality, test quality, interface design, clean code) against staged changes and produces a prioritized list of issues grouped by severity.
+
+**Cross-model consensus review:**
+> /code-review --multi
+
+Runs the same 8 Claude agents plus external reviews from Gemini and Codex. The output includes a cross-model agreement section highlighting issues where all models converge, giving higher confidence to consensus findings.
+
+For each issue, explain:
+1. What the problem is
+2. Why it matters
+3. How to fix it (with code example if helpful)
+
+## Troubleshooting
+
+### Too many changed files for agents to handle
+**Solution:** Narrow the review scope by targeting a specific directory or file pattern (e.g., `/code-review src/auth/`) instead of the entire changeset, or break the PR into smaller, focused reviews.
+
+### Agent returns shallow or redundant findings
+**Solution:** Ensure the review target is specific enough to give agents meaningful context; vague targets like "everything" produce generic results. Re-run with a focused target and verify that CLAUDE.md contains project-specific patterns the agents can check against.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nielsmadan) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
