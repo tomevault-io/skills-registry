@@ -1,0 +1,76 @@
+---
+name: sdlc-assistant
+description: > Use when this capability is needed.
+metadata:
+  author: diegouis
+---
+
+# Managing Software Development Lifecycle
+
+This skill orchestrates the full software development lifecycle from architecture through release, including planning, TDD, code review, debugging, and multi-stage pipeline execution.
+
+## When to Use
+
+- Defining or updating system architecture for a project
+- Conducting code reviews on pull requests or branches
+- Planning a testing strategy (unit, integration, e2e)
+- Preparing a release (versioning, changelog, readiness checks)
+- Generating or updating project documentation
+- Establishing or enforcing git workflow conventions
+- Breaking requirements into implementation plans with TDD
+- Debugging issues systematically using hypothesis-driven root-cause analysis
+- Generating Architecture Decision Records (ADRs) and C4 context diagrams
+- Orchestrating multi-stage pipelines (ProAgent 5-stage, PITER framework)
+- Creating and executing hierarchical project plans with progress tracking
+- Finalizing development branches with pre-merge quality checks
+
+## CRITICAL: Ask First, Load Later
+
+**DO NOT** read reference files, run environment detection commands, or load
+mode files until the user has told you what they want to do.
+
+**MANDATORY**: You MUST call the `AskUserQuestion` tool — do NOT render these options as text:
+
+AskUserQuestion(
+  header: "SDLC",
+  question: "What SDLC phase do you need help with?",
+  options: [
+    { label: "Architecture & ADRs", description: "Architecture design, ADRs, C4 diagrams" },
+    { label: "Code Review", description: "Code review, PR review, multi-agent review" },
+    { label: "Testing Strategy", description: "TDD, test strategy, test quality" },
+    { label: "Release & Versioning", description: "Release planning, changelogs, versioning, git workflows" }
+  ]
+)
+
+If the user selects "Other", present a second selector with: Planning & Tasks, Debugging, SDLC Pipelines (ProAgent/AWOS/PITER/Ralph).
+
+## Reference Routing
+
+> **CONTEXT GUARD**: Load reference files only when the user's request
+> matches a specific topic below. Do NOT load all references upfront.
+
+| User Intent | Reference File |
+|---|---|
+| Architecture design, ADRs, C4 diagrams | `references/architecture-decisions.md` |
+| Code review, PR review, multi-agent review | `references/code-review.md` |
+| TDD, test strategy, test quality | `references/testing-strategy.md` |
+| Release planning, changelogs, versioning | `references/release-management.md` |
+| Git workflows, conventional commits, branches | `references/versioning-git.md` |
+| Planning, task breakdown, requirements | `references/planning-tasks.md` |
+| Debugging, root-cause analysis | `references/debugging.md` |
+| SDLC pipelines (ProAgent, AWOS, PITER, Ralph) | `references/pipeline-frameworks.md` |
+
+## Core Principles
+
+- Follow TDD red-green-refactor for every implementation task
+- Use conventional commits and semantic versioning
+- Implement confirmation gates between autonomous workflow phases
+- Apply hypothesis-driven debugging — never shotgun debug
+
+## Integration Points
+
+GitHub/GitLab (PRs, issues, CI/CD), Jira (sprint tracking), Confluence (docs), Slack (notifications). Use Excalidraw MCP for architecture diagrams, pipeline flows, and sprint planning layouts.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/diegouis) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
