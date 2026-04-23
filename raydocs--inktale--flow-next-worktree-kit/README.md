@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [raydocs/inktale](https://github.com/raydocs/inktale/tree/main/.opencode/skill/flow-next-worktree-kit)
+Original source: [raydocs/inktale](https://github.com/raydocs/inktale/tree/main/plugins/flow-next/skills/flow-next-worktree-kit)
 
 ---
 
