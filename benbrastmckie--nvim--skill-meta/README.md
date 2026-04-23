@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [benbrastmckie/nvim](https://github.com/benbrastmckie/nvim/tree/main/.opencode/skills/skill-meta)
+Original source: [benbrastmckie/nvim](https://github.com/benbrastmckie/nvim/tree/main/.claude/skills/skill-meta)
 
 ---
 
