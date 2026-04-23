@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [intellectronica/agent-skills](https://github.com/intellectronica/agent-skills/tree/main/plugins/anki-connect/skills)
+Original source: [intellectronica/agent-skills](https://github.com/intellectronica/agent-skills/tree/main/plugins/context7/skills)
 
 ---
 
