@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kangwang42/r_note_for_epidemiology](https://github.com/kangwang42/r_note_for_epidemiology/tree/main/.claude/skills/section-ml-ai)
+Original source: [kangwang42/r_note_for_epidemiology](https://github.com/kangwang42/r_note_for_epidemiology/tree/main/.opencode/skills/section-ml-ai)
 
 ---
 
