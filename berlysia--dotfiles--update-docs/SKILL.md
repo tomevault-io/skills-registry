@@ -1,0 +1,54 @@
+---
+name: update-docs
+description: Update documentation to match code changes. Triggered by: 'update docs', 'sync documentation', 'README outdated', 'docs更新', 'ドキュメント直して'. Delegates to subagent to protect context. Use when this capability is needed.
+metadata:
+  author: berlysia
+---
+
+# Update Documentation
+
+コード変更に伴うドキュメント更新をサブエージェントに委任。
+
+## 実行
+
+Task tool (general-purpose) で以下を委任:
+
+```
+ドキュメントを更新してください。
+
+対象: [ユーザー指定 or 最近の変更]
+
+手順:
+1. git diff/log で変更内容を把握
+2. ドキュメントファイルの探索（下記「ファイル探索ルール」に従う）
+3. 品質基準に従って評価・更新
+4. サマリーを返す（更新ファイル、主な変更、要確認箇所）
+
+ファイル探索ルール（重要）:
+- `git ls-files '*.md'` でgit管理下のドキュメントを列挙する
+- Glob/Grepを使う場合は node_modules/, .git/, dist/, build/, coverage/ を必ず除外する
+- 広いパターン（**/README.md等）を使わず、まず既知の場所（プロジェクトルート, docs/, src/）を確認する
+
+品質基準:
+- 正確性: コードと記述の一致
+- 発見可能性: 目次反映、クロスリファレンス、検索キーワード
+- 一貫性: 用語・フォーマット・文体の統一
+- メンテナンス性: コンセプト優先、陳腐化しやすい情報を避ける
+
+注意:
+- 既存の文体・フォーマットを維持
+- 大規模変更は提案のみ（実行前に確認）
+```
+
+## 結果報告
+
+サブエージェントのサマリーをユーザーに提示。
+
+## バリエーション
+
+- **スコープ限定**: 「src/ のドキュメントだけ更新して」
+- **報告のみ**: 「更新せず、何を直すべきか教えて」
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/berlysia) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
