@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [packmindhub/packmind](https://github.com/packmindhub/packmind/tree/main/.github/skills/packmind-create-skill)
+Original source: [packmindhub/packmind](https://github.com/packmindhub/packmind/tree/main/.claude/skills/packmind-create-skill)
 
 ---
 
