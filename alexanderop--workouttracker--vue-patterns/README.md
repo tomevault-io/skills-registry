@@ -1,11 +1,11 @@
 # vue-patterns
 
-> Skill by [alexanderop](https://github.com/alexanderop/workouttracker) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [alexanderop](https://github.com/alexanderop/workoutTracker) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alexanderop/workouttracker](https://github.com/alexanderop/workouttracker/tree/main/.claude/skills/vue-patterns)
+Original source: [alexanderop/workoutTracker](https://github.com/alexanderop/workoutTracker/tree/main/.claude/skills/vue-patterns)
 
 ---
 
