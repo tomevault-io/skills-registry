@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sunpar/agentic_coding_tools](https://github.com/sunpar/agentic_coding_tools/tree/main/codex/skills/pr-review-guide)
+Original source: [sunpar/agentic_coding_tools](https://github.com/sunpar/agentic_coding_tools/tree/main/cursor/skills/pr-review-guide)
 
 ---
 
