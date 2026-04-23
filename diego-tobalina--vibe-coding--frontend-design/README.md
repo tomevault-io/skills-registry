@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [diego-tobalina/vibe-coding](https://github.com/diego-tobalina/vibe-coding/tree/main/.agent/skills/frontend-design)
+Original source: [diego-tobalina/vibe-coding](https://github.com/diego-tobalina/vibe-coding/tree/main/.claude/skills/frontend-design)
 
 ---
 
