@@ -2,7 +2,7 @@
 name: ci-cd-generator
 description: 为GitHub Actions、GitLab CI、Azure DevOps和Jenkins生成CI/CD流水线，包含构建、测试、部署阶段、缓存和密钥管理。 Use when this capability is needed.
 metadata:
-  author: AIDotNet
+  author: aidotnet
 ---
 
 # CI/CD Generator Skill
@@ -170,5 +170,5 @@ deploy:
 - Claude Code: ✅
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/AIDotNet) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/aidotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
