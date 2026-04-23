@@ -1,6 +1,6 @@
 ---
 name: git-commit-helper
-description: Creates well-structured git commits by analyzing changes, drafting messages, and executing commits. Use when the user asks to commit changes, save work, create a commit, or mentions committing their code.
+description: Creates well-structured git commits by analyzing changes, drafting messages, and executing commits using Gemini CLI's `run_shell_command` for git operations.
 metadata:
   author: adrielp
 ---
@@ -121,7 +121,7 @@ When the "what" isn't obvious from the code, explain the "why":
 
 ### Attribution
 - **NEVER add co-author information**
-- **NEVER add "Generated with Claude" or similar messages**
+- **NEVER add "Generated with Gemini" or similar messages**
 - **NEVER add "Co-Authored-By" lines**
 - **Write commit messages as if the user wrote them**
 
@@ -183,7 +183,7 @@ There are no changes to commit. The working directory is clean.
 ### Already Staged Changes
 If changes are already staged (`git diff --staged` shows content):
 - Review what's staged
-- Ask if user wants to commit staged changes as-is or modify staging
+- Ask if user wants to commit staged as-is or modify staging
 - Proceed based on their preference
 
 ### Conflicts or Issues
