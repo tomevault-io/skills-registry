@@ -1,0 +1,136 @@
+---
+name: secondbrain-adr
+description: | Use when this capability is needed.
+metadata:
+  author: sergio-bershadsky
+---
+
+# Create Architecture Decision Record
+
+Create numbered ADRs with category-based organization and status workflow.
+
+## Prerequisites
+
+Verify ADR entity is enabled in the secondbrain project:
+1. Check for `.claude/data/adrs/meta.yaml` (sharded) or `.claude/data/adrs/records.yaml` (legacy)
+2. If not found, suggest running `secondbrain-init` with ADRs enabled
+
+## Important Rules
+
+- **Do NOT add ADRs to the left sidebar/navigation.** ADRs are listed automatically via the `EntityTable` component on `docs/adrs/index.md`, which reads from `.claude/data/adrs/` shard files. No sidebar modification is needed.
+
+## Workflow
+
+### Step 1: Gather Information
+
+Collect from user or conversation context:
+
+1. **Category** (determines number range):
+   - `infrastructure` (0001-0999) — Architecture & infrastructure
+   - `feature` (2000-2999) — Feature implementation
+   - `process` (3000-3999) — Process & workflow
+
+2. **Title** — Brief decision title (will be slugified for filename)
+
+3. **Context** — What problem prompted this decision?
+
+### Step 2: Determine ADR Number
+
+1. Load `.claude/data/adrs/meta.yaml` (read `last_number` — tiny file, ~50 tokens)
+2. Find highest number in selected category range
+3. Increment to get next number
+4. Format: `ADR-XXXX` (zero-padded)
+
+**Number Ranges:**
+```
+infrastructure: 0001 - 0999
+feature:        2000 - 2999
+process:        3000 - 3999
+```
+
+### Step 3: Generate ADR Document
+
+Use template from `${CLAUDE_PLUGIN_ROOT}/templates/entities/adr/TEMPLATE.md`:
+
+**Filename:** `docs/adrs/ADR-XXXX-<title-slug>.md`
+
+**Frontmatter:**
+```yaml
+---
+id: ADR-XXXX
+status: draft
+date_created: YYYY-MM-DD
+date_updated: YYYY-MM-DD
+author: <author>
+category: <category>
+---
+```
+
+### Step 4: Update Records
+
+Add entry to the current month's shard `.claude/data/adrs/YYYY-MM.yaml`:
+
+```yaml
+- number: XXXX
+  title: "<title>"
+  status: draft
+  category: <category>
+  created: YYYY-MM-DD
+  file: docs/adrs/ADR-XXXX-<slug>.md
+  author: <author>
+```
+
+Update `last_number` in `.claude/data/adrs/meta.yaml` and ensure the current month is in the `shards` list.
+
+### Step 5: Sidebar Note
+
+**DO NOT manually add ADRs to VitePress sidebar.**
+
+ADRs are automatically listed via the `EntityTable` component on `docs/adrs/index.md`, which reads from `.claude/data/adrs/` shard files. No sidebar modification needed.
+
+### Step 6: Confirm Creation
+
+```
+## ADR Created
+
+**ID:** ADR-0012
+**Title:** Kubernetes Migration Strategy
+**Category:** infrastructure
+**Status:** draft
+**File:** docs/adrs/ADR-0012-kubernetes-migration-strategy.md
+
+### Next Steps
+1. Edit the ADR to add context, options, and decision
+2. Change status to 'proposed' when ready for review
+3. Use /secondbrain-adr-status to update status
+
+### Status Workflow
+draft → proposed → admitted → applied → implemented → tested
+```
+
+## Status Workflow
+
+```
+Draft → Proposed → Admitted → Applied → Implemented → Tested
+                          ↘ Rejected
+                          ↘ Canceled
+```
+
+| Status | Description |
+|--------|-------------|
+| draft | Initial creation, under development |
+| proposed | Ready for review |
+| admitted | Approved, pending implementation |
+| applied | Implementation started |
+| implemented | Implementation complete |
+| tested | Verified in production |
+| rejected | Not approved |
+| canceled | Abandoned |
+
+## Additional Resources
+
+- **`references/adr-template.md`** — Full ADR template
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sergio-bershadsky) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
