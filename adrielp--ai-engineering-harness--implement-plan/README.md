@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [adrielp/ai-engineering-harness](https://github.com/adrielp/ai-engineering-harness/tree/main/claude/skills/implement_plan)
+Original source: [adrielp/ai-engineering-harness](https://github.com/adrielp/ai-engineering-harness/tree/main/gemini/skills/implement_plan)
 
 ---
 
