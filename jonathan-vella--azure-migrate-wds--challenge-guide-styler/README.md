@@ -1,0 +1,13 @@
+# challenge-guide-styler
+
+> Skill by [jonathan-vella](https://github.com/jonathan-vella/azure-migrate-wds) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [jonathan-vella/azure-migrate-wds](https://github.com/jonathan-vella/azure-migrate-wds/tree/main/.github/skills/challenge-guide-styler)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
