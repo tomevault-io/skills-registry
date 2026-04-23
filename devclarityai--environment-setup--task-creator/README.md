@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [devclarityai/environment-setup](https://github.com/devclarityai/environment-setup/tree/main/cursor/.cursor/skills/task-creator)
+Original source: [devclarityai/environment-setup](https://github.com/devclarityai/environment-setup/tree/main/claude-code/.claude/skills/task-creator)
 
 ---
 
