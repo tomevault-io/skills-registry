@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [twofoldtech-dakota/claude-marketplace](https://github.com/twofoldtech-dakota/claude-marketplace/tree/main/plugins/sitecore-classic-analyzer/skills/frontend-razor)
+Original source: [twofoldtech-dakota/claude-marketplace](https://github.com/twofoldtech-dakota/claude-marketplace/tree/main/plugins/optimizely-cms-analyzer/skills/frontend-razor)
 
 ---
 
