@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [memorysaver/looplia-core](https://github.com/memorysaver/looplia-core/tree/main/docs/writing-agent-example/writing-agent/.claude/skills/content-documenter)
+Original source: [memorysaver/looplia-core](https://github.com/memorysaver/looplia-core/tree/main/plugins/looplia-writer/skills/content-documenter)
 
 ---
 
