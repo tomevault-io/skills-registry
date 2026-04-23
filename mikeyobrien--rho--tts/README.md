@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mikeyobrien/rho](https://github.com/mikeyobrien/rho/tree/main/platforms/android/skills/tts)
+Original source: [mikeyobrien/rho](https://github.com/mikeyobrien/rho/tree/main/platforms/macos/skills/tts)
 
 ---
 
