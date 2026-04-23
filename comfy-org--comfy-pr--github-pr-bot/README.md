@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [comfy-org/comfy-pr](https://github.com/comfy-org/comfy-pr/tree/main/.bot/skills/github-pr-bot)
+Original source: [comfy-org/comfy-pr](https://github.com/comfy-org/comfy-pr/tree/main/.claude/skills/github-pr-bot)
 
 ---
 
