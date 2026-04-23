@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [radema/geas-grimoire](https://github.com/radema/geas-grimoire/tree/main/.agent/skills/build-knowledge)
+Original source: [radema/geas-grimoire](https://github.com/radema/geas-grimoire/tree/main/personal-skills/build-knowledge)
 
 ---
 
