@@ -1,0 +1,43 @@
+---
+name: review-code
+description: Review local code changes against main branch Use when this capability is needed.
+metadata:
+  author: sasamuku
+---
+
+# Review Code
+
+Review all uncommitted and committed changes on the current branch compared to main.
+
+## Steps
+
+1. Get the diff between main and current HEAD:
+   ```bash
+   git diff main...HEAD
+   ```
+
+2. Get commit history for context:
+   ```bash
+   git log main..HEAD --oneline
+   ```
+
+3. If there are uncommitted changes:
+   ```bash
+   git diff
+   git diff --cached
+   ```
+
+4. Use **code-reviewer** agent to perform the review
+
+## Output
+
+The code-reviewer agent provides structured feedback organized by priority:
+- **Critical**: Security issues, bugs
+- **Warning**: Code quality concerns
+- **Suggestion**: Improvements
+
+With specific file locations and fix recommendations.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sasamuku) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
