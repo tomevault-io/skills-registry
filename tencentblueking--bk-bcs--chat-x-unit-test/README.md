@@ -1,11 +1,11 @@
 # chat-x-unit-test
 
-> Skill by [TencentBlueKing](https://github.com/TencentBlueKing/bk-bcs) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [tencentblueking](https://github.com/tencentblueking/bk-bcs) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TencentBlueKing/bk-bcs](https://github.com/TencentBlueKing/bk-bcs/tree/main/bcs-services/bcs-project-manager/.cursor/skills/chat-x-unit-test)
+Original source: [tencentblueking/bk-bcs](https://github.com/tencentblueking/bk-bcs/tree/main/bcs-services/bcs-project-manager/.cursor/skills/chat-x-unit-test)
 
 ---
 
