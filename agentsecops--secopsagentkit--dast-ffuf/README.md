@@ -1,0 +1,13 @@
+# dast-ffuf
+
+> Skill by [agentsecops](https://github.com/agentsecops/secopsagentkit) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [agentsecops/secopsagentkit](https://github.com/agentsecops/secopsagentkit/tree/main/skills/appsec/dast-ffuf)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
