@@ -1,0 +1,13 @@
+# framework_health_check
+
+> Skill by [grandinh](https://github.com/grandinh/claude-chaos-express) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [grandinh/claude-chaos-express](https://github.com/grandinh/claude-chaos-express/tree/main/.claude/skills/framework_health_check)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
