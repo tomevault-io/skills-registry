@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [syntaxasspiral/zk-context-vault](https://github.com/syntaxasspiral/zk-context-vault/tree/main/skills/memory-systems)
+Original source: [syntaxasspiral/zk-context-vault](https://github.com/syntaxasspiral/zk-context-vault/tree/main/skills/archive/memory-systems)
 
 ---
 
