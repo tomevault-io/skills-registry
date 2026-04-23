@@ -1,11 +1,11 @@
 # git-workflow
 
-> Skill by [AIDotNet](https://github.com/AIDotNet/MoYuCode) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [aidotnet](https://github.com/aidotnet/moyucode) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AIDotNet/MoYuCode](https://github.com/AIDotNet/MoYuCode/tree/main/skills/community/git-workflow)
+Original source: [aidotnet/moyucode](https://github.com/aidotnet/moyucode/tree/main/skills/community/git-workflow)
 
 ---
 
