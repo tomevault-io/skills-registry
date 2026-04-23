@@ -1,0 +1,13 @@
+# apex-cover-letter-pointers
+
+> Skill by [yutsukioka](https://github.com/yutsukioka/un_job_application_helper) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [yutsukioka/un_job_application_helper](https://github.com/yutsukioka/un_job_application_helper/tree/main/skills/apex-cover-letter-pointers)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
