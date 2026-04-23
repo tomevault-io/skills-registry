@@ -1,0 +1,13 @@
+# contact-form-builder-ses
+
+> Skill by [websmartteam](https://github.com/websmartteam/cor-code) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [websmartteam/cor-code](https://github.com/websmartteam/cor-code/tree/main/skills/contact-form-builder-ses)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
