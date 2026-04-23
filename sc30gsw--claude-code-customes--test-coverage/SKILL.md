@@ -1,0 +1,38 @@
+---
+name: test-coverage
+description: Analyzes test coverage and generates missing tests to achieve 80%+ coverage
+metadata:
+  author: sc30gsw
+---
+
+# Test Coverage
+
+Analyze test coverage and generate missing tests:
+
+1. Run tests with coverage: npm test --coverage or pnpm test --coverage
+
+2. Analyze coverage report (coverage/coverage-summary.json)
+
+3. Identify files below 80% coverage threshold
+
+4. For each under-covered file:
+   - Analyze untested code paths
+   - Generate unit tests for functions
+   - Generate integration tests for APIs
+   - Generate E2E tests for critical flows
+
+5. Verify new tests pass
+
+6. Show before/after coverage metrics
+
+7. Ensure project reaches 80%+ overall coverage
+
+Focus on:
+- Happy path scenarios
+- Error handling
+- Edge cases (null, undefined, empty)
+- Boundary conditions
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sc30gsw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
