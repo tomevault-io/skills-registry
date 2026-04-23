@@ -1,0 +1,102 @@
+---
+name: managing-ssh
+description: | Use when this capability is needed.
+metadata:
+  author: shren207
+---
+
+# SSH 및 Tailscale 관리
+
+SSH 키, ssh-agent, Tailscale VPN 관련 가이드입니다.
+
+## 목적과 범위
+
+SSH 인증, ssh-agent 로드, Tailscale 접속, sudo 환경변수 이슈를 통합적으로 다룬다.
+
+## Known Issues
+
+**sudo에서 SSH_AUTH_SOCK 유실**
+- `sudo` 실행 시 환경변수가 초기화되어 SSH 키 인증 실패
+- 해결: `sudo -E` 또는 sudoers에서 `SSH_AUTH_SOCK` 유지 설정
+
+**재부팅 후 SSH 키 미로드**
+- launchd agent로 자동 로드 설정되어 있지만 실패할 수 있음
+- 수동 로드: `ssh-add $HOME/.ssh/id_ed25519`
+
+**NixOS에서 SSH 키 자동 로드 방식 혼동**
+- NixOS는 launchd가 아니라 `services.ssh-agent` + `programs.keychain`으로 키 로드
+- 수동 로드: `ssh-add $HOME/.ssh/id_ed25519`
+
+## 빠른 참조
+
+### SSH 키 상태 확인
+
+```bash
+# 로드된 키 확인
+ssh-add -l
+
+# 키 로드
+ssh-add $HOME/.ssh/id_ed25519
+
+# 키 언로드
+ssh-add -d $HOME/.ssh/id_ed25519
+```
+
+### Tailscale 상태
+
+```bash
+# 연결 상태 확인
+tailscale status
+
+# 재인증 (만료 시)
+tailscale up
+
+# IP 확인
+tailscale ip -4
+```
+
+### SSH 설정 파일
+
+| 파일 | 용도 |
+|------|------|
+| `$HOME/.ssh/config` | SSH 호스트 설정 |
+| `$HOME/.ssh/id_ed25519` | 개인 키 |
+| `$HOME/.ssh/id_ed25519.pub` | 공개 키 |
+| `$HOME/.ssh/authorized_keys` | 인증된 키 (서버) |
+| `modules/darwin/programs/ssh/default.nix` | macOS SSH/launchd 설정 |
+| `modules/nixos/programs/ssh-client/default.nix` | NixOS SSH 클라이언트 설정 |
+| `modules/nixos/programs/tailscale.nix` | NixOS Tailscale VPN + 방화벽 설정 |
+| `modules/nixos/programs/mosh.nix` | NixOS mosh 설정 (Tailscale 전용, LAN 비노출) |
+| `modules/nixos/home.nix` | NixOS `services.ssh-agent`/`programs.keychain` 설정 |
+
+### authorizedKeys 추가 (NixOS)
+
+```nix
+# hosts/<hostname>/default.nix
+users.users.<username>.openssh.authorizedKeys.keys = [
+  "ssh-ed25519 AAAA... user@host"
+];
+```
+
+## 핵심 절차
+
+1. `ssh-add -l`과 Tailscale 상태를 먼저 확인한다.
+2. 실패 증상을 키 형식/agent/sudo 환경변수 문제로 분류한다.
+3. NixOS는 `home.nix`의 `services.ssh-agent`와 `programs.keychain` 설정을 점검한다.
+4. 서버 키 배포는 `authorizedKeys` 선언 후 재적용으로 처리한다.
+
+## 자주 발생하는 문제
+
+1. **SSH 키 invalid format**: 키 파일 끝에 개행 문자 필요
+2. **GitHub SSH 접근 실패**: `ssh-add -l`로 키 로드 확인
+3. **Tailscale 만료**: `tailscale up`으로 재인증
+4. **sudo 인증 실패**: `sudo -E` 또는 SSH_AUTH_SOCK 유지
+
+## 레퍼런스
+
+- 트러블슈팅: [references/troubleshooting.md](references/troubleshooting.md)
+- Tailscale 설정: [references/tailscale.md](references/tailscale.md)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shren207) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
