@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kluless13/claude-skills](https://github.com/kluless13/claude-skills/tree/main/skills/articulation)
+Original source: [kluless13/claude-skills](https://github.com/kluless13/claude-skills/tree/main/skills/dan-koe/skills/articulation)
 
 ---
 
