@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bodangren/git-workflow](https://github.com/bodangren/git-workflow/tree/main/skills/change-integrator)
+Original source: [bodangren/git-workflow](https://github.com/bodangren/git-workflow/tree/main/.claude/skills/change-integrator)
 
 ---
 
