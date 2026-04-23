@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cdeistopened/skill-stack](https://github.com/cdeistopened/skill-stack/tree/main/public/skills/brand-identity-wizard)
+Original source: [cdeistopened/skill-stack](https://github.com/cdeistopened/skill-stack/tree/main/.claude/skills/brand-identity-wizard)
 
 ---
 
