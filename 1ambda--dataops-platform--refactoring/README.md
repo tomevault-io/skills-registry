@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [1ambda/dataops-platform](https://github.com/1ambda/dataops-platform/tree/main/.copilot/skills/refactoring)
+Original source: [1ambda/dataops-platform](https://github.com/1ambda/dataops-platform/tree/main/.copilot/skills/_archived/refactoring)
 
 ---
 
