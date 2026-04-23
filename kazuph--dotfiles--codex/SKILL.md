@@ -1,0 +1,208 @@
+---
+name: codex
+description: Codex CLI を使って、ユーザーが明示的に望んだ調査・実装・レビューだけを補助的に実行する。Claude Code の主導権は維持し、乗っ取り的な委譲や危険な自動化は行わない。 Use when this capability is needed.
+metadata:
+  author: kazuph
+---
+
+# Codex Skill
+
+Codex CLI を Claude Code の補助として安全に使うためのスキル。
+
+## 基本姿勢
+
+- この skill は Claude Code の代替ではなく補助。ユーザーが `codex で` と明示した時だけ使う。
+- Codex への丸投げや自動乗っ取りはしない。明示依頼なしで委譲しない。
+- Stop hook、review gate、常駐フック、自動 install などの侵襲的な仕組みは持ち込まない。
+- `--dangerously-bypass-approvals-and-sandbox` は禁止しない。ただし必要性と影響範囲を理解した上で、明示的に使う。
+- 調査とレビューは必ず read-only。実装だけを明示依頼時に write で走らせる。
+- 破壊的な git コマンドは提案しない。`git checkout -- .` や `git reset --hard` は禁止。
+- Codex の出力はそのまま鵜呑みにせず、事実・推測・未確認点を分けて扱う。
+
+## モード
+
+### 1. 調査 `investigate`
+
+コードベースの読取り調査、原因分析、設計確認、仕様確認に使う。
+
+### コマンド
+
+```bash
+outfile=$(mktemp -t codex)
+codex exec \
+  --sandbox read-only \
+  -o "$outfile" \
+  "<プロンプト>" >/dev/null 2>&1
+cat "$outfile"
+```
+
+### ディレクトリ指定あり
+
+```bash
+outfile=$(mktemp -t codex)
+codex exec \
+  --sandbox read-only \
+  -C /path/to/dir \
+  -o "$outfile" \
+  "<プロンプト>" >/dev/null 2>&1
+cat "$outfile"
+```
+
+### ポイント
+
+- ファイル変更を許可しない。
+- 調査プロンプトには「ファイル変更禁止」を明記する。
+- 調査結果は「観測事実」「推測」「未確認点」を分けて返す。
+
+### 2. 実装 `implement`
+
+コード修正、最小安全パッチ、明示された実装作業にだけ使う。
+
+### コマンド
+
+```bash
+outfile=$(mktemp -t codex)
+codex exec \
+  --full-auto \
+  -o "$outfile" \
+  "<プロンプト>" >/dev/null 2>&1
+cat "$outfile"
+```
+
+### ディレクトリ指定あり
+
+```bash
+outfile=$(mktemp -t codex)
+codex exec \
+  --full-auto \
+  -C /path/to/dir \
+  -o "$outfile" \
+  "<プロンプト>" >/dev/null 2>&1
+cat "$outfile"
+```
+
+### ポイント
+
+- 実装はユーザーが明示した時だけ。
+- 巨大なリファクタや無関係変更は避け、「最小安全パッチ」を優先する。
+- 実行後は必ず `git diff` で変更範囲を確認する。
+- Codex が失敗したら、Claude 側で成功したふりをせず失敗として返す。
+
+### 3. レビュー `review`
+
+コードレビュー専用。レビュー結果から勝手に修正へ進まない。
+
+### 未コミット変更のレビュー
+
+```bash
+codex review --uncommitted
+```
+
+### ブランチ差分のレビュー
+
+```bash
+codex review --base main
+```
+
+### 特定コミットのレビュー
+
+```bash
+codex review --commit <SHA>
+```
+
+### カスタム観点でレビュー
+
+```bash
+codex review --uncommitted \
+  "セキュリティ観点でレビュー。XSS、権限漏れ、データ破壊リスクを重点確認"
+```
+
+### ディレクトリ指定あり
+
+```bash
+codex \
+  -C /path/to/dir \
+  review --base main
+```
+
+### ポイント
+
+- レビュー結果は findings first で扱う。
+- 重大度順、ファイルパス・行番号つきで返す。
+- 推測なら推測と明示し、証拠境界を崩さない。
+- レビュー後に自動修正へ進まない。直すなら別途 `implement` を明示実行する。
+
+## 共通の実行方針
+
+- モデルは固定しない。未指定なら Codex の既定を尊重する。
+- モデルを明示する時だけ `-m <model>` を付ける。
+- 作業ディレクトリを変える時だけ `-C /path/to/dir` を付ける。
+- セッション永続化が不要なら `--ephemeral` を検討する。
+- JSON Schema で出力形を縛りたい時だけ `--output-schema <file>` を使う。
+- `tcgetattr` などの TTY 問題が出る環境では `script -q /dev/null ...` でラップする。
+
+## Prompt の組み方
+
+OpenAI 版から採る価値があるのは、プロンプトを短く構造化する考え方だけ。以下は採用してよい。
+
+- 1回の Codex 実行には 1つの仕事だけ渡す。
+- 「何をやるか」より先に「何が done か」を書く。
+- 曖昧な長文より、短いブロック構造を優先する。
+- 調査・研究・レビューでは根拠を要求する。
+- 実装・デバッグでは検証条件を明示する。
+
+### 推奨ブロック
+
+```xml
+<task>具体的な依頼</task>
+<output_contract>欲しい出力の形</output_contract>
+<safety>触ってよい範囲、触ってはいけない範囲</safety>
+<verification>何を確認して完了とするか</verification>
+```
+
+### 例: investigate
+
+```xml
+<task>この不具合の根本原因を調べて。ファイル変更は禁止。</task>
+<output_contract>観測事実、推測、未確認点を分けて簡潔に返す。</output_contract>
+<verification>関連ファイルと実際のコード断片に基づいて説明する。</verification>
+```
+
+### 例: implement
+
+```xml
+<task>この不具合を最小安全パッチで修正して。</task>
+<safety>無関係なリファクタ禁止。既存挙動を壊さない。</safety>
+<verification>変更ファイル、実施した確認、残るリスクを最後に列挙する。</verification>
+```
+
+### 例: review
+
+```xml
+<task>この差分をレビューして。</task>
+<output_contract>findings first。重大度順。ファイルパスと行番号を含める。</output_contract>
+<verification>根拠が弱いものは推測として明示する。</verification>
+```
+
+## 引数パターン
+
+| 呼び出し | 動作 |
+|---------|------|
+| `/codex investigate <prompt>` | 読み取り調査 |
+| `/codex implement <prompt>` | 明示依頼された実装 |
+| `/codex review` | 未コミット変更レビュー |
+| `/codex review --base main` | ブランチ差分レビュー |
+
+引数の最初の語が `investigate` / `implement` / `review` でモードを判別する。
+
+## トラブルシューティング
+
+- Codex CLI 不在: `codex --version`
+- 未ログイン: `codex login`
+- TTY 問題: `script -q /dev/null ...`
+- タイムアウト: 依頼を分割して再実行
+- 出力が冗長: `-o "$outfile"` や `--output-schema` を使う
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/kazuph) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
