@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gonglingrui/screen-creative-skills](https://github.com/gonglingrui/screen-creative-skills/tree/main/english-version/category/knowledge-research/web-search)
+Original source: [gonglingrui/screen-creative-skills](https://github.com/gonglingrui/screen-creative-skills/tree/main/category/knowledge-research/web-search)
 
 ---
 
