@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [snaplogic/snaplogic-robotframework-examples](https://github.com/snaplogic/snaplogic-robotframework-examples/tree/main/.claude/skills/robot-expert)
+Original source: [snaplogic/snaplogic-robotframework-examples](https://github.com/snaplogic/snaplogic-robotframework-examples/tree/main/{{cookiecutter.primary_pipeline_name}}/.claude/skills/robot-expert)
 
 ---
 
