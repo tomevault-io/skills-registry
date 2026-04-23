@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kazuph/dotfiles](https://github.com/kazuph/dotfiles/tree/main/plugins/kazuph-dotfiles/skills/another-ai)
+Original source: [kazuph/dotfiles](https://github.com/kazuph/dotfiles/tree/main/plugins/another-ai/skills/another-ai)
 
 ---
 
