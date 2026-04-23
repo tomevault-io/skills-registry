@@ -2,7 +2,7 @@
 name: git-workflow
 description: 自动化Git操作，智能生成遵循Conventional Commits的提交信息、分支管理和PR描述生成。 Use when this capability is needed.
 metadata:
-  author: AIDotNet
+  author: aidotnet
 ---
 
 # Git Workflow Skill
@@ -140,5 +140,5 @@ git stash push -m "WIP: feature description"
 - Claude Code: ✅
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/AIDotNet) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/aidotnet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
