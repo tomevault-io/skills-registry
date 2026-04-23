@@ -2,7 +2,7 @@
 name: typescript-sdk-reference
 description: Comprehensive reference for the TypeScript Agent SDK with functions, types, and interfaces for programmatic Claude Code interactions Use when this capability is needed.
 metadata:
-  author: CaptainCrouton89
+  author: captaincrouton89
 ---
 
 # TypeScript SDK Reference
@@ -266,5 +266,5 @@ const result = query({
 - **[CLI Reference](https://docs.anthropic.com/en/docs/claude-code/cli-reference)** – Command-line interface docs
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/CaptainCrouton89) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/captaincrouton89) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
