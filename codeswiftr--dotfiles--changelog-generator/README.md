@@ -1,0 +1,13 @@
+# changelog-generator
+
+> Skill by [codeswiftr](https://github.com/codeswiftr/dotfiles) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [codeswiftr/dotfiles](https://github.com/codeswiftr/dotfiles/tree/main/config/claude/skills/changelog-generator)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
