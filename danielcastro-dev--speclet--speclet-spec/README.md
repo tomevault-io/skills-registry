@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [danielcastro-dev/speclet](https://github.com/danielcastro-dev/speclet/tree/main/.opencode/skill/speclet-spec)
+Original source: [danielcastro-dev/speclet](https://github.com/danielcastro-dev/speclet/tree/main/.codex/skills/speclet-spec)
 
 ---
 
