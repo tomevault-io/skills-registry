@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [daniel-heydari-dev/personal-ai-skills](https://github.com/daniel-heydari-dev/personal-ai-skills/tree/main/templates/skills/solid-principles)
+Original source: [daniel-heydari-dev/personal-ai-skills](https://github.com/daniel-heydari-dev/personal-ai-skills/tree/main/templates/claude/.claude/skills/solid-principles)
 
 ---
 
