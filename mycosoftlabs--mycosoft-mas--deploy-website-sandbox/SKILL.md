@@ -1,0 +1,119 @@
+---
+name: deploy-website-sandbox
+description: Deploy the Mycosoft website to the Sandbox VM (192.168.0.187). Use when the user asks to deploy, push to sandbox, rebuild the website container, or update the live site. Use when this capability is needed.
+metadata:
+  author: mycosoftlabs
+---
+
+# Deploy Website to Sandbox VM
+
+## CRITICAL: Execute Deployment Yourself — Never Hand Off to User
+
+**NEVER ask the user to deploy, SSH, run scripts, or debug.** You MUST execute the deployment yourself. If it fails, fix the failure (Dockerfile, pnpm, script errors) and retry until it succeeds. Never stop with "run this manually" or "you need to fix X." Load credentials from `.credentials.local` before SSH. See rule `agent-must-execute-operations.mdc`.
+
+## Prerequisites
+
+- Code committed and pushed to GitHub (main branch)
+- SSH access to Sandbox VM at 192.168.0.187
+
+## Deployment Steps
+
+Copy this checklist and track progress:
+
+```
+Deployment Progress:
+- [ ] Step 1: SSH to Sandbox VM
+- [ ] Step 2: Pull latest code
+- [ ] Step 3: Stop and remove old container
+- [ ] Step 4: Rebuild Docker image
+- [ ] Step 5: Start new container with NAS mount
+- [ ] Step 6: Health check
+- [ ] Step 7: Purge Cloudflare cache
+- [ ] Step 8: Verify deployment
+```
+
+### Step 1: SSH to Sandbox VM
+
+```bash
+ssh mycosoft@192.168.0.187
+```
+
+### Step 2: Pull latest code
+
+```bash
+cd /opt/mycosoft/website
+git fetch origin
+git reset --hard origin/main
+```
+
+### Step 3: Stop and remove old container
+
+```bash
+docker stop mycosoft-website
+docker rm mycosoft-website
+```
+
+### Step 4: Rebuild Docker image (no cache)
+
+```bash
+docker build -t mycosoft-always-on-mycosoft-website:latest --no-cache .
+```
+
+### Step 5: Start new container with NAS volume mount
+
+**CRITICAL**: Always include the NAS volume mount for media assets.
+
+```bash
+docker run -d --name mycosoft-website -p 3000:3000 \
+  -v /opt/mycosoft/media/website/assets:/app/public/assets:ro \
+  --restart unless-stopped mycosoft-always-on-mycosoft-website:latest
+```
+
+### Step 6: Health check
+
+```bash
+# Wait for container to start
+sleep 10
+# Check container is running
+docker ps | grep mycosoft-website
+# Test HTTP endpoint
+curl -s -o /dev/null -w "%{http_code}" http://localhost:3000
+```
+
+Expected: Container running, HTTP 200.
+
+### Step 7: Purge Cloudflare cache — AUTOMATIC (never ask user)
+
+**The Python deploy scripts run Cloudflare purge automatically.** Use `_tmp_deploy_sandbox.py` or `_complete_deploy_sandbox.py` from the website repo; they call `purge_everything()` after a successful deploy. **NEVER ask the user to purge Cloudflare manually.** If running deploy steps manually, run from website repo: `python -c "from _cloudflare_cache import purge_everything; purge_everything()"`
+
+### Step 8: Verify deployment
+
+Compare localhost:3010 (dev) vs sandbox.mycosoft.com (production) to confirm changes are live.
+
+## Key Details
+
+| Item | Value |
+|------|-------|
+| VM IP | 192.168.0.187 |
+| VM User | mycosoft |
+| Code Path | /opt/mycosoft/website |
+| Container | mycosoft-website |
+| Image | mycosoft-always-on-mycosoft-website:latest |
+| Port | 3000 |
+| NAS Mount | /opt/mycosoft/media/website/assets:/app/public/assets:ro |
+
+## NEVER Run or Recreate
+
+- **`_sync_nas_push_from_windows.py`** — Deleted. It corrupted NAS and local videos. Add videos by uploading directly to the NAS via UniFi web UI. The VM mounts the NAS; no sync script needed.
+
+## Troubleshooting (You Fix, Not User)
+
+- **Build fails**: Fix Dockerfile, pnpm-lock.yaml, or package resolution; retry deploy. Never ask the user to fix.
+- **Container won't start**: Check `docker logs`, fix config, retry.
+- **Script crashes**: Fix encoding/unicode issues in deploy script; retry.
+- **Videos not loading**: Verify NAS mount in docker run command.
+- **Changes not visible**: Run purge from script (`purge_everything()` in _cloudflare_cache). Never ask user to purge.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mycosoftlabs) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
