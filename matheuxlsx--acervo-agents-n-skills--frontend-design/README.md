@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [matheuxlsx/acervo-agents-n-skills](https://github.com/matheuxlsx/acervo-agents-n-skills/tree/main/skills/plugin-dev/skills/frontend-design)
+Original source: [matheuxlsx/acervo-agents-n-skills](https://github.com/matheuxlsx/acervo-agents-n-skills/tree/main/skills/frontend-design)
 
 ---
 
