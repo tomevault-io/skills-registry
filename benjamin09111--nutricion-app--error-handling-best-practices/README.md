@@ -1,0 +1,13 @@
+# error-handling-best-practices
+
+> Skill by [benjamin09111](https://github.com/benjamin09111/nutricion_app) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [benjamin09111/nutricion_app](https://github.com/benjamin09111/nutricion_app/tree/main/.agent/skills/error-handling-best-practices)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
