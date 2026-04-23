@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cbxm/ellipses](https://github.com/cbxm/ellipses/tree/main/claude/.claude/profiles/amol/skills/updating-nojodocs)
+Original source: [cbxm/ellipses](https://github.com/cbxm/ellipses/tree/main/claude/.claude/skills/updating-nojodocs)
 
 ---
 
