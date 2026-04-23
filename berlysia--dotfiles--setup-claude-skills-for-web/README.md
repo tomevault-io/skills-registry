@@ -1,0 +1,13 @@
+# setup-claude-skills-for-web
+
+> Skill by [berlysia](https://github.com/berlysia/dotfiles) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [berlysia/dotfiles](https://github.com/berlysia/dotfiles/tree/main/.skills/setup-claude-skills-for-web)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
