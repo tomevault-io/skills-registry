@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [joelhooks/swarm-tools](https://github.com/joelhooks/swarm-tools/tree/main/packages/opencode-swarm-plugin/global-skills/skill-creator)
+Original source: [joelhooks/swarm-tools](https://github.com/joelhooks/swarm-tools/tree/main/packages/opencode-swarm-plugin/examples/skill/skill-creator)
 
 ---
 
