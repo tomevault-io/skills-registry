@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [krosebrook/source-of-truth-monorepo](https://github.com/krosebrook/source-of-truth-monorepo/tree/main/plugins/marketplaces/ai-coding-config/.skills/skill-creator)
+Original source: [krosebrook/source-of-truth-monorepo](https://github.com/krosebrook/source-of-truth-monorepo/tree/main/plugins/marketplaces/ai-coding-config/.claude/skills/skill-creator)
 
 ---
 
