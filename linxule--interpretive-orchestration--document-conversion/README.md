@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [linxule/interpretive-orchestration](https://github.com/linxule/interpretive-orchestration/tree/main/plugin-cowork/skills/document-conversion)
+Original source: [linxule/interpretive-orchestration](https://github.com/linxule/interpretive-orchestration/tree/main/plugin/skills/document-conversion)
 
 ---
 
