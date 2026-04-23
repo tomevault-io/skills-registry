@@ -1,0 +1,13 @@
+# test-hb
+
+> Skill by [arweaveoasis](https://github.com/arweaveoasis/wao) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [arweaveoasis/wao](https://github.com/arweaveoasis/wao/tree/main/src/workspace/.claude/skills/test-hb)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
