@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [daydreamsai/skills-market](https://github.com/daydreamsai/skills-market/tree/main/plugins/agent-factory/skills)
+Original source: [daydreamsai/skills-market](https://github.com/daydreamsai/skills-market/tree/main/plugins/api-research/skills)
 
 ---
 
