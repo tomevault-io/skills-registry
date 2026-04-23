@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shalomobongo/nanoclaw](https://github.com/shalomobongo/nanoclaw/tree/main/.claude/skills/add-telegram-swarm)
+Original source: [shalomobongo/nanoclaw](https://github.com/shalomobongo/nanoclaw/tree/main/.codex/skills/add-telegram-swarm)
 
 ---
 
