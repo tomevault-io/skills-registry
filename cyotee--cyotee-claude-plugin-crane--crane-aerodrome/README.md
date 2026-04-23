@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cyotee/cyotee-claude-plugin-crane](https://github.com/cyotee/cyotee-claude-plugin-crane/tree/main/.opencode/skills/crane-aerodrome)
+Original source: [cyotee/cyotee-claude-plugin-crane](https://github.com/cyotee/cyotee-claude-plugin-crane/tree/main/skills/crane-aerodrome)
 
 ---
 
