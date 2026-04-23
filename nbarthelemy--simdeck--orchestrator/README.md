@@ -1,0 +1,13 @@
+# orchestrator
+
+> Skill by [nbarthelemy](https://github.com/nbarthelemy/simdeck) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [nbarthelemy/simdeck](https://github.com/nbarthelemy/simdeck/tree/main/.claude/skills/claudenv/orchestrator)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
