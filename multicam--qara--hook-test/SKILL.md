@@ -1,0 +1,40 @@
+---
+name: hook-test
+description: | Use when this capability is needed.
+metadata:
+  author: multicam
+---
+
+## Workflow Routing (SYSTEM PROMPT)
+
+**When user says "test hooks", "hook health check", "check hooks", "hooks status":**
+-> **READ:** `${PAI_DIR}/skills/hook-test/workflows/test-and-fix.md`
+-> **EXECUTE:** Run full hook test suite with auto-correct
+
+**When user says "fix hooks", "hooks broken", "hook errors":**
+-> **READ:** `${PAI_DIR}/skills/hook-test/workflows/test-and-fix.md`
+-> **EXECUTE:** Run diagnostics and auto-correct
+
+---
+
+## What This Skill Does
+
+1. **Validates hook files exist** and match settings.json config
+2. **Runs each hook** with mock stdin, checking exit codes (must be 0)
+3. **Validates output format** (PreToolUse must output hookSpecificOutput JSON)
+4. **Checks stdin pattern** (must use `readFileSync(0, 'utf-8')`, NOT streaming)
+5. **Auto-corrects** common issues when `--fix` is passed
+
+## Quick Usage
+
+```bash
+# Test all hooks
+claude "/hook-test"
+
+# Test and auto-fix
+claude "/hook-test fix"
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/multicam) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
