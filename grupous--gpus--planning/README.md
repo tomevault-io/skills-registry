@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [grupous/gpus](https://github.com/grupous/gpus/tree/main/.claude/skills/planning)
+Original source: [grupous/gpus](https://github.com/grupous/gpus/tree/main/.agent/skills/planning)
 
 ---
 
