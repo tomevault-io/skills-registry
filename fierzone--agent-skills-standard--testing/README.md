@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fierzone/agent-skills-standard](https://github.com/fierzone/agent-skills-standard/tree/main/skills/nextjs/testing)
+Original source: [fierzone/agent-skills-standard](https://github.com/fierzone/agent-skills-standard/tree/main/skills/php/testing)
 
 ---
 
