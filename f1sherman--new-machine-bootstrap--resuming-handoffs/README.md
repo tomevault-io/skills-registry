@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [f1sherman/new-machine-bootstrap](https://github.com/f1sherman/new-machine-bootstrap/tree/main/roles/common/files/config/skills/codex/resuming-handoffs)
+Original source: [f1sherman/new-machine-bootstrap](https://github.com/f1sherman/new-machine-bootstrap/tree/main/roles/common/files/config/skills/claude/resuming-handoffs)
 
 ---
 
