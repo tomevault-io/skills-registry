@@ -1,0 +1,13 @@
+# architecture-documentation
+
+> Skill by [normcrandall](https://github.com/normcrandall/claudeskills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [normcrandall/claudeskills](https://github.com/normcrandall/claudeskills/tree/main/skills/architecture-documentation)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
