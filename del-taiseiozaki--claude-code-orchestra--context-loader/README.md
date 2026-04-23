@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [del-taiseiozaki/claude-code-orchestra](https://github.com/del-taiseiozaki/claude-code-orchestra/tree/main/.codex/skills/context-loader)
+Original source: [del-taiseiozaki/claude-code-orchestra](https://github.com/del-taiseiozaki/claude-code-orchestra/tree/main/.gemini/skills/context-loader)
 
 ---
 
