@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aviz85/claude-skills-library](https://github.com/aviz85/claude-skills-library/tree/main/plugin/skills/aviz-skills-installer)
+Original source: [aviz85/claude-skills-library](https://github.com/aviz85/claude-skills-library/tree/main/skills/aviz-skills-installer)
 
 ---
 
