@@ -1,0 +1,48 @@
+---
+name: governancecomplete-agent-session
+description: Completes an agent session with status and summary. Use when this capability is needed.
+metadata:
+  author: venikman
+---
+
+# Governance: Complete Agent Session
+
+## 1. Context
+
+This skill updates a session record with completion status and summary, leaving a traceable end state for the session lifecycle.
+
+## 2. Inputs
+
+- **context** (required): Bounded context name (safe path segment).
+- **session_id** (required): Session identifier (safe path segment).
+- **status** (required): Completion status (`success`, `needs-review`, `blocked`, `failed`).
+- **allow_recomplete** (optional): Allow re-completion when the session outcome is `needs-review`.
+- **dod_report** (optional): Path to a DoD report (required to mark `success`).
+- **roc_report** (optional): Path to a RoC compliance report.
+- **roc_path** (optional): Path to a RoC policy file (used to generate a compliance report).
+- **used_tools** (optional): Semicolon-delimited tools used during the session (for RoC checks).
+- **approvals** (optional): Semicolon-delimited approval keys satisfied (for RoC checks).
+- **summary** (optional): Completion summary.
+- **agent_type** (optional): Agent type completing the session.
+- **agent_model** (optional): Agent model identifier.
+- **role_assignment** (optional): RoleAssignment for U.Work logging (default: Strategist).
+- **decisions** (optional): Semicolon-delimited DRR ids/paths.
+- **timestamp_start** (optional): ISO-8601 timestamp for deterministic output.
+
+## 3. Outputs
+
+- `runtime/contexts/<context>/sessions/<session_id>.session.md`
+
+## 4. Procedure
+
+1. Validate inputs and confirm the session record exists.
+2. If the session is already completed, allow re-completion only when `allow_recomplete` is true and the outcome is `needs-review`.
+3. If status is `success`, require a DoD report with pass status or downgrade to `needs-review`.
+4. Evaluate RoC compliance when provided and apply violation outcomes.
+5. Update front matter with completion status and timestamp.
+6. Append a completion section with summary.
+7. Emit U.Work via `telemetry/log-work` when available.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/venikman) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
