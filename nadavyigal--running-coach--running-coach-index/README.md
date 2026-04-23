@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nadavyigal/running-coach-](https://github.com/nadavyigal/running-coach-/tree/main/.codex/skills/running-coach-index)
+Original source: [nadavyigal/running-coach-](https://github.com/nadavyigal/running-coach-/tree/main/.cursor/skills/running-coach-index)
 
 ---
 
