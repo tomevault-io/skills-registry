@@ -2,7 +2,7 @@
 name: build-fix
 description: Fix build and TypeScript errors with minimal changes Use when this capability is needed.
 metadata:
-  author: Yeachan-Heo
+  author: yeachan-heo
 ---
 
 # Build Fix Skill
@@ -147,5 +147,5 @@ Keeps trying until build passes, even if it takes multiple iterations.
 Uses: explore → build-fixer → verifier workflow.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Yeachan-Heo) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/yeachan-heo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
