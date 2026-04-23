@@ -2,7 +2,7 @@
 name: vue-best-practices
 description: Vue 3 TypeScript, vue-tsc, Volar, Vite, component props, testing, composition API. Use when this capability is needed.
 metadata:
-  author: TencentBlueKing
+  author: tencentblueking
 ---
 
 # Vue Best Practices
@@ -64,5 +64,5 @@ metadata:
 > 根据 SKILL.md 中的 IF-THEN 规则判断是否需要加载
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/TencentBlueKing) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tencentblueking) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
