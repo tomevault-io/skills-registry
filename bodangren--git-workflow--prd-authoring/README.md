@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bodangren/git-workflow](https://github.com/bodangren/git-workflow/tree/main/.claude/skills/prd-authoring)
+Original source: [bodangren/git-workflow](https://github.com/bodangren/git-workflow/tree/main/skills/prd-authoring)
 
 ---
 
