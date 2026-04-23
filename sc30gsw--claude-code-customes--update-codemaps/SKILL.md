@@ -1,0 +1,28 @@
+---
+name: update-codemaps
+description: Analyzes codebase structure and updates architecture documentation with diff tracking
+metadata:
+  author: sc30gsw
+---
+
+# Update Codemaps
+
+Analyze the codebase structure and update architecture documentation:
+
+1. Scan all source files for imports, exports, and dependencies
+2. Generate token-lean codemaps in the following format:
+   - codemaps/architecture.md - Overall architecture
+   - codemaps/backend.md - Backend structure
+   - codemaps/frontend.md - Frontend structure
+   - codemaps/data.md - Data models and schemas
+
+3. Calculate diff percentage from previous version
+4. If changes > 30%, request user approval before updating
+5. Add freshness timestamp to each codemap
+6. Save reports to .reports/codemap-diff.txt
+
+Use TypeScript/Node.js for analysis. Focus on high-level structure, not implementation details.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sc30gsw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
