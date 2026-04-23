@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [randlee/synaptic-canvas](https://github.com/randlee/synaptic-canvas/tree/main/.claude/skills/sc-git-worktree)
+Original source: [randlee/synaptic-canvas](https://github.com/randlee/synaptic-canvas/tree/main/packages/sc-git-worktree/skills/sc-git-worktree)
 
 ---
 
