@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [benbrastmckie/nvim](https://github.com/benbrastmckie/nvim/tree/main/.opencode/skills/skill-git-workflow)
+Original source: [benbrastmckie/nvim](https://github.com/benbrastmckie/nvim/tree/main/.claude/skills/skill-git-workflow)
 
 ---
 
