@@ -2,7 +2,7 @@
 name: chat-x-unit-test
 description: 帮助开发者为 Vue 3 组件编写单元测试。当用户需要添加单元测试时使用。 Use when this capability is needed.
 metadata:
-  author: TencentBlueKing
+  author: tencentblueking
 ---
 
 # Vue 组件单元测试指南
@@ -71,5 +71,5 @@ describe('YourComponent', () => {
 > 根据 SKILL.md 中的 IF-THEN 规则判断是否需要加载
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/TencentBlueKing) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tencentblueking) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
