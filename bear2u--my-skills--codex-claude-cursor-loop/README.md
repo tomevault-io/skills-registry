@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bear2u/my-skills](https://github.com/bear2u/my-skills/tree/main/skills/codex-claude-cursor-loop)
+Original source: [bear2u/my-skills](https://github.com/bear2u/my-skills/tree/main/.claude/skills/codex-claude-cursor-loop)
 
 ---
 
