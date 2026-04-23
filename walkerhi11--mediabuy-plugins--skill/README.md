@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [walkerhi11/mediabuy-plugins](https://github.com/walkerhi11/mediabuy-plugins/tree/main/.claude-plugin/plugins/ecom-foundation-docs/skill)
+Original source: [walkerhi11/mediabuy-plugins](https://github.com/walkerhi11/mediabuy-plugins/tree/main/.claude-plugin/plugins/ecom-meta-testing-os/skill)
 
 ---
 
