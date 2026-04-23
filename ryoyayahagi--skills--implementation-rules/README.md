@@ -1,0 +1,13 @@
+# implementation-rules
+
+> Skill by [ryoyayahagi](https://github.com/ryoyayahagi/skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ryoyayahagi/skills](https://github.com/ryoyayahagi/skills/tree/main/implementation-rules)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
