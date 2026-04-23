@@ -1,0 +1,13 @@
+# uni-agent
+
+> Skill by [zrt-ai-lab](https://github.com/zrt-ai-lab/opencode-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [zrt-ai-lab/opencode-skills](https://github.com/zrt-ai-lab/opencode-skills/tree/main/uni-agent)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
