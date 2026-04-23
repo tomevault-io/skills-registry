@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [emz1998/nexly-notes](https://github.com/emz1998/nexly-notes/tree/main/.claude/skills/specs-creator)
+Original source: [emz1998/nexly-notes](https://github.com/emz1998/nexly-notes/tree/main/archive/specs-creator)
 
 ---
 
