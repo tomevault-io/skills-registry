@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gitwalter/antigravity-agent-factory](https://github.com/gitwalter/antigravity-agent-factory/tree/main/.agent/skills/chain/managing-knowledge-graphs)
+Original source: [gitwalter/antigravity-agent-factory](https://github.com/gitwalter/antigravity-agent-factory/tree/main/.agent/skills/parallel/managing-knowledge-graphs)
 
 ---
 
