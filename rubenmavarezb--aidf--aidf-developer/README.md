@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rubenmavarezb/aidf](https://github.com/rubenmavarezb/aidf/tree/main/templates/.ai/skills/aidf-developer)
+Original source: [rubenmavarezb/aidf](https://github.com/rubenmavarezb/aidf/tree/main/.ai/skills/aidf-developer)
 
 ---
 
