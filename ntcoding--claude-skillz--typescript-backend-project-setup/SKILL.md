@@ -2,7 +2,7 @@
 name: typescript-backend-project-setup
 description: Sets up NX monorepo for TypeScript backend projects optimized for AI-assisted development. Delegates to NX commands where possible, patches configs as last resort. Triggers on: 'set up typescript backend project', 'create backend project', 'initialize typescript backend', 'create monorepo', or when working in an empty project folder.
 metadata:
-  author: NTCoding
+  author: ntcoding
 ---
 
 # NX Monorepo TypeScript Backend Project Setup
@@ -554,5 +554,5 @@ Output a summary:
 **If failures:** Offer to fix all issues automatically.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/NTCoding) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ntcoding) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
