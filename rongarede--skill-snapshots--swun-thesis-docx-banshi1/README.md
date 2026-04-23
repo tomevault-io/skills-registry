@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rongarede/skill-snapshots](https://github.com/rongarede/skill-snapshots/tree/main/writing/swun-thesis-docx-banshi1)
+Original source: [rongarede/skill-snapshots](https://github.com/rongarede/skill-snapshots/tree/main/uncategorized/swun-thesis-docx-banshi1)
 
 ---
 
