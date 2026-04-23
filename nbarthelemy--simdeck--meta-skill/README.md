@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nbarthelemy/simdeck](https://github.com/nbarthelemy/simdeck/tree/main/.claude/skills/meta-skill)
+Original source: [nbarthelemy/simdeck](https://github.com/nbarthelemy/simdeck/tree/main/.claude/skills/claudenv/meta-skill)
 
 ---
 
