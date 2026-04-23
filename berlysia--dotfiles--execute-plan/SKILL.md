@@ -1,0 +1,80 @@
+---
+name: execute-plan
+description: Execute a pre-existing plan file by implementing tasks sequentially with test verification after each step. Use when plan/tasks are already decomposed and ready for implementation. Use when this capability is needed.
+metadata:
+  author: berlysia
+---
+
+# Execute Plan
+
+計画ファイルまたは分解済みタスクリストを入力として、順次実装・検証・コミットする。
+`/decompose` でタスク分解した後の実装フェーズで使用する。
+
+## 前提条件
+
+以下のいずれかが存在すること:
+
+- 計画ファイル（Markdown、ADRなど）のパス
+- TaskCreate で作成済みのタスクリスト
+- ユーザーが直接指定するタスク一覧
+
+## ワークフロー
+
+### 1. 計画の読み込み
+
+- 指定されたパスの計画ファイルを Read で読む
+- TaskList で既存タスクを確認する
+- 計画にタスク一覧がない場合、計画から実装タスクを抽出して TaskCreate で登録する
+- 計画に新フィールドやデータフロー追加がある場合、**Wiring Checklist**（型定義→スキーマ→CLI定義→CLIパース→実行ロジック→永続化渡し→永続化型→正規化 の各レイヤー通過確認リスト）が含まれているか確認する。なければ計画から抽出して作成する
+
+### 2. 順次実装ループ
+
+各タスクについて以下を実行:
+
+```
+for each task:
+  1. TaskUpdate → in_progress
+  2. 実装（Edit/Write で変更）
+  3. ビルド実行（プロジェクトの build コマンド）
+     - 失敗 → 修正して再ビルド（最大3回）
+  4. テスト実行（プロジェクトの test コマンド）
+     - 失敗 → 修正して再テスト（最大3回）
+  5. lint/type-check 実行
+  6. TaskUpdate → completed
+```
+
+### 3. 完了検証
+
+全タスク完了後、以下を順に実行:
+
+1. **全テストスイートを再実行** — 失敗があれば修正
+2. **ワイヤリング検証（Wiring Verification）** — 今回の変更で追加した全フィールド・データフローについて、定義から最終利用まで途切れなく接続されているかを検証する
+   - 計画に Wiring Checklist がある場合はそれに従う
+   - ない場合は、`git diff --name-only` で変更ファイルを特定し、追加した型フィールド・関数・CLI オプションの使用箇所を grep で追跡
+   - 「型定義あり・使用なし」「CLI パース済み・実行フローに未渡し」「永続化型に追加・書き込みコードなし」等のdead wireを検出
+   - dead wire が見つかった場合は修正してから次に進む
+3. **変更内容のサマリーをユーザーに提示**
+4. **ユーザーの指示に従ってコミット**
+
+## 制約
+
+### 実行の継続性
+
+- **全タスク完了まで停止しない**: タスクやフェーズが完了したら計画ドキュメントにも完了とマークし、即座に次のタスクに進む。途中で不要な確認や報告で中断しない
+- **タスク間の依存**: 前のタスクのテストが通らない場合、次のタスクに進まない
+- **ビルド/テスト3回失敗**: 自動修正を諦め、失敗状況をユーザーに報告して判断を仰ぐ（これが唯一の停止条件）
+
+### コード品質
+
+- **不要なコメント・JSDoc禁止**: 変更していないコードにコメントやJSDocを追加しない。新規コードにも自明な内容のコメントは書かない
+- **unknown型禁止**: 適切な型注釈を使用する。`any` / `unknown` でごまかさない
+- **typecheck継続実行**: 各タスクの実装後だけでなく、複数ファイルを変更した場合は途中でも typecheck を実行し、型エラーの蓄積を防ぐ
+
+### その他
+
+- **計画からの逸脱禁止**: 計画にない変更が必要な場合、ユーザーに確認してから実行する
+- **コミットはユーザー指示で**: 自動コミットしない — サマリー提示後にユーザーが判断する
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/berlysia) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
