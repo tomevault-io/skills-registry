@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tinkermonkey/documentation_robotics](https://github.com/tinkermonkey/documentation_robotics/tree/main/.github/skills/dr_05_technology_layer)
+Original source: [tinkermonkey/documentation_robotics](https://github.com/tinkermonkey/documentation_robotics/tree/main/integrations/claude_code/skills/dr_05_technology_layer)
 
 ---
 
