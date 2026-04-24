@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [itsdevcoffee/devcoffee-agent-skills](https://github.com/itsdevcoffee/devcoffee-agent-skills/tree/main/tldr/skills/review)
+Original source: [itsdevcoffee/devcoffee-agent-skills](https://github.com/itsdevcoffee/devcoffee-agent-skills/tree/main/jot/skills/review)
 
 ---
 
