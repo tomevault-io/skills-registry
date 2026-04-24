@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chachamaru127/claude-code-harness](https://github.com/chachamaru127/claude-code-harness/tree/main/codex/.codex/skills/generate-video)
+Original source: [chachamaru127/claude-code-harness](https://github.com/chachamaru127/claude-code-harness/tree/main/skills/generate-video)
 
 ---
 
