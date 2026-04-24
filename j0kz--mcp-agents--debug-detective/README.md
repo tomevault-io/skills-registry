@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [j0kz/mcp-agents](https://github.com/j0kz/mcp-agents/tree/main/docs/universal-skills/debug-detective)
+Original source: [j0kz/mcp-agents](https://github.com/j0kz/mcp-agents/tree/main/starter-kit/.claude/skills/debug-detective)
 
 ---
 
