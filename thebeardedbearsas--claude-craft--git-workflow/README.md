@@ -1,11 +1,11 @@
 # git-workflow
 
-> Skill by [TheBeardedBearSAS](https://github.com/TheBeardedBearSAS/claude-craft) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [thebeardedbearsas](https://github.com/thebeardedbearsas/claude-craft) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheBeardedBearSAS/claude-craft](https://github.com/TheBeardedBearSAS/claude-craft/tree/main/.claude/skills/git-workflow)
+Original source: [thebeardedbearsas/claude-craft](https://github.com/thebeardedbearsas/claude-craft/tree/main/.claude/skills/git-workflow)
 
 ---
 
