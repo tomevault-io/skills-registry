@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ydnikolaev/antigravity-factory](https://github.com/ydnikolaev/antigravity-factory/tree/main/.agent/skills/debugger)
+Original source: [ydnikolaev/antigravity-factory](https://github.com/ydnikolaev/antigravity-factory/tree/main/src/skills/debugger)
 
 ---
 
