@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [k-dense-ai/claude-scientific-writer](https://github.com/k-dense-ai/claude-scientific-writer/tree/main/skills/scientific-schematics)
+Original source: [k-dense-ai/claude-scientific-writer](https://github.com/k-dense-ai/claude-scientific-writer/tree/main/.claude/skills/scientific-schematics)
 
 ---
 
