@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pagerguild/guilde-lite](https://github.com/pagerguild/guilde-lite/tree/main/marketplace/plugins/tdd-automation/skills/tdd-red-phase)
+Original source: [pagerguild/guilde-lite](https://github.com/pagerguild/guilde-lite/tree/main/skills/tdd-red-phase)
 
 ---
 
