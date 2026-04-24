@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jsamuelsen11/claude-config](https://github.com/jsamuelsen11/claude-config/tree/main/plugins/ccfg-kubernetes/skills/deployment-patterns)
+Original source: [jsamuelsen11/claude-config](https://github.com/jsamuelsen11/claude-config/tree/main/plugins/ccfg-github-actions/skills/deployment-patterns)
 
 ---
 
