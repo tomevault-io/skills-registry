@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rom-orlovich/agents-system](https://github.com/rom-orlovich/agents-system/tree/main/claude-code-agent/.claude/skills/slack-operations)
+Original source: [rom-orlovich/agents-system](https://github.com/rom-orlovich/agents-system/tree/main/agent-bot/agent-engine/.claude/skills/slack-operations)
 
 ---
 
