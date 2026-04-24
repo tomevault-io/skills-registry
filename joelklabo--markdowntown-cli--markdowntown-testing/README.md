@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [joelklabo/markdowntown-cli](https://github.com/joelklabo/markdowntown-cli/tree/main/codex/skills/markdowntown-testing)
+Original source: [joelklabo/markdowntown-cli](https://github.com/joelklabo/markdowntown-cli/tree/main/apps/web/codex/skills/markdowntown-testing)
 
 ---
 
