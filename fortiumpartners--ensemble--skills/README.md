@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fortiumpartners/ensemble](https://github.com/fortiumpartners/ensemble/tree/main/packages/pytest/skills)
+Original source: [fortiumpartners/ensemble](https://github.com/fortiumpartners/ensemble/tree/main/packages/rspec/skills)
 
 ---
 
