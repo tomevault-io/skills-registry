@@ -1,0 +1,13 @@
+# linter-loop-limits
+
+> Skill by [adilkalam](https://github.com/adilkalam/orca) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [adilkalam/orca](https://github.com/adilkalam/orca/tree/main/skills/linter-loop-limits)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
