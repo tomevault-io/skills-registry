@@ -1,0 +1,49 @@
+---
+name: remove-skill
+description: Remove a tracked skill directory and purge non-archived repo references (breaking change). Use when this capability is needed.
+metadata:
+  author: graysurf
+---
+
+# Remove Skill
+
+## Contract
+
+Prereqs:
+
+- Run inside a git work tree.
+- `bash`, `git`, `python3`, and `rg` available on `PATH`.
+- You understand this is a breaking change (no compatibility shims are created).
+
+Inputs:
+
+- Target directory via `--skill-dir` (must start with `skills/`).
+- Safety flags:
+  - `--dry-run` to print planned changes without writing.
+  - `--yes` to skip the interactive confirmation prompt.
+
+Outputs:
+
+- Deletes the skill directory under `--skill-dir` (tracked + untracked files).
+- Deletes any matching script-spec files under `tests/script_specs/**` for scripts in that skill.
+- Removes references in tracked Markdown files.
+- Fails if any remaining references are found.
+
+Exit codes:
+
+- `0`: removed + no remaining references
+- `1`: deletion failed or references remain
+- `2`: usage error
+
+Failure modes:
+
+- `--skill-dir` invalid or missing `SKILL.md`.
+- Remaining references in non-Markdown tracked files (must be fixed manually).
+
+## Scripts (only entrypoints)
+
+- `$AGENT_HOME/skills/tools/skill-management/remove-skill/scripts/remove_skill.sh`
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/graysurf) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
