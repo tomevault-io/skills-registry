@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [databricks/app-templates](https://github.com/databricks/app-templates/tree/main/agent-openai-agents-sdk-multiagent/.claude/skills/add-tools)
+Original source: [databricks/app-templates](https://github.com/databricks/app-templates/tree/main/agent-openai-agents-sdk/.claude/skills/add-tools)
 
 ---
 
