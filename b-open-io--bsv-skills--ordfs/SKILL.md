@@ -1,0 +1,351 @@
+---
+name: ordfs
+description: This skill should be used when the user asks "what is ORDFS", "how to use ordfs.network", "ordfs API", "access on-chain content", "inscription gateway", "ordfs query parameters", "ordfs sequence", "ordfs directory", "ordfs preview", "recursive inscriptions", "ord-fs/json", or needs to reference, access, or serve on-chain content through ORDFS. Use when this capability is needed.
+metadata:
+  author: b-open-io
+---
+
+# ORDFS - Ordinals File System
+
+HTTP gateway for accessing on-chain content (inscriptions) from BSV blockchain.
+
+**Live Gateway**: https://ordfs.network
+**Repository**: https://github.com/b-open-io/1sat-stack
+
+## Quick Reference
+
+| Endpoint | Purpose |
+|----------|---------|
+| `/{txid}_{vout}` | Direct content access |
+| `/content/{pointer}` | Content with options |
+| `/content/{pointer}:{seq}` | Specific version |
+| `/content/{pointer}/{file}` | File from directory |
+| `/preview/{b64Html}` | Preview HTML code |
+| `/v2/metadata/{outpoint}` | Metadata only |
+
+## Content Access Patterns
+
+### Basic Content URL
+
+```
+https://ordfs.network/{txid}_{vout}
+```
+
+**Example**:
+```
+https://ordfs.network/abc123...def_0
+```
+
+### Outpoint Formats
+
+All formats resolve to the same content:
+
+| Format | Example |
+|--------|---------|
+| Underscore | `abc123..._0` |
+| Period | `abc123....0` |
+| Txid only | `abc123...` (defaults to vout 0) |
+
+### Content Endpoint with Options
+
+```
+/content/{pointer}[:{sequence}][/{filepath}]
+```
+
+**Query Parameters**:
+
+| Param | Default | Description |
+|-------|---------|-------------|
+| `content` | true | Include content data |
+| `map` | false | Include MAP metadata |
+| `out` | false | Include raw output (base64) |
+| `parent` | false | Include parent reference |
+| `raw` | - | Return directory JSON instead of index.html |
+
+**Examples**:
+```
+/content/abc123..._0?map=true          # With MAP metadata
+/content/abc123..._0?content=false     # Metadata only
+/content/abc123..._0?raw               # Directory listing
+```
+
+## Sequence Versioning
+
+Track inscription updates using sequence numbers.
+
+### No Sequence (Raw Content)
+
+```
+/content/{pointer}         # Raw content from the outpoint, no origin resolution
+```
+
+**Behavior**: Returns content directly from the specified outpoint. No crawl is performed.
+
+### Sequence Values
+
+| Seq | Behavior |
+|-----|----------|
+| (none) | Raw content from the outpoint, no origin resolution, no crawl |
+| -2 | Origin only — backward crawl to find origin, returns origin data, no forward crawl |
+| 0 | Resolve at the requested outpoint, also resolves origin to return in metadata |
+| -1 | Latest state — full forward crawl to current tip |
+| N (positive) | Specific sequence in the ordinal's transfer chain |
+
+```
+/content/{pointer}:-2      # Origin only
+/content/{pointer}:0       # Resolve at outpoint, with origin metadata
+/content/{pointer}:-1      # Latest state (full forward crawl)
+/content/{pointer}:5       # 5th transfer in chain
+```
+
+### Caching
+
+- Specific sequence (`:N` where N >= 0): Long TTL (30 days), immutable content
+- Latest (`:-1`): Short TTL (60s)
+
+### Response Headers
+
+| Header | Description |
+|--------|-------------|
+| `X-Outpoint` | Current outpoint |
+| `X-Origin` | Original inscription outpoint |
+| `X-Ord-Seq` | Sequence number |
+| `X-Map` | JSON MAP metadata |
+| `X-Parent` | Parent inscription outpoint |
+
+## Directories (ord-fs/json)
+
+Inscriptions with content type `ord-fs/json` represent directories.
+
+### Directory Format
+
+```json
+{
+  "index.html": "ord://abc123..._0",
+  "style.css": "abc123..._1",
+  "app.js": "def456..._0"
+}
+```
+
+Values can be:
+- `ord://txid_vout` - Full ordinal reference
+- `txid_vout` or `txid` - Direct reference
+- `_N` - Relative vout reference (resolved to `{manifest_txid}_N`)
+
+### Relative Vout Resolution (`_N`)
+
+ORDFS natively resolves `_N` patterns in directory manifests. When an ord-fs/json entry has a value like `_1`, ORDFS resolves it to `{manifest_txid}_1` — the sibling output in the same transaction.
+
+```json
+{
+  "SKILL.md": "_1",
+  "README.md": "_2",
+  "lib/utils.ts": "_3"
+}
+```
+
+Clients do NOT need to parse the manifest and construct outpoint URLs. Instead, request files by path:
+```
+/content/{manifest_outpoint}/SKILL.md      → resolves _1 → {txid}_1
+/content/{manifest_outpoint}/lib/utils.ts  → resolves _3 → {txid}_3
+```
+
+### Recursive Directory Traversal
+
+ORDFS supports nested directories. If a directory entry points to another ord-fs/json inscription, ORDFS recurses into it automatically:
+
+```json
+{
+  "SKILL.md": "_1",
+  "references": "_2"
+}
+```
+
+Where `_2` is itself an ord-fs/json manifest:
+```json
+{
+  "api-docs.md": "_1",
+  "examples.md": "_2"
+}
+```
+
+Accessing `/content/{root_manifest}/references/api-docs.md` traverses both levels.
+
+### Accessing Directory Files
+
+```
+/content/{directory_pointer}/index.html
+/content/{directory_pointer}/style.css
+/content/{directory_pointer}/app.js
+```
+
+### SPA Routing
+
+For SPAs, unknown paths fall back to `index.html`:
+
+```
+/content/{pointer}/unknown/path  → Returns index.html
+```
+
+### Raw Directory JSON
+
+Add `?raw` to get the directory listing instead of index.html:
+
+```
+/content/{pointer}?raw
+```
+
+## Preview Endpoint
+
+Test HTML inscriptions before broadcasting.
+
+### Base64 HTML Preview
+
+```
+/preview/{base64EncodedHtml}
+```
+
+**Example**:
+```javascript
+const html = "<html><body>Hello!</body></html>";
+const b64 = btoa(html);
+const previewUrl = `https://ordfs.network/preview/${b64}`;
+```
+
+### POST Preview
+
+```bash
+curl -X POST https://ordfs.network/preview \
+  -H "Content-Type: text/html" \
+  -d "<html><body>Hello!</body></html>"
+```
+
+## Recursive Inscriptions
+
+Reference other inscriptions from HTML/JS content.
+
+### Pattern
+
+```html
+<script src="/content/abc123..._0"></script>
+<img src="/def456..._0" />
+<link href="/content/style123..._0/main.css" rel="stylesheet">
+```
+
+### Base Path Handling
+
+ORDFS sets up base paths for recursive content to resolve correctly.
+
+## API Endpoints
+
+### V1 Endpoints
+
+| Endpoint | Purpose |
+|----------|---------|
+| `/v1/bsv/block/latest` | Latest block info |
+| `/v1/bsv/block/height/{h}` | Block by height |
+| `/v1/bsv/block/hash/{hash}` | Block by hash |
+| `/v1/bsv/tx/{txid}` | Raw transaction |
+
+### V2 Endpoints
+
+| Endpoint | Purpose |
+|----------|---------|
+| `/v2/tx/{txid}` | Raw transaction |
+| `/v2/tx/{txid}/proof` | Merkle proof |
+| `/v2/tx/{txid}/beef` | BEEF format proof |
+| `/v2/tx/{txid}/{vout}` | Specific output |
+| `/v2/block/tip` | Latest block header |
+| `/v2/chain/height` | Current height |
+| `/v2/metadata/{outpoint}` | Inscription metadata |
+| `/v2/stream/{outpoint}` | Streaming content |
+
+## DNS-Based Access
+
+Map custom domains to inscriptions.
+
+### DNS TXT Record
+
+Create `_ordfs.yourdomain.com`:
+
+```
+_ordfs.yourdomain.com IN TXT "ordfs=abc123..._0:5"
+```
+
+**Format**: `ordfs={pointer}[:{sequence}]`
+
+### How It Works
+
+1. User visits `yourdomain.com/path/to/file`
+2. ORDFS resolves DNS TXT record
+3. Returns content from inscription directory
+
+## Common Usage Patterns
+
+### Image Display
+
+```typescript
+// Using bitcoin-image for normalization
+import { getDisplayUrl } from "bitcoin-image";
+
+const imageUrl = await getDisplayUrl("ord://abc123..._0");
+// Returns: https://ordfs.network/abc123..._0
+
+// Direct construction
+const url = `https://ordfs.network/${txid}_${vout}`;
+```
+
+### Fetch Content
+
+```typescript
+// Get inscription content
+const response = await fetch(`https://ordfs.network/${origin}`);
+const content = await response.text();
+
+// Get with metadata
+const metaResponse = await fetch(
+  `https://ordfs.network/content/${origin}?map=true`
+);
+const mapData = metaResponse.headers.get("X-Map");
+```
+
+### Check Latest Version
+
+```typescript
+// Get latest sequence
+const response = await fetch(`https://ordfs.network/content/${origin}`);
+const sequence = response.headers.get("X-Ord-Seq");
+const currentOutpoint = response.headers.get("X-Outpoint");
+```
+
+## Caching Behavior
+
+| Request Type | Cache TTL |
+|--------------|-----------|
+| Specific sequence (`:N`) | 30 days |
+| Latest sequence (default) | 60 seconds |
+| Block headers (depth 100+) | 30 days |
+| Block headers (depth 4-99) | 1 hour |
+| Block tip | No cache |
+
+## Additional Resources
+
+### Reference Files
+
+- **`references/api-reference.md`** - Complete API documentation
+- **`references/advanced-features.md`** - DNS, streaming, directories
+
+### Examples
+
+- **`examples/fetch-content.ts`** - Content fetching patterns
+- **`examples/recursive-inscription.html`** - Recursive inscription example
+
+### Related Packages
+
+- `bitcoin-image` - URL normalization for ordfs.network
+- `@1sat/actions` - Create inscriptions
+- `@1sat/templates` - Inscription templates
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/b-open-io) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
