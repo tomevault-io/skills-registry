@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [spillwavesolutions/agent_rulez](https://github.com/spillwavesolutions/agent_rulez/tree/main/.opencode/skill/sdd)
+Original source: [spillwavesolutions/agent_rulez](https://github.com/spillwavesolutions/agent_rulez/tree/main/.claude/skills/sdd)
 
 ---
 
