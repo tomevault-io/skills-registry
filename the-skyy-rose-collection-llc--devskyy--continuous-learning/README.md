@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [the-skyy-rose-collection-llc/devskyy](https://github.com/the-skyy-rose-collection-llc/devskyy/tree/main/.claude/skills/continuous-learning)
+Original source: [the-skyy-rose-collection-llc/devskyy](https://github.com/the-skyy-rose-collection-llc/devskyy/tree/main/wordpress-copilot/skills/continuous-learning)
 
 ---
 
