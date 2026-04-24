@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [s-hiraoku/vscode-sidebar-terminal](https://github.com/s-hiraoku/vscode-sidebar-terminal/tree/main/.agents/skills/code-simplifier)
+Original source: [s-hiraoku/vscode-sidebar-terminal](https://github.com/s-hiraoku/vscode-sidebar-terminal/tree/main/.gemini/skills/code-simplifier)
 
 ---
 
