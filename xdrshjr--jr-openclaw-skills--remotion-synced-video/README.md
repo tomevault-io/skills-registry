@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xdrshjr/jr-openclaw-skills](https://github.com/xdrshjr/jr-openclaw-skills/tree/main/hf-papers-to-video/remotion-synced-video)
+Original source: [xdrshjr/jr-openclaw-skills](https://github.com/xdrshjr/jr-openclaw-skills/tree/main/remotion-synced-video)
 
 ---
 
