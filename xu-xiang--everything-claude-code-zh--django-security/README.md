@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xu-xiang/everything-claude-code-zh](https://github.com/xu-xiang/everything-claude-code-zh/tree/main/docs/ja-JP/skills/django-security)
+Original source: [xu-xiang/everything-claude-code-zh](https://github.com/xu-xiang/everything-claude-code-zh/tree/main/skills/django-security)
 
 ---
 
