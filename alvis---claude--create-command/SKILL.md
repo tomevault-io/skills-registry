@@ -1,0 +1,122 @@
+---
+name: create-command
+description: Create a new slash command following best practices. Use when establishing new CLI commands, documenting reusable command patterns, or building automated command templates. Use when this capability is needed.
+metadata:
+  author: alvis
+---
+
+# Create Custom Slash Command
+
+Create a new slash command using $ARGUMENTS (format: <command-name> [--purpose=...] [--skill1=...]) following the latest best practices and template structure. Generates new slash commands from templates, configures appropriate tools and permissions, creates clean comment-free command files, and follows latest template structure from template:command. Ultrathink mode.
+
+## Purpose & Scope
+
+**What this command does NOT do**:
+
+- Modify existing commands (use update-command)
+- Create non-command files
+- Override existing files without confirmation
+
+**When to REJECT**:
+
+- Empty or unclear purpose
+- Command already exists
+- Invalid command name format
+- Updating existing commands
+- Creating regular markdown documentation
+- Modifying template files
+
+## Workflow
+
+ultrathink: you'd perform the following steps
+
+### Step 1: Follow Create Command Skill
+
+- Execute the create-command skill process
+
+### Step 2: Reporting
+
+**Output Format**:
+
+```
+[✅/❌] Command: $ARGUMENTS
+
+## Summary
+- Command created: [name].md
+- Location: .claude/commands/[path]
+- Tools configured: [list]
+
+## Actions Taken
+1. Generated command from template
+2. Configured tools and permissions
+3. Created file at specified location
+
+## Configuration Applied
+- Allowed tools: [tools]
+- Model: [if specified]
+- Security restrictions: [if any]
+
+## Next Steps
+- Test command: /[command-name] "test-argument"
+- Customize skill if needed
+- Add to documentation if public command
+```
+
+## Examples
+
+### Basic Command Creation
+
+```bash
+/create-command fix-issue --purpose="fix bugs from issue tracker"
+# Generates: fix-issue.md
+# Tools: Bash, Edit, Read, Grep, Task
+```
+
+### Analysis Command
+
+```bash
+/create-command analyze-quality --purpose="analyze code quality and metrics"
+# Generates: analyze-quality.md
+# Tools: Read, Grep, Glob, Task
+# Pattern: Analysis skill
+```
+
+### Build Command with Restrictions
+
+```bash
+/create-command build-deploy --purpose="build and deploy application"
+# Generates: build-deploy.md
+# Tools: Bash(npm:*), Bash(docker:*), Read
+# Security: Restricted bash commands
+```
+
+### Namespaced Testing Command
+
+```bash
+/create-command test/unit-utilities --purpose="testing utilities for unit tests"
+# Generates: test/unit-utilities.md
+# Creates: .claude/commands/test/ directory
+# Tools: Bash(npm test:*), Read, Edit
+```
+
+### Error Case Handling
+
+```bash
+/create-command
+# Error: Missing command name
+# Prompt: "What command name would you like?"
+# Action: Wait for user input before proceeding
+```
+
+### With Skill Override
+
+```bash
+/create-command custom-task --purpose="perform custom analysis" --skill="analysis"
+# Uses analysis skill pattern
+# Configures read-only tools
+# Generates analytical skill structure
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/alvis) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
