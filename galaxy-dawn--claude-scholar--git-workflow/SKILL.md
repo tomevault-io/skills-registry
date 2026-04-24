@@ -2,7 +2,7 @@
 name: git-workflow
 description: This skill should be used when the user asks to "create git commit", "manage branches", "follow git workflow", "use Conventional Commits", "handle merge conflicts", or asks about git branching strategies, version control best practices, pull request workflows. Provides comprehensive Git workflow guidance for team collaboration. Use when this capability is needed.
 metadata:
-  author: Galaxy-Dawn
+  author: galaxy-dawn
 ---
 
 # Git Workflow Standards
@@ -478,5 +478,5 @@ This document defines the project's Git standards:
 Following these standards improves collaboration efficiency, ensures code quality, and simplifies version management.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Galaxy-Dawn) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/galaxy-dawn) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
