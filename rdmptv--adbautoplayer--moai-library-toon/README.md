@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rdmptv/adbautoplayer](https://github.com/rdmptv/adbautoplayer/tree/main/.claude/skills/moai-library-toon)
+Original source: [rdmptv/adbautoplayer](https://github.com/rdmptv/adbautoplayer/tree/main/.moai/backups/.claude.backup.1764591304/skills/moai-library-toon)
 
 ---
 
