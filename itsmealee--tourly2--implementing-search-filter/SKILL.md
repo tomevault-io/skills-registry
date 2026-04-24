@@ -1,0 +1,34 @@
+---
+name: implementing-search-filter
+description: Logic for constructing Appwrite queries to filter tours. Use when building the search sidebar or search bar. Use when this capability is needed.
+metadata:
+  author: itsmealee
+---
+
+# Search and Filter Logic
+
+## When to use this skill
+- Implementing filters for Location, Price, and Dates.
+- Handling search queries.
+
+## Appwrite Query Logic
+```javascript
+import { Query } from 'appwrite';
+
+const queries = [
+    Query.equal('location', selectedLocation),
+    Query.greaterThanEqual('price', minPrice),
+    Query.lessThanEqual('price', maxPrice),
+    Query.orderAsc('price')
+];
+
+const results = await databases.listDocuments(DATABASE_ID, COLLECTION_ID, queries);
+```
+
+## Instructions
+- **Debounce**: Debounce text input for location/name search.
+- **Sync**: Keep URL params in sync with filter state for shareable links.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/itsmealee) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
