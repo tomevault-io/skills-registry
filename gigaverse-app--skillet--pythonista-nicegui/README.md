@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gigaverse-app/skillet](https://github.com/gigaverse-app/skillet/tree/main/pythonista-base/skills/pythonista-nicegui)
+Original source: [gigaverse-app/skillet](https://github.com/gigaverse-app/skillet/tree/main/pythonista/skills/pythonista-nicegui)
 
 ---
 
