@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [scooter-lacroix/maestro](https://github.com/scooter-lacroix/maestro/tree/main/amp-cli/skills/maestro)
+Original source: [scooter-lacroix/maestro](https://github.com/scooter-lacroix/maestro/tree/main/gemini-cli/skills/maestro)
 
 ---
 
