@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [interstellar-code/claud-skills](https://github.com/interstellar-code/claud-skills/tree/main/.claude/skills/colored-output)
+Original source: [interstellar-code/claud-skills](https://github.com/interstellar-code/claud-skills/tree/main/generic-claude-framework/skills/colored-output)
 
 ---
 
