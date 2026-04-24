@@ -1,0 +1,13 @@
+# nextnode-infra
+
+> Skill by [walid-mos](https://github.com/walid-mos/mac-config) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [walid-mos/mac-config](https://github.com/walid-mos/mac-config/tree/main/claude/.claude/skills/nextnode-infra)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
