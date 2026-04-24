@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pacphi/sindri](https://github.com/pacphi/sindri/tree/main/v2/docker/lib/extensions/vf-algorithmic-art/resources)
+Original source: [pacphi/sindri](https://github.com/pacphi/sindri/tree/main/v2/docker/lib/extensions/vf-canvas-design/resources)
 
 ---
 
