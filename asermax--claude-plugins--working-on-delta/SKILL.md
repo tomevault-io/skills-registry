@@ -1,0 +1,161 @@
+---
+name: working-on-delta
+description: | Use when this capability is needed.
+metadata:
+  author: asermax
+---
+
+# Working on Delta Skill
+
+Orchestrates the per-delta workflow from spec through implementation.
+
+## When to Load
+
+Load this skill when executing:
+- `/katachi:spec-delta <ID>`
+- `/katachi:design-delta <ID>`
+- `/katachi:plan-delta <ID>`
+- `/katachi:implement-delta <ID>`
+- `/katachi:review-delta <ID>`
+- `/katachi:retrofit-design <ID>` (retrofit mode)
+
+## Key References
+
+**Guidance documents** (how to write each document type):
+- `references/spec-template.md` - How to write delta specifications
+- `references/design-template.md` - How to write design rationale
+- `references/plan-template.md` - How to write implementation plans
+
+**Document templates** (actual templates to follow):
+- `references/delta-spec.md` - Delta specification template
+- `references/delta-design.md` - Design document template
+- `references/implementation-plan.md` - Implementation plan template
+
+## Workflow
+
+### 1. Pre-Check
+
+Before starting any per-delta command:
+
+```python
+# Check delta exists in DELTAS.md
+delta = get_delta(FEATURE_ID)
+if not delta:
+    error("Delta not found in DELTAS.md")
+
+# Check dependencies are complete (for design/plan/implement)
+if command in ["design", "plan", "implement"]:
+    deps = get_dependencies(FEATURE_ID)
+    incomplete = [d for d in deps if not is_complete(d)]
+    if incomplete:
+        warn(f"Dependencies not complete: {incomplete}")
+```
+
+### 2. Status Update (Start)
+
+Update status when starting:
+
+```bash
+# spec-delta
+python ${CLAUDE_PLUGIN_ROOT}/scripts/deltas.py status set FEATURE-ID "⧗ Spec"
+
+# design-delta
+python ${CLAUDE_PLUGIN_ROOT}/scripts/deltas.py status set FEATURE-ID "⧗ Design"
+
+# plan-delta
+python ${CLAUDE_PLUGIN_ROOT}/scripts/deltas.py status set FEATURE-ID "⧗ Plan"
+
+# implement-delta
+python ${CLAUDE_PLUGIN_ROOT}/scripts/deltas.py status set FEATURE-ID "⧗ Implementation"
+```
+
+### 3. Document Creation Workflow
+
+For spec/design/plan commands:
+
+1. **Research Phase (Silent)**
+   - Read relevant context (DELTAS.md)
+   - Read previous documents (spec before design, design before plan)
+   - Read relevant ADRs and DES patterns
+   - Research any libraries/APIs involved
+
+2. **Draft Proposal**
+   - Create complete document following template
+   - Note uncertainties and assumptions
+   - Base choices on research
+
+3. **Present for Review**
+   - Show complete document to user
+   - Highlight uncertainties
+   - Ask: "What needs adjustment?"
+
+4. **Iterate**
+   - Apply user corrections
+   - Repeat until approved
+
+5. **Validate**
+   - Dispatch reviewer agent
+   - Review findings with user
+   - Apply accepted recommendations
+
+6. **Finalize**
+   - Write document to file
+   - Update status
+
+### 4. Agent Dispatch
+
+Each command dispatches its reviewer agent:
+
+| Command | Agent | Input |
+|---------|-------|-------|
+| spec-delta | `katachi:spec-reviewer` | Delta description, completed spec |
+| design-delta | `katachi:design-reviewer` | Spec, design, ADR/DES summaries |
+| plan-delta | `katachi:plan-reviewer` | Spec, design, plan, ADR/DES summaries |
+| review-delta | `katachi:code-reviewer` | Spec, design, plan, code, ADR/DES |
+| retrofit-design | `katachi:codebase-analyzer`, `katachi:design-reviewer` | Spec, implementation code, ADR/DES indexes |
+
+Dispatch pattern:
+
+```python
+Task(
+    subagent_type="katachi:spec-reviewer",
+    prompt=f"""
+Review this delta specification:
+
+## Delta Description (from DELTAS.md)
+{delta_description}
+
+## Completed Spec
+{spec_content}
+
+Provide structured critique following your review criteria.
+"""
+)
+```
+
+### 5. Status Update (Complete)
+
+Update status when completing:
+
+```bash
+# After successful completion
+python ${CLAUDE_PLUGIN_ROOT}/scripts/deltas.py status set FEATURE-ID "✓ Spec"
+python ${CLAUDE_PLUGIN_ROOT}/scripts/deltas.py status set FEATURE-ID "✓ Design"
+python ${CLAUDE_PLUGIN_ROOT}/scripts/deltas.py status set FEATURE-ID "✓ Plan"
+python ${CLAUDE_PLUGIN_ROOT}/scripts/deltas.py status set FEATURE-ID "✓ Implementation"
+```
+
+## Command Summary
+
+| Command | Description | Reviewer |
+|---------|-------------|----------|
+| `spec-delta` | Write delta specification (requirements, acceptance criteria) | `spec-reviewer` |
+| `design-delta` | Write delta design (approach, rationale, key decisions) | `design-reviewer` |
+| `plan-delta` | Write implementation plan (batches with steps and context) | `plan-reviewer` |
+| `implement-delta` | Implement all batches autonomously, then present for user review | — |
+| `review-delta` | Review-loop: dispatch code-reviewer, fix issues, repeat until PASS | `code-reviewer` |
+| `retrofit-design` | Retrofit existing code with design documentation | `codebase-analyzer`, `design-reviewer` |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/asermax) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
