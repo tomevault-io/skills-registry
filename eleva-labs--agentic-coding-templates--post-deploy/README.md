@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eleva-labs/agentic-coding-templates](https://github.com/eleva-labs/agentic-coding-templates/tree/main/.claude/skills/frontend/post-deploy)
+Original source: [eleva-labs/agentic-coding-templates](https://github.com/eleva-labs/agentic-coding-templates/tree/main/.claude/skills/shared/post-deploy)
 
 ---
 
