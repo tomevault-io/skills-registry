@@ -1,0 +1,85 @@
+---
+name: prd-writing
+description: > Use when this capability is needed.
+metadata:
+  author: yuch4
+---
+
+# PRD Writing Skill
+
+アイデア・壁打ちメモを「何を作るか」の正式な要件定義に変換する。
+
+## 入出力
+
+| 種別 | パス |
+|------|------|
+| 入力 | `docs/ideas/initial-requirements.md`（壁打ちメモ） |
+| 入力 | `docs/product-requirements.md`（既存あれば優先） |
+| 出力 | `docs/product-requirements.md` |
+
+## 参照ファイル
+
+| ファイル | 読むタイミング |
+|----------|----------------|
+| `./template.md` | 新規作成時のベース |
+| `./reference.md` | 品質チェック・レビュー観点 |
+
+## 手順
+
+### 1. 壁打ちメモ読解
+```
+docs/ideas/initial-requirements.md を読み、以下を抽出：
+- 解決したい課題
+- ターゲットユーザー概要
+- 主要機能アイデア
+- MVP範囲の示唆
+```
+
+### 2. 既存PRDの確認
+- `docs/product-requirements.md` が存在する？
+  - **Yes** → 構造を維持して差分更新
+  - **No** → `./template.md` をコピーして新規作成
+
+### 3. PRDセクションの作成
+
+`./template.md` の構造に従い、以下を埋める：
+
+| セクション | 内容 | 必須 |
+|-----------|------|------|
+| プロダクト概要 | 名称・コンセプト・ビジョン・目的 | ✅ |
+| ターゲットユーザー | ペルソナ・課題・1日のワークフロー | ✅ |
+| 成功指標（KPI） | SMART形式、測定方法付き | ✅ |
+| 機能要件（MVP） | ユーザーストーリー + 受入条件 + P0/P1/P2 | ✅ |
+| 非機能要件 | 性能・信頼性・セキュリティ（数値で） | ✅ |
+| スコープ外 | やらないことを明示 | ✅ |
+
+### 4. 品質チェック
+
+`./reference.md` のチェックリストで確認：
+- [ ] ビジョンが3-5文で明確
+- [ ] ペルソナに「1日のワークフロー」がある
+- [ ] KPIがSMART（具体的・測定可能・達成可能・関連性・期限）
+- [ ] 機能要件に受入条件がある
+- [ ] 非機能要件が数値で定義されている
+
+### 5. ユーザー承認
+**PRD作成後は必ずユーザーに承認を求める**
+- サマリを提示
+- 修正希望があれば対応
+- 承認されるまで次フェーズ（機能設計）に進まない
+
+## 発火例
+- 「PRDを作成して」
+- 「要件定義をまとめたい」
+- 「ユーザーストーリーを書いて」
+- 「KPIを定義して」
+- 「機能要件を整理して」
+
+## 境界（やらないこと）
+- **機能設計（どう実現するか）** → `functional-design` スキル
+- **技術選定** → `architecture-design` スキル
+- **壁打ち・アイデア出し** → 会話で実施し `docs/ideas/` に保存
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/yuch4) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
