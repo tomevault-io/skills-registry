@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yuch4/dx-selecta](https://github.com/yuch4/dx-selecta/tree/main/.github/skills/agent-memory)
+Original source: [yuch4/dx-selecta](https://github.com/yuch4/dx-selecta/tree/main/.claude/skills/agent-memory)
 
 ---
 
