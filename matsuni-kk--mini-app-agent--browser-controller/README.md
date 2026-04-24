@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [matsuni-kk/mini-app-agent](https://github.com/matsuni-kk/mini-app-agent/tree/main/.codex/skills/browser-controller)
+Original source: [matsuni-kk/mini-app-agent](https://github.com/matsuni-kk/mini-app-agent/tree/main/.github/skills/browser-controller)
 
 ---
 
