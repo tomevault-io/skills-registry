@@ -1,0 +1,53 @@
+---
+name: librel
+description: > Use when this capability is needed.
+metadata:
+  author: copilot-ld
+---
+
+# librel Skill
+
+## When to Use
+
+- Bumping package versions (major/minor/patch)
+- Detecting which packages changed between commits
+- Retrieving CloudFormation outputs for deployment
+- Automating release workflows
+
+## Key Concepts
+
+**VersionBumper**: Updates package.json version following semver rules.
+
+**ChangeDetector**: Compares git refs to identify modified packages.
+
+**StackQuery**: Retrieves AWS CloudFormation stack outputs for deployment
+config.
+
+## Usage Patterns
+
+### Pattern 1: Bump version
+
+```javascript
+import { VersionBumper } from "@copilot-ld/librel";
+
+const bumper = new VersionBumper("./packages/libagent");
+await bumper.bump("minor"); // 1.0.0 -> 1.1.0
+```
+
+### Pattern 2: Detect changes
+
+```javascript
+import { ChangeDetector } from "@copilot-ld/librel";
+
+const detector = new ChangeDetector(".");
+const changed = await detector.getChangedPackages("main", "HEAD");
+// ["libagent", "libmemory"]
+```
+
+## Integration
+
+Used by CI/CD scripts for release automation and change detection.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/copilot-ld) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
