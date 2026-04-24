@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [clyra-ai/gait](https://github.com/clyra-ai/gait/tree/main/.agents/submissions/anthropic/ci-failure-triage)
+Original source: [clyra-ai/gait](https://github.com/clyra-ai/gait/tree/main/.agents/submissions/openai/ci-failure-triage)
 
 ---
 
