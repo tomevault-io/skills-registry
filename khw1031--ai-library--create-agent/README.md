@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [khw1031/ai-library](https://github.com/khw1031/ai-library/tree/main/skills/create-agent)
+Original source: [khw1031/ai-library](https://github.com/khw1031/ai-library/tree/main/.claude/skills/create-agent)
 
 ---
 
