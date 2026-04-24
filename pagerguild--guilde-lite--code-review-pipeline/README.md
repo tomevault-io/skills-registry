@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pagerguild/guilde-lite](https://github.com/pagerguild/guilde-lite/tree/main/marketplace/plugins/code-review-pipeline/skills/code-review-pipeline)
+Original source: [pagerguild/guilde-lite](https://github.com/pagerguild/guilde-lite/tree/main/skills/code-review-pipeline)
 
 ---
 
