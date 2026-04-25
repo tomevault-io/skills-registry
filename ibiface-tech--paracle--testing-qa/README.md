@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ibiface-tech/paracle](https://github.com/ibiface-tech/paracle/tree/main/.claude/skills/testing-qa)
+Original source: [ibiface-tech/paracle](https://github.com/ibiface-tech/paracle/tree/main/.parac/agents/skills/testing-qa)
 
 ---
 
