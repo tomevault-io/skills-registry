@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [projanvil/mindforge](https://github.com/projanvil/mindforge/tree/main/skills/zh-cn/swiftui-development)
+Original source: [projanvil/mindforge](https://github.com/projanvil/mindforge/tree/main/skills/en/swiftui-development)
 
 ---
 
