@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ibiface-tech/paracle](https://github.com/ibiface-tech/paracle/tree/main/.claude/skills/technical-documentation)
+Original source: [ibiface-tech/paracle](https://github.com/ibiface-tech/paracle/tree/main/.github/skills/technical-documentation)
 
 ---
 
