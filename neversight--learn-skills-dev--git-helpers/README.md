@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NeverSight/learn-skills.dev](https://github.com/NeverSight/learn-skills.dev/tree/main/data/skills-md/adeonir/agents-skills/git-helpers)
+Original source: [NeverSight/learn-skills.dev](https://github.com/NeverSight/learn-skills.dev/tree/main/data/skills-md/adeonir/agent-skills/git-helpers)
 
 ---
 
