@@ -1,0 +1,467 @@
+---
+name: repo-init
+description: Initialize a new repository with standard scaffolding - git, gitignore, AGENTS.md, justfile, mise, beads, and timbers. Use when starting a new project or setting up an existing repo for Claude Code workflows. Use when this capability is needed.
+metadata:
+  author: rbergman
+---
+
+# Repository Initialization
+
+Scaffold a new or existing repository with standard project infrastructure.
+
+**Related skills:**
+- **just-pro** - Build system patterns and templates
+- **mise** - Tool version management
+- **output-compression** - CLI output compression (RTK + tokf)
+- Timbers (`timbers init`) - Development reasoning ledger
+- **go-pro**, **rust-pro**, **typescript-pro**, **python-pro** - Language-specific setup
+
+## Execution Modes
+
+This skill supports two modes. **Prefer molecule mode** when beads is available.
+
+### Molecule Mode (Preferred)
+
+Use beads molecules for tracked, closeable tasks. Each step becomes an issue you can close as you complete it.
+
+**Prerequisites:** beads installed (`bd --version` works)
+
+**Steps:**
+
+1. Find the dm-work plugin install path:
+   ```bash
+   jq -r '.plugins["dm-work@dark-matter-marketplace"][0].installPath' ~/.claude/plugins/installed_plugins.json
+   ```
+
+2. Wisp the formula (ephemeral, no git pollution):
+   ```bash
+   bd mol wisp <install-path>/skills/repo-init/references/repo-init.formula.json \
+     --var lang=<language> --var name=<project-name> --var type=<project-type>
+   ```
+
+3. Work through tasks:
+   ```bash
+   bd ready              # See next task
+   # ... do the work ...
+   bd close <step-id>    # Mark complete
+   ```
+
+4. Clean up when done:
+   ```bash
+   bd mol burn <wisp-id>
+   ```
+
+**Variables:**
+| Variable | Required | Default | Values |
+|----------|----------|---------|--------|
+| `lang` | Yes | - | go, rust, typescript, python |
+| `name` | Yes | - | Project name |
+| `type` | No | cli | cli, lib, web, api |
+
+---
+
+### Manual Mode (Fallback)
+
+Use when beads is not installed or for quick setups without tracking.
+
+Follow the steps below in order. Steps 3-6 can run in parallel after git-init.
+
+---
+
+## Step 1: Gather Context
+
+Before scaffolding, clarify:
+
+1. **Project language(s)**: Go, Rust, TypeScript, Python, or multi-language?
+2. **Project type**: Library, CLI, web app, API, monorepo?
+3. **Existing files**: Is this a fresh repo or adding to existing code?
+
+Use AskUserQuestion if unclear from context.
+
+---
+
+## Step 2: Git Setup
+
+```bash
+# Initialize git if needed
+git init
+```
+
+### .gitignore Templates
+
+Copy from the appropriate language skill's `references/gitignore`:
+
+| Language | Source |
+|----------|--------|
+| Go | `go-pro/references/gitignore` |
+| Rust | `rust-pro/references/gitignore` |
+| TypeScript | `typescript-pro/references/gitignore` |
+| Python | `python-pro/references/gitignore` |
+
+**For multi-language repos:** Start with the primary language's gitignore, then merge patterns from others.
+
+**Minimal fallback** (if language skill unavailable):
+
+```gitignore
+# Environment
+.env
+.env.local
+.env.*.local
+.envrc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Build (customize per language)
+dist/
+build/
+target/
+node_modules/
+__pycache__/
+```
+
+### .claudeignore
+
+Every repo should have a `.claudeignore` file. Claude Code indexes everything it can see — without ignore patterns, it reads build artifacts, generated files, and large binaries, wasting massive token budget. This is the single highest-impact CC optimization.
+
+**Universal base (all projects):**
+
+```
+# Secrets — never leak into CC context
+.env
+.env.*
+.envrc
+secrets/
+*.pem
+*.key
+*.p12
+
+# Lock files (large, no signal)
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+bun.lockb
+Cargo.lock
+go.sum
+Gemfile.lock
+poetry.lock
+
+# Source maps
+*.map
+
+# Binary assets (images, fonts)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.svg
+*.woff
+*.woff2
+*.ttf
+*.eot
+
+# Logs and OS
+*.log
+logs/
+.DS_Store
+
+# Agent working dirs
+.worktrees/
+history/
+```
+
+**Add language-specific patterns:**
+
+| Language | Patterns |
+|----------|----------|
+| TypeScript/Node | `node_modules/`, `dist/`, `build/`, `.next/`, `coverage/`, `*.tsbuildinfo`, `.turbo/`, `.cache/` |
+| Python | `__pycache__/`, `.venv/`, `venv/`, `*.pyc`, `.mypy_cache/`, `.pytest_cache/`, `dist/`, `build/`, `*.egg-info/` |
+| Go | `vendor/`, `bin/` |
+| Rust | `target/` |
+| AI/ML | `output/`, `models/`, `*.safetensors`, `*.ckpt`, `*.pt`, `*.bin`, `checkpoints/` |
+
+**For multi-language repos:** Combine all relevant language patterns.
+
+---
+
+## Step 3: AGENTS.md
+
+Copy the AGENTS.md template from this skill's `references/AGENTS.md` to the project root, then create a symlink so Claude Code discovers it automatically:
+
+```bash
+cp <skill-install-path>/references/AGENTS.md ./AGENTS.md
+ln -s AGENTS.md CLAUDE.md
+```
+
+AGENTS.md is the canonical file; CLAUDE.md is a symlink so Claude Code discovers it automatically.
+
+Customize the template for the specific project (update project description, add project-specific conventions).
+
+### CLAUDE.local.md (personal project prefs)
+
+Create `CLAUDE.local.md` for personal preferences that shouldn't be committed (it's auto-added to `.gitignore`):
+
+```bash
+cat > CLAUDE.local.md << 'EOF'
+# Personal Project Preferences
+# This file is gitignored — safe for local paths, sandbox URLs, etc.
+
+# For worktrees: import shared personal prefs so all worktrees stay in sync
+# @~/.claude/my-project-instructions.md
+EOF
+```
+
+Use this for sandbox URLs, test data paths, local tool overrides, and other per-developer settings.
+
+### Modular rules (monorepos)
+
+For monorepos or projects with distinct subsystems, use `.claude/rules/` instead of a single large CLAUDE.md:
+
+```
+.claude/
+├── CLAUDE.md              # Core project instructions
+└── rules/
+    ├── go-backend.md      # Go-specific rules
+    ├── ts-frontend.md     # TypeScript-specific rules
+    └── api-design.md      # API conventions
+```
+
+All `.md` files in `.claude/rules/` are auto-loaded. Rules can be **path-scoped** via YAML frontmatter to only activate when Claude touches matching files:
+
+```markdown
+---
+paths:
+  - "packages/api/**/*.go"
+---
+
+# API Backend Rules
+- All handlers return structured errors
+- Use slog for logging, never fmt.Print
+```
+
+Skip this for single-language repos — a single CLAUDE.md is simpler.
+
+---
+
+## Step 4: Justfile Skeleton
+
+```just
+# Project Build System
+# Usage: just --list
+
+default:
+    @just --list
+
+# First-time setup
+setup:
+    mise trust
+    mise install
+    @echo "Ready. Run 'just check' to verify."
+
+# Quality gates - add language-specific checks
+check:
+    @echo "Add fmt, lint, test recipes"
+
+# Remove build artifacts
+clean:
+    @echo "Add clean commands"
+```
+
+See **just-pro** skill for language-specific recipes.
+
+---
+
+## Step 5: Mise Configuration
+
+Create `.mise.toml`:
+
+```toml
+[tools]
+# Add tools with: mise use <tool>@<version>
+# Examples:
+# node = "22"
+# go = "1.23"
+# rust = "1.83"
+# just = "latest"
+```
+
+---
+
+## Step 5.5: Output Compression (Optional)
+
+CLI output compression reduces build/test/git noise before it reaches LLM context. See **output-compression** skill for full details.
+
+```bash
+# Option 1: RTK (zero-config baseline — recommended)
+command -v rtk &>/dev/null && rtk init --global || echo "Install: brew install rtk"
+
+# Option 2: tokf (per-project customization — add when RTK isn't enough)
+command -v tokf &>/dev/null && tokf hook install || echo "Install: brew install mpecan/tokf/tokf"
+```
+
+Either or both tools can be active. RTK handles most CLI noise automatically. Add tokf with project-local `.tokf/filters/` when you need surgical filtering for specific commands.
+
+---
+
+## Step 6: Environment Template
+
+Create `.envrc.example` (committed) as template for `.envrc` (gitignored):
+
+```bash
+# Copy to .envrc and fill in values
+# cp .envrc.example .envrc && direnv allow
+
+# Mise integration
+if command -v mise &> /dev/null; then
+  eval "$(mise hook-env -s bash)"
+fi
+
+# Project-specific environment
+# export DATABASE_URL="postgres://localhost/myapp"
+# export API_KEY=""
+```
+
+---
+
+## Step 7: Claude Code Project Settings
+
+Create `.claude/settings.local.json` to wire DM orchestration, hooks, and session management for this project:
+
+```bash
+mkdir -p .claude
+```
+
+Write to `.claude/settings.local.json`:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v timbers &>/dev/null && [ -d .timbers ]; then timbers prime; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v timbers &>/dev/null && [ -d .timbers ]; then timbers hook run claude-stop; fi",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+This wires session-start context recovery and session-end enforcement. The DM plugin skills (orchestrator, subagent, language skills) are available globally from the plugin install — this file adds project-specific hooks.
+
+**Customize per-project:** Add project-specific SessionStart commands (e.g., `bd prime` if beads is initialized), adjust Stop hook timeout for heavy gate suites.
+
+---
+
+## Step 8: Beads Initialization
+
+```bash
+bd init --server  # embedded mode requires CGO; use --server on macOS
+```
+
+Set up shared hooks in `.githooks/` (committed to git, shared via `core.hooksPath`):
+
+```bash
+mkdir -p .githooks
+# Create pre-commit, post-merge, and other hooks in .githooks/
+# See typescript-pro skill for full hook structure
+chmod +x .githooks/*
+git config core.hooksPath .githooks
+```
+
+**Do NOT run `bd hooks install`** — it writes to `.git/hooks/` which is bypassed. Instead, copy the beads hook content (run `bd hooks install --force` once to see it, then copy the marker block into `.githooks/pre-commit`). Same for timbers.
+
+Add a `just hooks` recipe for onboarding (sets `core.hooksPath`). Add a `just doctor` check to verify it.
+
+---
+
+## Step 8.5: Timbers Initialization (Optional)
+
+If the user wants structured development reasoning logs (what/why/how per commit):
+
+```bash
+# Check if installed
+command -v timbers || echo "Install: brew install gorewood/tap/timbers"
+
+# Initialize (creates .timbers/, .gitattributes, git hooks, Claude Code integration)
+timbers init --yes --git-hooks
+
+# Add onboarding snippet to AGENTS.md
+timbers onboard --target agents >> AGENTS.md
+```
+
+This sets up:
+- `.timbers/` directory for entry storage
+- Pre-commit hook (blocks commits when prior commits are undocumented)
+- Post-commit hook (reminds to document)
+- Claude Code Stop hook (blocks session end if pending entries)
+
+Timbers captures the *reasoning* behind commits — the "why" that git log can't tell you. Entries are files in `.timbers/` that sync via regular `git push`.
+
+Skip if the project is trivial or short-lived.
+
+---
+
+## Step 9: Next Steps
+
+Point user to language-specific setup:
+
+| Language | Next Step |
+|----------|-----------|
+| Go | Invoke **go-pro** skill, run `go mod init` |
+| Rust | Invoke **rust-pro** skill, run `cargo init` |
+| TypeScript | Invoke **typescript-pro** skill, run `npm init` |
+| Python | Invoke **python-pro** skill, run `uv init` |
+
+---
+
+## Quick Reference
+
+```bash
+# Full manual init sequence
+git init
+# Create .gitignore, .claudeignore, AGENTS.md, CLAUDE.md symlink, justfile, .mise.toml, .envrc.example
+bd init --server  # embedded mode requires CGO; use --server on macOS
+timbers init --yes --git-hooks && timbers onboard --target agents >> AGENTS.md
+mise use just@latest
+# Then follow language skill for specifics
+```
+
+## Monorepo Variant
+
+For monorepos, the root gets:
+- Root `justfile` with module imports (see just-pro monorepo patterns)
+- Root `.mise.toml` with shared tooling
+- Root `.claudeignore` combining patterns for all languages in the monorepo
+- Single `.beads/` at root
+
+Each package gets:
+- Package-local `justfile`
+- Language-specific configs (Cargo.toml, package.json, etc.)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/rbergman) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
