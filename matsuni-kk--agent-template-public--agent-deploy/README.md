@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [matsuni-kk/agent_template_public](https://github.com/matsuni-kk/agent_template_public/tree/main/.codex/skills/agent-deploy)
+Original source: [matsuni-kk/agent_template_public](https://github.com/matsuni-kk/agent_template_public/tree/main/.claude/skills/agent-deploy)
 
 ---
 
