@@ -1,0 +1,71 @@
+---
+name: search-mode
+description: Exhaustive search mode. Use when you need broad codebase or documentation coverage, multiple parallel searches, and a synthesized inventory of findings. Use when this capability is needed.
+metadata:
+  author: opzero1
+---
+
+# Search Mode
+
+> **ACTIVATION**: When loaded, immediately maximize search effort across all available tools.
+
+## Protocol
+
+**MAXIMIZE SEARCH EFFORT**
+
+Launch multiple background agents in parallel only when the extra coverage is worth the context and wall-clock cost.
+
+### Agent Deployment
+
+```
+// Codebase patterns (INTERNAL)
+task(agent="explore", prompt="Find [pattern 1]...", background=true)
+task(agent="explore", prompt="Find [pattern 2]...", background=true)
+task(agent="explore", prompt="Find [pattern 3]...", background=true)
+
+// External resources (EXTERNAL)
+task(agent="researcher", prompt="Find docs for...", background=true)
+task(agent="researcher", prompt="Find GitHub examples...", background=true)
+```
+
+### Direct Tools
+
+Use the `explore` agent's scope-first tool hierarchy for local search, then add external research only when the task crosses into documentation or OSS examples.
+
+### Search Strategy
+
+1. **Fire 3-5 parallel agents** for broad coverage
+2. **Use direct tools** for specific patterns simultaneously
+3. **NEVER stop at first result** - be exhaustive
+4. **Cross-reference findings** between internal and external sources
+
+## Example Workflow
+
+For: "Find all authentication implementations"
+
+```
+// Parallel agents
+task(agent="explore", prompt="Find auth middleware implementations", background=true)
+task(agent="explore", prompt="Find login/logout functions", background=true)
+task(agent="explore", prompt="Find JWT/session handling", background=true)
+task(agent="researcher", prompt="Find NextAuth.js best practices", background=true)
+
+// Direct tools (in parallel)
+glob(pattern="**/*auth*")
+grep(pattern="authenticate|authorization|jwt|session", include="*.ts")
+ast_grep_search(pattern="async function $NAME($$$) { $$$ }", lang="typescript")
+lsp_symbols(query="authenticate", scope="workspace")
+```
+
+## Output Requirements
+
+Synthesize ALL findings into:
+
+1. **File inventory** with absolute paths
+2. **Pattern summary** - what patterns exist
+3. **Key findings** - most relevant discoveries
+4. **Gaps identified** - what wasn't found
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/opzero1) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
