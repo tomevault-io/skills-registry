@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tundraray/overture](https://github.com/tundraray/overture/tree/main/skills/documentation-criteria)
+Original source: [tundraray/overture](https://github.com/tundraray/overture/tree/main/gamedev/skills/documentation-criteria)
 
 ---
 
