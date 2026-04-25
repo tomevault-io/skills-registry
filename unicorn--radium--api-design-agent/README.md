@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [unicorn/radium](https://github.com/unicorn/radium/tree/main/skills/examples/api-design-agent)
+Original source: [unicorn/radium](https://github.com/unicorn/radium/tree/main/skills/design/api-design-agent)
 
 ---
 
