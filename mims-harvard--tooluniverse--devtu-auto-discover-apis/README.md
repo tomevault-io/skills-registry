@@ -1,11 +1,11 @@
 # devtu-auto-discover-apis
 
-> Skill by [mims-harvard](https://github.com/mims-harvard/tooluniverse) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [mims-harvard](https://github.com/mims-harvard/ToolUniverse) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mims-harvard/tooluniverse](https://github.com/mims-harvard/tooluniverse/tree/main/skills/devtu-auto-discover-apis)
+Original source: [mims-harvard/ToolUniverse](https://github.com/mims-harvard/ToolUniverse/tree/main/skills/devtu-auto-discover-apis)
 
 ---
 
