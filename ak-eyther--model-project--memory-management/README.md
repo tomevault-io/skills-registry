@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ak-eyther/model-project](https://github.com/ak-eyther/model-project/tree/main/codex/skills/memory-management)
+Original source: [ak-eyther/model-project](https://github.com/ak-eyther/model-project/tree/main/.claude/skills/memory-management)
 
 ---
 
