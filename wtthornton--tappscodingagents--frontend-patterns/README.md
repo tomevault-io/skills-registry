@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wtthornton/tappscodingagents](https://github.com/wtthornton/tappscodingagents/tree/main/.claude/skills/frontend-patterns)
+Original source: [wtthornton/tappscodingagents](https://github.com/wtthornton/tappscodingagents/tree/main/tapps_agents/resources/claude/skills/frontend-patterns)
 
 ---
 
