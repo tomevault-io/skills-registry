@@ -1,0 +1,123 @@
+---
+name: session-end
+description: | Use when this capability is needed.
+metadata:
+  author: stars-end
+---
+
+# Session End
+
+End session cleanly with Beads health checks, stats, and next work suggestion.
+
+## Workflow
+
+### 1. Set Beads Context
+```
+mcp__plugin_beads_beads__set_context(workspace_root="/path/to/project")
+```
+
+### 2. Verify Canonical Beads Health
+**CRITICAL:** confirm Beads is reachable before ending session context.
+
+```bash
+bdx dolt test --json
+bdx show <known-beads-id> --json
+```
+
+**What this does:**
+- Confirms `bdx` coordination path is healthy
+- Confirms issue reads are queryable
+- Prevents silent session-end on broken tracker state
+
+Use raw `bd` only for local diagnostics/bootstrap/path-sensitive operations.
+
+### 3. Get Session Stats
+```
+stats = mcp__plugin_beads_beads__stats()
+```
+
+Show relevant metrics:
+- Issues closed this session
+- Issues created this session
+- Current epic progress
+- Total ready work available
+
+### 4. Suggest Next Work
+```
+readyTasks = mcp__plugin_beads_beads__ready(priority=1)
+```
+
+Show top 3-5 ready tasks by priority:
+- Unblocked P1 issues
+- Next phase tasks in current epic
+- High-value backlog items
+
+### 5. Verify Canonicals Are Clean (V7.6)
+
+Run the invariant check before claiming you're “done”:
+
+```bash
+~/agent-skills/scripts/dx-verify-clean.sh
+```
+
+### 6. Context Summary
+
+Show what to resume in next session:
+```
+📊 Session Summary
+
+Issues Closed: 3
+  • bd-xpi.4 (Testing)
+  • bd-xpi.4.1 (Bug: SessionStart permission)
+  • bd-xpi.4.2 (Bug: UserPromptSubmit JSON)
+
+Issues Created: 2
+  • bd-xpi.4.1 (discovered-from bd-xpi.4)
+  • bd-xpi.4.2 (discovered-from bd-xpi.4)
+
+Current Work:
+  bd-xpi.5 (in_progress): Implementation Part 2
+  Epic: bd-xpi (DX_V3_BEADS_INTEGRATION)
+
+✅ Beads connectivity verified
+✅ Canonicals verified clean
+
+📍 Next Session:
+  Top ready tasks:
+  1. bd-xpi.5 (P1) - Continue implementation
+  2. bd-abc.3 (P1) - API integration testing
+  3. bd-def.2 (P2) - Documentation updates
+
+Say "bdx ready" to see full ready work queue
+```
+
+## Best Practices
+
+- **Always call at session end** - Catches tracker outages before context loss
+- **Don't skip health checks** - Prevents silent drift on broken Beads service
+- **Review stats** - Understand what was accomplished
+- **Note next work** - Reduces context switching overhead in next session
+- **Git status clean** - Commit all work before session-end
+
+## Common Usage
+
+**User signals:**
+- "I'm done for today"
+- "Ending session"
+- "Log off"
+- "Save and exit"
+- "That's all for now"
+
+> Note: Skill activation relies on semantic description matching, not legacy pattern files.
+
+## What This DOESN'T Do
+
+- ❌ Create new issues (use beads-workflow for that)
+- ❌ Commit code (use sync-feature-branch first)
+- ❌ Close ongoing work (only validates state + summarizes)
+
+**Philosophy:** Clean exits + Context preservation + Ready for next session
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/stars-end) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
