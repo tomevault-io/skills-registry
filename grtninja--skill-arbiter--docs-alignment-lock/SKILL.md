@@ -1,0 +1,66 @@
+---
+name: docs-alignment-lock
+description: Keep repository policy docs aligned and privacy-safe before PRs. Use when changing workflow/policy text across AGENTS.md, README.md, CONTRIBUTING.md, SKILL.md, PR templates, or skill candidate docs. Use when this capability is needed.
+metadata:
+  author: grtninja
+---
+
+# Docs Alignment Lock
+
+Use this skill to keep documentation policy-consistent and public-safe.
+
+## Workflow
+
+1. Read `AGENTS.md` first and treat it as policy source of truth.
+2. Align policy language across:
+   - `AGENTS.md`
+   - `README.md`
+   - `CONTRIBUTING.md`
+   - `SKILL.md`
+   - `.github/pull_request_template.md`
+   - repo-local scope/status docs when they are part of the shipped contract (`docs/PROJECT_SCOPE.md`, `docs/SCOPE_TRACKER.md`, reconciliation notes, startup rosters, USB handoff docs)
+3. Enforce public-shape rules in docs and skill candidates:
+   - no private repo identifiers
+   - no user-specific absolute paths
+   - use placeholders (`<PRIVATE_REPO_A>`, `<PRIVATE_REPO_B>`, `<PRIVATE_REPO_C>`, `<PRIVATE_REPO_D>`, `$CODEX_HOME/skills`, `$env:USERPROFILE\\...`)
+4. Ensure skill update messaging rule is present and aligned:
+   - `New Skill Unlocked: <SkillName>`
+   - `<SkillName> Leveled up to <LevelNumber>`
+5. Run privacy and release checks.
+6. If release-impacting docs/scripts changed, prepare a patch release bump.
+7. For multi-repo work, ensure the changed behavior is explicitly documented where the open diffs actually live, not only in a central control repo.
+
+## Commands
+
+```bash
+python3 scripts/check_private_data_policy.py
+python3 scripts/check_release_hygiene.py
+python3 -m py_compile scripts/arbitrate_skills.py scripts/prepare_release.py scripts/check_release_hygiene.py scripts/check_private_data_policy.py
+```
+
+For release-impacting changes:
+
+```bash
+python3 scripts/prepare_release.py --part patch
+```
+## Scope Boundary
+
+Use this skill only for the `docs-alignment-lock` lane and workflow defined in this file and its references.
+
+Do not use this skill for unrelated lanes; route those through `$skill-hub` and the most specific matching skill.
+
+## Reference
+
+- `references/docs-alignment-checklist.md`
+
+## Loopback
+
+If this lane is unresolved, blocked, or ambiguous:
+
+1. Capture current evidence and failure context.
+2. Route back through `$skill-hub` for chain recalculation.
+3. Resume only after the updated chain returns a deterministic next step.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/grtninja) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
