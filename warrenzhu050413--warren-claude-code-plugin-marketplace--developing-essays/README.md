@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [warrenzhu050413/warren-claude-code-plugin-marketplace](https://github.com/warrenzhu050413/warren-claude-code-plugin-marketplace/tree/main/claude-context-orchestrator/snippets/local/communication/developing-essays)
+Original source: [warrenzhu050413/warren-claude-code-plugin-marketplace](https://github.com/warrenzhu050413/warren-claude-code-plugin-marketplace/tree/main/claude-context-orchestrator/snippets/local/documentation/developing-essays)
 
 ---
 
