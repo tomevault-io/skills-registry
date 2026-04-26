@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jorge-d-robles/gemini-fantasy](https://github.com/jorge-d-robles/gemini-fantasy/tree/main/.gemini/skills/gdscript-conventions)
+Original source: [jorge-d-robles/gemini-fantasy](https://github.com/jorge-d-robles/gemini-fantasy/tree/main/.claude/skills/gdscript-conventions)
 
 ---
 
