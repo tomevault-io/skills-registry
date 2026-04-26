@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rshankras/claude-code-apple-skills](https://github.com/rshankras/claude-code-apple-skills/tree/main/skills/ios/app-planner)
+Original source: [rshankras/claude-code-apple-skills](https://github.com/rshankras/claude-code-apple-skills/tree/main/skills/macos/app-planner)
 
 ---
 
