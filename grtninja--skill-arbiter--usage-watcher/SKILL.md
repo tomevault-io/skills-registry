@@ -1,0 +1,108 @@
+---
+name: usage-watcher
+description: Reduce paid credit spend and rate-limit risk with deterministic usage analysis and budget guardrails. Use when planning high-volume agent work, reviewing recent burn, or setting lean/standard/surge operating caps. Use when this capability is needed.
+metadata:
+  author: grtninja
+---
+
+# Usage Watcher
+
+Use this skill to control usage cost and avoid rate-limit surprises.
+
+## Workflow
+
+1. Capture recent usage history to CSV/JSON.
+2. Ingest live local-compute accounting from the running stack (`/health` plus `/api/accounting/summary`) whenever loopback evidence is available.
+3. Run `usage_guard.py analyze` to measure burn rate, rate-limit posture, and local displacement value.
+4. Run `usage_guard.py plan` to set practical daily/session caps.
+5. Select and record a chain usage mode (`economy`, `standard`, `surge`) from the analysis and plan outputs.
+6. Apply the recommendations before large agent workflows.
+
+## Analyze Command
+
+```bash
+python3 "$CODEX_HOME/skills/usage-watcher/scripts/usage_guard.py" analyze \
+  --input /path/to/usage.csv \
+  --window-days 30 \
+  --daily-budget 140 \
+  --weekly-budget 900 \
+  --credits-remaining 236 \
+  --five-hour-limit-remaining 100 \
+  --weekly-limit-remaining 0 \
+  --stack-health-url http://127.0.0.1:9000/health \
+  --stack-summary-url http://127.0.0.1:9000/api/accounting/summary \
+  --json-out /tmp/usage-analysis.json \
+  --format table
+```
+
+## Budget Plan Command
+
+```bash
+python3 "$CODEX_HOME/skills/usage-watcher/scripts/usage_guard.py" plan \
+  --monthly-budget 2800 \
+  --reserve-percent 20 \
+  --work-days-per-week 5 \
+  --sessions-per-day 3 \
+  --burst-multiplier 1.5 \
+  --json-out /tmp/usage-plan.json \
+  --format table
+```
+
+## Mandatory Chain Gate
+
+Before finalizing skill chains, provide:
+
+- `usage_analysis_json=/tmp/usage-analysis.json`
+- `usage_plan_json=/tmp/usage-plan.json`
+- `usage_mode=<economy|standard|surge>`
+- `stack_evidence` when a local loopback stack is available
+
+If this evidence is missing, chain selection is incomplete and must fail closed.
+
+## Mode Selection Rubric
+
+Use deterministic mode selection from analysis output:
+
+1. `economy`:
+   - daily status is `red`, or
+   - weekly status is `red`, or
+   - projected 30-day burn exceeds remaining budget.
+2. `standard`:
+   - daily/weekly status are `green` or mixed `green/yellow`,
+   - no active governor `throttle`/`disable` recommendation.
+3. `surge`:
+   - explicit deadline pressure is present,
+   - budget remains within guardrails,
+   - governor action is not `throttle`/`disable`.
+
+Always record rationale in one short line with the selected mode.
+
+## Guardrail Policy
+
+- Economy mode for discovery and triage.
+- Standard mode for normal implementation tasks.
+- Surge mode only for urgent deadlines.
+- Prefer bounded scripts and cached artifacts over repeated broad discovery.
+- When preview displacement value is positive, prefer local-first routing and skill chains that preserve paid credits and included-usage headroom.
+## Scope Boundary
+
+Use this skill only for the `usage-watcher` lane and workflow defined in this file and its references.
+
+Do not use this skill for unrelated lanes; route those through `$skill-hub` and the most specific matching skill.
+
+## References
+
+- `references/cost-control-playbook.md`
+- `references/usage-csv-template.csv`
+
+## Loopback
+
+If this lane is unresolved, blocked, or ambiguous:
+
+1. Capture current evidence and failure context.
+2. Route back through `$skill-hub` for chain recalculation.
+3. Resume only after the updated chain returns a deterministic next step.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/grtninja) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
