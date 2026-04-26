@@ -1,0 +1,72 @@
+---
+name: skill-trust-ledger
+description: Keep a local reliability ledger for skills using recorded outcomes and arbiter evidence. Use when deciding whether to trust, restrict, or block skills over time. Use when this capability is needed.
+metadata:
+  author: grtninja
+---
+
+# Skill Trust Ledger
+
+Use this skill to preserve operational memory and avoid repeating past failure patterns.
+
+## Workflow
+
+1. Record outcome events after meaningful runs.
+2. Ingest `skill-arbiter` evidence JSON after admissions.
+3. Generate periodic trust-tier reports.
+4. Use tiers to guide invoke/disable policy.
+
+## Record Event
+
+```bash
+python3 "$CODEX_HOME/skills/skill-trust-ledger/scripts/trust_ledger.py" \
+  --ledger ~/.codex/skills/.trust-ledger.local.json \
+  record \
+  --skill repo-b-mcp-comfy-bridge \
+  --event success \
+  --source manual \
+  --note "Pilot run clean"
+```
+
+## Ingest Arbiter Evidence
+
+```bash
+python3 "$CODEX_HOME/skills/skill-trust-ledger/scripts/trust_ledger.py" \
+  --ledger ~/.codex/skills/.trust-ledger.local.json \
+  ingest-arbiter \
+  --input /tmp/repo-b-mcp-comfy-bridge-arbiter.json
+```
+
+## Report Tiers
+
+```bash
+python3 "$CODEX_HOME/skills/skill-trust-ledger/scripts/trust_ledger.py" \
+  --ledger ~/.codex/skills/.trust-ledger.local.json \
+  report \
+  --window-days 90 \
+  --min-events 2 \
+  --json-out /tmp/skill-trust-report.json \
+  --format table
+```
+## Scope Boundary
+
+Use this skill only for the `skill-trust-ledger` lane and workflow defined in this file and its references.
+
+Do not use this skill for unrelated lanes; route those through `$skill-hub` and the most specific matching skill.
+
+## References
+
+- `references/ledger-workflow.md`
+- `references/scoring-contract.md`
+
+## Loopback
+
+If this lane is unresolved, blocked, or ambiguous:
+
+1. Capture current evidence and failure context.
+2. Route back through `$skill-hub` for chain recalculation.
+3. Resume only after the updated chain returns a deterministic next step.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/grtninja) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
