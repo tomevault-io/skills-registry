@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bybren-llc/story-systems-template](https://github.com/bybren-llc/story-systems-template/tree/main/.claude/skills/writers-room)
+Original source: [bybren-llc/story-systems-template](https://github.com/bybren-llc/story-systems-template/tree/main/.gemini/skills/writers-room)
 
 ---
 
