@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marcusgoll/spec-flow](https://github.com/marcusgoll/spec-flow/tree/main/.claude/skills/planning-phase)
+Original source: [marcusgoll/spec-flow](https://github.com/marcusgoll/spec-flow/tree/main/.codex/skills/planning-phase)
 
 ---
 
