@@ -1,0 +1,152 @@
+---
+name: bv-integration
+description: | Use when this capability is needed.
+metadata:
+  author: stars-end
+---
+
+# Beads Viewer Integration
+
+BV is a TUI for visualizing Beads issues with graph analysis and a robot protocol for agents.
+
+## Quick Reference
+
+| Command | Human Use | Agent Use |
+|---------|-----------|-----------|
+| `bv` | Interactive TUI | N/A (requires TTY) |
+| `bv --robot-plan` | N/A | Get next highest-impact task |
+| `bv --robot-insights` | N/A | Get graph metrics JSON |
+| `bv --export-graph` | Export HTML graph | N/A |
+
+## Auto-Select Next Task (Robot Mode)
+
+Instead of `bdx list --status open`, use BV for smarter task selection:
+
+```bash
+bv --robot-plan
+```
+
+Returns JSON with the highest-impact unblocked task:
+```json
+{
+  "next": "bd-xyz",
+  "unblocks": 5,
+  "impact_score": 0.87,
+  "reason": "Critical path task, unblocks 5 downstream dependencies",
+  "alternatives": ["bd-abc", "bd-def"]
+}
+```
+
+### Using in Agent Workflow
+
+```bash
+# Get next task ID
+NEXT_TASK=$(bv --robot-plan | jq -r .next)
+
+# If valid, show details
+if [ -n "$NEXT_TASK" ] && [ "$NEXT_TASK" != "null" ]; then
+    bdx show "$NEXT_TASK"
+fi
+```
+
+## Graph Insights (Robot Mode)
+
+Get graph analysis metrics:
+
+```bash
+bv --robot-insights
+```
+
+Returns:
+```json
+{
+  "bottlenecks": ["bd-xyz"],
+  "critical_path": ["bd-a", "bd-b", "bd-c"],
+  "cycles": [],
+  "density": 0.42,
+  "pagerank": {"bd-xyz": 0.15, "bd-abc": 0.12}
+}
+```
+
+## Installation
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/beads_viewer/main/install.sh | bash
+```
+
+## Verification
+
+```bash
+# Check installed
+which bv && bv --version
+
+# Robot protocol works in a normal repo checkout (with canonical Beads available)
+cd ~/affordabot && bv --robot-plan | jq .
+
+# Optional: Interactive TUI (human only)
+bv
+```
+
+## Interactive TUI Keys (Human Reference)
+
+| Key | Action |
+|-----|--------|
+| `b` | Kanban board view |
+| `g` | Dependency graph |
+| `i` | Insights dashboard |
+| `h` | History view |
+| `t` | Time-travel (compare git revisions) |
+| `/` | Fuzzy search |
+| `j/k` | Navigate up/down |
+| `Enter` | View details |
+| `q` | Quit |
+
+## Integration with lib/fleet (Compatibility Layer)
+
+> **Note**: `lib/fleet` is a compatibility layer used by the deprecated `dx-dispatch` shim. For canonical dispatch, use `dx-runner` directly.
+
+FleetDispatcher can use BV for smart task selection:
+
+```python
+from lib.fleet import FleetDispatcher  # Legacy - prefer dx-runner
+
+dispatcher = FleetDispatcher()
+
+# Auto-select highest-impact task
+next_task = dispatcher.auto_select_task(repo="affordabot")
+if next_task:
+    dispatcher.dispatch(beads_id=next_task, ...)
+```
+
+**Migration**: For new dispatch workflows, use `dx-runner start --provider opencode` instead of `lib/fleet`.
+
+## When to Use BV vs bd CLI
+
+| Scenario | Use |
+|----------|-----|
+| Create/update issues | `bdx create`, `bdx update` |
+| Find next task (smart) | `bv --robot-plan` |
+| Find any ready task | `bdx ready` |
+| Visualize dependencies | `bv` (interactive) or `bv --robot-insights` |
+| Graph bottleneck analysis | `bv --robot-insights` |
+
+## Fallback
+
+If BV is not installed or fails, fall back to bd:
+
+```bash
+NEXT=$(bv --robot-plan 2>/dev/null | jq -r .next)
+if [ -z "$NEXT" ] || [ "$NEXT" = "null" ]; then
+    NEXT=$(bdx ready --limit 1 --json | jq -r '.[0].id')
+fi
+```
+
+---
+
+**Last Updated:** 2026-01-14
+**Repository:** https://github.com/Dicklesworthstone/beads_viewer
+**Related Skills:** beads-workflow
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/stars-end) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
