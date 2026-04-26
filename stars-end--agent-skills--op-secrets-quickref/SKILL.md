@@ -1,0 +1,428 @@
+---
+name: op-secrets-quickref
+description: | Use when this capability is needed.
+metadata:
+  author: stars-end
+---
+
+# op-secrets-quickref
+
+## Goal
+
+Keep secrets out of repos and dotfiles. Use 1Password `op://...` references and runtime resolution with **agent-safe cache/service-account auth by default**. GUI-backed `op` on macOS is a human bootstrap/recovery path, not a dependency for agents or cron.
+
+## Critical Rule
+
+- Tool calls do **not** share shell exports reliably. If auth needs to survive across tool calls, prefer cache/service-account mode from `scripts/lib/dx-auth.sh` and keep OP/Railway auth inside the same shell invocation.
+- If you need Railway in automation, load `RAILWAY_API_TOKEN` from the synced cache or service-account refresh in the **same command invocation**.
+- Do not treat macOS 1Password GUI unlock as agent readiness. It proves only `human_interactive_only`.
+- For agent sessions (especially macOS), raw `op read`, `op item get`, `op item list`, and `op whoami` are forbidden for routine secret access.
+- Agent-safe secret reads must use cache/service-account helpers, preferably `DX_AUTH_CACHE_ONLY=1 dx_auth_read_secret_cached ...`.
+- If cache/service-account auth is unavailable, fail closed with a blocker. Do not fall back to GUI-backed `op` in agent workflows.
+- Do not run OP retry loops unless the task is explicitly auth-repair.
+- Prefer the canonical status helper before diagnosing:
+
+```bash
+~/agent-skills/scripts/dx-op-auth-status.sh --json
+```
+
+- Prefer the canonical repair helper on fresh devices:
+
+```bash
+~/agent-skills/scripts/dx-bootstrap-auth.sh --json
+```
+
+- Prefer the canonical helper for Railway-linked shells:
+
+```bash
+~/agent-skills/scripts/dx-load-railway-auth.sh -- railway whoami
+```
+
+## Auth Mode Matrix
+
+| Context | Canonical mode | Allowed live `op` source |
+|---------|----------------|--------------------------|
+| Human in a macOS terminal | GUI-backed `op` | Yes, after 1Password app sign-in, CLI integration, and `op signin` for the current unlock/session |
+| Agent on macOS | synced cache first; service-account artifact if explicitly configured | No GUI dependency |
+| macOS cron/LaunchAgent | synced cache only | No |
+| Linux VM agent | synced cache or service-account artifact | No GUI |
+| `epyc12` maintenance | service-account refresh hub | Yes, via service account |
+
+`dx-op-auth-status.sh --json` reports one of:
+
+- `agent_ready_cache`: preferred on consumer hosts; synced cache can satisfy agent secrets.
+- `agent_ready_service_account`: acceptable on refresh-capable hosts.
+- `human_interactive_only`: GUI-backed `op` works, but agents/cron must still be fixed.
+- `blocked`: no usable agent-safe auth path is available.
+
+## Canonical Fleet Rule
+
+For canonical VM unattended automation:
+
+- `epyc12` is the only canonical VM that should refresh OP-derived caches
+  directly.
+- Other canonical VMs should sync cache artifacts from `epyc12` and run with
+  `DX_AUTH_CACHE_ONLY=1`.
+- If a macOS cron/system job is touching live `op`, treat that as topology
+  drift and fix the job instead of approving repeated privacy prompts.
+
+## What Lives Where
+
+- **DX/dev workflow secrets** (agent keys, GitHub tokens, Slack tokens): 1Password (`op://...`), resolved at runtime.
+- **Deploy/runtime config**: Railway **environment variables** in the Railway project.
+- **App runtime secrets** (for example `EODHD_CRON_SHARED_SECRET`, `DATABASE_URL`, service URLs): Railway service env, not guessed 1Password items.
+- **Railway CLI automation token**: `RAILWAY_API_TOKEN` exported from 1Password (`Agent-Secrets-Production`).
+
+### Slack token policy for deterministic transport
+
+- Use `SLACK_BOT_TOKEN` as default for Agent Coordination transport.
+- Fallback to `SLACK_APP_TOKEN` if needed.
+- Both are resolved from `op://dev/Agent-Secrets-Production/...`.
+- A valid token does not guarantee channel history access; missing channel membership or `channels:join` scope is a Slack scope issue, not an OP auth failure.
+
+```bash
+# Use cached resolution for automation / cron
+source scripts/lib/dx-auth.sh
+export SLACK_BOT_TOKEN="$(dx_auth_read_secret_cached "op://dev/Agent-Secrets-Production/SLACK_BOT_TOKEN")"
+export SLACK_APP_TOKEN="$(dx_auth_read_secret_cached "op://dev/Agent-Secrets-Production/SLACK_APP_TOKEN")"
+```
+
+Implementation uses these tokens via:
+[`scripts/lib/dx-slack-alerts.sh`](/private/tmp/agents/bd-3o07/agent-skills/scripts/lib/dx-slack-alerts.sh)
+
+## 1Password Item Reference
+
+| Item | Fields | Purpose |
+|------|--------|---------|
+| `Agent-Secrets-Production` | `ZAI_API_KEY`, `RAILWAY_API_TOKEN`, `GITHUB_TOKEN`, `SLACK_BOT_TOKEN`, `SLACK_APP_TOKEN`, `WINDMILL_API_TOKEN` | DX/dev workflow secrets (default source) |
+
+**Note:** ZAI_API_KEY is used as ANTHROPIC_AUTH_TOKEN (Z.ai routes to Anthropic-compatible API).
+
+## Agent-Safe Auth (Default)
+
+### Step 1: Check Agent Readiness
+
+```bash
+~/agent-skills/scripts/dx-bootstrap-auth.sh --json
+```
+
+Accept `agent_ready_cache` or `agent_ready_service_account` for agent work.
+On macOS, `human_interactive_only` means the GUI path works for the human but
+the agent-safe cache still needs to be synced or created.
+
+### Step 2: Verify/Create Service Account Token When Needed
+
+Check if credential exists:
+```bash
+ls -la ~/.config/systemd/user/op-{macmini,homedesktop-wsl,epyc6,epyc12}-token*
+```
+
+Create protected service-account token file (requires human to paste token):
+```bash
+~/agent-skills/scripts/create-op-credential.sh
+```
+
+### Step 3: Export Token for Current Shell
+
+Fallback order for service-account credentials:
+
+1. `OP_SERVICE_ACCOUNT_TOKEN_FILE` if explicitly set
+2. `~/.config/systemd/user/op-<canonical-host-key>-token`
+3. `~/.config/systemd/user/op-<canonical-host-key>-token.cred`
+4. legacy fallback: `~/.config/systemd/user/op_token`
+5. legacy fallback: `~/.config/systemd/user/op_token.cred`
+
+**Same-invocation helper for automation:**
+```bash
+~/agent-skills/scripts/dx-load-railway-auth.sh -- railway whoami
+```
+
+**Linux (systemd-creds encrypted):**
+```bash
+export OP_SERVICE_ACCOUNT_TOKEN="$(systemd-creds decrypt ~/.config/systemd/user/op-epyc6-token.cred)"
+```
+
+**macOS service-account fallback (not the GUI path):**
+```bash
+export OP_SERVICE_ACCOUNT_TOKEN="$(cat ~/.config/systemd/user/op-macmini-token)"
+```
+
+### Step 4: Verify Agent-Safe Mode
+
+```bash
+~/agent-skills/scripts/dx-op-auth-status.sh --json
+```
+
+For agent workflows, accept `agent_ready_cache` or `agent_ready_service_account`.
+Use `op whoami` only in explicit human bootstrap/recovery sessions.
+
+### macOS GUI Bootstrap
+
+Use this only when a human is actively setting up or repairing a Mac:
+
+1. Open 1Password and sign in/unlock.
+2. Enable 1Password CLI integration in the app's Developer settings.
+3. Run `op signin` once for the current 1Password unlock/session.
+4. Run `op whoami`.
+5. Use GUI-backed `op` to create/sync the agent-safe cache or credential.
+
+Do not put GUI-backed `op read` calls in cron, LaunchAgents, shell startup, or
+agent bootstrap scripts. Because the GUI-backed session can require re-signing
+after device lock or 1Password lock, it is a human convenience path, not an
+agent readiness signal.
+
+### Windmill CLI Auth
+
+Canonical source:
+`op://dev/Agent-Secrets-Production/WINDMILL_API_TOKEN`
+
+Legacy or ambiguous standalone references like "windmill dev api token" should be treated as migration artifacts unless a specific environment explicitly requires them.
+
+For repeated reads or commands that need the token to survive across tool calls, use cached service-account mode:
+
+```bash
+source scripts/lib/dx-auth.sh
+export WINDMILL_API_TOKEN="$(dx_auth_read_secret_cached "op://dev/Agent-Secrets-Production/WINDMILL_API_TOKEN")"
+```
+
+## Failure Modes: Auth vs Rate Limit
+
+Treat these as different problems:
+
+- `No accounts configured`, `not signed in`, `Unauthorized`
+  - for agent-safe auth: service-account/cache auth is missing or the token was
+    not loaded in the same invocation
+  - for macOS human GUI auth: run `op signin` after unlocking 1Password, then
+    retry `op whoami`
+- `Too many requests`
+  - service-account auth succeeded, but 1Password is rate-limiting the client
+
+For rate limits:
+- stop repeated raw OP loops (`op item list`, `op item get`, `op item create`, `op read`)
+- batch reads where possible
+- wait and retry with backoff instead of assuming auth is broken
+
+Agent-safe check pattern:
+
+```bash
+source scripts/lib/dx-auth.sh
+DX_AUTH_CACHE_ONLY=1 dx_auth_read_secret_cached "op://dev/Agent-Secrets-Production/RAILWAY_API_TOKEN" >/dev/null \
+  || { echo "BLOCKED: cache_unavailable"; exit 1; }
+```
+
+### Interactive Auth (Human Fallback Only)
+
+Use only for a human terminal recovery flow, not for agents:
+```bash
+# HUMAN_RECOVERY_ONLY
+eval $(op signin)
+```
+
+## Common Commands (Human Recovery Only; Not Agent Routine)
+
+### List Items (Titles Only)
+
+List items in the `dev` vault during manual recovery only:
+```bash
+# HUMAN_RECOVERY_ONLY
+op item list --vault dev
+```
+
+### List Field Labels (No Secret Values)
+
+Get field labels for an item using grep/cut (no jq needed) in manual recovery:
+```bash
+# HUMAN_RECOVERY_ONLY
+op item get --vault dev Agent-Secrets-Production --format json | grep -o '"label":"[^"]*"' | cut -d'"' -f4
+```
+
+Alternative using op's native field output:
+```bash
+# HUMAN_RECOVERY_ONLY
+op item get --vault dev Agent-Secrets-Production --fields label
+```
+
+### Read a Single Secret (interactive / one-shot)
+
+For explicit human bootstrap/recovery only:
+
+```bash
+# HUMAN_RECOVERY_ONLY
+op read "op://dev/Agent-Secrets-Production/ZAI_API_KEY"
+```
+
+### Cached Secret Resolution (standard for agents / automation / repeated reads)
+
+For cron, systemd, scripts, or any path that reads secrets repeatedly, use the
+cached helpers from `scripts/lib/dx-auth.sh`.  These avoid hitting 1Password on
+every invocation by maintaining a local file cache (`~/.cache/dx/op-secrets/`,
+24h TTL) refreshed via the service account token.
+
+**General-purpose cached read:**
+
+```bash
+source scripts/lib/dx-auth.sh
+token="$(dx_auth_read_secret_cached "op://dev/Agent-Secrets-Production/ZAI_API_KEY")"
+```
+
+**Named loaders for common secrets:**
+
+| Helper | Env var set | Source ref |
+|--------|-------------|------------|
+| `dx_auth_load_zai_api_key` | `ZAI_API_KEY` | `op://dev/Agent-Secrets-Production/ZAI_API_KEY` |
+| `dx_auth_load_railway_api_token` | `RAILWAY_API_TOKEN` | `op://dev/Agent-Secrets-Production/RAILWAY_API_TOKEN` |
+| `dx_auth_load_github_token` | `GH_TOKEN` | `op://dev/Agent-Secrets-Production/GITHUB_TOKEN` |
+| `dx_auth_load_op_service_account_token` | `OP_SERVICE_ACCOUNT_TOKEN` | host credential files |
+
+**Example — cron / automation:**
+
+```bash
+# Nightly enrichment (uses cached ZAI_API_KEY)
+0 3 * * * /path/to/agent-skills/scripts/enrichment/enrichment-cron-wrapper.sh >> /tmp/enrichment.log 2>&1
+```
+
+**Canonical VM fleet pattern:**
+
+```bash
+# Refresh hub (epyc12 only)
+*/15 * * * * /home/fengning/agent-skills/scripts/dx-job-wrapper.sh refresh-op-cache -- /home/fengning/agent-skills/scripts/dx-refresh-op-caches.sh
+
+# Consumer host (for example macmini)
+DX_AUTH_CACHE_ONLY=1
+2,17,32,47 * * * * ~/agent-skills/scripts/dx-job-wrapper.sh sync-op-cache -- ~/agent-skills/scripts/dx-sync-op-caches.sh
+```
+
+**Fresh-device repair:**
+
+```bash
+~/agent-skills/scripts/dx-bootstrap-auth.sh --json
+```
+
+This checks local agent auth first, syncs OP cache artifacts from `epyc12` on
+cache miss, then checks again. It does not use macOS GUI `op signin` as an
+agent readiness signal.
+
+**Example — script preamble:**
+
+```bash
+#!/usr/bin/env bash
+source scripts/lib/dx-auth.sh
+dx_auth_load_zai_api_key || { echo "BLOCKED: ZAI_API_KEY" >&2; exit 1; }
+# $ZAI_API_KEY is now exported and ready
+```
+
+**How the cache works:**
+
+1. If the target env var is already set (and not an `op://` reference), return immediately.
+2. Check the local cache file (`~/.cache/dx/op-secrets/`). If fresh (within TTL), read from it.
+3. On cache miss, load the OP service account token and refresh the cache via `op item get`.
+4. Export the resolved value.
+
+### Export for CLI Usage (cron/CI)
+
+```bash
+# GitHub CLI — use cached loader
+source scripts/lib/dx-auth.sh && dx_auth_load_github_token
+gh auth status  # Should show: ✓ Logged in to github.com (GH_TOKEN)
+
+# Railway CLI auth (same invocation recommended)
+~/agent-skills/scripts/dx-load-railway-auth.sh -- railway status
+```
+
+### Read Multiple Fields at Once (Human Recovery Only)
+
+```bash
+# HUMAN_RECOVERY_ONLY
+op item get --vault dev Agent-Secrets-Production --fields ZAI_API_KEY,RAILWAY_API_TOKEN,GITHUB_TOKEN
+```
+
+## Railway Variables
+
+### Railway CLI Token (Non-Interactive)
+
+```bash
+~/agent-skills/scripts/dx-load-railway-auth.sh -- railway whoami
+```
+
+If cache/service-account auth is unavailable in agent mode, fail closed and return a blocker. Human recovery can use:
+
+```bash
+~/agent-skills/scripts/dx-load-railway-auth.sh -- railway whoami
+```
+
+### App Runtime Secrets: Use Railway Context, Not `op read`
+
+If a secret belongs to the deployed app or service runtime, do **not** invent a 1Password path for it.
+
+Wrong:
+Raw `op read` against an invented app-runtime secret path (human recovery examples stay in the appendix only).
+
+Right:
+
+```bash
+# Verify the secret exists in the service runtime without printing it
+~/agent-skills/scripts/dx-load-railway-auth.sh -- \
+  ~/agent-skills/scripts/dx-railway-run.sh -- sh -lc 'test -n "$EODHD_CRON_SHARED_SECRET" && echo configured'
+
+# Use the secret inside Railway context so it never needs to be echoed locally
+~/agent-skills/scripts/dx-load-railway-auth.sh -- \
+  ~/agent-skills/scripts/dx-railway-run.sh -- sh -lc '
+    curl -sS -X POST \
+      -H "Content-Type: application/json" \
+      -H "X-PR-CRON-SECRET: $EODHD_CRON_SHARED_SECRET" \
+      "$BACKEND_INTERNAL_URL/api/v2/internal/eodhd/cron/eod"
+  '
+```
+
+For Prime Radiant dev investigations, the active orchestrator is Railway-hosted Windmill on the canonical unsuffixed Railway stack. Check the Windmill workspace assets under `f/eodhd/*` before assuming the deprecated `eodhd-cron` service is the primary runtime surface.
+
+### Railway Service URL Variables
+
+Railway automatically injects these URL variables into services:
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `RAILWAY_SERVICE_FRONTEND_URL` | Public URL for frontend service | `https://myapp.up.railway.app` |
+| `RAILWAY_SERVICE_BACKEND_URL` | Public URL for backend service | `https://api.myapp.up.railway.app` |
+| `RAILWAY_STATIC_URL` | Static URL (legacy) | `https://myapp.up.railway.app` |
+
+**Usage in services:**
+```bash
+# In Railway service, these are auto-injected
+curl "$RAILWAY_SERVICE_BACKEND_URL/health"
+```
+
+**Local development fallback:**
+```bash
+# Use localhost when not in Railway
+BACKEND_URL="${RAILWAY_SERVICE_BACKEND_URL:-http://localhost:3000}"
+```
+
+## Rules
+
+- Never hardcode secrets in repos.
+- Prefer synced cache or service-account auth over interactive biometric auth
+  for agents, cron, systemd, and LaunchAgents.
+- **Use cached secret helpers** (`dx_auth_read_secret_cached`, `dx_auth_load_zai_api_key`, etc.) for cron, systemd, automation, and repeated secret reads.
+- In agent sessions, raw `op read`, `op item get`, `op item list`, and `op whoami` are forbidden for routine secret access.
+- Human GUI-backed OP is bootstrap/recovery only and must be labeled as such.
+- On cache/service-account miss, fail closed with a blocker; never silently fall back to GUI OP.
+- Do not run OP retry loops unless the task is explicitly auth-repair.
+- Prefer `op://...` references in env templates and resolve at runtime via `op run --env-file=... -- <command>`.
+- Avoid printing secrets in logs. If you must verify, do it once and then stop output.
+- Use grep/cut instead of jq for field extraction (more portable).
+- Do not put `OP_SERVICE_ACCOUNT_TOKEN` or `RAILWAY_API_TOKEN` in `~/.zshrc` or `~/.zshenv`.
+- Do not guess 1Password item names for app runtime secrets. If the value belongs to a deployed service, fetch it from Railway context.
+- Do not diagnose OP rate limits as sign-in failures without checking `dx-op-auth-status.sh --json` first.
+
+## References
+
+- **Comprehensive Index**: `~/agent-skills/docs/SECRETS_INDEX.md` - Full secrets and env variables catalog
+- **Related Docs**:
+  - `~/agent-skills/docs/ENV_SOURCES_CONTRACT.md` - Environment source mapping
+  - `~/agent-skills/docs/SECRET_MANAGEMENT.md` - Detailed secret management guide
+  - `~/agent-skills/docs/SERVICE_ACCOUNTS.md` - Service account architecture
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/stars-end) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
