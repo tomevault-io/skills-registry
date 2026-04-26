@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [intent-solutions-io/plugins-nixtla](https://github.com/intent-solutions-io/plugins-nixtla/tree/main/003-skills/.claude/skills/nixtla-timegpt2-migrator)
+Original source: [intent-solutions-io/plugins-nixtla](https://github.com/intent-solutions-io/plugins-nixtla/tree/main/000-docs/000a-planned-skills/core-forecasting/nixtla-timegpt2-migrator)
 
 ---
 
