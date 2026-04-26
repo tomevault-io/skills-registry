@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [frankxai/arcanea-marketplace](https://github.com/frankxai/arcanea-marketplace/tree/main/plugins/golden-age-author/skills)
+Original source: [frankxai/arcanea-marketplace](https://github.com/frankxai/arcanea-marketplace/tree/main/plugins/oracle-intelligence/skills)
 
 ---
 
