@@ -1,11 +1,11 @@
 # ai-serving-apis
 
-> Skill by [lebsral](https://github.com/lebsral/dspy-programming-not-prompting-lms-skills) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [lebsral](https://github.com/lebsral/DSPy-Programming-not-prompting-LMs-skills) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lebsral/dspy-programming-not-prompting-lms-skills](https://github.com/lebsral/dspy-programming-not-prompting-lms-skills/tree/main/skills/ai-serving-apis)
+Original source: [lebsral/DSPy-Programming-not-prompting-LMs-skills](https://github.com/lebsral/DSPy-Programming-not-prompting-LMs-skills/tree/main/skills/ai-serving-apis)
 
 ---
 
