@@ -1,0 +1,44 @@
+---
+name: skill-task-model
+description: Standards for Technical Specifications (TASK) and Use Cases. Use when this capability is needed.
+metadata:
+  author: matrixfounder
+---
+
+# TASK Model & Examples
+
+**Purpose**: Defines the structure and quality standards for Technical Specifications to ensure unambiguous implementation.
+
+## 1. Red Flags (Anti-Rationalization)
+**STOP if you are thinking:**
+- "I'll figure out the edge cases while coding" -> **WRONG**. define Alternative Scenarios NOW.
+- "Acceptance Criteria: 'It works'" -> **WRONG**. Criteria must be binary (Pass/Fail) and specific.
+- "I don't need actors, it's just a backend job" -> **WRONG**. "System" is an actor. "Cron Job" is an actor.
+
+## 2. TASK Structure Rules
+- **Meta Information:** Section 0 MUST include Task ID and Slug.
+- **Use Cases:** Must be structured with Actors, Preconditions, Main Scenario, Alternative Scenarios, Postconditions, and Acceptance Criteria.
+- **Validation:** Criteria must be verifiable.
+
+## 3. Examples
+
+### ✅ Example of Good Use Case
+> [!TIP]
+> See `examples/good_use_case.md` for a complete, structured example.
+
+### ❌ Example of Bad Use Case
+> [!TIP]
+> See `examples/bad_use_case.md` for what NOT to do.
+
+### Rationalization Table
+| Agent Excuse | Reality / Counter-Argument |
+| :--- | :--- |
+| "Writing scenarios takes too long" | Rewriting code because of missed edge cases takes 3x longer. |
+| "It's obvious what happens" | Obvious to *you* now. Not obvious to the Code Reviewer or you in 2 weeks. |
+
+## 4. Resources
+- `examples/`: Reference use cases.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/matrixfounder) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
