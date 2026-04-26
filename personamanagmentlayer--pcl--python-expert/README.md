@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [personamanagmentlayer/pcl](https://github.com/personamanagmentlayer/pcl/tree/main/docs/examples/skills/python-expert)
+Original source: [personamanagmentlayer/pcl](https://github.com/personamanagmentlayer/pcl/tree/main/stdlib/languages/python-expert)
 
 ---
 
