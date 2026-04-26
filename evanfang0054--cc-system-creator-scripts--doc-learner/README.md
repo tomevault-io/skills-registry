@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [evanfang0054/cc-system-creator-scripts](https://github.com/evanfang0054/cc-system-creator-scripts/tree/main/skills/doc-learner)
+Original source: [evanfang0054/cc-system-creator-scripts](https://github.com/evanfang0054/cc-system-creator-scripts/tree/main/.claude/skills/doc-learner)
 
 ---
 
