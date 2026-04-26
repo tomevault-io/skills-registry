@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [raintree-technology/claude-starter](https://github.com/raintree-technology/claude-starter/tree/main/skills/aptos)
+Original source: [raintree-technology/claude-starter](https://github.com/raintree-technology/claude-starter/tree/main/templates/.claude/skills/aptos)
 
 ---
 
