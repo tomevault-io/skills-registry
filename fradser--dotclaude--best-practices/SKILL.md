@@ -2,7 +2,7 @@
 name: best-practices
 description: Language-specific best practices, code quality standards, and framework detection rules. Use when executing refactoring workflows, applying code quality rules, detecting frameworks, or checking language-specific patterns for TypeScript, Python, Go, Swift, or React. Use when this capability is needed.
 metadata:
-  author: FradSer
+  author: fradser
 ---
 
 # Best Practices
@@ -46,5 +46,5 @@ For Next.js projects, the `references/react/` directory provides:
 - **File Organization**: Single Responsibility applies at file level; files with multiple concerns are candidates for splitting (see `references/universal.md`)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/FradSer) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/fradser) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
