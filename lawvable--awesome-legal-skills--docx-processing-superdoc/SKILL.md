@@ -1,0 +1,51 @@
+---
+name: docx-processing-superdoc
+description: Searches, replaces, and reads text in Word documents. Use when the user asks to edit, search, or extract text from .docx files. Use when this capability is needed.
+metadata:
+  author: lawvable
+---
+
+# SuperDoc CLI
+
+Edit Word documents from the command line. Use instead of python-docx.
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `npx @superdoc-dev/cli@latest search <pattern> <files...>` | Find text across documents |
+| `npx @superdoc-dev/cli@latest replace <find> <to> <files...>` | Find and replace text |
+| `npx @superdoc-dev/cli@latest read <file>` | Extract plain text |
+
+## When to Use
+
+Use superdoc when the user asks to:
+- Search text in .docx files
+- Find and replace text in Word documents
+- Extract text content from .docx files
+- Bulk edit multiple Word documents
+
+## Examples
+
+```bash
+# Search across documents
+npx @superdoc-dev/cli@latest search "indemnification" ./contracts/*.docx
+
+# Find and replace
+npx @superdoc-dev/cli@latest replace "ACME Corp" "Globex Inc" ./merger/*.docx
+
+# Extract text
+npx @superdoc-dev/cli@latest read ./proposal.docx
+
+# JSON output for scripting
+npx @superdoc-dev/cli@latest search "Article 7" ./**/*.docx --json
+```
+
+## Options
+
+- `--json` — Machine-readable output
+- `--help` — Show help
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lawvable) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
