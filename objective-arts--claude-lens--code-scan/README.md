@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [objective-arts/claude-lens](https://github.com/objective-arts/claude-lens/tree/main/canon/code-scan)
+Original source: [objective-arts/claude-lens](https://github.com/objective-arts/claude-lens/tree/main/phases/code-scan)
 
 ---
 
