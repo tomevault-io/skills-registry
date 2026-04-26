@@ -1,0 +1,291 @@
+---
+name: claude-tracker-suite
+description: Claude Code session management suite: search sessions by topic/ID, resume crashed sessions, spawn new sessions (interactive or headless), monitor live sessions, detect projects, auto-summarize new sessions, and bootstrap new setups. This skill should be used when searching past sessions, checking running sessions, resuming work, spawning new sessions, or bootstrapping a new machine. Use when this capability is needed.
+metadata:
+  author: tdimino
+---
+
+# Claude Session Management Suite
+
+Search, browse, monitor, and manage Claude Code session history across all projects.
+
+## Tools Overview
+
+| Tool | Purpose |
+|------|---------|
+| `claude-tracker-search` | Search sessions by keyword or ID prefix (standalone script) |
+| `open-sessions.js` | List top N sessions, open selected in cmux tabs/splits |
+| `claude-tracker-resume` | Find and resume crashed/inactive sessions |
+| `claude-tracker-alive` | Check which sessions have running processes |
+| `claude-tracker-watch` | Daemon: auto-summarize new sessions, update active-projects.md |
+| `claude-tracker` | List recent sessions with status badges (standalone script) |
+| `new-session.sh` | Start a new session in Ghostty/VSCode/Cursor, with optional prompt or headless mode |
+| `resume-session.sh` | Open a session in a cmux tab (optionally open project in VS Code/Cursor) |
+| `detect-projects.js` | Scan sessions to find all projects, check CLAUDE.md coverage |
+| `bootstrap-claude-setup.js` | Generate complete ~/.claude/ config for new machine |
+| `update-active-projects.py` | Regenerate active-projects.md with enriched session data |
+
+## Standalone Scripts
+
+Commands delegate to standalone Node.js scripts (avoids shell escaping issues with inline `node -e`):
+
+| Script | Called By | Purpose |
+|--------|-----------|---------|
+| `scripts/search-sessions.js` | `/claude-tracker-search` | Keyword search or `--id` prefix lookup across all sessions |
+| `scripts/open-sessions.js` | Direct invocation | List top N sessions, open in cmux tabs/splits with confirmation |
+| `scripts/list-sessions.js` | `/claude-tracker` | List recent sessions with status badges |
+| `scripts/new-session.sh` | `/spawn` | Start new interactive or prompt-driven session in Ghostty/VSCode/Cursor or headless |
+| `scripts/resume-session.sh` | Direct invocation | Open session in cmux tab, optionally open project in VS Code/Cursor |
+| `scripts/detect-projects.js` | Direct invocation | Project discovery and CLAUDE.md scaffolding |
+| `scripts/bootstrap-claude-setup.js` | Direct invocation | New machine setup generator |
+
+All scripts use `~/.claude/lib/tracker-utils.js` for shared utilities (path decoding, session parsing, git remote detection).
+
+## Quick Start
+
+```bash
+# Search by topic
+claude-tracker-search "kothar mac mini"
+
+# Lookup by session ID prefix (exact directory from JSONL ground truth)
+node ~/.claude/skills/claude-tracker-suite/scripts/search-sessions.js --id d7b8f4dd
+
+# Search by session name/slug only (fast — no JSONL body scan)
+claude-tracker-search "thera" --name
+
+# List top 10 sessions, open selected in cmux tabs
+node ~/.claude/skills/claude-tracker-suite/scripts/open-sessions.js
+
+# Open top 5 as vertical splits
+node ~/.claude/skills/claude-tracker-suite/scripts/open-sessions.js --limit 5 --split right
+
+# Check what's alive
+claude-tracker-alive
+
+# Resume crashed sessions in tmux
+claude-tracker-resume --tmux
+
+# Start auto-summarize daemon
+claude-tracker-watch --daemon
+```
+
+## Search
+
+```bash
+claude-tracker-search "$ARGUMENTS"
+```
+
+**Search targets** (weighted ranking): Summary (3x), First prompt (2x), Project name (1x), Git branch (1x).
+
+| Flag | Description |
+|------|-------------|
+| `--limit <n>` | Max results (default: 20) |
+| `--id <prefix>` | Lookup by session ID prefix (8+ chars) |
+| `--project <name>` | Filter by project name (substring) |
+| `--since <duration>` | Recent only: `7d`, `24h`, `30m`, `2w` |
+| `--json` | Machine-readable JSON output |
+| `--name` | Search only session names, slugs, summaries—skips JSONL body scan (fast) |
+| `--fzf` | Interactive selection via fzf (outputs resume command) |
+
+## Resume Crashed Sessions
+
+```bash
+claude-tracker-resume                    # List crashed sessions with resume commands
+claude-tracker-resume --tmux             # Resume all in tmux windows
+claude-tracker-resume --zsh              # Resume all in Terminal.app tabs (macOS)
+claude-tracker-resume --all              # Include non-VS Code sessions
+claude-tracker-resume --dry-run          # Preview without acting
+```
+
+Smart fallback: if `--resume` fails on an expired session, automatically starts a fresh session in that project directory. Sessions older than 7 days show a STALE badge.
+
+## Alive Detection
+
+Check which sessions have running Claude processes:
+
+```bash
+claude-tracker-alive                     # Running + stale sessions overview
+claude-tracker-alive --running           # Only sessions with active processes
+claude-tracker-alive --stale             # Only sessions with no process
+claude-tracker-alive --json              # Machine-readable output
+```
+
+Cross-references running `claude` PIDs (via `pgrep` + `lsof`) against recent session files. Sessions >3 days without a process show an OLD badge.
+
+## Auto-Summarize Daemon
+
+Watch for new sessions and auto-populate summary cache:
+
+```bash
+claude-tracker-watch --status            # Check if daemon is running
+claude-tracker-watch --daemon            # Start in background
+claude-tracker-watch --stop              # Stop running daemon
+claude-tracker-watch --verbose           # Foreground with debug output
+```
+
+The daemon watches `~/.claude/projects/*/sessions-index.json` for changes. When new sessions appear, it caches summaries from Claude Code metadata and regenerates `active-projects.md`. See `references/daemon-setup.md` for launchd plist and lifecycle details.
+
+## Session Listing
+
+```bash
+claude-tracker                           # All recent sessions
+claude-tracker vscode                    # VS Code sessions only
+```
+
+## Detect Projects
+
+```bash
+node ~/.claude/skills/claude-tracker-suite/scripts/detect-projects.js                # List all
+node ~/.claude/skills/claude-tracker-suite/scripts/detect-projects.js --suggest      # Suggest additions
+node ~/.claude/skills/claude-tracker-suite/scripts/detect-projects.js --scaffold     # Create CLAUDE.md stubs
+node ~/.claude/skills/claude-tracker-suite/scripts/detect-projects.js --since 30d    # Recent only
+```
+
+## Update Active Projects
+
+```bash
+python3 ~/.claude/scripts/update-active-projects.py              # Regenerate active-projects.md
+python3 ~/.claude/scripts/update-active-projects.py --summarize  # Show sessions needing summaries
+```
+
+The generated table includes Model, Turns, and Cost columns from enriched session data (extracted from JSONL transcripts). Git worktree sessions show a tree emoji badge. Sessions without summaries are auto-named via one-shot `claude --model haiku` call.
+
+## Bootstrap New Setup
+
+Generate a complete `~/.claude/` configuration for a new machine:
+
+```bash
+node ~/.claude/skills/claude-tracker-suite/scripts/bootstrap-claude-setup.js --user "Name" --dry-run
+node ~/.claude/skills/claude-tracker-suite/scripts/bootstrap-claude-setup.js --user "Name"
+```
+
+Creates directory structure, global CLAUDE.md, userModel template, agent_docs stubs, and project CLAUDE.md scaffolds. Follow up with `/claude-md-manager` to enrich generated files.
+
+## Resume in New Terminal
+
+Open a session in a new cmux tab, optionally opening the project in an editor:
+
+```bash
+# Resume in cmux tab (default — auto-detects project directory)
+~/.claude/skills/claude-tracker-suite/scripts/resume-session.sh <session-id>
+
+# Resume in cmux + open project in VS Code
+~/.claude/skills/claude-tracker-suite/scripts/resume-session.sh <session-id> --vscode
+
+# Resume in cmux + open project in Cursor
+~/.claude/skills/claude-tracker-suite/scripts/resume-session.sh <session-id> --cursor
+
+# Explicit project directory
+~/.claude/skills/claude-tracker-suite/scripts/resume-session.sh <session-id> --project ~/Desktop/Programming
+```
+
+cmux owns the terminal lifecycle. Editor flags (`--vscode`, `--cursor`) only open the project in the editor — the session always resumes in cmux. Falls back to printing the resume command if cmux is not running.
+
+## New Session / Spawn
+
+Start a new Claude Code session in a terminal tab or headless:
+
+```bash
+# Interactive session in Ghostty (default)
+~/.claude/skills/claude-tracker-suite/scripts/new-session.sh ~/my-project
+
+# With a specific model
+~/.claude/skills/claude-tracker-suite/scripts/new-session.sh ~/my-project --model opus
+
+# Prompt-driven session in Ghostty tab
+~/.claude/skills/claude-tracker-suite/scripts/new-session.sh ~/my-project --prompt "fix the login bug"
+
+# Prompt-driven in VS Code terminal
+~/.claude/skills/claude-tracker-suite/scripts/new-session.sh ~/my-project --vscode --prompt "fix the login bug"
+
+# Headless — runs in current terminal, returns JSON
+~/.claude/skills/claude-tracker-suite/scripts/new-session.sh ~/my-project --headless --prompt "summarize the README"
+
+# Headless with specific model and output format
+~/.claude/skills/claude-tracker-suite/scripts/new-session.sh ~/my-project --headless --prompt "fix tests" --model haiku --output-format text
+```
+
+Headless and prompt-driven modes use `claude -p` (the Agent SDK CLI). Note: `-p` is now officially part of the Claude Agent SDK—it uses SDK billing, not interactive session billing. Terminal modes use the clipboard-paste AppleScript pattern for reliable command delivery (handles special characters in prompts).
+
+## Workflow: Find and Resume
+
+1. `claude-tracker-search "topic"` — find matching sessions
+2. `claude --resume <session-id>` — resume in current terminal
+3. `open-sessions.js` — list top sessions, open selected in cmux tabs
+4. Or `claude-tracker-resume --tmux` — auto-resume all crashed sessions
+
+## Workflow: Open Sessions in cmux
+
+List recent sessions and open them in cmux tabs or splits:
+
+```bash
+# List top 10, prompt for selection
+node ~/.claude/skills/claude-tracker-suite/scripts/open-sessions.js
+
+# Open as vertical splits
+node ~/.claude/skills/claude-tracker-suite/scripts/open-sessions.js --split right
+
+# Open all without confirmation
+node ~/.claude/skills/claude-tracker-suite/scripts/open-sessions.js --yes
+
+# JSON output for scripting
+node ~/.claude/skills/claude-tracker-suite/scripts/open-sessions.js --json
+```
+
+Session directories are resolved from JSONL ground truth (`decodeProjectPath`), not from `active-projects.md`. Falls back to printing resume commands when cmux is unavailable.
+
+For the full cmux CLI reference, see `references/cmux-commands.md`.
+
+## Workflow: Monitor Active Work
+
+1. `claude-tracker-alive` — see what's running vs stale
+2. `claude-tracker-watch --daemon` — keep summaries auto-updated
+3. Read `~/.claude/agent_docs/active-projects.md` — curated project overview
+
+## Related: Git Tracking
+
+Git-aware session tracking via PreToolUse/PostToolUse hooks intercepts all git commands and tags sessions with repos they touch. Enables cross-directory session discovery.
+
+| File | Purpose |
+|------|---------|
+| `~/.claude/hooks/git-track.sh` | PreToolUse hook — logs git commands to JSONL |
+| `~/.claude/hooks/git-track-post.sh` | PostToolUse hook — captures commit hashes |
+| `~/.claude/hooks/git-track-rebuild.py` | Builds bidirectional index at SessionEnd |
+| `~/.claude/git-tracking.jsonl` | Append-only event log (hot path) |
+| `~/.claude/git-tracking-index.json` | Bidirectional session <-> repo index |
+
+Query functions in `tracker-utils.js`:
+- `loadGitTracking()` — load the index
+- `getSessionsForRepo(path)` — find sessions that touched a repo
+- `getReposForSession(sid)` — find repos a session touched
+- `getRecentCommits({hours, repoPath})` — recent commits across sessions
+- `getRecentGitEvents({hours})` — raw event timeline
+
+The `/session-report` command generates a Markdown dashboard combining session status with git activity.
+
+## Related: Soul Registry
+
+The soul registry (`~/.claude/hooks/soul-registry.py`) tracks **live** sessions with heartbeats, topics, and Slack channel bindings. It complements the tracker suite:
+
+| | Tracker Suite | Soul Registry |
+|--|---------------|---------------|
+| **Scope** | All sessions, all time | Active sessions only |
+| **Data source** | JSONL transcripts, sessions-index.json | `~/.claude/soul-sessions/registry.json` |
+| **Updates** | After session ends (summaries) | Real-time (heartbeat every turn) |
+| **Purpose** | Search, resume, project detection | Cross-session awareness, Slack binding |
+
+To view the live registry: `python3 ~/.claude/hooks/soul-registry.py list --md`
+
+To activate Claudicle identity in a session: `/ensoul` (opt-in per session). To bind a session to Slack: `/slack-sync #channel`.
+
+## References
+
+For detailed schemas and infrastructure:
+
+- `references/data-schemas.md` — Session index, summary cache, and JSONL transcript schemas; data source locations; shared library API
+- `references/daemon-setup.md` — Watcher daemon lifecycle and launchd plist template
+- `references/cmux-commands.md` — Complete cmux CLI reference: hierarchy, splits, tabs, input, browser, sidebar, notifications, keyboard shortcuts
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tdimino) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
