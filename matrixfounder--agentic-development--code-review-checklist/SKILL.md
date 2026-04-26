@@ -1,0 +1,51 @@
+---
+name: code-review-checklist
+description: Structured checklist for code review: bugs, style, performance, security, docs. Use when this capability is needed.
+metadata:
+  author: matrixfounder
+---
+# Code Review Checklist
+
+## 1. Task Compliance
+- [ ] **Requirements:** Fulfills all "Changes Description" items?
+- [ ] **Acceptance Criteria:** Met?
+- [ ] **Use Cases:** Main scenario works?
+
+## 2. Implementation Quality
+- [ ] **Top-Down/Stubs:**
+    - *Stub Task:* Returns hardcoded values? NO logic? E2E checks hardcode?
+    - *Impl Task:* Real logic replaces stub? E2E updated?
+- [ ] **No Duplication:** used existing methods/helpers?
+- [ ] **Error Handling:** Exceptions caught and logged?
+- [ ] **Code Smells:** No magic numbers, understandable names?
+
+## 3. Documentation "First"
+- [ ] **Directory Docs:** `.AGENTS.md` updated for touched source directories under memory tracking policy (or bootstrap step recorded)?
+- [ ] **Docstrings:** Present for new classes/methods? (Google/JSDoc)
+- [ ] **Project Docs:** README updated if architecture changed?
+
+## 4. Testing
+- [ ] **E2E:** Passed? Checks main scenario?
+- [ ] **Regression:** All passed?
+- [ ] **Unit:** Edge cases covered?
+- [ ] **No Mocking:** Real LLM/DB used in integration tests?
+
+## 5. Consistency
+- [ ] **Backward Compatibility:** Existing consumers not broken?
+- [ ] **Architecture:** Follows layers (Service -> Repo)?
+- [ ] **Style:** Matches project conventions?
+
+## 6. High Assurance (If Tier 3 Active)
+- [ ] **Fail Reason Verified?** Did the tests fail exactly as predicted?
+- [ ] **Pass Reason Rational?** Does `EXPLAIN_PASS_REASON` match the code?
+- [ ] **Law of Minimalism:** No dead code? No speculation?
+- [ ] **Mutation Check:** If you delete a line, does it fail?
+
+## Criticality Protocol
+- 🔴 **BLOCKING:** Task not done, Test failure, Broken compat, Stub violation (Logic in stub task).
+- 🟡 **MAJOR:** Documentation missing, Duplication, Poor names.
+- 🟢 **MINOR:** Style nits.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/matrixfounder) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
