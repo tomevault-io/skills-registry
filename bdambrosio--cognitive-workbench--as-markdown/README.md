@@ -1,0 +1,13 @@
+# as-markdown
+
+> Skill by [bdambrosio](https://github.com/bdambrosio/cognitive_workbench) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [bdambrosio/cognitive_workbench](https://github.com/bdambrosio/cognitive_workbench/tree/main/src/tools_out/as-markdown)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
