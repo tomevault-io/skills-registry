@@ -2,7 +2,7 @@
 name: i18n-setup-wizard
 description: Sets up complete internationalization infrastructure for React, Vue, Next.js, or vanilla JS with framework config, translation files, and language switching. Use when user asks to "setup i18n", "add translations", "multi-language support", or "internationalization setup".
 metadata:
-  author: Dexploarer
+  author: dexploarer
 ---
 
 # i18n Setup Wizard
@@ -535,5 +535,5 @@ test('renders translated text', () => {
 - [ ] Test all languages
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Dexploarer) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dexploarer) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
