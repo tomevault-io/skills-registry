@@ -1,11 +1,11 @@
 # ci-cd-pipeline
 
-> Skill by [korallis](https://github.com/korallis/droidz) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [korallis](https://github.com/korallis/Droidz) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [korallis/droidz](https://github.com/korallis/droidz/tree/main/droidz_installer/payloads/claude/default/skills/ci-cd-pipeline)
+Original source: [korallis/Droidz](https://github.com/korallis/Droidz/tree/main/droidz_installer/payloads/claude/default/skills/ci-cd-pipeline)
 
 ---
 
