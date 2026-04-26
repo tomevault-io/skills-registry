@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [purpleailab/vigilo](https://github.com/purpleailab/vigilo/tree/main/packages/claude/skills/vulnerability-patterns/logic-error)
+Original source: [purpleailab/vigilo](https://github.com/purpleailab/vigilo/tree/main/packages/opencode/skills/logic-error)
 
 ---
 
