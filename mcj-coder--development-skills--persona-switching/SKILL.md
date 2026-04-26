@@ -1,0 +1,483 @@
+---
+name: persona-switching
+description: Use when setting up multi-identity Git/GitHub workflows or when phase transitions require role-specific personas for commits and operations.
+metadata:
+  author: mcj-coder
+---
+
+# Persona-Switching
+
+## Overview
+
+Enable repositories to adopt multi-identity Git/GitHub workflows where agents work
+under role-specific personas (e.g., "Claude (Backend Engineer)") while maintaining
+GPG signing integrity and appropriate permission levels.
+
+**Skill announcement:** "Using persona-switching to [set up multi-identity workflow |
+switch to appropriate role | suggest persona for this phase]."
+
+## Prerequisites
+
+- **Shell**: Bash or Zsh (Windows PowerShell not supported - see Limitations)
+- **GPG**: Installed with keys configured for each identity email
+- **gh CLI**: Installed and authenticated for each GitHub account
+- **Permissions**: Write access to `~/.config/<repo-name>/` for shell config
+
+## When to Use
+
+| Trigger Type  | Condition                                           | Action                                    |
+| ------------- | --------------------------------------------------- | ----------------------------------------- |
+| Explicit      | User requests "set up personas" or "switch persona" | Full setup or quick switch                |
+| Bootstrap     | `repo-best-practices-bootstrap` runs on target repo | Prompt: "Enable multi-identity workflow?" |
+| Workflow      | issue-driven-delivery phase transition              | Suggest appropriate persona for phase     |
+| Role mismatch | Current persona doesn't match task context          | Recommend persona switch                  |
+
+## Core Workflow
+
+1. Check for existing persona configuration in target repo
+2. If missing: run Setup Flow (role discovery, security profile configuration, artifact generation)
+3. Source the persona config script for current session
+4. Use `use_persona <role>` to switch to appropriate persona for current task
+5. Verify switch with `show_persona` and `gh auth status`
+6. Perform work under the switched persona identity
+7. Switch back to appropriate persona when task context changes
+
+## Detection Logic
+
+1. Check for existing `docs/playbooks/persona-switching.md` in target repo
+2. If exists: Skill provides runtime guidance only
+3. If missing: Skill triggers setup flow first
+
+## Setup Flow
+
+### Step 1: Role Discovery
+
+```text
+1. Check target repo for docs/roles/*.md
+   |-- Found: Parse frontmatter for role metadata
+   |          Fallback to file content if no frontmatter
+   |          Last resort: derive from filename
+   +-- Not found: Use reference personas as defaults
+
+2. Present discovered/default personas to user
+   +-- User can add, remove, or rename
+
+3. For each persona, prompt for security profile mapping
+   +-- Suggest based on role type (dev work vs elevated ops)
+```
+
+**Role file parsing priority:**
+
+1. Frontmatter: `name:`, `title:`, or `role:` fields
+2. Content: First H1 heading as role name
+3. Filename fallback: `tech-lead.md` -> "Tech Lead"
+
+### Step 2: Security Profile Configuration
+
+Configure N security profiles based on repository needs.
+
+**Default profiles (reference):**
+
+| Profile       | Purpose                   | Typical Permissions                    |
+| ------------- | ------------------------- | -------------------------------------- |
+| `contributor` | Standard development work | Push to branches, create PRs           |
+| `maintainer`  | Elevated operations       | Merge PRs, manage labels, close issues |
+| `admin`       | Repository administration | Branch protection, settings, releases  |
+
+**Configuration format:**
+
+```yaml
+security_profiles:
+  contributor:
+    github_account: "dev-bot-account"
+    email: "dev@company.com"
+    gpg_key: "ABC123..."
+  maintainer:
+    github_account: "lead-bot-account"
+    email: "lead@company.com"
+    gpg_key: "DEF456..."
+```
+
+### Step 3: Generate Artifacts
+
+1. Generate playbook: `docs/playbooks/persona-switching.md`
+2. Generate shell config: `~/.config/<repo-name>/persona-config.sh`
+3. Set file permissions: `chmod 600` on shell config (contains account mappings)
+4. Provide sourcing instructions for user's shell profile
+
+## Runtime Usage
+
+### Switching Personas
+
+```bash
+# Source the config (add to shell profile for persistence)
+source ~/.config/<repo-name>/persona-config.sh
+
+# Switch to a persona
+use_persona backend-engineer
+
+# Verify current persona
+show_persona
+```
+
+### What `use_persona` Does
+
+1. Switches `gh` CLI to correct GitHub account
+2. Updates Git config: `user.name`, `user.email`, `user.signingkey`
+3. Verifies GPG key is available
+4. Reports success or failure with actionable message
+
+### Persona-to-Profile Mapping
+
+Each persona maps to exactly one security profile:
+
+| Persona           | Default Profile | Rationale                                  |
+| ----------------- | --------------- | ------------------------------------------ |
+| Backend Engineer  | contributor     | Implementation work                        |
+| Frontend Engineer | contributor     | Implementation work                        |
+| QA Engineer       | contributor     | Test development                           |
+| Tech Lead         | maintainer      | Approvals, label management                |
+| Scrum Master      | maintainer      | Issue triage, workflow management          |
+| Security Engineer | contributor     | Reviews (escalate to maintainer if needed) |
+
+## Ownership Model
+
+### Phase Ownership (issue-driven-delivery integration)
+
+| Phase           | Default Owner          | Delegation Pattern                                           |
+| --------------- | ---------------------- | ------------------------------------------------------------ |
+| Refinement      | Tech Lead              | Invokes specialists for domain-specific input                |
+| Implementation  | Domain expert (varies) | Invokes specialists for sub-tasks + pre-verification reviews |
+| Verification    | QA Engineer            | Invokes Architecture/Security/Performance for expert reviews |
+| Review/Approval | Tech Lead              | Lightweight - work already validated                         |
+
+### Delegation Mechanics
+
+| Situation               | Mechanism            | Rationale                          |
+| ----------------------- | -------------------- | ---------------------------------- |
+| Quick review (< 10 min) | Persona switch       | Low overhead, stays in flow        |
+| Substantial sub-task    | Sub-agent delegation | Parallel work, cleaner separation  |
+| Multi-domain work       | Multiple sub-agents  | Backend + Frontend simultaneously  |
+| Expert consultation     | Persona switch       | Brief input, owner retains context |
+
+**Rule of thumb:** Switch for >3 commits in a role; delegate for single focused tasks.
+
+### "Dev Complete" Gate
+
+Before transitioning from Implementation to Verification:
+
+1. Owner invokes relevant specialist personas for review
+2. Each specialist validates their domain concerns
+3. Only after specialist sign-off does work move to QA
+
+This front-loads validation so final Review/Approval is a formality.
+
+## Workflow Integration
+
+### Automatic Suggestions
+
+| Workflow Step                    | Persona Suggestion          | Trigger                            |
+| -------------------------------- | --------------------------- | ---------------------------------- |
+| Step 3b (refinement start)       | Tech Lead                   | `state:refinement` label added     |
+| Step 7a (implementation handoff) | Domain expert based on task | `state:implementation` label added |
+| Step 8c (verification start)     | QA Engineer                 | `state:verification` label added   |
+| Step 11 (role reviews)           | Relevant specialists        | Review request in workflow         |
+
+### GPG Signing Compatibility
+
+Persona switching preserves GPG validity because:
+
+- GPG validates against email, not author name
+- Each security profile has consistent email + GPG key pairing
+- Author name changes ("Claude (Backend Engineer)") don't break signatures
+
+## Two-Account Review Workflow
+
+When branch protection rules require different accounts for PR creation and approval,
+use the two-account workflow.
+
+### Rationale
+
+Branch protection often requires:
+
+- PR cannot be merged by the author
+- Code owner approval required
+- Commits must be signed
+
+This creates a natural separation:
+
+| Account     | Profile       | Operations                             |
+| ----------- | ------------- | -------------------------------------- |
+| Contributor | `contributor` | Create branches, push commits, open PR |
+| Maintainer  | `maintainer`  | Review PR, approve, merge              |
+
+### Workflow Steps
+
+```text
+Implementation Phase (contributor account)
+    ↓
+1. use_persona backend-engineer  # contributor profile
+2. Implement changes
+3. Commit and push
+4. Create PR (gh pr create)
+    ↓
+Review Phase (maintainer account)
+    ↓
+5. use_persona tech-lead  # maintainer profile
+6. Review PR (gh pr view, gh pr diff)
+7. Approve PR (gh pr review --approve)
+8. Merge PR (gh pr merge --squash)
+    ↓
+Resume (contributor account)
+    ↓
+9. use_persona backend-engineer  # back to contributor
+10. Continue with next task
+```
+
+### Account Switching Commands
+
+```bash
+# Switch to contributor for implementation
+use_persona backend-engineer
+gh auth status  # Verify: contributor account
+
+# Create PR
+gh pr create --title "feat: description" --body "..."
+
+# Switch to maintainer for review
+use_persona tech-lead
+gh auth status  # Verify: maintainer account
+
+# Review and merge
+gh pr review <number> --approve --body "LGTM"
+gh pr merge <number> --squash --delete-branch
+
+# Switch back for next work
+use_persona backend-engineer
+```
+
+### Why Not Single Account?
+
+Single-account workflows bypass important controls:
+
+| Control               | Two-Account              | Single-Account         |
+| --------------------- | ------------------------ | ---------------------- |
+| Self-merge prevention | ✅ Enforced by GitHub    | ❌ Requires discipline |
+| Audit trail           | ✅ Clear author/approver | ⚠️ Same identity       |
+| Permission isolation  | ✅ Least privilege       | ❌ Elevated always     |
+| Code owner approval   | ✅ Different code owner  | ❌ Same person         |
+
+### Integration with Pair Programming
+
+The `pair-programming` skill uses two-account workflow automatically:
+
+1. Agent works as contributor during implementation
+2. Agent switches to maintainer for self-review (automated review loop)
+3. Human reviewer uses their account for final approval
+4. Agent (as maintainer) can merge after human approval
+
+See `skills/pair-programming/SKILL.md` for complete workflow.
+
+### Common Mistakes
+
+| Mistake                      | Impact                         | Prevention                       |
+| ---------------------------- | ------------------------------ | -------------------------------- |
+| Creating PR as maintainer    | Can't approve own PR           | Always create PR as contributor  |
+| Approving as contributor     | Approval rejected              | Switch to maintainer for reviews |
+| Merging without switching    | Merge fails or bypasses checks | Verify `gh auth status` first    |
+| Staying elevated after merge | Over-privileged for next task  | Switch back to contributor       |
+
+## Security Considerations
+
+### Credential Storage
+
+- **GPG keys**: Stored in user's GPG keyring (managed by `gpg-agent`)
+- **GitHub tokens**: Managed by `gh` CLI (stored in `~/.config/gh/hosts.yml`)
+- **Shell config**: Contains account mappings but NO secrets
+
+### GPG Agent Caching
+
+Configure `gpg-agent` for passphrase caching to avoid repeated prompts:
+
+```bash
+# ~/.gnupg/gpg-agent.conf
+default-cache-ttl 3600
+max-cache-ttl 7200
+```
+
+### Shell History
+
+The `use_persona` command does NOT expose secrets in shell history.
+Profile names are safe to log; actual credentials remain in secure storage.
+
+### File Permissions
+
+Generated shell config MUST have restricted permissions:
+
+```bash
+chmod 600 ~/.config/<repo-name>/persona-config.sh
+```
+
+This prevents other users from reading account mappings.
+
+## Limitations
+
+### Platform Compatibility
+
+| Platform             | Status           | Notes                                    |
+| -------------------- | ---------------- | ---------------------------------------- |
+| Linux                | ✅ Supported     | Native bash environment                  |
+| macOS                | ✅ Supported     | Requires bash 4.0+ (`brew install bash`) |
+| Windows (WSL2)       | ✅ Supported     | Use WSL2 with GPG4Win bridge             |
+| Windows (Git Bash)   | ⚠️ Partial       | Works but GPG integration complex        |
+| Windows (PowerShell) | ❌ Not Supported | Bash/Zsh shell required                  |
+
+**Windows Users:** This skill requires a bash-compatible shell. Options:
+
+1. **WSL2 (Recommended)**: Install WSL2 with Ubuntu, configure GPG passthrough
+2. **Git Bash**: Install Git for Windows, use bundled bash with GPG4Win
+
+### Other Limitations
+
+- **SSH signing**: GPG-based signing only; SSH signing keys planned for future
+- **Platform scope**: GitHub-focused; Azure DevOps/GitLab integration planned
+- **Bash version**: Requires bash 4.0+ for associative arrays
+
+## Common Mistakes
+
+**Red flags - STOP:**
+
+- "I'll just change user.email manually" (breaks GPG signing)
+- "Skip persona switch, it's a small change" (loses audit trail)
+- "Use admin profile for everything" (violates least-privilege)
+- "Commit as maintainer during implementation" (wrong permission level)
+
+**Correct approach:**
+
+- Always use `use_persona` to switch (handles all config atomically)
+- Switch to appropriate role even for small changes
+- Use contributor profile for implementation work
+- Elevate to maintainer only for approvals/merges
+
+## Evidence Requirements
+
+### Setup Evidence
+
+- [ ] Playbook generated at `docs/playbooks/persona-switching.md`
+- [ ] Shell config generated with `chmod 600` permissions
+- [ ] GPG keys validated for all configured emails
+- [ ] `use_persona` and `show_persona` commands tested
+
+### Runtime Evidence
+
+- [ ] Persona switch logged in session
+- [ ] `show_persona` confirms correct identity
+- [ ] `gh auth status` shows expected account
+- [ ] Test commit verifies GPG signature valid
+
+## Validation Commands
+
+### Verify Current Persona State
+
+```bash
+# Show current Git identity
+git config user.name
+git config user.email
+git config user.signingkey
+
+# Show current GitHub account
+gh auth status
+
+# Combined verification
+show_persona
+```
+
+### Test GPG Signing
+
+```bash
+# Verify GPG key exists and can sign
+echo "test" | gpg --clearsign --local-user "$(git config user.email)"
+
+# Verify commit signing works
+git commit --allow-empty -m "test: verify GPG signing" --gpg-sign
+git log -1 --show-signature
+git reset --hard HEAD~1  # Remove test commit
+```
+
+### Validate Persona Configuration
+
+```bash
+# Check persona config exists
+ls -la ~/.config/<repo-name>/persona-config.sh
+
+# Check file permissions (should be 600)
+stat -c "%a" ~/.config/<repo-name>/persona-config.sh  # Linux
+stat -f "%Lp" ~/.config/<repo-name>/persona-config.sh  # macOS
+
+# List available personas
+source ~/.config/<repo-name>/persona-config.sh
+use_persona  # With no argument, lists available personas
+```
+
+## Rollback Procedure
+
+### Reset to Default Git Identity
+
+If persona switching fails or corrupts Git config:
+
+```bash
+# Reset to default identity (from ~/.gitconfig)
+git config --unset user.name
+git config --unset user.email
+git config --unset user.signingkey
+
+# Verify reset
+git config --global user.name   # Should show global default
+git config --global user.email  # Should show global default
+```
+
+### Reset GitHub CLI Auth
+
+If `gh` CLI is in wrong account:
+
+```bash
+# List authenticated accounts
+gh auth status
+
+# Switch to correct account
+gh auth switch --user <account-name>
+
+# If account not listed, re-authenticate
+gh auth login
+```
+
+### Emergency Rollback (All Settings)
+
+If completely corrupted, reset everything:
+
+```bash
+# 1. Clear local git config
+git config --unset-all user.name
+git config --unset-all user.email
+git config --unset-all user.signingkey
+
+# 2. Reset gh auth
+gh auth logout --hostname github.com
+gh auth login
+
+# 3. Regenerate persona config
+rm ~/.config/<repo-name>/persona-config.sh
+# Re-run persona-switching setup
+```
+
+## References
+
+- `references/persona-config-template.sh` - Shell script template
+- `references/playbook-template.md` - Playbook template for target repos
+- `references/security-profiles.md` - Profile configuration guidance
+- `references/delegation-patterns.md` - When to switch vs delegate
+- `references/workflow-integration.md` - issue-driven-delivery integration
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mcj-coder) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
