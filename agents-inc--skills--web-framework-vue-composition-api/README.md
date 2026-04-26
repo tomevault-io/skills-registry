@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agents-inc/skills](https://github.com/agents-inc/skills/tree/main/src/skills/web-framework-vue-composition-api)
+Original source: [agents-inc/skills](https://github.com/agents-inc/skills/tree/main/dist/plugins/web-framework-vue-composition-api/skills/web-framework-vue-composition-api)
 
 ---
 
