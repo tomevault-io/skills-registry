@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bdambrosio/cognitive_workbench](https://github.com/bdambrosio/cognitive_workbench/tree/main/src/tools/search-web)
+Original source: [bdambrosio/cognitive_workbench](https://github.com/bdambrosio/cognitive_workbench/tree/main/src/tools_out/search-web)
 
 ---
 
