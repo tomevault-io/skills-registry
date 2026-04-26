@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [withzombies/hyperpowers](https://github.com/withzombies/hyperpowers/tree/main/.agents/skills/dispatching-parallel-agents)
+Original source: [withzombies/hyperpowers](https://github.com/withzombies/hyperpowers/tree/main/skills/dispatching-parallel-agents)
 
 ---
 
