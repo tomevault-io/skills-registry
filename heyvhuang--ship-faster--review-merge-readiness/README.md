@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [heyvhuang/ship-faster](https://github.com/heyvhuang/ship-faster/tree/main/skills/review-merge-readiness)
+Original source: [heyvhuang/ship-faster](https://github.com/heyvhuang/ship-faster/tree/main/skills/_archive/review-merge-readiness)
 
 ---
 
