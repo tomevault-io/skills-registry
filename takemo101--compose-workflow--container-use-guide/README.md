@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [takemo101/compose-workflow](https://github.com/takemo101/compose-workflow/tree/main/.claude/skills/container-use-guide)
+Original source: [takemo101/compose-workflow](https://github.com/takemo101/compose-workflow/tree/main/.opencode/skill/container-use-guide)
 
 ---
 
