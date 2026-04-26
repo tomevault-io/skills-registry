@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pascallammers/mylo-travel-concierge-v2](https://github.com/pascallammers/mylo-travel-concierge-v2/tree/main/.factory/skills/graphite-stacked-diffs)
+Original source: [pascallammers/mylo-travel-concierge-v2](https://github.com/pascallammers/mylo-travel-concierge-v2/tree/main/.claude/skills/graphite-stacked-diffs)
 
 ---
 
