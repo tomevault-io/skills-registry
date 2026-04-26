@@ -2,7 +2,7 @@
 name: vue-component-generator
 description: Generates Vue 3 components using Composition API, TypeScript, proper props definition, and best practices. Use when creating Vue components or building Vue UI.
 metadata:
-  author: Dexploarer
+  author: dexploarer
 ---
 
 # Vue.js Component Generator Skill
@@ -319,5 +319,5 @@ describe('ComponentName', () => {
 - 📝 Usage example provided
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Dexploarer) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dexploarer) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
