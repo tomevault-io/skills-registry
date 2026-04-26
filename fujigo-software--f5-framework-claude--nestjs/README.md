@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fujigo-software/f5-framework-claude](https://github.com/fujigo-software/f5-framework-claude/tree/main/plugins/f5-core/skills/nestjs)
+Original source: [fujigo-software/f5-framework-claude](https://github.com/fujigo-software/f5-framework-claude/tree/main/plugins/f5-stacks/skills/backend/nestjs)
 
 ---
 
