@@ -1,0 +1,91 @@
+---
+name: software-transactional-memory
+description: Implements software transactional memory. Use when: (1) Building concurrent Use when this capability is needed.
+metadata:
+  author: rainoftime
+---
+
+# Software Transactional Memory
+
+Implements STM for lock-free concurrent programming.
+
+## When to Use
+
+- Concurrent data structure design
+- Simplifying lock-free algorithms
+- Composing atomic operations
+- Database-style transactions in memory
+
+## What This Skill Does
+
+1. **Implements transactions** - Atomic read/write blocks
+2. **Handles conflicts** - Conflict detection and retry
+3. **Provides composability** - Transactional composition
+4. **Optimizes performance** - Read/write sets
+
+## Key Concepts
+
+| Concept | Description |
+|---------|-------------|
+| **Read set** | Variables read in transaction |
+| **Write set** | Variables written in transaction |
+| **Commit** | Validate and apply writes |
+| **Abort** | Discard changes, restart |
+| **Retry** | Wait for condition, restart |
+| **OrElse** | Alternative on abort |
+
+## STM Properties
+
+- **Atomicity**: All or nothing
+- **Isolation**: No intermediate states visible
+- **Consistency**: Maintain invariants
+- **Composability**: Combine operations
+
+## Tips
+
+- Keep transactions short
+- Avoid long-running operations
+- Use retry for blocking
+- Consider contention patterns
+- Profile abort rates
+
+## Related Skills
+
+- `actor-model-implementer` - Actor concurrency
+- `race-detection-tool` - Race detection
+- `weak-memory-model-verifier` - Verify concurrency
+
+## Research Tools & Artifacts
+
+STM implementations:
+
+| System | Language | What to Learn |
+|--------|----------|---------------|
+| **Haskell STM** | Haskell | Composable transactions |
+| **Clojure refs** | Clojure | Production STM |
+| **Intel TSX** | C/C++ | Hardware support |
+| **TinySTM** | C | Fast STM |
+
+### Key Papers
+
+- **Shavit & Touitou (1997)** - Original software transactional memory paper
+- **Herlihy & Moss (1993)** - Hardware transactional memory
+- **Harris, Marlow, Peyton Jones, Herlihy (2005)** - "Composable Memory Transactions" (PPoPP 2005)
+
+## Research Frontiers
+
+### 1. Hardware Transactional Memory
+- **Goal**: Hardware support for transactions
+- **Approach**: TSX, HTM
+- **Tools**: Intel TSX
+
+## Implementation Pitfalls
+
+| Pitfall | Real Consequence | Solution |
+|---------|-----------------|----------|
+| **Starvation** | Transactions never commit | Bounded retries |
+| **Contention** | High abort rate | Careful design |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/rainoftime) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
