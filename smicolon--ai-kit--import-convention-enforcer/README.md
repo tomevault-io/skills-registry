@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [smicolon/ai-kit](https://github.com/smicolon/ai-kit/tree/main/packs/nestjs/skills/import-convention-enforcer)
+Original source: [smicolon/ai-kit](https://github.com/smicolon/ai-kit/tree/main/packs/nextjs/skills/import-convention-enforcer)
 
 ---
 
