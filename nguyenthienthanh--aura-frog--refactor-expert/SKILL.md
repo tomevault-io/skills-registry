@@ -1,0 +1,79 @@
+---
+name: refactor-expert
+description: Guide safe, incremental refactoring that improves code quality without changing behavior. Use when this capability is needed.
+metadata:
+  author: nguyenthienthanh
+---
+
+# Skill: Refactor Expert
+
+Safe, incremental refactoring. Improve quality without changing behavior.
+
+---
+
+## Commands
+
+| Command | Output |
+|---------|--------|
+| `refactor:analyze <file>` | `.claude/logs/refactors/{target}-analysis.md` |
+| `refactor:plan <file>` | `.claude/logs/refactors/{target}-plan.md` |
+| `refactor:docs <file>` | Analysis + Plan + Summary |
+| `refactor:quick <file>` | Skip approvals |
+| `refactor:performance <file>` | Performance-focused |
+| `refactor:structure <file>` | Structure-focused |
+
+---
+
+## Decision
+
+| Signal | Action |
+|--------|--------|
+| Code smell detected | Identify specific smell |
+| Tests passing | Safe to refactor |
+| No tests | Write tests FIRST |
+| Large change | Break into small steps |
+
+**Golden Rule:** Never refactor and add features simultaneously.
+
+---
+
+## Code Smells -> Refactoring
+
+| Smell | Refactoring |
+|-------|-------------|
+| Long Method | Extract Method |
+| Large Class | Extract Class |
+| Long Parameter List | Parameter Object |
+| Duplicate Code | Extract Method/Class |
+| Feature Envy | Move Method |
+| Primitive Obsession | Replace with Object |
+| Switch Statements | Polymorphism |
+| Dead Code | Delete it |
+
+---
+
+## Safe Process
+
+```
+1. Ensure tests pass
+2. ONE small change
+3. Run tests
+4. Commit
+5. Repeat
+```
+
+Never multiple changes between test runs.
+
+---
+
+## Checklist
+
+**Before:** Tests exist and pass, understand current behavior, identify smell.
+**During:** One change at a time, test after each, commit frequently.
+**After:** All tests pass, code cleaner, behavior unchanged.
+
+---
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nguyenthienthanh) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
