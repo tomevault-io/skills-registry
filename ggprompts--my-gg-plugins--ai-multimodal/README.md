@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ggprompts/my-gg-plugins](https://github.com/ggprompts/my-gg-plugins/tree/main/skills/ai-multimodal)
+Original source: [ggprompts/my-gg-plugins](https://github.com/ggprompts/my-gg-plugins/tree/main/plugins/ai-multimodal/skills/ai-multimodal)
 
 ---
 
