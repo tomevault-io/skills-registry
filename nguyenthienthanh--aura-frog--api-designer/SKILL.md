@@ -1,0 +1,85 @@
+---
+name: api-designer
+description: Design consistent, RESTful APIs with proper versioning, documentation, and error handling. Use when this capability is needed.
+metadata:
+  author: nguyenthienthanh
+---
+
+# Skill: API Designer
+
+Design consistent, RESTful APIs with versioning, documentation, and error handling.
+
+---
+
+## RESTful Conventions
+
+| Method | Endpoint | Purpose | Response |
+|--------|----------|---------|----------|
+| GET | /users | List | 200 + array |
+| GET | /users/:id | Get one | 200 / 404 |
+| POST | /users | Create | 201 + created |
+| PUT | /users/:id | Replace | 200 / 404 |
+| PATCH | /users/:id | Update | 200 / 404 |
+| DELETE | /users/:id | Delete | 204 / 404 |
+
+Nested: `GET /users/:userId/orders`
+
+---
+
+## Naming
+
+- Resources: plural nouns (`/users`, `/orders`)
+- Query params: snake_case (`page_size`)
+- Request/Response bodies: camelCase
+
+**Versioning:** URL path `/api/v1/...` (recommended).
+
+---
+
+## Response Format
+
+**Success:** `{ "data": {...}, "meta": {...} }`
+**List:** Add `meta: { page, pageSize, total, totalPages }`
+**Error:** `{ "error": { "code": "VALIDATION_ERROR", "message": "...", "fields": {...} } }`
+
+---
+
+## Status Codes
+
+| Code | When |
+|------|------|
+| 200 | Successful GET/PUT/PATCH |
+| 201 | Successful POST |
+| 204 | Successful DELETE |
+| 400/422 | Invalid input / validation |
+| 401/403 | No auth / no permission |
+| 404/409 | Not found / conflict |
+| 429 | Rate limited |
+| 500 | Unexpected error |
+
+---
+
+## Pagination
+
+**Offset:** `?page=2&page_size=20` (simple, slow on large sets)
+**Cursor:** `?cursor=abc&limit=20` (consistent, fast, no page jump)
+
+---
+
+## Filtering & Sorting
+
+```
+GET /users?status=active&sort=created_at:desc&q=john&page=1&page_size=20
+```
+
+---
+
+## Checklist
+
+RESTful naming, consistent response format, proper status codes, pagination for lists, error codes, versioning, OpenAPI docs, rate limiting headers.
+
+---
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nguyenthienthanh) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
