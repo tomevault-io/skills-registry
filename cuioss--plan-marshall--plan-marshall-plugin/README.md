@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cuioss/plan-marshall](https://github.com/cuioss/plan-marshall/tree/main/marketplace/bundles/pm-dev-frontend/skills/plan-marshall-plugin)
+Original source: [cuioss/plan-marshall](https://github.com/cuioss/plan-marshall/tree/main/marketplace/bundles/pm-dev-java-cui/skills/plan-marshall-plugin)
 
 ---
 
