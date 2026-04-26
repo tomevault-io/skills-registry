@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jimmc414/kosmos](https://github.com/jimmc414/kosmos/tree/main/kosmos-claude-scientific-skills/scientific-skills/document-skills/docx)
+Original source: [jimmc414/kosmos](https://github.com/jimmc414/kosmos/tree/main/kosmos-reference/kosmos-claude-scientific-writer/.claude/skills/document-skills/docx)
 
 ---
 
