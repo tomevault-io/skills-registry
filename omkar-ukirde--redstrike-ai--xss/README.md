@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [omkar-ukirde/redstrike.ai](https://github.com/omkar-ukirde/redstrike.ai/tree/main/skills/web/xss)
+Original source: [omkar-ukirde/redstrike.ai](https://github.com/omkar-ukirde/redstrike.ai/tree/main/skills/injection/xss)
 
 ---
 
