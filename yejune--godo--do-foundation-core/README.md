@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yejune/godo](https://github.com/yejune/godo/tree/main/personas/do-ko/.claude/skills/do-foundation-core)
+Original source: [yejune/godo](https://github.com/yejune/godo/tree/main/personas/moai-ko/.claude/skills/do-foundation-core)
 
 ---
 
