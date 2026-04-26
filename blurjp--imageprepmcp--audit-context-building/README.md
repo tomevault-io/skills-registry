@@ -1,0 +1,13 @@
+# audit-context-building
+
+> Skill by [blurjp](https://github.com/blurjp/imageprepmcp) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [blurjp/imageprepmcp](https://github.com/blurjp/imageprepmcp/tree/main/.claude/skills/trailofbits-audit-context-building/skills/audit-context-building)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
