@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rafaelcalleja/claude-market-place](https://github.com/rafaelcalleja/claude-market-place/tree/main/plugins/fabric-skill/skills/fabric)
+Original source: [rafaelcalleja/claude-market-place](https://github.com/rafaelcalleja/claude-market-place/tree/main/plugins/personal-ai-infrastructure/skills/fabric)
 
 ---
 
