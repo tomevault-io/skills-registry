@@ -1,0 +1,44 @@
+---
+name: session-logs
+description: View and manage agent session logs for debugging and auditing. Use when this capability is needed.
+metadata:
+  author: kody-w
+---
+
+# Session Logs
+
+View and analyze agent session logs.
+
+## List Sessions
+
+```bash
+ls -la ~/.openrappter/sessions/
+```
+
+## View Latest Session
+
+```bash
+cat ~/.openrappter/sessions/latest.jsonl | jq '.'
+```
+
+## Search Session Logs
+
+```bash
+rg "error" ~/.openrappter/sessions/ --type jsonl
+```
+
+## Filter by Agent
+
+```bash
+cat ~/.openrappter/sessions/*.jsonl | jq 'select(.agent == "ShellAgent")'
+```
+
+## Export Session
+
+```bash
+jq -s '.' ~/.openrappter/sessions/SESSION_ID.jsonl > export.json
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/kody-w) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
