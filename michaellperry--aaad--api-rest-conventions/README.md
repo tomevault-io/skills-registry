@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [michaellperry/aaad](https://github.com/michaellperry/aaad/tree/main/.kilocode/skills-backend-api-developer/api-rest-conventions)
+Original source: [michaellperry/aaad](https://github.com/michaellperry/aaad/tree/main/.github/skills/api-rest-conventions)
 
 ---
 
