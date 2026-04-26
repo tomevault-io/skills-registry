@@ -2,7 +2,7 @@
 name: skill-creator
 description: |- Use when this capability is needed.
 metadata:
-  author: IgorWarzocha
+  author: igorwarzocha
 ---
 
 # Skill Creator
@@ -358,5 +358,5 @@ When to ask: Ambiguous request, multiple skill patterns apply, or scope unclear.
 </question_tool>
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/IgorWarzocha) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/igorwarzocha) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
