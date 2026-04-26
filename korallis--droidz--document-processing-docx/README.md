@@ -1,0 +1,13 @@
+# document-processing-docx
+
+> Skill by [korallis](https://github.com/korallis/droidz) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [korallis/droidz](https://github.com/korallis/droidz/tree/main/droidz_installer/payloads/claude/default/skills/document-processing-docx)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
