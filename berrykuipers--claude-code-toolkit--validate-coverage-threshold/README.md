@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [berrykuipers/claude-code-toolkit](https://github.com/berrykuipers/claude-code-toolkit/tree/main/.claude/api-skills-source/validate-coverage-threshold)
+Original source: [berrykuipers/claude-code-toolkit](https://github.com/berrykuipers/claude-code-toolkit/tree/main/.claude/skills/quality/validate-coverage-threshold)
 
 ---
 
