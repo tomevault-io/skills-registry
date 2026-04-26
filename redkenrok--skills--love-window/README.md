@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [redkenrok/skills](https://github.com/redkenrok/skills/tree/main/skills/love-window)
+Original source: [redkenrok/skills](https://github.com/redkenrok/skills/tree/main/templates/love-window)
 
 ---
 
