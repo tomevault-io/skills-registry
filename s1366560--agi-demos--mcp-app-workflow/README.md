@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [s1366560/agi-demos](https://github.com/s1366560/agi-demos/tree/main/.memstack/skills/mcp-app-workflow/mcp-app-workflow)
+Original source: [s1366560/agi-demos](https://github.com/s1366560/agi-demos/tree/main/.memstack/skills/mcp-app-workflow)
 
 ---
 
