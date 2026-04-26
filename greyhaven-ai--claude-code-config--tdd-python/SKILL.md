@@ -1,0 +1,36 @@
+---
+name: grey-haven-tdd-python
+description: Python Test-Driven Development expertise with pytest, strict red-green-refactor methodology, FastAPI testing patterns, and Pydantic model testing. Use when implementing Python features with TDD, writing pytest tests, testing FastAPI endpoints, developing with test-first approach, or when user mentions 'Python TDD', 'pytest', 'FastAPI testing', 'red-green-refactor', 'Python unit tests', 'test-driven Python', or 'Python test coverage'. Use when this capability is needed.
+metadata:
+  author: greyhaven-ai
+---
+
+# TDD Python Skill
+
+Python Test-Driven Development following strict red-green-refactor cycle with pytest and comprehensive coverage.
+
+## Description
+
+Systematic Python implementation using TDD methodology, ensuring tests written first and driving design decisions.
+
+## What's Included
+
+- **Examples**: Python TDD cycles, FastAPI TDD, Pydantic model TDD
+- **Reference**: pytest patterns, Python testing best practices
+- **Templates**: pytest templates, TDD workflows
+
+## Use When
+
+- Implementing Python features with TDD
+- FastAPI development
+- Pydantic model development
+
+## Related Agents
+
+- `tdd-python-implementer`
+
+**Skill Version**: 1.0
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/greyhaven-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
