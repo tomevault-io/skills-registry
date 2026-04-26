@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [thkt/claude-config](https://github.com/thkt/claude-config/tree/main/skills/formatting-audits)
+Original source: [thkt/claude-config](https://github.com/thkt/claude-config/tree/main/.ja/skills/formatting-audits)
 
 ---
 
