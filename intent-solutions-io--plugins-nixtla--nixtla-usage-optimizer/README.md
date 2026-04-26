@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [intent-solutions-io/plugins-nixtla](https://github.com/intent-solutions-io/plugins-nixtla/tree/main/003-skills/.claude/skills-backup-20251210-155310/nixtla-usage-optimizer)
+Original source: [intent-solutions-io/plugins-nixtla](https://github.com/intent-solutions-io/plugins-nixtla/tree/main/003-skills/.claude/skills/nixtla-usage-optimizer)
 
 ---
 
