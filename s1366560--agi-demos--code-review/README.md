@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [s1366560/agi-demos](https://github.com/s1366560/agi-demos/tree/main/.memstack/skills/code-review)
+Original source: [s1366560/agi-demos](https://github.com/s1366560/agi-demos/tree/main/src/builtin/skills/code-review)
 
 ---
 
