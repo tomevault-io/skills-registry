@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [davincidreams/atlas-agent-teams](https://github.com/davincidreams/atlas-agent-teams/tree/main/teams/marketing-seo/skills/content-strategy)
+Original source: [davincidreams/atlas-agent-teams](https://github.com/davincidreams/atlas-agent-teams/tree/main/teams/documentation/skills/content-strategy)
 
 ---
 
