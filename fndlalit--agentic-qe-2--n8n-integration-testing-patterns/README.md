@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fndlalit/agentic-qe-2](https://github.com/fndlalit/agentic-qe-2/tree/main/.claude/skills/n8n-integration-testing-patterns)
+Original source: [fndlalit/agentic-qe-2](https://github.com/fndlalit/agentic-qe-2/tree/main/v3/assets/skills/n8n-integration-testing-patterns)
 
 ---
 
