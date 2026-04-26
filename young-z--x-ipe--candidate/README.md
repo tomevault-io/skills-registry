@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [young-z/x-ipe](https://github.com/young-z/x-ipe/tree/main/x-ipe-docs/skill-meta/x-ipe-tool-infographic-syntax/candidate)
+Original source: [young-z/x-ipe](https://github.com/young-z/x-ipe/tree/main/x-ipe-docs/skill-meta/x-ipe-tool-uiux-reference/candidate)
 
 ---
 
