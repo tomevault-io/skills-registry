@@ -1,0 +1,220 @@
+---
+name: gemini-cli
+description: This skill should be used when the user asks to "use gemini", "gemini cli", "configure gemini", "set up gemini", "gemini review", "gemini images", or mentions general Gemini CLI usage. For specific topics, focused skills may be more appropriate. Use when this capability is needed.
+metadata:
+  author: nthplusio
+---
+
+# Gemini CLI Development
+
+Use the Gemini CLI as a complementary AI tool for large context review and image generation tasks, orchestrated from within Claude Code.
+
+## Prerequisites
+
+### Install Gemini CLI
+
+```bash
+npm install -g @google/gemini-cli
+```
+
+Or via npx (no install):
+```bash
+npx @google/gemini-cli
+```
+
+### Authentication (choose one)
+
+**Option 1: API Key (simplest)**
+```bash
+export GEMINI_API_KEY="your-api-key-here"
+```
+
+**Option 2: Google OAuth**
+```bash
+gemini auth login
+```
+
+**Option 3: Vertex AI**
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account.json"
+export GOOGLE_CLOUD_PROJECT="your-project-id"
+```
+
+### Install nano-banana Extension
+
+```bash
+gemini extensions install https://github.com/gemini-cli-extensions/nanobanana
+```
+
+For nano-banana image generation, also set (if using a separate key):
+```bash
+export NANOBANANA_GEMINI_API_KEY="your-key"
+```
+
+## Critical Rules
+
+### Gemini is Advisory Only
+
+**Gemini MUST NEVER modify source files, configuration, or any project content.** Its role in this plugin is strictly:
+1. **Advisor** — review code, analyze logs, provide recommendations
+2. **Image creator** — generate images, icons, patterns via nano-banana
+
+Gemini's output is always returned to Claude Code for the user to act on. Gemini does not implement fixes, refactor code, bump versions, or make any changes. If Gemini suggests a fix, Claude Code presents the suggestion — the user decides whether to apply it.
+
+**For reviews, always use `--sandbox` mode** to enforce read-only access:
+```bash
+gemini --sandbox -m gemini-3-pro-preview -p "Review this code..."
+```
+
+**Never use `--yolo` for reviews.** The `--yolo` flag auto-approves all tool calls including file writes. It is ONLY permitted for image generation via nano-banana (which requires tool approval for the generate command).
+
+### Always Use the CLI
+
+**Every task in this plugin MUST execute the Gemini CLI via Bash.** The entire purpose of this plugin is to delegate work to Gemini — not to do it with Claude. If you find yourself reading files with Read/Grep/Glob and analyzing them, you are doing it wrong. Instead, pipe content directly to `gemini -p` in a single Bash command.
+
+## Core Usage: Headless Mode
+
+The key integration pattern is Gemini's **headless mode** (`-p` flag), which accepts a prompt and returns output non-interactively. All content gathering and the gemini call should be a **single piped Bash command**:
+
+```bash
+# Simple prompt
+gemini -m gemini-3-pro-preview -p "Explain this error: ..."
+
+# Pipe file content for review
+cat large-file.ts | gemini -m gemini-3-pro-preview -p "Review this code for bugs and security issues" 2>&1
+
+# Pipe a directory of files
+find src/ -name "*.ts" -type f | sort | while read f; do echo "=== FILE: $f ==="; cat "$f"; done | gemini -m gemini-3-pro-preview -p "Review this codebase" 2>&1
+
+# Use sandbox mode (default for all reviews — read-only, no file writes)
+gemini --sandbox -m gemini-3-pro-preview -p "Analyze this codebase"
+```
+
+### Model Policy
+
+**Always use the preferred model first.** Only fallback if it returns an error (quota, unavailable, capacity).
+
+| Task | Preferred Model | Fallback Model |
+|------|----------------|----------------|
+| Text reviews | `gemini-3-pro-preview` | `gemini-2.5-pro` |
+| Image generation | `gemini-3-pro-image-preview` | `gemini-2.5-flash-image` |
+
+For image generation, always prepend `NANOBANANA_MODEL=gemini-3-pro-image-preview` to gemini commands (unless the user has set `NANOBANANA_MODEL` in their environment). For text reviews, use `-m gemini-3-pro-preview`.
+
+If a model returns an error, retry with the fallback and inform the user which model was used.
+
+```bash
+# Text review (default)
+gemini -m gemini-3-pro-preview -p "Your prompt here"
+
+# Text review (fallback)
+gemini -m gemini-2.5-pro -p "Your prompt here"
+
+# Image generation (default)
+NANOBANANA_MODEL=gemini-3-pro-image-preview gemini --yolo -p '/generate "prompt"'
+
+# Image generation (fallback)
+NANOBANANA_MODEL=gemini-2.5-flash-image gemini --yolo -p '/generate "prompt"'
+```
+
+### Configuration
+
+Gemini CLI uses `GEMINI.md` files (similar to `CLAUDE.md`) for project context:
+```bash
+# Create project context file
+echo "# Project: My App\nStack: React, TypeScript, Node.js" > GEMINI.md
+```
+
+Settings file location: `~/.gemini/settings.json`
+
+### Recommended Settings for Gemini 3 Pro
+
+Gemini 3 Pro requires **Preview Features** to be enabled. Without this setting, `-m gemini-3-pro-preview` will fail with a model not found error. The SessionStart hook checks for this automatically.
+
+**Enable via CLI:** Run `gemini`, then use the `/settings` command and enable Preview Features.
+
+**Enable via settings.json** (`~/.gemini/settings.json`):
+```json
+{
+  "general": {
+    "previewFeatures": true
+  }
+}
+```
+
+**Recommended settings for optimal plugin integration:**
+```json
+{
+  "general": {
+    "previewFeatures": true,
+    "enableAutoUpdate": true
+  },
+  "tools": {
+    "disableLLMCorrection": true
+  }
+}
+```
+
+**Model selection modes:**
+
+| Mode | Setting | Models Used |
+|------|---------|-------------|
+| Auto (Gemini 3) | `/model` → Auto (Gemini 3) | gemini-3-pro-preview, gemini-3-flash-preview |
+| Auto (Gemini 2.5) | `/model` → Auto (Gemini 2.5) | gemini-2.5-pro, gemini-2.5-flash |
+| Manual | `/model` → Manual | Any available model |
+
+Note: The `/model` setting does NOT affect headless mode (`-m` flag). This plugin always uses `-m gemini-3-pro-preview` explicitly, so the `/model` setting only matters for interactive use.
+
+## Focused Skills
+
+For specific tasks, use these focused skills:
+
+| Topic | Skill | Trigger Phrases |
+|-------|-------|-----------------|
+| Large Context Review | `gemini-cli:gemini-review` | "review with gemini", "gemini code review", "analyze large file" (requires `GEMINI_API_KEY` or `GOOGLE_API_KEY`) |
+| Image Generation | `gemini-cli:gemini-images` | "generate image", "create icon", "nano-banana", "gemini image" |
+
+## Common Patterns
+
+### Delegating to Gemini for Large Context
+
+When a task involves reviewing more context than is practical in the current session:
+
+```bash
+# Review an entire codebase directory (--sandbox ensures read-only)
+find src/ -name "*.ts" -exec cat {} + | gemini --sandbox -m gemini-3-pro-preview -p "Review this TypeScript codebase for: 1) Security vulnerabilities 2) Performance issues 3) Code quality"
+
+# Review a large log file
+gemini --sandbox -m gemini-3-pro-preview -p "Summarize errors and patterns in this log" < /var/log/app.log
+
+# Compare implementations
+diff -u old.ts new.ts | gemini --sandbox -m gemini-3-pro-preview -p "Review this diff for correctness and potential regressions"
+```
+
+### Using Gemini with File Context
+
+```bash
+# Pass specific files as context (--sandbox ensures read-only)
+gemini --sandbox -m gemini-3-pro-preview -p "Given these files, suggest improvements" --file src/api.ts --file src/types.ts
+
+# Review with project context
+gemini --sandbox -m gemini-3-pro-preview -p "Review the architecture of this project" --file package.json --file tsconfig.json --file src/index.ts
+```
+
+## Troubleshooting
+
+For debugging issues, the gemini-troubleshoot agent can diagnose common problems:
+- CLI not found
+- Authentication failures
+- Extension issues
+- Model availability
+
+## Resources
+
+- Gemini CLI docs: https://geminicli.com/docs/
+- nano-banana extension: https://github.com/gemini-cli-extensions/nanobanana
+- Gemini models: https://ai.google.dev/gemini-api/docs/models
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nthplusio) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
