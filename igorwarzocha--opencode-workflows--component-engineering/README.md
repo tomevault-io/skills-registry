@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [igorwarzocha/opencode-workflows](https://github.com/igorwarzocha/opencode-workflows/tree/main/agents/vite-react-ts-convex-tailwind/.opencode/skill/component-engineering)
+Original source: [igorwarzocha/opencode-workflows](https://github.com/igorwarzocha/opencode-workflows/tree/main/agents/component-engineer/.opencode/skill/component-engineering)
 
 ---
 
