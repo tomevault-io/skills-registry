@@ -35,6 +35,11 @@ Master React version upgrades, class to hooks migration, concurrent features ado
 
 - `resources/implementation-playbook.md` for detailed patterns and examples.
 
+## Limitations
+- Use this skill only when the task clearly matches the scope described above.
+- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
+- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.
+
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
