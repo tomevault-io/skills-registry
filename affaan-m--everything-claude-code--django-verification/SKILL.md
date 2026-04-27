@@ -1,23 +1,23 @@
 ---
 name: django-verification
-description: Verification loop for Django projects: migrations, linting, tests with coverage, security scans, and deployment readiness checks before release or PR. Use when this capability is needed.
+description: Django项目的验证循环：迁移、代码检查、带覆盖率的测试、安全扫描，以及在发布或PR前的部署就绪检查。 Use when this capability is needed.
 metadata:
   author: affaan-m
 ---
 
-# Django Verification Loop
+# Django 验证循环
 
-Run before PRs, after major changes, and pre-deploy to ensure Django application quality and security.
+在发起 PR 之前、进行重大更改之后以及部署之前运行，以确保 Django 应用程序的质量和安全性。
 
-## When to Activate
+## 何时激活
 
-- Before opening a pull request for a Django project
-- After major model changes, migration updates, or dependency upgrades
-- Pre-deployment verification for staging or production
-- Running full environment → lint → test → security → deploy readiness pipeline
-- Validating migration safety and test coverage
+* 在为一个 Django 项目开启拉取请求之前
+* 在重大模型变更、迁移更新或依赖升级之后
+* 用于暂存或生产环境的预部署验证
+* 运行完整的环境 → 代码检查 → 测试 → 安全 → 部署就绪流水线时
+* 验证迁移安全性和测试覆盖率时
 
-## Phase 1: Environment Check
+## 阶段 1: 环境检查
 
 ```bash
 # Verify Python version
@@ -31,9 +31,9 @@ pip list --outdated
 python -c "import os; import environ; print('DJANGO_SECRET_KEY set' if os.environ.get('DJANGO_SECRET_KEY') else 'MISSING: DJANGO_SECRET_KEY')"
 ```
 
-If environment is misconfigured, stop and fix.
+如果环境配置错误，请停止并修复。
 
-## Phase 2: Code Quality & Formatting
+## 阶段 2: 代码质量与格式化
 
 ```bash
 # Type checking
@@ -54,13 +54,14 @@ isort .  # Auto-fix
 python manage.py check --deploy
 ```
 
-Common issues:
-- Missing type hints on public functions
-- PEP 8 formatting violations
-- Unsorted imports
-- Debug settings left in production configuration
+常见问题：
 
-## Phase 3: Migrations
+* 公共函数缺少类型提示
+* 违反 PEP 8 格式规范
+* 导入未排序
+* 生产配置中遗留调试设置
+
+## 阶段 3: 数据库迁移
 
 ```bash
 # Check for unapplied migrations
@@ -79,12 +80,13 @@ python manage.py migrate
 python manage.py makemigrations --merge  # Only if conflicts exist
 ```
 
-Report:
-- Number of pending migrations
-- Any migration conflicts
-- Model changes without migrations
+报告：
 
-## Phase 4: Tests + Coverage
+* 待应用的迁移数量
+* 任何迁移冲突
+* 模型更改未生成迁移
+
+## 阶段 4: 测试与覆盖率
 
 ```bash
 # Run all tests with pytest
@@ -101,22 +103,23 @@ pytest -m integration  # Only integration tests
 open htmlcov/index.html
 ```
 
-Report:
-- Total tests: X passed, Y failed, Z skipped
-- Overall coverage: XX%
-- Per-app coverage breakdown
+报告：
 
-Coverage targets:
+* 总测试数：X 通过，Y 失败，Z 跳过
+* 总体覆盖率：XX%
+* 按应用划分的覆盖率明细
 
-| Component | Target |
+覆盖率目标：
+
+| 组件 | 目标 |
 |-----------|--------|
-| Models | 90%+ |
-| Serializers | 85%+ |
-| Views | 80%+ |
-| Services | 90%+ |
-| Overall | 80%+ |
+| 模型 | 90%+ |
+| 序列化器 | 85%+ |
+| 视图 | 80%+ |
+| 服务 | 90%+ |
+| 总体 | 80%+ |
 
-## Phase 5: Security Scan
+## 阶段 5: 安全扫描
 
 ```bash
 # Dependency vulnerabilities
@@ -136,13 +139,14 @@ gitleaks detect --source . --verbose
 python -c "from django.core.exceptions import ImproperlyConfigured; from django.conf import settings; settings.DEBUG"
 ```
 
-Report:
-- Vulnerable dependencies found
-- Security configuration issues
-- Hardcoded secrets detected
-- DEBUG mode status (should be False in production)
+报告：
 
-## Phase 6: Django Management Commands
+* 发现易受攻击的依赖项
+* 安全配置问题
+* 检测到硬编码的密钥
+* DEBUG 模式状态（生产环境中应为 False）
+
+## 阶段 6: Django 管理命令
 
 ```bash
 # Check for model issues
@@ -161,7 +165,7 @@ python manage.py check --database default
 python -c "from django.core.cache import cache; cache.set('test', 'value', 10); print(cache.get('test'))"
 ```
 
-## Phase 7: Performance Checks
+## 阶段 7: 性能检查
 
 ```bash
 # Django Debug Toolbar output (check for N+1 queries)
@@ -180,12 +184,13 @@ with connection.cursor() as cursor:
 EOF
 ```
 
-Report:
-- Number of queries per page (should be < 50 for typical pages)
-- Missing database indexes
-- Duplicate queries detected
+报告：
 
-## Phase 8: Static Assets
+* 每页查询次数（典型页面应 < 50）
+* 缺少数据库索引
+* 检测到重复查询
+
+## 阶段 8: 静态资源
 
 ```bash
 # Check for npm dependencies (if using npm)
@@ -200,7 +205,7 @@ ls -la staticfiles/
 python manage.py findstatic css/style.css
 ```
 
-## Phase 9: Configuration Review
+## 阶段 9: 配置审查
 
 ```python
 # Run in Python shell to verify settings
@@ -224,7 +229,7 @@ for check, result in checks.items():
 EOF
 ```
 
-## Phase 10: Logging Configuration
+## 阶段 10: 日志配置
 
 ```bash
 # Test logging output
@@ -239,7 +244,7 @@ EOF
 tail -f /var/log/django/django.log
 ```
 
-## Phase 11: API Documentation (if DRF)
+## 阶段 11: API 文档（如果使用 DRF）
 
 ```bash
 # Generate schema
@@ -253,7 +258,7 @@ python -c "import json; json.load(open('schema.json'))"
 # Visit http://localhost:8000/swagger/ in browser
 ```
 
-## Phase 12: Diff Review
+## 阶段 12: 差异审查
 
 ```bash
 # Show diff statistics
@@ -272,122 +277,123 @@ git diff | grep "DEBUG = True"  # Debug mode
 git diff | grep "import pdb"  # Debugger
 ```
 
-Checklist:
-- No debugging statements (print, pdb, breakpoint())
-- No TODO/FIXME comments in critical code
-- No hardcoded secrets or credentials
-- Database migrations included for model changes
-- Configuration changes documented
-- Error handling present for external calls
-- Transaction management where needed
+检查清单：
 
-## Output Template
+* 无调试语句（print, pdb, breakpoint()）
+* 关键代码中无 TODO/FIXME 注释
+* 无硬编码的密钥或凭证
+* 模型更改包含数据库迁移
+* 配置更改已记录
+* 外部调用存在错误处理
+* 需要时已进行事务管理
+
+## 输出模板
 
 ```
-DJANGO VERIFICATION REPORT
+DJANGO 验证报告
 ==========================
 
-Phase 1: Environment Check
+阶段 1：环境检查
   ✓ Python 3.11.5
-  ✓ Virtual environment active
-  ✓ All environment variables set
+  ✓ 虚拟环境已激活
+  ✓ 所有环境变量已设置
 
-Phase 2: Code Quality
-  ✓ mypy: No type errors
-  ✗ ruff: 3 issues found (auto-fixed)
-  ✓ black: No formatting issues
-  ✓ isort: Imports properly sorted
-  ✓ manage.py check: No issues
+阶段 2：代码质量
+  ✓ mypy: 无类型错误
+  ✗ ruff: 发现 3 个问题（已自动修复）
+  ✓ black: 无格式问题
+  ✓ isort: 导入已正确排序
+  ✓ manage.py check: 无问题
 
-Phase 3: Migrations
-  ✓ No unapplied migrations
-  ✓ No migration conflicts
-  ✓ All models have migrations
+阶段 3：数据库迁移
+  ✓ 无未应用的迁移
+  ✓ 无迁移冲突
+  ✓ 所有模型均有对应的迁移文件
 
-Phase 4: Tests + Coverage
-  Tests: 247 passed, 0 failed, 5 skipped
-  Coverage:
-    Overall: 87%
+阶段 4：测试与覆盖率
+  测试：247 通过，0 失败，5 跳过
+  覆盖率：
+    总计：87%
     users: 92%
     products: 89%
     orders: 85%
     payments: 91%
 
-Phase 5: Security Scan
-  ✗ pip-audit: 2 vulnerabilities found (fix required)
-  ✓ safety check: No issues
-  ✓ bandit: No security issues
-  ✓ No secrets detected
+阶段 5：安全扫描
+  ✗ pip-audit: 发现 2 个漏洞（需要修复）
+  ✓ safety check: 无问题
+  ✓ bandit: 无安全问题
+  ✓ 未检测到密钥泄露
   ✓ DEBUG = False
 
-Phase 6: Django Commands
-  ✓ collectstatic completed
-  ✓ Database integrity OK
-  ✓ Cache backend reachable
+阶段 6：Django 命令
+  ✓ collectstatic 完成
+  ✓ 数据库完整性正常
+  ✓ 缓存后端可访问
 
-Phase 7: Performance
-  ✓ No N+1 queries detected
-  ✓ Database indexes configured
-  ✓ Query count acceptable
+阶段 7：性能
+  ✓ 未检测到 N+1 查询
+  ✓ 数据库索引已配置
+  ✓ 查询数量可接受
 
-Phase 8: Static Assets
-  ✓ npm audit: No vulnerabilities
-  ✓ Assets built successfully
-  ✓ Static files collected
+阶段 8：静态资源
+  ✓ npm audit: 无漏洞
+  ✓ 资源构建成功
+  ✓ 静态文件已收集
 
-Phase 9: Configuration
+阶段 9：配置
   ✓ DEBUG = False
-  ✓ SECRET_KEY configured
-  ✓ ALLOWED_HOSTS set
-  ✓ HTTPS enabled
-  ✓ HSTS enabled
-  ✓ Database configured
+  ✓ SECRET_KEY 已配置
+  ✓ ALLOWED_HOSTS 已设置
+  ✓ HTTPS 已启用
+  ✓ HSTS 已启用
+  ✓ 数据库已配置
 
-Phase 10: Logging
-  ✓ Logging configured
-  ✓ Log files writable
+阶段 10：日志
+  ✓ 日志配置完成
+  ✓ 日志文件可写入
 
-Phase 11: API Documentation
-  ✓ Schema generated
-  ✓ Swagger UI accessible
+阶段 11：API 文档
+  ✓ 架构已生成
+  ✓ Swagger UI 可访问
 
-Phase 12: Diff Review
-  Files changed: 12
-  +450, -120 lines
-  ✓ No debug statements
-  ✓ No hardcoded secrets
-  ✓ Migrations included
+阶段 12：差异审查
+  文件变更：12
+  行数变化：+450, -120
+  ✓ 无调试语句
+  ✓ 无硬编码密钥
+  ✓ 包含迁移文件
 
-RECOMMENDATION: WARNING: Fix pip-audit vulnerabilities before deploying
+建议：WARNING: 部署前修复 pip-audit 发现的漏洞
 
-NEXT STEPS:
-1. Update vulnerable dependencies
-2. Re-run security scan
-3. Deploy to staging for final testing
+后续步骤：
+1. 更新存在漏洞的依赖项
+2. 重新运行安全扫描
+3. 部署到预发布环境进行最终测试
 ```
 
-## Pre-Deployment Checklist
+## 预部署检查清单
 
-- [ ] All tests passing
-- [ ] Coverage ≥ 80%
-- [ ] No security vulnerabilities
-- [ ] No unapplied migrations
-- [ ] DEBUG = False in production settings
-- [ ] SECRET_KEY properly configured
-- [ ] ALLOWED_HOSTS set correctly
-- [ ] Database backups enabled
-- [ ] Static files collected and served
-- [ ] Logging configured and working
-- [ ] Error monitoring (Sentry, etc.) configured
-- [ ] CDN configured (if applicable)
-- [ ] Redis/cache backend configured
-- [ ] Celery workers running (if applicable)
-- [ ] HTTPS/SSL configured
-- [ ] Environment variables documented
+* \[ ] 所有测试通过
+* \[ ] 覆盖率 ≥ 80%
+* \[ ] 无安全漏洞
+* \[ ] 无未应用的迁移
+* \[ ] 生产设置中 DEBUG = False
+* \[ ] SECRET\_KEY 已正确配置
+* \[ ] ALLOWED\_HOSTS 设置正确
+* \[ ] 数据库备份已启用
+* \[ ] 静态文件已收集并提供服务
+* \[ ] 日志配置正常且有效
+* \[ ] 错误监控（Sentry 等）已配置
+* \[ ] CDN 已配置（如果适用）
+* \[ ] Redis/缓存后端已配置
+* \[ ] Celery 工作进程正在运行（如果适用）
+* \[ ] HTTPS/SSL 已配置
+* \[ ] 环境变量已记录
 
-## Continuous Integration
+## 持续集成
 
-### GitHub Actions Example
+### GitHub Actions 示例
 
 ```yaml
 # .github/workflows/django-verification.yml
@@ -452,23 +458,23 @@ jobs:
         uses: codecov/codecov-action@v3
 ```
 
-## Quick Reference
+## 快速参考
 
-| Check | Command |
+| 检查项 | 命令 |
 |-------|---------|
-| Environment | `python --version` |
-| Type checking | `mypy .` |
-| Linting | `ruff check .` |
-| Formatting | `black . --check` |
-| Migrations | `python manage.py makemigrations --check` |
-| Tests | `pytest --cov=apps` |
-| Security | `pip-audit && bandit -r .` |
-| Django check | `python manage.py check --deploy` |
-| Collectstatic | `python manage.py collectstatic --noinput` |
-| Diff stats | `git diff --stat` |
+| 环境 | `python --version` |
+| 类型检查 | `mypy .` |
+| 代码检查 | `ruff check .` |
+| 格式化 | `black . --check` |
+| 迁移 | `python manage.py makemigrations --check` |
+| 测试 | `pytest --cov=apps` |
+| 安全 | `pip-audit && bandit -r .` |
+| Django 检查 | `python manage.py check --deploy` |
+| 收集静态文件 | `python manage.py collectstatic --noinput` |
+| 差异统计 | `git diff --stat` |
 
-Remember: Automated verification catches common issues but doesn't replace manual code review and testing in staging environment.
+请记住：自动化验证可以发现常见问题，但不能替代在预发布环境中的手动代码审查和测试。
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
