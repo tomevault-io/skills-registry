@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code/tree/main/docs/tr/skills/python-patterns)
+Original source: [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code/tree/main/docs/zh-CN/skills/python-patterns)
 
 ---
 
