@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hotriluan/alkana-dashboard](https://github.com/hotriluan/alkana-dashboard/tree/main/.opencode/skills/research)
+Original source: [hotriluan/alkana-dashboard](https://github.com/hotriluan/alkana-dashboard/tree/main/.claude/skills/research)
 
 ---
 
