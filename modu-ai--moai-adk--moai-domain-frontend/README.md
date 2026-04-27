@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [modu-ai/moai-adk](https://github.com/modu-ai/moai-adk/tree/main/internal/template/templates/.claude/skills/moai-domain-frontend)
+Original source: [modu-ai/moai-adk](https://github.com/modu-ai/moai-adk/tree/main/.claude/skills/moai-domain-frontend)
 
 ---
 
