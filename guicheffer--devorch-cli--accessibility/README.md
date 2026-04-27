@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [guicheffer/devorch-cli](https://github.com/guicheffer/devorch-cli/tree/main/templates/skills/ui-design-system-rn/accessibility)
+Original source: [guicheffer/devorch-cli](https://github.com/guicheffer/devorch-cli/tree/main/templates/skills/ui-design-system-web/accessibility)
 
 ---
 
