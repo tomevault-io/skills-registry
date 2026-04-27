@@ -1,0 +1,98 @@
+---
+name: preferences-hypermedia-development
+description: Hypermedia-driven UI development patterns including architecture, SSE streaming, Datastar framework, CSS architecture, web components, templating, and event architecture. Load when building server-driven UIs or hypermedia applications. Use when this capability is needed.
+metadata:
+  author: cameronraysmith
+---
+
+# Hypermedia development
+
+This guide covers server-first hypermedia architecture for building web applications where the backend is the source of truth for both application state and UI rendering.
+
+**Primary paradigm:** Server-driven UI - the server generates HTML fragments and pushes them to the browser via Server-Sent Events (SSE), eliminating client-side state management complexity.
+
+**Core philosophy (Tao of Datastar):**
+- Most state should live in the backend as the single source of truth
+- In Morph We Trust: send large DOM chunks, let morphing handle minimal updates
+- Use loading indicators rather than optimistic updates that deceive users
+- CQRS pattern: single long-lived SSE for reads, short-lived requests for writes
+
+**Contrast with SPA architectures:**
+- Hypermedia: `Server → HTML → Browser native DOM`
+- SPA: `Server → JSON → Client framework → Virtual DOM → Render`
+
+This paradigm complements functional domain modeling by maintaining clear effect boundaries: pure domain logic (sync), application orchestration (async/SSE), and infrastructure (I/O).
+Side effects should be explicit in type signatures and isolated at boundaries to preserve compositionality.
+In Rust (Ironstar), the async/sync boundary is the effect boundary: if a function is `async`, it performs I/O; if sync, it is pure.
+The Decider pattern (fmodel-rust) enforces this structurally: `decide` and `evolve` are pure synchronous functions; all I/O occurs at the axum/Zenoh boundary.
+
+## Contents
+
+| File | Description |
+|------|-------------|
+| [01-architecture.md](01-architecture.md) | Server-first philosophy, effect boundaries, HATEOAS principles, anti-patterns (client-side reactivity duplication, WASM SPAs, optimistic updates) |
+| [02-sse-patterns.md](02-sse-patterns.md) | SSE protocol fundamentals, event types (PatchElements, PatchSignals), connection lifecycle, reconnection resilience, lag handling, resource cleanup |
+| [03-datastar.md](03-datastar.md) | Datastar framework patterns: signal system, data attributes, backend actions, SDK event types, ReadSignals pattern, real-time updates |
+| [04-css-architecture.md](04-css-architecture.md) | CUBE CSS methodology, composition primitives (Every Layout), design tokens with Open Props, cascade layers, `light-dark()` theming, container queries, PostCSS configuration, Light DOM requirement |
+| [05-web-components.md](05-web-components.md) | Thin wrapper pattern for third-party libraries (charts, editors, maps), vanilla vs Lit, morph exclusion, event design, memory cleanup |
+| [06-templating.md](06-templating.md) | Type-safe server-side templating, lazy vs eager evaluation, ID strategy for morphing, security (escaping, sanitization), testing patterns |
+| [07-event-architecture.md](07-event-architecture.md) | Event sourcing with SSE, CQRS pattern for hypermedia, event log as authority, real-time projections |
+| [08-analytics-data-serving.md](08-analytics-data-serving.md) | DuckDB analytics via async-duckdb in axum handlers, query result serialization for SSE, predicate pushdown from UI interactions, httpfs remote data access, cache strategy |
+
+## When to use hypermedia architecture
+
+**Choose hypermedia when:**
+- Server is authoritative for application state and business logic
+- UI updates can tolerate server round-trip latency (CRUD apps, dashboards, content sites)
+- You want minimal client-side JavaScript and bundle sizes
+- Real-time updates are server-pushed (notifications, live data)
+
+**For standalone documents (no server):**
+When the document is self-contained and does not need server state (experiments, presentations, visualizations), see `~/.claude/skills/preferences-hypermedia-documents/SKILL.md` for the standalone authoring patterns that share the same design system and progressive enhancement approach.
+
+**Reconsider when:**
+- Application requires offline-first functionality
+- Ultra-low-latency interactions are critical (collaborative drawing, real-time gaming)
+- UI is highly stateful with complex client-side transitions (video editor, CAD tool)
+
+## Technology ecosystem
+
+**Hypermedia frameworks:** Datastar, htmx, Turbo (Hotwire)
+
+**Backend SDKs (Datastar):** Go, Rust, PHP, Python, .NET, Ruby, Java, Kotlin, TypeScript, Clojure
+
+**CSS architecture:** Open Props (design tokens), Open Props UI (copy-paste components)
+
+**Web component approaches:** Vanilla web components, Lit (for complex lifecycle management)
+
+**Templating (by language):**
+- Rust: hypertext (lazy), maud (eager), askama (file-based)
+- Go: templ (type-safe)
+- Python: htpy (type-safe), Jinja2 (ecosystem standard)
+- TypeScript: JSX/TSX with TypeScript
+
+**Reference implementations:**
+
+Ironstar (`~/projects/rust-workspace/ironstar`) is the canonical Rust integration of algebraic DDD with hypermedia architecture.
+It demonstrates the Decider pattern (fmodel-rust) for pure domain logic, embedded infrastructure (SQLite event store, Zenoh pub/sub, DuckDB analytics, moka cache), Open Props + CUBE CSS cascade layer architecture, hypertext lazy templates with datastar-rust SSE events, and Idris2 formal specifications for domain model verification.
+See the repo's CLAUDE.md for the authoritative architectural context.
+
+Stario (`~/projects/lakescope-workspace/stario`) is an illustrative Python 3.14+ framework for Datastar integration.
+It demonstrates the Go-style handler pattern `(Context, Writer) -> None`, declarative HTML element functions, `data`/`at` Datastar attribute helpers, and the Relay in-process pub/sub system for broadcasting events across SSE connections.
+
+## Related documents
+
+- `~/.claude/skills/preferences-web-platform-foundations/SKILL.md` - shared vocabulary: 15 web platform properties, capability ladder, paradigm routing
+- `~/.claude/skills/preferences-hypermedia-documents/SKILL.md` - standalone document authoring (presentations, experiments, visualizations) without a server backend
+- `~/.claude/skills/preferences-theoretical-foundations/SKILL.md` - algebraic foundations: signals as comonads, web components as coalgebras, event sourcing as free monoids
+- `~/.claude/skills/preferences-architectural-patterns/SKILL.md` - onion/hexagonal architecture, effect boundaries
+- `~/.claude/skills/preferences-domain-modeling/SKILL.md` - functional domain modeling, smart constructors
+- `~/.claude/skills/preferences-railway-oriented-programming/SKILL.md` - Result-based error handling
+- `~/.claude/skills/preferences-distributed-systems/SKILL.md` - event log authority, CQRS, idempotency patterns
+- `~/.claude/skills/preferences-data-modeling/SKILL.md` - materialized views, DuckDB/DuckLake patterns
+- `~/.claude/skills/preferences-rust-development/SKILL.md` - Rust-specific patterns (integrates with Datastar-Rust/hypertext)
+- `~/.claude/skills/preferences-typescript-nodejs-development/SKILL.md` - TypeScript patterns for Node.js backends
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/cameronraysmith) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
