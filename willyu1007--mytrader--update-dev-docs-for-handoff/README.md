@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [willyu1007/mytrader](https://github.com/willyu1007/mytrader/tree/main/.claude/skills/workflows/dev-docs/update-dev-docs-for-handoff)
+Original source: [willyu1007/mytrader](https://github.com/willyu1007/mytrader/tree/main/.ai/skills/workflows/dev-docs/update-dev-docs-for-handoff)
 
 ---
 
