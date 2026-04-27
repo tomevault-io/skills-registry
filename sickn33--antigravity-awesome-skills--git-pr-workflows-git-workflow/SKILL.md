@@ -141,6 +141,11 @@ In case of issues after merge:
 - **Merge Strategy**: Squash for feature branches, merge for release branches
 - **Sign-Off**: Require at least 2 approvals for main branch changes
 
+## Limitations
+- Use this skill only when the task clearly matches the scope described above.
+- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
+- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.
+
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/sickn33) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
