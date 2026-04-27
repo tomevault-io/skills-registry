@@ -1,0 +1,32 @@
+---
+name: performance-budgeting
+description: Define performance budgets and guardrails. Use when a senior developer needs performance targets and enforcement. Use when this capability is needed.
+metadata:
+  author: proflead
+---
+
+# Performance Budgeting
+
+## Purpose
+Define performance budgets and guardrails.
+
+## Inputs to request
+- Key performance metrics and baselines.
+- User journey or critical paths.
+- CI/CD capabilities for enforcement.
+
+## Workflow
+1. Set measurable budgets for key metrics.
+2. Define thresholds and monitoring hooks.
+3. Plan enforcement in CI or release gates.
+
+## Output
+- Performance budget proposal.
+
+## Quality bar
+- Tie budgets to user impact.
+- Avoid budgets that are too strict to maintain.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/proflead) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
