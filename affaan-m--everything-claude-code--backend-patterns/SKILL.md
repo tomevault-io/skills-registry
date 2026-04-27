@@ -1,6 +1,6 @@
 ---
 name: backend-patterns
-description: Backend architecture patterns, API design, database optimization, and server-side best practices for Node.js, Express, and Next.js API routes. Use when this capability is needed.
+description: > Use when this capability is needed.
 metadata:
   author: affaan-m
 ---
@@ -190,7 +190,7 @@ CREATE OR REPLACE FUNCTION create_market_with_position(
 )
 RETURNS jsonb
 LANGUAGE plpgsql
-AS $$
+AS $
 BEGIN
   -- Start transaction automatically
   INSERT INTO markets VALUES (market_data);
@@ -201,7 +201,7 @@ EXCEPTION
     -- Rollback happens automatically
     RETURN jsonb_build_object('success', false, 'error', SQLERRM);
 END;
-$$;
+$;
 ```
 
 ## Caching Strategies
@@ -600,4 +600,4 @@ export async function GET(request: Request) {
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
