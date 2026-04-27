@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [willyu1007/mytrader](https://github.com/willyu1007/mytrader/tree/main/.claude/skills/standards/code-review-standards)
+Original source: [willyu1007/mytrader](https://github.com/willyu1007/mytrader/tree/main/.ai/skills/standards/code-review-standards)
 
 ---
 
