@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [armanzeroeight/fastagent-plugins](https://github.com/armanzeroeight/fastagent-plugins/tree/main/plugins/react-native-toolkit/skills/performance-optimizer)
+Original source: [armanzeroeight/fastagent-plugins](https://github.com/armanzeroeight/fastagent-plugins/tree/main/plugins/frontend-developer/skills/performance-optimizer)
 
 ---
 
