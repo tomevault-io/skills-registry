@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bacchus-labs/wrangler](https://github.com/bacchus-labs/wrangler/tree/main/.wrangler/memory/knowledge-base/reference-prompts/skills/finishing-a-development-branch)
+Original source: [bacchus-labs/wrangler](https://github.com/bacchus-labs/wrangler/tree/main/skills/finishing-a-development-branch)
 
 ---
 
