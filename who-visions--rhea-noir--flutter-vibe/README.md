@@ -1,11 +1,11 @@
-# flutter-vibe
+# flutter_vibe
 
 > Skill by [who-visions](https://github.com/who-visions/rhea-noir) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [who-visions/rhea-noir](https://github.com/who-visions/rhea-noir/tree/main/.agent/skills/development/flutter-vibe)
+Original source: [who-visions/rhea-noir](https://github.com/who-visions/rhea-noir/tree/main/rhea_noir/skills/flutter_vibe)
 
 ---
 
