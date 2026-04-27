@@ -1,6 +1,6 @@
 ---
 name: frontend-patterns
-description: Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices. Use when this capability is needed.
+description: > Use when this capability is needed.
 metadata:
   author: affaan-m
 ---
@@ -644,4 +644,4 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
