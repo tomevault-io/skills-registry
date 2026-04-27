@@ -1,6 +1,6 @@
 ---
 name: coding-standards
-description: Universal coding standards, best practices, and patterns for TypeScript, JavaScript, React, and Node.js development. Use when this capability is needed.
+description: > Use when this capability is needed.
 metadata:
   author: affaan-m
 ---
@@ -532,4 +532,4 @@ setTimeout(callback, DEBOUNCE_DELAY_MS)
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/affaan-m) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
