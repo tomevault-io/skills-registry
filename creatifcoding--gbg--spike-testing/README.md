@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [creatifcoding/gbg](https://github.com/creatifcoding/gbg/tree/main/packages/spikectl/skills/spike-testing)
+Original source: [creatifcoding/gbg](https://github.com/creatifcoding/gbg/tree/main/packages/tmnl/.claude/skills/spike-testing)
 
 ---
 
