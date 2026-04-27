@@ -1,0 +1,362 @@
+---
+name: session-orient
+description: Strategic horizon session skill that assembles complete session context, calibrates by Cynefin domain and planning-depth signal, and produces a self-directing briefing. Use when this capability is needed.
+metadata:
+  author: cameronraysmith
+---
+# Session orientation
+
+Symlink location: `~/.claude/skills/session-orient/SKILL.md`
+Slash command: `/session-orient`
+
+Session start protocol that assembles context from all available sources, calibrates work selection by Cynefin domain and planning-depth, and produces a briefing that enables the worker to self-direct.
+This skill operates at the strategic planning horizon, reading the full remaining scope at low resolution.
+
+This is the default session start command for repositories with the full stigmergic workflow installed.
+For repositories without the full workflow (no session-layer skills, small utility repos, quick fixes), use `/issues-beads-orient` directly.
+
+## Theoretical grounding
+
+This skill is one component of a lifecycle that co-optimizes planning time against execution time.
+The underlying model: planning depth has an optimal finite value where marginal yield from one additional planned step equals marginal accuracy loss and planning cost.
+This optimum *decreases* as agent execution capacity increases — more agents demand shallower, faster planning cycles to avoid starving them on stale plans.
+Model Predictive Control provides the structural answer: plan over a finite prediction horizon, commit only to a shorter control horizon of items dispatched to agents, then re-observe actual codebase state and replan from scratch.
+Cynefin domain classification makes planning depth per-item rather than global: clear-domain work (known patterns) is planned far ahead at low cost, while complex-domain work (emergent behavior) is planned only as probes whose outcomes inform the next cycle.
+The Viable System Model maps this to an organizational lifecycle where each session skill implements a specific regulatory function: System 4 (orient), System 3 (plan), System 1 (implement), System 3* (review), System 5 (checkpoint).
+Stigmergic coordination binds it together — agents orient by reading structured signal tables on the issue DAG rather than receiving centralized briefings, achieving near-optimal throughput via local sensing and acting.
+Queue economics calibrates the pipeline: buffer sizing via Little's Law, agent utilization at 70-85% (not 100%, due to queueing instability), and batch sizing via the U-curve between planning overhead and plan staleness.
+
+This skill implements System 4: strategic scanning and environmental intelligence.
+It reads the full remaining scope at low resolution, assembles signal tables from the DAG, and produces a calibrated briefing whose depth is modulated by each issue's Cynefin classification and planning-depth signal.
+The depth modulation directly operationalizes the MPC insight — invest analysis effort where cause-effect relationships are knowable (complicated domain, standard depth) and substitute exploration directives where they are not (complex domain, deep depth with probe-first phase).
+
+This skill operates under the reflexive severity mandate: when patterns suggest the framework itself is producing poor outcomes, the agent's obligation is to pause and surface the observation rather than pressing on.
+See the double-loop learning triggers in `preferences-validation-assurance` and the reflexive severity framework in `preferences-adaptive-planning`.
+
+For the full theoretical derivation including the R_plan(d) formulation, buffer sizing heuristic, and validation gate placement theory, see `preferences-adaptive-planning`.
+
+## Composed skills
+
+This skill orchestrates a higher-level protocol that uses the following skills as components.
+Do not duplicate their functionality; delegate to them.
+
+- `/issues-beads-orient` provides DAG diagnostics and work selection (phase 1 graph-wide scan, phase 2 signal-table-driven briefing).
+- `/stigmergic-convention` provides the signal table schema, field definitions, and read-modify-write protocol for parsing and interpreting signal tables on candidate issues.
+
+Load `/issues-beads-prime` for core beads conventions and command quick reference before running orientation commands.
+
+## Protocol
+
+Execute the following steps in order.
+
+### Step 1: load beads-orient diagnostics
+
+Delegate the graph-wide scan to `/issues-beads-orient` phase 1.
+Run `bd status`, `bd epic status`, `bd ready`, and `bd blocked` to establish the current state of the issue graph.
+
+```bash
+bd status
+bd stale
+bd epic status
+```
+
+For structured data when analyzing larger graphs:
+
+```bash
+bd ready
+bd blocked
+```
+
+Extract the three prioritization perspectives described in `/issues-beads-orient`: parallel entry points, critical path, and high-impact items.
+Use the structural integrity checks from that skill (empty epic detection, orphan issue detection) to verify graph health before proceeding.
+
+### Step 2: read AMDiRE documentation relevant to the selected work area
+
+For each candidate issue, identify the documentation tree path covering architecture decisions, specifications, context documents, and research notes.
+Load relevant documentation to provide domain context beyond what the issue description contains.
+
+Locate documentation by scanning the repository's `docs/` directory structure and any paths referenced in the candidate issue's description or notes.
+Architecture decisions (ADRs), specification documents, and context notes provide the domain background needed to calibrate the briefing.
+
+When documentation references exist but the files are absent or outdated, note this as a gap in the synthesis output.
+Missing documentation in a complex-domain issue increases the case for exploration phase directives in step 6.
+
+### Step 3: documentation health check
+
+Before producing the synthesis, scan the repository's documentation tree for staleness, orphans, and supersession issues that affect the quality of the briefing.
+
+#### Staleness scan
+
+Check `docs/notes/` for files whose last meaningful git commit is 45+ days old that are referenced by open beads issues.
+These are potentially stale notes informing active work.
+For `docs/development/` specifications, use a 90-day threshold.
+
+When a document has `last-validated:` frontmatter, use that date for staleness comparison rather than file modification time.
+This distinguishes content validation from incidental edits (typo fixes, formatting).
+Fall back to the file's last git commit date when no `last-validated:` field exists.
+Do not use filesystem modification time (mtime), which is unreliable after `git checkout`, `git rebase`, and similar operations.
+
+```bash
+# Last meaningful commit date for a file (use instead of filesystem mtime)
+git log --follow -1 --format='%ai' -- <file>
+
+# Staleness check: compare git commit date against threshold
+# docs/notes/: 45 days, docs/development/: 90 days
+# Check flagged files for last-validated frontmatter override
+rg -l 'last-validated:' docs/notes/ docs/development/ 2>/dev/null
+```
+
+For files with `last-validated:` frontmatter, compare that date against the staleness threshold instead of the mtime result.
+A file modified yesterday for formatting but last validated 60 days ago is stale; a file unmodified for 50 days but validated 30 days ago is not.
+
+Cross-reference flagged files against open issue descriptions and notes to determine whether active work depends on stale documentation.
+
+#### Orphan detection
+
+Identify docs not referenced by CLAUDE.md, any beads issue description, or any other doc in the tree.
+These are candidates for review: they may be valuable but disconnected, or they may be forgotten drafts.
+
+#### Supersession cleanup
+
+Check for files with `superseded-by` frontmatter older than 30 days.
+These should have been deleted or archived; flag for cleanup.
+
+```bash
+rg -l 'superseded-by:' docs/ 2>/dev/null
+```
+
+#### Project re-entry detection
+
+If the most recent checkpoint in the beads graph is older than 45 days, this is a project re-entry scenario.
+Expand the documentation health check to a full sweep and include a triage summary with recommended actions (update, refactor, merge, delete) for each flagged doc.
+
+#### CLAUDE.md currency check
+
+Compare the project's CLAUDE.md "Current priorities" and "Current orientation" sections against the beads graph state.
+If the stated priorities reference closed issues or the orientation describes completed work, flag for update.
+
+#### Diagram source staleness
+
+Compare last git commit dates of diagram source files (`.d2`, `.tex`, `.mmd`) against code areas they depict.
+When a diagram's depicted scope has significant code churn since the diagram was last updated, flag it as potentially stale.
+The `preferences-architecture-diagramming` skill defines the diagram categories and their C4 level anchoring; the staleness check here determines whether existing diagrams still reflect reality.
+
+```bash
+# Find diagram source files and their modification times
+fd -e d2 -e tex -e mmd . docs/ 2>/dev/null
+```
+
+Cross-reference flagged diagrams against the compendium categories in `preferences-architecture-diagramming/04-diagram-compendium.md` to assess coverage gaps.
+Report missing C4 levels alongside stale diagrams so the worker can prioritize updates and new diagram creation together.
+
+Staleness thresholds vary by Cynefin domain, consistent with the adaptive planning calibration in `preferences-adaptive-planning`.
+Clear-domain diagrams tolerate longer intervals between updates because the depicted structure changes infrequently.
+Complex-domain diagrams require shorter review cycles because the system they depict is evolving through probes and emergent design.
+
+#### Planning repo context integrity
+
+In planning repos with `contexts/*.md`, verify symlink integrity: do targets exist?
+Flag context files whose source repos have had significant changes since the context was last updated.
+
+```bash
+# Check for broken symlinks in contexts/
+fd -t l --broken . contexts/ 2>/dev/null
+```
+
+### Step 4: parse signal tables on candidate issues
+
+For each candidate issue, extract the signal table from the issue's notes field using the delimiter-based parsing protocol from `/stigmergic-convention`.
+
+```bash
+bd show <id> --json | jq -r '.[0].notes // ""'
+```
+
+Parse the block between `<!-- stigmergic-signals -->` and `<!-- /stigmergic-signals -->` delimiters.
+Read the following values:
+
+- *schema-version* (integer, currently `1`)
+- *cynefin* (clear, complicated, complex, chaotic)
+- *planning-depth* (shallow, standard, deep, probe)
+- *surprise* (0.0 to 1.0)
+- *progress* (not-started, exploring, implementing, verifying, blocked)
+- *escalation* (none, pending, resolved)
+
+If *schema-version* is absent, treat the table as version 1.
+If *schema-version* is present and not `1`, warn the worker that the signal table uses an unrecognized schema version and that field semantics may have changed.
+Continue parsing best-effort but surface the warning prominently in the step 7 synthesis.
+
+When no signal table exists, apply defaults: cynefin=complicated, surprise=0.0, progress=not-started, escalation=none, planning-depth=standard.
+
+Additionally, read the confidence signals from the same signal table:
+
+- *confidence* (`undemonstrated`, `finding-recorded`, `prototype`, `locally-verified`, `integration-verified`, `validated`, `regression-protected`, `regressed`)
+- *evidence-freshness* (ISO date or `—`)
+- *regression-guard* (`none`, `manual`, `automated`, `runtime`)
+
+When confidence signals are absent, apply defaults: confidence=undemonstrated, evidence-freshness=absent, regression-guard=none.
+
+If escalation is `resolved`, extract the resolution from the `<!-- escalation-context -->` section and surface it prominently.
+If escalation is `pending`, inform the worker that an unresolved question exists and assess whether it blocks the candidate.
+
+### Step 5: calibrate briefing depth per planning-depth signal
+
+Assemble the briefing based on the planning-depth value.
+Planning-depth is derived from the Cynefin classification by default but can be manually overridden.
+
+At *shallow* depth (clear domain): emit acceptance criteria and verification commands only.
+The worker knows how to do this kind of work; they need to know what to produce and how to verify it.
+Omit dependency context unless a closed dependency changed an interface the worker must target.
+
+At *standard* depth (complicated domain): emit full context including the issue description, all closed dependency closure context in topological order, resolved escalations, and complete acceptance criteria with verification commands.
+If the surprise score from a prior worker exceeds 0.3, highlight the divergence and include checkpoint context that explains what was unexpected.
+
+At *deep* depth (complex domain): emit everything from standard plus explicit exploration phase directives.
+Separate "what we know" (from dependency context and prior checkpoint context) from "what we need to discover" (from the issue description's open questions or areas where surprise was high).
+Instruct the worker to checkpoint after exploration before implementing.
+
+At *probe* depth (chaotic domain): emit a minimal commitment directive focusing on hypothesis, smallest intervention, and rapid feedback loop.
+The worker acts first to stabilize, senses what happened, then checkpoints with observations.
+Long-term planning is explicitly deferred.
+
+### Step 6: produce exploration phase directives for complex and chaotic domains
+
+When planning-depth is *deep* or *probe*, orient shifts from "read the landscape" to "explore the problem space."
+This is discovery mode, activated within orient rather than as a separate command.
+
+Structure the output to separate known information from open questions:
+
+*Known* (assembled from closed dependency closure reasons, checkpoint context, and documentation):
+- What has been implemented and verified in upstream dependencies
+- What interfaces and constraints exist from prior work
+- What the documentation establishes about the domain
+- What confidence levels upstream dependencies have actually earned and whether their evidence is fresh
+
+*Unknown* (identified from the issue description, documentation gaps, and high surprise scores):
+- Questions the issue description leaves open
+- Areas where prior workers reported high surprise
+- Gaps between documentation and observed reality
+
+Direct the worker to:
+1. Spend their first phase probing the problem space before committing to an implementation approach.
+2. Set progress=exploring initially via signal table update.
+3. Checkpoint after exploration with findings (what was discovered, what approach is recommended, what risks remain).
+4. Update progress=implementing only after the exploration checkpoint.
+
+For *probe* depth specifically, frame the exploration as hypothesis testing.
+Define the hypothesis, the smallest intervention that could confirm or refute it, and the feedback mechanism for observing results.
+The worker is expected to act-sense-respond rather than sense-analyze-respond.
+
+### Step 7: present synthesis with prioritization and work plan
+
+Combine the diagnostics from step 1, documentation context from step 2, documentation health from step 3, signal table state from step 4, and calibrated briefing from steps 5-6 into a single coherent output.
+
+The synthesis includes:
+
+*Health overview*: open/ready/blocked ratio, epic progress, alerts from stale issues or graph health warnings.
+
+*Candidate assessment*: for each candidate issue, the Cynefin classification, planning-depth, surprise score, escalation state, confidence level, evidence-freshness, regression-guard status, and documentation coverage.
+
+*Calibrated briefing*: the depth-appropriate briefing assembled in step 5, with exploration directives from step 6 when applicable.
+
+*Work plan with phase recommendation*:
+- Recommend `/session-plan` if the operational buffer is depleted (few ready issues relative to work capacity) or if decomposition is needed before implementation can begin.
+- Recommend proceeding to implementation if the operational buffer is full and selected issues are ready with clear acceptance criteria.
+- Recommend discovery mode (within this orient session) if planning-depth is deep or probe, before either planning or implementing.
+- Recommend validation or regression-protection work when a candidate's implementation is ahead of its evidence: code exists and tests pass but confidence is still `prototype` or `undemonstrated`, indicating the evidence hasn't been assessed for severity.
+Also flag when closed issues in the epic have weak regression protection (`regression-guard` = `none` on `validated` or higher confidence work).
+
+*Cross-project context* (when available): any cross-repo references discovered during orientation, with confidence levels for each (see the cross-project context loading section below).
+
+## Cross-project context loading
+
+When operating in multi-repo ecosystems, session-orient assembles cross-project context to provide visibility beyond the current repository's DAG.
+This context is advisory, not authoritative: it reflects the last-known state of external repositories and may be stale.
+
+### Scan for cross-references
+
+Examine issue descriptions and notes for cross-repo references using the format `see {prefix}-{id} in {repo}`.
+This format is the convention for description cross-references between paired epics and their children across repositories.
+
+When cross-references are found:
+
+1. Check whether the referenced repository is accessible on the local filesystem.
+2. If accessible, load the referenced issue's status and checkpoint context from that repository's beads database.
+3. If not accessible, note the cross-reference as unresolvable and include only the information available in the local issue's description and notes.
+
+### Load referenced issue status
+
+For each resolvable cross-reference, query the external repository's beads database:
+
+```bash
+# From the external repo's working directory
+bd show <referenced-id> --json | jq '.[0] | {id, title, status, close_reason, notes}'
+```
+
+Extract the referenced issue's status (open, in_progress, closed), closure reason if closed, and any checkpoint context from its notes field.
+This provides the current state of the external dependency without requiring synchronous coordination between repositories.
+
+### Leverage context symlinks in planning repos
+
+Planning repositories may maintain `contexts/*.md` symlinks pointing to each project repo's `CLAUDE.md`.
+When the current repository is a planning repo or when the planning repo is accessible on the local filesystem, read these symlinks to survey project-level architectural decisions and current state across the ecosystem.
+
+```bash
+# List available context symlinks
+ls contexts/*.md 2>/dev/null
+```
+
+Each context file represents a project's orientation document.
+Read them to understand cross-project constraints, shared conventions, and architectural decisions that affect the current work.
+
+### Synthesize with confidence levels
+
+Present cross-project context with explicit confidence ratings:
+
+*High confidence*: the referenced repository was accessible and the issue's current status was read directly from its beads database.
+The information is current as of the local filesystem state.
+
+*Moderate confidence*: the referenced repository was accessible but the specific issue could not be found, or the issue exists but has no checkpoint context.
+The cross-reference in the local issue's description provides partial information.
+
+*Low confidence*: the referenced repository was not accessible on the local filesystem.
+Only the prose cross-reference in the local issue's description is available.
+The actual state of the external work is unknown.
+
+Include the confidence level with each piece of cross-project context so the worker can weight it appropriately in their planning.
+
+### Cross-project context integration with briefing depth
+
+Cross-project context modulates the briefing in the same way as local context:
+
+At *shallow* depth: mention cross-project references only if they affect interfaces the worker must target.
+
+At *standard* depth: include cross-project dependency status and any propagated checkpoint context.
+
+At *deep* depth: include everything from standard plus analysis of how cross-project state affects the exploration phase.
+Unknown cross-project state (low confidence references) becomes an explicit item in the "what we need to discover" section.
+
+At *probe* depth: include only cross-project context that directly informs the hypothesis or intervention design.
+
+## Typical next steps
+
+After orientation completes, the worker proceeds to one of:
+
+- `/session-plan` if decomposition is needed (operational buffer depleted, scope unclear, or new epic requiring breakdown).
+- Implementation if the operational buffer is full and the selected issue has clear acceptance criteria and verification commands.
+- Discovery mode within this orient session if planning-depth is deep or probe, followed by `/session-checkpoint` after exploration and then either `/session-plan` or implementation.
+
+---
+
+*Composed skills (delegate, do not duplicate):*
+- `/issues-beads-orient` -- DAG diagnostics, graph-wide scan, signal-table-driven briefing
+- `/stigmergic-convention` -- signal table schema and parsing protocol
+
+*Related skills:*
+- `/session-plan` -- tactical-to-operational decomposition
+- `/session-checkpoint` -- all-horizon state capture and handoff
+- `/issues-beads-prime` -- core beads conventions and command quick reference
+- `preferences-validation-assurance` for the confidence promotion chain and evidence quality dimensions used to interpret candidate issue readiness
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/cameronraysmith) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-12 -->
