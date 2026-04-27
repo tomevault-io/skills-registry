@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [darthlinuxer/agentic-skills](https://github.com/darthlinuxer/agentic-skills/tree/main/.agent/skills/senior-pmbok-pm)
+Original source: [darthlinuxer/agentic-skills](https://github.com/darthlinuxer/agentic-skills/tree/main/.claude/skills/senior-pmbok-pm)
 
 ---
 
