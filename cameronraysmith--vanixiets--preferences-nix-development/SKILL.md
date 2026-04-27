@@ -1,0 +1,44 @@
+---
+name: preferences-nix-development
+description: Nix development conventions including flake patterns, module structure, derivation best practices, and nix-darwin/home-manager patterns. Load when working with .nix files or nix-related configuration. Use when this capability is needed.
+metadata:
+  author: cameronraysmith
+---
+
+# Nix development
+
+- Most projects should contain a nix flake in `flake.nix` to provide devshell development environments, package builds, and OCI container image builds
+- Verify builds with `nix flake check` and `nix build`
+
+## Flakes and modules
+- Use flakes for all nix projects, not channels
+- Use hercules-ci/flake-parts to structure flake.nix files modularly where relevant
+  - package: nix/modules/{devshell,containers,packages,overrides}.nix
+- Use nixos-unified for system configurations and autoWire for module discovery
+  - system: modules/{home,darwin,nixos,flake-parts}/
+
+## Best Practices
+- Follow nixpkgs naming conventions and style
+- Use `inputs.*.follows = "nixpkgs"` to minimize flake input duplication
+- Place system-level config in modules/darwin/ or modules/nixos/
+- Place user-level config in modules/home/all/ (cross-platform) or darwin-only.nix/linux-only.nix
+- Use home-manager.sharedModules for platform-specific home configuration
+
+## Shell scripts and writeShellApplication
+
+`pkgs.writeShellApplication` runs shellcheck during its `checkPhase`.
+`nix build --dry-run` evaluates the derivation graph but does not execute build phases, so it will not catch shellcheck errors.
+
+Run `shellcheck <file>` directly on shell scripts before committing.
+This is faster than a full `nix build` and catches the same class of errors that `checkPhase` would surface.
+A full `nix build` (without `--dry-run`) of the relevant derivation remains the definitive verification, as it executes `checkPhase` with the exact shellcheck configuration the derivation specifies.
+
+## Nix Code Style
+- Format with `nix fmt`
+- Use explicit function arguments, not `with` statements
+- Prefer `inherit (x) y z;` over `inherit y z;`
+- Use `lib.mkIf`, `lib.mkMerge`, `lib.mkDefault` appropriately
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/cameronraysmith) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
