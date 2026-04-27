@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lobbi-docs/claude](https://github.com/lobbi-docs/claude/tree/main/plugins/fastapi-backend/skills/fastapi-patterns)
+Original source: [lobbi-docs/claude](https://github.com/lobbi-docs/claude/tree/main/plugins/fullstack-iac/skills/fastapi-patterns)
 
 ---
 
