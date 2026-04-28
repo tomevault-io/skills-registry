@@ -1,0 +1,108 @@
+---
+name: brainstorming-ideas
+description: AI agent generates diverse solutions through structured divergent thinking and systematic exploration frameworks. Use when exploring options, solving problems creatively, or generating alternatives. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Brainstorming Ideas
+
+## Quick Start
+
+1. **Diverge** (20 min) - Generate 20+ ideas with no judgment
+2. **Explore** (10 min) - Combine, connect, flesh out themes
+3. **Converge** (15 min) - Evaluate against criteria, prioritize
+4. **Select** - Pick top 3 with clear rationale
+5. **Document** - Capture all ideas and decisions for future reference
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Divergent Phase | Generate many options | Quantity over quality, no judgment |
+| SCAMPER | Systematic modification | Substitute, Combine, Adapt, Modify, Put to use, Eliminate, Reverse |
+| Mind Mapping | Visual connections | Central topic with branching ideas |
+| Reverse Brainstorm | Learn from failure | "How to guarantee failure?" -> prevention |
+| Role Storming | Different perspectives | Junior dev, security expert, user personas |
+| Starbursting | Question-based | Who, What, When, Where, Why, How |
+
+## Common Patterns
+
+```
+# Divergent Phase Rules
+1. Quantity over quality - aim for 20+ ideas
+2. No judgment - all ideas valid
+3. Wild ideas welcome - sparks creativity
+4. Build on others - "Yes, and..."
+5. Time-box - prevent over-analysis
+
+# SCAMPER Framework
+S - SUBSTITUTE: Different tech stack? Team structure?
+C - COMBINE: Merge features? Hybrid approaches?
+A - ADAPT: From other industries? Products?
+M - MODIFY/MAGNIFY: Bigger/smaller? Faster/slower?
+P - PUT TO OTHER USES: Different users? Problems?
+E - ELIMINATE: Remove features? Simplify?
+R - REVERSE: Opposite approach? Different order?
+```
+
+```
+# Reverse Brainstorm
+Goal: Build reliable API
+Reversed: How to make MOST unreliable API?
+
+| Failure Idea | Prevention Strategy |
+|--------------|---------------------|
+| No error handling | Comprehensive try/catch |
+| Single point of failure | Redundancy, load balancing |
+| No monitoring | Prometheus + Grafana |
+| Deploy on Fridays | Change freeze policies |
+
+# Prioritization Matrix
+| Idea | Impact | Effort | Score | Priority |
+|------|--------|--------|-------|----------|
+| A | High | Low | 9 | 1st |
+| B | High | High | 6 | 3rd |
+| C | Medium | Low | 7 | 2nd |
+```
+
+```
+# Role Storming Perspectives
+TECHNICAL:
+- Junior Dev: "What's confusing?"
+- Security Expert: "What vulnerabilities?"
+- DevOps: "How to deploy/monitor?"
+
+USER:
+- Power User: "Advanced features needed?"
+- New User: "Is this intuitive?"
+- Frustrated User: "What's annoying?"
+
+EXTERNAL:
+- Competitor: "How would we copy this?"
+- Hacker: "How to exploit this?"
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Set clear time limits per phase | Judging ideas during divergent phase |
+| Capture ALL ideas, even "bad" ones | Letting dominant voices control |
+| Build on others' ideas with "Yes, and..." | Skipping exploration phase |
+| Use visual tools (mind maps, boards) | Converging too early |
+| Vote anonymously to avoid groupthink | Brainstorming without clear goal |
+| Follow up with action items | Abandoning ideas without evaluation |
+| Mix individual and group ideation | Sessions over 60 minutes |
+| Create safety for wild ideas | Forgetting to capture reasoning |
+
+## Related Skills
+
+- `thinking-sequentially` - Structure exploration
+- `writing-plans` - Turn ideas into plans
+- `solving-problems` - Generate solution hypotheses
+- `dispatching-parallel-agents` - Parallel idea exploration
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
