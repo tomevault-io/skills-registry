@@ -1,0 +1,212 @@
+---
+name: processing-images
+description: Processes images with Sharp for optimization, resizing, format conversion, and batch operations. Use when optimizing web images, generating thumbnails, creating responsive image sets, or applying transformations. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Processing Images
+
+## Quick Start
+
+```typescript
+import sharp from 'sharp';
+
+// Resize and optimize for web
+async function optimizeImage(inputPath: string, outputPath: string): Promise<void> {
+  await sharp(inputPath)
+    .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
+    .webp({ quality: 80 })
+    .toFile(outputPath);
+}
+
+// Generate thumbnail with smart crop
+async function generateThumbnail(inputPath: string, outputPath: string): Promise<void> {
+  await sharp(inputPath)
+    .resize(300, 300, { fit: 'cover', position: sharp.strategy.attention })
+    .jpeg({ quality: 85 })
+    .toFile(outputPath);
+}
+
+// Convert to multiple formats
+async function convertFormats(inputPath: string, outputDir: string): Promise<void> {
+  const baseName = path.basename(inputPath, path.extname(inputPath));
+  await Promise.all([
+    sharp(inputPath).webp({ quality: 80 }).toFile(`${outputDir}/${baseName}.webp`),
+    sharp(inputPath).avif({ quality: 70 }).toFile(`${outputDir}/${baseName}.avif`),
+    sharp(inputPath).jpeg({ quality: 85, mozjpeg: true }).toFile(`${outputDir}/${baseName}.jpg`),
+  ]);
+}
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Resizing | Scale images with various fit modes | Use resize() with cover, contain, fill, inside, outside |
+| Format Conversion | Convert between JPEG, PNG, WebP, AVIF | Use toFormat() or format-specific methods |
+| Optimization | Reduce file size while preserving quality | Set quality levels and use mozjpeg/effort options |
+| Smart Cropping | Auto-detect focal points for cropping | Use sharp.strategy.attention for smart positioning |
+| Effects | Apply blur, sharpen, grayscale, tint | Use blur(), sharpen(), grayscale(), tint() |
+| Watermarks | Add text or image overlays | Use composite() with SVG or image buffers |
+| Metadata | Read EXIF data and image dimensions | Use metadata() for width, height, format info |
+| Color Analysis | Extract dominant colors | Use raw() output with color quantization |
+| LQIP Generation | Create low-quality image placeholders | Resize to ~20px with blur for base64 preview |
+| Batch Processing | Process multiple images concurrently | Use p-queue with controlled concurrency |
+
+## Common Patterns
+
+### Responsive Image Set Generation
+
+```typescript
+async function generateResponsiveSet(
+  inputPath: string,
+  outputDir: string,
+  widths: number[] = [320, 640, 1024, 1920]
+): Promise<{ srcset: string; sizes: string }> {
+  const baseName = path.basename(inputPath, path.extname(inputPath));
+  const srcsetParts: string[] = [];
+
+  for (const width of widths) {
+    const filename = `${baseName}-${width}w.webp`;
+    await sharp(inputPath)
+      .resize(width, null, { withoutEnlargement: true })
+      .webp({ quality: 80 })
+      .toFile(path.join(outputDir, filename));
+    srcsetParts.push(`${filename} ${width}w`);
+  }
+
+  return {
+    srcset: srcsetParts.join(', '),
+    sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+  };
+}
+```
+
+### E-commerce Product Image Processing
+
+```typescript
+async function processProductImage(inputPath: string, productId: string): Promise<ProductImages> {
+  const outputDir = path.join(MEDIA_DIR, 'products', productId);
+  await fs.mkdir(outputDir, { recursive: true });
+
+  const sizes = [
+    { name: 'thumb', width: 150, height: 150 },
+    { name: 'small', width: 300, height: 300 },
+    { name: 'medium', width: 600, height: 600 },
+    { name: 'large', width: 1200, height: 1200 },
+  ];
+
+  const images: Record<string, string> = {};
+  for (const size of sizes) {
+    const outputPath = path.join(outputDir, `${size.name}.webp`);
+    await sharp(inputPath)
+      .resize(size.width, size.height, { fit: 'contain', background: '#ffffff' })
+      .webp({ quality: 85 })
+      .toFile(outputPath);
+    images[size.name] = `/media/products/${productId}/${size.name}.webp`;
+  }
+
+  // Generate LQIP placeholder
+  const lqipBuffer = await sharp(inputPath).resize(20).blur(5).jpeg({ quality: 20 }).toBuffer();
+  const lqip = `data:image/jpeg;base64,${lqipBuffer.toString('base64')}`;
+
+  return { images, lqip };
+}
+```
+
+### Image Watermarking
+
+```typescript
+async function addWatermark(inputPath: string, outputPath: string, watermarkPath: string): Promise<void> {
+  const metadata = await sharp(inputPath).metadata();
+  const watermark = await sharp(watermarkPath)
+    .resize(Math.round((metadata.width || 800) * 0.2))
+    .toBuffer();
+
+  await sharp(inputPath)
+    .composite([{ input: watermark, gravity: 'southeast', blend: 'over' }])
+    .toFile(outputPath);
+}
+
+async function addTextWatermark(inputPath: string, outputPath: string, text: string): Promise<void> {
+  const metadata = await sharp(inputPath).metadata();
+  const { width = 800, height = 600 } = metadata;
+
+  const svg = `<svg width="${width}" height="${height}">
+    <text x="${width - 20}" y="${height - 20}" text-anchor="end"
+          font-size="24" fill="white" opacity="0.5">${text}</text>
+  </svg>`;
+
+  await sharp(inputPath)
+    .composite([{ input: Buffer.from(svg), gravity: 'southeast' }])
+    .toFile(outputPath);
+}
+```
+
+### Batch Processing with Progress
+
+```typescript
+import PQueue from 'p-queue';
+
+async function batchProcessImages(
+  inputPaths: string[],
+  outputDir: string,
+  transform: (image: sharp.Sharp) => sharp.Sharp,
+  onProgress?: (completed: number, total: number) => void
+): Promise<Map<string, { success: boolean; error?: string }>> {
+  const queue = new PQueue({ concurrency: 4 });
+  const results = new Map<string, { success: boolean; error?: string }>();
+  let completed = 0;
+
+  for (const inputPath of inputPaths) {
+    queue.add(async () => {
+      const filename = path.basename(inputPath, path.extname(inputPath)) + '.webp';
+      try {
+        let image = sharp(inputPath);
+        image = transform(image);
+        await image.toFile(path.join(outputDir, filename));
+        results.set(inputPath, { success: true });
+      } catch (error) {
+        results.set(inputPath, { success: false, error: error.message });
+      }
+      completed++;
+      onProgress?.(completed, inputPaths.length);
+    });
+  }
+
+  await queue.onIdle();
+  return results;
+}
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use WebP/AVIF for modern browsers with JPEG fallback | Serving only JPEG/PNG to all browsers |
+| Generate LQIP placeholders for lazy loading | Loading full images without placeholders |
+| Cache processed images to avoid reprocessing | Re-processing the same image on each request |
+| Use withoutEnlargement to prevent upscaling | Scaling images larger than their original size |
+| Strip EXIF metadata for privacy and smaller files | Exposing GPS and camera data in public images |
+| Validate image dimensions and format before processing | Processing arbitrary files without validation |
+| Use streams for large images to reduce memory | Loading very large images entirely into memory |
+| Set appropriate quality (70-85) for web delivery | Over-compressing (below 60) or under-compressing |
+| Use sharp.strategy.attention for thumbnails | Using center crop for all images |
+| Provide fallback formats for older browsers | Assuming all browsers support WebP/AVIF |
+
+## Related Skills
+
+- **media-processing** - Video and audio processing
+- **frontend-design** - Image usage in UI design
+
+## References
+
+- [Sharp Documentation](https://sharp.pixelplumbing.com/)
+- [Web.dev Image Optimization](https://web.dev/fast/#optimize-your-images)
+- [Squoosh](https://squoosh.app/) - Format comparison tool
+- [Can I Use AVIF](https://caniuse.com/avif)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
