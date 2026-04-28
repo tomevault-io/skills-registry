@@ -1,0 +1,169 @@
+---
+name: testing-with-playwright
+description: Claude writes reliable E2E tests using Playwright for browser automation. Use when writing end-to-end tests, implementing Page Object Model, visual regression testing, API mocking, or cross-browser testing. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Testing with Playwright
+
+## Quick Start
+
+```typescript
+// playwright.config.ts
+import { defineConfig, devices } from "@playwright/test";
+
+export default defineConfig({
+  testDir: "./tests/e2e",
+  fullyParallel: true,
+  retries: process.env.CI ? 2 : 0,
+  reporter: [["list"], ["html"]],
+  use: {
+    baseURL: "http://localhost:3000",
+    trace: "on-first-retry",
+    screenshot: "only-on-failure",
+  },
+  projects: [
+    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
+    { name: "firefox", use: { ...devices["Desktop Firefox"] } },
+    { name: "mobile", use: { ...devices["iPhone 12"] } },
+  ],
+  webServer: { command: "npm run dev", url: "http://localhost:3000" },
+});
+```
+
+## Features
+
+| Feature | Description | Reference |
+|---------|-------------|-----------|
+| Page Object Model | Maintainable test architecture pattern | [POM Guide](https://playwright.dev/docs/pom) |
+| Auto-Waiting | Built-in waiting for elements and assertions | [Auto-Waiting](https://playwright.dev/docs/actionability) |
+| Network Mocking | Intercept and mock API responses | [Network](https://playwright.dev/docs/network) |
+| Visual Testing | Screenshot comparison for regression testing | [Visual Comparisons](https://playwright.dev/docs/test-snapshots) |
+| Cross-Browser | Chrome, Firefox, Safari, mobile devices | [Browsers](https://playwright.dev/docs/browsers) |
+| Trace Viewer | Debug failing tests with timeline | [Trace Viewer](https://playwright.dev/docs/trace-viewer) |
+
+## Common Patterns
+
+### Page Object Model
+
+```typescript
+// tests/pages/login.page.ts
+import { Page, Locator, expect } from "@playwright/test";
+
+export class LoginPage {
+  readonly emailInput: Locator;
+  readonly passwordInput: Locator;
+  readonly submitButton: Locator;
+
+  constructor(private page: Page) {
+    this.emailInput = page.getByLabel("Email");
+    this.passwordInput = page.getByLabel("Password");
+    this.submitButton = page.getByRole("button", { name: "Sign in" });
+  }
+
+  async login(email: string, password: string) {
+    await this.emailInput.fill(email);
+    await this.passwordInput.fill(password);
+    await this.submitButton.click();
+  }
+
+  async expectError(message: string) {
+    await expect(this.page.getByRole("alert")).toContainText(message);
+  }
+}
+```
+
+### API Mocking
+
+```typescript
+import { test, expect } from "@playwright/test";
+
+test("mock API response", async ({ page }) => {
+  await page.route("**/api/users", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ users: [{ id: 1, name: "John" }] }),
+    })
+  );
+
+  await page.goto("/users");
+  await expect(page.getByText("John")).toBeVisible();
+});
+
+test("capture network requests", async ({ page }) => {
+  const requestPromise = page.waitForRequest("**/api/analytics");
+  await page.goto("/dashboard");
+  const request = await requestPromise;
+  expect(request.postDataJSON()).toMatchObject({ event: "page_view" });
+});
+```
+
+### Authentication Fixture
+
+```typescript
+// tests/fixtures/auth.fixture.ts
+import { test as base } from "@playwright/test";
+import { LoginPage } from "../pages/login.page";
+
+export const test = base.extend<{ authenticatedPage: Page }>({
+  authenticatedPage: async ({ page }, use) => {
+    // Fast auth via API
+    const response = await page.request.post("/api/auth/login", {
+      data: { email: "test@example.com", password: "password" },
+    });
+    const { token } = await response.json();
+
+    await page.context().addCookies([
+      { name: "auth_token", value: token, domain: "localhost", path: "/" },
+    ]);
+
+    await page.goto("/dashboard");
+    await use(page);
+  },
+});
+```
+
+### Visual Regression Testing
+
+```typescript
+test("visual snapshot", async ({ page }) => {
+  await page.goto("/");
+  await page.addStyleTag({
+    content: "*, *::before, *::after { animation-duration: 0s !important; }",
+  });
+
+  await expect(page).toHaveScreenshot("homepage.png", {
+    fullPage: true,
+    maxDiffPixels: 100,
+  });
+
+  // Mask dynamic content
+  await expect(page).toHaveScreenshot("dashboard.png", {
+    mask: [page.getByTestId("timestamp"), page.getByTestId("avatar")],
+  });
+});
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use Page Object Model for maintainability | Fragile CSS selectors |
+| Prefer user-facing locators (getByRole, getByLabel) | Relying on arbitrary waits |
+| Use API auth for faster test setup | Sharing state between tests |
+| Enable traces and screenshots for debugging | Testing third-party services directly |
+| Run tests in parallel for speed | Skipping flaky tests without fixing |
+| Mock external APIs for reliability | Hardcoding test data |
+
+## References
+
+- [Playwright Documentation](https://playwright.dev/docs/intro)
+- [Playwright Best Practices](https://playwright.dev/docs/best-practices)
+- [Page Object Model](https://playwright.dev/docs/pom)
+- [Visual Comparisons](https://playwright.dev/docs/test-snapshots)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
