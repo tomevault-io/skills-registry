@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentient/vibekit](https://github.com/agentient/vibekit/tree/main/plugins/performance-tools/skills/frontend-bundle-analysis-and-optimization)
+Original source: [agentient/vibekit](https://github.com/agentient/vibekit/tree/main/skills/agentient-performance/skills/frontend-bundle-analysis-and-optimization)
 
 ---
 
