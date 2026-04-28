@@ -1,0 +1,155 @@
+---
+name: building-responsive-layouts
+description: Claude builds responsive web layouts with mobile-first CSS, fluid typography, and container queries. Use when creating adaptive UIs that work across all device sizes. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Building Responsive Layouts
+
+## Quick Start
+
+```tsx
+// Responsive grid with auto-fit
+export function ResponsiveGrid({ children, minWidth = '300px' }: GridProps) {
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: `repeat(auto-fit, minmax(min(${minWidth}, 100%), 1fr))`,
+      gap: '1.5rem'
+    }}>
+      {children}
+    </div>
+  );
+}
+
+// With Tailwind
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+  {items.map(item => <Card key={item.id} {...item} />)}
+</div>
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Mobile-First Breakpoints | sm(640), md(768), lg(1024), xl(1280), 2xl(1536) | `ref/breakpoints.md` |
+| Fluid Typography | `clamp()` for responsive font sizes | `ref/fluid-type.md` |
+| Container Queries | Component-level responsive design | `ref/container-queries.md` |
+| Responsive Images | srcset, sizes, and art direction | `ref/images.md` |
+| Touch-Friendly | 44px minimum targets, hover vs touch handling | `ref/touch.md` |
+| Safe Areas | Handle notched devices and dynamic viewports | `ref/safe-areas.md` |
+
+## Common Patterns
+
+### useMediaQuery Hook
+
+```tsx
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    setMatches(media.matches);
+    const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, [query]);
+
+  return matches;
+}
+
+// Usage
+const isMobile = useMediaQuery('(max-width: 639px)');
+const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+```
+
+### Container Query Component
+
+```css
+.card-container {
+  container-type: inline-size;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+@container (min-width: 400px) {
+  .card {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  .card-image { width: 40%; }
+}
+```
+
+```tsx
+export function ResponsiveCard({ image, title, content }: CardProps) {
+  return (
+    <div className="card-container">
+      <article className="card">
+        <img src={image} alt="" className="card-image" />
+        <div className="card-content">
+          <h3>{title}</h3>
+          <p>{content}</p>
+        </div>
+      </article>
+    </div>
+  );
+}
+```
+
+### Responsive Navigation
+
+```tsx
+export function ResponsiveNav() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <nav className="relative">
+      <div className="flex justify-between items-center h-16 px-4">
+        <Logo />
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center space-x-8">
+          <NavLink href="/">Home</NavLink>
+          <NavLink href="/about">About</NavLink>
+        </div>
+        {/* Mobile menu button */}
+        <button
+          className="md:hidden p-2 min-h-[44px] min-w-[44px]"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+        >
+          <span className="sr-only">{isOpen ? 'Close' : 'Open'} menu</span>
+          {isOpen ? <XIcon /> : <MenuIcon />}
+        </button>
+      </div>
+      {/* Mobile nav */}
+      {isOpen && (
+        <div className="md:hidden px-2 pb-3 space-y-1">
+          <MobileNavLink href="/" onClick={() => setIsOpen(false)}>Home</MobileNavLink>
+          <MobileNavLink href="/about" onClick={() => setIsOpen(false)}>About</MobileNavLink>
+        </div>
+      )}
+    </nav>
+  );
+}
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Start with mobile-first CSS | Hiding essential content on mobile |
+| Use relative units (rem, %, vw) | Fixed pixel widths |
+| Test on real devices | Relying only on hover states |
+| Use 44px minimum touch targets | Small touch targets on mobile |
+| Consider reduced motion preferences | Ignoring landscape orientation |
+| Use CSS logical properties (inline, block) | Device-specific breakpoints |
+| Handle safe-area-inset for notched devices | Assuming mouse input |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
