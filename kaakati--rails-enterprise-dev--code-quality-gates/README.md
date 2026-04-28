@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kaakati/rails-enterprise-dev](https://github.com/kaakati/rails-enterprise-dev/tree/main/plugins/reactree-ios-dev/skills/code-quality-gates)
+Original source: [kaakati/rails-enterprise-dev](https://github.com/kaakati/rails-enterprise-dev/tree/main/plugins/reactree-rails-dev/skills/code-quality-gates)
 
 ---
 
