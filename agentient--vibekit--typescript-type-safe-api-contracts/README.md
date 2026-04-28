@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentient/vibekit](https://github.com/agentient/vibekit/tree/main/skills/agentient-frontend-tools/skills/agentient-frontend-foundation/skills/typescript-type-safe-api-contracts)
+Original source: [agentient/vibekit](https://github.com/agentient/vibekit/tree/main/plugins/frontend-tools/skills/typescript-type-safe-api-contracts)
 
 ---
 
