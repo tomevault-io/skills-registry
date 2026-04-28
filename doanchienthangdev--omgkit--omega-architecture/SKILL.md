@@ -1,0 +1,197 @@
+---
+name: architecting-omega-systems
+description: Designs scalable, resilient architectures using the 7 Omega principles. Use when building systems that need to scale to millions of users or designing platform-level infrastructure. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Architecting Omega Systems
+
+Build **scalable, resilient, and future-proof systems** following the 7 Omega Principles for platform-grade architecture.
+
+## Quick Start
+
+```yaml
+# 1. Define architectural requirements
+Architecture:
+  Name: "E-commerce Platform"
+  Scale: "1M+ concurrent users"
+  Principles: [leverage, abstraction, agentic, antifragile]
+
+# 2. Apply Omega decision framework
+Decision:
+  Question: "Monolith or microservices?"
+  Omega_Check:
+    - Leverage: "Does this multiply capability?"
+    - Scale: "Zero-marginal-cost at 1000x?"
+    - Resilience: "Self-healing under stress?"
+
+# 3. Design with antifragility
+Pattern: Event-Driven + Circuit Breakers + Auto-Scaling
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| 7 Omega Principles | Core architectural tenets for scalable systems | Apply all 7 to every decision |
+| Leverage Architecture | Systems that amplify effort, not add to it | Build frameworks, not features |
+| Agentic Services | Autonomous, self-healing microservices | Circuit breakers + health monitors |
+| Zero-Marginal-Cost | Platform economics at scale | Edge compute + aggressive caching |
+| Event-Driven Design | Loose coupling via event bus | Kafka/Redis streams + sagas |
+| Antifragile Patterns | Systems that strengthen under stress | Chaos engineering + adaptive config |
+| Decision Framework | Systematic architecture evaluation | Omega checklist for every choice |
+
+## Common Patterns
+
+### The 7 Omega Principles
+
+```
+1. LEVERAGE MULTIPLICATION   - Build systems that amplify effort
+2. TRANSCENDENT ABSTRACTION  - Solve classes of problems
+3. AGENTIC DECOMPOSITION     - Autonomous, self-managing services
+4. RECURSIVE IMPROVEMENT     - Systems that optimize themselves
+5. ZERO-MARGINAL-COST        - No cost per user at scale
+6. ANTIFRAGILE DESIGN        - Grow stronger under stress
+7. COMPOSABLE PRIMITIVES     - Lego blocks that combine infinitely
+```
+
+### Leverage Architecture Pattern
+
+```typescript
+// ONE implementation handles ALL entity types
+class LeveragedEntitySystem {
+  async create<T>(type: string, data: T): Promise<T> {
+    const validated = await this.validators.get(type)?.validate(data);
+    await this.runHooks(type, 'beforeCreate', validated);
+    const result = await this.storage.create(type, validated);
+    await this.runHooks(type, 'afterCreate', result);
+    return result as T;
+  }
+
+  // New entity = configuration, not code
+  registerEntityType(type: string, config: EntityConfig): void {
+    this.validators.set(type, createValidator(config.schema));
+  }
+}
+```
+
+### Agentic Service Pattern
+
+```typescript
+abstract class AgenticService {
+  private circuitBreaker: CircuitBreaker;
+  private healthMonitor: HealthMonitor;
+  private autoScaler: AutoScaler;
+
+  constructor() {
+    // Self-monitoring
+    this.healthMonitor = new HealthMonitor({
+      onUnhealthy: () => this.selfHeal()
+    });
+
+    // Self-protecting
+    this.circuitBreaker = new CircuitBreaker({
+      failureThreshold: 5,
+      onOpen: () => this.notifyDegradation()
+    });
+  }
+
+  protected async executeWithResilience<T>(
+    operation: () => Promise<T>,
+    fallback?: () => T
+  ): Promise<T> {
+    return this.circuitBreaker.execute(operation, fallback);
+  }
+}
+```
+
+### Zero-Marginal-Cost Pattern
+
+```typescript
+// Edge-first architecture
+const platformConfig = {
+  compute: { provider: 'cloudflare-workers', pricing: 'per-invocation' },
+  storage: { provider: 'r2', cdn: { enabled: true, ttl: '1y' } },
+  database: { provider: 'planetscale', sharding: 'automatic' },
+  cache: {
+    layers: [
+      { type: 'browser', ttl: '1h' },
+      { type: 'cdn-edge', ttl: '24h' },
+      { type: 'origin', ttl: '5m' }
+    ]
+  }
+};
+```
+
+### Event-Driven Saga Pattern
+
+```typescript
+class OrderSaga {
+  constructor(eventBus: EventBus) {
+    eventBus.subscribe('order.created', this.handleOrderCreated);
+    eventBus.subscribe('payment.failed', this.handlePaymentFailed);
+  }
+
+  handleOrderCreated = async (event: DomainEvent<Order>) => {
+    await this.eventBus.publish({
+      type: 'inventory.reserve',
+      data: { orderId: event.data.id, items: event.data.items },
+      correlationId: event.correlationId
+    });
+  };
+
+  handlePaymentFailed = async (event: DomainEvent) => {
+    // Compensating action
+    await this.eventBus.publish({ type: 'inventory.release', ... });
+    await this.eventBus.publish({ type: 'order.cancelled', ... });
+  };
+}
+```
+
+### Architecture Decision Template
+
+```markdown
+## Omega Architecture Decision
+
+### Context
+[Problem and constraints]
+
+### Omega Principles Check
+| Principle | Question | Assessment |
+|-----------|----------|------------|
+| Leverage | Does this multiply capability? | |
+| Abstraction | Solving class of problems? | |
+| Agentic | Can it operate autonomously? | |
+| Recursive | Will it self-improve? | |
+| Zero-Marginal | Sub-linear cost scaling? | |
+| Antifragile | Stronger under stress? | |
+| Composable | Combines with other components? | |
+
+### Scale Analysis
+- 10x load: [Impact]
+- 100x load: [Impact]
+- 1000x load: [Impact]
+
+### Decision
+[Chosen approach with rationale]
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Apply all 7 Omega principles to every decision | Building monoliths that cannot decompose |
+| Design for 1000x scale from day one | Tight coupling between services |
+| Use event-driven patterns for loose coupling | Ignoring failure modes in design |
+| Implement circuit breakers at all boundaries | Scaling vertically when horizontal is possible |
+| Build self-healing capabilities into services | Hardcoding configuration values |
+| Measure and optimize cost per transaction | Skipping capacity planning |
+| Document decisions using ADR template | Deploying without health checks |
+| Test failure scenarios with chaos engineering | Synchronous calls for non-critical paths |
+| Use infrastructure as code | Ignoring data consistency requirements |
+| Implement observability everywhere | Underestimating distributed system complexity |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
