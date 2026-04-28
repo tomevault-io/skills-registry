@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ngxtm/devkit](https://github.com/ngxtm/devkit/tree/main/templates/dart/rules/dart/best-practices)
+Original source: [ngxtm/devkit](https://github.com/ngxtm/devkit/tree/main/templates/typescript/rules/typescript/best-practices)
 
 ---
 
