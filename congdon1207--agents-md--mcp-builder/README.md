@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [congdon1207/agents.md](https://github.com/congdon1207/agents.md/tree/main/.codex/skills/mcp-builder)
+Original source: [congdon1207/agents.md](https://github.com/congdon1207/agents.md/tree/main/.opencode/skills/mcp-builder)
 
 ---
 
