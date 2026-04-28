@@ -1,0 +1,329 @@
+---
+name: clawbrain
+description: Claw Brain - Personal AI Memory System for OpenClaw/ClawDBot. Provides memory, personality, bonding, and learning capabilities. Auto-refreshes on service restart. Use when this capability is needed.
+metadata:
+  author: kbarbel640-del
+---
+
+# Claw Brain Skill 🧠
+
+Personal AI Memory System with Soul, Bonding, and Learning for OpenClaw/ClawDBot.
+
+> **Auto-Refresh on Restart**: ClawBrain automatically refreshes memory when the service restarts.
+
+## Features
+
+- 🎭 **Soul/Personality** - 6 evolving traits (humor, empathy, curiosity, creativity, helpfulness, honesty)
+- 👤 **User Profile** - Learns user preferences, interests, communication style
+- 💭 **Conversation State** - Real-time mood detection and context tracking
+- 📚 **Learning Insights** - Continuously learns from interactions and corrections
+- 🧠 **get_full_context()** - Everything for personalized responses
+- 🔄 **Auto-Refresh** - Automatically refreshes memory on service restart
+- 🔐 **Encrypted Secrets** - Store API keys and credentials securely
+
+---
+
+## Quick Install
+
+**One-liner (recommended):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/clawcolab/clawbrain/main/remote-install.sh | bash
+```
+
+This will:
+1. Detect your platform (ClawdBot or OpenClaw)
+2. Clone to the correct skills directory
+3. Install the startup hook automatically
+4. Check Python dependencies
+
+---
+
+## Configuration
+
+After installation, configure your agent ID:
+
+```bash
+# Create systemd drop-in config
+sudo mkdir -p /etc/systemd/system/clawdbot.service.d  # or openclaw.service.d
+
+sudo tee /etc/systemd/system/clawdbot.service.d/brain.conf << EOF
+[Service]
+Environment="BRAIN_AGENT_ID=your-agent-name"
+# Optional: PostgreSQL (for production)
+# Environment="BRAIN_POSTGRES_HOST=localhost"
+# Environment="BRAIN_POSTGRES_PASSWORD=your-password"
+# Optional: Redis (for caching)
+# Environment="BRAIN_REDIS_HOST=localhost"
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl restart clawdbot  # or openclaw
+```
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `BRAIN_AGENT_ID` | Unique ID for this agent's memories | `default` |
+| `BRAIN_POSTGRES_HOST` | PostgreSQL host | `localhost` |
+| `BRAIN_POSTGRES_PASSWORD` | PostgreSQL password | - |
+| `BRAIN_POSTGRES_PORT` | PostgreSQL port | `5432` |
+| `BRAIN_POSTGRES_DB` | PostgreSQL database | `brain_db` |
+| `BRAIN_POSTGRES_USER` | PostgreSQL user | `brain_user` |
+| `BRAIN_REDIS_HOST` | Redis host | `localhost` |
+| `BRAIN_REDIS_PORT` | Redis port | `6379` |
+| `BRAIN_STORAGE` | Force storage: `sqlite`, `postgresql`, `auto` | `auto` |
+
+---
+
+## How It Works
+
+### On Service Startup
+1. Hook triggers on `gateway:startup` event
+2. Detects storage backend (SQLite/PostgreSQL)
+3. Loads memories for the configured `BRAIN_AGENT_ID`
+4. Injects context into agent bootstrap
+
+### On `/new` Command
+1. Hook triggers on `command:new` event  
+2. Saves current session summary to memory
+3. Clears session state for fresh start
+
+### Storage Priority
+1. **PostgreSQL** - If available and configured
+2. **SQLite** - Fallback, zero configuration needed
+
+---
+
+## Hooks
+
+| Event | Action |
+|-------|--------|
+| `gateway:startup` | Initialize brain, refresh memories |
+| `command:new` | Save session to memory |
+
+---
+
+## Manual Installation
+
+If you prefer manual installation:
+
+```bash
+# Clone to your skills directory
+cd ~/.openclaw/skills  # or ~/clawd/skills or ~/.clawdbot/skills
+git clone https://github.com/clawcolab/clawbrain.git
+cd clawbrain
+./install.sh
+```
+
+---
+
+## Python API
+
+For direct Python usage (outside ClawdBot/OpenClaw):
+
+```python
+from clawbrain import Brain
+
+brain = Brain()
+```
+
+#### Methods
+
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `get_full_context()` | Get all context for personalized responses | dict |
+| `remember()` | Store a memory | None |
+| `recall()` | Retrieve memories | List[Memory] |
+| `learn_user_preference()` | Learn user preferences | None |
+| `get_user_profile()` | Get user profile | UserProfile |
+| `detect_user_mood()` | Detect current mood | dict |
+| `detect_user_intent()` | Detect message intent | str |
+| `generate_personality_prompt()` | Generate personality guidance | str |
+| `health_check()` | Check backend connections | dict |
+| `close()` | Close connections | None |
+
+### get_full_context()
+
+```python
+context = brain.get_full_context(
+    session_key="telegram_12345",  # Unique session ID
+    user_id="username",              # User identifier
+    agent_id="assistant",          # Bot identifier
+    message="Hey, how's it going?" # Current message
+)
+```
+
+**Returns:**
+```python
+{
+    "user_profile": {...},        # User preferences, interests
+    "mood": {"mood": "happy", ...},  # Current mood
+    "intent": "question",         # Detected intent
+    "memories": [...],            # Relevant memories
+    "personality": "...",         # Personality guidance
+    "suggested_responses": [...]  # Response suggestions
+}
+```
+
+### detect_user_mood()
+
+```python
+mood = brain.detect_user_mood("I'm so excited about this!")
+# Returns: {"mood": "happy", "confidence": 0.9, "emotions": ["joy", "anticipation"]}
+```
+
+### detect_user_intent()
+
+```python
+intent = brain.detect_user_intent("How does AI work?")
+# Returns: "question"
+
+intent = brain.detect_user_intent("Set a reminder for 3pm")
+# Returns: "command"
+
+intent = brain.detect_user_intent("I had a great day today")
+# Returns: "casual"
+```
+
+---
+
+## Example: Full Integration
+
+```python
+import sys
+sys.path.insert(0, "ClawBrain")
+
+from clawbrain import Brain
+
+class AssistantBot:
+    def __init__(self):
+        self.brain = Brain()
+    
+    def handle_message(self, message, chat_id):
+        # Get context
+        context = self.brain.get_full_context(
+            session_key=f"telegram_{chat_id}",
+            user_id=str(chat_id),
+            agent_id="assistant",
+            message=message
+        )
+        
+        # Generate response using context
+        response = self.generate_response(context)
+        
+        # Learn from interaction
+        self.brain.learn_user_preference(
+            user_id=str(chat_id),
+            pref_type="interest",
+            value="AI"
+        )
+        
+        return response
+    
+    def generate_response(self, context):
+        # Use user preferences
+        name = context["user_profile"].name or "there"
+        mood = context["mood"]["mood"]
+        
+        # Personalized response
+        if mood == "frustrated":
+            return f"Hey {name}, I'm here to help. Let me assist you."
+        else:
+            return f"Hi {name}! How can I help you today?"
+    
+    def shutdown(self):
+        self.brain.close()
+```
+
+---
+
+## Storage Backends
+
+### SQLite (Default - Zero Setup)
+
+No configuration needed. Data stored in local SQLite database.
+
+```python
+brain = Brain({"storage_backend": "sqlite"})
+```
+
+**Best for:** Development, testing, single-user deployments
+
+### PostgreSQL + Redis (Production)
+
+Requires PostgreSQL and Redis servers.
+
+```python
+brain = Brain()  # Auto-detects
+```
+
+**Requirements:**
+- PostgreSQL 14+
+- Redis 6+
+- Python packages: `psycopg2-binary`, `redis`
+
+```bash
+pip install psycopg2-binary redis
+```
+
+**Best for:** Production, multi-user, high-concurrency
+
+---
+
+## Files
+
+- `clawbrain.py` - Main Brain class with all features
+- `__init__.py` - Module exports
+- `SKILL.md` - This documentation
+- `skill.json` - ClawdHub metadata
+- `README.md` - Quick start guide
+
+---
+
+## Troubleshooting
+
+### ImportError: No module named 'clawbrain'
+
+```bash
+# Ensure ClawBrain folder is in your path
+sys.path.insert(0, "ClawBrain")
+```
+
+### PostgreSQL connection failed
+
+```bash
+# Check environment variables
+echo $POSTGRES_HOST
+echo $POSTGRES_PORT
+
+# Verify PostgreSQL is running
+pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT
+```
+
+### Redis connection failed
+
+```bash
+# Check Redis is running
+redis-cli ping
+```
+
+### Using SQLite (fallback)
+
+If PostgreSQL/Redis are unavailable, Claw Brain automatically falls back to SQLite:
+
+```python
+brain = Brain({"storage_backend": "sqlite"})
+```
+
+---
+
+## Learn More
+
+- **Repository:** https://github.com/clawcolab/clawbrain
+- **README:** See README.md for quick start
+- **Issues:** Report bugs at GitHub Issues
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/kbarbel640-del) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
