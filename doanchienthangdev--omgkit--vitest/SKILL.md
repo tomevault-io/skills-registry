@@ -1,0 +1,155 @@
+---
+name: testing-with-vitest
+description: Claude writes fast, reliable tests using Vitest for TypeScript/JavaScript projects. Use when writing unit tests, component tests, setting up mocks, snapshot testing, or configuring test coverage. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Testing with Vitest
+
+## Quick Start
+
+```typescript
+// vitest.config.ts
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: ["./tests/setup.ts"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html"],
+      thresholds: { global: { branches: 80, functions: 80, lines: 80 } },
+    },
+  },
+});
+
+// tests/setup.ts
+import { afterEach, vi } from "vitest";
+import { cleanup } from "@testing-library/vue";
+import "@testing-library/jest-dom/vitest";
+
+afterEach(() => { vi.clearAllMocks(); cleanup(); });
+```
+
+## Features
+
+| Feature | Description | Reference |
+|---------|-------------|-----------|
+| Unit Testing | Fast isolated tests with describe/it/expect | [Vitest API](https://vitest.dev/api/) |
+| Mocking | Module, function, and timer mocking with vi | [Mocking Guide](https://vitest.dev/guide/mocking.html) |
+| Snapshot Testing | Component and data structure snapshots | [Snapshot Testing](https://vitest.dev/guide/snapshot.html) |
+| Component Testing | Vue/React component testing with Testing Library | [Vue Test Utils](https://test-utils.vuejs.org/) |
+| Coverage Reports | V8/Istanbul coverage with thresholds | [Coverage](https://vitest.dev/guide/coverage.html) |
+| Parallel Execution | Multi-threaded test runner | [Test Runner](https://vitest.dev/guide/features.html) |
+
+## Common Patterns
+
+### Unit Testing with Parametrization
+
+```typescript
+import { describe, it, expect, test } from "vitest";
+
+describe("String Utils", () => {
+  test.each([
+    ["hello", 3, "hel..."],
+    ["hi", 10, "hi"],
+    ["test", 4, "test"],
+  ])('truncate("%s", %d) returns "%s"', (str, len, expected) => {
+    expect(truncate(str, len)).toBe(expected);
+  });
+});
+```
+
+### Mocking Modules and Services
+
+```typescript
+import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
+import { UserService } from "@/services/user";
+import { apiClient } from "@/lib/api";
+
+vi.mock("@/lib/api", () => ({
+  apiClient: { get: vi.fn(), post: vi.fn() },
+}));
+
+describe("UserService", () => {
+  beforeEach(() => vi.clearAllMocks());
+
+  it("fetches user from API", async () => {
+    const mockUser = { id: "1", name: "John" };
+    (apiClient.get as Mock).mockResolvedValue({ data: mockUser });
+
+    const user = await new UserService().getUser("1");
+
+    expect(apiClient.get).toHaveBeenCalledWith("/users/1");
+    expect(user).toEqual(mockUser);
+  });
+});
+```
+
+### Vue Component Testing
+
+```typescript
+import { describe, it, expect, vi } from "vitest";
+import { mount } from "@vue/test-utils";
+import Button from "@/components/Button.vue";
+
+describe("Button", () => {
+  it("emits click event", async () => {
+    const wrapper = mount(Button, { slots: { default: "Click" } });
+    await wrapper.trigger("click");
+    expect(wrapper.emitted("click")).toHaveLength(1);
+  });
+
+  it("is disabled when loading", () => {
+    const wrapper = mount(Button, { props: { loading: true } });
+    expect(wrapper.attributes("disabled")).toBeDefined();
+  });
+});
+```
+
+### Testing Async Operations with Timers
+
+```typescript
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+
+describe("Debounce", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("delays function execution", () => {
+    const fn = vi.fn();
+    const debouncedFn = debounce(fn, 100);
+
+    debouncedFn();
+    expect(fn).not.toHaveBeenCalled();
+
+    vi.advanceTimersByTime(100);
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
+});
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use descriptive test names explaining behavior | Testing implementation details |
+| Test behavior, not internal state | Sharing state between tests |
+| Use test.each for multiple similar cases | Using arbitrary timeouts |
+| Mock external dependencies | Over-mocking internal modules |
+| Keep tests focused and isolated | Duplicating test coverage |
+| Write tests alongside code | Ignoring flaky tests |
+
+## References
+
+- [Vitest Documentation](https://vitest.dev/)
+- [Vue Test Utils](https://test-utils.vuejs.org/)
+- [Testing Library](https://testing-library.com/)
+- [Vitest Coverage](https://vitest.dev/guide/coverage.html)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
