@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentient/vibekit](https://github.com/agentient/vibekit/tree/main/skills/agentient-adk-agents/skills/agent-orchestration)
+Original source: [agentient/vibekit](https://github.com/agentient/vibekit/tree/main/plugins/adk-tools/skills/agent-orchestration)
 
 ---
 
