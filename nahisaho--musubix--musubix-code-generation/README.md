@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nahisaho/musubix](https://github.com/nahisaho/musubix/tree/main/packages/deep-research/.github/skills/musubix-code-generation)
+Original source: [nahisaho/musubix](https://github.com/nahisaho/musubix/tree/main/.github/skills/musubix-code-generation)
 
 ---
 
