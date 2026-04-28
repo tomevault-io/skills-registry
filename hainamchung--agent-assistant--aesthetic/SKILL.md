@@ -136,5 +136,5 @@ Save in project `./docs/design-story.md`.
 6. Always evaluate aesthetic quality objectively (score ≥ 7/10)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/hainamchung/agent-assistant)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hainamchung) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
