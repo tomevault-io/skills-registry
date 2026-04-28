@@ -1,0 +1,186 @@
+---
+name: processing-documents
+description: Processes PDF, DOCX, XLSX, and PPTX files with extraction, generation, and batch operations. Use when building document pipelines, extracting content from office files, or generating reports. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Processing Documents
+
+## Quick Start
+
+```typescript
+import { PDFDocument } from 'pdf-lib';
+import ExcelJS from 'exceljs';
+import { Document, Packer, Paragraph, TextRun } from 'docx';
+
+// Extract text from PDF
+async function extractPDFText(buffer: Buffer): Promise<string> {
+  const pdfDoc = await PDFDocument.load(buffer);
+  const pages = pdfDoc.getPages();
+  return pages.map(page => page.getTextContent()).join('\n\n');
+}
+
+// Read Excel spreadsheet
+async function readExcel(buffer: Buffer) {
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.load(buffer);
+  return workbook.worksheets.map(sheet => ({
+    name: sheet.name,
+    rows: sheet.getSheetValues(),
+  }));
+}
+
+// Generate Word document
+async function generateDOCX(title: string, content: string[]): Promise<Buffer> {
+  const doc = new Document({
+    sections: [{
+      children: [
+        new Paragraph({ children: [new TextRun({ text: title, bold: true, size: 48 })] }),
+        ...content.map(text => new Paragraph({ children: [new TextRun(text)] })),
+      ],
+    }],
+  });
+  return await Packer.toBuffer(doc);
+}
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| PDF Extraction | Extract text, tables, images, and metadata from PDFs | Use pdf-lib or pdf-parse for text extraction |
+| PDF Generation | Create PDFs from templates with data binding | Use pdf-lib with text, images, and table elements |
+| DOCX Parsing | Parse Word documents preserving structure | Use mammoth or docx library for parsing |
+| DOCX Generation | Generate Word documents with formatting | Use docx package with paragraphs and tables |
+| Excel Reading | Read spreadsheets with formulas and formatting | Use exceljs to iterate sheets and cells |
+| Excel Generation | Create spreadsheets with charts and styling | Use exceljs with conditional formatting |
+| PPTX Generation | Create presentations with slides and charts | Use pptxgenjs for slide creation |
+| Batch Processing | Process multiple documents with concurrency | Use p-queue for controlled parallel processing |
+| Template Engine | Generate documents from templates with placeholders | Use docxtemplater for DOCX templates |
+| Streaming | Handle large files without memory exhaustion | Process files in chunks with streams |
+
+## Common Patterns
+
+### Batch Document Processing
+
+```typescript
+import PQueue from 'p-queue';
+
+async function processBatch(files: string[], transform: (buffer: Buffer) => Promise<Buffer>) {
+  const queue = new PQueue({ concurrency: 4 });
+  const results: { file: string; success: boolean; error?: string }[] = [];
+
+  for (const file of files) {
+    queue.add(async () => {
+      try {
+        const buffer = await fs.readFile(file);
+        const output = await transform(buffer);
+        await fs.writeFile(file.replace(/\.\w+$/, '_processed.pdf'), output);
+        results.push({ file, success: true });
+      } catch (error) {
+        results.push({ file, success: false, error: error.message });
+      }
+    });
+  }
+
+  await queue.onIdle();
+  return results;
+}
+```
+
+### Excel Report Generation
+
+```typescript
+async function generateReport(data: Record<string, any>[]): Promise<Buffer> {
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet('Report');
+
+  // Add headers with styling
+  const headers = Object.keys(data[0] || {});
+  sheet.addRow(headers);
+  sheet.getRow(1).font = { bold: true };
+  sheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE0E0E0' } };
+
+  // Add data rows
+  data.forEach(row => sheet.addRow(headers.map(h => row[h])));
+
+  // Auto-fit columns
+  sheet.columns.forEach(col => { col.width = 15; });
+
+  return Buffer.from(await workbook.xlsx.writeBuffer());
+}
+```
+
+### Invoice Generation from Template
+
+```typescript
+import Docxtemplater from 'docxtemplater';
+import PizZip from 'pizzip';
+
+async function generateInvoice(templatePath: string, invoiceData: InvoiceData): Promise<Buffer> {
+  const templateBuffer = await fs.readFile(templatePath);
+  const zip = new PizZip(templateBuffer);
+  const doc = new Docxtemplater(zip, { paragraphLoop: true, linebreaks: true });
+
+  doc.render({
+    invoiceNumber: invoiceData.number,
+    date: invoiceData.date,
+    customer: invoiceData.customer,
+    items: invoiceData.items,
+    total: invoiceData.total,
+  });
+
+  return doc.getZip().generate({ type: 'nodebuffer', compression: 'DEFLATE' });
+}
+```
+
+### PDF Table Extraction
+
+```typescript
+async function extractTables(pdfBuffer: Buffer): Promise<ExtractedTable[]> {
+  const pdfDoc = await PDFDocument.load(pdfBuffer);
+  const tables: ExtractedTable[] = [];
+
+  for (let i = 0; i < pdfDoc.getPageCount(); i++) {
+    const page = pdfDoc.getPage(i);
+    const content = await extractPageContent(page);
+    const detectedTables = detectTableStructures(content);
+    tables.push(...detectedTables.map(t => ({ ...t, pageNumber: i + 1 })));
+  }
+
+  return tables;
+}
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Stream large files (>10MB) to prevent memory issues | Loading entire large files into memory |
+| Validate file types before processing | Assuming file extensions match content |
+| Handle password-protected documents gracefully | Ignoring encrypted document errors |
+| Preserve original formatting when transforming | Stripping formatting without user consent |
+| Cache parsed results for repeated access | Re-parsing the same document multiple times |
+| Use appropriate libraries per format | Building custom parsers for standard formats |
+| Set file size limits for uploads | Processing unbounded file sizes |
+| Sanitize filenames and paths | Using untrusted paths directly |
+| Handle encoding issues (UTF-8, BOM) | Assuming all files use the same encoding |
+| Log processing errors with context | Silently failing on corrupt files |
+
+## Related Skills
+
+- **media-processing** - Video and audio processing
+- **image-processing** - Image manipulation with Sharp
+- **typescript** - Type-safe document handling
+
+## References
+
+- [pdf-lib Documentation](https://pdf-lib.js.org/)
+- [ExcelJS Documentation](https://github.com/exceljs/exceljs)
+- [docx Documentation](https://docx.js.org/)
+- [PptxGenJS Documentation](https://gitbrent.github.io/PptxGenJS/)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
