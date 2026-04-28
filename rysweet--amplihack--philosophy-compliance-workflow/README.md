@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rysweet/amplihack](https://github.com/rysweet/amplihack/tree/main/docs/claude/skills/philosophy-compliance-workflow)
+Original source: [rysweet/amplihack](https://github.com/rysweet/amplihack/tree/main/.claude/skills/philosophy-compliance-workflow)
 
 ---
 
