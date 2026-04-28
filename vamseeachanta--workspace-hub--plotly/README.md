@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vamseeachanta/workspace-hub](https://github.com/vamseeachanta/workspace-hub/tree/main/.claude/skills/data/visualization/plotly)
+Original source: [vamseeachanta/workspace-hub](https://github.com/vamseeachanta/workspace-hub/tree/main/_archive/skills/charts/plotly)
 
 ---
 
