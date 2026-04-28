@@ -1,0 +1,163 @@
+---
+name: testing-with-pytest
+description: Claude writes comprehensive Python tests using pytest. Use when writing unit tests, creating fixtures, parametrizing tests, mocking dependencies, testing async code, or setting up CI test pipelines. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Testing with Pytest
+
+## Quick Start
+
+```ini
+# pytest.ini
+[pytest]
+testpaths = tests
+python_files = test_*.py
+addopts = -v --strict-markers --cov=src --cov-report=term-missing --cov-fail-under=80
+markers =
+    slow: marks tests as slow
+    integration: marks tests as integration tests
+asyncio_mode = auto
+```
+
+```python
+# tests/conftest.py
+import pytest
+from sqlalchemy.orm import Session
+
+@pytest.fixture
+def db_session(engine) -> Session:
+    """Create database session with automatic rollback."""
+    connection = engine.connect()
+    transaction = connection.begin()
+    session = sessionmaker(bind=connection)()
+    yield session
+    session.close()
+    transaction.rollback()
+    connection.close()
+```
+
+## Features
+
+| Feature | Description | Reference |
+|---------|-------------|-----------|
+| Fixtures | Reusable test setup with dependency injection | [Fixtures Guide](https://docs.pytest.org/en/latest/how-to/fixtures.html) |
+| Parametrization | Test multiple inputs with @pytest.mark.parametrize | [Parametrize](https://docs.pytest.org/en/latest/how-to/parametrize.html) |
+| Mocking | unittest.mock integration for patching | [pytest-mock](https://pytest-mock.readthedocs.io/) |
+| Async Testing | Native async/await support with pytest-asyncio | [pytest-asyncio](https://pytest-asyncio.readthedocs.io/) |
+| Markers | Categorize and filter tests | [Markers](https://docs.pytest.org/en/latest/how-to/mark.html) |
+| Coverage | Code coverage with pytest-cov | [pytest-cov](https://pytest-cov.readthedocs.io/) |
+
+## Common Patterns
+
+### Parametrized Validation Tests
+
+```python
+import pytest
+from src.validators import validate_email, ValidationError
+
+class TestEmailValidation:
+    @pytest.mark.parametrize("email", [
+        "user@example.com",
+        "user.name@example.com",
+        "user+tag@example.co.uk",
+    ])
+    def test_valid_emails(self, email: str):
+        assert validate_email(email) is True
+
+    @pytest.mark.parametrize("email,error", [
+        ("", "Email is required"),
+        ("invalid", "Invalid email format"),
+        ("@example.com", "Invalid email format"),
+    ])
+    def test_invalid_emails(self, email: str, error: str):
+        with pytest.raises(ValidationError, match=error):
+            validate_email(email)
+```
+
+### Factory Fixtures
+
+```python
+@pytest.fixture
+def user_factory(db_session):
+    """Factory for creating test users."""
+    def _create_user(email="test@example.com", name="Test User", **kwargs):
+        user = User(email=email, name=name, **kwargs)
+        db_session.add(user)
+        db_session.commit()
+        return user
+    return _create_user
+
+@pytest.fixture
+def test_user(user_factory):
+    return user_factory(email="testuser@example.com")
+```
+
+### Mocking External Services
+
+```python
+from unittest.mock import patch, MagicMock
+
+class TestUserService:
+    def test_create_user_sends_email(self, user_service, mock_email_service):
+        user = user_service.create_user(email="new@example.com", name="New")
+
+        mock_email_service.send_email.assert_called_once_with(
+            to="new@example.com",
+            template="welcome",
+            context={"name": "New"},
+        )
+
+    @patch("src.services.user_service.datetime")
+    def test_last_login_updated(self, mock_datetime, user_service, test_user):
+        from datetime import datetime
+        mock_datetime.utcnow.return_value = datetime(2024, 1, 15, 10, 30)
+
+        user_service.authenticate(test_user.email, "password")
+        assert test_user.last_login == datetime(2024, 1, 15, 10, 30)
+```
+
+### Async API Testing
+
+```python
+import pytest
+from httpx import AsyncClient
+
+@pytest.mark.asyncio
+class TestAPIEndpoints:
+    async def test_get_users(self, async_client: AsyncClient, test_user):
+        response = await async_client.get("/api/users")
+        assert response.status_code == 200
+        assert len(response.json()["users"]) >= 1
+
+    async def test_create_user(self, async_client: AsyncClient):
+        response = await async_client.post("/api/users", json={
+            "email": "new@example.com",
+            "name": "New User",
+            "password": "SecurePass123!",
+        })
+        assert response.status_code == 201
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use descriptive test names explaining the scenario | Sharing state between tests |
+| Create reusable fixtures for common setup | Using sleep for timing issues |
+| Use parametrize for testing multiple inputs | Testing implementation details |
+| Mock external dependencies | Writing tests that depend on order |
+| Group related tests in classes | Using hardcoded file paths |
+| Use factories for test data creation | Leaving commented-out test code |
+
+## References
+
+- [Pytest Documentation](https://docs.pytest.org/)
+- [pytest-asyncio](https://pytest-asyncio.readthedocs.io/)
+- [pytest-mock](https://pytest-mock.readthedocs.io/)
+- [pytest-cov](https://pytest-cov.readthedocs.io/)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
