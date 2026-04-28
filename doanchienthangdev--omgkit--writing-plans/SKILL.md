@@ -1,0 +1,125 @@
+---
+name: writing-plans
+description: AI agent creates structured implementation plans with task breakdown, dependency mapping, risk assessment, and file-level detail. Use when planning features, projects, or complex implementations. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Writing Plans
+
+## Quick Start
+
+1. **Summarize** - Executive summary with goals, non-goals, background
+2. **Design** - High-level approach, architecture diagram, key decisions
+3. **Break Down** - Tasks in 2-4 hour chunks with file locations
+4. **Map Dependencies** - Identify critical path and parallel opportunities
+5. **Assess Risks** - Likelihood x Impact matrix with mitigations
+6. **Estimate** - Three-point estimation with buffers
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Plan Structure | Comprehensive template | Summary, design, tasks, testing, risks |
+| Task Breakdown | Manageable work units | 2-4 hours, single owner, clear criteria |
+| Dependency Mapping | Sequence and parallelize | Critical path, hard/soft dependencies |
+| Risk Assessment | Anticipate problems | Likelihood x Impact matrix |
+| Effort Estimation | Realistic timing | Three-point: (O + 4M + P) / 6 |
+| File-Level Detail | Exact code locations | New files, modifications, line numbers |
+
+## Common Patterns
+
+```
+# Plan Structure
+# Plan: [Feature Name]
+
+## Metadata
+- Status: Draft | Approved | In Progress
+- Estimated Duration: [X days]
+- Priority: P0 | P1 | P2
+
+## Goals & Non-Goals
+Goals: [What this WILL accomplish]
+Non-Goals: [What this will NOT address]
+
+## Design Overview
+[High-level approach, architecture diagram]
+
+## Implementation Tasks
+
+### Phase 1: [Foundation] - [X days]
+#### Task 1.1: [Name]
+- Description: [What]
+- Estimate: [X hours]
+- Files: `src/file.ts:45-60`
+- Dependencies: None
+- Acceptance Criteria:
+  - [ ] [Criterion 1]
+  - [ ] [Criterion 2]
+
+## Risks & Mitigations
+| Risk | Likelihood | Impact | Mitigation |
+|------|------------|--------|------------|
+| [Risk] | High | High | [Strategy] |
+```
+
+```
+# Dependency Diagram
+           [START]
+              |
+   +----------+----------+
+   |          |          |
+[Task 1]  [Task 2]  [Task 3]  <- Parallel
+   |          |          |
+   +-----+----+          |
+         |               |
+      [Task 4]      [Task 5]
+         |               |
+         +-------+-------+
+                 |
+            [Task 6]      <- Integration
+                 |
+            [COMPLETE]
+
+Critical Path: 1 -> 4 -> 6 (determines min duration)
+```
+
+```
+# Effort Estimation
+Three-Point: (Optimistic + 4*MostLikely + Pessimistic) / 6
+
+Example - OAuth Implementation:
+- Optimistic: 4 hours (works first try)
+- Most Likely: 8 hours (normal dev)
+- Pessimistic: 16 hours (issues)
+Estimate = (4 + 32 + 16) / 6 = 8.7 hours
+
+Buffers:
+- Individual tasks: 20%
+- Phase total: 30%
+- Project total: 40%
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Keep tasks to 2-4 hour chunks | Vague tasks ("implement feature") |
+| Include exact file locations | Skipping background/context |
+| Specify clear acceptance criteria | Ignoring non-functional requirements |
+| Map dependencies explicitly | Underestimating integration work |
+| Build in buffer for unknowns | Planning more than 2 weeks in detail |
+| Include testing in the plan | Hiding risks or uncertainties |
+| Review plan with stakeholders | Assuming requirements are complete |
+| Update plan as you learn | Forgetting rollback plans |
+
+## Related Skills
+
+- `executing-plans` - Follow plans systematically
+- `thinking-sequentially` - Structure reasoning for plans
+- `brainstorming-ideas` - Generate options for plans
+- `verifying-before-completion` - Validate plan completion
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
