@@ -1,11 +1,11 @@
-# context-management
+# context_management
 
 > Skill by [rysweet](https://github.com/rysweet/amplihack) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rysweet/amplihack](https://github.com/rysweet/amplihack/tree/main/.claude/skills/context-management)
+Original source: [rysweet/amplihack](https://github.com/rysweet/amplihack/tree/main/docs/claude/skills/context_management)
 
 ---
 
