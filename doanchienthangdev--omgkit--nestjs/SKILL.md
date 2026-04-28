@@ -1,0 +1,185 @@
+---
+name: building-nestjs-apis
+description: Builds enterprise NestJS applications with TypeScript, dependency injection, TypeORM, and microservices patterns. Use when creating scalable Node.js backends, REST/GraphQL APIs, or microservices.
+metadata:
+  author: doanchienthangdev
+---
+
+# NestJS
+
+## Quick Start
+
+```typescript
+import { Controller, Get, Module, NestFactory } from '@nestjs/common';
+
+@Controller('health')
+class HealthController {
+  @Get()
+  check() {
+    return { status: 'ok' };
+  }
+}
+
+@Module({ controllers: [HealthController] })
+class AppModule {}
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(3000);
+}
+bootstrap();
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Modules | Dependency injection, providers | [MODULES.md](MODULES.md) |
+| Controllers | Routes, validation, guards | [CONTROLLERS.md](CONTROLLERS.md) |
+| Services | Business logic, repositories | [SERVICES.md](SERVICES.md) |
+| Database | TypeORM, Prisma integration | [DATABASE.md](DATABASE.md) |
+| Auth | Passport, JWT, guards | [AUTH.md](AUTH.md) |
+| Testing | Unit, e2e with Jest | [TESTING.md](TESTING.md) |
+
+## Common Patterns
+
+### Controller with Validation
+
+```typescript
+@Controller('users')
+@UseGuards(JwtAuthGuard)
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get()
+  @Roles('admin')
+  findAll(@Query() query: PaginationDto) {
+    return this.usersService.findAll(query);
+  }
+
+  @Get(':id')
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.usersService.findOne(id);
+  }
+
+  @Post()
+  create(@Body() dto: CreateUserDto) {
+    return this.usersService.create(dto);
+  }
+}
+```
+
+### Service with Repository
+
+```typescript
+@Injectable()
+export class UsersService {
+  constructor(private readonly usersRepo: UsersRepository) {}
+
+  async findAll(query: PaginationDto) {
+    const [users, total] = await this.usersRepo.findAllWithCount({
+      skip: query.skip,
+      take: query.limit,
+    });
+    return { data: users, total, page: query.page };
+  }
+
+  async findOne(id: string) {
+    const user = await this.usersRepo.findOne({ where: { id } });
+    if (!user) throw new NotFoundException('User not found');
+    return user;
+  }
+
+  async create(dto: CreateUserDto) {
+    const exists = await this.usersRepo.findByEmail(dto.email);
+    if (exists) throw new ConflictException('Email in use');
+    return this.usersRepo.save(this.usersRepo.create(dto));
+  }
+}
+```
+
+### DTO with Validation
+
+```typescript
+export class CreateUserDto {
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  @MinLength(2)
+  name: string;
+
+  @IsString()
+  @MinLength(8)
+  @Matches(/^(?=.*[A-Z])(?=.*\d)/, {
+    message: 'Password must contain uppercase and number',
+  })
+  password: string;
+
+  @IsOptional()
+  @IsEnum(UserRole)
+  role?: UserRole;
+}
+```
+
+## Workflows
+
+### API Development
+
+1. Create module with `nest g module [name]`
+2. Create controller and service
+3. Define DTOs with class-validator
+4. Add guards for auth/roles
+5. Write unit and e2e tests
+
+### Module Structure
+
+```typescript
+@Module({
+  imports: [TypeOrmModule.forFeature([User])],
+  controllers: [UsersController],
+  providers: [UsersService, UsersRepository],
+  exports: [UsersService],
+})
+export class UsersModule {}
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use dependency injection | Direct instantiation |
+| Validate with DTOs | Trusting input |
+| Use guards for auth | Auth logic in controllers |
+| Use interceptors for cross-cutting | Duplicating logging/transform |
+| Write unit + e2e tests | Skipping test coverage |
+
+## Project Structure
+
+```
+src/
+├── main.ts
+├── app.module.ts
+├── common/
+│   ├── decorators/
+│   ├── guards/
+│   ├── interceptors/
+│   └── pipes/
+├── config/
+├── users/
+│   ├── users.module.ts
+│   ├── users.controller.ts
+│   ├── users.service.ts
+│   ├── dto/
+│   └── entities/
+└── auth/
+    ├── auth.module.ts
+    ├── strategies/
+    └── guards/
+```
+
+For detailed examples and patterns, see reference files above.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
