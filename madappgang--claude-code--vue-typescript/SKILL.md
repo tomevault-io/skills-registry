@@ -2,7 +2,7 @@
 name: vue-typescript
 description: Use when building Vue 3 applications with TypeScript, implementing Composition API components, setting up Pinia stores, or working with Vue Router. Covers script setup, composables, and reactive state.
 metadata:
-  author: MadAppGang
+  author: madappgang
 ---
 
 # Vue 3 + TypeScript Patterns
@@ -414,5 +414,5 @@ src/
 *Vue 3 + TypeScript patterns for modern frontend development*
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/MadAppGang) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/madappgang) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
