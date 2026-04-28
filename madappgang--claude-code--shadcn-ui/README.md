@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [madappgang/claude-code](https://github.com/madappgang/claude-code/tree/main/plugins/dev/skills/frontend/shadcn-ui)
+Original source: [madappgang/claude-code](https://github.com/madappgang/claude-code/tree/main/plugins/frontend/skills/shadcn-ui)
 
 ---
 
