@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [peparhugo/github-copilot-command-demo](https://github.com/peparhugo/github-copilot-command-demo/tree/main/skills/awesome-copilot/make-repo-contribution)
+Original source: [peparhugo/github-copilot-command-demo](https://github.com/peparhugo/github-copilot-command-demo/tree/main/.github/skills/awesome-copilot/make-repo-contribution)
 
 ---
 
