@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nahisaho/musubi](https://github.com/nahisaho/musubi/tree/main/.claude/skills/technical-writer)
+Original source: [nahisaho/musubi](https://github.com/nahisaho/musubi/tree/main/src/templates/agents/claude-code/skills/technical-writer)
 
 ---
 
