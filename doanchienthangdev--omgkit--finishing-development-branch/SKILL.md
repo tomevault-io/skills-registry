@@ -1,0 +1,126 @@
+---
+name: finishing-development-branches
+description: AI agent completes development branches with comprehensive quality gates, clean git history, and thorough PR preparation. Use when wrapping up features, preparing for merge, or finalizing PRs. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Finishing Development Branches
+
+## Quick Start
+
+1. **Code Complete** - All acceptance criteria met, edge cases handled, no TODOs
+2. **Quality Assurance** - Tests pass, coverage met, lint clean, build succeeds
+3. **Documentation** - README, API docs, inline comments updated
+4. **Git Hygiene** - Rebase on main, clean commit history, no conflicts
+5. **PR Ready** - Complete description, screenshots, reviewers assigned
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Code Completeness | All requirements implemented | Check acceptance criteria, edge cases, cleanup |
+| Quality Gates | Automated validation | Tests, lint, types, security, build |
+| TODO Scanner | Find unaddressed items | `TODO`, `FIXME`, `HACK`, `XXX` patterns |
+| Git Preparation | Clean history for merge | Rebase, squash WIP, conventional commits |
+| PR Generation | Comprehensive description | Summary, changes, testing, screenshots |
+| Verification Script | Final pre-PR check | Run all gates, generate report |
+
+## Common Patterns
+
+```
+# Completion Checklist
+PHASE 1: CODE COMPLETE
+[ ] All acceptance criteria implemented
+[ ] Edge cases handled
+[ ] Error handling complete
+[ ] No TODO/FIXME unaddressed
+[ ] Debug code removed
+
+PHASE 2: QUALITY ASSURANCE
+[ ] All tests passing
+[ ] Coverage meets threshold (80%+)
+[ ] Lint/format passing
+[ ] Type checking passing
+[ ] Security scan passing
+
+PHASE 3: DOCUMENTATION
+[ ] README updated if needed
+[ ] API documentation updated
+[ ] Complex logic commented
+
+PHASE 4: GIT HYGIENE
+[ ] Rebased on latest main
+[ ] Commit history clean
+[ ] Conventional commit messages
+[ ] No merge conflicts
+
+PHASE 5: PR READY
+[ ] Description complete
+[ ] Screenshots for UI changes
+[ ] Reviewers assigned
+```
+
+```bash
+# Git Preparation
+git fetch origin main
+git rebase origin/main
+
+# Review commits for squashing
+git log --oneline main..HEAD
+# Consider squashing: fix, wip, temp commits
+git rebase -i main
+
+# Push with lease (safe force)
+git push origin feature-branch --force-with-lease
+
+# Quality verification
+npm run lint && npm run typecheck && npm test && npm run build
+```
+
+```
+# PR Description Template
+## Summary
+[2-3 sentences on what/why]
+
+## Changes
+- [Change 1]
+- [Change 2]
+
+## Testing
+- [x] Unit tests
+- [x] Integration tests
+- [ ] Manual testing
+
+## Screenshots
+[For UI changes]
+
+## Checklist
+- [x] Self-review completed
+- [x] Tests pass
+- [x] Documentation updated
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Run all checks locally before pushing | Pushing broken code |
+| Rebase on latest main to avoid conflicts | Force pushing without --force-with-lease |
+| Squash WIP commits into meaningful units | Leaving fix/wip/temp commits |
+| Write clear conventional commit messages | Cryptic commit messages |
+| Include screenshots for UI changes | Creating PRs without descriptions |
+| Self-review your diff before requesting | Leaving debug statements in code |
+| Test in clean environment if possible | Skipping tests to save time |
+| Link to related tickets in PR | Ignoring linting warnings |
+
+## Related Skills
+
+- `requesting-code-reviews` - Write effective review requests
+- `verifying-before-completion` - Quality gate checklists
+- `writing-plans` - Plan completion criteria upfront
+- `executing-plans` - Track progress to completion
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
