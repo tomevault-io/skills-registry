@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [molcajeteai/plugin](https://github.com/molcajeteai/plugin/tree/main/molcajete/skills/software-principles)
+Original source: [molcajeteai/plugin](https://github.com/molcajeteai/plugin/tree/main/deprecated/code-principles/skills/software-principles)
 
 ---
 
