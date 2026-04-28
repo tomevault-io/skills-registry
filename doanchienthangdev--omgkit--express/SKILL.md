@@ -1,0 +1,181 @@
+---
+name: building-express-apis
+description: Builds production Express.js APIs with TypeScript, middleware patterns, authentication, and error handling. Use when creating Node.js backends, REST APIs, or Express applications.
+metadata:
+  author: doanchienthangdev
+---
+
+# Express.js
+
+## Quick Start
+
+```typescript
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+
+const app = express();
+
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
+app.listen(3000);
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Project Setup | TypeScript config, middleware stack | [SETUP.md](SETUP.md) |
+| Routing | Controllers, validation, async handlers | [ROUTING.md](ROUTING.md) |
+| Middleware | Auth, validation, error handling | [MIDDLEWARE.md](MIDDLEWARE.md) |
+| Database | Prisma/TypeORM integration | [DATABASE.md](DATABASE.md) |
+| Testing | Jest, supertest patterns | [TESTING.md](TESTING.md) |
+| Deployment | Docker, PM2, production config | [DEPLOYMENT.md](DEPLOYMENT.md) |
+
+## Common Patterns
+
+### Controller Pattern
+
+```typescript
+// controllers/users.ts
+import { Request, Response, NextFunction } from 'express';
+import { UserService } from '../services/UserService';
+
+export class UserController {
+  constructor(private userService: UserService) {}
+
+  getAll = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const users = await this.userService.findAll();
+      res.json(users);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = await this.userService.findById(req.params.id);
+      if (!user) return res.status(404).json({ error: 'Not found' });
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  };
+}
+```
+
+### Error Handler
+
+```typescript
+// middleware/errorHandler.ts
+import { Request, Response, NextFunction } from 'express';
+
+export class AppError extends Error {
+  constructor(
+    public statusCode: number,
+    message: string,
+    public isOperational = true
+  ) {
+    super(message);
+  }
+}
+
+export function errorHandler(
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({ error: err.message });
+  }
+
+  console.error(err);
+  res.status(500).json({ error: 'Internal server error' });
+}
+```
+
+### Validation Middleware
+
+```typescript
+// middleware/validate.ts
+import { Request, Response, NextFunction } from 'express';
+import { ZodSchema } from 'zod';
+
+export function validate(schema: ZodSchema) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const result = schema.safeParse({
+      body: req.body,
+      query: req.query,
+      params: req.params,
+    });
+
+    if (!result.success) {
+      return res.status(400).json({ errors: result.error.issues });
+    }
+
+    next();
+  };
+}
+```
+
+## Workflows
+
+### API Development Workflow
+
+1. Define routes in `routes/index.ts`
+2. Create controller with business logic
+3. Add validation schemas with Zod
+4. Write tests with supertest
+5. Document with OpenAPI/Swagger
+
+### Middleware Order
+
+```
+1. Security (helmet, cors)
+2. Rate limiting
+3. Body parsing
+4. Logging
+5. Authentication
+6. Routes
+7. 404 handler
+8. Error handler
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use async/await with try-catch | Callback patterns |
+| Validate all inputs | Trusting client data |
+| Use typed request/response | `any` types |
+| Centralize error handling | Scattered try-catch |
+| Use dependency injection | Direct imports in controllers |
+
+## Project Structure
+
+```
+src/
+├── app.ts              # Express setup
+├── server.ts           # Server entry
+├── config/             # Environment config
+├── controllers/        # Route handlers
+├── middleware/         # Custom middleware
+├── routes/             # Route definitions
+├── services/           # Business logic
+├── utils/              # Helpers
+└── types/              # TypeScript types
+```
+
+For detailed examples and patterns, see reference files above.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
