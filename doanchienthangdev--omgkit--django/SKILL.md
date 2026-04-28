@@ -1,0 +1,187 @@
+---
+name: building-django-apps
+description: Builds enterprise Django applications with DRF, ORM optimization, async views, and Celery tasks. Use when creating Python web apps, REST APIs, or full-stack Django projects.
+metadata:
+  author: doanchienthangdev
+---
+
+# Django
+
+## Quick Start
+
+```python
+# views.py
+from rest_framework import viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['GET'])
+def health_check(request):
+    return Response({'status': 'ok'})
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Models | ORM, relationships, managers | [MODELS.md](MODELS.md) |
+| Views | ViewSets, APIView, async views | [VIEWS.md](VIEWS.md) |
+| Serializers | Validation, nested data | [SERIALIZERS.md](SERIALIZERS.md) |
+| Auth | JWT, permissions, policies | [AUTH.md](AUTH.md) |
+| Queries | select_related, prefetch, N+1 | [QUERIES.md](QUERIES.md) |
+| Testing | pytest-django, fixtures | [TESTING.md](TESTING.md) |
+
+## Common Patterns
+
+### Model with Relationships
+
+```python
+from django.db import models
+from uuid import uuid4
+
+class User(AbstractUser):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    email = models.EmailField(unique=True)
+
+    USERNAME_FIELD = 'email'
+
+    class Meta:
+        db_table = 'users'
+        indexes = [models.Index(fields=['email'])]
+
+class Organization(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+    owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='owned_orgs')
+    members = models.ManyToManyField(User, through='Membership', related_name='organizations')
+```
+
+### DRF Serializers
+
+```python
+from rest_framework import serializers
+
+class UserSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'full_name', 'created_at']
+        read_only_fields = ['id', 'created_at']
+
+    def get_full_name(self, obj):
+        return f"{obj.first_name} {obj.last_name}".strip()
+
+class UserCreateSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, min_length=8)
+    password_confirm = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['email', 'password', 'password_confirm']
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password_confirm']:
+            raise serializers.ValidationError({'password_confirm': 'Passwords must match'})
+        return attrs
+
+    def create(self, validated_data):
+        validated_data.pop('password_confirm')
+        return User.objects.create_user(**validated_data)
+```
+
+### ViewSet with Permissions
+
+```python
+from rest_framework import viewsets, permissions
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return User.objects.select_related('profile').prefetch_related('organizations')
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return UserCreateSerializer
+        return UserSerializer
+
+    @action(detail=False, methods=['get', 'patch'])
+    def me(self, request):
+        if request.method == 'GET':
+            return Response(UserSerializer(request.user).data)
+        serializer = UserSerializer(request.user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+```
+
+## Workflows
+
+### API Development
+
+1. Create model and migration
+2. Create serializer with validation
+3. Create ViewSet or APIView
+4. Configure URL routing
+5. Write tests with pytest-django
+
+### Query Optimization
+
+```python
+# Avoid N+1 queries
+users = User.objects.select_related('profile').prefetch_related(
+    Prefetch('organizations', queryset=Organization.objects.only('id', 'name'))
+)
+
+# Use values() for lightweight queries
+User.objects.values('id', 'email', 'created_at')
+
+# Annotate for aggregations
+Organization.objects.annotate(member_count=Count('members'))
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use `select_related`/`prefetch_related` | N+1 queries |
+| Use serializers for validation | Manual validation |
+| Use custom managers | Query logic in views |
+| Use signals sparingly | Overusing signals |
+| Use Celery for heavy tasks | Sync operations for I/O |
+
+## Project Structure
+
+```
+project/
+├── manage.py
+├── config/
+│   ├── settings/
+│   ├── urls.py
+│   └── wsgi.py
+├── apps/
+│   ├── users/
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   └── tests/
+│   └── organizations/
+├── common/
+│   ├── permissions.py
+│   └── pagination.py
+└── tests/
+```
+
+For detailed examples and patterns, see reference files above.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
