@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [the-answerai/alphaagent-team](https://github.com/the-answerai/alphaagent-team/tree/main/plugins/aai-pm-linear/skills/account-report)
+Original source: [the-answerai/alphaagent-team](https://github.com/the-answerai/alphaagent-team/tree/main/plugins/aai-pm-github/skills/account-report)
 
 ---
 
