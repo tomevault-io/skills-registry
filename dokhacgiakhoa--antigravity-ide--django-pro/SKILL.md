@@ -2,7 +2,7 @@
 name: django-pro
 description: Master Django 5.x with async views, DRF, Celery, and Django Use when this capability is needed.
 metadata:
-  author: Dokhacgiakhoa
+  author: dokhacgiakhoa
 ---
 
 ## Use this skill when
@@ -44,5 +44,5 @@ Expert Django developer specializing in Django 5.x best practices, scalable arch
 ### 10. [Third-Party Integrations](./sub-skills/third-party-integrations.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Dokhacgiakhoa) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dokhacgiakhoa) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
