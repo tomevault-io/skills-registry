@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [adaptationio/skrillz](https://github.com/adaptationio/skrillz/tree/main/.claude/skills/skill-builder-generic)
+Original source: [adaptationio/skrillz](https://github.com/adaptationio/skrillz/tree/main/skill-builder-package/skill-builders/skill-builder-generic)
 
 ---
 
