@@ -2,7 +2,7 @@
 name: git-advanced-workflows
 description: Master advanced Git workflows including rebasing, cherry-picking, bisect, worktrees, and reflog to maintain clean history and recover from any situation. Use when managing complex Git histories, collaborating on feature branches, or troubleshooting repository issues. Use when this capability is needed.
 metadata:
-  author: Microck
+  author: microck
 ---
 
 # Git Advanced Workflows
@@ -402,5 +402,5 @@ git branch recovered-branch abc123
 - **scripts/git-clean-branches.sh**: Clean up merged and stale branches
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Microck) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/microck) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
