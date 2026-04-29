@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [benchflow-ai/skillsbench](https://github.com/benchflow-ai/skillsbench/tree/main/tasks-no-skills/virtualhome-agent-planning/environment/skills/pddl-skills)
+Original source: [benchflow-ai/skillsbench](https://github.com/benchflow-ai/skillsbench/tree/main/tasks-no-skills/pddl-tpp-planning/environment/skills/pddl-skills)
 
 ---
 
