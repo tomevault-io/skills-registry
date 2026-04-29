@@ -2,7 +2,7 @@
 name: python-patterns
 description: Python development principles and decision-making. Use when this capability is needed.
 metadata:
-  author: Dokhacgiakhoa
+  author: dokhacgiakhoa
 ---
 
 # Python Patterns
@@ -53,5 +53,5 @@ This skill teaches **decision-making principles**, not fixed code to copy.
 ### 25. [✅ DO:](./sub-skills/do.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Dokhacgiakhoa) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dokhacgiakhoa) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
