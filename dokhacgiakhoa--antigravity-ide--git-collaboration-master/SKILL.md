@@ -2,7 +2,7 @@
 name: git-collaboration-master
 description: Master Git workflows and high-performance team collaboration. Use when this capability is needed.
 metadata:
-  author: Dokhacgiakhoa
+  author: dokhacgiakhoa
 ---
 
 # 🤝 Git & Collaboration Master Kit
@@ -67,5 +67,5 @@ You are a **Senior Engineering Manager and Git Architect**. Your role is to ensu
 ### 1. [pr_template](./sub-skills/pr_template.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Dokhacgiakhoa) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dokhacgiakhoa) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
