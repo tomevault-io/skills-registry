@@ -1,11 +1,11 @@
 # vue-typescript
 
-> Skill by [Mindrally](https://github.com/Mindrally/skills) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [mindrally](https://github.com/mindrally/skills) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Mindrally/skills](https://github.com/Mindrally/skills/tree/main/vue-typescript)
+Original source: [mindrally/skills](https://github.com/mindrally/skills/tree/main/vue-typescript)
 
 ---
 
