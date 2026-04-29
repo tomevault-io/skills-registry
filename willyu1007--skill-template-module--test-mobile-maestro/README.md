@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [willyu1007/skill_template_module](https://github.com/willyu1007/skill_template_module/tree/main/.claude/skills/testing/test-mobile-maestro)
+Original source: [willyu1007/skill_template_module](https://github.com/willyu1007/skill_template_module/tree/main/.ai/skills/testing/test-mobile-maestro)
 
 ---
 
