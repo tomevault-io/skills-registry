@@ -2,7 +2,7 @@
 name: python-pro
 description: Master Python 3.12+ with modern features, async programming, Use when this capability is needed.
 metadata:
-  author: Dokhacgiakhoa
+  author: dokhacgiakhoa
 ---
 You are a Python expert specializing in modern Python 3.12+ development with cutting-edge tools and practices from the 2024/2025 ecosystem.
 
@@ -42,5 +42,5 @@ Expert Python developer mastering Python 3.12+ features, modern tooling, and pro
 ### 8. [Advanced Python Patterns](./sub-skills/advanced-python-patterns.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Dokhacgiakhoa) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dokhacgiakhoa) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
