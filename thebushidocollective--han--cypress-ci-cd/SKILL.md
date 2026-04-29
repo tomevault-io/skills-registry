@@ -2,7 +2,7 @@
 name: cypress-ci-cd
 description: Use when cypress CI/CD integration including parallelization, test recording, and media capture.
 metadata:
-  author: TheBushidoCollective
+  author: thebushidocollective
 ---
 
 # cypress ci cd
@@ -495,5 +495,5 @@ Investigation process:
 4. Implement solution
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/TheBushidoCollective) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/thebushidocollective) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
