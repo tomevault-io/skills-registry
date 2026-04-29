@@ -1,0 +1,13 @@
+# nestjs-testing-expert
+
+> Skill by [shipshitdev](https://github.com/shipshitdev/library) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [shipshitdev/library](https://github.com/shipshitdev/library/tree/main/bundles/testing/skills/nestjs-testing-expert)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
