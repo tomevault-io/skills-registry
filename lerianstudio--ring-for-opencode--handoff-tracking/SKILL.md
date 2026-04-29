@@ -1,0 +1,160 @@
+---
+name: ringhandoff-tracking
+description: | Use when this capability is needed.
+metadata:
+  author: lerianstudio
+---
+
+# Handoff Tracking
+
+## Overview
+
+Create structured handoff documents that preserve session context for future sessions. Handoffs capture what was done, what worked, what failed, key decisions, and next steps.
+
+**Core principle:** Handoffs preserve session context, making them available for future reference.
+
+**Announce at start:** "I'm creating a handoff document to preserve this session's context."
+
+## When to Create Handoffs
+
+| Situation | Action |
+|-----------|--------|
+| Session ending | ALWAYS create handoff |
+| Running /clear | Create handoff BEFORE clear |
+| Major milestone complete | Create handoff to checkpoint progress |
+| Context at 70%+ | Create handoff, then /clear |
+| Blocked and need help | Create handoff with blockers documented |
+
+## Handoff File Location
+
+**Path:** `docs/handoffs/{session-name}/YYYY-MM-DD_HH-MM-SS_{description}.md`
+
+Where:
+- `{session-name}` - From active work context (e.g., `context-management`, `auth-feature`)
+- `YYYY-MM-DD_HH-MM-SS` - Current timestamp in 24-hour format
+- `{description}` - Brief kebab-case description of work done
+
+**Example:** `docs/handoffs/context-management/2025-12-27_14-30-00_handoff-tracking-skill.md`
+
+If no clear session context, use `general/` as the folder name.
+
+## Handoff Document Template
+
+Use this exact structure for all handoff documents:
+
+```markdown
+---
+date: {ISO timestamp with timezone}
+session_name: {session-name}
+git_commit: {current commit hash}
+branch: {current branch}
+repository: {repository name}
+topic: "{Feature/Task} Implementation"
+tags: [implementation, {relevant-tags}]
+status: {complete|in_progress|blocked}
+outcome: UNKNOWN
+---
+
+# Handoff: {concise description}
+
+## Task Summary
+{Description of task(s) worked on and their status: completed, in_progress, blocked.
+If following a plan, reference the plan document and current phase.}
+
+## Critical References
+{2-3 most important file paths that must be read to continue this work.
+Leave blank if none.}
+- `path/to/critical/file.md`
+
+## Recent Changes
+{Files modified in this session with line references}
+- `src/path/to/file.py:45-67` - Added validation logic
+- `tests/path/to/test.py:10-30` - New test cases
+
+## Learnings
+
+### What Worked
+{Specific approaches that succeeded - these get indexed for future sessions}
+- Approach: {description} - worked because {reason}
+- Pattern: {pattern name} was effective for {use case}
+
+### What Failed
+{Attempted approaches that didn't work - helps future sessions avoid same mistakes}
+- Tried: {approach} -> Failed because: {reason}
+- Error: {error type} when {action} -> Fixed by: {solution}
+
+### Key Decisions
+{Important choices made and WHY - future sessions reference these}
+- Decision: {choice made}
+  - Alternatives: {other options considered}
+  - Reason: {why this choice}
+
+## Files Modified
+{Exhaustive list of files created or modified}
+- `path/to/new/file.py` - NEW: Description
+- `path/to/existing/file.py:100-150` - MODIFIED: Description
+
+## Action Items & Next Steps
+{Prioritized list for the next session}
+1. {Most important next action}
+2. {Second priority}
+3. {Additional items}
+
+## Other Notes
+{Anything else relevant: codebase locations, useful commands, gotchas}
+```
+
+## The Process
+
+### Step 1: Gather Session Metadata
+
+```bash
+# Get current git state
+git rev-parse HEAD        # Commit hash
+git branch --show-current # Branch name
+git remote get-url origin # Repository
+
+# Get timestamp
+date -u +"%Y-%m-%dT%H:%M:%SZ"
+```
+
+### Step 2: Determine Session Name
+
+Check for active work context:
+1. Recent plan files in `docs/plans/` - extract feature name
+2. Recent branch name - use as session context
+3. If unclear, use `general`
+
+### Step 3: Write Handoff Document
+
+1. Create handoff directory if needed: `mkdir -p docs/handoffs/{session-name}/`
+2. Write handoff file with template structure
+3. Fill in all sections with session details
+4. Be thorough in learnings.
+
+## Outcome Tracking
+
+Outcomes are marked AFTER the handoff is created, either:
+1. User responds to Stop hook prompt
+2. User runs outcome marking command later
+
+**Valid outcomes:**
+| Outcome | Meaning |
+|---------|---------|
+| SUCCEEDED | Task completed successfully |
+| PARTIAL_PLUS | Mostly done, minor issues remain |
+| PARTIAL_MINUS | Some progress, major issues remain |
+| FAILED | Task abandoned or blocked |
+
+Handoffs start with `outcome: UNKNOWN` and get updated when marked.
+
+## Remember
+
+- **Be thorough in Learnings** - These help future sessions avoid same mistakes
+- **Include file:line references** - Makes resumption faster
+- **Document WHY not just WHAT** - Decisions without rationale are useless
+- **Outcome is separate** - Don't try to guess outcome, leave as UNKNOWN
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lerianstudio) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
