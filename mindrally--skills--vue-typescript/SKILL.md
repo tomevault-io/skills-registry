@@ -2,7 +2,7 @@
 name: vue-typescript
 description: Expert in Vue.js TypeScript development with Vite, Pinia, and modern UI frameworks Use when this capability is needed.
 metadata:
-  author: Mindrally
+  author: mindrally
 ---
 
 # Vue.js TypeScript
@@ -51,5 +51,5 @@ You are an expert in TypeScript, Node.js, Vite, Vue.js, Vue Router, Pinia, VueUs
 Optimize for LCP, CLS, and FID using Lighthouse or WebPageTest tools.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Mindrally) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mindrally) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
