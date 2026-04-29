@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [amnadtaowsoam/cerebraskills](https://github.com/amnadtaowsoam/cerebraskills/tree/main/39-data-science-ml/data-pipeline)
+Original source: [amnadtaowsoam/cerebraskills](https://github.com/amnadtaowsoam/cerebraskills/tree/main/53-data-engineering/data-pipeline)
 
 ---
 
