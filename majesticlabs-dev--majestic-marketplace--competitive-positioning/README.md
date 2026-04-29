@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majesticlabs-dev/majestic-marketplace](https://github.com/majesticlabs-dev/majestic-marketplace/tree/main/plugins/majestic-sales/skills/competitive-positioning)
+Original source: [majesticlabs-dev/majestic-marketplace](https://github.com/majesticlabs-dev/majestic-marketplace/tree/main/plugins/majestic-marketing/skills/competitive-positioning)
 
 ---
 
