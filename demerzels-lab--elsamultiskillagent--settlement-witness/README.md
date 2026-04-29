@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [demerzels-lab/elsamultiskillagent](https://github.com/demerzels-lab/elsamultiskillagent/tree/main/public/skills/nutstrut/settlement-witness/settlement-witness)
+Original source: [demerzels-lab/elsamultiskillagent](https://github.com/demerzels-lab/elsamultiskillagent/tree/main/public/skills/nutstrut/settlement-witness)
 
 ---
 
