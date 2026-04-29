@@ -1,0 +1,68 @@
+---
+name: qa-coordinator
+description: > Use when this capability is needed.
+metadata:
+  author: dtsong
+---
+
+# QA Coordinator
+
+## Purpose
+
+Classify frontend bug symptoms, dispatch to the appropriate specialist skill, and orchestrate the MAP → DIAGNOSE → FIX → TEST pipeline with user confirmation between phases.
+
+## Scope Constraints
+
+- Read-only access to `package.json`, `tsconfig.json`, and project config files for stack detection
+- Write access limited to `.claude/qa-cache/project-config.json`
+- Does not modify source code, test files, or run shell commands directly
+- All file modifications and command execution delegated to specialist skills
+
+## Classification
+
+Extract **route** and **symptom** from user input. If ambiguous, ask one question.
+
+Auto-detect the stack if no `.claude/qa-cache/project-config.json` exists: read `package.json`, detect framework/test/styling/state, check for app/ vs pages/, confirm with user, save config. Re-detect only when `package.json` changes.
+
+| Symptom | Skill |
+|---------|-------|
+| Rendering, missing content, stale data, flicker | `ui-bug-investigator` |
+| State not updating, form issues, toggle broken | `ui-bug-investigator` |
+| Click/keyboard/focus broken, event issues | `ui-bug-investigator` |
+| Data not loading, API errors, server actions | `ui-bug-investigator` |
+| Hydration mismatch, RSC error, boundary issues | `ui-bug-investigator` |
+| Layout broken, spacing, alignment, overflow | `css-layout-debugger` |
+| Styling wrong, colors, dark mode, responsive | `css-layout-debugger` |
+| Unclear/mixed | `ui-bug-investigator` first, then `css-layout-debugger` if styling root cause found |
+
+## Skill Registry
+
+| Skill | Path | Purpose | Model Tier |
+|-------|------|---------|------------|
+| Mapper | `page-component-mapper/SKILL.md` | Map route to component tree | haiku  |
+| UI Investigator | `ui-bug-investigator/SKILL.md` | Diagnose non-CSS UI bugs | sonnet |
+| CSS Debugger | `css-layout-debugger/SKILL.md` | Diagnose CSS/layout/styling issues | sonnet |
+| Fix & Verify | `component-fix-and-verify/SKILL.md` | Apply and verify diagnosed fix | sonnet |
+| Test Generator | `regression-test-generator/SKILL.md` | Generate targeted regression test | sonnet |
+
+## Load Directive
+
+Read ONLY the relevant specialist SKILL.md for the current phase. Never load multiple specialists simultaneously. Route silently — never present a skill menu.
+
+## Handoff Protocol
+
+Sequential four-phase pipeline. Pause for user confirmation between each phase.
+
+**MAP** → Read `page-component-mapper/SKILL.md`. Output: `ComponentMap` artifact at .claude/qa-cache/component-maps/. Pause: "{N} components mapped. Continue?"
+
+**DIAGNOSE** → Read classified specialist SKILL.md. Input: ComponentMap path + symptom + classification. Output: `DiagnosisReport` artifact. Pause: "Root cause: {description} in {file}:{line}. Proceed with fix?"
+
+**FIX** → Read `component-fix-and-verify/SKILL.md`. Input: DiagnosisReport + ComponentMap paths. Output: `FixResult` artifact. Pause: "{PASS/FAIL/PARTIAL}. Generate regression test?"
+
+**TEST** → Read `regression-test-generator/SKILL.md`. Input: FixResult + DiagnosisReport + ComponentMap paths. Output: `RegressionTest` artifact. "Test written. Investigation complete."
+
+If user declines at any pause, stop and summarize findings so far.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dtsong) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
