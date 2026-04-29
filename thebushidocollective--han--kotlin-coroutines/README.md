@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [thebushidocollective/han](https://github.com/thebushidocollective/han/tree/main/plugins/specialized/android/skills/kotlin-coroutines)
+Original source: [thebushidocollective/han](https://github.com/thebushidocollective/han/tree/main/plugins/languages/kotlin/skills/kotlin-coroutines)
 
 ---
 
