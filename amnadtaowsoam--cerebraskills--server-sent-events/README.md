@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [amnadtaowsoam/cerebraskills](https://github.com/amnadtaowsoam/cerebraskills/tree/main/34-real-time-features/server-sent-events)
+Original source: [amnadtaowsoam/cerebraskills](https://github.com/amnadtaowsoam/cerebraskills/tree/main/03-backend-api/server-sent-events)
 
 ---
 
