@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [melodic-software/claude-code-plugins](https://github.com/melodic-software/claude-code-plugins/tree/main/plugins/security/skills/review)
+Original source: [melodic-software/claude-code-plugins](https://github.com/melodic-software/claude-code-plugins/tree/main/plugins/code-quality/skills/review)
 
 ---
 
