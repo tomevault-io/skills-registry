@@ -2,7 +2,7 @@
 name: vuejs-typescript-best-practices
 description: Vue.js and TypeScript best practices for building performant applications with Vite, Pinia, VueUse, and Tailwind CSS. Use when this capability is needed.
 metadata:
-  author: Mindrally
+  author: mindrally
 ---
 
 # Vue.js TypeScript Best Practices
@@ -51,5 +51,5 @@ You are an expert in TypeScript, Node.js, Vite, Vue.js, Vue Router, Pinia, VueUs
 - Optimize Web Vitals (LCP, CLS, FID) using tools like Lighthouse or WebPageTest
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Mindrally) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mindrally) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
