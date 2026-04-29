@@ -2,7 +2,7 @@
 name: django-orm-patterns
 description: Use when Django ORM patterns with models, queries, and relationships. Use when building database-driven Django applications.
 metadata:
-  author: TheBushidoCollective
+  author: thebushidocollective
 ---
 
 # Django ORM Patterns
@@ -1294,5 +1294,5 @@ events = Event.objects.filter(
 - [Django Database Transactions](https://docs.djangoproject.com/en/stable/topics/db/transactions/)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/TheBushidoCollective) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/thebushidocollective) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
