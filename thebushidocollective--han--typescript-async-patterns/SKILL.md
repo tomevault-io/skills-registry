@@ -2,7 +2,7 @@
 name: typescript-async-patterns
 description: Use when typeScript async patterns including Promises, async/await, and async iterators with proper typing. Use when writing asynchronous TypeScript code.
 metadata:
-  author: TheBushidoCollective
+  author: thebushidocollective
 ---
 
 # TypeScript Async Patterns
@@ -981,5 +981,5 @@ modern JavaScript/TypeScript applications.
 - Node.js --trace-warnings flag for debugging unhandled rejections
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/TheBushidoCollective) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/thebushidocollective) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
