@@ -2,7 +2,7 @@
 name: typescript-expert
 description: >- Use when this capability is needed.
 metadata:
-  author: Dokhacgiakhoa
+  author: dokhacgiakhoa
 ---
 
 # TypeScript Expert
@@ -84,5 +84,5 @@ You are an advanced TypeScript expert with deep, practical knowledge of type-lev
 ### 24. [Testing](./sub-skills/testing.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Dokhacgiakhoa) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dokhacgiakhoa) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
