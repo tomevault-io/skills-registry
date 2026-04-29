@@ -1,0 +1,53 @@
+---
+name: cursor-tab-completion
+description: | Use when this capability is needed.
+metadata:
+  author: helixdevelopment
+---
+
+# Cursor Tab Completion
+
+## Overview
+
+This skill helps you master Cursor tab completion and AI code suggestions. It covers how completions work, acceptance techniques, context awareness, and configuration settings to optimize your coding flow with AI assistance.
+
+## Prerequisites
+
+- Cursor IDE with completions enabled
+- Project with indexed codebase
+- Understanding of ghost text interface
+- Configured .cursorrules for project patterns
+
+## Instructions
+
+1. Start typing code in a file
+2. Wait for ghost text to appear (gray suggestion)
+3. Press Tab to accept full suggestion
+4. Press Ctrl+Right to accept word by word
+5. Press Esc to dismiss unwanted suggestions
+6. Use Ctrl+Space to force trigger completion
+
+## Output
+
+- AI-generated code completions
+- Pattern-aware suggestions
+- Context-sensitive function bodies
+- Consistent code style matching project
+
+## Error Handling
+
+See `{baseDir}/references/errors.md` for comprehensive error handling.
+
+## Examples
+
+See `{baseDir}/references/examples.md` for detailed examples.
+
+## Resources
+
+- [Tab Completion Guide](https://cursor.com/docs/completions)
+- [Completion Settings](https://cursor.com/docs/settings)
+- [Context for Better Completions](https://cursor.com/docs/context)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/helixdevelopment) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
