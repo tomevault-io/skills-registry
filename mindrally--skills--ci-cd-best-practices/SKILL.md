@@ -2,7 +2,7 @@
 name: ci-cd-best-practices
 description: CI/CD best practices for building automated pipelines, deployment strategies, testing, and DevOps workflows across platforms Use when this capability is needed.
 metadata:
-  author: Mindrally
+  author: mindrally
 ---
 
 # CI/CD Best Practices
@@ -517,5 +517,5 @@ Create runbooks for:
 - Annual tooling evaluation
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Mindrally) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mindrally) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
