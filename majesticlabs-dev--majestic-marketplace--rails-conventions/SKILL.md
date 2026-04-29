@@ -1,0 +1,207 @@
+---
+name: rails-conventions
+description: Rails code patterns and conventions following rubocop-rails-omakase style. Use when this capability is needed.
+metadata:
+  author: majesticlabs-dev
+---
+
+# Rails Conventions
+
+Opinionated Rails patterns for clean, maintainable code.
+
+## Core Philosophy
+
+1. **Duplication > Complexity**: Simple duplicated code beats complex DRY abstractions
+   - "I'd rather have four simple controllers than three complex ones"
+
+2. **Testability = Quality**: If it's hard to test, structure needs refactoring
+
+3. **Adding controllers is never bad. Making controllers complex IS bad.**
+
+## Turbo Streams
+
+Simple turbo streams MUST be inline in controllers:
+
+```ruby
+# FAIL: Separate .turbo_stream.erb files for simple operations
+render "posts/update"
+
+# PASS: Inline array
+render turbo_stream: [
+  turbo_stream.replace("post_#{@post.id}", partial: "posts/post", locals: { post: @post }),
+  turbo_stream.remove("flash")
+]
+```
+
+## Controller & Concerns
+
+Business logic belongs in models or concerns, not controllers.
+
+```ruby
+# Concern structure
+module Dispatchable
+  extend ActiveSupport::Concern
+
+  included do
+    scope :available, -> { where(status: "pending") }
+  end
+
+  class_methods do
+    def claim!(batch_size)
+      # class-level behavior
+    end
+  end
+end
+```
+
+## Service Extraction
+
+Extract when you see MULTIPLE of:
+- Complex business rules (not just "it's long")
+- Multiple models orchestrated
+- External API interactions
+- Reusable cross-controller logic
+
+Service structure:
+- Single public method
+- Namespace by responsibility (`Extraction::RegexExtractor`)
+- Constructor takes dependencies
+- Return data structures, not domain objects
+
+## Modern Ruby Style
+
+```ruby
+# Hash shorthand
+{ id:, slug:, doc_type: kind }
+
+# Safe navigation
+created_at&.iso8601
+@setting ||= SlugSetting.active.find_by!(slug:)
+
+# Keyword arguments
+def extract(document_type:, subject:, filename:)
+def process!(strategy: nil)
+```
+
+## Enum Patterns
+
+```ruby
+# Frozen arrays with validation
+STATUSES = %w[processed needs_review].freeze
+enum :status, STATUSES.index_by(&:itself), validate: true
+```
+
+## Scope Patterns
+
+```ruby
+# Guard with .present?, chainable design
+scope :by_slug, ->(slug) { where(slug:) if slug.present? }
+scope :from_date, ->(date) { where(created_at: Date.parse(date).beginning_of_day..) if date.present? }
+
+def self.filtered(params)
+  all.by_slug(params[:slug]).by_kind(params[:kind])
+rescue ArgumentError
+  all
+end
+```
+
+## Error Handling
+
+```ruby
+# Domain-specific errors
+class InactiveSlug < StandardError; end
+
+# Log with context, re-raise for upstream
+def handle_exception!(error:)
+  log_error("Exception #{error.class}: #{error.message}", error:)
+  mark_failed!(error.message)
+  raise
+end
+```
+
+## Testing (Minitest + Fixtures)
+
+```ruby
+test "describes expected behavior" do
+  email = emails(:two)
+  email.process
+  email.reload
+  assert_equal "finished", email.processing_status
+end
+```
+
+Principles:
+- **Behavior-driven**: Test what, not how
+- **Fixture-based**: Use `emails(:two)` for setup
+- **Mock externals**: Stub S3, APIs, PDFs
+- **State verification**: `.reload` after operations
+- **Helper methods**: `build_valid_email`, `with_stubbed_download`
+
+## Naming (5-Second Rule)
+
+If you can't understand in 5 seconds:
+
+```ruby
+# FAIL
+show_in_frame
+process_stuff
+
+# PASS
+fact_check_modal
+_fact_frame
+```
+
+## JavaScript & Importmap
+
+Rails 7+ uses importmap for JS dependency management. Scope dependencies to the narrowest entrypoint.
+
+### Multiple Entrypoints
+
+```ruby
+# config/importmap.rb
+pin "application"                    # Public entrypoint
+pin "@hotwired/turbo-rails", to: "turbo.min.js"
+pin "@hotwired/stimulus", to: "stimulus.min.js"
+
+# Admin-only dependencies - pinned but only imported in admin entrypoint
+pin "chartkick", to: "chartkick.js"
+pin "Chart.bundle", to: "Chart.bundle.js"
+```
+
+```javascript
+// app/javascript/application.js — public pages only
+import "@hotwired/turbo-rails"
+import "@hotwired/stimulus"
+import "controllers"
+
+// app/javascript/admin.js — imports public base + admin-only libs
+import "application"
+import "chartkick"
+import "Chart.bundle"
+```
+
+```erb
+<%# Admin layout %>
+<%= javascript_importmap_tags("admin") %>
+
+<%# All other layouts %>
+<%= javascript_importmap_tags %>
+```
+
+### Adding New JS Dependencies
+
+1. Determine scope: public-facing or admin-only?
+2. Pin in `config/importmap.rb`
+3. Import in the **correct** entrypoint
+4. Never add admin-only libraries to `application.js`
+
+## Performance
+
+- Consider scale impact
+- No premature caching
+- KISS - Keep It Simple
+- Indexes slow writes - add only when needed
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/majesticlabs-dev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
