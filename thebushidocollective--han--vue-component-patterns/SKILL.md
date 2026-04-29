@@ -2,7 +2,7 @@
 name: vue-component-patterns
 description: Use when Vue component patterns including props, emits, slots, and provide/inject. Use when building reusable Vue components.
 metadata:
-  author: TheBushidoCollective
+  author: thebushidocollective
 ---
 
 # Vue Component Patterns
@@ -1014,5 +1014,5 @@ const emit = defineEmits<{
 - [TypeScript with Vue](https://vuejs.org/guide/typescript/composition-api.html)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/TheBushidoCollective) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/thebushidocollective) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
