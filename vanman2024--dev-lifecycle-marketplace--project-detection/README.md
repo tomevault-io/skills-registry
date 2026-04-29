@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vanman2024/dev-lifecycle-marketplace](https://github.com/vanman2024/dev-lifecycle-marketplace/tree/main/.archive/old-numbered-plugins/01-core/skills/project-detection)
+Original source: [vanman2024/dev-lifecycle-marketplace](https://github.com/vanman2024/dev-lifecycle-marketplace/tree/main/plugins/foundation/skills/project-detection)
 
 ---
 
