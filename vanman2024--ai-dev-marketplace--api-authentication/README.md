@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vanman2024/ai-dev-marketplace](https://github.com/vanman2024/ai-dev-marketplace/tree/main/plugins/elevenlabs/skills/api-authentication)
+Original source: [vanman2024/ai-dev-marketplace](https://github.com/vanman2024/ai-dev-marketplace/tree/main/plugins/clerk/skills/api-authentication)
 
 ---
 
