@@ -2,7 +2,7 @@
 name: typescript-utility-types
 description: Use when typeScript utility types, mapped types, and advanced type manipulation. Use when creating flexible, type-safe TypeScript code.
 metadata:
-  author: TheBushidoCollective
+  author: thebushidocollective
 ---
 
 # TypeScript Utility Types
@@ -829,5 +829,5 @@ applications.
 - r/typescript: <https://www.reddit.com/r/typescript/>
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/TheBushidoCollective) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/thebushidocollective) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
