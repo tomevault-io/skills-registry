@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microck/ordinary-claude-skills](https://github.com/microck/ordinary-claude-skills/tree/main/skills_all/generate-image)
+Original source: [microck/ordinary-claude-skills](https://github.com/microck/ordinary-claude-skills/tree/main/skills_all/claude-scientific-skills/scientific-skills/generate-image)
 
 ---
 
