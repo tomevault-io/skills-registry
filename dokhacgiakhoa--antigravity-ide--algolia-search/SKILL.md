@@ -1,0 +1,20 @@
+---
+name: algolia-search
+description: Expert patterns for Algolia search implementation, indexing strategies, React InstantSearch, and relevance tuning Use when: adding search to, algolia, instantsearch, search api, search functionality. Use when this capability is needed.
+metadata:
+  author: dokhacgiakhoa
+---
+
+# Algolia Search Integration
+
+## Patterns
+
+## 🧠 Knowledge Modules (Fractal Skills)
+
+### 1. [React InstantSearch with Hooks](./sub-skills/react-instantsearch-with-hooks.md)
+### 2. [Next.js Server-Side Rendering](./sub-skills/nextjs-server-side-rendering.md)
+### 3. [Data Synchronization and Indexing](./sub-skills/data-synchronization-and-indexing.md)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dokhacgiakhoa) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
