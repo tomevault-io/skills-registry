@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [amnadtaowsoam/cerebraskills](https://github.com/amnadtaowsoam/cerebraskills/tree/main/61-ai-production/model-serving-inference)
+Original source: [amnadtaowsoam/cerebraskills](https://github.com/amnadtaowsoam/cerebraskills/tree/main/78-inference-model-serving/model-serving-inference)
 
 ---
 
