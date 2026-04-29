@@ -2,7 +2,7 @@
 name: django-rest-api-development
 description: Comprehensive guidelines for building scalable Django REST APIs with proper architecture, authentication, and performance optimization. Use when this capability is needed.
 metadata:
-  author: Mindrally
+  author: mindrally
 ---
 
 # Django REST API Development
@@ -76,5 +76,5 @@ You are an expert in Python, Django, and scalable RESTful API development.
 - Implement structured logging for API monitoring and debugging
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Mindrally) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mindrally) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
