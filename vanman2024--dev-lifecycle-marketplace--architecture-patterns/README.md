@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vanman2024/dev-lifecycle-marketplace](https://github.com/vanman2024/dev-lifecycle-marketplace/tree/main/plugins/planning/skills/architecture-patterns)
+Original source: [vanman2024/dev-lifecycle-marketplace](https://github.com/vanman2024/dev-lifecycle-marketplace/tree/main/.archive/old-numbered-plugins/03-planning/skills/architecture-patterns)
 
 ---
 
