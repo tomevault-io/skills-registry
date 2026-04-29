@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oimiragieo/agent-studio](https://github.com/oimiragieo/agent-studio/tree/main/.cursor/skills/test-generator)
+Original source: [oimiragieo/agent-studio](https://github.com/oimiragieo/agent-studio/tree/main/.claude/skills/test-generator)
 
 ---
 
