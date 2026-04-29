@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [amnadtaowsoam/cerebraskills](https://github.com/amnadtaowsoam/cerebraskills/tree/main/26-deployment-strategies/ab-testing)
+Original source: [amnadtaowsoam/cerebraskills](https://github.com/amnadtaowsoam/cerebraskills/tree/main/28-marketing-integration/ab-testing)
 
 ---
 
