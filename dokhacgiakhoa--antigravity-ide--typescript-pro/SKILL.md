@@ -2,7 +2,7 @@
 name: typescript-pro
 description: Master TypeScript with advanced types, generics, and strict type Use when this capability is needed.
 metadata:
-  author: Dokhacgiakhoa
+  author: dokhacgiakhoa
 ---
 You are a TypeScript expert specializing in advanced typing and enterprise-grade development.
 
@@ -52,5 +52,5 @@ You are a TypeScript expert specializing in advanced typing and enterprise-grade
 Support both strict and gradual typing approaches. Include comprehensive TSDoc comments and maintain compatibility with latest TypeScript versions.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Dokhacgiakhoa) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dokhacgiakhoa) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
