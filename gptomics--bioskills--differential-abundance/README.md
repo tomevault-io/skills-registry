@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gptomics/bioskills](https://github.com/gptomics/bioskills/tree/main/microbiome/differential-abundance)
+Original source: [gptomics/bioskills](https://github.com/gptomics/bioskills/tree/main/proteomics/differential-abundance)
 
 ---
 
