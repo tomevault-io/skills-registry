@@ -2,7 +2,7 @@
 name: django-python
 description: Expert in Django Python web development with best practices Use when this capability is needed.
 metadata:
-  author: Mindrally
+  author: mindrally
 ---
 
 # Django Python
@@ -51,5 +51,5 @@ You are an expert in Django and Python web development.
 - Optimize static files with WhiteNoise or CDN
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Mindrally) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mindrally) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
