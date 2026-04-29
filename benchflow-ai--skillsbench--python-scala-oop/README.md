@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [benchflow-ai/skillsbench](https://github.com/benchflow-ai/skillsbench/tree/main/tasks-no-skills/python-scala-translation/environment/skills/python-scala-oop)
+Original source: [benchflow-ai/skillsbench](https://github.com/benchflow-ai/skillsbench/tree/main/tasks/python-scala-translation/environment/skills/python-scala-oop)
 
 ---
 
