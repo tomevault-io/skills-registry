@@ -1,11 +1,11 @@
 # typescript-expert
 
-> Skill by [Dokhacgiakhoa](https://github.com/Dokhacgiakhoa/antigravity-ide) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [dokhacgiakhoa](https://github.com/dokhacgiakhoa/antigravity-ide) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Dokhacgiakhoa/antigravity-ide](https://github.com/Dokhacgiakhoa/antigravity-ide/tree/main/.agent/skills/typescript-expert)
+Original source: [dokhacgiakhoa/antigravity-ide](https://github.com/dokhacgiakhoa/antigravity-ide/tree/main/.agent/skills/typescript-expert)
 
 ---
 
