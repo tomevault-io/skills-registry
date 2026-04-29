@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [benchflow-ai/skillsbench](https://github.com/benchflow-ai/skillsbench/tree/main/tasks-no-skills/offer-letter-generator/environment/skills/docx)
+Original source: [benchflow-ai/skillsbench](https://github.com/benchflow-ai/skillsbench/tree/main/tasks-no-skills/organize-messy-files/environment/skills/docx)
 
 ---
 
