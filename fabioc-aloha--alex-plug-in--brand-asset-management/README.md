@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fabioc-aloha/alex_plug_in](https://github.com/fabioc-aloha/alex_plug_in/tree/main/.github/skills/brand-asset-management)
+Original source: [fabioc-aloha/alex_plug_in](https://github.com/fabioc-aloha/alex_plug_in/tree/main/platforms/vscode-extension/.github/skills/brand-asset-management)
 
 ---
 
