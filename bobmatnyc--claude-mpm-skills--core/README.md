@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bobmatnyc/claude-mpm-skills](https://github.com/bobmatnyc/claude-mpm-skills/tree/main/toolchains/javascript/frameworks/hono/core)
+Original source: [bobmatnyc/claude-mpm-skills](https://github.com/bobmatnyc/claude-mpm-skills/tree/main/toolchains/nextjs/core)
 
 ---
 
