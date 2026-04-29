@@ -1,11 +1,11 @@
 # typescript-review
 
-> Skill by [Microck](https://github.com/Microck/ordinary-claude-skills) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [microck](https://github.com/microck/ordinary-claude-skills) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Microck/ordinary-claude-skills](https://github.com/Microck/ordinary-claude-skills/tree/main/skills_all/typescript-review)
+Original source: [microck/ordinary-claude-skills](https://github.com/microck/ordinary-claude-skills/tree/main/skills_all/typescript-review)
 
 ---
 
