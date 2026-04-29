@@ -1,11 +1,11 @@
 # django-orm-patterns
 
-> Skill by [TheBushidoCollective](https://github.com/TheBushidoCollective/han) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [thebushidocollective](https://github.com/thebushidocollective/han) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheBushidoCollective/han](https://github.com/TheBushidoCollective/han/tree/main/plugins/frameworks/django/skills/django-orm-patterns)
+Original source: [thebushidocollective/han](https://github.com/thebushidocollective/han/tree/main/plugins/frameworks/django/skills/django-orm-patterns)
 
 ---
 
