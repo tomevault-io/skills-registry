@@ -2,7 +2,7 @@
 name: git-pr-workflows-git-workflow
 description: Orchestrate a comprehensive git workflow from code review through PR creation, leveraging specialized agents for quality assurance, testing, and deployment readiness. This workflow implements modern g Use when this capability is needed.
 metadata:
-  author: Dokhacgiakhoa
+  author: dokhacgiakhoa
 ---
 
 # Complete Git Workflow with Multi-Agent Orchestration
@@ -57,5 +57,5 @@ Orchestrate a comprehensive git workflow from code review through PR creation, l
 ### 10. [2. PR Metadata and Automation Setup](./sub-skills/2-pr-metadata-and-automation-setup.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Dokhacgiakhoa) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dokhacgiakhoa) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
