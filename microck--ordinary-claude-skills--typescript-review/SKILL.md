@@ -2,7 +2,7 @@
 name: typescript-review
 description: Review TypeScript and JavaScript code changes for compliance with Metabase coding standards, style violations, and code quality issues. Use when reviewing pull requests or diffs containing TypeScript/JavaScript code. Use when this capability is needed.
 metadata:
-  author: Microck
+  author: microck
 ---
 
 # TypeScript/JavaScript Code Review Skill
@@ -20,5 +20,5 @@ Review pull requests with a focus on:
 - React best practices (when applicable)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Microck) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/microck) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
