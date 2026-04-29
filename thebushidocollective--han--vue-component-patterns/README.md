@@ -1,11 +1,11 @@
 # vue-component-patterns
 
-> Skill by [TheBushidoCollective](https://github.com/TheBushidoCollective/han) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [thebushidocollective](https://github.com/thebushidocollective/han) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheBushidoCollective/han](https://github.com/TheBushidoCollective/han/tree/main/plugins/frameworks/vue/skills/vue-component-patterns)
+Original source: [thebushidocollective/han](https://github.com/thebushidocollective/han/tree/main/plugins/frameworks/vue/skills/vue-component-patterns)
 
 ---
 
