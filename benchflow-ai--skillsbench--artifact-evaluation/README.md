@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [benchflow-ai/skillsbench](https://github.com/benchflow-ai/skillsbench/tree/main/libs/artifact-runner/skills/artifact-evaluation)
+Original source: [benchflow-ai/skillsbench](https://github.com/benchflow-ai/skillsbench/tree/main/libs/artifact-runner/eval-kit/skills/artifact-evaluation)
 
 ---
 
