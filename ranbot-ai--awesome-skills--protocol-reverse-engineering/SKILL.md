@@ -1,0 +1,36 @@
+---
+name: protocol-reverse-engineering
+description: Comprehensive techniques for capturing, analyzing, and documenting network protocols for security research, interoperability, and debugging. Use when this capability is needed.
+metadata:
+  author: ranbot-ai
+---
+
+
+# Protocol Reverse Engineering
+
+Comprehensive techniques for capturing, analyzing, and documenting network protocols for security research, interoperability, and debugging.
+
+## Use this skill when
+
+- Working on protocol reverse engineering tasks or workflows
+- Needing guidance, best practices, or checklists for protocol reverse engineering
+
+## Do not use this skill when
+
+- The task is unrelated to protocol reverse engineering
+- You need a different domain or tool outside this scope
+
+## Instructions
+
+- Clarify goals, constraints, and required inputs.
+- Apply relevant best practices and validate outcomes.
+- Provide actionable steps and verification.
+- If detailed examples are required, open `resources/implementation-playbook.md`.
+
+## Resources
+
+- `resources/implementation-playbook.md` for detailed patterns and examples.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ranbot-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
