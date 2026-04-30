@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aiskillstore/marketplace](https://github.com/aiskillstore/marketplace/tree/main/skills/antfu/vue-router-best-practices)
+Original source: [aiskillstore/marketplace](https://github.com/aiskillstore/marketplace/tree/main/skills/vuejs-ai/vue-router-best-practices)
 
 ---
 
