@@ -1,0 +1,41 @@
+---
+name: fix-py-line-too-long
+description: Break into multiple lines using parentheses or brackets: Use when this capability is needed.
+metadata:
+  author: ranbot-ai
+---
+
+
+# Instructions for fixing "E501 Line too long"
+
+## For code lines
+Break into multiple lines using parentheses or brackets:
+```python
+result = some_very_long_function_name(
+    parameter1, parameter2, parameter3
+)
+```
+
+## For single-line strings
+Use string concatenation: `"ABC"` → `("A" "B" "C")`
+```python
+message = ("This is a very long string "
+           "that needs to be broken up")
+```
+
+## For long multi-line strings (docstrings)
+Add `# noqa: E501` AFTER the ending `"""`. NEVER add it inside the docstring.
+```python
+def example_function():
+    """This is a very long docstring that exceeds the line length limit."""  # noqa: E501
+    pass
+```
+
+## What NOT to do
+- Do not add `# noqa: E501` inside docstrings or multi-line strings
+- Do not break strings in the middle of words
+- Do not sacrifice code readability for line length compliance
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ranbot-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
