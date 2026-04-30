@@ -1,0 +1,218 @@
+---
+name: seo-fundamentals
+description: > Use when this capability is needed.
+metadata:
+  author: techwavedev
+---
+
+---
+
+# SEO Fundamentals
+
+> **Foundational principles for sustainable search visibility.**
+> This skill explains _how search engines evaluate quality_, not tactical shortcuts.
+
+---
+
+## 1. E-E-A-T (Quality Evaluation Framework)
+
+E-E-A-T is **not a direct ranking factor**.
+It is a framework used by search engines to **evaluate content quality**, especially for sensitive or high-impact topics.
+
+| Dimension             | What It Represents                 | Common Signals                                      |
+| --------------------- | ---------------------------------- | --------------------------------------------------- |
+| **Experience**        | First-hand, real-world involvement | Original examples, lived experience, demonstrations |
+| **Expertise**         | Subject-matter competence          | Credentials, depth, accuracy                        |
+| **Authoritativeness** | Recognition by others              | Mentions, citations, links                          |
+| **Trustworthiness**   | Reliability and safety             | HTTPS, transparency, accuracy                       |
+
+> Pages competing in the same space are often differentiated by **trust and experience**, not keywords.
+
+---
+
+## 2. Core Web Vitals (Page Experience Signals)
+
+Core Web Vitals measure **how users experience a page**, not whether it deserves to rank.
+
+| Metric  | Target  | What It Reflects    |
+| ------- | ------- | ------------------- |
+| **LCP** | < 2.5s  | Loading performance |
+| **INP** | < 200ms | Interactivity       |
+| **CLS** | < 0.1   | Visual stability    |
+
+**Important context:**
+
+- CWV rarely override poor content
+- They matter most when content quality is comparable
+- Failing CWV can _hold back_ otherwise good pages
+
+---
+
+## 3. Technical SEO Principles
+
+Technical SEO ensures pages are **accessible, understandable, and stable**.
+
+### Crawl & Index Control
+
+| Element           | Purpose                |
+| ----------------- | ---------------------- |
+| XML sitemaps      | Help discovery         |
+| robots.txt        | Control crawl access   |
+| Canonical tags    | Consolidate duplicates |
+| HTTP status codes | Communicate page state |
+| HTTPS             | Security and trust     |
+
+### Performance & Accessibility
+
+| Factor                 | Why It Matters                |
+| ---------------------- | ----------------------------- |
+| Page speed             | User satisfaction             |
+| Mobile-friendly design | Mobile-first indexing         |
+| Clean URLs             | Crawl clarity                 |
+| Semantic HTML          | Accessibility & understanding |
+
+---
+
+## 4. Content SEO Principles
+
+### Page-Level Elements
+
+| Element          | Principle                    |
+| ---------------- | ---------------------------- |
+| Title tag        | Clear topic + intent         |
+| Meta description | Click relevance, not ranking |
+| H1               | Page’s primary subject       |
+| Headings         | Logical structure            |
+| Alt text         | Accessibility and context    |
+
+### Content Quality Signals
+
+| Dimension   | What Search Engines Look For |
+| ----------- | ---------------------------- |
+| Depth       | Fully answers the query      |
+| Originality | Adds unique value            |
+| Accuracy    | Factually correct            |
+| Clarity     | Easy to understand           |
+| Usefulness  | Satisfies intent             |
+
+---
+
+## 5. Structured Data (Schema)
+
+Structured data helps search engines **understand meaning**, not boost rankings directly.
+
+| Type           | Purpose                |
+| -------------- | ---------------------- |
+| Article        | Content classification |
+| Organization   | Entity identity        |
+| Person         | Author information     |
+| FAQPage        | Q&A clarity            |
+| Product        | Commerce details       |
+| Review         | Ratings context        |
+| BreadcrumbList | Site structure         |
+
+> Schema enables eligibility for rich results but does not guarantee them.
+
+---
+
+## 6. AI-Assisted Content Principles
+
+Search engines evaluate **output quality**, not authorship method.
+
+### Effective Use
+
+- AI as a drafting or research assistant
+- Human review for accuracy and clarity
+- Original insights and synthesis
+- Clear accountability
+
+### Risky Use
+
+- Publishing unedited AI output
+- Factual errors or hallucinations
+- Thin or duplicated content
+- Keyword-driven text with no value
+
+---
+
+## 7. Relative Importance of SEO Factors
+
+There is **no fixed ranking factor order**.
+However, when competing pages are similar, importance tends to follow this pattern:
+
+| Relative Weight | Factor                      |
+| --------------- | --------------------------- |
+| Highest         | Content relevance & quality |
+| High            | Authority & trust signals   |
+| Medium          | Page experience (CWV, UX)   |
+| Medium          | Mobile optimization         |
+| Baseline        | Technical accessibility     |
+
+> Technical SEO enables ranking; content quality earns it.
+
+---
+
+## 8. Measurement & Evaluation
+
+SEO fundamentals should be validated using **multiple signals**, not single metrics.
+
+| Area        | What to Observe            |
+| ----------- | -------------------------- |
+| Visibility  | Indexed pages, impressions |
+| Engagement  | Click-through, dwell time  |
+| Performance | CWV field data             |
+| Coverage    | Indexing status            |
+| Authority   | Mentions and links         |
+
+---
+
+> **Key Principle:**
+> Sustainable SEO is built on _useful content_, _technical clarity_, and _trust over time_.
+> There are no permanent shortcuts.
+
+
+---
+
+<!-- AGI-INTEGRATION-START -->
+
+## 🧠 AGI Framework Integration
+
+> **Adapted for [@techwavedev/agi-agent-kit](https://www.npmjs.com/package/@techwavedev/agi-agent-kit)**
+> Original source: [antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills)
+
+### Hybrid Memory Integration (Qdrant + BM25)
+
+Before executing complex tasks with this skill:
+```bash
+python3 execution/memory_manager.py auto --query "<task summary>"
+```
+
+**Decision Tree:**
+- **Cache hit?** Use cached response directly — no need to re-process.
+- **Memory match?** Inject `context_chunks` into your reasoning.
+- **No match?** Proceed normally, then store results:
+
+```bash
+python3 execution/memory_manager.py store \
+  --content "Description of what was decided/solved" \
+  --type decision \
+  --tags seo-fundamentals <relevant-tags>
+```
+
+> **Note:** Storing automatically updates both Vector (Qdrant) and Keyword (BM25) indices.
+
+### Agent Team Collaboration
+
+- **Strategy**: This skill communicates via the shared memory system.
+- **Orchestration**: Invoked by `orchestrator` via intelligent routing.
+- **Context Sharing**: Always read previous agent outputs from memory before starting.
+
+### Local LLM Support
+
+When available, use local Ollama models for embedding and lightweight inference:
+- Embeddings: `nomic-embed-text` via Qdrant memory system
+- Lightweight analysis: Local models reduce API costs for repetitive patterns
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/techwavedev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
