@@ -1,0 +1,42 @@
+---
+name: error-handling-patterns
+description: Build resilient applications with robust error handling strategies that gracefully handle failures and provide excellent debugging experiences. Use when this capability is needed.
+metadata:
+  author: ranbot-ai
+---
+
+
+# Error Handling Patterns
+
+Build resilient applications with robust error handling strategies that gracefully handle failures and provide excellent debugging experiences.
+
+## Use this skill when
+
+- Implementing error handling in new features
+- Designing error-resilient APIs
+- Debugging production issues
+- Improving application reliability
+- Creating better error messages for users and developers
+- Implementing retry and circuit breaker patterns
+- Handling async/concurrent errors
+- Building fault-tolerant distributed systems
+
+## Do not use this skill when
+
+- The task is unrelated to error handling patterns
+- You need a different domain or tool outside this scope
+
+## Instructions
+
+- Clarify goals, constraints, and required inputs.
+- Apply relevant best practices and validate outcomes.
+- Provide actionable steps and verification.
+- If detailed examples are required, open `resources/implementation-playbook.md`.
+
+## Resources
+
+- `resources/implementation-playbook.md` for detailed patterns and examples.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ranbot-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
