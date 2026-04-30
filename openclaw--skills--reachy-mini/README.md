@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openclaw/skills](https://github.com/openclaw/skills/tree/main/skills/afalk42/reachy-mini)
+Original source: [openclaw/skills](https://github.com/openclaw/skills/tree/main/skills/snail3d/clawd/skills/reachy-mini)
 
 ---
 
