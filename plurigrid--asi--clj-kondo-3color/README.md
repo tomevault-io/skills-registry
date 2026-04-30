@@ -1,0 +1,13 @@
+# clj-kondo-3color
+
+> Skill by [plurigrid](https://github.com/plurigrid/asi) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [plurigrid/asi](https://github.com/plurigrid/asi/tree/main/ies/music-topos/.opencode/skill/clj-kondo-3color)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
