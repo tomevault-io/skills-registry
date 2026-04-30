@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [plurigrid/asi](https://github.com/plurigrid/asi/tree/main/skills/buberian-relations)
+Original source: [plurigrid/asi](https://github.com/plurigrid/asi/tree/main/plugins/asi/skills/buberian-relations)
 
 ---
 
