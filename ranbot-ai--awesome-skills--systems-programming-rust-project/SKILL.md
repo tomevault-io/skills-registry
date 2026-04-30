@@ -1,0 +1,263 @@
+---
+name: systems-programming-rust-project
+description: You are a Rust project architecture expert specializing in scaffolding production-ready Rust applications. Generate complete project structures with cargo tooling, proper module organization, testing Use when this capability is needed.
+metadata:
+  author: ranbot-ai
+---
+
+
+# Rust Project Scaffolding
+
+You are a Rust project architecture expert specializing in scaffolding production-ready Rust applications. Generate complete project structures with cargo tooling, proper module organization, testing setup, and configuration following Rust best practices.
+
+## Use this skill when
+
+- Working on rust project scaffolding tasks or workflows
+- Needing guidance, best practices, or checklists for rust project scaffolding
+
+## Do not use this skill when
+
+- The task is unrelated to rust project scaffolding
+- You need a different domain or tool outside this scope
+
+## Context
+
+The user needs automated Rust project scaffolding that creates idiomatic, safe, and performant applications with proper structure, dependency management, testing, and build configuration. Focus on Rust idioms and scalable architecture.
+
+## Requirements
+
+$ARGUMENTS
+
+## Instructions
+
+### 1. Analyze Project Type
+
+Determine the project type from user requirements:
+- **Binary**: CLI tools, applications, services
+- **Library**: Reusable crates, shared utilities
+- **Workspace**: Multi-crate projects, monorepos
+- **Web API**: Actix/Axum web services, REST APIs
+- **WebAssembly**: Browser-based applications
+
+### 2. Initialize Project with Cargo
+
+```bash
+# Create binary project
+cargo new project-name
+cd project-name
+
+# Or create library
+cargo new --lib library-name
+
+# Initialize git (cargo does this automatically)
+# Add to .gitignore if needed
+echo "/target" >> .gitignore
+echo "Cargo.lock" >> .gitignore  # For libraries only
+```
+
+### 3. Generate Binary Project Structure
+
+```
+binary-project/
+├── Cargo.toml
+├── README.md
+├── src/
+│   ├── main.rs
+│   ├── config.rs
+│   ├── cli.rs
+│   ├── commands/
+│   │   ├── mod.rs
+│   │   ├── init.rs
+│   │   └── run.rs
+│   ├── error.rs
+│   └── lib.rs
+├── tests/
+│   ├── integration_test.rs
+│   └── common/
+│       └── mod.rs
+├── benches/
+│   └── benchmark.rs
+└── examples/
+    └── basic_usage.rs
+```
+
+**Cargo.toml**:
+```toml
+[package]
+name = "project-name"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+authors = ["Your Name <email@example.com>"]
+description = "Project description"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/user/project-name"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+tokio = { version = "1.36", features = ["full"] }
+anyhow = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "benchmark"
+harness = false
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+```
+
+**src/main.rs**:
+```rust
+use anyhow::Result;
+use clap::Parser;
+
+mod cli;
+mod commands;
+mod config;
+mod error;
+
+use cli::Cli;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let cli = Cli::parse();
+
+    match cli.command {
+        cli::Commands::Init(args) => commands::init::execute(args).await?,
+        cli::Commands::Run(args) => commands::run::execute(args).await?,
+    }
+
+    Ok(())
+}
+```
+
+**src/cli.rs**:
+```rust
+use clap::{Parser, Subcommand};
+
+#[derive(Parser)]
+#[command(name = "project-name")]
+#[command(about = "Project description", long_about = None)]
+pub struct Cli {
+    #[command(subcommand)]
+    pub command: Commands,
+}
+
+#[derive(Subcommand)]
+pub enum Commands {
+    /// Initialize a new project
+    Init(InitArgs),
+    /// Run the application
+    Run(RunArgs),
+}
+
+#[derive(Parser)]
+pub struct InitArgs {
+    /// Project name
+    #[arg(short, long)]
+    pub name: String,
+}
+
+#[derive(Parser)]
+pub struct RunArgs {
+    /// Enable verbose output
+    #[arg(short, long)]
+    pub verbose: bool,
+}
+```
+
+**src/error.rs**:
+```rust
+use std::fmt;
+
+#[derive(Debug)]
+pub enum AppError {
+    NotFound(String),
+    InvalidInput(String),
+    IoError(std::io::Error),
+}
+
+impl fmt::Display for AppError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            AppError::NotFound(msg) => write!(f, "Not found: {}", msg),
+            AppError::InvalidInput(msg) => write!(f, "Invalid input: {}", msg),
+            AppError::IoError(e) => write!(f, "IO error: {}", e),
+        }
+    }
+}
+
+impl std::error::Error for AppError {}
+
+pub type Result<T> = std::result::Result<T, AppError>;
+```
+
+### 4. Generate Library Project Structure
+
+```
+library-name/
+├── Cargo.toml
+├── README.md
+├── src/
+│   ├── lib.rs
+│   ├── core.rs
+│   ├── utils.rs
+│   └── error.rs
+├── tests/
+│   └── integration_test.rs
+└── examples/
+    └── basic.rs
+```
+
+**Cargo.toml for Library**:
+```toml
+[package]
+name = "library-name"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+
+[dependencies]
+# Keep minimal for libraries
+
+[dev-dependencies]
+tokio-test = "0.4"
+
+[lib]
+name = "library_name"
+path = "src/lib.rs"
+```
+
+**src/lib.rs**:
+```rust
+//! Library documentation
+//!
+//! # Examples
+//!
+//! ```
+//! use library_name::core::CoreType;
+//!
+//! let instance = CoreType::new();
+//! ```
+
+pub mod core;
+pub mod error;
+pub mod utils;
+
+pub use core::CoreType;
+pub use error::{Error, Result};
+
+#[cfg(test)]
+mod tests {
+    use 
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ranbot-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
