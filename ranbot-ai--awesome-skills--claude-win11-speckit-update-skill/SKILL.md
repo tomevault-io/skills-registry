@@ -1,0 +1,27 @@
+---
+name: claude-win11-speckit-update-skill
+description: Windows 11 system management Use when this capability is needed.
+metadata:
+  author: ranbot-ai
+---
+
+
+# Claude Win11 Speckit Update Skill
+
+## Overview
+
+Windows 11 system management
+
+## When to Use This Skill
+
+Use this skill when you need to work with windows 11 system management.
+
+## Instructions
+
+This skill provides guidance and patterns for windows 11 system management.
+
+For more information, see the [source repository](https://github.com/NotMyself/claude-win11-speckit-update-skill).
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ranbot-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
