@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [duclm1x1/dive-ai](https://github.com/duclm1x1/dive-ai/tree/main/docs/v19.7/src/modules/skill-creator)
+Original source: [duclm1x1/dive-ai](https://github.com/duclm1x1/dive-ai/tree/main/docs/v19.7/configuration/agent/skills_external/antigravity-awesome-skills-main/skills/skill-creator)
 
 ---
 
