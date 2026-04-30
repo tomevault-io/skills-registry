@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aiskillstore/marketplace](https://github.com/aiskillstore/marketplace/tree/main/skills/dennisliuck/claude-opus-4-5-migration)
+Original source: [aiskillstore/marketplace](https://github.com/aiskillstore/marketplace/tree/main/skills/davila7/claude-opus-4-5-migration)
 
 ---
 
