@@ -1,0 +1,166 @@
+---
+name: writing-skills
+description: Use when creating, updating, or improving agent skills.
+metadata:
+  author: techwavedev
+---
+
+# Writing Skills (Excellence)
+
+Dispatcher for skill creation excellence. Use the decision tree below to find the right template and standards.
+
+## ⚡ Quick Decision Tree
+
+### What do you need to do?
+
+1. **Create a NEW skill:**
+   - Is it simple (single file, <200 lines)? → [Tier 1 Architecture](references/tier-1-simple/README.md)
+   - Is it complex (multi-concept, 200-1000 lines)? → [Tier 2 Architecture](references/tier-2-expanded/README.md)
+   - Is it a massive platform (10+ products, AWS, Convex)? → [Tier 3 Architecture](references/tier-3-platform/README.md)
+
+2. **Improve an EXISTING skill:**
+   - Fix "it's too long" -> [Modularize (Tier 3)](references/templates/tier-3-platform.md)
+   - Fix "AI ignores rules" -> [Anti-Rationalization](references/anti-rationalization/README.md)
+   - Fix "users can't find it" -> [CSO (Search Optimization)](references/cso/README.md)
+
+3. **Verify Compliance:**
+   - Check metadata/naming -> [Standards](references/standards/README.md)
+   - Add tests -> [Testing Guide](references/testing/README.md)
+
+## 📚 Component Index
+
+| Component | Purpose |
+|-----------|---------|
+| **[CSO](references/cso/README.md)** | "SEO for LLMs". How to write descriptions that trigger. |
+| **[Standards](references/standards/README.md)** | File naming, YAML frontmatter, directory structure. |
+| **[Anti-Rationalization](references/anti-rationalization/README.md)**| How to write rules that agents won't ignore. |
+| **[Testing](references/testing/README.md)** | How to ensure your skill actually works. |
+
+## 🛠️ Templates
+
+- [Technique Skill](references/templates/technique.md) (How-to)
+- [Reference Skill](references/templates/reference.md) (Docs)
+- [Discipline Skill](references/templates/discipline.md) (Rules)
+- [Pattern Skill](references/templates/pattern.md) (Design Patterns)
+
+## When to Use
+
+- Creating a NEW skill from scratch
+- Improving an EXISTING skill that agents ignore
+- Debugging why a skill isn't being triggered
+- Standardizing skills across a team
+
+## How It Works
+
+1. **Identify goal** → Use decision tree above
+2. **Select template** → From `references/templates/`
+3. **Apply CSO** → Optimize description for discovery
+4. **Add anti-rationalization** → For discipline skills
+5. **Test** → RED-GREEN-REFACTOR cycle
+
+## Quick Example
+
+```yaml
+---
+name: my-technique
+description: Use when [specific symptom occurs].
+metadata:
+  category: technique
+  triggers: error-text, symptom, tool-name
+---
+
+# My Technique
+
+## When to Use
+- [Symptom A]
+- [Error message]
+```
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---------|-----|
+| Description summarizes workflow | Use "Use when..." triggers only |
+| No `metadata.triggers` | Add 3+ keywords |
+| Generic name ("helper") | Use gerund (`creating-skills`) |
+| Long monolithic SKILL.md | Split into `references/` |
+
+See [gotchas.md](gotchas.md) for more.
+
+## ✅ Pre-Deploy Checklist
+
+Before deploying any skill:
+
+- [ ] `name` field matches directory name exactly
+- [ ] `SKILL.md` filename is ALL CAPS
+- [ ] Description starts with "Use when..."
+- [ ] `metadata.triggers` has 3+ keywords
+- [ ] Total lines < 500 (use `references/` for more)
+- [ ] No `@` force-loading in cross-references
+- [ ] Tested with real scenarios
+
+## 🔗 Related Skills
+
+- **opencode-expert**: For OpenCode environment configuration
+- Use `/write-skill` command for guided skill creation
+
+## Examples
+
+**Create a Tier 1 skill:**
+```bash
+mkdir -p ~/.config/opencode/skills/my-technique
+touch ~/.config/opencode/skills/my-technique/SKILL.md
+```
+
+**Create a Tier 2 skill:**
+```bash
+mkdir -p ~/.config/opencode/skills/my-skill/references/core
+touch ~/.config/opencode/skills/my-skill/{SKILL.md,gotchas.md}
+touch ~/.config/opencode/skills/my-skill/references/core/README.md
+```
+
+---
+
+<!-- AGI-INTEGRATION-START -->
+
+## AGI Framework Integration
+
+> **Adapted for [@techwavedev/agi-agent-kit](https://www.npmjs.com/package/@techwavedev/agi-agent-kit)**
+> Original source: [antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills)
+
+### Memory-First Protocol
+
+Retrieve brand voice guidelines, content templates, and prior successful content patterns. Cache editorial decisions for consistency across sessions.
+
+```bash
+# Check for prior content creation context before starting
+python3 execution/memory_manager.py auto --query "content patterns and brand voice guidelines for Writing Skills"
+```
+
+### Storing Results
+
+After completing work, store content creation decisions for future sessions:
+
+```bash
+python3 execution/memory_manager.py store \
+  --content "Content: brand voice established — professional but approachable, 8th-grade reading level, active voice" \
+  --type decision --project <project> \
+  --tags writing-skills content
+```
+
+### Multi-Agent Collaboration
+
+Share content guidelines with design agents (visual alignment) and development agents (copy integration).
+
+```bash
+python3 execution/cross_agent_context.py store \
+  --agent "<your-agent>" \
+  --action "Content created and reviewed — matches brand guidelines, SEO-optimized, A/B test variant prepared" \
+  --project <project>
+```
+
+<!-- AGI-INTEGRATION-END -->
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/techwavedev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
