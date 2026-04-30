@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [plurigrid/asi](https://github.com/plurigrid/asi/tree/main/plugins/asi/skills/crn-topology)
+Original source: [plurigrid/asi](https://github.com/plurigrid/asi/tree/main/ies/music-topos/.ruler/skills/crn-topology)
 
 ---
 
