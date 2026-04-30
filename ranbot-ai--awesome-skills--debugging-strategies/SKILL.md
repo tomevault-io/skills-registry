@@ -1,0 +1,41 @@
+---
+name: debugging-strategies
+description: Transform debugging from frustrating guesswork into systematic problem-solving with proven strategies, powerful tools, and methodical approaches. Use when this capability is needed.
+metadata:
+  author: ranbot-ai
+---
+
+
+# Debugging Strategies
+
+Transform debugging from frustrating guesswork into systematic problem-solving with proven strategies, powerful tools, and methodical approaches.
+
+## Use this skill when
+
+- Tracking down elusive bugs
+- Investigating performance issues
+- Debugging production incidents
+- Analyzing crash dumps or stack traces
+- Debugging distributed systems
+
+## Do not use this skill when
+
+- There is no reproducible issue or observable symptom
+- The task is purely feature development
+- You cannot access logs, traces, or runtime signals
+
+## Instructions
+
+- Reproduce the issue and capture logs, traces, and environment details.
+- Form hypotheses and design controlled experiments.
+- Narrow scope with binary search and targeted instrumentation.
+- Document findings and verify the fix.
+- If detailed playbooks are required, open `resources/implementation-playbook.md`.
+
+## Resources
+
+- `resources/implementation-playbook.md` for detailed debugging patterns and checklists.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ranbot-ai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
