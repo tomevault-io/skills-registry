@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [plurigrid/asi](https://github.com/plurigrid/asi/tree/main/skills/sheaf-laplacian-coordination)
+Original source: [plurigrid/asi](https://github.com/plurigrid/asi/tree/main/ies/music-topos/.codex/skills/sheaf-laplacian-coordination)
 
 ---
 
