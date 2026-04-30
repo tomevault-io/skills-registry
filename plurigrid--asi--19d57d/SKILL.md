@@ -44,5 +44,5 @@ Every use of this skill is an opportunity for worlding:
 *Add Interaction Exemplars here as the skill is used.*
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/plurigrid/asi)
-<!-- tomevault:3.0:skill_md:2026-04-07 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/plurigrid) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
