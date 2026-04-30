@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aiskillstore/marketplace](https://github.com/aiskillstore/marketplace/tree/main/skills/21pounder/deep-research)
+Original source: [aiskillstore/marketplace](https://github.com/aiskillstore/marketplace/tree/main/skills/199-biotechnologies/deep-research)
 
 ---
 
