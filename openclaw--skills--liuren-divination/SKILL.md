@@ -1,0 +1,26 @@
+---
+name: liuren
+description: Traditional Chinese "Xiao Liu Ren" divination based on current lunar time. Use when this capability is needed.
+metadata:
+  author: openclaw
+---
+
+# 小六壬 (Liu Ren) ⛩️
+
+基于当前农历时间（月、日、时）的快速起卦工具。
+
+## Usage
+
+Ask the agent to perform a divination:
+- "起一卦"
+- "算算现在运势"
+- "小六壬"
+
+The skill runs a Node.js script to calculate the lunar date and the corresponding "Liu Ren" sign.
+
+## Script
+The logic resides in `liuren.js`.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->
