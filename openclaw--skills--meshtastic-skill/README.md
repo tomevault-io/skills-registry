@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openclaw/skills](https://github.com/openclaw/skills/tree/main/skills/snail3d/clawd/meshtastic-skill)
+Original source: [openclaw/skills](https://github.com/openclaw/skills/tree/main/skills/lukevr/meshtastic-skill)
 
 ---
 
