@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openclaw/skills](https://github.com/openclaw/skills/tree/main/skills/fontstep/send-email)
+Original source: [openclaw/skills](https://github.com/openclaw/skills/tree/main/skills/vince-winkintel/sendgrid-skills/send-email)
 
 ---
 
