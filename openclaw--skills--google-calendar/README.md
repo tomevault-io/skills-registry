@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openclaw/skills](https://github.com/openclaw/skills/tree/main/skills/adrianmiller99/google-calendar)
+Original source: [openclaw/skills](https://github.com/openclaw/skills/tree/main/skills/mrgoodb/google-calendar)
 
 ---
 
