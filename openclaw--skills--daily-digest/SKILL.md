@@ -1,0 +1,21 @@
+---
+name: daily-digest
+description: Purpose: Generate a daily digest from memory and interactions, stored as journals/digest/digest-YYYY-MM-DD.md. Use when this capability is needed.
+metadata:
+  author: openclaw
+---
+# daily-digest Skill
+
+Purpose: Generate a daily digest from memory and interactions, stored as journals/digest/digest-YYYY-MM-DD.md.
+
+Usage:
+- Run the digest_daily.py script to generate today's digest.
+- Optional: integrate with clawdbot to run automatically via a cron job or a scheduler.
+
+Notes:
+- The script reads memory/YYYY-MM-DD.md and optionally memory/YYYY-MM-DD.md from yesterday to extract decisions, lessons, actions, and questions.
+- It also provides a placeholder summary when no structured entries exist in memory.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->
