@@ -1,0 +1,32 @@
+---
+name: sunhat-tron-development
+description: Use when working with the official detailed guide for developing, testing, deploying, and auditing TRON smart contracts using the Sunhat toolkit.
+metadata:
+  author: sun-protocol
+---
+
+# Sunhat TRON Development Skill
+
+This skill enables you to develop, test, and deploy smart contracts on the TRON network.
+
+**Rule:** Do not memorize the details of every task. Only read the specific workflow file relevant to your current objective.
+
+## Capabilities
+
+| Objective | Workflow File | Description |
+| :--- | :--- | :--- |
+| **Initialize Project** | [sunhat-init.md](workflows/sunhat-init.md) | Setup new project structure, config, and env. |
+| **Compile Contracts** | [sunhat-compile.md](workflows/sunhat-compile.md) | Compile Solidity/Vyper with TRON settings. |
+| **Run Tests** | [sunhat-test.md](workflows/sunhat-test.md) | Run Foundry (Solidity) or Hardhat (JS) tests. |
+| **Security Audit** | [sunhat-audit.md](workflows/sunhat-audit.md) | **White Hat** Analyze, Exploit (PoC), and Report. |
+| **Deploy to Network** | [sunhat-deploy.md](workflows/sunhat-deploy.md) | Deploy contracts to Mainnet/Nile/Shasta. |
+
+## Quick Reference
+
+- **CLI Tool**: `sunhat` (implicitly wraps Hardhat)
+- **Config**: `hardhat.config.ts`
+- **Networks**: `tron` (alias for configured TRON network)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sun-protocol) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
