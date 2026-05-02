@@ -2,7 +2,7 @@
 name: capacitor-ci-cd
 description: Complete CI/CD guide for Capacitor apps covering GitHub Actions, GitLab CI, build automation, app signing, and deployment pipelines. Use this skill when users need to automate their build and release process. Use when this capability is needed.
 metadata:
-  author: cap-go
+  author: Cap-go
 ---
 
 # CI/CD for Capacitor Applications
@@ -664,5 +664,5 @@ jobs:
 - Google Play API: https://developers.google.com/android-publisher
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/cap-go) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Cap-go) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
