@@ -1,0 +1,181 @@
+---
+name: claudecraft
+description: | Use when this capability is needed.
+metadata:
+  author: ivo-toby
+---
+
+# ClaudeCraft Workflow Skill
+
+## Project Context
+
+ClaudeCraft is a TUI-based spec-driven development orchestrator that enables:
+- Idea → BRD → PRD → Spec → Tasks → Autonomous Implementation
+- Parallel agent execution (max 6 concurrent)
+- Git worktree isolation for all implementation work
+- Real-time progress tracking in TUI
+- File-based task management
+
+## The Happy Path
+
+Complete workflow from idea to implementation:
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    QUICK TASKS (Lightweight)                         │
+├─────────────────────────────────────────────────────────────────────┤
+│  /claudecraft.quick     Research + craft prompt [USER REVIEWS]       │
+│        ↓                                                            │
+│  /claudecraft.quick-run Execute on current branch                    │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                 FULL WORKFLOW (Spec-Driven)                          │
+├─────────────────────────────────────────────────────────────────────┤
+│                        HUMAN INTERACTION                            │
+├─────────────────────────────────────────────────────────────────────┤
+│  /claudecraft.brd     Interactive BRD creation with research          │
+│        ↓                                                            │
+│  /claudecraft.prd     Interactive PRD creation (from BRD or scratch)  │
+│        ↓                                                            │
+│  /claudecraft.specify Generate technical spec [APPROVAL REQUIRED]     │
+├─────────────────────────────────────────────────────────────────────┤
+│                      FULLY AUTONOMOUS                               │
+├─────────────────────────────────────────────────────────────────────┤
+│  /claudecraft.plan    Create implementation plan                       │
+│        ↓                                                            │
+│  /claudecraft.tasks   Decompose into task files                         │
+│        ↓                                                            │
+│  /claudecraft.implement Execute with parallel agents                   │
+│        ↓                                                            │
+│  /claudecraft.qa      Final validation and merge                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+## Commands Available
+
+### Discovery & Requirements (Human Interactive)
+- `/claudecraft.brd` - **NEW** Guide user through creating a Business Requirements Document
+- `/claudecraft.prd` - **NEW** Guide user through creating a Product Requirements Document
+- `/claudecraft.ingest` - Import existing BRD/PRD document
+
+### Specification (Human Approval Required)
+- `/claudecraft.specify` - Generate specification from requirements
+
+### Quick Tasks (Lightweight, No Full Spec)
+- `/claudecraft.quick` - Research codebase + craft implementation prompt
+- `/claudecraft.quick-run` - Execute implementation from crafted prompt
+
+### Autonomous Execution (Full Spec Workflow)
+- `/claudecraft.plan` - Create technical implementation plan
+- `/claudecraft.tasks` - Decompose plan into executable task files
+- `/claudecraft.implement` - Execute autonomous implementation
+- `/claudecraft.qa` - Run final QA validation
+
+### Project Setup
+- `/claudecraft.init` - Initialize ClaudeCraft project
+- `/claudecraft.constitution` - Create or update project constitution (ground rules for all agents)
+
+## Key Principles
+
+- **constitution.md** defines immutable project principles
+- All specs live in `specs/{spec-id}/`
+- Implementation happens in isolated git worktrees (`.worktrees/`)
+- Human approval required **only** for specs, not implementation
+- Implementation is fully autonomous after spec approval
+
+## Directory Structure
+
+```
+project-root/
+├── .claudecraft/
+│   ├── constitution.md              # Immutable project principles
+│   ├── config.yaml                  # ClaudeCraft configuration
+│   ├── state/                       # Runtime task statuses
+│   ├── agents/                      # Active agent slots (slot-1.json .. slot-6.json)
+│   ├── logs/                        # Execution logs ({task_id}.jsonl)
+│   ├── ralph/                       # Ralph loop state ({task_id}_{agent_type}.json)
+│   └── memory/
+│       └── entities.json            # Cross-session context
+├── specs/{spec-id}/
+│   ├── meta.json                    # Spec metadata
+│   ├── tasks/
+│   │   ├── {task-id}.json           # Task definitions
+│   │   └── ...
+│   ├── brd.md                       # Business Requirements Document
+│   ├── prd.md                       # Product Requirements Document
+│   ├── spec.md                      # Functional specification
+│   ├── plan.md                      # Technical plan
+│   ├── research.md                  # Codebase analysis
+│   └── validation.md                # Human approval record
+├── .claude/
+│   ├── agents/                      # Sub-agent definitions
+│   ├── commands/                    # Slash commands
+│   ├── skills/claudecraft/             # This skill
+│   └── hooks/                       # Lifecycle hooks
+└── .worktrees/                      # Isolated development
+```
+
+## Workflow Stages
+
+1. **Business Requirements** (Human + AI) - Create BRD with `/claudecraft.brd`
+2. **Product Requirements** (Human + AI) - Create PRD with `/claudecraft.prd`
+3. **Specification** (Human + AI) **[HUMAN GATE]** - Generate and approve spec.md
+4. **Planning** (Autonomous) - Create technical plan.md
+5. **Task Decomposition** (Autonomous) - Create task JSON files
+6. **Implementation** (Autonomous) - Parallel agent execution
+7. **Quality Assurance** (Autonomous) - Final QA and merge
+
+## Sub-Agent Delegation
+
+- **claudecraft-architect**: Planning, design decisions, task decomposition
+- **claudecraft-coder**: Implementation of tasks
+- **claudecraft-reviewer**: Code review against spec and standards
+- **claudecraft-tester**: Test creation and execution
+- **claudecraft-qa**: Final validation and sign-off
+
+## TUI Features
+
+Launch with `claudecraft tui`:
+
+- **Specs Panel**: View all specifications and their status
+- **Spec Editor**: View/edit spec documents (BRD, PRD, spec, plan)
+- **Dependency Graph**: Visualize task dependencies
+- **Swimlane Board** (press 't'): Real-time task status across columns
+- **Agent Panel**: Live view of running Claude Code agents
+
+## Flat-File Storage Layout
+
+- **specs/{spec-id}/meta.json**: Spec metadata (id, title, status, source_type)
+- **specs/{spec-id}/tasks/{task-id}.json**: Task definitions (title, status, priority, dependencies, assignee)
+- **.claudecraft/logs/{task_id}.jsonl**: Execution logs (agent_type, action, output, success)
+- **.claudecraft/agents/slot-{n}.json**: Active agent slots (task_id, agent_type, pid, started_at)
+
+## Task Status Flow
+
+```
+TODO → IMPLEMENTING → TESTING → REVIEWING → DONE
+```
+
+Tasks are stored as JSON files in `specs/{spec-id}/tasks/`, visible in TUI swimlane board.
+Use `claudecraft list-tasks` to see all tasks.
+
+## Agent Commands
+
+For TUI integration:
+- `claudecraft agent-start TASK-ID --type coder` - Register active agent
+- `claudecraft agent-stop --task TASK-ID` - Deregister agent
+- `claudecraft list-agents` - View active agents
+
+## Best Practices
+
+1. Always reference constitution.md
+2. Follow existing codebase patterns
+3. Write tests alongside code
+4. Work in worktrees, never in main
+5. Iterate based on feedback
+6. Trust autonomous execution after spec approval
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ivo-toby) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
