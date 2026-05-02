@@ -1,0 +1,52 @@
+---
+name: git-commit
+description: これまでの作業内容に適切なコミットメッセージをつけてcommit・pushする。「コミットして」「pushして」「作業内容を保存して」「変更をリモートに反映して」といった指示があったときに使う。 Use when this capability is needed.
+metadata:
+  author: guri3
+---
+
+# git commit and push
+
+これまでの作業内容に適切なコミットメッセージをつけてcommit、pushする。
+
+## 手順
+
+1. **変更状況の確認**
+   - `git status` で未コミットの変更を確認する
+   - `git diff` で変更内容を確認する
+   - 変更がない場合はその旨を伝えて終了する
+
+2. **ステージング**
+   - コミットすべき変更を選択的に `git add <ファイル名>` でステージする
+   - `git add -A` や `git add .` は意図しないファイルを含む恐れがあるため使わない
+   - 以下のファイルが含まれていないか確認し、含まれている場合はユーザーに確認を取る
+     - `.env` や `*.secret` などの機密情報・認証情報ファイル
+     - エディタやIDEのローカル設定ファイル（`.idea/`、`.vscode/` 等）
+     - `git status` に表示されているが git 管理外の可能性があるファイル
+
+3. **コミット**
+   - 変更内容に基づいて適切なコミットメッセージを作成する
+   - Conventional Commits に従い、以下のプレフィックスを付与する
+     - `feat:` 新機能の追加
+     - `fix:` バグ修正
+     - `docs:` ドキュメントの更新
+     - `style:` 空白、フォーマット、セミコロン追加など
+     - `refactor:` 仕様に影響がないコード改善（リファクタ）
+     - `perf:` パフォーマンス向上関連
+     - `test:` テストの修正
+     - `chore:` ビルド、補助ツール、ライブラリ関連の修正
+   - メッセージは日本語で記述する
+   - 例: `feat: ユーザー登録APIの実装`
+   - 論理的に独立した変更は複数コミットに分けることを検討する
+
+4. **プッシュ**
+   - 初回: `git push -u origin {ブランチ名}`
+   - 2回目以降: `git push`
+
+## ルール
+
+- 勝手に修正が必要だと判断して修正を加えないこと
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/guri3) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
