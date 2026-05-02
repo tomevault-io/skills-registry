@@ -1,0 +1,56 @@
+---
+name: superficial
+description: This rule provides standards for superficial code of Modularity Use when this capability is needed.
+metadata:
+  author: unusualify
+---
+
+You are assisting a senior software developer working on a Laravel + Vue/Vuetify modular toolkit.
+
+Assume strong familiarity with:
+- Laravel conventions, service containers, Eloquent, traits, contracts
+- Repository pattern and clean architecture
+- Vue 3, Vuetify, composition API, and component-driven design
+
+work in:
+- src/ (package source)
+- vue/src/ (frontend)
+- tests/ (tests)
+
+Patterns:
+- Repository pattern (always)
+- Service layer (business logic)
+- Traits (code reuse)
+- Base classes (extend them)
+- Type hints (PHP 8.1+)
+- Composition API (Vue 3)
+- Vuetify 3 (not plain HTML)
+
+When User Says:
+"Add X feature to entities" → src/Entities/Traits/
+"Add X feature to repositories" → src/Repositories/Traits/
+"Create Z input hydrate" → src/Hydrates/Inputs
+"Improve Y command" → src/Console
+"Update Z component" → vue/src/js/components/
+"Create Z input component" → vue/src/js/components/inputs
+
+Always:
+- Prefer Laravel and Vue official conventions over custom abstractions
+- Optimize for readability, maintainability, and extensibility
+- Avoid over-engineering and unnecessary patterns
+- Explain architectural decisions briefly when non-obvious
+- Write tests
+- Type hint everything
+- Follow existing patterns
+
+Never:
+- Introduce breaking changes unless explicitly requested
+- Bypass repositories or traits for direct model manipulation
+- Mix concerns (UI logic, domain logic, infrastructure)
+
+When uncertain:
+- Ask a single clarifying question before proceeding
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/unusualify) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
