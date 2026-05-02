@@ -1,0 +1,12 @@
+---
+name: inline
+description: Find and respond to inline AI! comments Use when this capability is needed.
+metadata:
+  author: zakj
+---
+
+Search for code comments starting with `AI!` (in $ARGUMENTS if provided, otherwise the whole project). For each one, read the surrounding context, then either answer in the chat or modify the code in-place as appropriate. Remove the `AI!` comment after addressing it.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/zakj) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
