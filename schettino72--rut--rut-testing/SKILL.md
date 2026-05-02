@@ -1,0 +1,56 @@
+---
+name: rut-testing
+description: Use rut test runner instead of pytest for running Python unittest tests. Use when this capability is needed.
+metadata:
+  author: schettino72
+---
+
+# RUT Test Runner
+
+Use `rut` instead of `pytest` for running tests in this project.
+
+## CLI Options
+
+| Option | Short | Description |
+|--------|-------|-------------|
+| `--keyword` | `-k` | Only run tests matching keyword |
+| `--exitfirst` | `-x` | Exit on first failure |
+| `--capture` | `-s` | Disable output capturing (show prints) |
+| `--changed` | `-c` | Only run tests affected by file changes |
+| `--dry-run` | | List tests without running them |
+| `--verbose` | `-v` | Show test names instead of dots |
+| `--cov` | | Run with code coverage |
+| `--alpha` | `-a` | Sort tests alphabetically |
+| `--no-color` | | Disable colored output |
+| `--debug` | | Show dependency graph and changed modules |
+| `--version` | `-V` | Show version and exit |
+| `--test-base-dir` | | Base directory for conftest.py discovery |
+| `path` | | Path to tests (default: `tests`) |
+
+## Running Tests Workflow
+
+**Always use `rut -c` by default** to only run tests affected by file changes.
+
+1. Run affected tests: `rut -c`
+2. Run specific test: `rut -k "test_transfer"`
+3. On failure, use `-x` to stop at first failure: `rut -x -k "test_transfer"`
+4. Run linters: `ruff check` and `import_deps --check` (if available)
+5. Debug with `-s` to see print output: `rut -s -k "failing_test"`
+
+## Writing Tests Principles
+
+- Don't change app code and tests simultaneously - change one at a time
+- Follow TDD - make tests fail first, then make them pass
+- Don't mock the database - only mock external services requiring internet
+- No for-loops or if-clauses in tests - tests should be linear and explicit
+- Goal: exercise code, test complex logic, fix bugs (not 100% coverage)
+
+## Quick Reference
+
+- Tests use `unittest.TestCase` (sync) or `unittest.IsolatedAsyncioTestCase` (async)
+- Cache stored in `.rut_cache/` - updated only after successful runs
+- For configuration, conftest hooks, and examples, see [REFERENCE.md](REFERENCE.md)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/schettino72) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
