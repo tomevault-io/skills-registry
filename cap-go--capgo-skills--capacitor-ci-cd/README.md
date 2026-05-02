@@ -1,11 +1,11 @@
 # capacitor-ci-cd
 
-> Skill by [cap-go](https://github.com/cap-go/capgo-skills) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [Cap-go](https://github.com/Cap-go/capgo-skills) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cap-go/capgo-skills](https://github.com/cap-go/capgo-skills/tree/main/skills/capacitor-ci-cd)
+Original source: [Cap-go/capgo-skills](https://github.com/Cap-go/capgo-skills/tree/main/skills/capacitor-ci-cd)
 
 ---
 
