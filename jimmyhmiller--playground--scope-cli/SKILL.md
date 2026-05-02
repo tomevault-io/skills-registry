@@ -1,0 +1,67 @@
+---
+name: scope-cli
+description: Use the scope CLI for developer-first issue tracking in this repo. Trigger when the user asks to create/update/list/show issues, manage comments, conflicts, indexes, project mapping, or scope config files, or when demonstrating or scripting the scope CLI. Use when this capability is needed.
+metadata:
+  author: jimmyhmiller
+---
+
+# Scope CLI
+
+## Overview
+
+Use the `scope` CLI in this repo to manage local-first issues stored as markdown snapshots plus JSONL event logs. Prefer CLI commands over manual file edits.
+
+## Quick Start
+
+1. Initialize a project:
+   - `scope issues init --project <name>`
+2. Create an issue:
+   - `scope issues create --project <name> --title "..." [--priority p1] [--assignee ...] [--label ...] [--body "..."] [--body-file ./issue.md]`
+3. List and show:
+   - `scope issues list --project <name>`
+   - `scope issues show --project <name> <id>`
+
+## Core Tasks
+
+### Update and workflow
+
+- Update fields: `scope issues update <id> --status in_progress --add-label planning`
+- Close/reopen: `scope issues close <id>` / `scope issues reopen <id>`
+- Delete/restore (no prompts): `scope issues delete <id>` / `scope issues restore <id>` (`--force` is permanent)
+- Edit body: `scope issues edit <id>`
+  - Avoid stdin/heredoc bodies (ex: `/dev/stdin`, `<<EOF`) in agent shells; prefer `--body`, a real file path, or `scope issues edit`
+
+### Comments
+
+- Add: `scope issues comments add <id> --body "..."` or `--body-file ...`
+- List: `scope issues comments list <id> [--json]`
+
+### Index and rebuild
+
+- `scope issues index status|rebuild|verify`
+- `scope issues rebuild` to regenerate snapshots + index from events
+
+### Projects and mappings
+
+- `scope issues projects [--json]`
+- `scope issues project show --project <name>`
+- Map multiple working copies:
+  - `scope issues project link --project <name> --path /path/to/repo`
+  - `scope issues project links --project <name> [--json]`
+
+### Conflicts
+
+- `scope issues conflicts list`
+- `scope issues conflicts show <id>`
+- `scope issues conflicts resolve <id> --keep local|remote`
+
+## References
+
+Read these when you need the detailed spec or schema:
+
+- `references/cli.md` for command surface and file layout
+- `references/specs.md` for links to the full design docs in `docs/`
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/jimmyhmiller) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
