@@ -1,0 +1,81 @@
+---
+name: slack
+description: Read Slack messages, threads, and channels via CLI. Use when asked to view Slack URLs, search Slack, or look up Slack users. Use when this capability is needed.
+metadata:
+  author: lox
+---
+
+# Slack CLI
+
+A CLI for reading Slack content - messages, threads, channels, and users.
+
+## Installation
+
+If `slack-cli` is not on PATH, install it:
+
+```bash
+brew install --cask lox/tap/slack-cli
+```
+
+Or: `go install github.com/lox/slack-cli@latest`
+
+See https://github.com/lox/slack-cli for setup instructions (Slack app creation and OAuth).
+
+## Available Commands
+
+```
+slack-cli view <url>          # View any Slack URL (message, thread, or channel)
+slack-cli search <query>      # Search messages
+slack-cli channel list        # List channels you're a member of
+slack-cli channel read        # Read recent messages from a channel name, ID, or URL
+slack-cli channel info        # Show channel information by name, ID, or URL
+slack-cli thread read         # Read a thread by URL or channel+timestamp (supports --markdown)
+slack-cli user list           # List users in the workspace
+slack-cli user info           # Show user information
+slack-cli auth login          # Authenticate with Slack via OAuth
+slack-cli auth status         # Show authentication status
+```
+
+## Common Patterns
+
+### View a Slack URL the user shared
+
+```bash
+slack-cli view "https://workspace.slack.com/archives/C123/p1234567890" --markdown
+```
+
+### Search for messages
+
+```bash
+slack-cli search "from:@username keyword"
+slack-cli search "in:#channel-name keyword"
+```
+
+### Read a channel
+
+```bash
+slack-cli channel read #general --limit 50
+slack-cli channel read "https://workspace.slack.com/archives/C123" --markdown
+```
+
+## Discovering Options
+
+To see available subcommands and flags, run `--help` on any command:
+
+```bash
+slack-cli --help
+slack-cli view --help
+slack-cli search --help
+```
+
+## Notes
+
+- Use `--markdown` with `view`, `thread read`, or `channel read` when you need structured output
+- Thread URLs with `thread_ts` parameter are automatically detected
+- Channel names can include or omit the `#` prefix
+- If you see `channel_not_found` and multiple workspaces are configured, retry with `--workspace <workspace>`
+- User lookup accepts both user IDs (U123ABC) and email addresses
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/lox) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
