@@ -1,0 +1,131 @@
+---
+name: skill-repo
+description: "Use when creating new skill repositories from scratch, standardizing or validating existing skill repo structure, setting up composer/release workflows for skills, configuring split licensing (MIT + CC-BY-SA-4.0), or fixing plugin.json / SKILL.md validation errors."
+license: "(MIT AND CC-BY-SA-4.0). See LICENSE-MIT and LICENSE-CC-BY-SA-4.0"
+compatibility: "Requires bash 4.3+, python3, jq."
+metadata:
+  author: Netresearch DTT GmbH
+  version: "1.17.0"
+  repository: https://github.com/netresearch/skill-repo-skill
+allowed-tools: Bash(bash:*) Bash(python3:*) Bash(jq:*) Read Write Glob Grep
+---
+
+# Skill Repository Structure Guide
+
+Standards for Netresearch skill repository layout and distribution.
+
+## Repository Structure
+
+```
+{repo-name}/
+├── .claude-plugin/plugin.json   # Plugin metadata (required)
+├── skills/{name}/SKILL.md       # AI instructions (required)
+├── README.md                    # Human docs (required)
+├── LICENSE-MIT                  # Code license (required)
+├── LICENSE-CC-BY-SA-4.0         # Content license (required)
+├── composer.json                # PHP distribution (required)
+├── references/                  # Extended docs for >500w content
+├── scripts/                     # Automation
+└── .github/workflows/
+    ├── release.yml              # Tag-triggered release
+    ├── validate.yml             # Caller for reusable validation
+    └── auto-merge-deps.yml      # Caller for dep auto-merge
+```
+
+## Licensing (Split Model)
+
+| Path pattern | License |
+|---|---|
+| `skills/**/*.md`, `references/**`, `README.md`, `docs/**` | CC-BY-SA-4.0 |
+| `scripts/**`, `.github/workflows/**`, `*.sh`, `*.py`, `*.php` | MIT |
+| `composer.json`, `plugin.json`, config files | MIT |
+
+SPDX expression: `(MIT AND CC-BY-SA-4.0)`. Copyright: `Netresearch DTT GmbH`. No bare `LICENSE` file — use split files only.
+
+## SKILL.md Frontmatter
+
+```yaml
+---
+name: skill-name          # lowercase, hyphens, max 64 chars
+description: "Use when <trigger conditions>"
+---
+```
+
+Body: max 500 words. Use `references/` for extended content.
+
+## plugin.json (`.claude-plugin/plugin.json`)
+
+```json
+{
+  "name": "skill-name",
+  "version": "1.0.0",
+  "skills": ["./skills/skill-name"],
+  "license": "(MIT AND CC-BY-SA-4.0)",
+  "author": {"name": "Netresearch DTT GmbH", "url": "https://www.netresearch.de"}
+}
+```
+
+## composer.json
+
+Name **must match GitHub repo name**. Type must be `ai-agent-skill`. No `version` field (derived from git tags). No `composer.lock`.
+
+```json
+{
+  "name": "netresearch/{repo-name}",
+  "type": "ai-agent-skill",
+  "license": "(MIT AND CC-BY-SA-4.0)",
+  "require": {"netresearch/composer-agent-skill-plugin": "*"},
+  "extra": {"ai-agent-skill": "skills/{name}/SKILL.md"}
+}
+```
+
+## Reusable Workflow Callers
+
+Skill repos MUST delegate CI to skill-repo-skill reusable workflows:
+
+```yaml
+# .github/workflows/validate.yml
+uses: netresearch/skill-repo-skill/.github/workflows/validate.yml@main
+```
+
+Required callers: `validate.yml`, `release.yml`, `auto-merge-deps.yml`, `harness-verify.yml`, `eval-validate.yml`, `pr-quality.yml`.
+
+Auto-merge and pr-quality callers must use `pull_request_target` trigger (not `pull_request`). Never define actions directly in skill repos — always call reusable workflows so action version bumps happen in one place.
+
+## Releasing
+
+1. Bump version in `.claude-plugin/plugin.json`
+2. Commit: `chore: release vX.Y.Z`
+3. Tag: `git tag -s vX.Y.Z -m "vX.Y.Z"`
+4. Push: `git push origin main vX.Y.Z`
+
+## Installation
+
+1. **Marketplace**: `/plugin marketplace add netresearch/claude-code-marketplace`
+2. **Release**: Download to `~/.claude/skills/{name}/`
+3. **Composer**: `composer require netresearch/{repo-name}`
+
+## Validation
+
+```bash
+scripts/validate-skill.sh
+```
+
+## Cross-platform Compatibility
+
+- Use `grep -E` not `grep -P` (macOS BSD grep lacks `-P`)
+- Use `bash` in shebangs (macOS default is zsh)
+- Use `[[ ]]` for conditionals
+
+## References
+
+- `references/installation-methods.md`
+- `references/composer-setup.md`
+
+---
+
+> **Contributing:** https://github.com/netresearch/skill-repo-skill
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/netresearch) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
