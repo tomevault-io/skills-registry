@@ -1,0 +1,13 @@
+# fizzy
+
+> Skill by [robzolkos](https://github.com/robzolkos/fizzy-skill) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [robzolkos/fizzy-skill](https://github.com/robzolkos/fizzy-skill/tree/main/fizzy)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
