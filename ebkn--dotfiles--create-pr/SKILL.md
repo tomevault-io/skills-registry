@@ -1,0 +1,46 @@
+---
+name: create-pr
+description: Create a GitHub pull request with context-aware description Use when this capability is needed.
+metadata:
+  author: ebkn
+---
+
+## Pre-fetched context
+
+!`git rev-parse --abbrev-ref HEAD`
+!`git status --short`
+!`git ls-files ':(top,icase).github/pull_request_template.md' ':(top,icase).github/pull_request_template/*.md' ':(top,icase)pull_request_template.md'`
+
+## Instructions
+
+Create a pull request. Follow this flow:
+
+1. **Gather context**: Get default branch via `gh repo view --json defaultBranchRef -q .defaultBranchRef.name`, then run `git log --oneline`, `git diff --stat`, and `git diff` against it.
+
+2. **Uncommitted changes**: If `git status` above shows output, ask the user whether to commit them, ignore them, or abort. Do not proceed until answered.
+
+3. **PR template**:
+   - If a template path is listed, `Read` it before writing title/body.
+   - Detect `template_language` from headings/instructions/checklists (ignore code, URLs, HTML comments).
+   - Keep template headings/order and keep HTML comments (`<!-- -->`).
+   - If no template exists, skip.
+
+4. **Compose PR**:
+   - Title: Conventional Commits.
+   - Decide title language before drafting and keep it fixed unless the user requests a change.
+   - Title language policy: use `template_language` first whenever it can be detected.
+   - If the user explicitly asks to override language for the current PR, follow that override.
+   - If no `template_language` is detected, use: explicit user request > latest substantive user message > English.
+   - Ignore slash commands (for example `/create-pr`), code blocks, file paths, and URLs when inferring language.
+   - If language signals conflict or are ambiguous, ask the user which language to use before drafting.
+   - Keep `type(scope)` tokens standard (`feat`, `fix`, etc.); localize only the description text.
+   - Body: if template exists, fill its sections. If not, use Summary / Changes / Concerns / References.
+   - Proactively include any reference links (issues, docs, related PRs) found in conversation history.
+
+5. **Confirm**: Show the full PR title and body. Ask if the user wants to add links or make any edits — apply and re-confirm. Do not push or create until approved.
+
+6. **Push and create**: Push (`git push -u origin HEAD`) only if there are unpushed commits (`git log @{upstream}..HEAD`). Create with `gh pr create --title "<title>" --body "<body>"`. Return the PR URL.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ebkn) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
