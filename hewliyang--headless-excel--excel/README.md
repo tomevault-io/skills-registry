@@ -1,0 +1,13 @@
+# excel
+
+> Skill by [hewliyang](https://github.com/hewliyang/headless-excel) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [hewliyang/headless-excel](https://github.com/hewliyang/headless-excel/tree/main/skill/excel)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
