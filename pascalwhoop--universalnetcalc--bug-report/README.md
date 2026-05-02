@@ -1,0 +1,13 @@
+# bug-report
+
+> Skill by [pascalwhoop](https://github.com/pascalwhoop/universalnetcalc) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [pascalwhoop/universalnetcalc](https://github.com/pascalwhoop/universalnetcalc/tree/main/.claude/skills/bug-report)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
