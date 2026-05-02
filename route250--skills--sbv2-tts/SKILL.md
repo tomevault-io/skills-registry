@@ -1,0 +1,53 @@
+---
+name: sbv2-tts
+description: Style-Bert-VITS2 音声生成を行う。uvxが必要 Use when this capability is needed.
+metadata:
+  author: route250
+---
+
+# sbv2-tts
+
+Style-Bert-VITS2による音声生成コードと音声モデルをまとめたパッケージです。
+参考)https://github.com/litagin02/Style-Bert-VITS2
+
+## 実行手順
+
+1. `uvx` が使えるか確認する。使えない場合は `uv` を導入してから実行する。
+2. 使い方確認が必要な場合は `--help` を実行する。
+3. `--list-models`を実行して使用する音声モデルを探し、モデルの詳細は `--model-info`で確認する。ライセンス条件に留意すること。
+4. 実行は `/fullpath/scripts/run_sbv2.sh` を使う。`run_sbv2.sh` は `uvx` 実行専用。音声モデルは最初に自動ダウンロードされるが少し時間がかかるかも。
+
+- コマンドラインで指定する例
+```bash
+/fullpath/scripts/run_sbv2.sh --model amitaro --text "おはよう" --output out1.wav  --text "こんにちは" --output out2.wav
+```
+
+- 音声化する内容をテキストファイルで指定する例(txtの拡張子をwavに変換して出力)
+```bash
+/fullpath/scripts/run_sbv2.sh --model amitaro ohayou.txt konnichiwa.txt
+```
+
+- 出力したwavファイルに対応するinfoファイルも自動生成される。(コマンドラインでもファイル指定でも同様)
+音声の全体の秒数を確認したい場合は以下のようにする。
+```bash
+grep total-duration-sec *.info
+```
+
+Sentence単位の秒数を確認したい場合は以下のようにする。
+```bash
+grep segment *.info
+```
+
+## 読み上げ前のテキスト前処理の推奨
+- アルファベット表記は、できるだけカタカナに変換してから入力してください。
+- 読み間違いやすい漢字（例: 「方」「日」など）は、ひらがなに変換してから入力するほうが望ましいです。
+
+## ライセンス注意
+
+- モデルごとに利用条件が異なるため、実行前に `--model-info <modelId>` の出力を確認する。
+- 再配布・商用利用・クレジット表記・禁止用途の要件を必ず満たす。
+- 迷う場合は同梱の `docs/TERMS_OF_USE.md` と各配布元ライセンスURLを優先して確認する。
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/route250) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->
