@@ -1,11 +1,11 @@
 # react-native-i18n-workflow
 
-> Skill by [planeinabottle](https://github.com/planeinabottle/fitnessmobileapp) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [PlaneInABottle](https://github.com/PlaneInABottle/fitnessMobileApp) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [planeinabottle/fitnessmobileapp](https://github.com/planeinabottle/fitnessmobileapp/tree/main/.claude/skills/react-native-i18n-workflow)
+Original source: [PlaneInABottle/fitnessMobileApp](https://github.com/PlaneInABottle/fitnessMobileApp/tree/main/.claude/skills/react-native-i18n-workflow)
 
 ---
 
