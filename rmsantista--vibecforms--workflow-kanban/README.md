@@ -1,0 +1,13 @@
+# workflow_kanban
+
+> Skill by [rmsantista](https://github.com/rmsantista/vibecforms) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [rmsantista/vibecforms](https://github.com/rmsantista/vibecforms/tree/main/.claude/skills/workflow_kanban)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
