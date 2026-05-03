@@ -1,0 +1,13 @@
+# critical-acceptance
+
+> Skill by [jhleee](https://github.com/jhleee/cc-useful) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [jhleee/cc-useful](https://github.com/jhleee/cc-useful/tree/main/skills/critical-acceptance)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
