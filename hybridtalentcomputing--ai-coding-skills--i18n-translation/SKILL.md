@@ -2,7 +2,7 @@
 name: i18n-translation
 description: > Use when this capability is needed.
 metadata:
-  author: hybridtalentcomputing
+  author: HybridTalentComputing
 ---
 
 # i18n-translation: Full Internationalization Implementation
@@ -624,5 +624,5 @@ If stuck:
 **Remember:** 100% coverage is the standard. Zero tolerance for hardcoded strings in user-facing UI.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/hybridtalentcomputing) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-13 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/HybridTalentComputing) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
