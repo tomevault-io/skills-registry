@@ -2,7 +2,7 @@
 name: code-patterns
 description: Language-specific coding patterns for Python, TypeScript/React, and C#/.NET. Covers type safety, testing strategies, error handling, async patterns, and framework best practices. Routes to the appropriate language guide based on project context. Use when this capability is needed.
 metadata:
-  author: mastercodeyoda
+  author: MasterCodeYoda
 ---
 
 # Code Patterns
@@ -130,5 +130,5 @@ For detailed language-specific patterns (loaded on request only):
 - **workflow-guide**: For workflow and implementation planning
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/mastercodeyoda) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-13 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/MasterCodeYoda) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
