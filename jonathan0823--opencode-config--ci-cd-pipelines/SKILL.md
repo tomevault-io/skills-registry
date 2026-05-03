@@ -2,7 +2,7 @@
 name: ci-cd-pipelines
 description: GitHub Actions workflows for continuous integration, automated testing, security scanning, and deployment automation. Use when setting up CI/CD pipelines, creating GitHub Actions workflows, automating tests, or deploying applications. Use when this capability is needed.
 metadata:
-  author: jonathan0823
+  author: Jonathan0823
 ---
 
 # CI/CD Pipelines Skill
@@ -205,5 +205,5 @@ Use this skill when:
 - `@testing-strategies` - Test configuration and coverage
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/jonathan0823) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Jonathan0823) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
