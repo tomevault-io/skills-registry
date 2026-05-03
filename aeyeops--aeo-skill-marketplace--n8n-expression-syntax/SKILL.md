@@ -2,7 +2,7 @@
 name: n8n-expression-syntax
 description: Master n8n's double-curly-brace expression language for dynamic workflow data. Covers $json, $node, and $input variable access patterns, debugging syntax issues, and handling webhook payloads. Activate when crafting expressions, resolving evaluation failures, or mapping data between nodes. Use when this capability is needed.
 metadata:
-  author: aeyeops
+  author: AeyeOps
 ---
 
 # n8n Expression Syntax
@@ -518,5 +518,5 @@ For more details, see:
 **Need Help?** Reference the n8n expression documentation or use n8n-mcp validation tools to check your expressions.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/aeyeops) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-15 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/AeyeOps) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
