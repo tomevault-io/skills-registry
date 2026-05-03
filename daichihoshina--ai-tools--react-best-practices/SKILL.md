@@ -2,7 +2,7 @@
 name: react-best-practices
 description: Vercel React/Next.jsパフォーマンス最適化 - 45ルール8カテゴリ、ウォーターフォール排除からバンドル最適化まで Use when this capability is needed.
 metadata:
-  author: daichihoshina
+  author: DaichiHoshina
 ---
 
 # react-best-practices - React/Next.jsパフォーマンス最適化
@@ -112,5 +112,5 @@ metadata:
 - `~/.claude/guidelines/languages/nextjs-react.md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/daichihoshina) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-15 -->
+> Source: [DaichiHoshina/ai-tools](https://github.com/DaichiHoshina/ai-tools) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-04-19 -->
