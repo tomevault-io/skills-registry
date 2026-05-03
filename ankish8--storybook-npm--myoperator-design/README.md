@@ -1,11 +1,11 @@
 # myoperator-design
 
-> Skill by [ankish8](https://github.com/ankish8/storybook-npm) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [Ankish8](https://github.com/Ankish8/storybook-npm) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ankish8/storybook-npm](https://github.com/ankish8/storybook-npm/tree/main/.claude/plugins/myoperator-design/skills/myoperator-design)
+Original source: [Ankish8/storybook-npm](https://github.com/Ankish8/storybook-npm/tree/main/.claude/plugins/myoperator-design/skills/myoperator-design)
 
 ---
 
