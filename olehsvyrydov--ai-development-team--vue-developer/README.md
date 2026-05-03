@@ -1,11 +1,11 @@
 # vue-developer
 
-> Skill by [olehsvyrydov](https://github.com/olehsvyrydov/ai-development-team) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [olehsvyrydov](https://github.com/olehsvyrydov/AI-development-team) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [olehsvyrydov/ai-development-team](https://github.com/olehsvyrydov/ai-development-team/tree/main/claude/skills/development/frontend/vue/vue-developer)
+Original source: [olehsvyrydov/AI-development-team](https://github.com/olehsvyrydov/AI-development-team/tree/main/claude/skills/development/frontend/vue/vue-developer)
 
 ---
 
