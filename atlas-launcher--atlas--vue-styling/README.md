@@ -1,11 +1,11 @@
 # vue-styling
 
-> Skill by [atlas-launcher](https://github.com/atlas-launcher/atlas) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [Atlas-Launcher](https://github.com/Atlas-Launcher/atlas) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [atlas-launcher/atlas](https://github.com/atlas-launcher/atlas/tree/main/.agents/skills/vue-styling)
+Original source: [Atlas-Launcher/atlas](https://github.com/Atlas-Launcher/atlas/tree/main/.agents/skills/vue-styling)
 
 ---
 
