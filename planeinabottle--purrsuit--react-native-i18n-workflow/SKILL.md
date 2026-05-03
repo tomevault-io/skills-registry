@@ -2,7 +2,7 @@
 name: react-native-i18n-workflow
 description: Manages internationalization strings and translation workflows using i18next and react-i18next. Use when adding new text, supporting additional languages, or implementing pluralization and interpolation in Purrsuit Mobile App.
 metadata:
-  author: planeinabottle
+  author: PlaneInABottle
 ---
 
 # React Native i18n Workflow
@@ -90,5 +90,5 @@ See [TRANSLATION_STRUCTURE.md](references/TRANSLATION_STRUCTURE.md) for detailed
 See [I18N_BEST_PRACTICES.md](references/I18N_BEST_PRACTICES.md) for naming conventions and workflow steps.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/planeinabottle) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-15 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/PlaneInABottle) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
