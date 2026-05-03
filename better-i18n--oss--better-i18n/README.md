@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [better-i18n/oss](https://github.com/better-i18n/oss/tree/main/skill)
+Original source: [better-i18n/oss](https://github.com/better-i18n/oss/tree/main/apps/landing/content/agent-skills/better-i18n)
 
 ---
 
