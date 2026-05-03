@@ -1,11 +1,11 @@
 # ci-cd-pipelines
 
-> Skill by [jonathan0823](https://github.com/jonathan0823/opencode-config) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [Jonathan0823](https://github.com/Jonathan0823/opencode-config) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jonathan0823/opencode-config](https://github.com/jonathan0823/opencode-config/tree/main/skills/ci-cd-pipelines)
+Original source: [Jonathan0823/opencode-config](https://github.com/Jonathan0823/opencode-config/tree/main/skills/ci-cd-pipelines)
 
 ---
 
