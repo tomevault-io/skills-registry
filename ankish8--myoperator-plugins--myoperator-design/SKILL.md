@@ -2,7 +2,7 @@
 name: myoperator-design
 description: Create UIs matching the myOperator design system. Use this skill when the user asks to "build with myoperator design", "create myoperator-style UI", "use myoperator design system", "myoperator dashboard", "myoperator page", or asks for interfaces, pages, dashboards, or components that should follow myOperator's visual language. Generates standalone React/Tailwind code with the design system's color tokens, typography, and component patterns. Use when this capability is needed.
 metadata:
-  author: ankish8
+  author: Ankish8
 ---
 
 Generates production-ready React/Tailwind CSS code matching the myOperator design system. Code is standalone — does not require the myoperator-ui package but visually matches its components. Always include the full CSS variables block in output.
@@ -407,5 +407,5 @@ export function MyComponent() {
 - **Component catalog** (44 components, props, install commands): `references/component-catalog.md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/ankish8) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-15 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Ankish8) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
