@@ -1,11 +1,11 @@
 # ci-cd-devops
 
-> Skill by [vasallo94](https://github.com/vasallo94/obsidianrag) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [Vasallo94](https://github.com/Vasallo94/ObsidianRAG) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vasallo94/obsidianrag](https://github.com/vasallo94/obsidianrag/tree/main/.agent/skills/ci-cd-devops)
+Original source: [Vasallo94/ObsidianRAG](https://github.com/Vasallo94/ObsidianRAG/tree/main/.agent/skills/ci-cd-devops)
 
 ---
 
