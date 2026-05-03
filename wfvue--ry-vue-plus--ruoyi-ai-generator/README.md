@@ -1,0 +1,13 @@
+# ruoyi-ai-generator
+
+> Skill by [wfvue](https://github.com/wfvue/ry_vue_plus) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [wfvue/ry_vue_plus](https://github.com/wfvue/ry_vue_plus/tree/main/.codebuddy/skills/ruoyi-ai-generator)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
