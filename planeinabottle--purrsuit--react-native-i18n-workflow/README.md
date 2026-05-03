@@ -1,11 +1,11 @@
 # react-native-i18n-workflow
 
-> Skill by [planeinabottle](https://github.com/planeinabottle/purrsuit) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [PlaneInABottle](https://github.com/PlaneInABottle/purrsuit) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [planeinabottle/purrsuit](https://github.com/planeinabottle/purrsuit/tree/main/.claude/skills/react-native-i18n-workflow)
+Original source: [PlaneInABottle/purrsuit](https://github.com/PlaneInABottle/purrsuit/tree/main/.claude/skills/react-native-i18n-workflow)
 
 ---
 
