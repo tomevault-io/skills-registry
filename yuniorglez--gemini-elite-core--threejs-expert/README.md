@@ -1,11 +1,11 @@
 # threejs-expert
 
-> Skill by [yuniorglez](https://github.com/yuniorglez/gemini-elite-core) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [YuniorGlez](https://github.com/YuniorGlez/gemini-elite-core) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yuniorglez/gemini-elite-core](https://github.com/yuniorglez/gemini-elite-core/tree/main/skills/threejs-expert)
+Original source: [YuniorGlez/gemini-elite-core](https://github.com/YuniorGlez/gemini-elite-core/tree/main/skills/threejs-expert)
 
 ---
 
