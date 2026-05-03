@@ -1,0 +1,13 @@
+# quality-checks
+
+> Skill by [june3141](https://github.com/june3141/gantry-board) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [june3141/gantry-board](https://github.com/june3141/gantry-board/tree/main/.claude/skills/quality-checks)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
