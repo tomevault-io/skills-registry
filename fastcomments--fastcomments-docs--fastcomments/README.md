@@ -1,11 +1,11 @@
 # fastcomments
 
-> Skill by [fastcomments](https://github.com/fastcomments/fastcomments-docs) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [FastComments](https://github.com/FastComments/fastcomments-docs) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fastcomments/fastcomments-docs](https://github.com/fastcomments/fastcomments-docs/tree/main/fastcomments)
+Original source: [FastComments/fastcomments-docs](https://github.com/FastComments/fastcomments-docs/tree/main/fastcomments)
 
 ---
 
