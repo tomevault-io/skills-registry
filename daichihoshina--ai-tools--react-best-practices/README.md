@@ -1,11 +1,11 @@
 # react-best-practices
 
-> Skill by [daichihoshina](https://github.com/daichihoshina/ai-tools) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [DaichiHoshina](https://github.com/DaichiHoshina/ai-tools) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [daichihoshina/ai-tools](https://github.com/daichihoshina/ai-tools/tree/main/claude-code/skills/react-best-practices)
+Original source: [DaichiHoshina/ai-tools](https://github.com/DaichiHoshina/ai-tools/tree/main/claude-code/skills/react-best-practices)
 
 ---
 
