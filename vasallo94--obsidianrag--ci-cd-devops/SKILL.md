@@ -2,7 +2,7 @@
 name: ci-cd-devops
 description: > Use when this capability is needed.
 metadata:
-  author: vasallo94
+  author: Vasallo94
 ---
 
 # CI/CD & DevOps
@@ -40,5 +40,5 @@ uv publish
 (Requiere configuración de token local si no se usa CI/CD).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/vasallo94) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Vasallo94) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
