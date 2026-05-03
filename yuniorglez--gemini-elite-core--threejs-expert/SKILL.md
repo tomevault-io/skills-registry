@@ -2,7 +2,7 @@
 name: threejs-expert
 description: Senior WebGPU & 3D Graphics Architect for 2026. Specialized in Three.js v172+, WebGPU-first rendering, TSL (Three Shader Language), and high-performance React 19 integration via `@react-three/fiber` and `@react-three/drei`. Expert in building immersive, low-latency, and accessible 3D experiences for the modern web. Use when this capability is needed.
 metadata:
-  author: yuniorglez
+  author: YuniorGlez
 ---
 
 # 🧊 Skill: threejs-expert (v1.0.0)
@@ -141,5 +141,5 @@ material.colorNode = animatedColor;
 *Updated: January 23, 2026 - 15:45*
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/yuniorglez) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-12 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/YuniorGlez) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
