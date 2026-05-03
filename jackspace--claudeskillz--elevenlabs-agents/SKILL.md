@@ -2464,4 +2464,4 @@ This skill composes well with:
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/jackspace) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
