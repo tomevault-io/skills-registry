@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aberrantCode/llm_skills](https://github.com/aberrantCode/llm_skills/tree/main/codex/skills/react-best-practices)
+Original source: [aberrantCode/llm_skills](https://github.com/aberrantCode/llm_skills/tree/main/claude/skills/react-best-practices)
 
 ---
 
