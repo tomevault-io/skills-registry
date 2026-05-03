@@ -2,7 +2,7 @@
 name: vue-frontend-expert
 description: 专注于 Vue 3 (Nuxt 4)、SCSS (BEM) 和 I18n 前端实现。 Use when this capability is needed.
 metadata:
-  author: caomeiyouren
+  author: CaoMeiYouRen
 ---
 
 # Vue Frontend Expert Skill (Vue 前端专家技能)
@@ -28,5 +28,5 @@ metadata:
 动作: 编写 `article-card.vue`，使用 BEM 编写 SCSS，并为标题和按钮设置 i18n key。
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/caomeiyouren) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-12 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/CaoMeiYouRen) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
