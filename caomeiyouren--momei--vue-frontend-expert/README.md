@@ -1,11 +1,11 @@
 # vue-frontend-expert
 
-> Skill by [caomeiyouren](https://github.com/caomeiyouren/momei) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [CaoMeiYouRen](https://github.com/CaoMeiYouRen/momei) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [caomeiyouren/momei](https://github.com/caomeiyouren/momei/tree/main/.github/skills/vue-frontend-expert)
+Original source: [CaoMeiYouRen/momei](https://github.com/CaoMeiYouRen/momei/tree/main/.github/skills/vue-frontend-expert)
 
 ---
 
