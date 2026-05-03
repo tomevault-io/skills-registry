@@ -2,7 +2,7 @@
 name: global-coding-style
 description: Apply consistent coding style and formatting standards using automated tools (ESLint, Prettier, Ruff) with clear naming conventions, top-down code organization, and appropriate function/component sizing. Use this skill when writing any code in any language, naming files and variables, structuring code within files, organizing imports, configuring linters and formatters, or setting up pre-commit hooks. Apply when working on TypeScript/JavaScript files, Python files, .NET/C# files, configuration files (tsconfig.json, .prettierrc, .eslintrc), or any code that needs consistent formatting and naming. This skill ensures automated formatting with Prettier/Ruff (let tools handle it), ESLint/analyzer enforcement, TypeScript strict mode always enabled, proper naming conventions (PascalCase.tsx for React components, camelCase.ts for utilities, IPascalCase for interfaces with I prefix, PascalCase for types without prefix, camelCase for functions/constants/database fields/API endpoints/JSON keys, no underscore prefix for private variables), top-down readable code structure (imports → types → component → state → hooks → derived values → handlers → effects → early returns → JSX), manageable function sizes (scroll test, split at >300 lines), always destructured props, DRY principles (extract at 3+ repetitions), organized imports (external → internal absolute → relative → CSS/assets), and no backward compatibility code unless explicitly required. Use when this capability is needed.
 metadata:
-  author: theophiluschinomona
+  author: TheophilusChinomona
 ---
 
 # Global Coding Style
@@ -32,5 +32,5 @@ For details, refer to the information provided in this file:
 [global coding style](../../../agent-os/standards/global/coding-style.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/theophiluschinomona) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-15 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/TheophilusChinomona) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
