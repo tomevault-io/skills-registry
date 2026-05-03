@@ -2,7 +2,7 @@
 name: fastcomments
 description: > Use when this capability is needed.
 metadata:
-  author: fastcomments
+  author: FastComments
 ---
 
 # FastComments Agent Skill
@@ -370,5 +370,5 @@ Import page: https://fastcomments.com/auth/my-account/manage-data/import
 Re-importing the same content will not create duplicates. Import files are deleted after processing.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/fastcomments) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/FastComments) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
