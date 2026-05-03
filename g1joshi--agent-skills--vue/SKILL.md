@@ -2,7 +2,7 @@
 name: vue
 description: Vue.js progressive framework with Composition API and Pinia. Use for .vue files. Use when this capability is needed.
 metadata:
-  author: g1joshi
+  author: G1Joshi
 ---
 
 # Vue.js
@@ -69,5 +69,5 @@ A compilation strategy that compiles Vue components into highly efficient JavaSc
 - [Vue Vapor Mode](https://github.com/vuejs/core-vapor)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/g1joshi) — claim your Tome and manage your conversions.
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/G1Joshi) — claim your Tome and manage your conversions.
 <!-- tomevault:4.0:skill_md:2026-04-16 -->
