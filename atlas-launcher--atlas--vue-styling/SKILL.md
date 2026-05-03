@@ -2,7 +2,7 @@
 name: vue-styling
 description: Atlas Launcher Vue styling system. Use when editing launcher UI visuals, theming, dark/light behavior, glass surfaces, elevation, backgrounds, or component-level UX polish so changes stay aligned with launcher design language. Use when this capability is needed.
 metadata:
-  author: atlas-launcher
+  author: Atlas-Launcher
 ---
 
 # Vue Styling (Launcher)
@@ -49,5 +49,5 @@ If guidance and code disagree, follow code.
 - Use motion sparingly (`fade-up` style transitions only when it improves hierarchy).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/atlas-launcher) — claim your Tome and manage your conversions.
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Atlas-Launcher) — claim your Tome and manage your conversions.
 <!-- tomevault:4.0:skill_md:2026-04-16 -->
