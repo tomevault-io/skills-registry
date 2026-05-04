@@ -28,9 +28,9 @@ Vue.js testing best practices, patterns, and common gotchas.
 - [Playwright Documentation](https://playwright.dev/)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/ComeOnOliver) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/aiskillstore) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
 
 ---
 > Source: [tomevault-io/skills-registry](https://github.com/tomevault-io/skills-registry) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-04-29 -->
+<!-- tomevault:4.0:skill_md:2026-05-04 -->
