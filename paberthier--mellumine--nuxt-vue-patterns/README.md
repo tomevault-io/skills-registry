@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PABERTHIER/mellumine](https://github.com/PABERTHIER/mellumine/tree/main/.github/skills/nuxt-vue-patterns)
+Original source: [PABERTHIER/mellumine](https://github.com/PABERTHIER/mellumine/tree/main/.claude/skills/nuxt-vue-patterns)
 
 ---
 
