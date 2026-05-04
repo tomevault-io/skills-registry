@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/jiatastic/open-python-skills/commit-message)
+Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/junoh-moon/skills/commit-message)
 
 ---
 
