@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wang-q-l/ai-web](https://github.com/wang-q-l/ai-web/tree/main/.claude/skills/vue-admin-generator)
+Original source: [wang-q-l/ai-web](https://github.com/wang-q-l/ai-web/tree/main/.cursor/skills/vue-admin-generator)
 
 ---
 
