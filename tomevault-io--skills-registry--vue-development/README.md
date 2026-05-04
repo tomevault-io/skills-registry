@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tomevault-io/skills-registry](https://github.com/tomevault-io/skills-registry/tree/main/a5c-ai--babysitter--vue-development)
+Original source: [tomevault-io/skills-registry](https://github.com/tomevault-io/skills-registry/tree/main/alexanderop--claude-skill-vue-development--vue-development)
 
 ---
 
