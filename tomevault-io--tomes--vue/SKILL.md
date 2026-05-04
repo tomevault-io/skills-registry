@@ -1,79 +1,857 @@
 ---
 name: vue
-description: Use when editing .vue files, creating Vue 3 components, writing composables, or testing Vue code - provides Composition API patterns, props/emits best practices, VueUse integration, and reactive destructuring guidance
+description: Builds token-driven Vue 3 components with Composition API and TypeScript. Use when creating Vue component libraries, integrating design tokens, or building Nuxt design system components with composables.
 metadata:
-  author: hdkiller
+  author: dylantarre
 ---
 
-# Vue 3 Development
-
-Reference for Vue 3 Composition API patterns, component architecture, and testing practices.
-
-**Current stable:** Vue 3.5+ with enhanced reactivity performance (-56% memory, 10x faster array tracking), new SSR features, and improved developer experience.
+# Vue Component Patterns
 
 ## Overview
 
-Progressive reference system for Vue 3 projects. Load only files relevant to current task to minimize context usage (~250 tokens base, 500-1500 per sub-file).
+Build accessible, token-driven Vue 3 components using Composition API and modern patterns. Covers SFC structure, TypeScript integration, composables, and consuming design tokens.
 
 ## When to Use
 
-**Use this skill when:**
+- Creating a Vue 3 component library
+- Building components that use design tokens
+- Setting up a design system in Vue/Nuxt
+- Converting designs to Vue components
 
-- Writing `.vue` components
-- Creating composables (`use*` functions)
-- Building client-side utilities
-- Testing Vue components/composables
+## The Process
 
-**Use `nuxt` skill instead for:**
+1. **Identify component type**: Primitive, composite, or layout?
+2. **Choose styling approach**: Scoped CSS, CSS Modules, Tailwind, or UnoCSS?
+3. **Define props with TypeScript**: Use `defineProps` with interfaces
+4. **Implement with tokens**: CSS custom properties or provide/inject
+5. **Add accessibility**: ARIA, keyboard handling, focus management
+6. **Create composables**: Extract reusable logic
 
-- Server routes, API endpoints
-- File-based routing, middleware
-- Nuxt-specific patterns
+## Project Structure
 
-**For styled UI components:** use `nuxt-ui` skill
-**For headless accessible components:** use `reka-ui` skill
+```
+src/
+├── components/
+│   ├── primitives/
+│   │   ├── VButton/
+│   │   │   ├── VButton.vue
+│   │   │   ├── VButton.test.ts
+│   │   │   └── index.ts
+│   │   ├── VInput/
+│   │   └── VText/
+│   ├── composite/
+│   │   ├── VCard/
+│   │   ├── VModal/
+│   │   └── VDropdown/
+│   └── layout/
+│       ├── VStack/
+│       ├── VGrid/
+│       └── VContainer/
+├── composables/
+│   ├── useTheme.ts
+│   ├── useBreakpoint.ts
+│   └── useId.ts
+├── tokens/
+│   └── index.css
+└── index.ts
+```
 
-## Quick Reference
+## Component Patterns
 
-| Working on...            | Load file                  |
-| ------------------------ | -------------------------- |
-| `.vue` in `components/`  | references/components.md   |
-| File in `composables/`   | references/composables.md  |
-| File in `utils/`         | references/utils-client.md |
-| `.spec.ts` or `.test.ts` | references/testing.md      |
+### Button Component
 
-## Loading Files
+**VButton.vue:**
+```vue
+<script setup lang="ts">
+import { computed, useSlots } from 'vue';
 
-**Load one file at a time based on file context:**
+export interface ButtonProps {
+  /** Visual style variant */
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+  /** Size of the button */
+  size?: 'sm' | 'md' | 'lg';
+  /** Full width button */
+  fullWidth?: boolean;
+  /** Loading state */
+  loading?: boolean;
+  /** Disabled state */
+  disabled?: boolean;
+  /** HTML button type */
+  type?: 'button' | 'submit' | 'reset';
+}
 
-- Component work → [references/components.md](references/components.md)
-- Composable work → [references/composables.md](references/composables.md)
-- Utils work → [references/utils-client.md](references/utils-client.md)
-- Testing → [references/testing.md](references/testing.md)
+const props = withDefaults(defineProps<ButtonProps>(), {
+  variant: 'primary',
+  size: 'md',
+  fullWidth: false,
+  loading: false,
+  disabled: false,
+  type: 'button',
+});
 
-**DO NOT load all files at once** - wastes context on irrelevant patterns.
+const emit = defineEmits<{
+  click: [event: MouseEvent];
+}>();
 
-## Available Guidance
+const slots = useSlots();
 
-**[references/components.md](references/components.md)** - Props with reactive destructuring, emits patterns, defineModel for v-model, slots shorthand
+const isDisabled = computed(() => props.disabled || props.loading);
 
-**[references/composables.md](references/composables.md)** - Composition API structure, VueUse integration, lifecycle hooks, async patterns
+const classes = computed(() => [
+  'btn',
+  `btn--${props.variant}`,
+  `btn--${props.size}`,
+  {
+    'btn--full-width': props.fullWidth,
+    'btn--loading': props.loading,
+  },
+]);
 
-**[references/utils-client.md](references/utils-client.md)** - Pure functions, formatters, validators, transformers, when NOT to use utils
+function handleClick(event: MouseEvent) {
+  if (!isDisabled.value) {
+    emit('click', event);
+  }
+}
+</script>
 
-**[references/testing.md](references/testing.md)** - Vitest + @vue/test-utils, component testing, composable testing, mocking patterns
+<template>
+  <button
+    :type="type"
+    :class="classes"
+    :disabled="isDisabled"
+    :aria-busy="loading"
+    @click="handleClick"
+  >
+    <span v-if="loading" class="btn__spinner" aria-hidden="true" />
+    <span v-if="slots.leftIcon" class="btn__icon">
+      <slot name="leftIcon" />
+    </span>
+    <span class="btn__label">
+      <slot />
+    </span>
+    <span v-if="slots.rightIcon" class="btn__icon">
+      <slot name="rightIcon" />
+    </span>
+  </button>
+</template>
 
-## Examples
+<style scoped>
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    transform 100ms ease;
+}
 
-Working examples in `resources/examples/`:
+.btn:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
 
-- `component-example.vue` - Full component with all patterns
-- `composable-example.ts` - Reusable composition function
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Variants */
+.btn--primary {
+  background-color: var(--color-primary-500);
+  color: white;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background-color: var(--color-primary-600);
+}
+
+.btn--secondary {
+  background-color: transparent;
+  border-color: var(--color-gray-300);
+  color: var(--color-gray-700);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-gray-400);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-gray-700);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background-color: var(--color-gray-100);
+}
+
+.btn--danger {
+  background-color: var(--color-error-500);
+  color: white;
+}
+
+.btn--danger:hover:not(:disabled) {
+  background-color: var(--color-error-600);
+}
+
+/* Sizes */
+.btn--sm {
+  height: 32px;
+  padding: 0 var(--spacing-sm);
+  font-size: var(--text-sm);
+}
+
+.btn--md {
+  height: 40px;
+  padding: 0 var(--spacing-md);
+  font-size: var(--text-base);
+}
+
+.btn--lg {
+  height: 48px;
+  padding: 0 var(--spacing-lg);
+  font-size: var(--text-lg);
+}
+
+/* Modifiers */
+.btn--full-width {
+  width: 100%;
+}
+
+.btn--loading .btn__label {
+  opacity: 0;
+}
+
+.btn__spinner {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 600ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn__icon {
+  display: flex;
+  flex-shrink: 0;
+}
+</style>
+```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/hdkiller) — claim your Tome and manage your conversions.
+
+### Input Component
+
+**VInput.vue:**
+```vue
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { useId } from '@/composables/useId';
+
+export interface InputProps {
+  /** v-model value */
+  modelValue?: string;
+  /** Label text */
+  label?: string;
+  /** Placeholder text */
+  placeholder?: string;
+  /** Helper text */
+  helperText?: string;
+  /** Error message */
+  error?: string;
+  /** Input type */
+  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
+  /** Size variant */
+  size?: 'sm' | 'md' | 'lg';
+  /** Disabled state */
+  disabled?: boolean;
+  /** Required field */
+  required?: boolean;
+  /** Full width */
+  fullWidth?: boolean;
+}
+
+const props = withDefaults(defineProps<InputProps>(), {
+  modelValue: '',
+  type: 'text',
+  size: 'md',
+  disabled: false,
+  required: false,
+  fullWidth: false,
+});
+
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+  blur: [event: FocusEvent];
+  focus: [event: FocusEvent];
+}>();
+
+const slots = defineSlots<{
+  startAdornment?: () => any;
+  endAdornment?: () => any;
+}>();
+
+const inputId = useId();
+const helperId = computed(() => `${inputId}-helper`);
+const errorId = computed(() => `${inputId}-error`);
+
+const inputRef = ref<HTMLInputElement>();
+
+const classes = computed(() => [
+  'input-wrapper',
+  `input-wrapper--${props.size}`,
+  {
+    'input-wrapper--error': props.error,
+    'input-wrapper--disabled': props.disabled,
+    'input-wrapper--full-width': props.fullWidth,
+  },
+]);
+
+function handleInput(event: Event) {
+  const target = event.target as HTMLInputElement;
+  emit('update:modelValue', target.value);
+}
+
+function focus() {
+  inputRef.value?.focus();
+}
+
+defineExpose({ focus, inputRef });
+</script>
+
+<template>
+  <div :class="['input-container', { 'input-container--full-width': fullWidth }]">
+    <label v-if="label" :for="inputId" class="input-label">
+      {{ label }}
+      <span v-if="required" class="input-required" aria-hidden="true">*</span>
+    </label>
+
+    <div :class="classes">
+      <span v-if="slots.startAdornment" class="input-adornment">
+        <slot name="startAdornment" />
+      </span>
+
+      <input
+        :id="inputId"
+        ref="inputRef"
+        :value="modelValue"
+        :type="type"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :required="required"
+        :aria-invalid="!!error"
+        :aria-describedby="error ? errorId : helperText ? helperId : undefined"
+        class="input"
+        @input="handleInput"
+        @blur="emit('blur', $event)"
+        @focus="emit('focus', $event)"
+      />
+
+      <span v-if="slots.endAdornment" class="input-adornment">
+        <slot name="endAdornment" />
+      </span>
+    </div>
+
+    <span v-if="error" :id="errorId" class="input-error" role="alert">
+      {{ error }}
+    </span>
+    <span v-else-if="helperText" :id="helperId" class="input-helper">
+      {{ helperText }}
+    </span>
+  </div>
+</template>
+
+<style scoped>
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.input-container--full-width {
+  width: 100%;
+}
+
+.input-label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-gray-700);
+}
+
+.input-required {
+  color: var(--color-error-500);
+  margin-left: 2px;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  background-color: white;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgb(59 130 246 / 0.15);
+}
+
+.input-wrapper--error {
+  border-color: var(--color-error-500);
+}
+
+.input-wrapper--error:focus-within {
+  box-shadow: 0 0 0 3px rgb(239 68 68 / 0.15);
+}
+
+.input-wrapper--disabled {
+  background-color: var(--color-gray-100);
+  cursor: not-allowed;
+}
+
+/* Sizes */
+.input-wrapper--sm {
+  height: 32px;
+  padding: 0 var(--spacing-sm);
+}
+
+.input-wrapper--md {
+  height: 40px;
+  padding: 0 var(--spacing-md);
+}
+
+.input-wrapper--lg {
+  height: 48px;
+  padding: 0 var(--spacing-md);
+}
+
+.input {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: transparent;
+  font: inherit;
+  color: var(--color-gray-900);
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--color-gray-400);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  color: var(--color-gray-500);
+}
+
+.input-adornment {
+  display: flex;
+  align-items: center;
+  color: var(--color-gray-500);
+}
+
+.input-helper {
+  font-size: var(--text-sm);
+  color: var(--color-gray-500);
+}
+
+.input-error {
+  font-size: var(--text-sm);
+  color: var(--color-error-500);
+}
+</style>
+```
+
+---
+
+### Stack Layout Component
+
+**VStack.vue:**
+```vue
+<script setup lang="ts">
+import { computed, type Component } from 'vue';
+
+type SpacingToken = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+
+export interface StackProps {
+  /** HTML element or component to render */
+  as?: string | Component;
+  /** Direction of stacking */
+  direction?: 'row' | 'column';
+  /** Gap between items */
+  gap?: SpacingToken;
+  /** Horizontal alignment */
+  align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
+  /** Distribution */
+  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+  /** Wrap items */
+  wrap?: boolean;
+  /** Full width */
+  fullWidth?: boolean;
+}
+
+const props = withDefaults(defineProps<StackProps>(), {
+  as: 'div',
+  direction: 'column',
+  gap: 'md',
+  align: 'stretch',
+  justify: 'start',
+  wrap: false,
+  fullWidth: false,
+});
+
+const alignMap: Record<string, string> = {
+  start: 'flex-start',
+  center: 'center',
+  end: 'flex-end',
+  stretch: 'stretch',
+  baseline: 'baseline',
+};
+
+const justifyMap: Record<string, string> = {
+  start: 'flex-start',
+  center: 'center',
+  end: 'flex-end',
+  between: 'space-between',
+  around: 'space-around',
+  evenly: 'space-evenly',
+};
+
+const styles = computed(() => ({
+  '--stack-gap': `var(--spacing-${props.gap})`,
+  '--stack-align': alignMap[props.align],
+  '--stack-justify': justifyMap[props.justify],
+}));
+
+const classes = computed(() => [
+  'stack',
+  `stack--${props.direction}`,
+  {
+    'stack--wrap': props.wrap,
+    'stack--full-width': props.fullWidth,
+  },
+]);
+</script>
+
+<template>
+  <component :is="as" :class="classes" :style="styles">
+    <slot />
+  </component>
+</template>
+
+<style scoped>
+.stack {
+  display: flex;
+  gap: var(--stack-gap, var(--spacing-md));
+  align-items: var(--stack-align, stretch);
+  justify-content: var(--stack-justify, flex-start);
+}
+
+.stack--column {
+  flex-direction: column;
+}
+
+.stack--row {
+  flex-direction: row;
+}
+
+.stack--wrap {
+  flex-wrap: wrap;
+}
+
+.stack--full-width {
+  width: 100%;
+}
+</style>
+```
+
+---
+
+## Composables
+
+### useTheme
+
+**useTheme.ts:**
+```ts
+import { ref, watch, onMounted, readonly } from 'vue';
+
+type Theme = 'light' | 'dark' | 'system';
+
+const theme = ref<Theme>('system');
+const resolvedTheme = ref<'light' | 'dark'>('light');
+
+export function useTheme() {
+  function setTheme(newTheme: Theme) {
+    theme.value = newTheme;
+    localStorage.setItem('theme', newTheme);
+  }
+
+  function updateResolvedTheme() {
+    if (theme.value === 'system') {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      resolvedTheme.value = prefersDark ? 'dark' : 'light';
+    } else {
+      resolvedTheme.value = theme.value;
+    }
+    document.documentElement.dataset.theme = resolvedTheme.value;
+  }
+
+  onMounted(() => {
+    const stored = localStorage.getItem('theme') as Theme | null;
+    if (stored) theme.value = stored;
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', updateResolvedTheme);
+
+    updateResolvedTheme();
+  });
+
+  watch(theme, updateResolvedTheme);
+
+  return {
+    theme: readonly(theme),
+    resolvedTheme: readonly(resolvedTheme),
+    setTheme,
+  };
+}
+```
+
+### useId
+
+**useId.ts:**
+```ts
+import { getCurrentInstance } from 'vue';
+
+let idCounter = 0;
+
+export function useId(prefix = 'v'): string {
+  const instance = getCurrentInstance();
+  const uid = instance?.uid ?? ++idCounter;
+  return `${prefix}-${uid}`;
+}
+```
+
+### useBreakpoint
+
+**useBreakpoint.ts:**
+```ts
+import { ref, onMounted, onUnmounted } from 'vue';
+
+const breakpoints = {
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+  '2xl': 1536,
+} as const;
+
+type Breakpoint = keyof typeof breakpoints;
+
+export function useBreakpoint() {
+  const width = ref(0);
+  const current = ref<Breakpoint | 'xs'>('xs');
+
+  function update() {
+    width.value = window.innerWidth;
+
+    if (width.value >= breakpoints['2xl']) current.value = '2xl';
+    else if (width.value >= breakpoints.xl) current.value = 'xl';
+    else if (width.value >= breakpoints.lg) current.value = 'lg';
+    else if (width.value >= breakpoints.md) current.value = 'md';
+    else if (width.value >= breakpoints.sm) current.value = 'sm';
+    else current.value = 'xs';
+  }
+
+  onMounted(() => {
+    update();
+    window.addEventListener('resize', update);
+  });
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', update);
+  });
+
+  const isAbove = (bp: Breakpoint) => width.value >= breakpoints[bp];
+  const isBelow = (bp: Breakpoint) => width.value < breakpoints[bp];
+
+  return {
+    width,
+    current,
+    isAbove,
+    isBelow,
+    isMobile: () => isBelow('md'),
+    isDesktop: () => isAbove('lg'),
+  };
+}
+```
+
+---
+
+## Provide/Inject Pattern
+
+**ThemeProvider.vue:**
+```vue
+<script setup lang="ts">
+import { provide, readonly } from 'vue';
+import { useTheme } from '@/composables/useTheme';
+
+const { theme, resolvedTheme, setTheme } = useTheme();
+
+provide('theme', {
+  theme: readonly(theme),
+  resolvedTheme: readonly(resolvedTheme),
+  setTheme,
+});
+</script>
+
+<template>
+  <slot />
+</template>
+```
+
+**Consuming in child:**
+```vue
+<script setup lang="ts">
+import { inject } from 'vue';
+
+const themeContext = inject('theme');
+</script>
+```
+
+---
+
+## v-model Patterns
+
+**Multiple v-models:**
+```vue
+<script setup lang="ts">
+const props = defineProps<{
+  modelValue: string;
+  open: boolean;
+}>();
+
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+  'update:open': [value: boolean];
+}>();
+</script>
+
+<!-- Usage -->
+<MyComponent v-model="value" v-model:open="isOpen" />
+```
+
+---
+
+## Plugin Registration
+
+**index.ts:**
+```ts
+import type { App, Plugin } from 'vue';
+import VButton from './components/primitives/VButton/VButton.vue';
+import VInput from './components/primitives/VInput/VInput.vue';
+import VStack from './components/layout/VStack/VStack.vue';
+import './tokens/index.css';
+
+export { VButton, VInput, VStack };
+
+export const DesignSystem: Plugin = {
+  install(app: App) {
+    app.component('VButton', VButton);
+    app.component('VInput', VInput);
+    app.component('VStack', VStack);
+  },
+};
+
+export default DesignSystem;
+```
+
+**Usage:**
+```ts
+import { createApp } from 'vue';
+import { DesignSystem } from '@my-org/design-system';
+import App from './App.vue';
+
+createApp(App).use(DesignSystem).mount('#app');
+```
+
+---
+
+## Testing
+
+**VButton.test.ts:**
+```ts
+import { mount } from '@vue/test-utils';
+import { describe, it, expect, vi } from 'vitest';
+import VButton from './VButton.vue';
+
+describe('VButton', () => {
+  it('renders slot content', () => {
+    const wrapper = mount(VButton, {
+      slots: { default: 'Click me' },
+    });
+    expect(wrapper.text()).toContain('Click me');
+  });
+
+  it('emits click event', async () => {
+    const wrapper = mount(VButton);
+    await wrapper.trigger('click');
+    expect(wrapper.emitted('click')).toHaveLength(1);
+  });
+
+  it('does not emit when disabled', async () => {
+    const wrapper = mount(VButton, {
+      props: { disabled: true },
+    });
+    await wrapper.trigger('click');
+    expect(wrapper.emitted('click')).toBeUndefined();
+  });
+
+  it('applies variant class', () => {
+    const wrapper = mount(VButton, {
+      props: { variant: 'danger' },
+    });
+    expect(wrapper.classes()).toContain('btn--danger');
+  });
+
+  it('shows loading state', () => {
+    const wrapper = mount(VButton, {
+      props: { loading: true },
+    });
+    expect(wrapper.attributes('aria-busy')).toBe('true');
+    expect(wrapper.find('.btn__spinner').exists()).toBe(true);
+  });
+});
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/dylantarre) — claim your Tome and manage your conversions.
 <!-- tomevault:4.0:skill_md:2026-04-11 -->
 
 ---
 > Source: [tomevault-io/tomes](https://github.com/tomevault-io/tomes) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-04-29 -->
+<!-- tomevault:4.0:skill_md:2026-05-04 -->
