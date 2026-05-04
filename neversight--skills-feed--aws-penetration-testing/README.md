@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/sebas-aikon-intelligence/antigravity-awesome-skills/aws-penetration-testing)
+Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/jpropato/siba/aws-penetration-testing)
 
 ---
 
