@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/coleam00/second-brain-skills/brand-voice-generator)
+Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/kuse-ai/kuse-skills/brand-voice-generator)
 
 ---
 
