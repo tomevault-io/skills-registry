@@ -1,11 +1,11 @@
-# canvas_design
+# canvas-design
 
 > Skill by [neversight](https://github.com/neversight/skills_feed) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/vuralserhat86/antigravity-agentic-skills/canvas_design)
+Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/vibery-studio/templates/canvas-design)
 
 ---
 
