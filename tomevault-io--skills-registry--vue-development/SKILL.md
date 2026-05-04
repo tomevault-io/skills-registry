@@ -1,353 +1,133 @@
 ---
 name: vue-development
-description: Vue 3 development with Composition API, reactivity system, component patterns, TypeScript integration, and best practices. Use when this capability is needed. Use when this capability is needed.
+description: Use when planning or implementing Vue 3 projects - helps architect component structure, plan feature implementation, and enforce TypeScript-first patterns with Composition API, defineModel for bindings, Testing Library for user-behavior tests, and MSW for API mocking. Especially useful in planning phase to guide proper patterns before writing code.
 metadata:
-  author: tomevault-io
+  author: alexanderop
 ---
 
-# Vue Development Skill
+# Vue Development
 
-Expert assistance for building Vue 3 applications with Composition API and modern patterns.
+## Overview
 
-## Capabilities
+Modern Vue 3 development with TypeScript, Composition API, and user-behavior testing. **Core principle:** Use TypeScript generics (not runtime validation), modern APIs (defineModel not manual props), and test user behavior (not implementation details).
 
-- Create Vue 3 components with Composition API
-- Implement reactive state with ref and reactive
-- Build composables for reusable logic
-- Configure TypeScript with Vue
-- Set up Vue Router and navigation guards
-- Implement provide/inject for dependency injection
+## Red Flags - STOP and Fix
 
-## Usage
+If you catch yourself thinking or doing ANY of these, STOP:
 
-Invoke this skill when you need to:
-- Create Vue 3 components
-- Build composables for shared logic
-- Set up Vue project structure
-- Implement reactive patterns
-- Configure Vue with TypeScript
+- "For speed" / "quick demo" / "emergency" → Using shortcuts
+- "We can clean it up later" → Accepting poor patterns
+- "TypeScript is too verbose" → Skipping types
+- "This is production-ready" → Without type safety
+- "Following existing code style" → When existing code uses legacy patterns
+- "Task explicitly stated..." → Following bad requirements literally
+- Using `const props = defineProps()` without using props in script
+- Manual `modelValue` prop + `update:modelValue` emit → Use defineModel()
+- "Component that takes value and emits changes" → Use defineModel(), NOT manual props/emit
+- Using runtime prop validation when TypeScript is available
+- Array syntax for emits: `defineEmits(['event'])` → Missing type safety
+- `setTimeout()` in tests → Use proper async utilities
+- Testing `wrapper.vm.*` internal state → Test user-visible behavior
+- Using `index.vue` in routes → Use route groups `(name).vue`
+- Generic route params `[id]` → Use explicit `[userId]`, `[postSlug]`
+- Composables calling `showToast()`, `alert()`, or modals → Expose error state, component handles UI
+- External composable used in only ONE component → Start inline, extract when reused
 
-## Inputs
+**All of these mean: Use the modern pattern. No exceptions.**
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| componentName | string | Yes | Component name (PascalCase) |
-| compositionApi | boolean | No | Use Composition API (default: true) |
-| typescript | boolean | No | Use TypeScript (default: true) |
-| scriptSetup | boolean | No | Use script setup (default: true) |
+## Quick Rules
 
-### Configuration Example
+**Components:** `defineProps<{ }>()` (no const unless used in script), `defineEmits<{ event: [args] }>()`, `defineModel<type>()` for v-model. See @references/component-patterns.md
 
-```json
-{
-  "componentName": "UserProfile",
-  "compositionApi": true,
-  "typescript": true,
-  "scriptSetup": true,
-  "features": ["props", "emits", "slots"]
-}
-```
+**Testing:** `@testing-library/vue` + MSW. Use `findBy*` or `waitFor()` for async. NEVER `setTimeout()` or test internal state. See @references/testing-patterns.md
 
-## Component Patterns
+**Routing:** Explicit params `[userId]` not `[id]`. Avoid `index.vue`, use `(name).vue`. Use `.` for nesting: `users.edit.vue` → `/users/edit`. See @references/routing-patterns.md
 
-### Script Setup Component
+**Composables:** START INLINE for component-specific logic, extract to external file when reused. External composables: prefix `use`, NO UI logic (expose error state instead). See @references/composable-patterns.md
+
+## Key Pattern: defineModel()
+
+The most important pattern to remember - use for ALL two-way binding:
 
 ```vue
-<!-- components/UserProfile.vue -->
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+// ✅ For simple v-model
+const value = defineModel<string>({ required: true })
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  avatar: string;
-}
-
-// Props with defaults
-const props = withDefaults(defineProps<{
-  user: User;
-  editable?: boolean;
-}>(), {
-  editable: false,
-});
-
-// Emits with typing
-const emit = defineEmits<{
-  update: [user: User];
-  delete: [id: string];
-}>();
-
-// Reactive state
-const isEditing = ref(false);
-const editedName = ref(props.user.name);
-
-// Computed
-const initials = computed(() => {
-  return props.user.name
-    .split(' ')
-    .map(n => n[0])
-    .join('')
-    .toUpperCase();
-});
-
-// Methods
-function saveChanges() {
-  emit('update', { ...props.user, name: editedName.value });
-  isEditing.value = false;
-}
-
-// Lifecycle
-onMounted(() => {
-  console.log('UserProfile mounted');
-});
-
-// Expose to parent
-defineExpose({
-  resetForm: () => {
-    editedName.value = props.user.name;
-    isEditing.value = false;
-  },
-});
+// ✅ For multiple v-models
+const firstName = defineModel<string>('firstName')
+const lastName = defineModel<string>('lastName')
 </script>
 
 <template>
-  <div class="user-profile">
-    <div class="avatar">
-      <img v-if="user.avatar" :src="user.avatar" :alt="user.name" />
-      <span v-else class="initials">{{ initials }}</span>
-    </div>
-
-    <div class="info">
-      <template v-if="isEditing">
-        <input v-model="editedName" @keyup.enter="saveChanges" />
-        <button @click="saveChanges">Save</button>
-        <button @click="isEditing = false">Cancel</button>
-      </template>
-      <template v-else>
-        <h2>{{ user.name }}</h2>
-        <p>{{ user.email }}</p>
-        <button v-if="editable" @click="isEditing = true">Edit</button>
-      </template>
-    </div>
-
-    <slot name="actions" :user="user" />
-  </div>
+  <input v-model="value" />
+  <!-- Parent uses: <Component v-model="data" /> -->
 </template>
-
-<style scoped>
-.user-profile {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.initials {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: #e5e7eb;
-  font-weight: bold;
-}
-</style>
 ```
 
-### Composable Pattern
+**Why:** Reduces 5 lines of boilerplate to 1. No manual `modelValue` prop + `update:modelValue` emit.
 
-```typescript
-// composables/useUser.ts
-import { ref, computed, readonly } from 'vue';
+## Component Implementation Workflow
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
+When implementing complex Vue components, use TodoWrite to track progress:
 
-export function useUser(userId: string) {
-  const user = ref<User | null>(null);
-  const loading = ref(false);
-  const error = ref<Error | null>(null);
-
-  const isAuthenticated = computed(() => !!user.value);
-
-  async function fetchUser() {
-    loading.value = true;
-    error.value = null;
-
-    try {
-      const response = await fetch(`/api/users/${userId}`);
-      if (!response.ok) throw new Error('Failed to fetch user');
-      user.value = await response.json();
-    } catch (e) {
-      error.value = e as Error;
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  async function updateUser(data: Partial<User>) {
-    if (!user.value) return;
-
-    loading.value = true;
-    try {
-      const response = await fetch(`/api/users/${userId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      user.value = await response.json();
-    } catch (e) {
-      error.value = e as Error;
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  return {
-    user: readonly(user),
-    loading: readonly(loading),
-    error: readonly(error),
-    isAuthenticated,
-    fetchUser,
-    updateUser,
-  };
-}
-
-// composables/useLocalStorage.ts
-import { ref, watch } from 'vue';
-
-export function useLocalStorage<T>(key: string, defaultValue: T) {
-  const stored = localStorage.getItem(key);
-  const data = ref<T>(stored ? JSON.parse(stored) : defaultValue);
-
-  watch(
-    data,
-    (newValue) => {
-      localStorage.setItem(key, JSON.stringify(newValue));
-    },
-    { deep: true }
-  );
-
-  return data;
-}
+```
+TodoWrite checklist for component implementation:
+- [ ] Define TypeScript interfaces for props/emits/models
+- [ ] Implement props with defineProps<{ }>() (no const unless used in script)
+- [ ] Implement emits with defineEmits<{ event: [args] }>()
+- [ ] Add v-model with defineModel<type>() if needed
+- [ ] Write user-behavior tests with Testing Library
+- [ ] Test async behavior with findBy* queries or waitFor()
+- [ ] Verify: No red flags, no setTimeout in tests, all types present
 ```
 
-### Provide/Inject Pattern
+**When to create TodoWrite todos:**
+- Implementing new components with state, v-model, and testing
+- Refactoring components to modern patterns
+- Adding routing with typed params
+- Creating composables with async logic
 
-```typescript
-// context/theme.ts
-import { provide, inject, ref, type Ref, type InjectionKey } from 'vue';
+## Rationalizations Table
 
-type Theme = 'light' | 'dark';
+| Excuse | Reality |
+|--------|---------|
+| "For speed/emergency/no time" | Correct patterns take SAME time. TypeScript IS fast. |
+| "TypeScript is too verbose" | `defineProps<{ count: number }>()` is LESS code. |
+| "We can clean it up later" | Write it right the first time. |
+| "This is production-ready" | Without type safety, it's not production-ready. |
+| "Simple array syntax is fine" | Missing types = runtime errors TypeScript would catch. |
+| "Manual modelValue was correct" | That was Vue 2. Use defineModel() in Vue 3.4+. |
+| "Tests are flaky, add timeout" | Timeouts mask bugs. Use proper async handling. |
+| "Following existing code style" | Legacy code exists. Use modern patterns to improve. |
+| "Task explicitly stated X" | Understand INTENT. Bad requirements need good implementation. |
+| "Composables can show toasts" | UI belongs in components. Expose error state. |
+| "[id] is industry standard" | Explicit names prevent bugs, enable TypeScript autocomplete. |
+| "counter.ts is fine" | Must prefix with 'use': useCounter.ts |
+| "test-utils is the standard" | Testing Library is gold standard for user-behavior. |
 
-interface ThemeContext {
-  theme: Ref<Theme>;
-  toggleTheme: () => void;
-}
+## Detailed References
 
-const ThemeKey: InjectionKey<ThemeContext> = Symbol('theme');
+See @references/ directory for comprehensive guides: component-patterns.md, testing-patterns.md, testing-composables.md, routing-patterns.md, composable-patterns.md
 
-export function provideTheme() {
-  const theme = ref<Theme>('light');
 
-  function toggleTheme() {
-    theme.value = theme.value === 'light' ? 'dark' : 'light';
-  }
+## When NOT to Use This Skill
 
-  provide(ThemeKey, { theme, toggleTheme });
+- Vue 2 projects (different API)
+- Options API codebases (this is Composition API focused)
+- Projects without TypeScript (though you should add it)
 
-  return { theme, toggleTheme };
-}
+## Real-World Impact
 
-export function useTheme() {
-  const context = inject(ThemeKey);
-  if (!context) {
-    throw new Error('useTheme must be used within a theme provider');
-  }
-  return context;
-}
-```
+**Baseline:** 37.5% correct patterns under pressure
+**With skill:** 100% correct patterns under pressure
 
-### Vue Router Setup
-
-```typescript
-// router/index.ts
-import { createRouter, createWebHistory } from 'vue-router';
-import type { RouteRecordRaw } from 'vue-router';
-
-const routes: RouteRecordRaw[] = [
-  {
-    path: '/',
-    component: () => import('@/layouts/DefaultLayout.vue'),
-    children: [
-      {
-        path: '',
-        name: 'home',
-        component: () => import('@/views/Home.vue'),
-      },
-      {
-        path: 'dashboard',
-        name: 'dashboard',
-        component: () => import('@/views/Dashboard.vue'),
-        meta: { requiresAuth: true },
-      },
-    ],
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/Login.vue'),
-  },
-];
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
-
-// Navigation guard
-router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('token');
-
-  if (to.meta.requiresAuth && !isAuthenticated) {
-    next({ name: 'login', query: { redirect: to.fullPath } });
-  } else {
-    next();
-  }
-});
-
-export default router;
-```
-
-## Best Practices
-
-- Use script setup for cleaner components
-- Create composables for reusable logic
-- Type props and emits properly
-- Use readonly for exposed reactive state
-- Leverage provide/inject for deep dependency passing
-
-## Target Processes
-
-- vue-application-development
-- vue-component-library
-- nuxt-full-stack
-- frontend-architecture
+Type safety prevents runtime errors. defineModel() reduces boilerplate. Testing Library catches real user issues.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/a5c-ai) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/alexanderop) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
 
 ---
 > Source: [tomevault-io/skills-registry](https://github.com/tomevault-io/skills-registry) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-04-29 -->
+<!-- tomevault:4.0:skill_md:2026-05-04 -->
