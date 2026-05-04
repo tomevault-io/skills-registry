@@ -1,131 +1,72 @@
 ---
 name: code-review
-description: AI-powered code review using CodeRabbit. Default code-review skill. Trigger for any explicit review request AND autonomously when the agent thinks a review is needed (code/PR/quality/security). Use when this capability is needed.
+description: 用于代码审查的 Skill，支持通用准则以及 Python 和 Go 的专项审查。 Use when this capability is needed.
 metadata:
   author: neversight
 ---
 
-# CodeRabbit Code Review
 
-AI-powered code review using CodeRabbit. Enables developers to implement features, review code, and fix issues in autonomous cycles without manual intervention.
 
-## Capabilities
 
-- Finds bugs, security issues, and quality risks in changed code
-- Groups findings by severity (Critical, Warning, Info)
-- Works on staged, committed, or all changes; supports base branch/commit
-- Provides fix suggestions (`--plain`) or minimal output for agents (`--prompt-only`)
+# Code Review Skill
 
-## When to Use
+本 Skill 用于对代码进行深度审查，特别是针对 `<git_commit>` 到 `HEAD` 的git变更的代码。审查过程应当关注代码质量、逻辑正确性、性能以及架构设计。
 
-When user asks to:
+## 审查准则 (Review Guidelines)
 
-- Review code changes / Review my code
-- Check code quality / Find bugs or security issues
-- Get PR feedback / Pull request review
-- What's wrong with my code / my changes
-- Run coderabbit / Use coderabbit
+### 0. 审查前操作
+*   **跟用户确认变量**: 
+    * 在审查前，需要和用户确认 `<git_commit>`变量是多少（注意：用户要取想要分析的commit的上一个commit）。 示例：973a21b1
 
-## How to Review
 
-### 1. Check Prerequisites
+*   **代码lint和单测**:
+    *   在正式review前，执行make lint，检查代码是否符合代码规范。
+    *   在正式review前，执行make test，检查是否通过单测。
 
-```bash
-coderabbit --version 2>/dev/null || echo "NOT_INSTALLED"
-coderabbit auth status 2>&1
-```
+### 1. 通用准则 (General)
+*   **命名规范**: 
+    *   禁止使用 `flag`、`data`、`info` 等这类业务意义含糊且过于通用的变量/函数命名方式。
+    *   变量名应能反映其存储的内容，函数名应能反映其执行的动作。
+*   **逻辑正确性与性能**:
+    *   重点审查边界条件处理、异常流转。
+    *   检查是否存在不必要的循环、重复的 IO 操作或低效的算法。
+    *   检查 jeff dean 提到的了解每个操作的性能开销的数量级。比如cpu操作是ns级别，io操作是ms级别，代码中是否存在在大量cpu操作的地方（需要高性能时），引入大量io操作，导致性能下降。
+*   **DRY 原则 (Don't Repeat Yourself)**:
+    *   核查代码重复情况，对于超过两次出现的相似逻辑，需考虑提取为公共函数或组件。
+*   **设计模式与架构 (次要)**:
+    *   核查业务流程是否过于臃肿，是否可以抽象。
+    *   推荐使用“模板方法”等设计模式来增强代码的拓展性。给出如何抽象的建议。
 
-**If CLI not installed**, tell user:
 
-```text
-Please install CodeRabbit CLI first:
-curl -fsSL https://cli.coderabbit.ai/install.sh | sh
-```
+### 2. Python 专项准则 (Python Specific)
+*   **代码风格**: 遵循 PEP 8 规范。
+*   **Pythonic**: 优先使用列表推导式 (List Comprehensions)、生成器 (Generators)。
+*   **资源管理**: 确保使用 `with` 语句管理文件、网络连接等资源。
+*   **异步处理**: 若使用 `asyncio`，审查是否存在阻塞事件循环的操作。
 
-**If not authenticated**, tell user:
+### 3. Go 专项准则 (Go Specific)
+*   **错误处理**: 坚持 "Check errors early and return early"。禁止忽略错误返回。
+*   **并发安全**: 
+    *   检查 Goroutine 是否有泄露风险。
+    *   检查对共享变量的访问是否使用了互斥锁 (Mutex) 或通过 Channel 同步。
+*   **接口设计**: 崇尚小接口 (Small interfaces)。
+*   **性能优化**: 减少不必要的内存分配，注意 `slice` 的扩容成本。
 
-```text
-Please authenticate first:
-coderabbit auth login
-```
+## 交互与输出规范 (Interaction)
 
-### 2. Run Review
+针对审查中发现的问题，请按以下格式给出：
 
-Use `--prompt-only` for minimal output optimized for AI agents:
+1.  **问题描述**: 明确指出哪行代码、什么问题。
+2.  **修改思路**: 给出具体的重构建议或代码示例。
+3.  **优先级**: (可选) 标注 Critical / Major / Minor。
 
-```bash
-coderabbit review --prompt-only
-```
+**重要：在最后请询问用户：“是否需要我针对哪个问题进行修改？”**
 
-Or use `--plain` for detailed feedback with fix suggestions:
+## 使用方式
 
-```bash
-coderabbit review --plain
-```
-
-**Options:**
-
-| Flag             | Description                              |
-| ---------------- | ---------------------------------------- |
-| `-t all`         | All changes (default)                    |
-| `-t committed`   | Committed changes only                   |
-| `-t uncommitted` | Uncommitted changes only                 |
-| `--base main`    | Compare against specific branch          |
-| `--base-commit`  | Compare against specific commit hash     |
-| `--prompt-only`  | Minimal output optimized for AI agents   |
-| `--plain`        | Detailed feedback with fix suggestions   |
-
-**Shorthand:** `cr` is an alias for `coderabbit`:
-
-```bash
-cr review --prompt-only
-```
-
-### 3. Present Results
-
-Group findings by severity:
-
-1. **Critical** - Security vulnerabilities, data loss risks, crashes
-2. **Warning** - Bugs, performance issues, anti-patterns
-3. **Info** - Style issues, suggestions, minor improvements
-
-Create a task list for issues found that need to be addressed.
-
-### 4. Fix Issues (Autonomous Workflow)
-
-When user requests implementation + review:
-
-1. Implement the requested feature
-2. Run `coderabbit review --prompt-only`
-3. Create task list from findings
-4. Fix critical and warning issues systematically
-5. Re-run review to verify fixes
-6. Repeat until clean or only info-level issues remain
-
-### 5. Review Specific Changes
-
-**Review only uncommitted changes:**
-
-```bash
-cr review --prompt-only -t uncommitted
-```
-
-**Review against a branch:**
-
-```bash
-cr review --prompt-only --base main
-```
-
-**Review a specific commit range:**
-
-```bash
-cr review --prompt-only --base-commit abc123
-```
-
-## Documentation
-
-For more details: <https://docs.coderabbit.ai/cli>
+1.  用户提供代码片段或指定文件。
+2.  调用此 Skill 进行分析并输出审查意见。
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/neversight) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-13 -->
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
