@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/trancong12102/agentskills/conventional-commit)
+Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/marcelorodrigo/agent-skills/conventional-commit)
 
 ---
 
