@@ -1,16 +1,39 @@
 ---
-name: hello-world
-description: Use when working with a simple skill that should be used to respond to a user when the enter the phrase "hello world".
+name: greeting
+description: Greeting message Use when this capability is needed.
 metadata:
   author: neversight
 ---
 
-# Hello World
-Use the Hello, World skill to respond to the user when they enter the phrase "hello world".
+# Hello World Skill
 
-## Workflow
-1. Run the [script](./scripts/get-system-info.cjs) to obtain system information.
-2. Respond with the [template](./TEMPLATE.md).
+A minimal example skill that demonstrates the basic structure of an open-skills skill bundle.
+
+## What it does
+
+This skill takes a name as input and returns a friendly greeting message.
+
+## Usage
+
+```json
+{
+  "name": "Alice"
+}
+```
+
+Returns:
+
+```json
+{
+  "greeting": "Hello, Alice! Welcome to open-skills."
+}
+```
+
+## Files
+
+- `SKILL.md`: Skill metadata and documentation (this file)
+- `scripts/main.py`: Main entrypoint with the `run()` function
+- `tests/sample_input.json`: Example input for testing
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/neversight) — claim your Tome and manage your conversions.
