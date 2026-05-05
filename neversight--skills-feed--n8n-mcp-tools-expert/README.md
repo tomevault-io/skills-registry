@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/wilkomarketing/antigravity-n8n-skills/n8n-mcp-tools-expert)
+Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/redcoatasher/n8n-skills-redux/n8n-mcp-tools-expert)
 
 ---
 
