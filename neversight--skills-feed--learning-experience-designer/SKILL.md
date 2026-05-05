@@ -1,0 +1,16 @@
+---
+name: learning-experience-designer
+description: experience-designer for engaging, immersive learning experiences. Use when this capability is needed.
+metadata:
+  author: neversight
+---
+
+# Learning experience designer
+Design holistic learning experiences with journey mapping and emotional design.
+
+## CLI: /learning.experience-designer --learner-persona 'adult professional' --journey-map
+## Exit Codes: 0=success, 1=invalid mechanics, 2=too complex
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/neversight) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
