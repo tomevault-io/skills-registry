@@ -1,5 +1,5 @@
 ---
-name: laravel-api-resources-and-pagination
+name: laravelapi-resources-and-pagination
 description: Use API Resources with pagination and conditional fields; keep response shapes stable and cache-friendly Use when this capability is needed.
 metadata:
   author: neversight
@@ -13,7 +13,7 @@ Represent models via Resources; keep transport concerns out of Eloquent.
 
 ```
 # Resource
-php artisan make:resource PostResource    # or: php artisan make:resource PostResource
+sail artisan make:resource PostResource    # or: php artisan make:resource PostResource
 
 # Controller usage
 return PostResource::collection(
