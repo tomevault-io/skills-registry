@@ -1,5 +1,5 @@
 ---
-name: laravel-controller-tests
+name: laravelcontroller-tests
 description: Write focused controller tests using HTTP assertions; keep heavy logic in Actions/Services and unit test them Use when this capability is needed.
 metadata:
   author: neversight
