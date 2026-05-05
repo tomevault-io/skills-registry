@@ -1,5 +1,5 @@
 ---
-name: laravel-custom-helpers
+name: laravelcustom-helpers
 description: Create and register small, pure helper functions when they improve clarity; keep them organized and tested Use when this capability is needed.
 metadata:
   author: neversight
