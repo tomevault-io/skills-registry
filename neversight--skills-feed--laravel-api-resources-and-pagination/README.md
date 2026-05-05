@@ -1,11 +1,11 @@
-# laravel-api-resources-and-pagination
+# laravel:api-resources-and-pagination
 
 > Skill by [neversight](https://github.com/neversight/skills_feed) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/noartem/skills/laravel-api-resources-and-pagination)
+Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/jpcaparas/superpowers-laravel/laravel:api-resources-and-pagination)
 
 ---
 
