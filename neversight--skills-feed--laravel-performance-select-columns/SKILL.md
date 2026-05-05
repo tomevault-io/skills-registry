@@ -1,5 +1,5 @@
 ---
-name: laravel-performance-select-columns
+name: laravelperformance-select-columns
 description: Select only required columns to reduce memory and transfer costs; apply to base queries and relations Use when this capability is needed.
 metadata:
   author: neversight
