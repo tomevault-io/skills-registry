@@ -1,5 +1,5 @@
 ---
-name: laravel-controller-cleanup
+name: laravelcontroller-cleanup
 description: Reduce controller bloat using Form Requests for auth/validation, small Actions/Services with DTOs, and resource/single-action controllers Use when this capability is needed.
 metadata:
   author: neversight
