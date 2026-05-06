@@ -1,346 +1,120 @@
 ---
 name: swift-combine
-description: Master Combine framework for reactive programming - publishers, subscribers, operators, schedulers Use when this capability is needed.
+description: Swift Combine framework for reactive programming, handling asynchronous events with publishers, subscribers, and operators. Use when this capability is needed.
 metadata:
   author: neversight
 ---
 
-# Swift Combine Skill
+# Swift Combine
 
-Reactive programming with Apple's Combine framework for handling asynchronous events and data streams.
+This skill covers Apple's Combine framework for reactive programming and handling asynchronous events.
 
-## Prerequisites
+## Overview
 
-- iOS 13+ / macOS 10.15+
-- Understanding of closures and generics
-- Familiarity with async programming concepts
+Combine is a declarative Swift API for processing values over time. It provides a unified approach to handling asynchronous events, user interface updates, and data streams.
 
-## Parameters
+## Available References
 
-```yaml
-parameters:
-  use_async_await:
-    type: boolean
-    default: true
-    description: Prefer async/await where possible (iOS 15+)
-  scheduler:
-    type: string
-    enum: [main, background, immediate]
-    default: main
-  error_handling:
-    type: string
-    enum: [catch, retry, replace]
-    default: catch
-```
+- [Publishers & Subscribers](./references/publishers_subscribers.md) - Core concepts and lifecycle
+- [Operators](./references/operators.md) - Transforming, filtering, and combining streams
+- [Integration](./references/integration.md) - Using Combine with UIKit, SwiftUI, and Foundation
 
-## Topics Covered
+## Quick Reference
 
-### Core Concepts
-| Concept | Description |
-|---------|-------------|
-| Publisher | Emits values over time |
-| Subscriber | Receives values from publisher |
-| Operator | Transforms/filters values |
-| Subject | Publisher + manual value injection |
-| Cancellable | Subscription lifecycle |
+### Basic Publisher
 
-### Common Publishers
-| Publisher | Purpose |
-|-----------|---------|
-| `Just` | Single value, then complete |
-| `Future` | Single async result |
-| `PassthroughSubject` | Manual value broadcast |
-| `CurrentValueSubject` | Manual + current value |
-| `@Published` | Property wrapper publisher |
-
-### Key Operators
-| Category | Operators |
-|----------|-----------|
-| Transform | map, flatMap, scan |
-| Filter | filter, removeDuplicates, compactMap |
-| Combine | merge, combineLatest, zip |
-| Timing | debounce, throttle, delay |
-| Error | catch, retry, mapError |
-
-## Code Examples
-
-### Basic Publisher Chain
 ```swift
 import Combine
 
-final class SearchViewModel: ObservableObject {
-    @Published var searchText = ""
-    @Published private(set) var results: [SearchResult] = []
-    @Published private(set) var isLoading = false
-    @Published private(set) var error: Error?
+// Published property
+@Published var username: String = ""
 
-    private var cancellables = Set<AnyCancellable>()
-    private let searchService: SearchService
+// CurrentValueSubject
+let subject = CurrentValueSubject<String, Never>("initial")
 
-    init(searchService: SearchService) {
-        self.searchService = searchService
-        setupSearch()
-    }
+// PassthroughSubject
+let passthrough = PassthroughSubject<Int, Never>()
 
-    private func setupSearch() {
-        $searchText
-            .debounce(for: .milliseconds(300), scheduler: RunLoop.main) // Wait for typing pause
-            .removeDuplicates() // Don't search same query twice
-            .filter { $0.count >= 2 } // Minimum characters
-            .handleEvents(receiveOutput: { [weak self] _ in
-                self?.isLoading = true
-                self?.error = nil
-            })
-            .flatMap { [searchService] query -> AnyPublisher<[SearchResult], Never> in
-                searchService.search(query: query)
-                    .catch { error -> Just<[SearchResult]> in
-                        // Handle error, return empty
-                        return Just([])
-                    }
-                    .eraseToAnyPublisher()
-            }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] results in
-                self?.isLoading = false
-                self?.results = results
-            }
-            .store(in: &cancellables)
-    }
+// Just publisher
+let just = Just("value")
+
+// Future publisher
+let future = Future<String, Error> { promise in
+    promise(.success("result"))
 }
 ```
 
-### Subjects for Event Broadcasting
+### Subscribing
+
 ```swift
-final class EventBus {
-    static let shared = EventBus()
-
-    // PassthroughSubject - no current value
-    let userActions = PassthroughSubject<UserAction, Never>()
-
-    // CurrentValueSubject - maintains current value
-    let authState = CurrentValueSubject<AuthState, Never>(.loggedOut)
-
-    private init() {}
-
-    func send(_ action: UserAction) {
-        userActions.send(action)
-    }
-
-    func login(user: User) {
-        authState.send(.loggedIn(user))
-    }
-
-    func logout() {
-        authState.send(.loggedOut)
-    }
-}
-
-enum UserAction {
-    case tappedButton(String)
-    case viewedScreen(String)
-    case completedPurchase(orderId: String)
-}
-
-enum AuthState {
-    case loggedOut
-    case loggedIn(User)
-}
-
-// Subscription
-class AnalyticsService {
-    private var cancellables = Set<AnyCancellable>()
-
-    init() {
-        EventBus.shared.userActions
-            .sink { [weak self] action in
-                self?.track(action)
-            }
-            .store(in: &cancellables)
-    }
-
-    private func track(_ action: UserAction) {
-        // Send to analytics
-    }
-}
-```
-
-### Combining Multiple Publishers
-```swift
-final class CheckoutViewModel: ObservableObject {
-    @Published var cartItems: [CartItem] = []
-    @Published var shippingAddress: Address?
-    @Published var paymentMethod: PaymentMethod?
-    @Published var promoCode: String = ""
-
-    @Published private(set) var canCheckout = false
-    @Published private(set) var total: Decimal = 0
-
-    private var cancellables = Set<AnyCancellable>()
-
-    init() {
-        setupValidation()
-        setupTotalCalculation()
-    }
-
-    private func setupValidation() {
-        Publishers.CombineLatest3($cartItems, $shippingAddress, $paymentMethod)
-            .map { items, address, payment in
-                !items.isEmpty && address != nil && payment != nil
-            }
-            .assign(to: &$canCheckout)
-    }
-
-    private func setupTotalCalculation() {
-        Publishers.CombineLatest($cartItems, $promoCode)
-            .map { items, promo -> Decimal in
-                let subtotal = items.reduce(0) { $0 + $1.price * Decimal($1.quantity) }
-                let discount = self.calculateDiscount(promo: promo, subtotal: subtotal)
-                return subtotal - discount
-            }
-            .assign(to: &$total)
-    }
-
-    private func calculateDiscount(promo: String, subtotal: Decimal) -> Decimal {
-        // Promo code logic
-        return 0
-    }
-}
-```
-
-### Error Handling & Retry
-```swift
-extension Publisher {
-    func retryWithBackoff(
-        maxRetries: Int = 3,
-        initialDelay: TimeInterval = 1,
-        maxDelay: TimeInterval = 30
-    ) -> AnyPublisher<Output, Failure> {
-        self.catch { error -> AnyPublisher<Output, Failure> in
-            guard maxRetries > 0 else {
-                return Fail(error: error).eraseToAnyPublisher()
-            }
-
-            let delay = min(initialDelay * pow(2, Double(3 - maxRetries)), maxDelay)
-
-            return Just(())
-                .delay(for: .seconds(delay), scheduler: DispatchQueue.global())
-                .flatMap { _ in
-                    self.retryWithBackoff(
-                        maxRetries: maxRetries - 1,
-                        initialDelay: initialDelay,
-                        maxDelay: maxDelay
-                    )
-                }
-                .eraseToAnyPublisher()
+// Sink
+let cancellable = publisher.sink(
+    receiveCompletion: { completion in
+        switch completion {
+        case .finished:
+            print("Completed")
+        case .failure(let error):
+            print("Error: \(error)")
         }
-        .eraseToAnyPublisher()
+    },
+    receiveValue: { value in
+        print("Value: \(value)")
     }
-}
+)
 
-// Usage
-apiClient.fetchData()
-    .retryWithBackoff(maxRetries: 3)
-    .catch { error -> Just<Data> in
-        Logger.network.error("Final failure: \(error)")
-        return Just(Data())
-    }
-    .sink { data in
-        // Process data
+// Assign
+let cancellable = publisher
+    .assign(to: \.text, on: label)
+```
+
+### Storing Subscriptions
+
+```swift
+private var cancellables = Set<AnyCancellable>()
+
+publisher
+    .sink { value in
+        print(value)
     }
     .store(in: &cancellables)
 ```
 
-### Bridging to async/await
-```swift
-extension Publisher {
-    func firstValue() async throws -> Output {
-        try await withCheckedThrowingContinuation { continuation in
-            var cancellable: AnyCancellable?
+### Common Operators
 
-            cancellable = self.first()
-                .sink(
-                    receiveCompletion: { completion in
-                        switch completion {
-                        case .finished:
-                            break
-                        case .failure(let error):
-                            continuation.resume(throwing: error)
-                        }
-                        cancellable?.cancel()
-                    },
-                    receiveValue: { value in
-                        continuation.resume(returning: value)
-                    }
-                )
-        }
+```swift
+publisher
+    .filter { $0 > 0 }
+    .map { $0 * 2 }
+    .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+    .removeDuplicates()
+    .sink { value in
+        print(value)
     }
-}
-
-// Usage
-let result = try await somePublisher.firstValue()
 ```
 
-## Troubleshooting
+## Combine vs Async/Await
 
-### Common Issues
+| Use Case | Combine | Async/Await |
+|----------|---------|-------------|
+| Event streams | ✅ Excellent | ⚠️ Complex |
+| UI bindings | ✅ Perfect | ⚠️ Verbose |
+| Chaining operations | ✅ Great | ✅ Good |
+| Simple async calls | ⚠️ Overkill | ✅ Simple |
+| Error handling | ✅ Rich | ✅ Good |
 
-| Issue | Cause | Solution |
-|-------|-------|----------|
-| Sink never called | No strong reference | Store in cancellables Set |
-| UI not updating | Wrong scheduler | Use .receive(on: DispatchQueue.main) |
-| Memory leak | Strong reference in closure | Use [weak self] |
-| Duplicate events | Missing removeDuplicates | Add .removeDuplicates() |
-| Publisher completes early | Using first() or prefix() | Check operator semantics |
+## Best Practices
 
-### Debug Tips
-```swift
-// Print debug info for each event
-publisher
-    .print("Debug")
-    .sink { ... }
+1. **Store cancellables** - Prevent memory leaks
+2. **Use weak self** - Avoid retain cycles
+3. **Handle errors** - Always handle completion
+4. **Thread safety** - Use receive(on:) for UI
+5. **Cancel properly** - Clean up subscriptions
+6. **Avoid overuse** - Combine is powerful but not for everything
+7. **Test pipelines** - Use expectations for async
 
-// Handle events at each stage
-publisher
-    .handleEvents(
-        receiveSubscription: { _ in print("Subscribed") },
-        receiveOutput: { print("Output: \($0)") },
-        receiveCompletion: { print("Completed: \($0)") },
-        receiveCancel: { print("Cancelled") }
-    )
-    .sink { ... }
+## For More Information
 
-// Breakpoint on specific conditions
-publisher
-    .breakpoint(receiveOutput: { $0 > 100 })
-    .sink { ... }
-```
-
-## Validation Rules
-
-```yaml
-validation:
-  - rule: store_cancellables
-    severity: error
-    check: All subscriptions must be stored in cancellables
-  - rule: weak_self_in_closures
-    severity: warning
-    check: Use [weak self] in sink closures
-  - rule: receive_on_main
-    severity: warning
-    check: UI updates must receive on main queue
-```
-
-## Usage
-
-```
-Skill("swift-combine")
-```
-
-## Related Skills
-
-- `swift-swiftui` - @Published integration
-- `swift-concurrency` - async/await alternative
-- `swift-networking` - Network publishers
+Visit https://swiftzilla.dev for comprehensive Combine documentation.
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/neversight) — claim your Tome and manage your conversions.
