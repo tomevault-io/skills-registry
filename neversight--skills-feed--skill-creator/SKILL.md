@@ -1,6 +1,6 @@
 ---
 name: skill-creator
-description: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations. Use when this capability is needed.
+description: Guide for creating effective skills. Use when you want to create a new skill (or update an existing skill) that extends an agent with specialized workflows, tool integrations, or repo conventions. Use when this capability is needed.
 metadata:
   author: neversight
 ---
@@ -47,9 +47,32 @@ Think of Claude as exploring a path: a narrow bridge with cliffs needs specific 
 
 ### Anatomy of a Skill
 
+Every skill consists of a required SKILL.md file and optional bundled resources.
+
+### Where skills live (repo vs machine)
+
+Skills can be stored either repo-locally (project-specific) or in machine-level locations, depending on the harness.
+
+**Standard paths** (supported by Cursor, OpenCode, GitHub Copilot, Codex, and others):
+
+- Repo: `.agents/skills/<skill-name>/SKILL.md`
+- Machine: `~/.agents/skills/<skill-name>/SKILL.md`
+
+In this repository, the canonical skill layout is:
+
+- `skills/<skill-name>/SKILL.md`
+
+When you are installing a skill into a particular harness, use the location table in:
+
+- `skills/skill-installer/references/harness-locations.md`
+
+That table documents the standard paths, legacy/product-specific paths, and covers OpenCode, Claude Code, Copilot, Cursor, Gemini CLI, Amp, and other common harnesses.
+
+**Note:** This skill focuses on *creating* good skill content. For installation/migration across harnesses, use the `skill-installer` skill.
+
 Every skill consists of a required SKILL.md file and optional bundled resources:
 
-```
+```text
 skill-name/
 ├── SKILL.md (required)
 │   ├── YAML frontmatter metadata (required)
@@ -66,8 +89,8 @@ skill-name/
 
 Every SKILL.md consists of:
 
-- **Frontmatter** (YAML): Contains `name` and `description` fields. These are the only fields that Claude reads to determine when the skill gets used, thus it is very important to be clear and comprehensive in describing what the skill is, and when it should be used.
-- **Body** (Markdown): Instructions and guidance for using the skill. Only loaded AFTER the skill triggers (if at all).
+- **Frontmatter** (YAML): Must include `name` and `description`. OpenCode also recognizes `license`, `compatibility`, and `metadata` (string-to-string map). Other fields are ignored. Use the description to clearly capture when the skill should trigger.
+- **Body** (Markdown): Instructions and guidance for using the skill. Only loaded after the skill triggers (if at all).
 
 #### Bundled Resources (optional)
 
@@ -149,7 +172,7 @@ Claude loads FORMS.md, REFERENCE.md, or EXAMPLES.md only when needed.
 
 For Skills with multiple domains, organize content by domain to avoid loading irrelevant context:
 
-```
+```text
 bigquery-skill/
 ├── SKILL.md (overview and navigation)
 └── reference/
@@ -163,7 +186,7 @@ When a user asks about sales metrics, Claude only reads sales.md.
 
 Similarly, for skills supporting multiple frameworks or variants, organize by variant:
 
-```
+```text
 cloud-deploy/
 ├── SKILL.md (workflow + provider selection)
 └── references/
@@ -312,7 +335,7 @@ Write the YAML frontmatter with `name` and `description`:
   - Include all "when to use" information here - Not in the body. The body is only loaded after triggering, so "When to Use This Skill" sections in the body are not helpful to Claude.
   - Example description for a `docx` skill: "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. Use when Claude needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks"
 
-Do not include any other fields in YAML frontmatter.
+In this repository, include at least `name`, `description`, and `license` in YAML frontmatter. Optional fields like `compatibility` and `metadata` are OK if they help harness-specific discovery, but keep frontmatter minimal.
 
 ##### Body
 
@@ -349,33 +372,12 @@ If validation fails, the script will report the errors and exit without creating
 
 After testing the skill, users may request improvements. Often this happens right after using the skill, with fresh context of how the skill performed.
 
-*Skill Creator v1.1 - Enhanced*
+**Iteration workflow:**
 
-## 🔄 Workflow
-
-> **Kaynak:** [Anthropic Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) & [Agentic Design Patterns](https://www.deeplearning.ai/the-batch/issue-242/)
-
-### Aşama 1: Definition & Scoping
-- [ ] **One Job**: Skill'in tek bir amacı olduğundan emin ol (Unix Philosophy). "Her şeyi yapan" skill yazma.
-- [ ] **Trigger Definition**: Skill'in ne zaman tetikleneceğini (Description) çok net tanımla. Hangi kelimelerle, hangi durumlarda?
-- [ ] **Concrete Inputs**: Skill'in çalışması için gereken girdileri (Inputs) listele (Dosya, Metin, API Key).
-
-### Aşama 2: Implementation Strategy
-- [ ] **Progressive Disclosure**: Her şeyi `SKILL.md` içine yığma. Detayları `references/` klasörüne taşı ve gerektiğinde okut.
-- [ ] **Few-Shot Prompting**: Talimat vermek yerine örnek göster. "Şunu yap" deme, "Örnek girdi -> Örnek çıktı" göster.
-- [ ] **Fail Gracefully**: Scripts klasöründeki kodların hata durumunda (API down, dosya yok) ne yapacağını planla.
-
-### Aşama 3: Packaging & Validation
-- [ ] **Metadata Check**: `tags` ve `category` alanlarının doğru doldurulduğunu kontrol et.
-- [ ] **Token Economy**: `SKILL.md` dosyasının gereksiz verbose (geveze) olmadığından emin ol. Claude zaten zeki, ona "merhaba" demeyi öğretme.
-- [ ] **Self-Test**: Skill'i paketlemeden önce kendi ortamında (Simulation) test et.
-
-### Kontrol Noktaları
-| Aşama | Doğrulama |
-|-------|-----------|
-| 1 | Skill adı `verb-noun` formatında mı? (örn: `create-database`, `analyze-logs`). |
-| 2 | Description alanı 1024 karakterin altında mı? (Context window verimliliği). |
-| 3 | `scripts/` içindeki kodlar production-ready mi? (Hata yakalama var mı?). |
+1. Use the skill on real tasks
+2. Notice struggles or inefficiencies
+3. Identify how SKILL.md or bundled resources should be updated
+4. Implement changes and test again
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/neversight) — claim your Tome and manage your conversions.
