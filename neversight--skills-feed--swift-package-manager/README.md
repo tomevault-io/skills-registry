@@ -1,11 +1,11 @@
-# swift-package-manager
+# swift_package_manager
 
 > Skill by [neversight](https://github.com/neversight/skills_feed) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/nonameplum/agent-skills/swift-package-manager)
+Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/swiftzilla/skills/swift_package_manager)
 
 ---
 
