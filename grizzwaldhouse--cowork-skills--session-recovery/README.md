@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GrizzwaldHouse/cowork-skills](https://github.com/GrizzwaldHouse/cowork-skills/tree/main/skills)
+Original source: [GrizzwaldHouse/cowork-skills](https://github.com/GrizzwaldHouse/cowork-skills/tree/main/skills/ai-agents/session-recovery)
 
 ---
 
