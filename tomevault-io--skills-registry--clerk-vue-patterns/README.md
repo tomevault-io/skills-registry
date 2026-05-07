@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tomevault-io/skills-registry](https://github.com/tomevault-io/skills-registry/tree/main/awfixers-stuff--opencode-config--clerk-vue-patterns)
+Original source: [tomevault-io/skills-registry](https://github.com/tomevault-io/skills-registry/tree/main/clerk--skills--clerk-vue-patterns)
 
 ---
 
