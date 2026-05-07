@@ -7,18 +7,23 @@ metadata:
 
 Vue.js testing best practices, patterns, and common gotchas.
 
+### E2E Selector Stability
+- Prefer `data-testid` selectors for critical flows instead of visible-text selectors that depend on locale or UI copy.
+- Add markers in Vue components as part of feature work when a flow lacks stable hooks for Playwright.
+- Keep selector ids semantic and consistent across specs; centralize reused ids in a shared selector map (for this repo: `e2e/support/selectors.ts`).
+
 ### Testing
-- Setting up test infrastructure for Vue 3 projects → See [testing-vitest-recommended-for-vue](reference/testing-vitest-recommended-for-vue.md)
-- Tests keep breaking when refactoring component internals → See [testing-component-blackbox-approach](reference/testing-component-blackbox-approach.md)
-- Tests fail intermittently with race conditions → See [testing-async-await-flushpromises](reference/testing-async-await-flushpromises.md)
-- Composables using lifecycle hooks or inject fail to test → See [testing-composables-helper-wrapper](reference/testing-composables-helper-wrapper.md)
-- Getting "injection Symbol(pinia) not found" errors in tests → See [testing-pinia-store-setup](reference/testing-pinia-store-setup.md)
-- Components with async setup won't render in tests → See [testing-suspense-async-components](reference/testing-suspense-async-components.md)
-- Snapshot tests keep passing despite broken functionality → See [testing-no-snapshot-only](reference/testing-no-snapshot-only.md)
-- Choosing end-to-end testing framework for Vue apps → See [testing-e2e-playwright-recommended](reference/testing-e2e-playwright-recommended.md)
-- Tests need to verify computed styles or real DOM events → See [testing-browser-vs-node-runners](reference/testing-browser-vs-node-runners.md)
-- Testing components created with defineAsyncComponent fails → See [async-component-testing](reference/async-component-testing.md)
-- Teleported modal content can't be found in wrapper queries → See [teleport-testing-complexity](reference/teleport-testing-complexity.md)
+- Setting up test infrastructure for Vue 3 projects -> See [testing-vitest-recommended-for-vue](reference/testing-vitest-recommended-for-vue.md)
+- Tests keep breaking when refactoring component internals -> See [testing-component-blackbox-approach](reference/testing-component-blackbox-approach.md)
+- Tests fail intermittently with race conditions -> See [testing-async-await-flushpromises](reference/testing-async-await-flushpromises.md)
+- Composables using lifecycle hooks or inject fail to test -> See [testing-composables-helper-wrapper](reference/testing-composables-helper-wrapper.md)
+- Getting "injection Symbol(pinia) not found" errors in tests -> See [testing-pinia-store-setup](reference/testing-pinia-store-setup.md)
+- Components with async setup won't render in tests -> See [testing-suspense-async-components](reference/testing-suspense-async-components.md)
+- Snapshot tests keep passing despite broken functionality -> See [testing-no-snapshot-only](reference/testing-no-snapshot-only.md)
+- Choosing end-to-end testing framework for Vue apps -> See [testing-e2e-playwright-recommended](reference/testing-e2e-playwright-recommended.md)
+- Tests need to verify computed styles or real DOM events -> See [testing-browser-vs-node-runners](reference/testing-browser-vs-node-runners.md)
+- Testing components created with defineAsyncComponent fails -> See [async-component-testing](reference/async-component-testing.md)
+- Teleported modal content can't be found in wrapper queries -> See [teleport-testing-complexity](reference/teleport-testing-complexity.md)
 
 ## Reference
 
@@ -28,9 +33,9 @@ Vue.js testing best practices, patterns, and common gotchas.
 - [Playwright Documentation](https://playwright.dev/)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/aiskillstore) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [abondin/hreasy](https://github.com/abondin/hreasy) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-04-19 -->
 
 ---
 > Source: [tomevault-io/skills-registry](https://github.com/tomevault-io/skills-registry) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-05-04 -->
+<!-- tomevault:4.0:skill_md:2026-05-07 -->
