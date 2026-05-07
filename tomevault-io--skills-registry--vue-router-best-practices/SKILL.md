@@ -8,6 +8,7 @@ metadata:
 Vue Router best practices, common gotchas, and navigation patterns.
 
 ### Navigation Guards
+
 - Navigating between same route with different params → See [router-beforeenter-no-param-trigger](reference/router-beforeenter-no-param-trigger.md)
 - Accessing component instance in beforeRouteEnter guard → See [router-beforerouteenter-no-this](reference/router-beforerouteenter-no-this.md)
 - Navigation guard making API calls without awaiting → See [router-guard-async-await-pattern](reference/router-guard-async-await-pattern.md)
@@ -15,16 +16,18 @@ Vue Router best practices, common gotchas, and navigation patterns.
 - Navigation guard using deprecated next() function → See [router-navigation-guard-next-deprecated](reference/router-navigation-guard-next-deprecated.md)
 
 ### Route Lifecycle
+
 - Stale data when navigating between same route → See [router-param-change-no-lifecycle](reference/router-param-change-no-lifecycle.md)
 - Event listeners persisting after component unmounts → See [router-simple-routing-cleanup](reference/router-simple-routing-cleanup.md)
 
 ### Setup
+
 - Building production single-page application → See [router-use-vue-router-for-production](reference/router-use-vue-router-for-production.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/aiskillstore) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [BINGWU2003/student-side-job-platform](https://github.com/BINGWU2003/student-side-job-platform) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-04-19 -->
 
 ---
 > Source: [tomevault-io/skills-registry](https://github.com/tomevault-io/skills-registry) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-05-04 -->
+<!-- tomevault:4.0:skill_md:2026-05-07 -->
