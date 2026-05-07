@@ -277,4 +277,4 @@ re-validate (Phase 5-6), and resubmit.
 
 ---
 > Source: [GrizzwaldHouse/cowork-skills](https://github.com/GrizzwaldHouse/cowork-skills) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-04-26 -->
+<!-- tomevault:4.0:skill_md:2026-05-07 -->
