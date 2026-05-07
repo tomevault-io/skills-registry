@@ -407,9 +407,9 @@ export function MyComponent() {
 - **Component catalog** (44 components, props, install commands): `references/component-catalog.md`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/ankish8) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-13 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/Ankish8) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
 
 ---
 > Source: [tomevault-io/skills-registry](https://github.com/tomevault-io/skills-registry) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-04-29 -->
+<!-- tomevault:4.0:skill_md:2026-05-07 -->
