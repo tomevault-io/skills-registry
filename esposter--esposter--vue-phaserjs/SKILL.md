@@ -84,6 +84,22 @@ Any Phaser class that chains to `Scene → TextureManager → Texture → Frame 
 - Rex plugin instances (Slider, VirtualJoystick, etc.)
 - Any class that holds a `scene` reference
 
+## SSR / "Phaser is not defined" Fix
+
+**Problem**: `vue-phaserjs/dist/index.js` bundled `phaser4-rex-plugins` subpath imports (e.g. `phaser4-rex-plugins/plugins/clickoutside.js`). The bundled code accesses `Phaser.Scene`, `Phaser.Game`, etc. as globals at module-evaluation time, which fails in Node.js SSR.
+
+**Root cause**: The `external` array used string literal `"phaser4-rex-plugins"` which only matches the root package name, not subpath imports like `"phaser4-rex-plugins/plugins/clickoutside.js"`.
+
+**Fix** (`packages/vue-phaserjs/vite.config.js`): Use a RegExp to match all subpaths:
+
+```js
+rolldownOptions: {
+  external: ["phaser", /^phaser4-rex-plugins/, "pinia", "vue"],
+},
+```
+
+**Rule**: In Rolldown `external`, always use `/^package-name/` (regex) instead of `"package-name"` (string) when the package may be imported via subpaths. String literals only match exact module IDs.
+
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Esposter) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Source: [Esposter/Esposter](https://github.com/Esposter/Esposter) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-07 -->
