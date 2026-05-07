@@ -237,8 +237,8 @@ const stream = HashbrownOpenAI.stream.text({
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/aaronbassett) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-13 -->
+<!-- tomevault:4.0:skill_md:2026-04-16 -->
 
 ---
 > Source: [tomevault-io/skills-registry](https://github.com/tomevault-io/skills-registry) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-04-29 -->
+<!-- tomevault:4.0:skill_md:2026-05-07 -->
