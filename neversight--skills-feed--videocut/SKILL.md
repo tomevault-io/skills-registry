@@ -1,120 +1,119 @@
 ---
 name: videocut
-description: 自进化 skills。记录用户反馈，更新方法论和规则。触发词：更新规则、记录反馈、改进skill Use when this capability is needed.
+description: 环境准备。安装依赖、配置 API Key、验证环境。触发词：安装、环境准备、初始化 Use when this capability is needed.
 metadata:
   author: neversight
 ---
 
 <!--
-input: 用户反馈、错误纠正
-output: 更新后的文档（CLAUDE.md 或 tips/*.md）
-pos: 元 skill，让 Agent 从错误中学习
+input: 无
+output: 环境就绪
+pos: 前置 skill，首次使用前运行
 
 架构守护者：一旦我被修改，请同步更新：
 1. ../README.md 的 Skill 清单
 2. /CLAUDE.md 路由表
 -->
 
-# 自更新
+# 安装
 
-> 让 Agent 从错误中学习，持续改进
+> 首次使用前的环境准备
 
 ## 快速使用
 
 ```
-用户: 记录一下刚才的问题
-用户: 更新口误识别的规则
-用户: 这个教训要记下来
+用户: 安装环境
+用户: 初始化
 ```
 
-## 更新位置
+## 依赖清单
 
-| 内容类型 | 目标文件 | 示例 |
-|---------|---------|------|
-| 用户画像 | `CLAUDE.md` | 偏好、习惯 |
-| 方法论 + 反馈 | `*/tips/*.md` | 规则、教训 |
+| 依赖 | 用途 | 安装命令 |
+|------|------|----------|
+| Node.js | 运行脚本 | `brew install node` |
+| FFmpeg | 视频剪辑 | `brew install ffmpeg` |
+| curl | API 调用 | 系统自带 |
 
-## 流程
+## API 配置
 
-```
-用户触发（"刚才失败了"、"记录一下"）
-    ↓
-【自动】回溯上下文，找出问题点
-    ↓
-【自动】读目标文件全文，理解现有结构
-    ↓
-【自动】整合到正文相应位置（不是只往末尾加！）
-    ↓
-【自动】反馈记录只记事件，不重复规则
-    ↓
-汇报更新结果
-```
+### 火山引擎语音识别
 
-**关键**：不要问"什么问题"，直接从上下文分析！
+控制台：https://console.volcengine.com/speech/new/experience/asr?projectName=default
 
-## 更新原则
+1. 注册火山引擎账号
+2. 开通语音识别服务
+3. 获取 API Key
 
-### ❌ 错误做法：往末尾加
+配置到项目目录 `.claude/skills/.env`：
 
-```markdown
-## 反馈记录
-### 2026-01-14
-- 教训：审查稿末尾必须生成删除任务清单
-- 教训：用户确认时要分别确认口误和静音
+```bash
+# 文件路径：剪辑Agent/.claude/skills/.env
+VOLCENGINE_API_KEY=your_api_key_here
 ```
 
-只加到反馈记录 = 规则散落在末尾，下次还会犯错
+## 安装流程
 
-### ✅ 正确做法：整合到正文
-
-1. **读全文**，理解章节结构
-2. **找到相应位置**，把规则整合进去
-3. **反馈记录只记事件**：`- 审查稿标记了静音，但剪辑时漏删`
-
-```markdown
-## 四、审查稿格式
-（新增删除任务清单模板）
-
-## 五、确认与执行流程  ← 缺这个章节就新增
-（新增分别确认口误和静音的流程）
-
-## 反馈记录
-### 2026-01-14
-- 审查稿标记了静音，但剪辑时漏删（只删了口误）
+```
+1. 安装 Node.js + FFmpeg
+       ↓
+2. 配置火山引擎 API Key
+       ↓
+3. 验证环境
 ```
 
-## 触发条件
+## 执行步骤
 
-- 用户纠正 AI 错误
-- 用户说"记住这个"、"以后注意"
-- 发现新的通用规律
+### 1. 安装依赖
 
-## 反例
+```bash
+# macOS
+brew install node ffmpeg
 
-### 2026-01-13
-```
-❌ 错误：
-用户: 刚才失败了，更新到skills
-AI: 请告诉我你发现了什么问题？  ← 不该问！
-
-✅ 正确：
-AI: [自动回溯上下文，找到失败点]
-AI: [执行更新]
+# 验证
+node -v
+ffmpeg -version
 ```
 
-### 2026-01-14
-```
-❌ 错误：
-AI: 已更新，在反馈记录新增3条教训  ← 只加末尾！
+### 2. 配置 API Key
 
-✅ 正确：
-AI: [读全文，理解结构]
-AI: [整合到正文相应位置]
-AI: [反馈记录只记事件]
-AI: 已更新：新增第五章"确认与执行流程"，更新第四章模板
+```bash
+# 在项目 .claude/skills/ 目录下创建 .env 文件
+echo "VOLCENGINE_API_KEY=your_key" >> .claude/skills/.env
 ```
 
-**原则**：规则要整合到正文，反馈记录只是事件日志
+### 3. 验证环境
+
+```bash
+# 检查 Node.js
+node -v
+
+# 检查 FFmpeg
+ffmpeg -version
+
+# 检查 API Key（在项目目录下执行）
+cat .claude/skills/.env | grep VOLCENGINE
+```
+
+## 常见问题
+
+### Q1: API Key 在哪获取？
+
+火山引擎控制台 → 语音技术 → 语音识别 → API Key
+
+### Q2: ffmpeg 命令找不到
+
+```bash
+which ffmpeg  # 应该输出路径
+# 如果没有，重新安装：brew install ffmpeg
+```
+
+### Q3: 文件名含冒号报错
+
+FFmpeg 命令需加 `file:` 前缀：
+
+```bash
+ffmpeg -i "file:2026:01:26 task.mp4" ...
+```
 
 ---
 > Converted and distributed by [TomeVault](https://tomevault.io/claim/neversight) — claim your Tome and manage your conversions.
