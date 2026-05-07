@@ -1,11 +1,11 @@
-# videocut:自进化
+# videocut:安装
 
 > Skill by [neversight](https://github.com/neversight/skills_feed) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/ceeon/videocut-skills/videocut:自进化)
+Original source: [neversight/skills_feed](https://github.com/neversight/skills_feed/tree/main/data/skills-md/ceeon/videocut-skills/videocut:安装)
 
 ---
 
