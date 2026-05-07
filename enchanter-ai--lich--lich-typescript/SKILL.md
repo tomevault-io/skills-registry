@@ -50,4 +50,4 @@ Thin mapping layer — invoke subprocess, parse JSON, lookup, emit. No reasoning
 
 ---
 > Source: [enchanter-ai/lich](https://github.com/enchanter-ai/lich) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-04-29 -->
+<!-- tomevault:4.0:skill_md:2026-05-07 -->
