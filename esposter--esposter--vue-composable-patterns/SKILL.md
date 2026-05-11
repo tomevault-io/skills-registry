@@ -1,9 +1,73 @@
 ---
 name: vue-composable-patterns
-description: Esposter-specific Vue 3 composable and form patterns — MaybeRefOrGetter, SSR safety, online/offline, type-driven state reset, and resource management. Apply when writing composables, form dialogs, or browser-aware reactive code. Use when this capability is needed.
+description: Esposter-specific Vue 3 composable and form patterns — MaybeRefOrGetter, SSR safety, online/offline, type-driven state reset, resource management, and cursor pagination (store + useRead* composable + StyledWaypoint). Apply when writing composables, form dialogs, paginated lists, or browser-aware reactive code. Use when this capability is needed.
 metadata:
   author: Esposter
 ---
+
+## Cursor Pagination — Store + Composable + Waypoint
+
+Every paginated list follows a three-layer pattern. **Never load pages directly in a component or store a raw array for paginated data.**
+
+### Layer 1 — Store
+
+Call `useCursorPaginationData<TItem>()` — it handles the ref + cast internally. Expose `hasMore`, `items`, `readItems`, `readMoreItems`:
+
+```ts
+export const useFooStore = defineStore("feature/foo", () => {
+  const { hasMore, items, readItems, readMoreItems } = useCursorPaginationData<FooEntity>();
+  // mutations update items.value directly (optimistic or after server response)
+  return { hasMore, items, readItems, readMoreItems };
+});
+```
+
+### Layer 2 — `useRead*` Composable
+
+Wrap `readItems` (first page) and `readMoreItems` (subsequent pages) with tRPC calls. The `readMoreItems` callback receives the current `cursor` automatically:
+
+```ts
+export const useReadFoos = (roomId: string) => {
+  const { $trpc } = useNuxtApp();
+  const fooStore = useFooStore();
+  const { readItems, readMoreItems } = fooStore;
+  const readFoos = () => readItems(() => $trpc.foo.readFoos.query({ roomId }));
+  const readMoreFoos = (onComplete: () => void) =>
+    readMoreItems((cursor) => $trpc.foo.readFoos.query({ cursor, roomId }), onComplete);
+  return { readFoos, readMoreFoos };
+};
+```
+
+For global (non-room-scoped) lists omit the `roomId` parameter entirely.
+
+### Layer 3 — Component / Page
+
+Call `readFoos()` in `await` at setup time, destructure `hasMore` + `items` via `storeToRefs`, and place `<StyledWaypoint>` at the bottom of the list. The waypoint emits `change` with an `onComplete` callback when it enters the viewport:
+
+```vue
+<script setup lang="ts">
+const { readFoos, readMoreFoos } = useReadFoos(roomId);
+const fooStore = useFooStore();
+const { hasMore, items } = storeToRefs(fooStore);
+await readFoos();
+</script>
+
+<template>
+  <v-list v-if="items.length > 0">
+    <v-list-item v-for="item of items" :key="item.id" ... />
+    <StyledWaypoint :is-active="hasMore" @change="readMoreFoos" />
+  </v-list>
+</template>
+```
+
+`StyledWaypoint` is placed **inside** the list container, after all items — it only triggers when `:is-active` is true, so it is safe to always render it.
+
+### Rules
+
+- **Never** store a paginated list as a plain `ref<TItem[]>` — always use `CursorPaginationData<TItem>`.
+- **Never** call `readItems`/`readMoreItems` from a component directly — always go through a `useRead*` composable.
+- Optimistic mutations update `items.value` directly (spread for create, filter for delete) — no need to re-fetch.
+- `readMoreItems` appends; `readItems` resets the full `CursorPaginationData` ref (handles navigating back to first page).
+- For multi-list pagination (e.g., messages per room) use `useCursorPaginationDataMap` instead of `useCursorPaginationOperationData`.
 
 # Vue Composable & Form Patterns (Esposter)
 
@@ -28,6 +92,63 @@ export const useCopyToClipboard = () => {
   }
 }
 ```
+
+## Settings Tab Permissions — Hide at the Tab Level
+
+Permission-gated settings tabs are hidden via `SettingsPermissionMap`, not guarded inside the tab component. Individual tab components never check permissions — they render unconditionally (the tab is simply not shown to users who lack permission).
+
+**Pattern:**
+
+1. Add `[SettingsType.Xxx]: RoomPermission.YYY` to `services/message/settings/SettingsPermissionMap.ts`
+2. `LeftSideBar.vue` filters visible tabs using `hasPermission` inside a `computed`
+3. The tab component itself just fetches and renders — no `isPermitted` check
+
+```typescript
+// services/message/settings/SettingsPermissionMap.ts
+export const SettingsPermissionMap: Partial<Record<SettingsType, RoomPermission>> = {
+  [SettingsType.Bans]: RoomPermission.BanMembers,
+  [SettingsType.AuditLog]: RoomPermission.ManageRoom,
+};
+
+// LeftSideBar.vue — filters entries via computed, no per-component checks
+const visibleSettings = computed(() =>
+  Object.entries(SettingsListItemMap).filter(([settingsType]) => {
+    const permission = SettingsPermissionMap[settingsType];
+    if (!permission) return true;
+    const data = myPermissionsMap.value.get(roomId);
+    if (!data) return false;
+    return hasPermission(data.permissions, permission, data.isRoomOwner);
+  }),
+);
+```
+
+**Do NOT** check `isPermitted` inside the tab component and show "Insufficient permissions" text — hide the tab entirely instead.
+
+## StyledWaypoint — Infinite Scroll Pattern
+
+Use `<StyledWaypoint>` for cursor-paginated lists instead of a "Load more" button. It fires `@change` when scrolled into view and manages its own loading indicator via the default slot.
+
+- `:is-active="hasMore"` — hides and deactivates when no more pages
+- `@change="readMoreXxx"` — the handler must accept `(onComplete: () => void)` and call `onComplete()` when done (via the `onComplete` arg to `readMoreItems`)
+- Default slot: shown while loading (skeleton items); omit to use the built-in `v-progress-circular`
+
+```vue
+<StyledWaypoint :is-active="hasMore" @change="readMoreBans" />
+
+<!-- or with loading skeleton: -->
+<StyledWaypoint :is-active="hasMore" @change="readMoreMembers">
+  <MessageModelMemberSkeletonItem v-for="i in DEFAULT_READ_LIMIT" :key="i" />
+</StyledWaypoint>
+```
+
+Composable `readMoreXxx` signature must match the `@change` emitted callback:
+
+```typescript
+const readMoreBans = (onComplete: () => void) =>
+  readMoreItems((cursor) => $trpc.moderation.readBans.query({ cursor, limit: LIMIT, roomId }), onComplete);
+```
+
+Never use a manual "Load more" `v-btn` with `isLoadingMore` state — that belongs to `StyledWaypoint`.
 
 ## MaybeRefOrGetter Composables
 
@@ -206,15 +327,15 @@ Composables that manage tRPC subscriptions for a feature are named `use{Feature}
 
 ```typescript
 // composables/message/subscribables/useVoiceSubscribables.ts
-export const useVoiceSubscribables = () => {
+export const useVoiceSubscribables = async () => {
   // calls useOnlineSubscribable, sets up tRPC subscriptions
   // no return value
 };
 
 // composables/message/subscribables/useSubscribables.ts
-export const useSubscribables = () => {
-  useRoomSubscribables();
-  useVoiceSubscribables();
+export const useSubscribables = async () => {
+  await useRoomSubscribables();
+  await useVoiceSubscribables();
   // ...
 };
 ```
@@ -285,8 +406,110 @@ watch(
 
 - Always initialize the local type ref from the current model value, not a hardcoded default
 - `if (newType === oldType) return;` in a watch callback is always redundant — Vue only fires when the value changes
+
+## Offline IndexedDB Cache via `readItems` cacheOptions
+
+Room-switch composables (`useReadMessages`, `useReadMembers`, `useReadRooms`) pass a `ReadItemsCacheOptions<TItem>` as the third argument to `readItems`. `readItems` in `useCursorPaginationOperationData` handles the if-online/offline logic centrally — no manual `if (!online.value)` branches in composables.
+
+**`ReadItemsCacheOptions<TItem>`** (`app/models/pagination/cursor/ReadItemsCacheOptions.ts`):
+
+```typescript
+interface ReadItemsCacheOptions<TItem> {
+  cache: {
+    read: (partitionKey: string) => Promise<TItem[]>;
+    write: (items: TItem[], partitionKey: string) => Promise<void>;
+  };
+  onCacheRead?: () => void; // fires only on offline cache hit
+  partitionKey: string;
+}
+```
+
+**`readItems` behavior:**
+
+- Offline + `cacheOptions` present → read from cache, call `onCacheRead?.()`, skip tRPC query
+- Online → run tRPC query, then write results to cache
+
+**Generic base functions** (`app/services/cache/indexedDb/`):
+
+- `readIndexedDb(configuration, partitionKey)` — reads all items for a partition key
+- `writeIndexedDb(configuration, items, partitionKey)` — replaces all items for a partition key (respects `configuration.limit`)
+- `resetIndexedDb()` — clears the singleton (used in tests)
+
+**Configuration objects** (one per file, `as const satisfies IndexedDbStoreConfiguration`):
+
+- `MessageIndexedDbStoreConfiguration` — `CompositeAzureKeyPath`, `limit: 50`
+- `MemberIndexedDbStoreConfiguration` — `PartitionedIdKeyPath`
+- `RoomIndexedDbStoreConfiguration` — `PartitionedIdKeyPath`
+
+**partitionKey injection pattern** — when the entity type lacks a `partitionKey` field (e.g. `User`, `Room`), inject/strip it in the `cache.read/write` lambdas:
+
+```typescript
+cache: {
+  read: (partitionKey) => readIndexedDb(MemberIndexedDbStoreConfiguration, partitionKey),
+  write: (items, partitionKey) => writeIndexedDb(MemberIndexedDbStoreConfiguration, items, partitionKey),
+},
+```
+
+**`useMessageCache`** — additional composable for messages only, because the message component doesn't re-mount on room switch:
+
+- `watchDeep(items, ...)` — writes to IndexedDB when live subscription adds messages
+- `watch(currentRoomId, ...)` — hydrates store from IndexedDB on offline room switch
+
+Architecture doc: `features/esbabbler/cache.md`
+
+## Bundle Ancillary Reads with the Primary Read
+
+When a component needs ancillary data (e.g. permissions, metadata) alongside a primary list load, bundle the ancillary read inside the primary read composable — not in the component's `onMounted`.
+
+**Rule:** `readMyPermissions` and similar ancillary fetches belong inside the composable that owns the load (`useReadRooms`, `useReadMembers`, etc.), called in `Promise.all` alongside other metadata reads. If there is no natural companion read, call it directly in `<script setup>` — still no `onMounted`.
+
+```typescript
+// WRONG: component fetches permissions separately in onMounted
+const { isManageable, readMyPermissions } = roleStore;
+onMounted(async () => {
+  if (!isCreator.value) await readMyPermissions({ roomId: room.id });
+});
+
+// CORRECT: bundled in the owning read composable alongside other metadata
+// useReadRooms.ts
+const readMyPermissions = useReadMyPermissions();
+const readRooms = () =>
+  readItems(
+    () => $trpc.room.readRooms.query({ roomId: currentRoomId.value }),
+    ({ items }) => {
+      const roomIds = items.map(({ id }) => id);
+      return Promise.all([readUsersToRooms(roomIds), readMyPermissions(roomIds)]);
+    },
+  );
+```
+
+Follow the `useReadUsersToRooms` pattern for batch ancillary reads — a composable that accepts an array of IDs and calls the store method for each in `Promise.all`.
+
 - Writable computed is NOT the right tool here — it requires a backing `_ref` and still needs an external sync watch when a parent can reset the model
 
+## Async `onClick` Handlers — Always Use `getSynchronizedFunction`
+
+When an `onClick` (or any event handler) calls an `async` function, **always wrap with `getSynchronizedFunction`** from `#shared/util/getSynchronizedFunction`. Never use `void fn()` or a bare `() => { fn() }`.
+
+`getSynchronizedFunction` prevents concurrent calls (re-entrancy guard) and handles floating-promise lint errors in a single pattern.
+
+```typescript
+import { getSynchronizedFunction } from "#shared/util/getSynchronizedFunction";
+
+// WRONG — floating promise / no debounce
+onClick: () => { void openThread(partitionKey, rowKey) }
+
+// WRONG — swallows errors silently
+onClick: () => { openThread(partitionKey, rowKey) }
+
+// CORRECT
+onClick: getSynchronizedFunction(async () => {
+  await openThread(partitionKey, rowKey);
+}),
+```
+
+This applies everywhere an async function is used as an event handler: `onClick`, `onChange`, `onSubmit`, etc.
+
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Esposter) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Source: [Esposter/Esposter](https://github.com/Esposter/Esposter) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-11 -->
