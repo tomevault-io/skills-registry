@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [synmux/syn-horse](https://github.com/synmux/syn-horse/tree/main/.claude/skills/vue-router-skilld)
+Original source: [synmux/syn-horse](https://github.com/synmux/syn-horse/tree/main/.agents/skills/vue-router-skilld)
 
 ---
 
