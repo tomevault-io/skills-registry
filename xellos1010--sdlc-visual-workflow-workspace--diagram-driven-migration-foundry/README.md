@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Xellos1010/sdlc-visual-workflow-workspace](https://github.com/Xellos1010/sdlc-visual-workflow-workspace/tree/main/Research and Skills/diagram-driven-agent-orchestration-packet-2026-04-16/skill-source/diagram-driven-migration-foundry)
+Original source: [Xellos1010/sdlc-visual-workflow-workspace](https://github.com/Xellos1010/sdlc-visual-workflow-workspace/tree/main/.claude/skills/diagram-driven-migration-foundry)
 
 ---
 
