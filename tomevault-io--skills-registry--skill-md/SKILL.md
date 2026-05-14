@@ -1,6 +1,6 @@
 ---
 name: tomevault-design
-description: AUTO-INVOKE on any task that touches frontend, UI, design, components, layout, page, styling, brand, logo, color, palette, font, typography, motion, animation, copy, button, modal, navbar, sidebar, card, form, table, chart, hero, landing, or anything that ships pixels to tomevault-web. Triggers on file edits to tomevault-web/src/**/*.tsx, tomevault-web/src/app/**, .css, tailwind config, globals.css, or any UI component file. Loads the internal tomevault-design Tome at /home/tomevault/tomevault-design/, which composes four upstream design skills (design-an-interface, impeccable, taste-skill, ui-ux-pro-max) with TomeVault-specific design context (palette, typography, brand, motion, light-dark, deploy discipline, voice, analytics). REPLACES the archived Anthropic frontend-design skill — do not re-introduce that skill. Skip ONLY for pure backend, pure pipeline, pure infra work with no UI surface. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed.
+description: AUTO-INVOKE on any task that touches frontend, UI, design, components, layout, page, styling, brand, logo, color, palette, font, typography, motion, animation, copy, button, modal, navbar, sidebar, card, form, table, chart, hero, landing, or anything that ships pixels to tomevault-web. Triggers on file edits to tomevault-web/src/**/*.tsx, tomevault-web/src/app/**, .css, tailwind config, globals.css, or any UI component file. Loads the internal tomevault-design Tome at /home/tomevault/tomevault-design/, which composes four upstream design skills (design-an-interface, impeccable, taste-skill, ui-ux-pro-max) with TomeVault-specific design context (palette, typography, brand, motion, light-dark, deploy discipline, voice, analytics). REPLACES the archived Anthropic frontend-design skill — do not re-introduce that skill. Skip ONLY for pure backend, pure pipeline, pure infra work with no UI surface. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed.
 metadata:
   author: tomevault-io
 ---
@@ -73,6 +73,10 @@ Don't propose changes to the Tome's `components/` files without an actual surfac
 
 ---
 > Source: [tomevault-io/tomes](https://github.com/tomevault-io/tomes) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-14 -->
+
+---
+> Source: [tomevault-io/skills-registry](https://github.com/tomevault-io/skills-registry) — distributed by [TomeVault](https://tomevault.io).
 <!-- tomevault:4.0:skill_md:2026-05-14 -->
 
 ---
