@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tomevault-io/tomes](https://github.com/tomevault-io/tomes/tree/main/tomevault-io--tomes/skills/vue-component-generator/SKILL.md)
+Original source: [tomevault-io/tomes](https://github.com/tomevault-io/tomes/tree/main/tomevault-io--tomes/skills/clerk-vue-patterns/SKILL.md)
 
 ---
 
