@@ -175,4 +175,4 @@ Sequence:
 
 ---
 > Source: [tomevault-io/companyos](https://github.com/tomevault-io/companyos) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-04-30 -->
+<!-- tomevault:4.0:skill_md:2026-05-14 -->
