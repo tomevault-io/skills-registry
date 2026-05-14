@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tomevault-io/tomes](https://github.com/tomevault-io/tomes/tree/main/vizzly-testing--cli/skills/visual-testing-philosophy/SKILL.md)
+Original source: [tomevault-io/tomes](https://github.com/tomevault-io/tomes/tree/main/vizzly-testing--cli/skills/vizzly-knowledge/SKILL.md)
 
 ---
 
