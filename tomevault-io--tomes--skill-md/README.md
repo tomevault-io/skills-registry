@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tomevault-io/tomes](https://github.com/tomevault-io/tomes/tree/main/tomevault-io--companyos/skills/tomevault-design-md/SKILL.md)
+Original source: [tomevault-io/tomes](https://github.com/tomevault-io/tomes/tree/main/tomevault-io--tomes/skills/typescript-coding-standards/SKILL.md)
 
 ---
 
