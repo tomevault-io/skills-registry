@@ -1,75 +1,214 @@
 ---
-name: tomevault-design
-description: AUTO-INVOKE on any task that touches frontend, UI, design, components, layout, page, styling, brand, logo, color, palette, font, typography, motion, animation, copy, button, modal, navbar, sidebar, card, form, table, chart, hero, landing, or anything that ships pixels to tomevault-web. Triggers on file edits to tomevault-web/src/**/*.tsx, tomevault-web/src/app/**, .css, tailwind config, globals.css, or any UI component file. Loads the internal tomevault-design Tome at /home/tomevault/tomevault-design/, which composes four upstream design skills (design-an-interface, impeccable, taste-skill, ui-ux-pro-max) with TomeVault-specific design context (palette, typography, brand, motion, light-dark, deploy discipline, voice, analytics). REPLACES the archived Anthropic frontend-design skill — do not re-introduce that skill. Skip ONLY for pure backend, pure pipeline, pure infra work with no UI surface. Use when this capability is needed. Use when this capability is needed. Use when this capability is needed.
+name: vizzly-knowledge
+description: Core knowledge about Vizzly visual testing - file structure, CLI commands, and how it works. Use when working with Vizzly, running visual tests, or helping with screenshot-related tasks. Use when this capability is needed. Use when this capability is needed.
 metadata:
   author: tomevault-io
 ---
 
-# TomeVault Design (Tome Adapter)
+# Vizzly Visual Testing Knowledge Base
 
-This is a thin adapter that points at the internal **tomevault-design Tome** at `/home/tomevault/tomevault-design/`. The Tome is the source of truth — this file just routes you to it and sets the working directory expectation.
+You have deep knowledge of Vizzly, a visual regression testing platform. This context helps you work effectively with Vizzly projects.
 
-## What to do
+## What is Vizzly?
 
-1. **Read the Tome's orchestrator skill first:**
+Vizzly captures screenshots from real functional tests (not isolated component renders) and compares them against baselines. It works in two modes:
 
-   ```
-   /home/tomevault/tomevault-design/skills/tomevault-design/SKILL.md
-   ```
+**TDD Mode (Local Development):**
+- Run `vizzly tdd start` to start the local server
+- Screenshots are compared locally using `honeydiff` (fast Rust-based diffing)
+- Interactive dashboard at `http://localhost:47392`
+- Baselines stored in `.vizzly/baselines/`
+- No API token required
 
-   Follow its instructions. It will tell you which TomeVault context files to load, which of the four bundled skills to apply, and in what order.
+**Cloud Mode (CI/CD):**
+- Run `vizzly run "npm test" --wait`
+- Screenshots uploaded to Vizzly cloud
+- Team reviews changes via web dashboard
+- Requires `VIZZLY_TOKEN`
 
-2. **Resolve all paths in the orchestrator relative to the Tome root:**
+## The .vizzly Directory
 
-   ```
-   /home/tomevault/tomevault-design/
-   ```
+When Vizzly runs, it creates a `.vizzly/` directory with this structure:
 
-   When the orchestrator says "load `components/.impeccable.md`", read `/home/tomevault/tomevault-design/components/.impeccable.md`. When it says "run `skills/ui-ux-pro-max/scripts/search.py`", run `/home/tomevault/tomevault-design/skills/ui-ux-pro-max/scripts/search.py`.
+```
+.vizzly/
+├── baselines/          # Baseline screenshots (PNG files)
+│   ├── homepage.png
+│   └── login-form.png
+├── current/            # Current test screenshots
+│   ├── homepage.png
+│   └── login-form.png
+├── diffs/              # Visual diff images (red highlights)
+│   └── homepage.png
+├── report-data.json    # Comparison results (JSON)
+├── server.json         # TDD server info (port, etc.)
+└── baseline-metadata.json  # Source of baselines (optional)
+```
 
-3. **The Tome's four bundled skills are at:**
+## Understanding report-data.json
 
-   - `/home/tomevault/tomevault-design/skills/design-an-interface/SKILL.md`
-   - `/home/tomevault/tomevault-design/skills/impeccable/SKILL.md` (plus `reference/` subfiles)
-   - `/home/tomevault/tomevault-design/skills/taste-skill/SKILL.md`
-   - `/home/tomevault/tomevault-design/skills/ui-ux-pro-max/SKILL.md` (plus `data/`, `scripts/`, `templates/`)
+This is the primary source of truth for test results. Read it to understand test status:
 
-4. **TomeVault-specific design decisions live at:**
+```json
+{
+  "comparisons": [
+    {
+      "name": "homepage",
+      "status": "failed",        // "passed", "failed", or "new"
+      "diffPercentage": 2.3,     // Percentage of pixels different
+      "threshold": 0.1,          // Allowed diff percentage
+      "current": "/images/current/homepage.png",
+      "baseline": "/images/baselines/homepage.png",
+      "diff": "/images/diffs/homepage.png"
+    }
+  ]
+}
+```
 
-   `/home/tomevault/tomevault-design/components/`
+**Status meanings:**
+- `passed` - Screenshot matches baseline within threshold
+- `failed` - Screenshot differs more than threshold allows
+- `new` - No baseline exists yet (first time this screenshot was captured)
 
-   These override the bundled skills when they conflict. Palette, typography, brand, motion, light/dark, deploy discipline, analytics, voice.
+## CLI Commands
 
-## When this skill fires
+**TDD Mode (Local Development):**
+```bash
+vizzly tdd start              # Start TDD server (background)
+vizzly tdd run "npm test"     # Run tests with ephemeral server
+vizzly tdd status             # Show current test status
+vizzly tdd stop               # Stop the TDD server
+vizzly baselines              # List and query local baselines
+```
 
-Trigger on any of:
+**Cloud Mode (CI/CD):**
+```bash
+vizzly run "npm test"         # Run tests and upload to cloud
+vizzly run "npm test" --wait  # Wait for cloud processing
+vizzly status <build-id>      # Check build status
+vizzly builds                 # List and query builds
+vizzly finalize <parallel-id> # Finalize parallel builds
+vizzly comparisons            # Query and search comparisons
+```
 
-- Frontend / UI / design work on `tomevault-web/`
-- Page layout, component design, form / button / modal / nav / card / table / chart
-- Brand, logo, favicon, color, font, motion
-- Visual review or polish requests
+**Review Commands (approve/reject visual changes):**
+```bash
+vizzly comparisons -b <build-id>                     # List comparisons for a build
+vizzly comparisons --name "Button*" --status changed # Search by name/status
+vizzly approve <comparison-id>                       # Approve a comparison
+vizzly approve <comparison-id> -m "LGTM"             # Approve with comment
+vizzly reject <comparison-id> -r "reason"            # Reject (reason required)
+vizzly comment <build-id> "message"                  # Add comment to a build
+```
 
-Skip when the task is pure backend, pure infra, or pure pipeline scripting with no UI surface.
+**Project Setup:**
+```bash
+vizzly init                   # Create vizzly.config.js
+vizzly config                 # Display current configuration
+vizzly doctor                 # Run diagnostics to check environment
+```
 
-## Why this adapter exists
+**Account & Authentication:**
+```bash
+vizzly login                  # Authenticate with Vizzly cloud
+vizzly logout                 # Clear stored authentication tokens
+vizzly whoami                 # Show current auth status
+vizzly orgs                   # List organizations you have access to
+vizzly projects               # List projects you have access to
+```
 
-The internal Tome is a separate git repo at `/home/tomevault/tomevault-design/`. Symlinking it into `.claude/skills/` directly would break the orchestrator's relative paths. This adapter is the cheap, removable indirection: parent harness discovers `tomevault-design.md`, which redirects to the real Tome.
+**Project Configuration:**
+```bash
+vizzly project:select         # Configure project for current directory
+vizzly project:list           # Show all configured projects
+vizzly project:token          # Show project token for current directory
+vizzly project:remove         # Remove project configuration
+```
 
-Once we publish the Tome and decide to vendor it back into the parent (or install via a future Tome runtime), this adapter goes away.
+**Advanced:**
+```bash
+vizzly api <method> <endpoint>  # Make raw API requests
+vizzly upload                   # Upload screenshots directly
+vizzly preview                  # Upload static files as preview
+```
 
-## Status
+## Taking Screenshots in Tests
 
-The Tome is currently **internal and private** (no public remote, no GitHub repo). We're dogfooding it on the next handful of design surfaces. After 3 uses, we'll evaluate whether the four bundled skill choices, the orchestration routing, and the `components/` coverage are right.
+The client SDK provides `vizzlyScreenshot()`:
 
-Don't propose changes to the Tome's `components/` files without an actual surface in front of you that needs the change — over-designing the design system pre-dogfood is exactly the failure mode we're trying to avoid.
+```javascript
+import { vizzlyScreenshot } from '@vizzly-testing/cli/client';
+
+// In your test
+await vizzlyScreenshot('homepage', await page.screenshot(), {
+  browser: 'chrome',
+  viewport: '1920x1080'
+});
+```
+
+**Screenshot Identity:** Screenshots are matched by signature: `name|viewport_width|browser`. The same logical screenshot across runs can be compared even with different parameters.
+
+## Accepting Baselines
+
+When a screenshot changes intentionally, you need to accept it as the new baseline:
+
+**Via TDD Dashboard (Local):**
+1. Open `http://localhost:47392`
+2. Review the visual diff
+3. Click "Accept" on screenshots you want to update
+
+**Via CLI (Cloud builds):**
+```bash
+vizzly comparisons -b <build-id>          # List comparisons for a build
+vizzly approve <comparison-id>            # Approve a comparison
+vizzly reject <comparison-id> -r "reason" # Reject (reason required)
+```
+
+**Via File Operations (Local TDD):**
+Copy the current screenshot to baselines:
+```bash
+cp .vizzly/current/homepage.png .vizzly/baselines/homepage.png
+```
+
+## Configuration
+
+Vizzly uses `vizzly.config.js` for configuration:
+
+```javascript
+import { defineConfig } from '@vizzly-testing/cli/config';
+
+export default defineConfig({
+  threshold: 0.1,           // Default diff threshold (0.1 = 0.1%)
+  port: 47392,              // TDD server port
+  basePath: '.vizzly',      // Where to store screenshots
+});
+```
+
+## Environment Variables
+
+- `VIZZLY_TOKEN` - API authentication token
+- `VIZZLY_API_URL` - API base URL (default: https://app.vizzly.dev)
+- `VIZZLY_ENABLED` - Enable/disable SDK (default: auto-detect)
+- `VIZZLY_LOG_LEVEL` - Logging level (debug|info|warn|error)
+
+## Common Workflows
+
+**Starting visual testing on a project:**
+1. Install: `npm install --save-dev @vizzly-testing/cli`
+2. Init: `npx vizzly init`
+3. Add screenshots to tests
+4. Run: `vizzly tdd run "npm test"`
+5. Review and accept baselines
+
+**Debugging a failing screenshot:**
+1. Read `.vizzly/report-data.json` to find the failing comparison
+2. View the baseline and current images
+3. Compare visually to identify what changed
+4. Decide: accept as new baseline OR fix the visual regression
 
 ---
-> Source: [tomevault-io/companyos](https://github.com/tomevault-io/companyos) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-05-14 -->
-
----
-> Source: [tomevault-io/tomes](https://github.com/tomevault-io/tomes) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-05-14 -->
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vizzly-testing) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->
 
 ---
 > Source: [tomevault-io/tomes](https://github.com/tomevault-io/tomes) — distributed by [TomeVault](https://tomevault.io).
