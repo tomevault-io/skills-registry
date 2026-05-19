@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [YuDefine/nuxt-supabase-starter](https://github.com/YuDefine/nuxt-supabase-starter/tree/main/template/.claude/skills/vue-best-practices)
+Original source: [YuDefine/nuxt-supabase-starter](https://github.com/YuDefine/nuxt-supabase-starter/tree/main/template/.agents/skills/vue-best-practices)
 
 ---
 
