@@ -24,21 +24,14 @@ metadata:
 
 `defineSlots` → `defineModel` → `defineProps` → `defineEmits` (in this order), then all `const` assignments, then `defineExpose` last (preceded by a blank line, before any `watch`/lifecycle hooks).
 
-## Props Interface Naming
-
-- Always use `interface {ComponentName}Props` (e.g. `interface DialogProps`, `interface EditDialogButtonProps`)
-- Always call `defineProps<{ComponentName}Props>()`
-
 ## Inline Functions & Macros
 
 - **Inline arrow functions** where argument types can be inferred from context — don't extract single-use, trivially-typed lambdas into named functions.
-- **Inline Vue event handlers** — always write handlers directly in the template (`@submit="async (_, onComplete) => { ... }"`). This lets Vue infer event argument types automatically. Only extract to a named function if the same logic is reused in multiple places (e.g. called from both a button click AND a keydown handler). Single-use handlers must always be inlined, no exceptions.
+- **Vue event handlers** — write single-use handlers directly in the template (`@submit="async (_, onComplete) => { ... }"`). This lets Vue infer event argument types automatically and avoids component-local names that add no reuse. Inline single-statement calls directly (`@click="save(id)"`) and inline short multi-statement async handlers when they are only used once. Extract to a named `const myHandler = async () => { ... }` only when the logic is reused, exposed, passed to non-template APIs (timers, listeners, lifecycle hooks, third-party callbacks), depends on globals that Vue templates do not expose or type well (for example `structuredClone`, `Promise`, or browser/file picker APIs), uses syntax that Vue template expressions do not handle well (for example `instanceof`), or is long enough that inlining would make the template harder to scan.
 - **IME composition guard** — when handling `@keydown.enter` on text inputs, guard inline against IME composition so that confirming a CJK candidate doesn't prematurely commit: `@keydown.enter.stop="!$event.isComposing && commitEdit()"`.
-- **`defineModel`**: always type explicitly. For booleans, you must pass `{ default: false }` so the type does not implicitly include `undefined` (`defineModel<boolean>({ default: false })`). Always name the variable `modelValue`: `const modelValue = defineModel<string>()` — never `const model = ...` or any other alias.
+- **`defineModel`**: always type explicitly. For booleans, you must pass `{ default: false }` so the type does not implicitly include `undefined` (`defineModel<boolean>({ default: false })`).
+- **`defineProps`**: always destructure props at declaration time (`const { id, name } = defineProps<Props>()`). This preserves the props reactivity transform and avoids `props.foo` / `.value` ceremony in script and template. Use defaults in the destructure when needed.
 - **`defineSlots`**: only assign to a variable when `slots` is actually referenced in script — `const slots = defineSlots<{ ... }>()`. If `slots` is not used in script (e.g. the template uses `<slot>` tags directly), call `defineSlots<...>()` without assignment.
-- **No abbreviated parameter names** — use full descriptive names (e.g. `event` not `e`, `column` not `col`, `configuration` not `config`, `dataSource` not `source`, `relativePosition` not `relPos`, `position` not `pos`, `previous` not `prev`). Exception: simple iteration callbacks where the meaning is obvious from context (e.g. `.filter((row, index) => ...)`).
-- **No abbreviated function names** — use full descriptive names (e.g. `goToPrevious` not `goToPrev`, `initialize` not `init`, `calculate` not `calc`).
-- **`onUpdate:*` handler parameters** — always name the parameter `new{PropName}` in camelCase: `'onUpdate:itemsPerPage': (newItemsPerPage) => { ... }`, `'onUpdate:page': (newPage) => { ... }`, `'onUpdate:modelValue': (newModelValue) => { ... }`.
 - **Never destructure event parameters** — always use `(event: KeyboardEvent) => { event.key ... }` not `({ key }: KeyboardEvent) => { key ... }`. Destructuring event methods (e.g. `preventDefault`, `stopPropagation`) causes "Illegal invocation" because they lose their `this` binding. Keep the full `event` object for consistency even when only accessing properties.
 - **`@click` shorthands** — if a click handler is a single async call, use `@click="myAsyncFn(args)"` directly — no need to wrap in `async () => { await myAsyncFn(args) }`.
 - **Never declare `defineModel` unless the value is actually used** in script (e.g. in a `watch`, `computed`, or passed somewhere). Don't create a model just to forward it — use `:prop` + `@event` instead.
@@ -87,10 +80,9 @@ Example:
   ```
 
 - **`v-for` destructuring** — always destructure `v-for` bindings when properties are accessed in the template: `v-for="{ value, icon, title } of items"` not `v-for="item of items"` + `item.value`. Only keep a full reference when the whole object is needed (e.g. passed as a prop or stored in a ref). In that case, name the loop variable to match the prop it will be passed to, enabling `:propName` shorthand.
-- **Prop shorthand naming** — name local variables to match their target prop so Vue's `:propName` shorthand works without explicit assignment. For example, if the prop is `dataSourceType`, the local variable must also be `dataSourceType`.
 - **`#activator` always first** — in components that use both `#activator` and other slots (e.g. `v-tooltip`, `v-menu`), always place the `#activator` template as the first child.
 - **Slot names with dots always use dynamic binding** — Vue does not support dots in static slot names, so Vuetify item slots always require the bracket syntax: `#[`item.drag`]`, `#[`item.actions`]`. Only plain names without dots can be static (e.g. `#top`, `#activator`).
-- **Always use `:` shorthand** instead of `v-bind:propName` — write `:disabled="..."` not `v-bind:disabled="..."`. The object-spread form `v-bind="object"` has no shorthand and stays as-is.
+- **Always use `:` shorthand** instead of `v-bind:propName` — write `:disabled="..."` not `v-bind:disabled="..."`. The object-spread form also has a shorthand: use `:="object"` instead of `v-bind="object"`.
 - **Never use `.value` in templates** — Vue auto-unwraps refs in template expressions. Writing `ref.value` in a template accesses `.value` on the already-unwrapped object (not on the ref), which is almost always `undefined`. Write `fn(ref)` not `fn(ref.value)`. `.value` is only needed in `<script setup>` (outside template expressions).
 
 ## Optional Refs — Omit the Initial Value
@@ -109,12 +101,10 @@ The same applies to other nullable-initial refs: `ref<User>()`, `ref<number>()`,
 
 ## Refs & Computed
 
-- **Template refs** — always use `useTemplateRef` for both component and HTML element refs. Never suffix the variable with `Ref` — `const errorIcon = useTemplateRef(...)` not `const errorIconRef = useTemplateRef(...)`.
+- **Template refs** — always use `useTemplateRef` for both component and HTML element refs.
   - Components: `useTemplateRef<InstanceType<typeof ComponentName>>("name")`
   - HTML elements: `useTemplateRef("container")` — no explicit type annotation needed, Vue infers it. Use a generic semantic name like `"container"`, never the element tag name (not `"spanRef"`, not `"divRef"`).
-- **No `current` prefix** — reactive refs/computeds are always the current value by definition; the prefix is redundant. Write `userId` not `currentUserId`, `voteOptionId` not `currentVoteOptionId`. **Exception**: global store identifiers that distinguish the "active/selected" item from a collection of the same type (e.g. `currentRoomId` in a store that manages multiple rooms). These retain `current` because the name must convey "which one is active" to consumers across many components.
-- **Boolean computed naming** — use `is*` prefix for boolean computed refs (e.g., `isUndoable`, `isRedoable`, `isSavable`). Do not use `can*`.
-- **`display` prefix for presentation-layer derivations** — when a component applies sorting, filtering, or other view-specific transforms to raw store data, name the resulting computed with a `display` prefix: `displayFriends`, `displayReceivedFriendRequests`. Never use `sorted` or `filtered` as prefixes — those describe the mechanism, not the purpose.
+- **Sort at display time** — apply `.toSorted()` inside the `computed` that feeds the template; never sort in store ingestion (`readX`, `setX`, mutation helpers). Stores hold data in natural order; components transform for display. **Exception**: when the sorted order must be sent to the backend (e.g. message pagination cursors), sort before the API call instead.
 - **Computed for reused expressions** — extract a `computed` (named to match the prop, e.g. `title`) when the same derived value is bound to two or more props. This enables the `:propName` shorthand for one binding and avoids repeating the expression: `const title = computed(() => ...)` → `:title :tooltip-text="title"`. No need for a computed if the value is only used in one place.
 - **Inline prop values** — inline prop values directly in the template to take advantage of Vue TypeScript inference. Only extract to a `computed` when the same logic is reused in multiple places. Single-use derived values stay inline.
 - **Map lookups over computed** — when a value depends on an enum/discriminant key, use a `Map[type]` lookup directly in the template instead of a computed. If multiple properties are needed from the same map entry, use `Map[type].value`. Only fall back to computed when the same map lookup is duplicated in two or more places.
@@ -332,6 +322,7 @@ For a prop dependency, wrap it in a getter: `() => isActive`.
 - Always place `watch`, `onMounted`, `onUnmounted`, and other Vue lifecycle hooks/watchers at the **bottom** of `<script setup>`, after all `const` assignments.
 - Always put a blank line before them to visually separate them from regular `const` assignments.
 - Always wrap the callback in an explicit arrow function — never pass a function reference directly. This avoids scope/binding issues and prevents accidental argument forwarding: `onUnmounted(() => { reset(); })` not `onUnmounted(reset)`.
+- Vue `watch`, `onMounted`, `onUnmounted`, and related lifecycle hooks support async callbacks in this codebase. Use `async () => { await ... }` directly for hook/watch work; do not wrap Vue hook/watch callbacks in `getSynchronizedFunction`.
 - This applies everywhere — `.map()`, `.filter()`, lifecycle hooks, JS event listeners, etc. Always use `array.map((item) => fn(item))` not `array.map(fn)`. Vue template `@event` bindings are handled separately in Template Conventions: use `@click="fn()"` (call expression), not `@click="fn"` (bare reference).
 
 ## Browser Globals — Always Use `window.` Prefix
@@ -368,5 +359,5 @@ Standard built-ins available in all environments (Node.js + browser) do **not** 
 See the **vuetify** skill for all Vuetify-specific conventions.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/Esposter) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Source: [Esposter/Esposter](https://github.com/Esposter/Esposter) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-19 -->
