@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [XiaoMaColtAI/BettaFish-skill](https://github.com/XiaoMaColtAI/BettaFish-skill/tree/main/subskills/video-frames/SKILL.md)
+Original source: [XiaoMaColtAI/BettaFish-skill](https://github.com/XiaoMaColtAI/BettaFish-skill/tree/main/subskills/frontend-design/SKILL.md)
 
 ---
 
