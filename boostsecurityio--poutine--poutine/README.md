@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [boostsecurityio/poutine](https://github.com/boostsecurityio/poutine/tree/main/.claude/skills/snapshot/SKILL.md)
+Original source: [boostsecurityio/poutine](https://github.com/boostsecurityio/poutine/tree/main/.claude/skills/update-vulndb/SKILL.md)
 
 ---
 
