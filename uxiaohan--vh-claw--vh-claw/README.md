@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [uxiaohan/vh-claw](https://github.com/uxiaohan/vh-claw/tree/main/src/skills-cn/china-weather/SKILL.md)
+Original source: [uxiaohan/vh-claw](https://github.com/uxiaohan/vh-claw/tree/main/src/skills-cn/wechat-article/SKILL.md)
 
 ---
 
