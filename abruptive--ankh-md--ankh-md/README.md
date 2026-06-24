@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Abruptive/Ankh.md](https://github.com/Abruptive/Ankh.md/tree/main/examples/diagram-maker/.agent/skills/creative/ascii-art/SKILL.md)
+Original source: [Abruptive/Ankh.md](https://github.com/Abruptive/Ankh.md/tree/main/examples/ascii-designer/.agent/skills/creative/ascii-art/SKILL.md)
 
 ---
 
