@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [powroom/flins](https://github.com/powroom/flins/tree/main/.agents/skills/avoid-feature-creep/SKILL.md)
+Original source: [powroom/flins](https://github.com/powroom/flins/tree/main/.agents/skills/commander-guidelines/SKILL.md)
 
 ---
 
