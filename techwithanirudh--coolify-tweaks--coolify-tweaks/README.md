@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [techwithanirudh/coolify-tweaks](https://github.com/techwithanirudh/coolify-tweaks/tree/main/.agents/skills/vercel-react-best-practices/SKILL.md)
+Original source: [techwithanirudh/coolify-tweaks](https://github.com/techwithanirudh/coolify-tweaks/tree/main/.agents/skills/vercel-composition-patterns/SKILL.md)
 
 ---
 
