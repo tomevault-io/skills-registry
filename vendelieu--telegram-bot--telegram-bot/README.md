@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vendelieu/telegram-bot](https://github.com/vendelieu/telegram-bot/tree/main/.cursor/skills/add-ktnip-collector/SKILL.md)
+Original source: [vendelieu/telegram-bot](https://github.com/vendelieu/telegram-bot/tree/main/.cursor/skills/add-ktnip-ksp-tests/SKILL.md)
 
 ---
 
