@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [makabakaxy/mcp2cli](https://github.com/makabakaxy/mcp2cli/tree/main/presets/dayuanjiang-next-ai-draw-io/0.1.2/skills/SKILL.md)
+Original source: [makabakaxy/mcp2cli](https://github.com/makabakaxy/mcp2cli/tree/main/presets/sequential-thinking-mcp/0.2.0/skills/users/skill.md)
 
 ---
 
