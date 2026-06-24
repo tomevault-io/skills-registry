@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [atopile/atopile](https://github.com/atopile/atopile/tree/main/.claude/skills/sexp_bench/SKILL.md)
+Original source: [atopile/atopile](https://github.com/atopile/atopile/tree/main/.claude/skills/code-review/SKILL.md)
 
 ---
 
