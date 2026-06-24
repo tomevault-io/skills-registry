@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openags/auto-research](https://github.com/openags/auto-research/tree/main/skills/research-workflow/SKILL.md)
+Original source: [openags/auto-research](https://github.com/openags/auto-research/tree/main/packages/desktop/skills/ur5e-arm/SKILL.md)
 
 ---
 
