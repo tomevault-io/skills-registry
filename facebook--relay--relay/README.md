@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [facebook/relay](https://github.com/facebook/relay/tree/main/skills/relay-performance/SKILL.md)
+Original source: [facebook/relay](https://github.com/facebook/relay/tree/main/skills/relay-best-practices/SKILL.md)
 
 ---
 
