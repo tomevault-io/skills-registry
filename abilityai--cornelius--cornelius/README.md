@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Abilityai/cornelius](https://github.com/Abilityai/cornelius/tree/main/.claude/skills/integrate-recent-notes/SKILL.md)
+Original source: [Abilityai/cornelius](https://github.com/Abilityai/cornelius/tree/main/.claude/skills/get-youtube-transcript/SKILL.md)
 
 ---
 
