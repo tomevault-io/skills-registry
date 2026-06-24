@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PlanExeOrg/PlanExe](https://github.com/PlanExeOrg/PlanExe/tree/main/skills/planexe-mcp/SKILL.md)
+Original source: [PlanExeOrg/PlanExe](https://github.com/PlanExeOrg/PlanExe/tree/main/experiments/napkin_math/.claude/skills/monte-carlo/SKILL.md)
 
 ---
 
