@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pangon/ai-sdlc-scaffold](https://github.com/pangon/ai-sdlc-scaffold/tree/main/.claude/skills/SDLC-init/SKILL.md)
+Original source: [pangon/ai-sdlc-scaffold](https://github.com/pangon/ai-sdlc-scaffold/tree/main/.claude/skills/SDLC-design/SKILL.md)
 
 ---
 
