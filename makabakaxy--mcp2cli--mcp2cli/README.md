@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [makabakaxy/mcp2cli](https://github.com/makabakaxy/mcp2cli/tree/main/presets/context7/2.1.6/skills/users/skill.md)
+Original source: [makabakaxy/mcp2cli](https://github.com/makabakaxy/mcp2cli/tree/main/presets/openspec/1.0.0/skills/users/skill.md)
 
 ---
 
