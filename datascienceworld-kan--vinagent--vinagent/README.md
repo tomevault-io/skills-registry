@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [datascienceworld-kan/vinagent](https://github.com/datascienceworld-kan/vinagent/tree/main/agentskills/skills/skills/brand-guidelines/SKILL.md)
+Original source: [datascienceworld-kan/vinagent](https://github.com/datascienceworld-kan/vinagent/tree/main/agentskills/skills/skills/slack-gif-creator/SKILL.md)
 
 ---
 
