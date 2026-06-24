@@ -346,5 +346,5 @@ Use this skill when:
 **Note**: This is a quick reference. For complete documentation, see `C-SLOP.md` and `USAGE.md` in this repository.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/bigboggy) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [bigboggy/C-slop](https://github.com/bigboggy/C-slop) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
