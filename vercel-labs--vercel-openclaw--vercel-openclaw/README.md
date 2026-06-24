@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vercel-labs/vercel-openclaw](https://github.com/vercel-labs/vercel-openclaw/tree/main/.agents/skills/cron-watchdog-debug/SKILL.md)
+Original source: [vercel-labs/vercel-openclaw](https://github.com/vercel-labs/vercel-openclaw/tree/main/.agents/skills/gateway-proxy-debug/SKILL.md)
 
 ---
 
