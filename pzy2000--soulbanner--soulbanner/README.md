@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pzy2000/SoulBanner](https://github.com/pzy2000/SoulBanner/tree/main/skills/all-personas/SKILL.md)
+Original source: [pzy2000/SoulBanner](https://github.com/pzy2000/SoulBanner/tree/main/sovereign_skills/musk/SKILL.md)
 
 ---
 
