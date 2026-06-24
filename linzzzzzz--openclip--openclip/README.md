@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [linzzzzzz/openclip](https://github.com/linzzzzzz/openclip/tree/main/.trae/skills/video-clip-extractor/SKILL.md)
+Original source: [linzzzzzz/openclip](https://github.com/linzzzzzz/openclip/tree/main/.claude/skills/video-clip-extractor/SKILL.md)
 
 ---
 
