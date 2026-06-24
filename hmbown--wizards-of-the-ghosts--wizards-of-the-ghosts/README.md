@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Hmbown/Wizards-of-the-Ghosts](https://github.com/Hmbown/Wizards-of-the-Ghosts/tree/main/generated/hermes/monitoring-and-protection/speak-with-animals/SKILL.md)
+Original source: [Hmbown/Wizards-of-the-Ghosts](https://github.com/Hmbown/Wizards-of-the-Ghosts/tree/main/generated/hermes/actions-access-and-automation/planar-binding/SKILL.md)
 
 ---
 
