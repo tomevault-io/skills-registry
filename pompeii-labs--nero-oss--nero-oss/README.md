@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pompeii-labs/nero-oss](https://github.com/pompeii-labs/nero-oss/tree/main/examples/skills/write-tests/SKILL.md)
+Original source: [pompeii-labs/nero-oss](https://github.com/pompeii-labs/nero-oss/tree/main/examples/skills/explain-code/SKILL.md)
 
 ---
 
