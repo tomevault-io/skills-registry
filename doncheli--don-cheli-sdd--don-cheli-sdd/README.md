@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [doncheli/don-cheli-sdd](https://github.com/doncheli/don-cheli-sdd/tree/main/.opencode/skills/doncheli-plan/SKILL.md)
+Original source: [doncheli/don-cheli-sdd](https://github.com/doncheli/don-cheli-sdd/tree/main/.agent/skills/doncheli-webhook/SKILL.md)
 
 ---
 
