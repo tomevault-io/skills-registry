@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [anthropics/claude-for-legal](https://github.com/anthropics/claude-for-legal/tree/main/ip-legal/skills/fto-triage/SKILL.md)
+Original source: [anthropics/claude-for-legal](https://github.com/anthropics/claude-for-legal/tree/main/ip-legal/skills/oss-review/SKILL.md)
 
 ---
 
