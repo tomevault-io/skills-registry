@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MohmmedAshraf/laravel-translations](https://github.com/MohmmedAshraf/laravel-translations/tree/main/.agents/skills/pest-testing/SKILL.md)
+Original source: [MohmmedAshraf/laravel-translations](https://github.com/MohmmedAshraf/laravel-translations/tree/main/.agents/skills/wayfinder-development/SKILL.md)
 
 ---
 
