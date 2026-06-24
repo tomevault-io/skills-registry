@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dojoengine/dojo.js](https://github.com/dojoengine/dojo.js/tree/main/.claude/skills/update-grpc-proto/SKILL.md)
+Original source: [dojoengine/dojo.js](https://github.com/dojoengine/dojo.js/tree/main/.claude/skills/dojo-transactions/SKILL.md)
 
 ---
 
