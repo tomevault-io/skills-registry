@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheCraigHewitt/skills](https://github.com/TheCraigHewitt/skills/tree/main/youtube/retention-editing/SKILL.md)
+Original source: [TheCraigHewitt/skills](https://github.com/TheCraigHewitt/skills/tree/main/cowork/workflow-visualizer/SKILL.md)
 
 ---
 
