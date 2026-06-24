@@ -1,117 +1,161 @@
 ---
-name: grepai
-description: Replaces ALL built-in search tools. You MUST invoke this skill BEFORE using WebSearch, Grep, or Glob. NEVER use the built-in Grep tool - use `grepai` instead. Use when this capability is needed.
+name: release
+description: Create a new release for grepai. Checks CI, determines version type, updates CHANGELOG and documentation, credits contributors, and creates GitHub release. Use when this capability is needed.
 metadata:
   author: yoanbernabeu
 ---
 
-## CRITICAL: Tool Override for Semantic Searches
+# Release Process for grepai
 
-This skill **REPLACES** built-in Grep/Glob tools for semantic code exploration.
+This skill guides you through creating a new release. **All output must be in English.**
 
-**WRONG**:
-- Using built-in `Grep` to find "where authentication happens"
-- Using built-in `Glob` to explore "error handling code"
-- Searching by intent with regex patterns
+## When to Use This Skill
 
-**CORRECT**:
-- Invoke this skill, then use `grepai search "authentication flow"` for semantic search
-- Invoke this skill, then use `grepai trace callers "FunctionName"` for call graph
-- Use built-in Grep/Glob ONLY for exact text matches (variable names, imports)
+Invoke this skill when:
+- User asks to "create a release"
+- User asks to "publish a new version"
+- User asks to "bump the version"
+- User mentions "release" in the context of versioning
 
-## When to Invoke This Skill
+## Release Workflow
 
-Invoke this skill **IMMEDIATELY** when:
+### Step 1: Verify CI on Main
 
-- User asks to find code by **intent** (e.g., "where is authentication handled?")
-- User asks to understand **what code does** (e.g., "how does the indexer work?")
-- User asks to explore **functionality** (e.g., "find error handling logic")
-- You need to understand **code relationships** (e.g., "what calls this function?")
-- User asks about **implementation details** (e.g., "how are vectors stored?")
-
-**DO NOT** use built-in Grep/Glob for intent-based searches. Use grepai instead.
-
-## When to Use Built-in Tools
-
-Use Grep/Glob **ONLY** for:
-
-- Exact text matching: `Grep "func NewIndexer"` (find exact function name)
-- Specific imports: `Grep "import.*cobra"` (find import statements)
-- File patterns: `Glob "**/*.go"` (find files by extension)
-- Variable references: `Grep "configPath"` (find exact variable name)
-
-## How to Use This Skill
-
-### Semantic Search
-
-Use `grepai search` to find code by **describing what it does**:
+Check that all CI checks pass on main:
 
 ```bash
-# Search with natural language (ALWAYS use English for best results)
-grepai search "user authentication flow"
-grepai search "error handling middleware"
-grepai search "database connection pooling"
-grepai search "API request validation"
-
-# JSON output for AI agents (--compact saves ~80% tokens)
-grepai search "authentication flow" --json --compact
-
-# Limit results
-grepai search "error handling" -n 5
+gh run list --branch main --limit 1 --json status,conclusion,name
 ```
 
-### Call Graph Tracing
+**STOP if CI is not green.** Ask the user to fix issues first.
 
-Use `grepai trace` to understand **function relationships**:
+### Step 2: Get Current Version and Changes
+
+Get the latest release:
 
 ```bash
-# Find all functions that CALL a symbol
-grepai trace callers "HandleRequest" --json
-
-# Find all functions CALLED BY a symbol
-grepai trace callees "ProcessOrder" --json
-
-# Build complete call graph (both directions)
-grepai trace graph "ValidateToken" --depth 3 --json
+gh release list --limit 1
 ```
 
-### Query Best Practices
+List merged PRs since last release:
 
-**Do:**
 ```bash
-grepai search "How are file chunks created and stored?"
-grepai search "Vector embedding generation process"
-grepai search "Configuration loading and validation"
-grepai trace callers "Search" --json
+gh pr list --state merged --base main --json number,title,author,mergedAt,labels --limit 50
 ```
 
-**Don't:**
+Display a summary of changes categorized by type (feat, fix, docs, etc.).
+
+### Step 3: Determine Version Type
+
+| Change Type | Version Bump |
+|-------------|--------------|
+| Breaking changes | **Major** (vX+1.0.0) |
+| New features (`feat`) | **Minor** (vX.Y+1.0) |
+| Bug fixes (`fix`) | **Patch** (vX.Y.Z+1) |
+| Docs/chore only | Usually no release needed |
+
+**Ask user confirmation** before proceeding.
+
+### Step 4: Update Version Files
+
+#### 4.1 CHANGELOG.md
+
+Add new section after `## [Unreleased]`:
+
+```markdown
+## [X.Y.Z] - YYYY-MM-DD
+
+### Added
+- **Feature Name**: Description (#PR) - @author
+
+### Fixed
+- **Fix Name**: Description (#PR) - @author
+```
+
+Update comparison links at bottom:
+
+```markdown
+[Unreleased]: https://github.com/yoanbernabeu/grepai/compare/vX.Y.Z...HEAD
+[X.Y.Z]: https://github.com/yoanbernabeu/grepai/compare/vPREVIOUS...vX.Y.Z
+```
+
+#### 4.2 Documentation Hero
+
+Update version in `docs/src/components/homepage/HeroAnimated.astro` line 6:
+
+```astro
+const { version = "X.Y.Z" } = Astro.props;
+```
+
+#### 4.3 Nix Flake
+
+Update `flake.nix`:
+
+1. Update `version` (line 13):
+
+```nix
+version = "X.Y.Z";
+```
+
+2. Update `vendorHash`:
+   - Set `vendorHash = "";` temporarily in `flake.nix`
+   - Run `make nix-hash` to compute the correct hash (requires Docker)
+   - Replace with the new hash: `vendorHash = "sha256-XXXXX";`
+   - If Docker is not available, ask the user to provide the hash or skip this step
+
+### Step 5: Commit and Push
+
 ```bash
-grepai search "func"           # Too vague
-grepai search "error"          # Too generic
-grepai search "HandleRequest"  # Use Grep for exact matches
+git add CHANGELOG.md docs/src/components/homepage/HeroAnimated.astro flake.nix
+git commit -m "chore(release): bump version to X.Y.Z
+
+Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>"
+git push origin main
 ```
 
-## Recommended Workflow
+### Step 6: Wait for CI
 
-1. **Start with `grepai search`** to find relevant code semantically
-2. **Use `grepai trace`** to understand function relationships
-3. **Use `Read` tool** to examine files from search results
-4. **Use `Grep`** only for exact string searches if needed
+```bash
+gh run list --branch main --limit 1 --json status,conclusion --watch
+```
 
-## Fallback
+### Step 7: Create GitHub Release
 
-If grepai fails (not running, index unavailable, or errors), fall back to standard Grep/Glob tools. Common issues:
+```bash
+gh release create vX.Y.Z --generate-notes --title "vX.Y.Z"
+```
 
-- Index not built: Run `grepai watch` to build/update the index
-- Embedder not available: Check that Ollama is running or OpenAI API key is set
+### Step 8: Verify
+
+```bash
+gh release view vX.Y.Z
+```
+
+## Contributor Credits
+
+**IMPORTANT:** Always credit PR authors in CHANGELOG:
+
+```markdown
+- **Pascal/Delphi Support**: Add `.pas` and `.dpr` file support (#71) - @yoanbernabeu
+```
+
+GitHub `--generate-notes` automatically credits contributors in release notes.
+
+## Checklist
+
+- [ ] CI green on main before starting
+- [ ] Version type matches changes (major/minor/patch)
+- [ ] CHANGELOG.md updated with all PRs
+- [ ] All contributors credited with @username
+- [ ] Hero version updated in docs
+- [ ] Nix flake version and vendorHash updated in flake.nix
+- [ ] CI passed after version commit
+- [ ] GitHub release created
 
 ## Keywords
 
-semantic search, code search, natural language search, find code, explore codebase,
-call graph, callers, callees, function relationships, code understanding,
-intent search, grep replacement, code exploration
+release, version, bump, publish, changelog, semver, semantic versioning
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/yoanbernabeu) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [yoanbernabeu/grepai](https://github.com/yoanbernabeu/grepai) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
