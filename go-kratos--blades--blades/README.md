@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [go-kratos/blades](https://github.com/go-kratos/blades/tree/main/examples/skills/skills/weather-skill/SKILL.md)
+Original source: [go-kratos/blades](https://github.com/go-kratos/blades/tree/main/skills/testdata/embedded-skill/SKILL.md)
 
 ---
 
