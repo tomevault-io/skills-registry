@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zjunlp/SkillNet](https://github.com/zjunlp/SkillNet/tree/main/experiments/src/skills/scienceworld/scienceworld-conductivity-tester/SKILL.md)
+Original source: [zjunlp/SkillNet](https://github.com/zjunlp/SkillNet/tree/main/experiments/src/skills/scienceworld/scienceworld-container-relocator/SKILL.md)
 
 ---
 
