@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cmer81/open-meteo-mcp](https://github.com/cmer81/open-meteo-mcp/tree/main/skills/open-meteo/SKILL.md)
+Original source: [cmer81/open-meteo-mcp](https://github.com/cmer81/open-meteo-mcp/tree/main/skills/open-meteo-advanced/SKILL.md)
 
 ---
 
