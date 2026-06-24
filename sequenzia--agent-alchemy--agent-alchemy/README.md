@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sequenzia/agent-alchemy](https://github.com/sequenzia/agent-alchemy/tree/main/claude/claude-tools/skills/claude-code-teams/SKILL.md)
+Original source: [sequenzia/agent-alchemy](https://github.com/sequenzia/agent-alchemy/tree/main/claude/core-tools/skills/project-conventions/SKILL.md)
 
 ---
 
