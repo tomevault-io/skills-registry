@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [duoec/duo-video](https://github.com/duoec/duo-video/tree/main/skills/video-exporter/SKILL.md)
+Original source: [duoec/duo-video](https://github.com/duoec/duo-video/tree/main/skills/video-project-creator/SKILL.md)
 
 ---
 
