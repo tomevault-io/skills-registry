@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [obot-platform/nanobot](https://github.com/obot-platform/nanobot/tree/main/pkg/servers/workflows/testdata/with-workflows/workflows/another/SKILL.md)
+Original source: [obot-platform/nanobot](https://github.com/obot-platform/nanobot/tree/main/pkg/servers/workflows/testdata/with-workflows/workflows/test-workflow/SKILL.md)
 
 ---
 
