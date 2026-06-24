@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zdenham/anvil](https://github.com/zdenham/anvil/tree/main/plugins/anvil/skills/breadcrumb/SKILL.md)
+Original source: [zdenham/anvil](https://github.com/zdenham/anvil/tree/main/plugins/anvil/skills/orchestrate/SKILL.md)
 
 ---
 
