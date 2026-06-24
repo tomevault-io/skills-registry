@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HKUDS/ClawTeam](https://github.com/HKUDS/ClawTeam/tree/main/docs/skills/clawteam/SKILL.md)
+Original source: [HKUDS/ClawTeam](https://github.com/HKUDS/ClawTeam/tree/main/.agents/skills/clawteam-dev/SKILL.md)
 
 ---
 
