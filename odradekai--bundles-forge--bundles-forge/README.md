@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OdradekAI/bundles-forge](https://github.com/OdradekAI/bundles-forge/tree/main/tests/fixtures/missing-sections/skills/skill-a/SKILL.md)
+Original source: [OdradekAI/bundles-forge](https://github.com/OdradekAI/bundles-forge/tree/main/tests/fixtures/unreachable/skills/skill-orphan/SKILL.md)
 
 ---
 
