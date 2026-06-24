@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TW-NLP/DeepAgentForce](https://github.com/TW-NLP/DeepAgentForce/tree/main/src/services/skills/writing/doc-coauthoring/SKILL.md)
+Original source: [TW-NLP/DeepAgentForce](https://github.com/TW-NLP/DeepAgentForce/tree/main/src/services/skills/development/mcp-builder/SKILL.md)
 
 ---
 
