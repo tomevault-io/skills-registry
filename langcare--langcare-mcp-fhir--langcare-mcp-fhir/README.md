@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [langcare/langcare-mcp-fhir](https://github.com/langcare/langcare-mcp-fhir/tree/main/skills/core/patient-data-summary/problem-list-review/SKILL.md)
+Original source: [langcare/langcare-mcp-fhir](https://github.com/langcare/langcare-mcp-fhir/tree/main/cma/skills/clinical-decision-support/pneumonia-curb65/SKILL.md)
 
 ---
 
