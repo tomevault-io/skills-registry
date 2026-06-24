@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kangarooking/buffett-letters-skill](https://github.com/kangarooking/buffett-letters-skill/tree/main/look-through-earnings/SKILL.md)
+Original source: [kangarooking/buffett-letters-skill](https://github.com/kangarooking/buffett-letters-skill/tree/main/three-asset-categories/SKILL.md)
 
 ---
 
