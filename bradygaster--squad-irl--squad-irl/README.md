@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bradygaster/Squad-IRL](https://github.com/bradygaster/Squad-IRL/tree/main/.squad/skills/dynamic-json-guardrails/SKILL.md)
+Original source: [bradygaster/Squad-IRL](https://github.com/bradygaster/Squad-IRL/tree/main/.squad/skills/markdown-playlist-archive/SKILL.md)
 
 ---
 
