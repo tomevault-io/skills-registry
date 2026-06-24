@@ -1,0 +1,90 @@
+---
+name: common-architecture-decisions
+description: >- Use when this capability is needed.
+metadata:
+  author: macalbert
+---
+
+# Architecture Decision Records
+
+This skill provides an index of ADRs that document cross-cutting technical
+decisions in the Envilder project. Load this skill to understand the rationale
+behind tooling choices and architectural patterns before proposing changes.
+
+## When to Use
+
+- Before proposing a new library or tool (check if there's an existing decision)
+- When reviewing code that seems inconsistent with project conventions
+- When adding a new SDK and need to follow established patterns
+- When onboarding and need to understand "why" behind technical choices
+- Before writing tests — check ADR-0002 for the correct tooling per stack
+
+## ADR Index
+
+| ADR | Title | Scope | Key Decision |
+| --- | ----- | ----- | ------------ |
+| [ADR-0001](../../../docs/adr/0001-sdk-acceptance-test-infrastructure.md) | SDK Acceptance Test Infrastructure | All SDKs | TestContainers + LocalStack + Lowkey Vault; container wrappers with explicit lifecycle; `envilder.json` as single source for test tokens |
+| [ADR-0002](../../../docs/adr/0002-test-tooling-per-stack.md) | Test Tooling per Stack | All stacks | Vitest (TS), xUnit+NSubstitute+AwesomeAssertions (NET), pytest+unittest.mock (Py) |
+| [ADR-0003](../../../docs/adr/0003-sdk-architecture-pattern.md) | SDK Architecture Pattern | All SDKs | Three-layer (Domain→App→Infra), no DI framework, facade as primary API, internal factory |
+| [ADR-0004](../../../docs/adr/0004-code-quality-tooling.md) | Code Quality and Formatting | All stacks | Biome (TS), dotnet format (.NET), black+isort (Py); Secretlint for credentials |
+| [ADR-0005](../../../docs/adr/0005-sdk-integration-tiers.md) | SDK Integration Tiers | All SDKs | Three tiers (Facade, Builder, Framework); Tier 3 separate package; .NET exception; community-driven |
+| [ADR-0006](../../../docs/adr/0006-monorepo-structure.md) | Monorepo Structure | All components | Single repo, independent releases per component via version-bump detection, no orchestrator |
+| [ADR-0007](../../../docs/adr/0007-trunk-based-development.md) | Trunk-Based Development | All components | Single main branch, short-lived feature branches, squash merge, feature flags for incomplete work |
+| [ADR-0008](../../../docs/adr/0008-map-file-schema.md) | Map-File Schema Specification | All components | JSON Schema v1, `$` prefix reserved, `$config` strict fields, `file` provider for testing (planned), `EnvilderOptions.FromFile` (planned) |
+| [ADR-0009](../../../docs/adr/0009-sdk-dependency-compatibility-policy.md) | SDK Dependency Compatibility Policy | All SDKs | Minimum viable engine + dep versions in published SDKs; devDeps unconstrained; acceptance tests verify minimum |
+
+## Quick Reference: Test Doubles per Stack
+
+| Stack | Mock/Spy | Stub | Fake (data) | Dummy |
+| ----- | -------- | ---- | ----------- | ----- |
+| TypeScript | `vi.fn()` / `vi.mock()` | `vi.fn().mockResolvedValue()` | inline | inline |
+| .NET | NSubstitute (`Received()`) | NSubstitute (`.Returns()`) | Bogus (Mother pattern) | AutoFixture |
+| Python | `unittest.mock.Mock` / `AsyncMock` | `Mock(return_value=...)` | inline / fixtures | inline |
+
+## Quick Reference: Container Testing
+
+| Stack | Package | AWS | Azure |
+| ----- | ------- | --- | ----- |
+| TypeScript | `testcontainers` | `@testcontainers/localstack` | Custom (Lowkey Vault) |
+| .NET | `Testcontainers` | `Testcontainers.LocalStack` | Custom (Lowkey Vault) |
+| Python | `testcontainers` | `testcontainers[localstack]` | Custom (Lowkey Vault) |
+
+## Rules
+
+1. **Before adding a new testing tool**: Check ADR-0002. If not listed, propose
+   an ADR amendment or new ADR.
+2. **Before changing SDK public API surface**: Check ADR-0003. All SDKs must
+   follow the same facade/builder/client pattern.
+3. **Before changing formatters or linters**: Check ADR-0004. Changes affect CI
+   and all contributors.
+4. **Before changing acceptance test infrastructure**: Check ADR-0001. Container
+   wrappers, token resolution, and CI patterns are standardized.
+
+## Creating a New ADR
+
+Use the format in `docs/adr/`:
+
+```markdown
+# ADR-NNNN: Title
+
+## Status
+Proposed | Accepted | Deprecated | Superseded by ADR-XXXX
+
+## Context
+Why this decision is needed.
+
+## Decision
+What we chose and the details.
+
+## Consequences
+### Positive
+### Negative
+
+## When to Reconsider
+```
+
+Number sequentially. Keep scope focused — one decision per ADR.
+
+---
+> Source: [macalbert/envilder](https://github.com/macalbert/envilder) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
