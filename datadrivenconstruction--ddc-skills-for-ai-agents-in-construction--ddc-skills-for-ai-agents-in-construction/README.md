@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [datadrivenconstruction/DDC_Skills_for_AI_Agents_in_Construction](https://github.com/datadrivenconstruction/DDC_Skills_for_AI_Agents_in_Construction/tree/main/1_DDC_Toolkit/Schedule-Management/bim-to-schedule-4d/SKILL.md)
+Original source: [datadrivenconstruction/DDC_Skills_for_AI_Agents_in_Construction](https://github.com/datadrivenconstruction/DDC_Skills_for_AI_Agents_in_Construction/tree/main/1_DDC_Toolkit/Kaggle-Notebooks/5000-projects-analysis/SKILL.md)
 
 ---
 
