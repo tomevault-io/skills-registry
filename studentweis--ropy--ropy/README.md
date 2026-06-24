@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [StudentWeis/ropy](https://github.com/StudentWeis/ropy/tree/main/.agents/skills/gpui-entity/SKILL.md)
+Original source: [StudentWeis/ropy](https://github.com/StudentWeis/ropy/tree/main/.agents/skills/gpui-action/SKILL.md)
 
 ---
 
