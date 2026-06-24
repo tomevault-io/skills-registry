@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Ridwannurudeen/hermes-council](https://github.com/Ridwannurudeen/hermes-council/tree/main/skills/council/adversarial-critique/SKILL.md)
+Original source: [Ridwannurudeen/hermes-council](https://github.com/Ridwannurudeen/hermes-council/tree/main/skills/council/multi-perspective-analysis/SKILL.md)
 
 ---
 
