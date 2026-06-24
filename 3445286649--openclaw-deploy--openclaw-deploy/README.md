@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [3445286649/openclaw-deploy](https://github.com/3445286649/openclaw-deploy/tree/main/release-offline/resources/bundled-extensions/qqbot/skills/qqbot-media/SKILL.md)
+Original source: [3445286649/openclaw-deploy](https://github.com/3445286649/openclaw-deploy/tree/main/release-offline/resources/bundled-extensions/feishu/skills/feishu-wiki/SKILL.md)
 
 ---
 
