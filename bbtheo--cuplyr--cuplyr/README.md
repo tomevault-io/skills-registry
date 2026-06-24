@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bbtheo/cuplyr](https://github.com/bbtheo/cuplyr/tree/main/.claude/skills/tidy-argument-checking/SKILL.md)
+Original source: [bbtheo/cuplyr](https://github.com/bbtheo/cuplyr/tree/main/.claude/skills/tidy-deprecate-function/SKILL.md)
 
 ---
 
