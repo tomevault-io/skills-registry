@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [valuecodes/Rehoboam-UI](https://github.com/valuecodes/Rehoboam-UI/tree/main/.codex/skills/code-reviewer/SKILL.md)
+Original source: [valuecodes/Rehoboam-UI](https://github.com/valuecodes/Rehoboam-UI/tree/main/.codex/skills/validate-scene-ui/SKILL.md)
 
 ---
 
