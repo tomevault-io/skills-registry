@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [macalbert/envilder](https://github.com/macalbert/envilder/tree/main/.github/skills/dotnet-test-doubles/SKILL.md)
+Original source: [macalbert/envilder](https://github.com/macalbert/envilder/tree/main/.github/skills/sdk-release-checklist/SKILL.md)
 
 ---
 
