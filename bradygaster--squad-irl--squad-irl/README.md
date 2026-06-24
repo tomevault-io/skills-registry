@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bradygaster/Squad-IRL](https://github.com/bradygaster/Squad-IRL/tree/main/.squad/skills/history-hygiene/SKILL.md)
+Original source: [bradygaster/Squad-IRL](https://github.com/bradygaster/Squad-IRL/tree/main/.squad/skills/squad-conventions/SKILL.md)
 
 ---
 
