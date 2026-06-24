@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AQ-MedAI/MedMemoryBench](https://github.com/AQ-MedAI/MedMemoryBench/tree/main/methods/memOS/MemOS/apps/memos-local-openclaw/skill/browserwing-admin/SKILL.md)
+Original source: [AQ-MedAI/MedMemoryBench](https://github.com/AQ-MedAI/MedMemoryBench/tree/main/methods/memOS/MemOS/apps/memos-local-openclaw/skill/memos-memory-guide/SKILL.md)
 
 ---
 
