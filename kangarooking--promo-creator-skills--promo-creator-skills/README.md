@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kangarooking/promo-creator-skills](https://github.com/kangarooking/promo-creator-skills/tree/main/promo-workflow/SKILL.md)
+Original source: [kangarooking/promo-creator-skills](https://github.com/kangarooking/promo-creator-skills/tree/main/promo-storyboard/SKILL.md)
 
 ---
 
