@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pymc-labs/decision-hub](https://github.com/pymc-labs/decision-hub/tree/main/server/SKILL.md)
+Original source: [pymc-labs/decision-hub](https://github.com/pymc-labs/decision-hub/tree/main/bootstrap-skills/dhub-skill-creator/SKILL.md)
 
 ---
 
