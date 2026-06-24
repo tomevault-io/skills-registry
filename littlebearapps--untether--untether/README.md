@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [littlebearapps/untether](https://github.com/littlebearapps/untether/tree/main/.claude/skills/claude-stream-json/SKILL.md)
+Original source: [littlebearapps/untether](https://github.com/littlebearapps/untether/tree/main/.claude/skills/release-coordination/SKILL.md)
 
 ---
 
