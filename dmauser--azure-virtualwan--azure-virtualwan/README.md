@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dmauser/azure-virtualwan](https://github.com/dmauser/azure-virtualwan/tree/main/.squad/templates/skills/session-recovery/SKILL.md)
+Original source: [dmauser/azure-virtualwan](https://github.com/dmauser/azure-virtualwan/tree/main/.squad/templates/skills/retro-enforcement/SKILL.md)
 
 ---
 
