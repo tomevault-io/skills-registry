@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PlaiPin/rosclaw](https://github.com/PlaiPin/rosclaw/tree/main/extensions/openclaw-plugin/skills/take-photo/SKILL.md)
+Original source: [PlaiPin/rosclaw](https://github.com/PlaiPin/rosclaw/tree/main/extensions/openclaw-plugin/skills/navigate-to/SKILL.md)
 
 ---
 
