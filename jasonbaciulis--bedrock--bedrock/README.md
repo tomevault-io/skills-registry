@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jasonbaciulis/bedrock](https://github.com/jasonbaciulis/bedrock/tree/main/export/.claude/skills/laravel-best-practices/SKILL.md)
+Original source: [jasonbaciulis/bedrock](https://github.com/jasonbaciulis/bedrock/tree/main/export/.claude/skills/tailwindcss-development/SKILL.md)
 
 ---
 
