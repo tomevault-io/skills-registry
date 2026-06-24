@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA-Omniverse/usd-exchange](https://github.com/NVIDIA-Omniverse/usd-exchange/tree/main/.agents/skills/usd-authoring/SKILL.md)
+Original source: [NVIDIA-Omniverse/usd-exchange](https://github.com/NVIDIA-Omniverse/usd-exchange/tree/main/.agents/skills/getting-started/SKILL.md)
 
 ---
 
