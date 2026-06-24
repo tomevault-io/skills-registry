@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lucas-flatwhite/pm-skills-ko](https://github.com/lucas-flatwhite/pm-skills-ko/tree/main/pm-product-discovery/skills/metrics-dashboard/SKILL.md)
+Original source: [lucas-flatwhite/pm-skills-ko](https://github.com/lucas-flatwhite/pm-skills-ko/tree/main/pm-product-strategy/skills/porters-five-forces/SKILL.md)
 
 ---
 
