@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tomaspavlin/rohlik-mcp](https://github.com/tomaspavlin/rohlik-mcp/tree/main/.claude/skills/publish/SKILL.md)
+Original source: [tomaspavlin/rohlik-mcp](https://github.com/tomaspavlin/rohlik-mcp/tree/main/.claude/skills/test-mcp/SKILL.md)
 
 ---
 
