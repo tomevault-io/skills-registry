@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [louisho5/picobot](https://github.com/louisho5/picobot/tree/main/embeds/skills/example/SKILL.md)
+Original source: [louisho5/picobot](https://github.com/louisho5/picobot/tree/main/embeds/skills/weather/SKILL.md)
 
 ---
 
