@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ryoha000/launcherg](https://github.com/ryoha000/launcherg/tree/main/.codex/skills/shadcn/SKILL.md)
+Original source: [ryoha000/launcherg](https://github.com/ryoha000/launcherg/tree/main/.codex/skills/cloudflare-free-tier-guard/SKILL.md)
 
 ---
 
