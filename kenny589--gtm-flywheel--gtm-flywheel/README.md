@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kenny589/gtm-flywheel](https://github.com/kenny589/gtm-flywheel/tree/main/cold-email/copy-frameworks/SKILL.md)
+Original source: [kenny589/gtm-flywheel](https://github.com/kenny589/gtm-flywheel/tree/main/signal-scoring/intent-signals/SKILL.md)
 
 ---
 
