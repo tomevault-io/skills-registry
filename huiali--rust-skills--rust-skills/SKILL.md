@@ -1,356 +1,302 @@
 ---
-name: rust-skills
-description: This skill automatically routes to specialized sub-skills based on your question's context. Use when this capability is needed.
+name: rust-lifetime-complex
+description: Advanced lifetime expert covering HRTB, GAT, 'static bounds, trait object constraints, type system conflicts, and lifetime elision edge cases.triggers: - lifetime - HRTB - GAT - higher-ranked - 'static - trait object - one type is more general - lifetime conflict--- # Advanced Lifetime and Type System Expert ## Core Question **Why won't this type conversion compile?** The type system's boundaries are often surprising. Use when this capability is needed.
 metadata:
   author: huiali
 ---
-# Rust Expert Skill
 
----
-name: rust-skill
-description: |
-  Comprehensive Rust programming expert skill system. Handles all Rust topics: ownership, lifetimes,
-  async/await, FFI, performance, web development, embedded systems, and more. Auto-routes to 40+
-  specialized sub-skills based on your question.
-triggers:
-  - rust
-  - cargo
-  - ownership
-  - borrow
-  - lifetime
-  - async
-  - tokio
-  - compile error
-  - unsafe
-  - FFI
----
 
-# Rust Expert Skill System
+## Solution Patterns
 
----
-[中文](./SKILL_zh.md) | [English](./SKILL.md)
-
----
-
-## Description
-
-You are an expert Rust programmer with deep knowledge of:
-- Memory safety, ownership, borrowing, and lifetimes
-- Modern Rust patterns (2021-2024 editions)
-- Systems programming, concurrency, and unsafe Rust
-- Error handling, testing, and best practices
-
-You approach Rust problems with:
-1. Safety-first mindset - preventing undefined behavior at compile time
-2. Zero-cost abstractions - writing high-performance, low-overhead code
-3. Expressive type systems - using the type checker as a safety net
-4. Ergonomic APIs - designing clean, intuitive interfaces
-
-You think in terms of:
-- Ownership boundaries and mutation patterns
-- Trait bounds and generic constraints
-- Error propagation strategies
-- Concurrency primitives and synchronization
-- Cargo workspace organization
-- API design and crate ecosystem
-
-**When to use this skill:**
-- Rust compilation errors and type system issues
-- Ownership, borrowing, and lifetime questions
-- Async/await and concurrency patterns
-- Performance optimization and benchmarking
-- FFI and systems programming
-- Web development with Rust
-- Embedded and no_std environments
-- Testing, database, observability infrastructure
-
-This skill automatically routes to specialized sub-skills based on your question's context.
-
-## Instructions
-
-When working with Rust:
-
-### Code Analysis
-
-1. Identify ownership and borrowing patterns
-2. Check for lifetime issues and potential leaks
-3. Evaluate error handling strategy
-4. Assess concurrency safety (Send/Sync bounds)
-5. Review API ergonomics and idiomatic usage
-
-### Problem Solving
-
-1. Start with safe, idiomatic solutions
-2. Only use `unsafe` when absolutely necessary and justified
-3. Prefer the type system over runtime checks
-4. Use crates from the ecosystem when appropriate
-5. Consider performance implications of abstractions
-
-### Best Practices
-
-1. Use `Result` and `Option` throughout the codebase
-2. Implement `std::error::Error` for custom error types
-3. Write comprehensive tests (unit + integration)
-4. Document public APIs with rustdoc
-5. Use `cargo clippy` and `cargo fmt` for code quality
-
-### Error Handling Strategy
+### Pattern 1: HRTB (Higher-Ranked Trait Bounds)
 
 ```rust
-// Propagate errors with ? operator
-fn process_data(input: &str) -> Result<Data, MyError> {
-    let parsed = input.parse()?;
-    let validated = validate(parsed)?;
-    Ok(validated)
+// Problem: Concrete lifetime vs generic lifetime
+
+// ❌ This doesn't work with dyn
+type ClosureFn<T> = dyn for<'a> FnOnce(&'a mut Connection) -> BoxFuture<'a, T>;
+
+// ✅ Solution: Keep HRTB in generic bounds
+async fn with_connection<F, T, Fut>(f: F) -> Result<T, Error>
+where
+    F: for<'c> FnOnce(&'c mut Connection) -> Fut,
+    Fut: Future<Output = Result<T, Error>>,
+{
+    let mut conn = get_connection().await?;
+    f(&mut conn).await
 }
 
-// Use thiserror for custom error types
-#[derive(thiserror::Error, Debug)]
-pub enum MyError {
-    #[error("validation failed: {0}")]
-    Validation(String),
-    #[error("io error: {0}")]
-    Io(#[from] std::io::Error),
+// Usage
+with_connection(|conn| async move {
+    query("SELECT * FROM users").fetch_all(conn).await
+}).await?;
+```
+
+### Pattern 2: GAT + Object Safety
+
+```rust
+// Problem: GAT makes trait non-object-safe
+
+// ❌ Can't use dyn with GAT
+trait Repository {
+    type Row<'a>: RowView<'a>;  // GAT
+    fn query<'a>(&'a self) -> Vec<Self::Row<'a>>;
+}
+// let repo: Box<dyn Repository> = ...;  // Error!
+
+// ✅ Solution: Layered architecture
+trait InternalRepo {
+    type Row<'a>: RowView<'a>;  // GAT for internal use
+    fn query_borrowed<'a>(&'a self) -> Vec<Self::Row<'a>>;
+}
+
+trait PublicRepo: Send + Sync {
+    fn query(&self) -> Vec<RowDto>;  // Owned data
+}
+
+// Adapter converts borrowed -> owned
+impl<T: InternalRepo> PublicRepo for T {
+    fn query(&self) -> Vec<RowDto> {
+        self.query_borrowed()
+            .into_iter()
+            .map(|row| row.to_dto())
+            .collect()
+    }
 }
 ```
 
-### Memory Safety Patterns
+### Pattern 3: Static Bound Conflicts
 
-- Stack-allocated for small, Copy types
-- `Box<T>` for heap allocation and trait objects
-- `Rc<T>` and `Arc<T>` for shared ownership
-- `Vec<T>` for dynamic collections
-- References with explicit lifetimes
+```rust
+// Problem: 'static requirement conflicts with borrowing
 
-### Concurrency Safety
+// ❌ Can't borrow when 'static required
+async fn bad_resolver(&self, ctx: &Context) -> Result<&Data> {
+    // Error: lifetime 'a not 'static
+}
 
-- Use `Send` for data that can be sent across threads
-- Use `Sync` for data that can be shared safely
-- Prefer `Mutex<RwLock<T>>` for shared mutable state
-- Use `channel` for message passing
-- Consider `tokio` or `async-std` for async I/O
+// ✅ Solution: Return owned data
+async fn good_resolver(&self, ctx: &Context) -> Result<DataDto> {
+    let borrowed = self.repo.query().await?;
+    Ok(borrowed.to_owned_dto())
+}
 
-### Cargo Workflow
+// Alternative: Use Arc for shared ownership
+async fn shared_resolver(&self) -> Result<Arc<Data>> {
+    Ok(Arc::clone(&self.cached_data))
+}
+```
+
+### Pattern 4: Lifetime Elision Edge Cases
+
+```rust
+// Problem: Compiler can't infer lifetime
+
+// ❌ Ambiguous lifetime
+struct Parser<'a> {
+    input: &'a str,
+}
+
+impl<'a> Parser<'a> {
+    fn parse(&self) -> Result<&str, Error> {
+        // Which lifetime? 'a or 'self?
+        // Compiler can't tell
+    }
+}
+
+// ✅ Explicit lifetime annotation
+impl<'a> Parser<'a> {
+    fn parse<'b>(&'b self) -> Result<&'a str, Error> {
+        // Returns data from input, not self
+        Ok(&self.input[..10])
+    }
+}
+```
+
+### Pattern 5: Async + Lifetime Conflicts
+
+```rust
+// Problem: Holding references across await
+
+// ❌ Can't hold borrow across await
+async fn bad_async() {
+    let data = get_data();
+    let borrowed = &data.field;
+
+    some_async_call().await;  // Error: data might move
+
+    use_borrowed(borrowed);
+}
+
+// ✅ Solution 1: Clone before await
+async fn good_async_clone() {
+    let data = get_data();
+    let owned = data.field.clone();
+
+    some_async_call().await;  // OK
+
+    use_owned(&owned);
+}
+
+// ✅ Solution 2: Drop borrow before await
+async fn good_async_scope() {
+    let data = get_data();
+    let value = {
+        let borrowed = &data.field;
+        extract_value(borrowed)
+    };  // borrow dropped
+
+    some_async_call().await;  // OK
+}
+```
+
+
+## Common Conflict Patterns
+
+| Pattern | Cause | Solution |
+|---------|-------|----------|
+| HRTB → dyn | Concrete vs universal lifetime | Use generic functions |
+| GAT → dyn | Variable-sized associated types | Layered design with owned DTOs |
+| 'static + borrow | Lifetime contradiction | Return owned data |
+| Async + borrow | Future holds state across await | Clone or drop before await |
+| Closure capture + Send | Lifetime issues | Use 'static or Arc |
+
+
+## When to Give Up Borrowing
+
+### Performance vs Maintainability
+
+```rust
+// Decision factors:
+fn should_use_owned() -> bool {
+    // ✅ Use owned if:
+    // - Complex lifetime interactions
+    // - API boundaries
+    // - Async contexts
+    // - Multi-threaded sharing
+
+    // ✅ Keep borrowing if:
+    // - Large data structures
+    // - Hot path performance
+    // - Simple lifetime relationships
+    // - Internal implementation only
+
+    true
+}
+```
+
+### Rule of Thumb
+
+1. **API layer**: Default to owned data
+2. **Internal impl**: Borrow when beneficial
+3. **Performance hotspot**: Profile first, then optimize
+4. **High complexity**: Fall back to owned
+
+
+## Workflow
+
+### Step 1: Diagnose Error
+
+```
+Common errors:
+  "one type is more general" → HRTB + dyn conflict
+  "lifetime may not live long enough" → Borrow exceeds scope
+  "cannot be made into object" → GAT or HRTB in trait
+  "does not live long enough" → Early drop
+```
+
+### Step 2: Choose Strategy
+
+```
+Options:
+  → Simplify: Remove abstraction
+  → Split: Separate borrowed/owned layers
+  → Clone: Accept allocation cost
+  → Arc: Shared ownership
+  → Redesign: Change data flow
+```
+
+### Step 3: Validate Solution
+
+```
+Check:
+  → Compiles without hacky workarounds
+  → Reasonable complexity
+  → Performance acceptable
+  → Maintainable long-term
+```
+
+
+## Debugging Techniques
+
+### Minimize
+
+```rust
+// Reduce to minimal reproduction
+// Remove generics, traits, async one by one
+// Find the core conflict
+```
+
+### Explicit Lifetimes
+
+```rust
+// Write out all lifetime parameters
+// Makes relationships visible
+fn explicit<'a, 'b>(x: &'a str, y: &'b str) -> &'a str {
+    x
+}
+```
+
+### Accept Reality
+
+```rust
+// Not all designs can compile
+// Sometimes owned data is the answer
+// Complexity has limits
+```
+
+
+## Review Checklist
+
+When dealing with complex lifetimes:
+
+- [ ] HRTB not used with dyn trait objects
+- [ ] GAT traits have owned alternative for object safety
+- [ ] 'static bounds justified and documented
+- [ ] Async functions don't hold borrows across await
+- [ ] Lifetime elision not hiding ambiguity
+- [ ] Complex lifetimes have explicit annotations
+- [ ] Considered owned data alternative
+- [ ] Design simplification explored first
+
+
+## Verification Commands
 
 ```bash
-# Create new binary/library
-cargo new --bin project_name
-cargo new --lib library_name
+# Check for lifetime errors
+cargo check
 
-# Add dependencies
-cargo add crate_name
-cargo add --dev dev_dependency
+# Expand to see generated code
+cargo expand
 
-# Check, test, and build
-cargo check          # Fast type checking
-cargo build --release  # Optimized build
-cargo test --lib     # Library tests
-cargo test --doc     # Doc tests
-cargo clippy         # Lint warnings
-cargo fmt            # Format code
+# Verify no borrow checker issues
+cargo clippy
 ```
 
-## Constraints
 
-### Always Do
+## Related Skills
 
-- [ ] Always use `cargo check` before suggesting fixes
-- [ ] Include `cargo.toml` dependencies when relevant
-- [ ] Provide complete, compilable code examples
-- [ ] Explain the "why" behind each pattern
-- [ ] Show how to test the solution
-- [ ] Consider backward compatibility and MSRV if specified
+- **rust-ownership** - Basic lifetime fundamentals
+- **rust-async** - Async lifetime patterns
+- **rust-type-driven** - Type-level design
+- **rust-trait** - Trait object constraints
+- **rust-performance** - When to optimize with borrowing
 
-### Never Do
 
-- [ ] Never suggest `unsafe` without clear justification
-- [ ] Don't use `String` where `&str` suffices
-- [ ] Avoid `clone()` when references work
-- [ ] Don't ignore `Result` or `Option` values
-- [ ] Avoid panicking in library code
+## Localized Reference
 
-### Safety Requirements
-
-- [ ] Prove ownership correctness in complex scenarios
-- [ ] Document lifetime constraints clearly
-- [ ] Show Send/Sync reasoning for concurrency code
-- [ ] Provide error recovery strategies
-
-## Tools
-
-Available verification tools in the `scripts/` directory:
-
-### scripts/compile.sh
-
-```bash
-#!/bin/bash
-cargo check --message-format=short
-```
-
-Compile and check Rust code for errors.
-
-### scripts/test.sh
-
-```bash
-#!/bin/bash
-cargo test --lib --doc --message-format=short
-```
-
-Run all tests (unit, integration, doc).
-
-### scripts/clippy.sh
-
-```bash
-#!/bin/bash
-cargo clippy -- -D warnings
-```
-
-Run clippy linter with strict warnings.
-
-### scripts/fmt.sh
-
-```bash
-#!/bin/bash
-cargo fmt --check
-```
-
-Check code formatting.
-
-## References
-
-All reference materials are in the `references/` directory:
-
-### Core Concepts
-
-- references/core-concepts/ownership.md - Ownership and borrowing
-- references/core-concepts/lifetimes.md - Lifetime annotations
-- references/core-concepts/concurrency.md - Concurrency patterns
-
-### Best Practices
-
-- references/best-practices/best-practices.md - General best practices
-- references/best-practices/api-design.md - API design guidelines
-- references/best-practices/error-handling.md - Error handling
-- references/best-practices/unsafe-rules.md - Unsafe code rules (47 items)
-- references/best-practices/coding-standards.md - Coding standards (80 items)
-
-### Ecosystem
-
-- references/ecosystem/crates.md - Recommended crates
-- references/ecosystem/modern-crates.md - Modern crates (2024-2025)
-- references/ecosystem/testing.md - Testing strategies
-
-### Versions
-
-- references/versions/rust-editions.md - Rust 2021/2024 edition features
-
-### Commands
-
-- references/commands/rust-review.md - Code review command
-- references/commands/unsafe-check.md - Unsafe check command
-- references/commands/skill-index.md - Skill index command
-
----
-
-## Sub-Skills (35 Skills Available)
-
-This skill includes 35 sub-skills for different Rust domains. Use specific triggers to invoke specialized knowledge.
-
-### Core Skills (Daily Use)
-
-| Skill | Description | Triggers |
-|-------|-------------|----------|
-| **rust-skill** | Main Rust expert entry point | Rust, cargo, compile error |
-| **rust-ownership** | Ownership & lifetime | ownership, borrow, lifetime |
-| **rust-mutability** | Interior mutability | mut, Cell, RefCell, borrow |
-| **rust-concurrency** | Concurrency & async | thread, async, tokio |
-| **rust-error** | Error handling | Result, Error, panic |
-| **rust-error-advanced** | Advanced error handling | thiserror, anyhow, context |
-| **rust-coding** | Coding standards | style, naming, clippy |
-
-### Advanced Skills (Deep Understanding)
-
-| Skill | Description | Triggers |
-|-------|-------------|----------|
-| **rust-unsafe** | Unsafe code & FFI | unsafe, FFI, raw pointer |
-| **rust-anti-pattern** | Anti-patterns | anti-pattern, clone, unwrap |
-| **rust-performance** | Performance optimization | performance, benchmark, false sharing |
-| **rust-web** | Web development | web, axum, HTTP, API |
-| **rust-learner** | Learning & ecosystem | version, new feature |
-| **rust-ecosystem** | Crate selection | crate, library, framework |
-| **rust-cache** | Redis caching | cache, redis, TTL |
-| **rust-auth** | JWT & API Key auth | auth, jwt, token, api-key |
-| **rust-middleware** | Middleware patterns | middleware, cors, rate-limit |
-| **rust-xacml** | Policy engine | xacml, policy, rbac, permission |
-
-### Expert Skills (Specialized)
-
-| Skill | Description | Triggers |
-|-------|-------------|----------|
-| **rust-ffi** | Cross-language interop | FFI, C, C++, bindgen, C++ exception |
-| **rust-pin** | Pin & self-referential | Pin, Unpin, self-referential |
-| **rust-macro** | Macros & proc-macro | macro, derive, proc-macro |
-| **rust-async** | Async patterns | Stream, backpressure, select |
-| **rust-async-pattern** | Advanced async | tokio::spawn, plugin |
-| **rust-const** | Const generics | const, generics, compile-time |
-| **rust-embedded** | Embedded & no_std | no_std, embedded, ISR, WASM, RISC-V |
-| **rust-lifetime-complex** | Complex lifetimes | HRTB, GAT, 'static, dyn trait |
-| **rust-skill-index** | Skill index | skill, index, 技能列表 |
-| **rust-linear-type** | Linear types & resource mgmt | Destructible, RAII, linear semantics |
-| **rust-coroutine** | Coroutines & green threads | generator, suspend/resume, coroutine |
-| **rust-ebpf** | eBPF & kernel programming | eBPF, kernel module, map, tail call |
-| **rust-gpu** | GPU memory & computing | CUDA, GPU memory, compute shader |
-
-### Problem-Based Lookup
-
-| Problem Type | Skills to Use |
-|--------------|---------------|
-| Compile errors (ownership/lifetime) | rust-ownership, rust-lifetime-complex |
-| Borrow checker conflicts | rust-mutability |
-| Send/Sync issues | rust-concurrency |
-| Performance bottlenecks | rust-performance |
-| Async code issues | rust-concurrency, rust-async, rust-async-pattern |
-| Unsafe code review | rust-unsafe |
-| FFI & C++ interop | rust-ffi |
-| Embedded/no_std | rust-embedded |
-| eBPF kernel programming | rust-ebpf |
-| GPU computing | rust-gpu |
-| Advanced type system | rust-lifetime-complex, rust-macro, rust-const |
-| Coding standards | rust-coding |
-| Caching strategies | rust-cache |
-| Authentication/Authorization | rust-auth, rust-xacml |
-| Web middleware | rust-middleware, rust-web |
-
-### Skill Collaboration
-
-```
-rust-skill (main entry)
-    │
-    ├─► rust-ownership ──► rust-mutability ──► rust-concurrency ──► rust-async
-    │         │                     │                     │
-    │         └─► rust-unsafe ──────┘                     │
-    │                   │                                  │
-    │                   └─► rust-ffi ─────────────────────► rust-ebpf
-    │                             │                         │
-    │                             └────────────────────────► rust-gpu
-    │
-    ├─► rust-error ──► rust-error-advanced ──► rust-anti-pattern
-    │
-    ├─► rust-coding ──► rust-performance
-    │
-    ├─► rust-web ──► rust-middleware ──► rust-auth ──► rust-xacml
-    │                              │
-    │                              └─► rust-cache
-    │
-    └─► rust-learner ──► rust-ecosystem / rust-embedded
-              │
-              └─► rust-pin / rust-macro / rust-const
-                        │
-                        └─► rust-lifetime-complex / rust-async-pattern
-                                  │
-                                  └─► rust-coroutine
-```
+- **Chinese version**: [SKILL_ZH.md](./SKILL_ZH.md) - 完整中文版本，包含所有内容
 
 ---
 > Source: [huiali/rust-skills](https://github.com/huiali/rust-skills) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-17 -->
+<!-- tomevault:4.0:skill_md:2026-06-23 -->
