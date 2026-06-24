@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Calix-L/awesome-latex-skills](https://github.com/Calix-L/awesome-latex-skills/tree/main/latex-fmt/SKILL.md)
+Original source: [Calix-L/awesome-latex-skills](https://github.com/Calix-L/awesome-latex-skills/tree/main/paper-read/SKILL.md)
 
 ---
 
