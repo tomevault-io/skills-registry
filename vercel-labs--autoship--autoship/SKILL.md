@@ -190,5 +190,5 @@ The tool will show which checks failed. Fix the issues in the target repository,
 If AI fails, autoship falls back to manual input. Ensure `AI_GATEWAY_API_KEY` is set.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/vercel-labs) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [vercel-labs/autoship](https://github.com/vercel-labs/autoship) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
