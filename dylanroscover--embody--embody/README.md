@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dylanroscover/Embody](https://github.com/dylanroscover/Embody/tree/main/.claude/skills/mcp-tools-reference/SKILL.md)
+Original source: [dylanroscover/Embody](https://github.com/dylanroscover/Embody/tree/main/.claude/skills/externalize-operator/SKILL.md)
 
 ---
 
