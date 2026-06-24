@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [JamieMason/syncpack](https://github.com/JamieMason/syncpack/tree/main/.claude/skills/front-loading/SKILL.md)
+Original source: [JamieMason/syncpack](https://github.com/JamieMason/syncpack/tree/main/.claude/skills/document-code/SKILL.md)
 
 ---
 
