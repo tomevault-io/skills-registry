@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rlacombe/distillate](https://github.com/rlacombe/distillate/tree/main/.claude/skills/steer/SKILL.md)
+Original source: [rlacombe/distillate](https://github.com/rlacombe/distillate/tree/main/.claude/skills/forage/SKILL.md)
 
 ---
 
