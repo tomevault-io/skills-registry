@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jrswab/axe](https://github.com/jrswab/axe/tree/main/cmd/testdata/skills/sample/SKILL.md)
+Original source: [jrswab/axe](https://github.com/jrswab/axe/tree/main/.github/smoke-agents/skills/smoke-skill/SKILL.md)
 
 ---
 
