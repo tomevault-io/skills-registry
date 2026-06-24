@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [selop/pokebox](https://github.com/selop/pokebox/tree/main/.claude/skills/threejs/SKILL.md)
+Original source: [selop/pokebox](https://github.com/selop/pokebox/tree/main/.claude/skills/pokebox-fragment-shader/SKILL.md)
 
 ---
 
