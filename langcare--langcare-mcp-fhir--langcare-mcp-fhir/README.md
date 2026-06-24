@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [langcare/langcare-mcp-fhir](https://github.com/langcare/langcare-mcp-fhir/tree/main/skills/core/lab-diagnostics/preoperative-lab-checklist/SKILL.md)
+Original source: [langcare/langcare-mcp-fhir](https://github.com/langcare/langcare-mcp-fhir/tree/main/skills/core/population-health/quality-measure-dashboard/SKILL.md)
 
 ---
 
