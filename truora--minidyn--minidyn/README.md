@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [truora/minidyn](https://github.com/truora/minidyn/tree/main/.agents/skills/defining-minidyn-tdd/SKILL.md)
+Original source: [truora/minidyn](https://github.com/truora/minidyn/tree/main/.agents/skills/writing-minidyn-commits/SKILL.md)
 
 ---
 
