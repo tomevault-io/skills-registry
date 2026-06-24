@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Larusso/unity-version-manager](https://github.com/Larusso/unity-version-manager/tree/main/.gemini/skills/openspec-propose/SKILL.md)
+Original source: [Larusso/unity-version-manager](https://github.com/Larusso/unity-version-manager/tree/main/.codex/skills/openspec-ff-change/SKILL.md)
 
 ---
 
