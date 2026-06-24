@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mikeyobrien/ralph-orchestrator](https://github.com/mikeyobrien/ralph-orchestrator/tree/main/.claude/skills/tui-debug-in-pane/SKILL.md)
+Original source: [mikeyobrien/ralph-orchestrator](https://github.com/mikeyobrien/ralph-orchestrator/tree/main/.claude/skills/code-task-generator/SKILL.md)
 
 ---
 
