@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [webern/cargo-readme](https://github.com/webern/cargo-readme/tree/main/.claude/skills/review/SKILL.md)
+Original source: [webern/cargo-readme](https://github.com/webern/cargo-readme/tree/main/.claude/skills/publish/SKILL.md)
 
 ---
 
