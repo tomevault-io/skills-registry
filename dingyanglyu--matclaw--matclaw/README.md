@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DingyangLyu/MatClaw](https://github.com/DingyangLyu/MatClaw/tree/main/.claude/skills/add-discord/SKILL.md)
+Original source: [DingyangLyu/MatClaw](https://github.com/DingyangLyu/MatClaw/tree/main/.claude/skills/add-parallel/SKILL.md)
 
 ---
 
