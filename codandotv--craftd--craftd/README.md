@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CodandoTV/CraftD](https://github.com/CodandoTV/CraftD/tree/main/.github/skills/openspec-apply-change/SKILL.md)
+Original source: [CodandoTV/CraftD](https://github.com/CodandoTV/CraftD/tree/main/.github/skills/openspec-archive-change/SKILL.md)
 
 ---
 
