@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [raugadh/fila-starter](https://github.com/raugadh/fila-starter/tree/main/.agents/skills/livewire-development/SKILL.md)
+Original source: [raugadh/fila-starter](https://github.com/raugadh/fila-starter/tree/main/.agents/skills/debug-using-debugbar/SKILL.md)
 
 ---
 
