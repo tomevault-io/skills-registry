@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rayclaw/rayclaw](https://github.com/rayclaw/rayclaw/tree/main/rayclaw.data/skills/weather/SKILL.md)
+Original source: [rayclaw/rayclaw](https://github.com/rayclaw/rayclaw/tree/main/rayclaw.data/skills/nano-banana/SKILL.md)
 
 ---
 
