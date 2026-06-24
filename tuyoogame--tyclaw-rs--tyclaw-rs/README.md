@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tuyoogame/tyclaw.rs](https://github.com/tuyoogame/tyclaw.rs/tree/main/workspace/skills/dingtalk/dingtalk-todo/SKILL.md)
+Original source: [tuyoogame/tyclaw.rs](https://github.com/tuyoogame/tyclaw.rs/tree/main/workspace/skills/dingtalk/dingtalk-report/SKILL.md)
 
 ---
 
