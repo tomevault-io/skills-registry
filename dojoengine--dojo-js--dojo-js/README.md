@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dojoengine/dojo.js](https://github.com/dojoengine/dojo.js/tree/main/.claude/skills/dojo-events/SKILL.md)
+Original source: [dojoengine/dojo.js](https://github.com/dojoengine/dojo.js/tree/main/.claude/skills/dojo-entities/SKILL.md)
 
 ---
 
