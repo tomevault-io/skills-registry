@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Oolab-labs/claude-ide-bridge](https://github.com/Oolab-labs/claude-ide-bridge/tree/main/templates/scheduled-tasks/nightly-review/SKILL.md)
+Original source: [Oolab-labs/claude-ide-bridge](https://github.com/Oolab-labs/claude-ide-bridge/tree/main/claude-ide-bridge-plugin/skills/ide-deps/SKILL.md)
 
 ---
 
