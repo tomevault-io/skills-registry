@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Wuuu-uu/nanobot-feishu-specilized](https://github.com/Wuuu-uu/nanobot-feishu-specilized/tree/main/nanobot/skills/weather/SKILL.md)
+Original source: [Wuuu-uu/nanobot-feishu-specilized](https://github.com/Wuuu-uu/nanobot-feishu-specilized/tree/main/nanobot/skills/summarize/SKILL.md)
 
 ---
 
