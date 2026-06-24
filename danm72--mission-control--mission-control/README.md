@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Danm72/mission-control](https://github.com/Danm72/mission-control/tree/main/skills/mission-control-setup/SKILL.md)
+Original source: [Danm72/mission-control](https://github.com/Danm72/mission-control/tree/main/tests/integration/openclaw/skills/mission-control/SKILL.md)
 
 ---
 
