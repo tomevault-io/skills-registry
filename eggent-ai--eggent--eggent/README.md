@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eggent-ai/eggent](https://github.com/eggent-ai/eggent/tree/main/bundled-skills/tmux/SKILL.md)
+Original source: [eggent-ai/eggent](https://github.com/eggent-ai/eggent/tree/main/bundled-skills/slack/SKILL.md)
 
 ---
 
