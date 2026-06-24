@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [feiskyer/codex-settings](https://github.com/feiskyer/codex-settings/tree/main/skills/deep-research/SKILL.md)
+Original source: [feiskyer/codex-settings](https://github.com/feiskyer/codex-settings/tree/main/skills/spec-kit-skill/SKILL.md)
 
 ---
 
