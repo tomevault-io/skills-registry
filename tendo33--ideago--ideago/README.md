@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Tendo33/IdeaGo](https://github.com/Tendo33/IdeaGo/tree/main/.agents/skills/trellis-meta/SKILL.md)
+Original source: [Tendo33/IdeaGo](https://github.com/Tendo33/IdeaGo/tree/main/.claude/skills/trellis-meta/SKILL.md)
 
 ---
 
