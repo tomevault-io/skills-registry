@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [KarmaloopAI/Jiva](https://github.com/KarmaloopAI/Jiva/tree/main/examples/personas/tester/skills/test-writing/SKILL.md)
+Original source: [KarmaloopAI/Jiva](https://github.com/KarmaloopAI/Jiva/tree/main/examples/personas/developer/skills/implementation/SKILL.md)
 
 ---
 
