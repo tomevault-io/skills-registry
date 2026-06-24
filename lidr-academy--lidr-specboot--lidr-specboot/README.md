@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LIDR-academy/lidr-specboot](https://github.com/LIDR-academy/lidr-specboot/tree/main/ai-specs/skills/enrich-us/SKILL.md)
+Original source: [LIDR-academy/lidr-specboot](https://github.com/LIDR-academy/lidr-specboot/tree/main/ai-specs/skills/meta-prompt/SKILL.md)
 
 ---
 
