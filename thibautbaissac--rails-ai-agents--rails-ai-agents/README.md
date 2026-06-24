@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ThibautBaissac/rails_ai_agents](https://github.com/ThibautBaissac/rails_ai_agents/tree/main/.claude_37signals/skills/stimulus-patterns/SKILL.md)
+Original source: [ThibautBaissac/rails_ai_agents](https://github.com/ThibautBaissac/rails_ai_agents/tree/main/.claude_37signals/skills/migration-patterns/SKILL.md)
 
 ---
 
