@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alexandre-daubois/ember](https://github.com/alexandre-daubois/ember/tree/main/.agents/skills/ember-json/SKILL.md)
+Original source: [alexandre-daubois/ember](https://github.com/alexandre-daubois/ember/tree/main/.agents/skills/ember-setup/SKILL.md)
 
 ---
 
