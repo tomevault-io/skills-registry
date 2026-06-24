@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [minihellboy/factorminer](https://github.com/minihellboy/factorminer/tree/main/plugins/agent-plugins/factor-researcher/skills/factor-data/SKILL.md)
+Original source: [minihellboy/factorminer](https://github.com/minihellboy/factorminer/tree/main/plugins/agent-plugins/factor-researcher/skills/factor-mining/SKILL.md)
 
 ---
 
