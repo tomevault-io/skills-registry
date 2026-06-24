@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google-labs-code/jules-skills](https://github.com/google-labs-code/jules-skills/tree/main/skills/automate-github-issues/SKILL.md)
+Original source: [google-labs-code/jules-skills](https://github.com/google-labs-code/jules-skills/tree/main/skills/local-action-verification/SKILL.md)
 
 ---
 
