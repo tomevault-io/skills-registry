@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Srajangpt1/ai-security-crew](https://github.com/Srajangpt1/ai-security-crew/tree/main/skills/threat-model/SKILL.md)
+Original source: [Srajangpt1/ai-security-crew](https://github.com/Srajangpt1/ai-security-crew/tree/main/skills/security-review/SKILL.md)
 
 ---
 
