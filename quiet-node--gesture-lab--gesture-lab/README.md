@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [quiet-node/gesture-lab](https://github.com/quiet-node/gesture-lab/tree/main/.agents/skills/threejs-fundamentals/SKILL.md)
+Original source: [quiet-node/gesture-lab](https://github.com/quiet-node/gesture-lab/tree/main/.agents/skills/threejs-postprocessing/SKILL.md)
 
 ---
 
