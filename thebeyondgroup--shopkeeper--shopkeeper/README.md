@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheBeyondGroup/shopkeeper](https://github.com/TheBeyondGroup/shopkeeper/tree/main/.claude/skills/build-feature/SKILL.md)
+Original source: [TheBeyondGroup/shopkeeper](https://github.com/TheBeyondGroup/shopkeeper/tree/main/.claude/skills/define-feature/SKILL.md)
 
 ---
 
