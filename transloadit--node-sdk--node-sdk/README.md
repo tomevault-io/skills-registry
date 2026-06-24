@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [transloadit/node-sdk](https://github.com/transloadit/node-sdk/tree/main/.ai/skills/handover/SKILL.md)
+Original source: [transloadit/node-sdk](https://github.com/transloadit/node-sdk/tree/main/.ai/skills/gh-pr-to-green/SKILL.md)
 
 ---
 
