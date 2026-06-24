@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pikax/verter](https://github.com/pikax/verter/tree/main/.claude/skills/position-encoding/SKILL.md)
+Original source: [pikax/verter](https://github.com/pikax/verter/tree/main/.claude/skills/build-and-profiling/SKILL.md)
 
 ---
 
