@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [collabH/bigdata-growth](https://github.com/collabH/bigdata-growth/tree/main/.agents/skills/fengge-perspective/SKILL.md)
+Original source: [collabH/bigdata-growth](https://github.com/collabH/bigdata-growth/tree/main/.lingma/skills/bigdata-knowledge-coach/SKILL.md)
 
 ---
 
