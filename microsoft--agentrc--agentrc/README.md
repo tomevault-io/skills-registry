@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/agentrc](https://github.com/microsoft/agentrc/tree/main/plugin/skills/nested-hub/SKILL.md)
+Original source: [microsoft/agentrc](https://github.com/microsoft/agentrc/tree/main/plugin/skills/nested-detail/SKILL.md)
 
 ---
 
