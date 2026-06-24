@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jtydhr88/comfyui-custom-node-skills](https://github.com/jtydhr88/comfyui-custom-node-skills/tree/main/plugins/comfyui-custom-nodes/skills/comfyui-node-advanced/SKILL.md)
+Original source: [jtydhr88/comfyui-custom-node-skills](https://github.com/jtydhr88/comfyui-custom-node-skills/tree/main/plugins/comfyui-custom-nodes/skills/comfyui-node-datatypes/SKILL.md)
 
 ---
 
