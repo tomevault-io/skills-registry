@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jihadkhawaja/Egroo](https://github.com/jihadkhawaja/Egroo/tree/main/.github/skills/mudblazor-theming/SKILL.md)
+Original source: [jihadkhawaja/Egroo](https://github.com/jihadkhawaja/Egroo/tree/main/.github/skills/ef-core-migrations/SKILL.md)
 
 ---
 
