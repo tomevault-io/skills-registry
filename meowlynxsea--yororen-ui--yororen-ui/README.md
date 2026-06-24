@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MeowLynxSea/yororen-ui](https://github.com/MeowLynxSea/yororen-ui/tree/main/codex-skills/yororen-ui-user/SKILL.md)
+Original source: [MeowLynxSea/yororen-ui](https://github.com/MeowLynxSea/yororen-ui/tree/main/codex-skills/yororen-ui-recipes/SKILL.md)
 
 ---
 
