@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [KartikLabhshetwar/better-shot](https://github.com/KartikLabhshetwar/better-shot/tree/main/.agents/skills/design-anti-slop/SKILL.md)
+Original source: [KartikLabhshetwar/better-shot](https://github.com/KartikLabhshetwar/better-shot/tree/main/.claude/skills/design-anti-slop/SKILL.md)
 
 ---
 
