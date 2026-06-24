@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OpenMinis/MinisSkills](https://github.com/OpenMinis/MinisSkills/tree/main/tg-hub/SKILL.md)
+Original source: [OpenMinis/MinisSkills](https://github.com/OpenMinis/MinisSkills/tree/main/qbt-hub/SKILL.md)
 
 ---
 
