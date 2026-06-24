@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [acodercat/cave-agent](https://github.com/acodercat/cave-agent/tree/main/examples/skills/code-review/SKILL.md)
+Original source: [acodercat/cave-agent](https://github.com/acodercat/cave-agent/tree/main/examples/skills/data-processor/SKILL.md)
 
 ---
 
