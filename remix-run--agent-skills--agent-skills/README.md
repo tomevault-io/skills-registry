@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [remix-run/agent-skills](https://github.com/remix-run/agent-skills/tree/main/skills/react-router-framework-mode/SKILL.md)
+Original source: [remix-run/agent-skills](https://github.com/remix-run/agent-skills/tree/main/skills/react-router-declarative-mode/SKILL.md)
 
 ---
 
