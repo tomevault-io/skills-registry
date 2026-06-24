@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vercel-labs/next-browser](https://github.com/vercel-labs/next-browser/tree/main/skills/next-browser/SKILL.md)
+Original source: [vercel-labs/next-browser](https://github.com/vercel-labs/next-browser/tree/main/.claude/skills/synthesize-transcript/SKILL.md)
 
 ---
 
