@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PaulJPhilp/EffectPatterns](https://github.com/PaulJPhilp/EffectPatterns/tree/main/config/.claude-plugin/plugins/effect-patterns/skills/effect-patterns-platform-getting-started/SKILL.md)
+Original source: [PaulJPhilp/EffectPatterns](https://github.com/PaulJPhilp/EffectPatterns/tree/main/config/.claude-plugin/plugins/effect-patterns/skills/effect-patterns-scheduling-periodic-tasks/SKILL.md)
 
 ---
 
