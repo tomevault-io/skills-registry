@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [backbay-labs/clawdstrike](https://github.com/backbay-labs/clawdstrike/tree/main/examples/openclaw-plugin/skills/hello/SKILL.md)
+Original source: [backbay-labs/clawdstrike](https://github.com/backbay-labs/clawdstrike/tree/main/clawdstrike-plugin/skills/security-review/SKILL.md)
 
 ---
 
