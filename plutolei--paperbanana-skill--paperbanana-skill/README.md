@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PlutoLei/paperbanana-skill](https://github.com/PlutoLei/paperbanana-skill/tree/main/plugins/paperbanana/skills/paperbanana/SKILL.md)
+Original source: [PlutoLei/paperbanana-skill](https://github.com/PlutoLei/paperbanana-skill/tree/main/plugins/paperbanana-slide-deck/skills/paperbanana-slide-deck/SKILL.md)
 
 ---
 
