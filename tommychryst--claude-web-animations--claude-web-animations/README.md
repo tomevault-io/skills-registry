@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TommyChryst/claude-web-animations](https://github.com/TommyChryst/claude-web-animations/tree/main/scroll-reveal-video/SKILL.md)
+Original source: [TommyChryst/claude-web-animations](https://github.com/TommyChryst/claude-web-animations/tree/main/hero-loop-background/SKILL.md)
 
 ---
 
