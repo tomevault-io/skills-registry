@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cenzihan/paper-compass-skill](https://github.com/cenzihan/paper-compass-skill/tree/main/skills/paper-compass-roadmap/SKILL.md)
+Original source: [cenzihan/paper-compass-skill](https://github.com/cenzihan/paper-compass-skill/tree/main/skills/paper-compass-learnpath/SKILL.md)
 
 ---
 
