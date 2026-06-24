@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eqtylab/real-a2a](https://github.com/eqtylab/real-a2a/tree/main/.codex/skills/ralph2ralph/SKILL.md)
+Original source: [eqtylab/real-a2a](https://github.com/eqtylab/real-a2a/tree/main/plugin/skills/ralph2ralph/SKILL.md)
 
 ---
 
