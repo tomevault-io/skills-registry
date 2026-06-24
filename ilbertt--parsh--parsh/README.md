@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ilbertt/parsh](https://github.com/ilbertt/parsh/tree/main/skills/parsh-env/SKILL.md)
+Original source: [ilbertt/parsh](https://github.com/ilbertt/parsh/tree/main/skills/parsh-files/SKILL.md)
 
 ---
 
