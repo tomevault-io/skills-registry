@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gmh5225/awesome-llvm-security](https://github.com/gmh5225/awesome-llvm-security/tree/main/.claude/skills/mlir-development/SKILL.md)
+Original source: [gmh5225/awesome-llvm-security](https://github.com/gmh5225/awesome-llvm-security/tree/main/.claude/skills/llvm-obfuscation/SKILL.md)
 
 ---
 
