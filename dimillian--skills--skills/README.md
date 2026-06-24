@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Dimillian/Skills](https://github.com/Dimillian/Skills/tree/main/bug-hunt-swarm/SKILL.md)
+Original source: [Dimillian/Skills](https://github.com/Dimillian/Skills/tree/main/ios-debugger-agent/SKILL.md)
 
 ---
 
