@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [grandamenium/cortextos](https://github.com/grandamenium/cortextos/tree/main/community/agents/security/.claude/skills/event-logging/SKILL.md)
+Original source: [grandamenium/cortextos](https://github.com/grandamenium/cortextos/tree/main/community/agents/security/.claude/skills/worker-agents/SKILL.md)
 
 ---
 
