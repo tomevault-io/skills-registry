@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ghostwright/phantom](https://github.com/ghostwright/phantom/tree/main/skills-builtin/overheard/SKILL.md)
+Original source: [ghostwright/phantom](https://github.com/ghostwright/phantom/tree/main/skills-builtin/list-plugins/SKILL.md)
 
 ---
 
