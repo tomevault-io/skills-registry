@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [erp-mafia/swedish-accounting-skills](https://github.com/erp-mafia/swedish-accounting-skills/tree/main/.claude/skills/swedish-year-end-closing/SKILL.md)
+Original source: [erp-mafia/swedish-accounting-skills](https://github.com/erp-mafia/swedish-accounting-skills/tree/main/.claude/skills/swedish-invoice-compliance/SKILL.md)
 
 ---
 
