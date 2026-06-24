@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [supabase/agent-skills](https://github.com/supabase/agent-skills/tree/main/skills/supabase/SKILL.md)
+Original source: [supabase/agent-skills](https://github.com/supabase/agent-skills/tree/main/skills/supabase-postgres-best-practices/SKILL.md)
 
 ---
 
