@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nandemo-ya/kecs](https://github.com/nandemo-ya/kecs/tree/main/.claude/skills/ecs-cli-reference/SKILL.md)
+Original source: [nandemo-ya/kecs](https://github.com/nandemo-ya/kecs/tree/main/.claude/skills/localstack-services/SKILL.md)
 
 ---
 
