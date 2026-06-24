@@ -1,0 +1,13 @@
+# clawdstrike
+
+> Skill by [backbay-labs](https://github.com/backbay-labs/clawdstrike) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [backbay-labs/clawdstrike](https://github.com/backbay-labs/clawdstrike/tree/main/examples/bb-edr/skills/edr-triage/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
