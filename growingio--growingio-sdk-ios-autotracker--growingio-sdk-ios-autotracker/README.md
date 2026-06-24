@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [growingio/growingio-sdk-ios-autotracker](https://github.com/growingio/growingio-sdk-ios-autotracker/tree/main/.agents/skills/verification-before-completion/SKILL.md)
+Original source: [growingio/growingio-sdk-ios-autotracker](https://github.com/growingio/growingio-sdk-ios-autotracker/tree/main/.agents/skills/finishing-a-development-branch/SKILL.md)
 
 ---
 
