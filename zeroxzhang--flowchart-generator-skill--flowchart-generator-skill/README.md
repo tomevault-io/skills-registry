@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ZeroxZhang/flowchart-generator-skill](https://github.com/ZeroxZhang/flowchart-generator-skill/tree/main/SKILL.md)
+Original source: [ZeroxZhang/flowchart-generator-skill](https://github.com/ZeroxZhang/flowchart-generator-skill/tree/main/skill_v1.2_test/SKILL.md)
 
 ---
 
