@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OpenBMB/ChatDev](https://github.com/OpenBMB/ChatDev/tree/main/.agents/skills/greeting-demo/SKILL.md)
+Original source: [OpenBMB/ChatDev](https://github.com/OpenBMB/ChatDev/tree/main/.agents/skills/rest-api-caller/SKILL.md)
 
 ---
 
