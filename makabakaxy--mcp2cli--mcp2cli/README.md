@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [makabakaxy/mcp2cli](https://github.com/makabakaxy/mcp2cli/tree/main/presets/zereight-gitlab-mcp/2.0.35/skills/SKILL.md)
+Original source: [makabakaxy/mcp2cli](https://github.com/makabakaxy/mcp2cli/tree/main/presets/cloudflare-mcp/0.4.6/skills/users/skill.md)
 
 ---
 
