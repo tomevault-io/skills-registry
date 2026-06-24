@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [decebals/claude-code-java](https://github.com/decebals/claude-code-java/tree/main/.claude/skills/design-patterns/SKILL.md)
+Original source: [decebals/claude-code-java](https://github.com/decebals/claude-code-java/tree/main/.claude/skills/logging-patterns/SKILL.md)
 
 ---
 
