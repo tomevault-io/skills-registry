@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [asteroid-belt/skulto](https://github.com/asteroid-belt/skulto/tree/main/.claude/skills/autobuild/SKILL.md)
+Original source: [asteroid-belt/skulto](https://github.com/asteroid-belt/skulto/tree/main/.claude/skills/golang-cli-review/SKILL.md)
 
 ---
 
