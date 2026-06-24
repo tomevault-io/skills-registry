@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lucasvieirasilva/nx-plugins](https://github.com/lucasvieirasilva/nx-plugins/tree/main/.claude/skills/sonarcloud-review/SKILL.md)
+Original source: [lucasvieirasilva/nx-plugins](https://github.com/lucasvieirasilva/nx-plugins/tree/main/.claude/skills/github-pr-description/SKILL.md)
 
 ---
 
