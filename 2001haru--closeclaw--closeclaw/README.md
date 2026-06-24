@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [2001Haru/CloseClaw](https://github.com/2001Haru/CloseClaw/tree/main/closeclaw/skills/songsee/SKILL.md)
+Original source: [2001Haru/CloseClaw](https://github.com/2001Haru/CloseClaw/tree/main/closeclaw/skills/complex_task/SKILL.md)
 
 ---
 
