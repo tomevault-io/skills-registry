@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Linfee/spec-kit-cn](https://github.com/Linfee/spec-kit-cn/tree/main/.claude/skills/spec-kit-release/SKILL.md)
+Original source: [Linfee/spec-kit-cn](https://github.com/Linfee/spec-kit-cn/tree/main/.claude/skills/release-post-verify/SKILL.md)
 
 ---
 
