@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [adeze/raindrop-mcp](https://github.com/adeze/raindrop-mcp/tree/main/.github/skills/mcp-refactoring/SKILL.md)
+Original source: [adeze/raindrop-mcp](https://github.com/adeze/raindrop-mcp/tree/main/.github/skills/mcp-development/SKILL.md)
 
 ---
 
