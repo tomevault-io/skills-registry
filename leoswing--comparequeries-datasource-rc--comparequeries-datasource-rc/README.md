@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [leoswing/comparequeries-datasource-rc](https://github.com/leoswing/comparequeries-datasource-rc/tree/main/.claude/skills/build-plugin/SKILL.md)
+Original source: [leoswing/comparequeries-datasource-rc](https://github.com/leoswing/comparequeries-datasource-rc/tree/main/.codex/skills/validate-plugin/SKILL.md)
 
 ---
 
