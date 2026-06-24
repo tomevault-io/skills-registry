@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [citywill/pocket-stack](https://github.com/citywill/pocket-stack/tree/main/.trae/skills/web-document-creator/SKILL.md)
+Original source: [citywill/pocket-stack](https://github.com/citywill/pocket-stack/tree/main/.trae/skills/web-operation-document/SKILL.md)
 
 ---
 
