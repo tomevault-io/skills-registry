@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [scalar/scalar](https://github.com/scalar/scalar/tree/main/.agents/skills/cloud-agents-starter/SKILL.md)
+Original source: [scalar/scalar](https://github.com/scalar/scalar/tree/main/packages/themes/skills/scalar-design-system/SKILL.md)
 
 ---
 
