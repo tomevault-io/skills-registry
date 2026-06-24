@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wot-ui/wot-starter](https://github.com/wot-ui/wot-starter/tree/main/.agent/skills/alova-api-module/SKILL.md)
+Original source: [wot-ui/wot-starter](https://github.com/wot-ui/wot-starter/tree/main/.agent/skills/uni-page-generator/SKILL.md)
 
 ---
 
