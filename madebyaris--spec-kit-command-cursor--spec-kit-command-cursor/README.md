@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [madebyaris/spec-kit-command-cursor](https://github.com/madebyaris/spec-kit-command-cursor/tree/main/.cursor/skills/sdd-research/SKILL.md)
+Original source: [madebyaris/spec-kit-command-cursor](https://github.com/madebyaris/spec-kit-command-cursor/tree/main/.cursor/skills/sdd-planning/SKILL.md)
 
 ---
 
