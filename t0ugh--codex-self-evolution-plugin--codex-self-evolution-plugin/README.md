@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [T0UGH/codex-self-evolution-plugin](https://github.com/T0UGH/codex-self-evolution-plugin/tree/main/plugins/codex-self-evolution/skills/csep-session-recall/SKILL.md)
+Original source: [T0UGH/codex-self-evolution-plugin](https://github.com/T0UGH/codex-self-evolution-plugin/tree/main/src/codex_self_evolution/plugin_bundle/skills/csep-session-recall/SKILL.md)
 
 ---
 
