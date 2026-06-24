@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hunghg255/reactjs-tiptap-editor](https://github.com/hunghg255/reactjs-tiptap-editor/tree/main/skills/reactjs-tiptap-editor/SKILL.md)
+Original source: [hunghg255/reactjs-tiptap-editor](https://github.com/hunghg255/reactjs-tiptap-editor/tree/main/.agents/skills/frontend-design/SKILL.md)
 
 ---
 
