@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [brunodsazevedo/react-native-pagseguro-plugpag](https://github.com/brunodsazevedo/react-native-pagseguro-plugpag/tree/main/.claude/skills/speckit-branch-convention-validate/SKILL.md)
+Original source: [brunodsazevedo/react-native-pagseguro-plugpag](https://github.com/brunodsazevedo/react-native-pagseguro-plugpag/tree/main/.claude/skills/speckit-branch-convention-configure/SKILL.md)
 
 ---
 
