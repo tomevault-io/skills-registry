@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [star23/Day1Global-Skills](https://github.com/star23/Day1Global-Skills/tree/main/macro-liquidity/SKILL.md)
+Original source: [star23/Day1Global-Skills](https://github.com/star23/Day1Global-Skills/tree/main/us-value-investing/SKILL.md)
 
 ---
 
