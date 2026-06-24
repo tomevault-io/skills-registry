@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tedivm/robs_awesome_python_template](https://github.com/tedivm/robs_awesome_python_template/tree/main/{{cookiecutter.__package_slug}}/.agents/skills/celery-tasks/SKILL.md)
+Original source: [tedivm/robs_awesome_python_template](https://github.com/tedivm/robs_awesome_python_template/tree/main/{{cookiecutter.__package_slug}}/.agents/skills/docker-compose/SKILL.md)
 
 ---
 
