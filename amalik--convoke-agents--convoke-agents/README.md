@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [amalik/convoke-agents](https://github.com/amalik/convoke-agents/tree/main/_bmad/cis/skills/bmad-cis-innovation-strategy/SKILL.md)
+Original source: [amalik/convoke-agents](https://github.com/amalik/convoke-agents/tree/main/_bmad/bmm/4-implementation/bmad-correct-course/SKILL.md)
 
 ---
 
