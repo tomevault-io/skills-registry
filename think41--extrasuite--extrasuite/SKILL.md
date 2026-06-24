@@ -44,5 +44,5 @@ uvx extrasuite contacts search "alice" "acme corp"  # Multiple queries, fuzzy ma
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/think41) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-13 -->
+> Source: [think41/extrasuite](https://github.com/think41/extrasuite) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
