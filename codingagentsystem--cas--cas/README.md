@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [codingagentsystem/cas](https://github.com/codingagentsystem/cas/tree/main/.claude/skills/cas-task-tracking/SKILL.md)
+Original source: [codingagentsystem/cas](https://github.com/codingagentsystem/cas/tree/main/.claude/skills/cas-memory-management/SKILL.md)
 
 ---
 
