@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chippr-robotics/chippr-agi](https://github.com/chippr-robotics/chippr-agi/tree/main/.claude/skills/setup/SKILL.md)
+Original source: [chippr-robotics/chippr-agi](https://github.com/chippr-robotics/chippr-agi/tree/main/.claude/skills/add-discord/SKILL.md)
 
 ---
 
