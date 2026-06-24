@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ianchesal/dotfiles](https://github.com/ianchesal/dotfiles/tree/main/claude/skills/morning-startup/SKILL.md)
+Original source: [ianchesal/dotfiles](https://github.com/ianchesal/dotfiles/tree/main/claude/skills/sentiment-analysis/SKILL.md)
 
 ---
 
