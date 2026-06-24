@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jsturtevant/rally](https://github.com/jsturtevant/rally/tree/main/.squad/skills/ink-ui-patterns/SKILL.md)
+Original source: [jsturtevant/rally](https://github.com/jsturtevant/rally/tree/main/.squad/skills/pr-review-process/SKILL.md)
 
 ---
 
