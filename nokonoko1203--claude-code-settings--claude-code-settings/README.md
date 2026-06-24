@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nokonoko1203/claude-code-settings](https://github.com/nokonoko1203/claude-code-settings/tree/main/skills/playwright-cli/SKILL.md)
+Original source: [nokonoko1203/claude-code-settings](https://github.com/nokonoko1203/claude-code-settings/tree/main/skills/kill-dev-process/SKILL.md)
 
 ---
 
