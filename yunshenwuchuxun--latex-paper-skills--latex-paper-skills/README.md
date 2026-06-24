@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yunshenwuchuxun/latex-paper-skills](https://github.com/yunshenwuchuxun/latex-paper-skills/tree/main/.codex/skills/empirical-paper-writer/SKILL.md)
+Original source: [yunshenwuchuxun/latex-paper-skills](https://github.com/yunshenwuchuxun/latex-paper-skills/tree/main/.codex/skills/collaborating-with-gemini/SKILL.md)
 
 ---
 
