@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SujalXplores/v0.diy](https://github.com/SujalXplores/v0.diy/tree/main/.agents/skills/vercel-react-best-practices/SKILL.md)
+Original source: [SujalXplores/v0.diy](https://github.com/SujalXplores/v0.diy/tree/main/.agents/skills/vercel-composition-patterns/SKILL.md)
 
 ---
 
