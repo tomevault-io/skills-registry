@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [RightNow-AI/openfang](https://github.com/RightNow-AI/openfang/tree/main/crates/openfang-skills/bundled/sql-analyst/SKILL.md)
+Original source: [RightNow-AI/openfang](https://github.com/RightNow-AI/openfang/tree/main/crates/openfang-skills/bundled/rust-expert/SKILL.md)
 
 ---
 
