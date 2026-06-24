@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [thomasgauvin/claude-agent-sdk-in-cloudflare-containers](https://github.com/thomasgauvin/claude-agent-sdk-in-cloudflare-containers/tree/main/container/.claude/skills/configure-git-cli/SKILL.md)
+Original source: [thomasgauvin/claude-agent-sdk-in-cloudflare-containers](https://github.com/thomasgauvin/claude-agent-sdk-in-cloudflare-containers/tree/main/container/.claude/skills/codebase-fix-and-pr/SKILL.md)
 
 ---
 
