@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nanorepublica/django-prodserver](https://github.com/nanorepublica/django-prodserver/tree/main/.claude/skills/backend-migrations/SKILL.md)
+Original source: [nanorepublica/django-prodserver](https://github.com/nanorepublica/django-prodserver/tree/main/.claude/skills/global-conventions/SKILL.md)
 
 ---
 
