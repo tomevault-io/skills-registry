@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [moeru-ai/airi](https://github.com/moeru-ai/airi/tree/main/.agents/skills/eventa/SKILL.md)
+Original source: [moeru-ai/airi](https://github.com/moeru-ai/airi/tree/main/.agents/skills/unocss/SKILL.md)
 
 ---
 
