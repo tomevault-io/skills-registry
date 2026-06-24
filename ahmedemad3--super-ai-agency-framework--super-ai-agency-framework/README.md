@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ahmedemad3/super-ai-agency-framework](https://github.com/ahmedemad3/super-ai-agency-framework/tree/main/.agent/skills/PM-skill/SKILL.md)
+Original source: [ahmedemad3/super-ai-agency-framework](https://github.com/ahmedemad3/super-ai-agency-framework/tree/main/.agent/skills/DBA-skill/SKILL.md)
 
 ---
 
