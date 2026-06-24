@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OpenMinis/MinisSkills](https://github.com/OpenMinis/MinisSkills/tree/main/doubao-tts/SKILL.md)
+Original source: [OpenMinis/MinisSkills](https://github.com/OpenMinis/MinisSkills/tree/main/maimai-hub/SKILL.md)
 
 ---
 
