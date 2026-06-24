@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SwiftfulThinking/SwiftfulStarterProject](https://github.com/SwiftfulThinking/SwiftfulStarterProject/tree/main/.claude/skills/adding-deep-link/SKILL.md)
+Original source: [SwiftfulThinking/SwiftfulStarterProject](https://github.com/SwiftfulThinking/SwiftfulStarterProject/tree/main/.claude/skills/creating-manager/SKILL.md)
 
 ---
 
