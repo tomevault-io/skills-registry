@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [robonuggets/fantastic-posters](https://github.com/robonuggets/fantastic-posters/tree/main/.claude/skills/quality-posters/SKILL.md)
+Original source: [robonuggets/fantastic-posters](https://github.com/robonuggets/fantastic-posters/tree/main/.claude/skills/fantastic-posters/SKILL.md)
 
 ---
 
