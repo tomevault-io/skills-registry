@@ -1,0 +1,125 @@
+---
+name: iikit-08-taskstoissues
+description: >- Use when this capability is needed.
+metadata:
+  author: intent-integrity-chain
+---
+
+# Intent Integrity Kit Tasks to Issues
+
+Process steps in order. Do not skip ahead.
+
+Convert existing tasks into dependency-ordered GitHub issues for project tracking.
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+> **Platform note**: All `bash` commands have a PowerShell equivalent — replace `bash <script>.sh` with `pwsh <script>.ps1` and convert flags to `-PascalCase` form (e.g. `--phase 08 --json` → `-Phase 08 -Json`).
+
+## Prerequisites Check
+
+1. Run prerequisites check:
+   ```bash
+   bash .tessl/plugins/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/check-prerequisites.sh --phase 08 --json
+   ```
+   Windows: `pwsh .tessl/plugins/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/check-prerequisites.ps1 -Phase 08 -Json`
+
+2. Parse JSON for `FEATURE_DIR` and `AVAILABLE_DOCS`. Extract path to **tasks.md**.
+3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). After user selects, run:
+   ```bash
+   bash .tessl/plugins/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/set-active-feature.sh --json <selection>
+   ```
+   Windows: `pwsh .tessl/plugins/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/set-active-feature.ps1 -Json <selection>`
+
+   Then re-run the prerequisites check (item 1 of this section).
+
+## GitHub Remote Validation
+
+```bash
+git config --get remote.origin.url
+```
+
+**CRITICAL**: Only proceed if the configured remote is a GitHub remote (SSH or HTTPS form). Otherwise ERROR.
+
+## Step 1 — Parse tasks.md
+
+Extract: Task IDs, descriptions, phase groupings, parallel markers [P], user story labels [USn], dependencies.
+
+Proceed immediately to Step 2.
+
+
+
+## Step 2 — Prepare Labels and Title Format
+
+**Title format**: `[FeatureID/TaskID] [Story] Description` — feature-id extracted from `FEATURE_DIR` (e.g. `001-user-auth`).
+
+**Body**: use template from [issue-body-template.md](references/issue-body-template.md). **Labels** (create if needed): `iikit`, `phase-N`, `us-N`, `parallel`.
+
+Proceed immediately to Step 3.
+
+
+
+## Step 3 — Create Issues (parallel)
+
+Use the `Task` tool to dispatch issue creation in parallel — one subagent per chunk of tasks (split by phase or user story). Each subagent receives:
+- The chunk of tasks to create issues for
+- The feature-id, repo owner/name, and label set
+- Instructions to create each issue on the project's tracker using whichever tool is available; pass the task title, body, and labels
+
+```text
+Example title: [001-user-auth/T012] [US1] Create User model
+Example labels: iikit,phase-3,us-1
+```
+
+**CRITICAL**: Never create issues in repositories that don't match the project's configured remote. Verify before dispatching.
+
+Collect all created issue numbers from subagents. Verify all returned successfully before proceeding. If some failed: report failures, continue with successful issues only.
+
+Proceed immediately to Step 4.
+
+
+
+## Step 4 — Link Dependencies
+
+After all issues exist, edit bodies to add cross-references using `#NNN` syntax. Skip dependency links for any issues that failed to create.
+
+Finish here.
+
+
+
+## Report
+
+Output: issues created (count + numbers), failures (count + details), link to repo issues list.
+
+## Error Handling
+
+| Condition | Response |
+|-----------|----------|
+| Not a GitHub remote | STOP with error |
+| Issue creation fails | Report, continue with remaining issues |
+| Partial failure | Link dependencies for successful issues only |
+
+## Next Steps
+
+```bash
+bash .tessl/plugins/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/next-step.sh --phase 08 --json
+```
+
+Parse the JSON and present:
+1. `next_step` will be null (workflow complete)
+2. If `alt_steps` non-empty: list as alternatives
+3. Append dashboard link
+
+If on a feature branch, offer to merge: **A)** `git checkout main && git merge <branch>`, **B)** `gh pr create`, or **C)** skip.
+
+```
+Issues exported! Review in GitHub, assign team members, add to project boards.
+- Dashboard: file://$(pwd)/.specify/dashboard.html (resolve the path)
+```
+
+---
+> Source: [intent-integrity-chain/kit](https://github.com/intent-integrity-chain/kit) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
