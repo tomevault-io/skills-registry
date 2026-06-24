@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [walterra/eddoapp](https://github.com/walterra/eddoapp/tree/main/packages/chat-agent/skills/eddo-todo/SKILL.md)
+Original source: [walterra/eddoapp](https://github.com/walterra/eddoapp/tree/main/packages/chat-agent/skills/eddo-work/SKILL.md)
 
 ---
 
