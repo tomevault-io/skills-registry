@@ -233,4 +233,4 @@ Run the internal self-evaluation pass in `references/procedures/19-quality-gates
 
 ---
 > Source: [mykpono/ultimate-seo-geo](https://github.com/mykpono/ultimate-seo-geo) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-17 -->
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
