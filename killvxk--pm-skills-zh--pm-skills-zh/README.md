@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [killvxk/pm-skills-zh](https://github.com/killvxk/pm-skills-zh/tree/main/pm-execution/skills/summarize-meeting/SKILL.md)
+Original source: [killvxk/pm-skills-zh](https://github.com/killvxk/pm-skills-zh/tree/main/pm-product-strategy/skills/lean-canvas/SKILL.md)
 
 ---
 
