@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LigphiDonk/Oh-my--paper](https://github.com/LigphiDonk/Oh-my--paper/tree/main/src-tauri/resources/skills/research-paper-handoff/SKILL.md)
+Original source: [LigphiDonk/Oh-my--paper](https://github.com/LigphiDonk/Oh-my--paper/tree/main/src-tauri/resources/skills/inno-rclone-to-overleaf/SKILL.md)
 
 ---
 
