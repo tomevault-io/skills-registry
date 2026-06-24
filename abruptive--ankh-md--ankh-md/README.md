@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Abruptive/Ankh.md](https://github.com/Abruptive/Ankh.md/tree/main/examples/web-researcher/.agent/skills/productivity/ocr-and-documents/SKILL.md)
+Original source: [Abruptive/Ankh.md](https://github.com/Abruptive/Ankh.md/tree/main/examples/plan-writer/.agent/skills/software-development/writing-plans/SKILL.md)
 
 ---
 
