@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [huiali/rust-skills](https://github.com/huiali/rust-skills/tree/main/skills/rust-anti-pattern/SKILL.md)
+Original source: [huiali/rust-skills](https://github.com/huiali/rust-skills/tree/main/.codex/skills/rust-async/SKILL.md)
 
 ---
 
