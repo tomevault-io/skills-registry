@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Uniswap/uniswap-ai](https://github.com/Uniswap/uniswap-ai/tree/main/packages/plugins/uniswap-driver/skills/liquidity-planner/SKILL.md)
+Original source: [Uniswap/uniswap-ai](https://github.com/Uniswap/uniswap-ai/tree/main/packages/plugins/uniswap-trading/skills/pay-with-any-token/SKILL.md)
 
 ---
 
