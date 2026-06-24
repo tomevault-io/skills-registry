@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zamana-inc/vajra](https://github.com/zamana-inc/vajra/tree/main/orchestrator/skills/vajra-doc-review/SKILL.md)
+Original source: [zamana-inc/vajra](https://github.com/zamana-inc/vajra/tree/main/orchestrator/skills/vajra-plan-review/SKILL.md)
 
 ---
 
