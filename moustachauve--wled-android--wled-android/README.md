@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Moustachauve/WLED-Android](https://github.com/Moustachauve/WLED-Android/tree/main/.github/skills/compose-performance-audit/SKILL.md)
+Original source: [Moustachauve/WLED-Android](https://github.com/Moustachauve/WLED-Android/tree/main/.github/skills/kotlin-concurrency-expert/SKILL.md)
 
 ---
 
