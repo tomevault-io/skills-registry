@@ -1,0 +1,323 @@
+---
+name: testing
+description: > Use when this capability is needed.
+metadata:
+  author: recyclarr
+---
+
+# Testing Patterns and Infrastructure
+
+## Technical Stack
+
+- NUnit 4 test framework
+- NSubstitute for mocking
+- AutoFixture for test data generation
+- AwesomeAssertions for fluent assertions (NOT FluentAssertions)
+
+## Test Pyramid
+
+- **E2E**: Critical user workflows against real services (Testcontainers)
+- **Integration**: Complete workflows with mocked externals (Git, HTTP, filesystem)
+- **Unit**: Edge cases integration cannot reach
+
+## Naming
+
+- Classes: `{Component}Test` or `{Component}IntegrationTest`
+- Methods: Underscore-separated behavior (`Load_many_iterations_of_config`)
+- Pattern: `internal sealed class`
+
+## Integration Test Setup
+
+```csharp
+internal sealed class MyFeatureIntegrationTest : CliIntegrationFixture
+{
+    protected override void RegisterStubsAndMocks(ContainerBuilder builder)
+    {
+        // Register custom mocks here
+    }
+}
+```
+
+Mock externals only: Git (LibGit2Sharp), HTTP APIs, filesystem (`MockFileSystem`).
+
+## AutoFixture Attributes
+
+- `[AutoMockData]`: Basic DI with mocks
+- `[InlineAutoMockData(params)]`: Parameterized tests
+- `[Frozen]` or `[Frozen(Matching.ImplementedInterfaces)]`: Shared mock instances
+- `[CustomizeWith(typeof(T))]`: Custom configuration
+- `[AutoMockData(typeof(TestClass), nameof(Method))]`: DI container integration
+
+## NSubstitute Patterns
+
+**Arrange (setting up dependencies):**
+
+```csharp
+dependency.Method().Returns(value);
+dependency.Property.ReturnsNull();
+dependency.Method(default!).ReturnsForAnyArgs(value);
+dependency.Method().Returns([item1, item2]);
+Verify.That<T>(x => x.Property.Should().Be(expected));
+```
+
+**Last resort interaction verification** (when no observable outcome exists):
+
+```csharp
+mock.ReceivedWithAnyArgs().SetStatus(default, default);
+```
+
+**Argument matching** (returns setup and received verification): Prefer
+`ReceivedWithAnyArgs()`/`ReturnsForAnyArgs()` with `default` over `Arg.Any<T>()`:
+
+```csharp
+// Good
+mock.ReceivedWithAnyArgs().SetStatus(default, default);
+mock.Method(default!, default!).ReturnsForAnyArgs(value);
+
+// Bad
+mock.Received().SetStatus(Arg.Any<Status>(), Arg.Any<int?>());
+mock.Method(Arg.Any<string>(), Arg.Any<int>()).ReturnsForAnyArgs(value);
+```
+
+## AwesomeAssertions
+
+**Preferred:**
+
+```csharp
+result.Should().BeEquivalentTo(expected);
+result.Select(x => x.Property).Should().BeEquivalentTo(expected);
+act.Should().Throw<ExceptionType>().WithMessage("pattern");
+collection.Should().HaveCount(n).And.Contain(item);
+dict.Should().ContainKey(key).WhoseValue.Should().Be(expected);
+```
+
+**Anti-patterns:**
+
+- `dict!["key"]!` - use `ContainKey().WhoseValue` instead
+- `HaveCount()` + `BeEquivalentTo()` - redundant; equivalence checks count
+- Multiple assertions instead of `.And` chaining
+
+## Utilities
+
+- `IntegrationTestFixture`: Core library integration tests
+- `CliIntegrationFixture`: CLI integration with composition root
+- `Verify.That<T>()`: NSubstitute matcher with assertions
+- `TestableLogger`: Capture log messages
+- `NUnitAnsiConsole`: Console output verification
+- `MockFileSystem`: Filesystem testing (avoid absolute paths)
+- Factory classes: `NewCf`, `NewConfig`, `NewQualitySize`, `NewPlannedCf`, etc.
+
+## Test Factory Helpers (`New*` Classes)
+
+One `New{DomainType}` class per domain type (e.g. `NewQualityDefinition`, `NewCustomFormat`). No
+grab-bag classes mixing unrelated types.
+
+**Rules:**
+
+- Methods return one type. Use overloads or optional parameters for variants, not separate classes.
+- Accept only test-relevant parameters with sensible defaults. This shields tests from model changes.
+- Location: `Core.TestLibrary` for types in Core; `Cli.Tests/Reusable` for types in Cli. Hard
+  constraint from project dependency direction (see REC-90).
+- Overhaul existing helpers when their types are touched. No legacy pattern preservation.
+
+**When to skip:** If a domain type is trivial (few properties, no `required` fields, natural
+defaults), direct construction in tests is acceptable. Include a brief justification when skipping.
+
+## Filesystem Paths
+
+Avoid absolute paths in `MockFileSystem` (platform-incompatible):
+
+```csharp
+// Good
+Fs.CurrentDirectory().SubDirectory("a", "b").File("c.json")
+
+// Bad
+"/absolute/path/file.json"
+```
+
+## Running Tests
+
+```bash
+# Unit and integration tests
+dotnet test -v m
+
+# Specific test project
+dotnet test -v m tests/Recyclarr.Cli.Tests/
+
+# Single test by name
+dotnet test -v m --filter "FullyQualifiedName~TestMethodName"
+
+# E2E tests (requires Docker services)
+./scripts/Run-E2ETests.ps1
+```
+
+## Coverage Analysis
+
+Use coverage analysis to identify gaps before writing tests.
+
+```bash
+# Run tests + query uncovered lines (one-shot, preferred)
+./scripts/coverage.py --run uncovered Platform Migration
+
+# Run separately only when making multiple queries
+./scripts/coverage.py --run
+./scripts/coverage.py uncovered Platform
+./scripts/coverage.py files Migration
+
+# Find N files with lowest coverage
+./scripts/coverage.py --run lowest 10
+```
+
+Patterns are **substring matches** (case-insensitive), not globs. Multiple patterns match files
+containing ANY pattern. Examples:
+
+- `Platform` matches `src/Recyclarr.Core/Platform/AppPaths.cs`
+- `Platform Migration` matches files containing "Platform" OR "Migration"
+
+Output format: `path:pct:covered/total[:uncovered_lines]`
+
+CRITICAL: `--run` must succeed before querying. Investigate failures - coverage data is invalid on
+failure. Run coverage BEFORE writing tests to understand gaps.
+
+---
+
+## End-to-End Tests
+
+E2E tests run the full Recyclarr CLI against containerized Sonarr/Radarr instances. Tests verify
+that sync operations produce expected state in the services.
+
+### Running E2E Tests
+
+**MANDATORY**: Use `./scripts/Run-E2ETests.ps1` - never run `dotnet test` directly for E2E tests.
+The script outputs a log file path; use `rg` to search logs without rerunning tests.
+
+### Resource Provider Strategy
+
+The test uses multiple resource providers to verify different loading mechanisms:
+
+#### Official Trash Guides (Pinned SHA)
+
+```yaml
+- name: trash-guides-pinned
+  type: trash-guides
+  clone_url: https://github.com/TRaSH-Guides/Guides.git
+  reference: <pinned-sha>
+  replace_default: true
+```
+
+**Purpose**: Baseline data that tests real-world compatibility.
+
+**Use for**: Stable CFs that exist in official guides (e.g., `Bad Dual Groups`, `Obfuscated`).
+
+**Why pinned**: Prevents upstream changes from breaking tests unexpectedly.
+
+#### Local Custom Format Providers
+
+```yaml
+- name: sonarr-cfs-local
+  type: custom-formats
+  service: sonarr
+  path: <local-path>
+```
+
+**Purpose**: Tests `type: custom-formats` provider behavior specifically.
+
+**Use for**: CFs that need controlled structure or don't exist in official guides.
+
+#### Trash Guides Override
+
+```yaml
+- name: radarr-override
+  type: trash-guides
+  path: <local-path>
+```
+
+**Purpose**: Tests override/layering behavior (higher precedence than official guides).
+
+**Use for**:
+
+- Quality profiles with known structure for testing inheritance
+- CF groups with controlled members for testing group behavior
+- CFs that override official guide CFs (e.g., HybridOverride)
+
+### Fixture Directory Structure
+
+```txt
+Fixtures/
+  recyclarr.yml              # Test configuration
+  settings.yml               # Resource provider definitions
+  custom-formats-sonarr/     # type: custom-formats provider (Sonarr)
+  custom-formats-radarr/     # type: custom-formats provider (Radarr)
+  trash-guides-override/     # type: trash-guides provider (override layer)
+    metadata.json            # Defines paths for each resource type
+    docs/
+      Radarr/
+        cf/                  # Custom formats
+        cf-groups/           # CF groups
+        quality-profiles/    # Quality profiles
+      Sonarr/
+        cf/
+        cf-groups/
+        quality-profiles/
+```
+
+### When to Use Each Provider Type
+
+#### Use Official Guides When
+
+- Testing sync of real-world CFs that are stable
+- Testing compatibility with actual guide data structures
+- The specific CF content doesn't matter, just that syncing works
+
+#### Use Local Fixtures When
+
+- Testing specific inheritance/override behavior
+- Testing resources that don't exist in official guides
+- Testing provider-specific loading behavior
+- You need controlled, predictable resource structure
+
+### Trash ID Conventions
+
+- `e2e00000000000000000000000000001` - E2E test Radarr quality profile
+- `e2e00000000000000000000000000002` - E2E test Sonarr quality profile
+- `e2e00000000000000000000000000003` - E2E test Sonarr guide-only profile
+- `e2e00000000000000000000000000010` - E2E test Sonarr CF group
+- `e2e00000000000000000000000000011` - E2E test Radarr CF group
+- `cf000000000000000000000000000001` through `cf000000000000000000000000000008` - Local test CFs
+
+**Convention**: Local test trash IDs use a `cf` prefix so YAML treats them as strings without
+quoting. Never use all-numeric trash IDs in fixtures.
+
+### Adding New Test Cases
+
+1. **For new CFs**: Add JSON to appropriate `custom-formats-*` or `trash-guides-override/docs/*/cf/`
+2. **For new QPs**: Add JSON to `trash-guides-override/docs/*/quality-profiles/`
+3. **For new CF groups**: Add JSON to `trash-guides-override/docs/*/cf-groups/`
+4. **Update metadata.json** if adding new resource type paths
+5. **Update recyclarr.yml** to reference the new trash_ids
+6. **Update test assertions** in `RecyclarrSyncTests.cs`
+
+### metadata.json Structure
+
+The metadata.json file tells Recyclarr where to find each resource type:
+
+```json
+{
+  "json_paths": {
+    "radarr": {
+      "custom_formats": ["docs/Radarr/cf"],
+      "qualities": [],
+      "naming": [],
+      "custom_format_groups": ["docs/Radarr/cf-groups"],
+      "quality_profiles": ["docs/Radarr/quality-profiles"]
+    },
+    "sonarr": { "..." }
+  }
+}
+```
+
+**Important**: Paths must not contain spaces. Use `cf` instead of `Custom Formats`.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/recyclarr) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

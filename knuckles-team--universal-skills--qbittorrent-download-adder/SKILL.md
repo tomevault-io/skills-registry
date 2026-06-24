@@ -1,0 +1,44 @@
+---
+name: infrastructure-ops-team
+description: >- Use when this capability is needed.
+metadata:
+  author: Knuckles-Team
+---
+
+# Qbittorrent Download Adder Workflow
+
+**CONCEPT:INFRA-001**
+
+Prompts the user for a torrent/magnet download link and custom save parameters, then schedules and starts the download on qBittorrent.
+
+## Steps
+
+### Step 0: User Interaction
+**Agent**: `discovery-agent`
+**Tools**: `tun_tm_system, tun_tm_hosts`
+
+Prompt the user for the magnet link, torrent URL, custom save path category, and queue priorities.
+Expected: `download_link, save_category, start_immediately`
+
+### Step 1: Qbittorrent Agent
+**Agent**: `deployer-agent`
+**Tools**: `pt_stack, cnt_cm_compose_operations`
+
+Schedule the new download by calling qbittorrent_torrents with the add_new_torrent action, passing the target link and parameters.
+Expected: `addition_result`
+
+### Step 2: KG Persistence [depends_on: qbittorrent-agent]
+**Agent**: `deployer-agent`
+**Tools**: `graph_write`
+
+Persist workflow results as nodes and edges in the Knowledge Graph.
+Create appropriate typed nodes with metadata and link to existing domain entities.
+
+## Output
+- Qbittorrent Download Adder results persisted in KG
+- Structured report (MD/PDF)
+- Audit trail with timestamps and agent attributions
+
+---
+> Source: [Knuckles-Team/universal-skills](https://github.com/Knuckles-Team/universal-skills) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-16 -->

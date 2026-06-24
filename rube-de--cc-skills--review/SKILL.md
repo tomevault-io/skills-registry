@@ -1,0 +1,364 @@
+---
+name: review
+description: >- Use when this capability is needed.
+metadata:
+  author: rube-de
+---
+
+# Review: Single-Issue Deep Validation
+
+Deep-validate a single GitHub issue against the current codebase. Cross-reference file paths, detect already-implemented features, check for related PRs, verify dependencies, and deliver a structured verdict with recommended action.
+
+## Workflow
+
+```text
+1. Auth Check → 2. Detect Repo → 3. Fetch Issue → 4. Parse Body
+→ 5. Codebase Cross-Reference → 6. PR Check → 7. Dependency Check
+→ 8. Verdict → 9. Present Report → 10. Interactive Action
+```
+
+### Step 1: Verify GitHub Auth
+
+```bash
+gh auth status
+```
+
+**On failure:** Stop and tell the user to run `gh auth login`.
+
+### Step 2: Detect Repository
+
+```bash
+gh repo view --json nameWithOwner -q .nameWithOwner
+```
+
+**On failure:** Ask the user for the target repository (`owner/repo`).
+
+### Step 3: Fetch Issue
+
+Require an issue number from the user's arguments. If none provided, use `AskUserQuestion` to ask for one.
+
+```bash
+gh issue view ISSUE_NUMBER --json number,title,body,state,labels,assignees,milestone,createdAt,updatedAt,author,comments
+```
+
+**Edge cases:**
+- Issue doesn't exist → abort with a clear error
+- Issue already closed → warn but continue (informational analysis is still useful)
+
+### Step 4: Parse Issue Body
+
+Classify the issue into one of two tiers based on body structure:
+
+#### Tier 1: Structured (created by `/pm`)
+
+Detect `/pm` sections by their headers: `## Context`, `## Acceptance Criteria`, `## Implementation Guide`, `## Scope`.
+
+Extract:
+- **File paths** from `## Implementation Guide` and `## Scope` sections
+- **Acceptance criteria** — lines matching `VERIFY:` or checkbox patterns (`- [ ]` unchecked and `- [x]` checked). Include both so re-reviews after body edits still see previously checked-off criteria.
+- **Function/component names** — backtick-wrapped identifiers in implementation sections
+- **Dependencies** — `Blocked by: #N` and `Blocks: #N` patterns
+- **Epic reference** — `Part of #N` pattern
+- **Scope** — `### In Scope` and `### Out of Scope` subsections
+
+#### Tier 2: Unstructured (fallback)
+
+When `/pm` section headers are absent, extract what you can:
+- File paths by regex (paths containing `/` with common extensions)
+- Backtick-wrapped identifiers as potential function/component names
+- `#N` references as issue/PR cross-references
+- Title keywords for broad codebase search
+
+Note lower confidence in the verdict when using Tier 2 parsing.
+
+### Step 5: Codebase Cross-Reference
+
+Start with the Explore agent to get a broad understanding of the codebase structure before targeted searches. For large or unfamiliar codebases, use repomix-explorer (if available) to get a structural overview. Then use Glob, Grep, and Read for detailed analysis.
+
+For each piece of extracted data, cross-check against the codebase:
+
+#### 5a. File Path Validation
+
+For each extracted file path:
+
+1. Determine **intent** from surrounding context:
+   - Paths under headings like "Files to Create" or prefixed with "create", "add", "new" → expected to not exist yet (intent = **create**)
+   - All other paths → expected to exist (intent = **modify**)
+2. Check existence with `Glob`
+3. If a "modify" path is missing, search for the filename only (detect renames/moves)
+4. Record signal: `exists`, `missing`, `renamed/moved`, `correctly-absent` (create intent, not yet created), `already-created` (create intent, file exists)
+
+#### 5b. Implementation Detection
+
+For each function/component name and each acceptance criterion:
+
+1. `Grep` for the name/pattern in the codebase
+2. For each match, `Read` ~20 lines of surrounding context
+3. Classify each acceptance criterion:
+   - **Implemented** — criterion clearly satisfied by existing code
+   - **Partial** — some evidence but not fully satisfied
+   - **Not found** — no evidence in codebase
+
+#### 5c. Synthesis
+
+Combine file and implementation signals:
+
+| Condition | Signal |
+|-----------|--------|
+| All "Files to Create" exist + all criteria Implemented | **Already Implemented** |
+| Some files exist or some criteria met | **Partially Implemented** |
+| No implementation evidence found | **Still Needed** |
+
+### Step 6: PR Check
+
+Search for related pull requests:
+
+```bash
+gh pr list --state all --search "ISSUE_NUMBER" --limit 10 --json number,title,state,mergedAt,headRefName
+```
+
+Also search for PRs that reference the issue in their body:
+
+```bash
+gh api search/issues -f q="repo:OWNER/REPO type:pr ISSUE_NUMBER in:body" --jq '.items[] | {number,title,state,pull_request}'
+```
+
+Classify PR signals:
+
+| PR State | Signal |
+|----------|--------|
+| Merged | Strong close signal — work was completed |
+| Open | In Progress — active development |
+| Closed (not merged) | Abandoned attempt — note but weigh lightly |
+
+### Step 7: Dependency Check
+
+#### Blockers
+
+For each `Blocked by: #N` or `Depends on: #N` reference:
+
+```bash
+gh issue view BLOCKER_NUMBER --json number,title,state,labels
+```
+
+| Blocker State | Signal |
+|---------------|--------|
+| Open | Still blocked — issue cannot proceed |
+| Closed | Unblocked — stale blocker reference |
+
+#### Epic Context
+
+For each `Part of #N` reference:
+
+1. Fetch the epic issue
+2. Count total vs closed sub-issues (search for issues referencing the epic)
+3. Report sub-issue completion percentage
+
+### Step 8: Determine Verdict
+
+Based on signals from Steps 5-7, assign a verdict:
+
+| Verdict | Criteria |
+|---------|----------|
+| **Already Implemented** | All acceptance criteria met + merged PR exists |
+| **Partially Implemented** | Some criteria met OR some expected files exist but not all |
+| **In Progress** | Open PR exists referencing this issue |
+| **Still Needed** | No implementation evidence, no related PRs, blockers resolved (or none) |
+| **Outdated** | References files/APIs that no longer exist, 90+ days inactive, problem space changed |
+| **Needs Update** | File paths drifted, resolved blockers still listed, scope no longer matches codebase |
+
+Assign a **confidence level** based on parsing quality and signal strength:
+
+| Confidence | Criteria |
+|------------|----------|
+| **High** | Structured issue (Tier 1) + strong, unambiguous signals |
+| **Medium** | Unstructured issue (Tier 2) OR mixed/conflicting signals |
+| **Low** | Keyword-only matching, minimal codebase evidence |
+
+### Step 9: Present Report
+
+Present a structured markdown report:
+
+```markdown
+## Issue Review: #NUMBER — TITLE
+
+**Verdict:** VERDICT (Confidence: LEVEL)
+
+### Evidence
+
+#### File Status
+| Path | Intent | Status |
+|------|--------|--------|
+| src/auth/login.ts | Modify | Exists |
+| src/auth/mfa.ts | Create | Not yet created |
+
+#### Acceptance Criteria
+| Criterion | Status | Evidence |
+|-----------|--------|----------|
+| VERIFY: login redirects to dashboard | Implemented | Found in src/auth/login.ts:45 |
+| VERIFY: MFA prompt on new device | Not found | No matching code |
+
+#### Related PRs
+| PR | Title | State | Merged |
+|----|-------|-------|--------|
+| #<number> | Add login redirect | Merged | 2024-01-15 |
+
+#### Dependencies
+| Blocker | Title | State | Impact |
+|---------|-------|-------|--------|
+| #<number> | Auth refactor | Closed | Unblocked (stale reference) |
+
+#### Epic Context
+Part of #<number> — 4/6 sub-issues closed (67%)
+```
+
+Adapt the report to include only sections with findings — omit empty sections.
+
+### Step 10: Interactive Action
+
+Based on the verdict, offer appropriate actions via `AskUserQuestion`. For verdicts where the issue body contains stale or incorrect information, **updating the body directly** is the recommended action — implementing agents read the body first, and comments get buried. Every body edit is paired with an audit-trail comment explaining what changed and why.
+
+**Important — Tier 2 guard:** For unstructured issues (Tier 2), only attempt body edits for the Already Implemented and Partially Implemented verdicts (checking off criteria is safe even without structured sections). For the Needs Update, In Progress, and Outdated verdicts on Tier 2 issues, default to comment-only — mechanical corrections and section-level edits are unreliable without well-defined sections. The verdict blocks below show tier-specific options where they differ.
+
+**Already Implemented:**
+```text
+Question: "This issue appears already implemented. What would you like to do?"
+Options:
+  - Update issue body and close (Recommended) — check off implemented criteria with evidence, then close
+  - Close with comment summarizing evidence
+  - Add comment with findings (keep open)
+  - Skip — no action
+```
+
+Body modifications: In the Acceptance Criteria section, change `- [ ] VERIFY:` to `- [x] VERIFY:` for each implemented criterion. Append a brief evidence note inline (e.g., `— found in src/auth/login.ts:45`).
+
+**Needs Update (Tier 1 — structured issues):**
+```text
+Question: "This issue has stale references. What would you like to do?"
+Options:
+  - Update issue body (Recommended) — fix stale file paths, line numbers, and resolved blockers
+  - Add comment listing what needs updating
+  - Skip — no action
+```
+
+Body modifications: Fix stale line numbers and file paths in the Implementation Guide and Approach sections. Remove resolved blocker references in Dependencies, or rewrite them to a non-parsed form such as "Resolved blocker: #123 (closed)" — do not use strikethrough, which preserves the literal `Blocked by:` pattern and confuses dependency parsers. Update any scope references that no longer match the codebase.
+
+**Needs Update (Tier 2 — unstructured issues):**
+```text
+Question: "This issue has stale references. What would you like to do?"
+Options:
+  - Add comment listing what needs updating (Recommended)
+  - Skip — no action
+```
+
+Body edits are omitted for Tier 2 because mechanical corrections to unstructured bodies are unreliable without well-defined sections.
+
+**Partially Implemented:**
+```text
+Question: "This issue is partially done. What would you like to do?"
+Options:
+  - Update issue body (Recommended) — check off completed criteria, keep unchecked ones
+  - Add status comment with progress summary
+  - Skip — no action
+```
+
+Body modifications: In the Acceptance Criteria section, change `- [ ] VERIFY:` to `- [x] VERIFY:` only for criteria confirmed as implemented. Leave unimplemented criteria unchecked.
+
+**In Progress (Tier 1 — structured issues):**
+```text
+Question: "This issue is partially done with active PR(s). What would you like to do?"
+Options:
+  - Update issue body (Recommended) — add active PR reference at top of body
+  - Add status comment with progress summary
+  - Skip — no action
+```
+
+Body modifications: Add a status note at the top of the issue body linking to the active PR(s):
+```markdown
+> **Status:** In progress — see #PR_NUMBER
+```
+
+**In Progress (Tier 2 — unstructured issues):**
+```text
+Question: "This issue is partially done with active PR(s). What would you like to do?"
+Options:
+  - Add status comment with progress summary (Recommended)
+  - Skip — no action
+```
+
+**Outdated (Tier 1 — structured issues):**
+```text
+Question: "This issue appears outdated. What would you like to do?"
+Options:
+  - Update issue body and close (Recommended) — mark outdated references with deprecation note, then close
+  - Close as outdated with explanation
+  - Add comment noting staleness
+  - Skip — no action
+```
+
+Body modifications: Add a deprecation note at the top of the body and mark affected sections with `~~strikethrough~~` or inline notes identifying what is no longer valid.
+
+**Outdated (Tier 2 — unstructured issues):**
+```text
+Question: "This issue appears outdated. What would you like to do?"
+Options:
+  - Close as outdated with explanation (Recommended)
+  - Add comment noting staleness
+  - Skip — no action
+```
+
+**Still Needed:**
+
+No action prompt — the issue is valid as-is. Report the verdict and move on.
+
+#### Executing Actions
+
+**Edit issue body (heredoc pattern):**
+
+First fetch the current body, apply the verdict-specific modifications, then write it back:
+
+```bash
+# Fetch current body
+gh issue view ISSUE_NUMBER --json body -q .body
+```
+
+Apply the modifications described above for the specific verdict, then update:
+
+```bash
+# Write modified body via heredoc (quoted delimiter preserves all special characters)
+gh issue edit ISSUE_NUMBER --body-file - <<'ISSUE_BODY_END'
+MODIFIED_BODY_CONTENT
+ISSUE_BODY_END
+```
+
+Immediately after every body edit, post an audit-trail comment:
+
+```bash
+gh issue comment ISSUE_NUMBER --body-file - <<'EOF'
+## /pm:review — Issue Body Updated
+
+**Changes made:**
+- [list each specific modification]
+
+**Why:**
+- [evidence from review findings]
+
+*Updated by `/pm:review` on YYYY-MM-DD*
+EOF
+```
+
+**Close issues:**
+```bash
+gh issue close ISSUE_NUMBER --comment "Closing: REASON. Identified by /pm:review."
+```
+
+**Add comments:**
+```bash
+gh issue comment ISSUE_NUMBER --body "COMMENT_BODY"
+```
+
+**Never modify an issue without explicit user approval.**
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/rube-de) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

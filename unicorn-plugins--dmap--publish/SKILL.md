@@ -1,0 +1,254 @@
+---
+name: publish
+description: 개발 완료된 플러그인을 GitHub에 배포 Use when this capability is needed.
+metadata:
+  author: unicorn-plugins
+---
+
+# Publish
+
+## 목표
+
+개발 완료된 DMAP 플러그인을 GitHub 원격 저장소에 배포하고,
+사용자가 마켓플레이스를 통해 플러그인을 바로 설치할 수 있도록 안내함.
+
+[Top](#publish)
+
+---
+
+## 활성화 조건
+
+사용자가 `/dmap:publish` 호출 시 또는 develop-plugin 스킬의 Phase 4 완료 후 연결 시.
+"배포", "publish", "GitHub에 올려줘", "플러그인 등록" 키워드 감지 시.
+
+[Top](#publish)
+
+---
+
+## 작업 환경 변수 로드 
+CLAUDE.md에서 아래 환경변수 로드함. 없으면 '/dmap:team-panner'를 먼저 수행하도록 안내하고 종료.   
+- CLAUDE_RUNTIME: 런타임 종류. Claude Code 또는 Claude CoWork 
+- DMAP_PLUGIN_DIR: DMAP 플러그인의 루트 절대 경로 
+- PLUGIN_DIR: 생성할 플러그인의 루트 절대 경로 
+- PLUGIN_NAME: 생성할 플러그인 이름 
+
+[Top](#publish)
+
+---
+
+## 참조
+
+| 문서 | 경로 | 용도 |
+|------|------|------|
+| GitHub 계정 가이드 | `{DMAP_PLUGIN_DIR}/resources/guides/github/github-account-setup.md` | 계정 생성 안내 |
+| GitHub 토큰 가이드 | `{DMAP_PLUGIN_DIR}/resources/guides/github/github-token-guide.md` | PAT 생성 안내 |
+| GitHub Organization 가이드 | `{DMAP_PLUGIN_DIR}/resources/guides/github/github-organization-guide.md` | Organization 생성 안내 |
+| create_repo 도구 | `{DMAP_PLUGIN_DIR}/resources/tools/customs/git/create_repo.py` | GitHub 저장소 생성 및 Push |
+
+[Top](#publish)
+
+---
+
+## 스킬 부스팅
+
+| 단계 | 부스팅 스킬 | 용도 |
+|------|------------|------|
+| Step 1 (인증 정보 수집) | `/oh-my-claudecode:security-review` | 토큰 저장 및 .gitignore 처리 보안 검증 |
+| Step 2.5 (원격 URL 검증) | `/oh-my-claudecode:security-review` | 원격 URL 토큰 노출 자동 감지 및 수정 |
+| Step 2~3 (Push + 완료) | `/oh-my-claudecode:ultraqa` | 배포 결과 검증 (저장소 접근, README 확인) |
+
+[Top](#publish)
+
+---
+
+## 워크플로우
+
+### Step 1: GitHub 인증 정보 수집
+
+사용자에게 GitHub 인증 정보를 수집함.
+
+AskUserQuestion 도구로 다음 정보를 순차적으로 문의:
+
+1. **GitHub 계정 보유 여부**
+   - 보유: 다음 단계로 진행
+   - 미보유: 계정 생성 가이드 링크 제공 후 대기
+     `{DMAP_PLUGIN_DIR}/resources/guides/github/github-account-setup.md` 참조 안내
+
+2. **GitHub Username** 입력 요청
+
+3. **Personal Access Token (PAT)** 입력 요청
+   - 미보유 시: 토큰 생성 가이드 링크 제공
+     `{DMAP_PLUGIN_DIR}/resources/guides/github/github-token-guide.md` 참조 안내
+   - PAT 필요 권한: `repo` (전체)
+
+4. **Organization 사용 여부**
+   - 개인 계정 사용: username을 owner로 설정
+   - Organization 사용: org 이름 입력 요청
+   - Organization 미보유 시: 생성 가이드 링크 제공
+     `{DMAP_PLUGIN_DIR}/resources/guides/github/github-organization-guide.md` 참조 안내
+
+5. **토큰 저장**
+   - 플러그인 디렉토리에 `{PLUGIN_DIR}/.dmap/secrets/` 디렉토리 생성
+   - `{PLUGIN_DIR}/.dmap/secrets/git-token-{plugin-name}.env` 파일에 저장:
+     ```
+     GITHUB_USERNAME={username}
+     GITHUB_TOKEN={token}
+     GITHUB_OWNER={owner}
+     ```
+   - `.gitignore`에 `.dmap/secrets/` 패턴이 포함되어 있는지 확인, 없으면 추가
+
+### Step 2: 원격 저장소 생성 및 Push
+
+`{DMAP_PLUGIN_DIR}/resources/tools/customs/git/create_repo.py` 도구를 사용하여 GitHub 저장소 생성 + 로컬 Git 초기화 + Push를 한번에 수행함.
+`gh` CLI 설치가 불요하며, Python 표준 라이브러리만 사용.
+
+1. 저장소명 결정: 플러그인명 사용 (plugin.json의 name 필드)
+2. `.gitignore` 존재 확인 (develop-plugin에서 이미 생성됨)
+3. `create_repo.py` 실행:
+   ```
+   python {DMAP_PLUGIN_DIR}/resources/tools/customs/git/create_repo.py \
+     --name {repo-name} \
+     --desc "{plugin description}" \
+     --token {PAT} \
+     --dir {plugin-directory}
+   ```
+   - Organization 사용 시: `--org {org}` 옵션 추가
+4. 이미 git 저장소이고 원격이 설정된 경우 (업데이트 배포):
+   ```
+   git add .
+   git commit -m "Update: {plugin-name} DMAP plugin"
+   git push
+   ```
+
+> `create_repo.py`가 수행하는 작업: 저장소 존재 여부 확인 → 원격 저장소 생성 →
+> `git init` → `git remote add origin` → 초기 커밋 → `git push -u origin main`
+
+### Step 2.5: 원격 URL 보안 검증 (자동)
+
+`{DMAP_PLUGIN_DIR}/resources/tools/customs/git/create_repo.py` 또는 수동 Push 완료 후 즉시 실행:
+
+1. 원격 URL 확인:
+   ```
+   git remote -v
+   ```
+2. 토큰 패턴 감지 (`ghp_`, `github_pat_`, `gho_`, `ghu_` 등):
+   - 정규식: `https://[^@]+@github\.com/`
+3. 토큰 발견 시 자동 수정:
+   ```
+   git remote set-url origin https://github.com/{owner}/{repo}.git
+   ```
+4. 수정 후 사용자에게 알림 및 PAT 폐기 안내:
+   > ⚠️ 원격 URL에서 토큰이 발견되어 제거했습니다. 해당 토큰을 즉시 폐기하세요.
+   > GitHub → Settings → Developer settings → Personal access tokens → 해당 토큰 삭제
+
+### Step 3: 완료 메시지 및 플러그인 등록 안내
+
+Git Push 완료 후 다음 내용을 출력함.
+
+**축하 메시지 (감성적으로):**
+
+```
+🎉 축하합니다!
+
+당신의 플러그인 '{plugin-name}'이 세상에 첫 발을 내딛었습니다.
+아이디어에서 시작해 요구사항 정의, 설계, 개발, 그리고 배포까지 —
+모든 여정을 함께 해서 기뻤습니다.
+
+이제 당신이 허락하는 누구나 이 플러그인을 설치하고 사용할 수 있습니다.
+```
+
+**플러그인 등록 방법 안내:**
+
+```
+📦 플러그인 설치 방법 (사용자에게 공유하세요)
+
+# 1. GitHub 저장소를 마켓플레이스로 등록
+claude plugin marketplace add {owner}/{repo-name}
+
+# 2. 플러그인 설치
+claude plugin install {plugin-name}@{marketplace-name}   
+- plugin-name은 .claude-plugin/plugin.json의 name 필드와 동일
+- marketplace-name은 .claude-plugin/marketplace.json의 name 필드와 동일
+
+# 3. 설치 확인
+claude plugin list
+```
+
+**README 참조 안내:**
+
+```
+📖 자세한 설치·사용법은 README.md를 참고하세요:
+   https://github.com/{owner}/{repo-name}/blob/main/README.md
+```
+
+[Top](#publish)
+
+---
+
+## 사용자 상호작용
+
+모든 단계에서 AskUserQuestion 도구를 사용하여 사용자 입력을 수집함.
+특히 Step 1의 인증 정보는 민감 정보이므로 안전한 저장을 보장함.
+
+[Top](#publish)
+
+---
+
+## 문제 해결
+
+| 문제 | 해결 방법 |
+|------|----------|
+| Python 미설치 | Python 3.7+ 설치 안내: https://python.org/ |
+| Git 미설치 | Git 설치 안내: https://git-scm.com/ |
+| 인증 실패 | 토큰 권한(repo) 확인, 토큰 재생성 안내 |
+| 저장소 이미 존재 | 다른 이름 사용 또는 기존 저장소 활용 (업데이트 배포) |
+| 저장소 생성 실패 | Organization 권한 확인, 이름 중복 확인 |
+| Push 실패 | 원격 저장소 URL 확인, 인증 토큰 확인 |
+
+[Top](#publish)
+
+---
+
+## MUST 규칙
+
+| # | 규칙 |
+|---|------|
+| 1 | GitHub 인증 정보(username, PAT, owner)를 반드시 수집 후 진행 |
+| 2 | 토큰을 `{PLUGIN_DIR}/.dmap/secrets/` 디렉토리에 저장하고 `{PLUGIN_DIR}/.gitignore` 등록 확인 |
+| 3 | 저장소 존재 여부를 먼저 확인하여 멱등성 보장 |
+| 4 | 완료 메시지에 플러그인 설치 방법(마켓플레이스 등록 명령) 포함 |
+
+[Top](#publish)
+
+---
+
+## MUST NOT 규칙
+
+| # | 금지 사항 |
+|---|----------|
+| 1 | 인증 토큰을 로그/출력에 노출 금지 |
+| 2 | 사용자 확인 없이 기존 저장소를 덮어쓰지 않음 |
+| 3 | `{PLUGIN_DIR}/.dmap/secrets/` 디렉토리를 Git에 커밋하지 않음 |
+| 4 | 원격 URL에 토큰을 포함한 채로 저장하지 않음 (Step 2.5 자동 검증 필수) |
+
+[Top](#publish)
+
+---
+
+## 검증 체크리스트
+
+- [ ] GitHub 인증 정보 수집 단계가 포함되어 있는가
+- [ ] `{PLUGIN_DIR}/.dmap/secrets/` 저장 및 `{PLUGIN_DIR}/.gitignore` 확인 로직이 있는가
+- [ ] `{DMAP_PLUGIN_DIR}/resources/tools/customs/git/create_repo.py` 도구를 사용하여 저장소 생성 및 Push를 수행하는가
+- [ ] 저장소 존재 여부 사전 확인(멱등성)이 있는가
+- [ ] 완료 메시지에 설치 명령어가 포함되어 있는가
+- [ ] 문제 해결 가이드가 포함되어 있는가
+- [ ] 토큰이 출력/로그에 노출되지 않도록 하는 규칙이 있는가
+- [ ] Step 2.5 원격 URL 보안 검증이 포함되어 있는가
+- [ ] 토큰 발견 시 자동 수정 및 PAT 폐기 안내 로직이 있는가
+
+[Top](#publish)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/unicorn-plugins) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

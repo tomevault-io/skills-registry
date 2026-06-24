@@ -1,0 +1,13 @@
+# caveman-distillate
+
+> Skill by [dlepold](https://github.com/dlepold/caveman-distillate) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [dlepold/caveman-distillate](https://github.com/dlepold/caveman-distillate/tree/main/skills/caveman-distillate/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

@@ -1,0 +1,13 @@
+# ruoyi-plus-soybean
+
+> Skill by [m-xlsea](https://github.com/m-xlsea/ruoyi-plus-soybean) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [m-xlsea/ruoyi-plus-soybean](https://github.com/m-xlsea/ruoyi-plus-soybean/tree/main/.claude/skills/athena-preferences/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

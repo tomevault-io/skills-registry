@@ -1,0 +1,138 @@
+---
+name: verifying-before-completion
+description: AI agent validates work through evidence-based verification with comprehensive checklists, automated validation, and proof-of-work documentation. Use when completing tasks, preparing for review, or ensuring quality. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Verifying Before Completion
+
+## Quick Start
+
+1. **Functional** - All acceptance criteria met, happy path works, edge cases handled
+2. **Technical** - Tests pass, coverage met, lint clean, build succeeds
+3. **Security** - No secrets exposed, input sanitized, auth verified
+4. **Performance** - Response time acceptable, no N+1, no memory leaks
+5. **Documentation** - Code comments, API docs, README updated
+6. **Evidence** - Collect screenshots, test output, metrics for proof
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Universal Checklist | Comprehensive validation | Functional, technical, security, perf, docs |
+| Evidence Collection | Proof of verification | Test output, screenshots, metrics |
+| Automated Pipeline | CI/CD validation | Type check, lint, test, build, audit |
+| Type-Specific Checks | Context-aware validation | UI, API, migration, bug fix, optimization |
+| Pre-Commit Hooks | Catch issues early | lint-staged, related tests |
+| Sign-Off Template | Formal completion record | Verified by, date, evidence links |
+
+## Common Patterns
+
+```
+# Universal Verification Checklist
+FUNCTIONAL:
+[ ] All acceptance criteria met
+[ ] Happy path works correctly
+[ ] Edge cases handled
+[ ] Error handling works
+[ ] Input validation works
+
+TECHNICAL:
+[ ] Tests pass (unit, integration, E2E)
+[ ] Coverage meets threshold (80%+)
+[ ] No TypeScript/lint errors
+[ ] Build succeeds
+[ ] No security vulnerabilities
+
+DOCUMENTATION:
+[ ] Complex logic commented
+[ ] API documentation updated
+[ ] README updated if needed
+```
+
+```bash
+# Automated Verification Script
+npm run lint         # Lint check
+npm run typecheck    # Type check
+npm test             # Unit tests
+npm run build        # Build verification
+npm audit            # Security audit
+
+# Full verification
+npm run verify       # Runs all checks
+```
+
+```
+# Evidence Documentation Template
+## Test Evidence
+$ npm test
+Test Suites: 15 passed
+Tests: 87 passed
+Coverage: 85.2%
+
+## Manual Verification
+| Step | Expected | Actual | Status |
+|------|----------|--------|--------|
+| Login | Form appears | Works | Pass |
+| Submit | Success msg | Shows | Pass |
+
+## Performance Metrics
+| Metric | Baseline | Current | Status |
+|--------|----------|---------|--------|
+| Bundle | 245 KB | 248 KB | Pass |
+| API | 150ms | 145ms | Pass |
+
+## Sign-Off
+[x] All tests pass
+[x] Manual testing complete
+[x] Ready for review
+Verified by: [Name] on [Date]
+```
+
+```
+# Type-Specific Checklists
+UI COMPONENT:
+[ ] Renders in all browsers
+[ ] Responsive mobile/tablet/desktop
+[ ] Loading/error/empty states
+[ ] Keyboard accessible
+[ ] Matches design specs
+
+API ENDPOINT:
+[ ] Correct status codes
+[ ] Response matches schema
+[ ] Auth/authz enforced
+[ ] Input validated
+[ ] Documented in OpenAPI
+
+BUG FIX:
+[ ] Root cause identified
+[ ] Fix addresses root cause
+[ ] Regression test added
+[ ] No new bugs introduced
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Run all tests before marking complete | Skipping verification steps |
+| Document evidence of verification | Marking complete without evidence |
+| Test both happy and unhappy paths | Assuming tests are enough |
+| Verify on multiple browsers/devices | Ignoring edge cases |
+| Check performance impact | Skipping security checks |
+| Use automated verification | Merging without green CI |
+| Include screenshots for UI | Forgetting mobile testing |
+| Self-review before requesting | Rushing verification |
+
+## Related Skills
+
+- `finishing-development-branches` - Complete branch preparation
+- `executing-plans` - Quality gates during execution
+- `debugging-systematically` - Verify fixes work
+- `developing-test-driven` - Build verification into process
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

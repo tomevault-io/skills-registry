@@ -1,0 +1,325 @@
+---
+name: fix-vulnerability
+description: > Use when this capability is needed.
+metadata:
+  author: patriksimek
+---
+
+# Fix Vulnerability — vm2 Security Patch Agent
+
+You are fixing a vulnerability in the **vm2** Node.js sandboxing library. Goal: not to patch the specific PoC, but to **understand the underlying weakness and eliminate the entire class of attack it represents**.
+
+Wear three hats simultaneously:
+
+| Hat | Perspective |
+|---|---|
+| **Node.js Internals Expert** | How V8 executes JS, how Proxy/Reflect are implemented at the C++ level, how `vm` contexts are created, where the boundary between host and guest objects lives in memory. |
+| **JavaScript Language Expert** | Every spec-observable quirk: prototype walks, `Symbol.toPrimitive` / `Symbol.unscopables`, accessor descriptors inherited through prototypes, `arguments` aliasing, `WeakRef` / `FinalizationRegistry` timing, `with` scoping, `eval` vs `Function` vs `import()`, tagged templates leaking the realm's `String`, `Error.prepareStackTrace`. |
+| **Security Engineer** | You evaluate attack surfaces, not individual exploits. You think in terms of invariants and verify they hold under adversarial composition of language features. |
+
+---
+
+## Tools
+
+- **Repo scripts (preferred for advisory reads)** — the REST API does not expose advisory comment threads, so we scrape the authenticated web UI via a `GH_SESSION_COOKIE` stored in `.env`. Use these instead of the `gh` advisory endpoints whenever you need the **discussion / reporter messages**:
+  ```bash
+  # List non-published advisories (draft / triage) — default
+  node scripts/list-advisories.mjs
+  # All states, or only published
+  node scripts/list-advisories.mjs --all
+  node scripts/list-advisories.mjs --published
+  # Read the full thread (initial report + every comment) for one advisory
+  node scripts/read-ghsa-thread.mjs GHSA-xxxx-xxxx-xxxx
+  ```
+  The cookie acquisition flow is documented in `scripts/read-ghsa-thread.mjs`. If a call dies with "cookie expired", refresh it before continuing — do not fall back to `gh api` for thread content.
+
+- **GitHub CLI (`gh`)** — authenticated. Use the **repository** security advisories endpoint for metadata, CVSS, CWE, affected versions, and for the **temporary private fork** workflow (see step 6):
+  ```bash
+  # Advisory metadata (PoC excerpt, CVSS, CWE, severity, status)
+  gh api repos/patriksimek/vm2/security-advisories/GHSA-xxxx-xxxx-xxxx
+  ```
+  The thread / comments are NOT in this payload — use the scripts above for those.
+
+- **`docs/ATTACKS.md`** — institutional memory. Every fix you make updates this doc.
+
+- **Standard Node.js / shell tooling** for reproduction, instrumentation, and testing.
+
+---
+
+## Workflow
+
+> **Before step 1**: this skill assumes you are working **on a dedicated per-advisory branch**, not on `main`. See step 8a for why and step 8c for the setup commands. If the user invoked `/fix-vulnerability` while `git branch --show-current` returns `main`, your first action is to create and check out a fresh branch named `fix/<full-GHSA-id>` (e.g. `git checkout -b fix/GHSA-76w7-j9cq-rx2j main`). Every subsequent step — repro test, multi-angle agents, instrumentation, doc updates, commits — happens on that branch. Local `main` stays clean and never carries an embargoed fix commit.
+
+### 1. Orient
+
+Re-read `CLAUDE.md` and `docs/ATTACKS.md` cover-to-cover. CLAUDE.md has the file roles and architectural map; ATTACKS.md has the attack catalog, the [Defense Invariants](../../../docs/ATTACKS.md#defense-invariants), and the [Category Entry Format](../../../docs/ATTACKS.md#category-entry-format) you'll use later.
+
+Identify the trust boundary in precise terms: which objects live in the host realm, which in the sandbox realm, which bridge the two.
+
+### 2. Advisory deep-dive
+
+Fetch the full advisory **and the discussion thread**:
+
+```bash
+gh api repos/patriksimek/vm2/security-advisories/<GHSA-id>   # metadata, CVSS, CWE
+node scripts/read-ghsa-thread.mjs <GHSA-id>                  # initial report + every comment
+```
+
+The thread is where reporters post follow-ups, bypass PoCs, and confirmation/rejection of your patches — it is not available via the REST API. Always read it in full before designing a fix, and re-read it after the reporter responds.
+
+Extract: the PoC, CVSS vector, CWE classification, and any linked priors the reporter references — **follow the full history chain**. Many vm2 advisories are regressions or bypasses of earlier fixes; the genealogy matters.
+
+Classify the vulnerability against ATTACKS.md's Tier 1 primitives (categories 1–5) and Tier 2 techniques (6–15). If it doesn't fit existing categories, identify the new primitive or technique it represents.
+
+Trace the PoC line-by-line. For each step, annotate: which object reference the attacker holds, which realm that object belongs to, and which existing defense should have prevented this step (and why it didn't).
+
+### 3. Reproduce & instrument
+
+Write a minimal reproduction at `test/ghsa/<advisory-id>.js` that:
+- Runs the PoC inside vm2.
+- Asserts the **escape condition** (e.g., guest obtained `process` or executed host code) — not just "doesn't crash."
+- Currently **fails** (the exploit succeeds).
+
+Use `it.cond(name, condition, fn)` for Node version requirements; follow patterns in `test/vm.js` (`makeHelpers()`).
+
+Add targeted logging in `BaseHandler` / `ProtectedHandler` / `ReadOnlyHandler` traps in `lib/bridge.js`, in `ensureThis` / `thisFromOther` / `otherFromThis`, and in `handleException` (`lib/setup-sandbox.js`). Log trap name, target, args, and whether returned values are host or guest objects. Run the instrumented repro and save the trace.
+
+### 4. Root cause
+
+State the invariant violation as a precise, falsifiable claim. Map it to the [Defense Invariants](../../../docs/ATTACKS.md#defense-invariants) — which one was breached, and where?
+
+Cross-reference ATTACKS.md. If a prior fix addressed the same *category* but this PoC found a new *path*, the prior fix was specific rather than structural. Note this explicitly — your fix should subsume the prior one.
+
+Enumerate related attack paths:
+- Other Proxy traps with the same structural flaw?
+- Other built-in prototypes where the same kind of descriptor could leak?
+- Other throw sites if the bug is in exception handling?
+- Every place host code is called with a guest-controlled `this` if the bug is in `this` binding?
+- Could an attacker **compose** this primitive with another known technique from ATTACKS.md to escape even after a narrow fix?
+
+### 5. Design the fix — multi-angle exploration
+
+For any non-trivial vulnerability, **do not write the fix yourself first.** Spawn three parallel sub-agents in isolated git worktrees, each tasked with the same advisory but instructed to attack the design space from a different angle. Compare the diffs side-by-side and either pick the best or synthesize the strongest pieces of each.
+
+This pattern repeatedly catches real bugs that any single perspective would miss: the "minimal" angle misses variants the "structural" angle finds; the "structural" angle misses composition bypasses the "defense-in-depth" angle catches.
+
+| Angle | Instruction | Strength | Risk if used alone |
+|---|---|---|---|
+| **Minimal patch** | "Close the canonical PoC with the smallest possible diff. Do not refactor surrounding code. Comment every changed line with the invariant it enforces." | Easy to review; preserves behavior. | Often fixes the literal PoC but not the class — variants slip through. |
+| **Structural fix** | "Identify the invariant the PoC violates. Close the entire violation class at the right chokepoint, even if the diff is larger. Justify why this is the right layer." | Closes whole categories at once; survives variant probes. | May tighten the invariant too far and break legitimate APIs. |
+| **Defense-in-depth** | "Assume the structural fix has gaps. Add a second independent layer of checks at a different chokepoint. Identify what an attacker would do to compose past the primary fix and block that too." | Catches composition attacks across layers. | Belt-and-suspenders can be over-engineering; demand a perf/UX justification. |
+
+**Spawn pattern** — all three in parallel, single message, multiple `Agent` tool calls:
+
+```
+Agent({description: "Minimal patch for GHSA-xxxx",     subagent_type: "general-purpose", isolation: "worktree", prompt: "<advisory + 'minimal patch only, no refactoring'>"})
+Agent({description: "Structural fix for GHSA-xxxx",    subagent_type: "general-purpose", isolation: "worktree", prompt: "<advisory + 'identify the invariant, close the class at the right chokepoint'>"})
+Agent({description: "Defense-in-depth for GHSA-xxxx",  subagent_type: "general-purpose", isolation: "worktree", prompt: "<advisory + 'assume the canonical fix has gaps, add a second independent layer'>"})
+```
+
+**Synthesis (do this yourself, not a fourth agent):**
+
+1. Read each diff in full via `git diff main..agent-worktree-branch`. **Don't trust the agents' summaries — diffs are ground truth.** Agents routinely overstate what they did.
+2. Run each fix against the PoC + the variant probes from step 4. Record which fix passes which test.
+3. Look for:
+   - **Convergence** — when 2 of 3 agents land on the same chokepoint, that's strong signal it's the right level.
+   - **Divergence** — different chokepoints means the bug spans multiple layers; the final fix probably needs hunks from more than one agent.
+   - **Combined coverage** — frequently the right answer is "structural fix from B + symbol filter from C, drop A."
+4. Apply the chosen hunks to `main` yourself. Always merge by hand.
+
+**Practical gotchas observed in this codebase:**
+
+- **Worktrees auto-clean if the agent makes no changes.** An exploratory agent that decides "no fix needed" or only writes notes loses its reasoning when the worktree is reaped. Instruct exploratory agents to write a `NOTES.md` in the worktree so reasoning survives.
+- **Formatter contamination.** Prettier / ESLint hooks running inside the worktree produce huge diffs of trailing-comma and brace-spacing changes mixed into the security fix. Diff against current `main` and hand-pick the security-relevant hunks; never blindly cherry-pick the agent's full commit.
+- **Stale-base worktrees.** If you've committed earlier fixes on `main` since the worktree was created (common when fixing a cluster of advisories), the agent's diff against `main` will include unrelated reverts. Either rebase the worktree onto current `main` before merging, or apply hunks manually.
+- **Cap at three angles.** More dilutes attention without adding signal.
+
+### 6. Promote to structural and audit
+
+Verify the merged fix actually closes the invariant violation, not just the specific PoC path. Examples:
+
+| Specific | Structural |
+|---|---|
+| "Check if the property name is `constructor` in the `get` trap." | "Every value returned from any Proxy `get` trap passes through `thisFromOther()` / `ensureThis()`, with no exceptions." |
+| "Delete `Error.prepareStackTrace` before running guest code." | "All errors thrown across the boundary are reconstructed as new guest-realm `Error` objects with only `.message` copied." |
+
+For every Proxy trap in `BaseHandler`, `ProtectedHandler`, `ReadOnlyHandler`, verify the fix's invariant holds: `get`, `set`, `has`, `deleteProperty`, `ownKeys`, `getOwnPropertyDescriptor`, `defineProperty`, `apply`, `construct`, `getPrototypeOf`, `setPrototypeOf`, `isExtensible`, `preventExtensions`. For each: does it ever return, pass, or expose a host-realm object to guest code without wrapping?
+
+Also audit sandbox bootstrap (`lib/setup-sandbox.js`, `lib/setup-node-sandbox.js`) — several escapes came through sandbox globals (`Error.prepareStackTrace` fallback, `WebAssembly.JSTag`), not proxy traps.
+
+Evaluate second-order effects: infinite recursion (proxy wrapping triggers another trap that wraps again), broken legitimate API contracts, performance cliffs for benign code, regressions in the existing test suite.
+
+Apply the fix with minimal, self-contained diff. Comment every security-critical line with `// SECURITY:` explaining the invariant it enforces.
+
+### 7. Test
+
+- **Direct regression**: convert the Phase 3 repro into a passing test that asserts the guest does **not** obtain a host reference.
+- **Variants**: write tests for every related path identified in step 4. If the bug was in `get`, test the analogous pattern through `getOwnPropertyDescriptor`, `defineProperty`, `set`. If it used `Symbol.toPrimitive`, also test `Symbol.hasInstance`, `iterator`, `species`, `unscopables`. If it used `Error`, also test `AggregateError`, `Error.captureStackTrace`, `Error.prepareStackTrace`.
+- **Composition**: combine this vulnerability's mechanism with primitives from ATTACKS.md. Verify partial reproductions of the leak still cannot chain into a full escape.
+- **Adversarial probing**: write a small harness that enumerates `Object.getOwnPropertyNames` / `getOwnPropertySymbols` / `__proto__` walk on every value returned to guest code, and asserts none are host-realm references (compare against saved `host_Function`, `host_Object`, etc.).
+- **Existing suite**: `npm test` must pass. If a test breaks, evaluate whether it was relying on insecure behavior the fix correctly eliminates, and update with a comment explaining why.
+
+#### Multi-Node-version testing
+
+The fix must pass `npm test` on **every Node major from 8 through the latest release**. Older Nodes lack `SuppressedError`, `using` declarations, `WebAssembly.JSTag`, `Promise.try`, `Array.fromAsync`, top-level await, private class fields, optional chaining (pre-14), nullish coalescing (pre-14), etc. — a fix that uses any of these without guards crashes the load on older runtimes and silently breaks every embedder still on an LTS-extended tree.
+
+Run the full sweep before considering the fix done. With `nvm`:
+
+```bash
+for v in 8 10 12 14 16 18 20 22 24 25 26; do
+  nvm use $v && npm test 2>&1 | tail -3
+done
+```
+
+If any version fails, fix it before push. Do not assume "passes on the latest Node" means "passes everywhere" — older Nodes catch syntax/API choices that the latest V8 silently accepts.
+
+**Guarding rules for the fix code** (`lib/*.js`):
+
+- New syntax must be a strict subset of what Node 8's V8 understands. No `?.`, no `??`, no `Promise.try`, no top-level `await`, no `using`, no private class fields, no static class blocks. The transformer's Acorn parser is pinned at `ecmaVersion: 2022` for sandbox code; the bridge itself can be more conservative since it loads on the embedder's Node.
+- Feature-gated host APIs (`SuppressedError`, `AggregateError`, `WebAssembly.JSTag`, `Reflect`, `globalThis`, `BigInt`, `Promise.allSettled`, `Promise.any`) must be probed at module load (`typeof SuppressedError === 'function'`) and skipped, not blindly referenced. The codebase already does this — match the existing pattern at the install site.
+- Test code in `test/ghsa/<GHSA-id>/repro.js` may use newer syntax inside the sandbox-side string template, but the JS file itself must parse on Node 8. Use `it.cond(name, condition, fn)` for tests that require a newer feature (`HAS_WASM_STREAMING`, `HAS_USING`, `HAS_SUPPRESSED_ERROR`, etc.). See `test/ghsa/GHSA-v6mx-mf47-r5wg/repro.js` for the canonical shape.
+
+If a Node version reveals a failure that was not in the original PoC, that is a **separate finding** — either widen the fix to cover it, or open a follow-up advisory if it surfaces a new escape class.
+
+**Iterate with `/hacker`**: run the red-team skill against the patched tree. A bypass means the structural invariant is wrong, not that you need a tighter patch on the same line. Loop steps 5–7 until `/hacker` finds nothing.
+
+### 8. Commit to the temporary private fork
+
+Each advisory gets its own **temporary private fork** at `patriksimek/vm2-ghsa-<short-id>`. This fork is what the reporter (added as a collaborator on the advisory) sees and reviews; **never** push the embargoed fix to `origin` (`patriksimek/vm2`) until the advisory is published.
+
+#### 8a. Isolation: one branch per advisory
+
+**Local `main` stays at the last public release commit** (`origin/main` tip) — it is the integration line, not a scratch branch. Every embargoed fix lives on its own branch tracking its own private fork. This is the load-bearing invariant of the multi-advisory workflow:
+
+- **Two open reports never see each other's commits** until the maintainer chooses to integrate them. No accidental cross-contamination in tests, comments, or commit messages.
+- **`/hacker`, `npm test`, and the multi-angle agents** for advisory A run against advisory A's checked-out branch only — they cannot stumble into an advisory-B mitigation that incidentally also blocks the bypass they were looking for.
+- **Conflict surfaces at integration time, not at commit time.** When two advisories both touched `lib/bridge.js`, the conflict is resolved deliberately in front of `npm test`, not hidden inside a stack of `fix(GHSA-…)` commits on `main`.
+- **Rollback is trivial.** If a reporter rejects the structural direction, `git checkout main && git branch -D fix/GHSA-<full-id>` plus a force-push to the private fork undoes everything without disturbing `main` or other open advisories.
+
+**Switching between advisories** is `git checkout fix/GHSA-<other-full-id>`. Commit or stash anything in flight first — uncommitted changes carry across branches in a single working directory.
+
+**Multi-angle exploration agents** (the three Generators spawned in step 5) still use `isolation: "worktree"` — each spawns its own temporary worktree off the current branch tip so it can edit and test in parallel without disturbing your work. Those worktrees are scratch space owned by the agents; clean them up after you've synthesized.
+
+#### 8b. Create the temporary private fork
+
+**Check whether a fork already exists** as a git remote pointing at the GHSA-specific repo:
+
+```bash
+git remote -v | grep -i "vm2-ghsa-<short-id>" || echo "no remote yet"
+```
+
+Naming convention: the remote is conventionally named with the leading short-id chunk (e.g. `ghsa-248r` for `GHSA-248r-7h7q-cr24`), the repository is `patriksimek/vm2-ghsa-<full-id>`.
+
+**If the fork does NOT exist** — create it via the dedicated advisory-fork endpoint (not a generic `gh repo fork`). This endpoint creates the temporary private fork that is linked back to the advisory's UI:
+
+```bash
+# Create the temporary private fork for this advisory
+gh api -X POST repos/patriksimek/vm2/security-advisories/<GHSA-id>/forks
+# Response includes the new repo's full name and ssh_url; wire it up as a remote
+git remote add ghsa-<short-id> git@github.com:patriksimek/vm2-ghsa-<GHSA-id>.git
+```
+
+If the API call returns 202/Accepted, the fork is being created asynchronously — poll `gh api repos/patriksimek/vm2-ghsa-<GHSA-id>` until it returns 200 before pushing.
+
+#### 8c. Create the per-advisory branch
+
+For a **new advisory** (fork is fresh, no commits beyond `main`):
+
+```bash
+# From main, branch off and check out.
+git checkout main
+git checkout -b fix/GHSA-<full-id>
+```
+
+For a **follow-up on an advisory you've already pushed** (reporter found a bypass, asked for a tweak, or you're resuming after a context switch and deleted the local branch):
+
+```bash
+git fetch ghsa-<short-id>
+git checkout -b fix/GHSA-<full-id> ghsa-<short-id>/main
+```
+
+The branch lives only locally and on the private fork's `main`. It is your working branch where you accumulate commits before pushing.
+
+#### 8d. Commit and push
+
+All edits, multi-angle agent worktrees spawned with `isolation: "worktree"` (those spawn off the current branch tip and stay isolated), repro tests, `npm test`, `/hacker` runs, ATTACKS.md updates, and CHANGELOG.md entries happen **on this branch**. Local `main` is never touched during embargoed work.
+
+When ready:
+
+```bash
+# From the advisory branch
+git push ghsa-<short-id> HEAD:main
+```
+
+**If the fork already has commits** (follow-up commit on a previously reviewed fix) — add a new commit on top. Do not force-push or rebase commits the reporter has already reviewed.
+
+**Disclosure hygiene**:
+- Do not push to `origin` or open a public PR.
+- Commit messages MAY reference the GHSA ID — the fork is private and visible only to maintainers + reporter.
+- Never reference reporter names or embargo dates in commits, code comments, or `CHANGELOG.md`.
+
+#### 8e. Integration into `main` (at release time, not during embargo)
+
+When the advisory is published and the next release is being cut, merge each ready advisory's branch into `main` in a deliberate integration pass:
+
+```bash
+git checkout main
+git merge --no-ff fix/GHSA-<full-id>
+# Resolve any cross-advisory conflicts in lib/bridge.js etc.
+npm test
+# Run /hacker once more against the integrated tree.
+# Bump version in package.json, write CHANGELOG release header, then push origin.
+```
+
+Only after the public push do you delete the per-advisory branch (`git branch -d fix/GHSA-<full-id>`) and (optionally) archive the private fork.
+
+### 9. Post-commit summary
+
+After every commit (initial fix or follow-up), produce a **short** summary of what changed and post it to the advisory thread / share with the user. Keep it terse — the details live in the diff, the tests, and `ATTACKS.md`.
+
+Template:
+
+```
+GHSA-<id> — <one-line description>
+
+Root cause: <one sentence>
+Fix: <one sentence pointing at the chokepoint, e.g. "added X check in lib/bridge.js apply trap">
+Tests: test/ghsa/<GHSA-id>/repro.js + N variants
+ATTACKS.md: category <N> (<new | updated>)
+```
+
+Do not restate the PoC, list every changed line, or rehash the threat model — the reporter can read the diff.
+
+### 10. Document
+
+Update `docs/ATTACKS.md` following the [Category Entry Format](../../../docs/ATTACKS.md#category-entry-format) at the top of the doc:
+
+- New entry placed under the appropriate tier with the next sequential number, **or** added as a new canonical example to an existing category if the vulnerability is a variant.
+- The Mitigation section must reference the specific [Defense Invariant](../../../docs/ATTACKS.md#defense-invariants) the fix enforces.
+- Add `**Supersedes**:` linking to the prior category if this fix subsumes a previous specific patch.
+- Update `Summary → How The Bridge Defends` and `Summary → Compound Attack Patterns`.
+- If the fix retroactively strengthens defenses against prior attacks, annotate those entries with a defense-in-depth note.
+
+Update `CHANGELOG.md` with a one-line entry under the next release: `fix(GHSA-xxxx-xxxx-xxxx): <one-line description>`.
+
+### 11. Final review
+
+Answer every question with evidence:
+
+- [ ] **Is the PoC blocked?** The reproduction now fails to escape.
+- [ ] **Is the fix structural?** It restores a Defense Invariant, not just a specific PoC path.
+- [ ] **Are all related traps / boundary functions audited?** Every Proxy trap, every boundary-crossing function.
+- [ ] **Are variant tests written and passing?** At least one per related path from step 4.
+- [ ] **Are composition tests written and passing?** Combined with at least 3 primitives from ATTACKS.md.
+- [ ] **Does the full test suite pass?** No regressions.
+- [ ] **Does `npm test` pass on every Node major from 8 through the latest release?** Run the full local sweep before push. (Step 7 → "Multi-Node-version testing".)
+- [ ] **Do new tests fail without the patch?** Revert the fix (keep the new tests), run them, confirm every newly introduced security test **fails** — i.e., the exploit succeeds. Then re-apply the fix. **A security test that passes even without the patch proves nothing.** This is the single most important validation that your tests cover what you think they cover.
+- [ ] **Is `docs/ATTACKS.md` updated?** New entry follows the format, references the relevant Invariant, cross-referenced.
+- [ ] **Is `CHANGELOG.md` updated?**
+- [ ] **Are security-critical lines commented?** `// SECURITY:` annotations.
+- [ ] **Has `/hacker` passed?** Red-team found no bypasses.
+- [ ] **Could an attacker bypass with one additional trick?** Think adversarially for 5 more minutes. Try `eval`, `import()`, Proxy-wrapping the sandbox's own proxies, `Object.assign`, structured clone, `postMessage`, `WeakRef`, `FinalizationRegistry`, async microtask ordering. If any path is plausible, return to step 5.
+
+---
+> Source: [patriksimek/vm2](https://github.com/patriksimek/vm2) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-18 -->

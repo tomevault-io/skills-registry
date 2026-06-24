@@ -1,0 +1,49 @@
+---
+name: rust-simplify
+description: One-file-at-a-time Rust quality pass for Citum, using jcodemunch to target the highest-value cleanup. Use when this capability is needed.
+metadata:
+  author: citum
+---
+
+# Rust Simplify
+
+Use this skill for bounded Rust cleanup work in the Citum workspace when the task is to
+improve code quality rather than fix a specific bug.
+
+When `.jj` is present, use `docs/guides/JJ_AI_CHANGE_STACK.md` for optional
+local change isolation and intent capture before publishing through Git/GitHub.
+
+Read first:
+- `docs/guides/CODING_STANDARDS.md`
+- `docs/guides/AGENT_SKILLS.md`
+
+## Target Selection
+
+- Prefer `jcodemunch` symbol and file analysis before reading large files.
+- Pick the highest-value Rust file in the affected crate or module.
+- If a file path was supplied, confirm it is actually wired into the build.
+
+## Quality Pass
+
+- Reduce duplication and nested control flow.
+- Prefer idiomatic Rust and explicit error handling.
+- Review suspicious string ownership patterns. Prefer borrowed `&str` for lookup
+  and comparison work, and allocate `String` values at real ownership boundaries.
+- Do not perform broad allocation churn in hot paths without benchmark evidence.
+- Add or update tests when behavior changes.
+- When tests change, keep expected values independent of current implementation
+  output and confirm behavior changes would have failed before the fix when
+  practical.
+- Keep the scope to one focused file or one tightly related cluster.
+
+## Verification
+
+- Run the repo-required Rust checks for any `.rs`, `Cargo.toml`, or `Cargo.lock` change.
+- Run `python3 scripts/audit-rust-review-smells.py --changed` for Rust cleanup
+  passes and review the advisory findings.
+- Regenerate schemas if the touched files require it.
+- Report the exact checks you ran and the result.
+
+---
+> Source: [citum/citum-core](https://github.com/citum/citum-core) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-23 -->

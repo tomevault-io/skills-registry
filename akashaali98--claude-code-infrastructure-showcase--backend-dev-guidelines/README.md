@@ -1,0 +1,13 @@
+# backend-dev-guidelines
+
+> Skill by [akashaali98](https://github.com/akashaali98/claude-code-infrastructure-showcase) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [akashaali98/claude-code-infrastructure-showcase](https://github.com/akashaali98/claude-code-infrastructure-showcase/tree/main/.claude/skills/backend-dev-guidelines)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

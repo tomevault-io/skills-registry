@@ -1,0 +1,137 @@
+---
+name: refactor-command-to-commandlineresult
+description: Migrates a command class that still performs parsing or custom execution logic to return raw Git::CommandLineResult, moving parsing to facade/parser layers. Use during architectural redesign refactoring. Use when this capability is needed.
+metadata:
+  author: ruby-git
+---
+
+# Refactor Command to CommandLineResult
+
+Migrate a command that still performs parsing or custom execution logic to the
+`Git::Commands::Base` pattern, so command classes return raw
+`Git::CommandLineResult` and parsing moves to facade/parser layers.
+
+## Contents
+
+- [How to use this skill](#how-to-use-this-skill)
+- [Prerequisites](#prerequisites)
+- [Related skills](#related-skills)
+- [Target end state](#target-end-state)
+- [Refactor steps](#refactor-steps)
+- [What to remove from command classes](#what-to-remove-from-command-classes)
+- [What to update in tests](#what-to-update-in-tests)
+- [YARD updates](#yard-updates)
+- [Migration process and internal compatibility](#migration-process-and-internal-compatibility)
+
+## How to use this skill
+
+Attach this file to your Copilot Chat context, then invoke it with the command
+class or source file to migrate. Examples:
+
+```text
+Using the Refactor Command to CommandLineResult skill, migrate
+Git::Commands::Stash::Pop to the Base pattern.
+```
+
+```text
+Refactor Command to CommandLineResult: lib/git/commands/branch/delete.rb
+```
+
+The invocation needs the command class name or file path of the command to
+refactor.
+
+## Prerequisites
+
+Before starting, you **MUST** load the following skill(s) in their entirety:
+
+- [YARD Documentation](../yard-documentation/SKILL.md) — authoritative
+  source for YARD formatting rules and writing standards;
+
+## Related skills
+
+- [Command Implementation](../command-implementation/SKILL.md) — canonical class-shape checklist, phased
+  rollout gates, and internal compatibility contracts
+- [Review Arguments DSL](../review-arguments-dsl/SKILL.md) — verifying DSL entries match git CLI
+- [Command Test Conventions](../command-test-conventions/SKILL.md) — unit/integration test conventions for command classes
+- [Review Backward Compatibility](../review-backward-compatibility/SKILL.md) — preserving `Git::Lib` return-value contracts
+
+## Target end state
+
+```ruby
+class SomeCommand < Git::Commands::Base
+  arguments do
+    ...
+  end
+
+  # optional for non-zero successful exits
+  # rationale comment
+  # allow_exit_status 0..1
+
+  # @!method call(*, **)
+  #
+  #   @overload call(**options)
+  #
+  #     Execute the git ... command.
+  #
+  #     @return [Git::CommandLineResult]
+end
+```
+
+## Refactor steps
+
+1. Move parsing/transforming logic out of command class into caller/facade/parser.
+2. Replace legacy `ARGS` constant + custom `initialize` with `arguments do` +
+   inheritance from `Base`.
+3. Remove custom `#call` body and add `# @!method call(*, **)` YARD directive.
+4. If command requires non-default success exits, add `allow_exit_status` with
+   rationale comment.
+5. Update callers to consume `CommandLineResult` and parse `result.stdout` where
+   needed.
+
+## What to remove from command classes
+
+- parser invocations
+- output transformation logic
+- `literal` entries for policy/output-control flags (e.g. `literal '--no-edit'`,
+  `literal '--verbose'`, `literal '--no-progress'`, `literal '--no-color'`) —
+  command classes are neutral, faithful representations of the git CLI; convert to
+  `flag_option` / `value_option` so the facade can pass the policy value. See
+  "Command-layer neutrality" in CONTRIBUTING.md.
+- manual `raise_on_failure` / manual exit-code checks (unless temporarily needed in
+  an unmigrated class)
+- duplicated bind/execute logic
+
+## What to update in tests
+
+- unit specs should assert CLI args and `CommandLineResult` behavior
+- remove parsed-object assertions from command unit specs
+- move parsing expectations to parser/facade tests
+- include `raise_on_failure: false` in mocked command expectations
+
+## YARD updates
+
+- update `@return` to `Git::CommandLineResult`
+- keep command-specific `@overload` docs nested under `# @!method call(*, **)` directive
+- ensure `@raise` wording reflects allowed range behavior
+- tag short descriptions must not end with punctuation (no trailing period, comma,
+  or colon)
+- multi-paragraph tag descriptions must have a blank comment line (`#`) between the
+  short description and each continuation paragraph
+
+## Migration process and internal compatibility
+
+See [Command Implementation](../command-implementation/SKILL.md) for the canonical phased rollout checklist
+and internal compatibility contract. In summary:
+
+- **always work on a feature branch** — never commit or push directly to `main`;
+  create a branch before starting (`git checkout -b <feature-branch-name>`) and
+  open a pull request when the slice is ready
+- perform refactor in phased slices (pilot/family)
+- keep each slice independently revertible
+- do not mix unrelated behavior changes with refactor-only changes
+- pass slice gates: `bundle exec rspec`, `bundle exec rake test`,
+  `bundle exec rubocop`, `bundle exec rake yard`
+
+---
+> Source: [ruby-git/ruby-git](https://github.com/ruby-git/ruby-git) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-19 -->

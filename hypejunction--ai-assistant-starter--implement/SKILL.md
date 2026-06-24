@@ -1,0 +1,383 @@
+---
+name: implement
+description: Full feature implementation workflow with explore, plan, code, test, validate, and commit phases. Use for new features, enhancements, or significant code changes. Use when this capability is needed.
+metadata:
+  author: hypejunction
+---
+
+# Implement
+
+> **Purpose:** Full feature implementation workflow
+> **Phases:** Explore → Plan → Code → Self-Review → Test → Validate → Commit → Close
+> **Usage:** `/implement [scope flags] <task description>` or `/implement --todo <todo-file>`
+
+## Iron Laws
+
+1. **NO CODE WITHOUT APPROVED PLAN** — Never write implementation code until the user has explicitly approved the plan. Wasted code is worse than no code.
+2. **VERIFY AFTER EVERY FILE** — Run typecheck after each file change. Don't batch edits across files without verification. Evidence before assertions.
+3. **STAY IN SCOPE** — Never fix, improve, or refactor code outside the approved plan. Create a todo for out-of-scope issues.
+
+## When to Use
+
+- New feature implementation
+- Enhancements to existing features
+- Significant code changes (3-5 files)
+
+## When NOT to Use
+
+- Bug fixes → `/debug`
+- 16+ file changes → `/refactor` (6-15 files: confirm with user, consider `/refactor` if structural)
+- Design/planning only → `/plan`
+- Quick single-file edit → edit directly
+- Emergency fix → `/hotfix`
+- Strict test-first approach → `/tdd` (note: `/implement` supports TDD-lite in Phase 5)
+
+## Gate Enforcement
+
+See `ai-assistant-protocol` for valid approval terms and invalid responses.
+
+## Scope Flags
+
+| Flag | Description |
+|------|-------------|
+| `--todo=<file>` | Implement a specific todo from `.ai-project/todos/` |
+| `--files=<paths>` | Specific files/directories to work on |
+| `--uncommitted` | Build on current uncommitted changes |
+| `--branch=<name>` | Branch context (default: current) |
+| `--project=<path>` | Project root for monorepos |
+
+> **Note:** Command examples use `npm` as default. Adapt to the project's package manager per `ai-assistant-protocol` — Project Commands.
+
+## Task Tiers
+
+Classify the task early to scale the workflow appropriately:
+
+| Tier | Scope | Workflow |
+|------|-------|----------|
+| **nano** | 1-2 lines, config tweak | Skip Plan phase. Edit → validate → commit |
+| **small** | 1-2 files, clear approach | Lightweight plan (bullet list). Skip Self-Review |
+| **medium** | 3-5 files | Full workflow (default) |
+| **large** | 6+ files | Full workflow + batch execution + suggest feature branch + PR |
+
+**Auto-classification:** Estimate tier from the request. If `--todo` is provided, use the todo's `estimated_effort` field. The user can override at any time ("treat this as nano").
+
+**Tier shortcuts:**
+- **nano:** Phase 1 (quick scope) → Phase 3 (edit) → Phase 6 (validate) → Phase 7 (commit)
+- **small:** Phase 1 → Phase 2 (brief plan) → Phase 3 → Phase 5 (test) → Phase 6 → Phase 7
+- **medium:** All phases
+- **large:** All phases with batch execution (see Phase 3 — Batch Execution)
+
+---
+
+## Phase 1: Explore
+
+**Mode:** Read-only — understand the codebase before planning.
+
+### Step 1.1: Parse Scope
+
+```bash
+git branch --show-current
+git status --porcelain
+```
+
+If `--todo` is provided, read the todo file to seed the implementation:
+- Extract description, context, affected files, and acceptance criteria
+- The todo becomes the source of truth for scope and success criteria
+- Skip Step 1.2 (the todo already defines the goal and constraints)
+
+If scope is ambiguous, ask for clarification. Delegate large explorations (6+ files) to parallel agents to preserve context.
+
+### Step 1.2: Understand Request
+
+1. What's the goal? (success criteria, not task description)
+2. Who is affected?
+3. Constraints?
+
+**Skip this step when `--todo` is provided** — the todo file contains the goal and context.
+
+**Wait for user response if requirements are unclear.**
+
+### Step 1.3: Explore Code
+
+Read relevant files, trace imports and dependencies, note patterns and conventions.
+
+When reading existing code for patterns, verify the patterns are current: check recent commits to the file (`git log --oneline -5 -- path/to/file`). If the file was recently refactored, the new pattern may differ from older files.
+
+### Context-Aware Guidelines
+
+Based on code detected during exploration, load relevant guideline references:
+
+| Detected Code | Load Guidelines |
+|---|---|
+| TypeScript files | `typescript-guidelines` |
+| React components (.tsx/.jsx) | `typescript-guidelines`, `storybook-react-guidelines` |
+| API routes / handlers | `rest-api-guidelines`, `zod-guidelines`, `security-guidelines` |
+| Database queries / ORM | `prisma-guidelines` |
+| Test files | `vitest-guidelines` |
+| Environment config | `env-config-guidelines` |
+| Error handling / custom errors | `error-handling-guidelines` |
+| Docker / CI config | `docker-node-guidelines`, `github-actions-guidelines` |
+
+### Step 1.4: Verify Understanding
+
+Restate the task, list assumptions, flag edge cases. **Wait for confirmation.**
+
+---
+
+## Phase 2: Plan
+
+**Mode:** Read-only — design the approach.
+
+### Step 2.1: Create Plan
+
+Every step must include exact file paths, specific changes, and code snippets showing the shape of the change. See `references/plan-template.md` for a detailed template with bite-sized task format, and `/plan` skill for the plan quality checklist.
+
+```markdown
+## Implementation Plan
+
+### Summary
+[1-2 sentences]
+
+### Files to Modify
+| File | Change | Lines |
+|------|--------|-------|
+| `path/to/file.ts` | [specific change] | ~N |
+
+### Steps
+1. **[Action] [target]** — File: `path`, Change: [specific], Deliverable: [what's true after]
+
+### Edge Cases
+- [Case] → [handling]
+
+### Checklist
+- [ ] Implement [component/feature]
+- [ ] Write tests
+- [ ] Type check + lint passes
+
+---
+**Approve this plan?** (yes / no / modify)
+```
+
+**GATE: Do NOT proceed to Code Phase until user responds with explicit approval.**
+
+---
+
+## Phase 3: Code
+
+**Mode:** Full access — implement the approved plan.
+
+### Step 3.1: Create Git Savepoint
+
+For complex implementations, create a savepoint before starting:
+
+```bash
+git stash push -m "savepoint: before [feature]" --include-untracked
+git stash pop
+```
+
+Or commit any existing work so you can revert cleanly if needed.
+
+### Step 3.2: Implement (Verify Per File)
+
+For each file in plan, follow the micro-step pattern (see `references/task-decomposition.md`):
+1. Edit the file (one step per file — if a step touches >1 file, split it)
+2. **Run typecheck immediately** — don't batch multiple file edits
+3. Show fresh evidence of the result before claiming success
+4. Report progress
+
+If typecheck fails after a change, fix it before moving to the next file.
+
+When creating a new file: (a) Check if an existing file should be extended instead, (b) Follow the project's file naming conventions, (c) Mirror the structure of similar existing files, (d) Ensure the new file is properly imported/registered where needed (e.g., route registration, barrel exports).
+
+### Batch Execution (Large Tier)
+
+For large-tier tasks (6+ files), execute plan steps in batches with review checkpoints:
+
+1. **Review plan critically** before starting — raise concerns about gaps or unclear instructions
+2. **Execute in batches of 3 steps** — complete each step fully (edit, typecheck, verify)
+3. **Pause between batches** — report what was implemented, show verification output, say "Ready for feedback"
+4. **Apply feedback** if any, then execute the next batch
+5. **Stop immediately** on blockers — don't guess through unclear instructions or repeated failures
+
+This prevents large implementations from going off-track. The user can course-correct every 3 steps.
+
+### Step 3.3: Handle Surprises
+
+| Surprise Type | Response |
+|---------------|----------|
+| **Scope expansion** | Stop. Present additional scope and ask for approval. |
+| **Missing dependency** | Note it, ask if it should be added. |
+| **Design conflict** | Present options. Don't force the original plan. |
+| **Existing bug found** | Create a todo. Do NOT fix — out of scope. |
+
+See `references/task-decomposition.md` for detailed decision trees for each surprise type and evidence-before-claims requirements.
+
+### Step 3.4: Validate Code
+
+```bash
+npm run typecheck
+npm run lint
+```
+
+---
+
+## Phase 4: Self-Review
+
+**Mode:** Read-only — review your own work before testing.
+
+Compare implementation against the approved plan:
+
+```markdown
+## Spec Compliance
+| Plan Item | Status | Notes |
+|-----------|--------|-------|
+| [Step 1] | ✓ / ✗ | [deviations] |
+```
+
+Check for: `any` types, missing error handling, hardcoded values, inconsistent patterns, unused imports.
+
+**Security checklist (mandatory for code that handles user input, auth, or external data):**
+
+- [ ] No `eval()`, `new Function()`, or dynamic code execution with external input
+- [ ] No `innerHTML`, `dangerouslySetInnerHTML`, or `v-html` with unsanitized data
+- [ ] No raw SQL with string interpolation — use parameterized queries or ORM
+- [ ] No hardcoded secrets, API keys, or credentials — use environment variables
+- [ ] No `child_process.exec()` with user-controlled input — use `execFile()` with explicit args
+- [ ] No disabled security controls (`rejectUnauthorized: false`, `--no-verify`)
+- [ ] Input validation present at system boundaries (API routes, form handlers)
+- [ ] Auth/authz checks present on protected routes and operations
+
+Fix issues before proceeding.
+
+---
+
+## Phase 5: Test
+
+**Mode:** Testing — ensure new code has appropriate test coverage.
+
+**Test ordering:**
+- **New functions/modules** — prefer writing the test first (TDD-style: write failing test, then implement, then verify). This produces tighter, more targeted code.
+- **Enhancements to existing code** — write tests after implementation, verifying both new and existing behavior.
+- **For strict TDD workflows**, use `/tdd` instead of `/implement`.
+
+**Steps:**
+1. Categorize changed files by verification type (utility → unit tests, component → component tests, types → skip)
+2. Write tests with Gherkin test plans as comments
+3. Run tests: `npm run test -- [changed-files-pattern]`
+
+**GATE: All tests must pass.**
+
+---
+
+## Phase 6: Validate
+
+Run full validation:
+
+```bash
+npm run typecheck
+npm run lint
+npm run build
+```
+
+**GATE: All validations must pass. If any fail, fix before proceeding.**
+
+---
+
+## Phase 7: Commit
+
+**Mode:** Git operations with user confirmation required.
+
+### Step 7.1: Completion Evidence
+
+```markdown
+## Completion Evidence
+| Verification | Result |
+|--------------|--------|
+| Type check | ✓ Pass |
+| Lint | ✓ Pass |
+| Tests | ✓ Pass (N tests) |
+| Build | ✓ Pass |
+| Spec compliance | ✓ All plan items |
+```
+
+### Step 7.2: Confirm Commit
+
+```markdown
+**Message:**
+```
+feat: add user authentication
+```
+
+**Commit?** (yes / no / edit)
+```
+
+**GATE: Do NOT run `git commit` until user responds with explicit approval.**
+
+---
+
+## Phase 8: Close Todo
+
+**Mode:** Housekeeping — finalize the work item.
+
+**Skip this phase** if no `--todo` was provided and no todo is associated with the work.
+
+### Step 8.1: Verify Acceptance Criteria
+
+Check the todo's acceptance criteria against what was implemented:
+
+```markdown
+## Todo Acceptance
+| Criterion | Status |
+|-----------|--------|
+| [From todo] | ✓ / ✗ |
+```
+
+All criteria must be met. If any are unmet, note what remains and keep the todo open.
+
+### Step 8.2: Create ADR (if applicable)
+
+If the implementation involved design decisions (chose between approaches, adopted a pattern, established a convention), invoke `/adr --from-todo <todo-file>` to capture the decision record.
+
+**Skip the ADR** if the work was purely mechanical (no alternatives considered, no architectural choices).
+
+### Step 8.3: Delete the Todo
+
+Remove the completed todo file. The ADR (if created) and git history preserve the full context.
+
+```markdown
+## Closed
+- **Todo:** `{todo-file}` — deleted
+- **ADR:** `{adr-file}` — created (or: no ADR needed)
+```
+
+---
+
+## Quick Reference
+
+| Phase | Mode | Gate |
+|-------|------|------|
+| 1. Explore | Read-only | User confirms understanding |
+| 2. Plan | Read-only | **User approves plan** |
+| 3. Code | Full access | Typecheck passes per file |
+| 4. Self-Review | Read-only | Spec compliance verified |
+| 5. Test | Testing | **All tests pass** |
+| 6. Validate | Validation | **All checks pass** |
+| 7. Commit | Git only | **User confirms** |
+| 8. Close | Housekeeping | Acceptance criteria met (todo-driven only) |
+
+## Acceptance Tests
+
+| ID | Type | Prompt / Condition | Expected |
+|----|------|--------------------|----------|
+| IMP-T1 | Positive | "Build a login form" | Skill triggers |
+| IMP-T2 | Positive | "Add dark mode support" | Skill triggers |
+| IMP-T3 | Positive | "Implement user profile page" | Skill triggers |
+| IMP-T4 | Negative | "Why is login broken?" | Does NOT trigger (→ /debug) |
+| IMP-T5 | Negative | "Review my code before merging" | Does NOT trigger (→ /review) |
+| IMP-T6 | Negative | "Rename all utils to helpers" | Does NOT trigger (→ /refactor) |
+| IMP-T7 | Boundary | "Fix the button and add a tooltip" | Triggers (enhancement + new feature) |
+| IMP-T8 | Boundary | "Quick one-line change to config" | Does NOT trigger (direct edit) |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hypejunction) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

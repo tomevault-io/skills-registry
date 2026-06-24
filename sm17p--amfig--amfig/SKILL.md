@@ -1,0 +1,52 @@
+---
+name: e2e-playwright-extension
+description: Adds or updates extension E2E tests using the project Playwright setup and fixture (load unpacked extension, popup/background). Use when adding e2e for a feature, fixing failing e2e, or when changing popup/options/background flows. Use when this capability is needed.
+metadata:
+  author: sm17p
+---
+
+# E2E with Playwright (extension)
+
+Aligned with [WXT’s Playwright E2E example](https://github.com/wxt-dev/examples/tree/main/examples/playwright-e2e-testing): Chromium only, extension loaded from `dist/chrome-mv3`.
+
+## Layout
+
+- Tests in [e2e/tests/](e2e/tests/) — main suite [e2e/tests/extension.spec.ts](e2e/tests/extension.spec.ts) with describe blocks: **Popup**, **Content injection**, **Per-domain activation**; [e2e/tests/toolbar-settings.spec.ts](e2e/tests/toolbar-settings.spec.ts) covers toolbar settings menu (Feature Voting upvotes multi-on + isolation, behaviour toggles)
+- Shared fixture in [e2e/fixtures.ts](e2e/fixtures.ts)
+- Page helpers in [e2e/pages/](e2e/pages/) (e.g. [e2e/pages/popup.ts](e2e/pages/popup.ts))
+- Fixture page served via Playwright `webServer` + custom static server:
+  - `e2e/serve-fixtures.mjs`
+  - `playwright.config.ts` points `webServer.url` at `http://localhost:51234/inspector-playground.html`
+  - `use.baseURL` is `http://localhost:51234`
+  - Tests navigate with relative paths like `/inspector-playground.html`
+
+## Fixture
+
+The fixture extends Playwright with:
+
+- **context:** Chromium persistent context that loads the unpacked extension from `dist/chrome-mv3`
+- **extensionId:** Resolved from the service worker (MV3) or background page otherwise
+
+Use `context` and `extensionId` in tests. Import the extended `test` and `expect` from the fixture.
+
+## Popup
+
+Navigate to `chrome-extension://${extensionId}/popup.html`. Use helpers like `openPopup(page, extensionId)` from [e2e/pages/popup.ts](e2e/pages/popup.ts) for consistent setup. Tests: "popup opens and shows active toggle" (Popup), "inspector root and app load on supported page" (Content injection), "when domain is enabled in storage, inspector is active on page load" (Per-domain activation).
+
+## Run
+
+- CI: [.github/workflows/playwright.yml](../../../.github/workflows/playwright.yml) uses `jdx/mise-action` then `pnpm install --frozen-lockfile`.
+
+- First-time: `pnpm exec playwright install chromium` (installs Chromium and headless shell; do not use `--no-shell` or default tests will fail).
+- Build the extension: `pnpm build` so `dist/chrome-mv3` exists.
+- Run tests: `pnpm test:e2e`
+
+## Note
+
+`playwright-webextext` is in devDependencies for potential future use; current tests use the custom extension fixture in `fixtures.ts`.
+
+When a test needs deterministic inspector target setup (distances/side panel), prefer triggering the inspector via a synthetic `mouseover` on a known element (see `toolbar-distances.spec.ts`) rather than relying on hit-testing/hover in the presence of the overlay.
+
+---
+> Source: [sm17p/amfig](https://github.com/sm17p/amfig) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-21 -->

@@ -1,0 +1,96 @@
+---
+name: optimizing-tokens
+description: AI agent maximizes efficiency and minimizes costs through strategic token usage while maintaining output quality. Use when managing AI interactions, designing prompts, or reducing costs. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Optimizing Tokens
+
+## Quick Start
+
+1. **Analyze** - Identify input vs output token distribution
+2. **Minimize Context** - Read only relevant file sections, not entire files
+3. **Optimize Prompts** - Use direct commands, remove filler words
+4. **Structure Outputs** - Request concise formats (JSON over prose)
+5. **Batch Operations** - Combine related requests, avoid duplicate context
+6. **Select Model** - Match model tier to task complexity
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Context Targeting | Read only needed code sections | Line ranges, pattern search, summaries |
+| Prompt Efficiency | Direct commands vs verbose requests | 79% reduction possible |
+| Output Formatting | Structured concise responses | JSON/YAML over verbose explanations |
+| Model Selection | Right model for task complexity | Haiku: simple, Sonnet: standard, Opus: complex |
+| Batching | Combine related operations | Single request with multiple outputs |
+| Caching | Avoid redundant computation | Cache by content hash + timestamp |
+
+## Common Patterns
+
+```
+# Prompt Optimization (79% reduction)
+INEFFICIENT (120 tokens):
+"I would really appreciate it if you could help me
+with this task. What I need you to do is to please
+analyze this code and look for any bugs..."
+
+EFFICIENT (25 tokens):
+"Analyze for bugs, error handling issues, security.
+For each: location, problem, fix."
+
+# Context Optimization
+INEFFICIENT: Read entire 1000-line file
+EFFICIENT: Read lines 45-60 around target function
+
+# Output Format
+INEFFICIENT: "Please explain in detail..."
+EFFICIENT: "Output: JSON {name, severity, fix}"
+
+# Batching
+INEFFICIENT:
+  Request 1: "Given code [100 lines], find bugs"
+  Request 2: "Given code [same 100 lines], add types"
+
+EFFICIENT:
+  Single request: "Given code [100 lines]:
+  1. Find bugs
+  2. Add types"
+```
+
+```
+# Model Selection Guide
+| Task Type | Model | Examples |
+|-----------|-------|----------|
+| Simple | Haiku | Formatting, syntax check, lookups |
+| Standard | Sonnet | Features, bugs, reviews, tests |
+| Complex | Opus | Architecture, security, critical code |
+
+# Search Efficiency
+INEFFICIENT: grep ".*" / (matches everything)
+EFFICIENT: grep "handleAuth" src/ --type ts
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Read only what's needed - use line ranges | Reading entire files for one function |
+| Use direct language - commands over requests | Verbose, polite phrasing in prompts |
+| Structure outputs - JSON/YAML over prose | Requesting detailed explanations for simple tasks |
+| Batch operations - combine related requests | Repeating context across multiple requests |
+| Choose right model - Haiku for simple tasks | Using most powerful model for everything |
+| Limit search results - use head_limit | Unbounded searches returning thousands of results |
+| Cache results - avoid redundant computation | Re-analyzing unchanged files |
+| Progressive loading - start minimal, expand | Loading full context when partial suffices |
+
+## Related Skills
+
+- `dispatching-parallel-agents` - Efficient multi-agent patterns
+- `writing-plans` - Structured planning reduces iteration
+- `thinking-sequentially` - Organized reasoning saves tokens
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

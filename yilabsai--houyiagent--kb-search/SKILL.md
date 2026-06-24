@@ -1,0 +1,191 @@
+---
+name: kb-search
+description: | Use when this capability is needed.
+metadata:
+  author: yilabsai
+---
+
+# 知识库检索 Skill（kb-search）
+
+智能知识库检索助手，支持 Agentic 和 Indexed 双模式自动切换。
+
+## 触发条件
+
+用户问题涉及以下场景时激活本 Skill：
+- "从知识库查找/检索信息"
+- "在文档中搜索..."
+- "查找资料/文档..."
+- "帮我找一下关于..."
+
+## 输入参数
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| query | str | 必填 | 用户查询 |
+| knowledge_dir | str | "knowledge/" | 知识库根目录 |
+| mode | str | "auto" | 检索模式：auto/agentic/indexed |
+| max_rounds | int | 5 | 最大检索轮数（Agentic 模式） |
+
+## 输出
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| answer | str | 回答内容 |
+| sources | list[Source] | 引用来源（文件路径 + 位置） |
+| confidence | float | 置信度 (0-1) |
+
+## 工作流程
+
+### Agentic 模式（小规模知识库）
+
+1. **读取目录索引**
+   - 读取 `knowledge_dir/data_structure.md` 了解知识库结构
+   - 识别子目录和文件用途
+
+2. **选择候选文件**
+   - 根据查询内容选择最相关的目录和文件
+   - 递归进入子目录获取更多候选
+
+3. **渐进式检索**（最多 max_rounds 轮）
+   - Round 1: 使用初始关键词 grep 搜索
+   - Round 2: 扩展同义词和相关词
+   - Round 3: 扩展上下文范围
+   - Round 4: 跨文件关联检索
+   - Round 5: 最终确认
+
+4. **组织答案**
+   - 汇总检索结果
+   - 标注引用来源
+
+### Indexed 模式（大规模知识库）
+
+1. **查询分析**
+   - 识别查询类型（精确匹配/语义搜索/因果推理）
+   - 选择检索策略组合
+
+2. **并行检索**
+   - BM25 稀疏检索
+   - Vector 向量检索（HNSW）
+   - Graph 图检索（PPR，可选）
+
+3. **结果融合**
+   - RRF 融合多路检索结果
+   - LLM 重排序
+
+4. **生成答案**
+   - CRAG 验证相关性
+   - 生成最终答案
+
+## Hooks
+
+### PreToolUse (Read/Glob/Grep)
+
+在执行检索工具前，注入知识库上下文信息：
+- 当前知识库路径
+- 搜索策略提示
+
+### PostToolUse
+
+在工具执行后，记录检索进度和结果统计。
+
+### Stop
+
+在停止前验证是否找到了有效答案，提示未完成的检索任务。
+
+## 示例
+
+### 示例 1: 简单查询
+
+```
+用户: 什么是 RAG?
+Skill: 使用 Agentic 模式，在知识库中搜索 "RAG" 相关内容
+输出: RAG (Retrieval-Augmented Generation) 是一种...
+来源: knowledge/concepts/rag.md
+```
+
+### 示例 2: 复杂分析
+
+```
+用户: 分析 2023 年销售趋势
+Skill: 使用 Indexed 模式，结合向量搜索和图检索
+输出: 根据财务报告分析，2023 年销售呈现...
+来源: knowledge/reports/2023_annual.pdf, knowledge/data/sales.xlsx
+```
+
+## 注意事项
+
+1. **文件格式处理**
+   - 遇到 PDF/Excel 文件时，先读取对应的 references 文档学习处理方法
+   - 避免直接读取整个大文件
+
+2. **Token 优化**
+   - 使用 grep 定位后只读取匹配附近的上下文
+   - 设置合理的 chunk_limit 避免过多 token 消耗
+
+3. **来源引用**
+   - 始终标注信息来源
+   - 包含文件路径和大致位置
+
+## Input Schema
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "User query to search in knowledge base"
+    },
+    "knowledge_dir": {
+      "type": "string",
+      "default": "knowledge/",
+      "description": "Root directory of the knowledge base"
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["auto", "agentic", "indexed"],
+      "default": "auto",
+      "description": "Search mode"
+    },
+    "max_rounds": {
+      "type": "integer",
+      "default": 5,
+      "description": "Maximum search iterations"
+    }
+  },
+  "required": ["query"]
+}
+```
+
+## Output Schema
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "answer": {
+      "type": "string",
+      "description": "Generated answer"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file_path": { "type": "string" },
+          "location": { "type": "string" },
+          "snippet": { "type": "string" }
+        }
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "description": "Confidence score (0-1)"
+    }
+  }
+}
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/yilabsai) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

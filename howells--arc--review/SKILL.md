@@ -1,0 +1,419 @@
+---
+name: review
+description: | Use when this capability is needed.
+metadata:
+  author: howells
+---
+
+<tool_restrictions>
+# MANDATORY Tool Restrictions
+
+## BANNED TOOLS — calling these is a skill violation:
+- **`EnterPlanMode`** — BANNED. Do NOT call this tool. This skill has its own structured process. Execute the steps below directly.
+- **`ExitPlanMode`** — BANNED. You are never in plan mode.
+</tool_restrictions>
+
+<arc_runtime>
+This workflow requires the full Arc bundle, not a prompts-only install.
+Resolve the Arc install root from this skill's location and refer to it as `${ARC_ROOT}`.
+Use `${ARC_ROOT}/...` for Arc-owned files such as `references/`, `disciplines/`, `agents/`, `templates/`, and `scripts/`.
+Use project-local paths such as `.ruler/` or `rules/` for the user's repository.
+</arc_runtime>
+
+<required_reading>
+**Read these reference files NOW:**
+1. ${ARC_ROOT}/references/review-patterns.md
+2. ${ARC_ROOT}/disciplines/dispatching-parallel-agents.md
+3. ${ARC_ROOT}/disciplines/receiving-code-review.md
+</required_reading>
+
+<rules_context>
+**Check for project coding rules:**
+
+**Use Glob tool:** `.ruler/*.md`
+
+**Determine rules source:**
+- **If `.ruler/` exists:** Read rules from `.ruler/`
+- **If `.ruler/` doesn't exist:** Read rules from `rules/`
+
+**Pass relevant core rules to each reviewer:**
+
+| Reviewer | Rules to Pass |
+|----------|--------------|
+| daniel-product-engineer | react.md, typescript.md, code-style.md |
+| lee-nextjs-engineer | nextjs.md, api.md |
+| senior-engineer | code-style.md, typescript.md, react.md |
+| architecture-engineer | stack.md, turborepo.md |
+| security-engineer | security.md, api.md, env.md |
+| data-engineer | database.md, testing.md, api.md |
+| senior-engineer | cloudflare-workers.md (if wrangler.toml exists) |
+| accessibility-engineer | (interface rules only — already in agent prompt) |
+| designer | design.md, colors.md, spacing.md, typography.md |
+</rules_context>
+
+<progress_context>
+**Use Read tool:** `docs/arc/progress.md` (first 50 lines)
+
+Check for context on what led to the plan being reviewed.
+</progress_context>
+
+<scope_discipline>
+## Scope Discipline
+
+Reviewers must respect the plan's scope. This is non-negotiable:
+
+- **Do not silently argue for less work.** If you think the plan is overbuilt, raise it once in a "Scope Check" early in the review. After the user responds, commit to their decision.
+- **Do not sneak in additional scope.** Don't suggest features, enhancements, or "while you're at it" additions beyond what the plan covers.
+- **Your job is to make this plan succeed, not to lobby for a different plan.** Once scope is agreed, optimize within it — find bugs, catch edge cases, improve the architecture — but don't re-litigate what gets built.
+- **Include this principle in every reviewer prompt:** "Respect the plan's scope. Flag scope concerns once, then commit to making the plan succeed."
+</scope_discipline>
+
+<process>
+## Phase 0: Check for Specific Reviewer or Diff Mode
+
+**If `--diff` argument provided:**
+- Switch to **diff review mode** — skip Phase 1 (plan search) entirely
+- Jump to Phase 1D (Diff Review) below
+
+**If argument provided** (e.g., `daniel-product-engineer`):
+- Look for `${ARC_ROOT}/agents/review/{argument}.md`
+- If found → use only this reviewer, skip Phase 2 detection
+- If not found → list available reviewers from `${ARC_ROOT}/agents/review/` and ask user to pick
+
+**Available reviewers:**
+- `daniel-product-engineer` — Type safety, UI completeness, React patterns
+- `lee-nextjs-engineer` — Next.js App Router, server-first architecture
+- `senior-engineer` — Asymmetric strictness, review discipline
+- `architecture-engineer` — System design, component boundaries
+- `performance-engineer` — Bottlenecks, scalability
+- `security-engineer` — Vulnerabilities, OWASP
+- `data-engineer` — Migrations, transactions
+- `designer` — Visual design quality, UX fundamentals, AI slop detection
+
+## Phase 1: Find the Plan
+
+**Check if plan file path provided as argument:**
+- If yes → read that file and proceed to Phase 2
+- If no → search for plans
+
+**Search strategy:**
+
+1. **Check conversation context first** — Look for Claude Code plan mode output
+   - Look back through recent conversation messages
+   - Search for plan structure markers:
+     - "# Plan" or "## Plan" headings
+     - "Implementation Steps" sections
+     - Task lists with implementation details
+     - Step-by-step procedures
+   - If found → extract the plan content and proceed to Phase 2
+
+2. **Search Arc plan folders** — Look for plan files
+
+   **Use Glob tool:** `docs/arc/plans/*.md`
+   **Fallback:** `docs/plans/*.md`
+
+   - Sort results by modification time (newest first)
+   - Show all plan files (design, implementation, etc.)
+
+3. **Present options if multiple found:**
+   - List up to 5 most recent plans
+   - Show: filename, modification date, brief preview
+   - Ask user: "Which plan should I review?"
+
+4. **If no plans found:**
+   - Check if the current branch has changes vs main:
+     ```bash
+     git fetch origin main --quiet && git diff origin/main --stat
+     ```
+   - **If branch has changes:** Offer to review the diff instead:
+     "No plans found, but this branch has changes against main. Want me to review the diff?"
+     - If yes → switch to Phase 1D (Diff Review)
+     - If no → "Can you point me to a plan file, or paste the plan you'd like me to review?"
+   - **If no changes:** "I couldn't find any plans or branch changes to review."
+
+**Once plan located:**
+- Store the plan content
+- Note the source (conversation, file path, or user-provided)
+- Proceed to Phase 2
+
+## Phase 1D: Diff Review
+
+**This phase runs instead of plan review** when `--diff` is passed or the user opts into diff review from Phase 1.
+
+1. **Check branch state:**
+   ```bash
+   git branch --show-current
+   ```
+   If on `main` with no changes: "Nothing to review — you're on main with no changes." Stop.
+
+2. **Read the checklist:**
+   ```
+   Read: ${ARC_ROOT}/references/diff-review-checklist.md
+   ```
+
+3. **Get the diff:**
+   ```bash
+   git fetch origin main --quiet
+   git diff origin/main
+   ```
+
+4. **Run two-pass review** applying the checklist against the diff:
+   - **Pass 1 (CRITICAL):** Race conditions, trust boundaries, data safety
+   - **Pass 2 (INFORMATIONAL):** Conditional side effects, stale references, test gaps, dead code, performance
+
+5. **Present findings** using the checklist's output format.
+
+6. **If CRITICAL issues found:** For each critical issue, present as a Socratic question:
+   - "This pattern reads then writes without a transaction — what happens if two requests hit this simultaneously?"
+   - Wait for user to decide: fix now, acknowledge, or mark as false positive
+
+7. **Skip to Phase 6** (Summary and Next Steps) — diff review doesn't need the full plan review pipeline.
+
+## Phase 2: Detect Project Type
+
+**Skip if specific reviewer provided in Phase 0.**
+
+**Detect project type for reviewer selection:**
+
+**Use Grep tool on `package.json`:**
+- Pattern: `"next"` → nextjs
+- Pattern: `"react"` → react
+
+**Use Glob tool:**
+- `requirements.txt`, `pyproject.toml` → python
+
+**Select reviewers based on project type:**
+
+**TypeScript/React:**
+- ${ARC_ROOT}/agents/review/daniel-product-engineer.md
+- ${ARC_ROOT}/agents/review/senior-engineer.md
+- ${ARC_ROOT}/agents/review/architecture-engineer.md
+
+**Next.js:**
+- ${ARC_ROOT}/agents/review/lee-nextjs-engineer.md
+- ${ARC_ROOT}/agents/review/daniel-product-engineer.md
+- ${ARC_ROOT}/agents/review/senior-engineer.md
+
+**Python:**
+- ${ARC_ROOT}/agents/review/senior-engineer.md
+- ${ARC_ROOT}/agents/review/performance-engineer.md
+- ${ARC_ROOT}/agents/review/architecture-engineer.md
+
+**General/Unknown:**
+- ${ARC_ROOT}/agents/review/senior-engineer.md
+- ${ARC_ROOT}/agents/review/architecture-engineer.md
+
+**Conditional addition (all UI project types):**
+- If plan involves UI components, forms, or user-facing features → add `${ARC_ROOT}/agents/review/accessibility-engineer.md`
+- If plan involves UI components, pages, or visual design → add `${ARC_ROOT}/agents/review/designer.md`
+
+## Phase 2.5: Team Mode Check
+
+<team_mode_check>
+**Skip if specific reviewer was provided in Phase 0** (single reviewer, no team needed).
+
+**Check if agent teams are available** by attempting to detect team support in the current environment.
+
+**If teams are available**, offer the user a choice:
+
+```
+Execution mode:
+1. Team mode — Reviewers challenge each other's findings before you see them (higher quality, 3-5x token cost)
+2. Standard mode — Independent reviewers, findings consolidated by skill (faster, lower cost)
+```
+
+Use the AskUserQuestion interaction pattern with:
+- **"Team mode"** — Reviewers cross-review and debate findings. Questions that survive peer scrutiny are stronger. Best when reviewing complex or high-stakes plans.
+- **"Standard mode (Recommended)"** — Independent reviewers run in parallel. Faster and cheaper. Good default for most reviews.
+
+**If teams are NOT available**, proceed silently with standard mode. Do not mention teams to the user.
+
+**If team mode selected**, read the team reference:
+```
+${ARC_ROOT}/references/agent-teams.md
+```
+</team_mode_check>
+
+## Phase 3: Run Expert Review
+
+**If specific reviewer from Phase 0:** Spawn single reviewer agent.
+
+**If team mode selected:** Run team review (see Team Execution below).
+
+**Otherwise:** Spawn 3 reviewer agents in parallel:
+
+```
+Task [reviewer-1] model: sonnet: "Review this plan for [specialty concerns].
+Plan:
+[plan content]
+
+Focus on: [specific area based on reviewer type]"
+
+Task [reviewer-2] model: sonnet: "Review this plan for [specialty concerns]..."
+
+Task [reviewer-3] model: sonnet: "Review this plan for [specialty concerns]..."
+```
+
+### Team Execution (Agent Teams mode)
+
+Only if user opted into team mode in Phase 2.5.
+
+Create team `arc-review-[plan-slug]` with the 3 selected reviewers as teammates.
+
+**Round 1 — Initial Review:**
+
+Each reviewer performs their standard analysis independently (same prompts as standard mode).
+
+```
+Create team: arc-review-[plan-slug]
+Teammates: [reviewer-1], [reviewer-2], [reviewer-3]
+
+Each teammate reviews the plan through their domain lens.
+Same prompts and focus areas as standard mode.
+```
+
+**Round 2 — Cross-Review:**
+
+Each reviewer reads the others' findings and responds:
+- **"My analysis supports this"** — Confirms another reviewer's concern with additional evidence
+- **"My analysis addresses that"** — Points out that their recommendation already handles the concern
+- **"I disagree because"** — Challenges a finding with code-level evidence or domain reasoning
+
+**Resolution rules (from agent-teams reference):**
+- Code-level evidence wins over principle-based reasoning
+- Domain authority wins within domain
+- Every challenge must include explicit rationale
+
+**Round 2 output:** Pre-debated findings where each concern has either been confirmed by peers, refined through challenge, or dropped with stated rationale.
+
+**Wait for team to complete.**
+
+**If team creation fails**, fall back silently to standard parallel dispatch above.
+
+## Phase 4: Consolidate and Present
+
+<team_consolidation>
+**If team mode was used**, consolidation is simpler:
+
+- Findings already survived peer scrutiny — false positives were caught and removed during debate
+- Conflicting recommendations already resolved with rationale from both sides
+- Socratic questions derived from team-debated findings carry more weight: "Two reviewers independently flagged this — what if we..."
+- Focus on transforming debated findings into questions (skip deduplication and conflict resolution)
+</team_consolidation>
+
+**Transform findings into Socratic questions:**
+
+See `${ARC_ROOT}/references/review-patterns.md` for approach.
+
+Instead of presenting critiques:
+- Turn findings into exploratory questions
+- "What if we..." not "You should..."
+- Collaborative spirit, not adversarial
+
+**Example transformations:**
+- Reviewer: "This is overengineered"
+  → "We have three layers here. What if we started with one?"
+- Reviewer: "Missing error handling"
+  → "What happens if the API call fails? Should we handle that now or later?"
+- Reviewer: "Security concern"
+  → "This stores the token in localStorage. Is that acceptable for this use case?"
+
+**Present questions one at a time:**
+- Wait for user response
+- If user wants to keep something, they probably have context
+- Track decisions as you go
+
+## Phase 5: Apply Decisions
+
+For each decision:
+- Note what was changed
+- Note what was kept and why
+
+If plan came from a file:
+- Update the file with changes
+- Commit: `git commit -m "docs: update <plan> based on review"`
+
+## Phase 6: Summary and Next Steps
+
+```markdown
+## Review Summary
+
+**Reviewed:** [plan name/source]
+**Reviewers:** [list]
+
+### Changes Made
+- [Change 1]
+- [Change 2]
+
+### Kept As-Is
+- [Decision 1]: [reason]
+
+### Open Questions
+- [Any unresolved items]
+```
+
+**Show remaining arc:**
+```
+/arc:ideate     → Design doc (on main) ✓
+     ↓
+/arc:review     → Review ✓ YOU ARE HERE
+     ↓
+/arc:implement  → Plan + Execute task-by-task
+```
+
+**Offer next steps based on what was reviewed:**
+
+If reviewed a **design doc**:
+- "Ready to implement?" → `/arc:implement` (which will create the plan internally)
+- "Done for now" → end
+
+If reviewed an **implementation plan**:
+- "Ready to implement?" → `/arc:implement`
+- "Done for now" → end
+
+## Phase 7: Cleanup
+
+**Kill orphaned subagent processes:**
+
+After spawning reviewer agents, some may not exit cleanly. Run cleanup:
+
+```bash
+${ARC_ROOT}/scripts/cleanup-orphaned-agents.sh
+```
+
+</process>
+
+<arc_log>
+**After completing this skill, append to the activity log.**
+See: `${ARC_ROOT}/references/arc-log.md`
+
+Entry: `/arc:review — [Plan name] reviewed`
+</arc_log>
+
+<success_criteria>
+**Plan review** is complete when:
+- [ ] Plan located (conversation, file, or user-provided)
+- [ ] Project type detected and reviewers selected
+- [ ] Parallel expert review completed (3 agents)
+- [ ] All findings presented as Socratic questions
+- [ ] User made decisions on each finding
+- [ ] Plan updated (if from file)
+- [ ] Summary presented
+- [ ] Remaining arc shown (based on plan type)
+- [ ] User chose next step (detail/implement or done)
+- [ ] Progress journal updated
+- [ ] Orphaned agents cleaned up
+
+**Diff review** is complete when:
+- [ ] Branch has changes vs main
+- [ ] Checklist loaded from ${ARC_ROOT}/references/diff-review-checklist.md
+- [ ] Full diff read before flagging anything
+- [ ] Two-pass review applied (critical then informational)
+- [ ] Findings presented (critical as Socratic questions)
+- [ ] User decided on each critical finding
+- [ ] Summary presented
+</success_criteria>
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/howells) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

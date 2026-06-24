@@ -1,0 +1,13 @@
+# ai-drawio
+
+> Skill by [GBSOSS](https://github.com/GBSOSS/ai-drawio) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [GBSOSS/ai-drawio](https://github.com/GBSOSS/ai-drawio/tree/main/skills/diagram-generator/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

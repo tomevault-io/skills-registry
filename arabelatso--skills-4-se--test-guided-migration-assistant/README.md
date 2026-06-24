@@ -1,0 +1,13 @@
+# test-guided-migration-assistant
+
+> Skill by [ArabelaTso](https://github.com/ArabelaTso/Skills-4-SE) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ArabelaTso/Skills-4-SE](https://github.com/ArabelaTso/Skills-4-SE/tree/main/skills/test-guided-migration-assistant)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

@@ -1,0 +1,13 @@
+# x402-agent-api-skill
+
+> Skill by [yejiming](https://github.com/yejiming/web3-awesome-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [yejiming/web3-awesome-skills](https://github.com/yejiming/web3-awesome-skills/tree/main/skills/community/payments/x402-agent-api)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

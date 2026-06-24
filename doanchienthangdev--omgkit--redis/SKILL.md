@@ -1,0 +1,100 @@
+---
+name: developing-with-redis
+description: Use when working with the agent implements Redis caching, data structures, and real-time messaging patterns. Use when implementing caching layers, session storage, rate limiting, pub/sub messaging, or distributed data structures.
+metadata:
+  author: doanchienthangdev
+---
+
+# Developing with Redis
+
+## Quick Start
+
+```typescript
+import Redis from 'ioredis';
+
+const redis = new Redis({
+  host: process.env.REDIS_HOST || 'localhost',
+  port: parseInt(process.env.REDIS_PORT || '6379'),
+  maxRetriesPerRequest: 3,
+});
+
+// Basic caching
+await redis.setex('user:123', 3600, JSON.stringify(userData));
+const cached = await redis.get('user:123');
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Caching | High-speed key-value storage with TTL | Use `setex` for auto-expiration, `get` for retrieval |
+| Session Storage | Distributed session management | Store sessions with user ID index for multi-device |
+| Rate Limiting | Request throttling with sliding windows | Use sorted sets or token bucket algorithms |
+| Pub/Sub | Real-time messaging between services | Separate subscriber connections from publishers |
+| Streams | Event sourcing and message queues | Consumer groups for reliable message processing |
+| Data Structures | Lists, sets, sorted sets, hashes | Choose structure based on access patterns |
+
+## Common Patterns
+
+### Cache-Aside Pattern
+
+```typescript
+async function getOrSet<T>(key: string, factory: () => Promise<T>, ttl = 3600): Promise<T> {
+  const cached = await redis.get(key);
+  if (cached) return JSON.parse(cached);
+
+  const value = await factory();
+  await redis.setex(key, ttl, JSON.stringify(value));
+  return value;
+}
+```
+
+### Sliding Window Rate Limiter
+
+```typescript
+async function checkRateLimit(key: string, limit: number, windowSec: number): Promise<boolean> {
+  const now = Date.now();
+  const windowStart = now - windowSec * 1000;
+
+  const pipeline = redis.pipeline();
+  pipeline.zremrangebyscore(key, '-inf', windowStart);
+  pipeline.zadd(key, now, `${now}:${Math.random()}`);
+  pipeline.zcard(key);
+  pipeline.expire(key, windowSec);
+
+  const results = await pipeline.exec();
+  const count = results?.[2]?.[1] as number;
+  return count <= limit;
+}
+```
+
+### Distributed Lock
+
+```typescript
+async function acquireLock(key: string, ttlMs = 10000): Promise<string | null> {
+  const lockId = crypto.randomUUID();
+  const acquired = await redis.set(`lock:${key}`, lockId, 'PX', ttlMs, 'NX');
+  return acquired === 'OK' ? lockId : null;
+}
+
+async function releaseLock(key: string, lockId: string): Promise<boolean> {
+  const script = `if redis.call("get",KEYS[1])==ARGV[1] then return redis.call("del",KEYS[1]) else return 0 end`;
+  return (await redis.eval(script, 1, `lock:${key}`, lockId)) === 1;
+}
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Set TTL on all cache keys | Storing objects larger than 100KB |
+| Use pipelines for batch operations | Using `KEYS` command in production |
+| Implement connection pooling | Ignoring memory limits and eviction |
+| Use Lua scripts for atomic operations | Using Redis as primary database |
+| Add key prefixes for namespacing | Blocking on long-running operations |
+| Monitor memory with `INFO memory` | Storing sensitive data unencrypted |
+| Set up Redis Sentinel for HA | Skipping connection error handling |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

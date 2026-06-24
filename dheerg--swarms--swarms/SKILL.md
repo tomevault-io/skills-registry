@@ -1,0 +1,27 @@
+---
+name: suggest-members
+description: | Use when this capability is needed.
+metadata:
+  author: DheerG
+---
+
+Suggest additional team members based on the user's outcomes and selected mode. The lead and facilitator are always included.
+
+**Mode guidance:**
+- **Code mode** — suggest a mix of technical and domain-specific voices. Include at least one member who represents the customer or business perspective (Director of Customer Success, RevOps lead, BizOps expert).
+- **Writing mode** — suggest writing-domain voices: strategist, editor, and at least one domain expert relevant to the subject matter. Researcher as needed. Avoid engineering roles unless the subject requires them.
+- **General mode** — suggest domain-relevant voices that match what the outcomes actually require. Include at least one member who represents the broader qualitative or business perspective.
+- **Triage mode** — suggest investigators who can gather and weigh evidence from where the symptom points (code, logs, metrics, traces, issue history, user reports); keep roles tool-agnostic (no hardcoded observability vendor); include at least one voice attentive to blast radius — what a change at the breaking point would disturb downstream. Do not apply the Code-mode customer/business-perspective default unless the outcomes call for it.
+- **No mode provided** — default to Code mode guidance.
+
+Keep teams to 3-5 members total. Up to 8 for complex multi-domain work. All members except the lead are read-only.
+
+Present your suggestion.
+
+Rules when suggesting team members:
+- Avoid constraining dynamic team members too much. Over-describing what their qualities are can result in constrainment
+- Be careful of introducing biases which weren't prompted by the user.
+
+---
+> Source: [DheerG/swarms](https://github.com/DheerG/swarms) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-17 -->

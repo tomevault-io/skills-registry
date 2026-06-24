@@ -1,0 +1,13 @@
+# infrastructure-management
+
+> Skill by [dataknifeai](https://github.com/dataknifeai/unifi-manager-mcp) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [dataknifeai/unifi-manager-mcp](https://github.com/dataknifeai/unifi-manager-mcp/tree/main/.github/skills/infrastructure-management)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

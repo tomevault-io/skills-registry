@@ -1,0 +1,13 @@
+# django
+
+> Skill by [dekoza](https://github.com/dekoza/oh-my-slop) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [dekoza/oh-my-slop](https://github.com/dekoza/oh-my-slop/tree/main/skills/django)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

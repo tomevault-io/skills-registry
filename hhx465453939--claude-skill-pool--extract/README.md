@@ -1,0 +1,13 @@
+# extract
+
+> Skill by [hhx465453939](https://github.com/hhx465453939/claude_skill_pool) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [hhx465453939/claude_skill_pool](https://github.com/hhx465453939/claude_skill_pool/tree/main/skills.codex/extract/.codex/skills/extract)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

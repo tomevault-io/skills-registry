@@ -1,0 +1,13 @@
+# Specula
+
+> Skill by [specula-org](https://github.com/specula-org/Specula) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [specula-org/Specula](https://github.com/specula-org/Specula/tree/main/skills/tla-checking-workflow/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

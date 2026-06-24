@@ -1,0 +1,60 @@
+---
+name: fastapi-router-py
+description: Create FastAPI routers with CRUD operations, authentication dependencies, Use when this capability is needed.
+metadata:
+  author: JantonioFC
+---
+# FastAPI Router
+
+Create FastAPI routers following established patterns with proper authentication, response models, and HTTP status codes.
+
+## Quick Start
+
+Copy the template from [assets/template.py](assets/template.py) and replace placeholders:
+- `{{ResourceName}}` → PascalCase name (e.g., `Project`)
+- `{{resource_name}}` → snake_case name (e.g., `project`)
+- `{{resource_plural}}` → plural form (e.g., `projects`)
+
+## Authentication Patterns
+
+```python
+# Optional auth - returns None if not authenticated
+current_user: Optional[User] = Depends(get_current_user)
+
+# Required auth - raises 401 if not authenticated
+current_user: User = Depends(get_current_user_required)
+```
+
+## Response Models
+
+```python
+@router.get("/items/{item_id}", response_model=Item)
+async def get_item(item_id: str) -> Item:
+    ...
+
+@router.get("/items", response_model=list[Item])
+async def list_items() -> list[Item]:
+    ...
+```
+
+## HTTP Status Codes
+
+```python
+@router.post("/items", status_code=status.HTTP_201_CREATED)
+@router.delete("/items/{id}", status_code=status.HTTP_204_NO_CONTENT)
+```
+
+## Integration Steps
+
+1. Create router in `src/backend/app/routers/`
+2. Mount in `src/backend/app/main.py`
+3. Create corresponding Pydantic models
+4. Create service layer if needed
+5. Add frontend API functions
+
+## When to Use
+- Use this skill when you need for functional programming or specific domain tasks.
+
+---
+> Source: [JantonioFC/skillsbank](https://github.com/JantonioFC/skillsbank) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-15 -->

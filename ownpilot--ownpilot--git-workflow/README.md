@@ -1,0 +1,13 @@
+# git-workflow
+
+> Skill by [ownpilot](https://github.com/ownpilot/OwnPilot) — distributed by [TomeVault](https://tomevault.io/claim/ownpilot)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ownpilot/OwnPilot](https://github.com/ownpilot/OwnPilot/tree/main/packages/gateway/data/example-skills/git-workflow)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/ownpilot) to manage distribution.

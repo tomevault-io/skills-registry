@@ -1,0 +1,82 @@
+---
+name: worktree-setup
+description: Procedure for creating a git worktree and devcontainer for a new task. Use this when starting a new development task. Use when this capability is needed.
+metadata:
+  author: peteroden
+---
+
+Each task gets its own worktree and devcontainer instance. This ensures isolation — the worst case is rolling back a branch.
+
+## Create a Worktree
+
+```bash
+# From the main repo directory
+git worktree add ../worktrees/<branch-name> -b <type>/<ticket-id>-<short-description>
+```
+
+Branch naming follows conventional format:
+- `feature/PROJ-123-add-oauth-login`
+- `fix/PROJ-456-null-pointer-in-parser`
+- `refactor/PROJ-789-extract-payment-service`
+
+## Start the Devcontainer
+
+For a **yolo (developer) agent** — safelisted network only:
+```bash
+devcontainer up --workspace-folder ../worktrees/<branch-name>
+```
+The devcontainer should not use `"network": "none"`. Developer agents self-limit to safelisted registries per their agent instructions.
+
+For an **interactive agent** — with network:
+```bash
+devcontainer up --workspace-folder ../worktrees/<branch-name>
+```
+
+## Run Commands Inside
+
+```bash
+devcontainer exec --workspace-folder ../worktrees/<branch-name> <command>
+```
+
+## Verify the Environment
+
+```bash
+# Check the branch
+devcontainer exec --workspace-folder ../worktrees/<branch-name> git branch --show-current
+
+# Check tools are available
+devcontainer exec --workspace-folder ../worktrees/<branch-name> <build-command>
+```
+
+## Clean Up After Merge
+
+```bash
+# Stop the devcontainer (find container ID first)
+docker ps --filter "label=devcontainer.local_folder=../worktrees/<branch-name>" -q | xargs docker stop
+
+# Remove the worktree
+git worktree remove ../worktrees/<branch-name>
+
+# Delete the branch if merged
+git branch -d <branch-name>
+```
+
+## Notes
+
+- One worktree = one task = one agent = one devcontainer.
+- Worktrees share the same repo objects but have independent working directories.
+- Multiple worktrees can run concurrently — monitor machine resources.
+
+## Shared Devcontainer Warning
+
+If resource constraints prevent one-devcontainer-per-worktree, a single devcontainer can be shared. This introduces friction:
+
+- Files must be `docker cp`'d into the container for lint/test runs.
+- The container workspace must be restored after each run (`git checkout -- .` inside the container).
+- Agents can accidentally pollute each other's state if restoration is skipped.
+
+**Prefer dedicated containers.** Only share when machine resources (RAM, CPU) make it necessary. If sharing, document which container ID is shared and add restoration steps to every agent's workflow.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/peteroden) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->

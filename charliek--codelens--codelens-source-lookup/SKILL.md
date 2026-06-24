@@ -1,0 +1,120 @@
+---
+name: codelens-source-lookup
+description: | Use when this capability is needed.
+metadata:
+  author: charliek
+---
+
+# Source Lookup
+
+This skill enables viewing source code for any JVM class accessible to the project.
+
+## When to Use
+
+- View the implementation of a class or method
+- Read javadoc documentation for a library class
+- Generate interface stubs for understanding API contracts
+- Inspect JDK source code
+- View decompiled bytecode when source is unavailable
+
+## Prerequisites
+
+Ensure the CodeLens server is running for your project:
+
+```bash
+codelens start --project /path/to/project
+```
+
+**To look up *project* class source, the project must be compiled** — CodeLens
+discovers project classes by scanning compiled bytecode (`build/classes`), so
+build it first (`./gradlew build -x test`). Library and JDK source lookups work
+regardless. If project classes aren't found, check `codelens classes stats --json`
+(a `projectClassCount` of `0`, also flagged by a `warning:` from `start`, means
+rebuild then `codelens refresh`).
+
+**Output:** in a terminal these commands print the source code directly. Pass
+`--json` for the structured envelope documented in
+[FORMATS.md](references/FORMATS.md) (`source.content`, `filePath`, `language`,
+…) — that JSON shape is also auto-selected when output is piped or captured.
+
+## Commands
+
+### View Full Source
+
+```bash
+codelens source show <fully-qualified-class-name>
+```
+
+**Examples:**
+```bash
+# Project class
+codelens source show com.example.MyHandler
+
+# Library class (auto-downloads source JAR if available)
+codelens source show com.google.common.collect.ImmutableList
+
+# JDK class
+codelens source show java.util.concurrent.CompletableFuture
+```
+
+### View Method Source
+
+Extract a specific method from a class:
+
+```bash
+codelens source method <class-fqn> <method-name>
+```
+
+**Options:**
+- `--param-types <types>` - Disambiguate overloaded methods (comma-separated parameter types)
+- `--context <n>` - Include n lines before/after the method
+
+**Examples:**
+```bash
+# Simple method
+codelens source method com.example.UserService getUser
+
+# Overloaded method - specify parameter types
+codelens source method com.example.UserService findUsers --param-types "String,int"
+
+# With surrounding context
+codelens source method com.example.MyHandler handle --context 5
+```
+
+## Output Today
+
+`codelens source show <fqn>` returns the full resolved source for the class
+(default behavior). Richer output modes — stub generation, signatures-only,
+javadoc extraction, visibility filtering, and Java/Kotlin language
+switching — exist on the server endpoint but are not yet exposed on the CLI.
+They are queued as a follow-up Go-CLI enhancement; once landed, this section
+will be expanded with `--format`, `--visibility`, and `--lang` examples.
+
+## Source Resolution
+
+CodeLens resolves source in this order:
+
+1. **Project source** - Your local source files
+2. **Library source JARs** - Downloaded from Maven Central
+3. **JDK source** - From `src.zip` or JDK modules
+4. **Decompilation** - Fallback when source unavailable
+
+The server endpoint accepts query parameters to disable decompilation
+fallback or force a fresh source-JAR download, but those toggles are not
+yet exposed on the CLI. They are queued alongside the format/visibility
+flags in the follow-up Go-CLI enhancement noted above.
+
+## Tips
+
+- Combine with `codelens-jvm-analysis` skill to find classes first, then view their source
+- When viewing library code, source JARs are cached locally after first download
+- Decompiled code may not perfectly match original source but preserves logic
+
+## Related Skills
+
+- `codelens-jvm-analysis` - Find classes and methods to view
+- `codelens-ratpack-analysis` - Analyze Ratpack-specific handler source
+
+---
+> Source: [charliek/codelens](https://github.com/charliek/codelens) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-15 -->

@@ -1,0 +1,109 @@
+---
+name: go-coding-standards
+description: Apply Go idioms and project coding standards. Use when writing Go code, reviewing implementations, making architectural decisions, or when the user asks about Go best practices. Use when this capability is needed.
+metadata:
+  author: riddopic
+---
+
+# Go Coding Standards
+
+Apply these standards when writing or reviewing Go code in this project.
+
+## Quick Reference
+
+| Principle | Rule |
+|-----------|------|
+| Interfaces | Accept interfaces, return concrete types |
+| Errors | Errors are values — handle explicitly with context wrapping |
+| Functions | Keep under 50 lines, use early returns |
+| Receivers | Be consistent — all pointer or all value |
+| Zero values | Make them useful — types should work without initialization |
+
+## Core Go Idioms
+
+1. **Errors are values** — No exceptions, explicit error handling
+2. **Make zero values useful** — Design types to work without initialization
+3. **Accept interfaces, return concrete types**
+4. **Composition over inheritance** — Use embedding and interfaces
+5. **Small interfaces** — One or two methods per interface
+6. **Early returns** — Reduce nesting with guard clauses
+
+## Error Handling Pattern
+
+```go
+// Always wrap errors with context
+if err != nil {
+    return fmt.Errorf("loading config %s: %w", path, err)
+}
+
+// Define sentinel errors
+var ErrNotFound = errors.New("not found")
+
+// Check specific errors
+if errors.Is(err, ErrNotFound) {
+    // Handle not found
+}
+```
+
+## Struct Patterns
+
+For optional parameters, use functional options:
+
+```go
+type Option func(*StatusLine)
+
+func WithTheme(theme string) Option {
+    return func(s *StatusLine) {
+        s.theme = theme
+    }
+}
+
+func NewStatusLine(options ...Option) *StatusLine {
+    s := &StatusLine{theme: "default"} // defaults
+    for _, opt := range options {
+        opt(s)
+    }
+    return s
+}
+```
+
+## Memory Optimization
+
+- Preallocate slices when size is known: `make([]T, 0, expectedSize)`
+- Use `strings.Builder` for concatenation
+- Use `sync.Pool` for frequently allocated objects
+
+## LEVER Decision Framework
+
+Before writing new code, apply the LEVER principles:
+
+```
+L - Leverage existing patterns (use what works)
+E - Extend before creating (build on existing)
+V - Verify through reactivity (self-validating systems)
+E - Eliminate duplication (of knowledge, not just code)
+R - Reduce complexity (simplest solution wins)
+```
+
+**Quick decision guide:**
+
+1. **Leverage**: Does the standard library solve this? Does an existing internal package?
+2. **Extend**: Can we extend existing code rather than create new?
+3. **Verify**: Will this be self-validating through reactive patterns?
+4. **Eliminate**: Am I duplicating business knowledge?
+5. **Reduce**: Is this the simplest solution?
+
+> **Tip:** The `search-first` skill provides a systematic workflow for the Leverage step.
+
+**Note**: Duplicate _code_ is acceptable if it represents different _knowledge_.
+
+## Detailed Standards
+
+For complete Go idioms, see [go-specific.md](../../../docs/examples/standards/go-specific.md)
+For interface design, see [interfaces.md](../../../docs/examples/standards/interfaces.md)
+For documentation standards, see [documentation.md](../../../docs/examples/standards/documentation.md)
+For project coding guidelines, see [CODING_GUIDELINES.md](../../../docs/CODING_GUIDELINES.md)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/riddopic) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->

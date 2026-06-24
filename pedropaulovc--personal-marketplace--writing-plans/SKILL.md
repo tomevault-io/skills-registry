@@ -1,0 +1,136 @@
+---
+name: writing-plans
+description: Use when you have a spec or requirements for a multi-step task, before touching code
+metadata:
+  author: pedropaulovc
+---
+
+# Writing Plans
+
+## Overview
+
+Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+
+Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
+
+**Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
+
+**Context:** This should be run in a dedicated worktree (created by brainstorming skill).
+
+**Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
+
+## Bite-Sized Task Granularity
+
+**Each step is one action (2-5 minutes):**
+- "Write the failing test" - step
+- "Run it to make sure it fails" - step
+- "Implement the minimal code to make the test pass" - step
+- "Run the tests and make sure they pass" - step
+- "Commit" - step
+
+## Plan Document Header
+
+**Every plan MUST start with this header:**
+
+```markdown
+# [Feature Name] Implementation Plan
+
+> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development to implement this plan task-by-task.
+
+**Goal:** [One sentence describing what this builds]
+
+**Architecture:** [2-3 sentences about approach]
+
+**Tech Stack:** [Key technologies/libraries]
+
+---
+```
+
+## High-Level Spec (when derived from plan mode)
+
+If this implementation plan was created after a plan mode session (i.e. the user approved a plan via `ExitPlanMode`), include the approved plan as a high-level spec section immediately after the header. This gives the implementer the original requirements and design intent alongside the bite-sized tasks.
+
+```markdown
+## High-Level Spec
+
+> Copied from [original plan](path/to/plan-file.md) for reference.
+
+[Paste the full contents of the approved plan here verbatim]
+
+---
+```
+
+This section is **only** added when a plan mode plan exists. If the writing-plans skill was invoked directly (e.g. from brainstorming) without a preceding plan mode session, skip this section.
+
+## Task Structure
+
+````markdown
+### Task N: [Component Name]
+
+**Files:**
+- Create: `exact/path/to/file.py`
+- Modify: `exact/path/to/existing.py:123-145`
+- Test: `tests/exact/path/to/test.py`
+
+**Step 1: Write the failing test**
+
+```python
+def test_specific_behavior():
+    result = function(input)
+    assert result == expected
+```
+
+**Step 2: Run test to verify it fails**
+
+Run: `pytest tests/path/test.py::test_name -v`
+Expected: FAIL with "function not defined"
+
+**Step 3: Write minimal implementation**
+
+```python
+def function(input):
+    return expected
+```
+
+**Step 4: Run test to verify it passes**
+
+Run: `pytest tests/path/test.py::test_name -v`
+Expected: PASS
+
+**Step 5: Commit**
+
+```bash
+git add tests/path/test.py src/path/file.py
+git commit -m "feat: add specific feature"
+```
+````
+
+## External API Integration
+
+**Mocks are a liability when not validated against reality.** When a plan involves consuming external APIs:
+
+1. **Verify API response shapes with real data FIRST** — before writing specs, design docs, or mocks. Run the actual API call and capture the real response. Include the real response in the plan.
+2. **Never assume API field names** — check the official API docs AND make a real call. APIs often differ from documentation or from what seems "obvious."
+
+If a task consumes an external API, the plan must include the verified real response shape in the task description so the implementer works from ground truth, not assumptions.
+
+## Remember
+- Exact file paths always
+- Complete code in plan (not "add validation")
+- Exact commands with expected output
+- Reference relevant skills with @ syntax
+- DRY, YAGNI, TDD, frequent commits
+
+## Execution Handoff
+
+After saving the plan:
+
+**"Plan complete and saved to `docs/plans/<filename>.md`. Ready to execute with subagent-driven development - I'll dispatch a fresh subagent per task, review between tasks, fast iteration."**
+
+- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
+- Stay in this session
+- Fresh subagent per task + code review
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/pedropaulovc) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->

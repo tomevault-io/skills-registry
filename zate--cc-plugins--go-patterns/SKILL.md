@@ -1,0 +1,73 @@
+---
+name: go-patterns
+description: This skill should be used for Go idioms, error handling, goroutines, interfaces, and testing, golang, Go language, Go modules, Go concurrency Use when this capability is needed.
+metadata:
+  author: zate
+---
+
+# Go Patterns
+
+Idiomatic Go patterns for Go 1.21+.
+
+## Error Handling
+
+```go
+if err != nil {
+    return fmt.Errorf("failed to process %s: %w", id, err)
+}
+```
+
+## Interfaces
+
+Small interfaces (1-3 methods). Accept interfaces, return structs.
+
+```go
+type Reader interface {
+    Read(p []byte) (n int, err error)
+}
+```
+
+## Table-Driven Tests
+
+```go
+tests := []struct{
+    name string
+    input, want int
+}{
+    {"positive", 2, 3},
+}
+for _, tt := range tests {
+    t.Run(tt.name, func(t *testing.T) {
+        if got := Fn(tt.input); got != tt.want {
+            t.Errorf("got %d, want %d", got, tt.want)
+        }
+    })
+}
+```
+
+## Concurrency
+
+Always propagate context for cancellation:
+
+```go
+func work(ctx context.Context) error {
+    select {
+    case <-ctx.Done():
+        return ctx.Err()
+    default:
+        // do work
+    }
+}
+```
+
+## Defer for Cleanup
+
+```go
+f, err := os.Open(path)
+if err != nil { return err }
+defer f.Close()
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/zate) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

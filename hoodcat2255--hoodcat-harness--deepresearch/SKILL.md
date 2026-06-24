@@ -1,0 +1,111 @@
+---
+name: deepresearch
+description: | Use when this capability is needed.
+metadata:
+  author: hoodcat2255
+---
+
+# Deep Research
+
+**현재 연도: !`date +%Y`**
+
+## 프로세스
+
+### 1. 병렬 정보 수집
+
+$ARGUMENTS에 대해 **단일 메시지에서 5-7개 검색을 병렬 실행**한다:
+
+```
+동시 실행:
+├── WebSearch: "$ARGUMENTS comprehensive guide !`date +%Y`"
+├── WebSearch: "$ARGUMENTS best practices patterns"
+├── WebSearch: "$ARGUMENTS advanced tutorial"
+├── WebSearch: "$ARGUMENTS vs alternatives comparison"
+├── WebSearch: "$ARGUMENTS common mistakes pitfalls"
+├── Bash: gh search repos "$ARGUMENTS" --sort stars --limit 5
+├── Bash: gh search issues "$ARGUMENTS" --sort updated --limit 5
+├── Context7: resolve-library-id (기술 주제인 경우)
+└── Context7: query-docs (ID 확보 후, 최대 3회)
+```
+
+### 2. 심화 조사
+
+1차 결과에서 발견한 핵심 출처를 WebFetch로 상세 조회한다. 유용한 GitHub 레포가 있으면:
+- `gh api repos/{owner}/{repo}/readme` - README 조회
+- `gh release list -R {owner}/{repo} --limit 3` - 최신 릴리즈 확인
+- `gh issue view {number} -R {owner}/{repo}` - 주요 이슈 상세 조회
+
+Bash는 gh 명령 전용. 다른 시스템 명령 금지.
+
+### 3. 결과 저장
+
+파일: `docs/research-[주제]-!`date +%Y%m%d`.md`
+
+```markdown
+# [주제] 조사 결과
+
+> 조사일: !`date +%Y-%m-%d`
+
+## 개요
+[핵심 요약 - 3-5문장]
+
+## 상세 내용
+
+### [섹션 1]
+[내용]
+
+### [섹션 2]
+[내용]
+
+## 코드 예제 (해당 시)
+[코드 블록]
+
+## 주요 포인트
+- [포인트 1]
+- [포인트 2]
+- [포인트 3]
+
+## 출처
+- [출처 1](URL)
+- [출처 2](URL)
+```
+
+유의미한 출처가 3개 미만이면 검색 키워드를 변형하여 추가 검색한다.
+
+조사 완료 후 사용자에게 핵심 5가지를 요약하여 보고한다.
+
+## 대용량 웹 콘텐츠 처리 (Context Mode)
+
+context-mode MCP 서버가 활성화되어 있으면, 대용량 웹 페이지에 대해 fetch_and_index를 활용한다.
+
+### fetch_and_index 사용
+
+문서 페이지나 블로그 글이 길 것으로 예상될 때 (5KB 이상):
+- `mcp__context-mode__fetch_and_index(url: "https://example.com/docs/guide")`
+- 페이지를 마크다운으로 변환하고 FTS5에 인덱싱한다
+- 이후 `mcp__context-mode__search(queries: ["relevant keyword"])` 로 필요한 부분만 검색
+
+### WebFetch와의 사용 구분
+
+- **짧은 페이지** (API 응답, 짧은 블로그 글): WebFetch 그대로 사용
+- **긴 문서 페이지** (프레임워크 가이드, API 레퍼런스): fetch_and_index 사용
+- **GitHub README/이슈**: gh CLI로 직접 조회 (변경 없음)
+
+### 인덱싱된 콘텐츠 재활용
+
+fetch_and_index로 인덱싱한 내용은 세션 내 FTS5 DB에 보존된다. 같은 세션의 다른 에이전트도 search로 검색할 수 있으므로, 한번 인덱싱하면 중복 페치를 피할 수 있다.
+
+## 핸드오프 컨텍스트
+
+이 스킬의 출력은 다른 스킬/에이전트에서 소비된다:
+- **/blueprint**: 기술 선택의 근거 자료로 활용
+- **/decide**: 의사결정에 필요한 기초 조사 자료로 활용
+- **architect 에이전트**: 기술 스택 적합성 평가 시 참조
+
+## REVIEW 연동
+
+조사 결과가 아키텍처/기술 선택에 영향을 주는 경우, /blueprint이나 워크플로우가 architect 에이전트에게 리뷰를 요청한다. deepresearch 자체는 리뷰 없이 완료된다.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hoodcat2255) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

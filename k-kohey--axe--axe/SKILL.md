@@ -1,0 +1,77 @@
+---
+name: preview-report
+description: Capture previews of multiple SwiftUI files and generate a visual report. Use when the user wants to see all previews at once, create PR documentation, or batch-check UI across files. Use when this capability is needed.
+metadata:
+  author: k-kohey
+---
+
+# Batch Preview Report
+
+Capture screenshots of all `#Preview` blocks across multiple SwiftUI files and generate a report.
+
+## Steps
+
+### 1. Determine target files
+
+If `$ARGUMENTS` specifies files, use those directly. `$ARGUMENTS` may contain only View names (e.g. `ContentView`) instead of file paths, so resolve each to a `.swift` path (e.g. `TodoApp/ContentView.swift`) using Glob.
+
+If no arguments are provided, detect changed Swift files:
+
+```bash
+FILES=$(git diff --name-only --diff-filter=ACMR HEAD -- '*.swift')
+if [ -z "$FILES" ]; then
+  echo "No changed Swift files found. Specify files explicitly."
+  exit 1
+fi
+```
+
+### 2. Generate the report
+
+```bash
+axe preview report $FILES --format md --output <output-dir>
+```
+
+When `$ARGUMENTS` is provided, use `$ARGUMENTS` instead of `$FILES`:
+
+```bash
+axe preview report $ARGUMENTS --format md --output <output-dir>
+```
+
+This generates:
+- `axe_swiftui_preview_report.md` — Markdown report with embedded image references
+- `axe_swiftui_preview_report_assets/*.png` — Individual preview screenshots
+
+### 3. Display the results
+
+Read the generated Markdown report with the Read tool. Then read each preview image in the assets directory to show them to the user.
+
+### 4. Summarize
+
+Provide a summary of all captured previews, noting:
+- Total number of `#Preview` blocks found
+- Any previews that failed to capture (and likely reasons from stderr)
+- Quick observations about the UI state of each view
+
+## Options
+
+- Use `-j <n>` to control parallel simulator count for faster capture
+- Use `--reuse-build` to skip rebuilding if the project was recently built
+- Replace `--format md` with `--format html` for an interactive HTML report with lightbox
+
+## Use Cases
+
+- **PR review**: Capture all changed views before creating a pull request
+- **Visual regression**: Compare previews across branches
+- **Documentation**: Generate a visual catalog of UI components
+
+## Prerequisites
+
+Run this if the command fails because `axe` is not found::
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/k-kohey/axe/main/install.sh | sh
+```
+
+---
+> Source: [k-kohey/axe](https://github.com/k-kohey/axe) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-18 -->

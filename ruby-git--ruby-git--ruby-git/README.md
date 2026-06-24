@@ -1,0 +1,13 @@
+# ruby-git
+
+> Skill by [ruby-git](https://github.com/ruby-git/ruby-git) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ruby-git/ruby-git](https://github.com/ruby-git/ruby-git/tree/main/.github/skills/refactor-command-to-commandlineresult/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

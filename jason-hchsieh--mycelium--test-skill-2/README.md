@@ -1,0 +1,13 @@
+# test-skill-2
+
+> Skill by [jason-hchsieh](https://github.com/jason-hchsieh/mycelium) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [jason-hchsieh/mycelium](https://github.com/jason-hchsieh/mycelium/tree/main/test/fixtures/plugins/test-plugin-2/skills/test-skill-2)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

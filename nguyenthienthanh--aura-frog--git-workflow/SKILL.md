@@ -1,0 +1,51 @@
+---
+name: git-workflow
+description: Token-efficient git operations with security scanning and auto-split commits Use when this capability is needed.
+metadata:
+  author: nguyenthienthanh
+---
+
+> **AI-consumed reference.** Optimized for Claude to read during execution.
+> Human-readable explanation: see [docs/architecture/HIERARCHICAL_PLANNING.md](../../../docs/architecture/HIERARCHICAL_PLANNING.md)
+> or [docs/getting-started/](../../../docs/getting-started/) depending on topic.
+
+
+# Git Workflow
+
+Token-efficient git: 2-4 tool calls max.
+
+## Commit Process
+
+### 1. Stage + Security Scan
+
+Stage files, check diff stats, scan for secrets (`api_key|token|password|secret|credential`).
+**If secrets found: STOP. Show matches. Block commit.**
+
+### 2. Split Decision
+
+**Split** if: mixed types (feat+fix), FILES >10 unrelated, multiple scopes (frontend+backend).
+**Single** if: same type/scope, FILES ≤3 + LINES ≤50, logically related.
+
+### 3. Commit Message
+
+Format: `type(scope): description` (<72 chars, present tense, imperative)
+Types: feat, fix, docs, chore, refactor, test, perf
+
+### 4. Commit + Push
+
+Push only if user requests.
+
+## PR Workflow
+
+1. `git fetch origin main` + log commits since main + diff stats
+2. `gh pr create --title "type(scope): description" --body "## Summary\n- bullets\n\n## Test Plan\n- steps"`
+
+## Output
+
+```
+staged: 3 files (+45/-12 lines) | security: passed | commit: a3f8d92 feat(auth): add token refresh
+```
+
+---
+> Source: [nguyenthienthanh/aura-frog](https://github.com/nguyenthienthanh/aura-frog) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-28 -->

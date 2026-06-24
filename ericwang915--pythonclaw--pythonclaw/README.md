@@ -1,0 +1,13 @@
+# PythonClaw
+
+> Skill by [ericwang915](https://github.com/ericwang915/PythonClaw) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ericwang915/PythonClaw](https://github.com/ericwang915/PythonClaw/tree/main/pythonclaw/templates/skills/system/change_setting/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

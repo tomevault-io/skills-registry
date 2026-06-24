@@ -1,0 +1,13 @@
+# adding-service-documentation
+
+> Skill by [coollabsio](https://github.com/coollabsio/coolify-docs) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [coollabsio/coolify-docs](https://github.com/coollabsio/coolify-docs/tree/main/.claude/skills/adding-service-documentation)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

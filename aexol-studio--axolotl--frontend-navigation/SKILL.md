@@ -1,0 +1,118 @@
+---
+name: frontend-navigation
+description: React Router v7 navigation - route definitions, SSR integration, auth guards, Link/Navigate patterns, layout nesting, and project conventions Use when this capability is needed.
+metadata:
+  author: aexol-studio
+---
+
+## Architecture
+
+React Router v7 **Data Router** — `RouteObject[]` config, not JSX `<Routes>/<Route>`.
+
+- `routeConfig: RouteObject[]` in `frontend/src/routes/index.tsx` — single source of truth
+- `createBrowserRouter(routeConfig)` in `entry-client.tsx` — local const, never exported from routes
+- `createStaticHandler` / `createStaticRouter` in `entry-server.tsx` for SSR
+- All imports from `'react-router'` — no `react-router-dom`
+- Auth guards in **loaders** — layout components are pure `<Outlet />` wrappers
+
+## Route Config
+
+`frontend/src/routes/index.tsx` exports `routeConfig: RouteObject[]` — a flat config array, never JSX `<Routes>`.
+
+Structure:
+
+- Root route (`id: 'root'`) with `<RootLayout />` and `rootLoader`
+- `<GuestLayout />` group → guest routes (`/`, `/login`, `/verify-email`)
+- `<ProtectedLayout />` group → protected routes (`/app`, `/settings`)
+- Public routes at root level (`/examples`)
+- `{ path: '*', element: <NotFound /> }` catch-all
+
+To add a route: add a `RouteObject` to the correct group's `children[]` in `routes/index.tsx`.
+
+| Path            | Component     | Auth                    | Group             |
+| --------------- | ------------- | ----------------------- | ----------------- |
+| `/`             | `Landing`     | No (→ `/app` if authed) | `GuestLayout`     |
+| `/login`        | `Login`       | No (→ `/app` if authed) | `GuestLayout`     |
+| `/verify-email` | `VerifyEmail` | No (→ `/app` if authed) | `GuestLayout`     |
+| `/examples`     | `Examples`    | No                      | Public (no wrap)  |
+| `/app`          | `Dashboard`   | Yes (→ `/login`)        | `ProtectedLayout` |
+| `/settings`     | `Settings`    | Yes (→ `/login`)        | `ProtectedLayout` |
+| `*`             | `NotFound`    | No                      | Root              |
+
+## Auth Guards — Loaders Only
+
+Auth is centralized in `ProtectedLayout` loader — page loaders do data fetching only.
+
+```tsx
+// protected layout loader — extracts per-request queryClient from context
+import { type LoaderFunctionArgs, redirect } from 'react-router';
+import { isAuthenticated, queryClient, type AppLoadContext } from '@/lib/queryClient.js';
+
+export const protectedLoader = ({ context }: LoaderFunctionArgs) => {
+  const qc = (context as AppLoadContext | undefined)?.queryClient ?? queryClient;
+  if (!isAuthenticated(qc)) return redirect('/login');
+  return null;
+};
+
+// guest loader — redirect if already authenticated
+export const loginLoader = ({ context }: LoaderFunctionArgs) => {
+  const qc = (context as AppLoadContext | undefined)?.queryClient ?? queryClient;
+  if (isAuthenticated(qc)) return redirect('/app');
+  return { meta: { title: 'Sign In', description: '' } };
+};
+```
+
+## Navigation
+
+```tsx
+import { Link, Navigate, useNavigate } from 'react-router';
+<Link to="/app">Dashboard</Link>
+<Navigate to="/app" replace />  {/* replace on auth redirects — prevents back-button loops */}
+const navigate = useNavigate();
+navigate('/app'); navigate('/', { replace: true });
+```
+
+## File Structure
+
+```
+frontend/src/routes/
+├── index.tsx          # routeConfig + rootLoader
+├── RootLayout.tsx     # ThemeProvider > DynamiteProvider > QueryClientProvider > Outlet
+├── ErrorPage.tsx      # useRouteError() fallback — used as errorElement
+├── MetaUpdater.tsx    # document.title updater via useMatches (mounted in RootLayout)
+├── meta.ts            # RouteMeta interface + buildMetaHead() for SSR head injection
+├── guest/Layout.tsx   # GuestLayout — pure <Outlet />
+├── guest/landing/     # path: '/'
+├── guest/login/       # path: '/login'
+├── guest/verify-email/  # path: '/verify-email'
+├── protected/Layout.tsx  # ProtectedLayout — pure <Outlet />
+├── protected/dashboard/  # path: '/app'
+├── protected/settings/   # path: '/settings'
+├── public/examples/   # path: '/examples'
+└── not-found/         # path: '*'
+```
+
+## Conventions
+
+- `RouteObject[]` config only — never JSX `<Routes>/<Route>`
+- Auth in loaders — layouts are pure `<Outlet />`
+- Protected: `return redirect('/login')` — Guest: `return redirect('/app')`
+- `.js` extensions in imports — ESM requirement (`from './Layout.js'`)
+- Arrow functions everywhere: `const X = () => {}`
+- Route-scoped components → `routes/{group}/{route}/components/`
+
+## Quick Reference
+
+| Task                     | Code/Pattern                                                                                                                        |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Import router primitives | `import { Link, useNavigate, useLoaderData } from 'react-router'`                                                                   |
+| Navigate with link       | `<Link to="/app">Dashboard</Link>`                                                                                                  |
+| Redirect component       | `<Navigate to="/" replace />`                                                                                                       |
+| Programmatic navigation  | `const navigate = useNavigate(); navigate('/app')`                                                                                  |
+| Auth guard (protected)   | `const qc = (context as AppLoadContext)?.queryClient ?? queryClient; if (!isAuthenticated(qc)) return redirect('/login')` in loader |
+| Auth guard (guest)       | `const qc = (context as AppLoadContext)?.queryClient ?? queryClient; if (isAuthenticated(qc)) return redirect('/app')` in loader    |
+| Add route                | Add `RouteObject` to correct layout's `children` in `routes/index.tsx`                                                              |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/aexol-studio) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

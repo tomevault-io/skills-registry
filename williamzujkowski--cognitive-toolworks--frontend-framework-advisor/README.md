@@ -1,0 +1,13 @@
+# frontend-framework-advisor
+
+> Skill by [williamzujkowski](https://github.com/williamzujkowski/cognitive-toolworks) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [williamzujkowski/cognitive-toolworks](https://github.com/williamzujkowski/cognitive-toolworks/tree/main/skills/frontend-framework-advisor)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

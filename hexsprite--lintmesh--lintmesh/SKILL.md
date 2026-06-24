@@ -1,0 +1,89 @@
+---
+name: lintmesh
+description: Run multiple linters (eslint, oxlint, tsc, biome) in parallel with unified JSON output. Use when linting code, checking for errors before commits, or debugging lint failures. Triggers on "lint", "check code", "run linters", or after editing JS/TS files. Use when this capability is needed.
+metadata:
+  author: hexsprite
+---
+
+# Lintmesh
+
+Unified linter runner. One command, JSON output, all issues sorted by file:line.
+
+## Usage
+
+```bash
+# Lint everything (default: eslint + oxlint + tsc)
+lintmesh --quiet
+
+# Lint specific paths
+lintmesh --quiet src/
+
+# Select linters
+lintmesh --quiet --linters eslint,oxlint
+```
+
+Always use `--quiet` to suppress stderr progress.
+
+## Output Schema
+
+```typescript
+{
+  issues: Array<{
+    path: string;           // Relative to cwd
+    line: number;           // 1-indexed
+    column: number;
+    severity: "error" | "warning" | "info";
+    ruleId: string;         // "eslint/no-unused-vars", "oxlint/no-debugger", "tsc/TS2322"
+    message: string;
+    source: string;         // Which linter
+    fix?: {                 // Present if autofixable
+      replacements: Array<{ startOffset: number; endOffset: number; text: string }>;
+    };
+  }>;
+  summary: { total: number; errors: number; warnings: number; fixable: number };
+  linters: Array<{ name: string; success: boolean; error?: string }>;
+}
+```
+
+## Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| 0 | No errors (warnings OK) |
+| 1 | Errors found |
+| 2 | Tool failure |
+
+## CLI Options
+
+| Flag | Default | Purpose |
+|------|---------|---------|
+| `--linters <list>` | `eslint,oxlint,tsc` | Which linters |
+| `--fail-on <level>` | `error` | Exit 1 threshold |
+| `--timeout <ms>` | `30000` | Per-linter timeout |
+| `--quiet` | `false` | No stderr |
+
+## Patterns
+
+```bash
+# Error count
+lintmesh --quiet | jq '.summary.errors'
+
+# Files with issues
+lintmesh --quiet | jq -r '.issues[].path' | sort -u
+
+# Only errors
+lintmesh --quiet | jq '[.issues[] | select(.severity == "error")]'
+
+# Check if clean
+lintmesh --quiet && echo "No errors"
+```
+
+## When to Use
+
+- After editing code: catch issues early
+- Before committing: verify no regressions
+- Debugging CI: reproduce locally with same format
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/hexsprite) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

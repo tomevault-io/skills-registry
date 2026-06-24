@@ -1,0 +1,29 @@
+---
+name: doc-writer
+description: 根据当前项目或选中文件生成/更新 README 或技术文档，包含项目简介、快速开始、结构说明、示例代码等。 Use when this capability is needed.
+metadata:
+  author: shetiejun
+---
+
+# 技术文档 / README 生成器
+## 文档结构
+- 项目简介（1~2 段话）
+- 主要功能列表
+- 技术栈（语言、框架、关键依赖）
+- 快速开始（安装、运行、验证）
+- 目录结构说明
+- 使用示例（可包含代码片段）
+- 常见问题（可选）
+## 信息来源
+- 优先从 build.gradle 或者build.gradle.kts /libs.versions.toml 提取依赖
+- 从项目主要入口文件提取关键 API 和使用方式
+- 如已有 README，则在原有基础上增量更新，不覆盖已有手动内容
+- 需要保留文章中的总结内容
+## 输出方式
+- 默认输出为 Markdown
+- 如目标文件存在，采用「更新模式」：新增段落前给出对比摘要
+- 如涉及变更多个文件，先用列表说明将要修改的文件清单
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/shetiejun) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

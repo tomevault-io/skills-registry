@@ -1,0 +1,36 @@
+---
+name: songsee
+description: Generate spectrograms and feature-panel visualizations from audio with the songsee CLI. Use when this capability is needed.
+metadata:
+  author: openclaw
+---
+
+# songsee
+
+Generate spectrograms + feature panels from audio.
+
+Quick start
+
+- Spectrogram: `songsee track.mp3`
+- Multi-panel: `songsee track.mp3 --viz spectrogram,mel,chroma,hpss,selfsim,loudness,tempogram,mfcc,flux`
+- Time slice: `songsee track.mp3 --start 12.5 --duration 8 -o slice.jpg`
+- Stdin: `cat track.mp3 | songsee - --format png -o out.png`
+
+Common flags
+
+- `--viz` list (repeatable or comma-separated)
+- `--style` palette (classic, magma, inferno, viridis, gray)
+- `--width` / `--height` output size
+- `--window` / `--hop` FFT settings
+- `--min-freq` / `--max-freq` frequency range
+- `--start` / `--duration` time slice
+- `--format` jpg|png
+
+Notes
+
+- WAV/MP3 decode native; other formats use ffmpeg if available.
+- Multiple `--viz` renders a grid.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/openclaw) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

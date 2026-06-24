@@ -1,0 +1,13 @@
+# fanhub-rebrand-site
+
+> Skill by [MSBart2](https://github.com/MSBart2/apm) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [MSBart2/apm](https://github.com/MSBart2/apm/tree/main/.apm/skills/fanhub-rebrand-site)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

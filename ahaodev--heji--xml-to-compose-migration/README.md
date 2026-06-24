@@ -1,0 +1,13 @@
+# xml-to-compose-migration
+
+> Skill by [ahaodev](https://github.com/ahaodev/heji) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ahaodev/heji](https://github.com/ahaodev/heji/tree/main/client/.github/skills/xml-to-compose-migration)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

@@ -1,0 +1,13 @@
+# autonomous-orchestrion
+
+> Skill by [praxstack](https://github.com/praxstack/skills-and-personas) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [praxstack/skills-and-personas](https://github.com/praxstack/skills-and-personas/tree/main/new-skills/autonomous-orchestrion)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

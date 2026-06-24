@@ -1,0 +1,13 @@
+# tla-model-checking
+
+> Skill by [photoszzt](https://github.com/photoszzt/tlaplus-ai-tools) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [photoszzt/tlaplus-ai-tools](https://github.com/photoszzt/tlaplus-ai-tools/tree/main/skills/tla-model-checking)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

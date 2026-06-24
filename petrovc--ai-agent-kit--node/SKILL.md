@@ -1,0 +1,28 @@
+---
+name: node
+description: > Use when this capability is needed.
+metadata:
+  author: PetrovC
+---
+
+# Node.js (Backend) Skill
+
+## Goal
+Strict-typed, layered, testable Node services. No `any`, no callback soup,
+no magic strings. A junior should be able to trace a request end-to-end.
+
+## Quick reference
+
+| Concept | Best practice |
+|---|---|
+| TypeScript | Use strict mode, ESM imports (`"type": "module"`), correct path aliases |
+| Frameworks | Fastify or NestJS with ChangeDetectionStrategy / proper DI |
+| Performance | Do not block the event loop, use worker threads for CPU-heavy tasks |
+| Key commands | `npm run dev`, `npm run build`, `npm test`, `npx tsc --noEmit` |
+
+## Full guidance
+Extended how-to, patterns, anti-patterns, and checklists: [`SKILL.deep.md`](SKILL.deep.md)
+
+---
+> Source: [PetrovC/ai-agent-kit](https://github.com/PetrovC/ai-agent-kit) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-15 -->

@@ -1,0 +1,129 @@
+---
+name: vercel-deployment
+description: Expert knowledge for deploying to Vercel with Next.js Use when: vercel, deploy, deployment, hosting, production. Use when this capability is needed.
+metadata:
+  author: techwavedev
+---
+
+# Vercel Deployment
+
+You are a Vercel deployment expert. You understand the platform's
+capabilities, limitations, and best practices for deploying Next.js
+applications at scale.
+
+## When to Use This Skill
+
+Use this skill when:
+- Deploying to Vercel
+- Working with Vercel deployment
+- Hosting applications on Vercel
+- Deploying to production on Vercel
+- Configuring Vercel for Next.js applications
+
+Your core principles:
+1. Environment variables - different for dev/preview/production
+2. Edge vs Serverless - choose the right runtime
+3. Build optimization - minimize cold starts and bundle size
+4. Preview deployments - use for testing before production
+5. Monitoring - set up analytics and error tracking
+
+## Capabilities
+
+- vercel
+- deployment
+- edge-functions
+- serverless
+- environment-variables
+
+## Requirements
+
+- nextjs-app-router
+
+## Patterns
+
+### Environment Variables Setup
+
+Properly configure environment variables for all environments
+
+### Edge vs Serverless Functions
+
+Choose the right runtime for your API routes
+
+### Build Optimization
+
+Optimize build for faster deployments and smaller bundles
+
+## Anti-Patterns
+
+### ❌ Secrets in NEXT_PUBLIC_
+
+### ❌ Same Database for Preview
+
+### ❌ No Build Cache
+
+## ⚠️ Sharp Edges
+
+| Issue | Severity | Solution |
+|-------|----------|----------|
+| NEXT_PUBLIC_ exposes secrets to the browser | critical | Only use NEXT_PUBLIC_ for truly public values: |
+| Preview deployments using production database | high | Set up separate databases for each environment: |
+| Serverless function too large, slow cold starts | high | Reduce function size: |
+| Edge runtime missing Node.js APIs | high | Check API compatibility before using edge: |
+| Function timeout causes incomplete operations | medium | Handle long operations properly: |
+| Environment variable missing at runtime but present at build | medium | Understand when env vars are read: |
+| CORS errors calling API routes from different domain | medium | Add CORS headers to API routes: |
+| Page shows stale data after deployment | medium | Control caching behavior: |
+
+## Related Skills
+
+Works well with: `nextjs-app-router`, `supabase-backend`
+
+---
+
+<!-- AGI-INTEGRATION-START -->
+
+## AGI Framework Integration
+
+> **Adapted for [@techwavedev/agi-agent-kit](https://www.npmjs.com/package/@techwavedev/agi-agent-kit)**
+> Original source: [antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills)
+
+### Memory-First Protocol
+
+Retrieve prior deployment configurations, rollback procedures, and incident post-mortems. Avoid re-discovering infrastructure patterns.
+
+```bash
+# Check for prior infrastructure context before starting
+python3 execution/memory_manager.py auto --query "deployment configuration and patterns for Vercel Deployment"
+```
+
+### Storing Results
+
+After completing work, store infrastructure decisions for future sessions:
+
+```bash
+python3 execution/memory_manager.py store \
+  --content "Deployment pipeline: configured blue-green deployment with health checks on port 8080" \
+  --type technical --project <project> \
+  --tags vercel-deployment devops
+```
+
+### Multi-Agent Collaboration
+
+Broadcast deployment changes so frontend and backend agents update their configurations accordingly.
+
+```bash
+python3 execution/cross_agent_context.py store \
+  --agent "<your-agent>" \
+  --action "Deployed infrastructure changes — updated CI/CD pipeline with new health check endpoints" \
+  --project <project>
+```
+
+### Playbook Integration
+
+Use the `ship-saas-mvp` or `full-stack-deploy` playbook to sequence this skill with testing, documentation, and deployment verification.
+
+<!-- AGI-INTEGRATION-END -->
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/techwavedev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

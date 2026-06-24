@@ -1,0 +1,387 @@
+---
+name: learnings
+description: Capture, browse, and query evidence-backed execution learnings in `.learnings.jsonl`. Trigger cues/keywords: `$learnings`, browse/recent/search learnings, lessons learned, takeaways, wrap up, handoff, before commit/PR, after tests pass, fail-to-pass, strategy pivot, footgun, retry loop. Use when this capability is needed.
+metadata:
+  author: tkersey
+---
+
+# Learnings
+
+## Overview
+
+Capture durable lessons as soon as evidence appears, not only at explicit retrospective requests.
+Also use the same CLI for interactive browsing and filtered search so prior learnings can be loaded deliberately instead of defaulting every read to `recall`.
+Write each validated learning as JSONL so future agents can reuse successful patterns and avoid footguns quickly.
+
+## Zig CLI Iteration Repos
+
+When iterating on the Zig-backed `learnings`/`append_learning` helper CLI path, use these two repos:
+
+- `skills-zig` (`/Users/tk/workspace/tk/skills-zig`): source for the `learnings` and `append_learning` Zig binaries, build/test wiring, and release tags.
+- `homebrew-tap` (`/Users/tk/workspace/tk/homebrew-tap`): Homebrew formula updates/checksum bumps for released `learnings` binaries.
+
+## Trigger cues
+
+- `$learnings`
+- "browse learnings" / "show recent learnings" / "search learnings"
+- "what do we already know about X" / "summarize learnings about X"
+- "lessons learned" / "takeaways" / "wrap up" / "handoff"
+- Before commit/PR/ship; after a proof signal changes state (`fail->pass`)
+- "strategy pivot" / "footgun" / "gotcha" / "retry loop"
+
+## Load Modes
+
+- `recall`: implementation preflight for a concrete task. Use the active request text as the query and treat hits as constraints/invariants.
+- `recent`: interactive browsing. Use when the user wants to look around, skim the latest learnings, or orient before deciding what matters.
+- `query`: filtered or aggregated browsing. Use when the user wants search, ranking, grouping, or summaries by status/tag/path/time.
+- Routing rule: if the user asks to browse, search, summarize, or rank learnings, do not default to `recall`; start with `recent` or `query`, then switch to `recall` only when transitioning into implementation.
+- Context-gathering rule: after the first user request is available and before substantial edits, run `recall` during context gathering rather than on empty SessionStart hooks; if early exploration materially narrows the slice, rerun `recall` with the refined query.
+
+## Operating Contract (Auto-Capture)
+
+- Allowed to run automatically at the end of an implementation turn (success or paused) and at delivery boundaries (commit/PR/handoff).
+- Best-effort and non-blocking: never require extra context; if evidence is thin, either write nothing or persist `review_later` with placeholders.
+- Noise control: if no Capture Checkpoint occurred or nothing decision-shaping emerged, append 0 records; otherwise prefer 1 record (max 3).
+- Completion proof: after an implementation turn with a checkpoint or an intentional no-write, produce one exact proof line: `appended: id=...`, `duplicate-skip: <reason>`, or `0 records appended: <reason>`.
+- Stop-hook compatibility: when append dedupes or you intentionally skip capture, keep the proof line on one line with the exact `duplicate-skip:` or `0 records appended:` prefix so hooks can distinguish a valid no-write from a missed capture.
+- Helper-first write path: use `learnings append`/`run_learnings_tool append` for normal writes; keep `append_learning` available as a compatibility binary, and treat manual `.learnings.jsonl` edits as emergency-only with explicit rationale.
+- Repo-root fail-closed rule: only append from a verified git repo root. If `git rev-parse --show-toplevel` fails or the active task lives in a non-repo workspace such as `~/.codex/memories`, skip capture and emit `0 records appended: non-repo cwd`.
+- Path-drift rule: append from the verified repo root with `--path .learnings.jsonl`; if the CLI reports a different target path, treat that append as failed, repair the stray write if needed, and reappend correctly before closing.
+- Commit coupling: if this workflow updates `.learnings.jsonl` and a git commit follows in the same turn, include the current-turn `.learnings.jsonl` rows in that next commit by default. Exception: if `git check-ignore -v --no-index .learnings.jsonl` reports `.git/info/exclude`, treat the file as local-only: do not `git add -f`, stage, or commit it unless the user explicitly asks to publish it. If the shared file also holds unrelated fresh rows, stage only the session-owned rows with an index patch rather than leaving all learnings for a follow-up commit.
+
+## Quick Start
+
+```bash
+CODEX_SKILLS_HOME="${CODEX_HOME:-$HOME/.codex}"
+CLAUDE_SKILLS_HOME="${CLAUDE_HOME:-$HOME/.claude}"
+LEARNINGS_SPECS_DIR="$CODEX_SKILLS_HOME/skills/learnings/specs"
+[ -d "$LEARNINGS_SPECS_DIR" ] || LEARNINGS_SPECS_DIR="$CLAUDE_SKILLS_HOME/skills/learnings/specs"
+
+run_learnings_tool() {
+  local subcommand="${1:-}"
+  if [ -z "$subcommand" ]; then
+    echo "usage: run_learnings_tool <datasets|query|recent|recall|codify-candidates|quality-audit|value-report|append> [args...]" >&2
+    return 2
+  fi
+  shift || true
+
+  local mode=""
+  local bin=""
+  local marker=""
+  case "$subcommand" in
+    append|append-learning|append_learning)
+      mode="append"
+      bin="learnings"
+      marker="append_learning.zig"
+      ;;
+    datasets|query|recent|recall|codify-candidates|quality-audit|value-report)
+      mode="learnings"
+      bin="learnings"
+      marker="learnings.zig"
+      ;;
+    *)
+      echo "unknown learnings subcommand: $subcommand" >&2
+      return 2
+      ;;
+  esac
+
+  learnings_repo_root() {
+    git rev-parse --show-toplevel 2>/dev/null
+  }
+
+  run_learnings_append() {
+    local repo_root=""
+    local expected_path=""
+    local output=""
+    local status=0
+    local actual_path=""
+
+    repo_root="$(learnings_repo_root)" || {
+      echo "0 records appended: non-repo cwd" >&2
+      return 3
+    }
+    expected_path="$repo_root/.learnings.jsonl"
+    output="$(
+      cd "$repo_root" &&
+      "$bin" append --path .learnings.jsonl "$@"
+    )"
+    status=$?
+    printf '%s\n' "$output"
+    [ $status -ne 0 ] && return $status
+
+    actual_path="$(printf '%s\n' "$output" | sed -n 's/.* path=//p' | tail -n 1)"
+    if [ -n "$actual_path" ] && [ "$actual_path" != "$expected_path" ]; then
+      echo "append-path-mismatch: expected $expected_path got $actual_path" >&2
+      return 4
+    fi
+  }
+
+  install_learnings_direct() {
+    local repo="${SKILLS_ZIG_REPO:-$HOME/workspace/tk/skills-zig}"
+    if ! command -v zig >/dev/null 2>&1; then
+      echo "zig not found. Install Zig from https://ziglang.org/download/ and retry." >&2
+      return 1
+    fi
+    if [ ! -d "$repo" ]; then
+      echo "skills-zig repo not found at $repo." >&2
+      echo "clone it with: git clone https://github.com/tkersey/skills-zig \"$repo\"" >&2
+      return 1
+    fi
+    if ! (cd "$repo" && zig build -Doptimize=ReleaseSafe); then
+      echo "direct Zig build failed in $repo." >&2
+      return 1
+    fi
+    mkdir -p "$HOME/.local/bin"
+    for direct_bin in learnings append_learning; do
+      if [ ! -x "$repo/zig-out/bin/$direct_bin" ]; then
+        echo "direct Zig build did not produce $repo/zig-out/bin/$direct_bin." >&2
+        return 1
+      fi
+      install -m 0755 "$repo/zig-out/bin/$direct_bin" "$HOME/.local/bin/$direct_bin"
+    done
+  }
+
+  local os="$(uname -s)"
+  if command -v "$bin" >/dev/null 2>&1 && (
+    [ "$mode" != "append" ] && "$bin" --help 2>&1 | grep -q "$marker" ||
+    [ "$mode" = "append" ] && "$bin" append --help 2>&1 | grep -q "$marker"
+  ); then
+    if [ "$mode" = "append" ]; then
+      run_learnings_append "$@"
+    else
+      "$bin" "$subcommand" "$@"
+    fi
+    return
+  fi
+
+  if [ "$os" = "Darwin" ]; then
+    if ! command -v brew >/dev/null 2>&1; then
+      echo "homebrew is required on macOS: https://brew.sh/" >&2
+      return 1
+    fi
+    if ! brew install tkersey/tap/learnings; then
+      echo "brew install tkersey/tap/learnings failed." >&2
+      return 1
+    fi
+  elif ! (
+    command -v "$bin" >/dev/null 2>&1 && (
+      [ "$mode" != "append" ] && "$bin" --help 2>&1 | grep -q "$marker" ||
+      [ "$mode" = "append" ] && "$bin" append --help 2>&1 | grep -q "$marker"
+    )
+  ); then
+    if ! install_learnings_direct; then
+      return 1
+    fi
+  fi
+
+  if command -v "$bin" >/dev/null 2>&1 && (
+    [ "$mode" != "append" ] && "$bin" --help 2>&1 | grep -q "$marker" ||
+    [ "$mode" = "append" ] && "$bin" append --help 2>&1 | grep -q "$marker"
+  ); then
+    if [ "$mode" = "append" ]; then
+      run_learnings_append "$@"
+    else
+      "$bin" "$subcommand" "$@"
+    fi
+    return
+  fi
+  echo "learnings binary missing or incompatible after install attempt: $bin" >&2
+  if [ "$os" = "Darwin" ]; then
+    echo "expected install path: brew install tkersey/tap/learnings" >&2
+  else
+    echo "expected direct path: SKILLS_ZIG_REPO=<skills-zig-path> zig build -Doptimize=ReleaseSafe" >&2
+  fi
+  return 1
+}
+```
+
+## Capture Checkpoints
+
+Capture at least once per coding turn when any of these checkpoints occurs:
+
+1. Validation transition: a signal changes state (`fail->pass`, `pass->fail`, `timeout->stable`).
+2. Strategy pivot: an approach is abandoned, replaced, or simplified.
+3. Footgun discovery: hidden risk, brittle assumption, or recurring trap is observed.
+4. Momentum discovery: a pattern repeatedly accelerates implementation or debugging.
+5. Delivery boundary: immediately before commit/PR/final handoff.
+
+Auto-trigger rule: if none of these checkpoints occurred and nothing decision-shaping emerged, do not append anything.
+
+## Essentialness Test
+
+Before writing a learning, require all three:
+
+1. Decision delta: would this change what you do next time?
+2. Transferability: does it generalize beyond this one exact file/run path?
+3. Counterfactual: if ignored, is there a predictable failure, cost, or missed leverage?
+
+If any answer is no, skip capture (or use `review_later` only when uncertainty itself is decision-shaping).
+
+## Workflow
+
+1. Gather evidence.
+   - Inspect changed surface (`git status -sb`, `git diff --stat`, targeted `git diff`).
+   - Collect executed validation signals and outcomes.
+   - Collect failed attempts only when evidenced by commands, logs, diffs, or test output.
+2. Distill session essence first.
+   - Compress the turn to four lines: objective, inflection, proof, transferable rule.
+   - Keep only lessons that alter future decisions.
+3. Distill candidate learnings.
+   - Convert narrative into rule form (`When X, prefer Y because Z`).
+   - Prefer one essential learning over several procedural notes.
+   - Avoid path-bound/session-bound wording unless the path itself is the lesson.
+4. Assign semantic status.
+   - Use a concise action status in snake_case.
+   - Prefer `do_more` or `do_less` when they fit.
+   - Choose a more precise status when needed (for example `investigate_more`, `codify_now`, `avoid_for_now`).
+5. Run pre-append quality gate.
+   - `learning` contains explicit condition + action (`When/If ... prefer/do ...`).
+   - `evidence` includes at least one concrete anchor (command outcome, commit SHA, run ID, file path, or exact error string).
+   - `application` states what to do on the next similar task.
+   - `status` reflects intent (avoid defaulting to `do_more` when `codify_now`/`investigate_more`/`avoid_for_now` is more accurate).
+   - If working under temp paths (`/tmp`, `/var/folders/...`), either skip or mirror only high-signal lessons into a durable repo `.learnings.jsonl`.
+6. Persist immediately.
+   - Verify the target repo root first with `git rev-parse --show-toplevel`; if that fails, skip capture with `0 records appended: non-repo cwd` unless the user explicitly names another durable target.
+   - Append each accepted learning to `.learnings.jsonl` in that repo root (0 records is valid when nothing qualifies).
+   - Use `learnings append` via `run_learnings_tool append`, which changes into the verified repo root and passes `--path .learnings.jsonl`.
+   - If the append output reports `path=...`, require an exact match with `$repo_root/.learnings.jsonl`; treat any mismatch as a failed append and repair/reappend before finishing.
+   - If a commit will happen after the append, stage the current-turn `.learnings.jsonl` rows into that next commit by default.
+   - If `git check-ignore -v --no-index .learnings.jsonl` reports `.git/info/exclude`, treat the file as local-only, leave it unstaged, and never use `git add -f` to satisfy commit coupling, even if `.learnings.jsonl` is already tracked.
+   - If unrelated rows are present in a shared `.learnings.jsonl`, use a targeted index patch instead of postponing the learnings write.
+7. Report concise highlights in chat.
+   - Summarize the 1-3 highest leverage learnings (or say none).
+   - Reference the write result with one exact proof line (`appended: id=...`, `duplicate-skip: <reason>`, or `0 records appended: <reason>`).
+
+## JSONL Contract
+
+Write one JSON object per line:
+
+```json
+{
+  "id": "lrn-20260207T173422Z-a91f4e2c",
+  "captured_at": "2026-02-07T17:34:22Z",
+  "status": "do_more",
+  "learning": "Boundary parsing eliminated downstream guard duplication.",
+  "evidence": [
+    "uv run pytest tests/parser_test.py::test_rejects_invalid passed after boundary parse refactor"
+  ],
+  "application": "Parse and refine request payloads once at API boundaries.",
+  "tags": [
+    "api",
+    "testing"
+  ],
+  "context": {
+    "repo": "owner/repo",
+    "branch": "main",
+    "paths": [
+      "src/parser.py",
+      "tests/parser_test.py"
+    ]
+  },
+  "related_ids": [
+    "lrn-20260130T120000Z-deadbeef"
+  ],
+  "supersedes_id": "lrn-20260101T090000Z-cafebabe",
+  "source": "skill:learnings",
+  "fingerprint": "a91f4e2c6b5d3f10"
+}
+```
+
+Required keys:
+- `id`
+- `captured_at`
+- `status`
+- `learning`
+- `evidence`
+- `application`
+- `source`
+- `fingerprint`
+
+Optional keys:
+- `context`
+- `tags`
+- `related_ids`
+- `supersedes_id`
+
+## Write Procedure
+
+Use one append call per learning:
+
+```bash
+run_learnings_tool append \
+  --status do_more \
+  --learning "Boundary parsing eliminated downstream guard duplication." \
+  --evidence "uv run pytest tests/parser_test.py::test_rejects_invalid passed after boundary parse refactor" \
+  --application "Parse and refine request payloads once at API boundaries." \
+  --tag api \
+  --tag testing
+```
+
+Call the wrapper from a real repo checkout only; for non-repo tasks such as memory-folder maintenance, default to `0 records appended: non-repo cwd` unless the user explicitly names a target repo/file.
+
+The helper script:
+- Normalizes `status` to snake_case.
+- Defaults `status` to `review_later` when omitted.
+- Enforces strict quality by default (condition+action learning statement, anchored evidence, concrete application, and non-temporary repo path unless explicitly allowed).
+- Refuses append in non-repo cwd instead of guessing a target `.learnings.jsonl`.
+- Runs append from the verified repo root and passes `--path .learnings.jsonl`.
+- Treats reported target-path drift as failure instead of silently accepting the wrong file.
+- Supports explicit escape hatches:
+  - `--quality-mode best_effort` for intentional thin capture.
+  - `--allow-temp-path` when temporary-repo capture is unavoidable.
+- In `best_effort` mode only, backfills missing evidence/application with placeholders.
+- Captures a best-effort repo slug from `remote.origin.url` (or falls back to repo dir name).
+- Captures branch and changed paths from git when available.
+- Computes a fingerprint for duplicate detection.
+- Appends to `.learnings.jsonl` in repo root by default.
+
+## Browsing, Recall, and Codify Loop
+
+Use the miner script both for interactive browsing and for task-start loading once the user prompt is available.
+
+Routing:
+
+- Browse latest learnings: `run_learnings_tool recent --limit 10`
+- Search or rank learnings: `run_learnings_tool query --spec "@$LEARNINGS_SPECS_DIR/top-tags.json"`
+- Search by path concentration: `run_learnings_tool query --spec "@$LEARNINGS_SPECS_DIR/top-paths.json"`
+- Implementation preflight during context gathering: distill the request to a compact topical query first (roughly 4-8 task-defining terms; skip boilerplate, pasted skill blocks, and AGENTS text), then run `run_learnings_tool recall --query "<focused task terms>" --limit 5 --drop-superseded`
+- Refined-scope preflight: rerun `run_learnings_tool recall` once after `parse`, `seq`, or early file reads only if those steps materially narrow the implementation slice; tighten the query rather than replaying the full prompt.
+- If browse intent is ambiguous, start with `recent` before escalating to `query` or `recall`.
+
+CLI:
+
+```bash
+run_learnings_tool datasets
+run_learnings_tool query --spec "@$LEARNINGS_SPECS_DIR/status-rank.json"
+run_learnings_tool query --spec "@$LEARNINGS_SPECS_DIR/top-tags.json"
+run_learnings_tool query --spec "@$LEARNINGS_SPECS_DIR/top-paths.json"
+run_learnings_tool recent --limit 15
+run_learnings_tool recall --query "fix flaky pre-commit hook" --limit 5
+run_learnings_tool codify-candidates --min-count 3 --limit 20
+run_learnings_tool quality-audit --since 2026-02-01 --until 2026-03-05 --format json
+run_learnings_tool value-report --sessions-root "$HOME/.codex/sessions" --since 2026-03-01 --comparator impl_nonrecall --format json
+```
+
+Promotion rule of thumb:
+- If a learning is repeated (theme appears >= 3 times) or status is `codify_now`, promote it into durable docs (for example `codex/AGENTS.md` or a relevant skill doc).
+- After codifying, append a follow-up learning referencing the durable anchor (use `--related-id`/`--supersedes-id` and a `codified` tag).
+
+Runtime bootstrap policy for `learnings` mirrors `cas`: use Zig binaries only (`learnings` with `append` plus `append_learning` compatibility), default to Homebrew install on macOS, and fallback to direct Zig install from `skills-zig` on non-macOS.
+
+## Guardrails
+
+- Ground every learning in observed evidence; do not infer hidden causes as facts.
+- Do not write pure changelog bullets; write decision-shaping rules.
+- Keep `status` action-oriented and semantically meaningful for the situation.
+- Capture essence, not chronology: avoid storing every step if one inflection explains the outcome.
+- Do not let append target resolution depend on ambient non-repo cwd; verify repo root first or skip capture.
+- If a JSON learning row lands in source/docs or any file other than the intended `.learnings.jsonl`, revert it immediately and reappend through the verified repo-root CLI path.
+- If `.learnings.jsonl` matches `.git/info/exclude`, treat it as local-only state even if the file is already tracked: keep capture local, and do not force-add, stage, or commit it unless the user explicitly requests publication.
+- Avoid duplicate entries; the helper script skips exact duplicates by fingerprint.
+  - If you have materially new evidence for an existing learning, append a follow-up record (adjust `status` and/or make the `learning` statement more specific) or re-run with `--allow-duplicate` intentionally.
+  - Do not hand-edit existing JSONL lines in place.
+- If evidence is weak, persist with `review_later` and placeholders, then enrich later.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/tkersey) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

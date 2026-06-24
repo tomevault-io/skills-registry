@@ -1,0 +1,257 @@
+---
+name: ailang
+description: Write AILANG code. ALWAYS run 'ailang prompt' first - it contains the current syntax rules and templates. Use when this capability is needed.
+metadata:
+  author: sunholo-data
+---
+
+# AILANG
+
+## BEFORE YOU WRITE ANY CODE
+
+**Run this command first** - it outputs the current syntax rules and templates:
+
+```bash
+ailang prompt
+```
+
+This is the source of truth for AILANG syntax. Do not guess at syntax.
+
+## Session Start
+
+```bash
+# 1. Check for messages from other agents
+ailang messages list --unread
+
+# 2. Load current syntax (CRITICAL!)
+ailang prompt
+
+# 3. Verify AILANG is installed
+ailang --version
+
+# 4. If debugging, tracing, or toolchain help needed:
+#    ailang devtools-prompt
+```
+
+## Development Workflow
+
+```
+┌──────────────────────────────────────┐
+│ 1. Run: ailang prompt                │
+│    Read the template and examples    │
+└──────────────────────────────────────┘
+                 ↓
+┌──────────────────────────────────────┐
+│ 2. Write code following template     │
+│    module myproject/mymodule         │
+│    export func main() -> () ! {IO}   │
+└──────────────────────────────────────┘
+                 ↓
+┌──────────────────────────────────────┐
+│ 3. Type-check (fast feedback)        │
+│    ailang check file.ail             │
+└──────────────────────────────────────┘
+                 ↓
+┌──────────────────────────────────────┐
+│ 4. Run with capabilities             │
+│    ailang run --caps IO --entry main │
+└──────────────────────────────────────┘
+                 ↓
+        Fix errors, repeat
+```
+
+## CLI Quick Reference
+
+| Command | Purpose |
+|---------|---------|
+| `ailang prompt` | **Load syntax (DO THIS FIRST!)** |
+| `ailang devtools-prompt` | **Full toolchain reference (debugging, tracing, eval, chains, coordinator)** |
+| `ailang check file.ail` | Type-check without running |
+| `ailang run --caps IO --entry main file.ail` | Run program |
+| `ailang repl` | Interactive testing |
+| `ailang docs --list` | **List all stdlib modules** |
+| `ailang docs std/array` | **Show module exports and signatures** |
+| `ailang builtins list --verbose --by-module` | Full stdlib docs with examples |
+| `ailang examples search "query"` | **Find working code examples (v0.6.2+)** |
+| `ailang examples show NAME` | View example with expected output |
+| `ailang search "query"` | Search package registry |
+| `ailang install vendor/name` | Install a package |
+| `ailang pkg-docs vendor/name` | View package AI usage guide |
+
+## Exploring the Standard Library
+
+**The CLI is the source of truth.** Use `ailang docs` for module-level docs and `ailang builtins list --verbose` for all builtins:
+
+```bash
+# List all available stdlib modules
+ailang docs --list
+
+# Show full exports + signatures for a module (PREFER THIS)
+ailang docs std/string
+ailang docs std/json
+ailang docs std/stream
+
+# Full builtins with examples and signatures
+ailang builtins list --verbose --by-module
+
+# Search for specific function
+ailang builtins list --verbose | grep -A 10 "httpGet"
+```
+
+**Key stdlib modules (v0.10.0):**
+| Module | Purpose |
+|--------|---------|
+| `std/ai` | LLM calls via `call(prompt)` |
+| `std/array` | O(1) indexed arrays |
+| `std/bytes` | UTF-8 / base64 operations |
+| `std/clock` | Time and sleep |
+| `std/crypto` | Cryptographic operations |
+| `std/datetime` | Pure date/time manipulation |
+| `std/debug` | Structured tracing and assertions |
+| `std/embedding` | Embedding vectors |
+| `std/env` | Environment variables |
+| `std/fs` | File read/write |
+| `std/io` | Print / stdin |
+| `std/json` | JSON encode/decode |
+| `std/jwt` | JWT parsing and verification |
+| `std/list` | Functional list ops (map, filter, fold) |
+| `std/map` | O(1) key-value maps |
+| `std/math` | Trig, log, rounding |
+| `std/net` | HTTP requests |
+| `std/option` | Optional values |
+| `std/process` | Execute external commands |
+| `std/rand` | Random numbers |
+| `std/result` | Success/failure results |
+| `std/sem` | Semantic frame caching |
+| `std/sharedindex` | Namespace-partitioned similarity indexing |
+| `std/sharedmem` | SharedMem effect wrappers |
+| `std/simhash` | SimHash fingerprinting |
+| `std/stream` | WebSocket / SSE streaming |
+
+**Note:** This skill provides guidance, but `ailang prompt` and `ailang docs` are always more up-to-date.
+
+## Finding Working Examples (v0.6.2+)
+
+**Search 97 working code examples** directly from the CLI:
+
+```bash
+# Search for examples by keyword (flags BEFORE query!)
+ailang examples search "pattern matching"
+ailang examples search --limit 5 "recursion"
+
+# View a specific example with metadata and expected output
+ailang examples show adt_option
+ailang examples show fold_reduce --expected
+
+# List examples by tag
+ailang examples list --tags adt
+ailang examples list --tags recursion
+
+# See all available tags
+ailang examples tags
+```
+
+**Search scoring:** Tag match (1.0) > Description (0.95) > Content (0.80) > Partial (0.60-0.70)
+
+**When to use:**
+- Learning AILANG patterns: `ailang examples list --tags recursion`
+- Checking syntax: `ailang examples search "match"`
+- Finding working code: `ailang examples show NAME --run`
+
+**Flags MUST come before filename:**
+```bash
+ailang run --caps IO --entry main file.ail   # Correct
+ailang run file.ail --caps IO                # WRONG
+```
+
+## Capabilities
+
+| Cap | Purpose | Example Functions |
+|-----|---------|-------------------|
+| `IO` | Console I/O | `println` (prelude), `print` (needs import) |
+| `FS` | File system | `readFile`, `writeFile` |
+| `Net` | HTTP requests | `httpGet`, `httpPost`, `httpRequest` |
+| `Clock` | Time functions | `now`, `sleep` |
+| `AI` | LLM calls | `call(prompt)` |
+| `Rand` | Random numbers | `rand_int`, `rand_float` |
+| `Env` | Environment vars | `getEnv`, `getEnvOr` |
+| `Debug` | Debug logging | `log`, `check` |
+
+## Practical Examples
+
+Offer to create these working examples for users:
+
+| Example | What It Does | Run Command |
+|---------|--------------|-------------|
+| **AI Debate** | AI models debate a topic | `ailang run --caps IO,Env,AI --ai claude-haiku-4-5 --entry main ai_debate.ail` |
+| **Ask AI** | Simple CLI Q&A tool | `ailang run --caps IO,AI --ai claude-haiku-4-5 --entry demo ask_ai.ail` |
+| **File Summarizer** | Summarize files with AI | `ailang run --caps IO,FS,AI --ai gpt5-mini --entry demo summarize_file.ail` |
+| **Game of Life** | Conway's simulation | `ailang run --caps IO --entry main game_of_life.ail` |
+
+### AI Debate Example
+```ailang
+module my_debate
+import std/ai (call)
+import std/ai (call)
+
+export func main() -> () ! {IO, AI} {
+  println("=== AI Debate ===");
+  let optimist = call("Argue FOR AI benefits in 2 sentences");
+  println("Optimist: " ++ optimist);
+  let skeptic = call("Argue AGAINST AI risks in 2 sentences");
+  println("Skeptic: " ++ skeptic)
+}
+```
+
+### File Summarizer Example
+```ailang
+module summarizer
+import std/ai (call)
+import std/fs (readFile)
+
+export func main(path: string) -> () ! {IO, FS, AI} {
+  let content = readFile(path);
+  let summary = call("Summarize in 3 bullets: " ++ content);
+  println(summary)
+}
+```
+
+## Packages & Registry
+
+Install and use community packages from the AILANG registry:
+
+```bash
+# Discover packages
+ailang search "auth"              # Search by keyword
+ailang search --tag gcp           # Browse by tag
+ailang pkg-docs sunholo/auth      # View AI usage guide for a package
+
+# Use a package
+ailang install sunholo/auth@0.1.0
+ailang add --registry sunholo/auth@0.1.0  # Add as dependency
+
+# Publish a package
+ailang init package --name vendor/name    # Create ailang.toml
+ailang publish --dry-run                  # Preview
+ailang publish
+```
+
+## When Stuck
+
+- Run `ailang devtools-prompt` for full toolchain reference (debugging, tracing, eval, chains, coordinator)
+- Run `ailang repl` for interactive testing
+- See [common_patterns.md](resources/common_patterns.md) for patterns
+- See [cli_reference.md](resources/cli_reference.md) for full CLI docs
+- See [editor_support.md](resources/editor_support.md) for VS Code, Vim, Neovim setup
+- Check the [ailang-debug](../ailang-debug/SKILL.md) skill for error fixes
+- **Docs**: https://ailang.sunholo.com/docs/guides/getting-started
+
+## Done? Notify
+
+```bash
+ailang messages send user "Task completed" --from "my-agent" --title "Status"
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sunholo-data) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

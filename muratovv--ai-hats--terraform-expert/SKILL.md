@@ -1,0 +1,37 @@
+---
+name: terraform-expert
+description: Terraform/OpenTofu IaC — state management, DRY modules, safety practices Use when this capability is needed.
+metadata:
+  author: muratovv
+---
+# Terraform/OpenTofu Expert
+
+Maintain robust, DRY, and secure infrastructure as code.
+
+## When to Use
+- Writing or reviewing Terraform/OpenTofu configurations
+- Planning infrastructure changes
+- Managing state and provider versions
+
+## Conventions
+- **State**: `tofu plan` before `apply`. NEVER edit state manually. Pin provider versions.
+- **DRY**: Use modules for common resources (VPC, VM, SG). Use `locals` for naming logic.
+- **Data-Driven**: Fetch existing IDs via `data` sources. Validate inputs with `validation` blocks.
+- **Safety**: `sensitive = true` for secrets. `prevent_destroy = true` for production resources.
+- **Scaling**: Prefer `for_each` over `count` for resource sets.
+
+## Bundled Rules
+
+### IaC Tools
+1. **Documentation First**: Check current official docs before generating any IaC config.
+2. **No Hardcoded Versions**: Verify OS images, ISOs, container tags exist before referencing.
+3. **Environment Awareness**: Consult project environment docs for endpoints, storage, networks.
+
+## Anti-Patterns
+- `tofu apply` without `plan` — always review the plan first
+- Manual state editing — use `tofu state mv/rm` commands
+- Unpinned provider versions — leads to non-reproducible infrastructure
+
+---
+> Source: [muratovv/ai-hats](https://github.com/muratovv/ai-hats) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-22 -->

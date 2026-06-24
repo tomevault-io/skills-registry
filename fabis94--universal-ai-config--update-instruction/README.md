@@ -1,0 +1,13 @@
+# update-instruction
+
+> Skill by [fabis94](https://github.com/fabis94/universal-ai-config) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [fabis94/universal-ai-config](https://github.com/fabis94/universal-ai-config/tree/main/.universal-ai-config/skills/update-instruction)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

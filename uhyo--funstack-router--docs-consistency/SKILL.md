@@ -1,0 +1,20 @@
+---
+name: docs-consistency
+description: Ensure consistency of documentation files. Should be used automatically when you made a significant change to the codebase that may affect the documentation, or when you made a significant change to the documentation itself. Use when this capability is needed.
+metadata:
+  author: uhyo
+---
+
+# Docs Consistency Skill
+
+Documentation files (packages/docs) should be consistent and up-to-date with the codebase. When you make changes to the codebase that affect documented features, or when you update documentation files, ensure that all relevant documentation files reflect the changes accurately.
+
+## Checklist
+
+- [ ] New feature documentation is added. (when a new feature is introduced)
+- [ ] Updated feature documentation reflects code changes. (when existing features are modified)
+- [ ] Index pages don't lack links to new or updated sections.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/uhyo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

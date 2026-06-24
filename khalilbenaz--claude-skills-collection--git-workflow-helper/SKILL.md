@@ -1,0 +1,27 @@
+---
+name: git-workflow-helper
+description: Guide pour les opérations Git complexes, résolution de conflits et bonnes pratiques de workflow. À utiliser quand l'utilisateur est bloqué avec Git ou veut mettre en place un workflow. Se déclenche aussi avec "git merge conflict", "comment revert", "git rebase", "branching strategy", "j'ai cassé mon git", ou toute question Git avancée. Use when this capability is needed.
+metadata:
+  author: khalilbenaz
+---
+
+# Git Workflow Helper
+
+## Workflow
+1. **Diagnostic** : comprendre la situation actuelle (branche, état du repo, ce qui a été fait).
+2. **Solution pas à pas** : commandes exactes à exécuter, dans l'ordre, avec explication de chaque étape.
+3. **Prévention** : comment éviter le problème à l'avenir.
+4. **Si workflow demandé** : propose un modèle adapté (Git Flow, GitHub Flow, Trunk-based) avec :
+   - Schéma des branches
+   - Convention de nommage
+   - Règles de merge/rebase
+   - Template de commit message
+
+## Règles
+- Toujours prévenir avant une commande destructive (force push, reset --hard).
+- Proposer un backup avant toute opération risquée.
+- Adapter la complexité au niveau de l'utilisateur.
+
+---
+> Source: [khalilbenaz/claude-skills-collection](https://github.com/khalilbenaz/claude-skills-collection) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-16 -->

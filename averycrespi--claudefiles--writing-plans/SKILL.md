@@ -1,0 +1,157 @@
+---
+name: writing-plans
+description: Use when you have a spec or design document and need to break it into a detailed implementation plan with bite-sized tasks
+metadata:
+  author: averycrespi
+---
+
+# Writing Plans
+
+## Overview
+
+Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+
+Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
+
+**Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
+
+**Save plans to:** `.plans/YYYY-MM-DD-<feature-name>.md`
+
+## Bite-Sized Task Granularity
+
+**Each step is one action (2-5 minutes):**
+
+- "Write the failing test" - step
+- "Run it to make sure it fails" - step
+- "Implement the minimal code to make the test pass" - step
+- "Run the tests and make sure they pass" - step
+- "Commit" - step
+
+## Plan Document Header
+
+**Every plan MUST start with this header:**
+
+<header>
+# [Feature Name] Implementation Plan
+
+> **For Claude:** REQUIRED SUB-SKILL: Use Skill(executing-plans) to implement this plan task-by-task.
+
+**Goal:** [One sentence describing what this builds]
+
+**Architecture:** [2-3 sentences about approach]
+
+**Tech Stack:** [Key technologies/libraries]
+
+---
+
+</header>
+
+## Task Structure
+
+**Each task must following this structure:**
+
+<task>
+### Task N: [Component Name]
+
+**Files:**
+
+- Create: `exact/path/to/file.py`
+- Modify: `exact/path/to/existing.py:123-145`
+- Test: `tests/exact/path/to/test.py`
+
+**Step 1: Write the failing test**
+
+```python
+def test_specific_behavior():
+    result = function(input)
+    assert result == expected
+```
+
+**Step 2: Run test to verify it fails**
+
+Run: `pytest tests/path/test.py::test_name -v`
+Expected: FAIL with "function not defined"
+
+**Step 3: Write minimal implementation**
+
+```python
+def function(input):
+    return expected
+```
+
+**Step 4: Run test to verify it passes**
+
+Run: `pytest tests/path/test.py::test_name -v`
+Expected: PASS
+
+**Step 5: Commit**
+
+```bash
+git add tests/path/test.py src/path/file.py
+git commit -m "feat: add specific feature"
+```
+
+</task>
+
+## Documentation Task
+
+Before writing tasks, scan the project's documentation files (README.md, CLAUDE.md, docs/, etc.) and identify which sections would become stale after the planned changes. Then:
+
+- **If docs need updating:** Add a final task that updates the specific files and sections affected. This task follows the same structure as any other task — list the files, the sections to change, the new content, and a commit. It gets spec-reviewed and code-reviewed like everything else.
+- **If no docs need updating** (e.g., pure internal refactor): Add a comment at the end of the plan: `<!-- No documentation updates needed -->` so it's a conscious decision, not an oversight.
+
+## Remember
+
+- Exact file paths always — but **always relative to the repo root**, never absolute paths
+- **Never hardcode the repository's absolute path** (e.g., `/Users/alice/project`) anywhere in the plan — plans may be executed in worktrees at different paths
+- Never include `cd /absolute/path` commands — use relative paths or assume the working directory is the repo root
+- Complete code in plan (not "add validation")
+- Exact commands with expected output
+- Reference relevant skills with @ syntax
+- DRY, YAGNI, TDD, frequent commits
+
+## Execution Handoff
+
+After saving the plan:
+
+- Commit the plan document to git
+
+Then ask the user if they want to execute using `AskUserQuestion`:
+
+```javascript
+AskUserQuestion(
+  questions: [{
+    question: "Plan is ready. How would you like to proceed?",
+    header: "Execute",
+    multiSelect: false,
+    options: [
+      { label: "Execute with subagents (Recommended)", description: "Full isolation - best for complex plans or autonomous work" },
+      { label: "Execute quickly", description: "Faster - does implementation and reviews in main context" },
+      { label: "Don't execute", description: "Stop here - execute manually later" }
+    ]
+  }]
+)
+```
+
+**Based on selection:**
+
+**Execute with subagents:**
+
+- **REQUIRED SUB-SKILL:** Use Skill(executing-plans)
+- Dispatches subagents for implementation and reviews
+- Best for complex plans or autonomous work
+
+**Execute quickly:**
+
+- **REQUIRED SUB-SKILL:** Use Skill(executing-plans-quickly)
+- Does implementation and reviews inline in main context
+- Best for simple plans or interactive sessions
+
+**Don't execute:**
+
+- Plan is saved for later execution
+- User can invoke execution skills in any session
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/averycrespi) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

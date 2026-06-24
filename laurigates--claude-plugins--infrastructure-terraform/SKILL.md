@@ -1,0 +1,181 @@
+---
+name: infrastructure-terraform
+description: | Use when this capability is needed.
+metadata:
+  author: laurigates
+---
+
+# Infrastructure Terraform
+
+Expert knowledge for Infrastructure as Code using Terraform with focus on declarative HCL, state management, and resilient infrastructure.
+
+## When to Use
+
+| Scenario | Use this skill | Alternative |
+|----------|---------------|-------------|
+| Write or modify Terraform HCL config | `infrastructure-terraform` | - |
+| Run terraform plan/apply/destroy | `infrastructure-terraform` | - |
+| Debug Terraform state issues | `infrastructure-terraform` | - |
+| Design module structure or backends | `infrastructure-terraform` | - |
+| Check status of a TFC run | `tfc-run-status` | Use run-status for quick TFC status |
+| View TFC plan/apply logs | `tfc-run-logs` | Use run-logs for TFC log output |
+| Analyze TFC plan JSON output | `tfc-plan-json` | Use plan-json for structured plan data |
+| List recent TFC workspace runs | `tfc-list-runs` or `tfc-workspace-runs` | Use list-runs for TFC run history |
+
+## Core Expertise
+
+**Terraform & IaC**
+- **Declarative Infrastructure**: Clean, modular, and reusable HCL code
+- **State Management**: Protecting and managing Terraform state with remote backends
+- **Providers & Modules**: Leveraging community and custom providers/modules
+- **Execution Lifecycle**: Mastering the plan -> review -> apply workflow
+
+## Infrastructure Provisioning Process
+
+1. **Plan First**: Always generate `terraform plan` and review carefully before changes
+2. **Modularize**: Break down infrastructure into reusable and composable modules
+3. **Secure State**: Use remote backends with locking to protect state file
+4. **Parameterize**: Use variables and outputs for flexible and configurable infrastructure
+5. **Destroy with Caution**: Double-check plan before running `terraform destroy`
+
+## Essential Commands
+
+```bash
+# Core workflow
+terraform init                   # Initialize working directory
+terraform plan                   # Generate execution plan
+terraform apply                  # Apply changes
+terraform destroy               # Destroy infrastructure
+
+# State management
+terraform state list            # List all resources
+terraform state show <resource> # Show specific resource
+terraform state pull > backup.tfstate  # Backup state
+
+# Validation and formatting
+terraform validate              # Validate configuration
+terraform fmt -recursive        # Format all files recursively
+terraform fmt path/to/dir       # Format specific directory
+terraform graph | dot -Tsvg > graph.svg  # Dependency graph
+
+# Working with directories (use -chdir to stay in repo root)
+terraform -chdir=gcp fmt        # Format files in gcp/ directory
+terraform -chdir=gcp validate   # Validate gcp/ configuration
+terraform -chdir=gcp plan       # Plan from specific directory
+terraform -chdir=modules/vpc init  # Init module directory
+
+# Debugging
+export TF_LOG=DEBUG             # Enable debug logging
+terraform plan -out=tfplan      # Save plan for review
+terraform show tfplan           # View saved plan
+```
+
+## Best Practices
+
+**Module Structure**
+```hcl
+module "vpc" {
+  source  = "./modules/vpc"
+  version = "1.0.0"
+
+  vpc_cidr = var.vpc_cidr
+  environment = var.environment
+}
+
+output "vpc_id" {
+  value = module.vpc.vpc_id
+}
+```
+
+**Variable Configuration**
+```hcl
+variable "environment" {
+  description = "Environment name"
+  type        = string
+  validation {
+    condition     = contains(["dev", "staging", "prod"], var.environment)
+    error_message = "Environment must be dev, staging, or prod."
+  }
+}
+```
+
+**Remote State Backend**
+```hcl
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state"
+    key            = "prod/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "terraform-locks"
+  }
+}
+```
+
+**Provider Configuration**
+```hcl
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+  required_version = ">= 1.5"
+}
+```
+
+## Key Debugging Techniques
+
+**State Debugging**
+```bash
+# State inspection
+terraform state list
+terraform state show aws_instance.web
+
+# State recovery
+terraform refresh
+terraform plan -refresh-only
+terraform import aws_instance.existing i-1234567890
+```
+
+**Error Resolution**
+```bash
+# Provider errors
+terraform init -upgrade
+terraform init -reconfigure
+
+# Resource conflicts
+terraform taint aws_instance.broken
+terraform apply -target=aws_instance.web
+```
+
+## Agentic Optimizations
+
+| Context | Command |
+|---------|---------|
+| Format directory | `terraform -chdir=path/to/dir fmt` |
+| Check format (CI) | `terraform fmt -check -recursive` |
+| Validate config | `terraform -chdir=path/to/dir validate` |
+| Compact plan | `terraform plan -compact-warnings` |
+| JSON plan output | `terraform plan -out=plan.tfplan && terraform show -json plan.tfplan` |
+| List resources | `terraform state list` |
+
+## Quick Reference
+
+| Flag | Description |
+|------|-------------|
+| `-chdir=DIR` | Change to DIR before running command |
+| `-recursive` | Process directories recursively |
+| `-check` | Check formatting without changes (CI) |
+| `-compact-warnings` | Show warnings in compact form |
+| `-json` | Output in JSON format |
+| `-out=FILE` | Save plan to file |
+| `-target=RESOURCE` | Target specific resource |
+| `-refresh-only` | Only refresh state, no changes |
+
+For detailed debugging patterns, advanced module design, CI/CD integration, and troubleshooting strategies, see REFERENCE.md.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/laurigates) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

@@ -1,0 +1,424 @@
+---
+name: skills-manager
+description: >- Use when this capability is needed.
+metadata:
+  author: EfanWang
+---
+
+# Skills Manager
+
+Manage the **sibling skills** of this directory for one installed agent at a
+time. A single skills-manager instance scans only its own parent directory,
+whether it is installed under a Claude Code, Cursor, or Codex CLI skills root.
+It does not aggregate skills across Claude Code, Cursor, and Codex CLI. Install
+a separate copy in each agent's skills root when the user wants separate
+per-agent inventories.
+
+Supported installation roots include:
+- Claude Code: `~/.claude/skills/` or project `.claude/skills/`
+- Cursor: `~/.cursor/skills/`, project `.cursor/skills/`, or a shared project
+  skills directory the Cursor agent discovers
+- Codex CLI: `~/.codex/skills/`, `$HOME/.agents/skills/`, or project
+  `.agents/skills/`
+
+## Mental model
+
+- Each skill is a sibling directory under `<skills_root>/` containing a
+  `SKILL.md`.
+- `sources.json` (in this directory) records where each remote skill came from.
+  Without a record, a skill is **unclaimed** — we don't know its origin.
+- A skill is one of three types:
+  - **remote** — has a `url` in `sources.json`; can be checked / updated.
+  - **local** — has an empty `{}` record; user marked it as private; skip checks.
+  - **unclaimed** — no record at all; user hasn't told us where it came from.
+
+## When to trigger (and what to run)
+
+### Scenario A: list skills (and show update status)
+
+Triggers: "list my skills", "what skills do I have", "show skills", "which
+skills are outdated", "check for updates".
+
+Interpret "all my skills" / "我的所有 skill" as all sibling skill directories
+under this skills-manager installation's parent directory. Do not expand that
+to every programming tool's skills (Claude Code, Cursor, Codex CLI, etc.)
+unless the user explicitly asks for a cross-tool inventory.
+
+Run full inventory by default. This keeps the list command ergonomic: if the
+first cheap scan finds unclaimed skills, inventory runs the source audit once,
+writes high-confidence claims, and returns the final post-audit table data.
+
+```powershell
+python <skills-manager>/scripts/inventory.py --check-remote --audit-unclaimed
+```
+
+If the user explicitly says "preview only", "just list, don't write", or "no
+audit", use the read-only command instead:
+
+```powershell
+python <skills-manager>/scripts/inventory.py --check-remote
+```
+
+Output shapes:
+- Without `--audit-unclaimed`: JSON array of inventory entries.
+- With `--audit-unclaimed`: JSON object `{ "entries": [...], "audit": {...} }`.
+
+Parse `entries` (or the bare array for read-only output) and render as a
+markdown table with exactly four semantic columns: skill name, type,
+description, and status. Localize the column labels to the user's response
+language instead of forcing Chinese.
+
+Example for a Chinese response:
+
+| Skill名称 | 类型 | 功能描述 | 状态 |
+|---|---|---|---|
+| brainstorming | Git | ... | 🟢 最新 / 🔴 过期 |
+| my-private | 本地 | ... | 🟢 最新 |
+| unknown-thing | 未知 | ... | 🟡 未知 |
+
+Example for an English response:
+
+| Skill name | Type | Description | Status |
+|---|---|---|---|
+| brainstorming | Git | ... | 🟢 Latest / 🔴 Outdated |
+| my-private | Local | ... | 🟢 Latest |
+| unknown-thing | Unknown | ... | 🟡 Unknown |
+
+Output contract: always render all four semantic columns. Do not omit the
+description column to make the answer shorter, even on repeat list requests,
+after source-audit follow-ups, or when every skill has a known source. Use the
+inventory JSON `description` field as the source of the description, but choose
+whether to keep it as written, translate it, or summarize it according to the
+user's response language.
+
+Status indicator contract:
+- The status column must include one of these exact visual indicators:
+  `🟢` for current, `🔴` for outdated, or `🟡` for unknown.
+- These symbols are semantic status markers required by this skill's output
+  contract, not decorative emoji. They intentionally override generic style
+  rules such as "avoid emoji" for this table's status column only.
+- If the runtime, terminal, or user explicitly forbids emoji display, fall back
+  to text labels: `[latest]`, `[outdated]`, `[unknown]` (localized to the
+  user's response language).
+
+Display mappings:
+- Type: `remote` → `Git`; `local` → localized "local"; `unclaimed` →
+  localized "unknown".
+- Status:
+  - `up_to_date` → localized "🟢 latest"
+  - `update_available` → localized "🔴 outdated"
+  - `local` → localized "🟢 latest"
+  - `unclaimed` / `unknown` / `error` / `null` → localized "🟡 unknown"
+
+After the table, summarize in the user's response language, for example in
+Chinese: "共 X 个，最新 Y 个，过期 Z 个，本地 W 个，未知 V 个"; or in English:
+"Total X, latest Y, outdated Z, local W, unknown V." If `audit.ran` is true,
+also summarize how many were auto-claimed, need review, or had no match.
+
+If `audit.ran` is true and any report has `decision: "no_match"`,
+`decision: "needs_review"`, or `decision: "git_remote_unsupported"`, do **not**
+stop after explaining that the script does not run web search. Continue
+immediately into Scenario E's agent web-search handoff in the same turn, unless
+the user explicitly said "just list", "no audit", "preview only", "do not
+search", or "no network". The intended default for list/check requests is:
+
+```text
+inventory --check-remote --audit-unclaimed
+→ auto-claim .git/config / embedded GitHub URL evidence
+→ agent web search for remaining unknown/needs_review skills
+→ sources.py claim-remote / claim-local for clear decisions
+→ final table + concise summary
+```
+
+Do not offer "要处理未识别来源吗？" as the stopping point when unresolved reports
+already include `search_query_hint`; use those hints now.
+
+If the user later asks something like "just show me the ones with updates",
+re-filter the same JSON output — do **not** re-run inventory.
+
+### Scenario B: update skill(s)
+
+Triggers: "update X", "update all outdated", "refresh brainstorming", "pull
+latest".
+
+1. If user said "all outdated", first run inventory `--check-remote` to find
+   them.
+2. List the target skills back to the user for confirmation (destructive
+   action).
+3. For each, run:
+   ```powershell
+   python <skills-manager>/scripts/update_skill.py <name>
+   ```
+4. Each successful update writes a backup under `.backup/<name>-<ts>-<uuid>/`.
+   Report the backup path in your summary so the user can roll back manually.
+
+### Scenario D: install a new skill from GitHub
+
+Triggers: "install X from <github url>", "add this skill: <url>", "下载这个
+skill: <url>", or any time the user hands over a GitHub URL and asks you to set
+it up locally.
+
+**Always go through `install_skill.py`. Do not `git clone` manually** — the
+script bundles cloning, atomic placement, and `sources.json` registration so
+the skill is correctly tracked from day one.
+
+```powershell
+python <skills-manager>/scripts/install_skill.py <github-url> [--name <override>]
+```
+
+Accepted URL forms (the script normalizes all of these):
+- `https://github.com/<owner>/<repo>` (only valid if SKILL.md is at the repo root)
+- `https://github.com/<owner>/<repo>/tree/<branch>/<subpath>`
+- `https://github.com/<owner>/<repo>/blob/<branch>/<subpath>/SKILL.md`
+- `https://raw.githubusercontent.com/<owner>/<repo>/<branch>/<subpath>/SKILL.md`
+- `git@github.com:<owner>/<repo>.git`
+
+Defaults and behavior worth knowing:
+- Skill name defaults to `name` in the upstream SKILL.md frontmatter. Pass
+  `--name` to override (useful when names collide).
+- Branch defaults to the repo's default branch (auto-detected via
+  `ls-remote --symref`). Pass `--branch` if the URL omits it AND the default
+  is wrong, or if the branch name contains `/`.
+- If a skill with the resolved name already exists, the existing copy is moved
+  to `.backup/<name>-<ts>-<uuid>/` before installing. Report this path back to
+  the user.
+- On any failure after the swap, the script tries to roll back. If rollback
+  also fails, it surfaces both error strings — pass them to the user verbatim.
+
+Confirm with the user before installing (destructive if it overwrites an
+existing skill). After success, summarize: name, source repo, installed
+revision, backup path (if any).
+
+### Scenario C: delete a skill
+
+Triggers: "delete X", "remove X", "uninstall X".
+
+This is destructive; do **not** automate it.
+
+1. Confirm with the user: show the absolute path that will be moved.
+2. Backup using PowerShell (same drive, atomic on Windows):
+   ```powershell
+   $ts = Get-Date -Format yyyyMMdd-HHmmss
+   Move-Item <skills_root>/<name> <skills-manager>/.backup/<name>-$ts
+   ```
+3. Remove the sources.json record (only if it had one):
+   ```powershell
+   python <skills-manager>/scripts/sources.py remove <name>
+   ```
+4. Report success and the backup path.
+
+Never edit `sources.json` directly. Always go through `sources.py`.
+
+### Scenario E: audit unclaimed skills (batch)
+
+Triggers: "figure out where all my skills came from", "batch claim unknown
+skills", "auto-detect sources for installed skills", or proactively offer when
+Scenario A surfaces several `unclaimed` rows.
+
+This is an **agent-assisted source tracing** workflow. The scripts collect
+mechanical evidence; the agent decides source identity; `sources.py` registers
+confirmed sources. Open-world source search belongs to the agent because it can
+use page, repository, owner, README, and search-result context to distinguish
+official sources from mirrors, dotfiles, registries, and marketplace copies.
+
+**Default invocation — DO NOT add `--dry-run` unless the user explicitly asks
+for a preview.** Audit is not destructive: it only writes `sources.json` for
+low-risk evidence (`.git/config` or embedded source URL).
+No skill files are touched. Mistakes are reversible (`sources.py remove <name>`
+and re-run). Treat audit like `update_skill.py`, not like `install_skill.py` or
+delete — no confirmation needed beforehand, just report results afterwards.
+
+```powershell
+python <skills-manager>/scripts/audit_unclaimed.py            # collect evidence and auto-claim only trusted/explicit sources
+python <skills-manager>/scripts/audit_unclaimed.py --dry-run  # ONLY when user says "先看看不要动" / "preview only"
+```
+
+If you (agent) reflexively add `--dry-run` "to be safe", you'll surprise the
+user the same way they were surprised before this note was added: the script
+will dutifully report high-similarity trusted hits but write nothing.
+
+Per skill the workflow has three gates:
+
+1. **`.git/config` inspection** (offline). If the skill directory is itself a
+   git checkout pointing at github.com, claim it with the live branch +
+   `rev-parse HEAD`.
+2. **SKILL.md local GitHub URL hint**. A GitHub URL written inside the local
+   skill is treated as explicit evidence, then verified via raw + similarity.
+3. **Agent web search**. For unresolved skills, the script emits a
+   `search_query_hint`; the agent uses its own web search to find and judge the
+   source, then registers confirmed results through `sources.py`.
+
+Confidence rules:
+- Trusted/explicit gates (`.git/config`, local GitHub URL hint):
+  - `high` (both ratios ≥ 0.90) → auto-claim.
+  - `installed_revision` is the upstream HEAD SHA **only when similarity is
+    exactly 1.0**. Otherwise it is recorded as `null`, so inventory reports
+    `update_available` and `update_skill.py` can re-align it.
+- Agent web search:
+  - The script does not run web search itself.
+  - The agent **must** use its available web search capability for unresolved
+    audit reports during Scenario A / Scenario E, unless the user explicitly
+    opted out of search.
+  - Agent search results are evidence for source identity, not automatic claims.
+  - Once source identity is clear, run `sources.py claim-remote` or
+    `sources.py claim-local`.
+
+When `installed_revision` is `null`, both `inventory --check-remote` and
+`check_remote.py` surface the skill as `update_available` so the user/agent
+is prompted to run `update_skill.py`, which overwrites the local copy with
+upstream HEAD and writes the now-correct `installed_revision`. This is the
+self-healing path: claim makes a conservative record, update aligns it.
+
+**Agent web-search handoff.** Every unresolved report carries a
+`search_query_hint`
+when the local description is long enough. This is a mandatory continuation
+step for the agent, not a note to pass back to the user. Search with
+combinations such as:
+
+```text
+<skill-name> SKILL.md GitHub
+"<title or distinctive phrase>" "SKILL.md"
+"<description phrase>" GitHub
+```
+
+When reviewing web search results:
+1. Prefer official or purpose-built source repos, standard `skills/<name>/`
+   paths, and repos whose owner/name clearly match the skill family.
+2. Treat dotfiles, `.agents/skills`, `.claude/skills`, registry, marketplace,
+   mirror, awesome-list, and ordinary product repos as likely copies.
+3. Compare the candidate `SKILL.md` name, description, and opening body against
+   the local skill before registering it.
+4. Once source identity is clear, run `sources.py claim-remote` with the
+   candidate's url/branch/subpath. If multiple candidates still look plausible,
+   ask the user instead of guessing.
+
+When many skills remain unresolved, process them in a compact batch: search the
+strongest query for each skill, record clear matches immediately, and ask the
+user only about ambiguous or user-authored-looking skills. Do not final-answer
+with only "these need web search" when web search is available to the agent.
+
+Output is a JSON `{summary, reports, inventory_after}` payload. Render to the
+user as:
+- **"已自动登记 K 个"** — show each (name → repo+subpath, source: git_dir /
+  embedded_url). These were trusted/explicit matches.
+- **"未识别 M 个"** — before finalizing, use `search_query_hint` with the
+  agent's web search capability. Once you have a source, **agent runs
+  `sources.py claim-remote`**
+  (if from GitHub) or `sources.py claim-local` (if user-authored). Do not re-run
+  audit expecting web search to write records.
+- Then re-render the Scenario A table from `inventory_after` so the user sees
+  the new state in one shot — no need to invoke `inventory.py` separately.
+  (`inventory_after` is `null` when `--dry-run` is used, because sources.json
+  wasn't modified and a fresh inventory would just repeat the pre-audit state.)
+
+See the "Claim wizard" section below for the exact `sources.py claim-remote
+/ claim-local` parameter syntax — it's the single source of truth for those
+commands.
+
+**Important:** the script never auto `claim-local`. If a skill matched no
+upstream, surface it to the user and ask if it's their own work.
+
+## Claim wizard (handling unclaimed skills)
+
+Triggers: "claim unknown skills", "I want to know where my skills came from",
+"set up update tracking for all skills", or proactively offer it when the user
+sees many `unclaimed` rows in scenario A.
+
+For each unclaimed skill, in order:
+
+1. **Read its SKILL.md** (first ~60 lines). Note name + description + style.
+
+2. **Search the web** using the current agent's available web search
+   capability. Start
+   with `"<skill name>" SKILL.md github`, the local title, and any distinctive
+   phrase from the description. Prefer GitHub source pages and official docs
+   over registries, dotfiles, mirrors, and marketplace copies.
+
+3. **Compare**. For top 1–3 candidates, fetch the raw SKILL.md using the
+   current agent's web fetch tool or `curl`, save it to
+   `<skills-manager>/.tmp/<uuid>-candidate.md`, then:
+   ```powershell
+   python <skills-manager>/scripts/similarity.py <skills_root>/<skill>/SKILL.md <skills-manager>/.tmp/<uuid>-candidate.md
+   ```
+
+4. **Decide** based on `confidence`:
+   - `high` → tell the user: "I'm confident this is from `<repo>/<subpath>`. OK
+     to register?"
+   - `mid` → present candidates with ratios, ask user to pick.
+   - `low` → ask: "Is this skill written by you (not from GitHub)? Or do you
+     remember the source URL?"
+
+5. **Register**. Once user confirms:
+   ```powershell
+   # From GitHub
+   python <skills-manager>/scripts/sources.py claim-remote <name> \
+       --url <repo-url> --branch <branch> --subpath <subpath-in-repo>
+
+   # User-authored / private
+   python <skills-manager>/scripts/sources.py claim-local <name>
+   ```
+
+   `claim-remote` fetches upstream SKILL.md and compares it to local before
+   recording `installed_revision`:
+   - byte-equal → records the real HEAD SHA returned by `git ls-remote`
+   - any difference → records `installed_revision = null` and emits a
+     `verify_note` explaining the similarity ratio
+   Pass `--no-resolve --assume-revision <sha>` to skip the verification
+   (offline / scripted scenarios); the caller is then responsible for the
+   honesty of the recorded SHA.
+
+   A `null` revision is **not** an error: it's the honest "I know the source
+   repo but not which commit your local copy corresponds to" state, which
+   inventory surfaces as `update_available` and `update_skill.py` resolves by
+   overwriting local with HEAD.
+
+6. **Common upstreams seen in practice** (use as a hint, not a rule):
+   - `obra/superpowers` — skills under `skills/<name>/` on `main` branch.
+     Includes brainstorming, writing-plans, executing-plans,
+     systematic-debugging, web-access, etc.
+   - `thedotmack/claude-mem` plugin — skills already managed by the plugin
+     mechanism; do **not** claim these as remote (let the plugin manage them).
+   - Cursor official skills live in `skills-cursor/`, not `skills/`, so they
+     never appear in our scans.
+
+## Script contract reference
+
+All scripts live in `scripts/`. All output JSON to stdout. Errors go to stderr
+with non-zero exit codes (2 = bad input, 3 = sources.json corrupted, 4 = remote
+failure, 5 = filesystem failure during swap).
+
+| Script | Purpose |
+|---|---|
+| `inventory.py [--check-remote]` | Scan + classify all sibling skills. |
+| `check_remote.py <name>` | ls-remote a single claimed-remote skill. |
+| `install_skill.py <url> [--name N] [--branch B]` | Clone + atomic install + auto-register. |
+| `update_skill.py <name> [--dry-run]` | Clone + atomic swap. |
+| `audit_unclaimed.py [--dry-run]` | Batch identify unclaimed skills: `.git/` + local GitHub URL hints; unresolved items get web-search hints. |
+| `sources.py list \| remove \| claim-local \| claim-remote` | Mutate sources.json safely. |
+| `similarity.py <local.md> <remote.md>` | difflib-based file similarity for claim wizard. |
+
+## Failure modes worth knowing
+
+- **`sources.json` corrupt** → every script refuses to run. Show the parse
+  error to the user; tell them to fix the file or restore from `.tmp/` backup.
+- **`git ls-remote` fails** (network, private repo, dead URL) → status is shown
+  as `未知` in the user-facing table, with the git stderr available in
+  `check_error`. Don't retry blindly; tell the user when the error matters.
+- **Clone succeeded but SKILL.md not at subpath** → `subpath` in sources.json
+  is wrong. Re-run `sources.py claim-remote` with the correct subpath.
+- **An update leaves the central directory missing** (very rare; likely
+  disk/permission failure during rename) → check `.backup/<name>-<ts>-<uuid>/`
+  and move it back manually.
+
+## What this skill does NOT do
+
+- Does not install non-GitHub sources (GitLab, raw zip URLs, npm, etc.) — only
+  the URL forms listed under Scenario D.
+- Does not manage Cursor's built-in skills (`skills-cursor/`).
+- Does not touch plugin-managed skills (`~/.claude/plugins/cache/...`).
+- Does not detect or auto-merge local edits in Git skills. Updating a Git skill
+  replaces the current directory with the upstream copy after creating a backup.
+
+---
+> Source: [EfanWang/skills-manager](https://github.com/EfanWang/skills-manager) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-17 -->

@@ -1,0 +1,569 @@
+---
+name: conductor
+description: > Use when this capability is needed.
+metadata:
+  author: mikecubed
+---
+
+# Conductor — Composable Code Codex Orchestrator
+
+The conductor is the **single always-loaded entry point** to Composable Code Codex.
+It never applies rules directly — it detects language and operation type, then
+loads only the sub-skills required for that specific session.
+
+---
+
+## 0. IaC Dialect Detection (Pre-Language Gate)
+
+Before running language detection, check whether the target files are
+Infrastructure-as-Code. IaC files bypass the 5-language gate and route
+directly to `iac-check`.
+
+**IaC file indicators**:
+- `.tf`, `.tfvars` → Terraform HCL
+- `.yaml` / `.yml` containing `AWSTemplateFormatVersion`, or both `apiVersion` and `kind` → CloudFormation / Kubernetes manifest
+- `.json` containing `AWSTemplateFormatVersion` → CloudFormation JSON
+
+**Routing rules**:
+1. If IaC indicators are detected AND operation is `security` or `review`:
+   skip language detection entirely → load `iac-check` (and any other checks
+   from the dispatch table for that operation).
+2. If IaC indicators are detected AND operation is `write`:
+   `iac-check` does not apply to write operations — fall through to normal
+   language detection below.
+3. If no IaC indicators are found: proceed to language detection as normal.
+
+---
+
+## 1. Language Detection
+
+Detect language **in this priority order** before loading any check:
+
+1. Explicit user statement (e.g., "this is a Go service")
+2. File extension of the primary file being discussed:
+   - `.ts`, `.tsx` → **typescript**
+   - `.js`, `.mjs`, `.cjs`, `.jsx` → **javascript**
+   - `.py` → **python**
+   - `.go` → **go**
+   - `.rs` → **rust**
+3. Manifest file in repo root: `package.json` → typescript/javascript; `go.mod` → go; `Cargo.toml` → rust; `pyproject.toml` / `setup.py` → python
+4. Import statements / shebang lines in the file
+
+**If language cannot be determined**: Ask the user explicitly.
+Do NOT guess. Do NOT apply the wrong rule set silently.
+
+```
+"I need to detect the language before applying rules. Which language is this code written in?
+Options: TypeScript, JavaScript, Python, Go, Rust"
+```
+
+---
+
+## 2. Operation Type Detection
+
+Identify the operation type from the user's request:
+
+| Signal phrases | Operation |
+|----------------|-----------|
+| "write", "implement", "add function", "create module", "build" | `write` |
+| "review", "check", "audit", "what's wrong", "PR review" | `review` |
+| "refactor", "clean up", "improve", "rename", "extract" | `refactor` |
+| "fix test", "add test", "test coverage", "failing test" | `test` |
+| "security audit", "check for secrets", "vulnerabilities", "IaC review", "Terraform", "CloudFormation", "Kubernetes manifest", "infrastructure security" | `security` |
+| "check dependencies", "update deps", "CVE" | `dependency` |
+| "incident", "on call", "debugging production" | `incident` |
+
+---
+
+## 3. Situation → Check Dispatch Table
+
+Load **only** the listed checks. Never pre-load all checks.
+
+| Situation | Checks to load | Language refs |
+|-----------|---------------|---------------|
+| **write** — new code | `gate-check` + `type-check` + `naming-check` + `session-check` + `purity-check` + `immutability-check` + `result-check` | Yes for gate, type, naming, purity, immut, result |
+| **write** — boundary-touching (modules, adapters, ports, domain logic, composition-root wiring) | `gate-check` + `type-check` + `naming-check` + `session-check` + `purity-check` + `immutability-check` + `result-check` + `arch-check` | Yes for gate, type, naming, purity, immut, result |
+| **review** — PR / code review | `arch-check` + `type-check` + `naming-check` + `size-check` + `dead-check` + `test-check` + `obs-check` + `sec-check` + `iac-check` + `perf-check` + `resilience-check` + `a11y-check` + `docs-check` + `i18n-check` + `session-check` + `purity-check` + `immutability-check` + `result-check` + `context-check` | Yes for type, naming, purity, immut, result |
+| **refactor** — existing code | `gate-check` (gate only) + `arch-check` + `naming-check` + `size-check` + `dead-check` + `purity-check` + `immutability-check` | Yes for naming, purity, immut |
+| **test** — writing/fixing tests | `gate-check` + `test-check` | Yes for gate |
+| **security** — security audit | `sec-check` + `iac-check` | No |
+| **dependency** — dep update | `dep-check` | No |
+| **incident** — production issue | `obs-check` + `sec-check` | No |
+| **new service** — scaffold | `gate-check` + `arch-check` + `sec-check` + `session-check` + `purity-check` + `result-check` + `context-check` | Yes for gate, purity, result |
+| **observability** | `obs-check` | No |
+| **CI / full check** | All checks | Yes for gate, type, naming |
+| **boy scout** (session end) | `size-check` + `dead-check` + `naming-check` | Yes for naming |
+
+**Parallel dispatch (mandatory for review and CI operations)**:
+When dispatching multiple checks, issue **all** Task tool calls in a **single message** —
+do not wait for each to complete before issuing the next. This is mandatory for performance.
+Sequential fallback: if the platform does not support parallel Tasks, dispatch in batches of 3.
+
+**Write-mode `arch-check` activation**: load `arch-check` during `write`
+operations only when the change touches boundary-relevant code — modules,
+adapters, ports, domain logic, or composition-root wiring (i.e., the second
+`write` row above). Trivial pure functions, value-only utilities, and
+isolated edits stay on the lighter `write` path that omits `arch-check`
+to manage token cost.
+
+**To load a check**: Read `skills/{check-name}/SKILL.md`.
+**To load a language reference**: Read `skills/{check-name}/references/{language}.md`.
+
+**Token budget (approximate, GPT-4 tokenizer)**:
+
+| Session type | Components loaded | ~Tokens |
+|---|---|---|
+| Typical — write, TypeScript (no `--fix`) | conductor + gate + type + naming + session + purity + immut + result + 3 TS refs | ~16,000 |
+| Boundary-touching write, TypeScript | adds arch-check to the above | ~17,700 |
+| Minimal — security audit | conductor + sec-check | ~6,800 |
+| Worst-case — CI / full check (no `--fix`) | conductor + all 20 checks + 1 lang ref (largest) | ~39,000 |
+| `--fix` session: add auto-fix-eligibility.md | +1 file on demand | +~1,950 |
+
+> Note: SC-007 (≤1,000) and SC-008 (≤2,000) targets reflect the design goal of a
+> just-in-time progressive-loading model. Current SKILL.md files are comprehensive
+> reference documents; v1.1.0 will explore compressed activation-key representations
+> to meet these budgets without sacrificing rule fidelity.
+
+---
+
+## 4. Test Gate — Mandatory Before Session Close
+
+**This gate CANNOT be bypassed. Apply before any session ends with new code.**
+
+```
+INPUT: Agent has finished implementing the requested change
+
+STEP 1 — TEST-PINNED check:
+  IDENTIFY all new/modified public symbols (use `git diff HEAD` if available)
+  FOR each symbol:
+    GREP test files for an import of the symbol AND a call/construction
+    IF no match found:
+      BLOCK with `TEST-PINNED (BLOCK): No test exercises '{name}' at {file}:{line}`
+      DO NOT mark the session complete
+      Propose: write a test for {name}
+
+STEP 2 — TEST-RED-FIRST check:
+  FOR each new symbol with a test:
+    LOOK FOR a recorded red→green transition in `.codex/history.jsonl`
+    OR confirmation that the user observed the test failing before the
+       implementation existed
+    IF no transition recorded:
+      BLOCK with `TEST-RED-FIRST (BLOCK): Test for '{name}' was never observed failing`
+      Propose: temporarily break the implementation, confirm test fails,
+               revert; record the transition
+
+STEP 3 — Scaffold mode:
+  IF `--scaffold-tests` is active AND TEST-PINNED fires:
+    Generate failing test skeleton per gate-check's Scaffold Workflow
+    Write skeleton to disk; confirm test fails before continuing
+
+ORDER FLEXIBILITY:
+  Tests may be written before, during, or after the implementation. Only the
+  end-of-session state matters: every new symbol has a test that imports and
+  exercises it, every test has a recorded red→green transition.
+```
+
+**Bypass prohibition**: Requests phrased as "skip tests for speed", "just write the code",
+"tests aren't important here", or similar MUST be refused. Cite TEST-PINNED and explain
+the risk: the agent's biggest failure mode is shipping code without a test that would
+catch a broken implementation.
+
+---
+
+## 5. CLI Argument Handling
+
+Parse these arguments from the user's invocation. Defaults are safe.
+
+| Argument | Default | Behaviour |
+|----------|---------|-----------|
+| `path` | repo root | Restrict analysis/edit scope |
+| `--scope <glob>` | repo root | Restrict all operations to matching paths |
+| `--fix` | **off** | Without this: zero file modifications |
+| `--write` | **off** | Without this: no scaffold/write operations |
+| `--history` | **off** | Without this: skip git history analysis |
+| `--deep` | **off** | Without this: standard (faster) scan only |
+| `--diff-only` | **off** | Scope all analysis to `git diff HEAD` changed files only |
+| `--scaffold-tests` | **off** | On TEST-PINNED BLOCK: generate failing test skeleton before stopping (see §5.5) |
+| `--refresh` | **off** | Force re-detection of language/framework/layers; update `.codex/config.json` |
+
+**Safety rules**:
+- Without `--fix`: report only; NEVER modify files
+- Without `--scope` and repo has > 50 tracked files: ask for explicit scope before proceeding
+- Destructive actions (file deletion, history rewrite): require `--fix` AND explicit user confirmation
+- `--deep` without `--fix`: read-only exhaustive scan only
+
+### 5.1 Session Memory — Load on Start
+
+On session start, before language/framework detection:
+
+1. Check for `.codex/config.json` at project root
+2. If present AND `--refresh` flag is NOT set:
+   - Load `language`, `test_framework`, `layer_map`, `active_waivers` from the file
+   - Skip detection steps (use cached values)
+   - If `detected_at` is > 7 days old: note "Config is {N} days old — consider running `/codex --refresh` to re-detect."
+   - Emit: "Loaded cached config (detected {detected_at}). Use `--refresh` to re-detect."
+3. If absent OR `--refresh` is set: run full detection; skip to Step 2 of workflow
+
+### 5.2 Session Memory — Save on End
+
+At session end (after Boy Scout check, before final output):
+
+1. Write `.codex/config.json` with detected values using this schema:
+   ```json
+   {
+     "version": "1",
+     "detected_at": "ISO-8601 timestamp",
+     "language": "<detected>",
+     "test_framework": "<detected>",
+     "coverage_artifact": "<path or null>",
+     "layer_map": { "domain": "<path>", "application": "<path>", "infrastructure": "<path>" },
+     "active_waivers": [],
+     "monorepo_packages": []
+   }
+   ```
+2. If file exists: update in place (preserve keys not being overwritten, do NOT clobber)
+3. Create `.codex/` directory if absent
+
+### 5.3 Violation History — Append on Report Finalization
+
+After generating the violation report:
+
+1. Generate an 8-char hex `session_id`: use first 8 chars of a random hex string
+2. Compute `sprint` as ISO week: `YYYY-Www` (e.g., `2026-W10`)
+3. For each violation in the report: append one JSONL record to `.codex/history.jsonl`:
+   ```json
+   {"session_id":"a3f8c1d2","ts":"ISO-8601","sprint":"2026-W10","rule":"NAME-1","severity":"BLOCK","file":"src/foo.ts","line":42,"operation":"review","fixed":false}
+   ```
+4. Create `.codex/history.jsonl` if absent
+5. Set `"fixed": true` for violations resolved by `--fix` in the same session
+
+**Field definitions**:
+- `session_id`: groups all violations from the same codex invocation
+- `sprint`: ISO week number for trend grouping
+- `operation`: the detected operation type (write/review/refactor/test/security/dependency/incident/CI/boy-scout)
+- `fixed`: whether `--fix` resolved this violation in the current session
+
+### 5.4 `--diff-only` Scope Enforcement
+
+When `--diff-only` is active:
+
+1. Run `git diff HEAD --name-only` immediately after flag parsing
+2. Store result as `DIFF_FILES` list
+3. If working tree is clean (empty result): emit "No changed files to analyze" and exit 0
+4. Pass `DIFF_FILES` to all loaded checks as scope restriction
+5. All checks operate only on files in `DIFF_FILES` — violations for other files are silently excluded
+6. Note: `--diff-only` is overridden by an explicit `path` argument (path wins if both provided)
+
+### 5.5 `--scaffold-tests` Handling
+
+When `--scaffold-tests` is active:
+
+1. Set the flag; pass it to `gate-check` when loading it
+2. Do NOT exit on TEST-PINNED BLOCK before the scaffold step completes
+3. After scaffold skeleton is written to disk: re-evaluate TEST-PINNED gate
+4. TEST-PINNED is provisionally satisfied once skeleton exists; proceed with implementation
+   after user confirms at least one test is failing
+5. Implies `--write` permission for test files only
+
+### 5.6 `--refresh` Handling
+
+When `--refresh` is active:
+
+1. Skip loading `.codex/config.json` even if present
+2. Run full language/framework/layer map detection
+3. Write updated `.codex/config.json` at session end with newly detected values
+
+---
+
+## 6. Rule Precedence — Conflict Resolution
+
+When multiple rules conflict, apply the first applicable precedence and document deferred items:
+
+```
+1. SEC-* (BLOCK) — data exposure; always highest priority
+2. TEST-PINNED, TEST-RED-FIRST (BLOCK) — gate; untested code must not advance
+3. BOUND-1..4 (BLOCK) — structural boundaries
+4. PURE-1 (BLOCK) — purity violations in core (no I/O / clock / RNG / logging)
+5. RESULT-1 (BLOCK in Rust/TS, WARN elsewhere) — typed error discipline
+6. TYPE-1..6 (BLOCK) — type safety; TYPED-1..2 (WARN) — type-driven design
+7. IMMUT-1 (BLOCK) — parameter mutation in core
+8. COMP-1 (WARN default / BLOCK on deep behavioural hierarchies)
+9. SIZE-2, TEST-1, TEST-2, TEST-6, TEST-BEHAVIOR, TEST-NO-MOCK-FOR-PURE, DEAD-1, DEP-1, OBS-1 (BLOCK) — equal; all apply
+10. All WARN rules (PURE-2, IMMUT-2..3, RESULT-2..3, TEST-VACUOUS, NAME-UL, etc.)
+11. All INFO rules (PURE-3, TYPED-2 in Python/Go, etc.)
+```
+
+When a WARN fix would increase the risk of a BLOCK violation: defer the WARN fix and
+document it in the "Next Steps" section with rationale.
+
+---
+
+## 7. Waiver Lifecycle Awareness
+
+Before reporting any violation, check for a matching waiver:
+
+1. Scan for inline `# WAIVER:` blocks in the affected file
+2. Check `waivers.yaml` at project root (if present)
+
+**Waiver states**:
+
+| State | Condition | Action |
+|-------|-----------|--------|
+| Active | `expiry > today` AND scope matches AND rule matches | Show under ⚠️ Waivers, NOT ❌ Violations |
+| Expired | `expiry ≤ today` | Re-raise at original severity under ❌ Violations; show waiver as EXPIRED |
+| Invalid | Missing `expiry` OR missing `owner` OR scope is `**` | Treat as no waiver; violation active at full severity |
+| No waiver | No matching record | Normal violation handling |
+
+### 7.1 Per-Project Severity Overrides
+
+A project may shift the **severity** of paradigm-family rules via a
+`severity_overrides` map in `.codex/config.json`. Overrides differ from
+waivers: a waiver exempts a specific scope; an override changes the rule's
+severity for the entire project.
+
+```json
+{
+  "severity_overrides": {
+    "RESULT-1": "BLOCK",
+    "IMMUT-1": "INFO"
+  }
+}
+```
+
+Constraints (enforced by `plugins/ccc/config/overridable-rules.json` and the
+hook-side `_override_severity` helper):
+
+- **Eligible prefixes only**: `PURE-`, `IMMUT-`, `RESULT-`, `COMP-`, `TYPED-`.
+  Structural rules (`SEC-`, `BOUND-`, `NAME-UL`, `TEST-PINNED`,
+  `TEST-RED-FIRST`, `SIZE-`, etc.) are **not** overridable. Setting one of
+  these in the map is silently ignored.
+- **Valid severities**: `BLOCK`, `WARN`, `INFO`. No `OFF` — to silence a
+  rule, override it to `INFO`.
+- **Fail-open**: a malformed config, an unknown rule, or an invalid severity
+  all fall back to the rule's default severity. The override never escalates
+  beyond what the allowlist permits.
+- **Auto-fix eligibility is unchanged**: overriding a rule's severity does
+  not change whether `--fix` can repair it.
+
+When a finding is emitted at an overridden severity, the violation report
+must mark the change inline:
+`RESULT-1 (BLOCK, overridden from WARN): …`. This keeps the project-specific
+decision visible at review time.
+
+---
+
+## 8. Violation Report Output Schema
+
+**Load `skills/conductor/shared-contracts.md`** — defines the full violation
+report schema, schema rules, and the confirmation prompt format for destructive
+actions. Conductor loads this file at startup.
+
+---
+
+## 9. Boy Scout Check — Session End
+
+At the end of every session that modified files:
+
+1. Run `git diff --stat` on the session scope
+2. Verify: at least one positive change (new test, fix, improvement) exists
+3. Verify: all tests still pass (if a test runner is available)
+4. If diff is net-negative (only deletions, no improvements): flag as Boy Scout failure
+5. Report: "✅ Boy Scout: session diff is net-positive" or "⚠️ Boy Scout: session left code worse — review changes before committing"
+
+---
+
+## 10. Conductor Workflow
+
+```
+START
+  → Detect language
+  → Detect operation type
+  → IF write/refactor: run Test Gate (Step 4 above)
+  → Load required checks (Step 3 table)
+  → For each check: load SKILL.md + language reference if applicable
+  → Check for waivers (Step 7)
+  → Run checks and collect violations
+  → Apply precedence order (Step 6)
+  → Output violation report (Step 8)
+  → IF --fix: apply WARN auto-fixes within scope (Step 11)
+  → Boy Scout check (Step 9)
+END
+```
+
+---
+
+## 11. Auto-Remediation (--fix Mode)
+
+### 11.1 --scope Enforcement
+
+When `--scope` is active, **every** file modification — including `--fix` edits —
+MUST pass this gate before being applied:
+
+```
+FOR each proposed file edit:
+  IF file_path does NOT match --scope glob:
+    SKIP the edit (do NOT apply it)
+    Note in report: "File '{path}' is outside scope '{scope}' — skipped"
+  ELSE:
+    Apply the edit and record in "Actions Taken"
+```
+
+When `--scope` is not provided and the repository has >50 tracked files:
+prompt the user to specify a scope before proceeding with `--fix`.
+
+### 11.2 Confirmation Gate for Destructive Actions
+
+See `skills/conductor/shared-contracts.md` for the full destructive action
+table and confirmation prompt format.
+
+### 11.3 Auto-Fix Eligibility Table
+
+**Load on demand**: Before executing `--fix`, read `skills/conductor/auto-fix-eligibility.md`.
+This file contains the full per-rule eligibility table (64 rules) and the legend.
+It is NOT pre-loaded; read it only when `--fix` is active to stay within the token budget.
+
+### 11.4 --fix Execution Protocol
+
+```
+FOR each violation in the report (ordered by precedence):
+  1. Determine auto-fix eligibility (load `auto-fix-eligibility.md` if not yet loaded)
+  2. IF auto-remediable:
+     a. Verify file is within --scope
+     b. Apply the fix
+     c. Record in "Actions Taken": "{RULE-ID}: {description of change} at {file}:{line}"
+  3. IF requires confirmation (destructive):
+     a. Verify file is within --scope
+     b. Present confirmation prompt (11.2)
+     c. If y: apply; record in "Actions Taken"
+     d. If n: skip; record in "Next Steps"
+  4. IF human required:
+     a. Leave in "Next Steps" with explicit action description
+     b. NEVER apply automatically
+```
+
+When `--fix` is NOT active:
+- "Actions Taken" section MUST read exactly: "None — report-only mode"
+- Zero file modifications regardless of violations found
+
+---
+
+## 12. `--explain` Mode
+
+### 12.1 Explain with full scan (no RULE-ID)
+
+When `--explain` is active (flag present, no RULE-ID argument):
+
+1. Run the full scan normally
+2. After generating the violation report, load `skills/conductor/rule-explanations.md`
+3. For each violation entry: append the matching `## RULE-ID` explanation paragraph
+4. Format: violation entry followed by indented explanation block
+
+### 12.2 Explain single rule (with RULE-ID)
+
+When `--explain RULE-ID` is passed (e.g., `/codex --explain NAME-1`):
+
+1. Skip the full scan entirely
+2. Load `skills/conductor/rule-explanations.md`
+3. Find the `## RULE-ID` section matching the requested rule
+4. Print the section and exit
+
+**If RULE-ID is unknown**: print "Unknown rule ID. Valid IDs: TEST-PINNED, TEST-RED-FIRST, TEST-1–9, TEST-BEHAVIOR, TEST-NO-MOCK-FOR-PURE, TEST-VACUOUS, BOUND-1–4, COMP-1, PURE-1–3, IMMUT-1–3, RESULT-1–3, TYPE-1–6, TYPED-1–2, NAME-1–7, NAME-UL, SIZE-1–6, DEAD-1–5, SEC-1–7, DEP-1–5, OBS-1–5, IAC-1–5, PERF-1–5, RES-1–5, A11Y-1–5, DOCS-1–5, I18N-1–5, SESS-1–3, CTXT-1–3" and exit 1.
+
+**Token cost**: `rule-explanations.md` is loaded on-demand only. It is never loaded during normal scans.
+
+---
+
+## 13. `--history` Trend Report
+
+When `--history` is passed:
+
+### 13.1 Data loading
+
+1. Check for `.codex/history.jsonl` at project root
+2. If absent or empty: emit "No history found. Run `/codex` to start recording violations." and exit 0
+3. Read all JSONL records
+
+### 13.2 Trend table
+
+1. Group records by `sprint` field (ISO week: `YYYY-Www`)
+2. Count violations per rule per sprint
+3. Render trend table:
+
+```
+Sprint    | NAME-1 | TYPE-1 | SEC-1 | ... | Total
+2026-W08  |      5 |      2 |     0 |     |    12
+2026-W09  |      3 |      1 |     0 |     |     8  ↓
+2026-W10  |      4 |      0 |     1 |     |     9  ↑
+```
+
+Show ↑ if total increased from previous sprint, ↓ if decreased.
+Show only rules that appear in the history (skip zero-count columns).
+
+### 13.3 Boy Scout trend
+
+1. Get the last 4 session_ids (by `ts` field, sorted ascending)
+2. Count total violations per session
+3. Compare first session to last session in the 4-session window
+4. Report: "Boy Scout trend (last 4 sessions): net improving (↓N violations)" OR "net degrading (↑N violations)"
+5. If fewer than 4 sessions: report on available data ("based on N sessions")
+
+### 13.4 Exit behavior
+
+After rendering the trend report: exit 0 (skip the full scan).
+Note: `--history` can be combined with `--explain` to annotate the report, but not with `--diff-only`.
+
+---
+
+## 14. Layer Detection
+
+Detect the project's layer layout once per session and cache the result in
+`.codex/config.json` under `layer_map`. Consumed by any skill that needs to
+distinguish core (pure) code from shell (I/O / framework) code — currently
+`arch-check`, in the future `purity-check`, `immutability-check`, `result-check`,
+and `boundary-check`.
+
+**Detection order** (first match wins):
+
+1. **Functional-core convention** — if both `core/` and `shell/` directories
+   exist anywhere in the project tree, use them:
+   ```json
+   "layer_map": {
+     "core":  ["**/core/**"],
+     "shell": ["**/shell/**"]
+   }
+   ```
+   This is the preferred layout for new projects.
+
+2. **Legacy layered layout** — if `core/` is absent, fall back to the historical
+   heuristic. All I/O-adjacent paths collapse into `shell`:
+   ```
+   core    ← domain/, entities/, models/
+   shell   ← application/, app/, usecases/, services/, infra/, infrastructure/,
+            adapters/, db/, api/, controllers/, handlers/
+   ```
+   Pure domain logic should live under one of the core paths only.
+
+3. **Prompt and cache** — if neither layout is detected, ask the user once:
+   ```
+   "I can't auto-detect the layer layout for this project. Where does pure
+   domain logic live (relative to repo root)? Where does I/O / framework
+   code live? I'll cache the answer in .codex/config.json so I don't ask
+   again."
+   ```
+   Cache the user's answers in `.codex/config.json` `layer_map`. Future sessions
+   skip detection.
+
+**When detection runs**: only when a layer-aware skill is being dispatched
+(currently arch-check). Sessions that load only cross-cutting checks (sec, dep,
+obs, iac, perf, etc.) skip this step.
+
+**Manual override**: users can edit `.codex/config.json` `layer_map` directly.
+The `--refresh` flag forces re-detection on the next session.
+
+**Why the layered fallback**: enforcement should catch terrible agent code, not
+police folder names. New repos adopt `core/`/`shell/`; existing repos keep
+working with their idiomatic layout; nothing silently disables coverage.
+
+---
+> Source: [mikecubed/agent-orchestration](https://github.com/mikecubed/agent-orchestration) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-22 -->

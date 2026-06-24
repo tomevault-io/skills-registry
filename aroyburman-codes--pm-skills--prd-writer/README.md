@@ -1,0 +1,13 @@
+# prd-writer
+
+> Skill by [aroyburman-codes](https://github.com/aroyburman-codes/pm-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [aroyburman-codes/pm-skills](https://github.com/aroyburman-codes/pm-skills/tree/main/skills/prd-writer)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

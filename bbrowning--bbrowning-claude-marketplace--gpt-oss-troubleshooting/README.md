@@ -1,0 +1,13 @@
+# gpt-oss-troubleshooting
+
+> Skill by [bbrowning](https://github.com/bbrowning/bbrowning-claude-marketplace) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [bbrowning/bbrowning-claude-marketplace](https://github.com/bbrowning/bbrowning-claude-marketplace/tree/main/bbrowning-claude/skills/gpt-oss-troubleshooting)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

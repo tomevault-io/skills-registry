@@ -1,0 +1,13 @@
+# tasker-codex
+
+> Skill by [amirbrooks](https://github.com/amirbrooks/tasker-docstore-framework) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [amirbrooks/tasker-docstore-framework](https://github.com/amirbrooks/tasker-docstore-framework/tree/main/skills/tasker-codex)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

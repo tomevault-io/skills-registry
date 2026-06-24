@@ -1,0 +1,149 @@
+---
+name: rust-conventions
+description: Rust coding conventions and patterns for auth9-core development. Use when this capability is needed.
+metadata:
+  author: c9r-io
+---
+
+# Rust Conventions (auth9-core)
+
+## Tech Stack
+
+| Component | Library |
+|-----------|---------|
+| Web | axum + Tower middleware |
+| gRPC | tonic |
+| Database | sqlx (compile-time SQL, TiDB) |
+| Async | tokio |
+| Logging | tracing |
+| Cache | redis-rs, NoOpCacheManager (tests) |
+| Testing | mockall, wiremock |
+
+## Code Organization
+
+```
+auth9-core/src/
+├── domain/      # Pure models with validation
+├── service/     # Business logic (depends on repo traits)
+├── repository/  # Data access (mockable traits)
+├── api/         # HTTP handlers (thin)
+├── grpc/        # gRPC handlers (thin)
+└── cache/       # CacheManager + NoOpCacheManager
+```
+
+## Error Handling
+
+```rust
+// ❌ BAD
+let result = db.query().await.ok();
+
+// ✅ GOOD - use Result with context
+let result = db.query()
+    .await
+    .context("Failed to query tenant")?;
+
+// ✅ GOOD - custom error types
+#[derive(thiserror::Error, Debug)]
+pub enum ServiceError {
+    #[error("Tenant not found: {0}")]
+    TenantNotFound(Uuid),
+    #[error("Database error: {0}")]
+    Database(#[from] sqlx::Error),
+}
+```
+
+## Testing - NO EXTERNAL DEPENDENCIES
+
+All tests run fast (~1-2s) with **no Docker**:
+
+| Component | Approach |
+|-----------|----------|
+| Repository | Mock traits with `mockall` |
+| Service | Unit tests with mock repos |
+| gRPC | `NoOpCacheManager` + mocks |
+| External HTTP (OIDC) | `wiremock` HTTP mocking |
+
+### Prohibited
+
+- No testcontainers
+- No real database connections
+- No real Redis connections
+- No faker library
+
+### Repository Mock Pattern
+
+```rust
+#[cfg_attr(test, mockall::automock)]
+#[async_trait]
+pub trait TenantRepository: Send + Sync {
+    async fn create(&self, input: &CreateTenantInput) -> Result<Tenant>;
+    async fn find_by_id(&self, id: StringUuid) -> Result<Option<Tenant>>;
+}
+```
+
+### Service Layer Tests
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::repository::tenant::MockTenantRepository;
+
+    #[tokio::test]
+    async fn test_create_tenant() {
+        let mut mock = MockTenantRepository::new();
+        mock.expect_find_by_slug()
+            .returning(|_| Ok(None));
+        mock.expect_create()
+            .returning(|input| Ok(Tenant { name: input.name.clone(), ..Default::default() }));
+
+        let service = TenantService::new(Arc::new(mock), None);
+        let result = service.create(input).await;
+        assert!(result.is_ok());
+    }
+}
+```
+
+### gRPC Tests
+
+```rust
+use auth9_core::cache::NoOpCacheManager;
+
+#[tokio::test]
+async fn test_exchange_token() {
+    let cache = NoOpCacheManager::new();  // No Redis
+    let service = TokenExchangeService::new(jwt_manager, cache, repos...);
+    // ...
+}
+```
+
+### External HTTP (OIDC) Tests
+
+```rust
+use wiremock::{Mock, ResponseTemplate, MockServer};
+
+#[tokio::test]
+async fn test_oidc_http() {
+    let mock_server = MockServer::start().await;
+    Mock::given(method("GET"))
+        .and(path("/.well-known/openid-configuration"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(json!({
+            "issuer": mock_server.uri()
+        })))
+        .mount(&mock_server).await;
+    // Use mock_server.uri()
+}
+```
+
+## Commands
+
+```bash
+cargo test              # All tests (fast)
+cargo llvm-cov --html   # Coverage report
+cargo clippy            # Lint
+cargo fmt               # Format
+```
+
+---
+> Source: [c9r-io/auth9](https://github.com/c9r-io/auth9) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-16 -->

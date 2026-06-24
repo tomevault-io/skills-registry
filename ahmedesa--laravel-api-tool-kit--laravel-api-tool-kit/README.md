@@ -1,0 +1,13 @@
+# laravel-api-tool-kit
+
+> Skill by [ahmedesa](https://github.com/ahmedesa/laravel-api-tool-kit) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ahmedesa/laravel-api-tool-kit](https://github.com/ahmedesa/laravel-api-tool-kit/tree/main/skills/laravel-api-tool-kit/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

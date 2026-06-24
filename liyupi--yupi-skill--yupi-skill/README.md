@@ -1,0 +1,13 @@
+# yupi-skill
+
+> Skill by [liyupi](https://github.com/liyupi/yupi-skill) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [liyupi/yupi-skill](https://github.com/liyupi/yupi-skill/tree/main/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

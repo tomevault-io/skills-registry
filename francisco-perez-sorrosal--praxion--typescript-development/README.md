@@ -1,0 +1,13 @@
+# typescript-development
+
+> Skill by [francisco-perez-sorrosal](https://github.com/francisco-perez-sorrosal/praxion) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [francisco-perez-sorrosal/praxion](https://github.com/francisco-perez-sorrosal/praxion/tree/main/skills/typescript-development)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

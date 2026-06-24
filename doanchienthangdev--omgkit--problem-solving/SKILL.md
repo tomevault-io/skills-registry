@@ -1,0 +1,108 @@
+---
+name: solving-problems
+description: AI agent applies a 5-phase systematic framework for tackling complex problems when conventional approaches fail. Use when stuck, blocked, or troubleshooting issues. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Solving Problems
+
+## Purpose
+
+Apply a systematic 5-phase framework for complex problems:
+
+- Define problem boundaries clearly before investigating
+- Generate multiple hypotheses before testing any
+- Test hypotheses efficiently with time-boxing
+- Fix root causes, not just symptoms
+- Prevent recurrence with process improvements
+
+## Quick Start
+
+1. **Define** (5-10 min) - Clarify what IS and IS NOT the problem, set success criteria
+2. **Hypothesize** (10-15 min) - Generate 3+ hypotheses BEFORE testing any
+3. **Test** (time-boxed) - Test cheapest hypothesis first, mark confirmed/eliminated
+4. **Solve** - Fix root cause, verify fix, add regression test
+5. **Prevent** - Analyze why it happened, implement preventive measures
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Problem Boundary | Define what IS vs IS NOT the problem | List symptoms, affected scope, working parts |
+| Hypothesis Generation | Create 3+ theories before testing | Include evidence for/against, test cost |
+| Prioritized Testing | Test highest-value hypotheses first | Score = evidence x (1/cost) |
+| Root Cause Fix | Address underlying cause, not symptoms | Verify fix prevents recurrence |
+| Prevention Plan | Stop future occurrences | Code, process, monitoring changes |
+| Escalation Criteria | Know when to ask for help | Time-boxed out, all hypotheses eliminated |
+
+## Common Patterns
+
+```
+# Define Phase
+BOUNDARY DEFINITION
+What IS the problem:
+- Specific error: [error message]
+- Steps to reproduce: [steps]
+- When started: [date/commit]
+
+What is NOT the problem:
+- What still works: [list]
+- Red herrings eliminated: [list]
+
+Success criteria:
+- What does "solved" look like?
+
+# Hypothesize Phase
+H1: [Most likely] - Evidence: ___ - Test cost: Low
+H2: [Second likely] - Evidence: ___ - Test cost: Medium
+H3: [Less likely] - Evidence: ___ - Test cost: High
+
+RULE: Generate hypotheses BEFORE testing any.
+
+# Test Phase
+Test H1: [15 min box]
+  Action: ___
+  Result: CONFIRMED / ELIMINATED / INCONCLUSIVE
+```
+
+```
+# Risk Assessment Matrix
+| Hypothesis | Probability | Impact | Test Effort | Priority |
+|------------|-------------|--------|-------------|----------|
+| H1         | High        | High   | Low         | 1st      |
+| H2         | Medium      | High   | Medium      | 2nd      |
+```
+
+## Use Cases
+
+- Debugging complex bugs when conventional approaches fail
+- Troubleshooting production incidents with unknown root causes
+- Analyzing intermittent failures or race conditions
+- Investigating performance regressions
+- Resolving integration issues between systems
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Generate multiple hypotheses before testing | Testing first idea that comes to mind |
+| Test cheapest hypothesis first when evidence equal | Spending 4 hours on 1 hypothesis |
+| Time-box each phase | Rabbit holes without progress |
+| Document failed approaches (valuable data) | Discarding hypotheses without testing |
+| Verify root cause, not just symptoms | Fixing symptoms without understanding cause |
+| Escalate when time-boxed out | Hero-coding beyond time limits |
+| Add regression tests for every fix | Skipping prevention phase |
+
+## Related Skills
+
+See also these related skill documents for complementary techniques:
+
+- `debugging-systematically` - Four-phase debugging framework
+- `tracing-root-causes` - Deep investigation techniques
+- `thinking-sequentially` - Structure reasoning as numbered thoughts
+- `verifying-before-completion` - Ensure fix is complete
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

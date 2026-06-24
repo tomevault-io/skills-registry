@@ -1,0 +1,13 @@
+# pygraphistry
+
+> Skill by [graphistry](https://github.com/graphistry/pygraphistry) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [graphistry/pygraphistry](https://github.com/graphistry/pygraphistry/tree/main/agents/skills/test-amplification/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

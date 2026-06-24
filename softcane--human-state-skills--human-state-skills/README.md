@@ -1,0 +1,13 @@
+# human-state-skills
+
+> Skill by [softcane](https://github.com/softcane/human-state-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [softcane/human-state-skills](https://github.com/softcane/human-state-skills/tree/main/.agents/skills/reality-check-mode/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

@@ -1,0 +1,13 @@
+# plugin-release
+
+> Skill by [madebynoam](https://github.com/madebynoam/canvai) — distributed by [TomeVault](https://tomevault.io/claim/madebynoam)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [madebynoam/canvai](https://github.com/madebynoam/canvai/tree/main/.claude/skills/plugin-release)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/madebynoam) to manage distribution.

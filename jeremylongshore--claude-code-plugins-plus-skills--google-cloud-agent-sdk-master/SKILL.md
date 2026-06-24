@@ -1,0 +1,53 @@
+---
+name: google-cloud-agent-sdk-master
+description: | Use when this capability is needed.
+metadata:
+  author: jeremylongshore
+---
+# Google Cloud Agent SDK Master
+
+Master Google’s Agent Development Kit (ADK) patterns for building and deploying production-grade agents with clear tool contracts, validation, and operational guardrails.
+
+## Overview
+
+Use this skill to quickly answer “how do I do X with Google ADK?” and to produce a safe, production-oriented plan (structure, patterns, deployment, verification) rather than ad-hoc snippets.
+
+## Examples
+
+**Example: Pick the right ADK pattern**
+- Request: “Should this be a single agent or a multi-agent orchestrator?”
+- Output: an architecture recommendation with tradeoffs, plus a minimal scaffold plan.
+
+## Prerequisites
+
+- The target environment (local-only vs Vertex AI Agent Engine)
+- The agent’s core job, expected inputs/outputs, and required tools
+- Any constraints (latency, cost, compliance/security)
+
+## Instructions
+
+1. Clarify requirements and choose an ADK architecture (single vs multi-agent; orchestration pattern).
+2. Define tool interfaces (inputs, outputs, and error contracts) and how secrets are managed.
+3. Provide an implementation plan with a minimal scaffold and incremental milestones.
+4. Add validation: smoke prompts, regression tests, and deployment verification steps.
+
+## Output
+
+- A recommended ADK architecture and scaffold layout
+- A checklist of commands to validate locally and in CI
+- Optional: deployment steps and post-deploy health checks
+
+## Error Handling
+
+- If documentation conflicts, prefer the latest canonical standards in `000-docs/6767-*`.
+- If an API feature is unavailable in a region/version, propose a compatible alternative.
+
+## Resources
+
+- Full detailed guide (kept for reference): `${CLAUDE_SKILL_DIR}/references/SKILL.full.md`
+- ADK / Agent Engine docs: https://cloud.google.com/vertex-ai/docs/agent-engine
+- Canonical repo standards: `000-docs/6767-a-SPEC-DR-STND-claude-code-plugins-standard.md`
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/jeremylongshore) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

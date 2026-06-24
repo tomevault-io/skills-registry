@@ -1,0 +1,71 @@
+---
+name: start-task
+description: Start a new development task for PocketPal AI from a GitHub issue or description. Creates worktree, analyzes requirements, routes to planner. Use when this capability is needed.
+metadata:
+  author: a-ghorbani
+---
+
+# Start Task Workflow
+
+You are starting a new development task for PocketPal AI.
+
+## Input
+Task: $ARGUMENTS
+
+## Determine Input Type
+
+Check if the input is:
+1. **GitHub Issue**: Starts with `#` followed by a number (e.g., `#123`, `#456`)
+2. **Description**: Any other text (e.g., "Add dark mode toggle")
+
+## For GitHub Issue (e.g., #123)
+
+First, fetch the issue details:
+
+```bash
+gh issue view [number] --repo pocketpal-ai/pocketpal-ai --json title,body,labels,assignees
+```
+
+Then use the `pocketpal-orchestrator` agent with the issue context:
+
+```
+Use pocketpal-orchestrator to analyze GitHub issue #[number]
+
+Issue Title: [title from gh]
+Issue Body: [body from gh]
+Labels: [labels from gh]
+
+Repository: ./repos/pocketpal-ai
+```
+
+## For Description
+
+Use the `pocketpal-orchestrator` agent directly:
+
+```
+Use pocketpal-orchestrator: $ARGUMENTS
+
+Repository: ./repos/pocketpal-ai
+```
+
+## What Happens Next
+
+The orchestrator will:
+1. Generate a task ID (TASK-YYYYMMDD-HHMM)
+2. Create a worktree at `worktrees/TASK-xxx`
+3. Create a feature branch
+4. Copy secrets/env files
+5. Classify complexity (standard/complex)
+6. Route to planner with worktree context
+
+After the planner creates a story file, the story critic reviews it automatically. Implementation proceeds if the critic approves (LGTM). Human is only involved if blockers persist after revision.
+
+## Workflow
+
+```
+/start-task → orchestrator → planner → critic (review-revise) → implementer → tester → reviewer → PR
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/a-ghorbani) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->

@@ -1,0 +1,13 @@
+# dspy-output-refinement-constraints
+
+> Skill by [omidzamani](https://github.com/omidzamani/dspy-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [omidzamani/dspy-skills](https://github.com/omidzamani/dspy-skills/tree/main/skills/dspy-output-refinement-constraints)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

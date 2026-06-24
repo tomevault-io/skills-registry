@@ -1,0 +1,31 @@
+---
+name: structured-logging-and-observability
+description: Use this skill when building production services, pipelines, or automation that needs to be debugged, monitored, or audited. Add structured logs, metrics, and health checks before shipping any service.
+metadata:
+  author: aiming-lab
+---
+
+# Structured Logging and Observability
+
+**Log levels:**
+- `DEBUG`: detailed diagnostic (off in production)
+- `INFO`: normal operation milestones
+- `WARNING`: recoverable unexpected state
+- `ERROR`: operation failed, action needed
+
+**Structured logs (JSON) over free-form text:**
+```python
+import structlog
+log = structlog.get_logger()
+log.info("request_complete", method="POST", path="/api/data", status=200, latency_ms=42)
+```
+
+**Metrics to expose:** request rate, error rate, latency (p50/p95/p99), queue depth.
+
+**Health check endpoint:** `/health` returning `{"status": "ok"}` — required for load balancers.
+
+**Anti-pattern:** Logging only on error; you can't diagnose what you didn't observe.
+
+---
+> Source: [aiming-lab/MetaClaw](https://github.com/aiming-lab/MetaClaw) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-18 -->

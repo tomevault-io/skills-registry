@@ -1,0 +1,13 @@
+# debugging-ipc
+
+> Skill by [eretica](https://github.com/eretica/github-gh-reminder) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [eretica/github-gh-reminder](https://github.com/eretica/github-gh-reminder/tree/main/.claude/skills/debugging-ipc)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

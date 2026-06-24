@@ -1,0 +1,43 @@
+---
+name: get-github-advisories
+description: Query the GitHub Advisory Database for vulnerabilities affecting a package in a specific ecosystem, optionally narrowed by version and severity. Use when this capability is needed.
+metadata:
+  author: sasky80
+---
+
+# Get GitHub Advisories
+
+## Platform Note
+
+- Clean-install path: use the Go command from `.github/tools/skills-go`.
+
+## Authentication
+
+Set `GH_SEC_PAT` to a GitHub Personal Access Token.
+
+- Fine-grained PATs work and do not require extra permissions for this endpoint.
+- Public unauthenticated calls are possible, but this skill intentionally requires `GH_SEC_PAT` to avoid stricter anonymous rate limits.
+
+## Arguments
+
+| # | Name | Required | Description |
+|---|------|----------|-------------|
+| 1 | ecosystem | Yes | Package ecosystem (`npm`, `pip`, `maven`, `nuget`, `go`, `rust`, etc.) |
+| 2 | package | Yes | Package name in the selected ecosystem |
+| 3 | version | No | Package version to check (`affects=package@version`) |
+| 4 | severity | No | Advisory severity filter (`low`, `medium`, `high`, `critical`, `unknown`) |
+| 5 | per_page | No | Max advisories to return (1..100, default: 30) |
+
+## Examples
+
+```bash
+go run ./.github/tools/skills-go/cmd/skills-go get-github-advisories npm lodash 4.17.20 high 20
+```
+
+## Output
+
+Returns a JSON array of advisory objects from `https://api.github.com/advisories`, including fields like `ghsa_id`, `cve_id`, `severity`, `summary`, and `vulnerabilities`.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sasky80) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->

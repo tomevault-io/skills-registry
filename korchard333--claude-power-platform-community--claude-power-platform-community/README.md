@@ -1,0 +1,13 @@
+# claude-power-platform-community
+
+> Skill by [korchard333](https://github.com/korchard333/claude-power-platform-community) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [korchard333/claude-power-platform-community](https://github.com/korchard333/claude-power-platform-community/tree/main/.claude/skills/integration-patterns/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

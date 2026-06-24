@@ -1,0 +1,65 @@
+---
+name: vulnerability-validation
+description: Validate security findings for exploitability, reachability, and real-world impact using Bug Hunter-native findings artifacts. Use after security scans, before patch generation, or whenever the user wants confirmation that a suspected vulnerability is actually exploitable. Use when this capability is needed.
+metadata:
+  author: codexstar69
+---
+
+# Vulnerability Validation
+
+This is a bundled local Bug Hunter companion skill. It strengthens the security-specific parts of the Skeptic/Referee process.
+
+## Purpose
+
+Take suspected or confirmed security findings and answer:
+- Is the vulnerable path reachable?
+- Can an attacker control the input?
+- Are there existing mitigations?
+- How exploitable is it really?
+- What is the CVSS / PoC / impact level?
+
+## Inputs
+
+Prefer Bug Hunter-native artifacts:
+- `.bug-hunter/findings.json`
+- `.bug-hunter/threat-model.md`
+- `.bug-hunter/security-config.json`
+- `.bug-hunter/dep-findings.json` when dependency issues are involved
+
+## Workflow
+
+1. Read the findings and isolate the security ones.
+2. Trace reachability:
+   - EXTERNAL
+   - AUTHENTICATED
+   - INTERNAL
+   - UNREACHABLE
+3. Trace exploitability:
+   - EASY
+   - MEDIUM
+   - HARD
+   - NOT_EXPLOITABLE
+4. Check for mitigations already present in code, framework behavior, or deployment assumptions.
+5. For confirmed HIGH/CRITICAL security bugs, generate:
+   - exploitation path
+   - benign proof of concept
+   - CVSS vector + score
+6. Feed the result back into Bug Hunter-native verdicting.
+
+## Outputs
+
+When used as a companion to the main pipeline, keep outputs compatible with:
+- `.bug-hunter/referee.json`
+- `.bug-hunter/report.md`
+
+If a separate validation artifact is helpful for the run, place it under `.bug-hunter/validated-findings.json`.
+
+## Important constraints
+
+- This skill validates findings; it does not replace the normal fix pipeline.
+- Keep outputs portable and self-contained under `.bug-hunter/`.
+- Prefer explicit reasoning for false positives so the user can trust dismissals.
+
+---
+> Source: [codexstar69/bug-hunter](https://github.com/codexstar69/bug-hunter) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-19 -->

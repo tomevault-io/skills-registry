@@ -1,0 +1,52 @@
+---
+name: commit
+description: Stage meaningful diffs and create commits with WHY-focused messages. Use when agent needs to commit code changes. Use when this capability is needed.
+metadata:
+  author: motoki317
+---
+
+# Git Commit
+
+## Context
+
+!`git status --short`
+!`git diff --stat`
+!`git diff --cached --stat`
+!`git log --oneline -10`
+!`git branch --show-current`
+
+## Conventional Commits
+
+```
+<type>[scope]: <imperative description, < 50 chars>
+
+[body: explain WHY, not WHAT]
+
+[footer]
+```
+
+**Types**: `feat:` (MINOR) | `fix:` (PATCH) | `refactor:` | `perf:` | `test:` | `docs:` | `style:` | `build:` | `ci:` | `chore:`
+**Breaking Changes**: Append `!` or add `BREAKING CHANGE:` footer
+
+## Workflow
+
+1. **Analyze** — Review diffs; ensure tests pass and warnings are resolved
+2. **Group** — One commit per logical unit; separate structural (refactor) from behavioral (feat/fix) changes; use `git add -p` for partial staging
+3. **Write** — Imperative description + WHY in body (code=HOW, tests=WHAT, commit=WHY, comments=WHY NOT)
+4. **Commit**
+
+## Example
+
+```
+feat(auth): add OAuth2 support for GitHub login
+
+Users requested GitHub authentication to avoid creating another
+account. OAuth2 chosen over OAuth1 for simpler flow and better
+security with short-lived tokens.
+
+Closes #142
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/motoki317) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

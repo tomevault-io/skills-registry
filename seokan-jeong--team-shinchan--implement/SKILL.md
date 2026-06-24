@@ -1,0 +1,93 @@
+---
+name: team-shinchanimplement
+description: Use when you need quick code implementation for features, bug fixes, or utilities.
+metadata:
+  author: seokan-jeong
+---
+
+# EXECUTE IMMEDIATELY
+
+## Step 1: Validate Input
+
+```
+If args is empty or only whitespace:
+  Ask user: "What would you like me to implement?"
+  STOP and wait for user response
+
+If args length > 2000 characters:
+  Truncate to 2000 characters
+  Warn user: "Request was truncated to 2000 characters"
+```
+
+## Step 2: Domain Detection & Routing
+
+Read `${CLAUDE_PLUGIN_ROOT}/agents/_shared/domain-router.json` to determine the target agent.
+
+**Detection logic** (apply in order):
+1. Extract file extensions from args (e.g., "fix Login.tsx" → `.tsx` → frontend)
+2. Check args text against domain keywords in domain-router.json
+3. Check for path patterns (e.g., ".github/workflows/" → devops)
+4. Check for known filenames (e.g., "Dockerfile" → devops)
+
+**Routing decision:**
+- Frontend match → `subagent_type="team-shinchan:aichan"`
+- Backend match → `subagent_type="team-shinchan:bunta"`
+- DevOps match → `subagent_type="team-shinchan:masao"`
+- No match → `subagent_type="team-shinchan:bo"` (fallback)
+
+## Step 3: Execute Task
+
+**Do not read further. Execute this Task NOW:**
+
+```typescript
+Task(
+  subagent_type="{detected_agent from Step 2}",
+  model="sonnet",
+  prompt=`/team-shinchan:implement has been invoked.
+
+## Implementation Request
+
+Handle coding tasks including:
+
+| Area | Capabilities |
+|------|-------------|
+| Feature Implementation | New features, functions, classes |
+| Bug Fixes | Debugging, error correction |
+| Code Modification | Refactoring, updates, changes |
+| Utilities | Helper functions, utilities |
+| Tests | Unit tests, integration tests |
+
+## Implementation Requirements
+
+- Read existing code first to understand patterns
+- Follow project conventions
+- Write clean, maintainable code
+- Handle errors gracefully
+- Keep functions small and focused
+- Add comments only for complex logic
+
+## Post-Implementation Verification
+
+After writing code:
+1. Run existing tests if available (detect test framework from package.json/config)
+2. If tests fail, fix the issues before reporting completion
+3. If no tests exist, verify the code compiles/loads without errors
+
+## Output Format
+
+After implementation:
+- Summary of changes made
+- Files modified with line references
+- Test results (pass/fail/skipped)
+- Any follow-up recommendations
+
+User request: ${args || '(Please describe what to implement)'}
+`
+)
+```
+
+**STOP HERE. The above Task handles everything.**
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/seokan-jeong) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-12 -->

@@ -1,0 +1,81 @@
+---
+name: nils-cli-deliver-new-cli-crate
+description: Plan and implement new CLI crates by following repository standards for parity, JSON contracts, and publish readiness. Use when this capability is needed.
+metadata:
+  author: graysurf
+---
+
+# Nils CLI Deliver New CLI Crate
+
+## Contract
+
+Prereqs:
+
+- Run inside the `nils-cli` git work tree.
+- `agent-docs`, `bash`, `git`, and `python3` available on `PATH`.
+- The following policy docs exist:
+  - `docs/runbooks/new-cli-crate-development-standard.md`
+  - `docs/specs/cli-service-json-contract-guideline-v1.md`
+
+Inputs:
+
+- User request to create, port, or redesign a CLI crate.
+- Optional:
+  - source CLI/script reference (for parity work),
+  - target crate/package/bin naming,
+  - whether the crate is publishable or internal-only.
+
+Outputs:
+
+- A standards-aligned plan and/or implementation for the target CLI crate.
+- Required policy checks captured in the response:
+  - human-readable output contract,
+  - service-consumable JSON contract,
+  - publish-readiness requirements.
+- Validation evidence (commands run and pass/fail status).
+
+Exit codes:
+
+- `0`: success
+- `1`: failure
+- `2`: usage error
+
+Failure modes:
+
+- Required policy documents are missing.
+- `agent-docs resolve --context project-dev --strict` fails.
+- JSON contract or parity requirements are underspecified and cannot be inferred.
+- Required repository checks fail.
+
+## Scripts (only entrypoints)
+
+- `<PROJECT_ROOT>/.agents/skills/nils-cli-deliver-new-cli-crate/scripts/create-cli-crate.sh`
+
+## Workflow
+
+1. Run preflight policy resolution:
+   - `agent-docs resolve --context startup --strict --format checklist`
+   - `agent-docs resolve --context project-dev --strict --format checklist`
+2. Read and apply canonical standards:
+   - `docs/runbooks/new-cli-crate-development-standard.md`
+   - `docs/specs/cli-service-json-contract-guideline-v1.md`
+3. If planning is needed first, produce a rigorous plan under `docs/plans/*-plan.md` before code changes.
+4. During implementation, enforce these gates:
+   - human-readable output remains clear and stable,
+   - JSON mode is explicit, versioned, and machine-consumable,
+   - JSON error envelope is structured (`code`, `message`, optional `details`),
+   - no sensitive data appears in JSON output.
+5. Apply crate-level publishability rules:
+   - publishable crates follow workspace metadata conventions and release order checks,
+   - internal-only crates explicitly set/document `publish = false`.
+6. Validate before delivery:
+   - `./.agents/skills/nils-cli-verify-required-checks/scripts/nils-cli-verify-required-checks.sh`
+   - if publishable: `scripts/publish-crates.sh --dry-run --crate <crate-package-name>`
+7. In the final response, include:
+   - what was changed,
+   - policy gates satisfied,
+   - any unresolved risks.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/graysurf) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->

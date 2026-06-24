@@ -1,0 +1,49 @@
+---
+name: glab-attestation
+description: Work with GitLab attestations for software supply chain security including artifact verification and provenance. Use when verifying software artifacts, managing attestations, or working with supply chain security. Triggers on attestation, verify artifact, provenance, supply chain security. Use when this capability is needed.
+metadata:
+  author: vince-winkintel
+---
+
+# glab attestation
+
+## Overview
+
+```
+
+  Manage software attestations. (EXPERIMENTAL)                                                                          
+         
+  USAGE  
+         
+    glab attestation <command> [command] [--flags]                                    
+            
+  EXAMPLES  
+            
+    # Verify attestation for the filename.txt file in the gitlab-org/gitlab project.  
+    $ glab attestation verify gitlab-org/gitlab filename.txt                          
+                                                                                      
+    # Verify attestation for the filename.txt file in the project with ID 123.        
+    $ glab attestation verify 123 filename.txt                                        
+            
+  COMMANDS  
+            
+    verify <project_id> <artifact_path>  Verify the provenance of a specific artifact or file. (EXPERIMENTAL)
+         
+  FLAGS  
+         
+    -h --help                            Show help for this command.
+```
+
+## Quick start
+
+```bash
+glab attestation --help
+```
+
+## Subcommands
+
+See [references/commands.md](references/commands.md) for full `--help` output.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/vince-winkintel) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->

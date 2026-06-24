@@ -1,0 +1,173 @@
+---
+name: building-react-apps
+description: Builds production React applications with hooks, TypeScript, state management, and performance optimization. Use when creating React SPAs, component systems, or interactive UIs.
+metadata:
+  author: doanchienthangdev
+---
+
+# React
+
+## Quick Start
+
+```tsx
+import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <button onClick={() => setCount(c => c + 1)}>
+      Count: {count}
+    </button>
+  );
+}
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Hooks | useState, useEffect, custom hooks | [HOOKS.md](HOOKS.md) |
+| TypeScript | Props, state, event typing | [TYPESCRIPT.md](TYPESCRIPT.md) |
+| State | Zustand, Context, useReducer | [STATE.md](STATE.md) |
+| Forms | React Hook Form, Zod validation | [FORMS.md](FORMS.md) |
+| Testing | Vitest, Testing Library | [TESTING.md](TESTING.md) |
+| Performance | memo, useMemo, useCallback, Suspense | [PERFORMANCE.md](PERFORMANCE.md) |
+
+## Common Patterns
+
+### Typed Component with Props
+
+```tsx
+interface UserCardProps {
+  user: { id: string; name: string; email: string };
+  onEdit: (user: UserCardProps['user']) => void;
+  onDelete: (id: string) => void;
+}
+
+function UserCard({ user, onEdit, onDelete }: UserCardProps) {
+  return (
+    <div className="user-card">
+      <h3>{user.name}</h3>
+      <p>{user.email}</p>
+      <button onClick={() => onEdit(user)}>Edit</button>
+      <button onClick={() => onDelete(user.id)}>Delete</button>
+    </div>
+  );
+}
+```
+
+### Custom Hook for Data Fetching
+
+```tsx
+function useFetch<T>(url: string) {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchData() {
+      try {
+        const res = await fetch(url);
+        const json = await res.json();
+        if (!cancelled) setData(json);
+      } catch (e) {
+        if (!cancelled) setError(e as Error);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    fetchData();
+    return () => { cancelled = true; };
+  }, [url]);
+
+  return { data, loading, error };
+}
+```
+
+### Form with Validation
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+function LoginForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit = (data: z.infer<typeof schema>) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register('email')} />
+      {errors.email && <span>{errors.email.message}</span>}
+      <input {...register('password')} type="password" />
+      {errors.password && <span>{errors.password.message}</span>}
+      <button type="submit">Login</button>
+    </form>
+  );
+}
+```
+
+## Workflows
+
+### Component Development
+
+1. Define props interface with TypeScript
+2. Create component with hooks
+3. Extract reusable logic to custom hooks
+4. Add error boundaries for fault isolation
+5. Write tests with Testing Library
+
+### State Management Decision
+
+```
+Local state only       -> useState
+Complex local state    -> useReducer
+Shared across tree     -> Context + useReducer
+App-wide state         -> Zustand/Redux
+Server state           -> TanStack Query
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use functional components | Class components |
+| Extract custom hooks | Duplicating effect logic |
+| Memoize expensive computations | Premature optimization |
+| Handle loading/error states | Assuming success |
+| Use keys for lists | Index as key for dynamic lists |
+
+## Project Structure
+
+```
+src/
+├── App.tsx
+├── main.tsx
+├── components/         # Reusable UI components
+├── hooks/              # Custom hooks
+├── pages/              # Route components
+├── stores/             # State management
+├── services/           # API calls
+├── utils/              # Helper functions
+└── types/              # TypeScript types
+```
+
+For detailed examples and patterns, see reference files above.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

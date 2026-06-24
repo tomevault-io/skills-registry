@@ -1,0 +1,13 @@
+# neo-swift
+
+> Skill by [Benknightdark](https://github.com/Benknightdark/neo-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [Benknightdark/neo-skills](https://github.com/Benknightdark/neo-skills/tree/main/skills/neo-swift)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

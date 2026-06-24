@@ -1,0 +1,13 @@
+# minrlm
+
+> Skill by [avilum](https://github.com/avilum/minrlm) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [avilum/minrlm](https://github.com/avilum/minrlm/tree/main/.claude/skills/use-minrlm/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

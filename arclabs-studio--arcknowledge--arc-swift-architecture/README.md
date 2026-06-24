@@ -1,0 +1,13 @@
+# arc-swift-architecture
+
+> Skill by [arclabs-studio](https://github.com/arclabs-studio/arcknowledge) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [arclabs-studio/arcknowledge](https://github.com/arclabs-studio/arcknowledge/tree/main/.claude/skills/arc-swift-architecture)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

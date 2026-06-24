@@ -1,0 +1,13 @@
+# vibe-audit
+
+> Skill by [Fencer-Security](https://github.com/Fencer-Security/skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [Fencer-Security/skills](https://github.com/Fencer-Security/skills/tree/main/plugins/vibe-app-audit/skills/vibe-audit)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

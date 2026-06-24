@@ -1,0 +1,71 @@
+---
+name: proofshot
+description: Visual verification of UI features. Use after building or modifying any Use when this capability is needed.
+metadata:
+  author: AmElmo
+---
+
+# ProofShot — Visual Verification Workflow
+
+## When to use
+
+Use ProofShot after:
+- Building a new UI feature or page
+- Modifying existing UI components
+- Fixing a visual bug
+- Any change that affects what the user sees
+
+## The workflow (always follow these 3 steps)
+
+### Step 1: Start the session
+
+```bash
+proofshot start --description "what you are about to verify"
+```
+
+This starts the dev server, opens a headless browser, and begins recording.
+The description appears in the proof report for the human.
+
+### Step 2: Drive the browser and test
+
+Use proofshot exec to navigate, interact, and verify:
+
+```bash
+proofshot exec snapshot -i                                    # See interactive elements
+proofshot exec open http://localhost:PORT/page                # Navigate to a page
+proofshot exec click @e3                                      # Click a button
+proofshot exec fill @e2 "test@example.com"                    # Fill a form field
+proofshot exec screenshot step-NAME.png                       # Capture key moments
+```
+
+Take screenshots at important moments — these become the visual proof.
+Verify what you expect to see by reading the snapshot output.
+
+### Step 3: Stop and bundle the proof
+
+```bash
+proofshot stop
+```
+
+This stops recording, collects console + server errors, and generates
+a SUMMARY.md with video, screenshots, and error report.
+
+### Step 4 (optional): Post proof to the PR
+
+```bash
+proofshot pr              # Auto-detect PR from current branch
+proofshot pr 42           # Target a specific PR number
+```
+
+This uploads screenshots and video to GitHub and posts a formatted comment on the PR. By default it uses the official GitHub contents API on a `proofshot-artifacts` branch. Use `--upload-provider github-web-attachments` if you specifically want GitHub attachment URLs.
+
+## Tips
+
+- Always include a meaningful --description so the human knows what was tested
+- Take screenshots before AND after key actions (e.g., before form submit, after redirect)
+- If you find errors during verification, fix them and re-run the workflow
+- Use `proofshot pr` after stopping to attach proof directly to the pull request
+
+---
+> Source: [AmElmo/proofshot](https://github.com/AmElmo/proofshot) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-23 -->

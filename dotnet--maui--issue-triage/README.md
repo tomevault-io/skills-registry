@@ -1,0 +1,13 @@
+# issue-triage
+
+> Skill by [dotnet](https://github.com/dotnet/maui) — distributed by [TomeVault](https://tomevault.io/claim/dotnet)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [dotnet/maui](https://github.com/dotnet/maui/tree/main/.github/skills/issue-triage)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/dotnet) to manage distribution.

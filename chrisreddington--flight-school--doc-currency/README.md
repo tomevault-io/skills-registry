@@ -1,0 +1,13 @@
+# doc-currency
+
+> Skill by [chrisreddington](https://github.com/chrisreddington/flight-school) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [chrisreddington/flight-school](https://github.com/chrisreddington/flight-school/tree/main/.github/skills/doc-currency)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

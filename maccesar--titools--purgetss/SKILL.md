@@ -1,0 +1,443 @@
+---
+name: purgetss
+description: Titanium PurgeTSS utility-first styling toolkit. Use when styling, reviewing, analyzing, or examining Titanium UI with utility classes, configuring config.cjs, creating dynamic components with $.UI.create(), building animations, using grid layouts, setting up icon fonts, or working with TSS styles. AUTO-DETECT: If purgetss/ folder or purgetss/config.cjs exists, this project uses PurgeTSS — invoke this skill BEFORE writing ANY styling code. All styling MUST use PurgeTSS utility classes in XML, NOT custom TSS. PurgeTSS classes look like Tailwind but are NOT Tailwind — verify every class exists before using it. Never use padding on Views (use margins on children), never use flexbox classes, never write manual TSS when a utility class exists. Use when this capability is needed.
+metadata:
+  author: maccesar
+---
+
+# PurgeTSS Expert
+
+Utility-first styling toolkit for Titanium/Alloy mobile apps.
+
+## Project Detection
+
+> **️ℹ️ AUTO-DETECTS PURGETSS PROJECTS**
+> This skill automatically detects PurgeTSS usage when invoked and provides utility-first styling guidance.
+>
+> **Detection occurs automatically** - no manual command needed.
+>
+> **PurgeTSS project indicators:**
+> - `purgetss/` folder
+> - `purgetss/config.cjs` configuration file
+> - `purgetss/styles/utilities.tss` utility classes
+> - `app/styles/app.tss` (auto-generated)
+>
+> **Behavior based on detection:**
+> - **PurgeTSS detected** → Provides PurgeTSS-specific guidance, recommends utility classes, suggests `$.UI.create()` for dynamic components
+> - **Not detected** → Does NOT suggest PurgeTSS utility classes, does NOT recommend `$.UI.create()`, does NOT reference PurgeTSS-specific patterns
+
+## Core Workflow
+
+1. **Setup**: `purgetss create 'name'` or `purgetss init` for existing projects
+2. **Build**: Write XML with utility classes → PurgeTSS auto-generates `app.tss`
+3. **Configure**: Customize via `purgetss/config.cjs`
+
+## Project Structure
+
+```bash
+./purgetss/
+├─ fonts/              # Custom font files (.ttf, .otf)
+├─ styles/
+│  ├─ definitions.css  # For VS Code IntelliSense
+│  └─ utilities.tss     # All PurgeTSS utility classes
+└─ config.cjs          # Theme configuration
+
+./app/styles/
+├─ app.tss             # AUTO-GENERATED - DO NOT EDIT DIRECTLY
+└─ _app.tss            # YOUR CUSTOM STYLES (persists across runs)
+```
+
+### Understanding `app.tss` vs `_app.tss`
+
+> **⚠️ CRITICAL: app.tss IS AUTO-GENERATED**
+> **`app.tss` is ALWAYS regenerated** every time the app compiles.
+>
+> PurgeTSS scans ALL XMLs and Controllers for utility classes, then generates a fresh `app.tss` containing only the classes actually used.
+>
+> **NEVER edit `app.tss` directly** - your changes WILL be overwritten on the next build.
+
+> **️ℹ️ THE `_app.tss` BACKUP FILE**
+> On **first run**, PurgeTSS backs up your original `app.tss` to `_app.tss`.
+>
+> **`_app.tss` is your custom styles file** - it persists across all PurgeTSS runs.
+>
+> Every build, PurgeTSS:
+> 1. Scans XMLs and Controllers for used classes
+> 2. Regenerates `app.tss` from scratch
+> 3. Copies `_app.tss` content into the generated `app.tss`
+>
+> Better approach: define custom classes in `config.cjs` instead of `_app.tss`.
+
+### Checking for Unused/Unsupported Classes
+
+> **🚨 ALWAYS CHECK `app.tss` FOR ERRORS**
+> At the **end of every generated `app.tss`**, look for this section:
+>
+> ```tss
+> // Unused or unsupported classes
+> // .my-typo-class
+> // .non-existent-utility
+> ```
+>
+> **These are classes used in your XMLs or Controllers that have NO definition anywhere:**
+> - Not in `utilities.tss` (generated from PurgeTSS utilities)
+> - Not in `_app.tss` (your custom styles)
+> - Not in any other `.tss` file in the `styles/` folder
+>
+> **This means:**
+> 1. You have a **typo** in your class name
+> 2. You're using a class that **doesn't exist** in PurgeTSS
+> 3. You need to **define the class** in `_app.tss` or `config.cjs`
+>
+> **As part of any analysis, ALWAYS check the end of `app.tss` and report any unused/unsupported classes to the user!**
+
+### How `utilities.tss` Works
+
+> **️ℹ️ UTILITIES.TSS REGENERATION**
+> `./purgetss/styles/utilities.tss` contains ALL available PurgeTSS utility classes.
+>
+> **It regenerates when `./purgetss/config.cjs` changes** - this is where you define:
+> - Custom colors
+> - Custom spacing scales
+> - Ti Element styles
+> - Any project-specific utilities
+>
+> If a class appears in "Unused or unsupported classes" in `app.tss`, it means it's truly not defined anywhere - not even in your `config.cjs` customizations.
+
+## Quick Start
+
+```bash
+purgetss create 'MyApp' -d -v fa
+# -d: Install dev dependencies (ESLint, Tailwind)
+# -v: Copy icon fonts (fa, mi, ms, f7)
+```
+
+## What's New in v7.5.0
+
+- `extend` support for Window, View, and ImageView in `config.cjs`
+- Shorthand `apply` directive normalization
+- Apply directive property deduplication
+- Automatic platform resolution in apply directives
+- Updated Font Awesome to 7.2.0
+- Fixed: `extend.Window` was silently ignored
+- Fixed: Array-type properties (`extendEdges`, `mediaTypes`) bracket notation
+
+## What's New in v7.4.0
+
+- 9 new Animation methods: `transition`, `pulse`, `sequence`, `swap`, `shake`, `snapTo`, `reorder`, `undraggable`, `detectCollisions` (module now has 15 methods total)
+- Snap behavior classes: `snap-back`, `snap-center`, `snap-magnet`
+- `keep-z-index` utility class
+- Enriched callback event object with `action`, `state`, `id`, `targetId`, `index`, `total`, `getTarget()`
+- Delta-based drag for views with rotate/scale transforms
+- Position normalization for draggable views
+- Property inheritance from Animation object for all new methods
+
+> **💡 NEW PROJECT: Clean Up Default app.tss**
+> For new projects created with `purgetss create`, the default `app/styles/app.tss` contains a large commented template.
+>
+> **You can safely DELETE this file** - PurgeTSS will regenerate it on the first build with only the classes you actually use, and create a clean `_app.tss` backup.
+>
+> This prevents carrying around unnecessary commented code and ensures a fresh start.
+
+## Critical Rules (Low Freedom)
+
+### ⭐ PREFER `$.UI.create()` for Dynamic Components
+
+> **💡 RECOMMENDED FOR DYNAMIC COMPONENTS**
+> When creating components dynamically in Controllers, **use `$.UI.create()` instead of `Ti.UI.create()`** to get full PurgeTSS utility class support:
+>
+> ```javascript
+> // ✅ RECOMMENDED - Full PurgeTSS support
+> const view = $.UI.create('View', {
+>   classes: ['w-screen', 'h-auto', 'bg-white', 'rounded-lg']
+> })
+>
+> // ❌ AVOID - No PurgeTSS classes
+> const view = Ti.UI.createView({
+>   width: Ti.UI.FILL,
+>   height: Ti.UI.SIZE,
+>   backgroundColor: '#ffffff',
+>   borderRadius: 8
+> })
+> ```
+>
+> See [Dynamic Component Creation](references/dynamic-component-creation.md) for complete guide.
+
+### 🚨 RESPECT USER FILES
+**NEVER delete any existing `.tss` files** (like `index.tss`, `detail.tss`) or other project files without explicit user consent.
+
+**How to handle migration to PurgeTSS:**
+1. **ONLY** replace custom classes with PurgeTSS utility classes if the user explicitly requests it.
+2. When requested:
+    - Analyze the definitions in the existing `.tss` files.
+    - Update the XML/Controller components with equivalent PurgeTSS utility classes.
+    - **WAIT** for user confirmation before suggesting or performing any file deletion.
+3. If the user prefers keeping manual `.tss` files for specific styles, respect that choice and only use PurgeTSS for new or requested changes.
+
+### 🚨 NO FLEXBOX - Titanium Doesn't Support It
+
+> **🚨 FLEXBOX CLASSES DO NOT EXIST**
+> The following are **NOT supported**:
+> - ❌ `flex`, `flex-row`, `flex-col`
+> - ❌ `justify-between`, `justify-center`, `justify-start`, `justify-end`
+> - ❌ `items-center` for alignment (exists but sets `width/height: FILL`)
+>
+> **Use Titanium layouts instead:**
+> - ✅ `horizontal` - Children left to right
+> - ✅ `vertical` - Children top to bottom
+> - ✅ Omit layout class - Defaults to `composite` (absolute positioning)
+>
+> **💡 CRITICAL: Understanding Layout Composition**
+> When building complex UIs, carefully choose the layout mode for each container:
+>
+> **`vertical`** - Stack elements top to bottom (most common):
+> ```xml
+> <ScrollView class="vertical">
+>   <View class="mb-4">Item 1</View>
+>   <View class="mb-4">Item 2</View>
+>   <View>Item 3</View>
+> </ScrollView>
+> ```
+>
+> **`horizontal`** - Arrange elements left to right:
+> ```xml
+> <View class="horizontal w-screen">
+>   <Label text="Left" />
+>   <View class="w-screen" />  <!-- Spacer -->
+>   <Label text="Right" />
+> </View>
+> ```
+>
+> **`composite`** (default) - Absolute positioning with `top`, `left`, etc.:
+> ```xml
+> <View class="h-screen w-screen">
+>   <View class="wh-12 absolute left-0 top-0 bg-red-500" />
+>   <View class="wh-12 absolute bottom-0 right-0 bg-blue-500" />
+> </View>
+> ```
+>
+> **Common Issue:** If you see elements appearing in unexpected positions (e.g., a header bar "behind" content), check if parent containers have conflicting layout modes. Each container's layout affects its direct children only.
+>
+> ### 🚨 PLATFORM-SPECIFIC PROPERTIES REQUIRE MODIFIERS
+>
+> **🚨 CRITICAL: Platform-Specific Properties Require Modifiers**
+> Using `Ti.UI.iOS.*` or `Ti.UI.Android.*` properties WITHOUT platform modifiers causes cross-platform compilation failures.
+>
+> **WRONG - Adds iOS code to Android (causes failure):**
+> ```tss
+> // ❌ BAD - Adds Ti.UI.iOS to Android project
+> "#mainWindow": {
+>   statusBarStyle: Ti.UI.iOS.StatusBar.LIGHT_CONTENT
+> }
+> ```
+>
+> **CORRECT - Use platform modifiers in TSS:**
+> ```tss
+> // ✅ GOOD - Only adds to iOS
+> "#mainWindow[platform=ios]": {
+>   statusBarStyle: Ti.UI.iOS.StatusBar.LIGHT_CONTENT
+> }
+> ```
+>
+> **OR use PurgeTSS platform modifier classes:**
+> ```xml
+> <!-- ✅ GOOD - Platform-specific classes -->
+> <Window class="ios:status-bar-light android:status-bar-dark">
+> ```
+>
+> **Properties that ALWAYS require platform modifiers:**
+> - iOS: `statusBarStyle`, `modalStyle`, `modalTransitionStyle`, `systemButton`
+> - Android: `actionBar` configuration
+> - ANY `Ti.UI.iOS.*`, `Ti.UI.Android.*` constant
+>
+> **When suggesting platform-specific code:**
+> 1. Check if user's project supports that platform
+> 2. ALWAYS use `[platform=ios]` or `[platform=android]` TSS modifier
+> 3. OR use PurgeTSS platform classes like `ios:bg-blue-500`
+>
+> **For complete reference on platform modifiers, see** [Platform Modifiers](references/platform-modifiers.md).
+>
+> ### Other Mandatory Rules
+>
+> - **NO `p-` padding classes**: Titanium does NOT support a native `padding` property on `View`, `Window`, `ScrollView`, or `TableView`. Always use **margins on children** (`m-`) to simulate internal spacing.
+> - **View defaults to `SIZE`**: Use `w-screen`/`h-screen` to fill space when needed.
+> - **`rounded-full`**: To get a perfect circle, use `rounded-full-XX` (where XX is the width/height of the square element).
+> - **`rounded-full-XX` includes size**: These classes already set `width`, `height`, and `borderRadius`. Do **not** add `w-XX h-XX`/`wh-XX` unless you need to override.
+> - **`m-xx` on FILL elements**: Adding `m-4` to a `w-screen` element pins it to all four edges (top, bottom, left, right). This will **stretch the component vertically** to fill the parent unless you explicitly add `h-auto` (`Ti.UI.SIZE`) to constrain it to its content.
+> - **`w-XX` + `h-XX` → `wh-XX`**: If both width and height use the same scale value, prefer a single `wh-XX` (order doesn't matter: `w-10 h-10` and `h-10 w-10` are equivalent).
+> - **Use `wh-` shortcuts**: PurgeTSS provides a complete scale of combined width/height utilities:
+>     - **Numeric Scale**: `wh-0` to `wh-96` (e.g., `wh-16` sets both to 64px).
+>     - **Fractions**: `wh-1/2`, `wh-3/4`, up to `wh-11/12` for proportional sizing.
+>     - **Special Values**: `wh-auto` (explicit `SIZE`), `wh-full` (`100%`), and `wh-screen` (`FILL`).
+>     - Using these instead of separate `w-` and `h-` classes improves XML readability and reduces generated TSS size.
+>
+> **💡 LAYOUT TIP: EDGE PINNING**
+> If opposite margins cause a `Label`, `Button`, or `Switch` to stretch unexpectedly, it is due to Titanium's **Edge Pinning** rule (2 opposite pins = computed dimension). This applies to **any component whose default size is `Ti.UI.SIZE`**.
+>
+> - `mt-*` + `mb-*` or `my-*` can stretch the component vertically. Add `h-auto`.
+> - `ml-*` + `mr-*` or `mx-*` can stretch the component horizontally. Add `w-auto`.
+> - If margins affect both axes, use `wh-auto` to force `SIZE` for both width and height.
+>
+> ```xml
+> <!-- WRONG: my-1 creates vertical pins → Switch stretches to fill parent height -->
+> <Switch class="my-1 mr-2" />
+>
+> <!-- CORRECT: h-auto prevents vertical stretch -->
+> <Switch class="my-1 mr-2 h-auto" />
+> <Label class="my-1 ml-2 h-auto" text="Option" />
+> ```
+>
+> - **NEVER add `composite` class explicitly** - That's the default, use `horizontal`/`vertical` when needed
+> - **Arbitrary values use parentheses**: `w-(100px)`, `bg-(#ff0000)` - NO square brackets
+> - **`mode: 'all'` required** in `config.cjs` for Ti Elements styling
+> - **Classes use `kebab-case`**: `.my-class`, IDs use `camelCase`: `#myId`
+>
+> ## Common Anti-Patterns
+>
+> **WRONG:**
+> ```xml
+> <View class="flex-row justify-between">  <!-- Flexbox doesn't exist -->
+> <View class="p-4">  <!-- No padding on Views -->
+> <View class="composite">  <!-- Never add composite explicitly -->
+> ```
+>
+> **CORRECT:**
+> ```xml
+> <View class="horizontal">
+> <View class="m-4">  <!-- Use margins on children -->
+> <View>  <!-- Omit layout = composite by default -->
+> ```
+>
+> **WRONG (Dynamic Components):**
+> ```javascript
+> // Manual styling with Ti.UI.create()
+> const view = Ti.UI.createView({
+>   width: Ti.UI.FILL,
+>   backgroundColor: '#fff',
+>   borderRadius: 8
+> })
+> ```
+>
+> **CORRECT (Dynamic Components):**
+> ```javascript
+> // PurgeTSS classes with $.UI.create()
+> const view = $.UI.create('View', {
+>   classes: ['w-screen', 'bg-white', 'rounded-lg']
+> })
+> ```
+>
+> ## Class Verification Workflow
+>
+> **🚨 CRITICAL: VERIFY CLASSES BEFORE SUGGESTING**
+> **NEVER guess or hallucinate classes based on other CSS Frameworks knowledge!**
+>
+> PurgeTSS shares naming with some CSS Frameworks but has DIFFERENT classes for Titanium.
+> Always verify a class exists before suggesting it.
+>
+> ### Verification Steps
+>
+> 1. **Check if it's a KNOWN anti-pattern**
+>    - See [PROHIBITED Classes](references/class-index.md#prohibited-tailwind-classes-that-do-not-exist)
+>    - Common mistakes: `flex-row`, `justify-between`, `p-4` on Views (p-* not supported on Views)
+>
+> 2. **Check the Class Index**
+>    - See [Class Index](references/class-index.md) for available patterns
+>    - Constant properties like `keyboard-type-*`, `return-key-type-*` have dedicated classes
+>
+> 3. **Search the project when unsure**
+>    ```bash
+>    # Search for a class pattern in the project's utilities.tss
+>    grep -E "keyboard-type-" ./purgetss/styles/utilities.tss
+>    grep -E "return-key-type-" ./purgetss/styles/utilities.tss
+>    grep -E "^'bg-" ./purgetss/styles/utilities.tss
+>    ```
+>
+> 4. **After making changes**
+>    - Check `app.tss` for "Unused or unsupported classes" section at the end
+>    - Report any typos or non-existent classes to the user
+>
+> ### What HAS Classes vs What DOESN'T
+>
+> | Has Classes in PurgeTSS | Does NOT Have Classes                 |
+> | ----------------------- | ------------------------------------- |
+> | `keyboard-type-email`   | `hintText` (use attribute)            |
+> | `return-key-type-next`  | `passwordMask` (use attribute)        |
+> | `text-center`           | `autocorrect` (use attribute)         |
+> | `bg-blue-500`           | `autocapitalization` (use attribute)  |
+> | `w-screen`              | `flex-row` → use `horizontal`         |
+> | `wh-16`                 | `justify-between` → use margins       |
+> | `rounded-lg`            | `w-full` → use `w-screen`             |
+> | `m-4`, `gap-4`          | `p-4` on View → use `m-4` on children |
+>
+> **💡 TIP**
+> When in doubt, prefer using the search command above to verify. It's better to spend 5 seconds verifying than suggesting a class that doesn't exist and will appear in the "unused classes" warning.
+>
+> ## Reference Guides
+>
+> Load these only when needed:
+>
+> ### Essential References
+> - **[Class Index](references/class-index.md)** - Naming conventions, 416-property table, prohibited classes, verification commands (LOAD FIRST when unsure about a class)
+> - **[Class Categories](references/class-categories.md)** - Complete prefix inventory by category (layout, colors, typography, states, etc.)
+> - **[Dynamic Component Creation](references/dynamic-component-creation.md)** - `$.UI.create()` and `Alloy.createStyle()` for creating components in Controllers (READ FIRST for dynamic components)
+>
+> ### Setup & Configuration
+> - [Installation & Setup](references/installation-setup.md) - First run, VS Code, LiveView
+> - [CLI Commands](references/cli-commands.md) - All `purgetss` commands
+> - [Migration Guide](references/migration-guide.md) - Migrating existing apps from manual TSS to PurgeTSS
+>
+> ### Customization
+> - [Deep Customization](references/customization-deep-dive.md) - config.cjs, colors, spacing, Ti Elements
+> - [Custom Rules](references/custom-rules.md) - Styling Ti Elements, IDs, classes
+> - [Apply Directive](references/apply-directive.md) - Extracting utility combinations
+> - [Configurable Properties](references/configurable-properties.md) - All 80+ customizable properties
+>
+> ### Layout & Styling
+> - **[UI/UX Design Patterns](references/ui-ux-design.md)** - Complete guide to mobile UI components with PurgeTSS (cards, lists, forms, buttons, navigation, modals, accessibility)
+> - [Grid Layout System](references/grid-layout.md) - 12-column grid, responsive layouts
+> - [Smart Mappings](references/smart-mappings.md) - How gap, shadows, and grid work under the hood
+> - [Arbitrary Values](references/arbitrary-values.md) - Parentheses notation for custom values
+> - [Platform Modifiers](references/platform-modifiers.md) - ios:, android:, tablet:, handheld:
+> - [Opacity Modifier](references/opacity-modifier.md) - Color transparency with /50 syntax
+> - [Titanium Resets](references/titanium-resets.md) - Default styles for Ti elements
+>
+> ### Performance
+> - [Performance Tips](references/performance-tips.md) - Optimizing PurgeTSS apps (bridge crossings, ListView, animations)
+>
+> ### Components
+> - [TiKit UI Components](references/tikit-components.md) - Ready-to-use Alerts, Avatars, Buttons, Cards, Tabs built with PurgeTSS
+>
+> ### Fonts & Animations
+> - [Icon Fonts](references/icon-fonts.md) - Font Awesome 7, Material Icons, custom icon libraries
+> - [Animation System](references/animation-system.md) - 15 methods including collision detection, transitions, and sequential animations
+> - [Animation Advanced](references/animation-advanced.md) - Property inheritance, utility classes, implementation rules, complex UI example
+>
+> **💡 TEXT FONTS (Google Fonts, Roboto, etc.)**
+> For text fonts, see [CLI Commands → build-fonts](references/cli-commands.md#purgetss-build-fonts-alias-bf).
+>
+> ## Examples
+>
+> For complete WRONG vs CORRECT examples including:
+> - Titanium layout patterns (horizontal, vertical, composite)
+> - Grid with percentages
+> - Gap usage
+> - Manual .tss anti-patterns
+> - Dynamic component creation with `$.UI.create()` and `Alloy.createStyle()`
+>
+> See [EXAMPLES.md](references/EXAMPLES.md) and [Dynamic Component Creation](references/dynamic-component-creation.md)
+>
+> ## Related Skills
+>
+> For tasks beyond styling, use these complementary skills:
+>
+> | Task                                         | Use This Skill |
+> | -------------------------------------------- | -------------- |
+> | Project architecture, services, controllers  | `ti-expert`    |
+> | Complex UI components, ListViews, gestures   | `ti-ui`        |
+> | Alloy MVC concepts, data binding, TSS syntax | `alloy-guides` |
+> | Native features (camera, location, push)     | `ti-howtos`    |
+>
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/maccesar) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

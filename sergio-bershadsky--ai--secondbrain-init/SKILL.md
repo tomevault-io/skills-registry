@@ -1,0 +1,360 @@
+---
+name: secondbrain-init
+description: | Use when this capability is needed.
+metadata:
+  author: sergio-bershadsky
+---
+
+# Secondbrain Project Scaffolding
+
+Scaffold a complete knowledge management system with microdatabases, VitePress portal, and Claude automation.
+
+## Overview
+
+Initialize a new secondbrain project with:
+- **Microdatabase architecture** (YAML + JSON Schema validation)
+- **VitePress documentation portal** (custom theme, Vue components)
+- **Configurable entity types** (ADRs, Discussions, Notes, Tasks, Custom)
+- **Claude automation** (hooks, maximum freedom settings)
+
+## Workflow
+
+### Step 1: Gather Project Information
+
+Ask the user for:
+
+1. **Project name** (kebab-case, e.g., `my-knowledge-base`)
+2. **Target directory** (default: `./<project-name>`)
+3. **Use case** (optional context for customization):
+   - Personal knowledge base
+   - Project documentation
+   - Team collaboration
+
+### Step 2: Select Entity Types
+
+Present entity selection with checkboxes:
+
+```
+## Entity Selection
+
+Which entities would you like to enable?
+
+[x] ADRs (Architecture Decision Records)
+    - Numbered decisions with status workflow
+    - Category-based numbering ranges
+
+[x] Discussions (Meeting notes, conversations)
+    - Monthly partitioned records
+    - Participant tracking
+
+[x] Notes (General knowledge capture)
+    - Date-based IDs
+    - Tag support
+
+[ ] Tasks (Action items, todo tracking)
+    - Sequential numbering
+    - Priority and due dates
+
+Would you like to define a custom entity type? (y/n)
+```
+
+### Step 3: Configure Optional Features
+
+Present optional feature selection:
+
+```
+## Optional Features
+
+[ ] Review Stamps
+    - Track who reviewed which pages and when
+    - ReviewBadge component with staleness coloring (green/yellow/orange)
+    - Adds /secondbrain-review command
+
+[ ] Meeting Transcription
+    - Import meetings from transcription providers (Fireflies.ai)
+    - Auto-generate discussion documents from transcripts
+    - SessionStart hook checks for undocumented meetings
+    - Adds /secondbrain-transcribe command
+    - Requires provider API key (e.g., FIREFLIES_API_KEY)
+```
+
+**If Review Stamps selected:**
+- Ask for default reviewer name (can be left blank for per-review prompting)
+- Add `review` section to config.yaml
+- Scaffold `ReviewBadge.vue` component from `${CLAUDE_PLUGIN_ROOT}/templates/scaffolding/vitepress/theme/components/ReviewBadge.vue.tmpl`
+- Replace `{{fresh_days}}` with 30 and `{{aging_days}}` with 90 (or custom values)
+
+**If Meeting Transcription selected:**
+- Ask which provider: `fireflies` (more providers coming)
+- Ask for team member mappings (alias, full name, email patterns)
+- Add `team` and `integrations.transcription` sections to config.yaml
+- Scaffold provider client (e.g., `fireflies.py`) from `${CLAUDE_PLUGIN_ROOT}/templates/scaffolding/lib/fireflies.py.tmpl`
+- Remind user to set API key in `.env.local` or environment
+
+### Step 4: Configure Semantic Search
+
+Present search configuration options:
+
+```
+## Search Configuration
+
+Which semantic search would you like to enable?
+
+[ ] qmd (Claude Code search)
+    - CLI-based semantic search for AI
+    - Requires: bun/npm install -g qmd (~1.5GB models)
+    - Best for: Local development, Claude Code integration
+
+[ ] Orama (VitePress browser search)
+    - Client-side semantic search for humans
+    - Adds ~30MB to browser (on-demand model loading)
+    - Best for: Static sites, offline-capable portals
+
+[x] Both (Recommended)
+    - Dual index: qmd for Claude, Orama for browser
+    - Same semantic search quality for AI and humans
+
+[ ] None (Skip search)
+    - Use basic VitePress search (keyword only)
+    - Can add semantic search later with /secondbrain-search-init
+```
+
+**Based on selection:**
+
+| Selection | Actions |
+|-----------|---------|
+| qmd | Create `.claude/search/`, generate `qmd.config.json`, add search hook |
+| Orama | Add Orama deps to `package.json`, generate `SearchBox.vue`, generate build script |
+| Both | All of the above |
+| None | Skip search setup, use VitePress native search |
+
+### Step 6: Configure Maximum Freedom Settings
+
+**CRITICAL**: Always propose creating `.claude/settings.local.json` with maximum permissions:
+
+```json
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "_comment": "Secondbrain project - maximum freedom for knowledge management",
+
+  "permissions": {
+    "allow_web_search": true,
+    "allow_web_fetch": ["*"],
+    "allow_read": ["~/**", "/tmp/**"],
+    "allow_bash": ["*"],
+    "auto_approve_write": ["<project_path>/docs/**"]
+  }
+}
+```
+
+Show the settings and ask for confirmation before proceeding.
+
+### Step 7: Generate Scaffolding
+
+Create the following structure:
+
+```
+<project-name>/
+├── .claude/
+│   ├── settings.local.json     # Max freedom permissions + hooks
+│   ├── data/
+│   │   ├── config.yaml         # Project configuration
+│   │   ├── adrs/               # (if enabled)
+│   │   │   ├── schema.yaml
+│   │   │   ├── meta.yaml       # last_number + shard list
+│   │   │   └── YYYY-MM.yaml    # Monthly shard
+│   │   ├── discussions/        # (if enabled)
+│   │   │   ├── schema.yaml
+│   │   │   └── YYYY-MM.yaml    # Monthly shard
+│   │   ├── notes/              # (if enabled)
+│   │   │   ├── schema.yaml
+│   │   │   ├── meta.yaml       # shard list
+│   │   │   └── YYYY-MM.yaml    # Monthly shard
+│   │   └── tasks/              # (if enabled)
+│   │       ├── schema.yaml
+│   │       ├── meta.yaml       # last_number + shard list
+│   │       └── YYYY-MM.yaml    # Monthly shard
+│   ├── lib/
+│   │   └── tracking.py         # CRUD library with validation
+│   ├── hooks/
+│   │   ├── freshness-check.py
+│   │   ├── sidebar-check.py
+│   │   ├── session-context.py
+│   │   └── search-index-update.py  # (if qmd enabled)
+│   └── search/                     # (if qmd enabled)
+│       └── (qmd index files)
+├── docs/
+│   ├── .vitepress/
+│   │   ├── config.ts           # Navigation, sidebar, plugins
+│   │   ├── theme/
+│   │   │   ├── index.ts
+│   │   │   ├── Layout.vue      # Giscus comments
+│   │   │   ├── custom.css
+│   │   │   └── components/
+│   │   │       ├── EntityTable.vue
+│   │   │       ├── ReviewBadge.vue  # (if review stamps enabled)
+│   │   │       └── SearchBox.vue   # (if Orama enabled)
+│   │   └── data/
+│   │       └── <entity>.data.ts # Per enabled entity
+│   ├── index.md                # Home page
+│   ├── adrs/                   # (if enabled)
+│   │   ├── index.md
+│   │   └── TEMPLATE.md
+│   ├── discussions/            # (if enabled)
+│   │   ├── index.md
+│   │   └── TEMPLATE.md
+│   ├── notes/                  # (if enabled)
+│   │   └── index.md
+│   └── tasks/                  # (if enabled)
+│       └── index.md
+├── package.json                # VitePress dependencies
+├── qmd.config.json             # (if qmd enabled)
+├── CLAUDE.md                   # Project instructions
+└── .gitignore
+```
+
+### Step 8: Generate Files
+
+For each enabled entity, generate from templates in `${CLAUDE_PLUGIN_ROOT}/templates/`:
+
+1. **Microdatabase files:**
+   - `config.yaml` from `scaffolding/microdatabase/config.yaml.tmpl`
+   - Entity `schema.yaml` from `entities/<entity>/schema.yaml`
+   - Entity `records.yaml` initialized empty
+
+2. **VitePress files:**
+   - `config.ts` from `scaffolding/vitepress/config.ts.tmpl`
+   - Theme files from `scaffolding/vitepress/theme/`
+   - Data loaders from `scaffolding/vitepress/data/`
+
+3. **Documentation:**
+   - Home page from `scaffolding/docs/index.md.tmpl`
+   - Entity index pages from `scaffolding/docs/entity-index.md.tmpl`
+   - Templates from `entities/<entity>/TEMPLATE.md`
+
+4. **Automation:**
+   - `settings.local.json` from `scaffolding/claude/settings.local.json.tmpl`
+   - `tracking.py` from `scaffolding/lib/tracking.py.tmpl`
+   - Hooks from `hooks/` (copy to project)
+
+5. **Search (if enabled):**
+   - **qmd:** `qmd.config.json` from `scaffolding/search/qmd.config.json.tmpl`
+   - **qmd:** Copy `search-index-update.py` hook
+   - **Orama:** `SearchBox.vue` from `scaffolding/vitepress/theme/components/SearchBox.vue.tmpl`
+   - **Orama:** `build-search-index.ts` from `scaffolding/vitepress/search/build-search-index.ts.tmpl`
+   - **Orama:** Add dependencies to `package.json`
+
+6. **Review Stamps (if enabled):**
+   - `ReviewBadge.vue` from `scaffolding/vitepress/theme/components/ReviewBadge.vue.tmpl`
+   - Replace `{{fresh_days}}` / `{{aging_days}}` with configured thresholds (defaults: 30/90)
+   - Add `review` section to `config.yaml`
+
+7. **Meeting Transcription (if enabled):**
+   - Provider client (e.g., `fireflies.py`) from `scaffolding/lib/fireflies.py.tmpl`
+   - Add `team` and `integrations.transcription` sections to `config.yaml`
+
+### Step 9: Show Summary
+
+```
+## Secondbrain Created Successfully!
+
+**Project:** my-knowledge-base
+**Location:** /path/to/my-knowledge-base
+**Entities:** ADRs, Discussions, Notes
+
+### Structure Created
+
+.claude/
+├── settings.local.json    ✓ Maximum freedom permissions
+├── data/                  ✓ Microdatabases with schemas
+├── lib/tracking.py        ✓ CRUD operations
+└── hooks/                 ✓ Automation hooks
+
+docs/
+├── .vitepress/            ✓ Custom theme with EntityTable
+├── adrs/                  ✓ Decision records
+├── discussions/           ✓ Meeting notes
+└── notes/                 ✓ Knowledge capture
+
+### Next Steps
+
+1. Navigate to project:
+   cd my-knowledge-base
+
+2. Install dependencies:
+   npm install
+
+3. Start development server:
+   npm run docs:dev
+
+4. Create your first decision:
+   /secondbrain-adr infrastructure my-first-decision
+
+5. Add a note:
+   /secondbrain-note my-first-note
+
+### Available Commands
+
+- /secondbrain-search <query>          — Semantic search (if enabled)
+- /secondbrain-adr <category> <title>  — Create ADR
+- /secondbrain-note <title>            — Create note
+- /secondbrain-discussion <who> <topic> — Document discussion
+- /secondbrain-freshness               — Check what needs attention
+- /secondbrain-entity <name>           — Add custom entity type
+- /secondbrain-review <page> [name]    — Stamp page as reviewed (if enabled)
+- /secondbrain-transcribe <id|list|all> — Import meeting transcripts (if enabled)
+- /secondbrain-search-init             — Enable semantic search later
+```
+
+## Template Variables
+
+When generating files, replace these variables:
+
+| Variable | Description |
+|----------|-------------|
+| `{{project_name}}` | Project name (kebab-case) |
+| `{{project_path}}` | Absolute path to project |
+| `{{description}}` | Project description |
+| `{{date}}` | Current date (YYYY-MM-DD) |
+| `{{timestamp}}` | Current ISO timestamp |
+| `{{year_month}}` | Current year-month (YYYY-MM) |
+| `{{entities}}` | Array of enabled entity configs |
+
+## Entity Configuration
+
+Each entity has standard configuration:
+
+```yaml
+<entity_slug>:
+  enabled: true
+  label: "Entity Label"
+  singular: "Entity"
+  doc_path: docs/<entity_slug>
+  freshness:
+    stale_after_days: 30
+```
+
+## Additional Resources
+
+### Reference Files
+
+For detailed entity schemas and templates:
+
+- **`references/entity-schemas.md`** — Predefined entity schema definitions
+
+### Related Skills
+
+- **secondbrain-search** — Semantic search your knowledge base
+- **secondbrain-search-init** — Enable search on existing project
+- **secondbrain-entity** — Add custom entity types
+- **secondbrain-adr** — Create Architecture Decision Records
+- **secondbrain-note** — Create notes
+- **secondbrain-task** — Create tasks
+- **secondbrain-discussion** — Document discussions
+- **secondbrain-freshness** — Freshness report
+- **secondbrain-review** — Stamp pages as reviewed
+- **secondbrain-transcribe** — Import meeting transcripts
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/sergio-bershadsky) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

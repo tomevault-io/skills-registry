@@ -1,0 +1,910 @@
+---
+name: architect
+description: >- Use when this capability is needed.
+metadata:
+  author: jktfe
+---
+
+# FlowSpec Architect (Orchestrated)
+
+Creates FlowSpec projects — the reverse direction of `spec`/`wireframe`. This skill produces FlowSpec projects from wireframes, codebases, or design sessions using a **state-based orchestration workflow** with quality gates and interview loops.
+
+**Core pattern:** INIT → ROUTE → GATHER → INTERVIEW → GENERATE → VALIDATE → REFINE → FINALIZE → **CONFIRM**
+
+**Requires:** `flowspec_*` MCP tools (FlowSpec desktop app or standalone MCP server).
+
+<HARD-GATE>
+Do NOT invoke `/spec`, `/flowspec:spec`, or any implementation skill, write any implementation code, scaffold any project, or take any implementation action until:
+1. The FlowSpec spec has been exported and presented to the user
+2. The user has explicitly confirmed the spec is complete and correct
+3. You have received unambiguous approval (e.g. "yes", "approved", "looks good", "go ahead")
+
+This gate applies regardless of how simple the project seems. A tech spec markdown document is NOT confirmation — the user must review the actual FlowSpec project and approve it.
+</HARD-GATE>
+
+**Key Features:**
+- Screen-by-screen interview loops with user confirmation
+- Progressive JSON assembly (mini-specs → merged spec)
+- Quality gates with enhanced analysis (naming, fuzzy duplicates, subgraphs)
+- Semantic positioning with natural language commands
+- Resume capability for interrupted workflows
+
+---
+
+## State Machine Overview
+
+```
+INIT (verify MCP, select project)
+  ↓
+ROUTE (detect use case: UC1/UC2/UC3)
+  ↓
+GATHER (collect inputs: images/codebase/designs)
+  ↓
+INTERVIEW (iterative user clarification, screen-by-screen)
+  ↓
+GENERATE (build JSON, progressive assembly)
+  ↓
+VALIDATE (enhanced analysis, quality checks)
+  ↓
+REFINE (layout, regions, smart positioning)
+  ↓
+FINALIZE (export JSON, generate tech spec)
+  ↓
+CONFIRM (user reviews & approves spec — HARD GATE before implementation)
+```
+
+**State Persistence:** Use Task system (TaskCreate/TaskUpdate) to track state and enable resume.
+
+---
+
+## Phase 1: INIT (Setup & Verification)
+
+### Checkpoint 1.1: Verify MCP Connection
+```
+1. Call flowspec_list_projects()
+2. If error → tell user to open FlowSpec desktop app or start MCP server
+3. Display available projects (name, updated_at)
+```
+
+If MCP connection fails, use the 'Setup' button on the desktop dashboard to re-run the MCP configuration wizard.
+
+> **Sync status:** After creating or modifying projects via MCP, check the SyncIndicator in the desktop dashboard toolbar to verify changes synced to the cloud. The indicator shows: green (synced), amber (syncing), red (error with retry option).
+
+### Checkpoint 1.2: Project Selection
+Ask user:
+- **Create new project?** → `flowspec_create_project(name)`
+- **Use existing project?** → user selects from list
+- **Clone for safety?** → `flowspec_clone_project(projectId)` (recommended)
+
+Save `projectId` to state.
+
+### Checkpoint 1.3: State Transition
+```
+✓ Project ready → state: ROUTE
+```
+
+---
+
+## Phase 2: ROUTE (Determine Use Case)
+
+Analyse user input to determine workflow:
+
+| User provides | Route |
+|---------------|-------|
+| Wireframe images (PNG/JPG) | **UC1: Wireframe → Dataflow** |
+| Codebase path (directory) | **UC2: Codebase → Dataflow** |
+| "Design screens" / "new project" | **UC3: Design New Screens** |
+| JSON file | Direct import (skip to VALIDATE) |
+
+Save `useCase` to state.
+
+### Checkpoint 2.1: State Transition
+```
+✓ Use case determined → state: GATHER
+```
+
+---
+
+## UC1: Wireframe → Dataflow (Interview-Driven)
+
+**Goal:** Overlay wireframes with data architecture through screen-by-screen interviews.
+
+### Phase 3: GATHER (Upload & Create Screens)
+
+For each wireframe image:
+
+**Step 3.1:** Upload image
+```
+result = flowspec_upload_image(filePath: "/path/to/wireframe.png")
+→ { url, width, height, filename }
+```
+
+**Step 3.2:** Create screen
+```
+screen = flowspec_create_screen(
+  projectId,
+  name: "Login Page",
+  imageUrl: result.url,
+  imageWidth: result.width,
+  imageHeight: result.height,
+  imageFilename: result.filename
+)
+→ { id, name }
+```
+
+Save `screenId` for later region linking.
+
+**Checkpoint 3.1:** All screens created
+```
+✓ Screens: ${screenIds.length} created → state: INTERVIEW
+```
+
+---
+
+### Phase 4: INTERVIEW (Screen-by-Screen)
+
+**Critical:** Interview each screen individually with user confirmation loops.
+
+For each screen:
+
+**Step 4.1:** Show wireframe via vision
+- Display the wireframe image (use Read tool if needed)
+- Identify distinct UI regions:
+  - Headers, sidebars, navigation
+  - Forms (input fields, buttons)
+  - Data displays (tables, cards, charts)
+  - Interactive elements (dropdowns, toggles)
+
+**Step 4.2:** Region-by-region interview
+For each identified region, ask user:
+
+```
+Q1: "What data elements are in this region?"
+   → List field names, labels, values
+
+Q2: "What are the data types?"
+   → string, number, boolean, object, array
+
+Q3: "Is this data captured (user input) or inferred (computed/fetched)?"
+   → captured: form inputs, selections
+   → inferred: calculations, API responses, database queries
+
+Q4: "What constraints apply?"
+   → required, enum, range, format, uniqueness
+
+Q5: "What business logic affects this data?"
+   → validations, calculations, workflows
+```
+
+**Step 4.3:** Build mini-spec for this screen
+Assemble a mini-spec fragment:
+
+```json
+{
+  "screenName": "Login Page",
+  "dataPoints": [
+    {
+      "id": "email_input",
+      "label": "Email Address",
+      "type": "string",
+      "source": "captured",
+      "constraints": ["required", "email-format"]
+    },
+    {
+      "id": "auth_token",
+      "label": "Auth Token",
+      "type": "string",
+      "source": "inferred",
+      "sourceDefinition": "API /auth/login response"
+    }
+  ],
+  "components": [
+    {
+      "id": "login_page",
+      "label": "Login Page",
+      "displays": ["auth_token"],
+      "captures": ["email_input", "password_input"]
+    }
+  ],
+  "transforms": [
+    {
+      "id": "validate_email",
+      "label": "Validate Email Format",
+      "type": "validation",
+      "inputs": ["email_input"],
+      "outputs": ["email_valid"],
+      "logic": {
+        "type": "formula",
+        "content": "regex match @example.com"
+      }
+    }
+  ]
+}
+```
+
+**Step 4.4:** User confirmation checkpoint
+```
+ASK: "Screen '${screenName}' complete? [yes / no / refine]"
+
+- yes → save mini-spec, move to next screen
+- no → re-interview this screen (go back to Step 4.2)
+- refine → ask specific clarifications, update mini-spec
+```
+
+**Checkpoint 4.1:** All screens interviewed
+```
+✓ Mini-specs collected: ${miniSpecs.length} → state: GENERATE
+```
+
+---
+
+### Phase 5: GENERATE (JSON Assembly)
+
+**Step 5.1:** Merge mini-specs
+- Combine all screen mini-specs into full spec
+- Deduplicate node IDs (same label + type → single node)
+- Merge constraints and references
+
+**Step 5.2:** Add cross-screen dataFlow edges
+Trace data paths between screens — all edges use `flows-to` type:
+- Component A captures → Component B displays (flows-to)
+- Transform produces → Component displays (flows-to)
+- Validation checks → DataPoint (flows-to)
+
+**Step 5.3:** Add tables (if applicable)
+If database tables or API endpoints were mentioned:
+```json
+{
+  "tables": [
+    {
+      "id": "users_table",
+      "label": "Users",
+      "columns": [
+        { "name": "email", "type": "string" },
+        { "name": "created_at", "type": "string" }
+      ],
+      "sourceType": "database",
+      "endpoint": "postgresql://users"
+    }
+  ]
+}
+```
+
+**Step 5.4:** Add screens metadata
+Include screen IDs from Phase 3 (regions added in REFINE):
+```json
+{
+  "screens": [
+    {
+      "id": "screen_1",
+      "name": "Login Page",
+      "imageUrl": "https://...",
+      "imageWidth": 1920,
+      "imageHeight": 1080,
+      "regions": []
+    }
+  ]
+}
+```
+
+**Checkpoint 5.1:** JSON generated
+```
+✓ Full JSON spec assembled → state: VALIDATE
+```
+
+---
+
+### Phase 6: VALIDATE (Quality Checks)
+
+**Step 6.1:** Import spec with auto-layout
+```
+flowspec_import_json(
+  projectId,
+  json: fullSpec,
+  autoLayout: true,
+  layoutDirection: "TB"
+)
+```
+
+**Step 6.2:** Run enhanced analysis
+```
+analysis = flowspec_analyse_project(projectId)
+```
+
+Check for:
+- ✅ Orphan nodes (no edges)
+- ✅ Exact duplicate labels
+- ✅ **TBD / unresolved types** (DataPoints still set to `TBD`)
+- ✅ **Naming convention violations** (mixed-case, special chars, inconsistent prefixes)
+- ✅ **Fuzzy duplicates** (near matches via Levenshtein/cosine)
+- ✅ **Unreachable subgraphs** (isolated clusters)
+- ✅ **Consolidation opportunities** (same type + constraints)
+
+**Step 6.3:** Quality gate decision
+```
+IF issues found:
+  → Display analysis results
+  → Ask user: "Fix automatically [auto] or manually [manual] or skip [skip]?"
+
+  - auto → apply suggested fixes, re-import spec, re-validate
+  - manual → prompt specific fixes, user edits, re-import
+  - skip → proceed with warnings
+
+  → state: REFINE (on success) or VALIDATE (retry)
+
+ELSE:
+  → state: REFINE
+```
+
+**Checkpoint 6.1:** Validation passed
+```
+✓ Quality checks passed → state: REFINE
+```
+
+---
+
+### Phase 7: REFINE (Regions & Layout)
+
+**Step 7.1:** Add regions to screens
+For each screen and identified UI region from INTERVIEW phase:
+
+```
+flowspec_add_region(
+  projectId,
+  screenId,
+  label: "Login Form",
+  position: { x: 10, y: 20 },  # percentage (0-100)
+  size: { width: 80, height: 60 },
+  elementIds: [nodeId1, nodeId2]  # node IDs from canvas
+)
+```
+
+**Position guidelines:**
+- Use percentage coordinates (0-100) relative to wireframe
+- Top-left = (0, 0), bottom-right = (100, 100)
+- Typical sizes: header (100, 10), sidebar (20, 80), form (60, 40)
+
+**Step 7.2:** Semantic layout (optional)
+Offer smart positioning commands:
+
+```
+ASK: "Apply semantic layout? Examples:
+- 'move auth nodes to top-right'
+- 'arrange payment flow vertically on left'
+- 'cluster validation transforms in bottom-left'
+"
+
+IF user provides command:
+  flowspec_smart_layout(projectId, command)
+```
+
+**Step 7.3:** Manual layout adjustment (optional)
+```
+ASK: "Re-run auto-layout with different direction? [TB/BT/LR/RL/skip]"
+
+IF user selects direction:
+  flowspec_auto_layout(projectId, direction)
+```
+
+**Checkpoint 7.1:** Refinement complete
+```
+✓ Regions linked, layout optimized → state: FINALIZE
+```
+
+---
+
+### Phase 7.5: DECISION TREES (Optional — Workflow Analysis)
+
+If the project contains Transform nodes with `type: workflow` or `type: validation`, offer to generate decision trees for deeper analysis.
+
+**Step 7.5.1:** Identify candidate transforms
+```
+Search for transforms with type "workflow" or "validation" in the project.
+If none found → skip to Phase 8.
+```
+
+**Step 7.5.2:** Check for existing trees
+```
+flowspec_list_decision_trees(projectId)
+
+If trees exist, offer analysis:
+  flowspec_analyse_decision_tree(projectId, treeId)
+
+If no trees exist, inform user they can generate them
+from the FlowSpec UI (click tree icon on transform node).
+```
+
+**Step 7.5.3:** Include in tech spec
+```
+If decision trees exist, add a "Decision Trees" section to the
+tech spec listing each tree with its root transform, depth,
+branch count, and analysis summary.
+```
+
+**Checkpoint 7.5.1:** Decision tree review complete
+```
+✓ Decision trees reviewed → state: FINALIZE
+```
+
+---
+
+### Phase 8: FINALIZE (Export & Tech Spec)
+
+**Step 8.1:** Export final JSON
+```
+spec = flowspec_get_json(projectId)
+```
+
+Save to file: `{projectName}_flowspec.json`
+
+**Step 8.2:** Generate tech spec markdown
+Create structured implementation guide:
+
+```markdown
+# {Project Name} - Technical Specification
+
+Generated: {timestamp}
+
+## DataPoints (${dataPoints.length})
+
+| Label | Type | Source | Constraints |
+|-------|------|--------|-------------|
+| Email Address | string | captured | required, email-format |
+| Auth Token | string | inferred | - |
+
+## Components (${components.length})
+
+| Label | Displays | Captures | Wireframe |
+|-------|----------|----------|-----------|
+| Login Page | auth_token | email_input, password_input | Login Page |
+
+## Transforms (${transforms.length})
+
+| Label | Type | Inputs | Outputs | Logic |
+|-------|------|--------|---------|-------|
+| Validate Email | validation | email_input | email_valid | regex match |
+
+## Tables (${tables.length})
+
+| Label | Source | Columns |
+|-------|--------|---------|
+| Users | postgresql | email, created_at |
+
+## Implementation Recommendations
+
+1. **Database Schema**: Create tables with listed columns and types
+2. **API Contracts**: Build endpoints for inferred DataPoints (auth_token, etc.)
+3. **Component Structure**: Implement UI components with listed displays/captures
+4. **Validation Rules**: Apply constraints at both client and server
+5. **Data Flow**: Follow edges for state management and data passing
+
+## Quality Metrics
+
+- Total nodes: ${totalNodes}
+- Connected nodes: ${connectedNodes}
+- Orphans: ${orphans}
+- Duplicate labels: ${duplicates}
+- Naming violations: ${namingViolations}
+- Fuzzy duplicates: ${fuzzyDuplicates}
+
+✅ Ready for implementation in Claude Code via `/spec` skill
+```
+
+**Step 8.3:** Completion summary
+```
+✅ FlowSpec project created — awaiting your review.
+
+- Project: ${projectName}
+- Screens: ${screenCount}
+- Nodes: ${nodeCount} (DataPoints: ${dp}, Components: ${comp}, Transforms: ${tf})
+- Edges: ${edgeCount}
+- JSON: ${jsonFilePath}
+- Tech Spec: ${specFilePath}
+```
+
+**Checkpoint 8.1:** Export complete
+```
+✓ FINALIZE done → state: CONFIRM
+```
+
+---
+
+### Phase 9: CONFIRM (User Approval — HARD GATE)
+
+**This phase is mandatory. Do NOT skip it.**
+
+The FlowSpec spec must be reviewed and explicitly approved by the user before any implementation work begins. This prevents wasted effort from building against an incomplete or incorrect spec.
+
+**Step 9.1:** Present the spec for review
+```
+ASK: "Please review the FlowSpec project in the desktop app (or the exported JSON).
+
+Check:
+1. All screens and data elements are represented
+2. Data flows between components are correct
+3. Transform logic matches your requirements
+4. No missing or duplicate nodes
+
+When you're satisfied, confirm and I'll proceed to implementation.
+Is the spec complete and correct? [yes / needs changes]"
+```
+
+**Step 9.2:** Handle response
+```
+IF "needs changes":
+  → Ask what needs changing
+  → Apply changes via MCP tools
+  → Re-export JSON
+  → Re-run VALIDATE (quality checks)
+  → Return to Step 9.1 (re-present for review)
+
+IF "yes" / confirmed:
+  → Record confirmation timestamp
+  → state: DONE
+```
+
+**Step 9.3:** Post-confirmation next steps
+```
+✅ FlowSpec spec confirmed by user.
+
+Ready for implementation. You can now:
+1. Generate code with: /spec ${jsonFilePath}
+2. Use the tech spec for manual implementation planning
+```
+
+**Checkpoint 9.1:** Spec confirmed
+```
+✓ User confirmed spec → state: DONE
+```
+
+> **IMPORTANT:** Only after reaching DONE with user confirmation should you invoke `/spec` or begin any implementation. If the user asks to implement during FINALIZE or earlier phases, remind them the spec needs review and confirmation first.
+
+---
+
+## UC2: Codebase → Dataflow (AST-Driven)
+
+**Goal:** Reverse-engineer existing codebase into FlowSpec architecture.
+
+See [codebase-analysis.md](references/codebase-analysis.md) and [ast-parsing.md](references/ast-parsing.md) for detailed AST parsing strategies.
+
+### Phase 3: GATHER (Codebase Analysis)
+
+**Step 3.1:** Scope assessment
+```
+1. Detect framework (check package.json, directory structure)
+   - SvelteKit: src/routes/, +page.svelte
+   - Next.js: pages/ or app/, React
+   - Express: server.js, routes/
+   - Remix: app/routes/
+
+2. Count routes/pages (determine granularity)
+   - < 10 pages → single JSON spec
+   - 10-30 pages → split by domain (auth, admin, public)
+   - > 30 pages → per-module JSON specs
+
+3. Identify database/API access
+   - SQL queries, ORM models
+   - API fetch calls, endpoints
+```
+
+**Step 3.2:** Check for `@flowspec` annotations
+```
+1. Scan source files for @flowspec comments left by the codebase-indexer skill:
+   grep -r "// @flowspec" src/ --include="*.ts" --include="*.tsx" --include="*.svelte" --include="*.jsx"
+
+2. IF annotations found:
+   - Parse each: // @flowspec dp-name: type, source, constraints
+   - Build initial node list from annotations (already validated by indexer)
+   - Report: "Found ${count} pre-indexed elements in ${fileCount} files"
+   - Use these as the BASE for the spec — skip re-discovering them in INTERVIEW
+
+3. IF no annotations found:
+   - Proceed with full AST parsing in INTERVIEW phase
+```
+
+> **Why check annotations?** The `/flowspec:annotate` skill (codebase-indexer) may have already analysed this codebase and left `@flowspec` comments marking datapoints, components, transforms, and edges. Using these avoids duplicate work and ensures consistency with prior analysis.
+
+**Step 3.3:** Check existing specs
+```
+projects = flowspec_list_projects()
+existingNodes = flowspec_search_nodes(query: "codebase-relevant-term")
+
+IF existing project found:
+  ASK: "Update existing project or create new?"
+```
+
+**Checkpoint 3.1:** Scope defined
+```
+✓ Framework: ${framework}, Routes: ${routeCount}, Annotations: ${annotationCount} → state: INTERVIEW
+```
+
+---
+
+### Phase 4: INTERVIEW (AST Guidance)
+
+**Step 4.1:** AST parsing strategy
+Explain to user what will be analysed:
+
+```
+"I'll parse your ${framework} codebase using AST (Abstract Syntax Tree) analysis:
+
+1. **Type Definitions** → DataPoints
+   - Interfaces, types, Zod schemas
+   - Extract properties, types, constraints
+
+2. **Routes/Pages** → Components
+   - Each route file → one Component
+   - Identify load functions (data fetching)
+   - Identify form actions (data capture)
+
+3. **Utilities** → Transforms
+   - Functions in lib/utils, lib/services
+   - Calculate, validate, workflow logic
+
+4. **Data Flow** → Edges
+   - Trace imports, function calls
+   - Follow data dependencies
+
+Is this approach okay? [yes / customize]"
+```
+
+**Step 4.2:** AST parsing execution
+Use AST parsing techniques from [ast-parsing.md](references/ast-parsing.md):
+
+- **TypeScript:** `typescript` compiler API
+- **Svelte:** `svelte/compiler` + regex for runes
+- **React:** `@babel/parser` + `@babel/traverse`
+
+**Step 4.3:** Progressive mini-spec generation
+For each module/route:
+1. Parse file → extract entities
+2. Build mini-spec fragment
+3. **User confirmation:** "Module '${moduleName}' mapped. Correct? [yes/no/refine]"
+4. Save mini-spec
+
+**Checkpoint 4.1:** All modules parsed
+```
+✓ Mini-specs: ${miniSpecs.length} → state: GENERATE
+```
+
+---
+
+### Phase 5-8: Same as UC1
+Follow GENERATE → VALIDATE → REFINE → FINALIZE phases.
+
+**Additional Step in REFINE (UC2-specific):**
+```
+ASK: "Capture screenshots of running app for screen overlay? [yes/no]"
+
+IF yes:
+  - User provides localhost URL or deployed URL
+  - Use Playwright capture (if P1 tool available):
+    flowspec_capture_screen(url, selector, viewport)
+  - Or user uploads screenshots manually:
+    flowspec_upload_image(filePath)
+
+  - Create screens + add regions (same as UC1 Phase 7)
+```
+
+---
+
+## UC3: Design New Screens (Collaborative)
+
+**Goal:** Design new screens from scratch or extend existing project.
+
+### Phase 3: GATHER (Design Input)
+
+**Step 3.1:** Obtain screen design
+```
+ASK: "How would you like to design the screen?
+1. Upload image from Figma/Sketch/Pencil
+2. Start with blank screen (text description)
+3. Use existing screen as template
+"
+```
+
+**Step 3.2:** Upload or create
+- **If image:** Same as UC1 Phase 3 (upload → create screen)
+- **If blank:** Skip image, create screen with placeholder
+- **If template:** Clone existing screen
+
+**Checkpoint 3.1:** Screen created
+```
+✓ Screen: ${screenName} → state: INTERVIEW
+```
+
+---
+
+### Phase 4: INTERVIEW (Collaborative Design)
+
+**Step 4.1:** Region definition
+Walk through screen with user:
+
+```
+"Let's define UI regions for '${screenName}':
+
+For each region (header, form, table, sidebar, etc.):
+1. Region name: _____
+2. Position (x%, y%): _____, _____
+3. Size (width%, height%): _____, _____
+4. Data elements: [list]
+5. Interactions: [buttons, links, inputs]
+"
+```
+
+**Step 4.2:** Data element specification
+For each data element in region:
+```
+Q1: Label? → _____
+Q2: Type? → string/number/boolean/object/array
+Q3: Source? → captured/inferred
+Q4: Constraints? → required, enum, range, format
+Q5: Related transforms? → validation, calculation, workflow
+```
+
+**Step 4.3:** Build mini-spec
+Same as UC1 Phase 4 Step 4.3.
+
+**Step 4.4:** Confirmation
+```
+ASK: "Screen design complete? [yes/no/add-more-regions]"
+```
+
+**Checkpoint 4.1:** Design complete
+```
+✓ Regions defined → state: GENERATE
+```
+
+---
+
+### Phase 5-8: Same as UC1
+Follow GENERATE → VALIDATE → REFINE → FINALIZE phases.
+
+**Merge mode in GENERATE (UC3-specific):**
+```
+IF extending existing project:
+  flowspec_import_json(projectId, json: miniSpec, merge: true)
+  # Merges new nodes with existing, preserves structure
+```
+
+---
+
+## Quality Gate Checklist
+
+Run at **every VALIDATE checkpoint**:
+
+```yaml
+VALIDATE_CHECKLIST:
+  - orphans.length === 0
+    → Every node must have at least one edge
+
+  - duplicates.length === 0
+    → No exact duplicate labels
+
+  - namingViolations.length === 0
+    → Consistent naming convention (snake_case or camelCase, not mixed)
+
+  - fuzzyDuplicates.length === 0
+    → No near-duplicates (orderTotal vs order_total)
+
+  - isolatedSubgraphs.length === 0
+    → All nodes connected to main graph
+
+  - capturedDataPoints.every(dp =>
+      components.some(c => c.captures.includes(dp.id))
+    )
+    → Every captured DataPoint has capturing Component
+
+  - inferredDataPoints.every(dp =>
+      transforms.some(t => t.outputs.includes(dp.id)) ||
+      components.some(c => c.displays.includes(dp.id))
+    )
+    → Every inferred DataPoint has producing Transform or fetching Component
+
+IF any check fails:
+  → state: REFINE
+  → Display specific failures
+  → Suggest fixes
+  → Re-validate after fixes
+```
+
+---
+
+## State Machine Error Recovery
+
+**Interrupted workflow?** Resume from last checkpoint:
+
+```
+1. Check Task list for latest state
+2. Retrieve saved context (projectId, useCase, miniSpecs, screenIds)
+3. Resume from last completed phase:
+   - INIT → start over (quick)
+   - ROUTE → start over (quick)
+   - GATHER → resume uploads/parsing
+   - INTERVIEW → resume from last confirmed screen
+   - GENERATE → regenerate from saved mini-specs
+   - VALIDATE → re-run analysis
+   - REFINE → continue layout/regions
+   - FINALIZE → re-export
+   - CONFIRM → re-present spec for user review
+```
+
+**State transition failure?**
+```
+IF state transition blocked:
+  1. Display error details
+  2. Suggest corrective action
+  3. Allow manual state override (with confirmation)
+  4. Offer rollback to previous checkpoint
+```
+
+---
+
+## Advanced Features
+
+### Semantic Positioning Examples
+```
+# Move specific node types to regions
+"move all validation transforms to bottom-left"
+"arrange payment flow vertically on right side"
+"cluster auth-related nodes in top-right"
+
+# Organize by relationship
+"group captured DataPoints near their Components"
+"stack transforms between their inputs and outputs"
+```
+
+### Progressive Refinement
+```
+1. Import initial JSON spec (coarse-grained)
+2. Run analysis → identify gaps
+3. Add missing nodes/edges incrementally
+4. Re-import with merge: true
+5. Validate again → iterate
+```
+
+### Multi-spec Projects
+```
+# For large codebases
+1. Generate per-domain JSON specs (auth.json, admin.json, public.json)
+2. Import each with merge: true
+3. Deduplicate shared DataPoints
+4. Consolidate cross-domain edges
+```
+
+---
+
+## Tool Reference
+
+See [json-schema.md](references/json-schema.md) for JSON spec structure.
+
+See [workflow-orchestration.md](references/workflow-orchestration.md) for state machine details.
+
+See [ast-parsing.md](references/ast-parsing.md) for framework-specific parsing strategies.
+
+See [codebase-analysis.md](references/codebase-analysis.md) for UC2 full pipeline.
+
+---
+
+## Success Criteria
+
+A FlowSpec project is **complete** when:
+
+✅ All phases reached CONFIRM state
+✅ Quality gate passed (0 issues) — in strict mode, aim for zero errors and zero warnings
+✅ JSON exported to file
+✅ Tech spec generated
+✅ Regions linked to screens (if wireframes used)
+✅ Layout optimized (auto-layout or smart layout applied)
+✅ **User explicitly confirmed the spec is correct** (HARD GATE)
+
+**Output artifacts:**
+- `${projectName}_flowspec.json` (importable spec)
+- `${projectName}_tech_spec.md` (implementation guide)
+- FlowSpec project (viewable in desktop app)
+
+**Next step:** Only after user confirmation → `/spec ${projectName}_flowspec.json`
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/jktfe) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

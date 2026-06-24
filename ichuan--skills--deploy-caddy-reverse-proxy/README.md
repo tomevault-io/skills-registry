@@ -1,0 +1,13 @@
+# deploy-caddy-reverse-proxy
+
+> Skill by [ichuan](https://github.com/ichuan/skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ichuan/skills](https://github.com/ichuan/skills/tree/main/skills/deploy-caddy-reverse-proxy)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

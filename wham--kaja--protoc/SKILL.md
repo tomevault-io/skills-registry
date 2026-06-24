@@ -1,0 +1,15 @@
+---
+name: protoc
+description: Re-generates the project's code from protobuf source. Use when .proto files are changed. Use when this capability is needed.
+metadata:
+  author: wham
+---
+
+- Run `scripts/server` to re-generate Protobuf files. No custom commands.
+- The process uses `protoc` (protoc-go) and the relevant plugins to generate code for both server and client sides.
+- The process does not automatically exit, so ensure to terminate it manually after generation is complete. Wait for the output "Server started" and then stop the process.
+- Always commit all the generated files, even when there are just comment changes.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/wham) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

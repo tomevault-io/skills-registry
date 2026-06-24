@@ -1,0 +1,226 @@
+---
+name: managing-omega-sprints
+description: Orchestrates AI-native sprint management with autonomous agent coordination and continuous delivery. Use when running development sprints with AI agent teams or coordinating parallel task execution. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Managing Omega Sprints
+
+Execute **AI-native sprint management** with autonomous agent orchestration, intelligent task routing, and continuous delivery cycles.
+
+## Quick Start
+
+```yaml
+# 1. Define sprint vision
+Vision:
+  Objective: "Implement OAuth2 authentication"
+  Success: ["3 providers", "95% completion rate", "OWASP compliant"]
+
+# 2. Break into agent-executable tasks
+Tasks:
+  - { id: "types", agent: "architect", tokens: 5K }
+  - { id: "google-oauth", agent: "fullstack", tokens: 8K, depends: ["types"] }
+  - { id: "tests", agent: "tester", tokens: 6K, depends: ["google-oauth"] }
+
+# 3. Execute with autonomy level
+Execution:
+  Autonomy: "semi-auto"
+  Checkpoints: ["phase-complete", "error-threshold"]
+  QualityGates: ["coverage > 80%", "no-critical-bugs"]
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Sprint Lifecycle | Vision, Plan, Execute, Deliver, Retrospect | AI-native 5-phase cycle |
+| Task Breakdown | Atomic, testable, agent-sized tasks | Hours not days per task |
+| Agent Routing | Match tasks to optimal agents | Capability + load scoring |
+| Autonomy Levels | Full-auto to supervised modes | Balance speed and oversight |
+| Quality Gates | Automated checkpoints | Coverage, security, performance |
+| Parallel Execution | Swarm-based task processing | Maximize parallelization |
+| Sprint Analytics | Velocity, quality, efficiency metrics | Continuous improvement |
+
+## Common Patterns
+
+### Sprint Lifecycle
+
+```
+VISION ──> PLAN ──> EXECUTE ──> DELIVER ──> RETROSPECT
+   │         │         │           │             │
+   ▼         ▼         ▼           ▼             ▼
+ Define   Break into  Agents    Ship to      Learn and
+ success  agent-ready  work    production    improve
+ criteria   tasks    parallel
+```
+
+### Vision Definition
+
+```typescript
+interface SprintVision {
+  objective: string;
+  businessValue: string;
+  successCriteria: SuccessCriterion[];
+  scope: {
+    included: string[];
+    excluded: string[];
+    risks: Risk[];
+  };
+  qualityGates: QualityGate[];
+}
+
+const vision: SprintVision = {
+  objective: "Implement user authentication with OAuth2",
+  businessValue: "Reduce signup friction by 60%",
+  successCriteria: [
+    { metric: "OAuth providers", target: 3 },
+    { metric: "Auth completion rate", target: "95%" },
+    { metric: "Security audit", target: "OWASP compliant" }
+  ],
+  qualityGates: [
+    { type: 'coverage', threshold: 80 },
+    { type: 'security-scan', threshold: 'no-critical' }
+  ]
+};
+```
+
+### Task Breakdown
+
+```typescript
+interface SprintTask {
+  id: string;
+  title: string;
+  type: 'feature' | 'bugfix' | 'test' | 'docs';
+  priority: 'critical' | 'high' | 'medium';
+  estimatedTokens: number;
+  dependencies: string[];
+  suggestedAgent: AgentType;
+  acceptanceCriteria: string[];
+}
+
+// Layer-based breakdown
+const tasks = [
+  // Layer 1: Foundation
+  { id: 'types', title: 'Define TypeScript interfaces', agent: 'architect' },
+  { id: 'schema', title: 'Create DB migrations', depends: ['types'] },
+
+  // Layer 2: Implementation (parallel)
+  { id: 'google', title: 'Google OAuth', depends: ['types'] },
+  { id: 'github', title: 'GitHub OAuth', depends: ['types'] },
+
+  // Layer 3: Quality
+  { id: 'tests', title: 'Integration tests', depends: ['google', 'github'] }
+];
+```
+
+### Agent Routing
+
+```typescript
+type AgentType = 'architect' | 'fullstack' | 'debugger' | 'tester' | 'reviewer';
+
+const routingRules: Record<TaskType, AgentType[]> = {
+  feature: ['fullstack', 'frontend', 'backend'],
+  bugfix: ['debugger', 'fullstack'],
+  test: ['tester'],
+  docs: ['docs-manager'],
+  research: ['oracle', 'architect']
+};
+
+// Scoring algorithm
+function calculateFitScore(agent: Agent, task: Task): number {
+  let score = 0;
+  score += capabilityMatch * 40;      // Core capabilities
+  score += specializationMatch * 30;   // Domain expertise
+  score += (1 - loadFactor) * 20;      // Availability
+  score += hasContext ? 10 : 0;        // Context continuity
+  return score;
+}
+```
+
+### Autonomy Levels
+
+```typescript
+const autonomyConfigs = {
+  'full-auto': {
+    checkpoints: [{ trigger: 'phase-complete', action: 'notify' }],
+    approvalRequired: ['production-deploy']
+  },
+  'semi-auto': {
+    checkpoints: [
+      { trigger: 'task-complete', action: 'notify' },
+      { trigger: 'phase-complete', action: 'review', timeout: 3600 }
+    ],
+    approvalRequired: ['merge-to-main', 'production-deploy']
+  },
+  'supervised': {
+    checkpoints: [{ trigger: 'task-complete', action: 'review' }],
+    approvalRequired: ['all-merges', 'all-deploys']
+  }
+};
+```
+
+### Sprint Metrics
+
+```typescript
+interface SprintMetrics {
+  velocity: { completed: number; planned: number; ratio: number };
+  quality: { bugs: number; coverage: number; score: number };
+  efficiency: { totalTokens: number; parallelization: number };
+  agents: Map<AgentType, { tasks: number; efficiency: number }>;
+}
+
+// Dashboard template
+`
+SPRINT DASHBOARD: ${name}
+────────────────────────────────────
+PROGRESS         QUALITY         AGENTS
+████████░░ 80%   Coverage: 87%   arch: idle
+24/30 tasks      Bugs: 2         dev-1: working
+                 Security: OK    tester: queued
+`
+```
+
+### Retrospective Framework
+
+```markdown
+## Sprint Retrospective
+
+### Summary
+- Velocity: X/Y tasks (Z%)
+- Quality: Coverage %, Bugs introduced
+- Efficiency: Tokens used, Parallelization ratio
+
+### What Went Well
+1. [Success] - Why it worked - How to replicate
+
+### What Could Improve
+1. [Challenge] - Root cause - Proposed solution
+
+### Action Items
+| Action | Priority | Owner |
+|--------|----------|-------|
+| [Action] | High | [Agent] |
+
+### Learnings to Encode
+- [Pattern to add to agent prompts]
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Define clear success criteria before sprint | Starting without vision and scope |
+| Break tasks small enough for single-agent | Tasks with circular dependencies |
+| Enable maximum parallelization | Skipping quality gates under pressure |
+| Set appropriate autonomy based on risk | Ignoring retrospective insights |
+| Track metrics consistently | Over-committing capacity |
+| Run retrospectives after every sprint | Context-switching agents unnecessarily |
+| Encode learnings into agent prompts | Deploying without automated tests |
+| Use quality gates to prevent regressions | Letting blockers sit unaddressed |
+| Maintain sprint rhythm for predictability | Skipping the retrospective phase |
+| Celebrate wins to build momentum | Forgetting to update documentation |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

@@ -1,0 +1,62 @@
+---
+name: git-committing
+description: Conventional commit message format with type, scope, and description. Use when committing code, writing commit messages, or preparing changes for commit. Triggers on: commit, git commit, commit message, conventional commit, feat, fix, refactor. Use when this capability is needed.
+metadata:
+  author: porcami
+---
+
+# Git Committing
+
+Commit messages follow Conventional Commits format.
+
+## Format
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+```
+
+## Types
+
+| Type       | Use When                                  |
+| ---------- | ----------------------------------------- |
+| `feat`     | Adding new functionality                  |
+| `fix`      | Correcting a bug                          |
+| `test`     | Adding or updating tests (primary change) |
+| `refactor` | Restructuring without behaviour change    |
+| `docs`     | Documentation only                        |
+| `chore`    | Maintenance, dependencies                 |
+
+## Workflow-Aware Type Selection
+
+When a `Workflow:` field exists in PLAN.md, use the default type for that workflow unless the change clearly warrants a different type:
+
+| Workflow | Default Type |
+|----------|-------------|
+| TDD / One-shot | `feat` |
+| Bug-fix / Hotfix | `fix` |
+| Refactoring | `refactor` |
+| Chore | `chore` |
+
+## Scope
+
+Derive from:
+
+- Repository hint in work item title: `[payments]` → scope `payments`
+- Primary domain area affected
+- Component or module name
+
+Check recent commits for consistency: `git log --oneline -20`
+
+## Description Rules
+
+- Imperative mood: "add" not "added" or "adds"
+- Lowercase throughout
+- No trailing period
+- Under 50 characters (hard limit: 72)
+- Specific: "add balance validation to payment processor" not "update code"
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/porcami) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-14 -->

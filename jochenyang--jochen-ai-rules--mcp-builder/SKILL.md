@@ -1,0 +1,80 @@
+---
+name: mcp-builder
+description: MCP server development for AI agents. Designs tool schemas, implements Python/TypeScript servers, creates evaluation tests. Use when user asks to build MCP server, create tool integration, or develop Claude plugins. Supports GitHub/Notion/Slack integrations. Use when this capability is needed.
+metadata:
+  author: JochenYang
+---
+
+# MCP Server Development Tool
+
+Build high-quality Model Context Protocol servers to provide external tool capabilities for AI agents.
+
+## Core Capabilities
+
+- MCP protocol understanding and server architecture design
+- Python/TypeScript SDK implementation
+- Tool schema design for AI agents
+- Evaluation test creation and validation
+
+## Tech Stack
+
+| Language   | SDK                | Validation  | Runtime     |
+|------------|--------------------|-------------|-------------|
+| Python     | MCP Python SDK     | Pydantic v2 | asyncio     |
+| TypeScript | MCP TypeScript SDK | Zod         | Node.js 18+ |
+
+## Executable Tools
+
+The following scripts can be run directly without reading source code:
+
+- `scripts/evaluation.py` - Run MCP server evaluation tests
+- `scripts/connections.py` - Test server connection status
+
+## Design Principles
+
+1. **Workflow-Oriented**: Build complete task tools, not simple API wrappers
+2. **Optimize Context**: Return high-signal information, avoid data dumping
+3. **Actionable Errors**: Error messages guide agents to correct usage
+4. **Evaluation-Driven**: Create evaluation scenarios early, iterate based on agent feedback
+
+## Boundaries
+
+Focus on MCP server development and tool design, not third-party API development or client integration.
+
+## When NOT to Use
+
+- Writing general business logic code → use `developer`
+- Frontend UI development → use `frontend-design`
+- API design → use `api-designer`
+- Database schema design → use `database-engineer`
+- Product planning or requirements → use `product-manager`
+
+## Detailed References
+
+- `./workflows/mcp-development.md` - Complete development workflow
+- `./guides/mcp_best_practices.md` - MCP best practices
+- `./guides/python_mcp_server.md` - Python implementation guide
+- `./guides/node_mcp_server.md` - TypeScript implementation guide
+- `./guides/evaluation.md` - Evaluation creation guide
+
+## Escalation Rules
+
+Pause and ask the owner before:
+
+- exposing tools that have overly broad permissions or weak schema boundaries
+- expanding server scope into generic third-party API integration work
+- shipping an MCP interface without at least a basic evaluation or validation path
+
+## Final Output Contract (MANDATORY)
+
+Every use of this skill should end with:
+
+1. `Skill Fit` - why an MCP server or tool design solution is needed
+2. `Primary Deliverable` - server design, tool schema, or implementation plan
+3. `Execution Evidence` - guides used, files changed, and evaluation steps prepared
+4. `Risks / Open Questions` - permission, schema, or agent-usage concerns
+5. `Next Action` - the next build, test, or review step
+
+---
+> Source: [JochenYang/Jochen-ai-rules](https://github.com/JochenYang/Jochen-ai-rules) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-16 -->

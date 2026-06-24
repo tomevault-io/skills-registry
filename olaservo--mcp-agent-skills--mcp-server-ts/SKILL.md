@@ -1,0 +1,367 @@
+---
+name: mcp-server-ts
+description: Build TypeScript MCP servers with composable code snippets from the official Everything reference server. Use the add script to selectively copy tool, resource, or prompt modules. Use when creating MCP servers. Use when this capability is needed.
+metadata:
+  author: olaservo
+---
+
+# TypeScript MCP Server Builder
+
+Build MCP (Model Context Protocol) servers in TypeScript by referencing code snippets from the official Everything reference server.
+
+## How It Works
+
+1. **Browse** the snippet catalog below or in `snippets/`
+2. **Copy** the snippets you need into your project
+3. **Customize** the copied code for your use case
+4. **Register** your tools/resources/prompts with the server
+
+Snippets are bundled in this skill's `snippets/` directory.
+
+---
+
+## Quick Start Decision Trees
+
+### What MCP Primitive Should I Use?
+
+```
+Need to perform actions with side effects?
+  └─> Is it a long-running operation (>2-3 seconds)?
+      └─> Use TASKS (async execution with polling)
+          Examples: Research queries, data processing, report generation
+  └─> Is it quick and synchronous?
+      └─> Use TOOLS (model-controlled)
+          Examples: API calls, file operations, computations
+
+Need to expose data for LLM context?
+  └─> Is data relatively static or URI-addressable?
+      └─> Use RESOURCES (application-controlled)
+          Examples: file contents, database records, API responses
+  └─> Need parameterized access patterns?
+      └─> Use Resource Templates with URI variables
+          Example: myapp://users/{userId}/profile
+
+Need user-initiated commands/slash commands?
+  └─> Use PROMPTS (user-controlled)
+      Examples: /summarize, /translate, /analyze
+```
+
+### What Transport Should I Use?
+
+```
+Local integration (subprocess, CLI, Claude Desktop)?
+  └─> Use stdio transport (default)
+
+Remote service, multi-client, or web deployment?
+  └─> Use Streamable HTTP transport
+```
+
+> **Logging with stdio transport:** Never use `console.log()` in stdio servers - it writes to stdout, which is reserved for MCP protocol messages and will break communication. Use `console.error()` for all diagnostic output (it writes to stderr).
+
+---
+
+## Phase 1: Research
+
+### 1.1 Identify Your Integration
+
+Before writing code, understand:
+- What API/service are you integrating?
+- What operations do users need to perform?
+- What data should be exposed to the LLM?
+
+### 1.2 Browse Available Snippets
+
+Review the snippet catalog below to identify patterns that match your needs:
+
+| Snippet | Description | Best For |
+|---------|-------------|----------|
+| `server-setup` | Basic McpServer with stdio | Starting any new server |
+| `server-setup-tasks` | McpServer with Tasks capability | Servers needing async operations |
+| `tool-basic` | Simple tool with Zod schema | API calls, simple operations |
+| `tool-progress` | Tool with progress notifications | Long-running operations (sync) |
+| `tool-annotations` | Tool with semantic hints | Indicating read-only/destructive ops |
+| `tool-output-schema` | Tool with structured output | Typed responses |
+| `tool-agentic-sampling` | Agentic tool with LLM sampling loop | Server-driven AI workflows |
+| `tool-resource-links` | Tool returning resource_link blocks | Deferred resource resolution |
+| `tool-image` | Tool returning image content | Image responses |
+| `tool-elicitation` | Standalone elicitation request | User input forms |
+| `tool-sampling-simple` | Simple one-shot sampling | Quick LLM requests |
+| `task-tool-basic` | Task with multi-stage progress and cancellation | Async long-running operations |
+| `task-input-required` | Task with elicitation and cancellation | Operations needing user clarification |
+| `resource-static` | Static resource registration | Files, configs, static data |
+| `resource-template` | Dynamic URI template resource | Parameterized data access |
+| `resource-session` | Session-scoped temporary resource | Dynamic/computed data |
+| `resource-collection` | Collection returning multiple items | Indexes, composite resources |
+| `prompt-basic` | Simple prompt | Basic user commands |
+| `prompt-args` | Prompt with arguments | Parameterized commands |
+| `prompt-completions` | Context-aware argument completions | Dependent argument values |
+| `prompt-resource` | Prompt with embedded resources | Resource-based prompts |
+
+### 1.3 Check Client Compatibility
+
+Use the MCP docs server to look up current client capabilities:
+- Query for "Example clients" to get a full list of clients and supported features
+- Query for the client name that you'd like to use
+- Check transport support (stdio vs Streamable HTTP)
+- Verify feature support (tools, resources, prompts, sampling, etc.)
+
+---
+
+## Phase 2: Implement
+
+### 2.1 Initialize Project
+
+```bash
+mkdir my-mcp-server && cd my-mcp-server
+npm init -y
+npm install @modelcontextprotocol/sdk zod
+npm install -D typescript @types/node
+npx tsc --init
+```
+
+Update `tsconfig.json`:
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true
+  }
+}
+```
+
+Update `package.json`:
+```json
+{
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  }
+}
+```
+
+### 2.2 Add Snippets
+
+Copy snippets from this skill's `snippets/` directory into your project. The snippets are organized by category:
+
+```
+snippets/
+├── server/
+│   ├── index.ts              # Server setup
+│   └── index-with-tasks.ts   # Server setup with Tasks
+├── tools/                    # Tool examples
+│   ├── echo.ts
+│   ├── trigger-long-running-operation.ts
+│   ├── get-annotated-message.ts
+│   ├── get-structured-content.ts
+│   ├── agentic-sampling.ts
+│   ├── get-resource-links.ts
+│   ├── get-tiny-image.ts
+│   ├── trigger-elicitation-request.ts
+│   └── trigger-sampling-request.ts
+├── tasks/                    # Task examples (SEP-1686)
+│   ├── task-tool-basic.ts
+│   └── task-input-required.ts
+├── resources/                # Resource examples
+│   ├── files.ts
+│   ├── templates.ts
+│   ├── session.ts
+│   └── collection.ts
+└── prompts/                  # Prompt examples
+    ├── simple.ts
+    ├── args.ts
+    ├── completions.ts
+    └── resource.ts
+```
+
+**Copy snippets directly:**
+```bash
+cp snippets/server/index.ts /path/to/my-mcp-server/src/
+cp snippets/tools/echo.ts /path/to/my-mcp-server/src/
+```
+
+### 2.3 Customize and Register
+
+Each snippet includes:
+- Source URL linking to the original GitHub file
+- Working code ready to customize
+
+Modify the copied code:
+1. Update tool/resource/prompt names
+2. Adjust schemas for your API
+3. Implement your business logic
+4. Register with your server
+
+---
+
+## Phase 3: Test
+
+### 3.1 Build
+
+```bash
+npm run build
+```
+
+### 3.2 Test with MCP Inspector
+
+```bash
+npx @modelcontextprotocol/inspector@latest node dist/index.js
+```
+
+The Inspector lets you:
+- List and call tools
+- Browse resources
+- Test prompts
+- View server logs
+
+### 3.3 Quality Checklist
+
+- [ ] All tools have clear descriptions
+- [ ] Input schemas validate correctly
+- [ ] Error messages are actionable
+- [ ] Long operations report progress
+- [ ] Resources use appropriate MIME types
+
+### 3.4 Writing Good Tool Descriptions
+
+When an LLM client connects to your server, it uses your tool descriptions to decide which tools to call. Small refinements to descriptions can yield dramatic improvements in tool selection accuracy.
+
+**Think like you're onboarding a new hire.** Make implicit context explicit—specialized query formats, niche terminology, and expected behaviors should all be clearly stated.
+
+**Parameter naming matters:**
+- Avoid generic names like `user` → use `user_id`
+- Prefer semantic names (`file_type`) over technical ones (`mime_type`)
+- Use natural language identifiers over cryptic codes
+
+**Provide actionable error messages** that guide the agent toward correct usage, not opaque error codes.
+
+```typescript
+// Bad - vague description, unclear parameters
+server.registerTool("process", { inputSchema: z.object({ data: z.string() }) }, async ({ data }) => { ... });
+
+// Good - clear purpose, descriptive parameters
+server.registerTool(
+  "convert_markdown_to_html",
+  {
+    title: "Convert Markdown to HTML",
+    description: "Convert markdown text to HTML for rendering. Use when displaying user-generated content.",
+    inputSchema: z.object({ markdown_text: z.string().describe("Raw markdown to convert") }),
+  },
+  async ({ markdown_text }) => { ... }
+);
+```
+
+See: [Writing Tools for Agents](https://www.anthropic.com/engineering/writing-tools-for-agents) for more guidance.
+
+---
+
+## Available Snippets Catalog
+
+### Server Setup
+
+| Name | Description |
+|------|-------------|
+| `server-setup` | Basic McpServer initialization with stdio transport, capabilities declaration, and clean shutdown |
+| `server-setup-tasks` | McpServer with Tasks capability, InMemoryTaskStore, and InMemoryTaskMessageQueue |
+
+### Tasks (SEP-1686)
+
+| Name | Description |
+|------|-------------|
+| `task-tool-basic` | Task with multi-stage progress, cancellation, and createTask/getTask/getTaskResult/cancelTask handlers |
+| `task-input-required` | Task with input_required status, elicitation side-channel, multi-stage progress, and cancellation |
+
+### Tools
+
+| Name | Description |
+|------|-------------|
+| `tool-basic` | Simple tool with Zod input schema (echo pattern) |
+| `tool-progress` | Long-running operation with progress notifications |
+| `tool-annotations` | Tool with readOnlyHint, destructiveHint, idempotentHint |
+| `tool-output-schema` | Tool with structured output schema for typed responses |
+| `tool-agentic-sampling` | Agentic tool using sampling with tools - LLM executes server tools in a loop (MCP 2025-11-25) |
+| `tool-resource-links` | Tool returning resource_link content blocks for deferred resolution |
+| `tool-image` | Tool returning image content blocks (base64-encoded) |
+| `tool-elicitation` | Standalone elicitation request with schema-driven form (client capability check) |
+| `tool-sampling-simple` | Simple one-shot sampling request (client capability check) |
+
+### Resources
+
+| Name | Description |
+|------|-------------|
+| `resource-static` | Static resource from files or fixed data |
+| `resource-template` | Dynamic resource with URI template variables |
+| `resource-session` | Session-scoped temporary resources (not persisted) |
+| `resource-collection` | Collection resource returning multiple items with distinct URIs |
+
+### Prompts
+
+| Name | Description |
+|------|-------------|
+| `prompt-basic` | Simple prompt without arguments |
+| `prompt-args` | Prompt with required/optional arguments and auto-completion |
+| `prompt-completions` | Prompt with context-aware argument completions using completable() helper |
+| `prompt-resource` | Prompt with embedded resource references in messages |
+
+---
+
+## Related Skills
+
+This skill focuses on **building** MCP servers. For **connecting** to MCP servers, see:
+
+| Skill | Use When |
+|-------|----------|
+| **mcp-client-ts** | Full MCP client (tools, resources, prompts, sampling, roots, logging, tasks) |
+| **claude-agent-sdk-ts** | Claude agents (limited MCP: tools + resources only) |
+
+Choose based on which MCP features your server exposes and which the client needs.
+
+---
+
+## Reference Files
+
+For deeper guidance, load these reference documents:
+
+- [TypeScript SDK Patterns](./reference/typescript_sdk_patterns.md) - SDK imports, registration patterns, error handling
+- [MCP Primitives Guide](./reference/mcp_primitives_guide.md) - Tool, Resource, Prompt specifications from MCP spec
+- [MCP Tasks Guide](./reference/mcp_tasks_guide.md) - Task-based async operations (SEP-1686)
+
+---
+
+## MCP Documentation Server
+
+For up-to-date client compatibility info and protocol details, use the MCP docs server:
+
+```json
+{
+  "mcpServers": {
+    "mcp-docs": {
+      "type": "http",
+      "url": "https://modelcontextprotocol.io/mcp"
+    }
+  }
+}
+```
+
+This provides live access to:
+- Client capability matrices
+- Protocol specification updates
+- SDK documentation
+- Best practices
+
+---
+
+## External Resources
+
+- [MCP Specification](https://modelcontextprotocol.io/specification) - Official protocol documentation
+- [Everything Server](https://github.com/modelcontextprotocol/servers/tree/main/src/everything) - Reference implementation (snippet source)
+- [TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) - Official SDK repository
+- [MCP Inspector](https://www.npmjs.com/package/@modelcontextprotocol/inspector) - Testing tool
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/olaservo) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

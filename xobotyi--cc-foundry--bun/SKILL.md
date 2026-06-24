@@ -1,0 +1,219 @@
+---
+name: bun
+description: >- Use when this capability is needed.
+metadata:
+  author: xobotyi
+---
+
+# Bun
+
+**Use Bun APIs, not Node.js polyfills. If Bun provides a native API for it, use it.**
+
+Bun is a batteries-included JavaScript runtime. It replaces Node.js, npm, Jest, and webpack with a single tool. Prefer
+Bun-native APIs (`Bun.serve`, `Bun.file`, `Bun.$`, `bun:sqlite`, `bun:test`) over Node.js equivalents unless portability
+is an explicit requirement.
+
+## References
+
+- **HTTP server** — [`${CLAUDE_SKILL_DIR}/references/server.md`]: Route types, file response patterns, WebSocket
+  pub/sub, server config
+- **File I/O and processes** — [`${CLAUDE_SKILL_DIR}/references/io-and-processes.md`]: File I/O details, shell API,
+  child processes, workers
+- **Testing** — [`${CLAUDE_SKILL_DIR}/references/testing.md`]: Test modifiers, parametrized tests, mocking, snapshots,
+  CLI flags
+- **SQLite, bundler, plugins** — [`${CLAUDE_SKILL_DIR}/references/ecosystem.md`]: SQLite API, bundler options, plugins,
+  macros
+- **Configuration** — [`${CLAUDE_SKILL_DIR}/references/config-and-compat.md`]: bunfig.toml sections, Node.js
+  compatibility, env vars
+
+## Prefer Bun-Native APIs
+
+Rule: if `Bun.*` or `bun:*` has it, use it. Fall back to `node:*` only when there's no Bun-native alternative or when
+portability to Node.js is required.
+
+Core mappings: `Bun.serve()` over `http.createServer()`, `Bun.file()`/`Bun.write()` over `node:fs`, `Bun.$` over
+`child_process.exec`, `bun:sqlite` over `better-sqlite3`, `bun:test` over Jest/Vitest, `Bun.password` over `bcrypt`,
+`Bun.sleep()` over `setTimeout` wrappers, `Bun.spawn()` over `child_process.spawn`. Use `node:fs` for directory ops — no
+Bun API yet. Use Web Streams API over `node:stream`.
+
+Full API preference table: see `${CLAUDE_SKILL_DIR}/references/io-and-processes.md`.
+
+## HTTP Server
+
+### Routing
+
+- **Use `routes` object** (v1.2.3+) for declarative path matching. Preferred over `fetch`-based routing.
+- **Route types:** exact (`"/users/all"`, highest priority), parameterized (`"/users/:id"`, `req.params.id`), wildcard
+  (`"/api/*"`), per-method (`{ GET: handler, POST: handler }`).
+- **Precedence:** exact > parameterized > wildcard > global catch-all.
+- **`fetch` handler** as fallback for unmatched routes, not primary routing.
+- **Always implement `error` handler** in `Bun.serve()`.
+- **`development: true`** in dev for built-in error pages.
+
+### Static Responses
+
+- **Use static `Response` objects** for health checks, redirects, fixed JSON — they are zero-allocation after init,
+  cached for server lifetime.
+- **Call `server.reload()`** to update static responses at runtime.
+
+### Request Object
+
+- **Route handlers receive `BunRequest`** (extends `Request`) with `params` (auto URL-decoded) and `cookies`
+  (auto-tracked `CookieMap`).
+- **TypeScript infers param shape** when route is a string literal.
+- **Cookie changes are auto-tracked** — `Set-Cookie` headers added automatically when using `req.cookies.set()` /
+  `.delete()`.
+
+### WebSocket
+
+- **Upgrade via `server.upgrade(req, { data })`** in the `fetch` handler.
+- **Use native pub/sub** for topic-based broadcasting: `ws.subscribe("topic")`, `ws.publish("topic", data)`.
+- **Type `ws.data`** via the `data` property on the `websocket` handler object.
+
+WebSocket limits, server configuration, file response patterns, HTML imports, and server lifecycle details: see
+`${CLAUDE_SKILL_DIR}/references/server.md`.
+
+## File I/O
+
+- **`Bun.file()` is lazy.** Creating a `BunFile` does not read from disk. It conforms to `Blob`.
+- **Read with `.text()`, `.json()`, `.bytes()`, `.stream()`, `.arrayBuffer()`** on `BunFile`.
+- **Check existence:** `await file.exists()`. Access `file.size` and `file.type`.
+- **`Bun.write()` handles all types** — string, Blob, Response, ArrayBuffer, BunFile. Uses fastest syscall per platform
+  (`copy_file_range`, `sendfile`, `clonefile`).
+- **Incremental writing:** use `file.writer()` (`FileSink`). Call `.flush()` to flush buffer, `.end()` to flush + close
+  (required to let process exit).
+- **Built-in stdio references:** `Bun.stdin` (readonly), `Bun.stdout`, `Bun.stderr`.
+- **Use `node:fs` for directory ops** — `mkdir`, `readdir`. No Bun-specific API yet.
+- **`import.meta.dir`** gives the directory of the current file.
+
+## Shell API — `Bun.$`
+
+Cross-platform bash-like shell with JavaScript interop. Runs in-process (not `/bin/sh`).
+
+- **`$` tagged template** for shell commands. Interpolated values are auto-escaped — injection-safe by default.
+- **Read output:** `.text()` (string, auto-quiets), `.json()` (parsed), `.lines()` (async iterator), `.blob()`, or
+  `await $\`...\``for`{ stdout, stderr }` Buffers.
+- **`.quiet()`** to suppress stdout/stderr output.
+- **Non-zero exit codes throw `ShellError`** by default. Use `.nothrow()` to handle exit codes manually. Configure
+  globally: `$.nothrow()` or `$.throws(false)`.
+- **Piping and redirection** work: `|`, `>`, `2>&1`, `< ${Bun.file("input.txt")}`, `< ${response}`.
+- **Set environment/cwd:** `.env({ FOO: "bar" })`, `.cwd("/tmp")`. Global defaults: `$.env(...)`, `$.cwd(...)`.
+- **Security:** interpolated variables are escaped (no command injection), but argument injection is still possible
+  (external commands interpret their own flags). Spawning `bash -c` bypasses Bun's protections.
+
+## Child Processes
+
+- **`Bun.spawn()`** for fine-grained async process control. Access `proc.pid`, `proc.stdout`, `proc.exited`,
+  `proc.exitCode`. Kill with `proc.kill()`.
+- **`Bun.spawnSync()`** for blocking execution. Rule: `spawnSync` for CLI tools, `spawn` for servers.
+- **Timeout and abort:** `{ timeout: 5000, killSignal: "SIGKILL" }` or pass `AbortController.signal`.
+- **IPC between Bun processes:** `Bun.spawn(["bun", "child.ts"], { ipc(message) {} })`.
+
+Stdin/stdout options, workers, and process details: see `${CLAUDE_SKILL_DIR}/references/io-and-processes.md`.
+
+## Testing — `bun:test`
+
+- **Import from `bun:test`**, not `jest` or `vitest`.
+- **Jest-compatible API:** `test`, `describe`, `expect`, `mock`, `spyOn`, `beforeAll`, `beforeEach`, `afterEach`,
+  `afterAll`.
+- **Run with `bun test`** — auto-discovers `*.test.*` and `*.spec.*` files.
+- **Cleanup:** `mock.restore()` restores all spied functions, `mock.clearAllMocks()` clears history. Add to `afterEach`.
+- **`mock.module("./path", () => ({ ... }))`** for module mocking. Works for ESM and CJS.
+
+Test modifiers, parametrized tests, mocking details, snapshots, CLI flags, and bunfig.toml test config: see
+`${CLAUDE_SKILL_DIR}/references/testing.md`.
+
+## SQLite, Bundler, Plugins, Macros
+
+- **SQLite:** use `bun:sqlite` — native, synchronous, 3-6x faster than `better-sqlite3`. Enable WAL mode. Use prepared
+  statements and transactions.
+- **Bundler:** `Bun.build()` with targets `"bun"`, `"browser"`, `"node"`. Check `result.success` and iterate
+  `result.logs` on failure.
+- **Plugins:** `Bun.plugin()` with `setup(build)` — extend module resolver and loader. Register via bunfig.toml
+  `preload`.
+- **Macros:** compile-time code execution via `{ type: "macro" }` import. Return value inlined; must be
+  JSON-serializable.
+
+Full SQLite API, bundler options, plugin patterns, and macro constraints: see
+`${CLAUDE_SKILL_DIR}/references/ecosystem.md`.
+
+## Utilities
+
+### Hashing & Passwords
+
+- `Bun.password.hash(pw)` — argon2id default. Also supports `"bcrypt"`.
+- `Bun.password.verify(pw, hash)` — auto-detects algorithm.
+- `Bun.hash("data")` — fast non-crypto (Wyhash).
+- `new Bun.CryptoHasher("sha256")` — crypto hashing.
+
+### Sleep & Timing
+
+- `await Bun.sleep(ms)` — async. `Bun.sleepSync(ms)` — blocking.
+- `Bun.nanoseconds()` — high-resolution timer.
+
+### Comparison & Inspection
+
+- `Bun.deepEquals(a, b)` — deep equality. `Bun.deepMatch(subset, obj)` — partial match.
+- `Bun.inspect(obj)` — `console.log` format as string. `Bun.peek(promise)` — read without awaiting.
+
+### Compression
+
+- Gzip: `Bun.gzipSync(data)` / `Bun.gunzipSync(data)`.
+- Deflate: `Bun.deflateSync(data)` / `Bun.inflateSync(data)`.
+- Zstd: `Bun.zstdCompressSync(data)` / `Bun.zstdDecompressSync(data)`.
+
+### Paths, UUIDs, Streams
+
+- `Bun.randomUUIDv7()` — time-ordered. `crypto.randomUUID()` — standard v4.
+- Stream helpers: `Bun.readableStreamToText/JSON/Bytes/Blob/Array/ArrayBuffer(stream)`.
+- `Bun.escapeHTML("<script>")`, `Bun.stringWidth("hello")`.
+
+### Environment & Metadata
+
+- `Bun.version`, `Bun.revision` (git hash), `Bun.env` (alias for `process.env`), `Bun.main` (entrypoint path).
+- `import.meta.dir`, `import.meta.file`, `import.meta.path` — current file info.
+
+### HTMLRewriter
+
+- Cloudflare-compatible HTML streaming transformer. Works on `Response` objects and strings.
+
+## Package Manager — `bun install`
+
+Drop-in replacement for npm/yarn/pnpm. ~25x faster.
+
+- **Lockfile:** `bun.lock` (text, default since v1.2) or `bun.lockb` (binary).
+- **Does NOT run `postinstall`** of dependencies by default (security). Add to `trustedDependencies` in `package.json`
+  to allow.
+- **Workspaces** supported via `package.json` `workspaces` field.
+- **Auto-install:** when no `node_modules` found, Bun resolves packages on the fly.
+- **`bunx`:** execute package binaries without installing (like `npx`).
+- **`bun install --production`** skips devDependencies.
+
+## Configuration & Compatibility
+
+bunfig.toml sections, environment variable loading, and Node.js API compatibility details: see
+`${CLAUDE_SKILL_DIR}/references/config-and-compat.md`.
+
+## Application
+
+When **writing** Bun code:
+
+- Apply all conventions silently — don't narrate each rule being followed.
+- If an existing codebase uses Node.js patterns, follow codebase style but flag that Bun-native alternatives exist.
+- For new projects, use Bun-native APIs throughout.
+
+When **reviewing** Bun code:
+
+- Cite the specific Node.js-to-Bun migration and show the fix inline.
+- Don't lecture — state what's suboptimal and how to fix it.
+
+## Integration
+
+The **javascript** skill governs language choices; this skill governs Bun runtime and toolchain decisions. Activate
+**typescript** alongside both when working with TypeScript.
+
+**Use Bun APIs, not Node.js polyfills. When in doubt, check if Bun has a native API.**
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/xobotyi) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

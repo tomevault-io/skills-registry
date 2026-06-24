@@ -1,0 +1,129 @@
+---
+name: gmail
+description: Gmail API — read, send, and manage emails via Gmail Use when this capability is needed.
+metadata:
+  author: jholhewres
+---
+# Gmail
+
+Interact with Gmail using the Gmail API.
+
+## Setup
+
+1. **Check existing credentials:**
+   ```
+   vault_get gmail_access_token
+   ```
+
+2. **If not configured:**
+   - Go to Google Cloud Console: https://console.cloud.google.com
+   - Create project, enable Gmail API
+   - Configure OAuth 2.0 consent screen
+   - Create OAuth credentials (Desktop app)
+   - Get access token via OAuth flow
+   - Save to vault:
+     ```
+     vault_save gmail_access_token "ya29.a0..."
+     ```
+   The token is auto-injected as `$GMAIL_ACCESS_TOKEN`.
+   Note: Access tokens expire after ~1 hour; refresh and re-save when needed.
+
+## List Messages
+
+```bash
+# List recent emails
+curl -s "https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=10" \
+  -H "Authorization: Bearer $GMAIL_ACCESS_TOKEN" | jq '.messages'
+
+# Search emails
+curl -s "https://gmail.googleapis.com/gmail/v1/users/me/messages?q=is:unread+from:boss@company.com" \
+  -H "Authorization: Bearer $GMAIL_ACCESS_TOKEN" | jq '.messages'
+
+# Common search queries:
+# is:unread, is:starred, has:attachment, larger:5M
+# from:email@example.com, to:me, subject:urgent
+# newer_than:7d, older_than:1m
+```
+
+## Read Message
+
+```bash
+# Get message details
+curl -s "https://gmail.googleapis.com/gmail/v1/users/me/messages/MESSAGE_ID?format=full" \
+  -H "Authorization: Bearer $GMAIL_ACCESS_TOKEN" | jq '{
+    id, snippet,
+    from: (.payload.headers[] | select(.name == "From") | .value),
+    subject: (.payload.headers[] | select(.name == "Subject") | .value),
+    date: (.payload.headers[] | select(.name == "Date") | .value)
+  }'
+
+# Get raw message (including body)
+curl -s "https://gmail.googleapis.com/gmail/v1/users/me/messages/MESSAGE_ID?format=raw" \
+  -H "Authorization: Bearer $GMAIL_ACCESS_TOKEN" | jq -r '.raw' | base64 -d
+```
+
+## Send Email
+
+```bash
+# Create raw email (RFC 2822 format)
+RAW_EMAIL=$(cat <<EOF | base64 -w0
+From: me@gmail.com
+To: recipient@example.com
+Subject: Test Email from DevClaw
+
+This is the email body.
+Can have multiple lines.
+EOF
+)
+
+# Send
+curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/send" \
+  -H "Authorization: Bearer $GMAIL_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{\"raw\": \"$RAW_EMAIL\"}"
+```
+
+## Manage Labels
+
+```bash
+# List labels
+curl -s "https://gmail.googleapis.com/gmail/v1/users/me/labels" \
+  -H "Authorization: Bearer $GMAIL_ACCESS_TOKEN" | jq '.labels[]'
+
+# Add label to message
+curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/MESSAGE_ID/modify" \
+  -H "Authorization: Bearer $GMAIL_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"addLabelIds": ["Label_123"]}'
+```
+
+## Mark as Read/Star
+
+```bash
+# Mark as read
+curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/MESSAGE_ID/modify" \
+  -H "Authorization: Bearer $GMAIL_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"removeLabelIds": ["UNREAD"]}'
+
+# Star email
+curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/MESSAGE_ID/modify" \
+  -H "Authorization: Bearer $GMAIL_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"addLabelIds": ["STARRED"]}'
+```
+
+## Tips
+
+- Access tokens expire after ~1 hour, refresh using refresh token
+- Use `format=metadata` for headers only (faster)
+- Max results per request: 500
+- Label IDs: INBOX, SENT, DRAFT, SPAM, TRASH, UNREAD, STARRED
+
+## Triggers
+
+gmail, email, check email, send email, read gmail, inbox, gmail api
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/jholhewres) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

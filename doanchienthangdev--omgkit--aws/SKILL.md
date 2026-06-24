@@ -1,0 +1,111 @@
+---
+name: deploying-to-aws
+description: Use when working with the agent implements AWS cloud solutions with Lambda, S3, DynamoDB, ECS, and CDK infrastructure as code. Use when building serverless functions, deploying containers, managing cloud storage, or defining infrastructure as code.
+metadata:
+  author: doanchienthangdev
+---
+
+# Deploying to AWS
+
+## Quick Start
+
+```typescript
+// Lambda handler
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+
+export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  const { id } = event.pathParameters || {};
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id, message: 'Success' }),
+  };
+};
+```
+
+```bash
+# Deploy with CDK
+npx cdk deploy --all
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Lambda | Serverless function execution | Use for APIs, event processing, scheduled tasks |
+| S3 | Object storage with presigned URLs | Store files, serve static assets, data lakes |
+| DynamoDB | NoSQL database with single-digit ms latency | Design single-table schemas with GSIs |
+| ECS/Fargate | Container orchestration | Run Docker containers without managing servers |
+| API Gateway | REST and WebSocket API management | Throttling, auth, request validation |
+| CDK | Infrastructure as TypeScript code | Define stacks, manage deployments programmatically |
+
+## Common Patterns
+
+### S3 Presigned Upload URL
+
+```typescript
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+
+const s3 = new S3Client({});
+
+async function getUploadUrl(key: string, contentType: string): Promise<string> {
+  const command = new PutObjectCommand({ Bucket: process.env.BUCKET!, Key: key, ContentType: contentType });
+  return getSignedUrl(s3, command, { expiresIn: 3600 });
+}
+```
+
+### DynamoDB Single-Table Pattern
+
+```typescript
+import { DynamoDBDocumentClient, QueryCommand } from '@aws-sdk/lib-dynamodb';
+
+// pk: USER#123, sk: PROFILE | ORDER#timestamp
+async function getUserWithOrders(userId: string) {
+  const result = await docClient.send(new QueryCommand({
+    TableName: process.env.TABLE!,
+    KeyConditionExpression: 'pk = :pk',
+    ExpressionAttributeValues: { ':pk': `USER#${userId}` },
+  }));
+  return result.Items;
+}
+```
+
+### CDK Stack Definition
+
+```typescript
+import * as cdk from 'aws-cdk-lib';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
+
+const table = new dynamodb.Table(this, 'Table', {
+  partitionKey: { name: 'pk', type: dynamodb.AttributeType.STRING },
+  sortKey: { name: 'sk', type: dynamodb.AttributeType.STRING },
+  billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+});
+
+const fn = new lambda.Function(this, 'Handler', {
+  runtime: lambda.Runtime.NODEJS_20_X,
+  handler: 'index.handler',
+  code: lambda.Code.fromAsset('dist'),
+  environment: { TABLE_NAME: table.tableName },
+});
+
+table.grantReadWriteData(fn);
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use IAM roles, never access keys in code | Hardcoding credentials or secrets |
+| Enable encryption at rest and in transit | Exposing S3 buckets publicly |
+| Tag resources for cost tracking | Over-provisioning resources |
+| Use environment variables for config | Skipping CloudWatch alarms |
+| Implement least-privilege IAM policies | Using root account for deployments |
+| Enable X-Ray tracing for debugging | Synchronous invocations for long tasks |
+| Use VPC for sensitive workloads | Ignoring backup and disaster recovery |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

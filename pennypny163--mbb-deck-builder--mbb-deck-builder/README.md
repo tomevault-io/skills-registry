@@ -1,0 +1,13 @@
+# mbb-deck-builder
+
+> Skill by [pennypny163](https://github.com/pennypny163/mbb-deck-builder) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [pennypny163/mbb-deck-builder](https://github.com/pennypny163/mbb-deck-builder/tree/main/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

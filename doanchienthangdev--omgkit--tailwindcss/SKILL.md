@@ -1,0 +1,126 @@
+---
+name: styling-with-tailwind
+description: Claude styles UIs with Tailwind CSS utility classes, responsive design, and dark mode support. Use when creating component styles, theming systems, or responsive layouts. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Styling with Tailwind CSS
+
+## Quick Start
+
+```tsx
+// Button with variants using utility classes
+export function Button({ variant = 'primary', size = 'md', children }: ButtonProps) {
+  const base = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50';
+  const variants = {
+    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
+    outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500',
+    ghost: 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800',
+  };
+  const sizes = { sm: 'px-3 py-1.5 text-sm', md: 'px-4 py-2', lg: 'px-6 py-3 text-lg' };
+
+  return (
+    <button className={`${base} ${variants[variant]} ${sizes[size]}`}>
+      {children}
+    </button>
+  );
+}
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Configuration | Extend colors, fonts, spacing, animations | `ref/config.md` |
+| Responsive Design | Mobile-first breakpoints: sm, md, lg, xl, 2xl | `ref/responsive.md` |
+| Dark Mode | Class-based dark mode with `dark:` prefix | `ref/dark-mode.md` |
+| Custom Animations | Define keyframes and animation utilities | `ref/animations.md` |
+| CSS Variables | Theme with CSS custom properties | `ref/theming.md` |
+| Plugins | @tailwindcss/forms, typography, container-queries | `ref/plugins.md` |
+
+## Common Patterns
+
+### Responsive Card Grid
+
+```tsx
+export function CardGrid({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+      {children}
+    </div>
+  );
+}
+
+export function Card({ children, hoverable }: { children: React.ReactNode; hoverable?: boolean }) {
+  return (
+    <div className={cn(
+      'bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6',
+      hoverable && 'hover:shadow-lg hover:-translate-y-1 transition-all duration-200'
+    )}>
+      {children}
+    </div>
+  );
+}
+```
+
+### Dark Mode Toggle
+
+```tsx
+export function DarkModeToggle() {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const dark = localStorage.theme === 'dark' ||
+      (!localStorage.theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    setIsDark(dark);
+    document.documentElement.classList.toggle('dark', dark);
+  }, []);
+
+  const toggle = () => {
+    setIsDark(!isDark);
+    document.documentElement.classList.toggle('dark', !isDark);
+    localStorage.theme = !isDark ? 'dark' : 'light';
+  };
+
+  return (
+    <button onClick={toggle} className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
+      {isDark ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
+    </button>
+  );
+}
+```
+
+### Conditional Classes with cn()
+
+```tsx
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+// Usage
+<div className={cn(
+  'px-4 py-2 rounded-lg',
+  isActive && 'bg-blue-500 text-white',
+  isDisabled && 'opacity-50 cursor-not-allowed',
+  className
+)} />
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use mobile-first responsive design | Overusing @apply (prefer utilities) |
+| Leverage `cn()` for conditional classes | Hardcoding colors outside theme |
+| Configure content paths for purging | Using arbitrary values excessively |
+| Use CSS variables for theming | Mixing styling paradigms |
+| Group related utilities semantically | Skipping dark mode variants |
+| Use consistent spacing scales | Ignoring responsive testing |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

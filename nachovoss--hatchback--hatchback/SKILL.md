@@ -1,0 +1,134 @@
+---
+name: hatchback
+description: > Use when this capability is needed.
+metadata:
+  author: nachovoss
+---
+
+# Hatchback Project Skill
+
+This project was generated with **Hatchback** — a production-ready FastAPI boilerplate
+with SQLAlchemy 2, Alembic migrations, JWT auth, multi-tenancy, and Docker support.
+
+## Architecture Overview
+
+The project follows a **clean architecture** pattern with four distinct layers:
+
+```
+app/
+├── models/          # SQLAlchemy ORM models (DB layer)
+├── repositories/    # Data access — wraps queries, extends BaseRepository
+├── services/        # Business logic — orchestrates repositories
+├── routes/          # HTTP endpoints — thin controllers, delegates to services
+├── schemas/         # Pydantic v2 request/response schemas
+├── config/          # Database connection, rate limiter, settings
+├── dependencies.py  # FastAPI dependency injection (auth, services)
+```
+
+**Data flow:** Route → Service → Repository → Model
+
+## Key Conventions
+
+1. **Resource naming**: always `snake_case` (e.g. `blog_post`). The CLI and templates
+   derive `PascalCase` class names automatically (`BlogPost`).
+2. **Primary keys**: UUID columns via `sqlalchemy.dialects.postgresql.UUID(as_uuid=True)`.
+3. **Schemas**: use Pydantic v2 (`model_dump()`, not `.dict()`). Every resource should
+   have `Create`, `Update`, and `Response` schemas in `app/schemas/<resource>.py`.
+4. **Repositories** extend `app/repositories/base.py` (`BaseRepository`) which provides
+   `get_all`, `get_by_id`, `create`, `update`, `delete`.
+5. **Routes** use FastAPI `Depends()` for DB sessions and service injection.
+6. **Registering new resources**: imports must be added to:
+   - `app/models/__init__.py`
+   - `app/routes/__init__.py` (add to `routers` list)
+   - `app/services/__init__.py` (add to `__all__`)
+   - `app/repositories/__init__.py` (add to `__all__`)
+
+## Hatchback CLI Commands
+
+Run these from the **project root** (where `requirements.txt` lives).
+`hbk` is a shorthand alias — `hbk make product` is equivalent to `hatchback make product`.
+
+| Command | Description |
+|---|---|
+| `hatchback make <resource>` | Scaffold model, schema, repo, service, route, and test for a new resource |
+| `hatchback remove <resource>` | Remove a scaffolded resource and clean up all imports |
+| `hatchback migrate create -m "message"` | Create a new Alembic migration |
+| `hatchback migrate apply` | Apply pending migrations |
+| `hatchback migrate downgrade` | Rollback the last migration (use `-r -2` for multiple steps, `-r base` for all) |
+| `hatchback run` | Start Uvicorn dev server with hot-reload |
+| `hatchback seed` | Seed database with default tenant and admin user |
+| `hatchback test` | Run pytest test suite |
+| `hatchback inspect --url <db_url>` | Reflect an existing DB and generate SQLAlchemy models |
+| `hatchback upgrade` | Sync latest skills and infrastructure files into an existing project |
+
+### Scaffolding a new resource
+
+```bash
+hatchback make product
+```
+
+This creates:
+- `app/models/product.py` — SQLAlchemy model
+- `app/schemas/product.py` — Pydantic schemas (Create, Update, Response)
+- `app/repositories/product.py` — Repository extending BaseRepository
+- `app/services/product.py` — Service with CRUD methods
+- `app/routes/product.py` — Full REST router (GET, POST, PUT, DELETE)
+- `tests/test_products.py` — Pytest stubs
+
+It also auto-updates the `__init__.py` files in models, routes, services, and repositories.
+
+### Removing a resource
+
+```bash
+hatchback remove product        # asks for confirmation
+hatchback remove product --force # skips confirmation
+```
+
+This deletes all 6 files created by `make` and removes the corresponding imports
+from all `__init__.py` files.
+
+## Database & Migrations
+
+- **Engine**: PostgreSQL via `psycopg2-binary`
+- **ORM**: SQLAlchemy 2 with synchronous sessions
+- **Config**: `app/config/database.py` reads from `.env` (see `.env.example`)
+- **Migrations**: Alembic, configured in `alembic.ini` and `alembic/`
+
+After modifying a model, always run:
+```bash
+hatchback migrate create -m "describe change"
+hatchback migrate apply
+```
+
+## Authentication & Multi-tenancy
+
+- JWT tokens via `python-jose[cryptography]`
+- Password hashing via `passlib[bcrypt]`
+- Multi-tenant: every user belongs to a `Tenant`; tokens include `tenant_id`
+- Auth dependencies in `app/dependencies.py`:
+  - `get_current_user` — validates JWT, returns user
+  - `get_current_active_user` — checks user status is "active"
+  - `RoleChecker(["admin"])` — role-based access control
+
+## Testing
+
+- Framework: `pytest` with `httpx` (`AsyncClient` or `TestClient`)
+- Config: `tests/conftest.py` sets up test DB session and fixtures
+- Run: `hatchback test`
+
+## Environment Variables
+
+See `.env.example` for required vars:
+- `DATABASE_USERNAME`, `DATABASE_PASSWORD`, `DATABASE_HOSTNAME`, `DATABASE_PORT`, `DATABASE_NAME`
+- `SECRET_KEY` — JWT signing key (auto-generated on `hatchback init`)
+- `MAILERSEND_API_KEY`, `MAILERSEND_FROM_EMAIL`, `MAILERSEND_FROM_NAME`
+
+## Docker
+
+- `Dockerfile` — Python slim image, installs requirements, runs Uvicorn
+- `docker-compose.yml` — App + PostgreSQL service
+- Start DB only: `docker-compose up -d db`
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/nachovoss) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

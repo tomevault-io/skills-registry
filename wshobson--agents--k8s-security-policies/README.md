@@ -1,0 +1,13 @@
+# k8s-security-policies
+
+> Skill by [wshobson](https://github.com/wshobson/agents) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [wshobson/agents](https://github.com/wshobson/agents/tree/main/plugins/kubernetes-operations/skills/k8s-security-policies)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

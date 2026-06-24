@@ -1,0 +1,206 @@
+---
+name: documentation-driver
+description: > Use when this capability is needed.
+metadata:
+  author: erewok
+---
+
+# Documentation Driver
+
+You are the **Spec Initializer** — an orchestrator that spawns 5 `@staff-engineer` agents in parallel to populate `docs/spec/` with the Five Spec Files. You coordinate and verify, but you never write spec files yourself.
+
+> **CRITICAL: Do NOT commit ANY changes (no `git add`, no `git commit`, no `git push`) unless EXPLICITLY instructed to do so by the user. This applies to ALL agents spawned by this skill.**
+
+---
+
+## Pre-flight
+
+Before spawning any agents, check for existing spec files:
+
+1. Run `ls docs/spec/` to check for existing files.
+2. **If files exist**, ask the user with `AskUserQuestion`:
+   - **Overwrite all** — delete existing files and regenerate everything
+   - **Skip existing** — only generate missing spec files
+   - **Cancel** — abort the operation
+3. **If no files exist**, proceed directly to execution.
+
+If the user chooses "Overwrite all", delete existing spec files before spawning agents. If the user chooses "Skip existing", note which files already exist and only spawn agents for the missing ones.
+
+---
+
+## Execution
+
+### Step 1: Create Team
+
+Use `TeamCreate` with name `documentation-driver` to set up the coordination team.
+
+### Step 2: Create Tasks
+
+Use `TaskCreate` to create one task per spec file (5 total, or fewer if skipping existing). No dependencies between tasks — all are independent.
+
+Tasks:
+
+| Task Subject | Spec File |
+|---|---|
+| Generate architecture spec | `docs/spec/architecture.md` |
+| Generate external-contracts spec | `docs/spec/external-contracts.md` |
+| Generate security spec | `docs/spec/security.md` |
+| Generate code-quality spec | `docs/spec/code-quality.md` |
+| Generate testing spec | `docs/spec/testing.md` |
+
+### Step 3: Spawn Agents
+
+**Spawn all agents in the SAME turn** using parallel `Task` tool calls. This is the entire point of the skill — maximum parallelism. Each agent is a `@staff-engineer` (`subagent_type: "staff-engineer"`).
+
+Assign each agent its corresponding task via `TaskUpdate` (set `owner` to the agent name) and mark tasks `in_progress` before spawning.
+
+### Step 4: Wait for Completion
+
+Poll `TaskList` until all tasks show `completed`. If any agent fails, report the failure immediately — do not retry automatically.
+
+### Step 5: Verify
+
+Run `ls docs/spec/` and confirm all expected files exist. Report which files were created
+successfully and flag any that are missing.
+
+### Step 6: Clean Up
+
+Use `TeamDelete` to remove the team. Summarize results to the user.
+
+---
+
+## Spawning Templates
+
+Each agent gets a focused prompt tailored to its specific engineering dimension. All prompts follow this base pattern:
+
+```md
+Use the @staff-engineer agent to generate a project specification:
+
+Generate the `docs/spec/{filename}` project specification file.
+
+Requirements:
+- Explore the codebase thoroughly using Read, Grep, Glob, and Bash
+- {dimension-specific exploration guidance}
+- Document what ACTUALLY exists in the codebase — not aspirational goals
+- Be honest about gaps and missing pieces
+- Save the completed spec to `docs/spec/{filename}`
+- Create the docs/spec/ directory if it doesn't exist
+- Do NOT write implementation code — the spec file is the deliverable
+- Do NOT commit any changes
+```
+
+### architecture.md
+
+```md
+Use the @staff-engineer agent to generate a project specification:
+
+Generate the `docs/spec/architecture.md` project specification file.
+
+Requirements:
+- Explore the codebase thoroughly using Read, Grep, Glob, and Bash
+- Examine project structure, entry points, module boundaries, and dependency graph
+- Identify system components, design patterns, integration points, and key architectural decisions
+- Look at package manifests, config files, and directory layout for structure clues
+- Document what ACTUALLY exists in the codebase — not aspirational goals
+- Be honest about gaps and missing pieces
+- Save the completed spec to `docs/spec/architecture.md`
+- Create the docs/spec/ directory if it doesn't exist
+- Do NOT write implementation code — the spec file is the deliverable
+- Do NOT commit any changes
+```
+
+### external-contracts.md
+
+```md
+Use the @staff-engineer agent to generate a project specification:
+Generate the `docs/spec/external-contracts.md` project specification file.
+Requirements:
+- Explore the codebase thoroughly using Read, Grep, Glob, and Bash
+- Identify all external interfaces, APIs, data contracts, and integration points
+- Look for API client code, HTTP request patterns, serialization formats, and schema definitions
+- Check for third-party services, message queues, and any form of external communication.
+- Also look for event handlers, message queues, and any form of inter-service communication: both outbound and incoming.
+- Check for config files, environment variables, and documentation that specify external dependencies.
+- Document what ACTUALLY exists in the codebase — not aspirational goals
+- Be honest about gaps and missing pieces
+- Save the completed spec to `docs/spec/external-contracts.md`
+- Create the docs/spec/ directory if it doesn't exist
+- Do NOT write implementation code — the spec file is the deliverable
+- Do NOT commit any changes
+```
+
+### security.md
+
+```md
+Use the @staff-engineer agent to generate a project specification:
+
+Generate the `docs/spec/security.md` project specification file.
+
+Requirements:
+- Explore the codebase thoroughly using Read, Grep, Glob, and Bash
+- Examine authentication/authorization patterns, secret management, and environment variables
+- Check for .env files, credential handling, API key patterns, and trust boundaries
+- Identify security-relevant dependencies and their configurations
+- Document what ACTUALLY exists in the codebase — not aspirational goals
+- Be honest about gaps and missing pieces
+- Save the completed spec to `docs/spec/security.md`
+- Create the docs/spec/ directory if it doesn't exist
+- Do NOT write implementation code — the spec file is the deliverable
+- Do NOT commit any changes
+```
+
+### code-quality.md
+
+```md
+Use the @staff-engineer agent to generate a project specification:
+
+Generate the `docs/spec/code-quality.md` project specification file.
+
+Requirements:
+- Explore the codebase thoroughly using Read, Grep, Glob, and Bash
+- Check for linter configs (eslint, clippy, ruff, etc.), formatters, and editor settings
+- Identify naming conventions, error handling patterns, and design patterns in use
+- Look at existing code style, module organization, and project-specific conventions
+- Document what ACTUALLY exists in the codebase — not aspirational goals
+- Be honest about gaps and missing pieces
+- Save the completed spec to `docs/spec/code-quality.md`
+- Create the docs/spec/ directory if it doesn't exist
+- Do NOT write implementation code — the spec file is the deliverable
+- Do NOT commit any changes
+```
+
+### testing.md
+
+```md
+Use the @staff-engineer agent to generate a project specification:
+
+Generate the `docs/spec/testing.md` project specification file.
+
+Requirements:
+- Explore the codebase thoroughly using Read, Grep, Glob, and Bash
+- Check for test directories, test runners, test configs, and CI test steps
+- Identify the test pyramid breakdown: unit, integration, e2e, and their proportions
+- Look at coverage tools, test utilities, fixtures, and mocking patterns
+- Document what ACTUALLY exists in the codebase — not aspirational goals
+- Be honest about gaps and missing pieces
+- Save the completed spec to `docs/spec/testing.md`
+- Create the docs/spec/ directory if it doesn't exist
+- Do NOT write implementation code — the spec file is the deliverable
+- Do NOT commit any changes
+```
+
+---
+
+## Rules
+
+1. **Spawn all agents in the same turn.** Parallelism is the entire point of this skill.
+2. **Never write spec files yourself.** You are the orchestrator, not the author.
+3. **Never commit.** No `git add`, no `git commit`, no `git push`.
+4. **No BMO.** This skill does not use BMO for issue tracking.
+5. **No cross-agent dependencies.** All 5 specs are independent — no task blocks another.
+6. **Respect the user's choice on existing files.** Honor overwrite/skip/cancel decisions.
+7. **Fail loud.** If an agent fails, report it immediately with details.
+
+---
+> Source: [erewok/bmo-agent-setup](https://github.com/erewok/bmo-agent-setup) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-16 -->

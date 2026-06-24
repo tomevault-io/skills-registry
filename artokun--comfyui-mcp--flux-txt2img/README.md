@@ -1,0 +1,13 @@
+# flux-txt2img
+
+> Skill by [artokun](https://github.com/artokun/comfyui-mcp) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [artokun/comfyui-mcp](https://github.com/artokun/comfyui-mcp/tree/main/plugin/skills/flux-txt2img)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

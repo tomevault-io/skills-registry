@@ -1,0 +1,232 @@
+---
+name: spz
+description: Use the spz CLI to spawn, provision, inspect, and access Spritz instances, including service-principal create flows, preset-based provisioning, canonical access URLs, and ACP-ready instance operations. Use when this capability is needed.
+metadata:
+  author: textcortex
+---
+
+# spz
+
+## When to use this skill
+
+Use this skill when you need to interact with a Spritz control plane through the `spz` CLI.
+
+Typical cases:
+
+- spawn a new agent instance from a preset such as `openclaw` or `claude-code`
+- create a new instance from a preset such as `openclaw` or `claude-code`
+- create an instance on behalf of a user with a service-principal bearer token
+- suggest a DNS-safe random name for an instance
+- inspect an instance URL
+- attach to terminal access
+- forward a local port into one instance
+- manage local `spz` profiles for different Spritz environments
+
+## What Spritz is
+
+Spritz is a control plane for agent instances.
+
+In user-facing agent language, `spawn` means `create a Spritz instance for an agent`.
+
+Core model:
+
+- an instance is a `Spritz` resource
+- the instance may expose ACP on port `2529`
+- Spritz owns provisioning, routing, auth, canonical URLs, and lifecycle
+- the backend image owns the runtime itself
+
+For external provisioners:
+
+- the human remains the owner
+- the service principal is only the actor that created the instance
+- create-only service principals should not be able to edit, delete, terminal into, or list user instances unless explicitly granted
+
+## Authentication modes
+
+`spz` supports two auth models.
+
+### 1. Bearer token
+
+Use this for services, bots, and automation.
+
+- env: `SPRITZ_BEARER_TOKEN`
+- flag: `--token`
+- active profile field: `bearerToken`
+
+This is the preferred mode for external provisioners such as bots.
+
+### 2. Header-based user identity
+
+Use this for local or trusted internal environments.
+
+- `SPRITZ_USER_ID`
+- `SPRITZ_USER_EMAIL`
+- `SPRITZ_USER_TEAMS`
+
+This mode is not the right fit for external automation.
+
+## Important environment variables
+
+- `SPRITZ_API_URL`: Spritz API base URL, for example `https://console.example.com/api`
+- `SPRITZ_BEARER_TOKEN`: service-principal bearer token
+- `SPRITZ_CONFIG_DIR`: config directory for profiles
+- `SPRITZ_PROFILE`: active profile name
+
+## Zenobot and other preconfigured bot images
+
+Some bot images ship with `spz` already configured through an active profile.
+
+When you are inside one of those images:
+
+- check `spz profile current`
+- inspect `spz profile show <name>`
+- prefer the active profile over asking for raw `SPRITZ_*` env vars
+
+Expected shape:
+
+- profile name like `zenobot`
+- preconfigured API URL
+- preconfigured bearer token
+- preconfigured namespace when needed
+
+So if `spz profile current` returns a profile, assume Spritz is already configured unless the command itself fails.
+
+## Service-principal create flow
+
+For bots and other external provisioners, prefer external owner resolution when
+you only know the user's platform identity.
+
+Example for a Discord-triggered create:
+
+```bash
+spz create \
+  --owner-provider discord \
+  --owner-subject 123456789012345678 \
+  --preset openclaw \
+  --idle-ttl 24h \
+  --ttl 168h \
+  --idempotency-key discord-interaction-123 \
+  --source discord \
+  --request-id discord-interaction-123 \
+  --json
+```
+
+Rules:
+
+- for Discord, Slack, Teams, and similar platform-triggered creates, pass the
+  external platform user through `--owner-provider` and `--owner-subject`
+- never pass a Discord, Slack, or Teams user ID through `--owner-id`
+- do not ask for or depend on an internal owner ID unless it is already known
+  from a trusted internal context
+- use `--owner-id` only when you already have the canonical internal Spritz
+  owner ID and intend a direct internal/admin create
+- if provider, subject, preset, or tenant context is unclear, ask for
+  clarification instead of guessing
+- the service principal is only the actor
+- the same `idempotency-key` and same request should replay the same instance
+- the same `idempotency-key` with a different request should fail with conflict
+- the response should include the canonical access URL
+
+## Common commands
+
+Create from a preset for an external platform user:
+
+```bash
+spz create --preset openclaw --owner-provider discord --owner-subject 123456789012345678 --idle-ttl 24h --ttl 168h --idempotency-key req-123 --json
+```
+
+Create from a preset for a known internal owner:
+
+```bash
+spz create --preset openclaw --owner-id user-123 --idle-ttl 24h --ttl 168h --idempotency-key req-123 --json
+```
+
+If external owner resolution fails, explain it like this:
+
+```text
+The external account could not be resolved to a Spritz owner.
+Ask the user to connect their account in the product or integration that owns
+this identity mapping, then retry the create request.
+```
+
+Create from an explicit image:
+
+```bash
+spz create --image example.com/spritz-devbox:latest --owner-id user-123 --idempotency-key req-123 --json
+```
+
+Suggest a name:
+
+```bash
+spz suggest-name --preset claude-code
+```
+
+Open an instance URL:
+
+```bash
+spz open openclaw-tide-wind
+```
+
+List instances:
+
+```bash
+spz list
+```
+
+Open a terminal:
+
+```bash
+spz terminal openclaw-tide-wind
+```
+
+Forward a local port into one instance:
+
+```bash
+spz port-forward openclaw-tide-wind --local 3000 --remote 3000
+```
+
+Use profiles:
+
+```bash
+spz profile set staging --api-url https://console.example.com/api --token service-token --namespace spritz
+spz profile use staging
+```
+
+## Operational expectations
+
+- prefer `--preset` over `--image` when a preset exists
+- prefer bearer-token auth for bots
+- for chat-platform-triggered creates, prefer external owner flags over direct
+  `--owner-id`
+- do not assume the caller already knows an internal owner ID
+- if the required provider, subject, tenant, or preset is unclear, ask for the
+  missing detail instead of guessing
+- when reporting a successful create back in a messaging app, tag the person
+  who requested it and include what was created plus the returned URLs for
+  opening it
+- treat the create response as the source of truth for the access URL
+- do not construct instance URLs yourself
+- use idempotency keys for any retried or externally triggered create operation
+- for service principals, expect create to succeed and list/delete to be denied unless extra scopes were granted
+- prefer `spz port-forward` over raw `ssh -L` when you need local access to one private instance port
+
+## Bundled skill usage
+
+This package includes a bundled `spz` skill for Codex-compatible environments.
+
+Install it into the current user's Codex skill directory with:
+
+```bash
+spz --skill install spz --agent codex --scope user --force
+```
+
+Inspect it with:
+
+```bash
+spz --skill show spz
+spz --skill list
+```
+
+---
+> Source: [textcortex/spritz](https://github.com/textcortex/spritz) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-22 -->

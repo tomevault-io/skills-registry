@@ -1,0 +1,89 @@
+---
+name: josk
+description: Guides JoSk integration for horizontally scaled Node.js and Bun apps — cluster-wide scheduling via Redis, MongoDB, or PostgreSQL so each tick runs on one instance. Use when writing or reviewing recurring jobs, cron-style tasks, `setInterval`/`setTimeout`/`setImmediate` work, periodic background jobs (queues, sync, polling, cleanup), multi-instance / Kubernetes / PM2 / Meteor deployments, the `josk` npm package, or `ostrio:cron-jobs`. Also when the user names JoSk, `RedisAdapter`, `MongoAdapter`, `PostgresAdapter`, Redis Cluster / KeyDB Cluster hash-tag routing via `useHashTags`, at-least-once / at-most-once semantics, zombie recovery, leases, `zombieTime`, `execute`, `concurrency`, `pause()`/`resume()` instance backpressure, or comparisons to Agenda, Bree, node-cron, Bull, or BullMQ. Use when this capability is needed.
+metadata:
+  author: veliovgroup
+---
+
+# JoSk
+
+Distributed `setInterval` / `setTimeout` / `setImmediate` for Node ≥20.9 and Bun ≥1.1.
+Server-only. Schedule in Redis, MongoDB, or PostgreSQL; lease + atomic claim limit duplicate ticks.
+
+## Quick start
+
+JoSk does not open connections — pass a connected client. Always wire `onError` and `destroy()` on shutdown. Read [references/](references/) lazily; do not guess v4/v5/v6 semantics from memory.
+
+```js
+import { JoSk, RedisAdapter } from 'josk';
+import { createClient } from 'redis';
+
+const client = createClient({ url: process.env.REDIS_URL });
+await client.connect();
+
+const jobs = new JoSk({
+  adapter: new RedisAdapter({ client }),
+  onError: (title, { error, uid }) => console.error(title, uid, error),
+});
+
+await jobs.setInterval(async () => { /* idempotent work */ }, 60_000, 'poll-1m');
+// jobs.pause() / jobs.resume() / jobs.destroy()
+```
+
+## Reference map
+
+| Question | Read |
+|---|---|
+| Options, methods, hooks, types | [references/api.md](references/api.md) |
+| Adapter setup, cluster rules, custom adapter | [references/adapters.md](references/adapters.md) |
+| Handlers, CRON, concurrency, shutdown | [references/patterns.md](references/patterns.md) |
+| Meteor / `ostrio:cron-jobs` | [references/meteor.md](references/meteor.md) |
+| Zombies, jitter, migrations, KeyDB | [references/troubleshooting.md](references/troubleshooting.md) |
+
+## Mental model
+
+- **`adapter`** required — `RedisAdapter`, `MongoAdapter`, `PostgresAdapter`, or custom ([adapters.md](references/adapters.md)).
+- **`uid`** — app-wide unique string per logical task; reuse collides in storage.
+- **Handler** — async/Promise preferred; sync zero-arg; or `(ready) =>` for callback APIs ([patterns.md](references/patterns.md)).
+- **`set*` → `Promise<string>`** — pass string or that Promise to `clear*`.
+
+## Pick the adapter
+
+| Adapter | Choose when |
+|---|---|
+| **PostgreSQL** | Multi-DC, clock skew, strict single-claim; `SKIP LOCKED` |
+| **Redis / KeyDB / Valkey** | Single-region, high frequency; single writable primary only; Cluster needs `useHashTags: true` |
+| **MongoDB** | App already on Mongo (Meteor: `MongoInternals…mongo.db`); official `mongodb` driver |
+
+## Pick the scheduling method
+
+| Method | Guarantee | Use when |
+|---|---|---|
+| `setInterval(fn, delay, uid)` | At-least-once per tick | Idempotent recurring work |
+| `setTimeout(fn, delay, uid)` | At-most-once | One-shot; duplicate worse than miss; removed before handler |
+| `setImmediate(fn, uid)` | At-most-once | One-shot fire-now; same as `setTimeout` with delay 0 |
+
+`zombieTime` (default 15 min): max interval handler runtime before re-claim. Keep ≥ slowest handler + margin; not below 60s.
+
+## Throughput
+
+- `execute: 'batch'` (default) — all due tasks per lease; `'one'` — one task per lease
+- `concurrency: Infinity` (default) — parallel handlers; set integer to cap pool/API/CPU
+
+## Red flags
+
+Call out proactively when reviewing JoSk usage:
+
+- Missing `onError`
+- Reused `uid` across different tasks
+- Default `zombieTime` with handlers >15 min
+- `resetOnInit: true` in production cluster
+- Replica reads / multi-writer Redis
+- Redis Cluster without `useHashTags: true`
+- Intervals <~2s (storage + jitter overlap)
+- MongoAdapter on CosmosDB/DocumentDB/Mongoose without warning
+- KeyDB active-replication / multi-master
+
+---
+> Source: [veliovgroup/josk](https://github.com/veliovgroup/josk) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-19 -->

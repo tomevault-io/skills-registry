@@ -1,0 +1,32 @@
+---
+name: pr-submit
+description: Create or update a GitHub Pull Request — use ONLY when explicitly asked to create/submit/open a PR Use when this capability is needed.
+metadata:
+  author: wysaid
+---
+
+## When to use
+
+**Only** when the user explicitly asks to create, submit, or open a Pull Request.
+Do NOT invoke this skill for plain commit or push requests.
+
+## Procedure
+
+1. **Verify & clean** — ensure changes are complete, correct, and free of debug artifacts
+2. **Detect default branch** — determine the repository default branch first, for example:
+   - `DEFAULT_BRANCH=$(GH_PAGER= gh repo view --json defaultBranchRef -q '.defaultBranchRef.name')`
+2. **Commit & push**:
+   - If on `$DEFAULT_BRANCH`, create a new feature branch first (avoid name conflicts)
+   - Commit all changes and push to remote
+3. **Create or update PR**:
+   - Check if current branch already has a PR (`gh pr list --head <BRANCH> --base "$DEFAULT_BRANCH"`)
+   - **Exists**: update title/description to reflect new commits
+   - **None**: create PR against `$DEFAULT_BRANCH` with title/description derived from changes
+
+## Output
+
+- What changed, why, impact, and how to verify
+
+---
+> Source: [wysaid/CameraCapture](https://github.com/wysaid/CameraCapture) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-19 -->

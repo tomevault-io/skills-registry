@@ -1,0 +1,112 @@
+---
+name: spec-delegated
+description: Use after /dream-team:plan to write a delegated execution spec (orchestrator + sub-agents). No arguments needed — picks up conversation context from the brainstorming session. Use when this capability is needed.
+metadata:
+  author: ratler
+---
+
+# Write Delegated Spec
+
+Convert the brainstorming conversation into a formal spec file for delegated execution — single session with an orchestrator dispatching specialized sub-agents via the Task tool.
+
+**Prerequisites:** This skill assumes `/dream-team:plan` has already been run in this session. If the conversation has no brainstorming context (no discussed requirements, no confirmed approach, no validated task breakdown), stop and tell the user: "No brainstorming context found. Run `/dream-team:plan <prompt>` first to explore requirements and design."
+
+## Filename Format
+
+**All spec files MUST be named with a date prefix:** `specs/YYYY-MM-DD-<descriptive-kebab-case>.md`
+
+Use today's date. Example: `specs/2026-02-07-user-auth-api.md`
+
+## What To Do
+
+1. Read the spec template at `${CLAUDE_PLUGIN_ROOT}/templates/spec-template.md`.
+2. Read the available agent definitions at `${CLAUDE_PLUGIN_ROOT}/agents/*.md` to understand each agent's capabilities.
+3. Summarize the agreed plan from the conversation — confirm with the user before writing.
+4. Write the spec, filling in all sections from the brainstorming context.
+5. Set frontmatter `mode: delegated` and `spec-version: 1`.
+6. Set frontmatter `playwright: true` if the brainstorming decided to use Playwright MCP, otherwise `playwright: false`.
+7. Set frontmatter `frontend-design: true` if the brainstorming discussed frontend/UI work and design direction, otherwise `frontend-design: false`.
+8. If `frontend-design: true`, fill in the `## Design Direction` section with the aesthetic style, stack, component libraries, and design notes from the brainstorming conversation. Auto-suggest component libraries based on the chosen stack if not explicitly discussed.
+9. Assign each task to a specific agent by name and type.
+10. Mark tasks as `background: true` when they can safely run in parallel (no file conflicts, no dependencies).
+11. Include Team Members and Review Policy sections.
+12. Include a reviewer agent for post-task code review.
+13. Include a validator agent for final verification.
+14. Fill in the `## Cleanup` section with any teardown commands needed (stop servers, remove temp files). Use "N/A" if nothing to clean up.
+15. Save to `specs/YYYY-MM-DD-<descriptive-kebab-case>.md` using today's date.
+
+## Eliminating Ambiguity
+
+Specs are executed by agents that have no access to the brainstorming conversation. Every detail left unspecified becomes a coin flip — different agents will make different choices. The goal is **deterministic builds**: two agents reading the same task description should produce near-identical output.
+
+When writing task descriptions, prefer concrete values over descriptive language:
+
+- **CSS**: Specify exact hex colors, font stacks, spacing values, border-radius. Write `background: #1a1a2e` not "dark background". Write `font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif` not "system sans-serif stack".
+- **Strings**: Write exact user-facing text in quotes. Write `"Unable to load weather data"` not "an error message". Write `"${score} points by ${author} | ${comments} comments"` not "display the score, author, and comments".
+- **DOM structure**: Specify element types (`<div>`, `<p>`, `<span>`), class names, and nesting. Write `createElement("div")` not "create an element".
+- **API details**: Specify exact URLs, query parameters, response field paths, units, and data transformations (rounding, formatting). Write `windspeed_10m` with `mph` or `km/h` explicitly — don't leave the unit unspecified.
+- **Implementation patterns**: When a specific approach matters for consistency, spell it out. For example, specify whether a Promise should reject-and-catch or resolve-with-fallback. Specify timeout values. Specify whether to use `classList.remove()` or `className =`.
+- **Quote style**: If the project has a convention, state it (e.g., "use double quotes throughout JS").
+
+If you catch yourself writing a vague adjective ("red-tinted", "subtle", "clean"), replace it with the exact value. Vague descriptions are the #1 source of build divergence.
+
+## Task Rules
+
+- Every task must have `Assigned To` (agent display name) and `Agent Type` (builder, researcher, etc.)
+- Mark `Background: true` for tasks that can run in parallel with other background tasks
+- Mark `Background: false` for tasks that must complete before dependent tasks start
+- Set `Depends On` accurately — parallel tasks should not depend on each other
+- Every builder task must include a **Tests** field listing the test file paths and test cases it must produce. Use "N/A" only for tasks with zero testable code (research, docs, config-only).
+- Every builder task must include a `**Files**` field listing exactly which files it creates or modifies, prefixed with `creates:` or `modifies:`. Review, research, and validation tasks may omit this field.
+- Each builder task should produce 1-3 files and ~100-300 lines of code. If a task would be larger, split it into smaller tasks with clear file boundaries.
+- For background builder tasks (`Background: true`), verify that their `**Files**` fields do not overlap. Tasks with overlapping files must not both be `Background: true`.
+- Research tasks go first, then architecture, then building, then testing, then validation
+- **After every builder task that writes code, add a review task** assigned to the reviewer agent. The review task depends on the builder task it reviews.
+- **Add tester tasks when appropriate** — do NOT add them by default for every builder task (builders already do TDD). Add a tester task when: (a) multiple builder tasks produce components that must integrate — the tester writes integration tests after both complete; (b) the project handles user input, auth, or has security-sensitive APIs — the tester writes adversarial/boundary tests; (c) acceptance criteria span the full stack — the tester writes E2E tests after all builders finish. Tester tasks depend on the builder task(s) they test and should run before or alongside the final review.
+- The second-to-last task MUST be a final code review (reviewer) that depends on all builder tasks
+- The final task should always be assigned to the validator agent, depending on the final review
+
+## Review Policy Defaults
+
+Use these defaults unless the brainstorming conversation specified otherwise:
+- **Review After**: each task
+- **Fix Loop Trigger**: Critical and Important
+- **Max Retries**: 3
+- **Skip Review For**: researcher, validator
+
+## Team Members Format
+
+List only the agents actually assigned to tasks:
+
+```
+- <Display Name>
+  - **Role**: <specific focus in this plan>
+  - **Agent Type**: <builder | researcher | reviewer | validator | architect | tester>
+```
+
+## Git
+
+After saving the spec file, commit it:
+```
+git add specs/<spec-file>.md
+git commit -m "spec: <short description of what the spec covers>"
+```
+
+## Report
+
+After saving and committing the spec, output:
+
+```
+Spec written (delegated mode)
+
+File: specs/YYYY-MM-DD-<name>.md
+Tasks: <number of tasks>
+Complexity: <simple | medium | complex>
+Team: <list of agent names and roles>
+
+Execute with: /dream-team:build specs/YYYY-MM-DD-<name>.md
+```
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/ratler) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

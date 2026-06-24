@@ -1,0 +1,13 @@
+# baoyu-image-gen
+
+> Skill by [smallnest](https://github.com/smallnest/langgraphgo) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [smallnest/langgraphgo](https://github.com/smallnest/langgraphgo/tree/main/examples/comic_skill_example/skills/baoyu-image-gen)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

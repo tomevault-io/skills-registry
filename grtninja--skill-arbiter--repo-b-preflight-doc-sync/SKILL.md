@@ -1,0 +1,67 @@
+---
+name: repo-b-preflight-doc-sync
+description: Enforce <PRIVATE_REPO_B> preflight gates and documentation lockstep. Use before PRs to run required validation profiles and keep README.md, docs/PROJECT_SCOPE.md, and docs/SCOPE_TRACKER.md synchronized with shipped behavior. Use when this capability is needed.
+metadata:
+  author: grtninja
+---
+
+# REPO_B Shim Preflight and Doc Sync
+
+Use this skill for PR-readiness and governance updates.
+
+## Workflow
+
+1. Run required preflight commands for the change scope.
+2. Capture command evidence and failures with explicit repro notes.
+3. Keep docs in lockstep for behavior changes.
+   - include repo-local reconciliation docs when the repo is carrying major unreleased open diffs
+   - include startup/state-persistence docs when launch behavior changed
+4. Add target-PC rerun steps when hardware-only checks cannot run locally.
+
+## Scope Boundary
+
+Use this skill for release-readiness gate execution and docs synchronization before PRs.
+
+Do not use this skill for:
+
+1. Runtime agent bridge behavior debugging.
+2. Hybrid Windows/WSL connectivity diagnosis.
+3. Strict hardware probe root-cause workflows.
+
+## Required Preflight Profiles
+
+```powershell
+pwsh -File tools/preflight.ps1
+pwsh -File tools/preflight.ps1 -Fast
+pwsh -File tools/preflight.ps1 -Node
+pwsh -File tools/preflight.ps1 -Hardware -ForceReal -MemryxOnly -VerboseOutput
+```
+
+```bash
+python tools/preflight.py
+```
+
+## Documentation Lockstep
+
+Review and update together when behavior changes:
+
+- `README.md`
+- `docs/PROJECT_SCOPE.md`
+- `docs/SCOPE_TRACKER.md`
+- repo-local reconciliation/startup notes when present
+
+## References
+
+- PR gate checklist: `references/pr-gate-checklist.md`
+
+## Loopback
+
+If this lane is unresolved, blocked, or ambiguous:
+
+1. Capture current evidence and failure context.
+2. Route back through `$skill-hub` for chain recalculation.
+3. Resume only after the updated chain returns a deterministic next step.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/grtninja) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

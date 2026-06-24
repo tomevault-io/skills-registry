@@ -1,0 +1,13 @@
+# code-review
+
+> Skill by [agentjido](https://github.com/agentjido/jido_ai) — distributed by [TomeVault](https://tomevault.io/claim/agentjido)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [agentjido/jido_ai](https://github.com/agentjido/jido_ai/tree/main/priv/skills/code-review)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Is this your repo? [Claim it](https://tomevault.io/claim/agentjido) to manage distribution.

@@ -1,0 +1,44 @@
+---
+name: web-server
+description: Web transport boundaries and feature-layer conventions Use when this capability is needed.
+metadata:
+  author: louisbranch
+---
+
+# Web Server Conventions
+
+Transport-layer guidance for the Web UI and related services.
+
+## Architecture Rules
+
+- Keep transport handlers thin; orchestration and domain decisions belong in service/domain packages.
+- Preserve feature boundaries (`internal/services/web/feature/*`, `internal/services/web/modules/*`); avoid cross-feature coupling.
+- Define interfaces at consumption points and avoid leaking concrete adapters across modules.
+- During refactors, prefer clean cutovers over long-lived compatibility routes.
+
+## Routing and Rendering
+
+- Use canonical route path packages for path construction; do not duplicate route constants.
+- Keep rendering and template composition scoped to the owning feature.
+- Favor explicit request -> service -> response flow over ad hoc handler logic.
+
+## Testing Focus
+
+- Prefer integration tests at transport seams (request mapping, auth checks, response contracts).
+- Assert user-visible outcomes and explicit protocol invariants, not incidental markup trivia.
+
+## Play UI Build Output
+
+- If the change touches `internal/services/play/ui/**`, refresh the checked-in
+  production bundle in `internal/services/play/ui/dist` before finishing.
+- Use `npm run build` from `internal/services/play/ui` or `make play-ui-dist`.
+- Treat the checked-in dist as part of the deliverable, not an optional local artifact.
+
+## Architecture Notes
+
+Refer to `docs/architecture/architecture.md` for system layout and service boundaries.
+Refer to `docs/architecture/domain-language.md` for canonical naming.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/louisbranch) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-16 -->

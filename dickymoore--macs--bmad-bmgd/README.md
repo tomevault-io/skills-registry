@@ -1,0 +1,13 @@
+# bmad-bmgd
+
+> Skill by [dickymoore](https://github.com/dickymoore/macs) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [dickymoore/macs](https://github.com/dickymoore/macs/tree/main/.codex/skills/bmad-bmgd)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

@@ -1,0 +1,13 @@
+# riligar-marketing-seo
+
+> Skill by [riligar](https://github.com/riligar/agents-kit) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [riligar/agents-kit](https://github.com/riligar/agents-kit/tree/main/.agent/skills/riligar-marketing-seo)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

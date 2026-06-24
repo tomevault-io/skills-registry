@@ -1,0 +1,140 @@
+---
+name: quality-workflow-gate
+description: Procedural reference for quality. Use it as a lookup for one task at a time for command reference, watcher setup, Husky hooks, test architecture, or end-of-feature smoke tests. Invoke when scaffolding the repo, configuring git hooks, setting up editor watchers, looking up an exact `pnpm`/`cargo` command, writing or restructuring tests, or verifying a feature is done before merge. The load-bearing *principles* (test-first, determinism, "what done means", pitfalls) live in `.github/copilot-instructions.md` and are always in context — this skill provides the concrete commands and setup details. Use when this capability is needed.
+metadata:
+  author: mcaden
+---
+
+# Quality workflow — procedural reference
+
+Companion to the **Shift-left quality** principles in `.github/copilot-instructions.md`. Those principles are always loaded; this file is a lookup. Read only the section needed for the current task instead of processing the whole document.
+
+## 1. Quality gate — single command
+
+The primary way to run the full acceptance gate:
+
+```
+pnpm gate              # full gate (frontend + Rust in parallel, auto-fixes formatting)
+pnpm gate:fe           # frontend only
+pnpm gate:rust         # rust only
+```
+
+`pnpm gate` runs `scripts/quality-gate.mjs` which:
+- Runs frontend (eslint → prettier → typecheck+build → vitest) and Rust (cargo fmt → clippy → test) **in parallel**
+- **Auto-fixes** formatting failures (eslint --fix, prettier --write, cargo fmt) then re-checks
+- **Suppresses output on success** — only shows failure details (last 80 lines)
+- Reports per-step timings, wall-clock total, and parallelism factor
+
+Typical timing (warm cache): ~90–170s wall-clock depending on machine and cache state.
+
+## 2. Individual commands (for inner-loop or debugging)
+
+```
+pnpm install                                     # install JS deps
+pnpm dev                                         # dev build + HMR (Vite + Tauri); alias: pnpm tauri:dev
+pnpm vite                                        # frontend-only Vite dev server (no Tauri shell)
+pnpm run tauri:build                             # production bundle
+pnpm run lint                                    # eslint + prettier --check
+pnpm run lint:fix                                # eslint --fix + prettier --write
+pnpm run dev:typecheck                           # tsc --noEmit --watch
+pnpm test                                        # vitest (watch by default in dev)
+pnpm test --run                               # vitest single-shot (CI mode)
+pnpm test --run --coverage                    # with coverage report
+cargo fmt --all -- --check                      # format check (workspace root)
+cargo clippy --workspace --all-targets --features test-helpers -- -D warnings
+cargo test --workspace --features test-helpers
+cargo watch -C src-tauri -x 'clippy --all-targets --features test-helpers -- -D warnings'  # Rust inner loop
+```
+
+These commands are wired up in `package.json` and the workspace
+`Cargo.toml`; if you find a discrepancy, treat it as a docs bug and
+update this skill in the same PR.
+
+**Prefer `pnpm gate` over running individual commands** — it handles
+auto-fixing, parallelism, and context-efficient output automatically.
+Use individual commands only for inner-loop iteration or debugging
+specific failures.
+
+### Agent-optimized variants (minimize context usage)
+
+When running commands as an AI agent (not a human in a terminal),
+use these flags to suppress verbose success output and only surface
+failures. This keeps token usage low and avoids flooding context with
+hundreds of lines of passing-test output.
+
+| Purpose | Command |
+|---------|---------|
+| Full gate (preferred) | `pnpm gate` (already context-efficient) |
+| Frontend gate only | `pnpm gate:fe` |
+| Rust gate only | `pnpm gate:rust` |
+| Rust build only | `cargo build --quiet` |
+| Rust tests | `cargo test --workspace --features test-helpers --quiet` |
+| Rust clippy | `cargo clippy --workspace --all-targets --features test-helpers --quiet -- -D warnings` |
+| Vitest | `pnpm test --run --reporter=dot` |
+| TypeScript typecheck | `pnpm exec tsc --noEmit 2>&1 \| Select-Object -Last 3` (Windows) or `… \| tail -3` (Unix) |
+
+**Rules for agents:**
+- **Always use `--quiet` for `cargo build`, `cargo test`, and `cargo clippy`** — they print full output only on failure, which is all you need.
+- **Always use `--reporter=dot` for vitest** — prints one char per test, full output only on failure.
+- **Pipe lint output through a filter** when running standalone: `pnpm run lint 2>&1 | Select-String "error|warning|✖|problem"` (Windows) or `… | grep -E 'error|warning|✖|problem'` (Unix).
+- **For `pnpm run build`** (Vite production build): pipe to `Select-Object -Last 5` / `tail -5` to get just the summary line.
+- **Prefer `pnpm gate`** over individual commands — it already suppresses success output and only reports failures (last 80 lines max).
+
+## 3. Inner-loop setup (one-time per contributor)
+
+Run continuously while coding so type/lint/test feedback hits in <5 s:
+
+```
+# Frontend watchers (run in two terminals)
+pnpm run dev:typecheck    # tsc --noEmit --watch
+pnpm run test:watch       # vitest
+
+# Rust watchers (run in two terminals)
+cargo watch -x 'clippy --all-targets --features test-helpers -- -D warnings'  # type + lint feedback (workspace root)
+cargo watch -x 'test --workspace --features test-helpers'         # tests
+```
+
+**Editor configuration**: ESLint + Prettier on save, `rust-analyzer` with `clippy` as the check command. No "I'll lint at the end" — by then it's a wall of changes.
+
+## 4. Pre-commit / pre-push hooks (Husky + lint-staged)
+
+Hooks live under `.husky/`. Bypassing with `--no-verify` is allowed only for branches explicitly marked as WIP and not intended for merging into `main`.
+
+- **pre-commit**:
+  - `lint-staged` runs `eslint --fix` + Prettier on staged JS/TS
+  - **Re-stage safety net**: after lint-staged, any fully-staged file that acquired new unstaged changes (indicating the fix was written to disk but not re-staged) is automatically re-added to the index. Partially-staged files are skipped (to avoid committing unintended hunks).
+  - `cargo fmt --check` and `cargo clippy --all-targets -- -D warnings` on the Rust workspace if any `.rs` file is staged
+- **pre-push**:
+  - `pnpm test --run` (vitest in CI mode)
+  - `cargo test --workspace --features test-helpers`
+
+## 5. Test architecture rules
+
+### Rust
+- Unit tests in-module: `#[cfg(test)] mod tests { ... }`
+- Integration tests in `src-tauri/tests/`
+- Filesystem touches: always `tempfile::TempDir`, never the real FS
+- Time-dependent async code: `#[tokio::test(flavor = "current_thread", start_paused = true)]` so virtual time advances deterministically
+- PTY pool integration tests use a trivial cross-platform child (`echo` on Unix, `cmd /c echo` on Windows) — never depend on `claude`/`copilot` being installed
+
+### Frontend
+- Colocate `Foo.test.tsx` next to `Foo.tsx`
+- Shared test helpers in `src/test/`
+- Hand-written mock at `src/lib/tauri-bridge.mock.ts` exporting the same shape as `tauri-bridge.ts` with `vi.fn()` defaults; tests override per-case
+- Component tests for Sidebar, NewSessionDialog, TerminalView (with a mock terminal); hook tests for `use-terminal`
+- E2E (post-v1, optional): Tauri's WebDriver integration — gated behind a separate pnpm script, not part of `pnpm test`
+
+### General
+- **Coverage** is a smell detector, not a target. No percentage gate, but a file <60% line coverage is a yellow flag worth explaining.
+- **Flaky tests are bugs.** Quarantine (`.skip` with a linked issue) within the same day; fix or delete within the week. Never retry to green.
+
+## 6. End-of-feature performance & memory smoke tests
+
+Run these before claiming a feature done:
+
+- **Tab-switch leak check**: open 10 sessions, switch tabs rapidly for 30 s — no leaked terminals, RSS stable (Activity Monitor / Task Manager).
+- **Backpressure check**: pipe a high-throughput command (`yes` on Unix, `for /l %i in (1,1,1000000) do @echo %i` on Windows) into one session — the UI in other tabs stays responsive (proves the bounded channel works).
+
+---
+> Source: [mcaden/arborist](https://github.com/mcaden/arborist) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-16 -->

@@ -1,0 +1,13 @@
+# bech32-encoding-decoding
+
+> Skill by [andrewwestberg](https://github.com/andrewwestberg/jormanager) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [andrewwestberg/jormanager](https://github.com/andrewwestberg/jormanager/tree/main/.agent/skills/bech32-encoding-decoding)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

@@ -1,0 +1,84 @@
+---
+name: cve-fix
+description: Fix CVEs in Submariner Go repositories. Arguments are optional and order-independent. TRIGGER when user asks to fix CVEs, scan for vulnerabilities, or mentions grype/CVE/GHSA. Use when this capability is needed.
+metadata:
+  author: submariner-io
+---
+
+# CVE Fix Workflow
+
+Run the command below exactly as written. Do not read, debug, or modify
+the CVE scripts. If a bare repo name like `subctl` is passed, convert it
+to `../subctl` before running.
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Find scripts directory (in shipyard repo)
+CVE_SCRIPTS="$(pwd)/scripts/cve"
+if [[ ! -d "$CVE_SCRIPTS" ]]; then
+  CVE_SCRIPTS="$HOME/go/src/submariner-io/shipyard/scripts/cve"
+fi
+if [[ ! -d "$CVE_SCRIPTS" ]]; then
+  echo "ERROR: Cannot find scripts/cve/ directory"
+  echo "Expected in current directory or ~/go/src/submariner-io/shipyard/"
+  exit 1
+fi
+
+exec bash "$CVE_SCRIPTS/fix-all.sh" $ARGUMENTS
+```
+
+fix-all.sh does everything: detect config, create fix branch, scan for CVEs,
+fix each deterministically, run tests, agent-review all results, and print
+the PR command.
+
+**Exit code 0**: All CVEs addressed. Review commits and run the printed PR command.
+
+**Exit code 2**: Some CVEs unresolved after review.
+
+**Exit code 1**: Error.
+
+## Multi-Repo
+
+For multiple repos, spawn one agent per repo. Each agent should run
+`bash ~/go/src/submariner-io/shipyard/scripts/cve/fix-all.sh REPO BRANCH`
+via the Bash tool (not the Skill tool, which times out in subagents).
+Report per repo: CVEs found, fixed, ignored, and PR command. On errors
+or timeout, clean up orphaned processes with
+`bash ~/go/src/submariner-io/shipyard/scripts/cve/clean.sh` before reporting.
+Never modify the CVE fix scripts themselves.
+
+## Usage
+
+- `/cve-fix` - current repo, current branch
+- `/cve-fix 0.23` - current repo, specified branch (short form)
+- `/cve-fix ../submariner-operator` - specified repo, current branch
+- `/cve-fix release-0.23 ../submariner-operator` - both specified (order doesn't matter)
+
+Arguments are order-independent. Short versions like `0.23` auto-expand
+to `release-0.23`. Repos must be paths. If a bare name like `subctl` is passed, resolve it
+to `../subctl` (from any submariner repo) or `~/go/src/submariner-io/subctl`.
+
+**From the command line** (without Claude):
+
+```bash
+make cve-fix                                                      # current repo, current branch
+make cve-fix BRANCH=release-0.23                                  # current repo, specified branch
+make cve-fix REPO=../submariner-operator BRANCH=release-0.23      # specified repo and branch
+```
+
+## Common Issues
+
+| Issue | Solution |
+| ----- | -------- |
+| CVE persists after fix | Verify FIXED-IN version; check for replace directives |
+| New CVE appears after fix | Dependency downgrade introduced it; fix immediately |
+| Tests fail | Try different version; check CI logs |
+| Container "no route to host" | Run `sudo systemctl restart docker` or `sudo systemctl restart podman` |
+| Stdlib CVEs | Fixed via go directive update. Check Shipyard Go version if CI fails |
+| Git fetch fails | Run `git fetch` manually before starting |
+
+---
+> Source: [submariner-io/shipyard](https://github.com/submariner-io/shipyard) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-18 -->

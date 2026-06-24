@@ -1,0 +1,154 @@
+---
+name: git-auto-commit-and-push
+description: | Use when this capability is needed.
+metadata:
+  author: Mo-Morris
+---
+
+# Git Auto Commit And Push
+
+## 目标
+根据仓库当前变更，自动生成清晰、自然、以中文为主的提交信息，并完成代码提交与推送。
+
+## 适用场景
+- 需要快速完成一次规范提交
+- 不确定 commit message 怎么写
+- 希望由 AI 先总结改动再推送
+
+## 触发规则（自动路由）
+- 当用户出现以下任一表达时，直接触发本 Skill：
+  - 提交代码
+  - 帮我 commit
+  - 提交并推送
+  - 生成 commit message 并提交
+  - 把这些改动推上去
+- 若用户只说“提交代码”，默认执行：
+  - 生成整体改动摘要的 commit message
+  - 自动 `git add -A`、`git commit`、`git push origin HEAD`
+
+## 输入参数
+- `commit_style`（可选，默认 `conventional`）
+  - 可选值：`conventional` / `simple`
+- `push_remote`（可选，默认 `origin`）
+- `include_untracked`（可选，默认 `true`）
+- `language`（可选，默认 `zh`，提交信息优先使用中文表达）
+- `summary_focus`（可选，默认 `overall`）
+  - 可选值：`overall` / `file-level`
+  - 建议始终使用 `overall`
+
+## 执行流程
+1. 校验当前目录是 Git 仓库；否则终止。
+2. 获取变更信息：
+   - `git status --short`
+   - `git diff`
+   - `git diff --staged`
+3. 若无改动，输出“无可提交内容”并结束。
+4. 识别敏感文件并排除（如 `.env`、`.pem`、私钥、凭证文件）。
+5. 基于改动自动生成 commit message（必须带生成来源标识）：
+   - 先提炼“本次改动的整体目的与结果”，再写 message
+   - 默认使用全局摘要，不按文件逐个描述
+   - message 应聚焦“这次改动整体完成了什么、解决了什么问题”，而不是“改了哪些文件”
+   - message 的主体描述尽量使用中文，保持简洁自然
+   - Git 约定前缀、技术名词、包名、命令、文件扩展名、常见短语等用英文更准确时，可以保留英文
+   - `conventional` 风格保留英文类型前缀；冒号后的 subject 优先使用中文，必要时可夹带简短英文术语
+   - 标识规范：在提交摘要下一行追加 `generated-by: git-auto-commit-and-push`
+   - `conventional`：
+     ```md
+     type(scope): 中文摘要
+     generated-by: git-auto-commit-and-push
+     ```
+   - `simple`：
+     ```md
+     一句中文简洁描述
+     generated-by: git-auto-commit-and-push
+     ```
+   - 示例：
+     ```md
+     feat(auth): 优化登录态校验流程
+     generated-by: git-auto-commit-and-push
+     ```
+     ```md
+     fix(api): 修复订单同步异常
+     generated-by: git-auto-commit-and-push
+     ```
+     ```md
+     优化技能的中文提交信息生成规则
+     generated-by: git-auto-commit-and-push
+     ```
+6. 暂存代码：
+   - `include_untracked=true` -> `git add -A`
+   - 否则仅暂存已跟踪文件
+7. 执行提交（**作者身份**，避免 Cursor 注入环境变量后变成 `cursor` 等错误作者）：
+   - 先读取期望的作者：**优先**本仓库 `local`（不受 Cursor 里可能被改写的全局配置影响），没有再读有效配置：
+     - `author_name=$(git config --local --get user.name || git config --get user.name)`
+     - `author_email=$(git config --local --get user.email || git config --get user.email)`
+   - 若二者任一为空：停止并提示在本仓库执行  
+     `git config user.name "你的名字"` 与 `git config user.email "你的邮箱"`  
+     （建议用 **`git config --local`** 只写进当前仓库，避免被其他环境改掉。）
+   - 提交命令（显式作者，覆盖 `GIT_AUTHOR_*` / `GIT_COMMITTER_*` 一类注入；`commit_message` 必须包含摘要行和下一行 `generated-by: git-auto-commit-and-push`）：
+     - `git commit --author="${author_name} <${author_email}>" -m "$commit_message"`
+   - 若你方环境仍强制改写作者，可在同一条命令前对当前 shell **取消继承**（按需选用其一即可）：
+     - `env -u GIT_AUTHOR_NAME -u GIT_AUTHOR_EMAIL -u GIT_COMMITTER_NAME -u GIT_COMMITTER_EMAIL git commit ...`
+8. 执行推送：`git push <push_remote> HEAD`
+9. 输出执行摘要（message、hash、目标分支、改动概览）。
+
+## 故障排除：提交者变成 Cursor 而不是本机用户
+
+**原因**：Cursor 执行 `git` 时可能带上 `GIT_AUTHOR_*` / `GIT_COMMITTER_*` 等环境变量，或读到另一套全局配置，导致作者显示为 `cursor`（或 Cursor 相关邮箱）。
+
+**处理**：
+
+1. 在本仓库设置**本地**身份（推荐，不依赖 IDE 环境）：
+   - `git config --local user.name "你的名字"`
+   - `git config --local user.email "你的邮箱"`
+2. 执行流程第 7 步已要求使用 `git commit --author="…"`，与上面配置一致即可稳定为你期望的作者。
+3. 若仍异常，在 Cursor 设置里检查是否启用了会改写 Git 全局配置的选项；或在终端用同一仓库手动 `git commit` 对比 `git config --list --show-origin`。
+
+## 约束与安全规则
+- 禁止 `git push --force` / `--force-with-lease`
+- 禁止破坏性回滚命令（如 `git reset --hard`）
+- 不自动提交敏感文件
+- pre-commit 失败时停止，并返回报错信息
+- 提交信息必须在摘要下一行包含 `generated-by: git-auto-commit-and-push` 标识
+- 提交信息优先使用中文表达整体改动；若英文能更准确表达技术含义，可以适度保留
+- 避免生成过于泛泛的英文 subject，例如 `update files`、`fix bug`
+- 默认不得在提交信息中罗列具体文件名；除非用户明确要求按文件维度描述
+
+## 输出格式
+```md
+已完成 Git 提交与推送。
+
+- Commit Message:
+  ```md
+  <message>
+  generated-by: git-auto-commit-and-push
+  ```
+- Commit Hash: <hash>
+- Remote/Branch: <remote>/<branch>
+
+变更摘要：
+- <本次改动的整体目标/收益>
+- <对功能或流程的整体影响>
+```
+
+## 可直接触发的用户指令示例
+```md
+请按 git-auto-commit-and-push skill 执行：
+1) 读取当前仓库改动
+2) 自动生成 commit message（conventional）
+3) 完成 commit
+4) 推送到 origin 当前分支
+
+要求：
+- 不要 force push
+- 不提交 .env、密钥等敏感文件
+- commit message 必须在摘要下一行包含 `generated-by: git-auto-commit-and-push`
+- commit message 尽量使用中文表达；conventional 类型前缀、技术名词和简短英文术语可保留
+- commit message 请基于整体改动总结，不要逐文件描述
+- 若没有改动请直接说明
+- 若 hook 失败请停止并反馈错误
+```
+
+---
+> Source: [Mo-Morris/bibi-share](https://github.com/Mo-Morris/bibi-share) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-17 -->

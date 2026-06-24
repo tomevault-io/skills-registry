@@ -1,0 +1,23 @@
+---
+name: logics-relationship-linker
+description: Build and maintain relationships across Logics documents. Use when Codex should discover or summarize links between `logics/request`, `logics/backlog`, `logics/tasks`, `logics/specs`, `logics/product`, and `logics/architecture` by scanning references and generating a relationship report. Use when this capability is needed.
+metadata:
+  author: alexago83
+---
+
+# Relationships
+
+## Generate a relationship report
+
+```bash
+python logics/skills/logics-relationship-linker/scripts/link_relations.py --out logics/RELATIONSHIPS.md
+```
+
+## Conventions
+
+- Prefer referencing docs using their doc ref (e.g. `req_001_some_slug`, `item_002_some_slug`, `task_003_some_slug`, `spec_004_some_slug`, `prod_005_some_slug`, `adr_006_some_slug`).
+- Keep relationships lightweight (don’t try to model everything).
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/alexago83) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

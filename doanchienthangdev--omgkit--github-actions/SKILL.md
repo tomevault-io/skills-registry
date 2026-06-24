@@ -1,0 +1,121 @@
+---
+name: automating-with-github-actions
+description: Use when working with the agent implements GitHub Actions CI/CD workflows with builds, tests, and deployments. Use when setting up continuous integration, automating deployments, creating reusable actions, or implementing security scanning.
+metadata:
+  author: doanchienthangdev
+---
+
+# Automating with GitHub Actions
+
+## Quick Start
+
+```yaml
+# .github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Workflows | Event-driven automation pipelines | Trigger on push, PR, schedule, or manual dispatch |
+| Jobs | Parallel or sequential task execution | Use `needs` for dependencies, matrix for variations |
+| Actions | Reusable workflow components | Use marketplace actions or create custom composite |
+| Environments | Deployment targets with protection | Configure approvals, secrets, and URLs |
+| Artifacts | Build output persistence | Upload/download between jobs, retention policies |
+| Caching | Dependency caching for speed | Cache npm, pip, gradle directories |
+
+## Common Patterns
+
+### Matrix Build
+
+```yaml
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci && npm test
+```
+
+### Deployment with Environments
+
+```yaml
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://example.com
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci && npm run build
+      - name: Deploy
+        run: ./deploy.sh
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+```
+
+### Docker Build and Push
+
+```yaml
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use concurrency groups to cancel stale runs | Hardcoding secrets in workflows |
+| Cache dependencies for faster builds | Skipping security scanning |
+| Use matrix strategies for cross-platform | Using deprecated action versions |
+| Implement environment protection rules | Running unnecessary jobs on PRs |
+| Set timeouts on long-running jobs | Ignoring workflow permissions |
+| Use reusable workflows for common patterns | Self-hosted runners without security review |
+| Upload test artifacts on failure | Skipping concurrency controls |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

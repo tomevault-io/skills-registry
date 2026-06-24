@@ -1,0 +1,49 @@
+---
+name: lenny-technology
+description: Technology & AI skills from Lenny's Podcast - AI strategy, LLMs, platform, tech debt Use when this capability is needed.
+metadata:
+  author: leolin990405
+---
+
+# Lenny Skills: Technology & AI
+
+6 actionable skills for technology and AI products.
+
+## Skills
+
+### 1. AI Product Strategy
+- Focus on user problems, not AI capabilities
+- Design for AI's strengths and weaknesses
+- Plan for rapid capability changes
+
+### 2. Building with LLMs
+- Start with prompting before fine-tuning
+- Build evaluation frameworks early
+- Design for graceful degradation
+
+### 3. Evaluating New Technology
+- Separate hype from reality
+- Run small experiments
+- Consider total cost of adoption
+
+### 4. Platform Strategy
+- Build for extensibility
+- Create developer ecosystems
+- Balance platform and product
+
+### 5. Technical Roadmaps
+- Align with product roadmap
+- Balance features and infrastructure
+- Communicate trade-offs clearly
+
+### 6. Managing Tech Debt
+- Make tech debt visible
+- Allocate time for maintenance
+- Pay down strategically
+
+## Source
+[Lenny's Podcast](https://www.lennyspodcast.com/) | [refoundai.com/lenny-skills](https://refoundai.com/lenny-skills/)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/leolin990405) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

@@ -1,0 +1,52 @@
+---
+name: edico
+description: Core Knowledge Management Skill. Reduces research redundancy and provides autonomous long-term memory by persisting synthesized web data. Use when this capability is needed.
+metadata:
+  author: xenitv1
+---
+<domain_overview>
+# 📚 EDICO: PERSISTENCE & REDUNDANCY REDUCTION
+> **MISSION:** To stop redundant web searches by the AI and transform learned insights into a permanent, collective local memory.
+> **Philosophy:** Knowledge should be cumulative, not ephemeral. Edico is the bridge between conversations, ensuring that once a topic is researched, it remains accessible forever.
+</domain_overview>
+
+<iron_laws>
+## 🚨 IRON LAWS
+```
+1. CHECK BEFORE SEARCH - Always scan the local .webdata directory BEFORE starting any deep web research.
+2. NO REDUNDANCY - If existing data is fresh (less than 2 months old), use it as the primary source instead of performing a new search.
+3. SOURCE-BASED TIMESTAMPS - Do NOT use the current date for the record. Use the date mentioned in the sources (e.g., article publication date) to ensure historical accuracy.
+4. EXHAUSTIVE ANALYSIS - Never write a "summary." Write a COMPREHENSIVE analysis. It must be so detailed that any subsequent AI reading it will NOT need to perform a new search. Include all data points, technical nuances, and context.
+5. ENGLISH ONLY PERSISTENCE - All data saved to the local database (topic, detailed_analysis, tags) MUST be written in English, regardless of the user's language or the source's language. This ensures 100% interoperability across systems.
+6. AUTONOMOUS PERSISTENCE - When /edico is triggered or research is complete, synthesize and save immediately without asking for user confirmation.
+7. QUALITY OVER QUANTITY - Do not save raw data dumps; only persist high-value, deep-dive insights.
+```
+</iron_laws>
+
+<protocols>
+## 📦 PROTOCOL 1: "CHECK-FIRST" TRIGGER
+Every time a user asks for research or a new topic is introduced:
+1.  **Search Local DB**: Use keywords to check `~/.webdata/research_log.jsonl`.
+2.  **Evaluate Freshness**: If found and < 2 months old, use it as the primary source.
+3.  **Optimize Search**: Only search the web for *missing* details or required updates.
+
+## 📦 PROTOCOL 2: DATA SYNTHESIS & STORAGE (AUTONOMOUS)
+When research is completed or `/edico` is called:
+1.  **Extract Dates**: Identify the publication or validity date from the sources.
+2.  **Analyze Exhaustively in English**: Write a deep-dive analysis that contains all critical findings. This must be in English.
+3.  **Execute**: Run `node skills/edico/scripts/persist.js` with structured parameters, including `--detailed_analysis` and `--timestamp`.
+4.  **Silent Success**: The operation must be silent and autonomous unless an error occurs.
+
+## ⚙️ STORAGE COMMAND TEMPLATE
+`node skills/edico/scripts/persist.js --topic "[TOPIC_IN_ENGLISH]" --detailed_analysis "[EXHAUSTIVE_CONTENT_IN_ENGLISH]" --sources "[URL1],[URL2]" --tags "[TAG1],[TAG2]" --timestamp "[SOURCE_DATE]"`
+</protocols>
+
+<usage_guidelines>
+## 🛠️ USAGE
+- Use this skill to combat "conversation amnesia."
+- Edico is the default memory layer for all web-related research tasks.
+</usage_guidelines>
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/xenitv1) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

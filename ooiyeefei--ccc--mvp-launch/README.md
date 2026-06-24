@@ -1,0 +1,13 @@
+# mvp-launch
+
+> Skill by [ooiyeefei](https://github.com/ooiyeefei/ccc) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ooiyeefei/ccc](https://github.com/ooiyeefei/ccc/tree/main/plugins/mvp-launch/skills/mvp-launch)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

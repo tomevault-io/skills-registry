@@ -1,0 +1,95 @@
+---
+name: pr-issues
+description: PR review triage, scoped fixes, verification, and merge workflow Use when this capability is needed.
+metadata:
+  author: louisbranch
+---
+
+# PR Issues Workflow
+
+Codify how to triage GitHub PR review comments, propose fixes, apply agreed changes, run tests, and set auto-merge with squash.
+
+## When to Use
+
+Use this skill when the user asks to:
+
+- Triage PR review comments
+- Respond to automated reviewer feedback
+- Fix PR issues and update the PR
+- Prepare a PR for auto-merge
+
+## Core Workflow
+
+1. **Fetch PR context**
+   - Get the PR number with `gh pr view --json number`
+   - Always fetch inline review comments (file/line) using the PR comments endpoint.
+
+2. **Wait for automated reviewer (if expected)**
+   - If the automated review posts after a delay, wait until it lands before making changes.
+   - If the review has not arrived, report that status and retry as needed.
+
+3. **Triage feedback**
+   - Must-fix: correctness, security, test failures, required reviewer notes, architecture boundary regressions.
+   - Should-fix: maintainability, clarity, small risks.
+   - Won't-fix: stylistic preference, low impact, or conflicts with existing conventions.
+
+4. **Recommend actions**
+   - Provide a concise recommendation per comment.
+   - If the user has not specified, default to fixing must-fix and high-confidence should-fix items.
+   - Call out won’t-fix items with rationale.
+
+5. **Implement approved changes**
+   - Apply agreed changes with an architecture-first lens.
+   - Avoid unrelated churn, but include small supporting refactors when needed to keep boundaries clean.
+   - If a requested micro-fix worsens architecture, propose the cleaner path and explain the trade-off.
+   - Use relevant skills if changes touch those domains (`schema`, `error-handling`, `go-style`, `web-server`).
+
+6. **Verify**
+   - Run `make check` before pushing PR updates.
+   - Treat `make check` as the gating local parity check for the PR workflows.
+   - Use `make smoke` for faster runtime iteration when you need quick confidence before the final gate.
+   - Remove stale tombstone tests instead of preserving historical expectations after a deliberate feature removal.
+   - Note failures and propose fixes before proceeding.
+
+7. **Update PR and enable auto-merge**
+   - Do not post PR comments or review replies by default.
+   - Post a PR/review comment only when explicitly requested by the user, or when a reviewer explicitly asked for a follow-up response.
+   - Keep any required comment concise (max 3 bullets). Never paste line-by-line command output, full test logs, or long mechanical package lists.
+   - Default merge command: `gh pr merge <pr> --auto --squash`.
+   - If auto-merge is unavailable but the PR is mergeable immediately, use `gh pr merge <pr> --squash`.
+   - Do not use `--merge`, `--rebase`, or `--delete-branch`.
+   - If squash merge fails, report the blocker instead of switching merge strategies or bypassing `gh pr merge` with ad hoc API calls.
+
+## GitHub CLI Commands
+
+Use `gh` for all PR data and updates.
+
+```bash
+gh pr view <pr> --json title,number,headRefName,reviewDecision,checks
+gh api repos/<owner>/<repo>/pulls/<pr>/comments
+gh api repos/<owner>/<repo>/pulls/<pr>/reviews
+gh pr comment <pr> --body "<summary>"
+gh pr merge <pr> --auto --squash
+gh pr merge <pr> --squash
+```
+
+Inline comments (file/line) come from `pulls/<pr>/comments`. Always use that endpoint for line-level feedback.
+
+## Response Format
+
+Provide a short triage report with:
+
+- Must-fix: bullets with recommendation and rationale.
+- Should-fix: bullets with recommendation and rationale.
+- Won't-fix: bullets with recommendation and rationale.
+
+After changes, report:
+
+- Files updated.
+- Tests run and results.
+- Whether any PR/review comment was posted (and why). Include comment text only when explicitly requested.
+- Auto-merge status (enabled or blocked by checks).
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/louisbranch) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->

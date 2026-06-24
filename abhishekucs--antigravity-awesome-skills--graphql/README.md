@@ -1,0 +1,13 @@
+# graphql
+
+> Skill by [Abhishekucs](https://github.com/Abhishekucs/antigravity-awesome-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [Abhishekucs/antigravity-awesome-skills](https://github.com/Abhishekucs/antigravity-awesome-skills/tree/main/plugins/antigravity-awesome-skills-claude/skills/graphql)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

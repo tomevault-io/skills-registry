@@ -1,0 +1,184 @@
+---
+name: building-laravel-apis
+description: Builds enterprise Laravel applications with Eloquent, API Resources, Sanctum auth, and queue processing. Use when creating PHP backends, REST APIs, or full-stack Laravel applications.
+metadata:
+  author: doanchienthangdev
+---
+
+# Laravel
+
+## Quick Start
+
+```php
+// routes/api.php
+Route::get('/health', fn () => ['status' => 'ok']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('users', UserController::class);
+});
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Models | Eloquent ORM, relationships, scopes | [MODELS.md](MODELS.md) |
+| Controllers | Resource controllers, form requests | [CONTROLLERS.md](CONTROLLERS.md) |
+| API Resources | Response transformation | [RESOURCES.md](RESOURCES.md) |
+| Auth | Sanctum, policies, gates | [AUTH.md](AUTH.md) |
+| Queues | Jobs, events, listeners | [QUEUES.md](QUEUES.md) |
+| Testing | Feature, unit tests | [TESTING.md](TESTING.md) |
+
+## Common Patterns
+
+### Model with Relationships
+
+```php
+class User extends Authenticatable
+{
+    use HasApiTokens, HasFactory, SoftDeletes;
+
+    protected $fillable = ['name', 'email', 'password', 'role'];
+    protected $hidden = ['password', 'remember_token'];
+    protected $casts = ['email_verified_at' => 'datetime', 'password' => 'hashed'];
+
+    public function organizations(): BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class, 'memberships')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeSearch($query, ?string $search)
+    {
+        return $search
+            ? $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+            : $query;
+    }
+}
+```
+
+### Controller with Service
+
+```php
+class UserController extends Controller
+{
+    public function __construct(private UserService $userService) {}
+
+    public function index(Request $request): PaginatedCollection
+    {
+        $users = $this->userService->list(
+            search: $request->input('search'),
+            perPage: $request->input('per_page', 20)
+        );
+        return new PaginatedCollection($users, UserResource::class);
+    }
+
+    public function store(CreateUserRequest $request): JsonResponse
+    {
+        $user = $this->userService->create($request->validated());
+        return (new UserResource($user))
+            ->response()
+            ->setStatusCode(201);
+    }
+
+    public function show(User $user): UserResource
+    {
+        return new UserResource($user->load('organizations'));
+    }
+}
+```
+
+### Form Request Validation
+
+```php
+class CreateUserRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return $this->user()->isAdmin();
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'min:2', 'max:100'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()],
+            'role' => ['sometimes', 'in:admin,user,guest'],
+        ];
+    }
+}
+```
+
+## Workflows
+
+### API Development
+
+1. Create model and migration
+2. Create controller with `php artisan make:controller --api`
+3. Add Form Request for validation
+4. Create API Resource for responses
+5. Write feature tests
+
+### Resource Response
+
+```php
+class UserResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'organizations' => OrganizationResource::collection($this->whenLoaded('organizations')),
+            'created_at' => $this->created_at->toIso8601String(),
+        ];
+    }
+}
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use Form Requests for validation | Validating in controllers |
+| Use API Resources for responses | Returning models directly |
+| Use service classes for logic | Fat controllers |
+| Use eager loading | N+1 queries |
+| Use soft deletes | Hard deletes for important data |
+
+## Project Structure
+
+```
+app/
+├── Http/
+│   ├── Controllers/Api/
+│   ├── Requests/
+│   ├── Resources/
+│   └── Middleware/
+├── Models/
+├── Services/
+├── Policies/
+├── Jobs/
+└── Events/
+routes/
+├── api.php
+└── web.php
+tests/
+├── Feature/
+└── Unit/
+```
+
+For detailed examples and patterns, see reference files above.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

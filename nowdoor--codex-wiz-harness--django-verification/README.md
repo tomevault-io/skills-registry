@@ -1,0 +1,13 @@
+# django-verification
+
+> Skill by [NowDoor](https://github.com/NowDoor/codex_wiz_harness) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [NowDoor/codex_wiz_harness](https://github.com/NowDoor/codex_wiz_harness/tree/main/.agents/skills/django-verification)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

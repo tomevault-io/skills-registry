@@ -1,0 +1,26 @@
+---
+name: flutter-security
+description: Enforce architect-level security standards including AES-256-GCM encryption, secure storage, biometric gates, and memory safety. Use when handling sensitive data, credentials, clipboard content, or API communication security. Use when this capability is needed.
+metadata:
+  author: dhruvanbhalara
+---
+
+# Security & Data Integrity (Architect Level)
+
+-   **AES-256-GCM**: Use Authenticated Encryption for all sensitive storage.
+-   **Secret Storage**: Mandatory use of `flutter_secure_storage` for encryption keys and master-derived keys.
+-   **Key Derivation**: Mandate NIST-approved hashing (**Argon2id**) for master password derivation before local storage encryption and export.
+-   **Memory Safety**: Strictly clear sensitive variables (passwords, keys) from memory when the operation finishes or the app enters the background.
+-   **Clipboard Safety**: Mandate programmatic clearing of sensitive data (OTPs, Passwords) after a short duration (30-60s).
+-   **Biometric Gate**: Mandatory local authentication for any view, export, or destructive action.
+-   **Audit Log**: All security-sensitive actions should be logged via `AppLogger` (excluding raw secrets).
+
+# Input & API Security
+
+-   **Input Validation**: Validate and sanitize all user-facing input fields before processing or storage.
+-   **HTTPS Only**: All API communication MUST use HTTPS. Consider certificate pinning for sensitive applications.
+-   **Token Storage**: STRICTLY prohibit storing tokens, API keys, or credentials in source code or public repositories. Use `flutter_secure_storage` or environment-based injection.
+
+---
+> Source: [dhruvanbhalara/skills](https://github.com/dhruvanbhalara/skills) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-22 -->

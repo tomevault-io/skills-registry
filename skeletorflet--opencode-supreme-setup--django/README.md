@@ -1,0 +1,13 @@
+# django
+
+> Skill by [skeletorflet](https://github.com/skeletorflet/opencode-supreme-setup) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [skeletorflet/opencode-supreme-setup](https://github.com/skeletorflet/opencode-supreme-setup/tree/main/config/skills/django)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

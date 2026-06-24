@@ -1,0 +1,62 @@
+---
+name: pandoc
+description: Document conversion between formats with Pandoc Use when this capability is needed.
+metadata:
+  author: jholhewres
+---
+# Pandoc
+
+Use the **bash** tool with pandoc for document format conversion.
+
+## Setup
+
+```bash
+# Check if installed
+command -v pandoc
+
+# Install — macOS
+brew install pandoc
+
+# Install — Ubuntu/Debian
+sudo apt install pandoc
+
+# PDF output also requires LaTeX:
+#   Ubuntu/Debian: sudo apt install texlive-latex-base
+#   macOS: brew install --cask mactex (or basictex for lighter install)
+```
+
+## Common Conversions
+```bash
+pandoc input.md -o output.pdf
+pandoc input.md -o output.docx
+pandoc input.md -o output.html --standalone
+pandoc input.docx -o output.md
+pandoc input.html -o output.md
+```
+
+## With Styling
+```bash
+pandoc input.md -o output.pdf --template=template.tex
+pandoc input.md -o output.html --css=style.css --standalone
+pandoc input.md -o output.pdf -V geometry:margin=1in
+```
+
+## Batch
+```bash
+for f in *.md; do pandoc "$f" -o "${f%.md}.pdf"; done
+```
+
+## Metadata
+```bash
+pandoc input.md -o output.pdf --metadata title="Title" --metadata author="Author"
+```
+
+## Tips
+- Use --standalone (-s) for complete HTML documents
+- Use --toc for automatic table of contents
+- PDF output requires LaTeX (texlive) or use --pdf-engine=wkhtmltopdf
+- Use read_file to check input, write_file to save templates
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/jholhewres) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

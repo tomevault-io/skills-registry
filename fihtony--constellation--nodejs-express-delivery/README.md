@@ -1,0 +1,13 @@
+# nodejs-express-delivery
+
+> Skill by [fihtony](https://github.com/fihtony/constellation) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [fihtony/constellation](https://github.com/fihtony/constellation/tree/main/.github/skills/nodejs-express-delivery)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

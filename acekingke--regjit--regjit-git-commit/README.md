@@ -1,0 +1,13 @@
+# regjit-git-commit
+
+> Skill by [acekingke](https://github.com/acekingke/regjit) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [acekingke/regjit](https://github.com/acekingke/regjit/tree/main/.opencode/skills/regjit-git-commit)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

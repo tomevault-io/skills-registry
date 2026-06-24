@@ -1,0 +1,39 @@
+---
+name: project-development
+description: Use standardized scripts to manage the project environment, testing, and linting. Use when this capability is needed.
+metadata:
+  author: allenporter
+---
+
+# Project Development Skill
+
+This skill teaches you how to interact with the Supernote codebase using standardized scripts, following the "Scripts to Rule Them All" pattern.
+
+## Core Scripts
+
+| Script | When to use |
+| :--- | :--- |
+| `script/bootstrap` | After cloning or when dependencies change. |
+| `script/test` | Before submitting changes or to verify functionality. |
+| `script/lint` | Before committing to ensure code style and quality. |
+| `script/server` | When you need a running server for integration testing or manual verification. |
+| `script/db_revision` | To generate a database migration revision. |
+
+## Usage Patterns
+
+### Standard Development Flow
+1. **Initialize**: `./script/bootstrap`
+2. **Implement**: Make your changes to the code.
+3. **Database**: If you changed models, run `./script/db_revision "..."`.
+4. **Lint**: `./script/lint` to check for style issues.
+5. **Test**: `./script/test` to run the test suite.
+6. **Verify**: `./script/server` to run an ephemeral server for manual checks.
+
+### Notes
+- All scripts are located in the `script/` directory at the project root.
+- Scripts are designed to be run from the project root.
+- The scripts will automatically use `uv` if it is installed, otherwise they will fall back to standard Python tools.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/allenporter) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

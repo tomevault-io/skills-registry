@@ -1,0 +1,50 @@
+---
+name: documentation
+description: Create Architecture Decision Records (ADRs) and Runbooks for operational documentation. Use when this capability is needed.
+metadata:
+  author: nguyenthienthanh
+---
+
+> **AI-consumed reference.** Optimized for Claude to read during execution.
+> Human-readable explanation: see [docs/architecture/HIERARCHICAL_PLANNING.md](../../../docs/architecture/HIERARCHICAL_PLANNING.md)
+> or [docs/getting-started/](../../../docs/getting-started/) depending on topic.
+
+
+# Documentation (ADR & Runbook)
+
+## When to Create
+
+- **ADR:** Technology choices, architectural changes, new patterns, deprecations
+- **Runbook:** Service deployment, common ops tasks, incident response
+
+## ADR Template
+
+```markdown
+# ADR-[N]: [TITLE]
+**Status:** Proposed | Accepted | Deprecated | Superseded by ADR-X
+**Date:** YYYY-MM-DD
+
+## Context — ## Decision — ## Options Considered — ## Consequences
+```
+
+Location: `docs/adr/ADR-NNN-description.md`. Keep immutable — supersede, don't edit.
+
+## Runbook Template
+
+```markdown
+# Runbook: [Service]
+**Owner:** [Team] | **On-Call:** [Contact]
+
+## Prerequisites — ## Common Operations — ## Troubleshooting — ## Alerts & Escalation
+```
+
+Location: `docs/runbooks/service-name.md`. Test commands before documenting.
+
+## Principles
+
+- ADR: clear problem, options evaluated, consequences documented
+- Runbook: commands copy-paste-ready, escalation path defined
+
+---
+> Source: [nguyenthienthanh/aura-frog](https://github.com/nguyenthienthanh/aura-frog) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-28 -->

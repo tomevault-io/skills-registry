@@ -1,0 +1,13 @@
+# armory
+
+> Skill by [Mathews-Tom](https://github.com/Mathews-Tom/armory) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [Mathews-Tom/armory](https://github.com/Mathews-Tom/armory/tree/main/skills/static-web-artifacts-builder/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

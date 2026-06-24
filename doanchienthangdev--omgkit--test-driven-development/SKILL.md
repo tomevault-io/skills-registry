@@ -1,0 +1,169 @@
+---
+name: developing-test-driven
+description: AI agent practices test-first development with the Red-Green-Refactor cycle for confident, well-designed code. Use when implementing features, fixing bugs, or establishing testing practices. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Developing Test-Driven
+
+## Quick Start
+
+1. **Red** - Write a failing test that defines desired behavior
+2. **Green** - Write minimal code to make the test pass
+3. **Refactor** - Improve code while keeping tests green
+4. **Repeat** - Continue with next behavior (1-5 minute cycles)
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Red-Green-Refactor | Core TDD cycle | Fail -> Pass -> Improve -> Repeat |
+| Test Patterns | Effective test structures | Arrange-Act-Assert, Given-When-Then |
+| Test Fixtures | Reusable test setup | beforeEach, factories, builders |
+| Mocking Strategies | Isolate dependencies | Inject deps, mock boundaries only |
+| Parameterized Tests | Test multiple inputs | `it.each` for input variations |
+| Coverage Analysis | Verify thoroughness | Statements, branches, functions |
+
+## Common Patterns
+
+```typescript
+// RED-GREEN-REFACTOR CYCLE
+
+// RED: Write failing test
+it('rejects passwords shorter than 8 characters', () => {
+  const result = validatePassword('short');
+  expect(result.valid).toBe(false);
+  expect(result.errors).toContain('Password must be at least 8 characters');
+});
+
+// GREEN: Minimal implementation
+function validatePassword(password: string) {
+  const errors = [];
+  if (password.length < 8) {
+    errors.push('Password must be at least 8 characters');
+  }
+  return { valid: errors.length === 0, errors };
+}
+
+// REFACTOR: Extract rules (tests stay green)
+const rules = [
+  { test: (p) => p.length >= 8, message: 'Must be 8+ chars' },
+  { test: (p) => /[A-Z]/.test(p), message: 'Must have uppercase' },
+];
+function validatePassword(password: string) {
+  const errors = rules.filter(r => !r.test(password)).map(r => r.message);
+  return { valid: errors.length === 0, errors };
+}
+```
+
+```typescript
+// ARRANGE-ACT-ASSERT Pattern
+it('increases total when item added', () => {
+  // ARRANGE
+  const cart = new ShoppingCart();
+  const item = { id: '1', price: 10.00 };
+
+  // ACT
+  cart.addItem(item);
+
+  // ASSERT
+  expect(cart.total).toBe(10.00);
+});
+
+// PARAMETERIZED TESTS
+it.each([
+  ['simple@example.com', true],
+  ['user.name@domain.org', true],
+  ['invalid', false],
+  ['@nodomain.com', false],
+])('validates %s as %s', (email, expected) => {
+  expect(isValidEmail(email)).toBe(expected);
+});
+
+// BUILDER PATTERN for test data
+const user = new UserBuilder().admin().inactive().build();
+```
+
+```
+# Mocking Guidelines
+MOCK (external boundaries):
+- External APIs (payment, email)
+- Third-party services
+- System clock, random
+- Network requests
+
+DON'T MOCK (your code):
+- Pure functions
+- Data transformations
+- Business logic
+- Internal services
+```
+
+```
+# Coverage Analysis
+| Type | Target | Notes |
+|------|--------|-------|
+| Statements | 80%+ | Code executed |
+| Branches | 70%+ | If/else paths |
+| Functions | 90%+ | All functions called |
+
+REMEMBER: 100% coverage != well-tested
+- Test edge cases
+- Test error paths
+- Test boundary conditions
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Write test BEFORE implementation | Writing implementation first |
+| Keep tests focused on ONE behavior | Testing multiple things in one test |
+| Use descriptive test names | Generic names like "test1" |
+| Run tests frequently (every few minutes) | Long gaps between test runs |
+| Refactor only when tests green | Refactoring with failing tests |
+| Test behavior, not implementation | Testing private methods directly |
+| Keep cycles short (1-5 minutes) | 30+ minute cycles |
+| Mock only external dependencies | Over-mocking your own code |
+
+## Command Integration
+
+### Using TDD Command
+
+```bash
+# Start TDD workflow
+/dev:tdd "user authentication"
+
+# TDD with specific coverage
+/dev:tdd "payment processing" --coverage 95
+
+# TDD with specific test types
+/dev:tdd "API endpoint" --test-types unit,integration,contract
+```
+
+### Configuration
+
+```yaml
+# .omgkit/workflow.yaml
+testing:
+  enabled: true
+  enforcement:
+    level: strict  # TDD recommends strict
+  coverage_gates:
+    unit:
+      minimum: 90
+      target: 95
+```
+
+## Related Skills
+
+- `methodology/test-enforcement` - Enforce test completion
+- `methodology/test-task-generation` - Auto-generate test tasks
+- `methodology/testing-anti-patterns` - Avoid common test mistakes
+- `testing/vitest` - Vitest testing framework
+- `testing/playwright` - E2E testing with Playwright
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

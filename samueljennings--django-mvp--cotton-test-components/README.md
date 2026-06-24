@@ -1,0 +1,13 @@
+# cotton-test-components
+
+> Skill by [samueljennings](https://github.com/samueljennings/django-mvp) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [samueljennings/django-mvp](https://github.com/samueljennings/django-mvp/tree/main/.github/skills/cotton-test-components)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

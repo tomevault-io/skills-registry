@@ -1,0 +1,183 @@
+---
+name: building-fastapi-apis
+description: Builds high-performance FastAPI applications with async/await, Pydantic v2, dependency injection, and SQLAlchemy. Use when creating Python REST APIs, async backends, or microservices.
+metadata:
+  author: doanchienthangdev
+---
+
+# FastAPI
+
+## Quick Start
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"}
+
+@app.get("/users/{user_id}")
+async def get_user(user_id: int):
+    return {"user_id": user_id}
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Routing | Path params, query params, body | [ROUTING.md](ROUTING.md) |
+| Pydantic | Schemas, validation, serialization | [SCHEMAS.md](SCHEMAS.md) |
+| Dependencies | Injection, database sessions | [DEPENDENCIES.md](DEPENDENCIES.md) |
+| Auth | JWT, OAuth2, security utils | [AUTH.md](AUTH.md) |
+| Database | SQLAlchemy async, migrations | [DATABASE.md](DATABASE.md) |
+| Testing | pytest, AsyncClient | [TESTING.md](TESTING.md) |
+
+## Common Patterns
+
+### Pydantic Schemas
+
+```python
+from pydantic import BaseModel, EmailStr, Field, field_validator
+
+class UserCreate(BaseModel):
+    email: EmailStr
+    name: str = Field(..., min_length=2, max_length=100)
+    password: str = Field(..., min_length=8)
+
+    @field_validator("password")
+    @classmethod
+    def validate_password(cls, v: str) -> str:
+        if not any(c.isupper() for c in v):
+            raise ValueError("Must contain uppercase")
+        if not any(c.isdigit() for c in v):
+            raise ValueError("Must contain digit")
+        return v
+
+class UserResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
+    email: EmailStr
+    name: str
+    created_at: datetime
+```
+
+### Dependency Injection
+
+```python
+from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
+    async with async_session_maker() as session:
+        yield session
+
+async def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    db: AsyncSession = Depends(get_db),
+) -> User:
+    payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+    user = await db.get(User, payload["sub"])
+    if not user:
+        raise HTTPException(status_code=401)
+    return user
+
+# Type aliases for cleaner signatures
+DB = Annotated[AsyncSession, Depends(get_db)]
+CurrentUser = Annotated[User, Depends(get_current_user)]
+```
+
+### Route with Service Layer
+
+```python
+@router.get("/", response_model=PaginatedResponse[UserResponse])
+async def list_users(
+    db: DB,
+    current_user: CurrentUser,
+    page: int = Query(1, ge=1),
+    limit: int = Query(20, ge=1, le=100),
+):
+    service = UserService(db)
+    users, total = await service.list(offset=(page - 1) * limit, limit=limit)
+    return PaginatedResponse.create(data=users, total=total, page=page, limit=limit)
+
+@router.post("/", response_model=UserResponse, status_code=201)
+async def create_user(db: DB, user_in: UserCreate):
+    service = UserService(db)
+    if await service.get_by_email(user_in.email):
+        raise HTTPException(status_code=409, detail="Email exists")
+    return await service.create(user_in)
+```
+
+## Workflows
+
+### API Development
+
+1. Define Pydantic schemas for request/response
+2. Create service layer for business logic
+3. Add route with dependency injection
+4. Write tests with pytest-asyncio
+5. Document with OpenAPI (automatic)
+
+### Service Pattern
+
+```python
+class UserService:
+    def __init__(self, db: AsyncSession):
+        self.db = db
+
+    async def get_by_id(self, user_id: UUID) -> User | None:
+        result = await self.db.execute(
+            select(User).where(User.id == user_id)
+        )
+        return result.scalar_one_or_none()
+
+    async def create(self, data: UserCreate) -> User:
+        user = User(**data.model_dump(), hashed_password=hash_password(data.password))
+        self.db.add(user)
+        await self.db.commit()
+        return user
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use async/await everywhere | Sync operations in async code |
+| Validate with Pydantic v2 | Manual validation |
+| Use dependency injection | Direct imports |
+| Handle errors with HTTPException | Generic exceptions |
+| Use type hints | `Any` types |
+
+## Project Structure
+
+```
+app/
+├── main.py
+├── core/
+│   ├── config.py
+│   ├── security.py
+│   └── deps.py
+├── api/
+│   └── v1/
+│       ├── __init__.py
+│       ├── users.py
+│       └── auth.py
+├── models/
+├── schemas/
+├── services/
+└── db/
+    ├── base.py
+    └── session.py
+tests/
+├── conftest.py
+└── test_users.py
+```
+
+For detailed examples and patterns, see reference files above.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

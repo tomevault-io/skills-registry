@@ -1,0 +1,109 @@
+---
+name: avoiding-testing-anti-patterns
+description: AI agent identifies and fixes common testing anti-patterns that lead to flaky, slow, or unmaintainable test suites. Use when reviewing tests, debugging test failures, or improving test quality. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Avoiding Testing Anti-Patterns
+
+## Quick Start
+
+1. **Identify** - Recognize anti-pattern category (flaky, implementation, over-mocking)
+2. **Assess Severity** - Critical (fix now), High (fix soon), Medium (plan to fix)
+3. **Apply Fix** - Use proper async handling, test behavior not implementation
+4. **Verify** - Run tests in random order, ensure independence
+5. **Prevent** - Add test smell detection to CI
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Flaky Tests | Random failures destroying trust | Use waitFor, not sleep; deterministic data |
+| Implementation Testing | Breaks on every refactor | Test behavior through public interface |
+| Over-Mocking | Tests pass but bugs slip through | Mock boundaries only, not your own code |
+| Slow Tests | Hurt development velocity | Right test layer, shared setup, mock network |
+| Test Interdependence | Can't run tests in isolation | Fresh state in beforeEach, no shared mutation |
+| Poor Design | Hard to understand/maintain | Descriptive names, focused tests, clear values |
+
+## Common Patterns
+
+```typescript
+// FLAKY: Timing-dependent
+await sleep(100);  // May not be enough
+expect(result).toBe('processed');
+
+// FIXED: Wait for condition
+await waitFor(() => {
+  expect(result).toBe('processed');
+}, { timeout: 5000 });
+
+// FLAKY: Shared state between tests
+let sharedState = [];
+it('test1', () => { sharedState.push('a'); });
+it('test2', () => { expect(sharedState).toHaveLength(1); }); // Order-dependent!
+
+// FIXED: Fresh state each test
+beforeEach(() => { sharedState = []; });
+
+// IMPLEMENTATION: Testing private state
+expect(counter._count).toBe(1);
+
+// BEHAVIOR: Testing public interface
+expect(counter.getValue()).toBe(1);
+
+// OVER-MOCKING: Everything mocked
+const mockDb = { save: jest.fn() };
+const mockPayment = { charge: jest.fn() };
+// Only testing that mocks were called
+
+// FIXED: Mock boundaries only
+const testDb = await createTestDatabase();  // Real
+const mockPayment = createMockPaymentProvider();  // External only
+```
+
+```
+# Anti-Pattern Severity Guide
+CRITICAL (fix immediately):
+- Flaky tests - Random failures destroy trust
+- Testing implementation - Breaks on every refactor
+- Hidden dependencies - Tests fail mysteriously
+
+HIGH (fix soon):
+- Slow tests - Hurt development velocity
+- Test interdependence - Can't run in isolation
+- Over-mocking - Tests pass but bugs slip through
+
+MEDIUM (plan to fix):
+- Poor naming - Tests don't document behavior
+- Magic values - Unclear expected values
+- Giant tests - Hard to understand
+
+LOW (fix when touching):
+- Commented tests - Remove or fix
+- Duplicate tests - Consolidate
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Test behavior, not implementation | Accessing private properties |
+| Use factories for test data | Random/inconsistent test data |
+| Write descriptive test names | Generic names like "test1", "should work" |
+| Keep tests independent | Shared mutable state between tests |
+| Mock only external boundaries | Mocking your own code extensively |
+| Use waitFor, not sleep | setTimeout/sleep in tests |
+| Make assertions specific | toBeDefined() for everything |
+| Run tests in random order | Assuming test execution order |
+
+## Related Skills
+
+- `developing-test-driven` - TDD with proper patterns
+- `testing-with-vitest` - Vitest testing framework
+- `testing-with-playwright` - E2E testing patterns
+- `debugging-systematically` - Debug flaky test failures
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

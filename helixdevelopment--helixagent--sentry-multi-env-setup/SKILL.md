@@ -1,0 +1,50 @@
+---
+name: sentry-multi-env-setup
+description: | Use when this capability is needed.
+metadata:
+  author: helixdevelopment
+---
+
+# Sentry Multi Env Setup
+
+## Prerequisites
+
+- Environment naming convention defined
+- DSN management strategy
+- Sample rate requirements per environment
+- Alert routing per environment
+
+## Instructions
+
+1. Set environment option in SDK init to match deployment target
+2. Configure environment-specific sample rates (100% dev, 10% prod)
+3. Choose project structure (single with environments vs separate projects)
+4. Set up separate DSNs per environment in environment variables
+5. Implement conditional DSN loading to disable in development
+6. Add environment context and tags in beforeSend hook
+7. Configure environment filters in Sentry dashboard
+8. Create production-only alert rules with appropriate conditions
+9. Set up lower-priority staging alerts for development feedback
+10. Document environment configuration and best practices for team
+
+## Output
+- Environment-specific Sentry configuration
+- Separate or shared projects configured
+- Environment-based alert rules
+- Sample rates optimized per environment
+
+## Error Handling
+
+See `{baseDir}/references/errors.md` for comprehensive error handling.
+
+## Examples
+
+See `{baseDir}/references/examples.md` for detailed examples.
+
+## Resources
+- [Sentry Environments](https://docs.sentry.io/product/sentry-basics/environments/)
+- [Filtering Events](https://docs.sentry.io/platforms/javascript/configuration/filtering/)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/helixdevelopment) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-15 -->

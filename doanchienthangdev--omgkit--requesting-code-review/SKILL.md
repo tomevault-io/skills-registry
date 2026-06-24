@@ -1,0 +1,115 @@
+---
+name: requesting-code-reviews
+description: AI agent requests effective code reviews through proper preparation, clear descriptions, and appropriate reviewer selection. Use when creating PRs, requesting feedback, or submitting for review. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Requesting Code Reviews
+
+## Quick Start
+
+1. **Self-Review** - Review your own diff first, catch obvious issues
+2. **Prepare Code** - Tests pass, no debug code, documentation updated
+3. **Write Description** - Clear summary, changes list, testing info, screenshots
+4. **Select Reviewers** - Match expertise to changes, respect workload
+5. **Time Appropriately** - Early week, morning hours, avoid Fridays
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Self-Review | Catch issues before requesting | Check debug code, TODOs, test coverage |
+| PR Description | Guide reviewers effectively | Summary, changes, testing, attention areas |
+| Reviewer Selection | Match expertise to needs | Code owner, domain expert, security reviewer |
+| PR Sizing | Optimal size for review quality | <400 lines ideal, split larger PRs |
+| Timing | When to request reviews | Morning, early week, check availability |
+| Reviewer Guidance | Help reviewers focus | Key areas, skip suggestions, questions |
+
+## Common Patterns
+
+```
+# PR Description Template
+## Summary
+[What changed and why - 2-3 sentences]
+Resolves #123
+
+## Changes
+- [Bullet point each significant change]
+
+## Testing
+### Automated Tests
+- [x] Unit tests added/updated
+- [x] Integration tests pass
+
+### Manual Testing
+1. [Step to verify]
+2. [Expected result]
+
+## Screenshots
+[For UI changes]
+
+## Areas Needing Review
+- Security: [specific file/concern]
+- Performance: [specific concern]
+
+## Checklist
+- [x] Self-review completed
+- [x] Tests pass locally
+- [x] Documentation updated
+```
+
+```
+# PR Size Guide
+| Size | Lines | Review Time | Recommendation |
+|------|-------|-------------|----------------|
+| Small | <100 | 15-30 min | Ideal for quality review |
+| Medium | <400 | 30-60 min | Acceptable |
+| Large | <800 | 1-2 hours | Consider splitting |
+| Too Large | 800+ | 2+ hours | Split required |
+
+# Reviewer Selection
+1. Code owner - maintains affected area
+2. Domain expert - knows the technology
+3. Security - for auth/crypto changes
+4. Architecture - for design changes
+
+Max reviewers: 4 (too many = diffused responsibility)
+```
+
+```
+# Self-Review Checklist
+[ ] No console.log/debug statements
+[ ] No commented-out code
+[ ] No hardcoded values (should be config)
+[ ] Error handling appropriate
+[ ] All tests pass
+[ ] New code has tests
+[ ] Complex logic has comments
+[ ] Commit messages clear
+[ ] Rebased on latest main
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Self-review first | Submitting PRs without testing |
+| Keep PRs small (<400 lines) | Creating massive PRs |
+| Write clear descriptions | Leaving descriptions empty |
+| Highlight key review areas | Expecting reviewers to find everything |
+| Choose reviewers wisely | Overloading single reviewers |
+| Be responsive to feedback | Ignoring reviewer availability |
+| Include screenshots for UI | Rushing reviewers |
+| Test thoroughly first | Wasting reviewer time on broken code |
+
+## Related Skills
+
+- `receiving-code-reviews` - Handle feedback professionally
+- `finishing-development-branches` - Complete PR preparation
+- `verifying-before-completion` - Pre-submission verification
+- `writing-plans` - Plan review-ready deliverables
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

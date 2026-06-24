@@ -1,0 +1,13 @@
+# documentation
+
+> Skill by [mateusvillain](https://github.com/mateusvillain/lets-ui) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [mateusvillain/lets-ui](https://github.com/mateusvillain/lets-ui/tree/main/.agent/skills/documentation)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

@@ -1,0 +1,485 @@
+---
+name: nodejs-backend-patterns
+description: Node.js backend architecture patterns — Express, Fastify, Next.js API routes, TypeScript services. API design, database optimization, caching, middleware. Not applicable to Python, Go, or Java backends. Use when this capability is needed.
+metadata:
+  author: marvinrichter
+---
+
+# Node.js Backend Patterns
+
+Backend architecture patterns and best practices for Node.js/TypeScript server-side applications (Express, Fastify, Next.js API routes). For Python backends see `fastapi-patterns` or `django-patterns`. For Go see `go-patterns`. For Java see `springboot-patterns`.
+
+## When to Activate
+
+- Designing REST or GraphQL API endpoints in a Node.js/TypeScript project
+- Implementing repository, service, or controller layers with TypeScript
+- Optimizing database queries in a Node.js context (N+1, indexing, connection pooling)
+- Adding caching (Redis, in-memory, HTTP cache headers) in a Node.js service
+- Setting up background jobs or async processing with Node.js workers
+- Structuring error handling and validation for Express/Fastify/Next.js APIs
+- Building middleware (auth, logging, rate limiting) in Node.js
+
+## API Design Patterns
+
+### RESTful API Structure
+
+```typescript
+// ✅ Resource-based URLs
+GET    /api/markets                 # List resources
+GET    /api/markets/:id             # Get single resource
+POST   /api/markets                 # Create resource
+PUT    /api/markets/:id             # Replace resource
+PATCH  /api/markets/:id             # Update resource
+DELETE /api/markets/:id             # Delete resource
+
+// ✅ Query parameters for filtering, sorting, pagination
+GET /api/markets?status=active&sort=volume&limit=20&offset=0
+```
+
+### Repository Pattern
+
+```typescript
+// Abstract data access logic
+interface MarketRepository {
+  findAll(filters?: MarketFilters): Promise<Market[]>
+  findById(id: string): Promise<Market | null>
+  create(data: CreateMarketDto): Promise<Market>
+  update(id: string, data: UpdateMarketDto): Promise<Market>
+  delete(id: string): Promise<void>
+}
+
+class SupabaseMarketRepository implements MarketRepository {
+  async findAll(filters?: MarketFilters): Promise<Market[]> {
+    let query = supabase.from('markets').select('*')
+
+    if (filters?.status) {
+      query = query.eq('status', filters.status)
+    }
+
+    if (filters?.limit) {
+      query = query.limit(filters.limit)
+    }
+
+    const { data, error } = await query
+
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  // Other methods...
+}
+```
+
+### Use Case Pattern (Hexagonal)
+
+For services with real domain logic, use the hexagonal ports & adapters pattern. The use case depends on output port interfaces, not concrete adapters:
+
+```typescript
+// domain/port/in/SearchMarketsUseCase.ts — input port
+interface SearchMarketsUseCase {
+  execute(query: string, limit?: number): Promise<Market[]>
+}
+
+// domain/port/out/MarketRepository.ts — output port
+interface MarketRepository {
+  findByIds(ids: string[]): Promise<Market[]>
+}
+
+// application/usecase/SearchMarketsService.ts — use case implementation
+class SearchMarketsService implements SearchMarketsUseCase {
+  constructor(
+    private readonly marketRepo: MarketRepository,    // output port
+    private readonly vectorSearch: VectorSearchPort,  // output port
+  ) {}
+
+  async execute(query: string, limit = 10): Promise<Market[]> {
+    const embedding = await this.vectorSearch.embed(query)
+    const results = await this.vectorSearch.search(embedding, limit)
+    const markets = await this.marketRepo.findByIds(results.map(r => r.id))
+
+    const scoreMap = new Map(results.map(r => [r.id, r.score]))
+    return markets.sort((a, b) => (scoreMap.get(b.id!) ?? 0) - (scoreMap.get(a.id!) ?? 0))
+  }
+}
+```
+
+For simple CRUD without domain complexity, a direct service class is acceptable. For anything with business rules, invariants, or multiple collaborators, use hexagonal. See skill: `hexagonal-typescript` for full patterns.
+
+### Middleware Pattern
+
+```typescript
+// Request/response processing pipeline
+export function withAuth(handler: NextApiHandler): NextApiHandler {
+  return async (req, res) => {
+    const token = req.headers.authorization?.replace('Bearer ', '')
+
+    if (!token) {
+      return res.status(401).json({ error: 'Unauthorized' })
+    }
+
+    try {
+      const user = await verifyToken(token)
+      req.user = user
+      return handler(req, res)
+    } catch (error) {
+      return res.status(401).json({ error: 'Invalid token' })
+    }
+  }
+}
+
+// Usage
+export default withAuth(async (req, res) => {
+  // Handler has access to req.user
+})
+```
+
+## Database Patterns
+
+### Query Optimization
+
+```typescript
+// ✅ GOOD: Select only needed columns
+const { data } = await supabase
+  .from('markets')
+  .select('id, name, status, volume')
+  .eq('status', 'active')
+  .order('volume', { ascending: false })
+  .limit(10)
+
+// ❌ BAD: Select everything
+const { data } = await supabase
+  .from('markets')
+  .select('*')
+```
+
+### N+1 Query Prevention
+
+```typescript
+// ❌ BAD: N+1 query problem
+const markets = await getMarkets()
+for (const market of markets) {
+  market.creator = await getUser(market.creator_id)  // N queries
+}
+
+// ✅ GOOD: Batch fetch
+const markets = await getMarkets()
+const creatorIds = markets.map(m => m.creator_id)
+const creators = await getUsers(creatorIds)  // 1 query
+const creatorMap = new Map(creators.map(c => [c.id, c]))
+
+markets.forEach(market => {
+  market.creator = creatorMap.get(market.creator_id)
+})
+```
+
+### Transaction Pattern
+
+```typescript
+async function createMarketWithPosition(
+  marketData: CreateMarketDto,
+  positionData: CreatePositionDto
+) {
+  // Use Supabase transaction
+  const { data, error } = await supabase.rpc('create_market_with_position', {
+    market_data: marketData,
+    position_data: positionData
+  })
+
+  if (error) throw new Error('Transaction failed')
+  return data
+}
+
+// SQL function in Supabase
+CREATE OR REPLACE FUNCTION create_market_with_position(
+  market_data jsonb,
+  position_data jsonb
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  -- Start transaction automatically
+  INSERT INTO markets VALUES (market_data);
+  INSERT INTO positions VALUES (position_data);
+  RETURN jsonb_build_object('success', true);
+EXCEPTION
+  WHEN OTHERS THEN
+    -- Rollback happens automatically
+    RETURN jsonb_build_object('success', false, 'error', SQLERRM);
+END;
+$$;
+```
+
+## Caching Strategies
+
+### Redis Caching Layer
+
+```typescript
+class CachedMarketRepository implements MarketRepository {
+  constructor(
+    private baseRepo: MarketRepository,
+    private redis: RedisClient
+  ) {}
+
+  async findById(id: string): Promise<Market | null> {
+    // Check cache first
+    const cached = await this.redis.get(`market:${id}`)
+
+    if (cached) {
+      return JSON.parse(cached)
+    }
+
+    // Cache miss - fetch from database
+    const market = await this.baseRepo.findById(id)
+
+    if (market) {
+      // Cache for 5 minutes
+      await this.redis.setex(`market:${id}`, 300, JSON.stringify(market))
+    }
+
+    return market
+  }
+
+  async invalidateCache(id: string): Promise<void> {
+    await this.redis.del(`market:${id}`)
+  }
+}
+```
+
+## Error Handling Patterns
+
+### RFC 7807 / RFC 9457 Problem Details (Standard)
+
+All HTTP error responses MUST use `Content-Type: application/problem+json` and the RFC 7807 schema.
+Do NOT use `{ error: "..." }` or `{ success: false, error: "..." }` — use `ProblemDetails`:
+
+```typescript
+// Standard error interface — replaces ApiError
+export interface ProblemDetails {
+  type: string       // URI identifying the problem type (link to docs)
+  title: string      // Short, stable summary
+  status: number     // HTTP status code (mirrors response status)
+  detail?: string    // Occurrence-specific explanation
+  instance?: string  // URI of this specific occurrence
+  [key: string]: unknown  // Extension fields (e.g., errors[], traceId)
+}
+
+// Next.js API Route error handler
+export function errorHandler(error: unknown, request: Request): Response {
+  if (error instanceof z.ZodError) {
+    const body: ProblemDetails = {
+      type: 'https://api.example.com/problems/validation-failed',
+      title: 'Validation Failed',
+      status: 400,
+      detail: 'One or more fields failed validation.',
+      errors: error.errors.map(e => ({ field: e.path.join('.'), detail: e.message })),
+    }
+    return NextResponse.json(body, {
+      status: 400,
+      headers: { 'Content-Type': 'application/problem+json' },
+    })
+  }
+
+  if (error instanceof NotFoundError) {
+    const body: ProblemDetails = {
+      type: 'https://api.example.com/problems/not-found',
+      title: 'Not Found',
+      status: 404,
+      detail: error.message,
+      instance: new URL(request.url).pathname,
+    }
+    return NextResponse.json(body, {
+      status: 404,
+      headers: { 'Content-Type': 'application/problem+json' },
+    })
+  }
+
+  console.error('Unexpected error:', error)
+  const body: ProblemDetails = { type: 'about:blank', title: 'Internal Server Error', status: 500 }
+  return NextResponse.json(body, {
+    status: 500,
+    headers: { 'Content-Type': 'application/problem+json' },
+  })
+}
+
+// Usage
+export async function GET(request: Request) {
+  try {
+    const data = await fetchData()
+    return NextResponse.json(data)
+  } catch (error) {
+    return errorHandler(error, request)
+  }
+}
+```
+
+See skill: `problem-details` for the full RFC 7807/9457 field reference and per-language examples.
+
+### Retry with Exponential Backoff
+
+```typescript
+async function fetchWithRetry<T>(
+  fn: () => Promise<T>,
+  maxRetries = 3
+): Promise<T> {
+  let lastError: Error
+
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn()
+    } catch (error) {
+      lastError = error as Error
+
+      if (i < maxRetries - 1) {
+        // Exponential backoff: 1s, 2s, 4s
+        const delay = Math.pow(2, i) * 1000
+        await new Promise(resolve => setTimeout(resolve, delay))
+      }
+    }
+  }
+
+  throw lastError!
+}
+
+// Usage
+const data = await fetchWithRetry(() => fetchFromAPI())
+```
+
+## Authentication & Authorization
+
+### JWT Token Validation
+
+```typescript
+import jwt from 'jsonwebtoken'
+
+interface JWTPayload {
+  userId: string
+  email: string
+  role: 'admin' | 'user'
+}
+
+export function verifyToken(token: string): JWTPayload {
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET!) as JWTPayload
+    return payload
+  } catch (error) {
+    throw new ApiError(401, 'Invalid token')
+  }
+}
+
+export async function requireAuth(request: Request) {
+  const token = request.headers.get('authorization')?.replace('Bearer ', '')
+
+  if (!token) {
+    throw new ApiError(401, 'Missing authorization token')
+  }
+
+  return verifyToken(token)
+}
+
+// Usage in API route
+export async function GET(request: Request) {
+  const user = await requireAuth(request)
+
+  const data = await getDataForUser(user.userId)
+
+  return NextResponse.json({ success: true, data })
+}
+```
+
+### Role-Based Access Control
+
+```typescript
+type Permission = 'read' | 'write' | 'delete' | 'admin'
+
+interface User {
+  id: string
+  role: 'admin' | 'moderator' | 'user'
+}
+
+const rolePermissions: Record<User['role'], Permission[]> = {
+  admin: ['read', 'write', 'delete', 'admin'],
+  moderator: ['read', 'write', 'delete'],
+  user: ['read', 'write']
+}
+
+export function hasPermission(user: User, permission: Permission): boolean {
+  return rolePermissions[user.role].includes(permission)
+}
+
+export function requirePermission(permission: Permission) {
+  return (handler: (request: Request, user: User) => Promise<Response>) => {
+    return async (request: Request) => {
+      const user = await requireAuth(request)
+
+      if (!hasPermission(user, permission)) {
+        throw new ApiError(403, 'Insufficient permissions')
+      }
+
+      return handler(request, user)
+    }
+  }
+}
+
+// Usage - HOF wraps the handler
+export const DELETE = requirePermission('delete')(
+  async (request: Request, user: User) => {
+    // Handler receives authenticated user with verified permission
+    return new Response('Deleted', { status: 200 })
+  }
+)
+```
+
+## Rate Limiting
+
+### Simple In-Memory Rate Limiter
+
+```typescript
+class RateLimiter {
+  private requests = new Map<string, number[]>()
+
+  async checkLimit(
+    identifier: string,
+    maxRequests: number,
+    windowMs: number
+  ): Promise<boolean> {
+    const now = Date.now()
+    const requests = this.requests.get(identifier) || []
+
+    // Remove old requests outside window
+    const recentRequests = requests.filter(time => now - time < windowMs)
+
+    if (recentRequests.length >= maxRequests) {
+      return false  // Rate limit exceeded
+    }
+
+    // Add current request
+    recentRequests.push(now)
+    this.requests.set(identifier, recentRequests)
+
+    return true
+  }
+}
+
+const limiter = new RateLimiter()
+
+export async function GET(request: Request) {
+  const ip = request.headers.get('x-forwarded-for') || 'unknown'
+
+  const allowed = await limiter.checkLimit(ip, 100, 60000)  // 100 req/min
+
+  if (!allowed) {
+    return NextResponse.json({
+      error: 'Rate limit exceeded'
+    }, { status: 429 })
+  }
+
+  // Continue with request
+}
+```
+
+**Remember**: Backend patterns enable scalable, maintainable server-side applications. Choose patterns that fit your complexity level.
+
+---
+> Source: [marvinrichter/clarc](https://github.com/marvinrichter/clarc) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-15 -->

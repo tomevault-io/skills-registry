@@ -1,0 +1,190 @@
+---
+name: building-vue-apps
+description: Builds production Vue 3 applications with Composition API, TypeScript, Pinia, and Vue Router. Use when creating Vue.js SPAs, component libraries, or reactive web interfaces.
+metadata:
+  author: doanchienthangdev
+---
+
+# Vue.js
+
+## Quick Start
+
+```vue
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+
+const count = ref(0);
+const doubled = computed(() => count.value * 2);
+</script>
+
+<template>
+  <button @click="count++">
+    Count: {{ count }} (doubled: {{ doubled }})
+  </button>
+</template>
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Composition API | Reactive state, composables, lifecycle | [COMPOSITION.md](COMPOSITION.md) |
+| TypeScript | Props, emits, refs typing | [TYPESCRIPT.md](TYPESCRIPT.md) |
+| Pinia | State management, stores, plugins | [PINIA.md](PINIA.md) |
+| Vue Router | Navigation, guards, lazy loading | [ROUTER.md](ROUTER.md) |
+| Testing | Vitest, Vue Test Utils patterns | [TESTING.md](TESTING.md) |
+| Performance | Lazy loading, memoization, virtual lists | [PERFORMANCE.md](PERFORMANCE.md) |
+
+## Common Patterns
+
+### Component with Props and Emits
+
+```vue
+<script setup lang="ts">
+interface Props {
+  user: { id: string; name: string; email: string };
+  showActions?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  showActions: true,
+});
+
+const emit = defineEmits<{
+  (e: 'edit', user: Props['user']): void;
+  (e: 'delete', id: string): void;
+}>();
+</script>
+
+<template>
+  <div class="user-card">
+    <h3>{{ user.name }}</h3>
+    <p>{{ user.email }}</p>
+    <div v-if="showActions">
+      <button @click="emit('edit', user)">Edit</button>
+      <button @click="emit('delete', user.id)">Delete</button>
+    </div>
+  </div>
+</template>
+```
+
+### Composable for Reusable Logic
+
+```typescript
+// composables/useFetch.ts
+import { ref, watch, type Ref } from 'vue';
+
+export function useFetch<T>(url: Ref<string>) {
+  const data = ref<T | null>(null);
+  const loading = ref(false);
+  const error = ref<Error | null>(null);
+
+  async function fetchData() {
+    loading.value = true;
+    error.value = null;
+    try {
+      const response = await fetch(url.value);
+      data.value = await response.json();
+    } catch (e) {
+      error.value = e as Error;
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  watch(url, fetchData, { immediate: true });
+
+  return { data, loading, error, refetch: fetchData };
+}
+```
+
+### Pinia Store
+
+```typescript
+// stores/user.ts
+import { defineStore } from 'pinia';
+import { ref, computed } from 'vue';
+
+export const useUserStore = defineStore('user', () => {
+  const user = ref<User | null>(null);
+  const token = ref<string | null>(null);
+
+  const isAuthenticated = computed(() => !!user.value);
+
+  async function login(credentials: { email: string; password: string }) {
+    const res = await authService.login(credentials);
+    user.value = res.user;
+    token.value = res.token;
+  }
+
+  function logout() {
+    user.value = null;
+    token.value = null;
+  }
+
+  return { user, token, isAuthenticated, login, logout };
+});
+```
+
+## Workflows
+
+### Component Development
+
+1. Define props interface with TypeScript
+2. Define emits with typed events
+3. Use `<script setup>` syntax
+4. Create composables for reusable logic
+5. Write tests with Vitest + Vue Test Utils
+
+### Router Setup
+
+```typescript
+const routes = [
+  { path: '/', component: () => import('./views/Home.vue') },
+  {
+    path: '/dashboard',
+    component: () => import('./views/Dashboard.vue'),
+    meta: { requiresAuth: true },
+  },
+];
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+  if (to.meta.requiresAuth && !userStore.isAuthenticated) {
+    next({ path: '/login', query: { redirect: to.fullPath } });
+  } else {
+    next();
+  }
+});
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use Composition API with `<script setup>` | Options API in new code |
+| Type props/emits with interfaces | `any` types |
+| Create composables for shared logic | Duplicating reactive logic |
+| Use Pinia for global state | Overusing provide/inject |
+| Lazy load routes and components | Bundling everything upfront |
+
+## Project Structure
+
+```
+src/
+├── App.vue
+├── main.ts
+├── components/         # Reusable components
+├── composables/        # Composition functions
+├── views/              # Page components
+├── stores/             # Pinia stores
+├── router/             # Route definitions
+├── services/           # API services
+└── types/              # TypeScript types
+```
+
+For detailed examples and patterns, see reference files above.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

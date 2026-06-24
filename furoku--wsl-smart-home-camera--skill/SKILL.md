@@ -1,0 +1,110 @@
+---
+name: smart-home
+description: Control smart home devices via USB camera + Nature Remo on WSL2. Capture room photos with ffmpeg, analyze with vision, operate lights/AC/TV via Nature Remo Cloud API. Use when asked to check the room, turn lights on/off, adjust AC temperature, or manage home appliances. Also handles the capture→analyze→operate→verify loop. Use when this capability is needed.
+metadata:
+  author: furoku
+---
+
+# Smart Home (Camera + Nature Remo)
+
+## Prerequisites
+
+- USB camera attached to WSL via usbipd (`/dev/video0`)
+- ffmpeg installed
+- Nature Remo token at `~/.config/nature-remo/token`
+- Camera permissions: `sudo chmod 666 /dev/video0 /dev/video1`
+
+Check TOOLS.md for device IDs, camera position mapping, and appliance list.
+
+## Camera Capture
+
+```bash
+ffmpeg -f v4l2 -input_format mjpeg -video_size 1920x1080 \
+  -i /dev/video0 -frames:v 1 -update 1 /tmp/camera.jpg -y
+```
+
+- Use `-vf "vflip"` only if camera is mounted upside-down
+- If `/dev/video0` missing: camera disconnected, needs re-attach from Windows
+- If permission denied: `sudo chmod 666 /dev/video0 /dev/video1`
+
+## Nature Remo API
+
+Token: `TOKEN=$(cat ~/.config/nature-remo/token)`
+
+### List appliances
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" https://api.nature.global/1/appliances
+```
+
+### Light control
+```bash
+curl -s -X POST "https://api.nature.global/1/appliances/{ID}/light" \
+  -H "Authorization: Bearer $TOKEN" -d "button={on|off|night|on-100}"
+```
+
+### AC control
+```bash
+curl -s -X POST "https://api.nature.global/1/appliances/{ID}/aircon_settings" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d "operation_mode={warm|cool|auto}&temperature={temp}"
+```
+
+### TV control
+```bash
+curl -s -X POST "https://api.nature.global/1/appliances/{ID}/tv" \
+  -H "Authorization: Bearer $TOKEN" -d "button=power"
+```
+
+## Operate→Verify Loop
+
+After any operation, capture a photo to verify the result:
+
+1. Execute Nature Remo command
+2. Wait 1-2 seconds
+3. Capture photo
+4. Analyze: confirm the expected change (e.g., "left side darker" = bed light off)
+
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `/dev/video0` not found | USB detached | Windows admin: `usbipd attach --wsl --busid {ID}` |
+| Permission denied | Missing permissions | `sudo chmod 666 /dev/video0 /dev/video1` |
+| Purple/magenta noise | Wrong pixel format | Use `-input_format mjpeg` |
+| Image upside down | Camera orientation | Add/remove `-vf "vflip"` |
+| Nature Remo 404 | Wrong appliance ID | Re-fetch appliance list |
+
+## Periodic Observation (git-based state tracking)
+
+For automated room monitoring, use the capture→analyze→diff→commit loop:
+
+1. Capture photo: `ffmpeg ... -update 1 /tmp/camera.jpg -y`
+2. Analyze with vision model → generate `state.json` (lights, AC, TV, people, room condition)
+3. Compare with previous `state.json` → generate `diff.md`
+4. `git add -A && git commit -m "state: {summary of changes}"`
+5. Report significant changes to Discord
+
+### state.json schema
+```json
+{
+  "timestamp": "ISO-8601",
+  "lights": { "living_kitchen": "on|off", ... },
+  "ac": { "living": { "mode": "warm|cool|auto", "temp": 26 } },
+  "tv": "on|off",
+  "people": { "count": 0, "locations": [] },
+  "room": { "floor_clean": true, "bed_made": false, "curtain": "open|closed" }
+}
+```
+
+### Reporting rules
+- Changes detected → report diff to Discord
+- No changes → commit silently
+- Late night (23:00-08:00) → only report urgent issues (all lights on + no people)
+
+## Setup Script
+
+Run `scripts/setup-check.sh` to verify all prerequisites are met.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/furoku) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

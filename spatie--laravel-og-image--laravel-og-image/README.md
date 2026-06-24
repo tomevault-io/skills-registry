@@ -1,0 +1,13 @@
+# laravel-og-image
+
+> Skill by [spatie](https://github.com/spatie/laravel-og-image) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [spatie/laravel-og-image](https://github.com/spatie/laravel-og-image/tree/main/resources/boost/skills/laravel-og-image/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

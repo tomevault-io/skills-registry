@@ -1,0 +1,36 @@
+---
+name: k9s-kubernetes-terminal-dashboard
+description: K9s is a terminal-based UI for managing Kubernetes clusters, providing real-time observation of resources, log tailing, pod shell access, and cluster navigation. Written in Go with over 28,000 GitHub stars, it replaces dozens of kubectl commands with an interactive interface. Use when this capability is needed.
+metadata:
+  author: agentskillexchange
+---
+
+# K9s Kubernetes Terminal Dashboard
+
+K9s is a terminal-based UI for managing Kubernetes clusters, providing real-time observation of resources, log tailing, pod shell access, and cluster navigation. Written in Go with over 28,000 GitHub stars, it replaces dozens of kubectl commands with an interactive interface.
+
+## Installation
+
+Use the upstream install or setup path that matches your environment:
+- make build && ./execs/k9s
+
+Requirements and caveats from upstream:
+- [![Docker Pulls](https://img.shields.io/docker/pulls/derailed/k9s.svg?maxAge=604800)](https://hub.docker.com/r/derailed/k9s/)
+- | Cordon/Uncordon node | u | Node view |
+- | Drain node | r | Node view |
+
+Basic usage or getting-started notes:
+- Build and run the executable
+- # To run K9s in a given namespace
+- | Benchmark (run/stop) | b | Services/Port-forwards |
+
+- Source: https://github.com/derailed/k9s
+- Extracted from upstream docs: https://raw.githubusercontent.com/derailed/k9s/HEAD/README.md
+
+## Source
+
+- [Agent Skill Exchange](https://agentskillexchange.com/skills/k9s-kubernetes-terminal-dashboard/)
+
+---
+> Source: [agentskillexchange/skills](https://github.com/agentskillexchange/skills) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-22 -->

@@ -1,0 +1,58 @@
+---
+name: skill-governance
+description: Audit skill layout and validate SKILL.md contracts. Use when this capability is needed.
+metadata:
+  author: graysurf
+---
+
+# Skill Governance
+
+## Contract
+
+Prereqs:
+
+- Run inside a git work tree.
+- `bash` available on `PATH`.
+- `git` available on `PATH`.
+- `python3` available on `PATH`.
+
+Inputs:
+
+- `audit-skill-layout.sh`: optional `--skill-dir <path>` (or `--help`).
+- `validate_skill_contracts.sh`: optional `--file <path>` (repeatable).
+- `validate_skill_paths.sh`: optional `--help` (placeholder until v2 enforcement).
+
+Outputs:
+
+- Validation results on stdout/stderr.
+- Exit status indicating pass/fail.
+
+Exit codes:
+
+- `0`: all checks pass
+- `1`: validation errors or missing prerequisites
+- `2`: usage error (unsupported flags)
+
+Failure modes:
+
+- Not running inside a git repo.
+- Missing `git` or `python3`.
+- Skill layout violates allowed top-level entries.
+- `SKILL.md` missing required `## Contract` headings.
+
+## Scripts (only entrypoints)
+
+- `$AGENT_HOME/skills/tools/skill-management/skill-governance/scripts/audit-skill-layout.sh`
+- `$AGENT_HOME/skills/tools/skill-management/skill-governance/scripts/validate_skill_contracts.sh`
+- `$AGENT_HOME/skills/tools/skill-management/skill-governance/scripts/validate_skill_paths.sh`
+
+## Related docs
+
+- Repo-wide review checklist:
+  - `docs/runbooks/skills/SKILL_REVIEW_CHECKLIST.md`
+- Baseline inventory snapshot for tracked skills:
+  - `docs/plans/skills-inventory-audit.md`
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/graysurf) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

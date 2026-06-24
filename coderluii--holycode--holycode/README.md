@@ -1,0 +1,13 @@
+# HolyCode
+
+> Skill by [CoderLuii](https://github.com/CoderLuii/HolyCode) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [CoderLuii/HolyCode](https://github.com/CoderLuii/HolyCode/tree/main/config/skills/oh-my-openagent-setup/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

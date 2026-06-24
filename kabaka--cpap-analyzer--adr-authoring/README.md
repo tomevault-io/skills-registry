@@ -1,0 +1,13 @@
+# adr-authoring
+
+> Skill by [kabaka](https://github.com/kabaka/cpap-analyzer) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [kabaka/cpap-analyzer](https://github.com/kabaka/cpap-analyzer/tree/main/.github/skills/adr-authoring)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

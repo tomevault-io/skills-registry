@@ -1,0 +1,13 @@
+# splunk-observability-ai-agent-monitoring-setup
+
+> Skill by [chambear2809](https://github.com/chambear2809/splunk-cisco-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [chambear2809/splunk-cisco-skills](https://github.com/chambear2809/splunk-cisco-skills/tree/main/skills/splunk-observability-ai-agent-monitoring-setup)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

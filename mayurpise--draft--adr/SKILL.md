@@ -1,0 +1,317 @@
+---
+name: adr
+description: Architecture Decision Records with evaluate and design modes. Document significant technical decisions with context, alternatives, and consequences. Use when this capability is needed.
+metadata:
+  author: mayurpise
+---
+
+# Architecture Decision Records
+
+You are creating or managing Architecture Decision Records (ADRs) for this project.
+
+## Red Flags - STOP if you're:
+
+- Creating an ADR without understanding the decision context
+- Documenting trivial decisions that don't warrant an ADR (e.g., variable naming)
+- Writing an ADR after the fact without capturing the original reasoning
+- Listing alternatives without genuine pros/cons analysis
+- Skipping the "Consequences" section (the most valuable part)
+- Not checking existing ADRs for conflicts or superseded decisions
+
+**ADRs capture WHY, not just WHAT. Every decision needs alternatives considered.**
+
+---
+
+## Pre-Check
+
+1. Verify Draft is initialized:
+```bash
+ls draft/ 2>/dev/null
+```
+
+If `draft/` doesn't exist:
+- Tell user: "Project not initialized. Run `/draft:init` first."
+- Stop here.
+
+2. Check for existing ADR directory:
+```bash
+ls draft/adrs/ 2>/dev/null
+```
+
+If `draft/adrs/` doesn't exist, create it:
+```bash
+mkdir -p draft/adrs
+```
+
+## Step 1: Parse Arguments
+
+Check for arguments:
+- `/draft:adr` — Interactive mode: ask about the decision
+- `/draft:adr "decision title"` — Create ADR with given title
+- `/draft:adr list` — List all existing ADRs
+- `/draft:adr supersede <number>` — Mark an ADR as superseded
+
+### List Mode
+
+If argument is `list`:
+1. Read all files in `draft/adrs/`
+2. Display summary table:
+
+```
+Architecture Decision Records
+
+| # | Title | Status | Date |
+|---|-------|--------|------|
+| 001 | Use PostgreSQL for primary storage | Accepted | 2026-01-15 |
+| 002 | Adopt event-driven architecture | Proposed | 2026-02-01 |
+| 003 | Replace REST with GraphQL | Superseded by #005 | 2026-02-03 |
+```
+
+Stop here after listing.
+
+### Supersede Mode
+
+If argument is `supersede <number>`:
+1. Read the ADR file `draft/adrs/<number>-*.md`
+2. Change status from `Accepted` to `Superseded by ADR-<new_number>`
+3. In the OLD ADR's References section, add: "Superseded by ADR-<new_number>"
+4. Ask what new ADR supersedes it, or create the new one
+5. In the NEW ADR's References section, add: "Supersedes ADR-<old_number>"
+6. Stop here after updating.
+
+## Step 2: Gather Decision Context
+
+If in interactive mode (no title provided), ask:
+
+1. "What technical decision needs to be documented?"
+2. "What's the context? What forces are driving this decision?"
+3. "What alternatives did you consider?"
+
+If title provided, proceed directly with the title.
+
+## Step 3: Load Project Context
+
+Read relevant Draft context:
+- `draft/.ai-context.md` — Current architecture patterns, invariants, data paths, and constraints. Falls back to `draft/architecture.md` for legacy projects.
+- `draft/tech-stack.md` — Current technology choices
+- `draft/product.md` — Product requirements that influence the decision
+
+Cross-reference the decision against existing context:
+- Does it align with documented architecture patterns?
+- Does it introduce a new technology not in tech-stack.md?
+- Does it affect product requirements?
+
+## Step 4: Determine ADR Number
+
+```bash
+# Extract the highest existing ADR number from filenames
+ls draft/adrs/*.md 2>/dev/null | sed 's/.*\/\([0-9]*\)-.*/\1/' | sort -n | tail -1
+```
+
+Next number = highest existing ADR number + 1, zero-padded to 3 digits (001, 002, ...). If no ADRs exist, start at 001.
+
+Verify the target filename `draft/adrs/<number>-<kebab-case-title>.md` does not already exist. If collision, increment the number until a free slot is found.
+
+## Step 5: Create ADR File
+
+**MANDATORY: Include YAML frontmatter with git metadata.** Gather git info first:
+
+```bash
+git branch --show-current                    # LOCAL_BRANCH
+git rev-parse --abbrev-ref @{upstream} 2>/dev/null || echo "none"  # REMOTE/BRANCH
+git rev-parse HEAD                           # FULL_SHA
+git rev-parse --short HEAD                   # SHORT_SHA
+git log -1 --format=%ci HEAD                 # COMMIT_DATE
+git log -1 --format=%s HEAD                  # COMMIT_MESSAGE
+git status --porcelain | head -1 | wc -l     # 0 = clean, >0 = dirty
+```
+
+Create `draft/adrs/<number>-<kebab-case-title>.md`:
+
+```markdown
+---
+project: "{PROJECT_NAME}"
+module: "root"
+adr_number: <number>
+generated_by: "draft:adr"
+generated_at: "{ISO_TIMESTAMP}"
+git:
+  branch: "{LOCAL_BRANCH}"
+  remote: "{REMOTE/BRANCH}"
+  commit: "{FULL_SHA}"
+  commit_short: "{SHORT_SHA}"
+  commit_date: "{COMMIT_DATE}"
+  commit_message: "{COMMIT_MESSAGE}"
+  dirty: {true|false}
+synced_to_commit: "{FULL_SHA}"
+---
+
+# ADR-<number>: <Title>
+
+| Field | Value |
+|-------|-------|
+| **Branch** | `{LOCAL_BRANCH}` → `{REMOTE/BRANCH}` |
+| **Commit** | `{SHORT_SHA}` — {COMMIT_MESSAGE} |
+| **Generated** | {ISO_TIMESTAMP} |
+| **Synced To** | `{FULL_SHA}` |
+
+**Status:** Proposed
+**Deciders:** [names or roles]
+
+## Context
+
+[What is the issue that we're seeing that is motivating this decision or change?]
+[What forces are at play (technical, business, organizational)?]
+
+## Decision
+
+[What is the change that we're proposing and/or doing?]
+[State the decision in active voice: "We will..."]
+
+## Alternatives Considered
+
+### Alternative 1: <name>
+- **Pros:** [advantages]
+- **Cons:** [disadvantages]
+- **Why rejected:** [specific reason]
+
+### Alternative 2: <name>
+- **Pros:** [advantages]
+- **Cons:** [disadvantages]
+- **Why rejected:** [specific reason]
+
+## Consequences
+
+### Positive
+- [Benefit 1]
+- [Benefit 2]
+
+### Negative
+- [Trade-off 1]
+- [Trade-off 2]
+
+### Risks
+- [Risk and mitigation]
+
+## References
+
+- [Link to relevant discussion, RFC, or documentation]
+- [Related ADRs: ADR-xxx]
+```
+
+## Step 6: Present for Review
+
+Present the ADR to the user for review:
+
+```
+ADR-<number> created: <title>
+File: draft/adrs/<number>-<kebab-case-title>.md
+Status: Proposed
+
+Review the ADR and update status to "Accepted" when approved.
+```
+
+## Step 7: Update References (if applicable)
+
+If the decision affects existing Draft context:
+
+1. **tech-stack.md** — If introducing or removing technology, note: "Consider updating draft/tech-stack.md to reflect this decision."
+2. **architecture.md** — If changing architectural patterns, note: "Consider updating `draft/architecture.md` to reflect this decision (`.ai-context.md` will be auto-refreshed via Condensation Subroutine)."
+3. **Superseded ADRs** — If this decision replaces a previous one, update the old ADR's status.
+
+## ADR Status Lifecycle
+
+```
+Proposed → Accepted → [Deprecated | Superseded by ADR-xxx]
+```
+
+- **Proposed** — Decision documented, awaiting review
+- **Accepted** — Decision approved and in effect
+- **Deprecated** — Decision no longer relevant (context changed)
+- **Superseded** — Replaced by a newer decision (link to replacement)
+
+### Evaluate Mode
+
+When invoked as `/draft:adr evaluate <proposal>`:
+
+1. Read the proposal description
+2. Load context: `.ai-context.md`, `tech-stack.md`, `guardrails.md`
+3. Evaluate against 6 dimensions:
+
+| Dimension | Question |
+|-----------|----------|
+| Architecture Alignment | Does this fit the current system topology and module boundaries? |
+| Tech Stack Consistency | Does this align with accepted technologies and patterns? |
+| Invariant Impact | Does this violate or weaken any documented invariants? |
+| Scalability | How does this affect system scaling characteristics? |
+| Operational Complexity | Does this increase deployment, monitoring, or maintenance burden? |
+| Team Familiarity | Does the team have experience with this approach? |
+
+4. Output evaluation directly (not saved to file):
+```
+Proposal: {description}
+Verdict: RECOMMEND / CAUTION / REJECT
+
+| Dimension | Score | Notes |
+|-----------|-------|-------|
+| Architecture Alignment | ✓/△/✗ | [notes] |
+...
+```
+
+### Design Mode
+
+When invoked as `/draft:adr design <system>`:
+
+1. Read the system/component name
+2. Load full context: `architecture.md`, `.ai-context.md`, `tech-stack.md`, `product.md`
+3. Generate a 5-section design document:
+
+**Section 1: Requirements**
+- Functional requirements (from product.md and description)
+- Non-functional requirements (from tech-stack.md constraints)
+- Constraints (from guardrails.md)
+
+**Section 2: High-Level Design**
+- Component diagram
+- Data flow
+- API surface
+
+**Section 3: Deep Dive**
+- Detailed component design
+- Data models
+- Error handling strategy
+
+**Section 4: Scale & Reliability**
+- Scaling approach
+- Failure modes and recovery
+- SLO targets
+
+**Section 5: Trade-off Analysis**
+- Alternatives considered
+- Why this approach
+- What we're giving up
+
+4. Save to `draft/adrs/` with ADR numbering: `draft/adrs/<number>-design-<kebab-case-name>.md`
+
+## Error Handling
+
+**If no draft/ directory:**
+- Tell user to run `/draft:init` first
+
+**If ADR number conflict:**
+- Increment to next available number
+- Warn: "ADR-<number> already exists. Using ADR-<next>."
+
+**If superseding non-existent ADR:**
+- Warn: "ADR-<number> not found. Check `draft/adrs/` for valid ADR numbers."
+
+## Cross-Skill Dispatch
+
+- **Suggested by:** `/draft:deep-review` (architecture debt findings), `/draft:decompose` (module boundary decisions), `/draft:new-track` (new technology or architectural shift detected)
+- **Auto-invoked by:** `/draft:decompose` when decomposition involves breaking a monolith or major boundary change
+- **Feeds into:** `/draft:new-track` (ADR referenced in spec context), `/draft:learn` (decision patterns)
+- **Jira sync:** If ticket linked, attach ADR and post comment via `core/shared/jira-sync.md`
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/mayurpise) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

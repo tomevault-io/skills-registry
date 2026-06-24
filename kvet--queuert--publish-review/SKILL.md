@@ -1,0 +1,280 @@
+---
+name: publish-review
+description: Run a comprehensive review of the Queuert library before publishing, launching 8 parallel agents to check documentation coherence, API design, implementation verification, feature completeness, API consistency, schema design, code style, and benchmarks. Use when preparing to publish or validating publish readiness. Use when this capability is needed.
+metadata:
+  author: kvet
+---
+
+# Publish Readiness Review
+
+Run a comprehensive review of the Queuert library before publishing. This skill launches 8 specialized review agents in parallel to check different aspects of publish readiness.
+
+## Instructions
+
+When this skill is invoked, you MUST:
+
+1. Launch all 8 review agents IN PARALLEL using the Task tool with a single message containing 8 tool calls
+2. Wait for all agents to complete
+3. Write a combined report to `docs/publish-readiness-report.md`
+4. Display a summary of findings in the conversation
+
+## Agents to Launch
+
+Launch these 7 agents in parallel using the Task tool (all in one message with 7 Task tool calls):
+
+### 1. Documentation Coherence Agent
+
+```
+subagent_type: general-purpose
+description: Review docs coherence
+prompt: |
+  You are a documentation coherence reviewer for the Queuert library.
+
+  First, read the detailed instructions in .claude/agents/publish-review/docs-coherence.md
+
+  Then review all documentation for coherence and consistency:
+  - TSDoc on all public exports in packages/*/src/**/*.ts (primary API documentation)
+  - README.md - User-facing overview
+  - CLAUDE.md - Session instructions (workflow requirements, high-level links)
+  - docs/src/content/docs/advanced/*.md - Reference documents (architectural, defer to TSDoc for API signatures)
+  - packages/*/README.md - Package READMEs (API documentation)
+
+  Check for:
+  1. Terminology consistency across all docs
+  2. Feature parity between design docs, TSDoc, and package READMEs
+  3. Code example accuracy (syntax, current API)
+  4. Cross-reference integrity (valid links/paths)
+  5. Completeness gaps (exports missing TSDoc or not documented in package READMEs)
+
+  Categorize findings as CRITICAL, WARNING, or SUGGESTION.
+  Return a structured report with specific file locations.
+```
+
+### 2. API Design Review Agent
+
+```
+subagent_type: general-purpose
+description: Review API design
+prompt: |
+  You are an API design reviewer for the Queuert library.
+
+  First, read the detailed instructions in .claude/agents/publish-review/api-design.md
+
+  Then review the public API across all packages/*/src/index.ts for design issues,
+  following the checks described in the instructions file.
+
+  Categorize findings as CRITICAL, WARNING, or SUGGESTION.
+  Return a structured report.
+```
+
+### 3. Implementation Verification Agent
+
+```
+subagent_type: general-purpose
+description: Verify implementation
+prompt: |
+  You are an implementation verification agent for the Queuert library.
+
+  First, read the detailed instructions in .claude/agents/publish-review/impl-verification.md
+
+  Then verify implementation matches documentation by following the checks
+  described in the instructions file: export audit, interface compliance,
+  design doc compliance, test coverage, and example verification.
+
+  Categorize findings as CRITICAL, WARNING, or SUGGESTION.
+  Return a structured report.
+```
+
+### 4. Feature Completeness Agent
+
+```
+subagent_type: general-purpose
+description: Check feature completeness
+prompt: |
+  You are a feature completeness auditor for the Queuert library.
+
+  First, read the detailed instructions in .claude/agents/publish-review/feature-completeness.md
+
+  Then identify undercooked features and missing functionality by following
+  the checks described in the instructions file: TODO.md audit, test health,
+  example completeness, package readiness, and feature gaps.
+
+  Categorize findings as CRITICAL, WARNING, or SUGGESTION.
+  Return a structured report.
+```
+
+### 5. API Consistency Agent
+
+```
+subagent_type: general-purpose
+description: Check API consistency
+prompt: |
+  You are an API consistency reviewer for the Queuert library.
+
+  First, read the detailed instructions in .claude/agents/publish-review/api-consistency.md
+
+  Then ensure consistent patterns across all packages by following the checks
+  described in the instructions file: cross-package patterns, configuration,
+  lifecycle, type exports, testing exports, error handling, and re-exports.
+
+  Categorize findings as CRITICAL, WARNING, or SUGGESTION.
+  Return a structured report with recommendations for standardization.
+```
+
+### 6. Schema Review Agent
+
+```
+subagent_type: general-purpose
+description: Review schema design
+prompt: |
+  You are a database schema reviewer for the Queuert library.
+
+  First, read the detailed instructions in .claude/agents/publish-review/schema-review.md
+
+  Then review the state adapter schema design across PostgreSQL and SQLite by
+  following the checks described in the instructions file: index coverage,
+  normalization, query efficiency, cross-backend consistency, forward-compatibility,
+  locking/concurrency, and data integrity.
+
+  Categorize findings as CRITICAL, WARNING, or SUGGESTION.
+  Return a structured report.
+```
+
+### 7. Code Style Agent
+
+```
+subagent_type: general-purpose
+description: Review code style
+prompt: |
+  You are a code style reviewer for the Queuert library.
+
+  First, read the detailed instructions in .claude/agents/publish-review/code-style.md
+
+  Then verify the codebase follows conventions from code-style.md by
+  following the checks described in the instructions file: function declaration style,
+  unnecessary async wrapping, redundant types, comment quality, nullable conventions,
+  error class usage, and naming conventions.
+
+  Categorize findings as CRITICAL, WARNING, or SUGGESTION.
+  Return a structured report.
+```
+
+### 8. Benchmarks Agent
+
+```
+subagent_type: general-purpose
+description: Run benchmarks
+prompt: |
+  You are a benchmarks runner for the Queuert library.
+
+  Run `pnpm benchmarks` from the repository root to execute all benchmarks
+  (memory footprint and type complexity).
+
+  Report:
+  1. Whether all benchmarks ran successfully
+  2. Any errors or failures encountered
+  3. Notable results or regressions compared to values documented in
+     docs/src/content/docs/integrations/benchmarks.md
+
+  Categorize findings as CRITICAL, WARNING, or SUGGESTION.
+  Return a structured report.
+```
+
+## Report Format
+
+After all agents complete, write the combined report to `docs/publish-readiness-report.md` with this structure:
+
+```markdown
+# Queuert Publish Readiness Review
+
+Generated: [current date]
+
+## Summary
+
+- Critical Issues: [count]
+- Warnings: [count]
+- Suggestions: [count]
+
+## 1. Documentation Coherence
+
+[Agent 1 findings]
+
+## 2. API Design
+
+[Agent 2 findings]
+
+## 3. Implementation Verification
+
+[Agent 3 findings]
+
+## 4. Feature Completeness
+
+[Agent 4 findings]
+
+## 5. API Consistency
+
+[Agent 5 findings]
+
+## 6. Schema Review
+
+[Agent 6 findings]
+
+## 7. Code Style
+
+[Agent 7 findings]
+
+## 8. Benchmarks
+
+[Agent 8 findings]
+
+## Action Items
+
+### Must Fix Before Publish
+
+[All CRITICAL items from all agents]
+
+### Should Fix
+
+[All WARNING items from all agents]
+
+### Consider for Future
+
+[All SUGGESTION items from all agents]
+```
+
+## Known Accepted Items (Ignore List)
+
+The following items have been reviewed and accepted as intentional design decisions. Agents should NOT flag these:
+
+- **`createOtelObservabilityAdapter` is async**: Reserves the right to add async initialization later. Accepted.
+- **`helpersSymbol` exported publicly but marked `@internal`**: Required by `@queuert/dashboard` and `createInProcessWorker`. The `@internal` annotation is a convention, not enforcement. Accepted.
+- **`createAsyncLock` re-exported from `@queuert/sqlite` via `queuert/internal`**: SQLite users need this for transaction serialization. Accepted.
+- **`createClient` is async but performs no I/O**: Reserves the right to add async initialization later. Accepted.
+- **`createInProcessWorker` is async but performs no I/O**: Reserves the right to add async initialization later. Accepted.
+- **`$idType` phantom property on `createPgStateAdapter` options**: Intentional pattern for generic type inference. Accepted.
+- **`HookNotRegisteredError` does not accept `cause`**: This error is never caused by another error. Accepted.
+- **Notify adapter channel prefix uses different separators**: Each adapter uses its transport's idiomatic separator (`:` for Redis, `_` for PG, `.` for NATS). Accepted.
+- **`testing` export declared in `publishConfig` but files excluded**: Testing utilities are workspace-only, not shipped to npm. The `publishConfig.exports` entry is overridden by the `files` exclusion. Accepted.
+- **NATS notify adapter lacks provider abstraction**: NATS is experimental. A provider abstraction will be added when the API stabilizes. Accepted.
+- **NATS package exports no types from index.ts**: NATS is experimental. Types will be exported when the API stabilizes. Accepted.
+- **NATS notify adapter uses `nc`/`kv` instead of `provider`**: NATS is experimental. Will standardize to provider pattern when API stabilizes. Accepted.
+- **NATS notify adapter uses `subjectPrefix` while PG and Redis use `channelPrefix`**: Each adapter uses its transport's idiomatic terminology. Accepted.
+- **State adapter factory options differ between PG and SQLite for ID generation**: Intentional — each adapter uses the most natural approach for its database (`idDefault` SQL expression for PG, `idGenerator` JS function for SQLite). Accepted.
+- **`TransactionContextRequiredError` does not accept `cause`**: This error signals API misuse (calling mutating methods without `runInTransaction`), never caused by another error. Accepted.
+- **OTEL `workerError` does not record error details**: Counter attributes should remain low-cardinality per OTEL best practices. Error details are captured via the Log adapter. Accepted.
+- **`getNextJobAvailableInMsSql` uses `FOR UPDATE SKIP LOCKED`**: Tracked in TODO.md for future cleanup. Accepted for now.
+- **SQLite `checkExternalBlockerRefsSql` lacks row locking**: SQLite serializes writes via exclusive transaction locking, providing equivalent safety. Accepted.
+- **`listJobChains` status filter applies post-join**: Acceptable for dashboard queries with pagination. A denormalized chain status column can be added if performance becomes an issue. Accepted.
+- **SQLite `createJobs` performs per-job queries (O(n) round-trips)**: Documented and accepted SQLite trade-off. Tracked in TODO.md. Accepted.
+- **SQLite `addJobsBlockers` performs per-job-blocker-group loop (O(n) round-trips)**: Same accepted SQLite trade-off. Tracked in TODO.md. Accepted.
+- **Package READMEs are minimal**: Package READMEs link to the docs site for API documentation. This is the intended pattern. Accepted.
+
+## Severity Definitions
+
+- **CRITICAL**: Must fix before publish (breaking inconsistency, docs lie about behavior, missing critical export)
+- **WARNING**: Should fix (minor inconsistencies, unclear docs, suboptimal patterns)
+- **SUGGESTION**: Nice to have (style improvements, additional docs, polish)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/kvet) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-11 -->

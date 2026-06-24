@@ -1,0 +1,49 @@
+---
+name: rust-unsafe-and-ffi
+description: Use for unsafe Rust, raw pointers, `MaybeUninit`, `NonNull`, foreign function interface (FFI), application binary interface (ABI) boundaries, layout guarantees, and soundness review. Use when this capability is needed.
+metadata:
+  author: leynos
+---
+
+# Rust Unsafe and FFI
+
+Use this when the code must uphold invariants the compiler cannot check.
+
+## Working stance
+
+- Safe wrapper first; `unsafe` is the narrow implementation detail.
+- Write the invariant list before writing the block.
+- Every `unsafe` block should justify itself in plain language.
+- FFI boundaries must define ownership, lifetime, layout, and panic policy.
+- If a safe design is available and fast enough, prefer it.
+
+## Decision surface
+
+- Non-null raw ownership handle: use `NonNull<T>`.
+- Deferred initialization: use `MaybeUninit<T>`.
+- C ABI interop: use an explicit `repr(C)` contract where required.
+- Public low-level capability: build a safe wrapper and expose a narrow
+  `unsafe fn` only when the caller truly must uphold the contract.
+- Sharing across threads: prove `Send` and `Sync`; never assume them.
+
+## Red flags
+
+- `unsafe` appears only to silence the borrow checker,
+- `transmute` or raw-pointer tricks appear before a safe conversion or wrapper
+  was ruled out,
+- pointer validity and aliasing rules are not written down,
+- `CString::as_ptr()` outlives the owning `CString`,
+- FFI code can panic across the boundary,
+- manual `Send` or `Sync` impls appear without a crisp argument,
+- shared mutation is built without `UnsafeCell` or a wrapper that uses it.
+
+Read [safety-comment-template.md](references/safety-comment-template.md),
+[ffi-boundaries.md](references/ffi-boundaries.md),
+[maybeuninit-and-nonnull.md](references/maybeuninit-and-nonnull.md), and
+[unsafecell-and-interior-mutability.md](references/unsafecell-and-interior-mutability.md)
+before adding new unsafe blocks or reviewing old ones. The verification
+skill (`rust-verification`) covers when to reach for Miri and `loom`.
+
+---
+> Source: [leynos/rust-skill](https://github.com/leynos/rust-skill) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-16 -->

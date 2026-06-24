@@ -1,0 +1,167 @@
+---
+name: implementing-accessibility
+description: Claude implements WCAG 2.1 AA compliant web interfaces with proper ARIA, keyboard navigation, and screen reader support. Use when building accessible components or auditing existing UIs. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Implementing Accessibility
+
+## Quick Start
+
+```tsx
+// Accessible dialog with focus trap and ARIA
+export function Dialog({ isOpen, onClose, title, children }: DialogProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
+
+  useEffect(() => {
+    if (isOpen) {
+      dialogRef.current?.focus();
+      document.body.style.overflow = 'hidden';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+  return createPortal(
+    <>
+      <div className="dialog-backdrop" onClick={onClose} />
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={titleId} tabIndex={-1}>
+        <h2 id={titleId}>{title}</h2>
+        {children}
+        <button onClick={onClose} aria-label="Close dialog">&times;</button>
+      </div>
+    </>,
+    document.body
+  );
+}
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Semantic HTML | Proper landmarks, headings, and native elements | `ref/semantic-structure.md` |
+| ARIA Attributes | Roles, states, and properties for custom widgets | `ref/aria-patterns.md` |
+| Keyboard Navigation | Tab order, roving tabindex, keyboard shortcuts | `ref/keyboard-nav.md` |
+| Focus Management | Focus trapping, restoration, visible indicators | `ref/focus-management.md` |
+| Live Regions | Dynamic content announcements for screen readers | `ref/live-regions.md` |
+| Testing | jest-axe, Cypress accessibility, manual testing | `ref/a11y-testing.md` |
+
+## Common Patterns
+
+### Accessible Form Field
+
+```tsx
+export function FormField({ id, label, error, hint, required, ...props }: FormFieldProps) {
+  const hintId = hint ? `${id}-hint` : undefined;
+  const errorId = error ? `${id}-error` : undefined;
+  const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined;
+
+  return (
+    <div className={`form-field ${error ? 'has-error' : ''}`}>
+      <label htmlFor={id}>
+        {label}
+        {required && <span aria-hidden="true">*</span>}
+        {required && <span className="sr-only">(required)</span>}
+      </label>
+      {hint && <p id={hintId} className="form-hint">{hint}</p>}
+      <input
+        id={id}
+        aria-required={required}
+        aria-invalid={!!error}
+        aria-describedby={describedBy}
+        {...props}
+      />
+      {error && <p id={errorId} role="alert">{error}</p>}
+    </div>
+  );
+}
+```
+
+### Roving Tabindex for Tab Component
+
+```tsx
+export function Tabs({ tabs }: { tabs: Tab[] }) {
+  const [activeTab, setActiveTab] = useState(0);
+  const tabRefs = useRef<HTMLButtonElement[]>([]);
+
+  const handleKeyDown = (e: KeyboardEvent, index: number) => {
+    let newIndex = index;
+    if (e.key === 'ArrowRight') newIndex = (index + 1) % tabs.length;
+    if (e.key === 'ArrowLeft') newIndex = (index - 1 + tabs.length) % tabs.length;
+    if (e.key === 'Home') newIndex = 0;
+    if (e.key === 'End') newIndex = tabs.length - 1;
+    if (newIndex !== index) {
+      e.preventDefault();
+      setActiveTab(newIndex);
+      tabRefs.current[newIndex]?.focus();
+    }
+  };
+
+  return (
+    <div>
+      <div role="tablist">
+        {tabs.map((tab, i) => (
+          <button
+            key={tab.id}
+            ref={el => tabRefs.current[i] = el!}
+            role="tab"
+            aria-selected={activeTab === i}
+            aria-controls={`panel-${tab.id}`}
+            tabIndex={activeTab === i ? 0 : -1}
+            onClick={() => setActiveTab(i)}
+            onKeyDown={e => handleKeyDown(e, i)}
+          >{tab.label}</button>
+        ))}
+      </div>
+      {tabs.map((tab, i) => (
+        <div key={tab.id} role="tabpanel" id={`panel-${tab.id}`} hidden={activeTab !== i} tabIndex={0}>
+          {tab.content}
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+### Live Region Announcer
+
+```tsx
+export function useAnnounce() {
+  const [message, setMessage] = useState('');
+
+  const announce = useCallback((text: string) => {
+    setMessage('');
+    requestAnimationFrame(() => setMessage(text));
+    setTimeout(() => setMessage(''), 1000);
+  }, []);
+
+  const Announcer = () => (
+    <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+      {message}
+    </div>
+  );
+
+  return { announce, Announcer };
+}
+
+// Usage: announce('3 results found');
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use semantic HTML elements (`<button>`, `<nav>`, `<main>`) | Removing focus outlines without replacement |
+| Provide text alternatives for images | Relying on color alone to convey information |
+| Ensure 4.5:1 color contrast for text | Using placeholder as the only label |
+| Associate labels with form controls | Trapping keyboard focus unintentionally |
+| Provide skip links for keyboard users | Auto-playing media with sound |
+| Test with actual screen readers (NVDA, VoiceOver) | Using ARIA when native HTML suffices |
+| Announce dynamic content changes with live regions | Very small touch targets (min 44x44px) |
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

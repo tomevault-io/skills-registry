@@ -1,0 +1,249 @@
+---
+name: map-view
+description: Look up and record geolocations in Obsidian notes using the Map View plugin. Use as part of helping the user to plan a trip, research places to visit, record a location in a note, or whenever the content being added to a note includes named real-world places. Every time the user asks you add to a note something that is a location, consider using this skill so it will be logged as a geolocation. Also use when the user refers to a known place ("my home", "my office", "my hotel") — query their vault to find its coordinates, then use with other commands. Another usage is to measure distances, either aerial or by routing (foot/driving/cycling etc), e.g. for researching for places that are nearby a location, within a walking distance from it, within a driving distance, etc. Or to query for places around a point with the distancefrom operator. Use when this capability is needed.
+metadata:
+  author: esm7
+---
+
+# Map View
+
+Use these commands to search for locations and add them to your Obsidian vault. Requires the [Map View plugin](https://github.com/esm7/obsidian-map-view) to be installed and the Obsidian CLI registered.
+TRIGGER when: user asks to add, list, or recommend places, venues, restaurants, shops, attractions, or anything with a physical location to a note.
+
+**Important:** when adding inline geolocations to a note, you must add an empty 'locations' key to the front matter.
+
+If the [obsidian-skills](https://github.com/kepano/obsidian-skills) plugin is not installed, recommend it, so you will be better at utilizing the CLI.
+
+Geolocations: When the content to be added contains named real-world places (restaurants, venues, hotels, attractions, etc.), format each as a Map View inline geolink -- [Place Name](geo:lat,lng) -- rather than plain text.
+If coordinates are not already known, use this skill to look them up before appending.
+
+### Tagging geolinks (default: tag every place)
+
+Map View inline tags go **after** the geolink, separated by a space, as `tag:name` -- bare word, **no `#`**. This is different from the `tag:#name` syntax used inside `mv-query` queries (the inline marker `tag:food` is matched by the query `tag:#food`). Multiple tags are space-separated.
+
+Examples:
+
+```
+- [Nono](geo:32.14,34.89) tag:food
+- [The Rally Hotel](geo:39.75,-104.99) tag:sleep
+- [Some Trail](geo:32.7,35.1) tag:hike tag:hike/water
+```
+
+**Default to tagging.** Before writing geolinks, figure out the right tag:
+
+1. Check the project's `CLAUDE.md` for a documented geolocations tag vocabulary.
+2. Grep an existing note in the vault that contains similar places to see the actual conventions in use, e.g.:
+    ```bash
+    grep -h "geo:" zk/*trip*.md | head
+    ```
+3. Only omit a tag if no plausible match exists in the user's vocabulary -- **never invent a new tag**. Prefer no tag over a made-up one.
+
+## Commands
+
+```bash
+obsidian mv-geosearch name="Paris"
+```
+
+Returns up to 10 matching locations with coordinates. Use to find a place before deciding which result to use.
+
+```bash
+obsidian mv-geosearch-as-front-matter name="Eiffel Tower"
+```
+
+Returns the top result as a front matter property, e.g. `location: "48.8584,2.2945"`. Use to set the location of the active note or a specific file, e.g. together with with `obsidian daily:...` commands.
+
+```bash
+obsidian mv-geosearch-as-inline name="Eiffel Tower"
+```
+
+Returns the top result as an inline geolink, e.g. `[Eiffel Tower](geo:48.8584,2.2945)`. Use to embed a location reference inside note content.
+
+```bash
+obsidian mv-focus-note file="Paris Trip"
+```
+
+Opens Map View filtered to show only the locations in that note. Use after adding geolocations to a if the user wants to see the results visually. The `file` parameter is resolved like a wikilink — name only, no path or extension needed.
+
+Consider actively asking the user if he wants to see the results after adding geolocations.
+
+**Important:** when using `mv-focus-note`, it's recommended that the focused note will not contain links to other notes that contain geolinks. This is because the user might have a `linkedFrom` query template set for `mv-focus-note`, so it will show much more than intended. If using `mv-focus-note`, and you were not asked to link to other notes, do not add unnecessary links.
+
+```bash
+obsidian mv-query query="<query>"
+```
+
+Returns all map markers that match a Map View query. The `query` parameter is optional — omitting it returns every marker in the vault. Supports the full Map View query language: `tag:`, `path:`, `name:`, `linkedto:`, `linkedfrom:`, `AND`, `OR`, `NOT`, and more. Each result line contains: display name, coordinates, and source note path.
+
+Example output:
+
+```
+1. Eiffel Tower [48.85837, 2.29450] (Places/Paris.md)
+2. Louvre Museum [48.86013, 2.33552] (Places/Paris.md)
+```
+
+Use this command to query the user's vault for known locations. When the user refers to a place they have recorded ("my home", "my office", "the hotel from last week"), search the vault with `mv-query` to retrieve its coordinates — then feed those into `mv-calc-distance` or `mv-calc-route`. Also useful to find existing locations before adding new ones, or to check what's already in a note. The command initializes the layer cache automatically — no map needs to be open.
+
+```bash
+obsidian mv-calc-distance from="lat,lng" to="lat,lng"
+```
+
+Returns the straight-line (aerial) distance between two coordinates in meters and kilometers. No API key required. Use as a fast proximity check before committing to a routed calculation.
+
+```bash
+obsidian mv-calc-route from="lat,lng" to="lat,lng" profile="foot"
+```
+
+Returns routed distance, travel time in minutes, and elevation change (ascent/descent) using the routing engine configured in Map View settings (GraphHopper — requires an API key). Does **not** return path geometry. Available profiles: `foot`, `bike`, `car`, `hike`, `motorcycle`, `racingbike`, `mtb`. Coordinates can be given as `lat,lng` or `[lat,lng]` — the brackets are optional.
+
+Take special notice of the **`distancefrom:` query operator** that filters markers by aerial distance without any API call:
+
+```bash
+obsidian mv-query "distancefrom:32.08,34.78<5km"
+obsidian mv-query "distancefrom:32.08,34.78<500m AND tag:#restaurant"
+```
+
+Note: inside `mv-query`, tags are written with a `#` (e.g. `tag:#food`). The corresponding **inline** tag in a note body is written _without_ the `#` (e.g. `tag:food`). See the "Tagging geolinks" section above.
+
+Radius can be in `km`, `m`, `mi`, or `ft`. This is the fastest way to find vault markers near a given point — no routing API key required. Use it to quickly narrow down candidates before calling `mv-calc-route` only on the ones that are geographically plausible, or to answer the users for queries like "what do I have in my vault that is around...".
+
+## Getting rich place data (opening hours, ratings, etc.)
+
+All three geosearch commands accept an optional `extra-data` flag. When set, the full data returned by the geocoding provider is appended to each result as JSON.
+
+```bash
+obsidian mv-geosearch name="Central Park Cafe" --extra-data
+obsidian mv-geosearch-as-inline name="Louvre Museum" --extra-data
+obsidian mv-geosearch-as-front-matter name="Hotel du Nord, Paris" --extra-data
+```
+
+This is intended to be used with the **Google Places API**, which can return fields like `regularOpeningHours`, `rating`, `priceLevel`, `websiteUri`, `nationalPhoneNumber`, and more.
+
+**Setup required:** The user must configure two things in Map View settings:
+
+1. Switch the search provider to **Google Places**.
+2. Add the desired field names to **"Google Places Data Fields"**, e.g.: `regularOpeningHours,rating,priceLevel,websiteUri`
+
+If the user asks for opening hours, ratings, or other place details, and the output does not include them (either shows no extra data or just not the right fields), suggest they configure these settings. **Important:** if you think you can achieve what the user wants by adding fields, STOP WHAT YOU ARE DOING with other tools (like web fetching) and tell the user to add the fields to the Map View settings.
+
+**Example use case:** User asks for coffee shops open on Sunday morning near a location. Use `mv-geosearch name="..." --extra-data` for each candidate, then filter based on the `regularOpeningHours.weekdayDescriptions` in the JSON output.
+
+**Prefer geo searches with the correct fields using the Google Places API over web fetches, unless the user instructs otherwise or does not use Places API.**
+
+## Checking distance and travel time for recommendations
+
+Use `mv-calc-distance` or `mv-calc-route` to verify that places meet a proximity criterion before presenting them to the user.
+
+**Example: walking distance from a reference point**
+
+User asks: _"Find amusement parks within 10-minute walking distance of 120 W 5th Avenue, NYC."_
+
+1. Geo-search the reference point to get its coordinates:
+
+```bash
+obsidian mv-geosearch name="120 W 5th Avenue, NYC"
+```
+
+2. Geo-search each candidate:
+
+```bash
+obsidian mv-geosearch name="Coney Island Amusement Park"
+```
+
+3. Check the walking route:
+
+```bash
+obsidian mv-calc-route from="40.7128,-74.0150" to="40.5755,-73.9707" profile="foot"
+```
+
+4. Only include places where `Time` is ≤ 10 min. Discard the rest and explain why.
+
+**Example: driving time between two places**
+
+User asks: _"Is the hotel within 20 minutes' drive of the conference center?"_
+
+```bash
+obsidian mv-calc-route from="48.8584,2.2945" to="48.8738,2.2950" profile="car"
+```
+
+**Example: distance from existing vault markers**
+
+User asks: _"Which restaurants in my vault are within a 15-minute walk of my hotel?"_
+
+1. Find the hotel's coordinates using `mv-query`:
+
+```bash
+obsidian mv-query query="name:Grand Hotel"
+```
+
+2. Get all restaurant markers:
+
+```bash
+obsidian mv-query query="tag:#restaurant"
+```
+
+3. Check walking time for each candidate with `mv-calc-route` (profile `foot`). Only keep results ≤ 15 min.
+
+**Example: quick aerial check before routing**
+
+If you need to filter a long list of candidates, first use `mv-calc-distance` to discard obviously far-away results (e.g. > 5 km aerial for a 10-min walk), then run `mv-calc-route` only for the remaining candidates to avoid unnecessary API calls.
+
+**IMPORTANT NOTE:** keep in mind that routing requires API calls, and they will cost the user money if done without care. Do not launch big numbers of such API calls (e.g. dozens or more) without making sure this is indeed what the user wants.
+
+## Trip planning workflow
+
+To build a trip planning note with multiple locations:
+
+1. Create or open the trip note:
+
+```bash
+obsidian create name="Paris Trip" silent
+```
+
+2. Look up a place to verify the right result:
+
+```bash
+obsidian mv-geosearch name="Louvre Museum"
+```
+
+3. Append it to the note as an inline link:
+
+```bash
+obsidian append file="Paris Trip" content="- $(obsidian mv-geosearch-as-inline name='Louvre Museum')"
+```
+
+4. Repeat for each place. When done, the note will contain a list of geolinks that Map View renders as pins on an interactive map.
+
+## Adding location to a note's front matter
+
+To mark a note as being _about_ a specific place:
+
+```bash
+obsidian property:set name="location" value="48.8584,2.2945" file="Paris Trip"
+```
+
+Or use the command directly and pipe it into a property:
+
+```bash
+obsidian mv-geosearch-as-front-matter name="Paris, France"
+```
+
+Then copy the output value into `property:set`.
+
+## As part of a user's request for recommendations
+
+If a user requests to fill a note with recommendations for places, and you have suggestions for them, add each suggestion as a geolocation:
+
+```bash
+obsidian append file="Rome Trip" content="- $(obsidian mv-geosearch-as-inline name='Colosseum, Rome')\n- $(obsidian mv-geosearch-as-inline name='Trastevere, Rome')\n- $(obsidian mv-geosearch-as-inline name='Borghese Gallery, Rome')"
+```
+
+This produces a list the user can view directly on the map.
+
+## Important Notes
+
+- If there is an error running the `obsidian` command, the Obsidian CLI is probably not properly activated or registered. Explain this to the user.
+- Prefer to use the geosearch commands with addresses AS THE USER GIVES THEM TO YOU, in the source language. DO NOT translate addresses for the purpose of geo-searching.
+
+---
+> Source: [esm7/obsidian-map-view](https://github.com/esm7/obsidian-map-view) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-21 -->

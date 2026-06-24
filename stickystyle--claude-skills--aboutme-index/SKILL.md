@@ -1,0 +1,46 @@
+---
+name: aboutme-index
+description: Index-based file discovery using ABOUTME headers. Use INSTEAD of grep or Explore agent when searching for files by purpose or feature. Faster and more accurate than scanning code. Invoke this skill when user asks "which files handle X", "where is Y implemented", or when you need to find files related to a feature or task. Use when this capability is needed.
+metadata:
+  author: stickystyle
+---
+
+# ABOUTME Index
+
+Read `.claude/aboutme-index.md` to find files by purpose instead of grep-searching.
+
+## Usage
+
+1. Read the index:
+```bash
+cat .claude/aboutme-index.md
+```
+
+2. Filter by keyword using grep:
+```bash
+grep -i "auth\|jwt" .claude/aboutme-index.md
+```
+
+3. Read the relevant files.
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `/aboutme-check` | Find files missing ABOUTME headers |
+| `/aboutme-rebuild` | Rebuild the entire index |
+| `/aboutme-stale` | Check for stale headers |
+| `cat .claude/aboutme-index.md` | Read the index directly |
+
+## Index Format
+
+```markdown
+- `app/src/auth.py`: JWT authentication module for AWS Cognito access tokens...
+- `app/src/config.py`: Centralized configuration using Pydantic settings...
+```
+
+The index is auto-rebuilt on session start and updated incrementally on file edits.
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/stickystyle) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

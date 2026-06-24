@@ -1,0 +1,119 @@
+---
+name: mist-device-inventory
+description: > Use when this capability is needed.
+metadata:
+  author: tmunzer-AIDE
+---
+
+# Mist Device Inventory & Firmware Analyser
+
+Enumerate devices, audit firmware, classify Wi-Fi capabilities, and detect hardware features across the Mist org using live inventory data.
+
+## Workflow
+
+### Step 0 — Resolve org_id and sites
+
+1. Call `get_mist_self` once to get `org_id` from `privileges[0].org_id`.
+2. If user names a site, resolve it by name: `search_mist_data(scope='org', search_type='sites', org_id=..., filters={name:'<site_name>'})` → `site_id`. Only fetch the full site list (`get_mist_config(resource_type='sites', scope='org', org_id=..., limit=200)`) when you need a complete site map (e.g., org-wide inventory queries).
+
+### Step 1 — Route by question type
+
+| User intent | Go to |
+|---|---|
+| Wi-Fi 7 / 6GHz / 6E APs, GPS APs | Step 2 |
+| Switch models, families, port types, PoE | Step 2b |
+| Gateway / router models, SD-WAN, SSR | Step 2c |
+| Firmware versions, outdated firmware, recommended firmware | Step 3 |
+| Cisco switches / non-Juniper devices | Step 4 |
+| Power draw stats | Step 5 |
+| License expiry | Step 6 |
+| APs tunneled to Mist Edge | Step 7 |
+| General inventory overview | Step 3 (full inventory) |
+
+### Step 2 — Wi-Fi capability queries
+
+1. Get all APs: `search_mist_data(scope='org', search_type='inventory', org_id=..., filters={device_type:'ap'}, limit=100)`. Paginate fully.
+2. Classify each AP's `model` using [references/ap-capabilities.md](references/ap-capabilities.md). BT11 is a Bluetooth beacon — exclude from Wi-Fi queries.
+   If a model is not listed, report it as "unclassified — check Juniper documentation."
+3. Filter to the requested capability (Wi-Fi 7, 6GHz, GPS, outdoor, UWB, etc).
+4. Present results grouped by site with model, Wi-Fi standard, name, status, and firmware.
+
+### Step 2b — Switch model queries
+
+1. Get all switches: `search_mist_data(scope='org', search_type='inventory', org_id=..., filters={device_type:'switch'}, limit=100)`. Paginate fully.
+2. Classify each switch using [references/switch-models.md](references/switch-models.md) for family, role, port type, and PoE capability.
+3. For PoE queries: models with P/MP/MUP/MXP/XP suffix support PoE.
+4. Present results grouped by site with model, family, role, name, status, and firmware.
+
+### Step 2c — Gateway / router model queries
+
+1. Get all gateways: `search_mist_data(scope='org', search_type='inventory', org_id=..., filters={device_type:'gateway'}, limit=100)`. For MX routers, also query with `device_type:'router'`. Paginate fully.
+2. Classify using [references/gateway-models.md](references/gateway-models.md) for family and role.
+3. Present results grouped by site with model, family, role, name, status, and firmware.
+
+### Step 3 — Firmware audit
+
+1. Get all devices of the requested type (ap/switch/gateway): `search_mist_data(scope='org', search_type='inventory', org_id=..., filters={device_type:'ap'}, limit=100)`. Paginate fully.
+2. Group by `model`, then by `version` within each model.
+3. **Recommended firmware heuristic:** the most common version per model is likely the recommended one. Flag devices on older versions.
+4. **Version comparison:** parse `version` as `major.minor.patch` (e.g., "0.14.29583" → major=0, minor=14). Compare numerically. "0.14.x" < "0.15.x".
+5. For "running X or below" queries: filter where minor <= requested version number.
+6. Present: model | current version | count | status (current/outdated).
+
+### Step 4 — Vendor / compatibility queries
+
+Mist inventory only contains Juniper/Mist devices. Non-Juniper hardware (Cisco, Aruba) will never appear.
+
+1. If user asks "are there Cisco switches": report "No — Mist inventory only contains Juniper/Mist-managed devices."
+2. If user asks "can I put [model] in Mist" or "is [model] compatible": check against `get_mist_constants(constant_type='device_models')`. If the model appears, it's compatible. Also report which `type` it maps to (ap, switch, gateway).
+
+### Step 5 — Power draw stats
+
+1. Resolve the site if specified.
+2. Call `get_mist_stats(stats_type='site_devices', site_id=...)` to get per-device stats.
+3. The stats may include power-related fields (`lldp_stat.power_draw`, `env_stat`). If not available at summary level, note the limitation and suggest checking the Mist dashboard.
+4. Present: AP name | model | status | IP | uptime | power info (if available).
+
+### Step 6 — License expiry
+
+The MCP does not expose license expiry dates directly. Approach:
+
+1. Call `get_mist_self` — check if org privileges include license info.
+2. If not available, report the limitation: "License expiry data is not accessible via the API. Check Organization > Subscriptions in the Mist dashboard."
+
+### Step 7 — Mist Edge tunnel detection
+
+1. Get all org-level WLANs: `get_mist_config(resource_type='wlans', scope='org', org_id=..., limit=100)`. Paginate.
+2. Also get site-level WLANs for each relevant site.
+3. Filter WLANs where `mxtunnel_id` or `mxtunnel_ids` is set — these tunnel to Mist Edge.
+4. Identify which sites those WLANs are deployed to (via `template_id` → site assignment, or site_id).
+5. Get APs at those sites: `search_mist_data(scope='org', search_type='inventory', filters={device_type:'ap', site_id:...})`.
+6. Present: WLAN name | tunnel target | site | APs serving it.
+
+## Pagination
+
+All `search_mist_data` and `get_mist_config` calls may return partial results. Always check `has_more` — if true, call again with `next_cursor` until all data is retrieved. This is critical for orgs with many devices.
+
+## Output
+
+Present results as clean tables. For large datasets, use canvas (`web-artifacts-builder` skill) to render an interactive dashboard with:
+- Summary cards (total APs, switches, gateways; connected vs disconnected)
+- Firmware distribution grouped by model
+- Wi-Fi standard badges per device
+- Flagged outliers highlighted
+
+For smaller results, a markdown table is fine.
+
+## Error handling
+
+| Situation | Action |
+|---|---|
+| Site name not found | Use `search_mist_data(search_type='sites', filters={name:'...'})` to fuzzy-match |
+| No devices returned | Report "No devices of type X found in the org/site" |
+| Model not in reference tables | Report as "unclassified — check Juniper documentation" and show the raw model string |
+| License data unavailable | Direct user to Mist dashboard |
+| Pagination incomplete | Always paginate — partial data leads to wrong conclusions |
+
+---
+> Source: [tmunzer-AIDE/mist-skills](https://github.com/tmunzer-AIDE/mist-skills) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-16 -->

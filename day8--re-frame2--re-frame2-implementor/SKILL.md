@@ -1,0 +1,92 @@
+---
+name: re-frame2-implementor
+description: > Use when this capability is needed.
+metadata:
+  author: day8
+---
+
+# re-frame2-implementor
+
+This skill is **workflow + guidance** layered on the spec corpus at [`spec/`](../../spec/). The spec is the contract; the reference impl under `implementation/` is one worked example, not normative.
+
+The job is to walk the engineer through two phases:
+
+1. **Phase 1** — lock the load-bearing decisions (target language, substrate, scope, identity primitive, persistent data, concurrency, schema mechanism, hot-reload).
+2. **Phase 2** — implement EPs in dependency order (001 → 002 → 006 → 004 → 009, then optional EPs per Phase 1 scope), validated by the conformance corpus.
+
+## When NOT to use this skill
+
+Full skill-disambiguation matrix lives at [`skills/README.md` §Skill routing — single source](../README.md#skill-routing--single-source). In brief: not for authoring on the CLJS reference, greenfield bootstrap, v1→v2 migration, live-app inspection, or pattern-rationale reading.
+
+## Cardinal rules (one-liners; full text in [`references/cardinal-rules.md`](references/cardinal-rules.md))
+
+1. **Spec is the contract.** When `implementation/` and [`spec/`](../../spec/) disagree, the spec wins.
+2. **Phase 1 before Phase 2.** Lock decisions in writing before writing code.
+3. **Dependency order.** EP 001 → 002 → 006 → 004 → 009 are the foundation; optional EPs sit downstream.
+4. **Substrate-agnostic phrasing.** Write to "the identity primitive", "the render-tree", "the reactive container" — not to hiccup / Reagent / keywords.
+5. **No core.async equivalents.** Async effects ride host primitives; cross-frame work is run-to-completion-drained.
+6. **JVM-runnability for testing.** Pure transitions and pure sub computations must be callable from a non-substrate harness.
+7. **Conformance corpus is the acceptance test.** Score is `passed / claimed-applicable`; a fixture you can't make pass without outside sources is a *spec gap*.
+8. **Spec gap → draft a GitHub issue against `day8/re-frame2` and ask before filing.** Don't paper, don't invent, don't extrapolate from the reference — but don't auto-file either. Show the engineer the drafted title + body, restrict the body to public spec-quoted evidence (no private port source), and wait for explicit OK before running `gh issue create`. The skill runs in the engineer's port repo; spec gaps reach the framework maintainers via the upstream repo's GitHub issues — never via `bd` (re-frame2's internal tracker, never invoked from a published skill).
+9. **Per-issue approval gate for any cross-repo side effect.** Before running `gh issue create` against a repo other than the one the engineer is working in, show the full draft (title, target repo, label set, body) and wait for explicit "yes" / "go" / "file it". Invoking the skill is consent to the workflow, not to each cross-repo write. See [`references/cardinal-rules.md` §9](references/cardinal-rules.md).
+10. **Pin the spec corpus.** The kickoff prompt names a specific `day8/re-frame2` commit/tag; verify the checkout's HEAD and origin before reading the spec, and record the pinned hash in `DECISIONS.md` (preamble before D1). An unverified checkout is not the contract.
+11. **Honour the reserved `:rf/*` scheme.** Framework-owned ids live under the single root namespace `:rf/*` (and its sub-namespaces); user code MUST NOT register under `:rf/*`. Reserved fx-ids and reserved app-db keys (`:rf/machines`, `:rf/route`, …) are part of the contract. A port that ignores the scheme fails conformance fixtures that assert `:rf.*` operation ids. Per [`spec/Conventions.md`](../../spec/Conventions.md); the "where does each surface live" map is [`spec/Ownership.md`](../../spec/Ownership.md).
+
+## Phase 1 — lock the decisions
+
+Walk [`references/phase-1-decisions.md`](references/phase-1-decisions.md) and produce a locked-decision record using the [`references/decision-record.md`](references/decision-record.md) template. The seven decision blocks (D1 target language, D2 substrate, D3 scope, D4 the always-required realisation decisions — Implementor-Checklist Part 2's F1–F6 / S1–S3 / Sub1–Sub2 / V1–V3 / T1–T3 / E1–E2, sub-numbered 1:1 with the checklist, D5 schema mechanism, D6 integration story, D7 capability tag set) are detailed there; the canonical option matrices live in [`spec/Implementor-Checklist.md`](../../spec/Implementor-Checklist.md).
+
+Output of Phase 1: a single dated decision record committed to the port's own repo.
+
+## Phase 2 — walk the spec corpus
+
+With Phase 1 locked, walk [`references/phase-2-impl-order.md`](references/phase-2-impl-order.md) EP-by-EP. The leaf carries, for each EP: what to read first, the contract to expose, how the CLJS reference realised it (as **one** example, not normative), what the conformance fixtures check, common spec-gap traps.
+
+Dependency order is fixed: **EP 001 Registration → 002 Frames → 006 Reactive substrate → 004 Views → 009 Instrumentation**, then a first conformance pass against the `:core/*` fixtures. Optional EPs (010 Schemas, 008 Testing, 005 State machines, 012 Routing, 011 SSR, 013 Flows, 014 HTTP, 007 Stories) follow in the order Phase 1 declared `yes` for them.
+
+## Source discipline
+
+Three tiers, in priority order:
+
+1. **[`spec/`](../../spec/)** — the contract. Read in numeric order.
+2. **[`spec/Implementor-Checklist.md`](../../spec/Implementor-Checklist.md)** — the decision-ordered companion.
+3. **`implementation/`** — a worked example. Useful for "how did *someone* solve X?" Never useful as a contract claim.
+
+If `implementation/` and `spec/` disagree, the spec wins.
+
+## Conformance
+
+The corpus at [`spec/conformance/`](../../spec/conformance/) is host-agnostic data. Harness shape, the EDN-handler-body DSL, capability tagging, scoring, and the spec-gap-vs-implementation-bug distinction are all in [`references/conformance.md`](references/conformance.md). The corpus is the acceptance test for [Goal 2 — AI-implementable from the spec alone](https://day8.github.io/re-frame2/spec/000-Vision/#ai-implementable-from-the-spec-alone).
+
+## Kickoff and output
+
+- [`references/kickoff-prompt.md`](references/kickoff-prompt.md) — paste-ready prompt for the engineer to drop into a fresh Claude session opened in the root of their port repo.
+- [`references/output-format.md`](references/output-format.md) — the standard agent-output shape: implementation summary, capability tags claimed, conformance score, decisions made, spec gaps filed.
+
+## Done — "v1-complete against `<capability tag set>`"
+
+- [ ] Phase 1 decision record committed to the port's repo.
+- [ ] All in-scope EPs have a working implementation.
+- [ ] The port exposes [`spec/API.md`](../../spec/API.md), adapted to host idiom.
+- [ ] Conformance score is `(claimed-applicable) / (claimed-applicable)`.
+- [ ] Non-spec-gap failures fixed in the port; spec-gap failures filed as GitHub issues against `day8/re-frame2`.
+- [ ] Port's README states claimed capability tags and conformance score.
+
+## Reference files (all one level deep)
+
+- [`references/cardinal-rules.md`](references/cardinal-rules.md) — the eleven rules in prose + anti-pattern corollaries.
+- [`references/phase-1-decisions.md`](references/phase-1-decisions.md) — Phase 1 walkthrough, seven decision blocks.
+- [`references/decision-record.md`](references/decision-record.md) — fill-in template for the locked-decision record.
+- [`references/phase-2-impl-order.md`](references/phase-2-impl-order.md) — EP-by-EP implementation order.
+- [`references/reference-impl-tour.md`](references/reference-impl-tour.md) — guided tour of the CLJS reference; what's substrate-specific vs pattern-required.
+- [`references/conformance.md`](references/conformance.md) — corpus harness, DSL, capability tagging, scoring.
+- [`references/kickoff-prompt.md`](references/kickoff-prompt.md) — fresh-session kickoff prompt.
+- [`references/output-format.md`](references/output-format.md) — agent-output shape.
+
+---
+
+*Authoritative contract: [`spec/`](../../spec/). Decision companion: [`spec/Implementor-Checklist.md`](../../spec/Implementor-Checklist.md). Conformance: [`spec/conformance/`](../../spec/conformance/). CLJS reference (worked example): `implementation/`. Full skill-disambiguation matrix: [`skills/README.md` §Skill routing — single source](../README.md#skill-routing--single-source).*
+
+---
+> Source: [day8/re-frame2](https://github.com/day8/re-frame2) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-22 -->

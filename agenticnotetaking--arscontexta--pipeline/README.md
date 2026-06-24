@@ -1,0 +1,13 @@
+# pipeline
+
+> Skill by [agenticnotetaking](https://github.com/agenticnotetaking/arscontexta) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [agenticnotetaking/arscontexta](https://github.com/agenticnotetaking/arscontexta/tree/main/skill-sources/pipeline)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

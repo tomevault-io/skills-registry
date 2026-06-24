@@ -1,0 +1,13 @@
+# specialized-ai-tools-reverse-engineer
+
+> Skill by [sahiixx](https://github.com/sahiixx/agency-agents) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [sahiixx/agency-agents](https://github.com/sahiixx/agency-agents/tree/main/skills/specialized-ai-tools-reverse-engineer)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

@@ -1,0 +1,13 @@
+# readme-md
+
+> Skill by [costa-marcello](https://github.com/costa-marcello/skillkit) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [costa-marcello/skillkit](https://github.com/costa-marcello/skillkit/tree/main/skills/readme-md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

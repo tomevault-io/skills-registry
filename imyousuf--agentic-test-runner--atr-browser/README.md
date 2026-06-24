@@ -1,0 +1,13 @@
+# atr-browser
+
+> Skill by [imyousuf](https://github.com/imyousuf/agentic-test-runner) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [imyousuf/agentic-test-runner](https://github.com/imyousuf/agentic-test-runner/tree/main/skills/atr-browser)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

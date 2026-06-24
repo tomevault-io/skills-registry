@@ -1,0 +1,100 @@
+---
+name: scaffold-app
+description: > Use when this capability is needed.
+metadata:
+  author: ojfbot
+---
+
+You are a senior engineer doing initial setup for a brand-new application. Generate a production-ready project skeleton — actual files on disk — without implementing business logic.
+
+**Tier:** 2 — Multi-step procedure
+**Phase:** Project inception (before any /plan-feature or /scaffold runs)
+
+## Input
+
+Parse `$ARGUMENTS` for:
+- `--type=<template>` — required: `langgraph-app` | `browser-extension` | `python-scraper`
+- `--name=<slug>` — required: kebab-case project name
+- `--description=<text>` — optional: one-line purpose
+- `--org=<github-org>` — optional (default: `ojfbot`)
+- `--dir=<path>` — optional: parent directory (default: `../`)
+
+If `--type` missing: output the three templates and their use cases, then stop.
+If `--name` missing: stop and ask for a kebab-case name.
+
+## Steps
+
+### 1. Plan
+
+> **Load `knowledge/template-guide.md`** for template selection guidance and common scaffolding pitfalls.
+
+### 2. Read the template spec
+
+Read `domain-knowledge/app-templates.md` to get the canonical file list, dependency versions, and configuration patterns for the chosen template.
+
+### 3. State your plan
+
+Before writing any files, output:
+- Target directory (absolute path)
+- Template type and what it includes
+- Top-level package/module list
+- Non-obvious choices
+
+If target directory already exists and is non-empty: warn and stop.
+
+### 4. Create the project skeleton
+
+Write all files to disk per the template spec:
+- TypeScript: strict-mode compatible
+- Python: parseable by 3.11+
+- Use exact dependency versions from `domain-knowledge/app-templates.md`
+- Mark config values: `# TODO: set real value`
+- No business logic — stubs and wiring only
+- Add `// SCAFFOLD: <reason>` on non-obvious structural choices
+
+### 5. Write CLAUDE.md
+
+Accurate build/test/lint commands, architecture summary, key conventions, honest open items.
+
+### 6. Initialize git
+
+```bash
+cd <project-dir>
+git init -b main
+git add .
+git commit -m "chore: initial scaffold"
+```
+
+### 7. Register in fleet infrastructure
+
+After the project skeleton is created, the new repo must be registered in fleet-wide systems. Output each registration as a concrete action with the exact file and line to edit:
+
+1. **daily-logger sweep** — Add the repo name to the `REPOS` array in `daily-logger/src/collect-context.ts` with a comment describing the app's role. Without this, the daily article generator will not pick up any commits, PRs, or issues from the new repo.
+2. **daily-logger SYSTEM_PROMPT** — Add a bullet describing the new repo to the "Additional repos" list in the `SYSTEM_PROMPT` constant in `daily-logger/src/generate-article.ts`. Without this, the article generator sweeps the repo's commits but Claude has no context about what the app is — it will either ignore the activity or mischaracterise it. Include the app's purpose and its relationship to Frame.
+3. **daily-logger KNOWN_REPOS** — Add the repo name to the `KNOWN_REPOS` set in `daily-logger/src/build-api.ts`. Without this, the API builder will not recognize the repo when extracting `reposActive` from article bodies, and the repo will be invisible to `repos.json` statistics and the `/frame-standup` action backlog.
+4. **Shell production remote** (Frame OS sub-apps only) — Add `VITE_REMOTE_<NAME>=https://<slug>.jim.software` to `shell/.env.production` so the Module Federation host resolves the remote in production rather than falling back to localhost.
+5. **Security scan workflow** — Copy the fleet-standard TruffleHog security scan workflow into `.github/workflows/security-scan.yml`. Use any existing fleet repo as the canonical source.
+6. **`frame-ui-components` CI clone** (if the app consumes shared components) — Add the `git clone https://github.com/ojfbot/frame-ui-components` step before `pnpm install` in CI so the `file:../frame-ui-components` dep resolves.
+7. **`@carbon/styles` peer dep** (if the app uses `frame-ui-components`) — Add `@carbon/styles` as an explicit dependency in the app's `package.json` (peer dep gap in `frame-ui-components` until patched upstream).
+8. **selfco vault entity** — Create `~/selfco/wiki/entities/<slug>.md` (kind: `repo`, status: `unstarted`, per the schema in `~/selfco/CLAUDE.md` and `templates/entity.md` in the vault), add its `- [[<slug>]] — <one-liner>` line to `wiki/index.md`, and append a `## [date] sync | new repo <slug>` entry to `wiki/log.md` (then commit/push the vault per its git-mirror rule). Equivalently: run `/vault sync` after the repo's first commit. Without this, the repo is invisible to `/vault query`/`orient` and to every future cultivate pass — the knowledge-space twin of the daily-logger sweep omission below.
+
+> **Why this step exists:** `seh-study` shipped 15 commits in one day and the daily-logger missed all of them because the repo was never added to the sweep. Likewise `lofi-beaver`, `morning-cockpit`, and `workstation-yuri` shipped for weeks with no vault entity page (caught 2026-06-11). This checklist prevents that class of omission for every future app.
+
+### 8. Output next-steps checklist
+
+Include the fleet registration items from Step 7 that require changes in other repos (daily-logger, shell) as explicit checklist items, since the constraint below prevents this skill from writing those files directly.
+
+## Constraints
+
+- Do not implement business logic.
+- Do not touch files outside the new project directory.
+- Do not run package installs.
+- If `domain-knowledge/app-templates.md` and `domain-knowledge/shared-stack.md` conflict: prefer app-templates.md.
+
+---
+
+$ARGUMENTS
+
+---
+> Source: [ojfbot/core](https://github.com/ojfbot/core) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-15 -->

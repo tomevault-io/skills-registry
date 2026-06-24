@@ -1,0 +1,219 @@
+---
+name: writing-javascript
+description: Writes modern JavaScript with ES2024+ features, async patterns, and functional programming. Use when building Node.js applications, implementing async workflows, or writing clean maintainable code. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Writing JavaScript
+
+## Quick Start
+
+```javascript
+// Modern destructuring and spread
+const { name, email, role = 'user' } = user;
+const settings = { ...defaults, theme: 'dark' };
+const [first, ...rest] = items;
+
+// Optional chaining and nullish coalescing
+const street = user?.address?.street ?? 'Unknown';
+config.timeout ??= 5000;
+
+// Async/await with error handling
+async function fetchUser(id) {
+  try {
+    const response = await fetch(`/api/users/${id}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to fetch:', error);
+    throw error;
+  }
+}
+
+// Functional composition
+const pipe = (...fns) => x => fns.reduce((acc, fn) => fn(acc), x);
+const processData = pipe(filter(isValid), map(transform), reduce(aggregate, []));
+```
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Destructuring | Extract values from objects and arrays | Use `const { a, b } = obj` or `const [x, y] = arr` |
+| Spread Operator | Expand iterables and merge objects | Use `...` for shallow copies and merging |
+| Optional Chaining | Safe property access on nullable values | Use `?.` to avoid "cannot read property" errors |
+| Nullish Coalescing | Default values for null/undefined only | Use `??` instead of `\|\|` for falsy values |
+| Async/Await | Clean asynchronous code flow | Use try/catch for error handling |
+| Promise Methods | Parallel and conditional execution | Use all, allSettled, race, any for concurrency |
+| Array Methods | Functional array transformations | Use map, filter, reduce, find, at, toSorted |
+| Classes | Object-oriented patterns with private fields | Use # prefix for truly private members |
+| Modules | ESM import/export for code organization | Use named exports and barrel files |
+| Iterators | Custom iteration with generators | Use function* and for...of loops |
+
+## Common Patterns
+
+### Async Patterns with Concurrency Control
+
+```javascript
+// Parallel execution
+const [user, posts] = await Promise.all([fetchUser(id), fetchPosts(id)]);
+
+// Handle mixed success/failure
+const results = await Promise.allSettled(ids.map(fetchUser));
+const successful = results.filter(r => r.status === 'fulfilled').map(r => r.value);
+const failed = results.filter(r => r.status === 'rejected').map(r => r.reason);
+
+// Retry with exponential backoff
+async function withRetry(fn, maxRetries = 3, baseDelay = 1000) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (attempt === maxRetries - 1) throw error;
+      await new Promise(r => setTimeout(r, baseDelay * Math.pow(2, attempt)));
+    }
+  }
+}
+
+// Concurrent execution with limit
+async function mapConcurrent(items, fn, limit = 5) {
+  const results = [];
+  const executing = new Set();
+  for (const item of items) {
+    const promise = fn(item).then(r => { executing.delete(promise); return r; });
+    executing.add(promise);
+    results.push(promise);
+    if (executing.size >= limit) await Promise.race(executing);
+  }
+  return Promise.all(results);
+}
+```
+
+### Functional Programming Utilities
+
+```javascript
+// Currying
+const curry = fn => function curried(...args) {
+  return args.length >= fn.length ? fn(...args) : (...next) => curried(...args, ...next);
+};
+
+// Memoization
+const memoize = fn => {
+  const cache = new Map();
+  return (...args) => {
+    const key = JSON.stringify(args);
+    if (!cache.has(key)) cache.set(key, fn(...args));
+    return cache.get(key);
+  };
+};
+
+// Immutable updates
+const updateUser = (user, updates) => ({ ...user, ...updates, updatedAt: new Date() });
+const addItem = (arr, item) => [...arr, item];
+const removeAt = (arr, i) => [...arr.slice(0, i), ...arr.slice(i + 1)];
+```
+
+### Error Handling with Result Type
+
+```javascript
+class Result {
+  constructor(value, error) { this.value = value; this.error = error; }
+  static ok(value) { return new Result(value, null); }
+  static err(error) { return new Result(null, error); }
+  isOk() { return this.error === null; }
+  map(fn) { return this.isOk() ? Result.ok(fn(this.value)) : this; }
+  unwrapOr(defaultValue) { return this.isOk() ? this.value : defaultValue; }
+}
+
+async function safeFetch(url) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return Result.err(new Error(`HTTP ${res.status}`));
+    return Result.ok(await res.json());
+  } catch (e) { return Result.err(e); }
+}
+
+// Usage
+const result = await safeFetch('/api/data');
+const data = result.map(d => d.items).unwrapOr([]);
+```
+
+### Event Emitter Pattern
+
+```javascript
+class EventEmitter {
+  constructor() { this.events = new Map(); }
+
+  on(event, listener) {
+    if (!this.events.has(event)) this.events.set(event, new Set());
+    this.events.get(event).add(listener);
+    return () => this.off(event, listener);
+  }
+
+  off(event, listener) { this.events.get(event)?.delete(listener); }
+
+  emit(event, ...args) {
+    this.events.get(event)?.forEach(listener => listener(...args));
+  }
+
+  once(event, listener) {
+    const wrapper = (...args) => { listener(...args); this.off(event, wrapper); };
+    return this.on(event, wrapper);
+  }
+}
+```
+
+### Modern Collection Usage
+
+```javascript
+// Map for key-value with any type keys
+const cache = new Map();
+cache.set(userObj, 'data'); // Object as key
+for (const [key, value] of cache) { /* iterate */ }
+
+// Set for unique values and operations
+const setA = new Set([1, 2, 3]);
+const setB = new Set([2, 3, 4]);
+const union = new Set([...setA, ...setB]);
+const intersection = new Set([...setA].filter(x => setB.has(x)));
+
+// WeakMap for private data without memory leaks
+const privateData = new WeakMap();
+class Secret {
+  constructor(value) { privateData.set(this, { value }); }
+  getValue() { return privateData.get(this).value; }
+}
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Use `const` by default, `let` only when needed | Using `var` for variable declarations |
+| Use `===` for strict equality comparisons | Using `==` which allows type coercion |
+| Use async/await over raw promise chains | Deep nesting with .then() callbacks |
+| Use optional chaining for safe property access | Manual null checks at every level |
+| Use destructuring for cleaner parameter extraction | Accessing object properties repeatedly |
+| Use template literals for string interpolation | String concatenation with + |
+| Use arrow functions for callbacks | Using function expressions for simple callbacks |
+| Handle promise rejections explicitly | Ignoring unhandled rejection warnings |
+| Use modules (ESM) for code organization | Polluting the global namespace |
+| Write pure functions when possible | Functions with hidden side effects |
+
+## Related Skills
+
+- **typescript** - Type-safe JavaScript development
+- **nodejs** - Server-side JavaScript runtime
+- **react** - JavaScript UI framework
+
+## References
+
+- [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
+- [ECMAScript Specification](https://tc39.es/ecma262/)
+- [JavaScript Info](https://javascript.info/)
+- [Node.js Documentation](https://nodejs.org/docs/)
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

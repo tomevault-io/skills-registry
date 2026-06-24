@@ -1,0 +1,13 @@
+# manage_icons
+
+> Skill by [gambitnl](https://github.com/gambitnl/aralia) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [gambitnl/aralia](https://github.com/gambitnl/aralia/tree/main/public/agent-docs/skills/manage_icons)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

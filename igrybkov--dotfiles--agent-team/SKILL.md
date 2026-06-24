@@ -1,0 +1,311 @@
+---
+name: agent-team
+description: Launch a Claude Code agent team shaped like a standard engineering org (PM, BA, UX, tech lead, architect, engineers, QA, security, devops). Lead runs discovery first, then sizes the team and hires custom specialists if the task warrants it. Use when a task would benefit from parallel exploration, multiple perspectives, or cross-role collaboration. Use when this capability is needed.
+metadata:
+  author: igrybkov
+---
+
+# Engineering Agent Team Skill
+
+Launch an agent team modeled after a standard engineering org. You (the current session) become the **team lead**: you run discovery, clarify requirements, and only then decide how big the team needs to be.
+
+## Prerequisites
+
+Agent teams must be enabled. They require:
+- Claude Code v2.1.32 or later
+- `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` in env or settings.json
+- `--teammate-mode tmux` (or run inside tmux so `auto` picks split panes)
+
+If the env var isn't set, tell the user to enable it and stop.
+
+## Input
+
+The user provides a task description as the skill argument (`$ARGUMENTS`). If empty, use `AskUserQuestion` to ask what problem they want the team to tackle.
+
+Treat the input as the **problem statement** — not a prescription of the team. You decide the team shape based on the problem.
+
+## Roles available
+
+Each role is backed by a subagent definition in `profiles/agents/files/agents/` (symlinked to `~/.claude/agents/`). When spawning a teammate, reference the subagent by name — its tools allowlist, default model, and philosophy get loaded automatically. The definition body is *appended* to the teammate's system prompt, not substituted for it, so your spawn instructions still drive the task.
+
+| Role | Subagent | Default model | When to spawn |
+|------|----------|---------------|---------------|
+| **Product Manager** | `product-manager` | sonnet | Almost always — fuzzy requirements or unclear goals |
+| **Business Analyst** | `business-analyst` | sonnet | Early, for any task with non-trivial domain logic or stakeholder context |
+| **UX Designer** | `ux-designer` | sonnet | Any task that touches a user-facing surface (CLI output, command args, config shape, API responses, docs, GUI) |
+| **UI Specialist** | `ui-specialist` | sonnet | Only when the task involves a graphical UI. Skip for CLI/API work — UX Designer covers those. |
+| **Tech Lead** | `tech-lead` | opus | **Almost always.** Hands-on breadth role; owns team capacity planning. |
+| **System Architect** | `system-architect` | opus | Design-heavy work: new systems, cross-component changes, security/reliability concerns, or when the team needs a vetted design doc before writing code. |
+| **Software Engineer** | `software-engineer` | opus or sonnet *(per task)* | Implementation. Model is picked per task: `opus` for gnarly problems (algorithms, correctness, perf, subtle debugging), `sonnet` for well-scoped implementation. Clone the role for parallel tracks (`engineer-1`, `engineer-2`, ...). |
+| **QA Engineer** | `qa-automation-engineer` | sonnet | Anything with meaningful test surface |
+| **Security Specialist** | `security-specialist` | sonnet | **After** implementation, for any code that handles user input, authn/authz, data storage/egress, external integrations, or secrets. Skip for pure internal refactors. |
+| **DevOps Engineer** | `devops-engineer` | opus | **Mandatory** for any task involving deployment topology, CI/CD, k8s/Helm, cloud infra, networking, autoscaling, secrets/IAM, multi-tenancy, IaC, container builds, observability. Bring them in during discovery, not post-hoc. |
+| **Tech Writer** | `tech-writer` | sonnet | Any task that changes a public-facing API, CLI interface, configuration schema, or user-visible behavior. Also for tasks where documentation is a primary deliverable. Audits what docs exist, identifies what is stale, and writes or updates the minimum necessary. Has access to all MCP tools (Confluence, Obsidian, GitHub, Jira, Slack) to discover documentation that lives outside the repo. |
+
+When spawning, **name teammates by role** (e.g. `pm`, `ba`, `ux`, `ui`, `tech-lead`, `architect`, `engineer`, `qa`, `security`, `devops`, `writer`) so you can message them by name later. Clone engineers with suffixes when parallel tracks warrant it (`engineer-1`, `engineer-2`).
+
+**Tech Lead vs System Architect — don't conflate them:**
+- **Tech Lead** is hands-on and broad: codebase archaeology, estimates, pairing with BA, breaking down work, unblocking implementers. Present on almost every task.
+- **System Architect** is a specialist who goes deep on design and produces documentation (sequence diagrams, component wiring, security model, trade-off analysis) before the team implements. Only brought in when the task justifies thorough up-front design.
+- On small/simple tasks, the Tech Lead covers design decisions without needing an Architect. On large/novel tasks, both are present — Architect produces the design, Tech Lead shepherds the team through executing it.
+
+**UX vs UI — don't conflate them:**
+- **UX** is about the whole interaction: flag names, command order, error copy, confirmation prompts, output legibility, flow, defaults. Applies even if there's zero GUI.
+- **UI** is about the visual layer when there *is* a GUI. If the task is CLI-only, spawn UX, skip UI.
+
+**UX Designer vs Tech Writer — don't conflate them:**
+- **UX Designer** shapes the interaction surface: what the interface says and how it works. Produces UX decisions.
+- **Tech Writer** captures and maintains what the system *does* — in READMEs, docs, wikis, guides, and API references. Applies when there's a documentation audience (developers, operators, users) who needs to understand or act on the change. Skip for pure internal refactors with no user-facing or operator-visible behavior change.
+
+**Picking engineer model per task:** Match model to difficulty. Tricky algorithms, perf-critical paths, correctness-critical code, subtle debugging → `opus`. Well-scoped implementation of clear specs → `sonnet`. Straightforward parallelizable work like scaffolding or mechanical changes → `sonnet`. Don't spin up opus engineers for easy tasks, and don't starve hard tasks on sonnet.
+
+## Hiring custom roles
+
+The roster above covers most teams, the same way a typical engineering org's job ladder covers most work. But real orgs hire specialists when a project warrants it — and your team should too. When discovery reveals a niche the standard roster doesn't fit, **hire a new role**: spawn a teammate using the closest base subagent and write a custom job description in the spawn prompt. Think of it as opening a requisition for a specialist contractor for the duration of this task.
+
+### How "hiring" works
+
+A custom hire is just a teammate built from three things:
+
+- **A base subagent** — picks the tooling allowlist, default model, and engineering instincts. Choose the closest fit:
+  - `software-engineer` — hands-on technical specialists (ML, perf, mobile, embedded, data, game engine, etc.)
+  - `system-architect` — design specialists (API schema designer, distributed systems reviewer, capacity-model architect)
+  - `ux-designer` — interaction specialists (i18n/l10n, voice/CLI grammar, accessibility flows)
+  - `ui-specialist` — visual specialists (design system curator, WCAG auditor)
+  - `security-specialist` — risk auditors (threat modeler, supply-chain reviewer, compliance officer)
+  - `devops-engineer` — infra specialists (SRE, cost engineer, observability designer, FinOps)
+  - `business-analyst` — domain specialists (compliance officer, legal reviewer, billing-rules analyst)
+  - `qa-automation-engineer` — test specialists (chaos engineer, performance test designer, fuzz harness author)
+- **A job description** — your spawn prompt frames the role. Treat it like a real job posting: one line on what the role is, one line on what they own, one line on what they don't own (handed back to standard roles), one line on how they should report back.
+- **A descriptive name** — drop the generic role suffix in favor of the specialty: `ml-engineer`, `db-specialist`, `perf-engineer`, `accessibility-auditor`, `i18n-specialist`, `compliance-officer`, `data-engineer`, `mobile-engineer`, `sre`. Names matter for routing later messages.
+
+### When to hire vs. use the standard roster
+
+Hire when the *thinking style* of the role is fundamentally different from a standard engineer reading a codebase — not just because the topic sounds specialized.
+
+Examples worth hiring for:
+
+| Scenario | Custom hire | Base subagent | Why hire instead of using standard |
+|----------|-------------|---------------|-------------------------------------|
+| New ML training pipeline / model eval refactor | `ml-engineer` | `software-engineer` (opus) | Standard engineer optimizes for code clarity; ML work demands reasoning in data drift, eval metrics, reproducibility, leakage |
+| Latency budget regression on hot path | `perf-engineer` | `software-engineer` (opus) | Most engineers optimize prematurely. A perf engineer profiles first, sets budgets, validates with measurement |
+| WCAG 2.2 AA audit before product launch | `accessibility-auditor` | `ui-specialist` | UI specialist covers components; an a11y auditor cares specifically about screen readers, contrast ratios, keyboard nav, focus order |
+| Adding RTL + 12 locales to an existing product | `i18n-specialist` | `ux-designer` | Translation pipelines, locale-specific formatting, plural rules, and RTL layouts are their own discipline |
+| GDPR / HIPAA / SOC2 review of a new data flow | `compliance-officer` | `business-analyst` or `security-specialist` | Standard security covers vulnerabilities; compliance covers legal data handling, retention, subject-access rights |
+| iOS-specific battery/lifecycle bug | `mobile-engineer` | `software-engineer` (opus) | Platform conventions (lifecycle, background modes, App Store rules) are specialist knowledge |
+| Slow query / index strategy on a 1B-row table | `db-specialist` | `software-engineer` (opus) or `system-architect` | Reads query plans, knows MVCC/locking, can design partitioning — not the same skill as backend coding |
+| Production incident postmortem + reliability hardening | `sre` | `devops-engineer` (opus) | DevOps builds infra; an SRE reasons about SLOs, error budgets, blast radius, runbooks |
+| GraphQL schema redesign across teams | `schema-architect` | `system-architect` | Schema design has its own grammar (nullability rules, federation, versioning) that's distinct from system design |
+| Open-source license audit on a vendored tree | `license-reviewer` | `business-analyst` | License compatibility is a focused legal-adjacent skill, not a general analyst task |
+| Cost runaway on cloud infra | `finops-engineer` | `devops-engineer` | Cost optimization needs unit-economics thinking, not just infra fluency |
+| Chaos / fault-injection test design | `chaos-engineer` | `qa-automation-engineer` | Failure-mode design is a specialist discipline distinct from normal test coverage |
+
+**Don't hire just because the topic sounds fancy.** If a standard `software-engineer` reading the codebase can do the work, don't dress them up with a custom title. Hire when the role's mental model genuinely differs from the standard subagent's body.
+
+### Tech Lead's role in hiring
+
+The Tech Lead recommends custom hires alongside team sizing. After discovery, ask:
+
+> Based on discovery, recommend the team. Specify standard roles (engineers, QA, etc.) and any **custom hires** the task warrants. For each custom hire, name the role, pick the base subagent, justify why a standard engineer wouldn't fit, and write a 2–4 sentence job description.
+
+Present custom hires to the user for confirmation the same way you confirm team size — don't hire silently. If the user pushes back ("just use a regular engineer"), respect it.
+
+### Spawn instruction template (custom hire)
+
+> Spawn `<role-name>` — use the `<base-subagent>` subagent (model: <opus|sonnet>).
+> **Role:** <one line on the specialty>.
+> **Owns:** <what this hire is responsible for on this task>.
+> **Does not own:** <what's out of scope, handed back to standard roles>.
+> **Report back with:** <expected deliverables and format>.
+
+### Worked examples
+
+**ML Engineer** for a model-quality regression:
+
+> Spawn `ml-engineer` — use the `software-engineer` subagent (model: opus).
+> **Role:** ML engineer specializing in training pipelines and evaluation. Reasons in terms of data distribution, drift, leakage, and metric design — not just code quality.
+> **Owns:** training loop refactor, eval metric definition, data preprocessing for the new model variant, reproducibility (seed control, deterministic ops).
+> **Does not own:** model serving infra (that's `devops`), product framing of "what counts as a regression" (that's `pm`), security review of the data pipeline (that's `security`).
+> **Report back with:** code changes, eval results table (baseline vs new variant on the held-out set, with confidence intervals), and a brief on any data quality issues uncovered.
+
+**SRE** for a recurring production incident:
+
+> Spawn `sre` — use the `devops-engineer` subagent (model: opus).
+> **Role:** Site Reliability Engineer. Reasons in SLOs, error budgets, blast radius, runbooks, and toil reduction. Treats every fix as a chance to remove a class of failure, not patch one instance.
+> **Owns:** postmortem authorship, SLO/SLI definition for the affected service, runbook updates, alerting changes, and identifying toil to automate.
+> **Does not own:** the implementation of the underlying fix (that's `engineer-1`), security implications of the failure mode (that's `security`).
+> **Report back with:** a postmortem (timeline, contributing factors, action items), proposed SLOs, and a prioritized list of toil-reduction work.
+
+**Accessibility Auditor** for a pre-launch a11y review:
+
+> Spawn `accessibility-auditor` — use the `ui-specialist` subagent (model: sonnet).
+> **Role:** Accessibility auditor specializing in WCAG 2.2 AA. Thinks in screen readers, contrast ratios, keyboard navigation, focus order, ARIA semantics — not just visual polish.
+> **Owns:** auditing the new flow against WCAG 2.2 AA, identifying violations with severity, and recommending fixes the UI specialist can implement.
+> **Does not own:** implementing the fixes (that's `ui`), broader interaction design (that's `ux`).
+> **Report back with:** a findings report (violation, WCAG criterion, severity, recommended fix) and a sign-off recommendation (ship / ship with caveats / block).
+
+## Workflow
+
+### 1. Discovery phase (small team)
+
+Start with a **minimal discovery team**. Don't spawn the full roster yet.
+
+Default discovery team:
+- **BA** (`business-analyst`) — analyzes the domain: entities, business rules, data flows, stakeholders, acceptance criteria, compliance constraints
+- **PM** (`product-manager`) — drafts requirements, open questions, success criteria, priorities
+- **UX Designer** (`ux-designer`) — maps out the user-facing surface (CLI flags, error states, output formats, GUI flows, docs) and names friction points. Spawn whenever the task touches any user interaction, which is most of the time.
+- **Tech Lead** (`tech-lead`) — investigates the existing codebase/system relevant to the task, estimates feasibility and effort, pairs with BA to ground domain analysis in what the code actually does, identifies risks and unknowns. Always present in discovery.
+
+**Add the Tech Writer** (`tech-writer`) **to discovery only when** the task is likely to produce a documentation change — meaning a developer using or operating the system would need to know something different after the change than before. Most changes don't clear this bar. When it does apply, the Tech Writer audits the existing documentation landscape (including external sources via MCP: Confluence, Obsidian, GitHub, Jira) and produces a map of what exists, what is stale, and what is missing — before any code is written.
+
+**Add the System Architect** (`system-architect`) **to discovery when:**
+- The task spans multiple components or services
+- There are competing design approaches that need trade-off analysis
+- Security, reliability, or data integrity concerns are material
+- The team would benefit from sequence diagrams, component diagrams, or a written design doc before implementation
+- The Tech Lead flags during initial discovery that design-level thinking is needed
+
+**Add the DevOps Engineer** (`devops-engineer`) **to discovery when** the task touches any infra concern (see roster table). DevOps joins discovery, not post-hoc — networking, load management, and data isolation are designed in, not retrofitted.
+
+For a small, well-understood task, Tech Lead alone is enough. For a novel or cross-cutting task, spawn the specialists from the start.
+
+Spawn instruction template for discovery (standard case):
+
+> Spawn four teammates to run discovery on this task: **"<task>"**
+> - `ba` — use the `business-analyst` subagent type. Analyze the domain: entities, business rules, data flows, stakeholders, compliance/policy constraints. Produce draft acceptance criteria and flag any domain ambiguity.
+> - `pm` — use the `product-manager` subagent type. Draft requirements, success criteria, priorities, and explicit open questions for the user. Do not invent scope — flag ambiguity.
+> - `ux` — use the `ux-designer` subagent type. Map the user-facing surface this task touches (CLI args, output, errors, flows, docs, or GUI) and flag UX issues, inconsistencies, and unanswered interaction questions.
+> - `tech-lead` — use the `tech-lead` subagent type. Investigate the existing codebase/system relevant to this task (prior art, constraints, what's unclear), ground-truth the BA's domain analysis against the code, estimate effort, flag risks. Recommend whether a System Architect is needed.
+>
+> Each teammate reports back when done. Do not start implementation.
+
+Add an architect to discovery when the task is clearly design-heavy from the outset:
+
+> - `architect` — use the `system-architect` subagent type. Weigh 2–3 design approaches with pros/cons, produce sequence/component diagrams, plan component integration, cover security architecture, and write a design doc the team can execute against. Coordinate with `tech-lead` to keep the design grounded in the existing system. No implementation.
+
+Add a devops engineer to discovery when the task has any infra touchpoint:
+
+> - `devops` — use the `devops-engineer` subagent type. Design networking, load management, and data isolation for this task. Identify the IaC surface, CI/CD changes, observability needs, and cost/ops impact. Coordinate with `architect` and `tech-lead` on integration points.
+
+Drop the UX teammate from discovery only for pure internal refactors with no observable behavior change. Drop the BA only for tasks with no meaningful domain/business logic (e.g. pure infra or refactors).
+
+### 2. Clarify with the user
+
+Once discovery teammates report back, synthesize their findings and present to the user:
+- What the task actually is (as understood)
+- Open questions from PM
+- Technical options/trade-offs from tech lead
+- Any blockers or missing info from BA
+
+Use `AskUserQuestion` for concrete decisions. Don't proceed to build the rest of the team until the user has confirmed direction.
+
+### 3. Size the team
+
+**This is the Tech Lead's job to recommend.** After discovery, ask the `tech-lead` explicitly:
+
+> Based on discovery, recommend the capacity needed to deliver this effectively. Count engineers and justify parallelism. Specify the model (`opus` or `sonnet`) for each engineer based on the difficulty of their assigned track. If the work splits into N independent tracks, propose N engineers (clone with suffixes like `engineer-1`, `engineer-2`). If the work is sequential or small, propose a smaller team. Also recommend any **custom hires** (see "Hiring custom roles" above) the task warrants — name the role, pick the base subagent, and justify why a standard engineer would not fit.
+
+The Tech Lead should think about:
+- **Parallelism available**: how many independent tracks/modules/concerns can genuinely run in parallel without file conflicts?
+- **Dependencies**: if work is sequential, more engineers add coordination cost without speeding delivery.
+- **Complexity**: match model to task. Tricky algorithms, correctness-critical code, perf, or subtle debugging → `opus`. Well-scoped implementation → `sonnet`.
+- **Review load**: one QA can reasonably cover 2–3 engineers; more needs a second QA.
+
+**Cloning engineers is explicitly allowed** — spawn multiple `software-engineer` teammates with distinguishing suffixes (`engineer-1`, `engineer-2`, `qa-1`, `qa-2`) and different models per teammate as the Tech Lead recommends.
+
+Present the Tech Lead's proposed team shape (including per-engineer model choices) to the user and get confirmation before spawning.
+
+Conservative default heuristics (use when Tech Lead hasn't recommended otherwise):
+
+- **Tiny scope (1-2 hrs of work)**: Tech Lead + lead can handle it. No Architect, no extra engineers.
+- **Medium scope (multi-file change, single concern)**: Tech Lead + 1 `software-engineer` (sonnet) + QA. Add Architect only if design trade-offs are non-obvious.
+- **Large scope (multi-component, parallel work)**: Tech Lead + Architect + multiple `software-engineer` teammates (mix of opus for hard tracks and sonnet for well-scoped ones) + QA.
+- **Design-heavy, low-implementation**: Tech Lead + Architect, produce a design doc, then re-size for implementation.
+- **GUI work confirmed**: add the **UI Specialist** (`ui-specialist`) and keep them in close contact with UX. Skip if the task is CLI/API/backend-only.
+- **CLI or API ergonomics work**: no UI Specialist needed — UX Designer stays on through implementation to review flag names, error copy, output formats.
+- **Security-sensitive work** (auth, input handling, data storage, external integrations, secrets): Security Specialist is **mandatory** in the post-implementation phase. For especially sensitive work, also bring the Architect in upfront to cover security architecture before code is written.
+- **DevOps / infra work**: DevOps Engineer is **mandatory** — bring them in during discovery. For production-grade changes, also pair with Security Specialist and Architect.
+- **User-visible or operator-visible changes** (new CLI flags, API surface, config schema, behavior changes): consider spawning a Tech Writer. Most changes do not need documentation — a bug fix, a refactor, an internal restructuring rarely does. The bar is: would a developer using or operating the system need to know something different than before? If yes, spawn a writer. If no, skip. When in doubt, have the Tech Lead make the call after discovery.
+
+Explain the team shape to the user and get confirmation before spawning.
+
+### 4. Assign work
+
+Create tasks in the shared task list (one self-contained unit per task, sized so each teammate has ~5–6 tasks). Assign explicitly to avoid file conflicts — two teammates should not own the same file.
+
+Tell teammates to:
+- Check in when blocked instead of guessing
+- Not mark tasks complete until work is actually done and verified
+- Ping QA when a unit is ready for review
+
+### 5. Monitor and synthesize
+
+- Wait for teammates to finish before starting work yourself.
+- If a teammate stalls, redirect or respawn.
+- Synthesize findings across teammates for the user.
+
+### 6. Post-implementation documentation update
+
+If a Tech Writer was part of the team, spawn them post-implementation to update docs against the finished code:
+
+> Spawn `writer` — use the `tech-writer` subagent type. Review the changes produced by this team (diff, new files, updated config). First determine whether a documentation change is actually warranted — most changes don't require one. If it is, audit existing documentation (local and external via MCP: Confluence, Obsidian, GitHub, Jira, Slack), then update or create the minimum necessary. Report: your warrant assessment, what you changed, and what you flagged for later.
+
+If no Tech Writer was involved in discovery, don't spawn one now just for completeness — only if the Tech Lead believes the change warrants it.
+
+### 7. Post-implementation security review
+
+Once implementation is done (or a significant reviewable slice is), spawn the Security Specialist to audit the new code **before** declaring the work complete:
+
+> Spawn `security` — use the `security-specialist` subagent type. Review the implementation produced by this team for vulnerabilities and alignment with established security practices. Focus on auth, input validation, injection vectors, secrets handling, authz boundaries, data exposure, dependency CVEs. Reference OWASP Top 10 and any project-specific policy docs (e.g. CLAUDE.md, SECURITY.md). Do not implement fixes — produce a findings report with severity ratings and specific file/line references. Flag anything that should block shipping.
+
+After the Security Specialist reports, feed findings back to the implementation team for remediation, or escalate to the user if a finding changes scope. Re-run the Security Specialist on the fixes if findings were material.
+
+Skip this phase only for pure internal refactors with no change in attack surface.
+
+### 8. Cleanup
+
+When all tasks are done (including security remediation and documentation updates), run cleanup: `Clean up the team`.
+
+## Spawn command for the lead (you)
+
+After reading the user's task, issue a spawn instruction like:
+
+```
+Create an agent team for this task: "<user's task>"
+
+Start with discovery only. Spawn:
+- ba — use the `business-analyst` subagent. Analyze the domain: entities, business rules, data flows, stakeholders, constraints. Draft acceptance criteria and flag domain ambiguity.
+- pm — use the `product-manager` subagent. Draft requirements, success criteria, priorities, and explicit open questions. Flag ambiguity rather than inventing scope.
+- ux — use the `ux-designer` subagent. Map the user-facing surface (CLI args, output, errors, flows, docs, GUI if any) and flag UX issues and interaction questions.
+- tech-lead — use the `tech-lead` subagent. Investigate the existing codebase/system, ground-truth BA's analysis against the code, estimate effort, flag risks. Recommend whether a System Architect is needed.
+
+Each teammate reports back to me when done. Do not start implementation. I will decide the rest of the team shape (including whether to bring in a System Architect and how many engineers at what model) after reviewing their reports and clarifying with the user.
+```
+
+Add `architect` (use the `system-architect` subagent) to the initial spawn when the task is obviously design-heavy, cross-component, or security/reliability-critical. Add `devops` (use the `devops-engineer` subagent) when the task has any infra touchpoint. Add `writer` (use the `tech-writer` subagent) only when a developer or operator would need to know something different after the change than before — most changes don't clear this bar. Drop `ux` only for pure internal refactors.
+
+**Custom hires in discovery:** if the task is obviously in a specialist domain from the user's first message (ML, deep DB perf, accessibility audit, compliance, mobile platform work, SRE/incident response), hire the specialist into discovery rather than after. Follow the spawn template under "Hiring custom roles". When in doubt, defer the hire — let the Tech Lead recommend it post-discovery once the scope is grounded.
+
+## Important notes
+
+- **Use subagent types**: always reference a subagent definition by name when spawning. This loads the role's philosophy, tools, and default model. Your spawn instructions get appended on top.
+- **Override model when needed**: for `software-engineer` especially, specify `opus` or `sonnet` per teammate in your spawn prompt based on the Tech Lead's recommendation. The definition's default model can be overridden at spawn time.
+- **Names matter**: use the role names above so the user and you can message teammates predictably. Add numeric suffixes when cloning.
+- **File conflicts**: never give two teammates overlapping file ownership.
+- **Token cost**: agent teams use significantly more tokens than a single session. For trivial tasks, skip the skill and just do the work.
+- **Cleanup**: always clean up the team when done. Don't leave orphan teammates.
+
+## Anti-patterns
+
+- Don't spawn the full roster upfront — discovery first, then size.
+- Don't skip the PM for "obvious" tasks — user goals are rarely as obvious as they look.
+- Don't have the lead implement while teammates are still running. Wait for them.
+- Don't leave engineer model selection implicit. The Tech Lead picks per task; state it at spawn.
+- Don't skip the subagent reference when spawning. Without it, teammates get none of the role philosophy.
+- Don't hire a custom role just to relabel a standard engineer. Hire only when the role's thinking style genuinely differs from the base subagent's body (ML, perf, a11y, SRE, compliance, etc.) — not because the topic sounds specialized.
+- Don't hire silently. Custom hires get user confirmation the same way team size does.
+- Don't invent base subagents that don't exist. A custom hire must extend one of the real subagent definitions in `~/.claude/agents/` — the job description goes in the spawn prompt, not in a new file.
+
+---
+> Source: [igrybkov/dotfiles](https://github.com/igrybkov/dotfiles) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-23 -->

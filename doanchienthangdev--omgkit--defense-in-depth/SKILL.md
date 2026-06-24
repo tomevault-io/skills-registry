@@ -1,0 +1,103 @@
+---
+name: implementing-defense-in-depth
+description: AI agent designs layered security architecture with multiple independent protective barriers ensuring no single point of failure. Use when building security systems, reviewing architecture, or hardening applications. Use when this capability is needed.
+metadata:
+  author: doanchienthangdev
+---
+
+# Implementing Defense in Depth
+
+## Quick Start
+
+1. **Perimeter** - WAF, DDoS protection, rate limiting, IP filtering
+2. **Network** - VPC, security groups, mTLS, network policies
+3. **Application** - Input validation, output encoding, CSRF, CSP
+4. **Data** - Encryption at rest/transit, access control, classification
+5. **Identity** - MFA, least privilege, session management
+6. **Monitoring** - Logging, alerting, anomaly detection across all layers
+
+## Features
+
+| Feature | Description | Guide |
+|---------|-------------|-------|
+| Layered Protection | 5+ independent security barriers | Each layer catches what others miss |
+| Perimeter Security | First line of defense | WAF rules, rate limits, DDoS protection |
+| Network Isolation | Segment and protect internal comms | VPC subnets, security groups, mTLS |
+| Application Security | Secure code and request handling | Validate input, encode output, CSP headers |
+| Data Protection | Protect data at rest and in transit | AES-256-GCM, field-level encryption |
+| Identity Security | Authentication and authorization | MFA, RBAC, secure sessions |
+
+## Common Patterns
+
+```
+# Security Layers Architecture
++--------------------------------------------------+
+| LAYER 1: PERIMETER                               |
+| WAF | DDoS | Rate Limiting | IP Filtering        |
++--------------------------------------------------+
+    |
+    v
++--------------------------------------------------+
+| LAYER 2: NETWORK                                 |
+| VPC | Security Groups | TLS Everywhere           |
++--------------------------------------------------+
+    |
+    v
++--------------------------------------------------+
+| LAYER 3: APPLICATION                             |
+| Input Validation | Output Encoding | CSRF | CSP  |
++--------------------------------------------------+
+    |
+    v
++--------------------------------------------------+
+| LAYER 4: DATA                                    |
+| Encryption at Rest | Encryption in Transit       |
++--------------------------------------------------+
+    |
+    v
++--------------------------------------------------+
+| LAYER 5: IDENTITY                                |
+| MFA | Least Privilege | Session Management       |
++--------------------------------------------------+
+
+CROSS-CUTTING: Logging | Alerting | Anomaly Detection
+```
+
+```
+# Network Security Groups (Example)
+loadBalancer:
+  inbound:  [443 from 0.0.0.0/0]
+  outbound: [8080 to application-sg]
+
+application:
+  inbound:  [8080 from load-balancer-sg]
+  outbound: [5432 to database-sg, 443 to external]
+
+database:
+  inbound:  [5432 from application-sg]
+  outbound: [] # No outbound
+```
+
+## Best Practices
+
+| Do | Avoid |
+|----|-------|
+| Implement all layers - each provides unique protection | Relying on a single security layer |
+| Fail securely - deny access when in doubt | Trusting user input at any layer |
+| Log security events for detection/forensics | Exposing detailed error messages |
+| Rotate credentials regularly | Storing secrets in code |
+| Validate all inputs at every layer | Skipping security in development |
+| Encrypt sensitive data at rest and in transit | Assuming internal traffic is safe |
+| Use least privilege for all access | Disabling security for "convenience" |
+| Test security controls regularly | Ignoring security alerts |
+
+## Related Skills
+
+- `applying-owasp-security` - OWASP security guidelines
+- `implementing-oauth` - OAuth authentication flows
+- `implementing-better-auth` - Modern auth patterns
+- `verifying-before-completion` - Security verification checklists
+
+---
+> Converted and distributed by [TomeVault](https://tomevault.io/claim/doanchienthangdev) — claim your Tome and manage your conversions.
+<!-- tomevault:4.0:skill_md:2026-04-13 -->

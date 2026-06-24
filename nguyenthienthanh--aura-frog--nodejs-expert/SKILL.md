@@ -1,0 +1,41 @@
+---
+name: nodejs-expert
+description: Node.js gotchas and decision criteria. Covers async pitfalls, Express/NestJS patterns, and common mistakes. Use when this capability is needed.
+metadata:
+  author: nguyenthienthanh
+---
+
+> **AI-consumed reference.** Optimized for Claude to read during execution.
+> Human-readable explanation: see [docs/architecture/HIERARCHICAL_PLANNING.md](../../../docs/architecture/HIERARCHICAL_PLANNING.md)
+> or [docs/getting-started/](../../../docs/getting-started/) depending on topic.
+
+
+# Node.js Expert — Gotchas & Decisions
+
+Use Context7 for Express/NestJS/Fastify docs.
+
+## Key Decisions
+
+```toon
+decisions[4]{choice,use_when}:
+  Express vs NestJS vs Fastify,"Express: simple APIs. NestJS: enterprise/DI/decorators. Fastify: high perf"
+  Prisma vs TypeORM vs Drizzle,"Prisma: best DX/types. TypeORM: Active Record pattern. Drizzle: SQL-like + lightweight"
+  Zod vs Joi vs class-validator,"Zod: TS-first inference. Joi: runtime schemas. class-validator: NestJS decorators"
+  JWT vs session,"JWT: stateless/microservices. Session: monolith/server-rendered"
+```
+
+## Gotchas
+
+- `forEach` + `async`: does NOT await. Use `for...of` or `Promise.all(items.map(async ...))`
+- Express error handler: MUST have 4 params `(err, req, res, next)` — even if unused, or Express ignores it
+- Unhandled promise rejection crashes Node 15+ — always catch or use `process.on('unhandledRejection')`
+- `asyncHandler` wrapper: wrap Express route handlers to catch async errors → `next(err)`
+- `req.body` is `undefined` without `express.json()` middleware — common setup miss
+- `process.env.PORT` is string — parse with `parseInt()` or `Number()` before comparison
+- NestJS: `@Injectable()` with `@Module({ providers: [...] })` — forgetting module registration = runtime error
+- Stream backpressure: always handle `drain` event on writable streams for large data
+- `__dirname` not available in ESM — use `import.meta.dirname` (Node 21+) or `fileURLToPath(import.meta.url)`
+
+---
+> Source: [nguyenthienthanh/aura-frog](https://github.com/nguyenthienthanh/aura-frog) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-05-28 -->

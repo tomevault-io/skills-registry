@@ -1,0 +1,13 @@
+# code-review-frontend
+
+> Skill by [ChristopherAlphonse](https://github.com/ChristopherAlphonse/calphonse-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ChristopherAlphonse/calphonse-skills](https://github.com/ChristopherAlphonse/calphonse-skills/tree/main/code-review-frontend)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).

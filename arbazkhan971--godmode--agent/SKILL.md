@@ -1,0 +1,301 @@
+---
+name: agent
+description: AI agent development. ReAct/plan-and-execute/multi-agent architectures, tool design, memory systems, guardrails, orchestration (LangChain, LlamaIndex, CrewAI, AutoGen). Use when this capability is needed.
+metadata:
+  author: arbazkhan971
+---
+
+# Agent — AI Agent Development
+
+## Activate When
+- User invokes `/godmode:agent`
+- User says "build an AI agent", "create an agent", "add tools to my agent"
+- User says "design agent memory", "agent keeps looping", "agent safety"
+- When building autonomous or semi-autonomous LLM-powered systems
+- When `/godmode:prompt` identifies a need for agentic capabilities (tool use, multi-step reasoning)
+- When `/godmode:rag` needs to be wrapped in an agent loop
+- When the orchestrator detects agent frameworks (LangChain, LlamaIndex, CrewAI, AutoGen, custom agent loops) in code
+
+## Workflow
+
+### Step 1: Agent Discovery & Requirements
+Understand what the agent must accomplish:
+
+```
+AGENT DISCOVERY:
+Purpose: <what the agent must autonomously accomplish>
+Type:
+  - Single-agent: One agent with tools (most common)
+  - Multi-agent: Multiple specialized agents coordinating
+  - Human-in-the-loop: Agent proposes, human approves critical actions
+
+User interaction:
+  - Conversational: User chats with agent in real-time
+  - Autonomous: Agent runs a task to completion without user input
+  - Supervised: Agent asks for confirmation at decision points
+
+Environment:
+  - Tools available: <list of APIs, databases, code execution, file systems>
+  - External systems: <services the agent will interact with>
+```
+If the user hasn't specified, ask: "What should this agent do autonomously? What tools does it need?"
+
+### Step 2: Architecture Pattern Selection
+Select the agent architecture pattern:
+
+```
+AGENT ARCHITECTURE SELECTION:
+
+Patterns:
+| Pattern | Best for |
+|--|--|
+| ReAct | General-purpose tool use, step-by-step reasoning |
+| (Reason + Act) | with tool calls. Simple, effective, well-understood. |
+| Plan-and-Execute | Complex tasks needing upfront planning. Planner |
+|  | creates step list, executor follows it. Good for |
+|  | multi-step tasks with clear decomposition. |
+| Reflexion | Tasks requiring self-correction. Agent attempts, |
+|  | evaluates own output, and retries with feedback. |
+```
+### Step 3: Agent Loop Design
+Design the core agent execution loop:
+
+```
+AGENT LOOP DESIGN:
+
+Pattern: <selected pattern>
+Model: <LLM for agent reasoning — e.g., Claude 3.5 Sonnet, GPT-4>
+
+ReAct loop:
+  while not done and steps < max_steps:
+  1. THINK: Reason about current state and what to do next
+  2. ACT: Select and call a tool with parameters
+  3. OBSERVE: Process tool result
+  4. EVALUATE: Is the task complete? Should I continue?
+  Termination conditions:
+  - Task completed successfully -> return result
+```
+### Step 4: Tool Design & Integration
+Design the tools the agent can use:
+
+```
+TOOL INVENTORY:
+| Tool | Type | Risk Level | Description |
+|--|--|--|--|
+| <tool_name> | Read-only | LOW | <what it does> |
+| <tool_name> | Write | MEDIUM | <what it does> |
+| <tool_name> | External API | MEDIUM | <what it does> |
+| <tool_name> | Code exec | HIGH | <what it does> |
+| <tool_name> | Destructive | CRITICAL | <what it does> |
+
+TOOL DESIGN PRINCIPLES:
+1. Single responsibility: each tool does one thing well
+2. Clear naming: tool name describes the action (search_docs, create_ticket)
+3. Typed parameters: every parameter has a type, description, and constraints
+```
+### Step 5: Memory System Design
+Design how the agent remembers and learns:
+
+```
+MEMORY SYSTEM DESIGN:
+
+Memory types:
+| Type | Implementation |
+|--|--|
+| Working memory | Current conversation context window. Limited by |
+| (short-term) | model context length. Contains current task state, |
+|  | recent tool results, and immediate reasoning. |
+| Conversation memory | Full conversation history, summarized on overflow. |
+|--|--|
+| (session) | Stored in session store (Redis, database). |
+|  | Summarize older turns to fit context window. |
+| Episodic memory | Past task executions and outcomes. "Last time I |
+```
+### Step 6: Guardrails & Safety
+Design safety boundaries for the agent:
+
+```
+AGENT GUARDRAILS:
+
+Layer 1 — Input guardrails:
+| Check | Action |
+|--|--|
+| Prompt injection detection | Reject input, log attempt |
+| PII in input | Redact before processing |
+| Off-topic request | Redirect to designated channel |
+| Malicious intent detection | Refuse and log |
+| Input length limit | Truncate with warning |
+
+Layer 2 — Execution guardrails:
+```
+### Step 7: Agent Evaluation & Testing
+Design a test suite for the agent:
+
+```
+AGENT TEST SUITE:
+
+Test categories:
+| Category | Tests | Description |
+|--|--|--|
+| Task completion | <N> | Agent successfully completes defined tasks |
+| Tool selection | <N> | Agent picks correct tool for each step |
+| Multi-step reasoning | <N> | Agent chains tools correctly for complex |
+|  |  | tasks |
+| Error recovery | <N> | Agent handles tool failures gracefully |
+| Safety compliance | <N> | Agent refuses unsafe actions |
+| Guardrail adherence | <N> | Agent stays within defined limits |
+| Edge cases | <N> | Ambiguous inputs, missing data, conflicts |
+| Adversarial | <N> | Injection attacks, manipulation attempts |
+```
+### Step 8: Agent Artifacts & Commit
+Generate the deliverables:
+
+1. **Agent config**: `config/agents/<agent>-config.yaml`
+2. **Agent implementation**: `src/agents/<agent>/agent.py`
+3. **Tool definitions**: `src/agents/<agent>/tools/`
+4. **Memory module**: `src/agents/<agent>/memory.py`
+5. **Guardrails**: `src/agents/<agent>/guardrails.py`
+6. **Test suite**: `tests/agents/<agent>/`
+7. **Architecture doc**: `docs/agents/<agent>-architecture.md`
+
+```
+AGENT DEVELOPMENT COMPLETE:
+
+Architecture:
+- Pattern: <pattern name>
+- Model: <LLM for reasoning>
+- Tools: <N tools> (read: <N>, write: <N>, code exec: <N>)
+- Memory: <memory types implemented>
+- Guardrails: <N guardrail layers>
+
+Evaluation:
+- Task completion rate: <val>
+- Tool selection accuracy: <val>
+- Safety violation rate: <val> (require 0%)
+- Avg steps per task: <N>
+- Avg latency per task: <seconds>
+```
+Commit: `"agent: <agent name> — <pattern>, <N> tools, completion=<val>, safety=100%"`
+
+## Key Behaviors
+
+1. **Guardrails before capabilities.** Safety constraints first.
+2. **Tools are the agent's hands.** Tool design > LLM choice.
+3. **Loops need escape hatches.** Max steps, cost, time limits.
+4. **Test trajectories, not only outcomes.** Evaluate full traces.
+5. **Memory is context engineering.** Retrieve selectively.
+6. **Human-in-the-loop for irreversible actions.** No exceptions.
+7. **Observability is mandatory.** Log every agent step.
+
+```bash
+# Run agent evaluation suite
+pytest tests/agents/ -v --timeout=120
+python -m agents.evaluate --test-inputs 3 --safety-check
+```
+IF completion rate < 80%: review tool definitions and prompts.
+WHEN safety violation detected: block deployment, fix immediately.
+
+## Flags & Options
+
+| Flag | Description |
+|--|--|
+| (none) | Full agent development workflow |
+| `--pattern <name>` | Force architecture: `react`, `plan-execute`, `reflexion`, `multi-agent`, `state-machine`, `router` |
+| `--tools` | Design and inventory agent tools |
+
+## Explicit Loop Protocol
+
+When building or debugging agent loops, use this tracking protocol:
+
+```
+AGENT BUILD/DEBUG LOOP:
+current_iteration = 0
+max_iterations = 20
+issues_remaining = total_issues
+
+WHILE issues_remaining > 0 AND current_iteration < max_iterations:
+    current_iteration += 1
+
+    1. IDENTIFY next issue (tool gap, guardrail weakness, test failure)
+    2. IMPLEMENT fix (code change, config update, prompt edit)
+    3. git commit with message: "agent: fix <issue> (iter {current_iteration})"
+    4. RUN evaluation suite against the fix
+    5. RECORD result:
+       - Pass/fail for each test category
+       - Regression check: did the fix break anything?
+```
+## HARD RULES
+
+```
+MECHANICAL CONSTRAINTS — NON-NEGOTIABLE:
+1. NEVER deploy an agent without guardrails defined first — safety before capabilities.
+2. NEVER allow irreversible tool actions without explicit user confirmation gate.
+3. EVERY agent loop MUST have a max_steps termination — no unbounded loops.
+4. EVERY agent MUST have a cost budget (max tokens per task) — no runaway spending.
+5. git commit BEFORE running evaluation — if eval reveals regression, revert.
+6. Safety violation rate MUST equal 0% — any safety failure is a blocking issue.
+7. Log every agent step in structured format:
+   STEP\tACTION\tTOOL\tRESULT\tTOKENS\tLATENCY
+8. Test trajectories, not only final outputs — correct answer via unsafe path is a failure.
+9. NEVER give agents tools they do not need — fewer tools = better tool selection.
+10. Observability is mandatory — if you cannot trace every step, do not deploy.
+```
+## Auto-Detection
+```bash
+AUTO-DETECT agent context:
+  1. LLM provider: grep -r "openai\|anthropic\|google.generativeai\|ollama\|together" package.json pyproject.toml
+    requirements.txt 2>/dev/null
+  2. Agent framework: grep -r "langchain\|langgraph\|autogen\|crewai\|magentic\|pydantic-ai" package.json
+    pyproject.toml 2>/dev/null
+  3. Tool definitions: grep -rl "tool_call\|function_call\|@tool\|BaseTool\|StructuredTool" src/ --include="*.ts"
+    --include="*.py" 2>/dev/null | head -5
+  4. Vector store: grep -r "pinecone\|weaviate\|chromadb\|pgvector\|qdrant\|milvus" package.json pyproject.toml
+    2>/dev/null
+  5. Existing agent code: grep -rl "agent\|AgentExecutor\|ReActAgent\|create_agent" src/ --include="*.ts"
+    --include="*.py" 2>/dev/null | head -5
+```
+
+## Success Criteria
+Verify all of these before marking the task complete:
+1. Agent completes target task on >= 3 test inputs.
+2. Max steps termination works (limit <= 20 steps).
+3. Cost budget enforced (token limit per task <= 100K tokens).
+4. Guardrails block unsafe actions (>= 1 adversarial test).
+5. Every step logged: step, action, tool, result, tokens, latency.
+6. Irreversible actions require confirmation gate.
+7. Tool errors handled gracefully (max 2 retries).
+8. Evaluation suite measures success rate, cost, safety.
+
+<!-- tier-3 -->
+
+## Error Recovery
+| Failure | Action |
+|--|--|
+| Agent loops without progress | Add loop detection: if same action repeated 3x, force different action or stop. |
+| Token budget exceeded | Set hard limit per task. When 80% consumed, switch to shorter prompts. |
+| Tool returns unexpected format | Validate output. Retry max 2x, then report failure. |
+
+## Keep/Discard Discipline
+```
+After EACH agent change (prompt edit, tool addition, guardrail update):
+  1. MEASURE: Run evaluation suite — task completion rate, safety violations, avg steps.
+  2. COMPARE: Did the change improve the target metric without introducing regressions?
+  3. DECIDE:
+     - KEEP if: completion rate maintained or improved AND safety violations = 0 AND no new failure modes
+     - DISCARD if: safety violation detected OR completion rate dropped OR new failure mode introduced
+  4. COMMIT kept changes. Revert discarded changes before the next iteration.
+
+Never keep a change that introduces any safety violation, regardless of completion rate improvement.
+```
+
+## Stop Conditions
+```
+STOP when ANY of these are true:
+  - Agent completes target tasks end-to-end with correct output on 3+ test inputs
+  - Safety violation rate = 0% across all test cases including adversarial inputs
+  - All guardrails (max steps, cost budget, confirmation gates) verified working
+```
+
+---
+> Source: [arbazkhan971/godmode](https://github.com/arbazkhan971/godmode) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-16 -->

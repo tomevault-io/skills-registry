@@ -1,0 +1,79 @@
+---
+name: speq-code-guardrails
+description: TDD and code quality guardrails triggered by speq-implement. Use when this capability is needed.
+metadata:
+  author: marconae
+---
+
+# Code Guardrails
+
+**Clean Code** (Martin) TDD workflow and quality guardrails.
+
+## Golden Rule
+
+**No production code without a failing test first.**
+
+## Evidence Rule
+
+**No claim without evidence.** Run command, show output, then claim.
+
+## TDD Cycle (London School)
+
+```
+RED    → Write failing test, run it, show failure
+GREEN  → Minimal code to pass, run test, show pass
+REFACTOR → Clean up, run test + lint, show output
+```
+
+Run ONLY the test you created/changed — not the full suite.
+
+## Guiding Principles
+
+| Principle | Meaning |
+|-----------|---------|
+| **KISS** | Simplest solution that works |
+| **YAGNI** | Build for now, not hypotheticals |
+| **DRY** | Extract duplication, don't copy-paste |
+| **Single Responsibility** (**SOLID**) | One function = one purpose |
+| **Boy Scout** | Leave code cleaner than you found it |
+| **Root Cause** | **Five Whys** — fix the source, not the symptom |
+
+## Design
+
+- Config at high levels, behavior at low levels
+- Polymorphism over conditionals
+- Dependency injection for testability
+- Law of Demeter: talk only to immediate collaborators
+
+## Functions
+
+- Small and focused
+- Few arguments (≤3 ideal)
+- No side effects
+- No boolean flags — split into separate methods
+
+## Naming
+
+- Descriptive, unambiguous, pronounceable
+- Named constants over magic numbers
+- No prefixes or type encodings
+
+## Comments
+
+- Public/interface methods: brief doc comment (purpose only)
+- Private methods: no comments
+- No inline comments — code should be self-explanatory
+- No work tracking (TODOs, FIXMEs, ticket refs)
+
+## Code Smells
+
+| Smell | Signal |
+|-------|--------|
+| Rigidity | Small changes cascade everywhere |
+| Fragility | One change breaks unrelated code |
+| Immobility | Can't reuse code elsewhere |
+| Opacity | Hard to understand at a glance |
+
+---
+> Source: [marconae/speq-skill](https://github.com/marconae/speq-skill) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-17 -->

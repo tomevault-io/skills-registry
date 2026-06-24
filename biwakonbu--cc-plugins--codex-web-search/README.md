@@ -1,0 +1,13 @@
+# codex-web-search
+
+> Skill by [biwakonbu](https://github.com/biwakonbu/cc-plugins) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [biwakonbu/cc-plugins](https://github.com/biwakonbu/cc-plugins/tree/main/plugins/web-search-codex/skills/codex-web-search)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
