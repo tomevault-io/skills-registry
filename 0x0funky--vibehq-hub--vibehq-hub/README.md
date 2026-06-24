@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [0x0funky/vibehq-hub](https://github.com/0x0funky/vibehq-hub/tree/main/.claude/skills/benchmark-loop/SKILL.md)
+Original source: [0x0funky/vibehq-hub](https://github.com/0x0funky/vibehq-hub/tree/main/.claude/skills/optimize-protocol/SKILL.md)
 
 ---
 
