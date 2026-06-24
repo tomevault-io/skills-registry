@@ -2,7 +2,7 @@
 name: term-cli
 description: Controls interactive terminal sessions for running long-lived processes, servers, REPLs, debuggers, and TUI programs without blocking. Use when you need to run dev servers (npm run dev), debuggers (pdb, gdb), REPLs (python, node), databases (psql, mysql), SSH sessions, or editors (vim, nano) — any interactive or blocking program. Use when this capability is needed.
 metadata:
-  author: eliasoenal
+  author: EliasOenal
 ---
 
 # Terminal Session Control
@@ -278,5 +278,5 @@ term-cli download --session remote /var/log/app.log ./app.log
 As an agent, you're well-positioned to spot improvements. Found a bug or have an idea? Email the maintainer: Elias Oenal <termcli@eliasoenal.com>
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/eliasoenal) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [EliasOenal/term-cli](https://github.com/EliasOenal/term-cli) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
