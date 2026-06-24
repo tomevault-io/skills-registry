@@ -1,312 +1,259 @@
 ---
-name: analytics
-description: When the user wants to set up, improve, or audit analytics tracking and measurement. Also use when the user mentions "set up tracking," "GA4," "Google Analytics," "conversion tracking," "event tracking," "UTM parameters," "tag manager," "GTM," "analytics implementation," "tracking plan," "how do I measure this," "track conversions," "attribution," "Mixpanel," "Segment," "are my events firing," or "analytics isn't working." Use this whenever someone asks how to know if something is working or wants to measure marketing results. For A/B test measurement, see ab-testing. Use when this capability is needed.
+name: competitors
+description: When the user wants to create competitor comparison or alternative pages for SEO and sales enablement. Also use when the user mentions 'alternative page,' 'vs page,' 'competitor comparison,' 'comparison page,' '[Product] vs [Product],' '[Product] alternative,' 'competitive landing pages,' 'how do we compare to X,' 'battle card,' or 'competitor teardown.' Use this for any content that positions your product against competitors. Covers four formats: singular alternative, plural alternatives, you vs competitor, and competitor vs competitor. For sales-specific competitor docs, see sales-enablement. Use when this capability is needed.
 metadata:
   author: coreyhaines31
 ---
 
-# Analytics Tracking
+# Competitor & Alternative Pages
 
-You are an expert in analytics implementation and measurement. Your goal is to help set up tracking that provides actionable insights for marketing and product decisions.
+You are an expert in creating competitor comparison and alternative pages. Your goal is to build pages that rank for competitive search terms, provide genuine value to evaluators, and position your product effectively.
 
 ## Initial Assessment
 
 **Check for product marketing context first:**
 If `.agents/product-marketing.md` exists (or `.claude/product-marketing.md`, or the legacy `product-marketing-context.md` filename, in older setups), read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
 
-Before implementing tracking, understand:
+Before creating competitor pages, understand:
 
-1. **Business Context** - What decisions will this data inform? What are key conversions?
-2. **Current State** - What tracking exists? What tools are in use?
-3. **Technical Context** - What's the tech stack? Any privacy/compliance requirements?
+1. **Your Product**
+   - Core value proposition
+   - Key differentiators
+   - Ideal customer profile
+   - Pricing model
+   - Strengths and honest weaknesses
+
+2. **Competitive Landscape**
+   - Direct competitors
+   - Indirect/adjacent competitors
+   - Market positioning of each
+   - Search volume for competitor terms
+
+3. **Goals**
+   - SEO traffic capture
+   - Sales enablement
+   - Conversion from competitor users
+   - Brand positioning
 
 ---
 
 ## Core Principles
 
-### 1. Track for Decisions, Not Data
-- Every event should inform a decision
-- Avoid vanity metrics
-- Quality > quantity of events
+### 1. Honesty Builds Trust
+- Acknowledge competitor strengths
+- Be accurate about your limitations
+- Don't misrepresent competitor features
+- Readers are comparing—they'll verify claims
 
-### 2. Start with the Questions
-- What do you need to know?
-- What actions will you take based on this data?
-- Work backwards to what you need to track
+### 2. Depth Over Surface
+- Go beyond feature checklists
+- Explain *why* differences matter
+- Include use cases and scenarios
+- Show, don't just tell
 
-### 3. Name Things Consistently
-- Naming conventions matter
-- Establish patterns before implementing
-- Document everything
+### 3. Help Them Decide
+- Different tools fit different needs
+- Be clear about who you're best for
+- Be clear about who competitor is best for
+- Reduce evaluation friction
 
-### 4. Maintain Data Quality
-- Validate implementation
-- Monitor for issues
-- Clean data > more data
-
----
-
-## Tracking Plan Framework
-
-### Structure
-
-```
-Event Name | Category | Properties | Trigger | Notes
----------- | -------- | ---------- | ------- | -----
-```
-
-### Event Types
-
-| Type | Examples |
-|------|----------|
-| Pageviews | Automatic, enhanced with metadata |
-| User Actions | Button clicks, form submissions, feature usage |
-| System Events | Signup completed, purchase, subscription changed |
-| Custom Conversions | Goal completions, funnel stages |
-
-**For comprehensive event lists**: See [references/event-library.md](references/event-library.md)
+### 4. Modular Content Architecture
+- Competitor data should be centralized
+- Updates propagate to all pages
+- Single source of truth per competitor
 
 ---
 
-## Event Naming Conventions
+## Page Formats
 
-### Recommended Format: Object-Action
+### Format 1: [Competitor] Alternative (Singular)
 
-```
-signup_completed
-button_clicked
-form_submitted
-article_read
-checkout_payment_completed
-```
+**Search intent**: User is actively looking to switch from a specific competitor
 
-### Best Practices
-- Lowercase with underscores
-- Be specific: `cta_hero_clicked` vs. `button_clicked`
-- Include context in properties, not event name
-- Avoid spaces and special characters
-- Document decisions
+**URL pattern**: `/alternatives/[competitor]` or `/[competitor]-alternative`
 
----
+**Target keywords**: "[Competitor] alternative", "alternative to [Competitor]", "switch from [Competitor]"
 
-## Essential Events
-
-### Marketing Site
-
-| Event | Properties |
-|-------|------------|
-| cta_clicked | button_text, location |
-| form_submitted | form_type |
-| signup_completed | method, source |
-| demo_requested | - |
-
-### Product/App
-
-| Event | Properties |
-|-------|------------|
-| onboarding_step_completed | step_number, step_name |
-| feature_used | feature_name |
-| purchase_completed | plan, value |
-| subscription_cancelled | reason |
-
-**For full event library by business type**: See [references/event-library.md](references/event-library.md)
+**Page structure**:
+1. Why people look for alternatives (validate their pain)
+2. Summary: You as the alternative (quick positioning)
+3. Detailed comparison (features, service, pricing)
+4. Who should switch (and who shouldn't)
+5. Migration path
+6. Social proof from switchers
+7. CTA
 
 ---
 
-## Event Properties
+### Format 2: [Competitor] Alternatives (Plural)
 
-### Standard Properties
+**Search intent**: User is researching options, earlier in journey
 
-| Category | Properties |
-|----------|------------|
-| Page | page_title, page_location, page_referrer |
-| User | user_id, user_type, account_id, plan_type |
-| Campaign | source, medium, campaign, content, term |
-| Product | product_id, product_name, category, price |
+**URL pattern**: `/alternatives/[competitor]-alternatives`
 
-### Best Practices
-- Use consistent property names
-- Include relevant context
-- Don't duplicate automatic properties
-- Avoid PII in properties
+**Target keywords**: "[Competitor] alternatives", "best [Competitor] alternatives", "tools like [Competitor]"
 
----
+**Page structure**:
+1. Why people look for alternatives (common pain points)
+2. What to look for in an alternative (criteria framework)
+3. List of alternatives (you first, but include real options)
+4. Comparison table (summary)
+5. Detailed breakdown of each alternative
+6. Recommendation by use case
+7. CTA
 
-## GA4 Implementation
-
-### Quick Setup
-
-1. Create GA4 property and data stream
-2. Install gtag.js or GTM
-3. Enable enhanced measurement
-4. Configure custom events
-5. Mark conversions in Admin
-
-### Custom Event Example
-
-```javascript
-gtag('event', 'signup_completed', {
-  'method': 'email',
-  'plan': 'free'
-});
-```
-
-**For detailed GA4 implementation**: See [references/ga4-implementation.md](references/ga4-implementation.md)
+**Important**: Include 4-7 real alternatives. Being genuinely helpful builds trust and ranks better.
 
 ---
 
-## Google Tag Manager
+### Format 3: You vs [Competitor]
 
-### Container Structure
+**Search intent**: User is directly comparing you to a specific competitor
 
-| Component | Purpose |
-|-----------|---------|
-| Tags | Code that executes (GA4, pixels) |
-| Triggers | When tags fire (page view, click) |
-| Variables | Dynamic values (click text, data layer) |
+**URL pattern**: `/vs/[competitor]` or `/compare/[you]-vs-[competitor]`
 
-### Data Layer Pattern
+**Target keywords**: "[You] vs [Competitor]", "[Competitor] vs [You]"
 
-```javascript
-dataLayer.push({
-  'event': 'form_submitted',
-  'form_name': 'contact',
-  'form_location': 'footer'
-});
-```
-
-**For detailed GTM implementation**: See [references/gtm-implementation.md](references/gtm-implementation.md)
+**Page structure**:
+1. TL;DR summary (key differences in 2-3 sentences)
+2. At-a-glance comparison table
+3. Detailed comparison by category (Features, Pricing, Support, Ease of use, Integrations)
+4. Who [You] is best for
+5. Who [Competitor] is best for (be honest)
+6. What customers say (testimonials from switchers)
+7. Migration support
+8. CTA
 
 ---
 
-## UTM Parameter Strategy
+### Format 4: [Competitor A] vs [Competitor B]
 
-### Standard Parameters
+**Search intent**: User comparing two competitors (not you directly)
 
-| Parameter | Purpose | Example |
-|-----------|---------|---------|
-| utm_source | Traffic source | google, newsletter |
-| utm_medium | Marketing medium | cpc, email, social |
-| utm_campaign | Campaign name | spring_sale |
-| utm_content | Differentiate versions | hero_cta |
-| utm_term | Paid search keywords | running+shoes |
+**URL pattern**: `/compare/[competitor-a]-vs-[competitor-b]`
 
-### Naming Conventions
-- Lowercase everything
-- Use underscores or hyphens consistently
-- Be specific but concise: `blog_footer_cta`, not `cta1`
-- Document all UTMs in a spreadsheet
+**Page structure**:
+1. Overview of both products
+2. Comparison by category
+3. Who each is best for
+4. The third option (introduce yourself)
+5. Comparison table (all three)
+6. CTA
+
+**Why this works**: Captures search traffic for competitor terms, positions you as knowledgeable.
 
 ---
 
-## Debugging and Validation
+## Essential Sections
 
-### Testing Tools
+### TL;DR Summary
+Start every page with a quick summary for scanners—key differences in 2-3 sentences.
 
-| Tool | Use For |
-|------|---------|
-| GA4 DebugView | Real-time event monitoring |
-| GTM Preview Mode | Test triggers before publish |
-| Browser Extensions | Tag Assistant, dataLayer Inspector |
+### Paragraph Comparisons
+Go beyond tables. For each dimension, write a paragraph explaining the differences and when each matters.
 
-### Validation Checklist
+### Feature Comparison
+For each category: describe how each handles it, list strengths and limitations, give bottom line recommendation.
 
-- [ ] Events firing on correct triggers
-- [ ] Property values populating correctly
-- [ ] No duplicate events
-- [ ] Works across browsers and mobile
-- [ ] Conversions recorded correctly
-- [ ] No PII leaking
+### Pricing Comparison
+Include tier-by-tier comparison, what's included, hidden costs, and total cost calculation for sample team size.
 
-### Common Issues
+### Who It's For
+Be explicit about ideal customer for each option. Honest recommendations build trust.
 
-| Issue | Check |
-|-------|-------|
-| Events not firing | Trigger config, GTM loaded |
-| Wrong values | Variable path, data layer structure |
-| Duplicate events | Multiple containers, trigger firing twice |
+### Migration Section
+Cover what transfers, what needs reconfiguration, support offered, and quotes from customers who switched.
+
+**For detailed templates**: See [references/templates.md](references/templates.md)
 
 ---
 
-## Privacy and Compliance
+## Content Architecture
 
-### Considerations
-- Cookie consent required in EU/UK/CA
-- No PII in analytics properties
-- Data retention settings
-- User deletion capabilities
+### Centralized Competitor Data
+Create a single source of truth for each competitor with:
+- Positioning and target audience
+- Pricing (all tiers)
+- Feature ratings
+- Strengths and weaknesses
+- Best for / not ideal for
+- Common complaints (from reviews)
+- Migration notes
 
-### Implementation
-- Use consent mode (wait for consent)
-- IP anonymization
-- Only collect what you need
-- Integrate with consent management platform
+**For data structure and examples**: See [references/content-architecture.md](references/content-architecture.md)
+
+---
+
+## Research Process
+
+### Deep Competitor Research
+
+For each competitor, gather:
+
+1. **Product research**: Sign up, use it, document features/UX/limitations
+2. **Pricing research**: Current pricing, what's included, hidden costs
+3. **Review mining**: G2, Capterra, TrustRadius for common praise/complaint themes
+4. **Customer feedback**: Talk to customers who switched (both directions)
+5. **Content research**: Their positioning, their comparison pages, their changelog
+
+### Ongoing Updates
+
+- **Quarterly**: Verify pricing, check for major feature changes
+- **When notified**: Customer mentions competitor change
+- **Annually**: Full refresh of all competitor data
+
+---
+
+## SEO Considerations
+
+### Keyword Targeting
+
+| Format | Primary Keywords |
+|--------|-----------------|
+| Alternative (singular) | [Competitor] alternative, alternative to [Competitor] |
+| Alternatives (plural) | [Competitor] alternatives, best [Competitor] alternatives |
+| You vs Competitor | [You] vs [Competitor], [Competitor] vs [You] |
+| Competitor vs Competitor | [A] vs [B], [B] vs [A] |
+
+### Internal Linking
+- Link between related competitor pages
+- Link from feature pages to relevant comparisons
+- Create hub page linking to all competitor content
+
+### Schema Markup
+Consider FAQ schema for common questions like "What is the best alternative to [Competitor]?"
 
 ---
 
 ## Output Format
 
-### Tracking Plan Document
+### Competitor Data File
+Complete competitor profile in YAML format for use across all comparison pages.
 
-```markdown
-# [Site/Product] Tracking Plan
+### Page Content
+For each page: URL, meta tags, full page copy organized by section, comparison tables, CTAs.
 
-## Overview
-- Tools: GA4, GTM
-- Last updated: [Date]
-
-## Events
-
-| Event Name | Description | Properties | Trigger |
-|------------|-------------|------------|---------|
-| signup_completed | User completes signup | method, plan | Success page |
-
-## Custom Dimensions
-
-| Name | Scope | Parameter |
-|------|-------|-----------|
-| user_type | User | user_type |
-
-## Conversions
-
-| Conversion | Event | Counting |
-|------------|-------|----------|
-| Signup | signup_completed | Once per session |
-```
+### Page Set Plan
+Recommended pages to create with priority order based on search volume.
 
 ---
 
 ## Task-Specific Questions
 
-1. What tools are you using (GA4, Mixpanel, etc.)?
-2. What key actions do you want to track?
-3. What decisions will this data inform?
-4. Who implements - dev team or marketing?
-5. Are there privacy/consent requirements?
-6. What's already tracked?
-
----
-
-## Tool Integrations
-
-For implementation, see the [tools registry](../../tools/REGISTRY.md). Key analytics tools:
-
-| Tool | Best For | MCP | Guide |
-|------|----------|:---:|-------|
-| **GA4** | Web analytics, Google ecosystem | ✓ | [ga4.md](../../tools/integrations/ga4.md) |
-| **Mixpanel** | Product analytics, event tracking | - | [mixpanel.md](../../tools/integrations/mixpanel.md) |
-| **Amplitude** | Product analytics, cohort analysis | - | [amplitude.md](../../tools/integrations/amplitude.md) |
-| **PostHog** | Open-source analytics, session replay | - | [posthog.md](../../tools/integrations/posthog.md) |
-| **Segment** | Customer data platform, routing | - | [segment.md](../../tools/integrations/segment.md) |
+1. What are common reasons people switch to you?
+2. Do you have customer quotes about switching?
+3. What's your pricing vs. competitors?
+4. Do you offer migration support?
 
 ---
 
 ## Related Skills
 
-- **ab-testing**: For experiment tracking
-- **seo-audit**: For organic traffic analysis
-- **cro**: For conversion optimization (uses this data)
-- **revops**: For pipeline metrics, CRM tracking, and revenue attribution
+- **programmatic-seo**: For building competitor pages at scale
+- **copywriting**: For writing compelling comparison copy
+- **seo-audit**: For optimizing competitor pages
+- **schema**: For FAQ and comparison schema
+- **sales-enablement**: For internal sales collateral, decks, and objection docs
 
 ---
 > Source: [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) — distributed by [TomeVault](https://tomevault.io).
