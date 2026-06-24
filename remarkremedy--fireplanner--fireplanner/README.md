@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [RemarkRemedy/fireplanner](https://github.com/RemarkRemedy/fireplanner/tree/main/.claude/skills/deep-review/SKILL.md)
+Original source: [RemarkRemedy/fireplanner](https://github.com/RemarkRemedy/fireplanner/tree/main/.claude/skills/deep-review-plan/SKILL.md)
 
 ---
 
