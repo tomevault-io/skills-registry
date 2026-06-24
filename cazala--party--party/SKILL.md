@@ -5,7 +5,7 @@ metadata:
   author: cazala
 ---
 
-# Party
+# Party Skill
 
 Reusable guidance for using the `@cazala/party` library programmatically: engine setup, runtime selection, particles, modules, and performance constraints across CPU + WebGPU.
 
@@ -189,4 +189,4 @@ engine.addOscillator({
 
 ---
 > Source: [cazala/party](https://github.com/cazala/party) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-17 -->
+<!-- tomevault:4.0:skill_md:2026-06-23 -->
