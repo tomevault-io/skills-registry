@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bybren-llc/safe-agentic-workflow](https://github.com/bybren-llc/safe-agentic-workflow/tree/main/.agents/skills/frontend-patterns/SKILL.md)
+Original source: [bybren-llc/safe-agentic-workflow](https://github.com/bybren-llc/safe-agentic-workflow/tree/main/.claude/skills/pattern-discovery/SKILL.md)
 
 ---
 
