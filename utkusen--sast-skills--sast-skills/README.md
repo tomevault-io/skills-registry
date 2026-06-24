@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [utkusen/sast-skills](https://github.com/utkusen/sast-skills/tree/main/sast-files/.agents/skills/sast-missingauth/SKILL.md)
+Original source: [utkusen/sast-skills](https://github.com/utkusen/sast-skills/tree/main/sast-files/.claude/skills/sast-missingauth/SKILL.md)
 
 ---
 
