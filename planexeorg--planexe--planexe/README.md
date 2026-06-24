@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PlanExeOrg/PlanExe](https://github.com/PlanExeOrg/PlanExe/tree/main/experiments/napkin_math/.claude/skills/run-napkin-math-pipeline/SKILL.md)
+Original source: [PlanExeOrg/PlanExe](https://github.com/PlanExeOrg/PlanExe/tree/main/experiments/napkin_math/.claude/skills/extract-parameters-from-full/SKILL.md)
 
 ---
 
