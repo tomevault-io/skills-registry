@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [caol64/wenyan-cli](https://github.com/caol64/wenyan-cli/tree/main/skills/generate-wechat-theme/SKILL.md)
+Original source: [caol64/wenyan-cli](https://github.com/caol64/wenyan-cli/tree/main/skills/apply-wechat-custom-theme/SKILL.md)
 
 ---
 
