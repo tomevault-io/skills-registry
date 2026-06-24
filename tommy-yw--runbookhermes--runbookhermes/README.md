@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Tommy-yw/RunbookHermes](https://github.com/Tommy-yw/RunbookHermes/tree/main/skills/research/llm-wiki/SKILL.md)
+Original source: [Tommy-yw/RunbookHermes](https://github.com/Tommy-yw/RunbookHermes/tree/main/skills/productivity/maps/SKILL.md)
 
 ---
 
