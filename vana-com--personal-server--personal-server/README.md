@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vana-com/personal-server](https://github.com/vana-com/personal-server/tree/main/.agents/skills/yeet/SKILL.md)
+Original source: [vana-com/personal-server](https://github.com/vana-com/personal-server/tree/main/.agents/skills/typescript/SKILL.md)
 
 ---
 
