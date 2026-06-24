@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [toonight/get-shit-done-for-antigravity](https://github.com/toonight/get-shit-done-for-antigravity/tree/main/.agents/skills/plan-checker/SKILL.md)
+Original source: [toonight/get-shit-done-for-antigravity](https://github.com/toonight/get-shit-done-for-antigravity/tree/main/.agents/skills/token-budget/SKILL.md)
 
 ---
 
