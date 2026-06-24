@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Hainrixz/claude-webkit](https://github.com/Hainrixz/claude-webkit/tree/main/.claude/skills/web-reader/SKILL.md)
+Original source: [Hainrixz/claude-webkit](https://github.com/Hainrixz/claude-webkit/tree/main/.claude/skills/ui-ux-pro-max/SKILL.md)
 
 ---
 
