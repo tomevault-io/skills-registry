@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/azure-api-management-policy-toolkit](https://github.com/Azure/azure-api-management-policy-toolkit/tree/main/.github/skills/policy-emulator/SKILL.md)
+Original source: [Azure/azure-api-management-policy-toolkit](https://github.com/Azure/azure-api-management-policy-toolkit/tree/main/.github/skills/policy-authoring/SKILL.md)
 
 ---
 
