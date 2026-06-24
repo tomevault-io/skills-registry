@@ -1,0 +1,13 @@
+# userinterface-wiki
+
+> Skill by [raphaelsalaja](https://github.com/raphaelsalaja/userinterface-wiki) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [raphaelsalaja/userinterface-wiki](https://github.com/raphaelsalaja/userinterface-wiki/tree/main/skills/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
