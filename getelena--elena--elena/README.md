@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [getelena/elena](https://github.com/getelena/elena/tree/main/docs/public/.well-known/skills/elena-tooling/SKILL.md)
+Original source: [getelena/elena](https://github.com/getelena/elena/tree/main/docs/public/.well-known/skills/elena-authoring/SKILL.md)
 
 ---
 
