@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [m1heng/clawdbot-feishu](https://github.com/m1heng/clawdbot-feishu/tree/main/.agents/skills/agent-browser/SKILL.md)
+Original source: [m1heng/clawdbot-feishu](https://github.com/m1heng/clawdbot-feishu/tree/main/.claude/skills/feishu-e2e-test/SKILL.md)
 
 ---
 
