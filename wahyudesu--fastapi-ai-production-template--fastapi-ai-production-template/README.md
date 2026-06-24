@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wahyudesu/Fastapi-AI-Production-Template](https://github.com/wahyudesu/Fastapi-AI-Production-Template/tree/main/.agents/skills/fastapi/SKILL.md)
+Original source: [wahyudesu/Fastapi-AI-Production-Template](https://github.com/wahyudesu/Fastapi-AI-Production-Template/tree/main/.agents/skills/cuml-machine-learning/SKILL.md)
 
 ---
 
