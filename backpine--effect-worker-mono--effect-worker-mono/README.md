@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [backpine/effect-worker-mono](https://github.com/backpine/effect-worker-mono/tree/main/repos/effect/.agents/skills/grill-me/SKILL.md)
+Original source: [backpine/effect-worker-mono](https://github.com/backpine/effect-worker-mono/tree/main/repos/effect/.agents/skills/standard-jsdoc/SKILL.md)
 
 ---
 
