@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Pr0fe5s0r/StixDB](https://github.com/Pr0fe5s0r/StixDB/tree/main/skills/API/SKILL.md)
+Original source: [Pr0fe5s0r/StixDB](https://github.com/Pr0fe5s0r/StixDB/tree/main/skills/CLI/SKILL.md)
 
 ---
 
