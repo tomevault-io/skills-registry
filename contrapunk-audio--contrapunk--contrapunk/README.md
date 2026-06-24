@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [contrapunk-audio/contrapunk](https://github.com/contrapunk-audio/contrapunk/tree/main/.claude/skills/release-patch/SKILL.md)
+Original source: [contrapunk-audio/contrapunk](https://github.com/contrapunk-audio/contrapunk/tree/main/.claude/skills/vital-preset-import/SKILL.md)
 
 ---
 
