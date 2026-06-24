@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [opslane/opslane](https://github.com/opslane/opslane/tree/main/skills/verify/SKILL.md)
+Original source: [opslane/opslane](https://github.com/opslane/opslane/tree/main/skills/verify-setup/SKILL.md)
 
 ---
 
