@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/promptflow](https://github.com/microsoft/promptflow/tree/main/.github/skills/maf-tracing/SKILL.md)
+Original source: [microsoft/promptflow](https://github.com/microsoft/promptflow/tree/main/.github/skills/maf-prs-job/SKILL.md)
 
 ---
 
