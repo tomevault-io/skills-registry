@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [astral-sh/ruff](https://github.com/astral-sh/ruff/tree/main/.agents/skills/summarise-ecosystem-results/SKILL.md)
+Original source: [astral-sh/ruff](https://github.com/astral-sh/ruff/tree/main/.agents/skills/minimizing-ty-ecosystem-changes/SKILL.md)
 
 ---
 
