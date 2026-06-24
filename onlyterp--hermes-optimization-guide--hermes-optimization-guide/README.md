@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OnlyTerp/hermes-optimization-guide](https://github.com/OnlyTerp/hermes-optimization-guide/tree/main/skills/ops/weekly-dep-audit/SKILL.md)
+Original source: [OnlyTerp/hermes-optimization-guide](https://github.com/OnlyTerp/hermes-optimization-guide/tree/main/skills/ops/daily-inbox-triage/SKILL.md)
 
 ---
 
