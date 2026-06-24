@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DataLab-atom/EvoAny](https://github.com/DataLab-atom/EvoAny/tree/main/plugin/skills/paper-assemble/SKILL.md)
+Original source: [DataLab-atom/EvoAny](https://github.com/DataLab-atom/EvoAny/tree/main/plugin/skills/write-experiment/SKILL.md)
 
 ---
 
