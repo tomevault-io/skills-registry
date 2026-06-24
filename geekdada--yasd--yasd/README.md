@@ -1,0 +1,13 @@
+# yasd
+
+> Skill by [geekdada](https://github.com/geekdada/yasd) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [geekdada/yasd](https://github.com/geekdada/yasd/tree/main/.agents/skills/vite/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
