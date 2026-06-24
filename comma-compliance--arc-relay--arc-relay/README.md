@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [comma-compliance/arc-relay](https://github.com/comma-compliance/arc-relay/tree/main/cmd/arc-sync/skill.md)
+Original source: [comma-compliance/arc-relay](https://github.com/comma-compliance/arc-relay/tree/main/skills/arc-sync/SKILL.md)
 
 ---
 
