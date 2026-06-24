@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hexianWeb/Third-Person-MC](https://github.com/hexianWeb/Third-Person-MC/tree/main/.cursor/skills/vtj-ui-integration/SKILL.md)
+Original source: [hexianWeb/Third-Person-MC](https://github.com/hexianWeb/Third-Person-MC/tree/main/.agent/skills/vtj-component-model/SKILL.md)
 
 ---
 
