@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [btahir/react-kino](https://github.com/btahir/react-kino/tree/main/.agents/skills/agent-browser/SKILL.md)
+Original source: [btahir/react-kino](https://github.com/btahir/react-kino/tree/main/.agents/skills/remotion-best-practices/SKILL.md)
 
 ---
 
