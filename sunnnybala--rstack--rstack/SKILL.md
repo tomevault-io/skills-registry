@@ -1,5 +1,5 @@
 ---
-name: rstack
+name: analyze-results
 description: | Use when this capability is needed.
 metadata:
   author: sunnnybala
@@ -40,10 +40,10 @@ _SESSION_ID="$$-$(date +%s)"
 echo "TELEMETRY: ${_TEL:-off}"
 echo "TEL_PROMPTED: $_TEL_PROMPTED"
 if [ "$_TEL" != "off" ]; then
-  echo '{"skill":"rstack","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","repo":"'$(basename "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null || echo "unknown")'"}'  >> ~/.rstack/analytics/skill-usage.jsonl 2>/dev/null || true
+  echo '{"skill":"analyze-results","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","repo":"'$(basename "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null || echo "unknown")'"}'  >> ~/.rstack/analytics/skill-usage.jsonl 2>/dev/null || true
 fi
 if [ "$_TEL" != "off" ]; then
-  echo '{"skill":"rstack","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","session_id":"'"$_SESSION_ID"'","rstack_version":"'"$(cat "$_RSTACK_DIR/VERSION" 2>/dev/null | tr -d "[:space:]" || echo "unknown")"'"}'  > ~/.rstack/analytics/.pending-"$_SESSION_ID" 2>/dev/null || true
+  echo '{"skill":"analyze-results","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","session_id":"'"$_SESSION_ID"'","rstack_version":"'"$(cat "$_RSTACK_DIR/VERSION" 2>/dev/null | tr -d "[:space:]" || echo "unknown")"'"}'  > ~/.rstack/analytics/.pending-"$_SESSION_ID" 2>/dev/null || true
 fi
 for _PF in $(find ~/.rstack/analytics -maxdepth 1 -name '.pending-*' 2>/dev/null); do
   if [ -f "$_PF" ]; then
@@ -62,11 +62,10 @@ echo "SLUG: ${SLUG:-unknown}"
 # --- GENERATED PREAMBLE END ---
 ```
 
-If output shows `UPGRADE_AVAILABLE <old> <new>`: tell user "RStack update available: v{old} → v{new}." Then read `rstack-upgrade/SKILL.md` and follow the "Inline Upgrade Flow".
-
+If output shows `UPGRADE_AVAILABLE <old> <new>`: read `rstack-upgrade/SKILL.md` and follow the "Inline Upgrade Flow". Then continue with this skill.
 If output shows `JUST_UPGRADED <from> <to>`: tell user "Running RStack v{to} (just updated!)" and continue.
 
-If `NEEDS_SETUP`: tell user to run `/setup` to configure compute providers.
+If output shows `NEEDS_SETUP`: tell user to run `/setup` first.
 
 If `TEL_PROMPTED` is `no`: Ask the user about telemetry. Use AskUserQuestion:
 
@@ -98,40 +97,93 @@ touch ~/.rstack/.telemetry-prompted
 
 This only happens once. If `TEL_PROMPTED` is `yes`, skip this entirely.
 
-## RStack — Research Automation
+**Important:** Note the `PROJECT_ROOT` value from the preamble output. All file paths below are relative to this project root directory. Work products (analysis/, figures) go at the project root. Plumbing (.rstack/experiments.jsonl) goes in the `.rstack/` subdirectory.
 
-Available skills:
+## Step 0: Load Experiment Data
 
-| Skill | What it does | When to use |
-|-------|-------------|------------|
-| `/research` | Full pipeline: idea to paper | "Write a paper about...", "research this topic" |
-| `/lit-review` | Find and review relevant papers | "Find papers about...", "literature review" |
-| `/novelty-check` | Assess novelty, refine hypothesis | "Is this novel?", "check existing work" |
-| `/experiment` | Run ML experiments on cloud GPU | "Run experiments", "train a model" |
-| `/analyze-results` | Generate figures and tables | "Make figures", "analyze results" |
-| `/write-paper` | Write venue-formatted LaTeX paper | "Write the paper", "format for arXiv" |
-| `/setup` | Configure compute and tools | "Setup Modal", "configure RStack" |
+First, create output directories:
+```bash
+_PROJECT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+mkdir -p "$_PROJECT_ROOT/analysis/figures" "$_PROJECT_ROOT/analysis/tables" "$_PROJECT_ROOT/analysis/scripts"
+```
 
-## Routing
+1. Read `.rstack/experiments.jsonl`. If it does not exist or is empty, tell user: "No experiment results found. Run /experiment first or provide results manually."
+2. Read `results/` directory to find raw outputs (metrics.json, figures/, stdout.log for each run).
+3. Count completed runs. If fewer than 2, warn: "Only {N} completed runs. Results may not be meaningful. Consider running more experiments."
 
-When the user's request matches a skill, invoke it using the Skill tool. Match rules:
+## Step 1: Generate Comparison Table
 
-- Research idea + wants full pipeline → `/research`
-- Wants to find papers, survey a field → `/lit-review`
-- Wants to check if idea is novel → `/novelty-check`
-- Wants to run experiments, train models → `/experiment`
-- Has results, wants figures/tables → `/analyze-results`
-- Has results, wants to write paper → `/write-paper`
-- Needs to configure Modal, tectonic → `/setup`
+Create a LaTeX-formatted comparison table comparing all experiment runs:
 
-If unclear what the user wants, ask:
+| Run | Hypothesis | Metric | Value | Improved? | Duration |
+|-----|-----------|--------|-------|-----------|----------|
 
-> What would you like to do?
-> A) Full research pipeline (idea to paper)
-> B) Literature review
-> C) Run experiments
-> D) Write/format a paper
-> E) Something else
+Read from experiments.jsonl. Include baseline (first run or user-specified baseline) and all subsequent runs. Highlight the best result.
+
+Write table source to `analysis/tables/comparison.tex`.
+
+## Step 2: Generate Figures
+
+For each visualization needed, generate a self-contained Python matplotlib script and run it locally:
+
+**Training curves** (if metrics.json contains per-epoch data):
+```python
+import matplotlib.pyplot as plt
+import json
+# Read metrics, plot loss/accuracy curves, save to analysis/figures/
+```
+
+**Ablation chart** (if multiple experiment variants exist):
+- Bar chart comparing metric across runs
+- Error bars if multiple seeds were used
+
+**Other figures** as appropriate for the experiment type (confusion matrix, attention maps, etc.).
+
+For each figure:
+1. Write a Python script to `analysis/scripts/fig_{name}.py`
+2. Run it: `python analysis/scripts/fig_{name}.py`
+3. Output PNG + PDF to `analysis/figures/`
+
+If matplotlib is not installed, run `pip install matplotlib` first.
+
+## Step 3: Statistical Summary
+
+Write `analysis/stats.json` with:
+```json
+{
+  "total_runs": 5,
+  "completed_runs": 4,
+  "failed_runs": 1,
+  "best_run": "run-003",
+  "best_metric": {"name": "val_loss", "value": 0.342},
+  "baseline_metric": {"name": "val_loss", "value": 0.456},
+  "improvement": "25.0%",
+  "figures_generated": ["loss_curve.png", "ablation.png"],
+  "tables_generated": ["comparison.tex"]
+}
+```
+
+## Step 4: Human Checkpoint
+
+Show the user:
+- Summary table (text format)
+- List of generated figures (read and display the PNGs)
+- Key finding: "Best result: {metric} = {value} (run-{N}), {X}% improvement over baseline"
+
+Use AskUserQuestion:
+> Figures and tables generated. {N} figures, {M} tables.
+> Best result: {metric_name} = {value} ({improvement}% vs baseline).
+>
+> A) Looks good — proceed to paper writing
+> B) Re-run analysis with different parameters
+> C) Need more experiments first
+
+## Important Rules
+
+- Never invent data points. Every number comes from experiments.jsonl or results/ files.
+- Always generate both PNG and PDF versions of figures (PNG for preview, PDF for LaTeX).
+- Use clean, publication-quality style: no gridlines, readable fonts, proper axis labels.
+- If only one experiment run exists, skip ablation charts and note "single run, no comparison possible."
 
 ---
 
@@ -145,12 +197,12 @@ _TEL_END=$(date +%s)
 _TEL_DUR=$(( _TEL_END - _TEL_START ))
 rm -f ~/.rstack/analytics/.pending-"$_SESSION_ID" 2>/dev/null || true
 if [ "$_TEL" != "off" ]; then
-  echo '{"skill":"rstack","duration_s":"'"$_TEL_DUR"'","outcome":"OUTCOME","session":"'"$_SESSION_ID"'","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' >> ~/.rstack/analytics/skill-usage.jsonl 2>/dev/null || true
+  echo '{"skill":"analyze-results","duration_s":"'"$_TEL_DUR"'","outcome":"OUTCOME","session":"'"$_SESSION_ID"'","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' >> ~/.rstack/analytics/skill-usage.jsonl 2>/dev/null || true
 fi
 if [ "$_TEL" != "off" ] && [ -x "$_RSTACK_DIR/bin/rstack-telemetry-log" ]; then
   "$_RSTACK_DIR/bin/rstack-telemetry-log" \
-    --skill "rstack" --duration "$_TEL_DUR" --outcome "OUTCOME" \
-    --session-id "$_SESSION_ID" 2>/dev/null &
+    --skill "analyze-results" --duration "$_TEL_DUR" --outcome "OUTCOME" \
+    --session-id "$_SESSION_ID" --pipeline-stage "analyze-results" 2>/dev/null &
 fi
 # --- GENERATED EPILOGUE END ---
 ```
@@ -159,4 +211,4 @@ Replace `OUTCOME` with success/error/abort based on the workflow result.
 
 ---
 > Source: [sunnnybala/Rstack](https://github.com/sunnnybala/Rstack) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-17 -->
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
