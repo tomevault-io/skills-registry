@@ -1,0 +1,32 @@
+---
+name: code-explainer
+description: Provides a brief explanation of the code attached, including key components, notable patterns, and a code walkthrough.
+metadata:
+  author: devclarityai
+---
+# Code Explainer
+
+Provide a brief explanation of the code attached. I'm trying to better understand it.
+
+## Key Components
+- Main classes/functions and their roles
+- Important dependencies
+- Critical flows
+
+## Notable Patterns
+- Design patterns used
+- Architecture decisions
+- Important abstractions
+
+## Code Walkthrough
+- How it works
+- Key decision points
+- Important considerations
+
+## Gotchas & Tips
+- Edge cases to watch for
+- Performance considerations
+
+---
+> Source: [devclarityai/devclarity-coding-tutorial](https://github.com/devclarityai/devclarity-coding-tutorial) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
