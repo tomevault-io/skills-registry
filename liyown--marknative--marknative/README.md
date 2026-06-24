@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [liyown/marknative](https://github.com/liyown/marknative/tree/main/packages/marknative-skill/SKILL.md)
+Original source: [liyown/marknative](https://github.com/liyown/marknative/tree/main/packages/marknative-docs/guide/skill.md)
 
 ---
 
