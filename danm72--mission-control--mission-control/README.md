@@ -1,11 +1,11 @@
 # mission-control
 
-> Skill by [danm72](https://github.com/danm72/mission-control) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [Danm72](https://github.com/Danm72/mission-control) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [danm72/mission-control](https://github.com/danm72/mission-control/tree/main/skills/mission-control)
+Original source: [Danm72/mission-control](https://github.com/Danm72/mission-control/tree/main/skills/mission-control/SKILL.md)
 
 ---
 
