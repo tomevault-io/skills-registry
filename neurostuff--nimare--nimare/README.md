@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neurostuff/NiMARE](https://github.com/neurostuff/NiMARE/tree/main/.skills/reviewing_code/SKILL.md)
+Original source: [neurostuff/NiMARE](https://github.com/neurostuff/NiMARE/tree/main/.skills/dev_environment/SKILL.md)
 
 ---
 
