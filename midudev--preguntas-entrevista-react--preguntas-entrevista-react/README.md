@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [midudev/preguntas-entrevista-react](https://github.com/midudev/preguntas-entrevista-react/tree/main/.agents/skills/next-best-practices/SKILL.md)
+Original source: [midudev/preguntas-entrevista-react](https://github.com/midudev/preguntas-entrevista-react/tree/main/.agents/skills/nodejs-best-practices/SKILL.md)
 
 ---
 
