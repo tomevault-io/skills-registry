@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ThierryN/fire-flow](https://github.com/ThierryN/fire-flow/tree/main/skills-library/excalidraw-diagrams/SKILL.md)
+Original source: [ThierryN/fire-flow](https://github.com/ThierryN/fire-flow/tree/main/skills-library/document-processing/pdf-forms-integration/SKILL.md)
 
 ---
 
