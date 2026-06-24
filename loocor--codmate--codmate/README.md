@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [loocor/codmate](https://github.com/loocor/codmate/tree/main/payload/internal-skills/skills-wizard/SKILL.md)
+Original source: [loocor/codmate](https://github.com/loocor/codmate/tree/main/payload/internal-skills/commands-wizard/SKILL.md)
 
 ---
 
