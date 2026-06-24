@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [adithya-s-k/manim_skill](https://github.com/adithya-s-k/manim_skill/tree/main/skills/manimgl-best-practices/SKILL.md)
+Original source: [adithya-s-k/manim_skill](https://github.com/adithya-s-k/manim_skill/tree/main/skills/manimce-best-practices/SKILL.md)
 
 ---
 
