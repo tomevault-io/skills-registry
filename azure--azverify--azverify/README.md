@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/AZVerify](https://github.com/Azure/AZVerify/tree/main/.github/skills/azv-bicep-whatif/SKILL.md)
+Original source: [Azure/AZVerify](https://github.com/Azure/AZVerify/tree/main/.github/skills/azv-azure-to-bicep/SKILL.md)
 
 ---
 
