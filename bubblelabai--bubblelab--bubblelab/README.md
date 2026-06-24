@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bubblelabai/BubbleLab](https://github.com/bubblelabai/BubbleLab/tree/main/.claude/skills/commit/SKILL.md)
+Original source: [bubblelabai/BubbleLab](https://github.com/bubblelabai/BubbleLab/tree/main/.claude/skills/create-bubble/SKILL.md)
 
 ---
 
