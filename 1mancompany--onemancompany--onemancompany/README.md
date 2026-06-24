@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [1mancompany/OneManCompany](https://github.com/1mancompany/OneManCompany/tree/main/company/human_resource/employees/00005/skills/ontology/SKILL.md)
+Original source: [1mancompany/OneManCompany](https://github.com/1mancompany/OneManCompany/tree/main/src/onemancompany/default_skills/project-brainstorming/SKILL.md)
 
 ---
 
