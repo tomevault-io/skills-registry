@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alonronin/mockingoose](https://github.com/alonronin/mockingoose/tree/main/.agents/skills/vitest/SKILL.md)
+Original source: [alonronin/mockingoose](https://github.com/alonronin/mockingoose/tree/main/.agents/skills/mongoose-mongodb/SKILL.md)
 
 ---
 
