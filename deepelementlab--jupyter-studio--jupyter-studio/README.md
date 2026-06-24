@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [deepelementlab/jupyter-studio](https://github.com/deepelementlab/jupyter-studio/tree/main/clawcode/clawcode/plugin/builtin_plugins/clawcode-skills/skills/coding-standards/SKILL.md)
+Original source: [deepelementlab/jupyter-studio](https://github.com/deepelementlab/jupyter-studio/tree/main/clawcode/clawcode/plugin/builtin_plugins/clawcode-skills/skills/backend-patterns/SKILL.md)
 
 ---
 
