@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alvinxx1123/sspOffer-interview-assistant](https://github.com/alvinxx1123/sspOffer-interview-assistant/tree/main/src/main/resources/skill-packs/interview-flow-skill/SKILL.md)
+Original source: [alvinxx1123/sspOffer-interview-assistant](https://github.com/alvinxx1123/sspOffer-interview-assistant/tree/main/src/main/resources/skill-packs/resume-grounding-skill/SKILL.md)
 
 ---
 
