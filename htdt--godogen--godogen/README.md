@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [htdt/godogen](https://github.com/htdt/godogen/tree/main/bevy/skills/bevy-help/SKILL.md)
+Original source: [htdt/godogen](https://github.com/htdt/godogen/tree/main/babylon/skills/godogen/SKILL.md)
 
 ---
 
