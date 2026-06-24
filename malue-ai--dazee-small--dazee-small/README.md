@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [malue-ai/dazee-small](https://github.com/malue-ai/dazee-small/tree/main/instances/xiaodazi/skills/job-application-optimizer/SKILL.md)
+Original source: [malue-ai/dazee-small](https://github.com/malue-ai/dazee-small/tree/main/instances/xiaodazi/skills/meeting-notes-to-action-items/SKILL.md)
 
 ---
 
