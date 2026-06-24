@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [poteto/brainmaxxing](https://github.com/poteto/brainmaxxing/tree/main/.agents/skills/meditate/SKILL.md)
+Original source: [poteto/brainmaxxing](https://github.com/poteto/brainmaxxing/tree/main/.agents/skills/ruminate/SKILL.md)
 
 ---
 
