@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA-Omniverse/content-agents](https://github.com/NVIDIA-Omniverse/content-agents/tree/main/.agents/skills/deploy-physics-agent-docker/SKILL.md)
+Original source: [NVIDIA-Omniverse/content-agents](https://github.com/NVIDIA-Omniverse/content-agents/tree/main/.agents/skills/deploy-material-agent-docker/SKILL.md)
 
 ---
 
