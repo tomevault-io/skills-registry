@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wavetermdev/waveterm](https://github.com/wavetermdev/waveterm/tree/main/.kilocode/skills/create-view/SKILL.md)
+Original source: [wavetermdev/waveterm](https://github.com/wavetermdev/waveterm/tree/main/.kilocode/skills/electron-api/SKILL.md)
 
 ---
 
