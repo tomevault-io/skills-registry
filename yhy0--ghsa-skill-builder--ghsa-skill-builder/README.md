@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yhy0/ghsa-skill-builder](https://github.com/yhy0/ghsa-skill-builder/tree/main/vuln-skills/skills/go-vuln-crypto-tls/SKILL.md)
+Original source: [yhy0/ghsa-skill-builder](https://github.com/yhy0/ghsa-skill-builder/tree/main/vuln-skills/skills/pentest-auth-bypass/SKILL.md)
 
 ---
 
