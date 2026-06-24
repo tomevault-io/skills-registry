@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mykpono/ultimate-seo-geo](https://github.com/mykpono/ultimate-seo-geo/tree/main/SKILL.md)
+Original source: [mykpono/ultimate-seo-geo](https://github.com/mykpono/ultimate-seo-geo/tree/main/plugins/ultimate-seo-geo/skills/ultimate-seo-geo/SKILL.md)
 
 ---
 
