@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [QuantClaw/QuantClaw](https://github.com/QuantClaw/QuantClaw/tree/main/assets/skills/weather/SKILL.md)
+Original source: [QuantClaw/QuantClaw](https://github.com/QuantClaw/QuantClaw/tree/main/assets/skills/healthcheck/SKILL.md)
 
 ---
 
