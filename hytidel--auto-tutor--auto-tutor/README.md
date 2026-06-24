@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Hytidel/auto-tutor](https://github.com/Hytidel/auto-tutor/tree/main/.claude/skills/glossary-collector/SKILL.md)
+Original source: [Hytidel/auto-tutor](https://github.com/Hytidel/auto-tutor/tree/main/.claude/skills/everything-to-markdown/SKILL.md)
 
 ---
 
