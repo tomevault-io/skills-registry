@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lawchat-oss/taiwan-legal-plugin](https://github.com/lawchat-oss/taiwan-legal-plugin/tree/main/taiwan-legal/skills/statute-lookup/SKILL.md)
+Original source: [lawchat-oss/taiwan-legal-plugin](https://github.com/lawchat-oss/taiwan-legal-plugin/tree/main/taiwan-legal/skills/judgment-search/SKILL.md)
 
 ---
 
