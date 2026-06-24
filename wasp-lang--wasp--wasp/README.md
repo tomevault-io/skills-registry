@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wasp-lang/wasp](https://github.com/wasp-lang/wasp/tree/main/web/.claude/skills/crossposting/SKILL.md)
+Original source: [wasp-lang/wasp](https://github.com/wasp-lang/wasp/tree/main/web/.claude/skills/social-content/SKILL.md)
 
 ---
 
