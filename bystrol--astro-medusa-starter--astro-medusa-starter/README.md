@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Bystrol/astro-medusa-starter](https://github.com/Bystrol/astro-medusa-starter/tree/main/.agents/skills/building-storefronts/SKILL.md)
+Original source: [Bystrol/astro-medusa-starter](https://github.com/Bystrol/astro-medusa-starter/tree/main/.agents/skills/storefront-best-practices/SKILL.md)
 
 ---
 
