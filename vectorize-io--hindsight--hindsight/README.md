@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vectorize-io/hindsight](https://github.com/vectorize-io/hindsight/tree/main/skills/hindsight-local/SKILL.md)
+Original source: [vectorize-io/hindsight](https://github.com/vectorize-io/hindsight/tree/main/.claude/skills/hs-release/SKILL.md)
 
 ---
 
