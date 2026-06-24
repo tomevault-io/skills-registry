@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [areed1192/interactive-brokers-api](https://github.com/areed1192/interactive-brokers-api/tree/main/.github/skills/package-audit/SKILL.md)
+Original source: [areed1192/interactive-brokers-api](https://github.com/areed1192/interactive-brokers-api/tree/main/.github/skills/changelog-review/SKILL.md)
 
 ---
 
