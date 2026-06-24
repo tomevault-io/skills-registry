@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [frank-fs/frank](https://github.com/frank-fs/frank/tree/main/.claude/skills/expert-review/SKILL.md)
+Original source: [frank-fs/frank](https://github.com/frank-fs/frank/tree/main/.claude/skills/commit-push-pr/SKILL.md)
 
 ---
 
