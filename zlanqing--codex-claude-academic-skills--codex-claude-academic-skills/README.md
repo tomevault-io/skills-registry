@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zLanqing/codex-claude-academic-skills](https://github.com/zLanqing/codex-claude-academic-skills/tree/main/scientific-toolkit-skill/references/scientific-skills/networkx/SKILL.md)
+Original source: [zLanqing/codex-claude-academic-skills](https://github.com/zLanqing/codex-claude-academic-skills/tree/main/scientific-toolkit-skill/references/scientific-skills/matplotlib/SKILL.md)
 
 ---
 
