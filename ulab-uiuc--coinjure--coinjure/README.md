@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ulab-uiuc/coinjure](https://github.com/ulab-uiuc/coinjure/tree/main/.claude/skills/relation-discovery/SKILL.md)
+Original source: [ulab-uiuc/coinjure](https://github.com/ulab-uiuc/coinjure/tree/main/.claude/skills/portfolio-management/SKILL.md)
 
 ---
 
