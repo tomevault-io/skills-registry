@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [le-soleil-se-couche/VoiceInk](https://github.com/le-soleil-se-couche/VoiceInk/tree/main/.agents/skills/vercel-react-native-skills/SKILL.md)
+Original source: [le-soleil-se-couche/VoiceInk](https://github.com/le-soleil-se-couche/VoiceInk/tree/main/.agents/skills/vercel-react-best-practices/SKILL.md)
 
 ---
 
