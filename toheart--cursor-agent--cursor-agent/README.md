@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [toheart/cursor-agent](https://github.com/toheart/cursor-agent/tree/main/.cursor/skills/openspec-apply-change/SKILL.md)
+Original source: [toheart/cursor-agent](https://github.com/toheart/cursor-agent/tree/main/.cursor/skills/openspec-archive-change/SKILL.md)
 
 ---
 
