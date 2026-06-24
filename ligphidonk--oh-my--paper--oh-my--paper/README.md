@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LigphiDonk/Oh-my--paper](https://github.com/LigphiDonk/Oh-my--paper/tree/main/skills/inno-pipeline-planner/SKILL.md)
+Original source: [LigphiDonk/Oh-my--paper](https://github.com/LigphiDonk/Oh-my--paper/tree/main/skills/inno-prepare-resources/SKILL.md)
 
 ---
 
