@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ryaker/zora](https://github.com/ryaker/zora/tree/main/.claude/skills/zora-setup-guide/SKILL.md)
+Original source: [ryaker/zora](https://github.com/ryaker/zora/tree/main/.claude/skills/zora-config-advisor/SKILL.md)
 
 ---
 
