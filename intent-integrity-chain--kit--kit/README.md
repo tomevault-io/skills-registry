@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [intent-integrity-chain/kit](https://github.com/intent-integrity-chain/kit/tree/main/.claude/skills/iikit-03-checklist/SKILL.md)
+Original source: [intent-integrity-chain/kit](https://github.com/intent-integrity-chain/kit/tree/main/.claude/skills/iikit-00-constitution/SKILL.md)
 
 ---
 
