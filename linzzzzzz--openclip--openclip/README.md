@@ -1,0 +1,13 @@
+# openclip
+
+> Skill by [linzzzzzz](https://github.com/linzzzzzz/openclip) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [linzzzzzz/openclip](https://github.com/linzzzzzz/openclip/tree/main/.trae/skills/video-clip-extractor/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
