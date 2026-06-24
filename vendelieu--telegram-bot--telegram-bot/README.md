@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vendelieu/telegram-bot](https://github.com/vendelieu/telegram-bot/tree/main/.cursor/skills/bot-user/build-wizard-flow/SKILL.md)
+Original source: [vendelieu/telegram-bot](https://github.com/vendelieu/telegram-bot/tree/main/.cursor/skills/bot-user/setup-bot-handlers/SKILL.md)
 
 ---
 
