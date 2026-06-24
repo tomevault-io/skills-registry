@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ProjectDXAI/labrat](https://github.com/ProjectDXAI/labrat/tree/main/.agents/skills/labrat-operator/SKILL.md)
+Original source: [ProjectDXAI/labrat](https://github.com/ProjectDXAI/labrat/tree/main/templates/.agents/skills/labrat-operator/SKILL.md)
 
 ---
 
