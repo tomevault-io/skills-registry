@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zjunlp/SkillNet](https://github.com/zjunlp/SkillNet/tree/main/experiments/src/skills/webshop/webshop-query-interpreter/SKILL.md)
+Original source: [zjunlp/SkillNet](https://github.com/zjunlp/SkillNet/tree/main/experiments/src/skills/alfworld/alfworld-search-verifier/SKILL.md)
 
 ---
 
