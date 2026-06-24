@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rand/cc-polymath](https://github.com/rand/cc-polymath/tree/main/skills/discover-debugging/SKILL.md)
+Original source: [rand/cc-polymath](https://github.com/rand/cc-polymath/tree/main/skills/discover-networking/SKILL.md)
 
 ---
 
