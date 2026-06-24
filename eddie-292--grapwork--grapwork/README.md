@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eddie-292/grapwork](https://github.com/eddie-292/grapwork/tree/main/frontend/skills/examples/frontend-design/SKILL.md)
+Original source: [eddie-292/grapwork](https://github.com/eddie-292/grapwork/tree/main/frontend/skills/examples/slack-gif-creator/SKILL.md)
 
 ---
 
