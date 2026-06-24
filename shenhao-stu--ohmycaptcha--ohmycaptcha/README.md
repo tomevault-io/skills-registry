@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shenhao-stu/ohmycaptcha](https://github.com/shenhao-stu/ohmycaptcha/tree/main/skills/ohmycaptcha/SKILL.md)
+Original source: [shenhao-stu/ohmycaptcha](https://github.com/shenhao-stu/ohmycaptcha/tree/main/skills/ohmycaptcha-image/SKILL.md)
 
 ---
 
