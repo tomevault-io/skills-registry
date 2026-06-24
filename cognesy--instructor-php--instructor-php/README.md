@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cognesy/instructor-php](https://github.com/cognesy/instructor-php/tree/main/examples/D02_AgentBuilder/AgentSkills/skills/fix-issue/SKILL.md)
+Original source: [cognesy/instructor-php](https://github.com/cognesy/instructor-php/tree/main/examples/D02_AgentBuilder/AgentSkills/skills/code-review/SKILL.md)
 
 ---
 
