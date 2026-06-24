@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [browser-use/browsercode](https://github.com/browser-use/browsercode/tree/main/packages/bcode-browser/skills/browser-execute/SKILL.md)
+Original source: [browser-use/browsercode](https://github.com/browser-use/browsercode/tree/main/packages/opencode/test/fixture/skills/cloudflare/SKILL.md)
 
 ---
 
