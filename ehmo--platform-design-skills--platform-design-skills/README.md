@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ehmo/platform-design-skills](https://github.com/ehmo/platform-design-skills/tree/main/skills/watchos/SKILL.md)
+Original source: [ehmo/platform-design-skills](https://github.com/ehmo/platform-design-skills/tree/main/skills/visionos/SKILL.md)
 
 ---
 
