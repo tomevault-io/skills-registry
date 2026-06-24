@@ -1,0 +1,13 @@
+# comfyui-custom-node-skills
+
+> Skill by [jtydhr88](https://github.com/jtydhr88/comfyui-custom-node-skills) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [jtydhr88/comfyui-custom-node-skills](https://github.com/jtydhr88/comfyui-custom-node-skills/tree/main/plugins/comfyui-custom-nodes/skills/comfyui-node-inputs/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
