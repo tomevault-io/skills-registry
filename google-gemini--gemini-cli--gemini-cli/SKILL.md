@@ -1,60 +1,18 @@
 ---
-name: behavioral-evals
-description: Guidance for creating, running, fixing, and promoting behavioral evaluations. Use when verifying agent decision logic, debugging failures, debugging prompt steering, or adding workspace regression tests. Use when this capability is needed.
+name: pr-address-comments
+description: Use this skill if the user asks you to help them address GitHub PR comments for their current branch of the Gemini CLI. Requires `gh` CLI tool.
 metadata:
   author: google-gemini
 ---
+You are helping the user address comments on their Pull Request. These comments may have come from an automated review agent or a team member.
 
-# Behavioral Evals
+OBJECTIVE: Help the user review and address comments on their PR.
 
-## Overview
+# Comment Review Procedure
 
-Behavioral evaluations (evals) are tests that validate the **agent's decision-making** (e.g., tool choice) rather than pure functionality. They are critical for verifying prompt changes, debugging steerability, and preventing regressions.
-
-> [!NOTE]
-> **Single Source of Truth**: For core concepts, policies, running tests, and general best practices, always refer to **[evals/README.md](file:///Users/abhipatel/code/gemini-cli/docs/evals/README.md)**.
-
----
-
-## 🔄 Workflow Decision Tree
-
-1.  **Does a prompt/tool change need validation?**
-    *   *No* -> Normal integration tests.
-    *   *Yes* -> Continue below.
-2.  **Is it UI/Interaction heavy?**
-    *   *Yes* -> Use `appEvalTest` (`AppRig`). See **[creating.md](references/creating.md)**.
-    *   *No* -> Use `evalTest` (`TestRig`). See **[creating.md](references/creating.md)**.
-3.  **Is it a new test?**
-    *   *Yes* -> Set policy to `USUALLY_PASSES`.
-    *   *No* -> `ALWAYS_PASSES` (locks in regression).
-4.  **Are you fixing a failure or promoting a test?**
-    *   *Fixing* -> See **[fixing.md](references/fixing.md)**.
-    *   *Promoting* -> See **[promoting.md](references/promoting.md)**.
-
----
-
-## 📋 Quick Checklist
-
-### 1. Setup Workspace
-Seed the workspace with necessary files using the `files` object to simulate a realistic scenario (e.g., NodeJS project with `package.json`).
-*   *Details in **[creating.md](references/creating.md)***
-
-### 2. Write Assertions
-Audit agent decisions using `rig.setBreakpoint()` (AppRig only) or index verification on `rig.readToolLogs()`.
-*   *Details in **[creating.md](references/creating.md)***
-
-### 3. Verify
-Run single tests locally with Vitest. Confirm stability locally before relying on CI workflows.
-*   *See **[evals/README.md](file:///Users/abhipatel/code/gemini-cli/docs/evals/README.md)** for running commands.*
-
----
-
-## 📦 Bundled Resources
-
-Detailed procedural guides:
-*   **[creating.md](references/creating.md)**: Assertion strategies, Rig selection, Mock MCPs.
-*   **[fixing.md](references/fixing.md)**: Step-by-step automated investigation, architecture diagnosis guidelines.
-*   **[promoting.md](references/promoting.md)**: Candidate identification criteria and threshold guidelines.
+1. Run the `scripts/fetch-pr-info.js` script to get PR info and state. MAKE SURE you read the entire output of the command, even if it gets truncated.
+2. Summarize the review status by analyzing the diff, commit log, and comments to see which still need to be addressed. Pay attention to the current user's comments. For resolved threads, summarize as a single line with a ✅. For open threads, provide a reference number e.g. [1] and the comment content.
+3. Present your summary of the feedback and current state and allow the user to guide you as to what to fix/address/skip. DO NOT begin fixing issues automatically.
 
 ---
 > Source: [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli) — distributed by [TomeVault](https://tomevault.io).
