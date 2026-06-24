@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [renfei-design/design-jarvis](https://github.com/renfei-design/design-jarvis/tree/main/.skills/hifi-design/SKILL.md)
+Original source: [renfei-design/design-jarvis](https://github.com/renfei-design/design-jarvis/tree/main/.skills/content-review/SKILL.md)
 
 ---
 
