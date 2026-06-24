@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ITSpecialist111/Copilot-Cowork-Skills](https://github.com/ITSpecialist111/Copilot-Cowork-Skills/tree/main/rfp-agent-swarm/skills/rfp-respond/SKILL.md)
+Original source: [ITSpecialist111/Copilot-Cowork-Skills](https://github.com/ITSpecialist111/Copilot-Cowork-Skills/tree/main/rfp-agent-swarm/skills/rfp-assemble/SKILL.md)
 
 ---
 
