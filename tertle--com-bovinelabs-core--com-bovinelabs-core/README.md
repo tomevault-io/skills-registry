@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tertle/com.bovinelabs.core](https://github.com/tertle/com.bovinelabs.core/tree/main/Plugins~/skills/bl-core-settings/SKILL.md)
+Original source: [tertle/com.bovinelabs.core](https://github.com/tertle/com.bovinelabs.core/tree/main/Plugins~/skills/bl-core-lifecycle/SKILL.md)
 
 ---
 
