@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [imbue-ai/offload](https://github.com/imbue-ai/offload/tree/main/skills/offload-onboard/SKILL.md)
+Original source: [imbue-ai/offload](https://github.com/imbue-ai/offload/tree/main/skills/offload-benchmark/SKILL.md)
 
 ---
 
