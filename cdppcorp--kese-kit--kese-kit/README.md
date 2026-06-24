@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cdppcorp/KESE-KIT](https://github.com/cdppcorp/KESE-KIT/tree/main/skills/kesekit-guide/SKILL.md)
+Original source: [cdppcorp/KESE-KIT](https://github.com/cdppcorp/KESE-KIT/tree/main/skills/kesekit-check/SKILL.md)
 
 ---
 
