@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [coyvalyss1/model-matchmaker](https://github.com/coyvalyss1/model-matchmaker/tree/main/skills/share-analytics/SKILL.md)
+Original source: [coyvalyss1/model-matchmaker](https://github.com/coyvalyss1/model-matchmaker/tree/main/skills/optimize-classifier/SKILL.md)
 
 ---
 
