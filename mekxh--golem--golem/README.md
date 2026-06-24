@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MEKXH/golem](https://github.com/MEKXH/golem/tree/main/skills/data-pipeline/SKILL.md)
+Original source: [MEKXH/golem](https://github.com/MEKXH/golem/tree/main/skills/remote-sensing/SKILL.md)
 
 ---
 
