@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jl-codes/platformio-mcp](https://github.com/jl-codes/platformio-mcp/tree/main/.skills/esp32-flash-monitor/SKILL.md)
+Original source: [jl-codes/platformio-mcp](https://github.com/jl-codes/platformio-mcp/tree/main/.agents/skills/embedded-systems/SKILL.md)
 
 ---
 
