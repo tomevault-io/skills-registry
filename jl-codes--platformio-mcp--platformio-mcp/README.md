@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jl-codes/platformio-mcp](https://github.com/jl-codes/platformio-mcp/tree/main/.skills/firmware-bringup/SKILL.md)
+Original source: [jl-codes/platformio-mcp](https://github.com/jl-codes/platformio-mcp/tree/main/.agents/skills/pio-manager/SKILL.md)
 
 ---
 
