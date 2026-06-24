@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nicepkg/ai-workflow](https://github.com/nicepkg/ai-workflow/tree/main/workflows/video-creator-workflow/.claude/skills/capture-triage/SKILL.md)
+Original source: [nicepkg/ai-workflow](https://github.com/nicepkg/ai-workflow/tree/main/workflows/content-creator-workflow/.claude/skills/fact-checker/SKILL.md)
 
 ---
 
