@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [huangjia2019/sdd-in-action](https://github.com/huangjia2019/sdd-in-action/tree/main/week2/code/.claude/skills/openspec-sync-specs/SKILL.md)
+Original source: [huangjia2019/sdd-in-action](https://github.com/huangjia2019/sdd-in-action/tree/main/week2/code/.opencode/skills/openspec-ff-change/SKILL.md)
 
 ---
 
