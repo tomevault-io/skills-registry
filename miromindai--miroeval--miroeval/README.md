@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MiroMindAI/MiroEval](https://github.com/MiroMindAI/MiroEval/tree/main/factual_eval/miroflow/skill/skills/Today_feeling/SKILL.md)
+Original source: [MiroMindAI/MiroEval](https://github.com/MiroMindAI/MiroEval/tree/main/factual_eval/miroflow/skill/skills/Afternoon_feeling/SKILL.md)
 
 ---
 
