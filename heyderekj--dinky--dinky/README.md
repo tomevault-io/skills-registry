@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [heyderekj/dinky](https://github.com/heyderekj/dinky/tree/main/site/.well-known/agent-skills/dinky-overview/SKILL.md)
+Original source: [heyderekj/dinky](https://github.com/heyderekj/dinky/tree/main/site/.well-known/agent-skills/dinky-local-cli/SKILL.md)
 
 ---
 
