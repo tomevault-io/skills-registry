@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aws-solutions-library-samples/sample-voice-agent](https://github.com/aws-solutions-library-samples/sample-voice-agent/tree/main/.claude/skills/create-local-tool/SKILL.md)
+Original source: [aws-solutions-library-samples/sample-voice-agent](https://github.com/aws-solutions-library-samples/sample-voice-agent/tree/main/.claude/skills/verify-deployment/SKILL.md)
 
 ---
 
