@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lza6/AIWriteX-main](https://github.com/lza6/AIWriteX-main/tree/main/superpowers-main/skills/writing-plans/SKILL.md)
+Original source: [lza6/AIWriteX-main](https://github.com/lza6/AIWriteX-main/tree/main/superpowers-main/skills/brainstorming/SKILL.md)
 
 ---
 
