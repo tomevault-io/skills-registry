@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [liangdabiao/Godogen](https://github.com/liangdabiao/Godogen/tree/main/.claude/skills/visual-qa/SKILL.md)
+Original source: [liangdabiao/Godogen](https://github.com/liangdabiao/Godogen/tree/main/.claude/skills/godot-api/SKILL.md)
 
 ---
 
