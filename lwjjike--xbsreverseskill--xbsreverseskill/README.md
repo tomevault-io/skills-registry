@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lwjjike/xbsReverseSkill](https://github.com/lwjjike/xbsReverseSkill/tree/main/web-reverse-env/SKILL.md)
+Original source: [lwjjike/xbsReverseSkill](https://github.com/lwjjike/xbsReverseSkill/tree/main/ast-deobfuscation/SKILL.md)
 
 ---
 
