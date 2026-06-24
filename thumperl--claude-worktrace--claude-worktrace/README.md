@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [thumperL/claude-worktrace](https://github.com/thumperL/claude-worktrace/tree/main/skills/worklog-logging/SKILL.md)
+Original source: [thumperL/claude-worktrace](https://github.com/thumperL/claude-worktrace/tree/main/skills/worklog-analysis/SKILL.md)
 
 ---
 
