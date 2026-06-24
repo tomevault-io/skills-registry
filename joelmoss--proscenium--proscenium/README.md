@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [joelmoss/proscenium](https://github.com/joelmoss/proscenium/tree/main/.claude/skills/test/SKILL.md)
+Original source: [joelmoss/proscenium](https://github.com/joelmoss/proscenium/tree/main/.claude/skills/compile/SKILL.md)
 
 ---
 
