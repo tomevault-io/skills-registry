@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jamiepine/voicebox](https://github.com/jamiepine/voicebox/tree/main/.agents/skills/release-bump/SKILL.md)
+Original source: [jamiepine/voicebox](https://github.com/jamiepine/voicebox/tree/main/.agents/skills/add-tts-engine/SKILL.md)
 
 ---
 
