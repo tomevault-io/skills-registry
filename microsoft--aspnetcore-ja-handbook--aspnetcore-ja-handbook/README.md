@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/aspnetcore-ja-handbook](https://github.com/microsoft/aspnetcore-ja-handbook/tree/main/.github/skills/reviewer/SKILL.md)
+Original source: [microsoft/aspnetcore-ja-handbook](https://github.com/microsoft/aspnetcore-ja-handbook/tree/main/.github/skills/code-verifier/SKILL.md)
 
 ---
 
