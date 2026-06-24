@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [haojing8312/WorkClaw](https://github.com/haojing8312/WorkClaw/tree/main/.claude/skills/dispatching-parallel-agents/SKILL.md)
+Original source: [haojing8312/WorkClaw](https://github.com/haojing8312/WorkClaw/tree/main/apps/runtime/src-tauri/builtin-skills/docx/SKILL.md)
 
 ---
 
