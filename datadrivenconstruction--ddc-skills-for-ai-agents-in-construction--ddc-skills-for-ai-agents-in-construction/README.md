@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [datadrivenconstruction/DDC_Skills_for_AI_Agents_in_Construction](https://github.com/datadrivenconstruction/DDC_Skills_for_AI_Agents_in_Construction/tree/main/2_DDC_Book/4.3-BIM-Validation-Pipeline/bim-consistency-checker/SKILL.md)
+Original source: [datadrivenconstruction/DDC_Skills_for_AI_Agents_in_Construction](https://github.com/datadrivenconstruction/DDC_Skills_for_AI_Agents_in_Construction/tree/main/2_DDC_Book/2.6-Data-Quality-Validation/validation-rules-builder/SKILL.md)
 
 ---
 
