@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [academiadocodigo/SimpleORM](https://github.com/academiadocodigo/SimpleORM/tree/main/.claude/skills/delphi-patterns/SKILL.md)
+Original source: [academiadocodigo/SimpleORM](https://github.com/academiadocodigo/SimpleORM/tree/main/.claude/skills/delphi-validator/SKILL.md)
 
 ---
 
