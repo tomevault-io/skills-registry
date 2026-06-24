@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mr-daedalium/ostack-saas](https://github.com/mr-daedalium/ostack-saas/tree/main/setup-deploy/SKILL.md)
+Original source: [mr-daedalium/ostack-saas](https://github.com/mr-daedalium/ostack-saas/tree/main/design-review/SKILL.md)
 
 ---
 
