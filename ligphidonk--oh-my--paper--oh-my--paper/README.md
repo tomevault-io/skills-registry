@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LigphiDonk/Oh-my--paper](https://github.com/LigphiDonk/Oh-my--paper/tree/main/skills/gemini-deep-research/SKILL.md)
+Original source: [LigphiDonk/Oh-my--paper](https://github.com/LigphiDonk/Oh-my--paper/tree/main/skills/claude-code-dispatch/SKILL.md)
 
 ---
 
