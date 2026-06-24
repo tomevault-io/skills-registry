@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Vasallo94/ObsidianRAG](https://github.com/Vasallo94/ObsidianRAG/tree/main/.agent/skills/rag-architect/SKILL.md)
+Original source: [Vasallo94/ObsidianRAG](https://github.com/Vasallo94/ObsidianRAG/tree/main/.agent/skills/python-backend/SKILL.md)
 
 ---
 
