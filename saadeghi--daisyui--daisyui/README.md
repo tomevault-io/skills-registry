@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [saadeghi/daisyui](https://github.com/saadeghi/daisyui/tree/main/skills/daisyui/usage/SKILL.md)
+Original source: [saadeghi/daisyui](https://github.com/saadeghi/daisyui/tree/main/skills/daisyui/colors/SKILL.md)
 
 ---
 
