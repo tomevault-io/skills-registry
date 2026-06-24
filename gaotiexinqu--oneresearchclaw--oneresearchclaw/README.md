@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gaotiexinqu/OneResearchClaw](https://github.com/gaotiexinqu/OneResearchClaw/tree/main/.cursor/skills/document-grounding/SKILL.md)
+Original source: [gaotiexinqu/OneResearchClaw](https://github.com/gaotiexinqu/OneResearchClaw/tree/main/.cursor/skills/grounded-research-lit/SKILL.md)
 
 ---
 
