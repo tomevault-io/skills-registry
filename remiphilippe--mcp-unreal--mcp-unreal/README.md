@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [remiphilippe/mcp-unreal](https://github.com/remiphilippe/mcp-unreal/tree/main/.claude/skills/go-mcp-tool/SKILL.md)
+Original source: [remiphilippe/mcp-unreal](https://github.com/remiphilippe/mcp-unreal/tree/main/.claude/skills/ue-test-patterns/SKILL.md)
 
 ---
 
