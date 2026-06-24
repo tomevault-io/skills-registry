@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [krafton-ai/KIRA](https://github.com/krafton-ai/KIRA/tree/main/KIRA-Slack/.claude/skills/pdf/SKILL.md)
+Original source: [krafton-ai/KIRA](https://github.com/krafton-ai/KIRA/tree/main/KiraClaw/defaults/skills/pptx/SKILL.md)
 
 ---
 
