@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mukul975/Threatswarm](https://github.com/mukul975/Threatswarm/tree/main/threatswarm-plugin/skills/exploit-db/SKILL.md)
+Original source: [mukul975/Threatswarm](https://github.com/mukul975/Threatswarm/tree/main/threatswarm-plugin/skills/report-templates/SKILL.md)
 
 ---
 
