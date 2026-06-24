@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NiJingzhe/SimpleLLMFunc](https://github.com/NiJingzhe/SimpleLLMFunc/tree/main/skills/simplellmfunc/SKILL.md)
+Original source: [NiJingzhe/SimpleLLMFunc](https://github.com/NiJingzhe/SimpleLLMFunc/tree/main/skills/simplellmfunc-developer/SKILL.md)
 
 ---
 
