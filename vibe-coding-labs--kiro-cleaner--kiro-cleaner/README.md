@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vibe-coding-labs/kiro-cleaner](https://github.com/vibe-coding-labs/kiro-cleaner/tree/main/.agents/skills/bmad-review-edge-case-hunter/SKILL.md)
+Original source: [vibe-coding-labs/kiro-cleaner](https://github.com/vibe-coding-labs/kiro-cleaner/tree/main/.agents/skills/bmad-bmm-create-architecture/SKILL.md)
 
 ---
 
