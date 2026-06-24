@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dotnet/android](https://github.com/dotnet/android/tree/main/.github/skills/android-reviewer/SKILL.md)
+Original source: [dotnet/android](https://github.com/dotnet/android/tree/main/.github/skills/read-assembly-store/SKILL.md)
 
 ---
 
