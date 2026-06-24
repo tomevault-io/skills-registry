@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cuongpt083/smart-pole-skill](https://github.com/cuongpt083/smart-pole-skill/tree/main/skills/sp-chat-agent/SKILL.md)
+Original source: [cuongpt083/smart-pole-skill](https://github.com/cuongpt083/smart-pole-skill/tree/main/skills/sp-coding-agent/SKILL.md)
 
 ---
 
