@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MicrosoftDocs/semantic-kernel-docs](https://github.com/MicrosoftDocs/semantic-kernel-docs/tree/main/.github/skills/per-concept-documentation/SKILL.md)
+Original source: [MicrosoftDocs/semantic-kernel-docs](https://github.com/MicrosoftDocs/semantic-kernel-docs/tree/main/.github/skills/cross-repository-references/SKILL.md)
 
 ---
 
