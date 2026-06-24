@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [learntocloud/learn-to-cloud-app](https://github.com/learntocloud/learn-to-cloud-app/tree/main/.github/skills/query-prod-db/SKILL.md)
+Original source: [learntocloud/learn-to-cloud-app](https://github.com/learntocloud/learn-to-cloud-app/tree/main/.github/skills/review-pr-comments/SKILL.md)
 
 ---
 
