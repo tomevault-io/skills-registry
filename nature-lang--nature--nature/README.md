@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nature-lang/nature](https://github.com/nature-lang/nature/tree/main/nls/.agents/skills/coding-guidelines/SKILL.md)
+Original source: [nature-lang/nature](https://github.com/nature-lang/nature/tree/main/nls/.agents/skills/m06-error-handling/SKILL.md)
 
 ---
 
