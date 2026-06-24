@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [garden-co/classic-jazz](https://github.com/garden-co/classic-jazz/tree/main/.cursor/skills/jazz-testing/SKILL.md)
+Original source: [garden-co/classic-jazz](https://github.com/garden-co/classic-jazz/tree/main/.cursor/skills/benchmarking/SKILL.md)
 
 ---
 
