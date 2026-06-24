@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zai-org/zai-coding-plugins](https://github.com/zai-org/zai-coding-plugins/tree/main/plugins/glm-plan-bug/skills/case-feedback-skill/SKILL.md)
+Original source: [zai-org/zai-coding-plugins](https://github.com/zai-org/zai-coding-plugins/tree/main/plugins/glm-plan-usage/skills/usage-query-skill/SKILL.md)
 
 ---
 
