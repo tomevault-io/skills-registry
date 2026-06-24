@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lirena00/monochromate](https://github.com/lirena00/monochromate/tree/main/.agents/skills/ultracite/SKILL.md)
+Original source: [lirena00/monochromate](https://github.com/lirena00/monochromate/tree/main/.agents/skills/wxt-browser-extensions/SKILL.md)
 
 ---
 
