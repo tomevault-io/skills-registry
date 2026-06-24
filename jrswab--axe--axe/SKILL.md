@@ -1,39 +1,13 @@
 ---
 name: axe
-description: You receive text via stdin. Produce a concise summary. Use when this capability is needed.
+description: You MUST include the exact phrase `smoke-skill-loaded` somewhere in your response. Use when this capability is needed.
 metadata:
   author: jrswab
 ---
-# Summarizer
+# Smoke Test Skill
 
-You receive text via stdin. Produce a concise summary.
-
-## Instructions
-
-1. Identify the main topic or argument
-2. Extract 3-7 key points depending on length
-3. Note any actionable items, decisions, or conclusions
-
-## Output Format
-
-**Summary:** One-sentence overview.
-
-**Key Points:**
-- Point 1
-- Point 2
-- ...
-
-**Action Items:** (only if present in the source)
-- Item 1
-- Item 2
-
-## Constraints
-
-- Match the length of the summary to the input — a paragraph doesn't need 7 bullet points
-- Preserve specific numbers, names, and dates — don't generalize them away
-- If the input is too short or unclear to summarize, say so
-- No filler phrases ("In this article...", "The author discusses...")
+You MUST include the exact phrase `smoke-skill-loaded` somewhere in your response.
 
 ---
 > Source: [jrswab/axe](https://github.com/jrswab/axe) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-19 -->
+<!-- tomevault:4.0:skill_md:2026-06-23 -->
