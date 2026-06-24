@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [falgon/htcc](https://github.com/falgon/htcc/tree/main/.agents/skills/htcc-review-comment-response/SKILL.md)
+Original source: [falgon/htcc](https://github.com/falgon/htcc/tree/main/.agents/skills/htcc-output-permission-workflow/SKILL.md)
 
 ---
 
