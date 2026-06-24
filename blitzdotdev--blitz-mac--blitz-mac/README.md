@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [blitzdotdev/blitz-mac](https://github.com/blitzdotdev/blitz-mac/tree/main/src/resources/skills/asc-app-create-ui/SKILL.md)
+Original source: [blitzdotdev/blitz-mac](https://github.com/blitzdotdev/blitz-mac/tree/main/src/resources/skills/asc-team-key-create/SKILL.md)
 
 ---
 
