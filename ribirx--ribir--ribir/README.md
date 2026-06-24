@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [RibirX/Ribir](https://github.com/RibirX/Ribir/tree/main/.agents/skills/ribir-debug/SKILL.md)
+Original source: [RibirX/Ribir](https://github.com/RibirX/Ribir/tree/main/.agents/skills/ribir-widget-creator/SKILL.md)
 
 ---
 
