@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [foryourhealth111-pixel/Vibe-Skills](https://github.com/foryourhealth111-pixel/Vibe-Skills/tree/main/bundled/skills/LQF_Machine_Learning_Expert_Guide/SKILL.md)
+Original source: [foryourhealth111-pixel/Vibe-Skills](https://github.com/foryourhealth111-pixel/Vibe-Skills/tree/main/bundled/skills/transformer-lens-interpretability/SKILL.md)
 
 ---
 
