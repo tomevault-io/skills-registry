@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [UniRound-Tec/Aurogen](https://github.com/UniRound-Tec/Aurogen/tree/main/aurogen/skills/github/SKILL.md)
+Original source: [UniRound-Tec/Aurogen](https://github.com/UniRound-Tec/Aurogen/tree/main/aurogen/skills/clawhub/SKILL.md)
 
 ---
 
