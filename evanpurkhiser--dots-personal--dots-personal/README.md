@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [evanpurkhiser/dots-personal](https://github.com/evanpurkhiser/dots-personal/tree/main/machines/server/agents/skills/iptorrents/SKILL.md)
+Original source: [evanpurkhiser/dots-personal](https://github.com/evanpurkhiser/dots-personal/tree/main/machines/server/agents/skills/git-status/SKILL.md)
 
 ---
 
