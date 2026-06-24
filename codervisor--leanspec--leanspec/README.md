@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [codervisor/leanspec](https://github.com/codervisor/leanspec/tree/main/.agents/skills/leanspec-pre-push/SKILL.md)
+Original source: [codervisor/leanspec](https://github.com/codervisor/leanspec/tree/main/.agents/skills/leanspec-development/SKILL.md)
 
 ---
 
