@@ -99,7 +99,7 @@ For detailed patterns and monorepo structures, see [references/architecture.md](
 Relations build graphs between entities such as hierarchies, inventories, targeting.
 
 ```typescript
-import { relation } from 'koota'
+import { relation, trait } from 'koota'
 
 const ChildOf = relation({ autoDestroy: 'orphan' }) // Hierarchy
 const Contains = relation({ store: { amount: 0 } }) // With data
@@ -108,6 +108,9 @@ const Targeting = relation({ exclusive: true }) // One target only
 // Build graph
 const parent = world.spawn()
 const child = world.spawn(ChildOf(parent))
+const gold = world.spawn()
+const silver = world.spawn()
+const inventory = world.spawn(Contains(gold), Contains(silver))
 
 // Query children of parent
 const children = world.query(ChildOf(parent))
@@ -115,9 +118,18 @@ const children = world.query(ChildOf(parent))
 // Query all entities with any ChildOf relation
 const allChildren = world.query(ChildOf('*'))
 
+// Query relation targets
+const targets = inventory.targetsFor(Contains)
+
+// Filter by traits on the target entity
+const IsRare = trait()
+silver.add(IsRare)
+// Target filters can use any legal query, not just a single trait
+const rareInventories = world.query(Contains(IsRare))
+
 // Get targets from entity
-const items = entity.targetsFor(Contains) // Entity[]
-const target = entity.targetFor(Targeting) // Entity | undefined
+const items = inventory.targetsFor(Contains) // Entity[]
+const target = child.targetFor(ChildOf) // Entity | undefined
 ```
 
 For detailed patterns, traversal, ordered relations, and anti-patterns, see [references/relations.md](references/relations.md).
@@ -233,5 +245,5 @@ Systems query the world and update entities. Run them via frameloop (continuous)
 For systems, frameloop, event-driven patterns, and time management, see [references/runtime.md](references/runtime.md).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/pmndrs) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [pmndrs/koota](https://github.com/pmndrs/koota) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
