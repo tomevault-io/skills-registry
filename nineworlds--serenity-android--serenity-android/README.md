@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NineWorlds/serenity-android](https://github.com/NineWorlds/serenity-android/tree/main/.skills/skill-validator/SKILL.md)
+Original source: [NineWorlds/serenity-android](https://github.com/NineWorlds/serenity-android/tree/main/.skills/network-retrofit/SKILL.md)
 
 ---
 
