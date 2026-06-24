@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kangarooking/system-prompt-skills](https://github.com/kangarooking/system-prompt-skills/tree/main/injection-defense/SKILL.md)
+Original source: [kangarooking/system-prompt-skills](https://github.com/kangarooking/system-prompt-skills/tree/main/output-formatting/SKILL.md)
 
 ---
 
