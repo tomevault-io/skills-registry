@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [a-pavithraa/springboot-skills-marketplace](https://github.com/a-pavithraa/springboot-skills-marketplace/tree/main/plugins/springboot-architecture/skills/code-reviewer/SKILL.md)
+Original source: [a-pavithraa/springboot-skills-marketplace](https://github.com/a-pavithraa/springboot-skills-marketplace/tree/main/plugins/springboot-architecture/skills/spring-data-jpa/SKILL.md)
 
 ---
 
