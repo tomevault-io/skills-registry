@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cortex-tms/cortex-tms](https://github.com/cortex-tms/cortex-tms/tree/main/.claude/skills/plan/SKILL.md)
+Original source: [cortex-tms/cortex-tms](https://github.com/cortex-tms/cortex-tms/tree/main/.claude/skills/release/SKILL.md)
 
 ---
 
