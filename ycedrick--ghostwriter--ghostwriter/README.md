@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ycedrick/ghostwriter](https://github.com/ycedrick/ghostwriter/tree/main/skills/ghostwriter/SKILL.md)
+Original source: [ycedrick/ghostwriter](https://github.com/ycedrick/ghostwriter/tree/main/plugins/ghostwriter/skills/ghostwriter/SKILL.md)
 
 ---
 
