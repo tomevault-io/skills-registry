@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jsturtevant/rally](https://github.com/jsturtevant/rally/tree/main/.claude/skills/parallel-worktree-agents/SKILL.md)
+Original source: [jsturtevant/rally](https://github.com/jsturtevant/rally/tree/main/.squad-templates/skills/squad-conventions/SKILL.md)
 
 ---
 
