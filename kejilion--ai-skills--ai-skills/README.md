@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kejilion/AI-Skills](https://github.com/kejilion/AI-Skills/tree/main/public/potential-stock-deep-screener/SKILL.md)
+Original source: [kejilion/AI-Skills](https://github.com/kejilion/AI-Skills/tree/main/public/openai-compatible-image-generator/SKILL.md)
 
 ---
 
