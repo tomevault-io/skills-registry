@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zocomputer/skills](https://github.com/zocomputer/skills/tree/main/Community/generate-custom-qr-code/SKILL.md)
+Original source: [zocomputer/skills](https://github.com/zocomputer/skills/tree/main/Official/zo-important-email-digest/SKILL.md)
 
 ---
 
