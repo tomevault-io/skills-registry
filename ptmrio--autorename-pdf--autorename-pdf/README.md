@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ptmrio/autorename-pdf](https://github.com/ptmrio/autorename-pdf/tree/main/.claude/skills/rename-pdfs/SKILL.md)
+Original source: [ptmrio/autorename-pdf](https://github.com/ptmrio/autorename-pdf/tree/main/.claude/skills/rename-pdfs-exe/SKILL.md)
 
 ---
 
