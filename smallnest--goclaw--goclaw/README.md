@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [smallnest/goclaw](https://github.com/smallnest/goclaw/tree/main/internal/builtin_skills/weather/SKILL.md)
+Original source: [smallnest/goclaw](https://github.com/smallnest/goclaw/tree/main/internal/builtin_skills/peekaboo/SKILL.md)
 
 ---
 
