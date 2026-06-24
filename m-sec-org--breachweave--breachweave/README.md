@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [m-sec-org/BreachWeave](https://github.com/m-sec-org/BreachWeave/tree/main/packages/core/src/config/skills/builtin/known-product-exploit/SKILL.md)
+Original source: [m-sec-org/BreachWeave](https://github.com/m-sec-org/BreachWeave/tree/main/packages/core/src/config/skills/builtin/jwt-oauth-token-attacks/SKILL.md)
 
 ---
 
