@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OzeroHAX/AssistAgents](https://github.com/OzeroHAX/AssistAgents/tree/main/templates/skills/coder/system-design/testable-code/SKILL.md)
+Original source: [OzeroHAX/AssistAgents](https://github.com/OzeroHAX/AssistAgents/tree/main/templates/skills/task-use/research/context-strategy/SKILL.md)
 
 ---
 
