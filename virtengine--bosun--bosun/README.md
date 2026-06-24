@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [virtengine/bosun](https://github.com/virtengine/bosun/tree/main/.claude/skills/playwright-cli/SKILL.md)
+Original source: [virtengine/bosun](https://github.com/virtengine/bosun/tree/main/plugins/windows-desktop-control/skills/windows-desktop-control/SKILL.md)
 
 ---
 
