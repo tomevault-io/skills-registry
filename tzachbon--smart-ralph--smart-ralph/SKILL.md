@@ -1,157 +1,51 @@
 ---
-name: smart-ralph
-description: Core Smart Ralph skill defining common arguments, execution modes, and shared behaviors across all Ralph plugins. Use when this capability is needed.
+name: ralph-specum-requirements
+description: This skill should be used only when the user explicitly asks to use `$ralph-specum-requirements`, or explicitly asks Ralph Specum in Codex to run the requirements phase. Use when this capability is needed.
 metadata:
   author: tzachbon
 ---
 
-# Smart Ralph
+# Ralph Specum Requirements
 
-Core skill for all Ralph plugins. Defines common arguments, execution modes, and shared behaviors.
+You are a **coordinator, not a product manager** -- delegate ALL work to a `product-manager` sub-agent.
 
-## Common Arguments
+## Contract
 
-All Ralph commands support these standard arguments:
+- Resolve the active spec by explicit path, exact name, or `.current-spec`
+- Require the spec directory to exist
+- Merge state fields only
+- Keep the Ralph disk contract unchanged
 
-| Argument | Short | Description | Default |
-|----------|-------|-------------|---------|
-| `--quick` | `-q` | Skip interactive phases, auto-generate artifacts, start execution immediately | false |
-| `--commit` | `-c` | Commit and push spec/feature files after generation | true (normal), false (quick) |
-| `--no-commit` | | Explicitly disable committing files | - |
-| `--max-task-iterations` | `-m` | Max retries per failed task before stopping | 5 |
-| `--fresh` | `-f` | Force new spec/feature, overwrite if exists | false |
+## Action
 
-## Argument Parsing Rules
+1. Resolve the active spec. If none exists, stop.
+2. Read `research.md` when present, `.progress.md`, and the current state.
+3. Clear any prior approval gate by merging `awaitingApproval: false` before generation.
+4. Use the current brainstorming interview style unless quick mode is active.
+5. **Delegate** requirements generation to a `product-manager` sub-agent. Pass research context, goal, and interview results. The sub-agent writes `requirements.md`. Do NOT write requirements.md yourself.
+6. Read the sub-agent's output and validate it exists.
+7. Merge state with `phase: "requirements"` and `awaitingApproval: true` (or `false` when `--quick` is active).
+8. Update `.progress.md` with approved research context, user decisions, blockers, next step, and any epic constraints that must carry forward.
+9. If spec commits are enabled, commit only the spec artifacts.
 
-```text
-Priority Order (highest to lowest):
-1. --no-commit (explicit disable)
-2. --commit (explicit enable)
-3. --quick mode default (false)
-4. Normal mode default (true)
-```
+### Stop Behavior
 
-### Parsing Logic
+- **Without `--quick`**: STOP HERE. Display the walkthrough summary and approval prompt. Do NOT continue to design. Wait for the user to explicitly approve and request the next phase.
+- **With `--quick`**: Continue directly into design.
 
-```text
-commitSpec = true  // default
+## Output Shape
 
-if "--no-commit" in args:
-  commitSpec = false
-else if "--commit" in args:
-  commitSpec = true
-else if "--quick" in args:
-  commitSpec = false  // quick mode defaults to no commit
-// else keep default (true)
-```
+The result should include user stories, acceptance criteria, functional requirements, non-functional requirements, dependencies, exclusions, and success criteria.
 
-## Execution Modes
+## Response Handoff
 
-### Normal Mode (Interactive)
-
-- User reviews artifacts between phases
-- Phase transitions require explicit commands
-- Each phase sets `awaitingApproval: true`
-- Commits spec files by default
-
-### Quick Mode (`--quick`)
-
-- Skips all interactive prompts and interviews
-- Auto-generates all artifacts in sequence
-- Immediately starts execution after generation
-- Does NOT commit by default (use `--commit` to override)
-- Still delegates to subagents (delegation is mandatory)
-
-## State File Structure
-
-All Ralph plugins use a state file with common fields:
-
-```json
-{
-  "phase": "research|requirements|design|tasks|execution",
-  "taskIndex": 0,
-  "totalTasks": 0,
-  "taskIteration": 1,
-  "maxTaskIterations": 5,
-  "awaitingApproval": false
-}
-```
-
-Plugins may extend with additional fields.
-
-## Commit Behavior
-
-When `commitSpec` is true:
-
-1. Stage spec/feature files after generation
-2. Commit with message: `chore(<plugin>): commit spec files before implementation`
-3. Push to current branch
-
-When `commitSpec` is false:
-
-- Files remain uncommitted
-- User can manually commit later
-
-## Execution Loop (Self-Contained)
-
-The execution loop is self-contained via the built-in stop-hook. No external plugins are required.
-
-```text
-1. Coordinator outputs task delegation prompt
-2. Stop-hook detects task completion signals
-3. Stop-hook outputs continuation prompt for next task
-4. Loop ends when coordinator outputs ALL_TASKS_COMPLETE
-```
-
-### Coordinator Prompt
-
-The implement command includes the coordinator prompt inline. The stop-hook (`hooks/scripts/stop-watcher.sh`) reads `.speckit-state.json` to determine continuation behavior.
-
-## Task Completion Protocol
-
-### Executor Signals
-
-| Signal | Meaning |
-|--------|---------|
-| `TASK_COMPLETE` | Task finished successfully |
-| `VERIFICATION_PASS` | Verification task passed |
-| `VERIFICATION_FAIL` | Verification failed, needs retry |
-
-### Coordinator Signals
-
-| Signal | Meaning |
-|--------|---------|
-| `ALL_TASKS_COMPLETE` | All tasks done, end loop |
-
-## Error Handling
-
-### Max Retries
-
-When `taskIteration` exceeds `maxTaskIterations`:
-
-1. Output error with task index and attempt count
-2. Include last failure reason
-3. Suggest manual intervention
-4. Do NOT output ALL_TASKS_COMPLETE
-5. Do NOT continue execution
-
-### State Corruption
-
-If state file missing or invalid:
-
-1. Output error with state file path
-2. Suggest re-running the implement command
-3. Do NOT continue execution
-
-## Branch Management
-
-All Ralph plugins follow consistent branch strategy:
-
-1. Check current branch before starting
-2. If on default branch (main/master): prompt for branch strategy
-3. If on feature branch: offer to continue or create new
-4. Quick mode: auto-create branch, no prompts
+- After writing `requirements.md`, name `requirements.md` and summarize the requirements briefly.
+- End with exactly one explicit choice prompt:
+  - `approve current artifact`
+  - `request changes`
+  - `continue to design`
+- Treat `continue to design` as approval of `requirements.md`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/tzachbon) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [tzachbon/smart-ralph](https://github.com/tzachbon/smart-ralph) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-23 -->
