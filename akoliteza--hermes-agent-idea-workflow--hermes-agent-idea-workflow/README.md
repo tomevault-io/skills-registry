@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AkoliteZA/hermes-agent-idea-workflow](https://github.com/AkoliteZA/hermes-agent-idea-workflow/tree/main/idea-to-design-doc/SKILL.md)
+Original source: [AkoliteZA/hermes-agent-idea-workflow](https://github.com/AkoliteZA/hermes-agent-idea-workflow/tree/main/idea-superpowers-suite/SKILL.md)
 
 ---
 
