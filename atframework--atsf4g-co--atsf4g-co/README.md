@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [atframework/atsf4g-co](https://github.com/atframework/atsf4g-co/tree/main/.agents/skills/configure-expression/SKILL.md)
+Original source: [atframework/atsf4g-co](https://github.com/atframework/atsf4g-co/tree/main/.agents/skills/ai-agent-maintenance/SKILL.md)
 
 ---
 
