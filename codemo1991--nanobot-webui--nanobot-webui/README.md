@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [codemo1991/nanobot-webui](https://github.com/codemo1991/nanobot-webui/tree/main/nanobot/skills/mirror-system/SKILL.md)
+Original source: [codemo1991/nanobot-webui](https://github.com/codemo1991/nanobot-webui/tree/main/nanobot/skills/voice-transcribe/SKILL.md)
 
 ---
 
