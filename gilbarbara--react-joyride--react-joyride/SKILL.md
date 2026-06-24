@@ -431,5 +431,5 @@ Read these for complete API details:
 - `references/patterns.md` — Complete working examples: controlled mode, before/after hooks, custom tooltip, event subscription, dynamic steps
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/gilbarbara) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Source: [gilbarbara/react-joyride](https://github.com/gilbarbara/react-joyride) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
