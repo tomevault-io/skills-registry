@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/fabric-task-flows](https://github.com/microsoft/fabric-task-flows/tree/main/.github/skills/fabric-test/SKILL.md)
+Original source: [microsoft/fabric-task-flows](https://github.com/microsoft/fabric-task-flows/tree/main/.github/skills/fabric-deploy/SKILL.md)
 
 ---
 
