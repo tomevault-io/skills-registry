@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mikker/dotfiles](https://github.com/mikker/dotfiles/tree/main/agents.symlink/skills/swiftui-pro/skills/swiftui-pro/SKILL.md)
+Original source: [mikker/dotfiles](https://github.com/mikker/dotfiles/tree/main/agents.symlink/skills/ask-questions-if-underspecified/SKILL.md)
 
 ---
 
