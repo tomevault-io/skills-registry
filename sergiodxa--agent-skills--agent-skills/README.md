@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sergiodxa/agent-skills](https://github.com/sergiodxa/agent-skills/tree/main/skills/frontend-js-best-practices/SKILL.md)
+Original source: [sergiodxa/agent-skills](https://github.com/sergiodxa/agent-skills/tree/main/skills/ruby-on-rails-best-practices/SKILL.md)
 
 ---
 
