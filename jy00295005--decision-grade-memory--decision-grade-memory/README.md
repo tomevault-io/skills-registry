@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jy00295005/decision-grade-memory](https://github.com/jy00295005/decision-grade-memory/tree/main/codex/paper_skills/custom/dgm-method-design/SKILL.md)
+Original source: [jy00295005/decision-grade-memory](https://github.com/jy00295005/decision-grade-memory/tree/main/codex/paper_skills/custom/dgm-citation-audit/SKILL.md)
 
 ---
 
