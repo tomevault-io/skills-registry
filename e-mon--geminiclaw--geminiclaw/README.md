@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [e-mon/geminiclaw](https://github.com/e-mon/geminiclaw/tree/main/templates/.gemini/skills/coding-plan/SKILL.md)
+Original source: [e-mon/geminiclaw](https://github.com/e-mon/geminiclaw/tree/main/templates/.gemini/skills/session-logs/SKILL.md)
 
 ---
 
