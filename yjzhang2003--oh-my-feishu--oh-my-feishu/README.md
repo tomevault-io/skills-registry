@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yjzhang2003/oh-my-feishu](https://github.com/yjzhang2003/oh-my-feishu/tree/main/workspace/.claude/skills/web-monitor-service-manager/SKILL.md)
+Original source: [yjzhang2003/oh-my-feishu](https://github.com/yjzhang2003/oh-my-feishu/tree/main/oh-my-feishu-plugin/skills/lark-workflow-standup-report/SKILL.md)
 
 ---
 
