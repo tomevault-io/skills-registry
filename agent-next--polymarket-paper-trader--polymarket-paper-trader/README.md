@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agent-next/polymarket-paper-trader](https://github.com/agent-next/polymarket-paper-trader/tree/main/skill/pm-sim/SKILL.md)
+Original source: [agent-next/polymarket-paper-trader](https://github.com/agent-next/polymarket-paper-trader/tree/main/skill/polymarket-paper-trader/SKILL.md)
 
 ---
 
