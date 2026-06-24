@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rendercv/rendercv](https://github.com/rendercv/rendercv/tree/main/.claude/skills/solve-rendercv-issue/SKILL.md)
+Original source: [rendercv/rendercv](https://github.com/rendercv/rendercv/tree/main/.claude/skills/triage-rendercv-issue/SKILL.md)
 
 ---
 
