@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ogham-mcp/ogham-mcp](https://github.com/ogham-mcp/ogham-mcp/tree/main/skills/ogham-recall/SKILL.md)
+Original source: [ogham-mcp/ogham-mcp](https://github.com/ogham-mcp/ogham-mcp/tree/main/skills/ogham-maintain/SKILL.md)
 
 ---
 
