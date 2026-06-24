@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CLAW3DBSC/Claw3D](https://github.com/CLAW3DBSC/Claw3D/tree/main/assets/skills/soundclaw/SKILL.md)
+Original source: [CLAW3DBSC/Claw3D](https://github.com/CLAW3DBSC/Claw3D/tree/main/assets/skills/todo-board/SKILL.md)
 
 ---
 
