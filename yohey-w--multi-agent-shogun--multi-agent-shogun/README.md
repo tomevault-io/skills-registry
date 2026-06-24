@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yohey-w/multi-agent-shogun](https://github.com/yohey-w/multi-agent-shogun/tree/main/skills/shogun-agent-status/SKILL.md)
+Original source: [yohey-w/multi-agent-shogun](https://github.com/yohey-w/multi-agent-shogun/tree/main/.cursor/skills/inbox-write/SKILL.md)
 
 ---
 
