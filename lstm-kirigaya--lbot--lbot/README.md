@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LSTM-Kirigaya/LBot](https://github.com/LSTM-Kirigaya/LBot/tree/main/src/qqbot-skills/execute-task/SKILL.md)
+Original source: [LSTM-Kirigaya/LBot](https://github.com/LSTM-Kirigaya/LBot/tree/main/src/qqbot-skills/history-message/SKILL.md)
 
 ---
 
