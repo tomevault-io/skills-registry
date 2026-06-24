@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [viclafouch/mui-tel-input](https://github.com/viclafouch/mui-tel-input/tree/main/.agents/skills/react-useeffect/SKILL.md)
+Original source: [viclafouch/mui-tel-input](https://github.com/viclafouch/mui-tel-input/tree/main/.agents/skills/web-design-guidelines/SKILL.md)
 
 ---
 
