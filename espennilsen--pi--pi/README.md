@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [espennilsen/pi](https://github.com/espennilsen/pi/tree/main/extensions/pi-memory/skills/pi-memory/SKILL.md)
+Original source: [espennilsen/pi](https://github.com/espennilsen/pi/tree/main/skills/dry-code-review/dry-code-review/SKILL.md)
 
 ---
 
