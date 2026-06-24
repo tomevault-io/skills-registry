@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [0x0funky/agent-game-forge](https://github.com/0x0funky/agent-game-forge/tree/main/apps/daemon/src/templates/skills/generate2dmap/SKILL.md)
+Original source: [0x0funky/agent-game-forge](https://github.com/0x0funky/agent-game-forge/tree/main/apps/daemon/src/templates/skills/generate2dsprite/SKILL.md)
 
 ---
 
