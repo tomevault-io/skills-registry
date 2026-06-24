@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zeon-studio/open-hr](https://github.com/zeon-studio/open-hr/tree/main/.agents/skills/caveman-commit/SKILL.md)
+Original source: [zeon-studio/open-hr](https://github.com/zeon-studio/open-hr/tree/main/.agents/skills/caveman-review/SKILL.md)
 
 ---
 
