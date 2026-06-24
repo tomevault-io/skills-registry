@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [justrach/merjs](https://github.com/justrach/merjs/tree/main/.claude/skills/merjs/SKILL.md)
+Original source: [justrach/merjs](https://github.com/justrach/merjs/tree/main/.claude/skills/deploy/SKILL.md)
 
 ---
 
