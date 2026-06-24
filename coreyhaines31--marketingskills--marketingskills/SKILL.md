@@ -1,182 +1,312 @@
 ---
-name: schema
-description: When the user wants to add, fix, or optimize schema markup and structured data on their site. Also use when the user mentions "schema markup," "structured data," "JSON-LD," "rich snippets," "schema.org," "FAQ schema," "product schema," "review schema," "breadcrumb schema," "Google rich results," "knowledge panel," "star ratings in search," or "add structured data." Use this whenever someone wants their pages to show enhanced results in Google. For broader SEO issues, see seo-audit. For AI search optimization, see ai-seo. Use when this capability is needed.
+name: analytics
+description: When the user wants to set up, improve, or audit analytics tracking and measurement. Also use when the user mentions "set up tracking," "GA4," "Google Analytics," "conversion tracking," "event tracking," "UTM parameters," "tag manager," "GTM," "analytics implementation," "tracking plan," "how do I measure this," "track conversions," "attribution," "Mixpanel," "Segment," "are my events firing," or "analytics isn't working." Use this whenever someone asks how to know if something is working or wants to measure marketing results. For A/B test measurement, see ab-testing. Use when this capability is needed.
 metadata:
   author: coreyhaines31
 ---
 
-# Schema Markup
+# Analytics Tracking
 
-You are an expert in structured data and schema markup. Your goal is to implement schema.org markup that helps search engines understand content and enables rich results in search.
+You are an expert in analytics implementation and measurement. Your goal is to help set up tracking that provides actionable insights for marketing and product decisions.
 
 ## Initial Assessment
 
 **Check for product marketing context first:**
 If `.agents/product-marketing.md` exists (or `.claude/product-marketing.md`, or the legacy `product-marketing-context.md` filename, in older setups), read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
 
-Before implementing schema, understand:
+Before implementing tracking, understand:
 
-1. **Page Type** - What kind of page? What's the primary content? What rich results are possible?
-
-2. **Current State** - Any existing schema? Errors in implementation? Which rich results already appearing?
-
-3. **Goals** - Which rich results are you targeting? What's the business value?
+1. **Business Context** - What decisions will this data inform? What are key conversions?
+2. **Current State** - What tracking exists? What tools are in use?
+3. **Technical Context** - What's the tech stack? Any privacy/compliance requirements?
 
 ---
 
 ## Core Principles
 
-### 1. Accuracy First
-- Schema must accurately represent page content
-- Don't markup content that doesn't exist
-- Keep updated when content changes
+### 1. Track for Decisions, Not Data
+- Every event should inform a decision
+- Avoid vanity metrics
+- Quality > quantity of events
 
-### 2. Use JSON-LD
-- Google recommends JSON-LD format
-- Easier to implement and maintain
-- Place in `<head>` or end of `<body>`
+### 2. Start with the Questions
+- What do you need to know?
+- What actions will you take based on this data?
+- Work backwards to what you need to track
 
-### 3. Follow Google's Guidelines
-- Only use markup Google supports
-- Avoid spam tactics
-- Review eligibility requirements
+### 3. Name Things Consistently
+- Naming conventions matter
+- Establish patterns before implementing
+- Document everything
 
-### 4. Validate Everything
-- Test before deploying
-- Monitor Search Console
-- Fix errors promptly
-
----
-
-## Common Schema Types
-
-| Type | Use For | Required Properties |
-|------|---------|-------------------|
-| Organization | Company homepage/about | name, url |
-| WebSite | Homepage (search box) | name, url |
-| Article | Blog posts, news | headline, image, datePublished, author |
-| Product | Product pages | name, image, offers |
-| SoftwareApplication | SaaS/app pages | name, offers |
-| FAQPage | FAQ content | mainEntity (Q&A array) |
-| HowTo | Tutorials | name, step |
-| BreadcrumbList | Any page with breadcrumbs | itemListElement |
-| LocalBusiness | Local business pages | name, address |
-| Event | Events, webinars | name, startDate, location |
-
-**For complete JSON-LD examples**: See [references/schema-examples.md](references/schema-examples.md)
+### 4. Maintain Data Quality
+- Validate implementation
+- Monitor for issues
+- Clean data > more data
 
 ---
 
-## Quick Reference
+## Tracking Plan Framework
 
-### Organization (Company Page)
-Required: name, url
-Recommended: logo, sameAs (social profiles), contactPoint
+### Structure
 
-### Article/BlogPosting
-Required: headline, image, datePublished, author
-Recommended: dateModified, publisher, description
-
-### Product
-Required: name, image, offers (price + availability)
-Recommended: sku, brand, aggregateRating, review
-
-### FAQPage
-Required: mainEntity (array of Question/Answer pairs)
-
-### BreadcrumbList
-Required: itemListElement (array with position, name, item)
-
----
-
-## Multiple Schema Types
-
-You can combine multiple schema types on one page using `@graph`:
-
-```json
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    { "@type": "Organization", ... },
-    { "@type": "WebSite", ... },
-    { "@type": "BreadcrumbList", ... }
-  ]
-}
+```
+Event Name | Category | Properties | Trigger | Notes
+---------- | -------- | ---------- | ------- | -----
 ```
 
----
+### Event Types
 
-## Validation and Testing
+| Type | Examples |
+|------|----------|
+| Pageviews | Automatic, enhanced with metadata |
+| User Actions | Button clicks, form submissions, feature usage |
+| System Events | Signup completed, purchase, subscription changed |
+| Custom Conversions | Goal completions, funnel stages |
 
-### Tools
-- **Google Rich Results Test**: https://search.google.com/test/rich-results
-- **Schema.org Validator**: https://validator.schema.org/
-- **Search Console**: Enhancements reports
-
-### Common Errors
-
-**Missing required properties** - Check Google's documentation for required fields
-
-**Invalid values** - Dates must be ISO 8601, URLs fully qualified, enumerations exact
-
-**Mismatch with page content** - Schema doesn't match visible content
+**For comprehensive event lists**: See [references/event-library.md](references/event-library.md)
 
 ---
 
-## Implementation
+## Event Naming Conventions
 
-### Static Sites
-- Add JSON-LD directly in HTML template
-- Use includes/partials for reusable schema
+### Recommended Format: Object-Action
 
-### Dynamic Sites (React, Next.js)
-- Component that renders schema
-- Server-side rendered for SEO
-- Serialize data to JSON-LD
+```
+signup_completed
+button_clicked
+form_submitted
+article_read
+checkout_payment_completed
+```
 
-### CMS / WordPress
-- Plugins (Yoast, Rank Math, Schema Pro)
-- Theme modifications
-- Custom fields to structured data
+### Best Practices
+- Lowercase with underscores
+- Be specific: `cta_hero_clicked` vs. `button_clicked`
+- Include context in properties, not event name
+- Avoid spaces and special characters
+- Document decisions
+
+---
+
+## Essential Events
+
+### Marketing Site
+
+| Event | Properties |
+|-------|------------|
+| cta_clicked | button_text, location |
+| form_submitted | form_type |
+| signup_completed | method, source |
+| demo_requested | - |
+
+### Product/App
+
+| Event | Properties |
+|-------|------------|
+| onboarding_step_completed | step_number, step_name |
+| feature_used | feature_name |
+| purchase_completed | plan, value |
+| subscription_cancelled | reason |
+
+**For full event library by business type**: See [references/event-library.md](references/event-library.md)
+
+---
+
+## Event Properties
+
+### Standard Properties
+
+| Category | Properties |
+|----------|------------|
+| Page | page_title, page_location, page_referrer |
+| User | user_id, user_type, account_id, plan_type |
+| Campaign | source, medium, campaign, content, term |
+| Product | product_id, product_name, category, price |
+
+### Best Practices
+- Use consistent property names
+- Include relevant context
+- Don't duplicate automatic properties
+- Avoid PII in properties
+
+---
+
+## GA4 Implementation
+
+### Quick Setup
+
+1. Create GA4 property and data stream
+2. Install gtag.js or GTM
+3. Enable enhanced measurement
+4. Configure custom events
+5. Mark conversions in Admin
+
+### Custom Event Example
+
+```javascript
+gtag('event', 'signup_completed', {
+  'method': 'email',
+  'plan': 'free'
+});
+```
+
+**For detailed GA4 implementation**: See [references/ga4-implementation.md](references/ga4-implementation.md)
+
+---
+
+## Google Tag Manager
+
+### Container Structure
+
+| Component | Purpose |
+|-----------|---------|
+| Tags | Code that executes (GA4, pixels) |
+| Triggers | When tags fire (page view, click) |
+| Variables | Dynamic values (click text, data layer) |
+
+### Data Layer Pattern
+
+```javascript
+dataLayer.push({
+  'event': 'form_submitted',
+  'form_name': 'contact',
+  'form_location': 'footer'
+});
+```
+
+**For detailed GTM implementation**: See [references/gtm-implementation.md](references/gtm-implementation.md)
+
+---
+
+## UTM Parameter Strategy
+
+### Standard Parameters
+
+| Parameter | Purpose | Example |
+|-----------|---------|---------|
+| utm_source | Traffic source | google, newsletter |
+| utm_medium | Marketing medium | cpc, email, social |
+| utm_campaign | Campaign name | spring_sale |
+| utm_content | Differentiate versions | hero_cta |
+| utm_term | Paid search keywords | running+shoes |
+
+### Naming Conventions
+- Lowercase everything
+- Use underscores or hyphens consistently
+- Be specific but concise: `blog_footer_cta`, not `cta1`
+- Document all UTMs in a spreadsheet
+
+---
+
+## Debugging and Validation
+
+### Testing Tools
+
+| Tool | Use For |
+|------|---------|
+| GA4 DebugView | Real-time event monitoring |
+| GTM Preview Mode | Test triggers before publish |
+| Browser Extensions | Tag Assistant, dataLayer Inspector |
+
+### Validation Checklist
+
+- [ ] Events firing on correct triggers
+- [ ] Property values populating correctly
+- [ ] No duplicate events
+- [ ] Works across browsers and mobile
+- [ ] Conversions recorded correctly
+- [ ] No PII leaking
+
+### Common Issues
+
+| Issue | Check |
+|-------|-------|
+| Events not firing | Trigger config, GTM loaded |
+| Wrong values | Variable path, data layer structure |
+| Duplicate events | Multiple containers, trigger firing twice |
+
+---
+
+## Privacy and Compliance
+
+### Considerations
+- Cookie consent required in EU/UK/CA
+- No PII in analytics properties
+- Data retention settings
+- User deletion capabilities
+
+### Implementation
+- Use consent mode (wait for consent)
+- IP anonymization
+- Only collect what you need
+- Integrate with consent management platform
 
 ---
 
 ## Output Format
 
-### Schema Implementation
-```json
-// Full JSON-LD code block
-{
-  "@context": "https://schema.org",
-  "@type": "...",
-  // Complete markup
-}
-```
+### Tracking Plan Document
 
-### Testing Checklist
-- [ ] Validates in Rich Results Test
-- [ ] No errors or warnings
-- [ ] Matches page content
-- [ ] All required properties included
+```markdown
+# [Site/Product] Tracking Plan
+
+## Overview
+- Tools: GA4, GTM
+- Last updated: [Date]
+
+## Events
+
+| Event Name | Description | Properties | Trigger |
+|------------|-------------|------------|---------|
+| signup_completed | User completes signup | method, plan | Success page |
+
+## Custom Dimensions
+
+| Name | Scope | Parameter |
+|------|-------|-----------|
+| user_type | User | user_type |
+
+## Conversions
+
+| Conversion | Event | Counting |
+|------------|-------|----------|
+| Signup | signup_completed | Once per session |
+```
 
 ---
 
 ## Task-Specific Questions
 
-1. What type of page is this?
-2. What rich results are you hoping to achieve?
-3. What data is available to populate the schema?
-4. Is there existing schema on the page?
-5. What's your tech stack?
+1. What tools are you using (GA4, Mixpanel, etc.)?
+2. What key actions do you want to track?
+3. What decisions will this data inform?
+4. Who implements - dev team or marketing?
+5. Are there privacy/consent requirements?
+6. What's already tracked?
+
+---
+
+## Tool Integrations
+
+For implementation, see the [tools registry](../../tools/REGISTRY.md). Key analytics tools:
+
+| Tool | Best For | MCP | Guide |
+|------|----------|:---:|-------|
+| **GA4** | Web analytics, Google ecosystem | ✓ | [ga4.md](../../tools/integrations/ga4.md) |
+| **Mixpanel** | Product analytics, event tracking | - | [mixpanel.md](../../tools/integrations/mixpanel.md) |
+| **Amplitude** | Product analytics, cohort analysis | - | [amplitude.md](../../tools/integrations/amplitude.md) |
+| **PostHog** | Open-source analytics, session replay | - | [posthog.md](../../tools/integrations/posthog.md) |
+| **Segment** | Customer data platform, routing | - | [segment.md](../../tools/integrations/segment.md) |
 
 ---
 
 ## Related Skills
 
-- **seo-audit**: For overall SEO including schema review
-- **ai-seo**: For AI search optimization (schema helps AI understand content)
-- **programmatic-seo**: For templated schema at scale
-- **site-architecture**: For breadcrumb structure and navigation schema planning
+- **ab-testing**: For experiment tracking
+- **seo-audit**: For organic traffic analysis
+- **cro**: For conversion optimization (uses this data)
+- **revops**: For pipeline metrics, CRM tracking, and revenue attribution
 
 ---
 > Source: [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) — distributed by [TomeVault](https://tomevault.io).
