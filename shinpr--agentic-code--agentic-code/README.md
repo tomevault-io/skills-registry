@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shinpr/agentic-code](https://github.com/shinpr/agentic-code/tree/main/.agents/skills/testing-strategy/SKILL.md)
+Original source: [shinpr/agentic-code](https://github.com/shinpr/agentic-code/tree/main/.agents/skills/ai-development-guide/SKILL.md)
 
 ---
 
