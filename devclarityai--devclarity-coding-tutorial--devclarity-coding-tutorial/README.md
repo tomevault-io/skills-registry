@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [devclarityai/devclarity-coding-tutorial](https://github.com/devclarityai/devclarity-coding-tutorial/tree/main/.cursor/skills/code-explainer/SKILL.md)
+Original source: [devclarityai/devclarity-coding-tutorial](https://github.com/devclarityai/devclarity-coding-tutorial/tree/main/.agents/skills/code-explainer/SKILL.md)
 
 ---
 
