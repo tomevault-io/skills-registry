@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HyunjunJeon/Deepagent-research-context-engineering](https://github.com/HyunjunJeon/Deepagent-research-context-engineering/tree/main/deepagents_sourcecode/libs/deepagents-cli/examples/skills/skill-creator/SKILL.md)
+Original source: [HyunjunJeon/Deepagent-research-context-engineering](https://github.com/HyunjunJeon/Deepagent-research-context-engineering/tree/main/deepagents_sourcecode/libs/deepagents-cli/examples/skills/langgraph-docs/SKILL.md)
 
 ---
 
