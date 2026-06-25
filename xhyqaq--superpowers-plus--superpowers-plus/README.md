@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xhyqaq/superpowers-plus](https://github.com/xhyqaq/superpowers-plus/tree/main/skills/verification-before-completion/SKILL.md)
+Original source: [xhyqaq/superpowers-plus](https://github.com/xhyqaq/superpowers-plus/tree/main/skills/bootstrapping-repository-memory/SKILL.md)
 
 ---
 
