@@ -1,13 +1,13 @@
 # tamagui
 
-> Skill by [tamagui](https://github.com/tamagui/tamagui) — distributed by [TomeVault](https://tomevault.io/claim/tamagui)
+> Skill by [tamagui](https://github.com/tamagui/tamagui) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tamagui/tamagui](https://github.com/tamagui/tamagui/tree/main/plans/tamagui-skill/skills/tamagui)
+Original source: [tamagui/tamagui](https://github.com/tamagui/tamagui/tree/main/.claude/skills/git-safety/SKILL.md)
 
 ---
 
 Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
-Is this your repo? [Claim it](https://tomevault.io/claim/tamagui) to manage distribution.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
