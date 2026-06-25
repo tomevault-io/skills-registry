@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ScaleBrick/founder-marketing-skills](https://github.com/ScaleBrick/founder-marketing-skills/tree/main/skills/strategy/SKILL.md)
+Original source: [ScaleBrick/founder-marketing-skills](https://github.com/ScaleBrick/founder-marketing-skills/tree/main/skills/keywords/SKILL.md)
 
 ---
 
