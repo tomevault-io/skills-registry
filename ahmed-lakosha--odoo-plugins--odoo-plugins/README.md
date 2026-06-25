@@ -1,0 +1,13 @@
+# odoo-plugins
+
+> Skill by [ahmed-lakosha](https://github.com/ahmed-lakosha/odoo-plugins) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ahmed-lakosha/odoo-plugins](https://github.com/ahmed-lakosha/odoo-plugins/tree/main/odoo-test-plugin/odoo-test/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
