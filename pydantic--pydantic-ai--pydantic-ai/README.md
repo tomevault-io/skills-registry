@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pydantic/pydantic-ai](https://github.com/pydantic/pydantic-ai/tree/main/.claude/skills/testing-skill/SKILL.md)
+Original source: [pydantic/pydantic-ai](https://github.com/pydantic/pydantic-ai/tree/main/.claude/skills/pre-push-review/SKILL.md)
 
 ---
 
