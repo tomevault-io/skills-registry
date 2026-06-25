@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [YougLin-dev/Aha-Loop](https://github.com/YougLin-dev/Aha-Loop/tree/main/.agents/skills/research/SKILL.md)
+Original source: [YougLin-dev/Aha-Loop](https://github.com/YougLin-dev/Aha-Loop/tree/main/.agents/skills/architect/SKILL.md)
 
 ---
 
