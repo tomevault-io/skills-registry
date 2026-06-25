@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shanyan-wcx/Harmonic](https://github.com/shanyan-wcx/Harmonic/tree/main/.opencode/skills/trellis-break-loop/SKILL.md)
+Original source: [shanyan-wcx/Harmonic](https://github.com/shanyan-wcx/Harmonic/tree/main/.opencode/skills/trellis-before-dev/SKILL.md)
 
 ---
 
