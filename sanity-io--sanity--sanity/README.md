@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sanity-io/sanity](https://github.com/sanity-io/sanity/tree/main/.agents/skills/find-skills/SKILL.md)
+Original source: [sanity-io/sanity](https://github.com/sanity-io/sanity/tree/main/.agents/skills/write-a-skill/SKILL.md)
 
 ---
 
