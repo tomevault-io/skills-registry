@@ -1,258 +1,98 @@
 ---
-name: subscriptionsync
-description: Work with the subscription sync bridge in `openmeter/billing/worker/subscriptionsync/...`. Use when modifying how subscription target state is reconciled into billing artifacts such as invoice lines, split-line groups, or charges; when changing persisted-state loading, reconciler patch routing, or subscription sync tests; and when reasoning about the bridge between subscription views and billing state. Use when this capability is needed.
+name: go-types-conversion
+description: Naming convention for type-translation files and functions. Use when creating or editing files that convert between domain, API, and DB types. Use when this capability is needed.
 metadata:
   author: openmeterio
 ---
 
-# Subscription Sync
+# Type Translation Naming
 
-Guidance for working with `openmeter/billing/worker/subscriptionsync/`.
+Apply to new and touched code. Do not rename legacy symbols unsolicited.
 
-## What This Package Is
+## File naming
 
-`subscriptionsync` is the bridge between the subscription domain and billing.
+| Path contains                                     | File name    | Purpose      |
+| ------------------------------------------------- | ------------ | ------------ |
+| `httpdriver/`, `httphandler/`, `api/v3/handlers/` | `convert.go` | API ↔ domain |
+| `adapter/`, `repo/`                               | `mapping.go` | DB ↔ domain  |
 
-- Input: either a subscription ID (`models.NamespacedID`) or an already-expanded `subscription.SubscriptionView`
-- Output: reconciled billing state
-  - invoice lines / split-line groups
-  - charges
-  - persisted sync state
+Split large files by entity: `convert_plan.go`, `mapping_subscription.go`.
 
-It does not own subscription editing rules and it does not own billing primitives. It translates subscription target state into billing-side operations.
+`mapper.go` is forbidden. Rename it to `convert.go` or `mapping.go` (based on layer) when the file is touched.
 
-## Package Layout
+## Function naming
 
-```
-openmeter/billing/worker/subscriptionsync/
-├── service/                         # orchestration entrypoint used by the worker
-│   ├── service.go                   # Service struct, Config, FeatureFlags, constructor
-│   ├── sync.go                      # internal sync orchestration for SyncByID/SyncByView entrypoints
-│   ├── ref.go                       # normalizes subscription ID vs view references
-│   ├── reconcile.go                 # build persisted snapshot + target state + plan
-│   ├── handlers.go                  # event handlers (HandleCancelledEvent, HandleInvoiceCreation)
-│   ├── base_test.go                 # shared SuiteBase + SyncSuiteBase test harness
-│   ├── sync_test.go                 # invoice-sync scenarios
-│   ├── creditsonly_test.go          # credit-only charge scenarios
-│   ├── syncbillinganchor_test.go    # billing anchor / alignment scenarios
-│   ├── persistedstate/              # package-owned persisted snapshot abstractions
-│   ├── targetstate/                 # expected billing/charge target generation
-│   └── reconciler/                  # plan + apply layer
-│       ├── reconciler.go            # Reconciler interface, Plan/Apply, diffItem, filterInScopeLines
-│       ├── patch.go                 # Patch interfaces, PatchCollection, patchCollectionRouter
-│       ├── patchinvoice.go          # invoicePatchCollectionBase (shared invoice patch helpers)
-│       ├── patchinvoiceline.go      # lineInvoicePatchCollection
-│       ├── patchinvoicelinehierarchy.go # lineHierarchyPatchCollection
-│       ├── patchcharge.go           # chargePatchCollection base + newChargeIntentBaseFromTargetState
-│       ├── patchchargeflatfee.go    # flatFeeChargeCollection
-│       ├── patchchargeusagebased.go # usageBasedChargeCollection
-│       ├── patchhelpers.go          # shared patch utilities
-│       ├── prorate.go               # semanticProrateDecision
-│       ├── invoiceupdater/          # invoice line/group CRUD
-│       └── chargeupdater/           # charge creation (or disabled no-op)
-├── reconciler/                      # periodic reconciliation (batch re-sync of subscriptions)
-├── adapter/                         # sync-state persistence (Ent-backed)
-└── service.go                       # top-level interface/config (subscriptionsync.Service, subscriptionsync.Adapter)
-```
+### Shape: `From<Qualifier><Thing>` / `To<Qualifier><Thing>`
 
-## Core Flow
+The qualifier is `API` or `DB` — no other qualifiers (`Domain`, `Model`, package-name infixes).
 
-The public sync entrypoints are defined by `subscriptionsync.SyncService`:
+The suffix `<Thing>` is the **non-domain type's unqualified name** — the API type or DB type, not the domain type. This keeps it stable: a matched pair (`FromAPI<Thing>` / `ToAPI<Thing>`) always refers to the same non-domain type, regardless of direction.
 
-- `SyncByID(...)` and `SyncByIDAndInvoiceCustomer(...)` fetch subscription state internally.
-- `SyncByView(...)` and `SyncByViewAndInvoiceCustomer(...)` use an already-expanded subscription view.
-- The `AndInvoiceCustomer` variants run the regular sync and then invoice pending lines for the subscription customer.
+- `FromAPI<Thing>` — takes the API type `<Thing>` as input, returns the domain representation.
+- `ToAPI<Thing>` — takes the domain type as input, returns the API type `<Thing>`.
+- Same for `FromDB<Thing>` / `ToDB<Thing>`.
 
-The internal orchestration lives in `service/sync.go` (`synchronizeSubscription`, `synchronizeSubscriptionAndInvoiceCustomer`) and normalizes the public input through `subscriptionReferenceOrView` from `service/ref.go`.
+### Examples
 
-High-level flow:
-1. Load the subscription entity, including deleted subscriptions when the ID path is used.
-2. Load persisted sync state and persisted billing artifacts.
-3. Build target state from the subscription view, or an empty target state when the subscription is deleted.
-4. Reconcile target vs persisted.
-5. Apply billing patches.
-6. Persist sync state.
+```go
+// API ↔ domain
+FromAPIPlan(a api.Plan) (plan.Plan, error)
+ToAPIPlan(p plan.Plan) api.Plan
 
-The important bridge boundaries are:
-- `persistedstate`: current billing-side reality relevant to this subscription
-- `targetstate`: expected billing-side reality derived from the subscription view
-- `reconciler`: diff between the two, expressed as backend-specific patches
+// Suffix is the API type name, even when domain type differs
+FromAPIPlanCreate(a api.PlanCreate) (plan.CreateInput, error)
+ToAPIPlanCreate(p plan.CreateInput) api.PlanCreate
 
-Deleted-subscription cleanup uses the ID path. `subscription.Service.GetView` follows the normal non-deleted read path, so code that needs to reconcile deleted subscriptions must use `List(... IncludeDeleted: true)` or the sync service's ID entrypoints rather than calling `GetView` first.
+FromAPIProRatingConfig(a api.ProRatingConfig) (productcatalog.ProRatingConfig, error)
+ToAPIProRatingConfig(p productcatalog.ProRatingConfig) *api.ProRatingConfig
 
-## Persisted State
+// DB ↔ domain — suffix is the DB type name
+FromDBSubscription(row *db.Subscription) (subscription.Subscription, error)
+ToDBSubscription(s subscription.Subscription) *db.Subscription
 
-`service/persistedstate` owns the billing-side read model used by sync.
-
-Important rules:
-- Do not leak raw `billing.LineOrHierarchy` through the rest of subscription sync.
-- Use `persistedstate.Item` and the `ItemAs...` helpers instead.
-- `Item.Type()` is package-owned and distinguishes:
-  - `invoice.line`
-  - `invoice.splitLineGroup`
-  - `charge.flatFee`
-  - `charge.usageBased`
-- `State` contains:
-  - `ByUniqueID map[string]Item`
-  - `Invoices`
-
-Charge loading notes:
-- charges are optional and loaded only when `ChargesService` is configured
-- persisted charges are merged into `State.ByUniqueID`; downstream sync code should not depend on a separate charge-only map
-- persisted charge unique IDs must not overlap persisted invoice unique IDs
-- credit-purchase charges tied to subscriptions are currently unsupported and should error
-
-Invoice loading notes:
-- only invoices referenced by the loaded persisted entities are fetched
-- missing referenced invoices are treated as errors
-- `Invoices.IsGatheringInvoice(...)` returns an error for unknown IDs
-
-## Target State
-
-`service/targetstate` converts a subscription view into expected billing/charge items.
-
-Useful points:
-- `BuildInput.SubscriptionView` is a pointer. A nil view represents a deleted subscription and builds an empty target state so persisted billing artifacts are removed.
-- `StateItem.IsBillable()` is the first gate
-- `StateItem.GetServicePeriod()` is the diff-level period source
-- `StateItem.GetExpectedLine()` is invoice-specific rendering; keep direct billing assumptions isolated to places that really need invoice lines
-
-For direct billing sync, target items that are not billable or do not render to an expected line are filtered before invoice diffing.
-
-## Semantic Prorate Decision
-
-`reconciler/prorate.go` contains `semanticProrateDecision(existing, target)`. For flat fee lines, it compares the existing per-unit amount and service period against the target. If either differs, it returns `ShouldProrate: true` with original/target amounts so the patch can update period and amount atomically. Non-flat-fee items always return `ShouldProrate: false` and fall through to the normal shrink/extend path.
-
-The service-level `FeatureFlags` (`EnableFlatFeeInAdvanceProrating`, `EnableFlatFeeInArrearsProrating`) gate whether proration is applied during target state generation.
-
-### Invoicing path
-
-Semantic proration (`semanticProrateDecision`) and empty-period filtering (`patchhelpers.go`, `patchinvoicelinehierarchy.go`) are invoice-only concerns — they run only when `patches.GetBackendType() == BackendTypeInvoicing`. Within invoiced lines, flat fee lines are excluded from empty-period filtering because their prorating implementation handles period changes.
-
-### Charges path
-
-Charge-backed targets do not use invoice-style semantic proration. The charge stack materializes and prorates the charge state itself, so reconciliation only needs to detect create/delete/period-shape changes. In the charges path, the flat fee charge is responsible for handling the omission of empty lines.
-
-## Reconciler
-
-`service/reconciler` is intentionally split into:
-- semantic diffing
-- patch collection routing
-- backend-specific apply
-
-Current shape:
-- invoice patches and charge patches are separate
-- routing is based on persisted item type for existing entities
-- default routing for new target items uses subscription settlement mode and rate-card type
-- apply order is intentionally invoice-first, charge-second during the backend transition; this is not atomic across backends, and partial apply is acceptable because the invoice backend is being deprecated in favor of charges
-
-Important routing rules:
-- `GetCollectionFor(persistedItem)` routes by persisted item type (invoice line, split-line group, flat fee charge, usage-based charge)
-- `ResolveDefaultCollection(targetItem)` routes new items (no persisted counterpart) by subscription settlement mode + price type:
-  - `credit_only` + flat price -> `flatFeeChargeCollection`
-  - `credit_only` + unit price -> `usageBasedChargeCollection`
-  - everything else -> `lineCollection` (invoice lines)
-
-The `filterInScopeLines` function gates which target items enter reconciliation. It filters out non-billable items for every backend, and only invoicing-backed targets are additionally gated on `GetExpectedLine()`. This runs before any diffing so absent targets naturally produce delete/no-op outcomes.
-
-Charge-backed mutation notes:
-- charge collections support create/delete and period-shape changes
-- most shrink and extend operations are emitted as an emulated replacement: delete the existing charge and create a replacement charge from the target state
-- usage-based `credit_then_invoice` shrink and extend are emitted as native charge patches, including the target invoice-at, so the usage-based state machine can preserve existing immutable invoice/ledger state and keep the invoice train unblocked
-- charge-backed explicit prorate still returns unsupported; charge domains own their own proration/materialization behavior
-
-## Invoice vs Charge Semantics
-
-Keep these separate:
-
-- Invoice sync:
-  - may need `GetExpectedLine()`
-  - reasons about gathering vs standard invoices
-  - updates invoice lines and split-line groups
-
-- Charge sync:
-  - provisions charge intents directly
-  - does not go through invoice-line rendering
-  - supports create/delete and period-shape changes
-  - emits most shrink and extend operations as delete+create replacements
-  - emits usage-based `credit_then_invoice` shrink and extend as native charge patches
-  - keeps explicit prorate unsupported because charges own their own proration logic
-
-Do not force charge behavior through invoice abstractions.
-
-## Split-Line Groups
-
-Split-line hierarchies are invoice-only persisted items.
-
-Important detail:
-- annotation semantics are taken from the last relevant child line
-- hierarchy shrink logic must delete an emptied usage-based child instead of updating it to an empty non-billable window
-
-If you see regressions around progressive billing cancellation, inspect the hierarchy shrink path first.
-
-## Testing Guidance
-
-Main service tests live in:
-- `service/sync_test.go` for invoice-oriented scenarios
-- `service/creditsonly_test.go` for charge-oriented `credit_only` scenarios
-- `service/syncbillinganchor_test.go` for billing anchor / alignment scenarios
-- `service/base_test.go` for shared setup and helpers
-
-Test suite hierarchy:
-- `SuiteBase` — base struct embedding `billingtest.BaseSuite` + `billingtest.SubscriptionMixin`. Handles service construction, namespace/customer/feature provisioning, and teardown.
-- `SyncSuiteBase` — extends `SuiteBase` with sync-specific helpers: `gatheringInvoice(...)`, `createSubscriptionFromPlanAt(...)`, `expectLines(...)`, line matchers (`recurringLineMatcher`, `oneTimeLineMatcher`).
-
-Use `setupChargesService(config)` on `SuiteBase` to rebuild the sync service with a charge-capable stack (replaces the default no-charges service).
-
-When a billing sync test needs to exercise deleted-subscription cleanup, prefer the public ID entrypoint (`SyncByID` / `SyncByIDAndInvoiceCustomer`) so the service owns the `IncludeDeleted` lookup. Subscription-domain coverage for deleted scheduled replacements belongs under `openmeter/subscription/service/sync_test.go`; keep billing-package tests focused on billing artifacts.
-
-For charge-backed sync tests:
-- prefer `openmeter/billing/charges/testutils.NewMockHandlers()`
-- these mocks are intentionally minimal but valid enough for charge creation/advancement
-- do not query charge tables directly from sync tests; use `Charges.ListCharges(...)` with `SubscriptionIDs` and `ChargeTypes` filters to assert the end state through the public charges stack
-- when asserting charge subscription phase IDs, derive the expected phase from the child unique reference ID and the loaded subscription view instead of hardcoding phase IDs in scenario data
-
-Pattern for credit-only tests:
-1. construct plan with `SettlementMode: productcatalog.CreditOnlySettlementMode`
-2. create subscription through the plan workflow
-3. sync to a future horizon
-4. assert charges by unique reference IDs and exact periods
-
-## Event Handlers
-
-`service/handlers.go` contains two event-driven entrypoints:
-
-- `HandleCancelledEvent`: triggered on subscription cancellation. Syncs up to the subscription's `ActiveTo` time. Skips pre-sync invoice creation to avoid creating invoices that would immediately change.
-- `HandleInvoiceCreation`: triggered when a standard invoice is created. Finds affected subscriptions from the invoice lines and re-syncs each to backfill the gathering invoice.
-
-## Periodic Reconciler
-
-`reconciler/reconciler.go` (the top-level `reconciler` package, not `service/reconciler`) is the batch reconciliation component. It periodically re-syncs subscriptions to catch missed events.
-
-Key methods:
-- `ListSubscriptions(...)` — pages through active subscriptions with their sync states
-- `ReconcileSubscription(...)` — calls `SyncByID` for the subscription under reconciliation
-- `All(...)` — reconciles all eligible subscriptions, skipping those with no billables or whose `NextSyncAfter` is in the future (unless `Force` is set)
-
-## Common Refactor Rules
-
-- Keep `persistedstate` package-owned. It is the anti-corruption boundary.
-- Keep `diffItem(...)` driven by semantic periods and target items, not by rendered invoice-line details unless required.
-- Prefer adding narrow helpers over passing raw billing union types around.
-- When adding new billing backends, route them through the reconciler collections instead of branching ad hoc in `sync.go`.
-
-## Verification
-
-When changing this package, the usual verification commands are:
-
-```bash
-nix develop --impure .#ci -c go vet ./...
-nix develop --impure .#ci -c make lint-go
-nix develop --impure .#ci -c env POSTGRES_HOST=127.0.0.1 go test -count=1 -tags dynamic ./openmeter/billing/worker/subscriptionsync/...
-nix develop --impure .#ci -c env POSTGRES_HOST=127.0.0.1 go test -count=1 -tags dynamic ./test/billing
+FromDBChargeFlatFee(row *entdb.ChargeFlatFee) (flatfee.Charge, error)
+ToDBChargeFlatFee(c flatfee.Charge) *entdb.ChargeFlatFee
 ```
 
-If the change touches charges provisioning behavior, also verify the relevant `openmeter/billing/charges/...` packages or suites.
+### Additional rules
+
+- **Exported** functions always include the type suffix (`FromAPIPlanCreate`, not bare `FromAPI`).
+- **Unexported** helpers in a single-type file may drop the suffix (`fromDB`, `toAPI`).
+- **Fallible** (parse/validate) → `(T, error)`. **Infallible** (projection) → `T`. Typically `FromAPI…` / `FromDB…` is fallible; the reverse is not.
+- **Batch helpers** use the plural: `FromAPIPlans`, `ToDBSubscriptions`. Same suffix rule — the plural of the non-domain type name.
+
+### Forbidden patterns
+
+- `Map…`, `Convert…To…`, primary `As…`
+- `<Source>To<Target>` shape (e.g. `APIToPlan`)
+- Bare `FromAPI` / `ToDB` without a type suffix
+- goverter or other codegen type mappers
+
+## Decision tree
+
+### Naming a function
+
+1. **Pick the qualifier:** API/HTTP/wire on one side → `API`. DB/persistence on one side → `DB`.
+2. **Pick the suffix:** the non-domain type's unqualified name (`Plan`, `PlanCreate`, `ChargeFlatFee`).
+3. **Pick the return style:** fallible → `(T, error)`, infallible → `T`.
+4. **Exported?** Must include the type suffix. Unexported single-type helper may drop it.
+
+### Interacting with the user
+
+- **File is `mapper.go`?** Flag it — should be `convert.go` or `mapping.go` based on layer. Offer to rename as part of the edit. Don't rename silently.
+- **Adding new functions to a legacy file?** Use the new convention for new functions. Don't rename old ones unless asked.
+- **Task is "clean up this file"?** Rename, update call sites, `Grep` for the old name to catch misses, keep the rename in its own commit.
+- **`// Code generated` header?** Off-limits regardless.
+
+## Suggestion phrasing
+
+Lead with the specific rename and the reason. Keep it short.
+
+> `MapChargeFlatFeeFromDB` — use `FromDBChargeFlatFee`. Want me to rename and update callers?
+
+> Direction looks inverted — `FromAPI…` returns a domain type, so this should be `ToAPIPlan`. Drop the error return if it can't actually fail.
+
+> This file is `mapper.go` — should be `convert.go` since it lives in `httphandler/`. Want me to rename it?
 
 ---
 > Source: [openmeterio/openmeter](https://github.com/openmeterio/openmeter) — distributed by [TomeVault](https://tomevault.io).
