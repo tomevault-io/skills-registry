@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wolverin0/clawtrol](https://github.com/wolverin0/clawtrol/tree/main/.claude/skills/audit-fix-generator/SKILL.md)
+Original source: [wolverin0/clawtrol](https://github.com/wolverin0/clawtrol/tree/main/.claude/skills/audit-domain-10-cost/SKILL.md)
 
 ---
 
