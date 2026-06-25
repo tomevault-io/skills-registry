@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google-labs-code/design.md](https://github.com/google-labs-code/design.md/tree/main/.agents/skills/ink/SKILL.md)
+Original source: [google-labs-code/design.md](https://github.com/google-labs-code/design.md/tree/main/.agents/skills/tdd/SKILL.md)
 
 ---
 
