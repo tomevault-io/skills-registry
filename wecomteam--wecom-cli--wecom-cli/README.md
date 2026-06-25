@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [WecomTeam/wecom-cli](https://github.com/WecomTeam/wecom-cli/tree/main/skills/wecomcli-contact/SKILL.md)
+Original source: [WecomTeam/wecom-cli](https://github.com/WecomTeam/wecom-cli/tree/main/skills/wecomcli-schedule/SKILL.md)
 
 ---
 
