@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lllllllama/RigorPilot-Skills](https://github.com/lllllllama/RigorPilot-Skills/tree/main/skills/explore-code/SKILL.md)
+Original source: [lllllllama/RigorPilot-Skills](https://github.com/lllllllama/RigorPilot-Skills/tree/main/skills/analyze-project/SKILL.md)
 
 ---
 
