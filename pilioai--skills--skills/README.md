@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pilioai/skills](https://github.com/pilioai/skills/tree/main/skills/remove-background/SKILL.md)
+Original source: [pilioai/skills](https://github.com/pilioai/skills/tree/main/skills/remove-pdf-watermark/SKILL.md)
 
 ---
 
