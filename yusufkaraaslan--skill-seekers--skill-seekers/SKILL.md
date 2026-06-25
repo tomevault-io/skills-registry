@@ -1,172 +1,74 @@
 ---
-name: golden-jupyter-topics
-description: Use when testing the golden_jupyter_topics golden build
+name: skill-builder
+description: Automatically detect source types and build AI skills using Skill Seekers. Use when the user wants to create skills from documentation, repos, PDFs, videos, or other knowledge sources. Use when this capability is needed.
 metadata:
   author: yusufkaraaslan
 ---
 
-# Golden_Jupyter_Topics Notebook Skill
+# Skill Builder
 
-Use when testing the golden_jupyter_topics golden build
+You have access to the Skill Seekers MCP server which provides 40 tools for converting knowledge sources into AI-ready skills.
 
-## 📋 Notebook Information
+## When to Use This Skill
 
-**Kernel:** Python 3
+Use this skill when the user:
+- Wants to create an AI skill from a documentation site, GitHub repo, PDF, video, or other source
+- Needs to convert documentation into a format suitable for LLM consumption
+- Wants to update or sync existing skills with their source documentation
+- Needs to export skills to vector databases (Weaviate, Chroma, FAISS, Qdrant)
+- Asks about scraping, converting, or packaging documentation for AI
 
-**Language:** python 3.11.4
+## Source Type Detection
 
-## 💡 When to Use This Skill
+Automatically detect the source type from user input:
 
-Use this skill when you need to:
-- Understand golden_jupyter_topics concepts and analysis workflow
-- Reference code examples and their outputs
-- Reproduce data analysis or computation steps
-- Review methodology, visualizations, and results
-- Find library usage patterns and best practices
+| Input Pattern | Source Type | Tool to Use |
+|---------------|-------------|-------------|
+| `https://...` (not GitHub/YouTube) | Documentation | `scrape_docs` |
+| `owner/repo` or `github.com/...` | GitHub | `scrape_github` |
+| `*.pdf` | PDF | `scrape_pdf` |
+| YouTube/Vimeo URL or video file | Video | `scrape_video` |
+| Local directory path | Codebase | `scrape_codebase` |
+| `*.ipynb`, `*.html`, `*.yaml` (OpenAPI), `*.adoc`, `*.pptx`, `*.rss`, `*.1`-`.8` | Various | `scrape_generic` |
+| JSON config file | Unified | Use config with `scrape_docs` |
 
-## 📖 Section Overview
+## Recommended Workflow
 
-**Total Sections:** 5
+1. **Detect source type** from the user's input
+2. **Generate or fetch config** using `generate_config` or `fetch_config` if needed
+3. **Estimate scope** with `estimate_pages` for documentation sites
+4. **Scrape the source** using the appropriate scraping tool
+5. **Enhance** with `enhance_skill` if the user wants AI-powered improvements
+6. **Package** with `package_skill` for the target platform
+7. **Export to vector DB** if requested using `export_to_*` tools
 
-**Content Breakdown:**
+## Available MCP Tools
 
-- **Data Loading**: 1 sections
-- **Evaluation**: 1 sections
-- **Setup**: 1 sections
-- **Other**: 2 sections
+### Config Management
+- `generate_config` — Generate a scraping config from a URL
+- `list_configs` — List available preset configs
+- `validate_config` — Validate a config file
 
-## 🔑 Key Concepts
+### Scraping (use based on source type)
+- `scrape_docs` — Documentation sites
+- `scrape_github` — GitHub repositories
+- `scrape_pdf` — PDF files
+- `scrape_video` — Video transcripts
+- `scrape_codebase` — Local code analysis
+- `scrape_generic` — Jupyter, HTML, OpenAPI, AsciiDoc, PPTX, RSS, manpage, Confluence, Notion, chat
 
-*Main topics covered in this notebook*
+### Post-processing
+- `enhance_skill` — AI-powered skill enhancement
+- `package_skill` — Package for target platform
+- `upload_skill` — Upload to platform API
+- `install_skill` — End-to-end install workflow
 
-**Major Topics:**
-
-- Getting Started
-
-**Subtopics:**
-
-- Modeling Results
-
-## 📦 Dependencies
-
-*3 package(s) imported*
-
-- `numpy`
-- `pandas`
-- `sklearn`
-
-## ⚡ Quick Reference
-
-*Common documentation patterns found:*
-
-**Getting Started** (1 sections):
-- Getting Started (section 1)
-
-**Modeling** (1 sections):
-- Modeling Results (section 5)
-
-## 📝 Code Examples
-
-*High-quality code cells from notebook*
-
-### Bash Examples (1)
-
-**Example 1** (Quality: 5.0/10):
-
-```bash
-pip install pandas
-```
-
-### Python Examples (3)
-
-**Example 1** (Quality: 9.5/10):
-
-```python
-def long_example():
-    x0 = 0
-    x1 = 1
-    x2 = 2
-    x3 = 3
-    x4 = 4
-    x5 = 5
-    x6 = 6
-    x7 = 7
-    x8 = 8
-    x9 = 9
-    x10 = 10
-    x11 = 11
-    x12 = 12
-    x13 = 13
-    x14 = 14
-    x15 = 15
-    x16 = 16
-    x17 = 17
-    x18 = 18
-    x19 = 19
-    x20 = 20
-    x21 = 21
-    x22 = 22
-    x23 = 23
-    x24 = 24
-    x25 = 25
-    x26 = 26
-    x27 = 27
-    x28 = 28
-    x29 = 29
-    x30 = 30
-    x31 = 31
-    x32 = 32
-    x33 = 33
-    x34 = 34
-    x35 = 35
-    x36 = 36
-    x37 = 37
-    x3
-...
-```
-
-**In [2]** (Quality: 7.5/10):
-
-```python
-import pandas as pd
-df = pd.read_csv('data.csv')
-df.head()
-```
-
-**Example 3** (Quality: 2.0/10):
-
-```python
-%timeit broken()
-```
-
-## 📊 Notebook Statistics
-
-- **Total Sections**: 5
-- **Code Cells**: 2
-- **Markdown Cells**: 2
-- **Raw Cells**: 1
-- **Notebooks**: 1
-- **Programming Languages**: 2
-
-**Language Breakdown:**
-
-- python: 3 code cells
-- bash: 1 code cells
-
-## 🗺️ Navigation
-
-**Reference Files:**
-
-- `references/section_s2-s2.md` - Data Loading
-- `references/section_s5-s5.md` - Evaluation
-- `references/section_s1-s1.md` - Setup
-- `references/section_s3-s4.md` - Other
-
-See `references/index.md` for complete notebook structure.
-
----
-
-**Generated by Skill Seeker** | Jupyter Notebook Scraper
+### Advanced
+- `detect_patterns` — Design pattern detection in code
+- `extract_test_examples` — Extract usage examples from tests
+- `build_how_to_guides` — Generate how-to guides from tests
+- `split_config` — Split large configs into focused skills
+- `export_to_weaviate`, `export_to_chroma`, `export_to_faiss`, `export_to_qdrant` — Vector DB export
 
 ---
 > Source: [yusufkaraaslan/Skill_Seekers](https://github.com/yusufkaraaslan/Skill_Seekers) — distributed by [TomeVault](https://tomevault.io).
