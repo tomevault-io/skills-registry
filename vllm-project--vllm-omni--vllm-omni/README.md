@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vllm-project/vllm-omni](https://github.com/vllm-project/vllm-omni/tree/main/.claude/skills/add-tts-model/SKILL.md)
+Original source: [vllm-project/vllm-omni](https://github.com/vllm-project/vllm-omni/tree/main/.claude/skills/diffusion-perf-opt/SKILL.md)
 
 ---
 
