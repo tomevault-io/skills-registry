@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [flysheep-ai/education-skills](https://github.com/flysheep-ai/education-skills/tree/main/gaokao-english-tutor/SKILL.md)
+Original source: [flysheep-ai/education-skills](https://github.com/flysheep-ai/education-skills/tree/main/gaokao-chinese-tutor/SKILL.md)
 
 ---
 
