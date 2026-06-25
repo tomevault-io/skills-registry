@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [antvis/Infographic](https://github.com/antvis/Infographic/tree/main/skills/infographic-syntax-creator/SKILL.md)
+Original source: [antvis/Infographic](https://github.com/antvis/Infographic/tree/main/skills/infographic-template-updater/SKILL.md)
 
 ---
 
