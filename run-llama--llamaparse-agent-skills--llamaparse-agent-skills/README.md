@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [run-llama/llamaparse-agent-skills](https://github.com/run-llama/llamaparse-agent-skills/tree/main/skills/liteparse/SKILL.md)
+Original source: [run-llama/llamaparse-agent-skills](https://github.com/run-llama/llamaparse-agent-skills/tree/main/skills/llamaparse/SKILL.md)
 
 ---
 
