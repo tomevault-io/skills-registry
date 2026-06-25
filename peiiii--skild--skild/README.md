@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Peiiii/skild](https://github.com/Peiiii/skild/tree/main/examples/kitchen-sink-skillset/skills/echo-skill-inline/SKILL.md)
+Original source: [Peiiii/skild](https://github.com/Peiiii/skild/tree/main/examples/kitchen-sink-skillset/skills/hello-skill-inline/SKILL.md)
 
 ---
 
