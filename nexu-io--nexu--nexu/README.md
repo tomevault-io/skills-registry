@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nexu-io/nexu](https://github.com/nexu-io/nexu/tree/main/apps/desktop/static/bundled-skills/coding-agent/SKILL.md)
+Original source: [nexu-io/nexu](https://github.com/nexu-io/nexu/tree/main/apps/desktop/static/bundled-skills/deep-research/SKILL.md)
 
 ---
 
