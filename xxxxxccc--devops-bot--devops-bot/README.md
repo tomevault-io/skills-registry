@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xxxxxccc/devops-bot](https://github.com/xxxxxccc/devops-bot/tree/main/skills/swiftui-expert-skill/SKILL.md)
+Original source: [xxxxxccc/devops-bot](https://github.com/xxxxxccc/devops-bot/tree/main/skills/code-review-analysis/SKILL.md)
 
 ---
 
