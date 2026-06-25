@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [besoeasy/open-skills](https://github.com/besoeasy/open-skills/tree/main/skills/csv-data-summarizer/SKILL.md)
+Original source: [besoeasy/open-skills](https://github.com/besoeasy/open-skills/tree/main/skills/free-translation-api/SKILL.md)
 
 ---
 
