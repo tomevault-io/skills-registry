@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mattwynne/yaks](https://github.com/mattwynne/yaks/tree/main/skills/bdd-formulation/SKILL.md)
+Original source: [mattwynne/yaks](https://github.com/mattwynne/yaks/tree/main/skills/triaging-mutants/SKILL.md)
 
 ---
 
