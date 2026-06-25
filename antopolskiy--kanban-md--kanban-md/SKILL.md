@@ -4,7 +4,6 @@ description: > Use when this capability is needed.
 metadata:
   author: antopolskiy
 ---
-<!-- kanban-md-skill-version: 0.31.0 -->
 
 # kanban-md
 
@@ -79,7 +78,7 @@ kanban-md list [--status S] [--priority P] [--assignee A] [--tag T] \
   [--parent ID] [--unblocked]
 ```
 
-Sort fields: id, status, priority, created, updated, due. `-r` reverses.
+Sort fields: id, title, status, priority, created, updated, due. `-r` reverses.
 `--unblocked` shows tasks whose dependencies are all at terminal status.
 
 ### create
@@ -357,5 +356,5 @@ kanban-md list --compact --status in-progress,review   # all active/parked work
 - **DO** quote task titles with special characters: `kanban-md create "Fix: the 'login' bug"`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/antopolskiy) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [antopolskiy/kanban-md](https://github.com/antopolskiy/kanban-md) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
