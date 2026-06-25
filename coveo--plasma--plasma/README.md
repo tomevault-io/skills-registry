@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [coveo/plasma](https://github.com/coveo/plasma/tree/main/packages/llms/src/skill.md)
+Original source: [coveo/plasma](https://github.com/coveo/plasma/tree/main/.github/skills/plasma-component-docs/SKILL.md)
 
 ---
 
