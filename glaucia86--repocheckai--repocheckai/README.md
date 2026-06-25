@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [glaucia86/repocheckai](https://github.com/glaucia86/repocheckai/tree/main/.github/skills/ci-workflow-audit/SKILL.md)
+Original source: [glaucia86/repocheckai](https://github.com/glaucia86/repocheckai/tree/main/.github/skills/code-quality-audit/SKILL.md)
 
 ---
 
