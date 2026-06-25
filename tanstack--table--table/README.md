@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TanStack/table](https://github.com/TanStack/table/tree/main/packages/angular-table/skills/angular/compose-with-tanstack-store/SKILL.md)
+Original source: [TanStack/table](https://github.com/TanStack/table/tree/main/packages/react-table/skills/react/react-subscribe-compiler-compat/SKILL.md)
 
 ---
 
