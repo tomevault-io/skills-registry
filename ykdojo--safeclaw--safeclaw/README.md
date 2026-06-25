@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ykdojo/safeclaw](https://github.com/ykdojo/safeclaw/tree/main/setup/skills/gdoc/SKILL.md)
+Original source: [ykdojo/safeclaw](https://github.com/ykdojo/safeclaw/tree/main/setup/skills/slack/SKILL.md)
 
 ---
 
