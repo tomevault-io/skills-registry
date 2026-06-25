@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Noizefield/audio-plugin-coder](https://github.com/Noizefield/audio-plugin-coder/tree/main/.kilocode/skills/skill_ideation/SKILL.md)
+Original source: [Noizefield/audio-plugin-coder](https://github.com/Noizefield/audio-plugin-coder/tree/main/.kilocode/skills/skill_packaging/SKILL.md)
 
 ---
 
