@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fmind/mlops-python-package](https://github.com/fmind/mlops-python-package/tree/main/.gemini/skills/MLOps Validation/SKILL.md)
+Original source: [fmind/mlops-python-package](https://github.com/fmind/mlops-python-package/tree/main/.gemini/skills/MLOps Prototyping/SKILL.md)
 
 ---
 
