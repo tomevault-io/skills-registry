@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Alexander-M-Dickerson/ai-asset-pricing](https://github.com/Alexander-M-Dickerson/ai-asset-pricing/tree/main/.claude/skills/check-consistency/SKILL.md)
+Original source: [Alexander-M-Dickerson/ai-asset-pricing](https://github.com/Alexander-M-Dickerson/ai-asset-pricing/tree/main/.claude/skills/create-audit-agent/SKILL.md)
 
 ---
 
