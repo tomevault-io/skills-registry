@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [L-LesterYu/OpenClaw-hot-skills-zh](https://github.com/L-LesterYu/OpenClaw-hot-skills-zh/tree/main/skills/imap-smtp-email-zh/SKILL.md)
+Original source: [L-LesterYu/OpenClaw-hot-skills-zh](https://github.com/L-LesterYu/OpenClaw-hot-skills-zh/tree/main/skills/caldav-calendar-zh/SKILL.md)
 
 ---
 
