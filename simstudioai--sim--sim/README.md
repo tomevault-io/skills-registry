@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [simstudioai/sim](https://github.com/simstudioai/sim/tree/main/helm/sim/.claude/skills/sim-helm/SKILL.md)
+Original source: [simstudioai/sim](https://github.com/simstudioai/sim/tree/main/.agents/skills/memory-load-check/SKILL.md)
 
 ---
 
