@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dreamhunter2333/cloudflare_temp_email](https://github.com/dreamhunter2333/cloudflare_temp_email/tree/main/skills/cf-temp-mail-agent-mail/SKILL.md)
+Original source: [dreamhunter2333/cloudflare_temp_email](https://github.com/dreamhunter2333/cloudflare_temp_email/tree/main/.claude/skills/cf-temp-mail-release/SKILL.md)
 
 ---
 
