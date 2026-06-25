@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [go-to-k/delstack](https://github.com/go-to-k/delstack/tree/main/.claude/skills/add-operator/SKILL.md)
+Original source: [go-to-k/delstack](https://github.com/go-to-k/delstack/tree/main/.claude/skills/add-preprocessor/SKILL.md)
 
 ---
 
