@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TinyAGI/tinyagi](https://github.com/TinyAGI/tinyagi/tree/main/.agents/skills/tinyagi-admin/SKILL.md)
+Original source: [TinyAGI/tinyagi](https://github.com/TinyAGI/tinyagi/tree/main/.agents/skills/skills-manager/SKILL.md)
 
 ---
 
