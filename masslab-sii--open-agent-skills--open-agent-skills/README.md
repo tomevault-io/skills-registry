@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MassLab-SII/open-agent-skills](https://github.com/MassLab-SII/open-agent-skills/tree/main/skills/shopping_admin/SKILL.md)
+Original source: [MassLab-SII/open-agent-skills](https://github.com/MassLab-SII/open-agent-skills/tree/main/portable-skills/github/SKILL.md)
 
 ---
 
