@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [polarsource/polar](https://github.com/polarsource/polar/tree/main/.agents/skills/fix-sentry/SKILL.md)
+Original source: [polarsource/polar](https://github.com/polarsource/polar/tree/main/.agents/skills/render-env/SKILL.md)
 
 ---
 
