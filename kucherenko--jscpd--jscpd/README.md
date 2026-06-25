@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kucherenko/jscpd](https://github.com/kucherenko/jscpd/tree/main/skills/jscpd/SKILL.md)
+Original source: [kucherenko/jscpd](https://github.com/kucherenko/jscpd/tree/main/skills/dry-refactoring/SKILL.md)
 
 ---
 
