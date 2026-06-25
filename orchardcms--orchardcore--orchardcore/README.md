@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OrchardCMS/OrchardCore](https://github.com/OrchardCMS/OrchardCore/tree/main/.agents/skills/orchardcore-tester/SKILL.md)
+Original source: [OrchardCMS/OrchardCore](https://github.com/OrchardCMS/OrchardCore/tree/main/.agents/skills/orchardcore-tenants/SKILL.md)
 
 ---
 
