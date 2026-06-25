@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [michaelversus/SwiftFindRefs](https://github.com/michaelversus/SwiftFindRefs/tree/main/swiftfindrefs/SKILL.md)
+Original source: [michaelversus/SwiftFindRefs](https://github.com/michaelversus/SwiftFindRefs/tree/main/.claude/skills/swift-concurrency/SKILL.md)
 
 ---
 
