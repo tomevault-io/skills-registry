@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [compozy/compozy](https://github.com/compozy/compozy/tree/main/.agents/skills/crafting-effective-readmes/SKILL.md)
+Original source: [compozy/compozy](https://github.com/compozy/compozy/tree/main/.agents/skills/vercel-react-best-practices/SKILL.md)
 
 ---
 
