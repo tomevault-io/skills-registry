@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alibaba/PyFlightProfiler](https://github.com/alibaba/PyFlightProfiler/tree/main/skills/flight-profiler-watch/SKILL.md)
+Original source: [alibaba/PyFlightProfiler](https://github.com/alibaba/PyFlightProfiler/tree/main/skills/flight-profiler-stack/SKILL.md)
 
 ---
 
