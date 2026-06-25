@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jsverse/transloco](https://github.com/jsverse/transloco/tree/main/.claude/skills/plan-reviewer/SKILL.md)
+Original source: [jsverse/transloco](https://github.com/jsverse/transloco/tree/main/.claude/skills/angular-new-app/SKILL.md)
 
 ---
 
