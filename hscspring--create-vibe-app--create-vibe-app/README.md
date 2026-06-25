@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hscspring/create-vibe-app](https://github.com/hscspring/create-vibe-app/tree/main/src/create_vibe_app/templates/vibe-default/skill/skill-creator/SKILL.md)
+Original source: [hscspring/create-vibe-app](https://github.com/hscspring/create-vibe-app/tree/main/src/create_vibe_app/templates/vibe-default/skill/design-create/SKILL.md)
 
 ---
 
