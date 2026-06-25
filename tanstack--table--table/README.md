@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TanStack/table](https://github.com/TanStack/table/tree/main/packages/preact-table/skills/preact/compose-with-tanstack-store/SKILL.md)
+Original source: [TanStack/table](https://github.com/TanStack/table/tree/main/packages/svelte-table/skills/svelte/compose-with-tanstack-query/SKILL.md)
 
 ---
 
