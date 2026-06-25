@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yaosqee/xilian-agent](https://github.com/yaosqee/xilian-agent/tree/main/.agents/skills/improve-codebase-architecture/SKILL.md)
+Original source: [yaosqee/xilian-agent](https://github.com/yaosqee/xilian-agent/tree/main/packages/frontend/.claude/skills/ui-ux-pro-max/SKILL.md)
 
 ---
 
