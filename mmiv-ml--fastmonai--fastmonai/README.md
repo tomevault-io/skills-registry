@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MMIV-ML/fastMONAI](https://github.com/MMIV-ML/fastMONAI/tree/main/.claude/skills/skill-creator/SKILL.md)
+Original source: [MMIV-ML/fastMONAI](https://github.com/MMIV-ML/fastMONAI/tree/main/.claude/skills/code-reviewer/SKILL.md)
 
 ---
 
