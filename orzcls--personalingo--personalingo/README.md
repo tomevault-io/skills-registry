@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [orzcls/PersonaLingo](https://github.com/orzcls/PersonaLingo/tree/main/skills/personalingo/SKILL.md)
+Original source: [orzcls/PersonaLingo](https://github.com/orzcls/PersonaLingo/tree/main/exports/runnable/smoke_c_0a0e63e4/Skill.md)
 
 ---
 
