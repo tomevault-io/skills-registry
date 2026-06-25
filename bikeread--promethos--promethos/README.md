@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bikeread/promethos](https://github.com/bikeread/promethos/tree/main/skills/trim-agent-scope/SKILL.md)
+Original source: [bikeread/promethos](https://github.com/bikeread/promethos/tree/main/skills/build-agent-evals/SKILL.md)
 
 ---
 
