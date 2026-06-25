@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [atypica-ai/marketing-skills](https://github.com/atypica-ai/marketing-skills/tree/main/skills/html-to-pdf/SKILL.md)
+Original source: [atypica-ai/marketing-skills](https://github.com/atypica-ai/marketing-skills/tree/main/skills/market-sizing/SKILL.md)
 
 ---
 
