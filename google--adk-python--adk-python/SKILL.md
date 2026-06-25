@@ -1,30 +1,155 @@
 ---
-name: adk-architecture
-description: ADK architectural knowledge — graph orchestration, resumption, execution flow, node contracts, observability, and LLM context orchestration. Use this skill whenever you need to understand the architecture, event flow, or state management of the ADK system, or when designing or modifying core components. Triggers on "how does X work", "design of", "architecture of", "event flow", "resumption state", "checkpoint", "BaseNode", "NodeRunner". Use when this capability is needed.
+name: adk-sample-creator
+description: Author new samples for the ADK Python repository. Use this skill when the user wants to create a new sample demonstrating a feature or agent pattern (e.g., dynamic nodes, standalone agents, fan-out/fan-in) or when adding examples to subdirectories under `contributing/`. Use when this capability is needed.
 metadata:
   author: google
 ---
 
-# ADK Architecture Guide
+# ADK Sample Creator
 
-## Core Interfaces (references/interfaces/)
-- [BaseNode](references/interfaces/base-node.md) — node contract, output/streaming, state/routing, HITL, configuration
-- [Workflow](references/interfaces/workflow.md) — graph orchestration, dynamic nodes (tracking/dedup/resume), transitive dynamic nodes, interrupt propagation, design rules for node authors
-- [Runner](references/interfaces/runner.md) — The public interface for executing workflows and agents. Documents entrance methods `run` and `run_async`.
-- [Agent](references/interfaces/agent.md) — Blueprint defining identity, instructions, and tools. Documents that `run` is the preferred entrance method.
-- [BaseAgent](references/interfaces/base-agent.md) — Base class for all agents. Defines the contract for subclassing with `_run_impl` as the primary override point.
-- [Event](references/interfaces/event.md) — Core data structure for state reconstruction and communication. Represents a conversation turn or action.
+This skill helps you create new samples for the ADK Python repository. You should search for subdirectories under `contributing` (such as `new_workflow_samples`, `workflow_samples`, etc.) and confirm with the user which folder they want to use before creating the sample.
 
-## Key Principles (references/principles/)
-- [API Principles](references/principles/api-principles.md) — stability, backward compatibility, and self-containment. Use when making design choices that affect the public API surface.
+> [!TIP]
 
-## Runtime Knowledge (references/architecture/)
-- [Context](references/architecture/context.md) — 1:1 node-context mapping, InvocationContext singleton, property reference
-- [NodeRunner](references/architecture/node-runner.md) — two communication channels, execution flow, output delegation. Internal runtime details.
-- [Runner Roles](references/architecture/runner-roles.md) — Runner vs NodeRunner vs Workflow separation. Explains why they are separate to avoid deadlocks.
-- [Checkpoint and Resume](references/architecture/checkpoint-resume.md) — HITL lifecycle, `rerun_on_resume`, `run_id`
-- [Observability](references/architecture/observability.md) — span-on-Context design, NodeRunner integration, correlated logs, metrics
-- [LLM Context Orchestration](references/architecture/llm-context-orchestration.md) — relationship between events and LLM context, task delegation translation, branch isolation. Use when modifying event processing, context preparation for LLMs, or debugging context pollution issues.
+> Before creating samples, you can use the `adk-style` skill to learn about ADK 2.0 architecture knowledge and best practices.
+
+A sample consists of:
+
+1.  A directory per sample.
+2.  An `agent.py` file defining the agent or workflow logic.
+3.  A `README.md` file explaining the sample.
+
+## Guidelines
+
+### 1. Folder Name
+
+Use snake_case for the folder name (e.g., `dynamic_nodes`, `fan_out_fan_in`).
+
+### 2. `agent.py` Content
+
+The `agent.py` should focus on demonstrating a specific feature or agent pattern. Use absolute imports for testing convenience.
+
+> [!IMPORTANT]
+> **Model Selection**: Do not set the `model` parameter explicitly (e.g., `model="gemini-2.5-flash"`) on `Agent` instances in sample agents. Instead, let them default to the system-configured model, unless a specific model is explicitly requested by the user.
+
+Choose one of the following patterns:
+
+#### Pattern A: Workflows (for complex graphs)
+
+Use this when you need multiple nodes, routing, or parallel execution.
+
+**Imports:**
+
+```python
+from google.adk import Agent
+from google.adk import Context
+from google.adk.workflow import node
+from google.adk.workflow import JoinNode
+from google.adk.workflow._workflow_class import Workflow
+```
+
+**Anatomy:**
+
+```python
+my_agent = Agent(name="my_agent", ...)
+
+@node()
+async def my_node(node_input: str):
+    return "result"
+
+root_agent = Workflow(
+    name="root_wf",
+    edges=[("START", my_node)],
+)
+```
+
+#### Pattern B: Standalone Agents (for single-agent or simple tool use)
+
+Use this when you don't need a graph and the agent handles the loop.
+
+**Imports:**
+
+```python
+from google.adk import Agent
+from google.adk.tools import google_search  # example
+```
+
+**Anatomy:**
+
+```python
+root_agent = Agent(
+    name="standalone_assistant",
+    instruction="You are a helpful assistant.",
+    description="An assistant that can help with queries.",
+    tools=[google_search],
+)
+```
+
+### 3. `README.md` Content
+
+Each sample should have a `README.md` with the following structure:
+
+- **Overview**: What the sample does.
+- **Sample Inputs**: Examples of inputs to test with. Each prompt must be wrapped in backticks. If a prompt has an explanation, always add a blank line between the prompt and the explanation, and indent the explanation by two spaces.
+- **Graph**: Visualization of the graph flow (Mermaid recommended for workflows).
+- **How To**: Explanation of key techniques used (e.g., `ctx.run_node`).
+- **Related Guides**: Links to relevant developer guides in `docs/guides/` that explain the concepts or classes used.
+
+#### README Example Template:
+
+````markdown
+# ADK Sample Name
+
+## Overview
+
+Brief description.
+
+## Sample Inputs
+
+- `Prompt example 1`
+
+- `Prompt example 2`
+
+  *Explanation or expected behavior*
+
+## Graph
+
+```mermaid
+graph TD
+    START --> MyNode
+```
+
+## How To
+
+Explain the details.
+
+## Related Guides
+
+- [Guide Title](../../docs/guides/path/to/guide.md) - Brief description of what the guide covers.
+````
+
+## Examples
+
+### Dynamic Nodes
+Snippet from `dynamic_nodes/agent.py`:
+```python
+@node(rerun_on_resume=True)
+async def orchestrate(ctx: Context, node_input: str) -> str:
+    while True:
+        headline = await ctx.run_node(generate_headline)
+        # ...
+````
+
+### Fan Out Fan In
+
+Snippet from `fan_out_fan_in/agent.py`:
+
+```python
+root_agent = Workflow(
+    name="root_agent",
+    edges=[("START", (node_a, node_b), join_node, aggregate)],
+)
+```
 
 ---
 > Source: [google/adk-python](https://github.com/google/adk-python) — distributed by [TomeVault](https://tomevault.io).
