@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [spark-arena/sparkrun](https://github.com/spark-arena/sparkrun/tree/main/sparkrun-cc-plugin/skills/run/SKILL.md)
+Original source: [spark-arena/sparkrun](https://github.com/spark-arena/sparkrun/tree/main/sparkrun-cc-plugin/skills/setup/SKILL.md)
 
 ---
 
