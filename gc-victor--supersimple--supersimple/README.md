@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gc-victor/supersimple](https://github.com/gc-victor/supersimple/tree/main/skills/simplify/SKILL.md)
+Original source: [gc-victor/supersimple](https://github.com/gc-victor/supersimple/tree/main/skills/conductor/SKILL.md)
 
 ---
 
