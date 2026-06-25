@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [camel-ai/camel](https://github.com/camel-ai/camel/tree/main/.camel/skills/skill-creator/SKILL.md)
+Original source: [camel-ai/camel](https://github.com/camel-ai/camel/tree/main/.camel/skills/docs-incremental-update/SKILL.md)
 
 ---
 
