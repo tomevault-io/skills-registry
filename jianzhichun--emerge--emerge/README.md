@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jianzhichun/emerge](https://github.com/jianzhichun/emerge/tree/main/skills/emerge-reverse-synthesis/SKILL.md)
+Original source: [jianzhichun/emerge](https://github.com/jianzhichun/emerge/tree/main/skills/runner-elicitation-policy/SKILL.md)
 
 ---
 
