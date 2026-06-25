@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zifeixu85/videofly-template](https://github.com/zifeixu85/videofly-template/tree/main/.claude/skills/pricing-setup/SKILL.md)
+Original source: [zifeixu85/videofly-template](https://github.com/zifeixu85/videofly-template/tree/main/.claude/skills/videofly-init/SKILL.md)
 
 ---
 
