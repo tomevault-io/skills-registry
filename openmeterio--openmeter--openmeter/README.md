@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openmeterio/openmeter](https://github.com/openmeterio/openmeter/tree/main/.agents/skills/e2e/SKILL.md)
+Original source: [openmeterio/openmeter](https://github.com/openmeterio/openmeter/tree/main/.agents/skills/api/SKILL.md)
 
 ---
 
