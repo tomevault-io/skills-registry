@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [krusemediallc/arcads-claude-code](https://github.com/krusemediallc/arcads-claude-code/tree/main/skills/image-ad-clone/SKILL.md)
+Original source: [krusemediallc/arcads-claude-code](https://github.com/krusemediallc/arcads-claude-code/tree/main/skills/chatgpt-image-ad/SKILL.md)
 
 ---
 
