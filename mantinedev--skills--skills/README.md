@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mantinedev/skills](https://github.com/mantinedev/skills/tree/main/skills/mantine-combobox/SKILL.md)
+Original source: [mantinedev/skills](https://github.com/mantinedev/skills/tree/main/skills/mantine-custom-components/SKILL.md)
 
 ---
 
