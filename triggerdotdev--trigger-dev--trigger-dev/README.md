@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [triggerdotdev/trigger.dev](https://github.com/triggerdotdev/trigger.dev/tree/main/.claude/skills/trigger-dev-tasks/SKILL.md)
+Original source: [triggerdotdev/trigger.dev](https://github.com/triggerdotdev/trigger.dev/tree/main/.claude/skills/span-timeline-events/SKILL.md)
 
 ---
 
