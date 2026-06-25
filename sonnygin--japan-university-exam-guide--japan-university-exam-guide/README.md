@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sonnygin/japan-university-exam-guide](https://github.com/sonnygin/japan-university-exam-guide/tree/main/skills/academic-cold-email/SKILL.md)
+Original source: [sonnygin/japan-university-exam-guide](https://github.com/sonnygin/japan-university-exam-guide/tree/main/skills/research-proposal-skill/SKILL.md)
 
 ---
 
