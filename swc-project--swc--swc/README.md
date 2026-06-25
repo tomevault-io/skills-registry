@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [swc-project/swc](https://github.com/swc-project/swc/tree/main/.agents/skills/repair-pr/SKILL.md)
+Original source: [swc-project/swc](https://github.com/swc-project/swc/tree/main/.agents/skills/add-changeset/SKILL.md)
 
 ---
 
