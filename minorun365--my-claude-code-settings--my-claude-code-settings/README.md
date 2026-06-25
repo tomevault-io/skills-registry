@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [minorun365/my-claude-code-settings](https://github.com/minorun365/my-claude-code-settings/tree/main/claude/skills/kb-frontend-amplify-ui/SKILL.md)
+Original source: [minorun365/my-claude-code-settings](https://github.com/minorun365/my-claude-code-settings/tree/main/claude/skills/kb-google-workspace-mcp/SKILL.md)
 
 ---
 
