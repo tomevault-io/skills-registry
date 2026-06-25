@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MemTensor/MemOS](https://github.com/MemTensor/MemOS/tree/main/apps/memos-local-openclaw/skill/memos-memory-guide/SKILL.md)
+Original source: [MemTensor/MemOS](https://github.com/MemTensor/MemOS/tree/main/apps/openwork-memos-integration/apps/desktop/skills/dev-browser/SKILL.md)
 
 ---
 
