@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CyrusNuevoDia/gepa-research](https://github.com/CyrusNuevoDia/gepa-research/tree/main/plugins/gepa-research/skills/discover/SKILL.md)
+Original source: [CyrusNuevoDia/gepa-research](https://github.com/CyrusNuevoDia/gepa-research/tree/main/plugins/gepa-research/skills/optimize/SKILL.md)
 
 ---
 
