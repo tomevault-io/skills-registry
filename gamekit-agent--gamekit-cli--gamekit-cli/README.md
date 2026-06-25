@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gamekit-agent/gamekit-cli](https://github.com/gamekit-agent/gamekit-cli/tree/main/template/.claude/skills/adding-ui/SKILL.md)
+Original source: [gamekit-agent/gamekit-cli](https://github.com/gamekit-agent/gamekit-cli/tree/main/template/.claude/skills/screenshot/SKILL.md)
 
 ---
 
