@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [supabase/supabase-js](https://github.com/supabase/supabase-js/tree/main/.agents/skills/nx-plugins/SKILL.md)
+Original source: [supabase/supabase-js](https://github.com/supabase/supabase-js/tree/main/.agents/skills/nx-generate/SKILL.md)
 
 ---
 
