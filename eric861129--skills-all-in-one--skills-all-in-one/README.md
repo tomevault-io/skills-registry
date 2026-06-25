@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eric861129/SKILLS_All-in-one](https://github.com/eric861129/SKILLS_All-in-one/tree/main/.agent/skills/sql-migration-manager/SKILL.md)
+Original source: [eric861129/SKILLS_All-in-one](https://github.com/eric861129/SKILLS_All-in-one/tree/main/public/SKILLS/Media & Content/moltdj/SKILL.md)
 
 ---
 
