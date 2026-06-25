@@ -2,7 +2,7 @@
 name: codemap
 description: Navigate codebases efficiently using structural indexes. Use when finding symbol definitions (classes, functions, methods), exploring file structure, or locating code by name. Reduces token consumption by 60-80% through targeted line-range reads instead of full file scans. Use when this capability is needed.
 metadata:
-  author: azidan
+  author: AZidan
 ---
 
 # CodeMap - Codebase Structural Index
@@ -183,5 +183,5 @@ codemap find "validateToken"
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/azidan) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [AZidan/codemap](https://github.com/AZidan/codemap) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
