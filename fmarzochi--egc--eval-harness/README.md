@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Fmarzochi/EGC](https://github.com/Fmarzochi/EGC/tree/main/skills/testing/eval-harness)
+Original source: [Fmarzochi/EGC](https://github.com/Fmarzochi/EGC/tree/main/.agents/skills/eval-harness)
 
 ---
 
