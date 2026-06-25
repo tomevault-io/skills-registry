@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [apache/skywalking](https://github.com/apache/skywalking/tree/main/.claude/skills/license/SKILL.md)
+Original source: [apache/skywalking](https://github.com/apache/skywalking/tree/main/.claude/skills/ci-e2e-debug/SKILL.md)
 
 ---
 
