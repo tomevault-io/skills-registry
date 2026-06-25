@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [thoreinstein/gemini-obsidian](https://github.com/thoreinstein/gemini-obsidian/tree/main/skills/research/SKILL.md)
+Original source: [thoreinstein/gemini-obsidian](https://github.com/thoreinstein/gemini-obsidian/tree/main/skills/compound/SKILL.md)
 
 ---
 
