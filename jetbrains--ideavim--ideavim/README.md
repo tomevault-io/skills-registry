@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [JetBrains/ideavim](https://github.com/JetBrains/ideavim/tree/main/.claude/skills/tests-maintenance/SKILL.md)
+Original source: [JetBrains/ideavim](https://github.com/JetBrains/ideavim/tree/main/.claude/skills/issues-deduplication/SKILL.md)
 
 ---
 
