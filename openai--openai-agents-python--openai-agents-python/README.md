@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openai/openai-agents-python](https://github.com/openai/openai-agents-python/tree/main/.agents/skills/final-release-review/SKILL.md)
+Original source: [openai/openai-agents-python](https://github.com/openai/openai-agents-python/tree/main/examples/tools/skills/csv-workbench/SKILL.md)
 
 ---
 
