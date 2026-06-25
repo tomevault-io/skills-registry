@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MiniMax-AI/Mini-Agent](https://github.com/MiniMax-AI/Mini-Agent/tree/main/mini_agent/skills/document-skills/docx/SKILL.md)
+Original source: [MiniMax-AI/Mini-Agent](https://github.com/MiniMax-AI/Mini-Agent/tree/main/mini_agent/skills/artifacts-builder/SKILL.md)
 
 ---
 
