@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jaxxstorm/sentinel](https://github.com/jaxxstorm/sentinel/tree/main/.codex/skills/openspec-ff-change/SKILL.md)
+Original source: [jaxxstorm/sentinel](https://github.com/jaxxstorm/sentinel/tree/main/.codex/skills/openspec-new-change/SKILL.md)
 
 ---
 
