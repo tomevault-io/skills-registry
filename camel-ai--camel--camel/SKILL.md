@@ -1,367 +1,172 @@
 ---
-name: skill-creator
-description: Guide for creating effective skills. Use when creating a new skill or updating an existing skill that extends agent capabilities with specialized knowledge, workflows, or tool integrations. Use when this capability is needed.
+name: docs-incremental-update
+description: > Use when this capability is needed.
 metadata:
   author: camel-ai
 ---
 
-# Skill Creator
+# Docs Incremental Update
 
-This skill provides guidance for creating effective skills.
+Update Mintlify .mdx documentation so it stays in sync with CAMEL source code.
 
-## About Skills
+## Scope
 
-Skills are modular, self-contained packages that extend agent capabilities by providing
-specialized knowledge, workflows, and tools. Think of them as "onboarding guides" for specific
-domains or tasks—they transform a general-purpose agent into a specialized agent
-equipped with procedural knowledge that no model can fully possess.
+- Only use this skill when the driver is **Python source changes** referenced
+  by a target document's `doc_code_map`.
+- Do **not** use it for docs-only edits, workflow/YAML changes, or broad
+  wording cleanups without Python changes.
+- Prefer **no document change** when Python edits are internal and do not
+  affect public API, behavior, configuration, examples, or reader understanding.
 
-### What Skills Provide
+## Edit Rule
 
-1. Specialized workflows - Multi-step procedures for specific domains
-2. Tool integrations - Instructions for working with specific file formats or APIs
-3. Domain expertise - Company-specific knowledge, schemas, business logic
-4. Bundled resources - Scripts, references, and assets for complex and repetitive tasks
+Use terminal tools to inspect the target doc, inspect any relevant code, and
+edit the target doc directly. Keep changes scoped to that doc and preserve its
+frontmatter.
+CI treats the run as successful based on the resulting target doc file state,
+not on any special status token in the chat response.
 
-## Core Principles
 
-### Concise is Key
+## Quick Reference
 
-The context window is a public good. Skills share the context window with everything else the agent needs: system prompt, conversation history, other Skills' metadata, and the actual user request.
+| Item | Path |
+|------|------|
+| Doc roots | `docs/mintlify/` |
+| Mapping utility | `docs/mintlify/scripts/docs_sync/doc_code_map.py` |
+| Auto-sync script | `.camel/skills/docs-incremental-update/scripts/auto_sync_docs_with_chatagent.py` |
+| Workflow | `.github/workflows/docs_release_auto_sync_pr.yml` |
 
-**Default assumption: The agent is already very capable.** Only add context the agent doesn't already have. Challenge each piece of information: "Does the agent really need this explanation?" and "Does this paragraph justify its token cost?"
+## Workflow
 
-Prefer concise examples over verbose explanations.
+### Step 1 — Identify Impacted Docs
 
-### Set Appropriate Degrees of Freedom
-
-Match the level of specificity to the task's fragility and variability:
-
-**High freedom (text-based instructions)**: Use when multiple approaches are valid, decisions depend on context, or heuristics guide the approach.
-
-**Medium freedom (pseudocode or scripts with parameters)**: Use when a preferred pattern exists, some variation is acceptable, or configuration affects behavior.
-
-**Low freedom (specific scripts, few parameters)**: Use when operations are fragile and error-prone, consistency is critical, or a specific sequence must be followed.
-
-Think of the agent exploring a path: a narrow bridge with cliffs needs specific guardrails (low freedom), while an open field allows many routes (high freedom).
-
-### Anatomy of a Skill
-
-Every skill consists of a required SKILL.md file and optional bundled resources:
-
-```
-skill-name/
-├── SKILL.md (required)
-│   ├── YAML frontmatter metadata (required)
-│   │   ├── name: (required)
-│   │   ├── description: (required)
-│   │   └── compatibility: (optional, rarely needed)
-│   └── Markdown instructions (required)
-└── Bundled Resources (optional)
-    ├── scripts/          - Executable code (Python/Bash/etc.)
-    ├── references/       - Documentation intended to be loaded into context as needed
-    └── assets/           - Files used in output (templates, icons, fonts, etc.)
-```
-
-#### SKILL.md (required)
-
-Every SKILL.md consists of:
-
-- **Frontmatter** (YAML): Contains `name` and `description` fields (required), plus optional fields like `license`, `metadata`, and `compatibility`. Only `name` and `description` are read by the agent to determine when the skill triggers, so be clear and comprehensive about what the skill is and when it should be used. The `compatibility` field is for noting environment requirements (target product, system packages, etc.) but most skills don't need it.
-- **Body** (Markdown): Instructions and guidance for using the skill. Only loaded AFTER the skill triggers (if at all).
-
-#### Bundled Resources (optional)
-
-##### Scripts (`scripts/`)
-
-Executable code (Python/Bash/etc.) for tasks that require deterministic reliability or are repeatedly rewritten.
-
-- **When to include**: When the same code is being rewritten repeatedly or deterministic reliability is needed
-- **Example**: `scripts/rotate_pdf.py` for PDF rotation tasks
-- **Benefits**: Token efficient, deterministic, may be executed without loading into context
-- **Note**: Scripts may still need to be read by the agent for patching or environment-specific adjustments
-
-##### References (`references/`)
-
-Documentation and reference material intended to be loaded as needed into context to inform the agent's process and thinking.
-
-- **When to include**: For documentation that the agent should reference while working
-- **Examples**: `references/finance.md` for financial schemas, `references/mnda.md` for company NDA template, `references/policies.md` for company policies, `references/api_docs.md` for API specifications
-- **Use cases**: Database schemas, API documentation, domain knowledge, company policies, detailed workflow guides
-- **Benefits**: Keeps SKILL.md lean, loaded only when the agent determines it's needed
-- **Best practice**: If files are large (>10k words), include grep search patterns in SKILL.md
-- **Avoid duplication**: Information should live in either SKILL.md or references files, not both. Prefer references files for detailed information unless it's truly core to the skill—this keeps SKILL.md lean while making information discoverable without hogging the context window. Keep only essential procedural instructions and workflow guidance in SKILL.md; move detailed reference material, schemas, and examples to references files.
-
-##### Assets (`assets/`)
-
-Files not intended to be loaded into context, but rather used within the output the agent produces.
-
-- **When to include**: When the skill needs files that will be used in the final output
-- **Examples**: `assets/logo.png` for brand assets, `assets/slides.pptx` for PowerPoint templates, `assets/frontend-template/` for HTML/React boilerplate, `assets/font.ttf` for typography
-- **Use cases**: Templates, images, icons, boilerplate code, fonts, sample documents that get copied or modified
-- **Benefits**: Separates output resources from documentation, enables the agent to use files without loading them into context
-
-#### What to Not Include in a Skill
-
-A skill should only contain essential files that directly support its functionality. Do NOT create extraneous documentation or auxiliary files, including:
-
-- README.md
-- INSTALLATION_GUIDE.md
-- QUICK_REFERENCE.md
-- CHANGELOG.md
-- etc.
-
-The skill should only contain the information needed for an AI agent to do the job at hand. It should not contain auxilary context about the process that went into creating it, setup and testing procedures, user-facing documentation, etc. Creating additional documentation files just adds clutter and confusion.
-
-### Progressive Disclosure Design Principle
-
-Skills use a three-level loading system to manage context efficiently:
-
-1. **Metadata (name + description)** - Always in context (~100 words)
-2. **SKILL.md body** - When skill triggers (<5k words)
-3. **Bundled resources** - As needed by the agent (Unlimited because scripts can be executed without reading into context window)
-
-#### Progressive Disclosure Patterns
-
-Keep SKILL.md body to the essentials and under 500 lines to minimize context bloat. Split content into separate files when approaching this limit. When splitting out content into other files, it is very important to reference them from SKILL.md and describe clearly when to read them, to ensure the reader of the skill knows they exist and when to use them.
-
-**Key principle:** When a skill supports multiple variations, frameworks, or options, keep only the core workflow and selection guidance in SKILL.md. Move variant-specific details (patterns, examples, configuration) into separate reference files.
-
-**Pattern 1: High-level guide with references**
-
-```markdown
-# PDF Processing
-
-## Quick start
-
-Extract text with pdfplumber:
-[code example]
-
-## Advanced features
-
-- **Form filling**: See [FORMS.md](FORMS.md) for complete guide
-- **API reference**: See [REFERENCE.md](REFERENCE.md) for all methods
-- **Examples**: See [EXAMPLES.md](EXAMPLES.md) for common patterns
-```
-
-The agent loads FORMS.md, REFERENCE.md, or EXAMPLES.md only when needed.
-
-**Pattern 2: Domain-specific organization**
-
-For Skills with multiple domains, organize content by domain to avoid loading irrelevant context:
-
-```
-bigquery-skill/
-├── SKILL.md (overview and navigation)
-└── reference/
-    ├── finance.md (revenue, billing metrics)
-    ├── sales.md (opportunities, pipeline)
-    ├── product.md (API usage, features)
-    └── marketing.md (campaigns, attribution)
-```
-
-When a user asks about sales metrics, the agent only reads sales.md.
-
-Similarly, for skills supporting multiple frameworks or variants, organize by variant:
-
-```
-cloud-deploy/
-├── SKILL.md (workflow + provider selection)
-└── references/
-    ├── aws.md (AWS deployment patterns)
-    ├── gcp.md (GCP deployment patterns)
-    └── azure.md (Azure deployment patterns)
-```
-
-When the user chooses AWS, the agent only reads aws.md.
-
-**Pattern 3: Conditional details**
-
-Show basic content, link to advanced content:
-
-```markdown
-# DOCX Processing
-
-## Creating documents
-
-Use docx-js for new documents. See [DOCX-JS.md](DOCX-JS.md).
-
-## Editing documents
-
-For simple edits, modify the XML directly.
-
-**For tracked changes**: See [REDLINING.md](REDLINING.md)
-**For OOXML details**: See [OOXML.md](OOXML.md)
-```
-
-The agent reads REDLINING.md or OOXML.md only when the user needs those features.
-
-**Important guidelines:**
-
-- **Avoid deeply nested references** - Keep references one level deep from SKILL.md. All reference files should link directly from SKILL.md.
-- **Structure longer reference files** - For files longer than 100 lines, include a table of contents at the top so the agent can see the full scope when previewing.
-
-## Skill Creation Process
-
-Skill creation involves these steps:
-
-1. Understand the skill with concrete examples
-2. Plan reusable skill contents (scripts, references, assets)
-3. Initialize the skill (run init_skill.py)
-4. Edit the skill (implement resources and write SKILL.md)
-5. Package the skill (run package_skill.py)
-6. Iterate based on real usage
-
-Follow these steps in order, skipping only if there is a clear reason why they are not applicable.
-
-### Step 1: Understanding the Skill with Concrete Examples
-
-Skip this step only when the skill's usage patterns are already clearly understood. It remains valuable even when working with an existing skill.
-
-To create an effective skill, clearly understand concrete examples of how the skill will be used. This understanding can come from either direct user examples or generated examples that are validated with user feedback.
-
-For example, when building an image-editor skill, relevant questions include:
-
-- "What functionality should the image-editor skill support? Editing, rotating, anything else?"
-- "Can you give some examples of how this skill would be used?"
-- "I can imagine users asking for things like 'Remove the red-eye from this image' or 'Rotate this image'. Are there other ways you imagine this skill being used?"
-- "What would a user say that should trigger this skill?"
-
-To avoid overwhelming users, avoid asking too many questions in a single message. Start with the most important questions and follow up as needed for better effectiveness.
-
-Conclude this step when there is a clear sense of the functionality the skill should support.
-
-### Step 2: Planning the Reusable Skill Contents
-
-To turn concrete examples into an effective skill, analyze each example by:
-
-1. Considering how to execute on the example from scratch
-2. Identifying what scripts, references, and assets would be helpful when executing these workflows repeatedly
-
-Example: When building a `pdf-editor` skill to handle queries like "Help me rotate this PDF," the analysis shows:
-
-1. Rotating a PDF requires re-writing the same code each time
-2. A `scripts/rotate_pdf.py` script would be helpful to store in the skill
-
-Example: When designing a `frontend-webapp-builder` skill for queries like "Build me a todo app" or "Build me a dashboard to track my steps," the analysis shows:
-
-1. Writing a frontend webapp requires the same boilerplate HTML/React each time
-2. An `assets/hello-world/` template containing the boilerplate HTML/React project files would be helpful to store in the skill
-
-Example: When building a `big-query` skill to handle queries like "How many users have logged in today?" the analysis shows:
-
-1. Querying BigQuery requires re-discovering the table schemas and relationships each time
-2. A `references/schema.md` file documenting the table schemas would be helpful to store in the skill
-
-To establish the skill's contents, analyze each concrete example to create a list of the reusable resources to include: scripts, references, and assets.
-
-### Step 3: Initializing the Skill
-
-At this point, it is time to actually create the skill.
-
-Skip this step only if the skill being developed already exists, and iteration or packaging is needed. In this case, continue to the next step.
-
-When creating a new skill from scratch, always run the `init_skill.py` script. The script conveniently generates a new template skill directory that automatically includes everything a skill requires, making the skill creation process much more efficient and reliable.
-
-Usage (run from the skill-creator skill directory):
+Determine which `.mdx` files are affected by the code change.
 
 ```bash
-python scripts/init_skill.py <skill-name> --path <output-directory>
+# From repo root, pass only changed Python files
+python docs/mintlify/scripts/docs_sync/doc_code_map.py impacted \
+  --changed-file <file1> --changed-file <file2>
+
+# Or using git refs
+python docs/mintlify/scripts/docs_sync/doc_code_map.py impacted \
+  --base-ref <base> --head-ref <head>
 ```
 
-Note: The scripts are located in this skill's `scripts/` directory. Use the full path if running from a different directory.
+Each `.mdx` file declares a `doc_code_map` block in its YAML frontmatter:
 
-The script:
+```yaml
+---
+title: MCP Toolkit
+doc_code_map:
+  - "camel/toolkits/mcp_toolkit.py"
+  - "camel/runtimes/llm_guard_runtime.py"
+---
+```
 
-- Creates the skill directory at the specified path
-- Generates a SKILL.md template with proper frontmatter and TODO placeholders
-- Creates example resource directories: `scripts/`, `references/`, and `assets/`
-- Adds example files in each directory that can be customized or deleted
+### Step 2 — Read Current Doc and Relevant Code
 
-After initialization, customize or remove the generated SKILL.md and example files as needed.
+For each impacted doc:
 
-### Step 4: Edit the Skill
+1. Open the target `.mdx` file and inspect its `doc_code_map` frontmatter.
+2. Use the provided changed Python file list as initial context.
+3. Read any source files needed to judge whether the doc is still accurate.
+4. Compare the target doc against the current code and decide whether a
+   reader-facing update is actually needed.
 
-When editing the (newly-generated or existing) skill, remember that the skill is being created for an agent to use. Include information that would be beneficial and non-obvious to the agent. Consider what procedural knowledge, domain-specific details, or reusable assets would help the agent execute these tasks more effectively.
+### Step 3 — Update the Document Body
 
-#### Learn Proven Design Patterns
+Rewrite only the parts of the body that are outdated relative to the code.
 
-Consult these helpful guides based on your skill's needs:
+Rules:
+- **Edit the target doc directly through terminal tools** for this run.
+- **Let file changes speak for themselves** — if no update is needed, leave the
+  target doc untouched instead of relying on a sentinel reply.
+- **Use changed Python files as context, not a hard boundary** — inspect other
+  relevant code when needed to make a correct documentation decision.
+- **Ignore non-Python changes** — docs, workflow, YAML, test-only, and release
+  metadata changes should not trigger doc edits by themselves.
+- **Prefer the smallest possible diff** — keep all already-correct content.
+- **Preserve frontmatter** — never modify the `---` block.
+- **Preserve style** — keep existing section structure and tone.
+- **Preserve Mintlify components** — keep Card, Accordion, Tab, CodeGroup, etc.
+- **Update code snippets** — fix imports, class names, method signatures, parameters.
+- **Update prose** — fix descriptions that no longer match the code.
+- **Remove references** to deleted classes/methods/parameters.
+- **Add references** to newly introduced public API when relevant.
+- **Skip the document entirely** if the Python change is internal and does not
+  require reader-facing doc updates.
+- After finishing, either leave the file unchanged or update it in place.
+- Do not return the full rewritten document body in chat; a short status note
+  is enough.
 
-- **Multi-step processes**: See references/workflows.md for sequential workflows and conditional logic
-- **Specific output formats or quality standards**: See references/output-patterns.md for template and example patterns
-
-These files contain established best practices for effective skill design.
-
-#### Start with Reusable Skill Contents
-
-To begin implementation, start with the reusable resources identified above: `scripts/`, `references/`, and `assets/` files. Note that this step may require user input. For example, when implementing a `brand-guidelines` skill, the user may need to provide brand assets or templates to store in `assets/`, or documentation to store in `references/`.
-
-Added scripts must be tested by actually running them to ensure there are no bugs and that the output matches what is expected. If there are many similar scripts, only a representative sample needs to be tested to ensure confidence that they all work while balancing time to completion.
-
-Any example files and directories not needed for the skill should be deleted. The initialization script creates example files in `scripts/`, `references/`, and `assets/` to demonstrate structure, but most skills won't need all of them.
-
-#### Update SKILL.md
-
-**Writing Guidelines:** Always use imperative/infinitive form.
-
-##### Frontmatter
-
-Write the YAML frontmatter with `name` and `description`:
-
-- `name`: The skill name
-- `description`: This is the primary triggering mechanism for your skill, and helps the agent understand when to use the skill.
-  - Include both what the Skill does and specific triggers/contexts for when to use it.
-  - Include all "when to use" information here - Not in the body. The body is only loaded after triggering, so "When to Use This Skill" sections in the body are not helpful to the agent.
-  - Example description for a `docx` skill: "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. Use when the agent needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks"
-
-Do not include any other fields in YAML frontmatter.
-
-##### Body
-
-Write instructions for using the skill and its bundled resources.
-
-### Step 5: Packaging a Skill
-
-Once development of the skill is complete, it must be packaged into a distributable .skill file that gets shared with the user. The packaging process automatically validates the skill first to ensure it meets all requirements.
-
-Usage (run from the skill-creator skill directory):
+### Step 4 — Verify
 
 ```bash
-python scripts/package_skill.py <path/to/skill-folder>
+# Ensure all patterns still resolve
+python docs/mintlify/scripts/docs_sync/doc_code_map.py verify
 ```
 
-Optional output directory specification:
+Check that no frontmatter was accidentally removed or duplicated.
 
-```bash
-python scripts/package_skill.py <path/to/skill-folder> ./dist
+## Mintlify Component Cheatsheet
+
+Use these components in `.mdx` files:
+
+```mdx
+<Card title="Title" icon="icon-name" href="/path">
+  Description text.
+</Card>
 ```
 
-Note: The scripts are located in this skill's `scripts/` directory. Use the full path if running from a different directory.
+```mdx
+<Accordion title="Click to expand">
+  Hidden content revealed on click.
+</Accordion>
+```
 
-The packaging script will:
+```mdx
+<Tabs>
+  <Tab title="Python">
+    Python content here.
+  </Tab>
+  <Tab title="TypeScript">
+    TypeScript content here.
+  </Tab>
+</Tabs>
+```
 
-1. **Validate** the skill automatically, checking:
+~~~~mdx
+<CodeGroup>
+```python title="example.py"
+print("hello")
+```
+```bash title="shell"
+echo hello
+```
+</CodeGroup>
+~~~~
 
-   - YAML frontmatter format and required fields
-   - Skill naming conventions and directory structure
-   - Description completeness and quality
-   - File organization and resource references
+```mdx
+<Note>Important information the reader should know.</Note>
+<Warning>Critical warning about potential issues.</Warning>
+<Tip>Helpful suggestion or best practice.</Tip>
+```
 
-2. **Package** the skill if validation passes, creating a .skill file named after the skill (e.g., `my-skill.skill`) that includes all files and maintains the proper directory structure for distribution. The .skill file is a zip file with a .skill extension.
+## Automated Workflow
 
-If validation fails, the script will report the errors and exit without creating a package. Fix any validation errors and run the packaging command again.
+The GitHub Actions workflow `docs_release_auto_sync_pr.yml` runs
+automatically on each release:
 
-### Step 6: Iterate
-
-After testing the skill, users may request improvements. Often this happens right after using the skill, with fresh context of how the skill performed.
-
-**Iteration workflow:**
-
-1. Use the skill on real tasks
-2. Notice struggles or inefficiencies
-3. Identify how SKILL.md or bundled resources should be updated
-4. Implement changes and test again
+1. Verifies `doc_code_map` patterns (`doc_code_map.py verify`).
+2. Writes `changed_python_files.txt` from the release diff for all changed
+   `*.py` files that may match `doc_code_map`.
+3. Computes `impacted_docs.txt` from that changed Python file list.
+4. Runs `auto_sync_docs_with_chatagent.py` with both files so the agent knows
+   which target doc it may inspect and update directly through terminal tools,
+   while using `changed_python_files.txt` as context. The script accepts
+   success based on whether the target doc actually changed and rejects edits
+   outside the target doc.
+5. Opens a PR with the changes.
 
 ---
 > Source: [camel-ai/camel](https://github.com/camel-ai/camel) — distributed by [TomeVault](https://tomevault.io).
