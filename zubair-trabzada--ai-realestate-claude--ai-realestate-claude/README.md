@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zubair-trabzada/ai-realestate-claude](https://github.com/zubair-trabzada/ai-realestate-claude/tree/main/skills/realestate-comps/SKILL.md)
+Original source: [zubair-trabzada/ai-realestate-claude](https://github.com/zubair-trabzada/ai-realestate-claude/tree/main/skills/realestate-quick/SKILL.md)
 
 ---
 
