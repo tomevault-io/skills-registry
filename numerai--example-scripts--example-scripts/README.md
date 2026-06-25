@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [numerai/example-scripts](https://github.com/numerai/example-scripts/tree/main/numerai/agents/skills/numerai-research/SKILL.md)
+Original source: [numerai/example-scripts](https://github.com/numerai/example-scripts/tree/main/numerai/agents/skills/numerai-model-upload/SKILL.md)
 
 ---
 
