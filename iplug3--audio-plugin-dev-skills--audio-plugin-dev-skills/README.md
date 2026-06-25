@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [iPlug3/audio-plugin-dev-skills](https://github.com/iPlug3/audio-plugin-dev-skills/tree/main/plugins/audio-plugin-validators/skills/validate-clap/SKILL.md)
+Original source: [iPlug3/audio-plugin-dev-skills](https://github.com/iPlug3/audio-plugin-dev-skills/tree/main/plugins/audio-plugin-validators/skills/validate-vst3/SKILL.md)
 
 ---
 
