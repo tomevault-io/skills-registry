@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [simstudioai/sim](https://github.com/simstudioai/sim/tree/main/.cursor/skills/add-hosted-key/SKILL.md)
+Original source: [simstudioai/sim](https://github.com/simstudioai/sim/tree/main/.agents/skills/add-hosted-key/SKILL.md)
 
 ---
 
