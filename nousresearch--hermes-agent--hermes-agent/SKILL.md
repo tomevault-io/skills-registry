@@ -1,299 +1,349 @@
 ---
-name: himalaya
-description: Himalaya CLI: IMAP/SMTP email from terminal. Use when this capability is needed.
+name: subagent-driven-development
+description: Execute plans via delegate_task subagents (2-stage review). Use when this capability is needed.
 metadata:
   author: NousResearch
 ---
 
-# Himalaya Email CLI
+# Subagent-Driven Development
 
-Himalaya is a CLI email client that lets you manage emails from the terminal using IMAP, SMTP, Notmuch, or Sendmail backends.
+## Overview
 
-This skill is separate from the Hermes Email gateway adapter. The gateway
-adapter lets people email the agent and uses Hermes' built-in IMAP/SMTP
-adapter; this skill lets the agent operate a mailbox from terminal tools and
-requires the external `himalaya` CLI.
+Execute implementation plans by dispatching fresh subagents per task with systematic two-stage review.
 
-## References
+**Core principle:** Fresh subagent per task + two-stage review (spec then quality) = high quality, fast iteration.
 
-- `references/configuration.md` (config file setup + IMAP/SMTP authentication)
-- `references/message-composition.md` (MML syntax for composing emails)
+## When to Use
 
-## Prerequisites
+Use this skill when:
+- You have an implementation plan (from the `plan` skill or user requirements)
+- Tasks are mostly independent
+- Quality and spec compliance are important
+- You want automated review between tasks
 
-1. Himalaya CLI installed (`himalaya --version` to verify)
-2. A configuration file at `~/.config/himalaya/config.toml`
-3. IMAP/SMTP credentials configured (password stored securely)
+**vs. manual execution:**
+- Fresh context per task (no confusion from accumulated state)
+- Automated review process catches issues early
+- Consistent quality checks across all tasks
+- Subagents can ask questions before starting work
 
-### Installation
+## The Process
+
+### 1. Read and Parse Plan
+
+Read the plan file. Extract ALL tasks with their full text and context upfront. Create a todo list:
+
+```python
+# Read the plan
+read_file("docs/plans/feature-plan.md")
+
+# Create todo list with all tasks
+todo([
+    {"id": "task-1", "content": "Create User model with email field", "status": "pending"},
+    {"id": "task-2", "content": "Add password hashing utility", "status": "pending"},
+    {"id": "task-3", "content": "Create login endpoint", "status": "pending"},
+])
+```
+
+**Key:** Read the plan ONCE. Extract everything. Don't make subagents read the plan file — provide the full task text directly in context.
+
+### 2. Per-Task Workflow
+
+For EACH task in the plan:
+
+#### Step 1: Dispatch Implementer Subagent
+
+Use `delegate_task` with complete context:
+
+```python
+delegate_task(
+    goal="Implement Task 1: Create User model with email and password_hash fields",
+    context="""
+    TASK FROM PLAN:
+    - Create: src/models/user.py
+    - Add User class with email (str) and password_hash (str) fields
+    - Use bcrypt for password hashing
+    - Include __repr__ for debugging
+
+    FOLLOW TDD:
+    1. Write failing test in tests/models/test_user.py
+    2. Run: pytest tests/models/test_user.py -v (verify FAIL)
+    3. Write minimal implementation
+    4. Run: pytest tests/models/test_user.py -v (verify PASS)
+    5. Run: pytest tests/ -q (verify no regressions)
+    6. Commit: git add -A && git commit -m "feat: add User model with password hashing"
+
+    PROJECT CONTEXT:
+    - Python 3.11, Flask app in src/app.py
+    - Existing models in src/models/
+    - Tests use pytest, run from project root
+    - bcrypt already in requirements.txt
+    """,
+    toolsets=['terminal', 'file']
+)
+```
+
+#### Step 2: Dispatch Spec Compliance Reviewer
+
+After the implementer completes, verify against the original spec:
+
+```python
+delegate_task(
+    goal="Review if implementation matches the spec from the plan",
+    context="""
+    ORIGINAL TASK SPEC:
+    - Create src/models/user.py with User class
+    - Fields: email (str), password_hash (str)
+    - Use bcrypt for password hashing
+    - Include __repr__
+
+    CHECK:
+    - [ ] All requirements from spec implemented?
+    - [ ] File paths match spec?
+    - [ ] Function signatures match spec?
+    - [ ] Behavior matches expected?
+    - [ ] Nothing extra added (no scope creep)?
+
+    OUTPUT: PASS or list of specific spec gaps to fix.
+    """,
+    toolsets=['file']
+)
+```
+
+**If spec issues found:** Fix gaps, then re-run spec review. Continue only when spec-compliant.
+
+#### Step 3: Dispatch Code Quality Reviewer
+
+After spec compliance passes:
+
+```python
+delegate_task(
+    goal="Review code quality for Task 1 implementation",
+    context="""
+    FILES TO REVIEW:
+    - src/models/user.py
+    - tests/models/test_user.py
+
+    CHECK:
+    - [ ] Follows project conventions and style?
+    - [ ] Proper error handling?
+    - [ ] Clear variable/function names?
+    - [ ] Adequate test coverage?
+    - [ ] No obvious bugs or missed edge cases?
+    - [ ] No security issues?
+
+    OUTPUT FORMAT:
+    - Critical Issues: [must fix before proceeding]
+    - Important Issues: [should fix]
+    - Minor Issues: [optional]
+    - Verdict: APPROVED or REQUEST_CHANGES
+    """,
+    toolsets=['file']
+)
+```
+
+**If quality issues found:** Fix issues, re-review. Continue only when approved.
+
+#### Step 4: Mark Complete
+
+```python
+todo([{"id": "task-1", "content": "Create User model with email field", "status": "completed"}], merge=True)
+```
+
+### 3. Final Review
+
+After ALL tasks are complete, dispatch a final integration reviewer:
+
+```python
+delegate_task(
+    goal="Review the entire implementation for consistency and integration issues",
+    context="""
+    All tasks from the plan are complete. Review the full implementation:
+    - Do all components work together?
+    - Any inconsistencies between tasks?
+    - All tests passing?
+    - Ready for merge?
+    """,
+    toolsets=['terminal', 'file']
+)
+```
+
+### 4. Verify and Commit
 
 ```bash
-# Pre-built binary (Linux/macOS — recommended)
-curl -sSL https://raw.githubusercontent.com/pimalaya/himalaya/master/install.sh | PREFIX=~/.local sh
+# Run full test suite
+pytest tests/ -q
 
-# macOS via Homebrew
-brew install himalaya
+# Review all changes
+git diff --stat
 
-# Or via cargo (any platform with Rust)
-cargo install himalaya --locked
+# Final commit if needed
+git add -A && git commit -m "feat: complete [feature name] implementation"
 ```
 
-## Configuration Setup
+## Task Granularity
 
-Run the interactive wizard to set up an account:
+**Each task = 2-5 minutes of focused work.**
 
-```bash
-himalaya account configure
+**Too big:**
+- "Implement user authentication system"
+
+**Right size:**
+- "Create User model with email and password fields"
+- "Add password hashing function"
+- "Create login endpoint"
+- "Add JWT token generation"
+- "Create registration endpoint"
+
+## Red Flags — Never Do These
+
+- Start implementation without a plan
+- Skip reviews (spec compliance OR code quality)
+- Proceed with unfixed critical/important issues
+- Dispatch multiple implementation subagents for tasks that touch the same files
+- Make subagent read the plan file (provide full text in context instead)
+- Skip scene-setting context (subagent needs to understand where the task fits)
+- Ignore subagent questions (answer before letting them proceed)
+- Accept "close enough" on spec compliance
+- Skip review loops (reviewer found issues → implementer fixes → review again)
+- Let implementer self-review replace actual review (both are needed)
+- **Start code quality review before spec compliance is PASS** (wrong order)
+- Move to next task while either review has open issues
+
+## Handling Issues
+
+### If Subagent Asks Questions
+
+- Answer clearly and completely
+- Provide additional context if needed
+- Don't rush them into implementation
+
+### If Reviewer Finds Issues
+
+- Implementer subagent (or a new one) fixes them
+- Reviewer reviews again
+- Repeat until approved
+- Don't skip the re-review
+
+### If Subagent Fails a Task
+
+- Dispatch a new fix subagent with specific instructions about what went wrong
+- Don't try to fix manually in the controller session (context pollution)
+
+## Efficiency Notes
+
+**Why fresh subagent per task:**
+- Prevents context pollution from accumulated state
+- Each subagent gets clean, focused context
+- No confusion from prior tasks' code or reasoning
+
+**Why two-stage review:**
+- Spec review catches under/over-building early
+- Quality review ensures the implementation is well-built
+- Catches issues before they compound across tasks
+
+**Cost trade-off:**
+- More subagent invocations (implementer + 2 reviewers per task)
+- But catches issues early (cheaper than debugging compounded problems later)
+
+## Integration with Other Skills
+
+### With plan
+
+This skill EXECUTES plans created by the `plan` skill:
+1. User requirements → plan → implementation plan
+2. Implementation plan → subagent-driven-development → working code
+
+### With test-driven-development
+
+Implementer subagents should follow TDD:
+1. Write failing test first
+2. Implement minimal code
+3. Verify test passes
+4. Commit
+
+Include TDD instructions in every implementer context.
+
+### With requesting-code-review
+
+The two-stage review process IS the code review. For final integration review, use the requesting-code-review skill's review dimensions.
+
+### With systematic-debugging
+
+If a subagent encounters bugs during implementation:
+1. Follow systematic-debugging process
+2. Find root cause before fixing
+3. Write regression test
+4. Resume implementation
+
+## Example Workflow
+
+```
+[Read plan: docs/plans/auth-feature.md]
+[Create todo list with 5 tasks]
+
+--- Task 1: Create User model ---
+[Dispatch implementer subagent]
+  Implementer: "Should email be unique?"
+  You: "Yes, email must be unique"
+  Implementer: Implemented, 3/3 tests passing, committed.
+
+[Dispatch spec reviewer]
+  Spec reviewer: ✅ PASS — all requirements met
+
+[Dispatch quality reviewer]
+  Quality reviewer: ✅ APPROVED — clean code, good tests
+
+[Mark Task 1 complete]
+
+--- Task 2: Password hashing ---
+[Dispatch implementer subagent]
+  Implementer: No questions, implemented, 5/5 tests passing.
+
+[Dispatch spec reviewer]
+  Spec reviewer: ❌ Missing: password strength validation (spec says "min 8 chars")
+
+[Implementer fixes]
+  Implementer: Added validation, 7/7 tests passing.
+
+[Dispatch spec reviewer again]
+  Spec reviewer: ✅ PASS
+
+[Dispatch quality reviewer]
+  Quality reviewer: Important: Magic number 8, extract to constant
+  Implementer: Extracted MIN_PASSWORD_LENGTH constant
+  Quality reviewer: ✅ APPROVED
+
+[Mark Task 2 complete]
+
+... (continue for all tasks)
+
+[After all tasks: dispatch final integration reviewer]
+[Run full test suite: all passing]
+[Done!]
 ```
 
-Or create `~/.config/himalaya/config.toml` manually:
+## Remember
 
-```toml
-[accounts.personal]
-email = "you@example.com"
-display-name = "Your Name"
-default = true
-
-backend.type = "imap"
-backend.host = "imap.example.com"
-backend.port = 993
-backend.encryption.type = "tls"
-backend.login = "you@example.com"
-backend.auth.type = "password"
-backend.auth.cmd = "pass show email/imap"  # or use keyring
-
-message.send.backend.type = "smtp"
-message.send.backend.host = "smtp.example.com"
-message.send.backend.port = 587
-message.send.backend.encryption.type = "start-tls"
-message.send.backend.login = "you@example.com"
-message.send.backend.auth.type = "password"
-message.send.backend.auth.cmd = "pass show email/smtp"
-
-# Folder aliases (himalaya v1.2.0+ syntax). Required whenever the
-# server's folder names don't match himalaya's canonical names
-# (inbox/sent/drafts/trash). Gmail is the common case — see
-# `references/configuration.md` for the `[Gmail]/Sent Mail` mapping.
-folder.aliases.inbox = "INBOX"
-folder.aliases.sent = "Sent"
-folder.aliases.drafts = "Drafts"
-folder.aliases.trash = "Trash"
+```
+Fresh subagent per task
+Two-stage review every time
+Spec compliance FIRST
+Code quality SECOND
+Never skip reviews
+Catch issues early
 ```
 
-> **Heads up on the alias syntax.** Pre-v1.2.0 docs used a
-> `[accounts.NAME.folder.alias]` sub-section (singular `alias`).
-> v1.2.0 silently ignores that form — TOML parses fine, but the
-> alias resolver never reads it, so every lookup falls through to
-> the canonical name. On Gmail this means save-to-Sent fails *after*
-> SMTP delivery succeeds, and `himalaya message send` exits non-zero.
-> Any caller (agent, script, user) that retries on that exit code
-> will re-run the entire send — including SMTP — producing duplicate
-> emails to recipients. Always use `folder.aliases.X` (plural, dotted
-> keys, directly under `[accounts.NAME]`).
+**Quality is not an accident. It's the result of systematic process.**
 
-## Hermes Integration Notes
+## Further reading (load when relevant)
 
-- **Reading, listing, searching, moving, deleting** all work directly through the terminal tool
-- **Composing/replying/forwarding** — piped input (`cat << EOF | himalaya template send`) is recommended for reliability. Interactive `$EDITOR` mode works with `pty=true` + background + process tool, but requires knowing the editor and its commands
-- Use `--output json` for structured output that's easier to parse programmatically
-- The `himalaya account configure` wizard requires interactive input — use PTY mode: `terminal(command="himalaya account configure", pty=true)`
+When the orchestration involves significant context usage, long review loops, or complex validation checkpoints, load these references for the specific discipline:
 
-## Common Operations
+- **`references/context-budget-discipline.md`** — Four-tier context degradation model (PEAK / GOOD / DEGRADING / POOR), read-depth rules that scale with context window size, and early warning signs of silent degradation. Load when a run will clearly consume significant context (multi-phase plans, many subagents, large artifacts).
+- **`references/gates-taxonomy.md`** — The four canonical gate types (Pre-flight, Revision, Escalation, Abort) with behavior, recovery, and examples. Load when designing or reviewing any workflow that has validation checkpoints — use the vocabulary explicitly so each gate has defined entry, failure behavior, and resumption rules.
 
-### List Folders
-
-```bash
-himalaya folder list
-```
-
-### List Emails
-
-List emails in INBOX (default):
-
-```bash
-himalaya envelope list
-```
-
-List emails in a specific folder:
-
-```bash
-himalaya envelope list --folder "Sent"
-```
-
-List with pagination:
-
-```bash
-himalaya envelope list --page 1 --page-size 20
-```
-
-### Search Emails
-
-```bash
-himalaya envelope list from john@example.com subject meeting
-```
-
-### Read an Email
-
-Read email by ID (shows plain text):
-
-```bash
-himalaya message read 42
-```
-
-Export raw MIME:
-
-```bash
-himalaya message export 42 --full
-```
-
-### Reply to an Email
-
-To reply non-interactively from Hermes, read the original message, compose a reply, and pipe it:
-
-```bash
-# Get the reply template, edit it, and send
-himalaya template reply 42 | sed 's/^$/\nYour reply text here\n/' | himalaya template send
-```
-
-Or build the reply manually:
-
-```bash
-cat << 'EOF' | himalaya template send
-From: you@example.com
-To: sender@example.com
-Subject: Re: Original Subject
-In-Reply-To: <original-message-id>
-
-Your reply here.
-EOF
-```
-
-Reply-all (interactive — needs $EDITOR, use template approach above instead):
-
-```bash
-himalaya message reply 42 --all
-```
-
-### Forward an Email
-
-```bash
-# Get forward template and pipe with modifications
-himalaya template forward 42 | sed 's/^To:.*/To: newrecipient@example.com/' | himalaya template send
-```
-
-### Write a New Email
-
-**Non-interactive (use this from Hermes)** — pipe the message via stdin:
-
-```bash
-cat << 'EOF' | himalaya template send
-From: you@example.com
-To: recipient@example.com
-Subject: Test Message
-
-Hello from Himalaya!
-EOF
-```
-
-Or with headers flag:
-
-```bash
-himalaya message write -H "To:recipient@example.com" -H "Subject:Test" "Message body here"
-```
-
-Note: `himalaya message write` without piped input opens `$EDITOR`. This works with `pty=true` + background mode, but piping is simpler and more reliable.
-
-### Move/Copy Emails
-
-Move to folder (target folder comes first, then the message ID):
-
-```bash
-himalaya message move "Archive" 42
-```
-
-Copy to folder (target folder comes first, then the message ID):
-
-```bash
-himalaya message copy "Important" 42
-```
-
-### Delete an Email
-
-```bash
-himalaya message delete 42
-```
-
-### Manage Flags
-
-Add flag:
-
-```bash
-himalaya flag add 42 --flag seen
-```
-
-Remove flag:
-
-```bash
-himalaya flag remove 42 --flag seen
-```
-
-## Multiple Accounts
-
-List accounts:
-
-```bash
-himalaya account list
-```
-
-Use a specific account:
-
-```bash
-himalaya --account work envelope list
-```
-
-## Attachments
-
-Save attachments from a message:
-
-```bash
-himalaya attachment download 42
-```
-
-Save to specific directory:
-
-```bash
-himalaya attachment download 42 --downloads-dir ~/Downloads
-```
-
-## Output Formats
-
-Most commands support `--output` for structured output:
-
-```bash
-himalaya envelope list --output json
-himalaya envelope list --output plain
-```
-
-## Debugging
-
-Enable debug logging:
-
-```bash
-RUST_LOG=debug himalaya envelope list
-```
-
-Full trace with backtrace:
-
-```bash
-RUST_LOG=trace RUST_BACKTRACE=1 himalaya envelope list
-```
-
-## Tips
-
-- Use `himalaya --help` or `himalaya <command> --help` for detailed usage.
-- Message IDs are relative to the current folder; re-list after folder changes.
-- For composing rich emails with attachments, use MML syntax (see `references/message-composition.md`).
-- Store passwords securely using `pass`, system keyring, or a command that outputs the password.
+Both references adapted from gsd-build/get-shit-done (MIT © 2025 Lex Christopherson).
 
 ---
 > Source: [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) — distributed by [TomeVault](https://tomevault.io).
