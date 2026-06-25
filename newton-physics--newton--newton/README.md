@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [newton-physics/newton](https://github.com/newton-physics/newton/tree/main/.claude/skills/newton-api-design/SKILL.md)
+Original source: [newton-physics/newton](https://github.com/newton-physics/newton/tree/main/.claude/skills/release-changelog/SKILL.md)
 
 ---
 
