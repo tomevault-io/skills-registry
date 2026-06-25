@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [metarhia/metaskills](https://github.com/metarhia/metaskills/tree/main/skills/js-conventions/SKILL.md)
+Original source: [metarhia/metaskills](https://github.com/metarhia/metaskills/tree/main/skills/js-data-structures/SKILL.md)
 
 ---
 
