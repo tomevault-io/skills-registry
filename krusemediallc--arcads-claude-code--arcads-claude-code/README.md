@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [krusemediallc/arcads-claude-code](https://github.com/krusemediallc/arcads-claude-code/tree/main/skills/arcads-external-api/prompting/clone-ad/SKILL.md)
+Original source: [krusemediallc/arcads-claude-code](https://github.com/krusemediallc/arcads-claude-code/tree/main/skills/arcads-external-api/prompting/analyze-video/SKILL.md)
 
 ---
 
