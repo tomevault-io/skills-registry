@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chromium/chromium](https://github.com/chromium/chromium/tree/main/agents/skills/chromium-docs/SKILL.md)
+Original source: [chromium/chromium](https://github.com/chromium/chromium/tree/main/agents/skills/trace-analysis/SKILL.md)
 
 ---
 
