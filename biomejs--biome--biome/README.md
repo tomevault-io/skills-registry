@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [biomejs/biome](https://github.com/biomejs/biome/tree/main/.claude/skills/parser-development/SKILL.md)
+Original source: [biomejs/biome](https://github.com/biomejs/biome/tree/main/.claude/skills/formatter-development/SKILL.md)
 
 ---
 
