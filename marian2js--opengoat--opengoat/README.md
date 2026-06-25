@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marian2js/opengoat](https://github.com/marian2js/opengoat/tree/main/packages/core/src/core/skills/bundled/personas/brand-guardian/SKILL.md)
+Original source: [marian2js/opengoat](https://github.com/marian2js/opengoat/tree/main/packages/core/src/core/skills/bundled/personas/seo-specialist/SKILL.md)
 
 ---
 
