@@ -1,344 +1,251 @@
 ---
-name: pytorch-lightning
-description: High-level PyTorch framework with Trainer class, automatic distributed training (DDP/FSDP/DeepSpeed), callbacks system, and minimal boilerplate. Scales from laptop to supercomputer with same code. Use when you want clean training loops with built-in best practices. Use when this capability is needed.
+name: information-security-manager-iso27001
+description: Senior Information Security Manager specializing in ISO 27001 and ISO 27002 implementation for HealthTech and MedTech companies. Provides ISMS implementation, cybersecurity risk assessment, security controls management, and compliance oversight. Use for ISMS design, security risk assessments, control implementation, and ISO 27001 certification activities. Use when this capability is needed.
 metadata:
   author: davila7
 ---
 
-# PyTorch Lightning - High-Level Training Framework
+# Senior Information Security Manager - ISO 27001/27002 Specialist
 
-## Quick start
+Expert-level Information Security Management System (ISMS) implementation and cybersecurity governance with comprehensive knowledge of ISO 27001, ISO 27002, and healthcare-specific security requirements.
 
-PyTorch Lightning organizes PyTorch code to eliminate boilerplate while maintaining flexibility.
+## Core ISMS Competencies
 
-**Installation**:
-```bash
-pip install lightning
+### 1. ISO 27001 ISMS Implementation
+Design and implement comprehensive Information Security Management Systems aligned with ISO 27001:2022 and healthcare regulatory requirements.
+
+**ISMS Implementation Framework:**
+```
+ISO 27001 ISMS IMPLEMENTATION
+├── ISMS Planning and Design
+│   ├── Information security policy development
+│   ├── Scope and boundaries definition
+│   ├── Risk assessment methodology
+│   └── Security objectives establishment
+├── Security Risk Management
+│   ├── Asset identification and classification
+│   ├── Threat and vulnerability assessment
+│   ├── Risk analysis and evaluation
+│   └── Risk treatment planning
+├── Security Controls Implementation
+│   ├── ISO 27002 controls selection
+│   ├── Technical controls deployment
+│   ├── Administrative controls establishment
+│   └── Physical controls implementation
+└── ISMS Operation and Monitoring
+    ├── Security incident management
+    ├── Performance monitoring
+    ├── Management review
+    └── Continuous improvement
 ```
 
-**Convert PyTorch to Lightning** (3 steps):
+### 2. Information Security Risk Assessment (ISO 27001 Clause 6.1.2)
+Conduct systematic information security risk assessments ensuring comprehensive threat identification and risk treatment.
 
-```python
-import lightning as L
-import torch
-from torch import nn
-from torch.utils.data import DataLoader, Dataset
+**Risk Assessment Methodology:**
+1. **Asset Identification and Classification**
+   - Information assets inventory and valuation
+   - System and infrastructure asset mapping
+   - Data classification and handling requirements
+   - **Decision Point**: Determine asset criticality and protection requirements
 
-# Step 1: Define LightningModule (organize your PyTorch code)
-class LitModel(L.LightningModule):
-    def __init__(self, hidden_size=128):
-        super().__init__()
-        self.model = nn.Sequential(
-            nn.Linear(28 * 28, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, 10)
-        )
+2. **Threat and Vulnerability Analysis**
+   - **For Healthcare Data**: Follow references/healthcare-threat-modeling.md
+   - **For Medical Devices**: Follow references/device-security-assessment.md
+   - **For Cloud Services**: Follow references/cloud-security-evaluation.md
+   - Threat landscape analysis and modeling
 
-    def training_step(self, batch, batch_idx):
-        x, y = batch
-        y_hat = self.model(x)
-        loss = nn.functional.cross_entropy(y_hat, y)
-        self.log('train_loss', loss)  # Auto-logged to TensorBoard
-        return loss
+3. **Risk Analysis and Evaluation**
+   - Risk likelihood and impact assessment
+   - Risk level determination and prioritization
+   - Risk acceptability evaluation
+   - Risk treatment option analysis
 
-    def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=1e-3)
+### 3. ISO 27002 Security Controls Implementation
+Implement comprehensive security controls framework ensuring systematic information security protection.
 
-# Step 2: Create data
-train_loader = DataLoader(train_dataset, batch_size=32)
-
-# Step 3: Train with Trainer (handles everything else!)
-trainer = L.Trainer(max_epochs=10, accelerator='gpu', devices=2)
-model = LitModel()
-trainer.fit(model, train_loader)
+**Security Controls Categories:**
+```
+ISO 27002:2022 CONTROLS FRAMEWORK
+├── Organizational Controls (5.1-5.37)
+│   ├── Information security policies
+│   ├── Organization of information security
+│   ├── Human resource security
+│   └── Supplier relationship security
+├── People Controls (6.1-6.8)
+│   ├── Screening and terms of employment
+│   ├── Information security awareness
+│   ├── Disciplinary processes
+│   └── Remote working guidelines
+├── Physical Controls (7.1-7.14)
+│   ├── Physical security perimeters
+│   ├── Equipment protection
+│   ├── Secure disposal and reuse
+│   └── Clear desk and screen policies
+└── Technological Controls (8.1-8.34)
+    ├── Access control management
+    ├── Cryptography and key management
+    ├── Systems security
+    ├── Network security controls
+    ├── Application security
+    ├── Secure development
+    └── Supplier relationship security
 ```
 
-**That's it!** Trainer handles:
-- GPU/TPU/CPU switching
-- Distributed training (DDP, FSDP, DeepSpeed)
-- Mixed precision (FP16, BF16)
-- Gradient accumulation
-- Checkpointing
-- Logging
-- Progress bars
+### 4. Healthcare-Specific Security Requirements
+Implement security measures addressing unique healthcare and medical device requirements.
 
-## Common workflows
+**Healthcare Security Framework:**
+- **HIPAA Technical Safeguards**: Access control, audit controls, integrity, transmission security
+- **Medical Device Cybersecurity**: FDA cybersecurity guidance and IEC 62304 integration
+- **Clinical Data Protection**: Clinical trial data security and patient privacy
+- **Interoperability Security**: HL7 FHIR and healthcare standard security
 
-### Workflow 1: From PyTorch to Lightning
+## Advanced Information Security Applications
 
-**Original PyTorch code**:
-```python
-model = MyModel()
-optimizer = torch.optim.Adam(model.parameters())
-model.to('cuda')
+### Medical Device Cybersecurity Management
+Implement comprehensive cybersecurity measures for connected medical devices and IoT healthcare systems.
 
-for epoch in range(max_epochs):
-    for batch in train_loader:
-        batch = batch.to('cuda')
-        optimizer.zero_grad()
-        loss = model(batch)
-        loss.backward()
-        optimizer.step()
-```
+**Device Cybersecurity Framework:**
+1. **Device Security Assessment**
+   - Security architecture review and validation
+   - Vulnerability assessment and penetration testing
+   - Threat modeling and attack surface analysis
+   - **Decision Point**: Determine device security classification and controls
 
-**Lightning version**:
-```python
-class LitModel(L.LightningModule):
-    def __init__(self):
-        super().__init__()
-        self.model = MyModel()
+2. **Security Controls Implementation**
+   - **Device Authentication**: Multi-factor authentication and device identity
+   - **Data Protection**: Encryption at rest and in transit
+   - **Network Security**: Segmentation and monitoring
+   - **Update Management**: Secure software update mechanisms
 
-    def training_step(self, batch, batch_idx):
-        loss = self.model(batch)  # No .to('cuda') needed!
-        return loss
+3. **Security Monitoring and Response**
+   - Security event monitoring and SIEM integration
+   - Incident response and forensic capabilities
+   - Threat intelligence and vulnerability management
+   - Security awareness and training programs
 
-    def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters())
+### Cloud Security Management
+Ensure comprehensive security for cloud-based healthcare systems and SaaS applications.
 
-# Train
-trainer = L.Trainer(max_epochs=10, accelerator='gpu')
-trainer.fit(LitModel(), train_loader)
-```
+**Cloud Security Strategy:**
+- **Cloud Security Assessment**: Cloud service provider evaluation and due diligence
+- **Data Residency and Sovereignty**: Regulatory compliance and data location requirements
+- **Shared Responsibility Model**: Cloud provider and customer security responsibilities
+- **Cloud Access Security**: Identity and access management for cloud services
 
-**Benefits**: 40+ lines → 15 lines, no device management, automatic distributed
+### Privacy and Data Protection Integration
+Integrate information security with privacy and data protection requirements ensuring comprehensive data governance.
 
-### Workflow 2: Validation and testing
+**Privacy-Security Integration:**
+- **Privacy by Design**: Security controls supporting privacy requirements
+- **Data Minimization**: Security measures for data collection and retention limits
+- **Data Subject Rights**: Technical measures supporting privacy rights exercise
+- **Cross-Border Data Transfer**: Security controls for international data transfers
 
-```python
-class LitModel(L.LightningModule):
-    def __init__(self):
-        super().__init__()
-        self.model = MyModel()
+## ISMS Governance and Operations
 
-    def training_step(self, batch, batch_idx):
-        x, y = batch
-        y_hat = self.model(x)
-        loss = nn.functional.cross_entropy(y_hat, y)
-        self.log('train_loss', loss)
-        return loss
+### Information Security Policy Framework
+Establish comprehensive information security policies ensuring organizational security governance.
 
-    def validation_step(self, batch, batch_idx):
-        x, y = batch
-        y_hat = self.model(x)
-        val_loss = nn.functional.cross_entropy(y_hat, y)
-        acc = (y_hat.argmax(dim=1) == y).float().mean()
-        self.log('val_loss', val_loss)
-        self.log('val_acc', acc)
+**Policy Framework Structure:**
+- **Information Security Policy**: Top-level security commitment and direction
+- **Acceptable Use Policy**: System and data usage guidelines
+- **Access Control Policy**: User access and privilege management
+- **Incident Response Policy**: Security incident handling procedures
+- **Business Continuity Policy**: Security aspects of continuity planning
 
-    def test_step(self, batch, batch_idx):
-        x, y = batch
-        y_hat = self.model(x)
-        test_loss = nn.functional.cross_entropy(y_hat, y)
-        self.log('test_loss', test_loss)
+### Security Awareness and Training Program
+Develop and maintain comprehensive security awareness programs ensuring organizational security culture.
 
-    def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=1e-3)
+**Training Program Components:**
+- **General Security Awareness**: All-staff security training and awareness
+- **Role-Based Security Training**: Specialized training for specific roles
+- **Incident Response Training**: Security incident handling and escalation
+- **Regular Security Updates**: Ongoing security communication and updates
 
-# Train with validation
-trainer = L.Trainer(max_epochs=10)
-trainer.fit(model, train_loader, val_loader)
+### Security Incident Management (ISO 27001 Clause 8.2.3)
+Implement robust security incident management processes ensuring effective incident response and recovery.
 
-# Test
-trainer.test(model, test_loader)
-```
+**Incident Management Process:**
+1. **Incident Detection and Reporting**
+2. **Incident Classification and Prioritization**
+3. **Incident Investigation and Analysis**
+4. **Incident Response and Containment**
+5. **Recovery and Post-Incident Activities**
+6. **Lessons Learned and Improvement**
 
-**Automatic features**:
-- Validation runs every epoch by default
-- Metrics logged to TensorBoard
-- Best model checkpointing based on val_loss
+## ISMS Performance and Compliance
 
-### Workflow 3: Distributed training (DDP)
+### Security Metrics and KPIs
+Monitor comprehensive security performance indicators ensuring ISMS effectiveness and continuous improvement.
 
-```python
-# Same code as single GPU!
-model = LitModel()
+**Security Performance Dashboard:**
+- **Security Control Effectiveness**: Control implementation and performance metrics
+- **Incident Management Performance**: Response times, resolution rates, impact assessment
+- **Compliance Status**: Regulatory and standard compliance verification
+- **Risk Management Effectiveness**: Risk treatment success and residual risk levels
+- **Security Awareness Metrics**: Training completion, phishing simulation results
 
-# 8 GPUs with DDP (automatic!)
-trainer = L.Trainer(
-    accelerator='gpu',
-    devices=8,
-    strategy='ddp'  # Or 'fsdp', 'deepspeed'
-)
+### Internal Security Auditing
+Conduct systematic internal security audits ensuring ISMS compliance and effectiveness.
 
-trainer.fit(model, train_loader)
-```
+**Security Audit Program:**
+- **Risk-Based Audit Planning**: Audit scope and frequency based on risk assessment
+- **Technical Security Testing**: Vulnerability assessments and penetration testing
+- **Compliance Auditing**: ISO 27001 and regulatory requirement verification
+- **Process Auditing**: ISMS process effectiveness evaluation
 
-**Launch**:
-```bash
-# Single command, Lightning handles the rest
-python train.py
-```
+### Management Review and Continuous Improvement
+Lead management review processes ensuring systematic ISMS evaluation and strategic security planning.
 
-**No changes needed**:
-- Automatic data distribution
-- Gradient synchronization
-- Multi-node support (just set `num_nodes=2`)
+**Management Review Framework:**
+- **Security Performance Review**: Metrics analysis and trend identification
+- **Risk Assessment Updates**: Risk landscape changes and impact evaluation
+- **Compliance Status Review**: Regulatory and certification compliance assessment
+- **Security Investment Planning**: Security technology and resource allocation
+- **Strategic Security Planning**: Security strategy alignment with business objectives
 
-### Workflow 4: Callbacks for monitoring
+## Regulatory and Certification Management
 
-```python
-from lightning.pytorch.callbacks import ModelCheckpoint, EarlyStopping, LearningRateMonitor
+### ISO 27001 Certification Management
+Oversee ISO 27001 certification processes ensuring successful certification and maintenance.
 
-# Create callbacks
-checkpoint = ModelCheckpoint(
-    monitor='val_loss',
-    mode='min',
-    save_top_k=3,
-    filename='model-{epoch:02d}-{val_loss:.2f}'
-)
+**Certification Management:**
+- **Pre-certification Readiness**: Gap analysis and remediation planning
+- **Certification Audit Management**: Stage 1 and Stage 2 audit coordination
+- **Surveillance Audit Preparation**: Ongoing compliance and improvement demonstration
+- **Certification Maintenance**: Certificate renewal and scope management
 
-early_stop = EarlyStopping(
-    monitor='val_loss',
-    patience=5,
-    mode='min'
-)
+### Regulatory Security Compliance
+Ensure comprehensive compliance with healthcare security regulations and standards.
 
-lr_monitor = LearningRateMonitor(logging_interval='epoch')
-
-# Add to Trainer
-trainer = L.Trainer(
-    max_epochs=100,
-    callbacks=[checkpoint, early_stop, lr_monitor]
-)
-
-trainer.fit(model, train_loader, val_loader)
-```
-
-**Result**:
-- Auto-saves best 3 models
-- Stops early if no improvement for 5 epochs
-- Logs learning rate to TensorBoard
-
-### Workflow 5: Learning rate scheduling
-
-```python
-class LitModel(L.LightningModule):
-    # ... (training_step, etc.)
-
-    def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
-
-        # Cosine annealing
-        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-            optimizer,
-            T_max=100,
-            eta_min=1e-5
-        )
-
-        return {
-            'optimizer': optimizer,
-            'lr_scheduler': {
-                'scheduler': scheduler,
-                'interval': 'epoch',  # Update per epoch
-                'frequency': 1
-            }
-        }
-
-# Learning rate auto-logged!
-trainer = L.Trainer(max_epochs=100)
-trainer.fit(model, train_loader)
-```
-
-## When to use vs alternatives
-
-**Use PyTorch Lightning when**:
-- Want clean, organized code
-- Need production-ready training loops
-- Switching between single GPU, multi-GPU, TPU
-- Want built-in callbacks and logging
-- Team collaboration (standardized structure)
-
-**Key advantages**:
-- **Organized**: Separates research code from engineering
-- **Automatic**: DDP, FSDP, DeepSpeed with 1 line
-- **Callbacks**: Modular training extensions
-- **Reproducible**: Less boilerplate = fewer bugs
-- **Tested**: 1M+ downloads/month, battle-tested
-
-**Use alternatives instead**:
-- **Accelerate**: Minimal changes to existing code, more flexibility
-- **Ray Train**: Multi-node orchestration, hyperparameter tuning
-- **Raw PyTorch**: Maximum control, learning purposes
-- **Keras**: TensorFlow ecosystem
-
-## Common issues
-
-**Issue: Loss not decreasing**
-
-Check data and model setup:
-```python
-# Add to training_step
-def training_step(self, batch, batch_idx):
-    if batch_idx == 0:
-        print(f"Batch shape: {batch[0].shape}")
-        print(f"Labels: {batch[1]}")
-    loss = ...
-    return loss
-```
-
-**Issue: Out of memory**
-
-Reduce batch size or use gradient accumulation:
-```python
-trainer = L.Trainer(
-    accumulate_grad_batches=4,  # Effective batch = batch_size × 4
-    precision='bf16'  # Or 'fp16', reduces memory 50%
-)
-```
-
-**Issue: Validation not running**
-
-Ensure you pass val_loader:
-```python
-# WRONG
-trainer.fit(model, train_loader)
-
-# CORRECT
-trainer.fit(model, train_loader, val_loader)
-```
-
-**Issue: DDP spawns multiple processes unexpectedly**
-
-Lightning auto-detects GPUs. Explicitly set devices:
-```python
-# Test on CPU first
-trainer = L.Trainer(accelerator='cpu', devices=1)
-
-# Then GPU
-trainer = L.Trainer(accelerator='gpu', devices=1)
-```
-
-## Advanced topics
-
-**Callbacks**: See [references/callbacks.md](references/callbacks.md) for EarlyStopping, ModelCheckpoint, custom callbacks, and callback hooks.
-
-**Distributed strategies**: See [references/distributed.md](references/distributed.md) for DDP, FSDP, DeepSpeed ZeRO integration, multi-node setup.
-
-**Hyperparameter tuning**: See [references/hyperparameter-tuning.md](references/hyperparameter-tuning.md) for integration with Optuna, Ray Tune, and WandB sweeps.
-
-## Hardware requirements
-
-- **CPU**: Works (good for debugging)
-- **Single GPU**: Works
-- **Multi-GPU**: DDP (default), FSDP, or DeepSpeed
-- **Multi-node**: DDP, FSDP, DeepSpeed
-- **TPU**: Supported (8 cores)
-- **Apple MPS**: Supported
-
-**Precision options**:
-- FP32 (default)
-- FP16 (V100, older GPUs)
-- BF16 (A100/H100, recommended)
-- FP8 (H100)
+**Regulatory Compliance Framework:**
+- **HIPAA Security Rule**: Technical, administrative, and physical safeguards
+- **GDPR Security Requirements**: Technical and organizational measures
+- **FDA Cybersecurity Guidance**: Medical device cybersecurity compliance
+- **NIST Cybersecurity Framework**: Cybersecurity risk management integration
 
 ## Resources
 
-- Docs: https://lightning.ai/docs/pytorch/stable/
-- GitHub: https://github.com/Lightning-AI/pytorch-lightning ⭐ 29,000+
-- Version: 2.5.5+
-- Examples: https://github.com/Lightning-AI/pytorch-lightning/tree/master/examples
-- Discord: https://discord.gg/lightning-ai
-- Used by: Kaggle winners, research labs, production teams
+### scripts/
+- `isms-performance-dashboard.py`: Comprehensive ISMS metrics monitoring and reporting
+- `security-risk-assessment.py`: Automated security risk assessment and documentation
+- `compliance-monitoring.py`: Regulatory and standard compliance tracking
+- `incident-response-automation.py`: Security incident workflow automation
+
+### references/
+- `iso27001-implementation-guide.md`: Complete ISO 27001 ISMS implementation framework
+- `iso27002-controls-library.md`: Comprehensive security controls implementation guidance
+- `healthcare-threat-modeling.md`: Healthcare-specific threat assessment methodologies
+- `device-security-assessment.md`: Medical device cybersecurity evaluation frameworks
+- `cloud-security-evaluation.md`: Cloud service security assessment criteria
+
+### assets/
+- `isms-templates/`: Information security policy, procedure, and documentation templates
+- `risk-assessment-tools/`: Security risk assessment worksheets and calculation tools
+- `audit-checklists/`: ISO 27001 and security compliance audit checklists
+- `training-materials/`: Information security awareness and training programs
 
 ---
 > Source: [davila7/claude-code-templates](https://github.com/davila7/claude-code-templates) — distributed by [TomeVault](https://tomevault.io).
