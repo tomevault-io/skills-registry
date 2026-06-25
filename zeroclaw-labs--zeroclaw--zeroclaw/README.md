@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zeroclaw-labs/zeroclaw](https://github.com/zeroclaw-labs/zeroclaw/tree/main/.claude/skills/github-issue-triage/SKILL.md)
+Original source: [zeroclaw-labs/zeroclaw](https://github.com/zeroclaw-labs/zeroclaw/tree/main/.claude/skills/changelog-generation/SKILL.md)
 
 ---
 
