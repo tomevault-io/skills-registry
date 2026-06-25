@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [IncomeStreamSurfer/paperclip-surfers](https://github.com/IncomeStreamSurfer/paperclip-surfers/tree/main/.agents/skills/doc-maintenance/SKILL.md)
+Original source: [IncomeStreamSurfer/paperclip-surfers](https://github.com/IncomeStreamSurfer/paperclip-surfers/tree/main/skills/paperclip-create-plugin/SKILL.md)
 
 ---
 
