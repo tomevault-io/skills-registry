@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xvirobotics/metaskill](https://github.com/xvirobotics/metaskill/tree/main/examples/fullstack-web/.claude/skills/build-and-test/SKILL.md)
+Original source: [xvirobotics/metaskill](https://github.com/xvirobotics/metaskill/tree/main/examples/data-science/.claude/skills/generate-report/SKILL.md)
 
 ---
 
