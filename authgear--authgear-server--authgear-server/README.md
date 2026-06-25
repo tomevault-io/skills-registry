@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [authgear/authgear-server](https://github.com/authgear/authgear-server/tree/main/.claude/skills/update-email-templates/SKILL.md)
+Original source: [authgear/authgear-server](https://github.com/authgear/authgear-server/tree/main/.claude/skills/update-vettedpositions/SKILL.md)
 
 ---
 
