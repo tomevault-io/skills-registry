@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Milad-Akarie/cue](https://github.com/Milad-Akarie/cue/tree/main/skills/cue-animations/SKILL.md)
+Original source: [Milad-Akarie/cue](https://github.com/Milad-Akarie/cue/tree/main/example/.github/skills/cue-animations/SKILL.md)
 
 ---
 
