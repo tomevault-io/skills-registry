@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shiquda/roadmap-skill](https://github.com/shiquda/roadmap-skill/tree/main/skills/roadmap-planning-views/SKILL.md)
+Original source: [shiquda/roadmap-skill](https://github.com/shiquda/roadmap-skill/tree/main/skills/roadmap-web-visualization/SKILL.md)
 
 ---
 
