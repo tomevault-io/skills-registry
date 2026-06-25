@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [huggingface/skills](https://github.com/huggingface/skills/tree/main/skills/hf-cli/SKILL.md)
+Original source: [huggingface/skills](https://github.com/huggingface/skills/tree/main/skills/hf-mem/SKILL.md)
 
 ---
 
