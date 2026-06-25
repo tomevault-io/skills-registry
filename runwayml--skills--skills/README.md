@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [runwayml/skills](https://github.com/runwayml/skills/tree/main/skills/rw-generate-video/SKILL.md)
+Original source: [runwayml/skills](https://github.com/runwayml/skills/tree/main/skills/rw-generate-image/SKILL.md)
 
 ---
 
