@@ -1,73 +1,112 @@
 ---
-name: insforge-dev
-description: Use this skill set when contributing to the InsForge monorepo itself. This is for InsForge maintainers and contributors editing the platform, the shared dashboard package, the self-hosting shell, the UI library, shared schemas, tests, or docs.
+name: dashboard
+description: Use this skill when contributing to InsForge's shared dashboard package. This is for maintainers editing `packages/dashboard`, which ships in `self-hosting` and `cloud-hosting` modes, and the local `frontend/` shell used for `self-hosting` in this repo.
 metadata:
   author: InsForge
 ---
 
-# InsForge Dev
+# InsForge Dev Dashboard
 
-Use this skill set for work inside the InsForge repository.
+Use this skill for dashboard work in the InsForge repository.
 
-Then use the narrowest package skill that matches the task:
+## Scope
 
-- `backend`
-- `dashboard`
-- `ui`
-- `shared-schemas`
-- `docs`
+- `packages/dashboard/src/**`
+- `packages/dashboard/package.json`
+- `packages/dashboard/README.md`
+- `packages/dashboard/*.config.*`
+- `frontend/src/**`
+- `frontend/package.json`
 
-## Core Rules
+## Working Rules
 
-1. Identify the package boundary before editing.
-   - `backend/`: API, auth, database, providers, realtime, schedules
-   - `packages/dashboard/`: publishable dashboard package that supports `self-hosting` and `cloud-hosting` modes
-   - `frontend/`: local React + Vite shell that mounts `packages/dashboard/` in `self-hosting` mode
-   - `packages/shared-schemas/`: cross-package contracts
-   - `packages/ui/`: reusable design-system primitives
-   - `docs/`: product and agent-facing documentation
+1. Respect the shared-package versus host-app boundary.
+   - This dashboard is built with React and TypeScript.
+   - `packages/dashboard/` is the source of truth for the dashboard product.
+   - The package must support both `self-hosting` and `cloud-hosting` modes.
+   - Keep self-hosting-only bootstrap, local env defaults, and shell styling in `frontend/`.
+   - Do not let `packages/dashboard/` depend on `frontend/`.
+   - If both modes need a capability, define it in the package API first.
 
-2. Put code in the narrowest correct layer.
-   - Contract change: `packages/shared-schemas/` first, then consumers.
-   - Backend behavior: route -> service -> provider/infra.
-   - Shared dashboard behavior, routes, features, exports, and host contracts: `packages/dashboard/`.
-   - Self-hosting-only bootstrap, env wiring, and shell styling: `frontend/`.
-   - Reusable primitive: `packages/ui/` first.
+2. Preserve dashboard data-flow conventions.
+   - Follow the flow `service -> hook -> UI`.
+   - Use `apiClient` for HTTP calls so auth refresh and error handling stay consistent.
+   - Put request logic in services, data fetching and mutation state in hooks, and rendering/orchestration in UI components and pages.
+   - Reuse existing contexts, host abstractions, and hooks before creating new global state.
 
-3. Preserve repo conventions.
-   - Backend TS source uses ESM-style `.js` import specifiers.
-   - Backend success responses usually return raw JSON, not `{ data }`.
-   - Backend validation commonly uses shared Zod schemas plus `AppError`.
-   - Dashboard data access goes through `apiClient` and React Query.
-   - Dashboard frontend tests are split into Vitest unit tests, Vitest component tests, and Playwright UI smoke tests.
-   - Shared payloads belong in `@insforge/shared-schemas`.
-   - Never use the TypeScript `any` type. Prefer precise types, schema-derived types, `unknown`, or generics.
+3. Reuse the existing component layers.
+   - Use `@insforge/ui` for generic primitives.
+   - Use shared dashboard components when the pattern is already present.
+   - Keep reusable dashboard UI in `packages/dashboard/`.
+   - Only add UI to `frontend/` when it is specific to the local self-hosting shell.
+   - Keep package styles scoped to the dashboard container.
 
-4. Do not confuse repo development with app development on InsForge.
-   - This repo contains the platform, the publishable dashboard package, and a local shell for self-hosting mode.
-   - Keep guidance focused on maintaining InsForge itself.
+4. Keep the package surface aligned with shared contracts.
+   - Import cross-package types and Zod-derived shapes from `@insforge/shared-schemas`.
+   - When backend payloads change, update the related services, hooks, UI, and exported types together.
+   - Keep `packages/dashboard/src/index.ts` and `packages/dashboard/src/types` aligned with the public package API.
+   - Never use the TypeScript `any` type. Prefer precise prop, state, API, and hook result types.
 
-## Finish Rules
+## Frontend Testing
 
-- Run the smallest validation that gives confidence for the change.
-- Use repo-level checks like `npm run lint`, `npm run build`, `npm run typecheck`, and `npm test` when the change crosses package boundaries — each is wired through Turborepo (`turbo run <task>`) and covers every workspace, including `packages/dashboard/` and `packages/shared-schemas/`.
-- For dashboard UI behavior changes, choose the lowest useful frontend test layer from the `dashboard` skill and run that command before reporting back.
-- Use the package-specific validation steps in the child skill when the work is isolated to one package.
-- When reporting back, state what changed, what you validated, and what you could not validate.
+Use the lowest test layer that covers the risk. Add one focused regression test for bug fixes when practical.
 
-## Pre-PR Checklist (Mandatory Before Pushing to a PR)
+| Change type | Test layer | Location | Command |
+| --- | --- | --- | --- |
+| Pure helper, parser, formatter, state reducer | Unit | `packages/dashboard/src/**/__tests__/*.test.ts` | `npm --workspace @insforge/dashboard run test:unit` |
+| React component behavior, forms, dialogs, conditional rendering | Component | `packages/dashboard/src/**/__tests__/*.test.tsx` | `npm --workspace @insforge/dashboard run test:component` |
+| Routing, auth redirects, host-mode integration, browser-only behavior | UI smoke | `packages/dashboard/tests/ui/*.spec.ts` | `npm --workspace @insforge/dashboard run test:ui` |
 
-Before opening a PR or pushing new commits to an existing PR branch, run **all** of the following from the repo root and do not proceed while any of them fail on files your change touches:
+Conventions:
 
-1. `npx turbo run typecheck` — must pass across all packages.
-2. `npx turbo run lint` — must pass. If the failure is pre-existing in `main` and unrelated to your change, scope it:
-   - Run `npx eslint <your-changed-files>` and confirm your files are clean.
-   - Call out the pre-existing debt in the PR body so reviewers know it is not yours.
-   - Auto-fixable prettier/eslint errors in your own diff must be fixed (`npx eslint --fix <file>` or `npm run format`).
-3. `npx turbo run test` (or the package-specific test command) — all tests must pass, including any new tests you added for the change.
-4. `npx turbo run build` if routing, config, schemas, or cross-package exports changed.
+- `npm --workspace @insforge/dashboard run test` runs the full Vitest suite: unit plus component.
+- GitHub Actions splits dashboard checks into unit, component, and UI jobs in `.github/workflows/frontend-tests.yml`. Update the workflow when adding or renaming test scripts.
+- Unit tests should avoid React rendering and network mocking. Test data transformations directly.
+- Component tests use Testing Library with `packages/dashboard/src/test/setup.ts`. Mock hooks, services, and host context at the package boundary; assert user-visible behavior and callback effects, not implementation details or CSS class strings.
+- UI smoke tests use Playwright against the local `frontend/` shell. Mock backend API routes in `packages/dashboard/tests/ui/fixtures/`; every mocked route must either fulfill, fallback, or abort. Do not leave requests pending after a test branch.
+- Prefer one clear test per user-observable behavior over broad snapshot tests. Avoid brittle assertions tied to copy that is not part of the behavior being protected.
 
-Never push with failing checks on files you touched, even if CI would catch them later. CI failures slow reviewers down and the lint fix almost always takes less than a minute locally.
+## Local debug: viewing cloud-hosting-only UI in self-hosting
+
+**Use when** previewing UI gated on `useIsCloudHostingMode()`, `isInsForgeCloudProject()`, or a PostHog feature flag (e.g. the CTest dashboard variant, `dashboard-v3-experiment === 'c_test'`, the CLI connect panel) while running the local `frontend/` self-hosting shell.
+
+The lowest-friction approach is to **temporarily hardcode** the three gates below to `true`/the new branch, then restart the Vite dev server. These edits bypass real host/project detection and MUST be fully reverted before committing — landing them breaks both self-hosting and cloud-hosting users.
+
+### Hardcodes
+
+1. `packages/dashboard/src/lib/config/DashboardHostContext.tsx` — `useIsCloudHostingMode()` → `return true;` (was `useDashboardHost().mode === 'cloud-hosting'`).
+2. `packages/dashboard/src/lib/utils/utils.ts` — `isInsForgeCloudProject()` → `return true;` (was the `.insforge.app` hostname check).
+3. If the UI is also feature-flag-gated, hardcode the consumer. For CTest: `AppRoutes.tsx` → `const DashboardHomePage = CTestDashboardPage;` and, if relevant, the matching branch in `AppLayout.tsx` for `<ConnectDialogV2>`.
+
+Mark every hardcode with a trailing `// LOCAL DEBUG: <original expression>` comment so revert is a mechanical search.
+
+### Revert checklist — run all before committing
+
+1. `git grep -n "LOCAL DEBUG" packages/dashboard/src/` returns zero matches.
+2. Each gate is restored to its **original expression**, not just an equivalent value (the `mode === 'cloud-hosting'` comparison, the hostname check, the `getFeatureFlag(...)` call must all be back).
+3. Any imports deleted during debug (commonly `DashboardPage`, `getFeatureFlag`, `ConnectDialog`) are restored.
+4. `cd packages/dashboard && npm run lint && npm run typecheck` both pass.
+5. `git diff` of the four files above shows only intended changes — no `return true;`, no missing imports.
+
+### Rationalizations to reject
+
+| Excuse | Reality |
+|--------|---------|
+| "I'll revert in a follow-up PR." | Follow-up = a window where prod is broken. Revert now. |
+| "The original check was effectively the same." | If it were, you wouldn't have needed the hardcode. Restore the expression, not a value-equivalent. |
+| "Lint passed, so the deleted import doesn't matter." | Lint passed because the import was deleted; on revert the original code needs it back. |
+| "I'll ship the env-var override instead." | No env-var override is wired in the code. Don't invent one on the commit path — restore the original. |
+
+## Validation
+
+- `cd packages/dashboard && npm run test:unit` when changing pure helpers or reducers
+- `cd packages/dashboard && npm run test:component` when changing React component behavior
+- `cd packages/dashboard && npm run test:ui` when changing routing, auth, host-mode integration, or browser-only behavior
+- `cd packages/dashboard && npm run typecheck`
+- `cd packages/dashboard && npm run build`
+- `cd frontend && npm run build` when the local self-hosting shell changes
+
+For shared contract changes, also validate `packages/shared-schemas/` and the affected backend surface.
 
 ---
 > Source: [InsForge/InsForge](https://github.com/InsForge/InsForge) — distributed by [TomeVault](https://tomevault.io).
