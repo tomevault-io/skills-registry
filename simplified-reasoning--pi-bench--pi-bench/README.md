@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Simplified-Reasoning/Pi-Bench](https://github.com/Simplified-Reasoning/Pi-Bench/tree/main/data/pharmacist/skills/local-web-search/SKILL.md)
+Original source: [Simplified-Reasoning/Pi-Bench](https://github.com/Simplified-Reasoning/Pi-Bench/tree/main/data/Financier/skills/json-translator-1.0.0/SKILL.md)
 
 ---
 
