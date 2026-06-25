@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [etr/groundwork](https://github.com/etr/groundwork/tree/main/skills/task-validation-loop/SKILL.md)
+Original source: [etr/groundwork](https://github.com/etr/groundwork/tree/main/skills/test-driven-development/SKILL.md)
 
 ---
 
