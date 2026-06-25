@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ModelEngine-Group/fit-framework](https://github.com/ModelEngine-Group/fit-framework/tree/main/.agents/skills/upgrade-dependency/SKILL.md)
+Original source: [ModelEngine-Group/fit-framework](https://github.com/ModelEngine-Group/fit-framework/tree/main/.agents/skills/analyze-dependabot/SKILL.md)
 
 ---
 
