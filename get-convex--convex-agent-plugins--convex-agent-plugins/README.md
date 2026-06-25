@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [get-convex/convex-agent-plugins](https://github.com/get-convex/convex-agent-plugins/tree/main/skills/components-guide/SKILL.md)
+Original source: [get-convex/convex-agent-plugins](https://github.com/get-convex/convex-agent-plugins/tree/main/skills/migration-helper/SKILL.md)
 
 ---
 
