@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [livepeer/docs](https://github.com/livepeer/docs/tree/main/ai-tools/ai-skills/script-footprint-and-usage-audit/SKILL.md)
+Original source: [livepeer/docs](https://github.com/livepeer/docs/tree/main/ai-tools/ai-skills/generated-mdx-banners-governance/SKILL.md)
 
 ---
 
