@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Simplified-Reasoning/Pi-Bench](https://github.com/Simplified-Reasoning/Pi-Bench/tree/main/data/law_trainee/skills/data-analysis-1.0.2/SKILL.md)
+Original source: [Simplified-Reasoning/Pi-Bench](https://github.com/Simplified-Reasoning/Pi-Bench/tree/main/data/law_trainee/skills/china-tax-law-1.0.0/SKILL.md)
 
 ---
 
