@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tonone-ai/tonone](https://github.com/tonone-ai/tonone/tree/main/team/keel/skills/keel-cadence/SKILL.md)
+Original source: [tonone-ai/tonone](https://github.com/tonone-ai/tonone/tree/main/team/deal/skills/deal-pricing/SKILL.md)
 
 ---
 
