@@ -1,125 +1,43 @@
 ---
-name: sparc-implement
-description: Run the SPARC Architecture and Implementation phases — design module boundaries, write pseudocode, implement code, and run tests Use when this capability is needed.
+name: workflow-run
+description: Run a workflow — drive an MCP workflow lifecycle (execute/pause/resume/cancel) or invoke + resume a native .claude/workflows/*.js orchestration via the Workflow tool Use when this capability is needed.
 metadata:
   author: ruvnet
 ---
 
-# SPARC Architecture + Implementation
+# Workflow Run
 
-Run Phases 2 and 3 of the SPARC methodology: design algorithms with pseudocode, then establish architecture with module boundaries and API contracts.
+Run and manage a workflow on either surface.
 
-## When to use
+## A — MCP workflow lifecycle
 
-After the Specification phase is complete and its gate has been passed. This skill covers both the Pseudocode and Architecture phases as they are tightly coupled — algorithm design informs module boundaries and vice versa.
+When you need to run a persisted definition and control its lifecycle (pause/resume/cancel):
 
-## Steps
+1. **Execute** — call `mcp__claude-flow__workflow_execute` or `mcp__claude-flow__workflow_run` with the workflow ID
+2. **Monitor** — call `mcp__claude-flow__workflow_status` to check progress and step outcomes
+3. **Pause** — call `mcp__claude-flow__workflow_pause` to halt at the current step
+4. **Resume** — call `mcp__claude-flow__workflow_resume` to continue from where paused
+5. **Cancel** — call `mcp__claude-flow__workflow_cancel` to abort the workflow
 
-1. **Retrieve specification** — call `mcp__claude-flow__memory_search` with namespace `sparc-phases` and query for the feature's spec. Extract requirements, acceptance criteria, constraints, and edge cases.
+Execution modes: **sequential**, **parallel** (independent steps), **conditional** (branch on outcome), **manual gate** (pause for human approval).
 
-2. **Retrieve phase state** — call `mcp__claude-flow__memory_search` with namespace `sparc-state` and query for the feature to confirm we are in Phase 2 or 3.
+## B — Native `.claude/workflows/*.js`
 
-3. **Search for architectural patterns** — call `mcp__claude-flow__neural_predict` with the feature description to find relevant architectural decisions from past projects
+When you need a deterministic subagent fan-out, run a named native workflow with the `Workflow` tool. The named workflows are the `meta.name` of each `.claude/workflows/*.js` file (list them with `/workflow` or `ls .claude/workflows/`).
 
-4. **Phase 2 — Pseudocode Design**:
-   a. For each acceptance criterion, write language-agnostic pseudocode that satisfies it
-   b. Define core data structures with type annotations
-   c. Map control flow including:
-      - Happy path
-      - Error/exception paths for each edge case
-      - Concurrent access handling if applicable
-   d. Annotate algorithmic complexity (time and space) for critical paths
-   e. Store pseudocode artifact:
-      - Call `mcp__claude-flow__memory_store` with namespace `sparc-phases`, key `pseudo-{feature-slug}`
-      - Value: `{ status: "complete", algorithms: [...], dataStructures: [...], controlFlow: [...], complexity: {...} }`
-
-5. **Phase 3 — Architecture Design**:
-   a. Define bounded contexts and aggregate roots following DDD patterns:
-      - Identify entity boundaries and value objects
-      - Define aggregate invariants
-      - Map domain events
-   b. Design API contracts:
-      - Request/response schemas with TypeScript interfaces
-      - Error response codes and formats
-      - Versioning strategy if applicable
-   c. Plan module boundaries:
-      - Directory structure
-      - Dependency direction rules (no circular dependencies)
-      - Public vs internal interfaces
-   d. Specify infrastructure concerns:
-      - Persistence strategy (database, cache, file)
-      - Messaging patterns (sync, async, event-driven)
-      - Configuration and environment requirements
-   e. Store architecture artifact:
-      - Call `mcp__claude-flow__memory_store` with namespace `sparc-phases`, key `arch-{feature-slug}`
-      - Value: `{ status: "complete", boundedContexts: [...], apiContracts: [...], moduleBoundaries: {...}, infrastructure: {...} }`
-
-6. **Update phase state** — call `mcp__claude-flow__memory_store` with namespace `sparc-state`, updating current phase to 3 (Architecture) with both artifacts recorded
-
-7. **Record trajectory step** — call `mcp__claude-flow__hooks_intelligence_trajectory-step` with architecture summary
-
-8. **Begin implementation** — if the user confirms, proceed to write production code:
-   a. Create files following the defined module boundaries
-   b. Implement interfaces and types first
-   c. Implement core logic following the pseudocode
-   d. Write unit tests alongside implementation (TDD when possible)
-   e. Run tests to verify acceptance criteria
-
-9. **Present architecture** — display the architecture decision record and suggest running `/sparc advance` to pass the Phase 3 gate
-
-## Output format
-
-```
-# Pseudocode: {Feature Name}
-
-## Core Algorithms
-### Algorithm 1: {name}
-```pseudocode
-FUNCTION processRequest(input):
-    VALIDATE input against schema
-    IF invalid THEN THROW ValidationError
-    result <- TRANSFORM input
-    STORE result
-    RETURN result
-```
-Complexity: O(n) time, O(1) space
-
-## Data Structures
-- {StructName}: { field1: type, field2: type }
-
----
-
-# Architecture: {Feature Name}
-
-## Bounded Contexts
-- {ContextName}: {description}
-  - Aggregates: {list}
-  - Events: {list}
-
-## API Contracts
-### POST /api/{resource}
-- Request: { field1: string, field2: number }
-- Response: { id: string, ...fields }
-- Errors: 400 (validation), 409 (conflict), 500 (internal)
-
-## Module Structure
-```
-src/{feature}/
-  {feature}.types.ts      # Interfaces and types
-  {feature}.service.ts     # Business logic
-  {feature}.controller.ts  # HTTP handling
-  {feature}.repository.ts  # Data access
-  {feature}.test.ts        # Tests
+```js
+Workflow({ name: 'plugin-contract-audit' })                    // run a named workflow
+Workflow({ name: 'plugin-contract-audit', args: 'ruflo-agentdb' })  // pass args → the script's `args` global
+Workflow({ scriptPath: '.claude/workflows/foo.js' })           // run a script by path
+Workflow({ scriptPath, resumeFromRunId: 'wf_…' })              // resume — unchanged agent() calls return cached
 ```
 
-## Infrastructure
-- Persistence: {strategy}
-- Caching: {strategy}
-- Events: {strategy}
+Notes:
+- A native workflow runs in the background; you are notified on completion (don't poll). Watch live progress with `/workflows`.
+- Pause/resume here is **journal-based** (`resumeFromRunId`), not the MCP state machine. Stop a run first, then resume from its `runId`.
+- To author a new native workflow, use the `workflow-create` skill.
 
----
-Phases 2-3 complete. Run `/sparc advance` to pass the gate check.
-```
+See [ADR-0002](../../docs/adrs/0002-native-workflow-orchestration.md).
 
 ---
 > Source: [ruvnet/ruflo](https://github.com/ruvnet/ruflo) — distributed by [TomeVault](https://tomevault.io).
