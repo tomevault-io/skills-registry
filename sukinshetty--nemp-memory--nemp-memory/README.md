@@ -1,11 +1,11 @@
-# nemp-memory
+# Nemp-memory
 
-> Skill by [sukinshetty](https://github.com/sukinshetty/nemp-memory) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [SukinShetty](https://github.com/SukinShetty/Nemp-memory) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sukinshetty/nemp-memory](https://github.com/sukinshetty/nemp-memory/tree/main/skills/nemp-memory)
+Original source: [SukinShetty/Nemp-memory](https://github.com/SukinShetty/Nemp-memory/tree/main/skills/nemp-memory/SKILL.md)
 
 ---
 
