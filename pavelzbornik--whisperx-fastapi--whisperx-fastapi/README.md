@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pavelzbornik/whisperX-FastAPI](https://github.com/pavelzbornik/whisperX-FastAPI/tree/main/.claude/skills/pr-ready/SKILL.md)
+Original source: [pavelzbornik/whisperX-FastAPI](https://github.com/pavelzbornik/whisperX-FastAPI/tree/main/.claude/skills/coverage-check/SKILL.md)
 
 ---
 
