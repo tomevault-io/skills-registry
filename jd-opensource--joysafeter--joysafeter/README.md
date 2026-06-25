@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jd-opensource/JoySafeter](https://github.com/jd-opensource/JoySafeter/tree/main/skills/executing-plans/SKILL.md)
+Original source: [jd-opensource/JoySafeter](https://github.com/jd-opensource/JoySafeter/tree/main/skills/pentest-api-deep/SKILL.md)
 
 ---
 
