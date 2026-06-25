@@ -1,63 +1,70 @@
 ---
-name: apex-review
-description: Cross-cutting review of recent work — catches gaps between specialists. Use when asked to "review what we built", "check the work", "pre-launch review", or after completing a significant chunk of work. Use when this capability is needed.
+name: graphviz-dot-generator
+description: | Use when this capability is needed.
 metadata:
   author: jeremylongshore
 ---
 
-# Apex Review
+# Graphviz Dot Generator
 
-You are Apex — the engineering lead. Review recent work with a cross-cutting eye. Catch what individual specialists miss: gaps between components, concerns that span domains.
+## Overview
 
-Follow the output format defined in docs/output-kit.md — 40-line CLI max, box-drawing skeleton, unified severity indicators, compressed prose.
+This skill provides automated assistance for graphviz dot generator tasks within the Visual Content domain.
 
-## Steps
+## When to Use
 
-0. **Run the automated health snapshot.** From the repo root:
+This skill activates automatically when you:
+- Mention "graphviz dot generator" in your request
+- Ask about graphviz dot generator patterns or best practices
+- Need help with visual content skills covering diagrams, charts, presentations, and visual documentation tools.
 
-```bash
-cd team/apex/scripts && pip install -e . --quiet && python apex_agent/apex_scan.py . --skip-health --skip-deps --out /tmp/apex-scan.json 2>/dev/null || true
-python apex_agent/apex_scan.py . --skip-endpoints 2>&1 | tail -20
-```
+## Instructions
 
-Read `.reports/apex-<latest>.json` if written. Treat CRITICAL/HIGH findings as blocking issues. Treat the dependency cycle/unused-module findings as cross-cutting context for the review below.
+1. Provides step-by-step guidance for graphviz dot generator
+2. Follows industry best practices and patterns
+3. Generates production-ready code and configurations
+4. Validates outputs against common standards
 
-1. **Read git log and recent changes to understand what was built.**
+## Examples
 
-```bash
-git log --oneline -30
-```
+**Example: Basic Usage**
+Request: "Help me with graphviz dot generator"
+Result: Provides step-by-step guidance and generates appropriate configurations
 
-```bash
-git diff HEAD~10 --stat
-```
 
-Read the key changed files to understand the shape of the work.
+## Prerequisites
 
-2. **Review for cross-cutting concerns.** For each area, ask whether a specialist would flag this:
-   - **Security** (Warden): Auth gaps, secrets exposure, input validation, dependency vulnerabilities
-   - **Performance** (Spine): N+1 queries, missing indexes, unbounded lists, blocking calls
-   - **Observability** (Vigil): Logging coverage, error tracking, health checks, alerting gaps
-   - **Data integrity** (Flux): Migration safety, backup coverage, schema consistency, data validation
-   - **Infrastructure** (Forge): Resource sizing, cost implications, networking gaps
-   - **CI/CD** (Relay): Test coverage, deployment safety, rollback capability
+- Relevant development environment configured
+- Access to necessary tools and services
+- Basic understanding of visual content concepts
 
-3. **Check for consistency** — do the pieces fit together? Look for:
-   - Naming mismatches between components
-   - Assumptions one component makes that another doesn't satisfy
-   - Missing error handling at boundaries
-   - Gaps in the request/response flow
-   - Configuration that exists in one environment but not others
 
-4. **Present findings prioritized by risk.** For each issue:
-   - What's wrong (one sentence)
-   - Which specialist should fix it
-   - Estimated effort (quick fix / medium / significant)
-   - Risk level (critical / moderate / minor)
+## Output
 
-5. **If critical issues found, recommend blocking.** If all issues are minor, note them and give the green light. Be direct — "this is ready to ship with these caveats" or "do not ship until X is fixed."
+- Generated configurations and code
+- Best practice recommendations
+- Validation results
 
-6. **Delivery:** If findings exceed the 40-line CLI budget, invoke `/atlas-report` with the full findings. The HTML report is the output. CLI is the receipt only — print the box header, verdict (ship/block), top 3 issues, and the report path.
+
+## Error Handling
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| Configuration invalid | Missing required fields | Check documentation for required parameters |
+| Tool not found | Dependency not installed | Install required tools per prerequisites |
+| Permission denied | Insufficient access | Verify credentials and permissions |
+
+
+## Resources
+
+- Official documentation for related tools
+- Best practices guides
+- Community examples and tutorials
+
+## Related Skills
+
+Part of the **Visual Content** skill category.
+Tags: diagrams, mermaid, charts, visualization, presentations
 
 ---
 > Source: [jeremylongshore/claude-code-plugins-plus-skills](https://github.com/jeremylongshore/claude-code-plugins-plus-skills) — distributed by [TomeVault](https://tomevault.io).
