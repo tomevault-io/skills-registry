@@ -1,260 +1,148 @@
 ---
-name: row-pinning
+name: preactcompose-with-tanstack-devtools
 description: > Use when this capability is needed.
 metadata:
   author: TanStack
 ---
 
-This skill builds on `tanstack-table/state-management`. Read it first for the atom model.
+This skill builds on `tanstack-table/preact/table-state`. Read that first — the devtools panel inspects whatever table instance you register, so you need a working `useTable` before this skill is useful.
 
 ## Setup
 
-```ts
+Install the TanStack Devtools host and the Preact Table adapter:
+
+```sh
+pnpm add @tanstack/preact-devtools @tanstack/preact-table-devtools
+```
+
+The recommended pattern has two parts:
+
+1. Mount `<TanStackDevtools>` once at the app root with `tableDevtoolsPlugin()`.
+2. Call `useTanStackTableDevtools(table)` right after every `useTable()`.
+
+```tsx
+import { render } from 'preact'
+import { useTable } from '@tanstack/preact-table'
+import { TanStackDevtools } from '@tanstack/preact-devtools'
 import {
-  tableFeatures,
-  rowPinningFeature,
-  rowPaginationFeature,
-  createPaginatedRowModel,
-  constructTable,
-} from '@tanstack/table-core'
-import type { RowPinningState } from '@tanstack/table-core'
+  tableDevtoolsPlugin,
+  useTanStackTableDevtools,
+} from '@tanstack/preact-table-devtools'
 
-const features = tableFeatures({
-  rowPinningFeature,
-  rowPaginationFeature,
-  paginatedRowModel: createPaginatedRowModel(),
-})
+function UsersScreen() {
+  const table = useTable({
+    features,
+    key: 'users-table',
+    columns,
+    data,
+  })
 
-const table = constructTable({
-  features,
-  columns,
-  data,
-  getRowId: (row) => row.userId, // ← essentially mandatory
-  initialState: {
-    rowPinning: { top: [], bottom: [] } satisfies RowPinningState,
-  },
-})
+  // Register this table with the devtools panel.
+  useTanStackTableDevtools(table)
 
-// Pin a row
-row.pin('top') // or 'bottom' | false
+  return <UsersGrid table={table} />
+}
+
+render(
+  <>
+    <UsersScreen />
+    {/* Mount once, anywhere in the tree. */}
+    <TanStackDevtools plugins={[tableDevtoolsPlugin()]} />
+  </>,
+  document.getElementById('root')!,
+)
 ```
 
-## Core Patterns
+`tableDevtoolsPlugin()` returns a plugin descriptor for the multi-panel TanStack Devtools UI. `useTanStackTableDevtools` is a `preact/hooks` `useEffect` wrapper that upserts/removes the registration target on mount/unmount and re-runs when `table` or `table.options.key` changes.
 
-### Pin/unpin buttons in a cell
+## Patterns
+
+### Keying Tables
+
+Add a stable `key` option to the table options. Devtools use this key as both the registration id and the panel selector label.
 
 ```tsx
-// From examples/react/row-pinning/src/main.tsx
-<button onClick={() => row.pin('top')} disabled={!row.getCanPin()}>📌⬆</button>
-<button onClick={() => row.pin('bottom')} disabled={!row.getCanPin()}>📌⬇</button>
-{row.getIsPinned() && <button onClick={() => row.pin(false)}>✖ Unpin</button>}
+useTanStackTableDevtools(table)
 ```
 
-For grouped/expanded data, pass include flags:
+### Multiple Tables
 
-```ts
-row.pin('top', /* includeLeafRows */ true, /* includeParentRows */ false)
-```
-
-### Render pinned rows separately
+Register as many tables as you like. The Table panel renders a selector. Name each one.
 
 ```tsx
-<tbody>
-  {table.getTopRows().map((row) => (
-    <PinnedRow key={row.id} row={row} table={table} />
-  ))}
-  {table.getCenterRows().map((row) => (
-    <tr key={row.id}>
-      {row.getAllCells().map((cell) => (
-        <td key={cell.id}>
-          <table.FlexRender cell={cell} />
-        </td>
-      ))}
-    </tr>
-  ))}
-  {table.getBottomRows().map((row) => (
-    <PinnedRow key={row.id} row={row} table={table} />
-  ))}
-</tbody>
+function Dashboard() {
+  const ordersTable = useTable({ ...ordersOptions, key: 'orders-table' })
+  const usersTable = useTable({ ...usersOptions, key: 'users-table' })
+
+  useTanStackTableDevtools(ordersTable)
+  useTanStackTableDevtools(usersTable)
+
+  return <Layout ordersTable={ordersTable} usersTable={usersTable} />
+}
 ```
 
-### Disable persistence across pagination
+### Disabling Per Table
 
-```ts
-const table = constructTable({
-  features: tableFeatures({
-    rowPinningFeature,
-    columnFilteringFeature,
-    filteredRowModel: createFilteredRowModel(),
-    filterFns,
-  }),
-  columns,
-  data,
-  getRowId: (row) => row.id,
-  keepPinnedRows: false, // pinned rows disappear when filtered/paginated out
+`useTanStackTableDevtools` accepts an `enabled` option. When `false`, the registration is removed (the table disappears from the panel) but the hook still runs cleanly.
+
+```tsx
+useTanStackTableDevtools(table, {
+  enabled: import.meta.env.DEV && showTableDevtools,
 })
 ```
 
-`keepPinnedRows: true` (default) keeps pinned rows visible even when their underlying row would otherwise be filtered or paginated away.
+### Production Builds
 
-### Conditional pin permission
+The default `@tanstack/preact-table-devtools` entrypoint swaps to no-op implementations when `process.env.NODE_ENV !== 'development'`. To ship the real devtools to production, switch BOTH imports to the `/production` entrypoint:
 
-```ts
-const table = constructTable({
-  features,
-  columns,
-  data,
-  enableRowPinning: (row) => !row.original.archived, // predicate form
+```tsx
+import { TanStackDevtools } from '@tanstack/preact-devtools'
+import {
+  tableDevtoolsPlugin,
+  useTanStackTableDevtools,
+} from '@tanstack/preact-table-devtools/production'
+```
+
+If you mix entrypoints (one from `/production`, one from the default), one side is a no-op in production and the panel will appear empty.
+
+### Conditional Devtools by Env
+
+For a code-split production-only devtools bundle, dynamically import the `/production` entrypoint behind a flag:
+
+```tsx
+import { lazy, Suspense } from 'preact/compat'
+
+const TableDevtoolsRoot = lazy(async () => {
+  const { tableDevtoolsPlugin } =
+    await import('@tanstack/preact-table-devtools/production')
+  const { TanStackDevtools } = await import('@tanstack/preact-devtools')
+  return {
+    default: () => <TanStackDevtools plugins={[tableDevtoolsPlugin()]} />,
+  }
 })
 ```
 
 ## Common Mistakes
 
-### [HIGH] Omitting `getRowId` so pins attach to array indices
+### Forgetting to mount `<TanStackDevtools>` at the app root
 
-Wrong:
+Calling `useTanStackTableDevtools(table)` alone does nothing visible — it only registers the table with the devtools target store. Without a `<TanStackDevtools plugins={[tableDevtoolsPlugin()]} />` somewhere in the tree, there is no panel to render the registration. Symptom: hook runs without errors, no devtools button appears.
 
-```ts
-// row.id defaults to row.index; pin survives wrong rows after refetch
-const table = useTable({
-  features: tableFeatures({ rowPinningFeature, rowPaginationFeature }),
-  data, // refetched periodically
-})
-```
+### Importing devtools from the default path in a prod-only bundle
 
-Correct:
+If you only deploy production builds, `@tanstack/preact-table-devtools` resolves to no-op implementations. The plugin will mount, but the panel will be empty. Use `@tanstack/preact-table-devtools/production` if you want the real devtools available there.
 
-```ts
-const table = useTable({
-  features: tableFeatures({ rowPinningFeature, rowPaginationFeature }),
-  data,
-  getRowId: (row) => row.userId, // or row.uuid, row.id from API, etc.
-})
+### Accidentally shipping devtools to end users via `/production`
 
-// For grouped/expanded data, pass the include flags too:
-row.pin('top', includeLeafRows, includeParentRows)
-```
+The flip side: importing from `/production` in your default app bundle means every visitor downloads and runs the devtools UI. That is usually not what you want. Restrict `/production` imports to dev/preview entrypoints or code-split them behind a flag.
 
-`rowPinning.top` and `rowPinning.bottom` are arrays of string row ids. Default `row.id` is the data array index — refetched data reuses index 3 for a different record, but the pinning state still pins index 3.
+### Calling `useTanStackTableDevtools` outside the component that owns the table
 
-Source: docs/guide/row-selection.md (same root principle); examples/react/row-pinning/src/main.tsx
+The hook needs a `Table` instance to register. If you call it in a parent before `useTable` runs, or in a sibling that does not have access to the table, you pass `undefined` and nothing is registered. Always call it in the same component as `useTable`, immediately after.
 
-### [MEDIUM] Surprise behavior from `keepPinnedRows: true` default
+### Multiple tables without keys
 
-Wrong:
-
-```ts
-// Expecting pinned rows to vanish on filter, but they don't (default)
-const table = useTable({
-  features: tableFeatures({ rowPinningFeature, columnFilteringFeature }),
-  // keepPinnedRows defaults to true; pinned rows survive filtering
-})
-```
-
-Correct:
-
-```ts
-// Be explicit about the UX you want
-const table = useTable({
-  features: tableFeatures({ rowPinningFeature, columnFilteringFeature }),
-  keepPinnedRows: false, // pinned rows disappear when filtered/paginated out
-})
-
-// Or keep the default and render pinned separately:
-<tbody>
-  {table.getTopRows().map((row) => <PinnedRow row={row} key={row.id} />)}
-  {table.getCenterRows().map((row) => <Row row={row} key={row.id} />)}
-  {table.getBottomRows().map((row) => <PinnedRow row={row} key={row.id} />)}
-</tbody>
-```
-
-`keepPinnedRows: true` makes `getTopRows()` / `getBottomRows()` search the full pre-pagination row set; `false` only finds rows currently in the row model.
-
-Source: packages/table-core/src/features/row-pinning/rowPinningFeature.utils.ts; examples/react/row-pinning/src/main.tsx
-
-### [MEDIUM] Rendering pinned rows TWICE (once at top/bottom, once in main flow)
-
-Wrong:
-
-```tsx
-<tbody>
-  {table.getTopRows().map((row) => (
-    <PinnedRow row={row} key={row.id} />
-  ))}
-  {table.getRowModel().rows.map(
-    (
-      row, // ← still includes pinned rows
-    ) => (
-      <tr key={row.id}>...</tr>
-    ),
-  )}
-  {table.getBottomRows().map((row) => (
-    <PinnedRow row={row} key={row.id} />
-  ))}
-</tbody>
-```
-
-Correct:
-
-```tsx
-<tbody>
-  {table.getTopRows().map((row) => (
-    <PinnedRow key={row.id} row={row} table={table} />
-  ))}
-  {table.getCenterRows().map((row) => (
-    <tr key={row.id}>
-      {row.getAllCells().map((cell) => (
-        <td key={cell.id}>
-          <table.FlexRender cell={cell} />
-        </td>
-      ))}
-    </tr>
-  ))}
-  {table.getBottomRows().map((row) => (
-    <PinnedRow key={row.id} row={row} table={table} />
-  ))}
-</tbody>
-```
-
-`getRowModel()` returns the complete current row model with pinned rows still in it. Use `getCenterRows()` for the main flow. Use `getRowModel()` only if you intentionally want pinned rows duplicated.
-
-Source: examples/react/row-pinning/src/main.tsx
-
-### [CRITICAL] Reimplementing pin behavior manually
-
-Wrong:
-
-```ts
-// Hand-rolled "pinned" map + manual filter on render
-const [pinned, setPinned] = useState<Record<string, true>>({})
-const pinnedRows = rows.filter((r) => pinned[r.id])
-const otherRows = rows.filter((r) => !pinned[r.id])
-```
-
-Correct:
-
-```ts
-const table = useTable({
-  features: tableFeatures({ rowPinningFeature }),
-  columns,
-  data,
-  getRowId: (row) => row.id,
-})
-
-row.pin('top') // pin one row
-table.setRowPinning({ top: ['a', 'b'], bottom: [] }) // bulk set
-table.getTopRows()
-table.getCenterRows()
-table.getBottomRows()
-```
-
-Source: maintainer interview (Phase 4, 2026-05-17)
-
-## See also
-
-- `tanstack-table/state-management` — `rowPinning` state slice ownership
-- `tanstack-table/row-selection` — same `getRowId` stability concern
-- `tanstack-table/column-layout` — column pinning sits in a separate, more complex pipeline
+A table registered without `options.key` is skipped and devtools log an error. Add a unique `key` option to every table that should appear in devtools.
 
 ---
 > Source: [TanStack/table](https://github.com/TanStack/table) — distributed by [TomeVault](https://tomevault.io).
