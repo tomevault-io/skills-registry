@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [smithjoshua/claude-code-cowork-skills-file-organizer](https://github.com/smithjoshua/claude-code-cowork-skills-file-organizer/tree/main/cowork-skill/SKILL.md)
+Original source: [smithjoshua/claude-code-cowork-skills-file-organizer](https://github.com/smithjoshua/claude-code-cowork-skills-file-organizer/tree/main/claude-code-skill/SKILL.md)
 
 ---
 
