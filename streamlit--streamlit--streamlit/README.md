@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [streamlit/streamlit](https://github.com/streamlit/streamlit/tree/main/.claude/skills/improving-frontend-coverage/SKILL.md)
+Original source: [streamlit/streamlit](https://github.com/streamlit/streamlit/tree/main/.claude/skills/assessing-external-test-risk/SKILL.md)
 
 ---
 
