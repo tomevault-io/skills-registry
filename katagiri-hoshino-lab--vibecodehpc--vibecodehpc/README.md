@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Katagiri-Hoshino-Lab/VibeCodeHPC](https://github.com/Katagiri-Hoshino-Lab/VibeCodeHPC/tree/main/Agent-shared/skills/environment-setup/SKILL.md)
+Original source: [Katagiri-Hoshino-Lab/VibeCodeHPC](https://github.com/Katagiri-Hoshino-Lab/VibeCodeHPC/tree/main/Agent-shared/skills/performance-report/SKILL.md)
 
 ---
 
