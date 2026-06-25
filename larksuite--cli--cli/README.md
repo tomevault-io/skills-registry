@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [larksuite/cli](https://github.com/larksuite/cli/tree/main/skills/lark-im/SKILL.md)
+Original source: [larksuite/cli](https://github.com/larksuite/cli/tree/main/skills/lark-vc/SKILL.md)
 
 ---
 
