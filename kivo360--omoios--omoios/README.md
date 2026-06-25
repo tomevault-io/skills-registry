@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kivo360/OmoiOS](https://github.com/kivo360/OmoiOS/tree/main/.claude/skills/litho-budgeted-analysis/SKILL.md)
+Original source: [kivo360/OmoiOS](https://github.com/kivo360/OmoiOS/tree/main/backend/omoi_os/sandbox_skills/pr-creator/SKILL.md)
 
 ---
 
