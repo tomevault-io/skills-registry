@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheMattBerman/google-ads-copilot](https://github.com/TheMattBerman/google-ads-copilot/tree/main/skills/google-ads-rsas/SKILL.md)
+Original source: [TheMattBerman/google-ads-copilot](https://github.com/TheMattBerman/google-ads-copilot/tree/main/skills/google-ads-apply/SKILL.md)
 
 ---
 
