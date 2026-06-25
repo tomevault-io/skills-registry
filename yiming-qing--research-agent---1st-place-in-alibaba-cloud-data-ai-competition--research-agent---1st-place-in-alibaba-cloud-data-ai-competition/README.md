@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yiming-qing/Research-Agent---1st-place-in-Alibaba-Cloud-Data-AI-Competition](https://github.com/yiming-qing/Research-Agent---1st-place-in-Alibaba-Cloud-Data-AI-Competition/tree/main/skills/create-plan/SKILL.md)
+Original source: [yiming-qing/Research-Agent---1st-place-in-Alibaba-Cloud-Data-AI-Competition](https://github.com/yiming-qing/Research-Agent---1st-place-in-Alibaba-Cloud-Data-AI-Competition/tree/main/skills/get-current-time/SKILL.md)
 
 ---
 
