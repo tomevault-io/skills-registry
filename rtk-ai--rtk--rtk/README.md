@@ -1,0 +1,13 @@
+# rtk
+
+> Skill by [rtk-ai](https://github.com/rtk-ai/rtk) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [rtk-ai/rtk](https://github.com/rtk-ai/rtk/tree/main/.claude/skills/ship/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
