@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nrwl/nx](https://github.com/nrwl/nx/tree/main/.claude/skills/multi-version-compliance/SKILL.md)
+Original source: [nrwl/nx](https://github.com/nrwl/nx/tree/main/.claude/skills/nx-gradle-plugin-version-bump/SKILL.md)
 
 ---
 
