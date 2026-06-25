@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kaban-board/kaban](https://github.com/kaban-board/kaban/tree/main/kaban-workflow/skills/kaban-workflow/SKILL.md)
+Original source: [kaban-board/kaban](https://github.com/kaban-board/kaban/tree/main/marketplace/kaban-workflow/skills/kaban-workflow/SKILL.md)
 
 ---
 
