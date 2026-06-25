@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chromium/chromium](https://github.com/chromium/chromium/tree/main/agents/projects/bedrock/test-conversion-researcher/SKILL.md)
+Original source: [chromium/chromium](https://github.com/chromium/chromium/tree/main/chrome/browser/web_applications/docs/skills/create-web-applications-unittest/SKILL.md)
 
 ---
 
