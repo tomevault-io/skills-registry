@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HashWarlock/nobody-plans-for-pi](https://github.com/HashWarlock/nobody-plans-for-pi/tree/main/skills/nobody-requests-code-review/SKILL.md)
+Original source: [HashWarlock/nobody-plans-for-pi](https://github.com/HashWarlock/nobody-plans-for-pi/tree/main/skills/nobody-verifies-before-completion/SKILL.md)
 
 ---
 
