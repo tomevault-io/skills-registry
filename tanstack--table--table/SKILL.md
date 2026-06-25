@@ -1,328 +1,261 @@
 ---
-name: sorting
+name: row-pinning
 description: > Use when this capability is needed.
 metadata:
   author: TanStack
 ---
 
-This skill builds on `tanstack-table/state-management` and `tanstack-table/customizing-feature-behavior`. Read those first for the atom model and `sortFn` overrides.
+This skill builds on `tanstack-table/state-management`. Read it first for the atom model.
 
 ## Setup
 
 ```ts
 import {
   tableFeatures,
-  rowSortingFeature,
-  createSortedRowModel,
-  sortFns,
-  createColumnHelper,
+  rowPinningFeature,
+  rowPaginationFeature,
+  createPaginatedRowModel,
   constructTable,
 } from '@tanstack/table-core'
-import type { SortingState } from '@tanstack/table-core'
-
-type Person = {
-  firstName: string
-  lastName: string
-  age: number
-  status: 'single' | 'complicated' | 'relationship'
-}
+import type { RowPinningState } from '@tanstack/table-core'
 
 const features = tableFeatures({
-  rowSortingFeature,
-  sortedRowModel: createSortedRowModel(),
-  sortFns,
+  rowPinningFeature,
+  rowPaginationFeature,
+  paginatedRowModel: createPaginatedRowModel(),
 })
-const columnHelper = createColumnHelper<typeof features, Person>()
-
-const columns = columnHelper.columns([
-  columnHelper.accessor('firstName', { sortFn: 'alphanumeric' }),
-  columnHelper.accessor('lastName', {
-    sortUndefined: 'last',
-    sortDescFirst: false,
-  }),
-  columnHelper.accessor('age', { sortFn: 'basic' }),
-])
 
 const table = constructTable({
   features,
   columns,
   data,
-  initialState: { sorting: [] satisfies SortingState },
+  getRowId: (row) => row.userId, // ← essentially mandatory
+  initialState: {
+    rowPinning: { top: [], bottom: [] } satisfies RowPinningState,
+  },
 })
 
-table.setSorting([{ id: 'age', desc: true }])
+// Pin a row
+row.pin('top') // or 'bottom' | false
 ```
 
 ## Core Patterns
 
-### Clickable header sorting with multi-sort on Shift+click
+### Pin/unpin buttons in a cell
 
 ```tsx
-// From examples/react/sorting/src/main.tsx
-{
-  headerGroup.headers.map((header) => (
-    <th
-      key={header.id}
-      onClick={header.column.getToggleSortingHandler()}
-      style={{ cursor: header.column.getCanSort() ? 'pointer' : 'default' }}
-    >
-      <table.FlexRender header={header} />
-      {{ asc: ' 🔼', desc: ' 🔽' }[header.column.getIsSorted() as string] ??
-        null}
-    </th>
-  ))
-}
+// From examples/react/row-pinning/src/main.tsx
+<button onClick={() => row.pin('top')} disabled={!row.getCanPin()}>📌⬆</button>
+<button onClick={() => row.pin('bottom')} disabled={!row.getCanPin()}>📌⬇</button>
+{row.getIsPinned() && <button onClick={() => row.pin(false)}>✖ Unpin</button>}
 ```
 
-`getToggleSortingHandler` already handles multi-sort when the user holds Shift (configurable via `isMultiSortEvent`).
-
-### Custom `sortFn` for an enum
+For grouped/expanded data, pass include flags:
 
 ```ts
-// From examples/react/sorting/src/main.tsx
-const sortStatusFn: SortFn<typeof features, Person> = (
-  rowA,
-  rowB,
-  _columnId,
-) => {
-  const statusOrder = ['single', 'complicated', 'relationship']
-  return (
-    statusOrder.indexOf(rowA.original.status) -
-    statusOrder.indexOf(rowB.original.status)
-  )
-}
-
-columnHelper.accessor('status', { sortFn: sortStatusFn })
+row.pin('top', /* includeLeafRows */ true, /* includeParentRows */ false)
 ```
 
-Always return an ascending-order comparison. The row model multiplies by `-1` for descending and again for `invertSorting`.
-
-### Direction control with `sortUndefined` and `invertSorting`
-
-```ts
-columnHelper.accessor('rank', {
-  invertSorting: true, // rank 1 above rank 2 even when "descending"
-})
-
-columnHelper.accessor('lastName', {
-  sortUndefined: 'last', // ABSOLUTE: end regardless of asc/desc
-  sortDescFirst: false,
-})
-```
-
-`sortUndefined` literals (`'first'`, `'last'`) are absolute. Numeric (`-1`, `1`) flips with `desc`.
-
-### Server-side sorting
+### Render pinned rows separately
 
 ```tsx
-const [sorting, setSorting] = useState<SortingState>([])
-const { data } = useQuery({
-  queryKey: ['rows', sorting],
-  queryFn: () =>
-    fetch('/api/rows?sort=' + serialize(sorting)).then((r) => r.json()),
-})
+<tbody>
+  {table.getTopRows().map((row) => (
+    <PinnedRow key={row.id} row={row} table={table} />
+  ))}
+  {table.getCenterRows().map((row) => (
+    <tr key={row.id}>
+      {row.getAllCells().map((cell) => (
+        <td key={cell.id}>
+          <table.FlexRender cell={cell} />
+        </td>
+      ))}
+    </tr>
+  ))}
+  {table.getBottomRows().map((row) => (
+    <PinnedRow key={row.id} row={row} table={table} />
+  ))}
+</tbody>
+```
 
-const table = useTable({
-  features: tableFeatures({ rowSortingFeature }),
-  // omit sortedRowModel from features — server sorts
+### Disable persistence across pagination
+
+```ts
+const table = constructTable({
+  features: tableFeatures({
+    rowPinningFeature,
+    columnFilteringFeature,
+    filteredRowModel: createFilteredRowModel(),
+    filterFns,
+  }),
   columns,
   data,
-  manualSorting: true,
-  state: { sorting },
-  onSortingChange: setSorting,
+  getRowId: (row) => row.id,
+  keepPinnedRows: false, // pinned rows disappear when filtered/paginated out
+})
+```
+
+`keepPinnedRows: true` (default) keeps pinned rows visible even when their underlying row would otherwise be filtered or paginated away.
+
+### Conditional pin permission
+
+```ts
+const table = constructTable({
+  features,
+  columns,
+  data,
+  enableRowPinning: (row) => !row.original.archived, // predicate form
 })
 ```
 
 ## Common Mistakes
 
-### [HIGH] Using v8 `sortingFn` / `sortingFns` names
-
-Wrong:
-
-```tsx
-{
-  accessorKey: 'fullName',
-  sortingFn: 'alphanumeric', // v8 name — falls through to sortFn_basic
-}
-// useTable({ sortingFns: { ...sortingFns, myFn } }) // v8 option name
-```
-
-Correct:
-
-```tsx
-import { sortFns, createSortedRowModel } from '@tanstack/react-table'
-
-columnHelper.accessor('firstName', {
-  sortFn: 'alphanumeric',
-})
-
-const features = tableFeatures({
-  rowSortingFeature,
-  sortedRowModel: createSortedRowModel(),
-  sortFns: {
-    ...sortFns,
-    myCustom: (a, b, id) => a.original[id] - b.original[id],
-  },
-})
-
-const table = useTable({ features, columns, data })
-```
-
-v9 renamed `columnDef.sortingFn → sortFn`, the fn registry slot `sortingFns → sortFns` (now registered on `features`), exported registry `sortingFns → sortFns`. The new column option defaults to `'auto'` and falls back to `sortFn_basic` when lookup misses — wrong names sort wrong, silently.
-
-Source: packages/table-core/src/features/row-sorting/rowSortingFeature.utils.ts
-
-### [MEDIUM] Expecting `sortUndefined: 'first' | 'last'` to work in v8
-
-Wrong:
-
-```tsx
-// agent assumes numeric and literal forms are interchangeable
-{ accessorKey: 'lastName', sortUndefined: -1 } // ascending-first, descending-LAST
-```
-
-Correct:
-
-```tsx
-// From examples/react/sorting/src/main.tsx
-columnHelper.accessor((row) => row.lastName, {
-  id: 'lastName',
-  sortUndefined: 'last', // ABSOLUTE: always at end regardless of asc/desc
-  sortDescFirst: false,
-})
-```
-
-v8 only had `false | -1 | 1`. v9 added `'first'` / `'last'`. Numeric flips with `desc`; literals are absolute.
-
-Source: packages/table-core/src/features/row-sorting/createSortedRowModel.ts
-
-### [MEDIUM] Custom `sortFn` factors `desc` in itself
-
-Wrong:
-
-```tsx
-// takes sort direction into account, breaks the toggle
-const customSort: SortFn<any, any> = (a, b, id, desc) => {
-  // desc isn't even a parameter — agents try to detect via state
-  const cmp = a.original[id] - b.original[id]
-  return desc ? -cmp : cmp
-}
-```
-
-Correct:
-
-```tsx
-// From examples/react/sorting/src/main.tsx
-// Always return ascending; the row model handles desc & invertSorting.
-const sortStatusFn: SortFn<any, any> = (rowA, rowB, _columnId) => {
-  const statusOrder = ['single', 'complicated', 'relationship']
-  return (
-    statusOrder.indexOf(rowA.original.status) -
-    statusOrder.indexOf(rowB.original.status)
-  )
-}
-```
-
-From the docs guide: "The comparison function does not need to take whether or not the column is in descending or ascending order into account. The row models will take care of that logic." Doubly-flipping yields broken toggles.
-
-Source: packages/table-core/src/features/row-sorting/createSortedRowModel.ts
-
-### [MEDIUM] Fuzzy filter without a fuzzy-aware `sortFn`
+### [HIGH] Omitting `getRowId` so pins attach to array indices
 
 Wrong:
 
 ```ts
-columnHelper.accessor('fullName', {
-  filterFn: 'fuzzy',
-  // BUG: rows sort alphabetically, not by match rank
-})
-```
-
-Correct:
-
-```ts
-import { compareItems } from '@tanstack/match-sorter-utils'
-
-const fuzzySort: SortFn<typeof features, Person> = (rowA, rowB, columnId) => {
-  let dir = 0
-  if (rowA.columnFiltersMeta[columnId]) {
-    dir = compareItems(
-      rowA.columnFiltersMeta[columnId].itemRank!,
-      rowB.columnFiltersMeta[columnId].itemRank!,
-    )
-  }
-  return dir === 0 ? sortFns.alphanumeric(rowA, rowB, columnId) : dir
-}
-
-columnHelper.accessor('fullName', { filterFn: 'fuzzy', sortFn: fuzzySort })
-```
-
-The fuzzy filter writes `{ itemRank }` into `row.columnFiltersMeta[columnId]` via `addMeta`. Without a sortFn that reads it, results sort alphabetically and defeat the fuzzy ranking.
-
-Source: examples/react/filters-fuzzy/src/main.tsx
-
-### [MEDIUM] `getCanSort` returns false for display columns under `manualSorting`
-
-Wrong:
-
-```ts
-// getCanSort() returns false even though manualSorting is true
+// row.id defaults to row.index; pin survives wrong rows after refetch
 const table = useTable({
-  manualSorting: true,
-  columns: [
-    { id: 'computed', header: 'Computed', cell: (info) => row.x + row.y },
-  ],
+  features: tableFeatures({ rowPinningFeature, rowPaginationFeature }),
+  data, // refetched periodically
 })
 ```
 
 Correct:
 
 ```ts
-columnHelper.display({
-  id: 'computed',
-  header: 'Computed',
-  enableSorting: true, // force-enable for manualSorting
-  cell: (info) => info.row.original.x + info.row.original.y,
+const table = useTable({
+  features: tableFeatures({ rowPinningFeature, rowPaginationFeature }),
+  data,
+  getRowId: (row) => row.userId, // or row.uuid, row.id from API, etc.
 })
+
+// For grouped/expanded data, pass the include flags too:
+row.pin('top', includeLeafRows, includeParentRows)
 ```
 
-`getCanSort` checks for `accessorKey`/`accessorFn` even under `manualSorting`. Force it on display columns via `enableSorting: true` (and let the server sort).
+`rowPinning.top` and `rowPinning.bottom` are arrays of string row ids. Default `row.id` is the data array index — refetched data reuses index 3 for a different record, but the pinning state still pins index 3.
 
-Source: https://github.com/TanStack/table/issues/4136
+Source: docs/guide/row-selection.md (same root principle); examples/react/row-pinning/src/main.tsx
 
-### [CRITICAL] Reimplementing what built-in APIs provide
+### [MEDIUM] Surprise behavior from `keepPinnedRows: true` default
 
 Wrong:
 
 ```ts
-const [sorting, setSorting] = useState([])
-const sortedData = useMemo(
-  () => [...data].sort(/* …custom… */),
-  [data, sorting],
-)
-// then uses sortedData directly, bypassing the table
+// Expecting pinned rows to vanish on filter, but they don't (default)
+const table = useTable({
+  features: tableFeatures({ rowPinningFeature, columnFilteringFeature }),
+  // keepPinnedRows defaults to true; pinned rows survive filtering
+})
 ```
 
 Correct:
 
 ```ts
-const features = tableFeatures({
-  rowSortingFeature,
-  sortedRowModel: createSortedRowModel(),
-  sortFns,
+// Be explicit about the UX you want
+const table = useTable({
+  features: tableFeatures({ rowPinningFeature, columnFilteringFeature }),
+  keepPinnedRows: false, // pinned rows disappear when filtered/paginated out
 })
-const table = useTable({ features, columns, data })
-// table.setSorting(...), column.toggleSorting(), header.getToggleSortingHandler()
+
+// Or keep the default and render pinned separately:
+<tbody>
+  {table.getTopRows().map((row) => <PinnedRow row={row} key={row.id} />)}
+  {table.getCenterRows().map((row) => <Row row={row} key={row.id} />)}
+  {table.getBottomRows().map((row) => <PinnedRow row={row} key={row.id} />)}
+</tbody>
+```
+
+`keepPinnedRows: true` makes `getTopRows()` / `getBottomRows()` search the full pre-pagination row set; `false` only finds rows currently in the row model.
+
+Source: packages/table-core/src/features/row-pinning/rowPinningFeature.utils.ts; examples/react/row-pinning/src/main.tsx
+
+### [MEDIUM] Rendering pinned rows TWICE (once at top/bottom, once in main flow)
+
+Wrong:
+
+```tsx
+<tbody>
+  {table.getTopRows().map((row) => (
+    <PinnedRow row={row} key={row.id} />
+  ))}
+  {table.getRowModel().rows.map(
+    (
+      row, // ← still includes pinned rows
+    ) => (
+      <tr key={row.id}>...</tr>
+    ),
+  )}
+  {table.getBottomRows().map((row) => (
+    <PinnedRow row={row} key={row.id} />
+  ))}
+</tbody>
+```
+
+Correct:
+
+```tsx
+<tbody>
+  {table.getTopRows().map((row) => (
+    <PinnedRow key={row.id} row={row} table={table} />
+  ))}
+  {table.getCenterRows().map((row) => (
+    <tr key={row.id}>
+      {row.getAllCells().map((cell) => (
+        <td key={cell.id}>
+          <table.FlexRender cell={cell} />
+        </td>
+      ))}
+    </tr>
+  ))}
+  {table.getBottomRows().map((row) => (
+    <PinnedRow key={row.id} row={row} table={table} />
+  ))}
+</tbody>
+```
+
+`getRowModel()` returns the complete current row model with pinned rows still in it. Use `getCenterRows()` for the main flow. Use `getRowModel()` only if you intentionally want pinned rows duplicated.
+
+Source: examples/react/row-pinning/src/main.tsx
+
+### [CRITICAL] Reimplementing pin behavior manually
+
+Wrong:
+
+```ts
+// Hand-rolled "pinned" map + manual filter on render
+const [pinned, setPinned] = useState<Record<string, true>>({})
+const pinnedRows = rows.filter((r) => pinned[r.id])
+const otherRows = rows.filter((r) => !pinned[r.id])
+```
+
+Correct:
+
+```ts
+const table = useTable({
+  features: tableFeatures({ rowPinningFeature }),
+  columns,
+  data,
+  getRowId: (row) => row.id,
+})
+
+row.pin('top') // pin one row
+table.setRowPinning({ top: ['a', 'b'], bottom: [] }) // bulk set
+table.getTopRows()
+table.getCenterRows()
+table.getBottomRows()
 ```
 
 Source: maintainer interview (Phase 4, 2026-05-17)
 
 ## See also
 
-- `tanstack-table/customizing-feature-behavior` — `sortFn` authoring + `addMeta` chain
-- `tanstack-table/filtering` — fuzzy filter pattern that pairs with `fuzzySort`
-- `tanstack-table/state-management` — `manualSorting` + server-side state ownership
+- `tanstack-table/state-management` — `rowPinning` state slice ownership
+- `tanstack-table/row-selection` — same `getRowId` stability concern
+- `tanstack-table/column-layout` — column pinning sits in a separate, more complex pipeline
 
 ---
 > Source: [TanStack/table](https://github.com/TanStack/table) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-24 -->
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
