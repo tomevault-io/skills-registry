@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xperiun/claude-code-powerbi-skills](https://github.com/xperiun/claude-code-powerbi-skills/tree/main/claude-code/pbi-doc/SKILL.md)
+Original source: [xperiun/claude-code-powerbi-skills](https://github.com/xperiun/claude-code-powerbi-skills/tree/main/claude-code/pbi-modelo-review/SKILL.md)
 
 ---
 
