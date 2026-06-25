@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marian2js/opengoat](https://github.com/marian2js/opengoat/tree/main/packages/core/src/core/skills/bundled/marketing/cold-email/SKILL.md)
+Original source: [marian2js/opengoat](https://github.com/marian2js/opengoat/tree/main/packages/core/src/core/skills/bundled/marketing/ad-creative/SKILL.md)
 
 ---
 
