@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [calcom/cal.diy](https://github.com/calcom/cal.diy/tree/main/agents/skills/calcom-api/SKILL.md)
+Original source: [calcom/cal.diy](https://github.com/calcom/cal.diy/tree/main/agents/skills/web-design-guidelines/SKILL.md)
 
 ---
 
