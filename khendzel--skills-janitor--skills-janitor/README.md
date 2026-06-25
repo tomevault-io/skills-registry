@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [khendzel/skills-janitor](https://github.com/khendzel/skills-janitor/tree/main/skills/janitor-precheck/SKILL.md)
+Original source: [khendzel/skills-janitor](https://github.com/khendzel/skills-janitor/tree/main/skills/janitor-discover/SKILL.md)
 
 ---
 
