@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [compozy/compozy](https://github.com/compozy/compozy/tree/main/.agents/skills/tailwindcss/SKILL.md)
+Original source: [compozy/compozy](https://github.com/compozy/compozy/tree/main/.agents/skills/find-skills/SKILL.md)
 
 ---
 
