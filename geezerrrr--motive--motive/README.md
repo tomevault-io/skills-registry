@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [geezerrrr/motive](https://github.com/geezerrrr/motive/tree/main/Motive/Resources/Skills.bundle/spotify-player/SKILL.md)
+Original source: [geezerrrr/motive](https://github.com/geezerrrr/motive/tree/main/Motive/Resources/Skills.bundle/nano-banana-pro/SKILL.md)
 
 ---
 
