@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tonone-ai/tonone](https://github.com/tonone-ai/tonone/tree/main/team/lens/skills/lens-dashboard/SKILL.md)
+Original source: [tonone-ai/tonone](https://github.com/tonone-ai/tonone/tree/main/team/lumen/skills/lumen-metrics/SKILL.md)
 
 ---
 
