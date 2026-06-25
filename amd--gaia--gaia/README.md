@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [amd/gaia](https://github.com/amd/gaia/tree/main/.claude/skills/gaia-release/SKILL.md)
+Original source: [amd/gaia](https://github.com/amd/gaia/tree/main/.claude/skills/gaia-testing/SKILL.md)
 
 ---
 
