@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ActiveCampaign/postmark-skills](https://github.com/ActiveCampaign/postmark-skills/tree/main/postmark-templates/SKILL.md)
+Original source: [ActiveCampaign/postmark-skills](https://github.com/ActiveCampaign/postmark-skills/tree/main/postmark-send-email/SKILL.md)
 
 ---
 
