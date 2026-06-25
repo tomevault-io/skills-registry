@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Harryoung/efka](https://github.com/Harryoung/efka/tree/main/skills/batch-notification/SKILL.md)
+Original source: [Harryoung/efka](https://github.com/Harryoung/efka/tree/main/skills/document-conversion/SKILL.md)
 
 ---
 
