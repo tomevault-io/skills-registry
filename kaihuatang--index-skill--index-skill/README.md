@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [KaihuaTang/Index.skill](https://github.com/KaihuaTang/Index.skill/tree/main/.claude/skills/index-chat/SKILL.md)
+Original source: [KaihuaTang/Index.skill](https://github.com/KaihuaTang/Index.skill/tree/main/.claude/skills/extract-pdf/SKILL.md)
 
 ---
 
