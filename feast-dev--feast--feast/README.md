@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [feast-dev/feast](https://github.com/feast-dev/feast/tree/main/skills/feast-dev/SKILL.md)
+Original source: [feast-dev/feast](https://github.com/feast-dev/feast/tree/main/skills/feast-testing/SKILL.md)
 
 ---
 
