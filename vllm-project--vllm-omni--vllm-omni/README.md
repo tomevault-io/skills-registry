@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vllm-project/vllm-omni](https://github.com/vllm-project/vllm-omni/tree/main/.claude/skills/precheck-pr/SKILL.md)
+Original source: [vllm-project/vllm-omni](https://github.com/vllm-project/vllm-omni/tree/main/.claude/skills/quantization/SKILL.md)
 
 ---
 
