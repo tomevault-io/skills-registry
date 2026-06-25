@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yetidevworks/ygrep](https://github.com/yetidevworks/ygrep/tree/main/claude-plugin/skills/ygrep)
+Original source: [yetidevworks/ygrep](https://github.com/yetidevworks/ygrep/tree/main/claude-plugin/skills/ygrep/SKILL.md)
 
 ---
 
