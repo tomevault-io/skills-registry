@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HKUDS/nanobot](https://github.com/HKUDS/nanobot/tree/main/nanobot/skills/clawhub/SKILL.md)
+Original source: [HKUDS/nanobot](https://github.com/HKUDS/nanobot/tree/main/nanobot/skills/weather/SKILL.md)
 
 ---
 
