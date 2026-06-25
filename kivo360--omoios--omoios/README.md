@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kivo360/OmoiOS](https://github.com/kivo360/OmoiOS/tree/main/.claude/skills/docx/SKILL.md)
+Original source: [kivo360/OmoiOS](https://github.com/kivo360/OmoiOS/tree/main/.claude/skills/template/SKILL.md)
 
 ---
 
