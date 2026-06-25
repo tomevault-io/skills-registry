@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [guia-matthieu/clawfu-skills](https://github.com/guia-matthieu/clawfu-skills/tree/main/skills/seo-tools/entity-seo-playbook/SKILL.md)
+Original source: [guia-matthieu/clawfu-skills](https://github.com/guia-matthieu/clawfu-skills/tree/main/skills/validation/customer-discovery/SKILL.md)
 
 ---
 
