@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [evan043/claude-cli-advanced-starter-pack](https://github.com/evan043/claude-cli-advanced-starter-pack/tree/main/templates/skills/refactor-react/skill.md)
+Original source: [evan043/claude-cli-advanced-starter-pack](https://github.com/evan043/claude-cli-advanced-starter-pack/tree/main/templates/skills/refactor-fastapi/skill.md)
 
 ---
 
