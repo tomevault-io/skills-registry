@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TermiX-official/cryptoclaw](https://github.com/TermiX-official/cryptoclaw/tree/main/extensions/diffs/skills/diffs/SKILL.md)
+Original source: [TermiX-official/cryptoclaw](https://github.com/TermiX-official/cryptoclaw/tree/main/extensions/acpx/skills/acp-router/SKILL.md)
 
 ---
 
