@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [proyecto26/projectx](https://github.com/proyecto26/projectx/tree/main/.agents/skills/turborepo/SKILL.md)
+Original source: [proyecto26/projectx](https://github.com/proyecto26/projectx/tree/main/.agents/skills/react-router-v7/SKILL.md)
 
 ---
 
