@@ -1,13 +1,13 @@
 # prowler
 
-> Skill by [prowler-cloud](https://github.com/prowler-cloud/prowler) — distributed by [TomeVault](https://tomevault.io/claim/prowler-cloud)
+> Skill by [prowler-cloud](https://github.com/prowler-cloud/prowler) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [prowler-cloud/prowler](https://github.com/prowler-cloud/prowler/tree/main/skills/prowler)
+Original source: [prowler-cloud/prowler](https://github.com/prowler-cloud/prowler/tree/main/skills/tdd/SKILL.md)
 
 ---
 
 Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
-Is this your repo? [Claim it](https://tomevault.io/claim/prowler-cloud) to manage distribution.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
