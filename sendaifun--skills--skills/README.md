@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sendaifun/skills](https://github.com/sendaifun/skills/tree/main/skills/vulnhunter/SKILL.md)
+Original source: [sendaifun/skills](https://github.com/sendaifun/skills/tree/main/skills/solana-kit/SKILL.md)
 
 ---
 
