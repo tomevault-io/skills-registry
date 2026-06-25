@@ -2,7 +2,7 @@
 name: orchestrator-guidelines
 description: Guidance when working on orchestrator infrastructure (agents, skills, guidelines, setup wizard) Use when this capability is needed.
 metadata:
-  author: boardkit
+  author: BoardKit
 ---
 
 You are working on the **orchestrator repository** - the shared infrastructure provider for your organization's Claude Code resources.
@@ -67,5 +67,5 @@ Before committing changes:
 **Remember:** You're maintaining infrastructure used by multiple teams. Quality and consistency matter.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/boardkit) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [BoardKit/orchestrator](https://github.com/BoardKit/orchestrator) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
