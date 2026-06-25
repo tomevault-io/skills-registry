@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [blendi-remade/isometric-city-fal](https://github.com/blendi-remade/isometric-city-fal/tree/main/.cursor/skills/say-hi/SKILL.md)
+Original source: [blendi-remade/isometric-city-fal](https://github.com/blendi-remade/isometric-city-fal/tree/main/.cursor/skills/isometric-asset-sheets/SKILL.md)
 
 ---
 
