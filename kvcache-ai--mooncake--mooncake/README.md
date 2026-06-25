@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kvcache-ai/Mooncake](https://github.com/kvcache-ai/Mooncake/tree/main/.claude/skills/mooncake-api/SKILL.md)
+Original source: [kvcache-ai/Mooncake](https://github.com/kvcache-ai/Mooncake/tree/main/.claude/skills/mooncake-ci-local/SKILL.md)
 
 ---
 
