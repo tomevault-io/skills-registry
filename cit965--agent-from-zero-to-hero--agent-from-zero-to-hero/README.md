@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cit965/agent-from-zero-to-hero](https://github.com/cit965/agent-from-zero-to-hero/tree/main/skills/code-review/SKILL.md)
+Original source: [cit965/agent-from-zero-to-hero](https://github.com/cit965/agent-from-zero-to-hero/tree/main/skills/agent-builder/SKILL.md)
 
 ---
 
