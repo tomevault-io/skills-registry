@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [denoland/skills](https://github.com/denoland/skills/tree/main/skills/deno-guidance/SKILL.md)
+Original source: [denoland/skills](https://github.com/denoland/skills/tree/main/skills/deno-project-templates/SKILL.md)
 
 ---
 
