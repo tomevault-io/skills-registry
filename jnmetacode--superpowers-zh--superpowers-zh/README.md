@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh/tree/main/skills/using-git-worktrees/SKILL.md)
+Original source: [jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh/tree/main/skills/chinese-git-workflow/SKILL.md)
 
 ---
 
