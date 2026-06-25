@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [loro-dev/loro](https://github.com/loro-dev/loro/tree/main/skills/loro/SKILL.md)
+Original source: [loro-dev/loro](https://github.com/loro-dev/loro/tree/main/skills/moonbit/SKILL.md)
 
 ---
 
