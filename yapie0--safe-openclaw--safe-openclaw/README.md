@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Yapie0/safe-openclaw](https://github.com/Yapie0/safe-openclaw/tree/main/skills/healthcheck/SKILL.md)
+Original source: [Yapie0/safe-openclaw](https://github.com/Yapie0/safe-openclaw/tree/main/skills/bluebubbles/SKILL.md)
 
 ---
 
