@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [elb-pr/claudikins-tool-executor](https://github.com/elb-pr/claudikins-tool-executor/tree/main/skills/te-guide/SKILL.md)
+Original source: [elb-pr/claudikins-tool-executor](https://github.com/elb-pr/claudikins-tool-executor/tree/main/skills/te-config/SKILL.md)
 
 ---
 
