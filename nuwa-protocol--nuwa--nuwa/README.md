@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nuwa-protocol/nuwa](https://github.com/nuwa-protocol/nuwa/tree/main/nuwa-kit/typescript/examples/did-auth-agent/SKILL.md)
+Original source: [nuwa-protocol/nuwa](https://github.com/nuwa-protocol/nuwa/tree/main/nuwa-services/cadop-service/packages/cadop-web/public/skill.md)
 
 ---
 
