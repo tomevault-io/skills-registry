@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [patricio0312rev/skills](https://github.com/patricio0312rev/skills/tree/main/foundation/mermaid-diagram-generator/SKILL.md)
+Original source: [patricio0312rev/skills](https://github.com/patricio0312rev/skills/tree/main/testing/vscode-rest-client-generator/SKILL.md)
 
 ---
 
