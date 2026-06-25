@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [guangzan/tona](https://github.com/guangzan/tona/tree/main/.trae/skills/tona-theme/SKILL.md)
+Original source: [guangzan/tona](https://github.com/guangzan/tona/tree/main/.trae/skills/create-readme/SKILL.md)
 
 ---
 
