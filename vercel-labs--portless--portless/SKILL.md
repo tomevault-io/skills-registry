@@ -1,266 +1,174 @@
 ---
-name: portless
-description: Set up and use portless for named local dev server URLs (e.g. https://myapp.localhost instead of http://localhost:3000). Use when integrating portless into a project, configuring dev server names, setting up the local proxy, working with .localhost domains, or troubleshooting port/proxy issues. Use when this capability is needed.
+name: oauth
+description: Configure OAuth providers (Google, Apple, Microsoft, Facebook, GitHub, etc.) to work with portless local dev URLs. Use when setting up OAuth redirect URIs, fixing "redirect_uri_mismatch" or "invalid redirect" errors, configuring sign-in providers for local development, or when a provider rejects .localhost subdomains. Triggers include "OAuth not working with portless", "redirect URI mismatch", "Google/Apple/Microsoft sign-in fails locally", "configure OAuth for local dev", or any task involving OAuth callback URLs with portless domains. Use when this capability is needed.
 metadata:
   author: vercel-labs
 ---
 
-# Portless
+# OAuth with Portless
 
-Replace port numbers with stable, named .localhost URLs. For humans and agents.
+OAuth providers validate redirect URIs against domain rules. `.localhost` subdomains fail on most providers because they are not in the Public Suffix List or are explicitly blocked. Portless fixes this with `--tld` to serve apps on real, valid domains.
 
-## Why portless
+## The Problem
 
-- **Port conflicts**: `EADDRINUSE` when two projects default to the same port
-- **Memorizing ports**: which app is on 3001 vs 8080?
-- **Refreshing shows the wrong app**: stop one server, start another on the same port, stale tab shows wrong content
-- **Monorepo multiplier**: every problem scales with each service in the repo
-- **Agents test the wrong port**: AI agents guess or hardcode the wrong port
-- **Cookie/storage clashes**: cookies on `localhost` bleed across apps; localStorage lost when ports shift
-- **Hardcoded ports in config**: CORS allowlists, OAuth redirects, `.env` files break when ports change
-- **Sharing URLs with teammates**: "what port is that on?" becomes a Slack question
-- **Browser history is useless**: `localhost:3000` history is a mix of unrelated projects
+When portless uses the default `.localhost` TLD, OAuth providers reject redirect URIs like `http://myapp.localhost:1355/callback`:
 
-## Installation
+| Provider  | `localhost` | `.localhost` subdomains | Reason                         |
+| --------- | ----------- | ----------------------- | ------------------------------ |
+| Google    | Allowed     | Rejected                | Not in their bundled PSL       |
+| Apple     | Rejected    | Rejected                | No localhost at all            |
+| Microsoft | Allowed     | Allowed                 | Permissive localhost handling  |
+| Facebook  | Allowed     | Varies                  | Must register each URI exactly |
+| GitHub    | Allowed     | Allowed                 | Permissive                     |
 
-Install globally (recommended) or as a project dev dependency. Do NOT use `npx` or `pnpm dlx` for one-off execution.
+Google and Apple are the strictest. Microsoft and GitHub are more lenient with localhost.
 
-```bash
-# Global (available everywhere)
-npm install -g portless
+## The Fix
 
-# Or per-project dev dependency
-npm install -D portless
-```
-
-When installed per-project, invoke via package.json scripts or `npx portless` (since the package is local, npx will not download anything).
-
-## Quick Start
+Use a valid TLD so the redirect URI passes provider validation:
 
 ```bash
-# Install globally (or add -D to a project)
-npm install -g portless
-
-# Run your app (auto-starts the HTTPS proxy on port 443)
-portless run next dev
-# -> https://<project>.localhost
-
-# Or with an explicit name
+portless proxy start --tld dev
 portless myapp next dev
-# -> https://myapp.localhost
+# -> https://myapp.dev
 ```
 
-The proxy auto-starts when you run an app. You can also start it explicitly with `portless proxy start`.
+Any TLD in the Public Suffix List works: `.dev`, `.app`, `.com`, `.io`, etc.
 
-## Integration Patterns
+### Use a domain you own
 
-### package.json scripts
-
-```json
-{
-  "scripts": {
-    "dev": "portless run next dev"
-  }
-}
-```
-
-The proxy auto-starts when you run an app. Or start it explicitly: `portless proxy start`.
-
-### Multi-app setups with subdomains
+Bare TLDs like `.dev` mean `myapp.dev` could collide with a real domain. Use a subdomain of a domain you control:
 
 ```bash
-portless myapp next dev          # https://myapp.localhost
-portless api.myapp pnpm start    # https://api.myapp.localhost
-portless docs.myapp next dev     # https://docs.myapp.localhost
+portless proxy start --tld dev
+portless myapp.local.yourcompany next dev
+# -> https://myapp.local.yourcompany.dev
 ```
 
-By default, only explicitly registered subdomains are routed (strict mode). Start the proxy with `--wildcard` to allow any subdomain of a registered route to fall back to that app (e.g. `tenant1.myapp.localhost` routes to the `myapp` app). Exact matches always take priority over wildcards.
+This ensures no outbound traffic reaches something you don't own. For teams, set a wildcard DNS record (`*.local.yourcompany.dev -> 127.0.0.1`) so every developer gets resolution without `/etc/hosts`.
 
-### Git worktrees
+## Provider Setup
 
-`portless run` automatically detects git worktrees. In a linked worktree, the branch name is prepended as a subdomain prefix so each worktree gets a unique URL:
+### Google
 
-```bash
-# Main worktree (no prefix)
-portless run next dev   # -> https://myapp.localhost
+1. Go to [Google Cloud Console > Credentials](https://console.cloud.google.com/apis/credentials)
+2. Create or edit an OAuth 2.0 Client ID (Web application)
+3. Add the portless domain to **Authorized JavaScript origins**: `https://myapp.dev`
+4. Add the callback to **Authorized redirect URIs**: `https://myapp.dev/api/auth/callback/google`
 
-# Linked worktree on branch "fix-ui"
-portless run next dev   # -> https://fix-ui.myapp.localhost
+Google validates domains against the Public Suffix List. The domain must end with a recognized TLD. `.localhost` subdomains fail this check; `.dev`, `.app`, `.com`, etc. all pass.
+
+HTTPS is required for `.dev` and `.app` (HSTS-preloaded). Portless handles this automatically with `--https`.
+
+### Apple
+
+Apple Sign In does not allow `localhost` or IP addresses at all.
+
+1. Go to [Apple Developer > Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources)
+2. Register a Services ID
+3. Configure Sign In with Apple, adding the portless domain as a **Return URL**: `https://myapp.dev/api/auth/callback/apple`
+
+The domain must be a real, publicly-resolvable domain name. Since portless maps the domain to 127.0.0.1 locally, the browser resolves it but Apple's server-side validation may require the domain to resolve publicly too. If Apple rejects the domain, add a public DNS A record pointing to 127.0.0.1 for your dev subdomain.
+
+### Microsoft (Entra / Azure AD)
+
+1. Go to [Azure Portal > App registrations](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps)
+2. Create or edit an app registration
+3. Under **Authentication**, add a **Web** redirect URI: `https://myapp.dev/api/auth/callback/azure-ad`
+
+Microsoft allows `http://localhost` with any port for development. It also accepts `.localhost` subdomains in most cases. Using a custom TLD with portless is still recommended for consistency across providers.
+
+### Facebook (Meta)
+
+1. Go to [Meta for Developers > App Dashboard](https://developers.facebook.com/apps/)
+2. Under **Facebook Login > Settings**, add the portless URL to **Valid OAuth Redirect URIs**: `https://myapp.dev/api/auth/callback/facebook`
+
+Facebook requires each redirect URI to be registered exactly (no wildcards). Strict Mode (enabled by default) enforces exact matching.
+
+### GitHub
+
+1. Go to [GitHub Developer Settings > OAuth Apps](https://github.com/settings/developers)
+2. Set **Authorization callback URL**: `https://myapp.dev/api/auth/callback/github`
+
+GitHub is permissive with localhost and subdomains. A custom TLD is not strictly required but keeps the setup consistent.
+
+## Auth Library Configuration
+
+### NextAuth / Auth.js
+
+Set `NEXTAUTH_URL` to match the portless domain:
+
+```env
+NEXTAUTH_URL=https://myapp.dev
 ```
 
-No config changes needed. Put `portless run` in `package.json` once and it works in all worktrees.
+NextAuth uses this to construct callback URLs. Without it, callbacks may use `localhost` and cause a mismatch.
 
-### Bypassing portless
+### Passport.js
 
-Set `PORTLESS=0` to run the command directly without the proxy:
+Set the `callbackURL` in each strategy to use the portless domain:
 
-```bash
-PORTLESS=0 pnpm dev   # Bypasses proxy, uses default port
+```js
+new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.BASE_URL + "/auth/google/callback",
+});
 ```
 
-## How It Works
+Set `BASE_URL=https://myapp.dev` in your environment.
 
-1. `portless proxy start` starts an HTTPS reverse proxy on port 443 as a background daemon. Auto-elevates with sudo on macOS/Linux; falls back to port 1355 if sudo is unavailable. Use `--no-tls` for plain HTTP on port 80. Configurable with `-p` / `--port` or the `PORTLESS_PORT` env var. The proxy also auto-starts when you run an app.
-2. `portless <name> <cmd>` assigns a random free port (4000-4999) via the `PORT` env var and registers the app with the proxy
-3. The browser hits `https://<name>.localhost`; the proxy forwards to the app's assigned port
+### Generic / Manual
 
-`.localhost` domains resolve to `127.0.0.1` natively in Chrome, Firefox, and Edge. Safari relies on the system DNS resolver, which may not handle `.localhost` subdomains on all configurations. Run `portless hosts sync` to add entries to `/etc/hosts` if needed.
+Read the `PORTLESS_URL` environment variable that portless injects into the child process:
 
-Most frameworks (Next.js, Express, Nuxt, etc.) respect the `PORT` env var automatically. For frameworks that ignore `PORT` (Vite, Astro, React Router, Angular, Expo, React Native), portless auto-injects the correct `--port` and `--host` CLI flags.
-
-### State directory
-
-Portless stores its state (routes, PID file, port file) in a directory that depends on the proxy port:
-
-- **Port < 1024** (sudo required): `/tmp/portless` (macOS/Linux only)
-- **Port >= 1024** (no sudo): `~/.portless`
-- **Windows**: Always `~/.portless` (no privileged port concept)
-
-Override with the `PORTLESS_STATE_DIR` environment variable.
-
-### Environment variables
-
-| Variable              | Description                                                           |
-| --------------------- | --------------------------------------------------------------------- |
-| `PORTLESS_PORT`       | Override the default proxy port (default: 443 with HTTPS, 80 without) |
-| `PORTLESS_APP_PORT`   | Use a fixed port for the app (skip auto-assignment)                   |
-| `PORTLESS_HTTPS`      | HTTPS on by default; set to `0` to disable (same as `--no-tls`)       |
-| `PORTLESS_TLD`        | Use a custom TLD instead of localhost (e.g. test)                     |
-| `PORTLESS_WILDCARD`   | Set to `1` to allow unregistered subdomains to fall back to parent    |
-| `PORTLESS_SYNC_HOSTS` | Set to `1` to auto-sync /etc/hosts (auto-enabled for custom TLDs)     |
-| `PORTLESS_STATE_DIR`  | Override the state directory                                          |
-| `PORTLESS=0`          | Bypass the proxy, run the command directly                            |
-
-### HTTP/2 + HTTPS
-
-HTTPS with HTTP/2 is enabled by default (faster page loads for dev servers with many files). First run generates a local CA and adds it to the system trust store. After that, no prompts and no browser warnings.
-
-```bash
-portless proxy start --cert ./c.pem --key ./k.pem  # Use custom certs
-portless proxy start --no-tls                       # Disable HTTPS (plain HTTP)
-portless trust                                      # Add CA to trust store later
+```js
+const baseUrl = process.env.PORTLESS_URL || "http://localhost:3000";
+const callbackUrl = `${baseUrl}/auth/callback`;
 ```
-
-On Linux, `portless trust` supports Debian/Ubuntu, Arch, Fedora/RHEL/CentOS, and openSUSE (via `update-ca-certificates` or `update-ca-trust`). On Windows, it uses `certutil` to add the CA to the system trust store.
-
-## CLI Reference
-
-| Command                                | Description                                                 |
-| -------------------------------------- | ----------------------------------------------------------- |
-| `portless run <cmd> [args...]`         | Infer name from project, run through proxy (auto-starts)    |
-| `portless run --name <name> <cmd>`     | Override inferred base name (worktree prefix still applies) |
-| `portless <name> <cmd> [args...]`      | Run app at `https://<name>.localhost` (auto-starts proxy)   |
-| `portless get <name>`                  | Print URL for a service (for cross-service wiring)          |
-| `portless get <name> --no-worktree`    | Print URL without worktree prefix                           |
-| `portless list`                        | Show active routes                                          |
-| `portless trust`                       | Add local CA to system trust store (for HTTPS)              |
-| `portless proxy start`                 | Start HTTPS proxy as a daemon (port 443, auto-elevates)     |
-| `portless proxy start --no-tls`        | Start without HTTPS (plain HTTP on port 80)                 |
-| `portless proxy start -p <number>`     | Start the proxy on a custom port                            |
-| `portless proxy start --tld test`      | Use .test instead of .localhost (requires /etc/hosts sync)  |
-| `portless proxy start --foreground`    | Start the proxy in foreground (for debugging)               |
-| `portless proxy start --wildcard`      | Allow unregistered subdomains to fall back to parent route  |
-| `portless proxy stop`                  | Stop the proxy                                              |
-| `portless alias <name> <port>`         | Register a static route (e.g. for Docker containers)        |
-| `portless alias <name> <port> --force` | Overwrite an existing route                                 |
-| `portless alias --remove <name>`       | Remove a static route                                       |
-| `portless hosts sync`                  | Add routes to /etc/hosts (fixes Safari)                     |
-| `portless hosts clean`                 | Remove portless entries from /etc/hosts                     |
-| `portless <name> --app-port <n> <cmd>` | Use a fixed port for the app instead of auto-assignment     |
-| `portless <name> --force <cmd>`        | Kill the existing process and take over its route           |
-| `portless --name <name> <cmd>`         | Force `<name>` as app name (bypasses subcommand dispatch)   |
-| `portless <name> -- <cmd> [args...]`   | Stop flag parsing; everything after `--` is passed to child |
-| `portless --help` / `-h`               | Show help                                                   |
-| `portless run --help`                  | Show help for a subcommand (also: alias, hosts)             |
-| `portless --version` / `-v`            | Show version                                                |
-
-**Reserved names:** `run`, `get`, `alias`, `hosts`, `list`, `trust`, and `proxy` are subcommands and cannot be used as app names directly. Use `portless run <cmd>` to infer the name, or `portless --name <name> <cmd>` to force any name including reserved ones.
 
 ## Troubleshooting
 
-### Proxy not running
+### "redirect_uri_mismatch" or "invalid redirect URI"
 
-The proxy auto-starts when you run an app with `portless <name> <cmd>`. If it doesn't start (e.g. port conflict), start it manually:
+The redirect URI sent during the OAuth flow doesn't match what's registered with the provider. Check:
 
-```bash
-portless proxy start
-```
+1. The provider's registered redirect URI matches the portless domain exactly (protocol, host, path)
+2. `NEXTAUTH_URL` or equivalent is set to the portless URL (not `localhost`)
+3. The proxy is running with the correct TLD (`portless list` to verify)
 
-### Port already in use
+### Provider requires HTTPS
 
-Another process is bound to the proxy port. Either stop it first, or use a different port:
-
-```bash
-portless proxy start -p 8080
-```
-
-### Framework not respecting PORT
-
-Portless auto-injects `--port` and `--host` flags for frameworks that ignore the `PORT` env var: **Vite**, **Astro**, **React Router**, **Angular**, **Expo**, and **React Native**. SvelteKit uses Vite internally and is handled automatically.
-
-For other frameworks that don't read `PORT`, pass the port manually:
-
-- **Webpack Dev Server**: use `--port $PORT`
-- **Custom servers**: read `process.env.PORT` and listen on it
-
-### Permission errors
-
-The default ports (80 for HTTP, 443 for HTTPS) require `sudo` on macOS and Linux. Portless auto-elevates with sudo when needed. If sudo is unavailable, it falls back to port 1355 (no sudo needed). On Windows, no elevation is required.
+`.dev` and `.app` TLDs are HSTS-preloaded, so browsers force HTTPS. Start the proxy:
 
 ```bash
-portless proxy start --https           # Auto-elevates with sudo for port 443
-portless proxy start -p 1355 --https   # No sudo needed (URLs include :1355)
-portless proxy stop                    # Stop (use sudo if started with sudo)
+portless proxy start --tld dev
 ```
 
-### Safari can't find .localhost URLs
+Portless defaults to HTTPS on port 443 (auto-elevates with sudo). Run `portless trust` to add the local CA to your system trust store and eliminate browser warnings.
 
-Safari relies on the system DNS resolver for `.localhost` subdomains, which may not resolve them on all macOS configurations. Chrome, Firefox, and Edge have built-in handling.
+### Apple rejects the domain
 
-Fix:
+Apple may require the domain to resolve publicly. Add a DNS A record for your dev subdomain pointing to `127.0.0.1`:
 
-```bash
-portless hosts sync    # Adds current routes to /etc/hosts
-portless hosts clean   # Remove entries later
+```
+myapp.local.yourcompany.dev  A  127.0.0.1
 ```
 
-Auto-syncs `/etc/hosts` for custom TLDs (e.g. `--tld test`). For `.localhost`, set `PORTLESS_SYNC_HOSTS=1` to enable.
+Or use a wildcard: `*.local.yourcompany.dev  A  127.0.0.1`.
 
-### Browser shows certificate warning with --https
+### Callback goes to wrong URL after sign-in
 
-The local CA may not be trusted yet. Run:
+The auth library is constructing the callback URL from `localhost` instead of the portless domain. Set the appropriate environment variable:
 
-```bash
-portless trust
-```
+- **NextAuth**: `NEXTAUTH_URL=https://myapp.dev`
+- **Auth.js v5**: `AUTH_URL=https://myapp.dev`
+- **Manual**: `PORTLESS_URL` is injected automatically; use it as the base URL
 
-This adds the portless local CA to your system trust store. After that, restart the browser.
+## Example
 
-### Proxy loop (508 Loop Detected)
-
-If your dev server proxies requests to another portless app (e.g. Vite proxying `/api` to `api.myapp.localhost`), the proxy must rewrite the `Host` header. Without this, portless routes the request back to the original app, creating an infinite loop.
-
-Fix: set `changeOrigin: true` in the proxy config (Vite, webpack-dev-server, etc.):
-
-```ts
-// vite.config.ts
-proxy: {
-  "/api": {
-    target: "https://api.myapp.localhost",
-    changeOrigin: true,
-    ws: true,
-  },
-}
-```
-
-If your tooling doesn't trust the portless CA, point Node.js at it: `NODE_EXTRA_CA_CERTS=/tmp/portless/ca.pem` (or `~/.portless/ca.pem` when the proxy runs on a non-privileged port like 1355). Alternatively, use `--no-tls` for plain HTTP.
-
-### Requirements
-
-- Node.js 20+
-- macOS, Linux, or Windows
-- `openssl` (for `--https` cert generation; ships with macOS and most Linux distributions; on Windows, install via `winget install -e --id ShiningLight.OpenSSL.Dev` or use the copy bundled with Git for Windows)
+See [`examples/google-oauth`](../../examples/google-oauth) for a complete working example with Next.js + NextAuth + Google OAuth using `--tld dev`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/vercel-labs) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [vercel-labs/portless](https://github.com/vercel-labs/portless) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
