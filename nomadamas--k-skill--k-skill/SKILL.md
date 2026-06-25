@@ -1,135 +1,89 @@
 ---
-name: market-kurly-search
-description: 로그인 없이 접근 가능한 마켓컬리 검색/상품 상세 표면으로 상품 후보, 현재 가격, 할인 여부, 품절 여부를 조회한다. Use when this capability is needed.
+name: korean-middle-korean
+description: Convert incoming Korean text into a deterministic Korean Middle Korean-style rewrite with archaic particles, endings, Hanja hints, and tone-mark flavor. Use when this capability is needed.
 metadata:
   author: NomaDamas
 ---
 
-# Market Kurly Search
+# Korean Middle Korean Style Converter
 
 ## What this skill does
 
-마켓컬리 웹앱이 실제로 사용하는 **비로그인 검색/상품 상세 표면**을 사용해 아래 흐름을 처리한다.
+사용자가 한국어 문장을 "한국 중세 국어처럼", "훈민정음/중세국어 느낌으로", "옛 국어 밈체로" 바꾸어 달라고 할 때, 입력문을 **결정론적 Middle Korean-style 문체**로 바꾼다.
 
-- 키워드로 상품 후보를 검색한다.
-- 현재 가격과 할인 여부를 확인한다.
-- 품절 여부와 배송 타입을 확인한다.
-- 상품 링크를 함께 반환한다.
-- **주문/장바구니 같은 액션은 하지 않는다. 조회형으로만 답한다.**
+이 스킬은 학술적 복원이 아니라 창작용 스타일 변환이다.
+
+- 현대 한국어 조사 일부를 `ᄋᆞᆫ`, `ᄋᆞᆯ`, `애` 같은 중세국어풍 표기로 바꾼다.
+- `했다`, `하는`, `말하는` 같은 현대 어미를 `ᄒᆞ엿다〮`, `ᄒᆞᄂᆞᆫ`, `ᄆᆞᆯᄒᆞᄂᆞᆫ`처럼 바꾼다.
+- 날짜 단위는 `年`, `月`, `日`로 바꾼다.
+- 일부 한자어/밈 예시는 `熱愛說`, `俳優`, `學校`처럼 Hanja 힌트를 섞는다.
+- URL, 이메일, Markdown 링크, inline/fenced code span은 구조 토큰으로 보고 변환하지 않는다.
+- 인명·숫자·고유명사는 완전 보존이 아니라, 규칙이 맞지 않을 때 원문을 남기는 best-effort 방식으로 처리한다.
+- 한자어 힌트는 넓은 전역 치환으로 적용되므로 합성어·고유명사처럼 보이는 문자열 안에서도 바뀔 수 있다.
 
 ## When to use
 
-- "마켓컬리에서 우유 얼마야?"
-- "컬리에서 딸기 검색해줘"
-- "이 상품 품절인지 보고 링크도 줘"
-- "지금 컬리 가격만 빠르게 보고 싶어"
+- "이 문장을 한국 중세 국어로 바꿔줘"
+- "훈민정음 느낌 나는 밈 문장으로 변환해줘"
+- "중세국어풍으로 농담을 써줘"
+- "아래 글을 옛 국어 말투로 바꿔줘"
 
-## When not to use
+## When NOT to use
 
-- 주문/장바구니/결제까지 자동화해야 하는 경우
-- 주소 기반 배송 가능 여부나 회원 전용 가격을 확정해야 하는 경우
-- 로그인 세션이 필요한 개인화 추천/찜 정보를 조회해야 하는 경우
+- 학술 논문, 고문헌 번역, 훈민정음 해례본식 엄밀 표기가 필요한 작업
+- 법률·의학·계약 문서처럼 의미 오해가 위험한 문서
+- 혐오·괴롭힘·명예훼손 목적의 조롱성 변환
 
 ## Prerequisites
 
-- 인터넷 연결
 - `node` 18+
-- 이 저장소의 `market-kurly-search` package 또는 동일 로직
-
-## Required inputs
-
-### 1. Ask for a product keyword if it is missing
-
-상품명 또는 검색어가 없으면 먼저 물어본다.
-
-- 권장 질문: `찾을 마켓컬리 상품명이나 검색어를 알려주세요. 예: 우유, 딸기, 닭가슴살`
-- 너무 넓으면: `검색어가 너무 넓어요. 브랜드나 용량까지 같이 알려주시면 가격 후보를 더 정확히 추릴 수 있어요.`
-
-### 2. Confirm which candidate they want when the query is ambiguous
-
-검색 결과가 여러 개면 상위 2~3개만 보여주고 다시 확인받는다.
-
-- 권장 질문: `후보가 여러 개예요. 아래 상품 중 어떤 상품 가격을 볼까요?`
-- 응답에는 상품명 + 현재 가격 + 품절 여부 + 링크를 같이 붙인다.
-
-## Official Market Kurly surfaces
-
-- search list: `https://api.kurly.com/search/v4/sites/market/normal-search?keyword=<keyword>&page=1`
-- search count: `https://api.kurly.com/search/v3/sites/market/normal-search/count?keyword=<keyword>&filters=&allow_replace=true`
-- product detail page: `https://www.kurly.com/goods/<productNo>`
+- 설치된 `korean-middle-korean` skill 디렉터리 안에 `scripts/korean_middle_korean.js` helper 포함
+- 별도 API 키 없음
 
 ## Workflow
 
-### 1. Search by keyword first
+1. 변환할 한국어 텍스트를 받는다.
+2. 설치된 `korean-middle-korean` skill 디렉터리를 기준으로 `node scripts/korean_middle_korean.js` 를 실행한다.
+   - URL, 이메일, Markdown 링크, inline/fenced code span은 보호되어 원문 그대로 복원된다.
+3. 기본 JSON 출력에서 `output`을 사용자에게 반환한다.
+4. 사용자가 근거를 원하면 `replacements` 배열의 규칙 적용 내역을 요약한다.
+5. 학술적 정확성이 필요하다고 보이면 이 스킬은 창작용 스타일 변환임을 먼저 밝힌다.
 
-```js
-const { searchProducts } = require("market-kurly-search")
+## CLI examples
 
-const result = await searchProducts("우유")
-console.log(result.items.slice(0, 3))
+```bash
+node scripts/korean_middle_korean.js --text "민수는 3월 5일 학교에서 공부했다."
+node scripts/korean_middle_korean.js --text "열애설을 인정했다." --format text
+cat input.txt | node scripts/korean_middle_korean.js --stdin --format json
+node scripts/korean_middle_korean.js --file ./input.txt --format text
 ```
 
-검색 결과에서는 아래 필드를 우선 본다.
+## Response policy
 
-- 상품명
-- 현재 가격 (`discountedPrice` 우선, 없으면 `salesPrice`)
-- 할인율
-- 품절 여부
-- 배송 타입
-- 상품 링크
+- `output`을 중심으로 답한다.
+- "정확한 중세국어 번역"이라고 단정하지 말고, "중세국어풍/창작용 변환"이라고 설명한다.
+- 사용자가 원문 의미 보존을 중요하게 말하면, 변환문 뒤에 "의미 보존 확인"을 짧게 덧붙인다.
 
-### 2. Use the count endpoint when the result set is broad
+## Output schema
 
-```js
-const { countProducts } = require("market-kurly-search")
-
-const count = await countProducts("우유")
-console.log(count)
+```json
+{
+  "profile": "middle-korean-style-v1",
+  "input": "열애설을 인정했다.",
+  "output": "熱愛說ᄋᆞᆯ 인졍ᄒᆞ엿다〮.",
+  "replacements": [
+    { "kind": "lexicon", "from": "열애설", "to": "熱愛說", "count": 1 }
+  ],
+  "contract": "Deterministic Korean Middle Korean-style rewrite..."
+}
 ```
-
-후보가 너무 많으면 `count` 를 먼저 보여 주고 검색어를 좁히라고 안내한다.
-
-### 3. Use the goods page detail as a fallback or follow-up lookup
-
-```js
-const { getProductDetail } = require("market-kurly-search")
-
-const detail = await getProductDetail(5063110)
-console.log(detail)
-```
-
-`goods/<productNo>` HTML 안의 `__NEXT_DATA__` 에서 상품명, 가격, 품절 여부, 배송 타입을 추출한다.
-
-### 4. Respond conservatively
-
-응답은 짧고 보수적으로 정리한다.
-
-- 상품명
-- 현재 가격
-- 필요하면 원가/할인가 여부
-- 품절 여부 또는 판매 가능 여부
-- 상품 링크
-- **가격/품절/노출 정보는 시점에 따라 달라질 수 있으니 조회 시각 기준 참고값이라고 분명히 말한다.**
 
 ## Done when
 
-- 상품 키워드를 확인했다.
-- 검색 결과에서 후보와 현재 가격을 최소 1개 이상 반환했다.
-- 필요하면 상품 상세 페이지로 보조 확인했다.
-- 주문/장바구니 같은 범위 밖 액션은 하지 않았다.
-
-## Failure modes
-
-- 검색어가 너무 넓으면 후보가 과도하게 많아질 수 있다.
-- 가격/품절/배송 문구는 시점에 따라 달라질 수 있다.
-- 현재 확인한 표면은 **공식 개발자 Open API가 아니라 웹이 쓰는 공개 표면** 이므로 스키마가 바뀌면 깨질 수 있다.
-- 회원 전용/주소 전용 정보는 비로그인 조회만으로 확정할 수 없다.
-
-## Notes
-
-- 조회형 스킬이다.
-- 비로그인 공개 표면 우선 원칙을 유지한다.
-- 주문/장바구니/로그인 요구 기능은 시도하지 않는다.
+- `node scripts/korean_middle_korean.js --help` 가 동작한다.
+- `--text`, `--file`, `--stdin` 입력이 모두 동작한다.
+- JSON과 text 출력이 모두 동작한다.
+- 이슈 #270의 예시처럼 날짜/Hanja/중세국어풍 조사·어미·성조점이 나타난다.
 
 ---
 > Source: [NomaDamas/k-skill](https://github.com/NomaDamas/k-skill) — distributed by [TomeVault](https://tomevault.io).
