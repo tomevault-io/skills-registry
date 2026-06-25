@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DyHex/POMWright](https://github.com/DyHex/POMWright/tree/main/docs/v1-to-v2-migration/skills/pomwright-v2-migration/SKILL.md)
+Original source: [DyHex/POMWright](https://github.com/DyHex/POMWright/tree/main/docs/v1-to-v2-migration/skills/pomwright-v1-5-bridge-migration/SKILL.md)
 
 ---
 
