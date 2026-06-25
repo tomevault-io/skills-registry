@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nexu-io/nexu](https://github.com/nexu-io/nexu/tree/main/nexu-skills/skills/feishu-task/SKILL.md)
+Original source: [nexu-io/nexu](https://github.com/nexu-io/nexu/tree/main/.agents/skills/process-pr-reviews/SKILL.md)
 
 ---
 
