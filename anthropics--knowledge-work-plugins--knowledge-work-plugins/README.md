@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins/tree/main/cowork-plugin-management/skills/cowork-plugin-customizer/SKILL.md)
+Original source: [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins/tree/main/partner-built/brand-voice/skills/brand-voice-enforcement/SKILL.md)
 
 ---
 
