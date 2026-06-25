@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pkovzz/ngx-otp-input](https://github.com/pkovzz/ngx-otp-input/tree/main/.agents/skills/frontend-design/SKILL.md)
+Original source: [pkovzz/ngx-otp-input](https://github.com/pkovzz/ngx-otp-input/tree/main/.agents/skills/web-design-guidelines/SKILL.md)
 
 ---
 
