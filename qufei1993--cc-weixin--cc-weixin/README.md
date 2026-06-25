@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [qufei1993/cc-weixin](https://github.com/qufei1993/cc-weixin/tree/main/plugins/weixin/skills/access/SKILL.md)
+Original source: [qufei1993/cc-weixin](https://github.com/qufei1993/cc-weixin/tree/main/plugins/weixin/skills/configure/SKILL.md)
 
 ---
 
