@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sswym/oh-my-agent](https://github.com/sswym/oh-my-agent/tree/main/skills/research/SKILL.md)
+Original source: [sswym/oh-my-agent](https://github.com/sswym/oh-my-agent/tree/main/skills/reasoning/SKILL.md)
 
 ---
 
