@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SciSharp/NumSharp](https://github.com/SciSharp/NumSharp/tree/main/.claude/skills/np-tests/SKILL.md)
+Original source: [SciSharp/NumSharp](https://github.com/SciSharp/NumSharp/tree/main/.claude/skills/np-function/SKILL.md)
 
 ---
 
