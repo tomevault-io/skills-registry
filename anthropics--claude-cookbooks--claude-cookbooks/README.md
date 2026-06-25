@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [anthropics/claude-cookbooks](https://github.com/anthropics/claude-cookbooks/tree/main/.claude/skills/cookbook-audit/SKILL.md)
+Original source: [anthropics/claude-cookbooks](https://github.com/anthropics/claude-cookbooks/tree/main/skills/custom_skills/applying-brand-guidelines/SKILL.md)
 
 ---
 
