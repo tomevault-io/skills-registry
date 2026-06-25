@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dallay/agentsync](https://github.com/dallay/agentsync/tree/main/.agents/skills/frontend-design/SKILL.md)
+Original source: [dallay/agentsync](https://github.com/dallay/agentsync/tree/main/tests/e2e/fixtures/sample-skill/SKILL.md)
 
 ---
 
