@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [patricio0312rev/skills](https://github.com/patricio0312rev/skills/tree/main/ai-engineering/embedding-pipeline-builder/SKILL.md)
+Original source: [patricio0312rev/skills](https://github.com/patricio0312rev/skills/tree/main/db-management/multi-tenant-safety-checker/SKILL.md)
 
 ---
 
