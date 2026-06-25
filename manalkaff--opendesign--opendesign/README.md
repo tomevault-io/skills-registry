@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [manalkaff/opendesign](https://github.com/manalkaff/opendesign/tree/main/skills/create-design-system/SKILL.md)
+Original source: [manalkaff/opendesign](https://github.com/manalkaff/opendesign/tree/main/skills/interactive-prototype/SKILL.md)
 
 ---
 
