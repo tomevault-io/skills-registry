@@ -1,201 +1,46 @@
 ---
-name: cn-check
-description: Install and run the Continue CLI (`cn`) to execute AI agent checks on local code changes. Use when asked to "run checks", "lint with AI", "review my changes with cn", or set up Continue CI locally. Use when this capability is needed.
+name: docs-style
+description: Style guidelines for writing and updating documentation. Use when writing new docs, updating existing docs, or reviewing docs for quality. Use when this capability is needed.
 metadata:
   author: continuedev
 ---
 
-# cn check — Local AI Agent Checks
+# Docs Style Guide
 
-Run AI-powered code checks locally against your working tree changes using the Continue CLI. Each check is an agent (defined in markdown) that reviews your diff, identifies issues, and optionally suggests fixes as a patch.
+## Principles
 
-## When to Use
+- **Be concise** — no filler. Make it easy to find what you're looking for
+- **Task-oriented** — frame around what the user is trying to do, not what the product can do
+- **Progressive disclosure** — guide from introduction to advanced use-cases. Don't throw users into the deep end
+- **Real examples over abstract explanations** — show, don't describe
+- **Code snippets must be copy-pasteable** — no placeholder values that silently break, no missing imports
+- **Prerequisites up front** — don't surprise the user halfway through
+- **One topic per page** — if you're covering two things, split it
+- **Link, don't repeat** — reference other docs instead of duplicating content
+- **Scannable headings** — skimming the TOC should reveal the page structure
+- **Show expected output** — after a step, tell the user what they should see
+- **Consistent terminology** — pick one term for a concept, use it everywhere
+- **Screenshots/GIFs for key product features** — use visuals when they teach faster than text
+- **Know which type of doc you're writing** — a tutorial (learning), a how-to (completing a task), a reference (looking something up), or an explanation (understanding why). Don't mix them in one page
+- **Tutorials should be completable** — a user following every step should end up with a working result, every time
+- **Reference docs should be exhaustive and consistent** — cover everything, use the same structure for every entry
 
-- User asks to run AI checks on their code changes
-- User wants to set up `cn check` in a project
-- User needs to create custom check agents
-- User wants to apply AI-suggested fixes locally
-- User asks about Continue CI or agent-based code review
+## Tone
 
-## Installation
+- **Don't be patronizing** — the reader is a developer. Don't tell them when to use something in a "when to use X vs Y" comparison table. If the distinction matters, state it plainly at the top of the relevant section in a sentence, then move on.
+- **Respect the reader's time** — open with the command or code, not a paragraph explaining what they're about to see. Lead with the thing, then explain.
+- **No personality** — the docs aren't a character. Don't try to be warm, clever, or endearing. No "Let's dive in!", no "The Magic of...", no "Pro Tip:", no emoji in headings. Developers see through it instantly and it reads like marketing copy wearing a docs costume. Just be direct and clinical. The docs serve information, they don't have a relationship with the reader.
+- **Inline guidance over callout boxes** — prefer weaving tips into the prose rather than using `<Tip>`, `<Info>`, `<Warning>`, etc. These components break reading flow and look heavy when overused. Reserve them for truly critical warnings (e.g. data loss, security). One per page is a good ceiling; zero is often fine.
+- **Examples should feel real** — use realistic file paths, realistic prompts, realistic tasks. Not `> Tell me about the CLI` but `> @tests/auth.test.ts This test started failing after the last migration`.
+- **Examples earn their place** — don't add "Example: Doing X" sections that are just English prompts in a code block. Examples are valuable when they demonstrate non-obvious syntax, flags, piping, or configuration. If the reader could figure it out from the rest of the page, skip the example.
+- **No "Next Steps" sections** — don't end pages with a "Next Steps" or "What's Next?" section with CardGroups linking to other pages. The sidebar navigation already does this. If a link to another page is relevant, put it inline where the context is, not in a generic footer.
+- **Page title = sidebar title** — the `title` in frontmatter should match the sidebar label. Drop `sidebarTitle` unless there's a genuine reason for them to differ. Don't stuff extra context into the page title (e.g., "Continue CLI (cn) Overview" → "Overview").
+- **No subtitle/description in frontmatter** — don't use the `description` field. The opening paragraph of the page should provide whatever context is needed. Metadata subtitles add clutter and duplicate what the prose already says.
 
-### Prerequisites
+## Headings
 
-- Node.js 18+
-- A git repository with uncommitted or branched changes
-
-### Install the CLI
-
-```bash
-npm install -g @continuedev/cli
-```
-
-### Authenticate (required for Hub checks, optional for local-only)
-
-```bash
-cn login
-```
-
-This opens a browser for authentication. After login, Hub-configured checks are available automatically.
-
-## Usage
-
-### Basic: Run all discovered checks
-
-```bash
-cn check
-```
-
-This auto-detects checks from three sources (in priority order):
-
-1. Hub API — checks configured for your repo on continue.dev
-2. Local agents — markdown files in `.continue/agents/*.md`
-
-### Specify agents explicitly
-
-```bash
-# Run a single local agent
-cn check --agent .continue/agents/security-review.md
-
-# Run a Hub-published agent
-cn check --agent myorg/code-style
-
-# Run multiple agents
-cn check --agent .continue/agents/security.md --agent .continue/agents/docs.md
-```
-
-### Compare against a specific base branch
-
-```bash
-cn check --base develop
-```
-
-Default: auto-detects `main` or `master`.
-
-### Output formats
-
-```bash
-# JSON output (for CI pipelines or scripting)
-cn check --format json
-
-# Unified patch output (pipe to git apply)
-cn check --patch | git apply
-
-# Stop on first failure
-cn check --fail-fast
-```
-
-### Auto-fix mode
-
-```bash
-cn check --fix
-```
-
-Runs all checks, then applies any suggested patches directly to the working tree. Patches that conflict are reported but skipped.
-
-## Creating a Check Agent
-
-Create a markdown file at `.continue/agents/<name>.md`:
-
-```markdown
-# Security Review
-
-You are a security reviewer. Examine the code changes for:
-
-- SQL injection vulnerabilities
-- XSS risks in user-facing output
-- Hardcoded secrets or credentials
-- Insecure use of eval() or similar
-
-If you find issues, edit the files to fix them. If everything looks good, say so and exit.
-```
-
-The agent receives:
-
-- The full diff against the base branch
-- A list of changed files
-- Access to read/edit files in a temporary worktree
-
-Any edits the agent makes are captured as a patch and reported as a "fail" with suggested changes.
-
-## How It Works
-
-1. **Diff** — Computes `git diff <base>...HEAD` to find changed files
-2. **Resolve** — Discovers which checks to run (Hub, local, or `--agent` flags)
-3. **Worktree** — Creates a temporary git worktree per check for isolation
-4. **Run** — Forks a worker process per check; the agent runs with full tool access
-5. **Capture** — After the agent finishes, captures `git diff` in the worktree as a patch
-6. **Report** — Renders results: pass (no changes), fail (patch produced), or error
-
-Checks run in parallel by default. Use `--fail-fast` for sequential execution that stops on first failure.
-
-## Output
-
-### Interactive terminal (TTY)
-
-A live-updating table shows check progress:
-
-```
-cn check  -  3 checks against main  -  5 changed files
-
-Check               Status         Time
---------------------------------------------
-Security Review     * Running       12s
-Code Style          Pass            8s
-Documentation       Pending         -
-```
-
-When complete, a full report prints with pass/fail status, agent output, and suggested patches.
-
-### JSON output (`--format json`)
-
-```json
-{
-  "checks": [
-    {
-      "agent": ".continue/agents/security.md",
-      "name": "security",
-      "status": "pass",
-      "patch": "",
-      "output": "No security issues found.",
-      "duration": 8.2
-    }
-  ],
-  "summary": {
-    "total": 1,
-    "passed": 1,
-    "failed": 0,
-    "errored": 0
-  }
-}
-```
-
-## CLI Reference
-
-```
-cn check [options]
-
-Options:
-  --base <branch>     Base branch for diff (default: auto-detect)
-  --format <format>   Output format: text or json (default: text)
-  --fix               Apply suggested fixes to working tree
-  --patch             Output unified patch (pipe to git apply)
-  --fail-fast         Stop after first failing check
-  --agent <agent>     Agent to run (hub slug or local path, repeatable)
-  --config <path>     Path to config file
-  --org <slug>        Organization slug
-  --verbose           Enable debug logging
-```
-
-## Troubleshooting
-
-| Problem                      | Solution                                                                              |
-| ---------------------------- | ------------------------------------------------------------------------------------- |
-| "No changes detected"        | Make sure you have uncommitted changes or specify `--base`                            |
-| "No checks found"            | Create `.continue/agents/*.md` files or run `cn login` for Hub checks                 |
-| Check times out (5 min)      | Reduce diff size or split into focused agents                                         |
-| "Worker exited with code 1"  | Run with `--verbose` to see worker stderr                                             |
-| Patch conflicts with `--fix` | Apply patches manually: `cn check --patch > changes.patch && git apply changes.patch` |
+- **Direct and plain, not clever or engaging** — headings should just say what the section is about. Verbs are fine when they're direct ("Resume previous sessions"). Gerund phrases that sound like tutorial chapter titles are not ("Giving Context with @" → "`@` Context"). The test isn't grammatical — it's tonal. If it sounds like a friendly narrator is walking you through something, rewrite it. If it just plainly states what the section covers, it's good.
+- **Scannable over descriptive** — skimming the TOC should reveal the page structure at a glance. Keep headings short and plain.
 
 ---
 > Source: [continuedev/continue](https://github.com/continuedev/continue) — distributed by [TomeVault](https://tomevault.io).
