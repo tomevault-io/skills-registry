@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tamiror6/shopify-app-skills](https://github.com/tamiror6/shopify-app-skills/tree/main/skills/shopify-built-for-shopify/SKILL.md)
+Original source: [tamiror6/shopify-app-skills](https://github.com/tamiror6/shopify-app-skills/tree/main/skills/shopify-polaris-web-components/SKILL.md)
 
 ---
 
