@@ -1,478 +1,204 @@
 ---
-name: prowler-attack-paths-query
-description: > Use when this capability is needed.
+name: framework-compliance-triage
+description: Make a cloud account compliant with a security or industry framework using Prowler Cloud. Use when this capability is needed.
 metadata:
   author: prowler-cloud
 ---
 
-## Overview
+# Framework compliance
 
-Attack Paths queries are openCypher queries that analyze cloud infrastructure graphs (ingested via Cartography) to detect security risks like privilege escalation paths, network exposure, and misconfigurations.
+Iterative, interactive flow that takes a cloud account through setup, reporting, and remediation until it complies with the chosen security or industry framework.
 
-Queries are written in **openCypher Version 9** for compatibility with both Neo4j and Amazon Neptune.
+## Checkpoints
 
----
+This skill uses **checkpoints** to mark moments where you must stop, post a clear question or summary to the user, and wait for the reply before continuing. Each checkpoint is rendered like this:
 
-## Two query audiences
+> **Checkpoint — <name>**
+>
+> What to present, and what to wait for.
 
-This skill covers two types of queries with different isolation mechanisms:
+Treat every checkpoint as a hard stop:
 
-| | Predefined queries | Custom queries |
-|---|---|---|
-| **Where they live** | `api/src/backend/api/attack_paths/queries/{provider}.py` | User/LLM-supplied via the custom query API endpoint |
-| **Provider isolation** | `AWSAccount {id: $provider_uid}` anchor + path connectivity | Automatic `_Provider_{uuid}` label injection via `cypher_sanitizer.py` |
-| **What to write** | Chain every MATCH from the `aws` variable | Plain Cypher, no isolation boilerplate needed |
-| **Internal labels** | Never use (`_ProviderResource`, `_Tenant_*`, `_Provider_*`) | Never use (injected automatically by the system) |
+- Do not skip a checkpoint because the user previously said "go ahead", "just do it", or similar. Confirmations are scoped to a single checkpoint and do not transfer to later ones.
+- Do not bundle two checkpoints into one message. Post one, wait for the reply, then continue.
+- Do not infer the user's answer from context or proceed on silence. Ask explicitly and wait.
+- If a checkpoint is conditional (e.g. only fires when multiple accounts exist), evaluate the condition first; if it does not apply, continue without prompting.
+- If the user's initial message already answers the question a checkpoint asks (e.g. "make my AWS subscription compliant with CIS using Terraform autonomously"), treat the checkpoint as satisfied for the parts they covered, and only ask for what is still missing.
 
-**For predefined queries**: every node must be reachable from the `AWSAccount` root via graph traversal. This is the isolation boundary.
+## 1. Initial Prowler Cloud setup
 
-**For custom queries**: write natural Cypher without isolation concerns. The query runner injects a `_Provider_{uuid}` label into every node pattern before execution, and a post-query filter catches edge cases.
+> **Checkpoint — Provider and framework selection**
+>
+> If the user has not already specified both the provider and the framework, ask explicitly and wait for the answer. If they have specified them in their opening message, skip this checkpoint.
 
----
+Confirm both are supported by the Prowler Hub MCP:
 
-## Input Sources
+- Enumerate supported providers with `prowler_hub_list_providers`.
+- Enumerate frameworks for the chosen provider with `prowler_hub_list_compliances`, passing the provider `id` as the only element of the `provider` input list.
 
-Queries can be created from:
+If the framework is not supported, tell the user, suggest they request it or contribute it themselves, and end the flow. Otherwise continue.
 
-1. **pathfinding.cloud ID** (e.g., `ECS-001`, `GLUE-001`)
-   - Reference: https://github.com/DataDog/pathfinding.cloud
-   - The aggregated `paths.json` is too large for WebFetch. Use Bash:
+### 1.1 Connect to Prowler Cloud
 
-   ```bash
-   # Fetch a single path by ID
-   curl -s https://raw.githubusercontent.com/DataDog/pathfinding.cloud/main/docs/paths.json \
-     | jq '.[] | select(.id == "ecs-002")'
+Verify the Prowler MCP connection by calling `prowler_app_search_providers` — a successful response returns the list of providers. If the call fails, walk the user through troubleshooting: internet connectivity, Prowler Cloud credentials, and permissions on the Prowler Cloud account.
+For getting accurate information about configurations use `prowler_docs_search` to pull relevant instructions from the Prowler documentation.
 
-   # List all path IDs and names
-   curl -s https://raw.githubusercontent.com/DataDog/pathfinding.cloud/main/docs/paths.json \
-     | jq -r '.[] | "\(.id): \(.name)"'
+### 1.2 Verify the provider is configured (or configure it)
 
-   # Filter by service prefix
-   curl -s https://raw.githubusercontent.com/DataDog/pathfinding.cloud/main/docs/paths.json \
-     | jq -r '.[] | select(.id | startswith("ecs")) | "\(.id): \(.name)"'
-   ```
+Call `prowler_app_search_providers` to check whether the target provider (AWS account, Azure Subscription, GitHub Account...) exists in the user's Prowler Cloud account. Handle the result based on what's found:
 
-   If `jq` is not available, use `python3 -c "import json,sys; ..."` as a fallback.
+- **Provider not present.** Guide the user through adding and configuring it. Retrieve the relevant connection, credential, and permission instructions with `prowler_docs_search`.
+- **Provider present but misconfigured** (missing credentials, insufficient permissions, etc.). Walk the user through fixing the configuration, pulling the relevant guidance with `prowler_docs_search`.
+- **Provider present and configured.** Continue.
 
-2. **Natural language description** from the user
+> **Checkpoint — Account selection** *(conditional: more than one account of the chosen provider is configured)*
+>
+> List the accounts with helpful detail (account name, uid, last scan date) and ask which one to use. Wait for the answer. If only one account exists, skip this checkpoint and use it.
 
----
+### 1.3 Review compliance report for the provider account
 
-## Query Structure
+The flow needs at least one completed scan with a compliance report available.
 
-### Provider scoping parameter
+Look for a completed scan first: call `prowler_app_list_scans` with the selected `provider_id` and `state: ["completed"]`, then call `prowler_app_get_compliance_overview` with each `scan_id` to find one whose compliance report is available. If one is found, continue to the next section.
 
-One parameter is injected automatically by the query runner:
+If no completed scan has a report, call `prowler_app_list_scans` again with `state: ["available", "executing"]` to detect a scan in progress.
 
-| Parameter       | Property it matches | Used on      | Purpose                          |
-| --------------- | ------------------- | ------------ | -------------------------------- |
-| `$provider_uid` | `id`                | `AWSAccount` | Scopes to a specific AWS account |
+> **Checkpoint — Scan-in-progress decision** *(conditional: an in-progress scan was detected)*
+>
+> Tell the user a scan is already running and ask whether to wait for it to complete or start a fresh one. Wait for the answer.
 
-All other nodes are isolated by path connectivity from the `AWSAccount` anchor.
+If no scan is running (or the user chose to start a fresh one), trigger a new scan with `prowler_app_trigger_scan` and the `provider_id`. The link `https://cloud.prowler.com/scans?filter%5Bprovider_uid__in%5D={provider_id}` lets the user monitor progress.
 
-### Imports
+When a scan is in progress (either pre-existing and elected to wait, or just triggered), stop the flow and ask the user to return when it's completed — restart this section to re-check the results.
 
-All query files start with these imports:
+## 2. Compliance report
 
-```python
-from api.attack_paths.queries.types import (
-    AttackPathsQueryAttribution,
-    AttackPathsQueryDefinition,
-    AttackPathsQueryParameterDefinition,
-)
-from tasks.jobs.attack_paths.config import PROWLER_FINDING_LABEL
-```
+Every iteration of the remediation loop reads and writes a single markdown file per provider account and framework, stored at `${CLAUDE_PROJECT_DIR}/.prowler/compliance-<compliance_id>-<provider_uid>.md`. Sanitize `<provider_uid>` to `[a-zA-Z0-9_-]` by replacing anything else with `-`. Create `.prowler/` if missing.
 
-The `PROWLER_FINDING_LABEL` constant (value: `"ProwlerFinding"`) is used via f-string interpolation in all queries. Never hardcode the label string.
+Across iterations, edit only: status tags on failed requirements and their findings, the per-requirement `Fix plan` / `Fix applied` sub-bullets added during sections 3.3–3.4, the **Global remediation approach** block, and the **Activity log** (append-only, newest on top). Requirement descriptions, finding IDs, and the entire **Manual review requirements** section are read-only after first render.
 
-### Privilege escalation sub-patterns
+Status taxonomy for failed requirements and their findings:
 
-There are four distinct privilege escalation patterns. Choose based on the attack type:
+- `[FAIL]` — failing in the latest scan.
+- `[IN PROGRESS]` — picked up by section 3.3.
+- `[FIXED-UNVERIFIED]` — remediation applied; not yet confirmed.
+- `[PASS]` — passing in the latest scan (set when a rescan in section 3.5 confirms the fix).
+- `[SKIPPED]` — user explicitly deferred.
 
-| Sub-pattern | Target | `path_target` shape | Example |
-|---|---|---|---|
-| Self-escalation | Principal's own policies | `(aws)--(target_policy:AWSPolicy)--(principal)` | IAM-001 |
-| Lateral to user | Other IAM users | `(aws)--(target_user:AWSUser)` | IAM-002 |
-| Assume-role lateral | Assumable roles | `(aws)--(target_role:AWSRole)<-[:STS_ASSUMEROLE_ALLOW]-(principal)` | IAM-014 |
-| PassRole + service | Service-trusting roles | `(aws)--(target_role:AWSRole)-[:TRUSTS_AWS_PRINCIPAL]->(...)` | EC2-001 |
+### Report template
 
-#### Self-escalation (e.g., IAM-001)
+A fresh report is rendered like this (substituting values from the `prowler_app_get_compliance_framework_state_details` Prowler MCP tool response):
 
-The principal modifies resources attached to itself. `path_target` loops back to `principal`:
+````markdown
+# Compliance report: <compliance_id>
 
-```python
-AWS_{QUERY_NAME} = AttackPathsQueryDefinition(
-    id="aws-{kebab-case-name}",
-    name="{Human-friendly label} ({REFERENCE_ID})",
-    short_description="{Brief explanation, no technical permissions.}",
-    description="{Detailed description of the attack vector and impact.}",
-    attribution=AttackPathsQueryAttribution(
-        text="pathfinding.cloud - {REFERENCE_ID} - {permission}",
-        link="https://pathfinding.cloud/paths/{reference_id_lowercase}",
-    ),
-    provider="aws",
-    cypher=f"""
-        // Find principals with {permission}
-        MATCH path_principal = (aws:AWSAccount {{id: $provider_uid}})--(principal:AWSPrincipal)--(policy:AWSPolicy)--(stmt:AWSPolicyStatement)
-        WHERE stmt.effect = 'Allow'
-            AND any(action IN stmt.action WHERE
-                toLower(action) = '{permission_lowercase}'
-                OR toLower(action) = '{service}:*'
-                OR action = '*'
-            )
-
-        // Find target resources attached to the same principal
-        MATCH path_target = (aws)--(target_policy:AWSPolicy)--(principal)
-        WHERE target_policy.arn CONTAINS $provider_uid
-            AND any(resource IN stmt.resource WHERE
-                resource = '*'
-                OR target_policy.arn CONTAINS resource
-            )
-
-        WITH collect(path_principal) + collect(path_target) AS paths
-        UNWIND paths AS p
-        UNWIND nodes(p) AS n
-
-        WITH paths, collect(DISTINCT n) AS unique_nodes
-        UNWIND unique_nodes AS n
-        OPTIONAL MATCH (n)-[pfr]-(pf:{PROWLER_FINDING_LABEL} {{status: 'FAIL'}})
-
-        RETURN paths, collect(DISTINCT pf) as dpf, collect(DISTINCT pfr) as dpfr
-    """,
-    parameters=[],
-)
-```
-
-#### Other sub-pattern `path_target` shapes
-
-The other 3 sub-patterns share the same `path_principal`, deduplication tail, and RETURN as self-escalation. Only the `path_target` MATCH differs:
-
-```cypher
-// Lateral to user (e.g., IAM-002) - targets other IAM users
-MATCH path_target = (aws)--(target_user:AWSUser)
-WHERE any(resource IN stmt.resource WHERE resource = '*' OR target_user.arn CONTAINS resource OR resource CONTAINS target_user.name)
-
-// Assume-role lateral (e.g., IAM-014) - targets roles the principal can assume
-MATCH path_target = (aws)--(target_role:AWSRole)<-[:STS_ASSUMEROLE_ALLOW]-(principal)
-WHERE any(resource IN stmt.resource WHERE resource = '*' OR target_role.arn CONTAINS resource OR resource CONTAINS target_role.name)
-
-// PassRole + service (e.g., EC2-001) - targets roles trusting a service
-MATCH path_target = (aws)--(target_role:AWSRole)-[:TRUSTS_AWS_PRINCIPAL]->(:AWSPrincipal {arn: '{service}.amazonaws.com'})
-WHERE any(resource IN stmt.resource WHERE resource = '*' OR target_role.arn CONTAINS resource OR resource CONTAINS target_role.name)
-```
-
-**Multi-permission**: PassRole queries require a second permission. Add `MATCH (principal)--(policy2:AWSPolicy)--(stmt2:AWSPolicyStatement)` with its own WHERE before `path_target`, then check BOTH `stmt.resource` AND `stmt2.resource` against the target. See IAM-015 or EC2-001 in `aws.py` for examples.
-
-### Network exposure pattern
-
-The Internet node is reached via `CAN_ACCESS` through the already-scoped resource, not via a standalone lookup:
-
-```python
-AWS_{QUERY_NAME} = AttackPathsQueryDefinition(
-    id="aws-{kebab-case-name}",
-    name="{Human-friendly label}",
-    short_description="{Brief explanation.}",
-    description="{Detailed description.}",
-    provider="aws",
-    cypher=f"""
-        // Match exposed resources (MUST chain from `aws`)
-        MATCH path = (aws:AWSAccount {{id: $provider_uid}})--(resource:EC2Instance)
-        WHERE resource.exposed_internet = true
+**Provider account**: <display name + uid>
+**Scan ID**: <scan_id>
+**Generated**: <ISO timestamp>
+**Last update**: <ISO timestamp>
+**Status**: <passed>/<total> passing (<pct>%) · <failed> failing · <manual_review> manual review
 
-        // Internet node reached via path connectivity through the resource
-        OPTIONAL MATCH (internet:Internet)-[can_access:CAN_ACCESS]->(resource)
+## Global remediation approach
+<!-- Filled by section 3.1. -->
+- **Primary tool**: _Terraform | Azure CLI | AWS CLI | web console | mixed_
+- **Mode**: _Claude autonomous | Claude-assisted_
+- **Notes**:
 
-        WITH collect(path) AS paths, head(collect(internet)) AS internet, collect(can_access) AS can_access
-        UNWIND paths AS p
-        UNWIND nodes(p) AS n
+## Activity log
+- <ISO timestamp> — Report initialized from scan `<scan_id>`.
 
-        WITH paths, internet, can_access, collect(DISTINCT n) AS unique_nodes
-        UNWIND unique_nodes AS n
-        OPTIONAL MATCH (n)-[pfr]-(pf:{PROWLER_FINDING_LABEL} {{status: 'FAIL'}})
+## Failed requirements
 
-        RETURN paths, collect(DISTINCT pf) as dpf, collect(DISTINCT pfr) as dpfr,
-            internet, can_access
-    """,
-    parameters=[],
-)
-```
+### <code> — [FAIL]
+**Description**: <text>
+**Findings** (<n>):
+- [FAIL] `<finding_id>`
 
-### Register in query list
+## Manual review requirements
+- **<code>** — [PENDING]: <description>
+````
 
-Add to the `{PROVIDER}_QUERIES` list at the bottom of the file:
+### 2.1 Generate or refresh the report
 
-```python
-AWS_QUERIES: list[AttackPathsQueryDefinition] = [
-    # ... existing queries ...
-    AWS_{NEW_QUERY_NAME},  # Add here
-]
-```
+Resolve the report path for the current `compliance_id` and provider account.
 
----
+If the file does not exist, call `prowler_app_get_compliance_framework_state_details` for the target scan, render the template above, and write the file with one initialization entry in the activity log.
 
-## Step-by-step creation process
+If the file exists, read it and compare its `Scan ID` to the target scan from section 1.3. When the scan matches, reuse the file and summarize remaining `[FAIL]` and `[IN PROGRESS]` items in chat.
 
-### 1. Read the queries module
+> **Checkpoint — Report refresh** *(conditional: the file's `Scan ID` differs from the current target scan)*
+>
+> Tell the user the report on disk was generated from a different scan and ask whether to refresh it from the new scan. Wait for the answer.
 
-**FIRST**, read all files in the queries module to understand the structure, type definitions, registration, and existing style:
+On confirmation, regenerate the failed-requirements section from the new `prowler_app_get_compliance_framework_state_details` response, carry forward the **Global remediation approach** block and the full activity log, and append an activity-log entry noting the scan change.
 
-```text
-api/src/backend/api/attack_paths/queries/
-├── __init__.py      # Module exports
-├── types.py         # AttackPathsQueryDefinition, AttackPathsQueryParameterDefinition
-├── registry.py      # Query registry logic
-└── {provider}.py    # Provider-specific queries (e.g., aws.py)
-```
+Once the file is current, surface the top failing requirements in chat: sort by finding count descending, show the top 5 with their codes and counts, and point to the file path for the full list.
 
-**DO NOT** use generic templates. Match the exact style of existing queries in the file.
+## 3. Remediation loop
 
-### 2. Fetch and consult the Cartography schema
+### 3.1 Define the global remediation approach
 
-**This is the most important step.** Every node label, property, and relationship in the query must exist in the Cartography schema for the pinned version. Do not guess or rely on memory.
+Two modes are available:
 
-Check `api/pyproject.toml` for the Cartography dependency, then fetch the schema:
+- **Claude-assisted** (default when the user has not specified): per-requirement confirmation. For each requirement Claude shows the target resource, exact commands, side effects, and reversibility, then waits for explicit go-ahead before applying.
+- **Claude autonomous**: no per-requirement gate, but Claude still presents one batch-level fix plan up front (§3.2) and waits for a single confirmation, and pauses if a finding looks not applicable, requires a paid feature, or has wide blast radius (breaks dev workflow, forces collaborator changes, is hard to reverse).
 
-```bash
-grep cartography api/pyproject.toml
-```
+If the user phrases their request as "just do it" or similar, treat that as autonomous **with** the batch-plan confirmation still required — the confirmation is a property of the skill, not the user's verbosity preference.
 
-Build the schema URL (ALWAYS use the specific tag, not master/main):
+> **Checkpoint — Global remediation approach**
+>
+> Ask the user which tool to use for fixes (Terraform, gh / az / aws CLI, web console, mixed...) and which mode to operate in. Wait for the answer before continuing. This checkpoint is non-negotiable: never assume a default tool, and never assume autonomous mode.
 
-```text
-# Git dependency (prowler-cloud/cartography@0.126.1):
-https://raw.githubusercontent.com/prowler-cloud/cartography/refs/tags/0.126.1/docs/root/modules/{provider}/schema.md
+Once answered, write the values into the **Global remediation approach** block of the report file.
 
-# PyPI dependency (cartography = "^0.126.0"):
-https://raw.githubusercontent.com/cartography-cncf/cartography/refs/tags/0.126.0/docs/root/modules/{provider}/schema.md
-```
+> **Checkpoint — Overwriting an existing approach** *(conditional: the block is already populated from a previous session)*
+>
+> Show the previous values and the new ones, and ask the user to confirm before overwriting. Wait for the answer.
 
-Read the schema to discover available node labels, properties, and relationships for the target resources. Internal labels (`_ProviderResource`, `_AWSResource`, `_Tenant_*`, `_Provider_*`) exist for isolation but should never appear in queries.
+### 3.2 Present the batch fix plan *(autonomous mode only)*
 
-### 4. Create query definition
+In **assisted** mode, skip this section — the per-requirement gate in §3.3 confirms each fix as it comes up. Only run §3.2 in **autonomous** mode, where the loop will otherwise apply fixes without further input.
 
-Use the appropriate pattern (privilege escalation or network exposure) with:
+Before touching anything, post a single chat summary covering every `[FAIL]` requirement:
 
-- **id**: `{provider}-{kebab-case-description}`
-- **name**: Short, human-friendly label. For sourced queries, append the reference ID: `"EC2 Instance Launch with Privileged Role (EC2-001)"`.
-- **short_description**: Brief explanation, no technical permissions.
-- **description**: Full technical explanation. Plain text only.
-- **provider**: Provider identifier (aws, azure, gcp, kubernetes, github)
-- **cypher**: The openCypher query with proper escaping
-- **parameters**: Optional list of user-provided parameters (`parameters=[]` if none)
-- **attribution**: Optional `AttackPathsQueryAttribution(text, link)` for sourced queries. The `text` includes source, reference ID, and permissions. The `link` uses a lowercase ID. Omit for non-sourced queries.
+- Group findings that share a fix (e.g. ten branch-protection requirements satisfied by one PUT call → present as one group).
+- For each group: target resource, exact tool calls, side effects, reversibility.
+- Call out findings that look **not applicable** to this target (e.g. an Organization-only check evaluated against a User account, a feature gated by a paid plan, a resource type the user doesn't have) and propose `[SKIPPED]` with the reason.
+- Call out findings that require manual user action Claude cannot perform.
 
-### 5. Add query to provider list
+> **Checkpoint — Batch fix plan approval** *(conditional: autonomous mode)*
+>
+> Post the grouped plan and wait for explicit confirmation. Do not start any fix before the user replies.
 
-Add the constant to the `{PROVIDER}_QUERIES` list.
+Once approved, the loop proceeds through the batch without further prompts unless something deviates from the approved plan.
 
----
+### 3.3 Pick the first FAIL requirement and inspect its findings
 
-## Query naming conventions
+Pick the first `[FAIL]` requirement at the top of the failed-requirements section. Move its status and every finding under it to `[IN PROGRESS]`, and add a `**Fix plan**:` sub-bullet describing what will be done.
 
-### Query ID
+Call `prowler_app_get_finding_details` for each `finding_id` to retrieve the failing resource and the Prowler Hub's remediation guidance for that check using the tool `prowler_hub_get_check_details` with the `check_id` from the finding details. Summarize the guidance in chat, and append it to the `**Fix plan**` note for each finding.
 
-```text
-{provider}-{category}-{description}
-```
+If a finding does not apply to the target resource (Organization-only check on a User account, paid-tier feature, missing resource type, etc.), set the requirement status to `[SKIPPED]` with the reason, log it in the activity log, and move on without attempting the fix — even if it was missed during §3.2.
 
-Examples: `aws-ec2-privesc-passrole-iam`, `aws-ec2-instances-internet-exposed`
+> **Checkpoint — Per-requirement approval** *(conditional: assisted mode)*
+>
+> Post the per-requirement plan in chat — resource, command, side effects, reversibility — and wait for confirmation before moving to §3.4. In **autonomous** mode, post the plan for transparency but proceed unless it deviates from the batch plan agreed in §3.2.
 
-### Query constant name
+### 3.4 Diagnose, fix, verify
 
-```text
-{PROVIDER}_{CATEGORY}_{DESCRIPTION}
-```
+Read the remediation guidance returned in §3.3, identify the root cause, and apply the fix using the tool defined in the **Global remediation approach** block. After applying, verify via the same tool that applied the fix or via a provider API call when applicable. If the re-read shows the change did not land, leave the status at `[IN PROGRESS]`, surface the error to the user, and stop the loop for this requirement.
 
-Examples: `AWS_EC2_PRIVESC_PASSROLE_IAM`, `AWS_EC2_INSTANCES_INTERNET_EXPOSED`
+When the change is in place, append a `**Fix applied**: <tool, summary, refs>` sub-bullet to the requirement, move each fixed finding to `[FIXED-UNVERIFIED]`, and add one activity-log entry describing the change. If no programmatic verification was possible (e.g. web console action), note in the activity log that confirmation depends on the rescan in §3.5.
 
----
+### 3.5 Loop
 
-## Query categories
+Move to the next `[FAIL]` requirement and repeat from section 3.3.
 
-| Category             | Description                    | Example                   |
-| -------------------- | ------------------------------ | ------------------------- |
-| Basic Resource       | List resources with properties | RDS instances, S3 buckets |
-| Network Exposure     | Internet-exposed resources     | EC2 with public IPs       |
-| Privilege Escalation | IAM privilege escalation paths | PassRole + RunInstances   |
-| Data Access          | Access to sensitive data       | EC2 with S3 access        |
+> **Checkpoint — Rescan trigger** *(conditional: no `[FAIL]` requirements remain; all are `[FIXED-UNVERIFIED]` or `[SKIPPED]`)*
+>
+> Summarize what was applied, list any `[SKIPPED]` items with reasons, and ask whether to trigger a fresh scan with `prowler_app_trigger_scan` to verify the fixes end-to-end. Wait for the answer.
 
----
-
-## Common openCypher patterns
-
-### Match account and principal
-
-```cypher
-MATCH path_principal = (aws:AWSAccount {id: $provider_uid})--(principal:AWSPrincipal)--(policy:AWSPolicy)--(stmt:AWSPolicyStatement)
-```
-
-### Check IAM action permissions
-
-```cypher
-WHERE stmt.effect = 'Allow'
-    AND any(action IN stmt.action WHERE
-        toLower(action) = 'iam:passrole'
-        OR toLower(action) = 'iam:*'
-        OR action = '*'
-    )
-```
-
-### Find roles trusting a service
-
-```cypher
-MATCH path_target = (aws)--(target_role:AWSRole)-[:TRUSTS_AWS_PRINCIPAL]->(:AWSPrincipal {arn: 'ec2.amazonaws.com'})
-```
-
-### Find roles the principal can assume
-
-Note the arrow direction - `STS_ASSUMEROLE_ALLOW` points from the role to the principal:
-
-```cypher
-MATCH path_target = (aws)--(target_role:AWSRole)<-[:STS_ASSUMEROLE_ALLOW]-(principal)
-```
-
-### Check resource scope
-
-```cypher
-WHERE any(resource IN stmt.resource WHERE
-    resource = '*'
-    OR target_role.arn CONTAINS resource
-    OR resource CONTAINS target_role.name
-)
-```
-
-### Internet node via path connectivity
-
-The Internet node is reached through `CAN_ACCESS` relationships to already-scoped resources. No standalone lookup needed:
-
-```cypher
-OPTIONAL MATCH (internet:Internet)-[can_access:CAN_ACCESS]->(resource)
-```
-
-### Multi-label OR (match multiple resource types)
-
-```cypher
-MATCH path = (aws:AWSAccount {id: $provider_uid})-[r]-(x)-[q]-(y)
-WHERE (x:EC2PrivateIp AND x.public_ip = $ip)
-   OR (x:EC2Instance AND x.publicipaddress = $ip)
-   OR (x:NetworkInterface AND x.public_ip = $ip)
-   OR (x:ElasticIPAddress AND x.public_ip = $ip)
-```
-
-### Include Prowler findings
-
-Deduplicate nodes before the ProwlerFinding lookup to avoid redundant OPTIONAL MATCH calls on nodes that appear in multiple paths:
-
-```cypher
-WITH collect(path_principal) + collect(path_target) AS paths
-UNWIND paths AS p
-UNWIND nodes(p) AS n
-
-WITH paths, collect(DISTINCT n) AS unique_nodes
-UNWIND unique_nodes AS n
-OPTIONAL MATCH (n)-[pfr]-(pf:{PROWLER_FINDING_LABEL} {{status: 'FAIL'}})
-
-RETURN paths, collect(DISTINCT pf) as dpf, collect(DISTINCT pfr) as dpfr
-```
-
-For network exposure queries, aggregate the internet node and relationship alongside paths:
-
-```cypher
-WITH collect(path) AS paths, head(collect(internet)) AS internet, collect(can_access) AS can_access
-UNWIND paths AS p
-UNWIND nodes(p) AS n
-
-WITH paths, internet, can_access, collect(DISTINCT n) AS unique_nodes
-UNWIND unique_nodes AS n
-OPTIONAL MATCH (n)-[pfr]-(pf:{PROWLER_FINDING_LABEL} {{status: 'FAIL'}})
-
-RETURN paths, collect(DISTINCT pf) as dpf, collect(DISTINCT pfr) as dpfr,
-    internet, can_access
-```
-
----
-
-## Prowler-specific labels and relationships
-
-These are added by the sync task, not part of the Cartography schema. For all other node labels, properties, and relationships, **always consult the Cartography schema** (see step 2 below).
-
-| Label/Relationship     | Description                                        |
-| ---------------------- | -------------------------------------------------- |
-| `ProwlerFinding`       | Finding node (`status`, `severity`, `check_id`)    |
-| `Internet`             | Internet sentinel node                             |
-| `CAN_ACCESS`           | Internet-to-resource exposure (relationship)       |
-| `HAS_FINDING`          | Resource-to-finding link (relationship)            |
-| `TRUSTS_AWS_PRINCIPAL` | Role trust relationship                            |
-| `STS_ASSUMEROLE_ALLOW` | Can assume role (direction: role -> principal)      |
-
----
-
-## Parameters
-
-For queries requiring user input:
-
-```python
-parameters=[
-    AttackPathsQueryParameterDefinition(
-        name="ip",
-        label="IP address",
-        # data_type defaults to "string", cast defaults to str.
-        # For non-string params, set both: data_type="integer", cast=int
-        description="Public IP address, e.g. 192.0.2.0.",
-        placeholder="192.0.2.0",
-    ),
-],
-```
-
----
-
-## Best practices
-
-1. **Chain all MATCHes from the root account node**: Every `MATCH` clause must connect to the `aws` variable (or another variable already bound to the account's subgraph). An unanchored `MATCH` would return nodes from all providers.
-
-   ```cypher
-   // WRONG: matches ALL AWSRoles across all providers
-   MATCH (role:AWSRole) WHERE role.name = 'admin'
-
-   // CORRECT: scoped to the specific account's subgraph
-   MATCH (aws)--(role:AWSRole) WHERE role.name = 'admin'
-   ```
-
-   **Exception**: A second-permission MATCH like `MATCH (principal)--(policy2:AWSPolicy)--(stmt2:AWSPolicyStatement)` is safe because `principal` is already bound to the account's subgraph by the first MATCH. It does not need to chain from `aws` again.
-
-2. **Include Prowler findings**: Always add `OPTIONAL MATCH (n)-[pfr]-(pf:{PROWLER_FINDING_LABEL} {{status: 'FAIL'}})` with `collect(DISTINCT pf)`.
-
-3. **Comment the query purpose**: Add inline comments explaining each MATCH clause.
-
-4. **Never use internal labels in queries**: `_ProviderResource`, `_AWSResource`, `_Tenant_*`, `_Provider_*` are for system isolation. They should never appear in predefined or custom query text.
-
-6. **Internet node uses path connectivity**: Reach it via `OPTIONAL MATCH (internet:Internet)-[can_access:CAN_ACCESS]->(resource)` where `resource` is already scoped by the account anchor. No standalone lookup.
-
----
-
-## openCypher compatibility
-
-Queries must be written in **openCypher Version 9** for compatibility with both Neo4j and Amazon Neptune.
-
-### Avoid these (not in openCypher spec)
-
-| Feature                    | Use instead                                            |
-| -------------------------- | ------------------------------------------------------ |
-| APOC procedures (`apoc.*`) | Real nodes and relationships in the graph              |
-| Neptune extensions         | Standard openCypher                                    |
-| `reduce()` function        | `UNWIND` + `collect()`                                 |
-| `FOREACH` clause           | `WITH` + `UNWIND` + `SET`                              |
-| Regex operator (`=~`)      | `toLower()` + exact match, or `CONTAINS`/`STARTS WITH`. One legacy query uses `=~` - do not add new usages |
-| `CALL () { UNION }`        | Multi-label OR in WHERE (see patterns section)         |
-
----
-
-## Reference
-
-- **pathfinding.cloud**: https://github.com/DataDog/pathfinding.cloud (use `curl | jq`, not WebFetch)
-- **Cartography schema**: `https://raw.githubusercontent.com/{org}/cartography/refs/tags/{version}/docs/root/modules/{provider}/schema.md`
-- **Neptune openCypher compliance**: https://docs.aws.amazon.com/neptune/latest/userguide/feature-opencypher-compliance.html
-- **openCypher spec**: https://github.com/opencypher/openCypher
+On confirmation, trigger the rescan. When it completes, restart section 2.1 with the carry-forward path — requirements no longer in the new FAIL list move to `[PASS]`, anything still failing reverts to `[FAIL]` with the previous fix attempt visible in the activity log.
 
 ---
 > Source: [prowler-cloud/prowler](https://github.com/prowler-cloud/prowler) — distributed by [TomeVault](https://tomevault.io).
