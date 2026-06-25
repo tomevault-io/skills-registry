@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OmerFarukOruc/antigravity-dashboard](https://github.com/OmerFarukOruc/antigravity-dashboard/tree/main/.opencode/skills/prd/SKILL.md)
+Original source: [OmerFarukOruc/antigravity-dashboard](https://github.com/OmerFarukOruc/antigravity-dashboard/tree/main/.opencode/skills/commit/SKILL.md)
 
 ---
 
