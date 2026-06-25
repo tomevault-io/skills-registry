@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [maxvaega/skillkit](https://github.com/maxvaega/skillkit/tree/main/tests/fixtures/skills/arguments-test-skill/SKILL.md)
+Original source: [maxvaega/skillkit](https://github.com/maxvaega/skillkit/tree/main/tests/fixtures/skills/invalid-missing-name/SKILL.md)
 
 ---
 
