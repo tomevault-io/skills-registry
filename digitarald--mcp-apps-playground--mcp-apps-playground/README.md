@@ -1,0 +1,13 @@
+# mcp-apps-playground
+
+> Skill by [digitarald](https://github.com/digitarald/mcp-apps-playground) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [digitarald/mcp-apps-playground](https://github.com/digitarald/mcp-apps-playground/tree/main/.github/skills/mcp-apps/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
