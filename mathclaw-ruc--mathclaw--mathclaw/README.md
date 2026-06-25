@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MathClaw-ruc/MathClaw](https://github.com/MathClaw-ruc/MathClaw/tree/main/mathclaw/skills/github/SKILL.md)
+Original source: [MathClaw-ruc/MathClaw](https://github.com/MathClaw-ruc/MathClaw/tree/main/mathclaw/skills/clawhub/SKILL.md)
 
 ---
 
