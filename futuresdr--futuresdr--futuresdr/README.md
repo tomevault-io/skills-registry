@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [FutureSDR/FutureSDR](https://github.com/FutureSDR/FutureSDR/tree/main/.codex/skills/clean-deps/SKILL.md)
+Original source: [FutureSDR/FutureSDR](https://github.com/FutureSDR/FutureSDR/tree/main/.codex/skills/update-deps/SKILL.md)
 
 ---
 
