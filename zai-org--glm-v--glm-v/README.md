@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zai-org/GLM-V](https://github.com/zai-org/GLM-V/tree/main/skills/glmv-prd-to-app/SKILL.md)
+Original source: [zai-org/GLM-V](https://github.com/zai-org/GLM-V/tree/main/skills/glmv-prompt-gen/SKILL.md)
 
 ---
 
