@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Fmarzochi/everything-gemini](https://github.com/Fmarzochi/everything-gemini/tree/main/.agents/skills/eval-harness)
+Original source: [Fmarzochi/everything-gemini](https://github.com/Fmarzochi/everything-gemini/tree/main/skills/testing/eval-harness)
 
 ---
 
