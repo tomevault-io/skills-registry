@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [voidzero-dev/vite-plus](https://github.com/voidzero-dev/vite-plus/tree/main/.claude/skills/spawn-process/SKILL.md)
+Original source: [voidzero-dev/vite-plus](https://github.com/voidzero-dev/vite-plus/tree/main/.claude/skills/bump-vite-task/SKILL.md)
 
 ---
 
