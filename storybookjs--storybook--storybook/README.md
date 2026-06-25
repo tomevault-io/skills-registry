@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [storybookjs/storybook](https://github.com/storybookjs/storybook/tree/main/.claude/skills/storybook-upgrade/SKILL.md)
+Original source: [storybookjs/storybook](https://github.com/storybookjs/storybook/tree/main/.agents/skills/fix-linting-types-on-pr/SKILL.md)
 
 ---
 
