@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [czlonkowski/n8n-mcp](https://github.com/czlonkowski/n8n-mcp/tree/main/data/skills/n8n-validation-expert/SKILL.md)
+Original source: [czlonkowski/n8n-mcp](https://github.com/czlonkowski/n8n-mcp/tree/main/data/skills/n8n-expression-syntax/SKILL.md)
 
 ---
 
