@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ghostsecurity/skills](https://github.com/ghostsecurity/skills/tree/main/plugins/ghost/skills/scan-secrets/SKILL.md)
+Original source: [ghostsecurity/skills](https://github.com/ghostsecurity/skills/tree/main/plugins/ghost/skills/repo-context/SKILL.md)
 
 ---
 
