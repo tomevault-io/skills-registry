@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pingdotgg/t3code](https://github.com/pingdotgg/t3code/tree/main/.repos/effect-smol/.agents/skills/jsdocs/SKILL.md)
+Original source: [pingdotgg/t3code](https://github.com/pingdotgg/t3code/tree/main/.repos/effect-smol/.agents/skills/grill-me/SKILL.md)
 
 ---
 
