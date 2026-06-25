@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [juxt/allium](https://github.com/juxt/allium/tree/main/skills/elicit/SKILL.md)
+Original source: [juxt/allium](https://github.com/juxt/allium/tree/main/skills/allium/SKILL.md)
 
 ---
 
