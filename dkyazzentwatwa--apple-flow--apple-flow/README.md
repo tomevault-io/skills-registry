@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dkyazzentwatwa/apple-flow](https://github.com/dkyazzentwatwa/apple-flow/tree/main/skills/apple-flow-mail/SKILL.md)
+Original source: [dkyazzentwatwa/apple-flow](https://github.com/dkyazzentwatwa/apple-flow/tree/main/skills/apple-flow-pages/SKILL.md)
 
 ---
 
