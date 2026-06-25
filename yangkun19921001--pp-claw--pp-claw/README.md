@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yangkun19921001/PP-Claw](https://github.com/yangkun19921001/PP-Claw/tree/main/skills/github/SKILL.md)
+Original source: [yangkun19921001/PP-Claw](https://github.com/yangkun19921001/PP-Claw/tree/main/skills/clawhub/SKILL.md)
 
 ---
 
