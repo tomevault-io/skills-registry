@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [VoltAgent/voltagent](https://github.com/VoltAgent/voltagent/tree/main/examples/with-workspace/workspace/skills/data-analysis/SKILL.md)
+Original source: [VoltAgent/voltagent](https://github.com/VoltAgent/voltagent/tree/main/examples/with-workspace/workspace/skills/playwright-cli/SKILL.md)
 
 ---
 
