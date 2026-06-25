@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [trycua/cua](https://github.com/trycua/cua/tree/main/libs/cua-driver/rust/Skills/cua-driver/SKILL.md)
+Original source: [trycua/cua](https://github.com/trycua/cua/tree/main/libs/cua-driver/swift/Skills/cua-driver/SKILL.md)
 
 ---
 
