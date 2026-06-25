@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rust-works/succinctly](https://github.com/rust-works/succinctly/tree/main/.claude/skills/bit-optimization/SKILL.md)
+Original source: [rust-works/succinctly](https://github.com/rust-works/succinctly/tree/main/.claude/skills/simd-optimization/SKILL.md)
 
 ---
 
