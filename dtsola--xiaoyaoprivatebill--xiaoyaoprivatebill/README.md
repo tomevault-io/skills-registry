@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dtsola/xiaoyaoprivatebill](https://github.com/dtsola/xiaoyaoprivatebill/tree/main/.claude/skills/frontend-design/SKILL.md)
+Original source: [dtsola/xiaoyaoprivatebill](https://github.com/dtsola/xiaoyaoprivatebill/tree/main/.claude/skills/remotion-best-practices/SKILL.md)
 
 ---
 
