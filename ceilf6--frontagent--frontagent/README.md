@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ceilf6/FrontAgent](https://github.com/ceilf6/FrontAgent/tree/main/skills/frontend-design/SKILL.md)
+Original source: [ceilf6/FrontAgent](https://github.com/ceilf6/FrontAgent/tree/main/skills/skill-lifecycle/SKILL.md)
 
 ---
 
