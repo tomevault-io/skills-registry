@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [k1p1l0/claude-telegram-supercharged](https://github.com/k1p1l0/claude-telegram-supercharged/tree/main/skills/monitor/SKILL.md)
+Original source: [k1p1l0/claude-telegram-supercharged](https://github.com/k1p1l0/claude-telegram-supercharged/tree/main/skills/calendar/SKILL.md)
 
 ---
 
