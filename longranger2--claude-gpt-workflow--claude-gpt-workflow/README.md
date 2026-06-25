@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [longranger2/claude-gpt-workflow](https://github.com/longranger2/claude-gpt-workflow/tree/main/plan-review/SKILL.md)
+Original source: [longranger2/claude-gpt-workflow](https://github.com/longranger2/claude-gpt-workflow/tree/main/plan-execute/SKILL.md)
 
 ---
 
