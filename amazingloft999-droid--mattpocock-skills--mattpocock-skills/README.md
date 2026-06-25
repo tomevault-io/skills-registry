@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [amazingloft999-droid/mattpocock-skills](https://github.com/amazingloft999-droid/mattpocock-skills/tree/main/skills/engineering/diagnose/SKILL.md)
+Original source: [amazingloft999-droid/mattpocock-skills](https://github.com/amazingloft999-droid/mattpocock-skills/tree/main/skills/productivity/caveman/SKILL.md)
 
 ---
 
