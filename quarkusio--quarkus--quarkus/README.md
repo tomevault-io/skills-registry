@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [quarkusio/quarkus](https://github.com/quarkusio/quarkus/tree/main/.agents/skills/writing-build-steps/SKILL.md)
+Original source: [quarkusio/quarkus](https://github.com/quarkusio/quarkus/tree/main/.agents/skills/building-and-testing/SKILL.md)
 
 ---
 
