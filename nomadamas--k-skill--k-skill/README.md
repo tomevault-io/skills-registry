@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NomaDamas/k-skill](https://github.com/NomaDamas/k-skill/tree/main/korean-jangbu-for/SKILL.md)
+Original source: [NomaDamas/k-skill](https://github.com/NomaDamas/k-skill/tree/main/naver-news-search/SKILL.md)
 
 ---
 
