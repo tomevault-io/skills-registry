@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [supabase/supabase](https://github.com/supabase/supabase/tree/main/.claude/skills/studio-e2e-tests/SKILL.md)
+Original source: [supabase/supabase](https://github.com/supabase/supabase/tree/main/.claude/skills/safe-sql-execution/SKILL.md)
 
 ---
 
