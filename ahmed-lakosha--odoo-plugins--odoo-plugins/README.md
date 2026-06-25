@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ahmed-lakosha/odoo-plugins](https://github.com/ahmed-lakosha/odoo-plugins/tree/main/odoo-docker-plugin/odoo-docker/SKILL.md)
+Original source: [ahmed-lakosha/odoo-plugins](https://github.com/ahmed-lakosha/odoo-plugins/tree/main/odoo-report-plugin/odoo-report/SKILL.md)
 
 ---
 
