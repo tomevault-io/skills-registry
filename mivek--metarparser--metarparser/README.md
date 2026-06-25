@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mivek/MetarParser](https://github.com/mivek/MetarParser/tree/main/.agents/skills/java-junit/SKILL.md)
+Original source: [mivek/MetarParser](https://github.com/mivek/MetarParser/tree/main/.github/skills/java-docs/SKILL.md)
 
 ---
 
