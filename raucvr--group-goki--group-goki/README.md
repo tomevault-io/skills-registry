@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [raucvr/Group-Goki](https://github.com/raucvr/Group-Goki/tree/main/extensions/feishu/skills/feishu-perm/SKILL.md)
+Original source: [raucvr/Group-Goki](https://github.com/raucvr/Group-Goki/tree/main/extensions/feishu/skills/feishu-drive/SKILL.md)
 
 ---
 
