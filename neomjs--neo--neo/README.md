@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neomjs/neo](https://github.com/neomjs/neo/tree/main/.agents/skills/debugging-antigravity/SKILL.md)
+Original source: [neomjs/neo](https://github.com/neomjs/neo/tree/main/.agents/skills/structural-pre-flight/SKILL.md)
 
 ---
 
