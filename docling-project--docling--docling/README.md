@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [docling-project/docling](https://github.com/docling-project/docling/tree/main/.agents/skills/building-pydantic-ai-agents/SKILL.md)
+Original source: [docling-project/docling](https://github.com/docling-project/docling/tree/main/docs/examples/agent_skill/docling-document-intelligence/SKILL.md)
 
 ---
 
