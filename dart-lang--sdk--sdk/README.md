@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dart-lang/sdk](https://github.com/dart-lang/sdk/tree/main/.agents/skills/read_gerrit_cl/SKILL.md)
+Original source: [dart-lang/sdk](https://github.com/dart-lang/sdk/tree/main/.agents/skills/update_native_rev/SKILL.md)
 
 ---
 
