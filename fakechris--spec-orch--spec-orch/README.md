@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fakechris/spec-orch](https://github.com/fakechris/spec-orch/tree/main/.cursor/skills/spec-orch-spec-stage/SKILL.md)
+Original source: [fakechris/spec-orch](https://github.com/fakechris/spec-orch/tree/main/.cursor/skills/spec-orch-mr-closed-loop/SKILL.md)
 
 ---
 
