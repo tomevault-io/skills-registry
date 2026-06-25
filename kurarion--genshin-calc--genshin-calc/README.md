@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Kurarion/Genshin-Calc](https://github.com/Kurarion/Genshin-Calc/tree/main/.claude/skills/skill-creator/SKILL.md)
+Original source: [Kurarion/Genshin-Calc](https://github.com/Kurarion/Genshin-Calc/tree/main/.claude/skills/frontend-design/SKILL.md)
 
 ---
 
