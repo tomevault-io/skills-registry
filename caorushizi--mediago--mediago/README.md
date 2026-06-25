@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [caorushizi/mediago](https://github.com/caorushizi/mediago/tree/main/skills/mediago/SKILL.md)
+Original source: [caorushizi/mediago](https://github.com/caorushizi/mediago/tree/main/.agents/skills/vercel-react-best-practices/SKILL.md)
 
 ---
 
