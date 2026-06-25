@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fzyzcjy/flutter_rust_bridge](https://github.com/fzyzcjy/flutter_rust_bridge/tree/main/.claude/skills/frb-upgrade-flutter/SKILL.md)
+Original source: [fzyzcjy/flutter_rust_bridge](https://github.com/fzyzcjy/flutter_rust_bridge/tree/main/.claude/skills/frb-develop-feature/SKILL.md)
 
 ---
 
