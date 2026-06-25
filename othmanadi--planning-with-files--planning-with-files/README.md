@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files/tree/main/.opencode/skills/planning-with-files/SKILL.md)
+Original source: [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files/tree/main/.codebuddy/skills/planning-with-files/SKILL.md)
 
 ---
 
