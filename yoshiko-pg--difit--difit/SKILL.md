@@ -1,67 +1,49 @@
 ---
-name: difit-dev
-description: Ask the user for a code review through difit after code changes in this repository, using `pnpm run dev`. Use when this capability is needed.
+name: vscode-release
+description: Execute the VS Code extension release workflow when the user asks to publish/release the difit VS Code extension. Run local VSIX build and smoke verification first, ask for explicit OK in Japanese, then publish with vsce. Use when this capability is needed.
 metadata:
   author: yoshiko-pg
 ---
 
-# Difit Dev
+# VS Code Extension Release Workflow
 
-## Overview
+Follow this workflow for the current repository.
 
-This skill requests a code review from the user using `pnpm run dev` in this repository.
-Running `pnpm run dev` once is sufficient to start the review request workflow.
-Do not open a browser yourself, verify that a browser connected, or restart the server just to keep it alive.
-If the user leaves review comments, they are printed to stdout when the difit command exits.
-When review comments are returned, continue work and address them.
-If the server is shut down without comments, treat it as "no review comments were provided." Restarting it is unnecessary.
-Treat `Client disconnected, shutting down server...` without comments as a successful no-comments outcome.
-Manual verification of whether the page launched correctly is also unnecessary.
+## Prepare local build verification
 
-## Commands
+1. Verify release target files in `packages/vscode` and confirm current branch state.
+2. Run `pnpm install --frozen-lockfile`.
+3. Run `pnpm -C packages/vscode run package`.
+4. Read `packages/vscode/package.json` and confirm the current extension version.
+5. Confirm the VSIX exists at `packages/vscode/difit-vscode-<version>.vsix`.
+6. Ask the user to smoke test the local VSIX install in VS Code:
+   - Install from VSIX.
+   - Confirm the `difit` command opens review correctly.
+   - Confirm the toolbar button/icon appears and works.
+7. Ask for explicit OK in Japanese before publishing.
 
-- Review uncommitted changes before commit: `pnpm run dev .`
-- Review the HEAD commit: `pnpm run dev`
-- Review staging area changes: `pnpm run dev staged`
-- Review unstaged changes only: `pnpm run dev working`
+## Release after explicit OK
 
-Basic Usage:
+Treat the locally verified build result at OK time as the source of truth. Do not skip rebuilding after version changes.
 
-```bash
-pnpm run dev <target>                    # View single commit diff. ex: pnpm run dev 6f4a9b7
-pnpm run dev <target> [compare-with]     # Compare two commits/branches. ex: pnpm run dev feature main
-```
+1. Bump extension version in `packages/vscode/package.json`:
+   - `pnpm -C packages/vscode version patch --no-git-tag-version`
+2. Re-run `pnpm -C packages/vscode run package` and confirm the new VSIX filename.
+3. Commit `packages/vscode/package.json` with an English message: `chore(vscode): release vX.Y.Z`.
+4. Create tag `vscode-vX.Y.Z`.
+5. Push `main` and tags: `git push origin main --tags`.
+6. If push is rejected by non-fast-forward:
+   - Run `git pull --rebase origin main`.
+   - Retry `git push origin main --tags`.
+7. Publish to Visual Studio Marketplace:
+   - `pnpm -C packages/vscode exec vsce publish`
+   - Use the already bumped version from `packages/vscode/package.json`.
 
-## Optional Startup Comments
+## Output to user
 
-If there is something you want to tell the user when difit opens, attach it as startup comments with `--comment`.
-This is useful for review findings, explanations, and any context the user should see directly on the diff.
-
-```bash
-pnpm run dev <target> [compare-with] \
-  --comment '{"type":"thread","filePath":"src/foobar.ts","position":{"side":"old","line":102},"body":"line 1\nline 2"}' \
-  --comment '{"type":"thread","filePath":"src/example.ts","position":{"side":"new","line":{"start":36,"end":39}},"body":"Range comment for L36-L39"}'
-```
-
-- Do not insert `--` after `pnpm run dev` in this repository. `pnpm run dev -- ...` breaks argument parsing here.
-- Use `type: "thread"` for each comment.
-- Write comment bodies in the language the user is using.
-- Use `position.side: "new"` for lines that exist on the target side of the diff.
-- Use `position.side: "old"` for lines that exist only on the deleted side.
-- Use range comments for issues that span multiple lines.
-- Never copy secrets, tokens, passwords, API keys, private keys, or other credential-like material from the diff into `--comment` bodies or any command-line arguments.
-
-## Including Untracked Files
-
-For uncommitted changes, if files not yet added to git should also appear in the diff, add `--include-untracked`.
-
-```bash
-pnpm run dev . --include-untracked
-```
-
-## Constraints
-
-Can only be used inside this Git-managed repository.
+- Respond in Japanese.
+- Report local build verification result, released version, created tag, and publish result.
+- Mention if any recovery step was required (for example, rebase due to non-fast-forward).
 
 ---
 > Source: [yoshiko-pg/difit](https://github.com/yoshiko-pg/difit) — distributed by [TomeVault](https://tomevault.io).
