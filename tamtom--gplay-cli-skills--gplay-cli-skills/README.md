@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tamtom/gplay-cli-skills](https://github.com/tamtom/gplay-cli-skills/tree/main/skills/gplay-migrate-fastlane/SKILL.md)
+Original source: [tamtom/gplay-cli-skills](https://github.com/tamtom/gplay-cli-skills/tree/main/skills/gplay-review-management/SKILL.md)
 
 ---
 
