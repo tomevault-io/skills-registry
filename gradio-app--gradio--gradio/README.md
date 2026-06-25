@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gradio-app/gradio](https://github.com/gradio-app/gradio/tree/main/.agents/skills/gradio/SKILL.md)
+Original source: [gradio-app/gradio](https://github.com/gradio-app/gradio/tree/main/.agents/skills/hf-gradio/SKILL.md)
 
 ---
 
