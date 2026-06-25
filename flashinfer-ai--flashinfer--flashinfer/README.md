@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [flashinfer-ai/flashinfer](https://github.com/flashinfer-ai/flashinfer/tree/main/.claude/skills/debug-cuda-crash/SKILL.md)
+Original source: [flashinfer-ai/flashinfer](https://github.com/flashinfer-ai/flashinfer/tree/main/.claude/skills/benchmark-kernel/SKILL.md)
 
 ---
 
