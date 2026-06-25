@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MaxiDonkey/DelphiAnthropic](https://github.com/MaxiDonkey/DelphiAnthropic/tree/main/demos/bin32/VCL_Anthropic/delphi-uses-graph/SKILL.md)
+Original source: [MaxiDonkey/DelphiAnthropic](https://github.com/MaxiDonkey/DelphiAnthropic/tree/main/demos/bin64/VCL_Anthropic/delphi-uses-graph/SKILL.md)
 
 ---
 
