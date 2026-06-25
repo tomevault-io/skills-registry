@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/PowerToys](https://github.com/microsoft/PowerToys/tree/main/.github/skills/release-note-generation/SKILL.md)
+Original source: [microsoft/PowerToys](https://github.com/microsoft/PowerToys/tree/main/src/modules/cmdpal/ExtensionTemplate/TemplateCmdPalExtension/.github/skills/add-dock-band/SKILL.md)
 
 ---
 
