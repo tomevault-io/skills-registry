@@ -1,0 +1,13 @@
+# storybook
+
+> Skill by [storybookjs](https://github.com/storybookjs/storybook) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [storybookjs/storybook](https://github.com/storybookjs/storybook/tree/main/.agents/skills/pr/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
