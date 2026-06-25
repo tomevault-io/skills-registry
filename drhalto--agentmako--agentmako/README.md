@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [drhalto/agentmako](https://github.com/drhalto/agentmako/tree/main/plugins/_shared/skills/mako-code-intel/SKILL.md)
+Original source: [drhalto/agentmako](https://github.com/drhalto/agentmako/tree/main/mako-ai-claude-plugin/skills/mako-graph/SKILL.md)
 
 ---
 
