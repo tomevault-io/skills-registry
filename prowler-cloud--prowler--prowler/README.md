@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [prowler-cloud/prowler](https://github.com/prowler-cloud/prowler/tree/main/skills/ai-sdk-5/SKILL.md)
+Original source: [prowler-cloud/prowler](https://github.com/prowler-cloud/prowler/tree/main/skills/react-19/SKILL.md)
 
 ---
 
