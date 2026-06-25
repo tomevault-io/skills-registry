@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [langflow-ai/langflow](https://github.com/langflow-ai/langflow/tree/main/.agents/skills/e2e-testing/SKILL.md)
+Original source: [langflow-ai/langflow](https://github.com/langflow-ai/langflow/tree/main/.agents/skills/frontend-testing/SKILL.md)
 
 ---
 
