@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alchaincyf/nuwa-skill](https://github.com/alchaincyf/nuwa-skill/tree/main/examples/taleb-perspective/SKILL.md)
+Original source: [alchaincyf/nuwa-skill](https://github.com/alchaincyf/nuwa-skill/tree/main/examples/trump-perspective/SKILL.md)
 
 ---
 
