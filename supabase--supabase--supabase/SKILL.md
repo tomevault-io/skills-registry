@@ -1,55 +1,86 @@
 ---
-name: studio-error-handling
-description: Error display and troubleshooting pattern for Supabase Studio. Use when Use when this capability is needed.
+name: vercel-composition-patterns
+description: React composition patterns that scale. Use when refactoring components with Use when this capability is needed.
 metadata:
   author: supabase
 ---
 
-# Studio Error Handling Pattern
+# React Composition Patterns
 
-Full docs and code examples: `apps/studio/components/interfaces/ErrorHandling/README.md`
+Composition patterns for building flexible, maintainable React components. Avoid
+boolean prop proliferation by using compound components, lifting state, and
+composing internals. These patterns make codebases easier for both humans and AI
+agents to work with as they scale.
 
-## How it works
+## When to Apply
 
-Classification happens in the **data layer**: `handleError` in `data/fetchers.ts` tests the error message against `ERROR_PATTERNS` and throws the matching error subclass (e.g. `ConnectionTimeoutError extends ResponseError`). The component (`ErrorMatcher`) reads `errorType` from the instance and does an O(1) lookup — it never does regex matching.
+Reference these guidelines when:
+
+- Refactoring components with many boolean props
+- Building reusable component libraries
+- Designing flexible component APIs
+- Reviewing component architecture
+- Working with compound components or context providers
+
+## Rule Categories by Priority
+
+| Priority | Category                | Impact | Prefix          |
+| -------- | ----------------------- | ------ | --------------- |
+| 1        | Component Architecture  | HIGH   | `architecture-` |
+| 2        | State Management        | MEDIUM | `state-`        |
+| 3        | Implementation Patterns | MEDIUM | `patterns-`     |
+| 4        | React 19 APIs           | MEDIUM | `react19-`      |
+
+## Quick Reference
+
+### 1. Component Architecture (HIGH)
+
+- `architecture-avoid-boolean-props` - Don't add boolean props to customize
+  behavior; use composition
+- `architecture-compound-components` - Structure complex components with shared
+  context
+
+### 2. State Management (MEDIUM)
+
+- `state-decouple-implementation` - Provider is the only place that knows how
+  state is managed
+- `state-context-interface` - Define generic interface with state, actions, meta
+  for dependency injection
+- `state-lift-state` - Move state into provider components for sibling access
+
+### 3. Implementation Patterns (MEDIUM)
+
+- `patterns-explicit-variants` - Create explicit variant components instead of
+  boolean modes
+- `patterns-children-over-render-props` - Use children for composition instead
+  of renderX props
+
+### 4. React 19 APIs (MEDIUM)
+
+> **⚠️ React 19+ only.** Skip these patterns if you're on React 18 or earlier.
+
+- `react19-no-forwardref` - Don't use `forwardRef`; use `use()` instead of `useContext()`
+
+## How to Use
+
+Read individual rule files for detailed explanations and code examples:
 
 ```
-handleError() → throws ConnectionTimeoutError → React Query catches → ErrorMatcher reads errorType → renders troubleshooting
+rules/architecture-avoid-boolean-props.md
+rules/state-context-interface.md
 ```
 
-## Key files
+Each rule file contains:
 
-| File                                  | Purpose                                                          |
-| ------------------------------------- | ---------------------------------------------------------------- |
-| `data/error-patterns.ts`              | Array of `{ pattern, ErrorClass }` — the regex lives here        |
-| `types/api-errors.ts`                 | Error classes, `KnownErrorType` union, `ClassifiedError` type    |
-| `ErrorMatcher.tsx`                    | Component — reads `errorType`, looks up mapping, renders         |
-| `error-mappings.tsx`                  | `Record<KnownErrorType, { id, Troubleshooting: ComponentType }>` |
-| `errorMappings/ConnectionTimeout.tsx` | Reference troubleshooting component                              |
-| `TroubleshootingSections.tsx`         | Reusable accordion section components                            |
-| `TroubleshootingAccordion.tsx`        | Accordion wrapper with telemetry                                 |
+- Brief explanation of why it matters
+- Incorrect code example with explanation
+- Correct code example with explanation
+- Additional context and references
 
-## Usage
+## Full Compiled Document
 
-Pass the **full error object** from React Query — not `error.message`:
-
-```tsx
-{
-  isError && (
-    <ErrorMatcher title="Failed to load tables" error={error} supportFormParams={{ projectRef }} />
-  )
-}
-```
-
-## What NOT to do
-
-- Do not pass `error.message` to `ErrorMatcher` — pass the full `error` object so the class is preserved.
-- Do not put regex patterns in `error-mappings.tsx` — they belong in `data/error-patterns.ts`.
-- Do not use `Object.assign` to stamp `errorType` — throw a proper subclass instead.
-- Do not pass a raw URL string for support — use `supportFormParams={{ projectRef }}`.
-- Do not put the page title inside the error mapping — it belongs on the `<ErrorMatcher>` caller.
-- Do not add callback props (`onDebugWithAI`, `onRestartProject`) to troubleshooting components — use hooks inside them instead.
+For the complete guide with all rules expanded: `AGENTS.md`
 
 ---
 > Source: [supabase/supabase](https://github.com/supabase/supabase) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-24 -->
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
