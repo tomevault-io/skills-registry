@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [iOfficeAI/AionUi](https://github.com/iOfficeAI/AionUi/tree/main/.claude/skills/testing/SKILL.md)
+Original source: [iOfficeAI/AionUi](https://github.com/iOfficeAI/AionUi/tree/main/.claude/skills/bump-version/SKILL.md)
 
 ---
 
