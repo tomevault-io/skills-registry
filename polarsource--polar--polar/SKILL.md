@@ -1,87 +1,48 @@
 ---
-name: local-environment
-description: Local development environment management for Polar using Docker Use when this capability is needed.
+name: handbook-backend-development
+description: Use when working with a skill to add a new entry in the section "Backend Development" of the Polar Handbook. Those entries are there to explain concepts, tooling and best practices related to backend development, and are meant to be read by Polar developers.
 metadata:
   author: polarsource
 ---
 
-# Local Environment Skill
+# Handbook - Backend Development
 
-This skill enables Claude to help manage the Polar local development environment using Docker. Use this when the user needs to start, stop, debug, or understand the local development stack.
+This skill explains the process to add a new entry in the section "Backend Development" of the Polar Handbook. Those entries are there to explain concepts, tooling and best practices related to backend development, and are meant to be read by Polar developers.
 
-## Instance Auto-Detection
+The user should explain which concept they want to explain in the new entry, and the skill will guide them through the process of creating the file, exploring the code base to find relevant information, and writing the content of the entry.
 
-The `dev docker` command **automatically detects** the correct instance number. No manual `-i` flag is needed in most cases.
+## Step 1: Create the file
 
-**Detection priority:**
-1. `CONDUCTOR_PORT` env var → `(port - 55000) / 10 + 1`
-2. Workspace path hash → stable instance derived from the repo root path
+Create an MDX file in `handbook/backend-development` with a name that reflects the concept you want to explain. For example, if you want to explain how the distributed lock mechanism works, you could name the file `distributed-lock.mdx`.
 
-You can override with `-i N` if needed, but auto-detection handles Conductor workspaces automatically.
+Follow the following template for the content of the file:
 
-## When to Use
+```mdx
+---
+title: "Title of the entry"
+description: "Short description of the entry"
+---
 
-- User asks to start/stop the local environment
-- User needs to view logs or debug issues
-- User wants to run multiple isolated instances
-- User needs to understand the service architecture
-- User encounters container or service errors
+Summary of the concept you want to explain.
 
-## Quick Reference
+## When to use this concept
 
-| Task | Command |
-|------|---------|
-| Start full stack | `dev docker up -d` |
-| Stop services | `dev docker down` |
-| View all logs | `dev docker logs` |
-| View service logs | `dev docker logs {service}` |
-| Follow logs | `dev docker logs -f` |
-| Check status | `dev docker ps` |
-| Restart service | `dev docker restart {service}` |
-| Shell access | `dev docker shell {service}` |
-| Fresh start | `dev docker cleanup -f && dev docker up -d` |
-| With monitoring | `dev docker up --monitoring -d` |
-| Force rebuild | `dev docker up -b -d` |
+## How to use this concept
 
-## Services
+## How it works
+```
 
-| Service | Default Port | Description |
-|---------|-------------|-------------|
-| api | 8000 | FastAPI backend |
-| worker | - | Background job processor |
-| web | 3000 | Next.js frontend |
-| db | 5432 | PostgreSQL database |
-| redis | 6379 | Redis cache |
-| minio | 9000/9001 | S3-compatible storage |
-| prometheus | 9090 | Metrics (optional) |
-| grafana | 3001 | Dashboards (optional) |
+The three sections "When to use this concept", "How to use this concept" and "How it works under the hood" are here to structure the content of the entry. The first section should explain in which situations the concept is useful, the second section should explain how to use the concept in practice, and the third section should explain how the concept works under the hood, with technical details and references to the code base.
 
-## Instance Port Mapping
+Add this page to the navigation by adding an entry under "Backend Development" in `handbook/docs.json`.
 
-For manually started instances: `Port = Base Port + (Instance × 100)`
+## Step 2: Explore and draft the content of the entry
 
-| Instance | API | Web | DB | Redis | MinIO |
-|----------|-----|-----|-----|-------|-------|
-| 0 | 8000 | 3000 | 5432 | 6379 | 9000 |
-| 1 | 8100 | 3100 | 5532 | 6479 | 9100 |
-| 2 | 8200 | 3200 | 5632 | 6579 | 9200 |
+To write the content of the entry, you will need to explore the code base to find relevant information about the concept you want to explain. Use it to fill the three sections of the entry with accurate and detailed information. You can also add code snippets, diagrams, or any other type of content that you think is relevant to explain the concept.
 
-Shared infra (db/redis/minio/tinybird) runs under the `polar-shared` project
-without host port mappings — reach it via `dev docker exec <service>` or
-`docker exec polar-shared-<service>-1`. The per-instance database is named
-`polar_dev_<N>`, not `polar`.
+## Step 3: Ask for feedback
 
-## Rules Index
-
-| Rule | Category | Description |
-|------|----------|-------------|
-| [service-architecture](rules/service-architecture.md) | Reference | Service details |
-| [start-environment](rules/start-environment.md) | Operations | Starting the stack |
-| [stop-environment](rules/stop-environment.md) | Operations | Stopping the stack |
-| [manage-instances](rules/manage-instances.md) | Operations | Running parallel instances |
-| [view-logs](rules/view-logs.md) | Debugging | Viewing service logs |
-| [troubleshooting](rules/troubleshooting.md) | Debugging | Common errors and fixes |
-| [payment-testing](rules/payment-testing.md) | Operations | Login codes, Stripe webhooks, dramatiq actors, backoffice |
+Once you have a draft of the entry, ask for feedback from the user. If you have any doubts about the content, ask for clarification. You can also ask for feedback on the structure and the clarity of the entry. The goal is to make sure that the entry is accurate, clear, and useful for Polar developers.
 
 ---
 > Source: [polarsource/polar](https://github.com/polarsource/polar) — distributed by [TomeVault](https://tomevault.io).
