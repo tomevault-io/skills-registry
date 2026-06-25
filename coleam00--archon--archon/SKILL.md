@@ -1,485 +1,281 @@
 ---
-name: test-release
+name: replicate-issue
 description: | Use when this capability is needed.
 metadata:
   author: coleam00
 ---
 
-# Test Release
+# Replicate GitHub Issue
 
-Automated smoke test for a released archon binary. Covers three install paths:
+Systematically reproduce and validate a GitHub issue against the live Archon application.
+The goal: determine whether the reported behavior is real, identify exact reproduction steps,
+discover any related issues, and provide actionable fix recommendations.
 
-- `brew` — Homebrew tap on macOS (tests the formula and checksums)
-- `curl-mac` — `curl install.sh` on macOS (tests the install script, sandboxed to a temp dir)
-- `curl-vps` — `curl install.sh` on a remote Linux VPS (tests the Linux binary and full install path)
+**Issue number**: `$ARGUMENTS`
 
-Every path installs the binary, runs a fixed smoke test suite, and cleans up. The dev `bun link` binary is never touched and remains the default `archon` on PATH throughout.
+If `$ARGUMENTS` is empty, ask the user for the issue number before proceeding.
 
-**When NOT to use this skill:**
+---
 
-- There is no release yet — build a local binary via `bash scripts/build-binaries.sh` and run it from `dist/binaries/` directly
-- You want to test the dev clone — use `bun run validate` or invoke source directly via `bun packages/cli/src/cli.ts`
-- You want to test the full server + web UI deploy flow — use the cloud-init from `deploy/cloud-init.yml` on a real VPS
+## Phase 0: Prepare Environment
 
-## Local build for pre-release QA
+### 0.1 Switch to Main Branch and Pull Latest
 
-To build a binary locally with the exact same flags and constants that CI uses,
-invoke `scripts/build-binaries.sh` directly. The script supports two modes:
+Ensure you are testing against the latest code on `main` so results are accurate.
 
 ```bash
-# Multi-target mode (builds all 4 local platforms into dist/binaries/)
-VERSION=0.3.1 GIT_COMMIT=abc12345 bash scripts/build-binaries.sh
+cd /path/to/archon
 
-# Single-target mode (matches one CI matrix job)
-VERSION=0.3.1 \
-GIT_COMMIT=abc12345 \
-TARGET=bun-darwin-arm64 \
-OUTFILE=dist/test-archon-darwin-arm64 \
-bash scripts/build-binaries.sh
+# Stash any local changes to avoid conflicts
+git stash 2>/dev/null || true
 
-# Verify the binary — use the path from the mode you built:
-#   multi-target → ./dist/binaries/archon-darwin-arm64
-#   single-target → the OUTFILE you passed above
-./dist/test-archon-darwin-arm64 version
-# Expected: Archon CLI v0.3.1, Build: binary, Git commit: abc12345
+# Switch to main and pull latest
+git checkout main
+git pull origin main
+
+echo "On branch: $(git branch --show-current)"
+echo "Latest commit: $(git log --oneline -1)"
 ```
 
-Run this **before tagging a release** to catch build-time-constant issues
-locally. The script is the canonical entry point — both local dev and the
-release workflow call it the same way, so a green local build means the CI
-build will exercise the same code path.
+### 0.2 Kill Existing Archon Processes
 
-## Phase 1 — Determine scope
-
-Parse the arguments. The skill takes up to three:
-
-1. **Install path** (`brew` | `curl-mac` | `curl-vps`): which install flow to exercise
-2. **Expected version** (optional): the version tag the release should report, e.g. `0.3.1`. If not provided, fetch it:
+Free up ports 3090 (backend) and 5173 (frontend) so Archon starts cleanly.
 
 ```bash
-gh release list --repo coleam00/Archon --limit 1 --json tagName --jq '.[0].tagName'
+pkill -f "bun.*dev:server" 2>/dev/null || true
+pkill -f "bun.*dev:web" 2>/dev/null || true
+pkill -f "bun.*packages/server" 2>/dev/null || true
+pkill -f "bun.*packages/web" 2>/dev/null || true
+fuser -k 3090/tcp 2>/dev/null || true
+fuser -k 5173/tcp 2>/dev/null || true
+sleep 2
+
+# Verify ports are free
+! fuser 3090/tcp 2>/dev/null && ! fuser 5173/tcp 2>/dev/null && echo "Ports 3090 and 5173 are free" || echo "WARNING: Ports still in use"
 ```
 
-3. **VPS target** (only for `curl-vps`): SSH target in the form `user@host` or `host` (uses default SSH config)
-
-If any argument is missing, ask the user for clarification BEFORE doing anything. Never guess the install path or the expected version.
-
-Confirm the plan with the user before proceeding to Phase 2. Output should look like:
-
-```
-About to test:
-  Path:     brew (Homebrew tap on macOS)
-  Version:  0.3.1 (expected)
-  Cleanup:  will uninstall after tests (brew uninstall + untap)
-            If `archon-stable` symlink is detected in Phase 2, it will be
-            restored at the end of Phase 5 by reinstalling the tap formula.
-
-Proceed? (y/N)
-```
-
-Do not continue without explicit confirmation. Release testing touches install state and the user should be aware.
-
-## Phase 2 — Pre-flight
-
-Before touching anything:
-
-1. Capture the current dev binary state for reference:
+### 0.3 Start Archon Backend + Frontend
 
 ```bash
-which -a archon
-archon version 2>&1 | head -5
+cd /path/to/archon
+
+# Start both backend and frontend together
+bun run dev &
+sleep 8
+
+# Verify backend is healthy
+curl -s http://localhost:3090/api/health | head -c 200
+echo ""
+
+# Verify frontend is serving (port may vary if 5173 is taken)
+curl -s http://localhost:5173 | head -c 100 || curl -s http://localhost:5174 | head -c 100
 ```
 
-Record the path and version of the dev binary so the final report can show "dev binary was untouched".
+**Note**: If port 5173 is taken, Vite auto-increments (5174, 5175, etc.). Check the `bun run dev` output for the actual frontend port and use that throughout.
 
-2. Verify prerequisites for the chosen path:
+---
 
-   - **brew**: `brew --version` must succeed. If not, abort with "Homebrew not installed — see https://brew.sh/"
-   - **curl-mac**: `curl --version` must succeed (effectively always true on macOS)
-   - **curl-vps**: `ssh <target> 'uname -a'` must succeed. If not, abort with "Cannot SSH to <target>". Also verify `ssh <target> 'command -v curl'` returns a path.
+## Phase 1: Analyze the Issue
 
-3. Confirm the release exists on GitHub:
+### 1.1 Read the GitHub Issue
 
 ```bash
-gh release view v<version> --repo coleam00/Archon --json tagName,assets --jq '{tag: .tagName, assetCount: (.assets | length)}'
+gh issue view $ARGUMENTS --json title,body,labels,comments,state
 ```
 
-If the release does not exist or has no assets, abort with a clear message. Do not proceed to install a non-existent release.
+Parse the issue carefully. Extract:
+- **Title and summary**: What is the reported problem?
+- **Reproduction steps**: What specific actions trigger the bug?
+- **Expected behavior**: What should happen?
+- **Actual behavior**: What happens instead?
+- **Environment details**: Any specific conditions (browser, OS, timing)?
+- **Labels and priority**: How severe is this?
+- **Comments**: Any additional context, workarounds, or related issues?
 
-4. **Detect persistent `archon-stable` install (brew path only).** If the user has renamed a prior brew install to `archon-stable` (the dual-homebrew pattern — see `~/.config/fish/functions/brew-upgrade-archon.fish`), Phase 5's `brew uninstall` will wipe it. Capture the state so Phase 5b can restore it:
+### 1.2 Build a Test Plan
+
+Based on the issue content, create a checklist of specific things to test.
+For each symptom described in the issue, define:
+1. The exact user journey to reproduce it
+2. What to look for (expected vs actual)
+3. Screenshots to capture as evidence
+
+---
+
+## Phase 2: Reproduce with Browser Automation
+
+Use the `agent-browser` CLI (NOT Playwright) for all browser interactions.
+
+### Core Workflow
 
 ```bash
-ARCHON_STABLE_WAS_INSTALLED=""
-if [ -L /opt/homebrew/bin/archon-stable ] || [ -L /usr/local/bin/archon-stable ]; then
-  ARCHON_STABLE_WAS_INSTALLED="yes"
-  echo "Detected persistent archon-stable — will restore after Phase 5 uninstall."
-fi
+# 1. Navigate to the page
+agent-browser open http://localhost:5173
+
+# 2. Get interactive elements
+agent-browser snapshot -i
+
+# 3. Interact using refs from the snapshot
+agent-browser click @e1
+agent-browser fill @e2 "text"
+
+# 4. Re-snapshot after navigation or DOM changes
+agent-browser snapshot -i
+
+# 5. Take screenshots at every significant point
+agent-browser screenshot /tmp/issue-$ARGUMENTS-{step-name}.png
 ```
 
-Export `ARCHON_STABLE_WAS_INSTALLED` into the environment used by Phase 5b. Only applies to the `brew` path — `curl-mac` and `curl-vps` don't go through brew and don't disturb `archon-stable`.
+### Testing Guidelines
 
-## Phase 3 — Install
+- **Take screenshots liberally** — before and after each action, save to `/tmp/issue-$ARGUMENTS-*.png`
+- **Read every screenshot** — use the Read tool to visually inspect each screenshot and verify what you see
+- **Test the happy path first** — confirm the feature works under normal conditions before testing the bug
+- **Follow the exact reproduction steps** from the issue — don't shortcut
+- **Test variations** — try the same flow with slight differences (different data, different timing, page refresh)
+- **Test adjacent flows** — if the issue is about workflow X, also check workflows Y and Z for similar problems
+- **Use curl for API verification** — cross-reference UI state with direct API calls to confirm data accuracy
+- **Check after page refresh** — many SSE/real-time bugs only manifest after navigation or refresh
+- **Check across conversations** — if the issue involves conversations, test with multiple open conversations
+- **Wait for async operations** — use `agent-browser wait` commands for network-dependent operations
 
-### Path: brew
+### Triggering Workflows (if needed)
+
+If the issue involves workflow execution, use the REST API to trigger background workflows:
 
 ```bash
-brew tap coleam00/archon
-brew install coleam00/archon/archon
-BINARY="$(brew --prefix coleam00/archon/archon)/bin/archon"
+# Create a conversation
+CONV_ID=$(curl -s -X POST http://localhost:3090/api/conversations \
+  -H "Content-Type: application/json" -d '{}' | jq -r '.conversationId')
+
+# Trigger a workflow (archon-assist is a good general-purpose one)
+curl -s -X POST http://localhost:3090/api/workflows/archon-assist/run \
+  -H "Content-Type: application/json" \
+  -d "{\"conversationId\":\"$CONV_ID\",\"message\":\"Your test message here\"}"
 ```
 
-Capture `$BINARY` for Phase 4. Verify the file exists and is executable.
-
-### Path: curl-mac
-
-Install to a dedicated tmp directory so the dev `bun link` binary stays on PATH unchanged:
+### Triggering Chat Messages (if needed)
 
 ```bash
-INSTALL_DIR=/tmp/archon-test-release-$(date +%s)
-mkdir -p "$INSTALL_DIR"
-INSTALL_DIR="$INSTALL_DIR" curl -fsSL https://raw.githubusercontent.com/coleam00/Archon/main/scripts/install.sh | bash
-BINARY="$INSTALL_DIR/archon"
+curl -s -X POST "http://localhost:3090/api/conversations/$CONV_ID/message" \
+  -H "Content-Type: application/json" \
+  -d '{"message":"Your test message"}'
 ```
 
-Verify `$BINARY` exists and is executable. Capture the install directory for cleanup.
+---
 
-### Path: curl-vps
+## Phase 3: Document Findings
 
-Run the install script on the VPS:
+For each symptom in the issue, record:
+
+| Symptom | Reproduced? | Evidence | Notes |
+|---------|-------------|----------|-------|
+| {symptom from issue} | YES / NO / PARTIAL | Screenshot path | {details} |
+
+### Severity Classification
+
+- **Confirmed (Reproducible)**: The exact bug described in the issue was reproduced
+- **Partially Confirmed**: The symptom appears but under different conditions than described
+- **Not Reproduced**: Could not reproduce despite following the described steps
+- **Related Issue Found**: A different but related problem was discovered during testing
+
+---
+
+## Phase 4: Investigate Root Cause (if reproduced)
+
+If the issue was reproduced, do a targeted codebase analysis:
+
+1. **Identify the affected components** — which files/hooks/components are involved?
+2. **Read the relevant source code** — understand the current implementation
+3. **Trace the data flow** — where does the data come from? SSE? REST? React Query? useState?
+4. **Identify the root cause** — what specifically causes the observed behavior?
+5. **Check for similar patterns** — are other components vulnerable to the same issue?
+
+---
+
+## Phase 5: Recommendations
+
+Provide **multiple fix options** with trade-offs:
+
+### Option Format
+
+For each recommendation:
+
+```markdown
+### Option N: {Short title}
+
+**Approach**: {1-2 sentence description}
+
+**Changes required**:
+- {file}: {what changes}
+- {file}: {what changes}
+
+**Pros**:
+- {benefit}
+
+**Cons**:
+- {drawback}
+
+**Complexity**: Low / Medium / High
+**Risk**: Low / Medium / High
+```
+
+Provide at least 2-3 options ranging from quick fix to comprehensive solution.
+
+---
+
+## Phase 6: Cleanup
 
 ```bash
-ssh <target> 'curl -fsSL https://raw.githubusercontent.com/coleam00/Archon/main/scripts/install.sh | bash'
+# Close the browser
+agent-browser close
+
+# Stop Archon (optional — leave running if user wants to continue testing)
+# fuser -k 3090/tcp 2>/dev/null
+# fuser -k 5173/tcp 2>/dev/null
 ```
 
-Determine where the binary landed — `install.sh` uses `/usr/local/bin/archon` by default, or falls back to `$HOME/.local/bin/archon` if `/usr/local/bin` is not writable:
+---
 
-```bash
-ssh <target> 'command -v archon'
+## Phase 7: Summary Report
+
+Present a final summary to the user:
+
+```markdown
+# Issue #$ARGUMENTS Replication Report
+
+## Issue: {title}
+**Status**: Reproduced / Not Reproduced / Partially Reproduced
+**Tested on**: main @ {commit hash}
+
+## Reproduction Summary
+{2-3 sentences describing what was tested and the outcome}
+
+## Findings
+{Detailed findings with screenshot references}
+
+## Root Cause
+{If identified — what causes the bug and why}
+
+## Related Issues Discovered
+{Any additional problems found during testing}
+
+## Recommendations
+{Summary of fix options with recommended approach}
 ```
 
-Capture the remote path as `$REMOTE_BINARY`. For the rest of Phase 4, wrap every command as `ssh <target> '<cmd>'`.
-
-### Capture SHA256 and version
-
-Immediately after install, capture:
-
-```bash
-# Local paths (brew / curl-mac)
-shasum -a 256 "$BINARY" | awk '{print $1}'
-"$BINARY" version 2>&1
-
-# Remote path (curl-vps)
-ssh <target> "shasum -a 256 $REMOTE_BINARY || sha256sum $REMOTE_BINARY" | awk '{print $1}'
-ssh <target> "$REMOTE_BINARY version" 2>&1
-```
-
-Record both for the report. The SHA256 lets us confirm later that a user reporting a bug is running the exact same artifact we tested.
-
-## Phase 4 — Smoke tests
-
-Run these in order against `$BINARY` (or `ssh <target> $REMOTE_BINARY` for curl-vps). **Always use the full binary path, never the `archon` on PATH**, so there is no ambiguity about which binary is under test.
-
-Each test should capture the full command output for the final report. If a test fails, continue to the next test (so the report is complete) but mark the overall result as FAIL.
-
-### Test 1 — Version reports correctly
-
-```bash
-"$BINARY" version
-```
-
-**Pass criteria:**
-
-- Exit code 0
-- Output contains `Archon CLI v<expected-version>`
-- Output contains `Build: binary` (not `Build: source (bun)`)
-- Output contains a non-`unknown` git commit (i.e., `Git commit: <sha>`)
-
-**Common failures:**
-
-- Exit code non-zero → pino-pretty crash (#960) or similar startup failure
-- Wrong version reported → binary is stale or the build script failed to update `bundled-build.ts`
-- `Build: source (bun)` → `BUNDLED_IS_BINARY` was not set to `true` during the build (regression of #979)
-- `Git commit: unknown` → build script did not capture the commit
-
-### Test 2 — Bundled workflows load
-
-Create a temporary git repository so the CLI has something to operate on:
-
-```bash
-TESTREPO=/tmp/archon-test-repo-$(date +%s)
-mkdir -p "$TESTREPO"
-cd "$TESTREPO"
-git init -q
-git commit -q --allow-empty -m init
-"$BINARY" workflow list
-```
-
-**Pass criteria:**
-
-- Exit code 0
-- Output lists at least 20 bundled workflows (archon-assist, archon-fix-github-issue, archon-comprehensive-pr-review, etc.)
-- No errors about missing workflow files or JSON parse failures
-
-**Common failures:**
-
-- Empty list → bundled defaults were not embedded in the binary (regression of the `isBinaryBuild` detection path)
-- `Not in a git repository` → working directory handling bug
-- Parse errors → the embedded JSON is corrupt or stale
-
-### Test 3 — SDK path works (assist workflow)
-
-**Prerequisite.** Compiled binaries require Claude Code installed on the host and a configured binary path. Before running this test, ensure one of:
-
-```bash
-# Option A — env var (easy for ad-hoc testing)
-# After the native installer (Anthropic's default):
-export CLAUDE_BIN_PATH="$HOME/.local/bin/claude"
-# Or after npm global install:
-export CLAUDE_BIN_PATH="$(npm root -g)/@anthropic-ai/claude-code/cli.js"
-
-# Option B — config file (persistent)
-#   Add to ~/.archon/config.yaml:
-#   assistants:
-#     claude:
-#       claudeBinaryPath: /absolute/path/to/claude
-```
-
-Then in the same `$TESTREPO`:
-
-```bash
-"$BINARY" workflow run assist "say hello and nothing else" 2>&1 | tee /tmp/archon-test-assist.log
-```
-
-**Pass criteria:**
-
-- Exit code 0
-- The Claude subprocess spawns successfully (no `spawn EACCES`, `ENOENT`, or `process exited with code 1` in the early output)
-- No `Claude Code CLI not found` error (that means the resolver rejected the configured path — verify the cli.js actually exists)
-- A response is produced (any response — even just "hello" — proves the SDK round-trip works)
-
-**Common failures:**
-
-- `Claude Code not found` → `CLAUDE_BIN_PATH` / `claudeBinaryPath` is unset or points at a non-existent file. Fix the path and re-run.
-- `Module not found "/Users/runner/..."` → regression of #1210: the resolver was bypassed and the SDK's `import.meta.url` fallback leaked a build-host path. Investigate `packages/providers/src/claude/provider.ts` and the resolver.
-- `Credit balance is too low` → auth is pointing at an exhausted API key (check `CLAUDE_USE_GLOBAL_AUTH` and `~/.archon/.env`)
-- `unable to determine transport target for "pino-pretty"` → #960 regression, binary crashes on TTY
-- `package.json not found (bad installation?)` → #961 regression, `isBinaryBuild` detection broken
-- Process exits before producing output → generic spawn failure, capture stderr
-
-### Test 3b — Resolver error path (run without `CLAUDE_BIN_PATH`)
-
-Quickly verify the resolver fails loud when nothing is configured:
-
-```bash
-(unset CLAUDE_BIN_PATH; "$BINARY" workflow run assist "hello" 2>&1 | tee /tmp/archon-test-no-path.log)
-```
-
-**Pass criteria (when no `~/.archon/config.yaml` configures `claudeBinaryPath`):**
-
-- Error message contains `Claude Code not found`
-- Error message mentions both `CLAUDE_BIN_PATH` and `claudeBinaryPath` as remediation options
-- No `Module not found` stack traces referencing the CI filesystem
-
-If you *do* have `claudeBinaryPath` set globally, skip this test or temporarily rename `~/.archon/config.yaml`.
-
-### Test 4 — Env-leak gate refuses a leaky .env (optional, for releases including #1036/#1038/#983)
-
-Create a second throwaway repo with a fake sensitive key:
-
-```bash
-LEAKREPO=/tmp/archon-test-leak-$(date +%s)
-mkdir -p "$LEAKREPO"
-cd "$LEAKREPO"
-git init -q
-git commit -q --allow-empty -m init
-printf 'ANTHROPIC_API_KEY=sk-ant-test-fake\n' > .env
-"$BINARY" workflow run assist "hello" 2>&1 | tee /tmp/archon-test-leak.log
-```
-
-**Pass criteria:**
-
-- The command exits with a non-zero code, OR produces an error message containing `Cannot add codebase` or `Cannot run workflow`
-- The error mentions the dangerous key name (`ANTHROPIC_API_KEY`)
-- No Claude subprocess was actually spawned (the gate short-circuited)
-
-**Common failures:**
-
-- Command proceeds normally → the env-leak gate is not active (regression of #1036)
-- Error is generic or unclear → the context-aware error message from #983 has regressed
-- Gate blocks but with wrong remediation text → `formatLeakError` context detection is broken
-
-Clean up the leak test repo:
-
-```bash
-rm -rf "$LEAKREPO"
-```
-
-### Test 5 — Isolation list works (sanity check)
-
-In the same `$TESTREPO`:
-
-```bash
-"$BINARY" isolation list
-```
-
-**Pass criteria:**
-
-- Exit code 0
-- No errors (the list may be empty if no worktrees have been created, which is fine)
-
-This catches regressions in the isolation subsystem that would not surface from the other tests.
-
-### Test 6 — Cleanup test repos
-
-```bash
-rm -rf "$TESTREPO"
-```
-
-For `curl-vps` path, also clean up any remote test repos created via SSH.
-
-## Phase 5 — Uninstall
-
-**Always run uninstall, even if Phase 4 failed.** The goal is to leave the system in the same state as before the test.
-
-### Path: brew
-
-```bash
-brew uninstall coleam00/archon/archon
-brew untap coleam00/archon
-```
-
-Verify the dev binary is still the default:
-
-```bash
-which -a archon
-# should show only the ~/.bun/bin/archon path, not a brew path
-
-archon version | head -1
-# should match the dev version captured in Phase 2
-```
-
-**Restore `archon-stable` if it existed before the test** (dual-homebrew pattern — see Phase 2 item 4):
-
-```bash
-if [ -n "$ARCHON_STABLE_WAS_INSTALLED" ]; then
-  echo "Restoring archon-stable (detected before test)..."
-  brew tap coleam00/archon
-  brew install coleam00/archon/archon
-  BREW_BIN="$(brew --prefix)/bin"
-  if [ -e "$BREW_BIN/archon" ]; then
-    mv "$BREW_BIN/archon" "$BREW_BIN/archon-stable"
-    echo "archon-stable restored: $(archon-stable version 2>/dev/null | head -1)"
-  else
-    echo "WARNING: brew install succeeded but $BREW_BIN/archon missing — check formula"
-  fi
-fi
-```
-
-> **Note on the restored version**: this reinstalls from whatever the tap currently ships, which is typically the release you just tested (so `archon-stable` ends up at the newly-tested version). That's usually what the operator wants — you just verified the new release works, and you want `archon-stable` pointed at it. If you were testing an older version for back-version QA, the restored `archon-stable` will be the *current* tap formula, not the pre-test version. For that rare case, the operator should re-run `brew-upgrade-archon` manually after the test.
-
-### Path: curl-mac
-
-```bash
-rm -rf "$INSTALL_DIR"
-```
-
-### Path: curl-vps
-
-```bash
-ssh <target> "sudo rm -f /usr/local/bin/archon || rm -f \$HOME/.local/bin/archon"
-```
-
-Optional: the user may want to LEAVE the VPS binary installed for ongoing QA. Ask before removing.
-
-## Phase 6 — Report
-
-Produce a structured report with:
-
-- **Header**: release version tested, install path, timestamp, SHA256 of the tested binary
-- **Environment**: dev binary path + version (proof the dev install was not disturbed)
-- **Test results table**: one row per test with PASS / FAIL / SKIP
-- **Captured output**: for any FAIL, include the exact command, exit code, and last 20 lines of stderr/stdout
-- **Overall verdict**: PASS if all tests passed, FAIL if any test failed
-- **Next steps**: if FAIL, suggest concrete actions (file a hotfix issue, re-tag, check the build workflow, etc.)
-
-Example PASS report:
-
-```
-Test Release Report — archon v0.3.1 via brew
-────────────────────────────────────────────
-Tested at:    2026-04-08 15:42 UTC
-Binary SHA:   e62eb73547b3740d56f242859b434a91d3830360a0d18f14de383da0fd7a0be6
-Binary path:  /opt/homebrew/Cellar/archon/0.3.1/bin/archon
-Dev binary:   /Users/rasmus/.bun/bin/archon → ../install/.../cli.ts (unchanged)
-
-  [PASS]  Test 1  version reports 0.3.1, Build: binary, commit abc1234
-  [PASS]  Test 2  workflow list returned 21 bundled workflows
-  [PASS]  Test 3  workflow run assist produced output
-  [PASS]  Test 4  env-leak gate refused leaky .env with context-aware error
-  [PASS]  Test 5  isolation list executed without errors
-  [PASS]  Cleanup brew uninstall + untap clean, dev binary unchanged
-
-Overall: PASS
-
-This release is safe to announce. Next steps:
-  - Update release notes on GitHub if not done already
-  - Announce on whatever channels you use
-```
-
-Example FAIL report:
-
-```
-Test Release Report — archon v0.3.1 via curl-vps
-────────────────────────────────────────────────
-Tested at:    2026-04-08 15:42 UTC
-Binary SHA:   0cf83e15e6af228e3c3473467ca30fa7525b6d7069818d85f97a115ea703d708
-Binary path:  user@vps:/usr/local/bin/archon
-Dev binary:   /Users/rasmus/.bun/bin/archon (unchanged)
-
-  [PASS]  Test 1  version reports 0.3.1, Build: binary
-  [FAIL]  Test 2  workflow list returned 0 workflows
-
-    Command:  archon workflow list
-    Exit:     0
-    Output:
-      Discovering workflows in: /tmp/archon-test-repo-1712590923
-      Found 0 workflow(s):
-
-  [SKIP]  Test 3  SDK test skipped because Test 2 failed
-  [SKIP]  Test 4  env-leak gate test skipped because Test 2 failed
-  [PASS]  Test 5  isolation list executed without errors
-  [PASS]  Cleanup VPS binary removed
-
-Overall: FAIL
-
-Likely cause: bundled workflows were not embedded in the binary.
-Check the build workflow for missing asset embedding, or verify that
-BUNDLED_WORKFLOWS in packages/workflows/src/defaults/bundled-defaults.ts
-was populated at build time.
-
-Next steps:
-  1. File a P0 hotfix issue with the captured output
-  2. Do NOT announce v0.3.1 until the hotfix ships as v0.3.2
-  3. Consider adding a CI guard that blocks releases if BUNDLED_WORKFLOWS is empty
-```
-
-## Key behaviors
-
-- **Never touch the dev `bun link` binary.** Always use the installed binary path for Phase 4 tests. Verify before and after.
-- **Clean up on failure.** If Phase 4 fails mid-way, still run Phase 5 so the next run starts clean.
-- **Capture SHA256 immediately after install.** This lets bug reports reference the exact artifact under test.
-- **Explicit confirmation before install.** Never surprise the user by installing a second binary.
-- **Report the dev binary state in both preamble and postamble.** Proof that the test did not disturb the dev environment.
-- **Exit non-zero if any test failed.** The skill should propagate failure so automated wrappers (CI, scripts) can detect it.
-
-## Related
-
-- `scripts/build-binaries.sh` — builds the binary artifacts that end up in releases
-- `.github/workflows/release.yml` — builds and publishes the binary on tag push
-- `homebrew/archon.rb` — Homebrew tap formula (updated per release)
-- `scripts/install.sh` — the curl install script
-- `scripts/install-local.sh` / `install-local.ps1` — local-file install harnesses (for pre-release QA of binaries built from a branch, not from GitHub releases)
-- `/release` skill — the release procedure itself (opposite side of the flow)
+---
+
+## Execution Notes
+
+- Always use `agent-browser` (Vercel Agent Browser CLI), NOT Playwright
+- Load the `/agent-browser` skill if you need a command reference
+- Take screenshots at EVERY significant test point — these are your evidence
+- Read screenshots with the Read tool to visually verify what the UI shows
+- If reproduction requires long-running operations, be patient — wait for workflows to complete
+- Cross-reference browser state with API responses (`curl`) to distinguish UI bugs from backend bugs
+- If the issue cannot be reproduced, document what you tried and suggest possible reasons
+- Close the browser when finished: `agent-browser close`
 
 ---
 > Source: [coleam00/Archon](https://github.com/coleam00/Archon) — distributed by [TomeVault](https://tomevault.io).
