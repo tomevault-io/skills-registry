@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Javis603/Discord-AIBot](https://github.com/Javis603/Discord-AIBot/tree/main/src/Skills/pdf-analysis/SKILL.md)
+Original source: [Javis603/Discord-AIBot](https://github.com/Javis603/Discord-AIBot/tree/main/src/Skills/image-generation/SKILL.md)
 
 ---
 
