@@ -67,5 +67,5 @@ Default output shows: `path:line (score%) [indicator]`
 search, grep, find, code search, semantic search, local files, Grep, Glob, explore, locate, where is, definition
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/yetidevworks) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [yetidevworks/ygrep](https://github.com/yetidevworks/ygrep) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
