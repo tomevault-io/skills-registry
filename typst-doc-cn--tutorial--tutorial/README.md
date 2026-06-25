@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [typst-doc-cn/tutorial](https://github.com/typst-doc-cn/tutorial/tree/main/.codex/skills/openspec-archive-change/SKILL.md)
+Original source: [typst-doc-cn/tutorial](https://github.com/typst-doc-cn/tutorial/tree/main/.codex/skills/update-typst-grammar-authoring/SKILL.md)
 
 ---
 
