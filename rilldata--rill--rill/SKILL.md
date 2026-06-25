@@ -1,36 +1,39 @@
 ---
 name: rill
-description: Investigate bugs by spawning parallel agents to explore multiple hypotheses Use when this capability is needed.
+description: Review PR feedback and address each item interactively Use when this capability is needed.
 metadata:
   author: rilldata
 ---
 
-Investigate a bug by gathering context, then spawning parallel Task agents to test multiple hypotheses simultaneously.
+Fetch PR review feedback, then walk through each item interactively so the author can decide how to address it.
 
 Input: $ARGUMENTS
 
 ## Instructions
 
-### 1. Gather Context
+### 1. Fetch Feedback
 
-Parse the input for links and fetch context:
+1. Get PR details using `gh pr view <pr-number>`
+2. Fetch review comments using `gh api repos/{owner}/{repo}/pulls/{number}/comments` (inline) and `gh api repos/{owner}/{repo}/pulls/{number}/reviews` (summaries)
+3. If a reviewer name was provided, filter to only their comments
+4. Read the relevant code for each comment
 
-- **Slack link** (contains `slack.com/archives`): Fetch the message and thread replies via Slack MCP tools
-- **Linear issue** (ID like `ENG-1234` or URL): Fetch via `mcp__linear__get_issue`, including comments and attachments
-- **Free text**: Use directly as the problem statement
+### 2. Assess
 
-User-provided hunches should be prioritized when forming hypotheses.
+Summarize: what are the key themes, which items are quick wins, and which might warrant pushback?
 
-### 2. Investigate in Parallel
+### 3. Walk Through Each Item
 
-Generate 3-5 hypotheses, then use the **Task tool** to spawn one agent per hypothesis **in a single message** (parallel, not sequential). For each agent:
+Go through items in order of significance. For each:
 
-- `subagent_type: "Explore"`, `model: "sonnet"`
-- A focused prompt with the hypothesis, what to look for, and what would confirm or refute it
+1. Quote the feedback and show the relevant code
+2. Offer 2-4 approaches via `AskUserQuestion`, including "push back" when appropriate
+3. Execute the chosen approach — make the change, or draft a response
+4. Move to the next item
 
-### 3. Synthesize
+### 4. Wrap Up
 
-After all agents complete, report: which hypotheses were confirmed, refuted, or inconclusive, and recommend next steps.
+Summarize changes made, any drafted responses, and suggest a commit message.
 
 ---
 > Source: [rilldata/rill](https://github.com/rilldata/rill) — distributed by [TomeVault](https://tomevault.io).
