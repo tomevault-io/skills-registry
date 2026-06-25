@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [leefanv/omit-design](https://github.com/leefanv/omit-design/tree/main/skills/new-design/SKILL.md)
+Original source: [leefanv/omit-design](https://github.com/leefanv/omit-design/tree/main/skills/ship-design/SKILL.md)
 
 ---
 
