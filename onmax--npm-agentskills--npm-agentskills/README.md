@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [onmax/npm-agentskills](https://github.com/onmax/npm-agentskills/tree/main/playground-core/skills/test-skill/SKILL.md)
+Original source: [onmax/npm-agentskills](https://github.com/onmax/npm-agentskills/tree/main/playground-nuxt/skills/nuxt-test-skill/SKILL.md)
 
 ---
 
