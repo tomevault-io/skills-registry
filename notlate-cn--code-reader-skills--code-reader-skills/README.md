@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [notlate-cn/code-reader-skills](https://github.com/notlate-cn/code-reader-skills/tree/main/code-reader-zh/SKILL.md)
+Original source: [notlate-cn/code-reader-skills](https://github.com/notlate-cn/code-reader-skills/tree/main/code-reader-en/SKILL.md)
 
 ---
 
