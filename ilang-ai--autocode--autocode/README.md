@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ilang-ai/autocode](https://github.com/ilang-ai/autocode/tree/main/skills/plan-estimate/SKILL.md)
+Original source: [ilang-ai/autocode](https://github.com/ilang-ai/autocode/tree/main/skills/run-on-server/SKILL.md)
 
 ---
 
