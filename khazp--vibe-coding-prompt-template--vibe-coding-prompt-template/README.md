@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [KhazP/vibe-coding-prompt-template](https://github.com/KhazP/vibe-coding-prompt-template/tree/main/.claude/skills/vibe-prd/SKILL.md)
+Original source: [KhazP/vibe-coding-prompt-template](https://github.com/KhazP/vibe-coding-prompt-template/tree/main/.claude/skills/vibe-build/SKILL.md)
 
 ---
 
