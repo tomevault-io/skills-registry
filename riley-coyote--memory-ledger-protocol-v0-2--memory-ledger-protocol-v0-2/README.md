@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Riley-Coyote/memory-ledger-protocol-v0.2](https://github.com/Riley-Coyote/memory-ledger-protocol-v0.2/tree/main/skills/openclaw/continuity/SKILL.md)
+Original source: [Riley-Coyote/memory-ledger-protocol-v0.2](https://github.com/Riley-Coyote/memory-ledger-protocol-v0.2/tree/main/skills/openclaw/full-stack/SKILL.md)
 
 ---
 
