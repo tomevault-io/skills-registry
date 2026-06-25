@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [affaan-m/ECC](https://github.com/affaan-m/ECC/tree/main/skills/liquid-glass-design/SKILL.md)
+Original source: [affaan-m/ECC](https://github.com/affaan-m/ECC/tree/main/.kiro/skills/react-testing/SKILL.md)
 
 ---
 
