@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ktnyt/cclsp](https://github.com/ktnyt/cclsp/tree/main/.claude/skills/playwright-cli/SKILL.md)
+Original source: [ktnyt/cclsp](https://github.com/ktnyt/cclsp/tree/main/.claude/skills/security-review/SKILL.md)
 
 ---
 
