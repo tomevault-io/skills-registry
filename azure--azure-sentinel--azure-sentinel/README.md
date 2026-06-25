@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/Azure-Sentinel](https://github.com/Azure/Azure-Sentinel/tree/main/.github/skills/asim-parser-la-deployer/SKILL.md)
+Original source: [Azure/Azure-Sentinel](https://github.com/Azure/Azure-Sentinel/tree/main/.github/skills/update-solution-analyzer/SKILL.md)
 
 ---
 
