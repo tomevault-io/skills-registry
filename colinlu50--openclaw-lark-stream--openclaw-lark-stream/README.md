@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ColinLu50/openclaw-lark-stream](https://github.com/ColinLu50/openclaw-lark-stream/tree/main/skills/feishu-calendar/SKILL.md)
+Original source: [ColinLu50/openclaw-lark-stream](https://github.com/ColinLu50/openclaw-lark-stream/tree/main/skills/feishu-fetch-doc/SKILL.md)
 
 ---
 
