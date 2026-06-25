@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oujingzhou/openmozi](https://github.com/oujingzhou/openmozi/tree/main/skills/clawhub/SKILL.md)
+Original source: [oujingzhou/openmozi](https://github.com/oujingzhou/openmozi/tree/main/skills/greeting/SKILL.md)
 
 ---
 
