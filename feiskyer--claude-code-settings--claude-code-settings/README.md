@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [feiskyer/claude-code-settings](https://github.com/feiskyer/claude-code-settings/tree/main/skills/youtube-transcribe-skill/SKILL.md)
+Original source: [feiskyer/claude-code-settings](https://github.com/feiskyer/claude-code-settings/tree/main/plugins/kiro-skill/skills/kiro-skill/SKILL.md)
 
 ---
 
