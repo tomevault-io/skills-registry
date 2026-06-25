@@ -1,88 +1,81 @@
 ---
-name: bun-runtime
-description: Bun as runtime, package manager, bundler, and test runner. When to choose Bun vs Node, migration notes, and Vercel support. Use when this capability is needed.
+name: hipaa-compliance
+description: HIPAA-specific entrypoint for healthcare privacy and security work. Use when a task is explicitly framed around HIPAA, PHI handling, covered entities, BAAs, breach posture, or US healthcare compliance requirements. Use when this capability is needed.
 metadata:
   author: affaan-m
 ---
 
-# Bun Runtime
+# HIPAA Compliance
 
-Bun is a fast all-in-one JavaScript runtime and toolkit: runtime, package manager, bundler, and test runner.
+Use this as the HIPAA-specific entrypoint when a task is clearly about US healthcare compliance. This skill intentionally stays thin and canonical:
+
+- `healthcare-phi-compliance` remains the primary implementation skill for PHI/PII handling, data classification, audit logging, encryption, and leak prevention.
+- `healthcare-reviewer` remains the specialized reviewer when code, architecture, or product behavior needs a healthcare-aware second pass.
+- `security-review` still applies for general auth, input-handling, secrets, API, and deployment hardening.
 
 ## When to Use
 
-- **Prefer Bun** for: new JS/TS projects, scripts where install/run speed matters, Vercel deployments with Bun runtime, and when you want a single toolchain (run + install + test + build).
-- **Prefer Node** for: maximum ecosystem compatibility, legacy tooling that assumes Node, or when a dependency has known Bun issues.
-
-Use when: adopting Bun, migrating from Node, writing or debugging Bun scripts/tests, or configuring Bun on Vercel or other platforms.
+- The request explicitly mentions HIPAA, PHI, covered entities, business associates, or BAAs
+- Building or reviewing US healthcare software that stores, processes, exports, or transmits PHI
+- Assessing whether logging, analytics, LLM prompts, storage, or support workflows create HIPAA exposure
+- Designing patient-facing or clinician-facing systems where minimum necessary access and auditability matter
 
 ## How It Works
 
-- **Runtime**: Drop-in Node-compatible runtime (built on JavaScriptCore, implemented in Zig).
-- **Package manager**: `bun install` is significantly faster than npm/yarn. Lockfile is `bun.lock` (text) by default in current Bun; older versions used `bun.lockb` (binary).
-- **Bundler**: Built-in bundler and transpiler for apps and libraries.
-- **Test runner**: Built-in `bun test` with Jest-like API.
+Treat HIPAA as an overlay on top of the broader healthcare privacy skill:
 
-**Migration from Node**: Replace `node script.js` with `bun run script.js` or `bun script.js`. Run `bun install` in place of `npm install`; most packages work. Use `bun run` for npm scripts; `bun x` for npx-style one-off runs. Node built-ins are supported; prefer Bun APIs where they exist for better performance.
+1. Start with `healthcare-phi-compliance` for the concrete implementation rules.
+2. Apply HIPAA-specific decision gates:
+   - Is this data PHI?
+   - Is this actor a covered entity or business associate?
+   - Does a vendor or model provider require a BAA before touching the data?
+   - Is access limited to the minimum necessary scope?
+   - Are read/write/export events auditable?
+3. Escalate to `healthcare-reviewer` if the task affects patient safety, clinical workflows, or regulated production architecture.
 
-**Vercel**: Set runtime to Bun in project settings. Build: `bun run build` or `bun build ./src/index.ts --outdir=dist`. Install: `bun install --frozen-lockfile` for reproducible deploys.
+## HIPAA-Specific Guardrails
+
+- Never place PHI in logs, analytics events, crash reports, prompts, or client-visible error strings.
+- Never expose PHI in URLs, browser storage, screenshots, or copied example payloads.
+- Require authenticated access, scoped authorization, and audit trails for PHI reads and writes.
+- Treat third-party SaaS, observability, support tooling, and LLM providers as blocked-by-default until BAA status and data boundaries are clear.
+- Follow minimum necessary access: the right user should only see the smallest PHI slice needed for the task.
+- Prefer opaque internal IDs over names, MRNs, phone numbers, addresses, or other identifiers.
 
 ## Examples
 
-### Run and install
+### Example 1: Product request framed as HIPAA
 
-```bash
-# Install dependencies (creates/updates bun.lock or bun.lockb)
-bun install
+User request:
 
-# Run a script or file
-bun run dev
-bun run src/index.ts
-bun src/index.ts
-```
+> Add AI-generated visit summaries to our clinician dashboard. We serve US clinics and need to stay HIPAA compliant.
 
-### Scripts and env
+Response pattern:
 
-```bash
-bun run --env-file=.env dev
-FOO=bar bun run script.ts
-```
+- Activate `hipaa-compliance`
+- Use `healthcare-phi-compliance` to review PHI movement, logging, storage, and prompt boundaries
+- Verify whether the summarization provider is covered by a BAA before any PHI is sent
+- Escalate to `healthcare-reviewer` if the summaries influence clinical decisions
 
-### Testing
+### Example 2: Vendor/tooling decision
 
-```bash
-bun test
-bun test --watch
-```
+User request:
 
-```typescript
-// test/example.test.ts
-import { expect, test } from "bun:test";
+> Can we send support transcripts and patient messages into our analytics stack?
 
-test("add", () => {
-  expect(1 + 2).toBe(3);
-});
-```
+Response pattern:
 
-### Runtime API
+- Assume those messages may contain PHI
+- Block the design unless the analytics vendor is approved for HIPAA-bound workloads and the data path is minimized
+- Require redaction or a non-PHI event model when possible
 
-```typescript
-const file = Bun.file("package.json");
-const json = await file.json();
+## Related Skills
 
-Bun.serve({
-  port: 3000,
-  fetch(req) {
-    return new Response("Hello");
-  },
-});
-```
-
-## Best Practices
-
-- Commit the lockfile (`bun.lock` or `bun.lockb`) for reproducible installs.
-- Prefer `bun run` for scripts. For TypeScript, Bun runs `.ts` natively.
-- Keep dependencies up to date; Bun and the ecosystem evolve quickly.
+- `healthcare-phi-compliance`
+- `healthcare-reviewer`
+- `healthcare-emr-patterns`
+- `healthcare-eval-harness`
+- `security-review`
 
 ---
 > Source: [affaan-m/ECC](https://github.com/affaan-m/ECC) — distributed by [TomeVault](https://tomevault.io).
