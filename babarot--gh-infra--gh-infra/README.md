@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [babarot/gh-infra](https://github.com/babarot/gh-infra/tree/main/skills/file-manifest/SKILL.md)
+Original source: [babarot/gh-infra](https://github.com/babarot/gh-infra/tree/main/.claude/skills/vhs-demo/SKILL.md)
 
 ---
 
