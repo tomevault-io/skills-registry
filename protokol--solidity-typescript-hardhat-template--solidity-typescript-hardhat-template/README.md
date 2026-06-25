@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [protokol/solidity-typescript-hardhat-template](https://github.com/protokol/solidity-typescript-hardhat-template/tree/main/.claude/skills/deploy-check/SKILL.md)
+Original source: [protokol/solidity-typescript-hardhat-template](https://github.com/protokol/solidity-typescript-hardhat-template/tree/main/.claude/skills/new-contract/SKILL.md)
 
 ---
 
