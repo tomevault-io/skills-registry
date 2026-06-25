@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dakshaymehta/cardputer-claude-os](https://github.com/dakshaymehta/cardputer-claude-os/tree/main/.claude/skills/m5-onboard/SKILL.md)
+Original source: [dakshaymehta/cardputer-claude-os](https://github.com/dakshaymehta/cardputer-claude-os/tree/main/.claude/skills/cardputer-companion/SKILL.md)
 
 ---
 
