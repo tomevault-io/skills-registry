@@ -1,81 +1,144 @@
 ---
-name: hipaa-compliance
-description: HIPAA-specific entrypoint for healthcare privacy and security work. Use when a task is explicitly framed around HIPAA, PHI handling, covered entities, BAAs, breach posture, or US healthcare compliance requirements. Use when this capability is needed.
+name: customer-billing-ops
+description: 使用 Stripe 等连接计费工具操作客户计费工作流，例如订阅、退款、流失分类、计费门户恢复和计划分析。当用户需要帮助客户、检查订阅状态或管理影响收入的计费操作时使用。 Use when this capability is needed.
 metadata:
   author: affaan-m
 ---
 
-# HIPAA Compliance
+# 客户计费运营
 
-Use this as the HIPAA-specific entrypoint when a task is clearly about US healthcare compliance. This skill intentionally stays thin and canonical:
+此技能用于真实的客户运营操作，而非通用的支付 API 设计。
 
-- `healthcare-phi-compliance` remains the primary implementation skill for PHI/PII handling, data classification, audit logging, encryption, and leak prevention.
-- `healthcare-reviewer` remains the specialized reviewer when code, architecture, or product behavior needs a healthcare-aware second pass.
-- `security-review` still applies for general auth, input-handling, secrets, API, and deployment hardening.
+目标是帮助运营人员回答：客户是谁、发生了什么、最安全的修复方案是什么、以及后续应发送什么跟进内容。
 
-## When to Use
+## 使用场景
 
-- The request explicitly mentions HIPAA, PHI, covered entities, business associates, or BAAs
-- Building or reviewing US healthcare software that stores, processes, exports, or transmits PHI
-- Assessing whether logging, analytics, LLM prompts, storage, or support workflows create HIPAA exposure
-- Designing patient-facing or clinician-facing systems where minimum necessary access and auditability matter
+* 客户反馈计费异常、要求退款或无法取消订阅
+* 调查重复订阅、意外扣费、续费失败或流失风险
+* 审查套餐组合、活跃订阅、年付与月付转换、或团队席位混淆
+* 创建或验证计费门户流程
+* 审计涉及订阅、发票、退款或支付方式的支持投诉
 
-## How It Works
+## 首选工具界面
 
-Treat HIPAA as an overlay on top of the broader healthcare privacy skill:
+* 优先使用 Stripe 等关联计费工具
+* 仅将邮件、GitHub 或问题追踪器作为辅助证据
+* 当平台已提供必要控制功能时，优先使用托管计费/客户门户而非自定义账户管理代码
 
-1. Start with `healthcare-phi-compliance` for the concrete implementation rules.
-2. Apply HIPAA-specific decision gates:
-   - Is this data PHI?
-   - Is this actor a covered entity or business associate?
-   - Does a vendor or model provider require a BAA before touching the data?
-   - Is access limited to the minimum necessary scope?
-   - Are read/write/export events auditable?
-3. Escalate to `healthcare-reviewer` if the task affects patient safety, clinical workflows, or regulated production architecture.
+## 安全边界
 
-## HIPAA-Specific Guardrails
+* 切勿在回复中暴露密钥、完整卡号或不必要的客户个人身份信息
+* 不要盲目退款；首先对问题进行归类
+* 区分以下情况：
+  * 意外重复购买
+  * 有意的多席位或团队购买
+  * 产品故障/价值未兑现
+  * 结账失败或不完整
+  * 因缺少自助控制功能导致的取消
+* 对于年付方案、团队方案及按比例计费状态，在操作前需核实合同结构
 
-- Never place PHI in logs, analytics events, crash reports, prompts, or client-visible error strings.
-- Never expose PHI in URLs, browser storage, screenshots, or copied example payloads.
-- Require authenticated access, scoped authorization, and audit trails for PHI reads and writes.
-- Treat third-party SaaS, observability, support tooling, and LLM providers as blocked-by-default until BAA status and data boundaries are clear.
-- Follow minimum necessary access: the right user should only see the smallest PHI slice needed for the task.
-- Prefer opaque internal IDs over names, MRNs, phone numbers, addresses, or other identifiers.
+## 工作流程
 
-## Examples
+### 1. 清晰识别客户身份
 
-### Example 1: Product request framed as HIPAA
+从最可靠的标识符入手：
 
-User request:
+* 客户邮箱
+* Stripe 客户 ID
+* 订阅 ID
+* 发票 ID
+* 已知可关联到计费的 GitHub 用户名或支持邮箱
 
-> Add AI-generated visit summaries to our clinician dashboard. We serve US clinics and need to stay HIPAA compliant.
+返回简洁的身份摘要：
 
-Response pattern:
+* 客户
+* 活跃订阅
+* 已取消订阅
+* 发票
+* 明显异常（如重复的活跃订阅）
 
-- Activate `hipaa-compliance`
-- Use `healthcare-phi-compliance` to review PHI movement, logging, storage, and prompt boundaries
-- Verify whether the summarization provider is covered by a BAA before any PHI is sent
-- Escalate to `healthcare-reviewer` if the summaries influence clinical decisions
+### 2. 对问题进行分类
 
-### Example 2: Vendor/tooling decision
+在操作前将案例归入一个类别：
 
-User request:
+| 案例 | 典型操作 |
+|------|----------------|
+| 重复的个人订阅 | 取消多余订阅，考虑退款 |
+| 真实的多席位/团队意图 | 保留席位，澄清计费模式 |
+| 支付失败/结账不完整 | 通过门户恢复或更新支付方式 |
+| 缺少自助控制功能 | 提供门户、取消路径或发票访问权限 |
+| 产品故障或信任破裂 | 退款、道歉、记录产品问题 |
 
-> Can we send support transcripts and patient messages into our analytics stack?
+### 3. 优先采取最安全的可逆操作
 
-Response pattern:
+推荐顺序：
 
-- Assume those messages may contain PHI
-- Block the design unless the analytics vendor is approved for HIPAA-bound workloads and the data path is minimized
-- Require redaction or a non-PHI event model when possible
+1. 恢复自助管理功能
+2. 修复重复或异常的计费状态
+3. 仅对受影响的扣费或重复项进行退款
+4. 记录原因
+5. 发送简短的客户跟进信息
 
-## Related Skills
+若修复需要产品工作，需区分：
 
-- `healthcare-phi-compliance`
-- `healthcare-reviewer`
-- `healthcare-emr-patterns`
-- `healthcare-eval-harness`
-- `security-review`
+* 当前客户补救措施
+* 待办事项中的产品缺陷/工作流缺口
+
+### 4. 检查运营端产品缺口
+
+若客户痛点源于缺少运营界面，需明确指出。常见示例：
+
+* 无计费门户
+* 无用量/速率限制可见性
+* 无套餐/席位说明
+* 无取消流程
+* 无重复订阅防护
+
+将这些视为 ECC 或网站跟进事项，而非单纯的支持事件。
+
+### 5. 生成运营交接文档
+
+最终需包含：
+
+* 客户状态摘要
+* 已执行操作
+* 收入影响
+* 待发送的跟进文本
+* 需创建的产品或待办事项
+
+## 输出格式
+
+使用以下结构：
+
+```text
+客户
+- 姓名 / 邮箱
+- 相关账户标识
+
+计费状态
+- 活跃订阅
+- 发票或续费状态
+- 异常情况
+
+决策
+- 问题分类
+- 为何此操作正确
+
+已执行操作
+- 退款 / 取消 / 门户 / 无操作
+
+后续跟进
+- 简短客户消息
+
+产品缺口
+- 产品或网站中应修复的内容
+```
+
+## 优质建议示例
+
+* "正确的修复方案是计费门户，而非自定义仪表盘"
+* "这看起来是重复的个人结账，而非真实的团队席位购买"
+* "退还一笔重复扣费，保留剩余活跃订阅，后续如有需要再将客户转为组织计费"
 
 ---
 > Source: [affaan-m/ECC](https://github.com/affaan-m/ECC) — distributed by [TomeVault](https://tomevault.io).
