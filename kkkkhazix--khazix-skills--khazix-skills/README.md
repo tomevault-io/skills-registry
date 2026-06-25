@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [KKKKhazix/Khazix-Skills](https://github.com/KKKKhazix/Khazix-Skills/tree/main/khazix-writer/SKILL.md)
+Original source: [KKKKhazix/Khazix-Skills](https://github.com/KKKKhazix/Khazix-Skills/tree/main/storage-analyzer/SKILL.md)
 
 ---
 
