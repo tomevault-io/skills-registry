@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentscope-ai/QwenPaw](https://github.com/agentscope-ai/QwenPaw/tree/main/plugins/bundle/cloudpaw/skills/terraform-skill/SKILL.md)
+Original source: [agentscope-ai/QwenPaw](https://github.com/agentscope-ai/QwenPaw/tree/main/plugins/bundle/cloudpaw/skills/terraform-cli-setup/SKILL.md)
 
 ---
 
