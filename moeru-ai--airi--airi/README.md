@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [moeru-ai/airi](https://github.com/moeru-ai/airi/tree/main/.agents/skills/server-gateway-refactor/SKILL.md)
+Original source: [moeru-ai/airi](https://github.com/moeru-ai/airi/tree/main/.agents/skills/stage-tamagotchi-godot-csharp/SKILL.md)
 
 ---
 
