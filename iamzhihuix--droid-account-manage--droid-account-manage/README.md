@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [iamzhihuix/droid-account-manage](https://github.com/iamzhihuix/droid-account-manage/tree/main/.factory/skills/tauri-worker/SKILL.md)
+Original source: [iamzhihuix/droid-account-manage](https://github.com/iamzhihuix/droid-account-manage/tree/main/.factory/skills/scaffold-worker/SKILL.md)
 
 ---
 
