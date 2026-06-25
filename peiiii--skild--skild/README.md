@@ -1,11 +1,11 @@
 # skild
 
-> Skill by [peiiii](https://github.com/peiiii/skild) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [Peiiii](https://github.com/Peiiii/skild) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [peiiii/skild](https://github.com/peiiii/skild/tree/main/skills/skild)
+Original source: [Peiiii/skild](https://github.com/Peiiii/skild/tree/main/skills/skild/SKILL.md)
 
 ---
 
