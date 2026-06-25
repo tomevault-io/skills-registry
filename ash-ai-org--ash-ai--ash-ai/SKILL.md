@@ -1,230 +1,168 @@
 ---
-name: ash
-description: | Use when this capability is needed.
+name: generate-image
+description: Generate images using the Gemini API. Creates illustrations, thumbnails, icons, diagrams, photos, and visual assets from text prompts. Use when this capability is needed.
 metadata:
   author: ash-ai-org
 ---
 
-# Ash SDK Skill
+# Nano Banana Image Generation
 
-Ash is an open-source system for deploying and orchestrating hosted AI agents.
-You deploy agents to a server, create sessions, and interact via REST API + SSE streaming.
+Generate professional images via the Gemini API's native image generation models.
 
-## Decision Workflow
+## When to Use This Skill
 
-Before writing code, determine what you're building:
+ALWAYS use this skill when the user:
+- Asks for any image, graphic, illustration, or visual
+- Wants a thumbnail, featured image, or banner
+- Requests icons, diagrams, or patterns
+- Asks to edit, modify, or restore a photo
+- Uses words like: generate, create, make, draw, design, visualize
 
-1. **"I need to deploy an agent"** → See [Quick Start](#quick-start) step 1
-2. **"I need to create a session and send messages"** → See [Quick Start](#quick-start) steps 2-3
-3. **"I need real-time streaming output"** → See [Streaming](#streaming-messages)
-4. **"I need to manage session lifecycle"** → See `references/sessions.md`
-5. **"I need to handle errors"** → See `references/error-handling.md`
-6. **"I need the full API surface"** → See `references/api-reference.md`
+Do NOT attempt to generate images through any other method.
 
-## Quick Start
+## Prerequisites
 
-### Install
-
-**TypeScript:**
+Verify API key is set:
 ```bash
-npm install @ash-ai/sdk
+[ -n "$GEMINI_API_KEY" ] && echo "API key configured" || echo "Missing GEMINI_API_KEY"
 ```
 
-**Python:**
+If missing, ask the user to set it:
 ```bash
-pip install ash-ai-sdk
+export GEMINI_API_KEY="your-key-from-aistudio.google.com/apikey"
 ```
 
-### Step 1: Create Client
+## Models
 
-**TypeScript:**
-```typescript
-import { AshClient } from '@ash-ai/sdk';
+| Model | Best For | Max Resolution | Speed |
+|-------|----------|---------------|-------|
+| `gemini-2.5-flash-image` | Fast generation, high-volume, general use | 1024px | Fast |
+| `gemini-3-pro-image-preview` | Professional assets, complex prompts, text rendering, 4K | Up to 4K | Slower (thinking model) |
 
-const client = new AshClient({
-  serverUrl: 'http://localhost:4100',
-  apiKey: 'your-api-key', // optional in local dev mode
-});
+**Default model: `gemini-2.5-flash-image`** for most requests.
+**Use `gemini-3-pro-image-preview`** when user needs: 4K resolution, accurate text in images, complex multi-element compositions, professional asset production, or Google Search grounding.
+
+## Image Generation (Text-to-Image)
+
+```bash
+curl -s "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=$GEMINI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "contents": [{"parts": [{"text": "YOUR PROMPT HERE"}]}],
+    "generationConfig": {
+      "responseModalities": ["TEXT", "IMAGE"]
+    }
+  }' | python3 -c "
+import json, sys, base64
+data = json.load(sys.stdin)
+if 'error' in data:
+    print('API Error:', data['error'].get('message', str(data['error'])))
+    sys.exit(1)
+candidates = data.get('candidates', [])
+if not candidates:
+    print('No candidates returned')
+    sys.exit(1)
+parts = candidates[0].get('content', {}).get('parts', [])
+for part in parts:
+    if 'inlineData' in part:
+        img_data = base64.b64decode(part['inlineData']['data'])
+        mime = part['inlineData'].get('mimeType', 'image/png')
+        ext = 'png' if 'png' in mime else 'jpg'
+        outpath = 'OUTPUT_PATH_HERE.' + ext
+        with open(outpath, 'wb') as f:
+            f.write(img_data)
+        print(f'Image saved to: {outpath} ({len(img_data)} bytes)')
+    elif 'text' in part and not part.get('thought'):
+        print('Model notes:', part['text'][:300])
+"
 ```
 
-**Python:**
-```python
-from ash_ai import AshClient
+### With Aspect Ratio
 
-client = AshClient(
-    server_url="http://localhost:4100",
-    api_key="your-api-key",  # optional in local dev mode
+Add `imageConfig` to control aspect ratio:
+
+```bash
+curl -s "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=$GEMINI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "contents": [{"parts": [{"text": "YOUR PROMPT HERE"}]}],
+    "generationConfig": {
+      "responseModalities": ["TEXT", "IMAGE"],
+      "imageConfig": {
+        "aspectRatio": "16:9"
+      }
+    }
+  }' | python3 -c "SAME_DECODER_SCRIPT"
+```
+
+## Image Editing (Image + Text to Image)
+
+To edit an existing image, base64-encode it and include it as an `inlineData` part:
+
+```bash
+python3 -c "
+import base64, json, subprocess, sys
+
+with open('INPUT_IMAGE_PATH', 'rb') as f:
+    b64 = base64.b64encode(f.read()).decode()
+
+payload = {
+    'contents': [{'parts': [
+        {'inlineData': {'mimeType': 'image/png', 'data': b64}},
+        {'text': 'YOUR EDIT INSTRUCTION HERE'}
+    ]}],
+    'generationConfig': {
+        'responseModalities': ['TEXT', 'IMAGE']
+    }
+}
+
+result = subprocess.run(
+    ['curl', '-s',
+     'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=' + '$GEMINI_API_KEY_VALUE',
+     '-H', 'Content-Type: application/json',
+     '-d', json.dumps(payload)],
+    capture_output=True, text=True
 )
+
+data = json.loads(result.stdout)
+if 'error' in data:
+    print('API Error:', data['error'].get('message', str(data['error'])))
+    sys.exit(1)
+for part in data.get('candidates', [{}])[0].get('content', {}).get('parts', []):
+    if 'inlineData' in part:
+        img_data = base64.b64decode(part['inlineData']['data'])
+        with open('OUTPUT_PATH', 'wb') as f:
+            f.write(img_data)
+        print(f'Image saved ({len(img_data)} bytes)')
+    elif 'text' in part and not part.get('thought'):
+        print('Model notes:', part['text'][:300])
+"
 ```
 
-### Step 2: Create a Session
+## Aspect Ratios
 
-**TypeScript:**
-```typescript
-const session = await client.createSession('my-agent');
-console.log(session.id);     // "a1b2c3d4-..."
-console.log(session.status); // "active"
-```
+| Ratio | Use Case |
+|-------|----------|
+| 1:1 | Square social (IG, LinkedIn) |
+| 16:9 | Blog featured, YouTube thumbnail |
+| 9:16 | Vertical story |
+| 3:2 | Landscape photo |
+| 21:9 | Twitter/X header |
 
-**Python:**
-```python
-session = client.create_session("my-agent")
-print(session.id)     # "a1b2c3d4-..."
-print(session.status) # "active"
-```
+## Prompt Tips
 
-### Step 3: Send a Message and Stream the Response
+1. **Describe the scene narratively** — a descriptive paragraph beats a tag list
+2. **Add "no text"** if you don't want text rendered in the image
+3. **Be hyper-specific** — instead of "fantasy armor" say "ornate elven plate armor, etched with silver leaf patterns"
+4. **Use photography terms** for photorealistic results — camera angles, lens types, lighting
+5. **Reference artistic styles** — "editorial photography", "flat illustration", "3D render", "watercolor"
 
-**TypeScript:**
-```typescript
-import { extractTextFromEvent } from '@ash-ai/sdk';
+## Presenting Results
 
-for await (const event of client.sendMessageStream(session.id, 'Hello!')) {
-  if (event.type === 'message') {
-    const text = extractTextFromEvent(event.data);
-    if (text) console.log(text);
-  } else if (event.type === 'error') {
-    console.error('Error:', event.data.error);
-  } else if (event.type === 'done') {
-    console.log('Turn complete.');
-  }
-}
-```
-
-**Python:**
-```python
-for event in client.send_message_stream(session.id, "Hello!"):
-    if event.type == "message":
-        data = event.data
-        if data.get("type") == "assistant":
-            for block in data.get("message", {}).get("content", []):
-                if block.get("type") == "text":
-                    print(block["text"])
-    elif event.type == "error":
-        print(f"Error: {event.data['error']}")
-    elif event.type == "done":
-        print("Turn complete.")
-```
-
-### Step 4: Clean Up
-
-**TypeScript:**
-```typescript
-await client.endSession(session.id);
-```
-
-**Python:**
-```python
-client.end_session(session.id)
-```
-
-## Streaming Messages
-
-The SSE stream carries three event types:
-
-| Event | Description |
-|-------|-------------|
-| `message` | SDK message (assistant text, tool use, tool results, stream deltas) |
-| `error` | Error during processing |
-| `done` | Agent's turn is complete |
-
-### Real-Time Text Deltas
-
-Enable `includePartialMessages` for character-by-character streaming:
-
-**TypeScript:**
-```typescript
-import { extractStreamDelta } from '@ash-ai/sdk';
-
-for await (const event of client.sendMessageStream(session.id, 'Write a haiku.', {
-  includePartialMessages: true,
-})) {
-  if (event.type === 'message') {
-    const delta = extractStreamDelta(event.data);
-    if (delta) process.stdout.write(delta);
-  }
-}
-```
-
-**Python:**
-```python
-for event in client.send_message_stream(
-    session.id, "Write a haiku.",
-    include_partial_messages=True,
-):
-    if event.type == "message":
-        data = event.data
-        if data.get("type") == "stream_event":
-            evt = data.get("event", {})
-            if evt.get("type") == "content_block_delta":
-                delta = evt.get("delta", {})
-                if delta.get("type") == "text_delta":
-                    print(delta.get("text", ""), end="", flush=True)
-```
-
-## Multi-Turn Conversations
-
-Sessions preserve conversation context across turns automatically:
-
-**TypeScript:**
-```typescript
-const session = await client.createSession('my-agent');
-
-for await (const event of client.sendMessageStream(session.id, 'My name is Alice.')) {
-  // Agent acknowledges
-}
-
-for await (const event of client.sendMessageStream(session.id, 'What is my name?')) {
-  if (event.type === 'message') {
-    const text = extractTextFromEvent(event.data);
-    if (text) console.log(text); // "Your name is Alice."
-  }
-}
-
-await client.endSession(session.id);
-```
-
-## Session Lifecycle
-
-Sessions have five states: `starting` → `active` → `paused` → `active` (resume) → `ended`.
-
-```typescript
-// Pause (sandbox may stay alive for fast resume)
-await client.pauseSession(session.id);
-
-// Resume (warm path if sandbox alive, cold path restores from snapshot)
-await client.resumeSession(session.id);
-
-// End permanently
-await client.endSession(session.id);
-```
-
-For full lifecycle details, see `references/sessions.md`.
-
-## Validation Checklist
-
-Before running your code, verify:
-
-- [ ] **Server URL** is correct (default: `http://localhost:4100`, no trailing slash)
-- [ ] **API key** is set if the server has `ASH_API_KEY` configured
-- [ ] **Agent exists** — deploy it first or check with `client.listAgents()`
-- [ ] **Session is active** before sending messages (not paused or ended)
-- [ ] **Stream is consumed** — always iterate the full stream (don't break early without handling `done`)
-- [ ] **Errors are handled** — both thrown exceptions (connection) and `error` events (agent-level)
-
-## Topic Index
-
-| Topic | File |
-|-------|------|
-| SSE event types and stream handling | `references/streaming.md` |
-| Session states and lifecycle | `references/sessions.md` |
-| Full AshClient API reference | `references/api-reference.md` |
-| Common errors and fixes | `references/error-handling.md` |
-
-## Fallback
-
-For complete documentation: https://docs.ash-cloud.ai/llms.txt
+After generation:
+1. Read the generated image file to show it to the user
+2. Offer to regenerate with variations or different models if needed
 
 ---
 > Source: [ash-ai-org/ash-ai](https://github.com/ash-ai-org/ash-ai) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-24 -->
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
