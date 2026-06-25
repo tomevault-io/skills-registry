@@ -1,177 +1,275 @@
 ---
-name: omcustomfsd
-description: Full Self Driving — autonomous release loop that processes all auto-dev-eligible GitHub issues until none remain, by repeatedly running /pipeline auto-dev then /homework. Use when this capability is needed.
+name: scout
+description: Analyze external URL to evaluate fit with oh-my-customcode project and auto-create GitHub issue with verdict Use when this capability is needed.
 metadata:
   author: baekenough
 ---
 
-# /omcustom:fsd — Full Self Driving
+# /scout — External Link Analysis
 
-Autonomous release loop. Equivalent to running:
-
-```
-/goal "모든 이슈가 처리될 때까지" /loop "/pipeline auto-dev -> /homework"
-```
-
-This is a **thin alias / orchestrator skill**. It does not implement loop, issue-polling, release, or verification logic — it delegates entirely to existing skills.
+Analyze an external URL (tech blog, tool, library, methodology) to evaluate its fit with the oh-my-customcode project and auto-create a GitHub issue with a structured verdict.
 
 ## Usage
 
 ```
-/omcustom:fsd               # Run until all auto-dev-eligible issues are exhausted
-/omcustom:fsd 3             # Optional: cap at N releases (default: unlimited)
+/scout <url>
+/scout https://news.hada.io/topic?id=27673
+/scout https://github.com/user/repo
 ```
 
-No arguments are required. The default behavior runs until the auto-dev-eligible issue set is empty.
+## Verdict Taxonomy
 
-## What It Does
+| Verdict | Meaning | Label | Follow-up |
+|---------|---------|-------|-----------|
+| **INTERNALIZE** | Aligns with project philosophy; should become a skill/agent/guide | `scout:internalize` + `P1`/`P2`/`P3` | `/research` or direct implementation |
+| **INTEGRATE** | Useful but best kept as external dependency | `scout:integrate` + `P2`/`P3` | Plugin/MCP integration review |
+| **SKIP** | Irrelevant or duplicates existing functionality | `scout:skip` | Issue created then closed |
 
-FSD expands into:
+## Pre-flight Guards
 
-1. **`/goal` wrapper** — applies disciplined goal-to-execution workflow:
-   - Objective: "모든 이슈가 처리될 때까지"
-   - Delegates planning, gap detection, and R020 completion verification to the `goal` skill
-2. **`/loop` recurrence** — self-paced loop (model decides cadence), each iteration runs:
-   1. `/pipeline auto-dev` — full release pipeline for the next eligible issue
-   2. `/homework` — retrospective 찐빠 audit gate
-   3. **Open PR processing** — merge or defer all open PRs before checking convergence
+### Pre-flight Execution Checklist (MANDATORY before Phase 1)
 
-### Loop Convergence
+**Both guards MUST be executed before entering Phase 1.** Skipping either guard is a workflow violation.
 
-The loop converges naturally when **both** conditions are met:
+- [ ] Guard 1: URL Validity check passed (abort if invalid)
+- [ ] Guard 2: Duplicate Scout check passed (warn and confirm if duplicate found)
 
-1. The auto-dev-eligible issue set reaches 0
-2. All open PRs have been either merged or explicitly deferred
+Proceed to Phase 1 only after both checkboxes are satisfied.
 
-FSD processes **open PRs as part of each iteration**, not only issues. This includes dependabot PRs and any automatically created PRs. Issue eligibility follows `/pipeline auto-dev` label selection exactly:
+### Guard 1: URL Validity (GATE)
 
-- **Included**: `verify-ready` (preferred), unlabeled auto-dev candidates
-- **Excluded**: `verify-done`, `needs-review`, `decision-needed` labels
+Before any work, validate the URL:
 
-Do NOT invent new label logic here — defer to the `pipeline` skill's auto-dev issue selection.
-
-### PR Processing Rules
-
-When open PRs are found during an iteration:
-
-| PR state | Action |
-|----------|--------|
-| CI passing, auto-mergeable | Merge via mgr-gitnerd (R010) |
-| CI failing with known pattern (e.g., dependabot frozen-lockfile cascade → `bun install` lockfile regeneration) | Fix CI, then merge |
-| CI failing with unknown cause | Diagnose; if fixable within iteration, fix and merge; otherwise defer |
-| Breaking change / design judgment required | Defer and surface to user |
-| Explicitly excluded by user this session | Skip (honor directive persistence, R015) |
-
-All PR merge operations are delegated to **mgr-gitnerd** (R010). After merging, verify ground-truth via `gh pr view` or `git log` before declaring done (R020).
-
-Do NOT merge PRs that require user approval for architectural decisions. Surface them with a short summary and wait.
-
-### Iteration Flow (per iteration)
-
-```
-[FSD Iteration N]
-├── /pipeline auto-dev        → one release (PR create → merge → npm publish → milestone close)
-├── /homework                 → extract 찐빠, confirm gate (or --dry-run if requested)
-├── Open PR processing        → for each open PR: merge (if CI-green + auto-mergeable)
-│                                                  fix-then-merge (known CI failure pattern)
-│                                                  defer+surface (design decision needed)
-└── Check convergence: eligible issues = 0 AND open PRs = 0 (merged or deferred)?
-    ├── YES → [FSD Done] converged naturally
-    └── NO  → next iteration
+```bash
+# Check URL is syntactically valid
+echo "$URL" | grep -qE '^https?://'
 ```
 
-## Safety and Discipline
+If invalid: `[Pre-flight] GATE: Invalid or unreachable URL. Please check and retry.` — abort.
 
-Each iteration operates under full project rules — no relaxation because FSD is autonomous:
+### Guard 2: Duplicate Scout (WARN)
 
-| Rule | Applies |
-|------|---------|
-| R001 (safety) | Destructive ops still require explicit approval. Credential guardrails always active. PR merges that risk data loss require explicit approval. |
-| R009 (parallel) | Independent subtasks within each pipeline iteration run in parallel. |
-| R010 (orchestration) | All file modifications delegated to specialist subagents. mgr-gitnerd for git ops including PR merges. |
-| R015 (intent persistence) | If user explicitly defers a specific PR this session, honor that deferral — do not retry it. |
-| R017 (sync verification) | mgr-sauron passes required before any commit. |
-| R020 (completion verification) | Each release verified via `npm view`, `gh release view`, closed issues before `[Done]`. PR merges verified via `gh pr view` ground-truth before declaring iteration complete. |
+Search existing GitHub issues for prior scout reports on the same URL domain:
 
-`/homework` runs as a **retrospective gate** between iterations — findings go through `omcustom-feedback`'s Phase 4A confirmation gate. The loop does NOT skip homework on the grounds that it is "automated". If homework requires user confirmation (e.g., to file a feedback issue), the loop pauses and waits.
+```bash
+DOMAIN=$(echo "$URL" | cut -d'/' -f3)
+gh issue list --state all --label "scout:internalize,scout:integrate,scout:skip" \
+  --json number,title,body --jq ".[] | select(.body | contains(\"$DOMAIN\"))" 2>/dev/null
+```
 
-If a release operation triggers the safety classifier, the current iteration stops and surfaces the block to the user before continuing.
+If found: `[Pre-flight] WARN: Similar URL already scouted in issue #N. Proceed anyway? [Y/n]`
 
-## When to Use
+> **Why mandatory?** Guard 2 생략으로 인해 동일 도메인 중복 scout 이슈가 생성된 사례 발생 (세션 회고 #1281). 중복 triage 낭비를 방지하기 위해 Pre-flight 체크리스트로 승격.
 
-| Scenario | Use FSD? |
-|----------|----------|
-| Multiple eligible issues ready to process autonomously | YES |
-| Session where the user wants to "let it run" through the backlog | YES |
-| Verifying the autonomous release loop pattern from session memory | YES |
-| Single targeted issue fix | NO — use `/pipeline auto-dev` directly |
-| Exploratory research / planning only | NO — use `/research` or `/deep-plan` |
-| Only one issue and it needs human judgment | NO — use `/pipeline auto-dev` with manual oversight |
+## Display Format
+
+Before execution, show the plan:
+
+```
+[Scout] {url}
+├── Phase 1: 콘텐츠 수집 및 요약
+├── Phase 2: 프로젝트 철학 로드
+├── Phase 3: 적합성 분석 (sonnet)
+└── Phase 4: 이슈 생성
+
+예상: ~1분 | 비용: ~$0.5-1.5
+실행하시겠습니까? [Y/n]
+```
+
+> **암묵 승인 시 필수**: "되면 /scout으로 보고", "실행해줘" 등 묵시적 승인인 경우에도 위 plan 요약을 **반드시 1줄 이상 표시한 뒤 진행**한다 (R015 intent transparency). plan 표시 없이 바로 Phase 1으로 진입하는 것은 위반.
+
+## Workflow
+
+### Phase 1: Fetch & Summarize
+
+1. `WebFetch(url)` — retrieve page content
+2. Extract core information:
+   - Title and purpose
+   - Key technology / methodology
+   - Approach and principles
+3. If fetch fails — report error, abort
+
+> **External quantitative-fact source tagging** (#1298): WebFetch가 산출한 구체적 정량 주장(benchmark 수치, table 값, metric)은 이슈 본문에 `WebFetch-derived (unverified)`로 태깅한다 — 검증된 사실로 제시하지 않는다. WebFetch는 small fast model + 15분 URL 캐시를 사용하므로, 동일 URL을 여러 번 fetch해도 독립 교차검증이 아니다. load-bearing 수치는 primary PDF/원문으로 1회 검증하거나 명시적으로 unverified로 표기한다. (R020 Read-Before-Characterize, R023 Verifier Ground-Truth for cross-cutting facts)
+
+### Phase 2: Load Project Philosophy
+
+1. `Read(CLAUDE.md)` — extract architecture philosophy:
+   - Compilation metaphor (source -> build -> artifact)
+   - Separation of concerns (R006)
+   - Dynamic agent creation ("no expert? create one")
+   - Skill/agent/guide/rule structure
+2. `Read(README.md)` — extract project overview and component inventory
+3. `Glob(.claude/skills/*/SKILL.md)` — list existing skills for overlap detection
+
+### Phase 3: Fit Analysis
+
+> **MUST**: Agent tool 호출 시 반드시 `mode: "bypassPermissions"` 파라미터를 포함해야 한다 (R010 Universal bypassPermissions). CC Agent tool의 기본값은 `acceptEdits`이며, 이는 agent frontmatter의 `permissionMode`를 덮어쓴다. `mode` 누락 시 Bash/WebFetch 권한 프롬프트가 발생하여 비대화형 실행이 중단된다.
+>
+> ```
+> ❌ Agent(subagent_type: "general-purpose", prompt: "...")
+> ✓  Agent(subagent_type: "general-purpose", mode: "bypassPermissions", prompt: "...")
+> ```
+
+Spawn 1 sonnet agent with `mode: "bypassPermissions"` and the following analysis prompt.
+
+**Inputs**:
+- Fetched content summary (Phase 1)
+- Project philosophy context (Phase 2)
+- Existing skill list (Phase 2)
+
+**Analysis dimensions**:
+
+| Dimension | Question |
+|-----------|----------|
+| Philosophy alignment | Does it match the compilation metaphor, separation of concerns, "create experts on demand"? |
+| Technical fit | Does it complement or overlap with existing skills/agents/guides? |
+| Integration effort | How much work to internalize vs. use externally? |
+| Value proposition | What concrete benefit does it bring to the project? |
+
+**Agent prompt template**:
+
+```
+You are a project fit analyst. Given:
+
+1. External content summary:
+{phase1_summary}
+
+2. Project philosophy:
+{phase2_philosophy}
+
+3. Existing skills ({skill_count} total):
+{skill_list}
+
+Analyze the external content against the project philosophy across 4 dimensions:
+- Philosophy alignment
+- Technical fit (overlap with existing skills?)
+- Integration effort (XS/S/M/L)
+- Value proposition
+
+Return a structured verdict:
+- verdict: INTERNALIZE | INTEGRATE | SKIP
+- priority: P1 | P2 | P3
+- rationale: 2-3 sentences
+- philosophy_table: criterion/fit/rationale for each dimension
+- recommendation: specific integration plan or skip reason
+- next_steps: 2-3 actionable items
+- IMPORTANT: Write all analysis output in Korean. Technical terms, code references, label names, and skill/agent names stay in English.
+- escalation: true/false (INTERNALIZE + M/L effort = true)
+```
+
+**Output**: Structured verdict with rationale.
+
+### Phase 4: Issue Creation
+
+> **NOTE**: Phase 4는 orchestrator가 직접 `gh issue create` (Bash)로 처리한다. 만약 이슈 생성을 Agent(mgr-gitnerd 등)에 위임할 경우, 해당 Agent tool 호출에도 반드시 `mode: "bypassPermissions"`를 포함해야 한다 (R010).
+
+1. Ensure scout labels exist (defensive, idempotent):
+```bash
+gh label create "scout:internalize" --color "0E8A16" --description "Scout: should be internalized" 2>/dev/null || true
+gh label create "scout:integrate" --color "1D76DB" --description "Scout: keep as external" 2>/dev/null || true
+gh label create "scout:skip" --color "D4C5F9" --description "Scout: skip" 2>/dev/null || true
+```
+
+2. Create GitHub issue:
+```bash
+gh issue create \
+  --title "[scout:{verdict}] {content_title}" \
+  --label "scout:{verdict},P{n}" \
+  --body "{issue_body}"
+```
+
+3. If verdict is `SKIP`: auto-close the issue:
+```bash
+gh issue close {number} -c "Auto-closed: scout verdict is SKIP"
+```
+
+### Issue Body Template
+
+```markdown
+## Scout 리포트: {title}
+
+**출처**: {url}
+**판정**: {INTERNALIZE / INTEGRATE / SKIP}
+**우선순위**: {P1 / P2 / P3}
+
+## 요약
+{외부 콘텐츠에 대한 2-3문장 요약}
+
+## 프로젝트 철학 정합성
+| 기준 | 적합 | 근거 |
+|------|------|------|
+| Compilation metaphor | {check/cross} | {설명} |
+| Separation of concerns (R006) | {check/cross} | {설명} |
+| Dynamic agent creation | {check/cross} | {설명} |
+| 기존 스킬 중복 | {check/cross} | {중복 스킬 목록} |
+
+## 권장 사항
+{구체적 통합 계획 — 어떤 skill/agent/guide를 생성할지, 또는 건너뛰는 이유}
+
+## 다음 단계
+- [ ] {후속 조치 1}
+- [ ] {후속 조치 2}
+
+---
+`/scout`에 의해 생성됨
+```
+
+## Escalation
+
+When verdict is `INTERNALIZE` and integration effort is M or L:
+
+```
+[Advisory] 심층 분석 권장.
+└── 실행 검토: /research {url}
+```
+
+## Result Display
+
+```
+[Scout 완료] {title}
+├── 판정: {INTERNALIZE / INTEGRATE / SKIP}
+├── 우선순위: {P1 / P2 / P3}
+├── 이슈: #{number}
+└── 에스컬레이션: {/research 권장 | 없음}
+```
+
+## Model Selection
+
+| Phase | Model | Rationale |
+|-------|-------|-----------|
+| Phase 1 (Fetch) | orchestrator | Simple WebFetch, no agent needed |
+| Phase 2 (Load) | orchestrator | Simple Read/Glob, no agent needed |
+| Phase 3 (Analysis) | sonnet | Balanced reasoning for fit analysis |
+| Phase 4 (Issue) | orchestrator | gh issue create via Bash |
+
+## Integration
+
+| Rule | How |
+|------|-----|
+| R009 | Single agent in Phase 3 — no parallelism needed |
+| R010 | Orchestrator manages phases 1/2/4; analysis delegated to sonnet agent in Phase 3 |
+| R015 | Display scout plan before execution (Display Format section) |
 
 ## When NOT to Use
 
-- When issues require stakeholder approval or design decisions before implementation
-- When the issue set includes `decision-needed` or `needs-review` items only (loop converges immediately — just use `/pipeline auto-dev` once)
-- When cost sensitivity is high and the issue backlog is large — inspect the eligible set first before running FSD
+| Scenario | Better Alternative |
+|----------|--------------------|
+| Deep multi-source research | `/research <url>` |
+| Internal project analysis | `/omcustom:analysis` |
+| Known tool evaluation | Direct agent conversation |
+| Bulk URL analysis (5+) | `/research` with URL list |
 
-## Optional Release Cap
+## Differences from /research
 
-Pass a numeric argument to cap at N releases:
-
-```
-/omcustom:fsd 3    # Process at most 3 issues this FSD run
-```
-
-This corresponds to the `-max` parameter used in the manual pattern. Default is unlimited (run until eligible issues exhausted). The cap is advisory — the pipeline itself may stop earlier if the eligible set runs out before the cap is reached.
-
-## Session 114 Precedent
-
-This skill was extracted from the manual pattern used in Session 114 (2026-06-09):
-
-```
-/goal "모든 이슈가 처리될 때까지" /loop "/pipeline auto-dev -> /homework"
-```
-
-That session ran 2 iterations (v0.177.0 and v0.178.0) before converging with 0 eligible issues remaining. FSD codifies this pattern as a first-class invocable command.
-
-## Cross-References
-
-| Skill / Rule | Role |
-|--------------|------|
-| `goal` | Disciplined goal-to-execution wrapper — objective parse, gap detection, R020 verification |
-| `omcustom-loop` | Session auto-continuation via SubagentStop hook — keeps the loop alive during background agent work |
-| `pipeline` | `/pipeline auto-dev` — the core release pipeline per iteration |
-| `homework` | Retrospective 찐빠 audit gate per iteration |
-| `mgr-gitnerd` | PR merge operations — all open PR merges delegated here (R010) |
-| R001 (safety) | Destructive ops require approval; credential guardrails; risky PR merges require explicit approval |
-| R009 (parallel execution) | Parallel subtasks within each pipeline iteration |
-| R010 (orchestrator coordination) | All file writes delegated; mgr-gitnerd for git including PR merges |
-| R015 (intent persistence) | User PR deferral decisions honored for the session |
-| R017 (sync verification) | mgr-sauron required before commit/push |
-| R020 (completion verification) | Actual outcome verified before declaring each release or PR merge done |
-
-## Design Notes
-
-This skill is intentionally a **thin alias**. It does NOT duplicate:
-- Issue polling logic (owned by `pipeline`)
-- Loop cadence / auto-continuation (owned by `omcustom-loop` + SubagentStop hook)
-- Release pipeline steps (owned by `pipeline auto-dev`)
-- Retrospective analysis (owned by `homework`)
-- PR merge execution (owned by `mgr-gitnerd`)
-- Completion verification (owned by R020 + `goal`)
-
-If any of those underlying skills evolve, FSD automatically benefits — its only responsibility is declaring the intent and forwarding to the right components.
-
-## Permission Mode Note
-
-When this skill delegates work via Agent tool calls, ALL Agent tool calls MUST include `mode: "bypassPermissions"` per R010 Universal bypassPermissions.
-
-## Artifact Output
-
-Artifacts from each iteration follow the conventions of the constituent skills:
-- Pipeline artifacts: `.claude/outputs/sessions/{YYYY-MM-DD}/pipeline-auto-dev-{HHmmss}.md`
-- Homework artifacts: `.claude/outputs/sessions/{YYYY-MM-DD}/homework-{HHmmss}.md`
+| Aspect | /scout | /research |
+|--------|--------|-----------|
+| Purpose | Quick fit evaluation | Deep multi-dimensional analysis |
+| Teams | 1 agent | 10 teams |
+| Cost | ~$0.5-1.5 | ~$8-15 |
+| Duration | 1-2 min | 10-20 min |
+| Output | Issue with verdict | Full report with ADOPT/ADAPT/AVOID |
+| When | First contact with new link | Deep dive after scout recommends |
 
 ---
 > Source: [baekenough/oh-my-customcode](https://github.com/baekenough/oh-my-customcode) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-21 -->
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
