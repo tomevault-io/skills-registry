@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sheng-jie/learn-cc-csharp](https://github.com/sheng-jie/learn-cc-csharp/tree/main/skills/pdf/SKILL.md)
+Original source: [sheng-jie/learn-cc-csharp](https://github.com/sheng-jie/learn-cc-csharp/tree/main/skills/code-review/SKILL.md)
 
 ---
 
