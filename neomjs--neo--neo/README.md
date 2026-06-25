@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neomjs/neo](https://github.com/neomjs/neo/tree/main/.agents/skills/identity-firewall/SKILL.md)
+Original source: [neomjs/neo](https://github.com/neomjs/neo/tree/main/.agents/skills/blocked-task-state/SKILL.md)
 
 ---
 
