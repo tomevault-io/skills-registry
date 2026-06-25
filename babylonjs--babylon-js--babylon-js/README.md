@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [BabylonJS/Babylon.js](https://github.com/BabylonJS/Babylon.js/tree/main/.github/skills/create-pr/SKILL.md)
+Original source: [BabylonJS/Babylon.js](https://github.com/BabylonJS/Babylon.js/tree/main/.github/skills/monitor-pr/SKILL.md)
 
 ---
 
