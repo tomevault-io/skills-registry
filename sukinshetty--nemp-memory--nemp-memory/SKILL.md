@@ -2,7 +2,7 @@
 name: nemp-memory
 description: Persistent local memory for AI agents. Use when starting a new session, when the user mentions remembering something, when you need project context, when making architecture decisions, or when working with other agents on the same project. Use when this capability is needed.
 metadata:
-  author: sukinshetty
+  author: SukinShetty
 ---
 
 
@@ -108,5 +108,5 @@ Log every operation to `.nemp/access.log` with timestamp, operation, key, and ag
 6\. Regenerate `.nemp/MEMORY.md` after every write/delete.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/sukinshetty) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [SukinShetty/Nemp-memory](https://github.com/SukinShetty/Nemp-memory) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
