@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [voidzero-dev/vite-plus](https://github.com/voidzero-dev/vite-plus/tree/main/.claude/skills/sync-tsdown-cli/SKILL.md)
+Original source: [voidzero-dev/vite-plus](https://github.com/voidzero-dev/vite-plus/tree/main/.claude/skills/add-ecosystem-ci/SKILL.md)
 
 ---
 
