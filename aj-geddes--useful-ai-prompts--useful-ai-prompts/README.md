@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aj-geddes/useful-ai-prompts](https://github.com/aj-geddes/useful-ai-prompts/tree/main/skills/test-data-generation/SKILL.md)
+Original source: [aj-geddes/useful-ai-prompts](https://github.com/aj-geddes/useful-ai-prompts/tree/main/skills/api-contract-testing/SKILL.md)
 
 ---
 
