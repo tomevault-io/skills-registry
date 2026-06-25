@@ -1,119 +1,153 @@
 ---
-name: stock-analyzer
-description: 分析股票和市场。当用户想要分析单个或多个股票，或进行市场复盘时调用。 Use when this capability is needed.
+name: daily-stock-analysis
+description: 分析 GitHub Issue，判断其真实性、优先级、仓库责任边界与建议动作。 Use when this capability is needed.
 metadata:
   author: ZhuLinsen
 ---
+# Analyze Issue
 
-# 股票分析器
+分析 GitHub Issue，判断其真实性、优先级、仓库责任边界与建议动作。
 
-本技能基于 `src/services/analyzer_service.py` 的逻辑，提供分析股票和整体市场的功能。
+**Repository**: https://github.com/ZhuLinsen/daily_stock_analysis/issues
 
-## 输出结构 (`AnalysisResult`)
+## Usage
 
-分析函数返回一个 `AnalysisResult` 对象（或其列表），该对象具有丰富的结构。以下是其关键组件的简要概述，并附有真实的输出示例：
-
-`dashboard` 属性包含核心分析，分为四个主要部分：
-1.  **`core_conclusion`**: 一句话总结、信号类型和仓位建议。
-2.  **`data_perspective`**: 技术数据，包括趋势状态、价格位置、量能分析和筹码结构。
-3.  **`intelligence`**: 定性信息，如新闻、风险警报和积极催化剂。
-4.  **`battle_plan`**: 可操作的策略，包括狙击点（买/卖目标）、仓位策略和风险控制清单。
-
-## 配置 (`Config`)
-
-所有分析函数都可以接受一个可选的 `config` 对象。该对象包含应用程序的所有配置，例如 API 密钥、通知设置和分析参数。
-
-如果未提供 `config` 对象，函数将自动使用从 `.env` 文件加载的全局单例实例。
-
-**参考:** [`Config`](src/config.py)
-
-## 函数
-
-### 1. 分析单只股票
-
-**描述:** 分析单只股票并返回分析结果。
-
-**何时使用:** 当用户要求分析特定股票时。
-
-**输入:**
-- `stock_code` (str): 要分析的股票代码。
-- `config` (Config, 可选): 配置对象。默认为 `None`。
-- `full_report` (bool, 可选): 是否生成完整报告。默认为 `False`。
-- `notifier` (NotificationService, 可选): 通知服务对象。默认为 `None`。
-
-**输出:** `Optional[AnalysisResult]`
-一个包含分析结果的 `AnalysisResult` 对象，如果分析失败则为 `None`。
-
-**示例:**
-
-```python
-from src.services.analyzer_service import analyze_stock
-
-# 分析单只股票
-result = analyze_stock("600989")
-if result:
-    print(f"股票: {result.name} ({result.code})")
-    print(f"情绪得分: {result.sentiment_score}")
-    print(f"操作建议: {result.operation_advice}")
+```text
+/analyze-issue <issue_number>
 ```
 
-**参考:** [`analyze_stock`](src/services/analyzer_service.py)
+## Instructions
 
-### 2. 分析多只股票
+分析时使用简洁中文，优先遵循仓库根目录 `AGENTS.md`。
 
-**描述:** 分析一个股票列表并返回分析结果列表。
+### Step 1: 同步最新代码基线
 
-**何时使用:** 当用户想要一次分析多只股票时。
+分析 issue 前必须先刷新远端状态，并尽量把本地安全推进到最新基线：
 
-**输入:**
-- `stock_codes` (List[str]): 要分析的股票代码列表。
-- `config` (Config, 可选): 配置对象。默认为 `None`。
-- `full_report` (bool, 可选): 是否为每只股票生成完整报告。默认为 `False`。
-- `notifier` (NotificationService, 可选): 通知服务对象。默认为 `None`。
-
-**输出:** `List[AnalysisResult]`
-一个 `AnalysisResult` 对象列表。
-
-**示例:**
-
-```python
-from src.services.analyzer_service import analyze_stocks
-
-# 分析多只股票
-results = analyze_stocks(["600989", "000001"])
-for result in results:
-    print(f"股票: {result.name}, 操作建议: {result.operation_advice}")
+```bash
+git status --short
+git fetch --all --prune
+# 仅当工作区干净且当前分支可 fast-forward 时执行：
+git pull --ff-only
 ```
 
-**参考:** [`analyze_stocks`](src/services/analyzer_service.py)
+- 只有在工作区干净、当前分支有可 fast-forward 的上游时，才执行并接受 `git pull --ff-only` 的结果。
+- 如存在本地改动、冲突状态、未跟踪风险文件、无上游分支或无法 fast-forward，不要执行 `stash`、`reset`、强制切分支或覆盖本地状态；改用已 fetch 的 `origin/main` 或相关远端 refs 做分析。
+- 在输出文档的 `Evidence` 中记录同步结果：本地 HEAD、使用的远端基线，以及未更新本地工作树的原因（如有）。
 
+### Step 2: 拉取 Issue 信息
 
-### 3. 执行大盘复盘
-
-**描述:** 对整体市场进行复盘并返回一份报告。
-
-**何时使用:** 当用户要求市场概览、摘要或复盘时。
-
-**输入:**
-- `config` (Config, 可选): 配置对象。默认为 `None`。
-- `notifier` (NotificationService, 可选): 通知服务对象。默认为 `None`。
-
-**输出:** `Optional[str]`
-一个包含市场复盘报告的字符串，如果失败则为 `None`。
-
-**示例:**
-
-```python
-from src.services.analyzer_service import perform_market_review
-
-# 执行大盘复盘
-report = perform_market_review()
-if report:
-    print(report)
+```bash
+gh issue view <issue_number> --repo ZhuLinsen/daily_stock_analysis
+gh issue view <issue_number> --repo ZhuLinsen/daily_stock_analysis --comments
 ```
 
-**参考:** [`perform_market_review`](src/services/analyzer_service.py)
+如为 bug，优先核对 issue 模板中是否提供了以下信息：
+
+- 是否已同步到最新版本
+- commit hash / 版本基线
+- 运行环境与复现步骤
+- 日志或报错信息
+
+### Step 3: 回答 4 个核心问题
+
+1. 版本是否明确
+2. 问题是否真实且可验证
+3. 是否属于仓库责任边界
+4. 是否值得立即处理
+
+### Step 4: 结合仓库现状做证据检查
+
+- 阅读相关代码、配置、测试、脚本、工作流与文档
+- 如果问题涉及 API、数据源 fallback、报告生成、通知发送、认证、桌面端、发布流程，明确写出影响面
+- 判断是实际 bug、环境配置问题、使用方式问题、还是外部依赖问题
+- 如怀疑已被修复，检查当前代码而不是只看 issue 描述
+
+### Step 5: 形成结论
+
+至少给出以下字段：
+
+- `版本基线`：最新 / 非最新 / 未提供
+- `是否合理`：是/否 + 理由
+- `是否是 issue`：是/否 + 理由
+- `是否好解决`：是/否 + 难点
+- `结论`：`成立 / 部分成立 / 不成立`
+- `分类`：`bug / feature / docs / question / external`
+- `优先级`：`P0 / P1 / P2 / P3`
+- `难度`：`easy / medium / hard`
+- `建议动作`：`立即修复 / 排期修复 / 文档澄清 / 关闭`
+
+### Step 6: 生成分析文档
+
+保存到 `.claude/reviews/issues/issue-<number>.md`
+
+## Output Document Format
+
+```markdown
+# Issue #<number> Analysis
+
+**Date**: YYYY-MM-DD
+**Status**: Pending Review
+
+## Summary
+
+- 版本基线：
+- 是否合理：
+- 是否是 issue：
+- 是否好解决：
+- 结论：
+- 分类：
+- 优先级：
+- 难度：
+- 建议动作：
+
+## Evidence
+
+- 代码同步基线：
+- 关键 issue 信息：
+- 关键代码/脚本/工作流证据：
+
+## Impact Scope
+
+- 受影响模块：
+- 受影响运行路径（本地 / Docker / GitHub Actions / API / Web / Desktop）：
+
+## Root Cause / Main Reasoning
+
+<根因或主要判断依据>
+
+## Proposed Handling
+
+<建议修复、澄清或关闭方式>
+
+若建议后续创建 PR，给出的 PR title 建议符合 `AGENTS.md`：使用 `<类型>: <修改内容>`，不添加 `[codex]`、`codex`、`autocode`、`copilot` 或其他工具/agent 来源前缀；该约定仅用于协作一致性提醒，不应单独作为 review process blocker。
+
+## Risks And Rollback
+
+- 风险点：
+- 若修复，回滚方式：
+
+## Draft Reply
+
+<建议回复内容>
+```
+
+## Allowed Auto-Actions (No Confirmation Needed)
+
+- 拉取 issue 详情与评论
+- 执行 `git fetch --all --prune`，并在工作区干净且可 fast-forward 时执行 `git pull --ff-only`
+- 阅读相关代码、配置、脚本、工作流和文档
+- 生成分析文档
+
+## Actions Requiring Confirmation
+
+执行以下动作前，先询问用户：
+
+1. 添加或修改标签
+2. 在 issue 下评论
+3. 关闭 issue
+4. 开始修复 issue
 
 ---
 > Source: [ZhuLinsen/daily_stock_analysis](https://github.com/ZhuLinsen/daily_stock_analysis) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-17 -->
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
