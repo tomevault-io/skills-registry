@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SciMate-AI/HPC-Skills](https://github.com/SciMate-AI/HPC-Skills/tree/main/skills/hpc-su2/SKILL.md)
+Original source: [SciMate-AI/HPC-Skills](https://github.com/SciMate-AI/HPC-Skills/tree/main/skills/hpc-gmsh/SKILL.md)
 
 ---
 
