@@ -1,95 +1,82 @@
 ---
-name: server-gateway-refactor
-description: Use when refactoring AIRI apps/server routes that mix Hono route wiring, business operation orchestration, external gateway calls, billing, rate limiting, telemetry, or websocket session state. Applies especially to OpenAI-compatible, speech, Stripe, and websocket gateway surfaces.
+name: minecraft-debug-mcp
+description: Operate and debug the live Minecraft bot through its built-in MCP REPL server. Use when work requires starting the bot with `pnpm dev`, connecting to the local MCP endpoint, inspecting cognitive state/logs/history, injecting synthetic chat/events, or running targeted REPL code against the running brain during investigation and development. Use when this capability is needed.
 metadata:
   author: moeru-ai
 ---
 
-# Server Gateway Refactor
+# Minecraft Debug MCP
 
-Use this skill when an `apps/server` route file has grown into a mixed transport/business/infra module and the user wants it engineered rather than merely split by line count.
+## Overview
 
-## First Read
+Use this skill to run the local bot and interact with its MCP debug interface safely and quickly.
 
-Start from the exact route file the user named. Read nearby tests and domain services before editing. Use `rg` for call sites and avoid deleting legacy routes without checking tests/docs/env references.
+## Quick Start Workflow
 
-Look for these responsibilities:
+1. Run `pnpm dev` from `/path/to/project/root/services/minecraft` and keep it running.
+2. Wait for `MCP REPL server running at http://localhost:3001` in logs.
+3. Connect MCP client to `http://localhost:3001/sse`.
+4. Verify readiness with a read-only call:
+   - Read resource `brain://state`, or
+   - Call tool `get_state`.
+5. Continue with the smallest tool/action that answers the task.
 
-- HTTP/WebSocket transport shape: Hono routes, auth, request parsing, response mounting, upgrade setup.
-- Gateway operation shape: authenticated user, parsed body/query, operation id, model/provider routing, external calls.
-- Infra behavior: billing, rate limiting, telemetry/tracing, request logs, PostHog, retries, cache.
-- Domain services: persistence, Stripe records, character/provider ownership, chat messages, flux transactions.
+## Execution Rules
 
-## Boundary Rules
+- Start read-only, then escalate to mutation tools only when needed.
+- Prefer `get_state`, `get_last_prompt`, and `get_logs` for diagnostics before `execute_repl`.
+- Prefer `get_llm_trace` for structured per-attempt reasoning/content inspection.
+- Keep `execute_repl` snippets minimal and reversible.
+- Use `inject_chat` for conversational simulation and `inject_event` only when specific event-shape testing is required.
+- Treat `inject_chat` as side-effectful: it can trigger actual in-game bot replies/actions.
+- If MCP connection fails, check that `pnpm dev` is still running and port `3001` is free.
 
-- Keep Hono middleware as Hono middleware only when it can run from raw `Context`: auth, config availability, static files, IP-level limits.
-- Use gateway middleware when the decision needs parsed gateway context: user id, operation id, request body, requested model, resolved model, streaming lifecycle, usage, or billing state.
-- Prefer route-group scoped middleware for endpoint-specific behavior:
-  - Good: `gateway.route('openai').use('chat.completions', rateLimit).post(...)`
-  - Avoid: global gateway `.use('chat.completions', ...)` when the middleware is only meaningful for one endpoint group.
-- Do not create handler files that only pass through parse + operation. Inline thin adapters in the route index unless they hide meaningful protocol decisions.
-- Do not split by execution order alone. A module boundary should own a policy, operation, middleware, or external boundary.
+## Tooling Strategy
 
-## Naming
+- Use `get_state` to inspect queue/processing state and available tools/actions (skips REPL builtins by default; pass `{ includeBuiltins: true }` to include them).
+- Use `get_logs` with a small `limit` first.
+- Use `get_last_prompt` to inspect latest LLM input.
+- Use `execute_repl` for deep object inspection or one-off targeted calls on the running brain.
+- Use `inject_chat` to simulate player chat and verify behavior loop.
+- Use `get_llm_trace` to assert REPL behavior in automation (for example, detect repeated `await skip()` on specific events).
+- Use `execute_repl("forget_conversation()")` to clear conversation memory before prompt-engineering tests.
 
-- File names use kebab-case, not camelCase.
-- Use HTTP names for transport files and operation names for business files.
-- Prefer `middlewares/` for both Hono and gateway middleware in this project when they are part of a route gateway surface.
-- Prefer `operations/<operation>/index.ts` for reusable operation orchestration.
-- Avoid `gateway` as a domain name unless the module really owns route/runtime composition.
+Read `references/mcp-surface.md` for exact tool/resource names and argument schemas.
 
-## Preferred Shape
+## Live-Tested Notes
 
-For gateway-like HTTP surfaces:
+- `get_state` returns available tools/actions and runtime state (skips REPL builtins like `skip`, `use`, `log` by default to reduce noise; pass `{ includeBuiltins: true }` if you need to inspect them).
+- `get_last_prompt` can return very large payloads; call only when prompt-level debugging is needed.
+- `execute_repl` returns a structured result where `returnValue` is stringified; parse mentally as display output, not typed JSON.
+- `get_logs(limit=10)` is enough to verify whether an injected event reached REPL/executor.
+- `get_llm_trace(limit, turnId?)` gives structured attempt-level trace data (messages, content, reasoning, usage, duration).
+- `get_last_prompt` and `get_llm_trace` are compacted for MCP: system prompt/system-role messages are omitted to reduce token cost.
+- Prefer compact value reads in REPL:
+  - `query.self()` for bot status.
+  - `query.inventory().has(name, n)` / `query.inventory().count(name)` for checks.
+  - `query.inventory().summary()` for stable aggregated item output.
+  - `query.snapshot(range?)` for one-shot world+inventory capture.
+- `forget_conversation()` is available as a runtime function in REPL/global context and clears only conversation memory.
+- Current prompt behavior supports two-turn value-first flows: read/query turn returns concrete data first, follow-up turn performs chat/action using that returned value.
 
-```ts
-const gateway = createXGateway(deps)
-  .useHono('*', '*', authGuard)
-  .useHono('surface', '/path/*', configGuard(...))
+## Live Testing Workflow
 
-const surfaceRoutes = gateway.route('surface')
-  .use('operation.id', operationMiddleware(...))
-  .post('/path', surface.handler(
-    'operation.id',
-    async (c) => parseInput(c),
-    operation(deps),
-  ))
-  .route
-```
+1. Confirm MCP health:
+   - Call `get_state`.
+2. Capture baseline inventory:
+   - `execute_repl` with `query.inventory().list().map(i => ({ name: i.name, count: i.count }))`.
+3. Trigger a task through normal cognition path:
+   - Call `inject_chat` with a clear instruction (example: "please gather 3 dirt blocks").
+4. Verify execution trace:
+   - Call `get_logs(limit=10)` and check for:
+     - bot acknowledgement chat
+     - action tool feedback (for example `collectBlocks`)
+     - REPL result summary
+   - Call `get_llm_trace(limit=5)` when you need exact model output/reasoning for assertions.
+5. Re-check inventory using the same REPL snippet and compare against baseline.
 
-Keep route index readable:
-
-- It should show route groups, endpoint paths, and endpoint-scoped middleware.
-- It may inline small parse adapters.
-- It should not contain long external-provider workflows, webhook switches, or billing settlement logic.
-
-## Candidate Signals
-
-Use this pattern when:
-
-- One route file exceeds roughly 200-300 lines and mixes route wiring with external provider orchestration.
-- There are endpoint-specific middleware needs that cannot be represented as Hono middleware.
-- Tests describe operation behavior more than route matching.
-- The route has multiple business operations under one transport surface.
-
-Do not force this pattern when:
-
-- A CRUD route is already thin and delegates to a domain service.
-- The route mostly mounts framework-owned handlers, static assets, or metadata endpoints.
-- The logic belongs in an existing domain service instead of a new route gateway.
-
-## Verification
-
-After changes, run targeted validation before broader checks:
-
-```sh
-pnpm exec vitest run apps/server/src/routes/<route>/route.test.ts
-pnpm -F @proj-airi/server typecheck
-pnpm exec eslint <changed files>
-```
-
-If full `pnpm lint` fails from unrelated repo-wide issues, report that separately and keep targeted lint evidence.
+Use this workflow when validating behavior changes, tool wiring, or regressions in planning/execution loops.
 
 ---
 > Source: [moeru-ai/airi](https://github.com/moeru-ai/airi) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-24 -->
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
