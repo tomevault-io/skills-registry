@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [duckdb/duckdb-skills](https://github.com/duckdb/duckdb-skills/tree/main/skills/convert-file/SKILL.md)
+Original source: [duckdb/duckdb-skills](https://github.com/duckdb/duckdb-skills/tree/main/skills/read-memories/SKILL.md)
 
 ---
 
