@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [elizaOS/eliza](https://github.com/elizaOS/eliza/tree/main/packages/skills/skills/build-monetized-app/SKILL.md)
+Original source: [elizaOS/eliza](https://github.com/elizaOS/eliza/tree/main/packages/skills/skills/eliza-app-development/SKILL.md)
 
 ---
 
