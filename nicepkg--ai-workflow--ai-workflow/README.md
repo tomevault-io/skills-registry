@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nicepkg/ai-workflow](https://github.com/nicepkg/ai-workflow/tree/main/workflows/video-creator-workflow/.claude/skills/thumbnail-concept-generator/SKILL.md)
+Original source: [nicepkg/ai-workflow](https://github.com/nicepkg/ai-workflow/tree/main/workflows/marketing-pro-workflow/.claude/skills/running-marketing-campaigns/SKILL.md)
 
 ---
 
