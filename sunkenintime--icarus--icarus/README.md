@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SunkenInTime/icarus](https://github.com/SunkenInTime/icarus/tree/main/.agents/skills/impeccable/SKILL.md)
+Original source: [SunkenInTime/icarus](https://github.com/SunkenInTime/icarus/tree/main/.cursor/skills/frontend-design/SKILL.md)
 
 ---
 
