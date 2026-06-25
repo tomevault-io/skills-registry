@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tonone-ai/tonone](https://github.com/tonone-ai/tonone/tree/main/bundle/revenue-team/skills/surge-activation/SKILL.md)
+Original source: [tonone-ai/tonone](https://github.com/tonone-ai/tonone/tree/main/team/cache/skills/cache-evict/SKILL.md)
 
 ---
 
