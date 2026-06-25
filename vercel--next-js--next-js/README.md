@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vercel/next.js](https://github.com/vercel/next.js/tree/main/.agents/skills/react-vendoring/SKILL.md)
+Original source: [vercel/next.js](https://github.com/vercel/next.js/tree/main/.agents/skills/authoring-skills/SKILL.md)
 
 ---
 
