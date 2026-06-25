@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wasintoh/toh-framework](https://github.com/wasintoh/toh-framework/tree/main/src/skills/integrations/SKILL.md)
+Original source: [wasintoh/toh-framework](https://github.com/wasintoh/toh-framework/tree/main/src/skills/memory-system/SKILL.md)
 
 ---
 
