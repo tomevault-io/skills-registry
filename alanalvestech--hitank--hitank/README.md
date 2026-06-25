@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alanalvestech/hitank](https://github.com/alanalvestech/hitank/tree/main/skills/zendesk/SKILL.md)
+Original source: [alanalvestech/hitank](https://github.com/alanalvestech/hitank/tree/main/skills/clickup/SKILL.md)
 
 ---
 
