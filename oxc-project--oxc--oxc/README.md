@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oxc-project/oxc](https://github.com/oxc-project/oxc/tree/main/.agents/skills/migrate-oxfmt/SKILL.md)
+Original source: [oxc-project/oxc](https://github.com/oxc-project/oxc/tree/main/.agents/skills/migrate-oxlint/SKILL.md)
 
 ---
 
