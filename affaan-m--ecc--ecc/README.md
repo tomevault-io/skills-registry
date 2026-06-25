@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [affaan-m/ECC](https://github.com/affaan-m/ECC/tree/main/.agents/skills/eval-harness/SKILL.md)
+Original source: [affaan-m/ECC](https://github.com/affaan-m/ECC/tree/main/.kiro/skills/golang-testing/SKILL.md)
 
 ---
 
