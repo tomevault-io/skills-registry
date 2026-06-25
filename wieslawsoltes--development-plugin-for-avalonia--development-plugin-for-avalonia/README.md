@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wieslawsoltes/development-plugin-for-avalonia](https://github.com/wieslawsoltes/development-plugin-for-avalonia/tree/main/SKILL.md)
+Original source: [wieslawsoltes/development-plugin-for-avalonia](https://github.com/wieslawsoltes/development-plugin-for-avalonia/tree/main/skills/wpf-to-avalonia/SKILL.md)
 
 ---
 
