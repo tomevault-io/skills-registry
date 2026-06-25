@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [line/centraldogma](https://github.com/line/centraldogma/tree/main/.claude/skills/release-note/SKILL.md)
+Original source: [line/centraldogma](https://github.com/line/centraldogma/tree/main/.claude/skills/upgrade-deps/SKILL.md)
 
 ---
 
