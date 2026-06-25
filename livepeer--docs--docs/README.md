@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [livepeer/docs](https://github.com/livepeer/docs/tree/main/ai-tools/ai-skills/repo-audit-orchestrator/SKILL.md)
+Original source: [livepeer/docs](https://github.com/livepeer/docs/tree/main/ai-tools/ai-skills/cleanup-quarantine-manager/SKILL.md)
 
 ---
 
