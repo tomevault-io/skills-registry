@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [coleam00/Archon](https://github.com/coleam00/Archon/tree/main/.claude/skills/manage-run/SKILL.md)
+Original source: [coleam00/Archon](https://github.com/coleam00/Archon/tree/main/.claude/skills/archon-dev/SKILL.md)
 
 ---
 
