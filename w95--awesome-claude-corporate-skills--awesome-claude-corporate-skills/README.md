@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [w95/awesome-claude-corporate-skills](https://github.com/w95/awesome-claude-corporate-skills/tree/main/04-marketing/domain-name-brainstormer/SKILL.md)
+Original source: [w95/awesome-claude-corporate-skills](https://github.com/w95/awesome-claude-corporate-skills/tree/main/11-customer-success/response-drafting/SKILL.md)
 
 ---
 
