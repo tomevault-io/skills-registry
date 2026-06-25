@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LingyiChen-AI/OpenSkills](https://github.com/LingyiChen-AI/OpenSkills/tree/main/examples/weekly-report-to-annual/SKILL.md)
+Original source: [LingyiChen-AI/OpenSkills](https://github.com/LingyiChen-AI/OpenSkills/tree/main/examples/file-to-article-generator/SKILL.md)
 
 ---
 
