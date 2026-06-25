@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA-NeMo/NeMo](https://github.com/NVIDIA-NeMo/NeMo/tree/main/.claude/skills/debug-training-logs/SKILL.md)
+Original source: [NVIDIA-NeMo/NeMo](https://github.com/NVIDIA-NeMo/NeMo/tree/main/.claude/skills/nemo-speech-asr-finetune/SKILL.md)
 
 ---
 
