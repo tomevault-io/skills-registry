@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fla-org/flash-linear-attention](https://github.com/fla-org/flash-linear-attention/tree/main/.agents/skills/fla-kda/SKILL.md)
+Original source: [fla-org/flash-linear-attention](https://github.com/fla-org/flash-linear-attention/tree/main/.agents/skills/fla-mr-readiness/SKILL.md)
 
 ---
 
