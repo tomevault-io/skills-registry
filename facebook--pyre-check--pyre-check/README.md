@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [facebook/pyre-check](https://github.com/facebook/pyre-check/tree/main/.llms/skills/architecture/SKILL.md)
+Original source: [facebook/pyre-check](https://github.com/facebook/pyre-check/tree/main/.llms/skills/pysa-json-models/SKILL.md)
 
 ---
 
