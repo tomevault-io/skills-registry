@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vyayasan/kyc-analyst](https://github.com/vyayasan/kyc-analyst/tree/main/skills/refresh/SKILL.md)
+Original source: [vyayasan/kyc-analyst](https://github.com/vyayasan/kyc-analyst/tree/main/skills/screening/SKILL.md)
 
 ---
 
