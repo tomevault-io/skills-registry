@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dada-lang/dada](https://github.com/dada-lang/dada/tree/main/.claude/skills/run-tests/SKILL.md)
+Original source: [dada-lang/dada](https://github.com/dada-lang/dada/tree/main/.claude/skills/author-code/SKILL.md)
 
 ---
 
