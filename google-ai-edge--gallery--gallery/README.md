@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google-ai-edge/gallery](https://github.com/google-ai-edge/gallery/tree/main/Android/src/app/src/main/assets/skills/send-email/SKILL.md)
+Original source: [google-ai-edge/gallery](https://github.com/google-ai-edge/gallery/tree/main/Android/src/app/src/main/assets/skills/mood-tracker/SKILL.md)
 
 ---
 
