@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neondatabase/ai-rules](https://github.com/neondatabase/ai-rules/tree/main/neon-plugin/skills/neon-toolkit/SKILL.md)
+Original source: [neondatabase/ai-rules](https://github.com/neondatabase/ai-rules/tree/main/neon-plugin/skills/neon-drizzle/SKILL.md)
 
 ---
 
