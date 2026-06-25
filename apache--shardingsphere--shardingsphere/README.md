@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [apache/shardingsphere](https://github.com/apache/shardingsphere/tree/main/.codex/skills/review-pr/SKILL.md)
+Original source: [apache/shardingsphere](https://github.com/apache/shardingsphere/tree/main/.codex/skills/analyze-issue/SKILL.md)
 
 ---
 
