@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute/tree/main/skills/cli-mcp/SKILL.md)
+Original source: [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute/tree/main/skills/cli-a2a/SKILL.md)
 
 ---
 
