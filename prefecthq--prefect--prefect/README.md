@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PrefectHQ/prefect](https://github.com/PrefectHQ/prefect/tree/main/.claude/skills/document-changes/SKILL.md)
+Original source: [PrefectHQ/prefect](https://github.com/PrefectHQ/prefect/tree/main/.claude/skills/backlog-management/SKILL.md)
 
 ---
 
