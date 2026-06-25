@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pbakaus/impeccable](https://github.com/pbakaus/impeccable/tree/main/.claude/skills/impeccable/SKILL.md)
+Original source: [pbakaus/impeccable](https://github.com/pbakaus/impeccable/tree/main/.gemini/skills/impeccable/SKILL.md)
 
 ---
 
