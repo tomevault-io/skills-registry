@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [onnx/onnx](https://github.com/onnx/onnx/tree/main/.agents/skills/add-function-body/SKILL.md)
+Original source: [onnx/onnx](https://github.com/onnx/onnx/tree/main/.agents/skills/add-shape-inference/SKILL.md)
 
 ---
 
