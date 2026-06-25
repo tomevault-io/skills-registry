@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shikidmsh-rgb/mochibot](https://github.com/shikidmsh-rgb/mochibot/tree/main/mochi/skills/maintenance/SKILL.md)
+Original source: [shikidmsh-rgb/mochibot](https://github.com/shikidmsh-rgb/mochibot/tree/main/mochi/skills/skill_management/SKILL.md)
 
 ---
 
