@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [YunjueTech/Yunjue-Agent](https://github.com/YunjueTech/Yunjue-Agent/tree/main/example/cli/skills/pptx/SKILL.md)
+Original source: [YunjueTech/Yunjue-Agent](https://github.com/YunjueTech/Yunjue-Agent/tree/main/example/cli/skills/xlsx/SKILL.md)
 
 ---
 
