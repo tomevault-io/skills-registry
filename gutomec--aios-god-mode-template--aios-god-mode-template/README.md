@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gutomec/aios-god-mode-template](https://github.com/gutomec/aios-god-mode-template/tree/main/template/skills/aiox-god-mode/SKILL.md)
+Original source: [gutomec/aios-god-mode-template](https://github.com/gutomec/aios-god-mode-template/tree/main/template/skills/aios-god-mode/SKILL.md)
 
 ---
 
