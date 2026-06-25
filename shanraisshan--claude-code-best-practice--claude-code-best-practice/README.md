@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice/tree/main/.claude/skills/weather-svg-creator/SKILL.md)
+Original source: [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice/tree/main/agent-teams/.claude/skills/time-fetcher/SKILL.md)
 
 ---
 
