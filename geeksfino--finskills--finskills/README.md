@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Geeksfino/finskills](https://github.com/Geeksfino/finskills/tree/main/China-market/sentiment-reality-gap/SKILL.md)
+Original source: [Geeksfino/finskills](https://github.com/Geeksfino/finskills/tree/main/China-market/quant-factor-screener/SKILL.md)
 
 ---
 
