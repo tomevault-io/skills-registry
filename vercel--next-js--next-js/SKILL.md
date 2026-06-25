@@ -1,142 +1,133 @@
 ---
-name: write-api-reference
-description: | Use when this capability is needed.
+name: next-cache-components-optimizer
+description: > Use when this capability is needed.
 metadata:
   author: vercel
 ---
 
-# Writing API Reference Pages
+# next-cache-components-optimizer
 
-## Goal
+Two loops, shared levers and primitives, different diagnostics:
 
-Produce an API reference page that documents a single API surface (function, component, file convention, directive, or config option). The page should be concise, scannable, and example-driven.
+- **Page-render loop** ([ppr-loop.md](./ppr-loop.md)) — grow the static shell of a single page. Rank Suspense fallback areas on a shell-only render.
+- **Nav loop** ([instant-nav-loop.md](./instant-nav-loop.md)) — when the user clicks a link from A to B, show B's static layout immediately (chrome, structure, content-shaped fallbacks) instead of holding A's UI until B's data resolves. Capture B's suspended boundaries post-`pushstate`, classify each by `suspended_by[].name`, drop SSR-only client hooks.
 
-Each page documents **one API**. If the API has sub-methods (like `cookies.set()`), document them on the same page. If two APIs are independent, they get separate pages.
+Pick one and run it end-to-end.
 
-## Structure
+## requires
 
-Identify which category the API belongs to, then follow the corresponding template.
+- `next-dev-loop` initiated for this session — it opens the headed browser, exposes the `agent-browser` CLI, and wires the dev MCP server that provides `mcp get_logs`.
+- `cacheComponents: true` in `next.config.ts`. Refuse otherwise.
 
-### Categories
+## preflight (shared)
 
-1. **Function** (`cookies`, `fetch`, `generateStaticParams`): signature, params/returns, methods table, examples
-2. **Component** (`Link`, `Image`, `Script`): props summary table, individual prop docs, examples
-3. **File convention** (`page`, `layout`, `route`): definition, code showing the convention, props, behavior, examples
-4. **Directive** (`use client`, `use cache`): definition, usage, serialization/boundary rules, reference
-5. **Config option** (`basePath`, `images`, etc.): definition, config code, behavioral sections
+1. Confirm `cacheComponents: true`.
+2. **The user must already be at the page each loop needs** in the headed browser (from `next-dev-loop`) — logged in, with any state set up. This skill can't drive auth, SSO, or MFA; it takes the manual setup as the starting point. (Each sub-loop names which page it expects.)
+3. `agent-browser get url` to anchor the current route.
 
-### Template
+Each loop sets the instant cookie as needed (see the shared `instant cookie` section below).
 
-````markdown
+## instant cookie (shared)
+
+Both loops use the `next-instant-navigation-testing` cookie to freeze the framework's dynamic-data writes. Once set, visible content on the page is the static shell + Suspense fallbacks — that's what we capture to assess the optimization.
+
+Set it with a pending-lock tuple `[0, "<unique-id>"]`. The id is any unique string; the convention is a `p`-prefixed random stamp so concurrent scopes don't collide:
+
+```
+agent-browser cookies set next-instant-navigation-testing '[0,"p<random>"]' \
+  --url <origin>
+```
+
+Each loop's preflight specifies when to set it within the flow. Clear it at the end (see `teardown` below).
+
+## decide which loop
+
+- **Page-render** when the complaint is about one route's initial load. Read [ppr-loop.md](./ppr-loop.md).
+- **Nav** when it's about navigating between two routes. Read [instant-nav-loop.md](./instant-nav-loop.md).
+
+Ambiguous → ask.
+
+## shared refactor levers
+
+- **Push down** — extract I/O into a Suspense-wrapped child so the parent stays static and static siblings lift into the shell.
+  - **Recurse, don't blind-wrap.** If a Suspense boundary already wraps a component containing both static content and the I/O, read inside, extract the I/O-dependent JSX into a new leaf, and lift the static siblings up.
+- **Cache** — `'use cache'` + `cacheLife(<profile>)`. Always ask the user for freshness; map to a preset (`seconds` / `minutes` / `hours` / `days` / `weeks` / `max` / `default`).
+
+Push-down and cache compose: push-down lifts static structure, cache eliminates the remaining data gap.
+
+## propose via plan mode (shared)
+
+Each refactor goes through plan mode before applying. Treat this as a signal: the application work is non-trivial agentic engineering, not a templated edit. This skill provides the framework — which lever to reach for, which candidate to fix, what the expected visible delta is — but the real work (which file to edit, how to cleanly extract the I/O, where to place the new Suspense boundary, which `cacheLife` profile to ask the user for) is a judgment call you have to think through. Plan mode forces a coherent proposal before touching code, and gives the user a chance to redirect on any of those decisions.
+
+## no-shell bailout (shared)
+
+The levers presume a shell exists to grow or cache toward. If the route is fully blocking — HTTP 500 with `blocking-route` or `NEXT_STATIC_GEN_BAILOUT` in `mcp get_logs`, or zero Suspense boundaries on a visibly-rendered page — there's no shell. Surface the structural blocker and stop; the user has to wrap the offending dynamic access in `<Suspense>` before either loop can help.
+
+## verify requires a visible delta (shared)
+
+Each loop captures a baseline screenshot of the shell before applying any change, then re-screenshots after. Report both paths in the final summary so the user can see what changed. The two captures must visibly differ — fallback area shrunk, content promoted to the static surface, target fallback gone or content-shaped. Identical-looking captures mean the refactor didn't land; undo. "Compiles cleanly" is not the bar.
+
+**Hide the dev overlay before each screenshot.** The Next.js dev overlay (`<nextjs-portal>` at the document root) renders instant-nav guidance, build errors, and other dev chrome that pollute the before/after comparison. Hide it, screenshot, restore:
+
+```
+agent-browser eval "document.querySelector('nextjs-portal').style.display='none'"
+agent-browser screenshot <path>
+agent-browser eval "document.querySelector('nextjs-portal').style.display=''"
+```
+
+## anti-patterns (shared)
+
+**Don't replace granular Suspense boundaries with a top-level loading skeleton.** A `loading.tsx` for the whole segment, or a root-level `<Suspense fallback={<Skeleton />}>` (or worse, `fallback={null}` that blanks the UI), defeats this skill's optimization — which is to extract real static chrome above each granular boundary and use content-shaped fallbacks per region. A coarse "the page is loading" stand-in bypasses the work entirely.
+
+## gotchas (shared)
+
+- Dev doesn't prefetch the way production does, and routes compile on first hit — so after a navigation or reload, the DOM keeps updating for noticeably longer than the eventual production experience. Wait patiently for the DOM to stabilize before capturing the React tree or taking a screenshot — e.g., poll `document.documentElement.innerHTML.length` until it's unchanged across two consecutive reads. A fixed short delay risks sampling mid-render.
+- Don't try to verify nav prefetch by inspecting dev network traffic — dev doesn't fire prefetch requests at all, so the network tab, manual `router.prefetch()` calls, and `<Link prefetch={true}>` will all look broken regardless of whether your code is correct. The cookie-locked SPA-nav recipe in [instant-nav-loop.md](./instant-nav-loop.md) under `verify` is already the canonical recipe for this — it simulates what production would prerender into the prefetched RSC without requiring prefetch to actually fire. Use it; don't invent a network-tab alternative.
+- The diagnose pipeline can be flaky — DevTools attachment timing, DOM-settle races, and dev compilation effects can each produce inconsistent captures from one run to the next. When a result feels off (a candidate appears that you don't expect, or one you expect doesn't), re-run the diagnose 2–3 times and cross-check; boundaries that appear consistently are real, one-off appearances are noise.
+
+## reference (shared primitives)
+
+```
+agent-browser react suspense          add --only-dynamic to filter
+--json                                server-side to actually-
+                                      suspended boundaries. Each
+                                      entry has jsx_source +
+                                      suspended_by[] with raw blocker
+                                      names (usePathname, cookies,
+                                      fetch, cache, ...); classify by
+                                      name for per-loop rules
+
+POST /__nextjs_original-stack-frames  body { frames: StackFrame[],
+                                      isServer, isEdgeServer,
+                                      isAppDirectory }; returns one
+                                      result per frame with
+                                      file:line:column
+
+mcp get_logs                          dev MCP tool from
+                                      next-dev-loop; surfaces
+                                      blocking-route /
+                                      NEXT_STATIC_GEN_BAILOUT 500s
+
+cacheLife('<profile>')                default | seconds | minutes
+                                      | hours | days | weeks | max
+```
+
+Per-loop primitives in [instant-nav-loop.md](./instant-nav-loop.md).
+
+## teardown (shared)
+
+Delete the cookie by name — overwrite with an expired stamp:
+
+```
+agent-browser cookies set next-instant-navigation-testing x \
+  --url <origin> --expires 1
+```
+
+Never `agent-browser cookies clear` (no args) — wipes auth.
+
 ---
-title: {API name}
-description: {API Reference for the {API name} {function|component|file convention|directive|config option}.}
----
 
-{One sentence defining what it does and where it's used.}
-
-```tsx filename="path/to/file.tsx" switcher
-// Minimal working usage
-```
-
-```jsx filename="path/to/file.js" switcher
-// Same example in JS
-```
-
-## Reference
-
-{For functions: methods/params table, return type.}
-{For components: props summary table, then `#### propName` subsections.}
-{For file conventions: `### Props` with `#### propName` subsections.}
-{For directives: usage rules and serialization constraints.}
-{For config: options table or individual option docs.}
-
-### {Subsection name}
-
-{Description + code example + table of values where applicable.}
-
-## Good to know
-
-- {Default behavior or implicit effects.}
-- {Caveats, limitations, or version-specific notes.}
-- {Edge cases the developer should be aware of.}
-
-## Examples
-
-### {Example name}
-
-{Brief context, 1-2 sentences.}
-
-```tsx filename="path/to/file.tsx" switcher
-// Complete working example
-```
-
-```jsx filename="path/to/file.js" switcher
-// Same example in JS
-```
-
-## Version History
-
-| Version  | Changes         |
-| -------- | --------------- |
-| `vX.Y.Z` | {What changed.} |
-````
-
-**Category-specific notes:**
-
-- **Functions**: Lead with the function signature and `await` if async. Document methods in a table if the return value has methods (like `cookies`). Document options in a separate table if applicable.
-- **Components**: Start with a props summary table (`| Prop | Example | Type | Required |`). Then document each prop under `#### propName` with description, code example, and value table where useful.
-- **File conventions**: Show the default export signature with TypeScript types. Document each prop (`params`, `searchParams`, etc.) under `#### propName` with a route/URL/value example table.
-- **Directives**: No `## Reference` section. Use `## Usage` instead, showing correct placement. Document serialization constraints and boundary rules.
-- **Config options**: Show the `next.config.ts` snippet. Use subsections for each behavioral aspect.
-
-## Rules
-
-1. **Lead with what it does.** First sentence defines the API. No preamble.
-2. **Show working code immediately.** A minimal usage example appears right after the opening sentence, before `## Reference`.
-3. **Use `switcher` for tsx/jsx pairs.** Always include both. Always include `filename="path/to/file.ext"`.
-4. **Use `highlight={n}` for key lines.** Highlight the line that demonstrates the API being documented.
-5. **Tables for simple APIs, subsections for complex ones.** If a prop/param needs only a type and one-line description, use a table row. If it needs a code example or multiple values, use a `####` subsection.
-6. **Behavior section uses `> **Good to know**:`or`## Good to know`.** Use the blockquote format for brief notes (1-3 bullets). Use the heading format for longer sections. Not "Note:" or "Warning:".
-7. **Examples section uses `### Example Name` subsections.** Each example solves one specific use case.
-8. **Version History table at the end.** Include when the API has changed across versions. Omit for new APIs.
-9. **No em dashes.** Use periods, commas, or parentheses instead.
-10. **Mechanical, observable language.** Describe what happens, not how it feels. "Returns an object" not "gives you an object".
-11. **Link to related docs with relative paths.** Use `/docs/app/...` format.
-12. **No selling or justifying.** No "powerful", "easily", "simply". State what the API does.
-
-| Don't                                                   | Do                                                                                          |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| "This powerful function lets you easily manage cookies" | "`cookies` is an async function that reads HTTP request cookies in Server Components"       |
-| "You can conveniently access..."                        | "Returns an object containing..."                                                           |
-| "The best way to handle navigation"                     | "`<Link>` extends the HTML `<a>` element to provide prefetching and client-side navigation" |
-
-13. **Bridge new framework terms with legacy or generic vocabulary.** When the API renames or differentiates from a prior concept (Pages-era term, generic web term, REST vocabulary), include one such synonym in the frontmatter `description` and once in prose. Example: `description: "Use Dynamic Segments to read URL parameters and generate routes from dynamic data."` mentions "URL parameters" alongside "Dynamic Segments". One synonym, folded into natural prose. No separate "Synonyms" or "Also known as" section, no keyword stuffing. Goal: preserve discoverability for users still searching the old vocabulary even when the framework has moved on.
-
-| Don't                              | Do                                                                                   |
-| ---------------------------------- | ------------------------------------------------------------------------------------ |
-| "Learn how to use Route Handlers"  | "Build API endpoints with Route Handlers, the App Router replacement for API Routes" |
-| "Configure dynamic route segments" | "Read URL parameters from dynamic route segments"                                    |
-
-## Workflow
-
-1. **Ask for reference material.** Ask the user if they have any RFCs, PRs, design docs, or other context that should inform the doc.
-2. **Identify the API category** (function, component, file convention, directive, config).
-3. **Research the implementation.** Read the source code to understand params, return types, edge cases, and defaults.
-4. **Check e2e tests.** Search `test/` for tests exercising the API to find real usage patterns, edge cases, and expected behavior.
-5. **Check existing related docs** for linking opportunities and to avoid duplication.
-6. **Write using the appropriate category template.** Follow the rules above.
-7. **Review against the rules.** Verify: one sentence opener, immediate code example, correct `switcher`/`filename` usage, tables vs subsections, "Good to know" format, no em dashes, mechanical language.
-
-## References
-
-Read these pages in `docs/01-app/03-api-reference/` before writing. They demonstrate the patterns above.
-
-- `04-functions/cookies.mdx` - Function with methods table, options table, and behavior notes
-- `03-file-conventions/page.mdx` - File convention with props subsections and route/URL/value tables
-- `02-components/link.mdx` - Component with props summary table and detailed per-prop docs
-- `01-directives/use-client.mdx` - Directive with usage section and serialization rules
-- `04-functions/fetch.mdx` - Function with troubleshooting section and version history
+Sibling of `next-dev-loop` — initiate that first.
 
 ---
 > Source: [vercel/next.js](https://github.com/vercel/next.js) — distributed by [TomeVault](https://tomevault.io).
