@@ -1,109 +1,84 @@
 ---
-name: babysit-pr
-description: Get a pull request to green CI. Diagnose and fix CI failures, push fixes, re-trigger CI via the "Run CICD" label, and repeat until all checks pass. Does not post comments — this is a local developer tool. Use when this capability is needed.
+name: nemo-speech-asr-finetune
+description: Guide NeMo Speech users through ASR fine-tuning with container setup and Lhotse training. Use when this capability is needed.
 metadata:
   author: NVIDIA-NeMo
 ---
 
-# babysit-pr
+# NeMo Speech ASR Fine-Tuning
 
-Get a PR's CI to green. Nothing else — no review comments, no PR comments, no status summaries. This skill is run locally by developers in their own sandboxes.
+Use this skill when a user wants to fine-tune a NeMo Speech ASR model, choose a checkpoint, adapt a tokenizer,
+configure Lhotse dataloading, train, average checkpoints, or evaluate a fine-tuned ASR `.nemo` checkpoint.
+Also use it for post-run refinement planning after fine-tuning.
 
-## Inputs
+Default posture:
 
-The PR number is the primary input. It may come from:
-- An explicit argument: `/babysit-pr 567`
-- The conversation context: "check on PR #567"
-- A GitHub PR URL pasted into the chat
+- Use the NeMo container unless the user explicitly asks for local execution.
+- Prefer Lhotse for train and validation dataloaders.
+- Use `trainer.max_steps`, not `trainer.max_epochs`.
+- Use `val_wer` as the checkpoint monitor for validation.
+- By default, evaluate WER without capitalization and punctuation effects. Change that only when the user explicitly
+  asks for raw/cased/punctuated scoring.
+- Report final quality from standalone evaluation, not only in-training validation logs.
 
-If no PR number is clear, ask for it before proceeding.
+## Staged Workflow
 
-## Workflow
+Load only the reference file needed for the current stage:
 
-### Step 1 — Get the full picture
+1. Setup and checkpoint selection: read `references/setup-checkpoints.md`.
+2. Data prep, transcript-style preflight, Lhotse, bucketing, validation dataloader, and blends: read
+   `references/data-lhotse.md`.
+3. Architecture detection, tokenizer changes, and AED/Canary multitask metrics: read
+   `references/architecture-tokenizer-metrics.md`.
+4. Training, checkpoint averaging, and evaluation: read `references/training-evaluation.md` and, when reporting WER,
+   `references/evaluation-style-contract.md`.
+5. Post-run refinement, error analysis, curriculum, and general-vs-domain evaluation: read
+   `references/refinement-iteration.md`.
 
-```bash
-gh pr view <PR_NUMBER> --repo NVIDIA-NeMo/NeMo
-gh pr checks <PR_NUMBER> --repo NVIDIA-NeMo/NeMo
-gh pr diff <PR_NUMBER> --repo NVIDIA-NeMo/NeMo
-```
+If the user explicitly asks for parallel/sub-agent work, split the work by these same stages. Keep each agent scoped to
+one stage and have the main agent integrate the final command/config.
 
-Determine the current state:
+## Core Commands
 
-| State                        | What to do                           |
-|------------------------------|--------------------------------------|
-| CI failing                   | Diagnose and fix (Step 2)            |
-| Merge conflicts              | Resolve (Step 3)                     |
-| Formatting check failing     | Wait — do NOT fix (see below)        |
-| CI green                     | Done, nothing to do                  |
-| CI pending                   | Wait for it to finish, then reassess |
+Generic fine-tuning uses `examples/asr/speech_to_text_finetune.py`. For architecture-specific recipes, route to:
 
-### Checks to ignore
+- CTC: `examples/asr/asr_ctc/speech_to_text_ctc_bpe.py`
+- RNNT: `examples/asr/asr_transducer/speech_to_text_rnnt_bpe.py`
+- Hybrid RNNT/CTC or TDT/CTC: `examples/asr/asr_hybrid_transducer_ctc/speech_to_text_hybrid_rnnt_ctc_bpe.py`
+- AED/Canary: `examples/asr/speech_multitask/speech_to_text_aed.py`
 
-The **"Isort and Black Formatting"** workflow (`reformat_with_isort_and_black` job) auto-pushes formatting fixes. If that check is failing or pending:
-- Do NOT fix formatting yourself — the auto-formatter will push a commit shortly.
-- Wait for it to complete and for the new commit to land before assessing other failures, since the formatting push changes the HEAD SHA and may re-trigger CI.
+Always check the current repo docs before giving version-sensitive claims:
 
-### Step 2 — Fix CI failures
+- `README.md`
+- `docs/source/asr/fine_tuning.rst`
+- `docs/source/asr/datasets.rst`
+- `docs/source/dataloaders.rst`
+- `docs/source/asr/featured_models.rst`
+- `docs/source/asr/asr_checkpoints.rst`
+- `nemo/collections/common/data/lhotse/dataloader.py`
 
-Check out the PR branch and inspect the failure logs:
+## Non-Negotiable Pitfalls
 
-```bash
-gh pr checkout <PR_NUMBER> --repo NVIDIA-NeMo/NeMo
-gh run list --repo NVIDIA-NeMo/NeMo --branch <branch-name>
-gh run view <RUN_ID> --repo NVIDIA-NeMo/NeMo --log-failed
-```
-
-Before attempting a fix, check `git log` for recent commits. If you see a previous fix attempt that addressed the same failure and it is still failing, **stop and tell the user** — the issue needs human attention. Do not keep retrying the same fix.
-
-Otherwise, identify the root cause, fix the code, and push:
-
-```bash
-git add <changed files>
-git commit -s -m "<brief summary of fix>"
-git push
-```
-
-### Step 3 — Re-trigger CI
-
-After pushing a fix, add the "Run CICD" label to re-trigger the CI pipeline:
-
-```bash
-gh pr edit <PR_NUMBER> --repo NVIDIA-NeMo/NeMo --add-label "Run CICD"
-```
-
-The "CICD NeMo" workflow is triggered by this label and removes it automatically when done.
-
-Then wait for CI to complete and reassess. Go back to Step 1.
-
-### Step 4 — Resolve merge conflicts
-
-If the PR branch has fallen behind main and has conflicts:
-
-```bash
-git fetch origin main
-git rebase origin/main
-# Resolve conflicts — keep the PR's intent, adopt refactors from main
-git add <resolved files>
-git rebase --continue
-git push --force-with-lease
-```
-
-After rebasing, go back to Step 3 to re-trigger CI.
-
-## Rules
-
-- **Do NOT post comments on the PR.** This is a local tool — communicate with the user directly.
-- **Do NOT address review comments.** The goal is green CI, not review resolution.
-- **Do NOT fix formatting.** The `Isort and Black Formatting` action handles that automatically.
-- **Do NOT retry a failed fix.** If your previous commit didn't resolve the failure, tell the user.
-- **Do NOT create new PRs.** Push to the existing branch only.
-- **Do NOT attempt to merge the PR or push to main.**
-
-## What done looks like
-
-CI is green (or the only remaining failures are pre-existing / flaky and you've told the user about them). That's it.
+- When changing Lhotse batch modes, explicitly null conflicting options. For OOMptimizer profiles, set
+  `batch_size=null`, `batch_duration=null`, and `quadratic_duration=null` when adding `bucket_batch_size`.
+- Set `model.validation_ds.use_lhotse=true`, but prefer static validation `batch_size` with bucketing disabled.
+- Do not use fused loss/WER or tune `fused_batch_size` for RNNT/TDT fine-tuning guidance from this skill.
+- Run the first OOMptimizer pass with default CLI settings; lower `--memory-fraction` only after a real training OOM.
+- Run preflight checks before long jobs: disk space, free GPUs, manifest validity, and duration/text sanity.
+- Before any fine-tuning, audit transcript style within and across all fine-tuning/validation/test sources. Do not
+  train on mixed casing, punctuation, inverse-text-normalization, or symbol conventions; choose and fix one target style
+  first, and compare it with the original checkpoint's prediction style when applicable.
+- For small domain adaptation, start with a lower LR than large-data fine-tuning; do not blindly use `1e-4`.
+- Do not train a tokenizer on validation or test transcripts.
+- Do not ignore silent Lhotse filtering from `min_duration`, `max_duration`, `min_tps`, and `max_tps`.
+- Do not use `amp=true` for inference/evaluation; use `amp=false compute_dtype=bfloat16`.
+- Unless the user asks otherwise, report the default WER with capitalization and punctuation removed, and record any raw
+  WER separately when it helps diagnose transcript-style mismatch.
+- For AED/Canary, configure `multitask_metrics_cfg` so ASR and translation/task-specific samples are evaluated with
+  the right constrained metrics.
+- If checkpoint averaging is used, evaluate the averaged checkpoint and keep it only if it beats the best individual
+  checkpoint.
 
 ---
 > Source: [NVIDIA-NeMo/NeMo](https://github.com/NVIDIA-NeMo/NeMo) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-24 -->
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
