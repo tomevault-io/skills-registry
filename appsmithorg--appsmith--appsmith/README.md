@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [appsmithorg/appsmith](https://github.com/appsmithorg/appsmith/tree/main/.cursor/skills/fix-pw-spec/SKILL.md)
+Original source: [appsmithorg/appsmith](https://github.com/appsmithorg/appsmith/tree/main/.cursor/skills/diagnose-pw-failure/SKILL.md)
 
 ---
 
