@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MemPalace/mempalace](https://github.com/MemPalace/mempalace/tree/main/.claude-plugin/skills/mempalace-recall/SKILL.md)
+Original source: [MemPalace/mempalace](https://github.com/MemPalace/mempalace/tree/main/.antigravity-plugin/skills/mempalace-recall/SKILL.md)
 
 ---
 
