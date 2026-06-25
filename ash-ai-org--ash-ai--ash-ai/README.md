@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ash-ai-org/ash-ai](https://github.com/ash-ai-org/ash-ai/tree/main/skills/ash/SKILL.md)
+Original source: [ash-ai-org/ash-ai](https://github.com/ash-ai-org/ash-ai/tree/main/examples/personal-assistant-demo/agent_folder/.claude/skills/analyze/SKILL.md)
 
 ---
 
