@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nicepkg/ai-workflow](https://github.com/nicepkg/ai-workflow/tree/main/workflows/stock-trader-workflow/.claude/skills/weekly-trade-strategy/.claude/skills/earnings-calendar/SKILL.md)
+Original source: [nicepkg/ai-workflow](https://github.com/nicepkg/ai-workflow/tree/main/workflows/stock-trader-workflow/.claude/skills/weekly-trade-strategy/.claude/skills/technical-analyst/SKILL.md)
 
 ---
 
