@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mcp-use/mcp-use](https://github.com/mcp-use/mcp-use/tree/main/skills/openapi-to-mcp/SKILL.md)
+Original source: [mcp-use/mcp-use](https://github.com/mcp-use/mcp-use/tree/main/skills/mcp-apps-builder/SKILL.md)
 
 ---
 
