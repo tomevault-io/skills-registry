@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [beingsmit/technical-product-gtm](https://github.com/beingsmit/technical-product-gtm/tree/main/skills/product-led-growth/SKILL.md)
+Original source: [beingsmit/technical-product-gtm](https://github.com/beingsmit/technical-product-gtm/tree/main/skills/developer-ecosystem/SKILL.md)
 
 ---
 
