@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [promptfoo/promptfoo](https://github.com/promptfoo/promptfoo/tree/main/examples/claude-agent-sdk/plugins/sample-plugin/skills/standards-check/SKILL.md)
+Original source: [promptfoo/promptfoo](https://github.com/promptfoo/promptfoo/tree/main/examples/claude-agent-sdk/skills/sample-project/.claude/skills/code-review/SKILL.md)
 
 ---
 
