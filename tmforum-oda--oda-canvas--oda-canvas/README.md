@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tmforum-oda/oda-canvas](https://github.com/tmforum-oda/oda-canvas/tree/main/skills/helm-chart-development/SKILL.md)
+Original source: [tmforum-oda/oda-canvas](https://github.com/tmforum-oda/oda-canvas/tree/main/skills/github-actions-debugging/SKILL.md)
 
 ---
 
