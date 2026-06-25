@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [besoeasy/open-skills](https://github.com/besoeasy/open-skills/tree/main/skills/phone-specs-scraper/SKILL.md)
+Original source: [besoeasy/open-skills](https://github.com/besoeasy/open-skills/tree/main/skills/user-ask-for-report/SKILL.md)
 
 ---
 
