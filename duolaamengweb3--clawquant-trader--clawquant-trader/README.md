@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [duolaAmengweb3/clawquant-trader](https://github.com/duolaAmengweb3/clawquant-trader/tree/main/docs/skill.md)
+Original source: [duolaAmengweb3/clawquant-trader](https://github.com/duolaAmengweb3/clawquant-trader/tree/main/clawquant/skills/SKILL.md)
 
 ---
 
