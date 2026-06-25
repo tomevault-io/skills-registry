@@ -1,206 +1,293 @@
 ---
-name: validate-trigger
-description: Audit an existing Sim webhook trigger against the service's webhook API docs and repository conventions, then report and fix issues across trigger definitions, provider handler, output alignment, registration, and security. Use when validating or repairing a trigger under `apps/sim/triggers/{service}/` or `apps/sim/lib/webhooks/providers/{service}.ts`. Use when this capability is needed.
+name: validate-integration
+description: Audit an existing Sim integration against the service API docs and repository conventions, then report and fix issues across tools, blocks, outputs, OAuth scopes, triggers, and registry entries. Use when validating or repairing a service integration under `apps/sim/tools`, `apps/sim/blocks`, or `apps/sim/triggers`. Use when this capability is needed.
 metadata:
   author: simstudioai
 ---
 
-# Validate Trigger
+# Validate Integration Skill
 
-You are an expert auditor for Sim webhook triggers. Your job is to validate that an existing trigger implementation is correct, complete, secure, and aligned across all layers.
+You are an expert auditor for Sim integrations. Your job is to thoroughly validate that an existing integration is correct, complete, and follows all conventions.
 
 ## Your Task
 
-1. Read the service's webhook/API documentation (via WebFetch)
-2. Read every trigger file, provider handler, and registry entry
-3. Cross-reference against the API docs and Sim conventions
-4. Report all issues grouped by severity (critical, warning, suggestion)
+When the user asks you to validate an integration:
+1. Read the service's API documentation (via WebFetch or Context7)
+2. Read every tool, the block, and registry entries
+3. Cross-reference everything against the API docs and Sim conventions
+4. Report all issues found, grouped by severity (critical, warning, suggestion)
 5. Fix all issues after reporting them
 
 ## Step 1: Gather All Files
 
-Read **every** file for the trigger — do not skip any:
+Read **every** file for the integration — do not skip any:
 
 ```
-apps/sim/triggers/{service}/           # All trigger files, utils.ts, index.ts
-apps/sim/lib/webhooks/providers/{service}.ts  # Provider handler (if exists)
-apps/sim/lib/webhooks/providers/registry.ts   # Handler registry
-apps/sim/triggers/registry.ts                 # Trigger registry
-apps/sim/blocks/blocks/{service}.ts           # Block definition (trigger wiring)
-```
-
-Also read for reference:
-```
-apps/sim/lib/webhooks/providers/types.ts            # WebhookProviderHandler interface
-apps/sim/lib/webhooks/providers/utils.ts            # Shared helpers (createHmacVerifier, etc.)
-apps/sim/lib/webhooks/provider-subscription-utils.ts    # Subscription helpers
-apps/sim/lib/webhooks/processor.ts                  # Central webhook processor
+apps/sim/tools/{service}/          # All tool files, types.ts, index.ts
+apps/sim/blocks/blocks/{service}.ts # Block definition
+apps/sim/tools/registry.ts          # Tool registry entries for this service
+apps/sim/blocks/registry.ts         # Block registry entry for this service
+apps/sim/components/icons.tsx        # Icon definition
+apps/sim/lib/auth/auth.ts           # OAuth config — should use getCanonicalScopesForProvider()
+apps/sim/lib/oauth/oauth.ts         # OAuth provider config — single source of truth for scopes
+apps/sim/lib/oauth/utils.ts               # Scope utilities, SCOPE_DESCRIPTIONS for modal UI
 ```
 
 ## Step 2: Pull API Documentation
 
-Fetch the service's official webhook documentation. This is the **source of truth** for:
-- Webhook event types and payload shapes
-- Signature/auth verification method (HMAC algorithm, header names, secret format)
-- Challenge/verification handshake requirements
-- Webhook subscription API (create/delete endpoints, if applicable)
-- Retry behavior and delivery guarantees
+Fetch the official API docs for the service. This is the **source of truth** for:
+- Endpoint URLs, HTTP methods, and auth headers
+- Required vs optional parameters
+- Parameter types and allowed values
+- Response shapes and field names
+- Pagination patterns (which param name, which response field)
+- Rate limits and error formats
 
-### Hard Rule: No Guessed Webhook Payload Schemas
+### Hard Rule: No Guessed Response Schemas
 
-If the official docs do not clearly show the webhook payload JSON for an event, you MUST tell the user instead of guessing.
+If the official docs do not clearly show the response JSON shape for an endpoint, you MUST tell the user instead of guessing.
 
-- Do NOT invent payload field names
-- Do NOT infer nested payload paths without evidence
-- Do NOT treat likely event shapes as verified
-- Do NOT accept `formatInput` mappings that are not backed by docs or live payloads
+- Do NOT assume field names from nearby endpoints
+- Do NOT infer nested JSON paths without evidence
+- Do NOT treat "likely" fields as confirmed outputs
+- Do NOT accept implementation guesses as valid just because they are defensive
 
-If a payload schema is unknown, validation must explicitly recommend:
-1. sample webhook payloads,
-2. a live test webhook source, or
-3. trimming the trigger to only documented outputs.
+If a response schema is unknown, the validation must explicitly call that out and require:
+1. sample responses from the user,
+2. live test credentials for verification, or
+3. trimming the tool/block down to only documented fields.
 
-## Step 3: Validate Trigger Definitions
+## Step 3: Validate Tools
 
-### utils.ts
-- [ ] `{service}TriggerOptions` lists all trigger IDs accurately
-- [ ] `{service}SetupInstructions` provides clear, correct steps for the service
-- [ ] `build{Service}ExtraFields` includes relevant filter/config fields with correct `condition`
-- [ ] Output builders expose all meaningful fields from the webhook payload
-- [ ] Output builders do NOT use `optional: true` or `items` (tool-output-only features)
-- [ ] Nested output objects correctly model the payload structure
+For **every** tool file, check:
 
-### Trigger Files
-- [ ] Exactly one primary trigger has `includeDropdown: true`
-- [ ] All secondary triggers do NOT have `includeDropdown`
-- [ ] All triggers use `buildTriggerSubBlocks` helper (not hand-rolled subBlocks)
-- [ ] Every trigger's `id` matches the convention `{service}_{event_name}`
-- [ ] Every trigger's `provider` matches the service name used in the handler registry
-- [ ] `index.ts` barrel exports all triggers
+### Tool ID and Naming
+- [ ] Tool ID uses `snake_case`: `{service}_{action}` (e.g., `x_create_tweet`, `slack_send_message`)
+- [ ] Tool `name` is human-readable (e.g., `'X Create Tweet'`)
+- [ ] Tool `description` is a concise one-liner describing what it does
+- [ ] Tool `version` is set (`'1.0.0'` or `'2.0.0'` for V2)
 
-### Trigger ↔ Provider Alignment (CRITICAL)
-- [ ] Every trigger ID referenced in `matchEvent` logic exists in `{service}TriggerOptions`
-- [ ] Event matching logic in the provider correctly maps trigger IDs to service event types
-- [ ] Event matching logic in `is{Service}EventMatch` (if exists) correctly identifies events per the API docs
+### Params
+- [ ] All required API params are marked `required: true`
+- [ ] All optional API params are marked `required: false`
+- [ ] Every param has explicit `required: true` or `required: false` — never omitted
+- [ ] Param types match the API (`'string'`, `'number'`, `'boolean'`, `'json'`)
+- [ ] Visibility is correct:
+  - `'hidden'` — ONLY for OAuth access tokens and system-injected params
+  - `'user-only'` — for API keys, credentials, and account-specific IDs the user must provide
+  - `'user-or-llm'` — for everything else (search queries, content, filters, IDs that could come from other blocks)
+- [ ] Every param has a `description` that explains what it does
 
-## Step 4: Validate Provider Handler
+### Request
+- [ ] URL matches the API endpoint exactly (correct base URL, path segments, path params)
+- [ ] HTTP method matches the API spec (GET, POST, PUT, PATCH, DELETE)
+- [ ] Headers include correct auth pattern:
+  - OAuth: `Authorization: Bearer ${params.accessToken}`
+  - API Key: correct header name and format per the service's docs
+- [ ] `Content-Type` header is set for POST/PUT/PATCH requests
+- [ ] Body sends all required fields and only includes optional fields when provided
+- [ ] For GET requests with query params: URL is constructed correctly with query string
+- [ ] ID fields in URL paths are `.trim()`-ed to prevent copy-paste whitespace errors
+- [ ] Path params use template literals correctly: `` `https://api.service.com/v1/${params.id.trim()}` ``
 
-### Auth Verification
-- [ ] `verifyAuth` correctly validates webhook signatures per the service's documentation
-- [ ] HMAC algorithm matches (SHA-1, SHA-256, SHA-512)
-- [ ] Signature header name matches the API docs exactly
-- [ ] Signature format is handled (raw hex, `sha256=` prefix, base64, etc.)
-- [ ] Uses `safeCompare` for timing-safe comparison (no `===`)
-- [ ] If `webhookSecret` is required, handler rejects when it's missing (fail-closed)
-- [ ] Signature is computed over raw body (not parsed JSON)
+### Response / transformResponse
+- [ ] Correctly parses the API response (`await response.json()`)
+- [ ] Extracts the right fields from the response structure (e.g., `data.data` vs `data` vs `data.results`)
+- [ ] All nullable fields use `?? null`
+- [ ] All optional arrays use `?? []`
+- [ ] Error cases are handled: checks for missing/empty data and returns meaningful error
+- [ ] Does NOT do raw JSON dumps — extracts meaningful, individual fields
+- [ ] Every extracted field is backed by official docs or live-verified sample payloads
 
-### Event Matching
-- [ ] `matchEvent` returns `boolean` (not `NextResponse` or other values)
-- [ ] Challenge/verification events are excluded from matching (e.g., `endpoint.url_validation`)
-- [ ] When `triggerId` is a generic webhook ID, all events pass through
-- [ ] When `triggerId` is specific, only matching events pass
-- [ ] Event matching logic uses dynamic `await import()` for trigger utils (avoids circular deps)
+### Outputs
+- [ ] All output fields match what the API actually returns
+- [ ] No fields are missing that the API provides and users would commonly need
+- [ ] No phantom fields defined that the API doesn't return
+- [ ] `optional: true` is set on fields that may not exist in all responses
+- [ ] When using `type: 'json'` and the shape is known, `properties` defines the inner fields (tool outputs only — block outputs do not support `properties`)
+- [ ] When using `type: 'array'`, `items` defines the item structure with `properties` (tool outputs only)
+- [ ] Field descriptions are accurate and helpful
 
-### formatInput (CRITICAL)
-- [ ] Every key in the `formatInput` return matches a key in the trigger `outputs` schema
-- [ ] Every key in the trigger `outputs` schema is populated by `formatInput`
-- [ ] No extra undeclared keys that users can't discover in the UI
-- [ ] No wrapper objects (`webhook: { ... }`, `{service}: { ... }`)
-- [ ] Nested output paths exist at the correct depth (e.g., `resource.id` actually has `resource: { id: ... }`)
-- [ ] `null` is used for missing optional fields (not empty strings or empty objects)
-- [ ] Returns `{ input: { ... } }` — not a bare object
-- [ ] Every mapped payload field is backed by official docs or live-verified webhook payloads
+### Types (types.ts)
+- [ ] Has param interfaces for every tool (e.g., `XCreateTweetParams`)
+- [ ] Has response interfaces for every tool (extending `ToolResponse`)
+- [ ] Optional params use `?` in the interface (e.g., `replyTo?: string`)
+- [ ] Field names in types match actual API field names
+- [ ] Shared response types are properly reused (e.g., `XTweetResponse` shared across tweet tools)
 
-### Idempotency
-- [ ] `extractIdempotencyId` returns a stable, unique key per delivery
-- [ ] Uses provider-specific delivery IDs when available (e.g., `X-Request-Id`, `Linear-Delivery`, `svix-id`)
-- [ ] Falls back to content-based ID (e.g., `${type}:${id}`) when no delivery header exists
-- [ ] Does NOT include timestamps in the idempotency key (would break dedup on retries)
+### Barrel Export (index.ts)
+- [ ] Every tool is exported
+- [ ] All types are re-exported (`export * from './types'`)
+- [ ] No orphaned exports (tools that don't exist)
 
-### Challenge Handling (if applicable)
-- [ ] `handleChallenge` correctly implements the service's URL verification handshake
-- [ ] Returns the expected response format per the API docs
-- [ ] Env-backed secrets are resolved via `resolveEnvVarsInObject` if needed
+### Tool Registry (tools/registry.ts)
+- [ ] Every tool is imported and registered
+- [ ] Registry keys use snake_case and match tool IDs exactly
+- [ ] Entries are in alphabetical order within the file
 
-## Step 5: Validate Automatic Subscription Lifecycle
+## Step 4: Validate Block
 
-If the service supports programmatic webhook creation:
+### Block ↔ Tool Alignment (CRITICAL)
 
-### createSubscription
-- [ ] Calls the correct API endpoint to create a webhook
-- [ ] Sends the correct event types/filters
-- [ ] Passes the notification URL from `getNotificationUrl(ctx.webhook)`
-- [ ] Returns `{ providerConfigUpdates: { externalId } }` with the external webhook ID
-- [ ] Throws on failure (orchestration handles rollback)
-- [ ] Provides user-friendly error messages (401 → "Invalid API Key", etc.)
+This is the most important validation — the block must be perfectly aligned with every tool it references.
 
-### deleteSubscription
-- [ ] Calls the correct API endpoint to delete the webhook
-- [ ] Handles 404 gracefully (webhook already deleted)
-- [ ] Never throws — catches errors and logs non-fatally
-- [ ] Skips gracefully when `apiKey` or `externalId` is missing
+For **each tool** in `tools.access`:
+- [ ] The operation dropdown has an option whose ID matches the tool ID (or the `tools.config.tool` function correctly maps to it)
+- [ ] Every **required** tool param (except `accessToken`) has a corresponding subBlock input that is:
+  - Shown when that operation is selected (correct `condition`)
+  - Marked as `required: true` (or conditionally required)
+- [ ] Every **optional** tool param has a corresponding subBlock input (or is intentionally omitted if truly never needed)
+- [ ] SubBlock `id` values are unique across the entire block — no duplicates even across different conditions
+- [ ] The `tools.config.tool` function returns the correct tool ID for every possible operation value
+- [ ] The `tools.config.params` function correctly maps subBlock IDs to tool param names when they differ
 
-### Orchestration Isolation
-- [ ] NO provider-specific logic in `route.ts`, `provider-subscriptions.ts`, or `deploy.ts`
-- [ ] All subscription logic lives on the handler (`createSubscription`/`deleteSubscription`)
+### SubBlocks
+- [ ] Operation dropdown lists ALL tool operations available in `tools.access`
+- [ ] Dropdown option labels are human-readable and descriptive
+- [ ] Conditions use correct syntax:
+  - Single value: `{ field: 'operation', value: 'x_create_tweet' }`
+  - Multiple values (OR): `{ field: 'operation', value: ['x_create_tweet', 'x_delete_tweet'] }`
+  - Negation: `{ field: 'operation', value: 'delete', not: true }`
+  - Compound: `{ field: 'op', value: 'send', and: { field: 'type', value: 'dm' } }`
+- [ ] Condition arrays include ALL operations that use that field — none missing
+- [ ] `dependsOn` is set for fields that need other values (selectors depending on credential, cascading dropdowns)
+- [ ] SubBlock types match tool param types:
+  - Enum/fixed options → `dropdown`
+  - Free text → `short-input`
+  - Long text/content → `long-input`
+  - True/false → `dropdown` with Yes/No options (not `switch` unless purely UI toggle)
+  - Credentials → `oauth-input` with correct `serviceId`
+- [ ] Dropdown `value: () => 'default'` is set for dropdowns with a sensible default
 
-## Step 6: Validate Registration and Block Wiring
+### Advanced Mode
+- [ ] Optional, rarely-used fields are set to `mode: 'advanced'`:
+  - Pagination tokens / next tokens
+  - Time range filters (start/end time)
+  - Sort order / direction options
+  - Max results / per page limits
+  - Reply settings / threading options
+  - Rarely used IDs (reply-to, quote-tweet, etc.)
+  - Exclude filters
+- [ ] **Required** fields are NEVER set to `mode: 'advanced'`
+- [ ] Fields that users fill in most of the time are NOT set to `mode: 'advanced'`
 
-### Trigger Registry (`triggers/registry.ts`)
-- [ ] All triggers are imported and registered
-- [ ] Registry keys match trigger IDs exactly
-- [ ] No orphaned entries (triggers that don't exist)
+### WandConfig
+- [ ] Timestamp fields have `wandConfig` with `generationType: 'timestamp'`
+- [ ] Comma-separated list fields have `wandConfig` with a descriptive prompt
+- [ ] Complex filter/query fields have `wandConfig` with format examples in the prompt
+- [ ] All `wandConfig` prompts end with "Return ONLY the [format] - no explanations, no extra text."
+- [ ] `wandConfig.placeholder` describes what to type in natural language
 
-### Provider Handler Registry (`providers/registry.ts`)
-- [ ] Handler is imported and registered (if handler exists)
-- [ ] Registry key matches the `provider` field on the trigger configs
-- [ ] Entries are in alphabetical order
+### Tools Config
+- [ ] `tools.access` lists **every** tool ID the block can use — none missing
+- [ ] `tools.config.tool` returns the correct tool ID for each operation
+- [ ] Type coercions are in `tools.config.params` (runs at execution time), NOT in `tools.config.tool` (runs at serialization time before variable resolution)
+- [ ] `tools.config.params` handles:
+  - `Number()` conversion for numeric params that come as strings from inputs
+  - `Boolean` / string-to-boolean conversion for toggle params
+  - Empty string → `undefined` conversion for optional dropdown values
+  - Any subBlock ID → tool param name remapping
+- [ ] No `Number()`, `JSON.parse()`, or other coercions in `tools.config.tool` — these would destroy dynamic references like `<Block.output>`
 
-### Block Wiring (`blocks/blocks/{service}.ts`)
-- [ ] Block has `triggers.enabled: true`
-- [ ] `triggers.available` lists all trigger IDs
-- [ ] All trigger subBlocks are spread into `subBlocks`: `...getTrigger('id').subBlocks`
-- [ ] No trigger IDs in `triggers.available` that aren't in the registry
-- [ ] No trigger subBlocks spread that aren't in `triggers.available`
+### Block Outputs
+- [ ] Outputs cover the key fields returned by ALL tools (not just one operation)
+- [ ] Output types are correct (`'string'`, `'number'`, `'boolean'`, `'json'`)
+- [ ] `type: 'json'` outputs describe inner fields in the description string: `'User profile (id, name, username, bio)'` or `'[{address, status, type}]'` for arrays
+- [ ] **Do NOT add a `properties: {...}` field on block outputs.** Block-level `OutputFieldDefinition` (from `@sim/workflow-types/blocks`) only accepts `{ type, description?, condition?, hiddenFromDisplay? }`. Nested `properties` is a tool-level construct (`OutputProperty`) — adding it to a block output will fail TypeScript at build time
+- [ ] No opaque `type: 'json'` with vague descriptions like `'Response data'`
+- [ ] Outputs that only appear for certain operations use `condition` if supported, or document which operations return them
 
-## Step 7: Validate Security
+### Block Metadata
+- [ ] `type` is snake_case (e.g., `'x'`, `'cloudflare'`)
+- [ ] `name` is human-readable (e.g., `'X'`, `'Cloudflare'`)
+- [ ] `description` is a concise one-liner
+- [ ] `longDescription` provides detail for docs
+- [ ] `docsLink` points to `'https://docs.sim.ai/integrations/{service}'`
+- [ ] `category` is `'tools'`
+- [ ] `bgColor` uses the service's brand color hex
+- [ ] `icon` references the correct icon component from `@/components/icons`
+- [ ] `authMode` is set correctly (`AuthMode.OAuth` or `AuthMode.ApiKey`)
+- [ ] Block is registered in `blocks/registry.ts` alphabetically
 
-- [ ] Webhook secrets are never logged (not even at debug level)
-- [ ] Auth verification runs before any event processing
-- [ ] No secret comparison uses `===` (must use `safeCompare` or `crypto.timingSafeEqual`)
-- [ ] Timestamp/replay protection is reasonable (not too tight for retries, not too loose for security)
-- [ ] Raw body is used for signature verification (not re-serialized JSON)
+### BlockMeta Skills (catalog)
+- [ ] `{Service}BlockMeta.skills` is present (3–5 for mainstream services, 2–3 for niche/low-level)
+- [ ] **Every skill is grounded** — its steps only use operations the block exposes in `tools.access`; flag any skill that implies an unsupported action (e.g. "receive messages" when the block only sends)
+- [ ] **Every skill is real, not hallucinated** — web-search the service and confirm each skill maps to a popular use case attested online (vendor use-case/solutions pages, official docs describing the workflow, reputable "top automations for X" articles). Rewrite or remove any skill you cannot source as something people genuinely do with the service.
+- [ ] Each skill has a kebab-case `name` (≤64 chars, unique), a one-line `description`, and markdown `content` with `# Title` + `## Steps` + an output/guidance section
 
-## Step 8: Report and Fix
+### Block Inputs
+- [ ] `inputs` section lists all subBlock params that the block accepts
+- [ ] Input types match the subBlock types
+- [ ] When using `canonicalParamId`, inputs list the canonical ID (not the raw subBlock IDs)
+
+## Step 5: Validate OAuth Scopes (if OAuth service)
+
+Scopes are centralized — the single source of truth is `OAUTH_PROVIDERS` in `lib/oauth/oauth.ts`.
+
+- [ ] Scopes defined in `lib/oauth/oauth.ts` under `OAUTH_PROVIDERS[provider].services[service].scopes`
+- [ ] `auth.ts` uses `getCanonicalScopesForProvider(providerId)` — NOT a hardcoded array
+- [ ] Block `requiredScopes` uses `getScopesForService(serviceId)` — NOT a hardcoded array
+- [ ] No hardcoded scope arrays in `auth.ts` or block files (should all use utility functions)
+- [ ] Each scope has a human-readable description in `SCOPE_DESCRIPTIONS` within `lib/oauth/utils.ts`
+- [ ] No excess scopes that aren't needed by any tool
+
+## Step 6: Validate Pagination Consistency
+
+If any tools support pagination:
+- [ ] Pagination param names match the API docs (e.g., `pagination_token` vs `next_token` vs `cursor`)
+- [ ] Different API endpoints that use different pagination param names have separate subBlocks in the block
+- [ ] Pagination response fields (`nextToken`, `cursor`, etc.) are included in tool outputs
+- [ ] Pagination subBlocks are set to `mode: 'advanced'`
+
+## Step 7: Validate Memory Load Safety
+
+If any tool lists, searches, exports, imports, downloads, uploads, paginates, batches, transforms arrays, or reads file/HTTP bodies, read `.agents/skills/memory-load-check/SKILL.md` and apply it to the integration.
+
+- [ ] List/search tools expose API limits and do not auto-fetch every page into memory
+- [ ] Transform logic does not build unbounded arrays, maps, sets, or `Promise.all` fan-outs
+- [ ] File and HTTP body reads use explicit byte caps or existing stream-limit helpers
+- [ ] Large result payloads are summarized, paginated, referenced, or capped rather than raw-dumped
+- [ ] Pagination and download tests cover caps, early stop behavior, or partial-result preservation when relevant
+
+## Step 8: Validate Error Handling
+
+- [ ] `transformResponse` checks for error conditions before accessing data
+- [ ] Error responses include meaningful messages (not just generic "failed")
+- [ ] HTTP error status codes are handled (check `response.ok` or status codes)
+
+## Step 9: Report and Fix
 
 ### Report Format
 
 Group findings by severity:
 
-**Critical** (runtime errors, security issues, or data loss):
-- Wrong HMAC algorithm or header name
-- `formatInput` keys don't match trigger `outputs`
-- Missing `verifyAuth` when the service sends signed webhooks
-- `matchEvent` returns non-boolean values
-- Provider-specific logic leaking into shared orchestration files
-- Trigger IDs mismatch between trigger files, registry, and block
-- `createSubscription` calling wrong API endpoint
-- Auth comparison using `===` instead of `safeCompare`
+**Critical** (will cause runtime errors or incorrect behavior):
+- Wrong endpoint URL or HTTP method
+- Missing required params or wrong `required` flag
+- Incorrect response field mapping (accessing wrong path in response)
+- Missing error handling that would cause crashes
+- Tool ID mismatch between tool file, registry, and block `tools.access`
+- OAuth scopes missing in `auth.ts` that tools need
+- `tools.config.tool` returning wrong tool ID for an operation
+- Type coercions in `tools.config.tool` instead of `tools.config.params`
 
-**Warning** (convention violations or usability issues):
-- Missing `extractIdempotencyId` when the service provides delivery IDs
-- Timestamps in idempotency keys (breaks dedup on retries)
-- Missing challenge handling when the service requires URL verification
-- Output schema missing fields that `formatInput` returns (undiscoverable data)
-- Overly tight timestamp skew window that rejects legitimate retries
-- `matchEvent` not filtering challenge/verification events
-- Setup instructions missing important steps
+**Warning** (follows conventions incorrectly or has usability issues):
+- Optional field not set to `mode: 'advanced'`
+- Missing `wandConfig` on timestamp/complex fields
+- Wrong `visibility` on params (e.g., `'hidden'` instead of `'user-or-llm'`)
+- Missing `optional: true` on nullable outputs
+- Opaque `type: 'json'` without property descriptions
+- Missing `.trim()` on ID fields in request URLs
+- Missing `?? null` on nullable response fields
+- Block condition array missing an operation that uses that field
+- Hardcoded scope arrays instead of using `getScopesForService()` / `getCanonicalScopesForProvider()`
+- Missing scope description in `SCOPE_DESCRIPTIONS` within `lib/oauth/utils.ts`
 
 **Suggestion** (minor improvements):
-- More specific output field descriptions
-- Additional output fields that could be exposed
-- Better error messages in `createSubscription`
-- Logging improvements
+- Better description text
+- Inconsistent naming across tools
+- Missing `longDescription` or `docsLink`
+- Pagination fields that could benefit from `wandConfig`
 
 ### Fix All Issues
 
@@ -209,25 +296,31 @@ After reporting, fix every **critical** and **warning** issue. Apply **suggestio
 ### Validation Output
 
 After fixing, confirm:
-1. `bun run type-check` passes
-2. Re-read all modified files to verify fixes are correct
-3. Provider handler tests pass (if they exist): `bun test {service}`
-4. Any remaining unknown webhook payload schemas were explicitly reported to the user instead of guessed
+1. `bun run lint` passes with no fixes needed
+2. TypeScript compiles clean (no type errors)
+3. Re-read all modified files to verify fixes are correct
+4. Any remaining unknown response schemas were explicitly reported to the user instead of guessed
 
 ## Checklist Summary
 
-- [ ] Read all trigger files, provider handler, types, registries, and block
-- [ ] Pulled and read official webhook/API documentation
-- [ ] Validated trigger definitions: options, instructions, extra fields, outputs
-- [ ] Validated primary/secondary trigger distinction (`includeDropdown`)
-- [ ] Validated provider handler: auth, matchEvent, formatInput, idempotency
-- [ ] Validated output alignment: every `outputs` key ↔ every `formatInput` key
-- [ ] Validated subscription lifecycle: createSubscription, deleteSubscription, no shared-file edits
-- [ ] Validated registration: trigger registry, handler registry, block wiring
-- [ ] Validated security: safe comparison, no secret logging, replay protection
+- [ ] Read ALL tool files, block, types, index, and registries
+- [ ] Pulled and read official API documentation
+- [ ] Validated every tool's ID, params, request, response, outputs, and types against API docs
+- [ ] Validated block ↔ tool alignment (every tool param has a subBlock, every condition is correct)
+- [ ] Validated advanced mode on optional/rarely-used fields
+- [ ] Validated wandConfig on timestamps and complex inputs
+- [ ] Validated tools.config mapping, tool selector, and type coercions
+- [ ] Validated block outputs match what tools return, with typed JSON where possible
+- [ ] Validated OAuth scopes use centralized utilities (getScopesForService, getCanonicalScopesForProvider) — no hardcoded arrays
+- [ ] Validated scope descriptions exist in `SCOPE_DESCRIPTIONS` within `lib/oauth/utils.ts` for all scopes
+- [ ] Validated pagination consistency across tools and block
+- [ ] Validated memory load safety using `.agents/skills/memory-load-check/SKILL.md` when tools list/search/download/import/export/batch data
+- [ ] Validated error handling (error checks, meaningful messages)
+- [ ] Validated registry entries (tools and block, alphabetical, correct imports)
 - [ ] Reported all issues grouped by severity
 - [ ] Fixed all critical and warning issues
-- [ ] `bun run type-check` passes after fixes
+- [ ] Ran `bun run lint` after fixes
+- [ ] Verified TypeScript compiles clean
 
 ---
 > Source: [simstudioai/sim](https://github.com/simstudioai/sim) — distributed by [TomeVault](https://tomevault.io).
