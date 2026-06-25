@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Fmarzochi/everything-gemini](https://github.com/Fmarzochi/everything-gemini/tree/main/.agents/skills/verification-loop)
+Original source: [Fmarzochi/everything-gemini](https://github.com/Fmarzochi/everything-gemini/tree/main/skills/testing/verification-loop)
 
 ---
 
