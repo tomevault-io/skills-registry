@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [maximhq/bifrost](https://github.com/maximhq/bifrost/tree/main/.claude/skills/api-validator/SKILL.md)
+Original source: [maximhq/bifrost](https://github.com/maximhq/bifrost/tree/main/.claude/skills/changelog-writer/SKILL.md)
 
 ---
 
