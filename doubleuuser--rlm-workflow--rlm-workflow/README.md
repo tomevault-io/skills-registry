@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [doubleuuser/rlm-workflow](https://github.com/doubleuuser/rlm-workflow/tree/main/skills/rlm-subagent/SKILL.md)
+Original source: [doubleuuser/rlm-workflow](https://github.com/doubleuuser/rlm-workflow/tree/main/skills/rlm-debugging/SKILL.md)
 
 ---
 
