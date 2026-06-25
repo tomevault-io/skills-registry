@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [linkedin/Liger-Kernel](https://github.com/linkedin/Liger-Kernel/tree/main/.agents/skills/liger-kernel-dev/SKILL.md)
+Original source: [linkedin/Liger-Kernel](https://github.com/linkedin/Liger-Kernel/tree/main/.agents/skills/liger-kernel-perf/SKILL.md)
 
 ---
 
