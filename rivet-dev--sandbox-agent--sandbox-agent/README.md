@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rivet-dev/sandbox-agent](https://github.com/rivet-dev/sandbox-agent/tree/main/examples/skills-custom-tool/SKILL.md)
+Original source: [rivet-dev/sandbox-agent](https://github.com/rivet-dev/sandbox-agent/tree/main/.agents/skills/agent-browser/SKILL.md)
 
 ---
 
