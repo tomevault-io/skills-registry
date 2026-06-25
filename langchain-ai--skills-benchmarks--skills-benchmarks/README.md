@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [langchain-ai/skills-benchmarks](https://github.com/langchain-ai/skills-benchmarks/tree/main/skills/noise/testing_patterns/SKILL.md)
+Original source: [langchain-ai/skills-benchmarks](https://github.com/langchain-ai/skills-benchmarks/tree/main/skills/noise/react_components/SKILL.md)
 
 ---
 
