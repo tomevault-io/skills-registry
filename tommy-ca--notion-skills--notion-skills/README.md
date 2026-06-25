@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tommy-ca/notion-skills](https://github.com/tommy-ca/notion-skills/tree/main/plugins/notion-skills/skills/meeting-intelligence/SKILL.md)
+Original source: [tommy-ca/notion-skills](https://github.com/tommy-ca/notion-skills/tree/main/plugins/notion-skills/skills/spec-to-implementation/SKILL.md)
 
 ---
 
