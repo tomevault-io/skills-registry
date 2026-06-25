@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TryGhost/Ghost](https://github.com/TryGhost/Ghost/tree/main/.agents/skills/add-admin-api-endpoint/SKILL.md)
+Original source: [TryGhost/Ghost](https://github.com/TryGhost/Ghost/tree/main/.agents/skills/add-private-feature-flag/SKILL.md)
 
 ---
 
