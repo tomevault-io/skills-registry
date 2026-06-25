@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mlflow/mlflow](https://github.com/mlflow/mlflow/tree/main/libs/typescript/integrations/claude-code/skills/setup/SKILL.md)
+Original source: [mlflow/mlflow](https://github.com/mlflow/mlflow/tree/main/libs/typescript/integrations/claude-code/skills/status/SKILL.md)
 
 ---
 
