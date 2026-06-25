@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eggjs/egg](https://github.com/eggjs/egg/tree/main/packages/skills/egg-core/SKILL.md)
+Original source: [eggjs/egg](https://github.com/eggjs/egg/tree/main/packages/skills/egg-unittest/SKILL.md)
 
 ---
 
