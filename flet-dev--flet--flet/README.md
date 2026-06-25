@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [flet-dev/flet](https://github.com/flet-dev/flet/tree/main/.agents/skills/imperative-to-declarative-flet/SKILL.md)
+Original source: [flet-dev/flet](https://github.com/flet-dev/flet/tree/main/website/.agents/skills/flet-release-announcement/SKILL.md)
 
 ---
 
