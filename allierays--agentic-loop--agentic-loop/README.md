@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [allierays/agentic-loop](https://github.com/allierays/agentic-loop/tree/main/.claude/skills/my-dna/SKILL.md)
+Original source: [allierays/agentic-loop](https://github.com/allierays/agentic-loop/tree/main/.claude/skills/lesson/SKILL.md)
 
 ---
 
