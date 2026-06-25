@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SpillwaveSolutions/automating-mac-apps-plugin](https://github.com/SpillwaveSolutions/automating-mac-apps-plugin/tree/main/plugins/automating-mac-apps-plugin/skills/automating-pages/SKILL.md)
+Original source: [SpillwaveSolutions/automating-mac-apps-plugin](https://github.com/SpillwaveSolutions/automating-mac-apps-plugin/tree/main/plugins/automating-mac-apps-plugin/skills/automating-notes/SKILL.md)
 
 ---
 
