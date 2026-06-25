@@ -1,74 +1,87 @@
 ---
-name: national-pension-workplace
-description: 국민연금공단 국민연금 가입 사업장 내역을 공공데이터포털 API(k-skill-proxy 경유)로 조회한다. 사업장명으로 가입자수·당월 고지금액·월별 취득/상실 추이를 확인해 그 회사의 직원 규모와 변화를 본다. Use when this capability is needed.
+name: local-election-candidate-search
+description: 중앙선거관리위원회 선거통계시스템 공개 통합검색으로 한국 지방선거 후보자 정보를 이름/선거종류/지역 기준으로 조회한다. Use when this capability is needed.
 metadata:
   author: NomaDamas
 ---
 
-# 국민연금 가입 사업장 내역 조회
+# Local Election Candidate Search
 
 ## What this skill does
 
-공공데이터포털의 **국민연금공단_국민연금 가입 사업장 내역 서비스**(data.go.kr 3046071, V2)를 `k-skill-proxy` 경유로 호출해 다음을 조회한다.
-
-- 가입 사업장 후보: 사업장명 + 사업자번호 앞 6자리로 매칭된 사업장 목록 (자료생성년월별 중복은 사업장당 최신 월로 정리)
-- 단일 사업장이 특정되면 상세: 가입자수(`jnngpCnt`), 당월 고지금액(`crrmmNtcAmt`), 신규취득/상실 인원
-- 월별 가입 현황 시계열
-
-사업자등록번호는 **앞 6자리만 공개**(뒷자리 마스킹)되므로 사업장명이 필수이며, 후보가 여럿이면 특정하지 않고 목록 그대로 돌려준다.
-
-## Design principles
-
-- 점수·등급·"위험" 같은 해석 라벨을 만들지 않는다. upstream이 돌려준 사실만 담는다.
-- 후보가 여럿이면 동일성을 단정하지 않는다.
+중앙선거관리위원회(NEC) 선거통계시스템의 공개 통합검색에서 후보자 이름을 조회하고, 지방선거 관련 후보자 이력만 기본으로 정리한다. 후보자명, 한자명, 생년월일/성별, 선거일, 선거명, 선거종류, 정당, 선거구, 득표, 직업, 학력, 경력 등을 반환한다.
 
 ## When to use
 
-- "○○ 회사 직원 규모가 얼마나 돼? 국민연금 가입자수로 보자"
-- "이 사업장 당월 국민연금 고지금액이 얼마야?"
-- "최근 인원이 늘었는지 줄었는지 월별로 보자"
+- 사용자가 “지방선거 후보”, “시도지사 후보”, “기초의원 후보”, “교육감 후보” 등을 이름/지역/선거일 기준으로 찾아 달라고 할 때
+- 중앙선관위 선거통계시스템에서 공개된 후보자 이력을 확인해야 할 때
+- 동명이인이 있을 수 있어 후보자명 + 선거종류/지역/연도 필터가 필요한 때
 
-## Prerequisites
+## Public access path
 
-- 인터넷 연결, `python3`
-- `scripts/national_pension_workplace.py` helper
-- hosted/self-host `k-skill-proxy`의 `/v1/national-pension/workplace` route 접근 가능
+Chosen path: NEC integrated candidate search.
 
-## Credential requirements
+- Entry page: `https://info.nec.go.kr/search/searchCandidate.xhtml`
+- Method: unauthenticated public `POST`
+- Required form field: `searchKeyword=<정확한 후보자 성명>`
+- Helper package: `local-election-candidate-search`
 
-- 사용자 측 필수 시크릿 없음.
-- `KSKILL_PROXY_BASE_URL` — self-host 프록시를 쓸 때만 설정. 비우면 hosted `https://k-skill-proxy.nomadamas.org` 사용.
-- `DATA_GO_KR_API_KEY` 는 프록시 운영 서버 환경에만 둔다. 공공데이터포털에서 `국민연금공단_국민연금 가입 사업장 내역` 활용신청이 되어 있어야 한다.
+Why this path: the visible NEC UI explicitly exposes candidate-name integrated search across recent and historical elections, and it returns the candidate result cards in server-rendered HTML. It is more stable than scraping per-election menu pages because it does not require selecting every city/town/constituency combo first.
+
+## Workflow
+
+1. Use the package CLI from this repository or installed workspace:
+
+```bash
+npx local-election-candidate-search 오세훈 --election 시도지사 --region 서울 --limit 5
+```
+
+2. Narrow ambiguous/homonym results:
+
+```bash
+npx local-election-candidate-search 김동연 --date 2014 --election 기초의원 --region 동작
+```
+
+3. Include non-local races only when the user asks for all NEC integrated-search matches:
+
+```bash
+npx local-election-candidate-search 이재명 --all --limit 20
+```
 
 ## Inputs
 
-- `--name`: 사업장명(상호) — 필수
-- `--b-no`: 사업자등록번호(하이픈 허용). 앞 6자리만 prefix 필터로 쓰인다.
+- Candidate name: exact Korean name; required.
+- `--election`: one of `시도지사`, `기초단체장`, `광역의원`, `기초의원`, `광역비례`, `기초비례`, `교육감`.
+- `--date` / `--year`: `YYYY`, `YYYYMMDD`, or `YYYY.MM.DD`.
+- `--region`: free text filter against parsed district/region text.
+- `--limit`: max rows, capped at 100.
+- `--all`: include non-local election results.
 
-## Privacy boundary
+## Outputs
 
-- 국민연금 데이터는 사업자번호 앞 6자리만 공개되므로, 6자리 일치 + 상호 유사 후보를 나열할 뿐 사업장 동일성을 단정하지 않는다.
-- 공개 범위는 법인·근로자 일정 규모 이상 사업장 위주이며, 소규모/개인 사업장은 미공개일 수 있다.
+Return concise JSON. Each `items[]` row may include:
 
-## CLI examples
+- `name`, `hanja`, `birth_date`, `gender`
+- `election_date`, `election_name`, `election_code`, `election_type`
+- `party`, `district`, `votes`, `vote_share`, `elected`
+- `job`, `education`, `career[]`
+- upstream code fields such as `city_code`, `sgg_city_code`, `town_code`
 
-```bash
-python3 national-pension-workplace/scripts/national_pension_workplace.py \
-  --name "삼성전자(주)" --b-no 124-81-00998
-```
+`summary.upstream_result_limit` shows the NEC row count requested before local client-side filters. Filtered searches request up to 100 upstream rows first, then apply exact-name matching, local/election/date/region filters, deduplication, and the final `--limit`.
 
 ## Failure modes
 
-- `400 bad_request`: 사업장명을 주지 않음.
-- `503 upstream_not_configured`: 프록시 서버에 `DATA_GO_KR_API_KEY` 없음.
-- `502 upstream_forbidden`: 프록시 키가 3046071에 활용신청되지 않음.
-- 후보 다수: `selected_candidate`가 `null` — 사용자가 후보 목록에서 특정한다.
+- `no candidate results`: NEC returned no matching card or filters removed all matches.
+- `unexpected NEC search HTML`: upstream may be in maintenance, NetFunnel queue, login/blocked state, or markup changed.
+- `NEC search page was capped`: filtered results are based on the maximum fetched page and may require upstream pagination for exhaustive coverage.
+- Homonyms: the same name can appear across many elections; always show election date/type/district and apply user-provided filters.
+- Future elections: candidate registration data may be incomplete until NEC publishes it.
 
-## Official surfaces
+## Done when
 
-- 공공데이터포털: <https://www.data.go.kr/data/3046071/openapi.do>
-- upstream: `https://apis.data.go.kr/B552015/NpsBplcInfoInqireServiceV2` (요청 파라미터 camelCase)
-- 프록시 route: `GET /v1/national-pension/workplace`
+- Results are sourced from `info.nec.go.kr` public HTML.
+- Local-election filtering is applied unless the user requested `--all`.
+- Any warnings/failure modes are shown instead of silently claiming no results.
 
 ---
 > Source: [NomaDamas/k-skill](https://github.com/NomaDamas/k-skill) — distributed by [TomeVault](https://tomevault.io).
