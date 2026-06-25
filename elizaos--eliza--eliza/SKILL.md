@@ -1,42 +1,39 @@
 ---
-name: spotify-player
-description: Terminal Spotify playback/search via spogo (preferred) or spotify_player. Use when the user asks to play music, search for a song, skip a track, pause playback, check what is currently playing, control Spotify, list audio devices, or manage a Spotify queue from the terminal. Use when this capability is needed.
+name: task-agent-eliza-bridge
+description: Use when spawning a Claude Code, Codex, Gemini, Aider, or other CLI task agent whose work needs parent Eliza runtime context. Covers the read-only loopback bridge for character, room, memory, and active workspace state.
 metadata:
   author: elizaOS
 ---
 
-# spogo / spotify_player
+# Task-Agent Eliza Bridge
 
-Use `spogo` **(preferred)** for Spotify playback/search. Use `spotify_player` when `spogo` is unavailable.
+Use this skill when a coding task agent needs context that lives in the parent Eliza runtime rather than in the checkout.
 
-Requirements
+The orchestrator injects a parent-runtime reference into each non-shell task agent's memory file. The child can curl these loopback-only, read-only endpoints with its session id:
 
-- Spotify Premium account.
-- Either `spogo` or `spotify_player` installed.
+- `GET /api/coding-agents/<sessionId>/parent-context`
+- `GET /api/coding-agents/<sessionId>/memory?q=<query>&limit=N`
+- `GET /api/coding-agents/<sessionId>/active-workspaces`
 
-spogo setup
+## Parent Responsibilities
 
-- Import cookies: `spogo auth import --browser chrome`
+Before delegating work that references parent context, make sure the spawned agent has the injected memory file. The bridge is for context reads only: character/persona, originating room, model preferences, memory search, and active workspace state.
 
-Common CLI commands
+Do not give the child the parent's API key or a full memory dump. Cloud state belongs to the `eliza-cloud` skill; local runtime state belongs to this bridge.
 
-- Search: `spogo search track "query"`
-- Playback: `spogo play|pause|next|prev`
-- Devices: `spogo device list`, `spogo device set "<name|id>"`
-- Status: `spogo status`
+## Child Responsibilities
 
-spotify_player commands
+The child should call the bridge only when the task depends on parent context that was not already resolved in the prompt, such as "their dad", "the project from yesterday", or "the same markup as last time".
 
-- Search: `spotify_player search "query"`
-- Playback: `spotify_player playback play|pause|next|previous`
-- Connect device: `spotify_player connect`
-- Like track: `spotify_player like`
+If the bridge returns `410 task_no_longer_active`, continue in workspace-only mode and state that parent context was unavailable. If it returns `503 parent_context_timeout`, do not retry indefinitely.
 
-Notes
+## Boundaries
 
-- Config folder: `~/.config/spotify-player` (e.g., `app.toml`).
-- For Spotify Connect integration, set a user `client_id` in config.
-- TUI shortcuts are available via `?` in the app.
+- Read-only GET endpoints only.
+- No parent memory writes.
+- No action delegation.
+- No persistent child identity assumptions.
+- The parent records lifecycle events through the existing hook channel.
 
 ---
 > Source: [elizaOS/eliza](https://github.com/elizaOS/eliza) — distributed by [TomeVault](https://tomevault.io).
