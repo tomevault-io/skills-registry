@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Hmbown/rlmagents](https://github.com/Hmbown/rlmagents/tree/main/libs/cli/examples/skills/langgraph-docs/SKILL.md)
+Original source: [Hmbown/rlmagents](https://github.com/Hmbown/rlmagents/tree/main/examples/content-builder-agent/skills/blog-post/SKILL.md)
 
 ---
 
