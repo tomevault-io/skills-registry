@@ -1,128 +1,131 @@
 ---
-name: audit
-description: Use when working with the feature or area to audit (optional)
+name: frontend-design
+description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications. Generates creative, polished code that avoids generic AI aesthetics. Use when this capability is needed.
 metadata:
   author: yournextstore
 ---
 
-Run systematic quality checks and generate a comprehensive audit report with prioritized issues and actionable recommendations. Don't fix issues - document them for other commands to address.
+This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
 
-**First**: Use the frontend-design skill for design principles and anti-patterns.
+## Design Direction
 
-## Diagnostic Scan
+Commit to a BOLD aesthetic direction:
+- **Purpose**: What problem does this interface solve? Who uses it?
+- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.
+- **Constraints**: Technical requirements (framework, performance, accessibility).
+- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?
 
-Run comprehensive checks across multiple dimensions:
+**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work—the key is intentionality, not intensity.
 
-1. **Accessibility (A11y)** - Check for:
-   - **Contrast issues**: Text contrast ratios < 4.5:1 (or 7:1 for AAA)
-   - **Missing ARIA**: Interactive elements without proper roles, labels, or states
-   - **Keyboard navigation**: Missing focus indicators, illogical tab order, keyboard traps
-   - **Semantic HTML**: Improper heading hierarchy, missing landmarks, divs instead of buttons
-   - **Alt text**: Missing or poor image descriptions
-   - **Form issues**: Inputs without labels, poor error messaging, missing required indicators
+Then implement working code that is:
+- Production-grade and functional
+- Visually striking and memorable
+- Cohesive with a clear aesthetic point-of-view
+- Meticulously refined in every detail
 
-2. **Performance** - Check for:
-   - **Layout thrashing**: Reading/writing layout properties in loops
-   - **Expensive animations**: Animating layout properties (width, height, top, left) instead of transform/opacity
-   - **Missing optimization**: Images without lazy loading, unoptimized assets, missing will-change
-   - **Bundle size**: Unnecessary imports, unused dependencies
-   - **Render performance**: Unnecessary re-renders, missing memoization
+## Frontend Aesthetics Guidelines
 
-3. **Theming** - Check for:
-   - **Hard-coded colors**: Colors not using design tokens
-   - **Broken dark mode**: Missing dark mode variants, poor contrast in dark theme
-   - **Inconsistent tokens**: Using wrong tokens, mixing token types
-   - **Theme switching issues**: Values that don't update on theme change
+### Typography
+→ *Consult [typography reference](reference/typography.md) for scales, pairing, and loading strategies.*
 
-4. **Responsive Design** - Check for:
-   - **Fixed widths**: Hard-coded widths that break on mobile
-   - **Touch targets**: Interactive elements < 44x44px
-   - **Horizontal scroll**: Content overflow on narrow viewports
-   - **Text scaling**: Layouts that break when text size increases
-   - **Missing breakpoints**: No mobile/tablet variants
+Choose fonts that are beautiful, unique, and interesting. Pair a distinctive display font with a refined body font.
 
-5. **Anti-Patterns (CRITICAL)** - Check against ALL the **DON'T** guidelines in the frontend-design skill. Look for AI slop tells (AI color palette, gradient text, glassmorphism, hero metrics, card grids, generic fonts) and general design anti-patterns (gray on color, nested cards, bounce easing, redundant copy).
+**DO**: Use a modular type scale with fluid sizing (clamp)
+**DO**: Vary font weights and sizes to create clear visual hierarchy
+**DON'T**: Use overused fonts—Inter, Roboto, Arial, Open Sans, system defaults
+**DON'T**: Use monospace typography as lazy shorthand for "technical/developer" vibes
+**DON'T**: Put large icons with rounded corners above every heading—they rarely add value and make sites look templated
 
-**CRITICAL**: This is an audit, not a fix. Document issues thoroughly with clear explanations of impact. Use other commands (normalize, optimize, harden, etc.) to fix issues after audit.
+### Color & Theme
+→ *Consult [color reference](reference/color-and-contrast.md) for OKLCH, palettes, and dark mode.*
 
-## Generate Comprehensive Report
+Commit to a cohesive palette. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
 
-Create a detailed audit report with the following structure:
+**DO**: Use modern CSS color functions (oklch, color-mix, light-dark) for perceptually uniform, maintainable palettes
+**DO**: Tint your neutrals toward your brand hue—even a subtle hint creates subconscious cohesion
+**DON'T**: Use gray text on colored backgrounds—it looks washed out; use a shade of the background color instead
+**DON'T**: Use pure black (#000) or pure white (#fff)—always tint; pure black/white never appears in nature
+**DON'T**: Use the AI color palette: cyan-on-dark, purple-to-blue gradients, neon accents on dark backgrounds
+**DON'T**: Use gradient text for "impact"—especially on metrics or headings; it's decorative rather than meaningful
+**DON'T**: Default to dark mode with glowing accents—it looks "cool" without requiring actual design decisions
 
-### Anti-Patterns Verdict
-**Start here.** Pass/fail: Does this look AI-generated? List specific tells from the skill's Anti-Patterns section. Be brutally honest.
+### Layout & Space
+→ *Consult [spatial reference](reference/spatial-design.md) for grids, rhythm, and container queries.*
 
-### Executive Summary
-- Total issues found (count by severity)
-- Most critical issues (top 3-5)
-- Overall quality score (if applicable)
-- Recommended next steps
+Create visual rhythm through varied spacing—not the same padding everywhere. Embrace asymmetry and unexpected compositions. Break the grid intentionally for emphasis.
 
-### Detailed Findings by Severity
+**DO**: Create visual rhythm through varied spacing—tight groupings, generous separations
+**DO**: Use fluid spacing with clamp() that breathes on larger screens
+**DO**: Use asymmetry and unexpected compositions; break the grid intentionally for emphasis
+**DON'T**: Wrap everything in cards—not everything needs a container
+**DON'T**: Nest cards inside cards—visual noise, flatten the hierarchy
+**DON'T**: Use identical card grids—same-sized cards with icon + heading + text, repeated endlessly
+**DON'T**: Use the hero metric layout template—big number, small label, supporting stats, gradient accent
+**DON'T**: Center everything—left-aligned text with asymmetric layouts feels more designed
+**DON'T**: Use the same spacing everywhere—without rhythm, layouts feel monotonous
 
-For each issue, document:
-- **Location**: Where the issue occurs (component, file, line)
-- **Severity**: Critical / High / Medium / Low
-- **Category**: Accessibility / Performance / Theming / Responsive
-- **Description**: What the issue is
-- **Impact**: How it affects users
-- **WCAG/Standard**: Which standard it violates (if applicable)
-- **Recommendation**: How to fix it
-- **Suggested command**: Which command to use (prefer: /animate, /quieter, /optimize, /adapt, /clarify, /distill, /delight, /onboard, /normalize, /audit, /harden, /polish, /extract, /bolder, /critique, /colorize — or other installed skills you're sure exist)
+### Visual Details
+**DO**: Use intentional, purposeful decorative elements that reinforce brand
+**DON'T**: Use glassmorphism everywhere—blur effects, glass cards, glow borders used decoratively rather than purposefully
+**DON'T**: Use rounded elements with thick colored border on one side—a lazy accent that almost never looks intentional
+**DON'T**: Use sparklines as decoration—tiny charts that look sophisticated but convey nothing meaningful
+**DON'T**: Use rounded rectangles with generic drop shadows—safe, forgettable, could be any AI output
+**DON'T**: Use modals unless there's truly no better alternative—modals are lazy
 
-#### Critical Issues
-[Issues that block core functionality or violate WCAG A]
+### Motion
+→ *Consult [motion reference](reference/motion-design.md) for timing, easing, and reduced motion.*
 
-#### High-Severity Issues  
-[Significant usability/accessibility impact, WCAG AA violations]
+Focus on high-impact moments: one well-orchestrated page load with staggered reveals creates more delight than scattered micro-interactions.
 
-#### Medium-Severity Issues
-[Quality issues, WCAG AAA violations, performance concerns]
+**DO**: Use motion to convey state changes—entrances, exits, feedback
+**DO**: Use exponential easing (ease-out-quart/quint/expo) for natural deceleration
+**DO**: For height animations, use grid-template-rows transitions instead of animating height directly
+**DON'T**: Animate layout properties (width, height, padding, margin)—use transform and opacity only
+**DON'T**: Use bounce or elastic easing—they feel dated and tacky; real objects decelerate smoothly
 
-#### Low-Severity Issues
-[Minor inconsistencies, optimization opportunities]
+### Interaction
+→ *Consult [interaction reference](reference/interaction-design.md) for forms, focus, and loading patterns.*
 
-### Patterns & Systemic Issues
+Make interactions feel fast. Use optimistic UI—update immediately, sync later.
 
-Identify recurring problems:
-- "Hard-coded colors appear in 15+ components, should use design tokens"
-- "Touch targets consistently too small (<44px) throughout mobile experience"
-- "Missing focus indicators on all custom interactive components"
+**DO**: Use progressive disclosure—start simple, reveal sophistication through interaction (basic options first, advanced behind expandable sections; hover states that reveal secondary actions)
+**DO**: Design empty states that teach the interface, not just say "nothing here"
+**DO**: Make every interactive surface feel intentional and responsive
+**DON'T**: Repeat the same information—redundant headers, intros that restate the heading
+**DON'T**: Make every button primary—use ghost buttons, text links, secondary styles; hierarchy matters
 
-### Positive Findings
+### Responsive
+→ *Consult [responsive reference](reference/responsive-design.md) for mobile-first, fluid design, and container queries.*
 
-Note what's working well:
-- Good practices to maintain
-- Exemplary implementations to replicate elsewhere
+**DO**: Use container queries (@container) for component-level responsiveness
+**DO**: Adapt the interface for different contexts—don't just shrink it
+**DON'T**: Hide critical functionality on mobile—adapt the interface, don't amputate it
 
-### Recommendations by Priority
+### UX Writing
+→ *Consult [ux-writing reference](reference/ux-writing.md) for labels, errors, and empty states.*
 
-Create actionable plan:
-1. **Immediate**: Critical blockers to fix first
-2. **Short-term**: High-severity issues (this sprint)
-3. **Medium-term**: Quality improvements (next sprint)
-4. **Long-term**: Nice-to-haves and optimizations
+**DO**: Make every word earn its place
+**DON'T**: Repeat information users can already see
 
-### Suggested Commands for Fixes
+---
 
-Map issues to available commands. Prefer these: /animate, /quieter, /optimize, /adapt, /clarify, /distill, /delight, /onboard, /normalize, /audit, /harden, /polish, /extract, /bolder, /critique, /colorize. You may also suggest other installed skills you're sure exist, but never invent commands.
+## The AI Slop Test
 
-Examples:
-- "Use `/normalize` to align with design system (addresses N theming issues)"
-- "Use `/optimize` to improve performance (addresses N performance issues)"
-- "Use `/harden` to improve resilience (addresses N edge cases)"
+**Critical quality check**: If you showed this interface to someone and said "AI made this," would they believe you immediately? If yes, that's the problem.
 
-**IMPORTANT**: Be thorough but actionable. Too many low-priority issues creates noise. Focus on what actually matters.
+A distinctive interface should make someone ask "how was this made?" not "which AI made this?"
 
-**NEVER**:
-- Report issues without explaining impact (why does this matter?)
-- Mix severity levels inconsistently
-- Skip positive findings (celebrate what works)
-- Provide generic recommendations (be specific and actionable)
-- Forget to prioritize (everything can't be critical)
-- Report false positives without verification
+Review the DON'T guidelines above—they are the fingerprints of AI-generated work from 2024-2025.
 
-Remember: You're a quality auditor with exceptional attention to detail. Document systematically, prioritize ruthlessly, and provide clear paths to improvement. A good audit makes fixing easy.
+---
+
+## Implementation Principles
+
+Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details.
+
+Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices across generations.
+
+Remember: Claude is capable of extraordinary creative work. Don't hold back—show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
 
 ---
 > Source: [yournextstore/yournextstore](https://github.com/yournextstore/yournextstore) — distributed by [TomeVault](https://tomevault.io).
