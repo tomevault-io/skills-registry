@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eduardo-sl/go-agent-skills](https://github.com/eduardo-sl/go-agent-skills/tree/main/skills/(architecture)/go-api-design/SKILL.md)
+Original source: [eduardo-sl/go-agent-skills](https://github.com/eduardo-sl/go-agent-skills/tree/main/skills/(code-quality)/go-code-review/SKILL.md)
 
 ---
 
