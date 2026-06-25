@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sendaifun/skills](https://github.com/sendaifun/skills/tree/main/skills/ct-alpha/SKILL.md)
+Original source: [sendaifun/skills](https://github.com/sendaifun/skills/tree/main/skills/marginfi/SKILL.md)
 
 ---
 
