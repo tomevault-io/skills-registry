@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rohitg00/manim-video-generator](https://github.com/rohitg00/manim-video-generator/tree/main/skills/visual-storyteller/SKILL.md)
+Original source: [rohitg00/manim-video-generator](https://github.com/rohitg00/manim-video-generator/tree/main/skills/animation-composer/SKILL.md)
 
 ---
 
