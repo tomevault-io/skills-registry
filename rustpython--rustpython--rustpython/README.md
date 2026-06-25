@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [RustPython/RustPython](https://github.com/RustPython/RustPython/tree/main/.agents/skills/apple-container/SKILL.md)
+Original source: [RustPython/RustPython](https://github.com/RustPython/RustPython/tree/main/.agents/skills/upgrade-pylib-next/SKILL.md)
 
 ---
 
