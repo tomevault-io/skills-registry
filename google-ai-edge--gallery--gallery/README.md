@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google-ai-edge/gallery](https://github.com/google-ai-edge/gallery/tree/main/skills/built-in/query-wikipedia/SKILL.md)
+Original source: [google-ai-edge/gallery](https://github.com/google-ai-edge/gallery/tree/main/skills/built-in/kitchen-adventure/SKILL.md)
 
 ---
 
