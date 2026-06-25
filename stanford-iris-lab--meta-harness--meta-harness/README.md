@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stanford-iris-lab/meta-harness](https://github.com/stanford-iris-lab/meta-harness/tree/main/reference_examples/text_classification/.claude/skills/meta-harness/SKILL.md)
+Original source: [stanford-iris-lab/meta-harness](https://github.com/stanford-iris-lab/meta-harness/tree/main/reference_examples/terminal_bench_2/.claude/skills/meta-harness-terminal-bench-2/SKILL.md)
 
 ---
 
