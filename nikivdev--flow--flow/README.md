@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nikivdev/flow](https://github.com/nikivdev/flow/tree/main/.ai/skills/quality-bun-feature-delivery/skill.md)
+Original source: [nikivdev/flow](https://github.com/nikivdev/flow/tree/main/.ai/skills/env/skill.md)
 
 ---
 
