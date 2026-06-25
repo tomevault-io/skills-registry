@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [spokvulcan/poker-planning](https://github.com/spokvulcan/poker-planning/tree/main/.agents/skills/convex-setup-auth/SKILL.md)
+Original source: [spokvulcan/poker-planning](https://github.com/spokvulcan/poker-planning/tree/main/.claude/skills/web-design-guidelines/SKILL.md)
 
 ---
 
