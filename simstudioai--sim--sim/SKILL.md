@@ -1,214 +1,233 @@
 ---
-name: add-model
-description: Add a new LLM model to `apps/sim/providers/models.ts` with every pricing and capability value verified against the provider's live API docs (no hallucination), plus the repo-side touchpoints that are not data-driven — hosted-key billing, tests, and provider-code handling. Use when adding a model to an existing provider in `apps/sim/providers/models.ts`. Use when this capability is needed.
+name: validate-trigger
+description: Audit an existing Sim webhook trigger against the service's webhook API docs and repository conventions, then report and fix issues across trigger definitions, provider handler, output alignment, registration, and security. Use when validating or repairing a trigger under `apps/sim/triggers/{service}/` or `apps/sim/lib/webhooks/providers/{service}.ts`. Use when this capability is needed.
 metadata:
   author: simstudioai
 ---
 
-# Add Model Skill
+# Validate Trigger
 
-You add a new model entry to `apps/sim/providers/models.ts`. **Every numeric and capability claim MUST be derived from a live web fetch of the provider's official docs in this session.** Marketing emails, training data, and your prior knowledge are not sources of truth — they routinely hallucinate pricing, context windows, and capability lists.
-
-## Hard rules (do not skip)
-
-1. **Live-fetch or refuse.** Before writing the entry, you must successfully WebFetch the provider's official models/pricing page in this session. If you cannot reach an authoritative source for any field, **mark the field as UNVERIFIED in your report and ask the user before guessing**. Never fill in pricing or capabilities from memory.
-2. **Two-source rule for pricing.** Cross-check input/output/cached pricing against at least one secondary source (OpenRouter, Artificial Analysis, CloudPrice, mem0, intuitionlabs). If sources disagree, the provider's own docs win — but flag the disagreement.
-3. **Read the code before setting capability flags.** Capability flags are dead unless the provider's implementation under `apps/sim/providers/{provider}/` actually consumes them (see Consumption Matrix below). Setting a flag the provider ignores is a silent bug.
-4. **Cite every fact.** Your final report must list the URL each value came from. No URL → not verified.
+You are an expert auditor for Sim webhook triggers. Your job is to validate that an existing trigger implementation is correct, complete, secure, and aligned across all layers.
 
 ## Your Task
 
-1. Identify provider and model id from user args
-2. Live-fetch official docs + pricing page + capability/parameter pages + at least one secondary source
-3. Apply the Consumption Matrix to know which capability flags are real
-4. Read 2-3 sibling entries in `models.ts` and match their pattern exactly
-5. Check the repo-side touchpoints that are NOT data-driven (hosted-key billing, tests, provider code)
-6. Insert the entry, run `bun run lint`, print the verification report
+1. Read the service's webhook/API documentation (via WebFetch)
+2. Read every trigger file, provider handler, and registry entry
+3. Cross-reference against the API docs and Sim conventions
+4. Report all issues grouped by severity (critical, warning, suggestion)
+5. Fix all issues after reporting them
 
-## Step 1: Live source-of-truth lookup
+## Step 1: Gather All Files
 
-In priority order — fetch all that exist for the provider:
+Read **every** file for the trigger — do not skip any:
 
-| Provider | Models index | Pricing | Reasoning/parameter caveats |
-|---|---|---|---|
-| OpenAI | platform.openai.com/docs/models | openai.com/api/pricing | platform.openai.com/docs/guides/reasoning |
-| Anthropic | docs.anthropic.com/en/docs/about-claude/models | anthropic.com/pricing | docs.anthropic.com/en/docs/build-with-claude/extended-thinking |
-| Google (Gemini) | ai.google.dev/gemini-api/docs/models | ai.google.dev/pricing | ai.google.dev/gemini-api/docs/thinking |
-| xAI | docs.x.ai/developers/models | docs.x.ai/developers/models (per-model detail page) | docs.x.ai/developers/model-capabilities/text/reasoning |
-| Mistral | docs.mistral.ai/getting-started/models/models_overview | mistral.ai/pricing | n/a |
-| DeepSeek | api-docs.deepseek.com/quick_start/pricing | same | api-docs.deepseek.com/guides/reasoning_model |
-| Groq | console.groq.com/docs/models | groq.com/pricing | n/a |
-| Cerebras | inference-docs.cerebras.ai/models | cerebras.ai/pricing | n/a |
-
-Secondary verification (use at least one): `openrouter.ai/<provider>/<model>`, `artificialanalysis.ai/models/<model>`, `cloudprice.net/models/<provider>-<model>`.
-
-Use a precise WebFetch prompt: *"Extract for {model_id}: exact model id string, context window in tokens, input price per 1M, cached input price per 1M, output price per 1M, max output tokens, supported reasoning effort levels, accepted parameters (temperature, top_p), release date. Do not fill in fields you cannot find."*
-
-## Step 2: Consumption Matrix (which provider honors which capability)
-
-| Capability | Honored by | Effect if set elsewhere |
-|---|---|---|
-| `temperature` | All providers (passed through if set) | Safe but inert on always-reasoning models that reject it |
-| `toolUsageControl` | All providers (provider-level, not per-model) | n/a — set on `ProviderDefinition`, not models |
-| `reasoningEffort` | `openai/core.ts`, `azure-openai`, `anthropic/core.ts` (mapped to thinking), `gemini/core.ts` | **Dead on xai, deepseek, mistral, groq, cerebras, openrouter, fireworks, bedrock, vertex** unless their core consumes it — re-grep before assuming |
-| `verbosity` | `openai/core.ts`, `azure-openai/index.ts` only | Dead elsewhere |
-| `thinking` | `anthropic/core.ts`, `gemini/core.ts` | Dead elsewhere |
-| `nativeStructuredOutputs` | `anthropic/core.ts`, `fireworks/index.ts`, `openrouter/index.ts` | Dead on openai, xai, google, vertex, bedrock, azure-openai, deepseek, mistral, groq, cerebras |
-| `maxOutputTokens` | Read by UI + executor for token estimation | Always meaningful — set if provider documents a cap |
-| `computerUse` | `anthropic/core.ts` | Dead elsewhere |
-| `deepResearch` | UI flag for routing to deep-research SKUs | Set only on actual deep-research model IDs |
-| `memory: false` | Conversation persistence opt-out | Set only when model genuinely cannot maintain history (e.g., deep-research) |
-
-**Always re-grep before relying on this table** — the codebase moves:
-
-```bash
-rg "reasoningEffort|reasoning_effort" apps/sim/providers/<provider>/
-rg "verbosity" apps/sim/providers/<provider>/
-rg "request\.thinking|thinking:" apps/sim/providers/<provider>/
-rg "supportsNativeStructuredOutputs|nativeStructuredOutputs" apps/sim/providers/<provider>/
+```
+apps/sim/triggers/{service}/           # All trigger files, utils.ts, index.ts
+apps/sim/lib/webhooks/providers/{service}.ts  # Provider handler (if exists)
+apps/sim/lib/webhooks/providers/registry.ts   # Handler registry
+apps/sim/triggers/registry.ts                 # Trigger registry
+apps/sim/blocks/blocks/{service}.ts           # Block definition (trigger wiring)
 ```
 
-## Step 3: Match the provider's existing entry pattern
-
-Open `apps/sim/providers/models.ts`, find `PROVIDER_DEFINITIONS[<provider>].models`, read 2-3 sibling entries. Match field order exactly:
-
-```ts
-{
-  id: '<exact-api-id>',
-  pricing: {
-    input: <number>,
-    cachedInput: <number>,  // omit if provider doesn't offer caching
-    output: <number>,
-    updatedAt: '<today YYYY-MM-DD>',
-  },
-  capabilities: {
-    // only flags the provider actually consumes — see matrix
-  },
-  contextWindow: <tokens>,
-  releaseDate: '<YYYY-MM-DD>',
-  recommended: true,        // only if new flagship; ask user before swapping
-  speedOptimized: true,     // only on smallest/fastest tier
-  deprecated: true,         // only on retired models
-}
+Also read for reference:
+```
+apps/sim/lib/webhooks/providers/types.ts            # WebhookProviderHandler interface
+apps/sim/lib/webhooks/providers/utils.ts            # Shared helpers (createHmacVerifier, etc.)
+apps/sim/lib/webhooks/provider-subscription-utils.ts    # Subscription helpers
+apps/sim/lib/webhooks/processor.ts                  # Central webhook processor
 ```
 
-### Reseller providers (azure-openai, azure-anthropic, vertex, bedrock, openrouter)
+## Step 2: Pull API Documentation
 
-Model id MUST be prefixed: `azure/`, `azure-anthropic/`, `vertex/`, `bedrock/`, `openrouter/`. Pricing usually mirrors the upstream provider but verify on the reseller's own pricing page.
+Fetch the service's official webhook documentation. This is the **source of truth** for:
+- Webhook event types and payload shapes
+- Signature/auth verification method (HMAC algorithm, header names, secret format)
+- Challenge/verification handshake requirements
+- Webhook subscription API (create/delete endpoints, if applicable)
+- Retry behavior and delivery guarantees
 
-### Insertion order
+### Hard Rule: No Guessed Webhook Payload Schemas
 
-Within a family, newest first (matches existing convention: GPT-5.5 above GPT-5.4 above GPT-5.2). Across families, biggest/flagship at top of list.
+If the official docs do not clearly show the webhook payload JSON for an event, you MUST tell the user instead of guessing.
 
-### `recommended` / `speedOptimized`
+- Do NOT invent payload field names
+- Do NOT infer nested payload paths without evidence
+- Do NOT treat likely event shapes as verified
+- Do NOT accept `formatInput` mappings that are not backed by docs or live payloads
 
-- At most one or two `recommended: true` per provider — the current flagship(s).
-- If you're adding a new flagship, ask the user before removing `recommended` from the previous flagship. Never silently flip it.
-- `speedOptimized: true` only on the smallest/fastest tier (nano, flash-lite, haiku class).
+If a payload schema is unknown, validation must explicitly recommend:
+1. sample webhook payloads,
+2. a live test webhook source, or
+3. trimming the trigger to only documented outputs.
 
-## Step 4: Repo-side touchpoints beyond the entry
+## Step 3: Validate Trigger Definitions
 
-Adding the `models.ts` entry is most of the job because nearly every consumer is **data-driven** and picks the model up automatically: the ~40 query helpers in `models.ts` / `providers/utils.ts`, the public `/models` catalog (`app/(landing)/models/utils.ts` iterates `PROVIDER_DEFINITIONS`), the agent-block model dropdown, and copilot's `isKnownModelId` / `suggestModelIdsForUnknownModel` validation. The touchpoints below are the exceptions — they are **not** data-driven, so check each one.
+### utils.ts
+- [ ] `{service}TriggerOptions` lists all trigger IDs accurately
+- [ ] `{service}SetupInstructions` provides clear, correct steps for the service
+- [ ] `build{Service}ExtraFields` includes relevant filter/config fields with correct `condition`
+- [ ] Output builders expose all meaningful fields from the webhook payload
+- [ ] Output builders do NOT use `optional: true` or `items` (tool-output-only features)
+- [ ] Nested output objects correctly model the payload structure
 
-### Hosted = auto-billed, by provider
+### Trigger Files
+- [ ] Exactly one primary trigger has `includeDropdown: true`
+- [ ] All secondary triggers do NOT have `includeDropdown`
+- [ ] All triggers use `buildTriggerSubBlocks` helper (not hand-rolled subBlocks)
+- [ ] Every trigger's `id` matches the convention `{service}_{event_name}`
+- [ ] Every trigger's `provider` matches the service name used in the handler registry
+- [ ] `index.ts` barrel exports all triggers
 
-`getHostedModels()` in `apps/sim/providers/models.ts` returns **every** model under `openai`, `anthropic`, and `google`:
+### Trigger ↔ Provider Alignment (CRITICAL)
+- [ ] Every trigger ID referenced in `matchEvent` logic exists in `{service}TriggerOptions`
+- [ ] Event matching logic in the provider correctly maps trigger IDs to service event types
+- [ ] Event matching logic in `is{Service}EventMatch` (if exists) correctly identifies events per the API docs
 
-```ts
-export function getHostedModels(): string[] {
-  return [
-    ...getProviderModels('openai'),
-    ...getProviderModels('anthropic'),
-    ...getProviderModels('google'),
-  ]
-}
-```
+## Step 4: Validate Provider Handler
 
-So a model added to any of those three providers is **automatically served with Sim's rotating hosted key and billed** to the workspace via `shouldBillModelUsage()` (`providers/utils.ts`). Before you insert:
+### Auth Verification
+- [ ] `verifyAuth` correctly validates webhook signatures per the service's documentation
+- [ ] HMAC algorithm matches (SHA-1, SHA-256, SHA-512)
+- [ ] Signature header name matches the API docs exactly
+- [ ] Signature format is handled (raw hex, `sha256=` prefix, base64, etc.)
+- [ ] Uses `safeCompare` for timing-safe comparison (no `===`)
+- [ ] If `webhookSecret` is required, handler rejects when it's missing (fail-closed)
+- [ ] Signature is computed over raw body (not parsed JSON)
 
-- **If the model should be BYOK-only / never-billed**, do NOT drop it under `openai`/`anthropic`/`google` as-is — that silently enrolls it in hosted billing. Confirm hosting/billing intent with the user. (Precedent: Ollama Cloud is a deliberately separate `isReseller` provider specifically to stay BYOK-only/never-billed.)
-- **If the model should be hosted**, the deployment must actually have a key for it — the provider's `{PREFIX}_COUNT` / `{PREFIX}_1..N` env vars must be set, or hosted runs fail at execution time.
-- State the hosted/billing status explicitly in the verification report.
+### Event Matching
+- [ ] `matchEvent` returns `boolean` (not `NextResponse` or other values)
+- [ ] Challenge/verification events are excluded from matching (e.g., `endpoint.url_validation`)
+- [ ] When `triggerId` is a generic webhook ID, all events pass through
+- [ ] When `triggerId` is specific, only matching events pass
+- [ ] Event matching logic uses dynamic `await import()` for trigger utils (avoids circular deps)
 
-### Tests with hardcoded model IDs
+### formatInput (CRITICAL)
+- [ ] Every key in the `formatInput` return matches a key in the trigger `outputs` schema
+- [ ] Every key in the trigger `outputs` schema is populated by `formatInput`
+- [ ] No extra undeclared keys that users can't discover in the UI
+- [ ] No wrapper objects (`webhook: { ... }`, `{service}: { ... }`)
+- [ ] Nested output paths exist at the correct depth (e.g., `resource.id` actually has `resource: { id: ... }`)
+- [ ] `null` is used for missing optional fields (not empty strings or empty objects)
+- [ ] Returns `{ input: { ... } }` — not a bare object
+- [ ] Every mapped payload field is backed by official docs or live-verified webhook payloads
 
-`bun run lint` does **not** run tests. A few tests assert specific model IDs and can break or need updating when you touch a hosted or flagship model:
+### Idempotency
+- [ ] `extractIdempotencyId` returns a stable, unique key per delivery
+- [ ] Uses provider-specific delivery IDs when available (e.g., `X-Request-Id`, `Linear-Delivery`, `svix-id`)
+- [ ] Falls back to content-based ID (e.g., `${type}:${id}`) when no delivery header exists
+- [ ] Does NOT include timestamps in the idempotency key (would break dedup on retries)
 
-- `apps/sim/providers/utils.test.ts` — asserts membership of `getHostedModels()` / `shouldBillModelUsage()`
-- `apps/sim/providers/index.test.ts` and serializer tests — reference concrete model IDs
+### Challenge Handling (if applicable)
+- [ ] `handleChallenge` correctly implements the service's URL verification handshake
+- [ ] Returns the expected response format per the API docs
+- [ ] Env-backed secrets are resolved via `resolveEnvVarsInObject` if needed
 
-```bash
-rg "<new-model-id>|getHostedModels|shouldBillModelUsage" apps/sim/providers/*.test.ts
-```
+## Step 5: Validate Automatic Subscription Lifecycle
 
-If anything matches, run the affected provider tests and update assertions as needed.
+If the service supports programmatic webhook creation:
 
-### New API behavior is NOT data-driven
+### createSubscription
+- [ ] Calls the correct API endpoint to create a webhook
+- [ ] Sends the correct event types/filters
+- [ ] Passes the notification URL from `getNotificationUrl(ctx.webhook)`
+- [ ] Returns `{ providerConfigUpdates: { externalId } }` with the external webhook ID
+- [ ] Throws on failure (orchestration handles rollback)
+- [ ] Provides user-friendly error messages (401 → "Invalid API Key", etc.)
 
-The Consumption Matrix (Step 2) tells you which capability *flags* are honored by existing provider code. But if the new model needs **net-new** request handling that the provider doesn't implement yet — a new beta header (e.g. Anthropic's `anthropic-beta` structured-outputs header in `anthropic/index.ts`), a new thinking/reasoning encoding, a Responses-API quirk — you must edit `apps/sim/providers/<provider>/core.ts` / `index.ts`. Setting a flag whose behavior isn't implemented is a silent no-op. When you do edit provider code, reuse the shared helpers rather than hand-rolling: streaming responses are assembled via `createStreamingExecution` (`@/providers/streaming-execution`) and tool schemas via `adaptOpenAIChatToolSchema` / `adaptAnthropicToolSchema` (`@/providers/tool-schema-adapter`).
+### deleteSubscription
+- [ ] Calls the correct API endpoint to delete the webhook
+- [ ] Handles 404 gracefully (webhook already deleted)
+- [ ] Never throws — catches errors and logs non-fatally
+- [ ] Skips gracefully when `apiKey` or `externalId` is missing
 
-### Wrong family entirely?
+### Orchestration Isolation
+- [ ] NO provider-specific logic in `route.ts`, `provider-subscriptions.ts`, or `deploy.ts`
+- [ ] All subscription logic lives on the handler (`createSubscription`/`deleteSubscription`)
 
-- **Embedding or rerank model** → it does NOT go in the `models[]` array. Use `EMBEDDING_MODEL_PRICING` / `RERANK_MODEL_PRICING` in `models.ts` instead.
-- **Brand-new provider** (not just a new model under an existing one) → much larger surface: add the id to `ProviderId` in `providers/types.ts`, a registry entry in `providers/registry.ts`, a provider implementation under `providers/<id>/` (assemble streaming responses with `createStreamingExecution` and wrap tool schemas with the `@/providers/tool-schema-adapter` helpers), an icon in `components/icons.tsx`, and the `PROVIDER_DEFINITIONS` block. That is beyond this skill — tell the user.
+## Step 6: Validate Registration and Block Wiring
 
-## Step 5: Write, lint
+### Trigger Registry (`triggers/registry.ts`)
+- [ ] All triggers are imported and registered
+- [ ] Registry keys match trigger IDs exactly
+- [ ] No orphaned entries (triggers that don't exist)
 
-```bash
-bun run lint
-```
+### Provider Handler Registry (`providers/registry.ts`)
+- [ ] Handler is imported and registered (if handler exists)
+- [ ] Registry key matches the `provider` field on the trigger configs
+- [ ] Entries are in alphabetical order
 
-Lint must pass before reporting done. **If lint fails:** read the error, fix the syntax/typing issue in the entry you just wrote (do not delete the entry — it's the work product), re-run lint, and note the fix in a "Lint adjustments" line in the verification report. Never report done with lint failing.
+### Block Wiring (`blocks/blocks/{service}.ts`)
+- [ ] Block has `triggers.enabled: true`
+- [ ] `triggers.available` lists all trigger IDs
+- [ ] All trigger subBlocks are spread into `subBlocks`: `...getTrigger('id').subBlocks`
+- [ ] No trigger IDs in `triggers.available` that aren't in the registry
+- [ ] No trigger subBlocks spread that aren't in `triggers.available`
 
-## Step 6: Verification report (mandatory format)
+## Step 7: Validate Security
 
-End with this exact structure:
+- [ ] Webhook secrets are never logged (not even at debug level)
+- [ ] Auth verification runs before any event processing
+- [ ] No secret comparison uses `===` (must use `safeCompare` or `crypto.timingSafeEqual`)
+- [ ] Timestamp/replay protection is reasonable (not too tight for retries, not too loose for security)
+- [ ] Raw body is used for signature verification (not re-serialized JSON)
 
-```markdown
-### Verification — <model-id>
+## Step 8: Report and Fix
 
-| Field | Value | Source URL | Status |
-|---|---|---|---|
-| `id` | `grok-4.3` | https://docs.x.ai/... | ✓ verified |
-| `contextWindow` | 1,000,000 | https://docs.x.ai/... + https://openrouter.ai/... | ✓ verified (2 sources agree) |
-| `input` | $1.25/M | https://docs.x.ai/... | ✓ verified |
-| `cachedInput` | $0.20/M | https://cloudprice.net/... | ⚠️ single source |
-| `output` | $2.50/M | https://docs.x.ai/... + https://openrouter.ai/... | ✓ verified |
-| `capabilities.temperature` | `{ min: 0, max: 1 }` | matches sibling entries | — pattern-match only |
-| `capabilities.reasoningEffort` | NOT SET | provider docs say API rejects it for this model | ✓ correctly omitted |
-| `releaseDate` | 2026-04-30 | https://docs.x.ai/... announcement | ✓ verified |
-| hosted/billing | BYOK-only (xai not in `getHostedModels`) | `providers/models.ts` | — confirmed intent |
+### Report Format
 
-**Disagreements**
-- _none_ OR _OpenRouter says X, provider docs say Y — used Y per provider rule_
+Group findings by severity:
 
-**Unverified fields**
-- _none_ OR _<field>: could not find authoritative source — left as <X> based on sibling pattern; please confirm_
-```
+**Critical** (runtime errors, security issues, or data loss):
+- Wrong HMAC algorithm or header name
+- `formatInput` keys don't match trigger `outputs`
+- Missing `verifyAuth` when the service sends signed webhooks
+- `matchEvent` returns non-boolean values
+- Provider-specific logic leaking into shared orchestration files
+- Trigger IDs mismatch between trigger files, registry, and block
+- `createSubscription` calling wrong API endpoint
+- Auth comparison using `===` instead of `safeCompare`
 
-If any row is ⚠️ single-source or "unverified," **state it plainly to the user and ask whether to proceed**. Do not silently merge.
+**Warning** (convention violations or usability issues):
+- Missing `extractIdempotencyId` when the service provides delivery IDs
+- Timestamps in idempotency keys (breaks dedup on retries)
+- Missing challenge handling when the service requires URL verification
+- Output schema missing fields that `formatInput` returns (undiscoverable data)
+- Overly tight timestamp skew window that rejects legitimate retries
+- `matchEvent` not filtering challenge/verification events
+- Setup instructions missing important steps
 
-## What to do if you cannot find a source
+**Suggestion** (minor improvements):
+- More specific output field descriptions
+- Additional output fields that could be exposed
+- Better error messages in `createSubscription`
+- Logging improvements
 
-Omitting a field is **not the same as verifying it**. Any field you cannot confirm from a live fetch must be **both** omitted from the entry **and** listed as ❓ UNVERIFIED in the report's "Unverified fields" section, with the URLs you attempted. Then ask the user to confirm before merging.
+### Fix All Issues
 
-- Pricing missing → do NOT guess. Omit `cachedInput`. Mark ❓ UNVERIFIED. Ask the user for the price or the docs URL.
-- Context window missing → do NOT guess. Ask the user; mark ❓ UNVERIFIED.
-- Release date missing → omit the field; mark ❓ UNVERIFIED in the report.
-- Capability uncertain → omit the flag (safer than setting a dead/wrong one); mark ❓ UNVERIFIED so the user knows you didn't confirm it either way.
+After reporting, fix every **critical** and **warning** issue. Apply **suggestions** where they don't add unnecessary complexity.
 
-## Anti-patterns this skill exists to prevent
+### Validation Output
 
-- ❌ Trusting a marketing email (xAI's grok-4.3 email claimed "3 reasoning efforts" but the API rejects `reasoning_effort` — verified by official docs only)
-- ❌ Setting `nativeStructuredOutputs: true` on xai/openai/google (dead — only anthropic/fireworks/openrouter consume it)
-- ❌ Setting `thinking` on non-Anthropic/non-Gemini providers
-- ❌ Setting `verbosity` on anything other than OpenAI gpt-5.x
-- ❌ Copying `pricing.updatedAt` from a sibling instead of using today's date
-- ❌ Inventing a `cachedInput` price by dividing input by 4 (varies by provider — find an explicit number)
-- ❌ Stamping `recommended: true` on the new model without removing it from the previous flagship
-- ❌ Adding a BYOK-only model under `openai`/`anthropic`/`google` (silently enrolls it in hosted billing via `getHostedModels()`)
-- ❌ Reporting "done" after only `bun run lint` when you touched a hosted (openai/anthropic/google) or flagship model with assertions in `providers/utils.test.ts`
-- ❌ Reporting "done" with any UNVERIFIED row in the table
+After fixing, confirm:
+1. `bun run type-check` passes
+2. Re-read all modified files to verify fixes are correct
+3. Provider handler tests pass (if they exist): `bun test {service}`
+4. Any remaining unknown webhook payload schemas were explicitly reported to the user instead of guessed
+
+## Checklist Summary
+
+- [ ] Read all trigger files, provider handler, types, registries, and block
+- [ ] Pulled and read official webhook/API documentation
+- [ ] Validated trigger definitions: options, instructions, extra fields, outputs
+- [ ] Validated primary/secondary trigger distinction (`includeDropdown`)
+- [ ] Validated provider handler: auth, matchEvent, formatInput, idempotency
+- [ ] Validated output alignment: every `outputs` key ↔ every `formatInput` key
+- [ ] Validated subscription lifecycle: createSubscription, deleteSubscription, no shared-file edits
+- [ ] Validated registration: trigger registry, handler registry, block wiring
+- [ ] Validated security: safe comparison, no secret logging, replay protection
+- [ ] Reported all issues grouped by severity
+- [ ] Fixed all critical and warning issues
+- [ ] `bun run type-check` passes after fixes
 
 ---
 > Source: [simstudioai/sim](https://github.com/simstudioai/sim) — distributed by [TomeVault](https://tomevault.io).
