@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [EthanAlgoX/MarketBot](https://github.com/EthanAlgoX/MarketBot/tree/main/marketbot/skills/intel-collector/SKILL.md)
+Original source: [EthanAlgoX/MarketBot](https://github.com/EthanAlgoX/MarketBot/tree/main/marketbot/skills/market-discovery/SKILL.md)
 
 ---
 
