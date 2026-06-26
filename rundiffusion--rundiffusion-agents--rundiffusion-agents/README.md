@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rundiffusion/RunDiffusion-Agents](https://github.com/rundiffusion/RunDiffusion-Agents/tree/main/skills/rundiffusion-host-agent-manager/SKILL.md)
+Original source: [rundiffusion/RunDiffusion-Agents](https://github.com/rundiffusion/RunDiffusion-Agents/tree/main/skills/rundiffusion-standalone-agent-manager/SKILL.md)
 
 ---
 
