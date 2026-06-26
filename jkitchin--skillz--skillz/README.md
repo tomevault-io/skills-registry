@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jkitchin/skillz](https://github.com/jkitchin/skillz/tree/main/skills/research/scientific-data-extraction/SKILL.md)
+Original source: [jkitchin/skillz](https://github.com/jkitchin/skillz/tree/main/skills/laboratory/opentrons-absorbance-reader/SKILL.md)
 
 ---
 
