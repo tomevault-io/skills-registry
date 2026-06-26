@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [okwasniewski/react-native-logs-cli](https://github.com/okwasniewski/react-native-logs-cli/tree/main/skills/react-native-logs-cli)
+Original source: [okwasniewski/react-native-logs-cli](https://github.com/okwasniewski/react-native-logs-cli/tree/main/skills/react-native-logs-cli/SKILL.md)
 
 ---
 
