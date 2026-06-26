@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zhylq/yuan-skills](https://github.com/zhylq/yuan-skills/tree/main/skills/zhy-wechat-publish/SKILL.md)
+Original source: [zhylq/yuan-skills](https://github.com/zhylq/yuan-skills/tree/main/skills/zhy-markdown2wechat/SKILL.md)
 
 ---
 
