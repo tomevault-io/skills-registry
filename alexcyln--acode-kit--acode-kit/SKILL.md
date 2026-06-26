@@ -1,0 +1,187 @@
+---
+name: acode-kit
+description: Lightweight workflow entry for Acode-kit. First action: check `.acode-kit-initialized.json` or the provider global cache. Keep the startup gate graph including Gate 3.5, Gate 4a, and Gate 4b plus 7 execution stages unchanged. Load workflow and standards progressively. Preserve gate control, stage order, and project-document governance. Use when this capability is needed.
+metadata:
+  author: AlexCyln
+---
+# Acode-kit
+Use this skill when:
+1. the user wants a project delivered under the Acode-kit workflow
+2. the user wants to continue an Acode-kit-managed project
+3. the user explicitly mentions `Acode-kit`
+4. the workspace shows Acode-kit project traces such as:
+   - `.acode-kit-initialized.json`
+   - `docs/project/ACTIVE_STANDARDS.md`
+   - `docs/project/PROJECT_OVERRIDES.md`
+   - `docs/project/PROJECT_EXTENSIONS.md`
+5. another generic project-delivery skill also matches, but the task is clearly for an Acode-kit-managed project
+
+## Precedence rule
+
+Acode-kit is the canonical workflow entry for any Acode-kit-managed project.
+
+1. if the user explicitly mentions `Acode-kit`, Acode-kit takes precedence over generic project-delivery skills
+2. if the workspace contains Acode-kit project traces, Acode-kit must take over
+3. if another similar high-level workflow skill also matches, do not hand off unless the user explicitly asks to leave the Acode-kit workflow
+4. treat other generic project-builder skills as non-authoritative when Acode-kit project traces exist
+
+## Core role
+
+Acode-kit is the public workflow orchestrator. It owns:
+1. startup gate control
+2. stage transitions
+3. document loading order
+4. sub-agent delegation boundary
+5. project-document governance
+
+It does not replace:
+1. `acode-kit init` for environment initialization
+2. `acode-run` for internal routed execution
+3. standards packages for detailed rules
+
+## Entry guard
+
+When the user invokes `Acode-kit`, stay in the main workflow entry.
+
+1. Do not jump to `acode-run` on entry.
+2. Do not treat `acode-run` as the startup executor.
+3. Do not route Step 1, Step 2, Step 3, Gate 3.5, Step 4a, or Step 4b through `acode-run`.
+4. First complete the startup lane and wait at gates as required.
+5. Only consider `acode-run` after Gate 4b, and only for a concrete routed subtask inside stage-driven execution.
+
+## First action
+Before anything else:
+
+1. check `.acode-kit-initialized.json` in the workspace
+2. if missing, check the provider global cache:
+   - `~/.codex/acode-kit/.acode-kit-global.json`
+   - `~/.claude/acode-kit/.acode-kit-global.json`
+3. if neither exists, tell the user to run:
+   - `node ~/.codex/skills/Acode-kit/scripts/acode-kit-init.mjs`
+   - `node ~/.claude/Acode-kit/scripts/acode-kit-init.mjs`
+4. stop until initialization exists
+
+Never start with Pencil, editor-state tools, or code generation.
+## Loading order
+Read only the minimum needed, in this order:
+
+1. this file
+2. `integrations/shared/WORKFLOW_CORE.md`
+3. provider adapter:
+   - `integrations/codex/acode-kit.md`
+   - `integrations/claude/acode-kit.md`
+4. current workflow doc in `workflows/`
+5. current load rule in `references/load-rules/`
+6. required scenario / stack standards
+7. project-level `ACTIVE_STANDARDS.md` and control docs
+
+Do not bulk-read all workflows or all standards on entry.
+## Workflow graph
+Startup sequence:
+1. Step 1: workspace status report
+2. Gate 1: user approval
+3. Step 2: requirements analysis + project skeleton
+4. Gate 2: user approval
+5. Step 3: PRD + progress plan
+6. Gate 3: user approval
+7. Gate 3.5: LMS tier confirmation
+8. Step 4a: directory materialization + document relocation
+9. Gate 4a: user approval
+10. Step 4b: environment + engineering scaffold setup
+11. Gate 4b: user approval
+
+LMS governs execution density only:
+1. `S` / `M` / `L` may change module granularity, batching width, and document expansion depth
+2. `S` / `M` / `L` may not remove startup gates, Stage 1-7, or Step 5a-5e
+3. every node still keeps its required inputs, outputs, review boundary, and standards obligations
+4. smaller LMS tiers reduce scope breadth, not workflow rigor
+
+Stage-driven execution:
+1. Stage 1: requirements structuring + module decomposition
+2. Stage 2: overall UI architecture
+3. Stage 3: overall data model + API framework
+4. Stage 4: project scaffold initialization
+5. Stage 5: module iteration
+6. Stage 6: integration testing + cross-module review
+7. Stage 7: deployment and go-live
+
+Stage 5 is fixed per module:
+1. Step 5a
+2. Step 5b
+3. Step 5c
+4. Step 5d
+5. Step 5e
+
+## Non-negotiable boundaries
+1. no file or directory creation before Gate 3 approval
+2. no design work before Gate 4b approval
+3. Pencil/design tools only at Stage 2 and Step 5b
+4. `Step 4a` and `Step 4b` are not `Stage 4`
+5. do not skip or merge gates
+6. do not skip stages when downstream outputs depend on them
+7. wait for explicit user approval at every gate, stage review, and Step 5a-5e review
+8. `Step 4a` must materialize the approved Step 2 / Step 3 outputs into project docs by direct relocation; `Step 4b` handles environment setup afterward
+9. when an extension is loaded, tell the user which extension was used, what it did at the current node, and why it was helpful
+
+## Workflow references
+Use these files instead of expanding the main entry:
+
+1. startup: `workflows/startup.md`
+2. approvals and document updates: `workflows/gate-rules.md`
+3. stage order and boundaries: `workflows/stage-execution.md`
+4. module design / TDD / shadcn / access-info rules: `workflows/module-iteration.md`
+5. major changes: `workflows/change-management.md`
+6. tool and context degradation: `workflows/fallback-and-degrade.md`
+
+## Standards routing
+Use:
+1. `references/load-rules/DOCUMENT_LOADING_RULES.md`
+2. `references/load-rules/TASK_TO_STANDARD_MAP.md`
+3. `references/load-rules/AGENT_DELEGATION_RULES.md`
+
+Detailed standards live in:
+1. `references/global-engineering-standards/`
+2. `references/scenario-standards/`
+3. `references/stack-standards/`
+
+Project-level activation lives in:
+1. `docs/project/PROJECT_OVERRIDES.md`
+2. `docs/project/ACTIVE_STANDARDS.md`
+
+## Router and delegation
+`acode-run` is internal and not user-facing. Invoke it only for routed subtasks. Keep:
+1. `project_id`, `phase`, `task_type`, `difficulty`, `provider`, `prompt`
+2. optional `context_summary`, `logical_session_id`, `native_session_id`
+3. fallback order: `error -> timeout -> quality_low -> budget_exceeded`
+
+Hard boundary:
+1. never invoke `acode-run` during startup Steps 1-4b or Gates 1-4b
+2. never invoke `acode-run` as a replacement for the main `Acode-kit` workflow entry
+3. invoke it only when the current stage already exists and the task is a bounded routed subtask
+4. final gate decisions, stage review outputs, and user-facing conclusions stay in `Acode-kit`
+
+Delegate bounded analysis only. Final gate decisions and final user-facing conclusions stay with the main agent.
+
+## Session resume
+When resuming an existing project, read first:
+1. `TRACEABILITY_MATRIX.md`
+2. `SESSION_HANDOFF.md`
+
+Continue from the recorded cursor. Do not re-run completed nodes.
+## Language and output
+1. use the user's language throughout
+2. keep outputs review-ready and stage-specific
+3. update project control docs before advancing
+
+## Never do these
+1. replace the declared tech stack on your own
+2. jump straight to coding when project facts are missing
+3. expand scope silently
+4. write production code without a failing test first
+5. let the user skip mandatory gates or stages
+6. interpret Gate 3 as permission to start design
+7. treat a missing MCP tool as a reason to abandon the workflow when a documented degradation exists
+
+---
+> Source: [AlexCyln/Acode-kit](https://github.com/AlexCyln/Acode-kit) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
