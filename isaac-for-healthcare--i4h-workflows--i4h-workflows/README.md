@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [isaac-for-healthcare/i4h-workflows](https://github.com/isaac-for-healthcare/i4h-workflows/tree/main/skills/i4h-workflow/SKILL.md)
+Original source: [isaac-for-healthcare/i4h-workflows](https://github.com/isaac-for-healthcare/i4h-workflows/tree/main/skills/i4h-lerobot-viz/SKILL.md)
 
 ---
 
