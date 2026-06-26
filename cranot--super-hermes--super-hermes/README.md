@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Cranot/super-hermes](https://github.com/Cranot/super-hermes/tree/main/skills/prism-scan/SKILL.md)
+Original source: [Cranot/super-hermes](https://github.com/Cranot/super-hermes/tree/main/skills/prism-reflect/SKILL.md)
 
 ---
 
