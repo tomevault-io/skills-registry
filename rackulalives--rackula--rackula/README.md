@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [RackulaLives/Rackula](https://github.com/RackulaLives/Rackula/tree/main/.claude/skills/gh-dev/SKILL.md)
+Original source: [RackulaLives/Rackula](https://github.com/RackulaLives/Rackula/tree/main/.claude/skills/gh-create/SKILL.md)
 
 ---
 
