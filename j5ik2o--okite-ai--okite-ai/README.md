@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [j5ik2o/okite-ai](https://github.com/j5ik2o/okite-ai/tree/main/skills/when-to-wrap-primitives/SKILL.md)
+Original source: [j5ik2o/okite-ai](https://github.com/j5ik2o/okite-ai/tree/main/skills/cqrs-aggregate-modeling/SKILL.md)
 
 ---
 
