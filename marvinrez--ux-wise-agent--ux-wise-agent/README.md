@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marvinrez/ux-wise-agent](https://github.com/marvinrez/ux-wise-agent/tree/main/skill.md)
+Original source: [marvinrez/ux-wise-agent](https://github.com/marvinrez/ux-wise-agent/tree/main/SKILL.md)
 
 ---
 
