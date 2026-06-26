@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PanCodeInventory/PanelAgent](https://github.com/PanCodeInventory/PanelAgent/tree/main/.agents/skills/fastapi-templates/SKILL.md)
+Original source: [PanCodeInventory/PanelAgent](https://github.com/PanCodeInventory/PanelAgent/tree/main/.agents/skills/nextjs-app-router-patterns/SKILL.md)
 
 ---
 
