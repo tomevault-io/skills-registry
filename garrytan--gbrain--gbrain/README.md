@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [garrytan/gbrain](https://github.com/garrytan/gbrain/tree/main/recipes/agent-voice/skills/voice-persona-mars/SKILL.md)
+Original source: [garrytan/gbrain](https://github.com/garrytan/gbrain/tree/main/recipes/agent-voice/skills/voice-persona-venus/SKILL.md)
 
 ---
 
