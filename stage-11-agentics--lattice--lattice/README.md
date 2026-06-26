@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Stage-11-Agentics/lattice](https://github.com/Stage-11-Agentics/lattice/tree/main/skills/delegator-example/SKILL.md)
+Original source: [Stage-11-Agentics/lattice](https://github.com/Stage-11-Agentics/lattice/tree/main/src/lattice/skills/lattice/SKILL.md)
 
 ---
 
