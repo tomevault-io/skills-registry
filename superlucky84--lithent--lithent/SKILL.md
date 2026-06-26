@@ -378,5 +378,5 @@ import { lTag } from 'lithent/tag';
 - `examples/` (quick examples)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/superlucky84) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [superlucky84/lithent](https://github.com/superlucky84/lithent) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
