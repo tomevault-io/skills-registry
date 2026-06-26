@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [harris21/laravel-herd-worktree](https://github.com/harris21/laravel-herd-worktree/tree/main/skills/laravel-herd-worktree)
+Original source: [harris21/laravel-herd-worktree](https://github.com/harris21/laravel-herd-worktree/tree/main/skills/laravel-herd-worktree/SKILL.md)
 
 ---
 
