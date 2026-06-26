@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HeshamFS/materials-simulation-skills](https://github.com/HeshamFS/materials-simulation-skills/tree/main/skills/ontology/ontology-mapper/SKILL.md)
+Original source: [HeshamFS/materials-simulation-skills](https://github.com/HeshamFS/materials-simulation-skills/tree/main/skills/ontology/ontology-validator/SKILL.md)
 
 ---
 
