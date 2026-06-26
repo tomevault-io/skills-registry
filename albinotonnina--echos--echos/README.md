@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [albinotonnina/echos](https://github.com/albinotonnina/echos/tree/main/.hive/prompts/skills/debug-failing-test/SKILL.md)
+Original source: [albinotonnina/echos](https://github.com/albinotonnina/echos/tree/main/.hive/prompts/skills/security-checklist/SKILL.md)
 
 ---
 
