@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [beita6969/ScienceClaw](https://github.com/beita6969/ScienceClaw/tree/main/skills/pymatgen-materials/SKILL.md)
+Original source: [beita6969/ScienceClaw](https://github.com/beita6969/ScienceClaw/tree/main/skills/education-research/SKILL.md)
 
 ---
 
