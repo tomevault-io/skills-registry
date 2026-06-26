@@ -517,5 +517,5 @@ The worktree is a separate copy of the codebase. Using the main repo path will e
 - Any Laravel development workflow
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/harris21) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [harris21/laravel-herd-worktree](https://github.com/harris21/laravel-herd-worktree) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
