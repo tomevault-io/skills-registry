@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [entireio/skills](https://github.com/entireio/skills/tree/main/skills/session-to-skill/SKILL.md)
+Original source: [entireio/skills](https://github.com/entireio/skills/tree/main/skills/session-crosslink/SKILL.md)
 
 ---
 
