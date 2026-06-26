@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Upsonic/Upsonic](https://github.com/Upsonic/Upsonic/tree/main/src/upsonic/skills/builtins/code-review/SKILL.md)
+Original source: [Upsonic/Upsonic](https://github.com/Upsonic/Upsonic/tree/main/src/upsonic/skills/builtins/data-analysis/SKILL.md)
 
 ---
 
