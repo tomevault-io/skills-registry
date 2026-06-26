@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs/tree/main/.github/skills/azure-typespec-author/SKILL.md)
+Original source: [Azure/azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs/tree/main/.github/skills/openai-typespec-update/SKILL.md)
 
 ---
 
