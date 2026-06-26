@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [EthanAlgoX/MarketBot](https://github.com/EthanAlgoX/MarketBot/tree/main/marketbot/skills/tech-news-digest/SKILL.md)
+Original source: [EthanAlgoX/MarketBot](https://github.com/EthanAlgoX/MarketBot/tree/main/marketbot/skills/catalyst-tracker/SKILL.md)
 
 ---
 
