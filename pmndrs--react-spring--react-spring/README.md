@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pmndrs/react-spring](https://github.com/pmndrs/react-spring/tree/main/.claude/skills/speckit-taskstoissues/SKILL.md)
+Original source: [pmndrs/react-spring](https://github.com/pmndrs/react-spring/tree/main/.claude/skills/speckit-git-initialize/SKILL.md)
 
 ---
 
