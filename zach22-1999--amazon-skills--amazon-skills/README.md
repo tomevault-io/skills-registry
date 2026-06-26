@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zach22-1999/amazon-skills](https://github.com/zach22-1999/amazon-skills/tree/main/skills/zach-sif-cvr-threshold-analyzer/SKILL.md)
+Original source: [zach22-1999/amazon-skills](https://github.com/zach22-1999/amazon-skills/tree/main/skills/zach-search-term-report-analyzer/SKILL.md)
 
 ---
 
