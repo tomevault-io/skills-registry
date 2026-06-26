@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nearai/ironclaw](https://github.com/nearai/ironclaw/tree/main/skills/coding/SKILL.md)
+Original source: [nearai/ironclaw](https://github.com/nearai/ironclaw/tree/main/skills/commit/SKILL.md)
 
 ---
 
