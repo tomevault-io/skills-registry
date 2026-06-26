@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rustfs/rustfs](https://github.com/rustfs/rustfs/tree/main/.agents/skills/rustfs-logging-governance/SKILL.md)
+Original source: [rustfs/rustfs](https://github.com/rustfs/rustfs/tree/main/.agents/skills/rustfs-release-version-bump/SKILL.md)
 
 ---
 
