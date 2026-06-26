@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [godmakereth/vibe-coding-tw](https://github.com/godmakereth/vibe-coding-tw/tree/main/skills/claude-cookbooks/SKILL.md)
+Original source: [godmakereth/vibe-coding-tw](https://github.com/godmakereth/vibe-coding-tw/tree/main/skills/claude-code-guide/SKILL.md)
 
 ---
 
