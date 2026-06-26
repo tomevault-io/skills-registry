@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Leochens/feishu-bot-chat-plugin](https://github.com/Leochens/feishu-bot-chat-plugin/tree/main/skills/a2a-interrupt/SKILL.md)
+Original source: [Leochens/feishu-bot-chat-plugin](https://github.com/Leochens/feishu-bot-chat-plugin/tree/main/skills/a2a-mode-switch/SKILL.md)
 
 ---
 
