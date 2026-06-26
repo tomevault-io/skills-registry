@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [browserbase/stagehand](https://github.com/browserbase/stagehand/tree/main/packages/cli/skills/browse/SKILL.md)
+Original source: [browserbase/stagehand](https://github.com/browserbase/stagehand/tree/main/packages/evals/skills/browser/SKILL.md)
 
 ---
 
