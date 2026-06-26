@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [langflow-ai/openrag](https://github.com/langflow-ai/openrag/tree/main/plugins/openrag/skills/sdk/SKILL.md)
+Original source: [langflow-ai/openrag](https://github.com/langflow-ai/openrag/tree/main/plugins/openrag/skills/install/SKILL.md)
 
 ---
 
