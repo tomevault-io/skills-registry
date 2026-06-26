@@ -1,315 +1,144 @@
 ---
-name: iphoneclaw
-description: > Use when this capability is needed.
+name: iphoneclaw-action-scripts
+description: Record, register, and invoke iPhoneClaw action scripts to reduce VLM tokens and make automations repeatable. Use when you want the model/agent to call `run_script(name=..., vars=...)`, when updating `action_scripts/registry.json`, when exporting scripts from `runs/*/events.jsonl`, or when triggering scripts remotely via `python -m iphoneclaw ctl run-script` while the worker is paused. Use when this capability is needed.
 metadata:
-  author: noedgeai
+  author: NoEdgeAI
 ---
 
-# iPhoneClaw — iPhone Automation Supervisor
+# iPhoneClaw Action Scripts
 
-You are a **supervisor subagent**. Your job:
-1. Start the iPhoneClaw worker in the background
-2. Poll its text-only supervisor API every ~10 seconds
-3. Intervene when the worker goes off-track
-4. Stop the worker and return a concise summary when done
+Use the local script registry (`action_scripts/registry.json`) to give the model a low-token primitive:
+`run_script(name=..., ...)` expands into a pre-recorded `.txt` action script and executes the concrete actions.
 
-You **never** see screenshots. You only see the worker's `Thought:` / `Action:` text via the supervisor HTTP API. The worker handles vision + action execution autonomously.
+Key files:
+- `action_scripts/registry.json`: short name -> script path
+- `action_scripts/common/*.txt`: curated scripts
+- `action_scripts/recorded/*.txt`: recordings/exports
 
-## Diary (Continuous Learning)
+## Priority Rules (MUST follow)
 
-This repo contains a supervisor-written diary at `WORKER_DIARY.md`.
+**When a registered script covers the task, ALWAYS use `run_script(...)` instead of manually composing individual actions.**
 
-Optional community sharing repo: https://github.com/NoEdgeAI/awesome-iphoneclaw-diary
-Only submit a PR to that repo if the user explicitly agrees.
+### 1. Launching an App -> ALWAYS use `open_app_spotlight`
 
-Before starting a task:
-- Use `grep` to query `WORKER_DIARY.md` and extract any relevant rules for this instruction.
-- Keep those rules in mind when injecting guidance.
-
-After the task finishes (or is stopped): REQUIRED
-- Write a short reflection and append exactly **one** new `DIARY|...` line to `WORKER_DIARY.md` (append-only).
-- Keep it actionable and text-only (no secrets, no screenshots). One line only.
-- If the new entry seems generally useful, ask the user:
-  "Do you want me to submit a PR to https://github.com/NoEdgeAI/awesome-iphoneclaw-diary with this diary entry?"
-  Only proceed if they say yes.
-
-## Typing Constraint (Chinese IME)
-
-The worker enforces: `type(content=...)` must be **ASCII only**. If Chinese input is needed, the worker should type **pinyin** (ASCII) and then select the Chinese candidate using clicks.
-
-## Avoid iPhone Home Search (Spotlight)
-
-Do NOT rely on the iPhone Home Screen search / Spotlight workflow to find apps. In iPhone Mirroring, Spotlight text input is often unreliable (IME / focus issues).
-Prefer opening apps via:
-- tapping the app icon directly
-- App Library navigation
-- in-app search boxes (once inside the app)
-
-## Home Screen Scrolling
-
-When the worker needs to scroll on the iPhone Home Screen / App Library:
-- do NOT scroll in the middle of the screen
-- scroll/swipe slightly above the bottom navigation bar / dock area
-- DO NOT use `drag(...)` for vertical scrolling. Use `scroll(direction='up'|'down', ...)`.
-- `scroll(...)` should be wheel-only (move cursor + wheel). Avoid "click to focus" before scrolling, since it may open a video/item under the cursor.
-
-## Back Navigation (important)
-
-iPhone "back" in many apps is more reliable via tapping the UI back button than performing a swipe gesture in iPhone Mirroring.
-
-Rules:
-- Prefer tapping the **top-left** back button `<` (just under the status bar) when it exists.
-- Avoid using left-to-right swipe/`drag(...)` as a "back" gesture unless you have no UI back button.
-
-## Timing-Sensitive UIs (double-click / multi-action)
-
-Some apps (e.g. Bilibili/YouTube video player) hide controls quickly. If the worker is too slow, the pause/play overlay can disappear before the second tap.
-
-Supervisor guidance to keep in mind:
-- Prefer a fast **double-click** on the center of the video to reveal controls: `double_click(start_box=...)`.
-- If needed, use a multi-action sequence in a single model response:
-  - `click(start_box=...)`
-  - `sleep(ms=50)`
-  - `click(start_box=...)`
-
-Note: historically the worker only executed the first parsed action; now it can execute 1-3 actions per response, but timing-sensitive sequences are still fragile. Be ready to inject guidance and retry.
-
-## Pre-flight (dynamic)
-
-Read the supervisor diary and keep relevant rules in mind:
-
-Auto-grep `WORKER_DIARY.md` using keywords extracted from the current task text (`$ARGUMENTS`):
-!`python -m iphoneclaw diary grep --text "$ARGUMENTS" --tail 30`
-
-Permission check result:
-!`python -m iphoneclaw doctor 2>&1 || true`
-
-If either "Screen Recording" or "Accessibility" shows **MISSING**, return immediately with:
-> Permissions missing. Go to **System Settings > Privacy & Security** and enable
-> Screen Recording + Accessibility for your terminal app, then retry.
-
-## Phase 1 — Start Worker
-
-Launch the worker in the background. The instruction comes from `$ARGUMENTS`.
-
-```bash
-python -m iphoneclaw run \
-  --instruction "$ARGUMENTS" \
-  --record-dir ./runs &
+Do NOT manually compose `iphone_home()`, `swipe`, `type` sequences to open an app.
+Instead, emit a single action:
+```text
+Action: run_script(name='open_app_spotlight', APP='<app_name>')
 ```
 
-Model connection uses environment variables (`IPHONECLAW_MODEL_BASE_URL`,
-`IPHONECLAW_MODEL_API_KEY`, `IPHONECLAW_MODEL_NAME`). If the user provided
-explicit `--base-url`, `--api-key`, or `--model` flags, pass them through.
-
-Wait 5 seconds for the worker and supervisor API to initialize:
-
-```bash
-sleep 5
+Examples:
+```text
+Action: run_script(name='open_app_spotlight', APP='bilibili')
+Action: run_script(name='open_app_spotlight', APP='Safari')
+Action: run_script(name='open_app_spotlight', APP='Settings')
+Action: run_script(name='open_app_spotlight', APP='WeChat')
 ```
 
-## Phase 2 — Monitor (max 20 iterations)
+This script does: Home -> swipe left x10 -> swipe up (Spotlight) -> type app name + Enter.
 
-Poll every **10 seconds**. Hard limit: **20 iterations** (~ 3.5 minutes). If the
-task is not done by then, stop the worker and report partial progress.
+### 2. Return to Home & Swipe -> use `iphone_home_swipe_left_10_then_down`
 
-Each iteration:
-
-```bash
-python -m iphoneclaw ctl context --tail 3
+When you need to go back to home screen and reset scroll position:
+```text
+Action: run_script(name='iphone_home_swipe_left_10_then_down')
 ```
 
-Response JSON has two keys:
-- `status` — `{ "status": "running"|"pause"|"hang"|"end"|"error"|"user_stopped", "paused": bool, "stopped": bool }`
-- `context` — recent conversation rounds with `role` and `text`
+This script does: Home -> swipe left x10 + swipe down.
 
-Read assistant messages — they contain `Thought:` and `Action:` for each step.
+### 3. Killing / Dismissing the Current App -> use `kill_app`
 
-### Decision per iteration
-
-**A. `status: running`** — Worker is progressing normally.
-Do nothing. `sleep 10` and poll again.
-
-**B. Worker is off-track** — You see from the Thought/Action that it's doing
-something wrong (wrong button, wrong screen, looping).
-Inject corrective guidance:
-
-```bash
-python -m iphoneclaw ctl inject \
-  --text "You tapped the wrong item. Go back and tap 'Wi-Fi' instead." \
-  --pause --resume
+Do NOT manually compose `iphone_app_switcher()` + swipe sequences to kill an app.
+Instead, emit a single action:
+```text
+Action: run_script(name='kill_app')
 ```
 
-`--pause --resume` ensures the worker reads your guidance before its next action.
+This script does: Cmd+2 (App Switcher) -> swipe up on right side to dismiss the current app.
 
-**C. `status: hang`** — Worker hit `finished()` or `call_user()`.
+### General Rule
 
-- Task complete → stop and proceed to Phase 3:
-  ```bash
-  python -m iphoneclaw ctl stop
-  ```
+Before composing a multi-step action sequence, check `action_scripts/registry.json` for an existing script that covers the flow. If one exists, use `run_script(name=...)`. This saves tokens and is more reliable than ad-hoc action chains.
 
-- Chain a follow-up → inject next instruction:
-  ```bash
-  python -m iphoneclaw ctl inject \
-    --text "Good. Now open Camera and take a photo." \
-    --resume
-  ```
+## Available Scripts (Registry)
 
-- `call_user` → read the last assistant message to understand what help is
-  needed. Either inject guidance and resume, or stop and report the question.
+| Short Name | Script | Description |
+|---|---|---|
+| `open_app_spotlight` | `common/open_app_spotlight.txt` | Open any app via Spotlight. Var: `APP` |
+| `iphone_home_swipe_left_10_then_down` | `common/iphone_home_swipe_left_10_then_down.txt` | Home + swipe left x10 + swipe down |
+| `kill_app` | `common/kill_app.txt` | Kill/dismiss current app via App Switcher (Cmd+2 + swipe up) |
 
-**D. `status: error`** — Worker crashed. Common causes:
-- Model API unreachable (check env vars / network)
-- Window not found (iPhone Mirroring not open)
-- Max loop count reached (task too complex)
+## Preferred Model Output (Low Token)
 
-Stop and report the error. Do NOT retry automatically.
-
-**E. `status: hang` with `reason: parse_error_streak`** — Vision model produced
-3+ unparseable outputs. Stop the worker and report.
-
-**F. Worker keeps outputting `finished()` too early / gets stuck in a bad context** —
-You can clear or trim the worker conversation context (text-only) to "unstick" it.
-This is useful when the model starts repeating the same wrong plan because of accumulated context.
-
-Clear ALL context (keeps last system prompt by default):
-```bash
-python -m iphoneclaw ctl clear-context --pause --resume
+When a stable flow exists, output a single action:
+```text
+Action: run_script(name='open_app_spotlight', APP='bilibili')
 ```
-
-Trim the most recent N assistant rounds (e.g. drop last 2 rounds):
-```bash
-python -m iphoneclaw ctl trim-context --drop-rounds 2 --pause --resume
-```
-
-After clearing/trimming, inject a short restated goal and resume (if needed):
-```bash
-python -m iphoneclaw ctl inject --text "Restated goal: ... Constraints: ... Next: ..." --resume
-```
-
-### If Stuck: Peek One Screenshot (Optional)
-
-Normally you supervise **text-only**. However, if the worker is clearly stuck (dead loop, repeating the same wrong action 3+ times, or cannot make progress after multiple injections), you may read the **most recent screenshot** from `runs/` to guide a better injection. This is often faster than guessing from text alone.
-
-Important:
-- Do NOT spawn another subagent to do this. You (Claude) should directly read the latest screenshot and decide the next injection/manual actions yourself.
-
-Preferred: use the supervisor API to fetch the latest screenshot path:
-
-```bash
-python -m iphoneclaw ctl screenshot-latest
-```
-
-Fallback: locate the latest screenshot file in `runs/`:
-
-```bash
-LATEST_RUN="$(ls -td runs/* 2>/dev/null | head -n 1)"
-LATEST_STEP="$(ls -td "$LATEST_RUN"/steps/* 2>/dev/null | head -n 1)"
-echo "$LATEST_STEP/screenshot.jpg"
-```
-
-Then use the `Read` tool to open that `screenshot.jpg` and inspect it.
-
-Rules:
-- Only read **the latest 1 screenshot** when necessary.
-- Do NOT paste screenshots/base64 into your final answer; use it only to craft a better `ctl inject` guidance.
-
-### Last Resort: Supervisor Manual Control (Optional)
-
-If the worker cannot proceed, and you have a clear next interaction, you can manually execute actions via the supervisor API.
-
-Important:
-- Do NOT spawn another subagent for manual control. You (Claude) should directly call `python -m iphoneclaw ctl exec ...` yourself.
-
-Rules:
-- Only use when the worker is paused/hang.
-- Prefer 1-3 simple actions (click/double_click/scroll/type/sleep).
-- After manual control, inject an updated guidance and resume.
 
 Notes:
-- These endpoints are enabled by default. For safety, recommend users set `IPHONECLAW_SUPERVISOR_TOKEN` to a random value.
-- If you get HTTP 404 from `ctl exec`/`ctl screenshot-latest`, the worker is likely still running an older iphoneclaw build. Stop it and restart `python -m iphoneclaw run ...`.
+- Vars can be passed as `vars={...}` or as keyword sugar (`APP='bilibili'`).
+- Prefer `name=...` (registry) over `path=...` (arbitrary file) for safety and portability.
 
-Example (double click to show video controls):
+## Run Scripts Manually (Local)
+
+Run a script file directly:
 ```bash
-python -m iphoneclaw ctl exec --action "double_click(start_box='<|box_start|>(500,500)<|box_end|>', interval_ms=50)"
+python -m iphoneclaw script run --file action_scripts/common/open_app_spotlight.txt --var APP=bilibili
 ```
 
-### Emergency Recovery: Kill App via App Switcher (when truly stuck)
+## Run Scripts Remotely (Supervisor API, Worker Paused)
 
-If the worker is clearly stuck for a long time (looping, cannot navigate back, cannot exit a fullscreen player) and normal `inject` guidance is not working, do a hard recovery by killing the current app from the iPhone App Switcher.
+Requirement: the worker must be `paused` and supervisor exec must be enabled (`enable_supervisor_exec`).
 
-Procedure (manual control):
-1) Pause the worker:
+Use `ctl`:
 ```bash
-python -m iphoneclaw ctl pause
+python -m iphoneclaw ctl run-script --name open_app_spotlight --var APP=bilibili
 ```
 
-2) Open App Switcher (Cmd+2):
+This hits supervisor endpoint `POST /v1/agent/script/run`.
+
+## Record And Register A New Script
+
+1. Create or record the script.
 ```bash
-python -m iphoneclaw ctl exec --action "iphone_app_switcher()"
+# real user behavior recording (recommended)
+python -m iphoneclaw script record-user --app "iPhone Mirroring" --out action_scripts/recorded/my_flow.txt
+
+# quick record from stdin (Ctrl-D to finish)
+python -m iphoneclaw script record --out action_scripts/recorded/my_flow.txt
 ```
 
-3) Kill the current app card: drag up a long distance from the middle-right area.
-Use a large vertical swipe to avoid "half swipe" that does nothing.
+Or export from a previous run:
 ```bash
-python -m iphoneclaw ctl exec \
-  --action "drag(start_box='<|box_start|>(800,650)<|box_end|>', end_box='<|box_start|>(800,120)<|box_end|>')"
+python -m iphoneclaw script from-run --run-dir runs/<run_id> --out action_scripts/recorded/<run_id>.txt
 ```
 
-4) Return to Home (Cmd+1) and re-enter the app (tap icon; avoid Spotlight):
-```bash
-python -m iphoneclaw ctl exec --action "iphone_home()"
-```
-Then tap the app icon from Home/App Library (do NOT use iPhone Home search / Spotlight).
-
-5) Inject a short reset guidance and resume:
-```bash
-python -m iphoneclaw ctl inject --text "Recovery done: app was killed and relaunched. Continue the task from the current screen. Avoid the previous stuck path." --resume
+2. Add a registry entry in `action_scripts/registry.json`:
+```json
+{
+  "my_flow": "recorded/my_flow.txt"
+}
 ```
 
-## Phase 3 — Report
-
-After stopping the worker (or it ended), do a final context fetch:
-
-```bash
-python -m iphoneclaw ctl context --tail 5 2>/dev/null || true
+3. Invoke it via model action:
+```text
+Action: run_script(name='my_flow')
 ```
 
-Return a **concise summary** to the user:
-- Whether the task succeeded or failed
-- Key actions the worker took (2-3 bullet points)
-- If the user asked for information (e.g. "what's the Wi-Fi name?"), relay the
-  answer from the worker's last Thought text
-- If it failed, explain why and suggest next steps
+You can also compose scripts by nesting inside `.txt`:
+```text
+include open_app_spotlight APP=bilibili
+# or:
+run_script(name='open_app_spotlight', APP='bilibili')
+```
 
-## Rules
+## Registry Path Resolution
 
-- **Never** read screenshot files from `runs/` — text-only supervision.
-- Only **one worker** at a time.
-- If `ctl context` fails to connect, check with `ps aux | grep iphoneclaw`. If the worker crashed, report it.
-- Keep injected guidance concise and actionable (1-2 sentences).
-- Do NOT exceed 20 polling iterations. Stop and report partial progress.
+Default registry path is `./action_scripts/registry.json`.
 
-### Diary Update (append-only, REQUIRED)
-
-Always append exactly one new diary entry line in the grep-friendly format:
-
-`DIARY|ts=YYYY-MM-DDTHH:MM:SS±HH:MM|app=<AppName>|task=<ShortTask>|reflection=<OneLine>|tags=<k1,k2>|run=<runs/...>`
-
-Guidelines:
-- `app`: the primary app involved (e.g. `Bilibili`, `Settings`, `iPhone Home`).
-- `task`: 6-12 words max.
-- `reflection`: 1-2 sentences, one line only. Use `; ` instead of newlines. Avoid `|` in values.
-- `tags`: comma keywords for grep (e.g. `scroll,wheel,no-drag,ime,ascii-only,spotlight-avoid`).
-- `run`: optional, if you have it.
-
-Process:
-1. Read current `WORKER_DIARY.md` (if it exists).
-2. Append a new entry at the end under "Entry Template" format.
-3. Use the `Write` tool to write the full updated file back.
+If running from a different working directory, set:
+- `IPHONECLAW_SCRIPT_REGISTRY=/absolute/path/to/action_scripts/registry.json`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/noedgeai) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [NoEdgeAI/iphoneclaw](https://github.com/NoEdgeAI/iphoneclaw) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
