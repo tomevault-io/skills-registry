@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [skindhu/skind-skills](https://github.com/skindhu/skind-skills/tree/main/skills/us-stock-researcher/SKILL.md)
+Original source: [skindhu/skind-skills](https://github.com/skindhu/skind-skills/tree/main/skills/educational-video-creator/SKILL.md)
 
 ---
 
