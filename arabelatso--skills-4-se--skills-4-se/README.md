@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ArabelaTso/Skills-4-SE](https://github.com/ArabelaTso/Skills-4-SE/tree/main/skills/rollback-strategy-advisor/SKILL.md)
+Original source: [ArabelaTso/Skills-4-SE](https://github.com/ArabelaTso/Skills-4-SE/tree/main/skills/cve-reachability-analyzer/SKILL.md)
 
 ---
 
