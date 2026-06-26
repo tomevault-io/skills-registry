@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [snakeying/Textum](https://github.com/snakeying/Textum/tree/main/.codex/skills/textum/SKILL.md)
+Original source: [snakeying/Textum](https://github.com/snakeying/Textum/tree/main/.claude/skills/textum/SKILL.md)
 
 ---
 
