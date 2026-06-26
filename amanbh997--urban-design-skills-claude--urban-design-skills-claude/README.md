@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Amanbh997/Urban-Design-Skills-Claude](https://github.com/Amanbh997/Urban-Design-Skills-Claude/tree/main/skills/site-analysis/SKILL.md)
+Original source: [Amanbh997/Urban-Design-Skills-Claude](https://github.com/Amanbh997/Urban-Design-Skills-Claude/tree/main/skills/street-design/SKILL.md)
 
 ---
 
