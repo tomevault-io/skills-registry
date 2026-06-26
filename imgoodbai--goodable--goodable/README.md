@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ImGoodBai/goodable](https://github.com/ImGoodBai/goodable/tree/main/skills/good-TTvideo2text/SKILL.md)
+Original source: [ImGoodBai/goodable](https://github.com/ImGoodBai/goodable/tree/main/skills/meeting-insights-analyzer/SKILL.md)
 
 ---
 
