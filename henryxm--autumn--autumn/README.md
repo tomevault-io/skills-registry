@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [henryxm/autumn](https://github.com/henryxm/autumn/tree/main/.cursor/skills/autumn-framework-2x/SKILL.md)
+Original source: [henryxm/autumn](https://github.com/henryxm/autumn/tree/main/.cursor/skills/autumn-framework-3x/SKILL.md)
 
 ---
 
