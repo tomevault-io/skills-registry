@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ColeMurray/background-agents](https://github.com/ColeMurray/background-agents/tree/main/packages/sandbox-runtime/src/sandbox_runtime/skills/upload-screenshot/SKILL.md)
+Original source: [ColeMurray/background-agents](https://github.com/ColeMurray/background-agents/tree/main/packages/sandbox-runtime/src/sandbox_runtime/skills/visual-verification/SKILL.md)
 
 ---
 
