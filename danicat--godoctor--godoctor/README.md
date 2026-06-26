@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [danicat/godoctor](https://github.com/danicat/godoctor/tree/main/skills/task_template/SKILL.md)
+Original source: [danicat/godoctor](https://github.com/danicat/godoctor/tree/main/skills/engineering_flow/SKILL.md)
 
 ---
 
