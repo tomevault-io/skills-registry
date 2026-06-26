@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ModelTC/lightllm](https://github.com/ModelTC/lightllm/tree/main/skills/test_model/deepseekr1-base-tp/SKILL.md)
+Original source: [ModelTC/lightllm](https://github.com/ModelTC/lightllm/tree/main/skills/test_model/qwen3.5-0.8b-pd-nixl/SKILL.md)
 
 ---
 
