@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NulightJens/ai-second-brain-skills](https://github.com/NulightJens/ai-second-brain-skills/tree/main/wiki-self-heal/SKILL.md)
+Original source: [NulightJens/ai-second-brain-skills](https://github.com/NulightJens/ai-second-brain-skills/tree/main/llm-wiki-setup/SKILL.md)
 
 ---
 
