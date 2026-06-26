@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dust-tt/dust](https://github.com/dust-tt/dust/tree/main/.claude/skills/dust-webhook-source/SKILL.md)
+Original source: [dust-tt/dust](https://github.com/dust-tt/dust/tree/main/.claude/skills/dust-audit-log-event/SKILL.md)
 
 ---
 
