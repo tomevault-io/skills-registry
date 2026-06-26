@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google/adk-samples](https://github.com/google/adk-samples/tree/main/python/agents/youtube-analyst/youtube_analyst/skills/product-launch-audit/SKILL.md)
+Original source: [google/adk-samples](https://github.com/google/adk-samples/tree/main/python/agents/youtube-analyst/youtube_analyst/skills/abcd-framework-audit/SKILL.md)
 
 ---
 
