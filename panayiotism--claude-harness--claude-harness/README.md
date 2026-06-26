@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [panayiotism/claude-harness](https://github.com/panayiotism/claude-harness/tree/main/skills/flow/SKILL.md)
+Original source: [panayiotism/claude-harness](https://github.com/panayiotism/claude-harness/tree/main/skills/start/SKILL.md)
 
 ---
 
