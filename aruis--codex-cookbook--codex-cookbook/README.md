@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aruis/codex-cookbook](https://github.com/aruis/codex-cookbook/tree/main/skills/junshi-wujiang/SKILL.md)
+Original source: [aruis/codex-cookbook](https://github.com/aruis/codex-cookbook/tree/main/skills/junshi-fazheng/SKILL.md)
 
 ---
 
