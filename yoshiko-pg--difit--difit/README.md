@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yoshiko-pg/difit](https://github.com/yoshiko-pg/difit/tree/main/.claude/skills/difit-dev/SKILL.md)
+Original source: [yoshiko-pg/difit](https://github.com/yoshiko-pg/difit/tree/main/.codex/skills/difit-review/SKILL.md)
 
 ---
 
