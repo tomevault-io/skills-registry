@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DNYoussef/context-cascade](https://github.com/DNYoussef/context-cascade/tree/main/skills/packaged/reflect_temp/SKILL.md)
+Original source: [DNYoussef/context-cascade](https://github.com/DNYoussef/context-cascade/tree/main/skills/specialists/image-gen/SKILL.md)
 
 ---
 
