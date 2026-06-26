@@ -1,15 +1,15 @@
 ---
-name: oauth-client-credentials-openapi-custom-commands
-description: How to author custom commands for the oauth-client-credentials-openapi CLI using the co-generated SDK. Use when this capability is needed.
+name: query-parameters-api-custom-commands
+description: How to author custom commands for the query-parameters-api CLI using the co-generated SDK. Use when this capability is needed.
 metadata:
   author: fern-api
 ---
 
-# Custom Commands for `oauth-client-credentials-openapi`
+# Custom Commands for `query-parameters-api`
 
 ## Overview
 
-The `oauth-client-credentials-openapi` CLI supports user-authored custom commands that are
+The `query-parameters-api` CLI supports user-authored custom commands that are
 compiled into the binary alongside the auto-generated API commands.
 Custom commands get a fully-wired SDK client that inherits the CLI's
 auth, retries, TLS, base URL, and global headers — zero configuration required.
@@ -17,34 +17,33 @@ auth, retries, TLS, base URL, and global headers — zero configuration required
 ## Architecture
 
 ```
-cli/oauth-client-credentials-openapi/custom.rs    ← Your command handlers (protected by .fernignore)
-cli/oauth-client-credentials-openapi/sdk_glue.rs  ← Generated bridge: sdk_client() + block_on()
-cli/oauth-client-credentials-openapi/main.rs      ← Generated entrypoint (calls custom::register)
-oauth-client-credentials-openapi-sdk/             ← Co-generated typed SDK crate
-oauth-client-credentials-openapi-types/           ← Co-generated typed model crate
+cli/query-parameters-api/custom.rs    ← Your command handlers (protected by .fernignore)
+cli/query-parameters-api/sdk_glue.rs  ← Generated bridge: sdk_client() + block_on()
+cli/query-parameters-api/main.rs      ← Generated entrypoint (calls custom::register)
+query-parameters-api-sdk/             ← Co-generated typed SDK crate
+query-parameters-api-types/           ← Co-generated typed model crate
 ```
 
 ## Adding a Custom Command
 
-### 1. Edit `cli/oauth-client-credentials-openapi/custom.rs`
+### 1. Edit `cli/query-parameters-api/custom.rs`
 
 This file is protected by `.fernignore` — `fern generate` will never
 overwrite it. Register commands in the `register()` function:
 
 ```rust
-use oauth_client_credentials_openapi_sdk::api::*;
+use query_parameters_api_sdk::api::*;
 
 pub fn register(app: CliApp) -> CliApp {
     let app = app.command(
-        clap::Command::new("get")
-            .about("Get a plant by ID")
-            .arg(clap::Arg::new("plantId").required(true))
-        ,
+        clap::Command::new("my-command")
+            .about("Description of your command")
+            .arg(clap::Arg::new("id").required(true)),
         |matches, ctx| {
-            let plant_id = matches.get_one::<String>("plantId").unwrap();
+            let id = matches.get_one::<String>("id").unwrap();
             let client = super::sdk_glue::sdk_client(ctx);
             let result = super::sdk_glue::block_on(
-                client.plants.get(plant_id),
+                client.resource.get(id),
             )?;
             println!("{}", serde_json::to_string_pretty(&result).unwrap());
             Ok(())
@@ -54,21 +53,12 @@ pub fn register(app: CliApp) -> CliApp {
 }
 ```
 
-Then build and test:
-```bash
-cargo build
-oauth-client-credentials-openapi get <plantId>
-```
-
 ### 2. Available SDK Clients
 
-The `sdk_glue::sdk_client(ctx)` call returns a `oauth_client_credentials_openapi_sdk::api::Client`
+The `sdk_glue::sdk_client(ctx)` call returns a `query_parameters_api_sdk::api::Client`
 with the following sub-clients:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `client.identity` | `oauth_client_credentials_openapi_sdk::api::IdentityClient` | identity operations |
-| `client.plants` | `oauth_client_credentials_openapi_sdk::api::PlantsClient` | plants operations |
+(Sub-clients are derived from the API spec at generation time.)
 
 ### 3. Key Patterns
 
@@ -86,18 +76,18 @@ let result = super::sdk_glue::block_on(
 
 **Use typed models for request/response serialization:**
 ```rust
-use oauth_client_credentials_openapi_sdk::api::*;
+use query_parameters_api_sdk::api::*;
 ```
 
 ## Regeneration Safety
 
 | File | Regenerated? | Notes |
 |------|-------------|-------|
-| `cli/oauth-client-credentials-openapi/custom.rs` | **No** | Protected by `.fernignore` |
-| `cli/oauth-client-credentials-openapi/sdk_glue.rs` | Yes | Bridges AppContext → SDK client |
-| `cli/oauth-client-credentials-openapi/main.rs` | Yes | Calls `custom::register(app)` |
-| `oauth-client-credentials-openapi-sdk/` | Yes | Co-generated typed SDK crate |
-| `oauth-client-credentials-openapi-types/` | Yes | Co-generated typed models |
+| `cli/query-parameters-api/custom.rs` | **No** | Protected by `.fernignore` |
+| `cli/query-parameters-api/sdk_glue.rs` | Yes | Bridges AppContext → SDK client |
+| `cli/query-parameters-api/main.rs` | Yes | Calls `custom::register(app)` |
+| `query-parameters-api-sdk/` | Yes | Co-generated typed SDK crate |
+| `query-parameters-api-types/` | Yes | Co-generated typed models |
 
 After running `fern generate`, your `custom.rs` is preserved. All
 generated code (SDK, types, glue, main.rs) is updated to match the
@@ -111,12 +101,12 @@ sub-clients), update your `custom.rs` to match.
 cargo build
 
 # Run your custom command
-oauth-client-credentials-openapi <your-command> [args]
+query-parameters-api <your-command> [args]
 
 # Run with verbose output for debugging
-RUST_LOG=debug oauth-client-credentials-openapi <your-command> [args]
+RUST_LOG=debug query-parameters-api <your-command> [args]
 ```
 
 ---
 > Source: [fern-api/fern](https://github.com/fern-api/fern) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-25 -->
+<!-- tomevault:4.0:skill_md:2026-06-26 -->
