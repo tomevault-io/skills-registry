@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [apache/cassandra](https://github.com/apache/cassandra/tree/main/.claude/skills/shallow-review/SKILL.md)
+Original source: [apache/cassandra](https://github.com/apache/cassandra/tree/main/.claude/skills/patch-explainer/SKILL.md)
 
 ---
 
