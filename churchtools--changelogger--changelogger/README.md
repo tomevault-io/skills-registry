@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [churchtools/changelogger](https://github.com/churchtools/changelogger/tree/main/.agents/skills/using-changelogger/SKILL.md)
+Original source: [churchtools/changelogger](https://github.com/churchtools/changelogger/tree/main/.agents/skills/releasing-with-changelogger/SKILL.md)
 
 ---
 
