@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ruvnet/ruflo](https://github.com/ruvnet/ruflo/tree/main/plugins/ruflo-browser/skills/browser-screenshot-diff/SKILL.md)
+Original source: [ruvnet/ruflo](https://github.com/ruvnet/ruflo/tree/main/plugins/ruflo-iot-cognitum/skills/iot-witness-verify/SKILL.md)
 
 ---
 
