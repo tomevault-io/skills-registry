@@ -1,155 +1,45 @@
 ---
-name: adk-sample-creator
-description: Author new samples for the ADK Python repository. Use this skill when the user wants to create a new sample demonstrating a feature or agent pattern (e.g., dynamic nodes, standalone agents, fan-out/fan-in) or when adding examples to subdirectories under `contributing/`. Use when this capability is needed.
+name: bigquery-ai-ml
+description: | Use when this capability is needed.
 metadata:
   author: google
 ---
 
-# ADK Sample Creator
+# Skill: bigquery-ai-ml
 
-This skill helps you create new samples for the ADK Python repository. You should search for subdirectories under `contributing` (such as `new_workflow_samples`, `workflow_samples`, etc.) and confirm with the user which folder they want to use before creating the sample.
+This skill defines the usage and rules for BigQuery AI/ML functions,
+preferring SQL-based Skills over dedicated BigQuery tools.
 
-> [!TIP]
+## 1. Skill vs Tool Preference (BigQuery AI/ML)
 
-> Before creating samples, you can use the `adk-style` skill to learn about ADK 2.0 architecture knowledge and best practices.
+Agents should **prefer using the Skill (SQL via `execute_sql()`)** over
+dedicated BigQuery tools for functionalities like Forecasting and Anomaly
+Detection.
 
-A sample consists of:
+Use `execute_sql()` with the standard BigQuery `AI.*` functions for these tasks
+instead of the corresponding high-level tools.
 
-1.  A directory per sample.
-2.  An `agent.py` file defining the agent or workflow logic.
-3.  A `README.md` file explaining the sample.
+## 2. Mandatory Reference Routing
 
-## Guidelines
+This skill file does not contain the syntax for these functions. You **MUST**
+read the associated reference file before generating SQL.
 
-### 1. Folder Name
+**CRITICAL**: DO NOT GUESS filenames. You MUST only use the exact paths
+provided below.
 
-Use snake_case for the folder name (e.g., `dynamic_nodes`, `fan_out_fan_in`).
-
-### 2. `agent.py` Content
-
-The `agent.py` should focus on demonstrating a specific feature or agent pattern. Use absolute imports for testing convenience.
-
-> [!IMPORTANT]
-> **Model Selection**: Do not set the `model` parameter explicitly (e.g., `model="gemini-2.5-flash"`) on `Agent` instances in sample agents. Instead, let them default to the system-configured model, unless a specific model is explicitly requested by the user.
-
-Choose one of the following patterns:
-
-#### Pattern A: Workflows (for complex graphs)
-
-Use this when you need multiple nodes, routing, or parallel execution.
-
-**Imports:**
-
-```python
-from google.adk import Agent
-from google.adk import Context
-from google.adk.workflow import node
-from google.adk.workflow import JoinNode
-from google.adk.workflow._workflow_class import Workflow
-```
-
-**Anatomy:**
-
-```python
-my_agent = Agent(name="my_agent", ...)
-
-@node()
-async def my_node(node_input: str):
-    return "result"
-
-root_agent = Workflow(
-    name="root_wf",
-    edges=[("START", my_node)],
-)
-```
-
-#### Pattern B: Standalone Agents (for single-agent or simple tool use)
-
-Use this when you don't need a graph and the agent handles the loop.
-
-**Imports:**
-
-```python
-from google.adk import Agent
-from google.adk.tools import google_search  # example
-```
-
-**Anatomy:**
-
-```python
-root_agent = Agent(
-    name="standalone_assistant",
-    instruction="You are a helpful assistant.",
-    description="An assistant that can help with queries.",
-    tools=[google_search],
-)
-```
-
-### 3. `README.md` Content
-
-Each sample should have a `README.md` with the following structure:
-
-- **Overview**: What the sample does.
-- **Sample Inputs**: Examples of inputs to test with. Each prompt must be wrapped in backticks. If a prompt has an explanation, always add a blank line between the prompt and the explanation, and indent the explanation by two spaces.
-- **Graph**: Visualization of the graph flow (Mermaid recommended for workflows).
-- **How To**: Explanation of key techniques used (e.g., `ctx.run_node`).
-- **Related Guides**: Links to relevant developer guides in `docs/guides/` that explain the concepts or classes used.
-
-#### README Example Template:
-
-````markdown
-# ADK Sample Name
-
-## Overview
-
-Brief description.
-
-## Sample Inputs
-
-- `Prompt example 1`
-
-- `Prompt example 2`
-
-  *Explanation or expected behavior*
-
-## Graph
-
-```mermaid
-graph TD
-    START --> MyNode
-```
-
-## How To
-
-Explain the details.
-
-## Related Guides
-
-- [Guide Title](../../docs/guides/path/to/guide.md) - Brief description of what the guide covers.
-````
-
-## Examples
-
-### Dynamic Nodes
-Snippet from `dynamic_nodes/agent.py`:
-```python
-@node(rerun_on_resume=True)
-async def orchestrate(ctx: Context, node_input: str) -> str:
-    while True:
-        headline = await ctx.run_node(generate_headline)
-        # ...
-````
-
-### Fan Out Fan In
-
-Snippet from `fan_out_fan_in/agent.py`:
-
-```python
-root_agent = Workflow(
-    name="root_agent",
-    edges=[("START", (node_a, node_b), join_node, aggregate)],
-)
-```
+| Function | Description | Required Reference File to Retrieve |
+| :--- | :--- | :--- |
+| **AI.FORECAST** | Time-series forecasting via the pre-trained TimesFM model | `references/bigquery_ai_forecast.md` |
+| **AI.CLASSIFY** | Categorize unstructured data into predefined labels | `references/bigquery_ai_classify.md` |
+| **AI.DETECT_ANOMALIES** | Identify deviations in time-series data via the pre-trained TimesFM model | `references/bigquery_ai_detect_anomalies.md` |
+| **AI.GENERATE** | General-purpose text and content generation | `references/bigquery_ai_generate.md` |
+| **AI.GENERATE_BOOL** | Generate a boolean value (TRUE/FALSE) based on a prompt | `references/bigquery_ai_generate_bool.md` |
+| **AI.GENERATE_DOUBLE** | Generate a floating-point number based on a prompt | `references/bigquery_ai_generate_double.md` |
+| **AI.GENERATE_INT** | Generate an integer value based on a prompt | `references/bigquery_ai_generate_int.md` |
+| **AI.IF** | Evaluate a natural-language boolean condition | `references/bigquery_ai_if.md` |
+| **AI.SCORE** | Rank items by semantic relevance (use with ORDER BY) | `references/bigquery_ai_score.md` |
+| **AI.SIMILARITY** | Compute cosine similarity between two inputs | `references/bigquery_ai_similarity.md` |
+| **AI.SEARCH** | Semantic search on tables with autonomous embedding generation | `references/bigquery_ai_search.md` |
 
 ---
 > Source: [google/adk-python](https://github.com/google/adk-python) — distributed by [TomeVault](https://tomevault.io).
