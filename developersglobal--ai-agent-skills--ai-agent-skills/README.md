@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DevelopersGlobal/ai-agent-skills](https://github.com/DevelopersGlobal/ai-agent-skills/tree/main/skills/hallucination-prevention/SKILL.md)
+Original source: [DevelopersGlobal/ai-agent-skills](https://github.com/DevelopersGlobal/ai-agent-skills/tree/main/skills/performance-optimization/SKILL.md)
 
 ---
 
