@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MadAppGang/claude-code](https://github.com/MadAppGang/claude-code/tree/main/plugins/multimodel/skills/task-complexity-router/SKILL.md)
+Original source: [MadAppGang/claude-code](https://github.com/MadAppGang/claude-code/tree/main/plugins/instantly/skills/sequence-best-practices/SKILL.md)
 
 ---
 
