@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ashenfad/calgebra](https://github.com/ashenfad/calgebra/tree/main/calgebra/skills/gcal/SKILL.md)
+Original source: [ashenfad/calgebra](https://github.com/ashenfad/calgebra/tree/main/calgebra/skills/calgebra/SKILL.md)
 
 ---
 
