@@ -1019,5 +1019,5 @@ You've succeeded when:
 - **Database as source of truth** - avoid GenServers for domain entities (see ADR-003)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/maxim-ist) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [maxim-ist/elixir-architect](https://github.com/maxim-ist/elixir-architect) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
