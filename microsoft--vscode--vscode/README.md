@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/vscode](https://github.com/microsoft/vscode/tree/main/.github/skills/component-fixtures/SKILL.md)
+Original source: [microsoft/vscode](https://github.com/microsoft/vscode/tree/main/.github/skills/auto-perf-optimize/SKILL.md)
 
 ---
 
