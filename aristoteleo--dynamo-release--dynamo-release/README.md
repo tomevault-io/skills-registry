@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aristoteleo/dynamo-release](https://github.com/aristoteleo/dynamo-release/tree/main/skills/dynamo-one-shot-total-rna-velocity/SKILL.md)
+Original source: [aristoteleo/dynamo-release](https://github.com/aristoteleo/dynamo-release/tree/main/skills/dynamo-differential-geometry-analysis/SKILL.md)
 
 ---
 
