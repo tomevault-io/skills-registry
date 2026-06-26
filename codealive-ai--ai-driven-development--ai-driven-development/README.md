@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CodeAlive-AI/ai-driven-development](https://github.com/CodeAlive-AI/ai-driven-development/tree/main/skills/clipboard/SKILL.md)
+Original source: [CodeAlive-AI/ai-driven-development](https://github.com/CodeAlive-AI/ai-driven-development/tree/main/skills/repo-explorer/SKILL.md)
 
 ---
 
