@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [babamba2/superclaude-for-sap](https://github.com/babamba2/superclaude-for-sap/tree/main/skills/analyze-symptom/SKILL.md)
+Original source: [babamba2/superclaude-for-sap](https://github.com/babamba2/superclaude-for-sap/tree/main/skills/program-to-spec/SKILL.md)
 
 ---
 
