@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bionic-gpt/daisy-rsx](https://github.com/bionic-gpt/daisy-rsx/tree/main/.agents/skills/static-site/SKILL.md)
+Original source: [bionic-gpt/daisy-rsx](https://github.com/bionic-gpt/daisy-rsx/tree/main/.agents/skills/ssg-whiz-new-article/SKILL.md)
 
 ---
 
