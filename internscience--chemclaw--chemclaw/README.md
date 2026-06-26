@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [InternScience/ChemClaw](https://github.com/InternScience/ChemClaw/tree/main/skills/iupac-to-smiles/SKILL.md)
+Original source: [InternScience/ChemClaw](https://github.com/InternScience/ChemClaw/tree/main/skills/boron-nmr-predict/SKILL.md)
 
 ---
 
