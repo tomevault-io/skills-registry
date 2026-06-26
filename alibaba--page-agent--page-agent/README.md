@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alibaba/page-agent](https://github.com/alibaba/page-agent/tree/main/.agents/skills/git-cleanup/SKILL.md)
+Original source: [alibaba/page-agent](https://github.com/alibaba/page-agent/tree/main/.agents/skills/update-changelog/SKILL.md)
 
 ---
 
