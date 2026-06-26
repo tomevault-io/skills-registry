@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alex-popov-tech/.dotfiles](https://github.com/alex-popov-tech/.dotfiles/tree/main/claude/.claude/skills/eslint-detector/SKILL.md)
+Original source: [alex-popov-tech/.dotfiles](https://github.com/alex-popov-tech/.dotfiles/tree/main/claude/.claude/skills/nvim-documentation/SKILL.md)
 
 ---
 
