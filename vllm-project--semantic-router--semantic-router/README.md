@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vllm-project/semantic-router](https://github.com/vllm-project/semantic-router/tree/main/tools/agent/skills/maintainer/issue-pr-management/SKILL.md)
+Original source: [vllm-project/semantic-router](https://github.com/vllm-project/semantic-router/tree/main/tools/agent/skills/maintainer/routing-calibration/SKILL.md)
 
 ---
 
