@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MigoXLab/dingo](https://github.com/MigoXLab/dingo/tree/main/clawhub/SKILL.md)
+Original source: [MigoXLab/dingo](https://github.com/MigoXLab/dingo/tree/main/skills/dingo-verify/SKILL.md)
 
 ---
 
