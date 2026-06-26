@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [telepresenceio/telepresence](https://github.com/telepresenceio/telepresence/tree/main/.claude/skills/prepare-release/SKILL.md)
+Original source: [telepresenceio/telepresence](https://github.com/telepresenceio/telepresence/tree/main/.claude/skills/changelog-entry/SKILL.md)
 
 ---
 
