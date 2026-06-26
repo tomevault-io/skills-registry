@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [barretstorck/gemini-superpowers](https://github.com/barretstorck/gemini-superpowers/tree/main/skills/test-driven-development/SKILL.md)
+Original source: [barretstorck/gemini-superpowers](https://github.com/barretstorck/gemini-superpowers/tree/main/skills/dispatching-parallel-agents/SKILL.md)
 
 ---
 
