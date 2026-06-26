@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [JimLiu/baoyu-skills](https://github.com/JimLiu/baoyu-skills/tree/main/skills/baoyu-markdown-to-html/SKILL.md)
+Original source: [JimLiu/baoyu-skills](https://github.com/JimLiu/baoyu-skills/tree/main/.claude/skills/release-skills/SKILL.md)
 
 ---
 
