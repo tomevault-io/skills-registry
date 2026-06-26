@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [easysoft/zentao-skills](https://github.com/easysoft/zentao-skills/tree/main/skills/zentao-cli/SKILL.md)
+Original source: [easysoft/zentao-skills](https://github.com/easysoft/zentao-skills/tree/main/skills/zentao-tour/SKILL.md)
 
 ---
 
