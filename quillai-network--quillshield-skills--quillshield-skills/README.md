@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [quillai-network/quillshield_skills](https://github.com/quillai-network/quillshield_skills/tree/main/plugins/dos-griefing-analysis/skills/dos-griefing-analysis/SKILL.md)
+Original source: [quillai-network/quillshield_skills](https://github.com/quillai-network/quillshield_skills/tree/main/plugins/input-arithmetic-safety/skills/input-arithmetic-safety/SKILL.md)
 
 ---
 
