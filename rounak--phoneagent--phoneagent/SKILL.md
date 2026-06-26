@@ -250,5 +250,5 @@ Example:
 2. If `stop` is not sent, terminate the `xcodebuild` session manually.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/rounak) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [rounak/PhoneAgent](https://github.com/rounak/PhoneAgent) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
