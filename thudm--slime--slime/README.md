@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [THUDM/slime](https://github.com/THUDM/slime/tree/main/.claude/skills/add-reward-function/SKILL.md)
+Original source: [THUDM/slime](https://github.com/THUDM/slime/tree/main/.claude/skills/add-rollout-function/SKILL.md)
 
 ---
 
