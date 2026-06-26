@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Lubu-Labs/langchain-agent-skills](https://github.com/Lubu-Labs/langchain-agent-skills/tree/main/skills/langsmith-trace-analyzer/SKILL.md)
+Original source: [Lubu-Labs/langchain-agent-skills](https://github.com/Lubu-Labs/langchain-agent-skills/tree/main/skills/langgraph-error-handling/SKILL.md)
 
 ---
 
