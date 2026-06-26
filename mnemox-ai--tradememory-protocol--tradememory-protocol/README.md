@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mnemox-ai/tradememory-protocol](https://github.com/mnemox-ai/tradememory-protocol/tree/main/skills/tradememory-bridge/SKILL.md)
+Original source: [mnemox-ai/tradememory-protocol](https://github.com/mnemox-ai/tradememory-protocol/tree/main/.skills/strategy-validator/SKILL.md)
 
 ---
 
