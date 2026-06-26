@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Chen-zexi/open-ptc-agent](https://github.com/Chen-zexi/open-ptc-agent/tree/main/skills/docx/SKILL.md)
+Original source: [Chen-zexi/open-ptc-agent](https://github.com/Chen-zexi/open-ptc-agent/tree/main/skills/creating-financial-models/SKILL.md)
 
 ---
 
