@@ -72,5 +72,5 @@ rn-logs help
 - `multiple apps connected` -> pass `--app`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/okwasniewski) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [okwasniewski/react-native-logs-cli](https://github.com/okwasniewski/react-native-logs-cli) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
