@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ychampion/cskill-agents](https://github.com/ychampion/cskill-agents/tree/main/skills/lazy-heavy-command-shims/SKILL.md)
+Original source: [ychampion/cskill-agents](https://github.com/ychampion/cskill-agents/tree/main/skills/steady-state-sidecar-sync/SKILL.md)
 
 ---
 
