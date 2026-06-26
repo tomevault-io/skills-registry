@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ychampion/cskill-agents](https://github.com/ychampion/cskill-agents/tree/main/agents/codex/skills/bundled-skill-file-extraction/SKILL.md)
+Original source: [ychampion/cskill-agents](https://github.com/ychampion/cskill-agents/tree/main/agents/codex/skills/built-in-agent-feature-gating/SKILL.md)
 
 ---
 
