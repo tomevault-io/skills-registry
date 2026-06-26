@@ -150,5 +150,5 @@ export const increment = () => {
 Use `createStore` for reactive state, access via `.value`, subscribe with `watch(callback)`. Dependencies are tracked automatically inside callbacks. Use framework connectors for UI integration. For Flux patterns, use `createStoreManualSync`. Combine watches with `combineWatch` or derive computed values with `createComputed`.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/superlucky84) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [superlucky84/state-ref](https://github.com/superlucky84/state-ref) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
