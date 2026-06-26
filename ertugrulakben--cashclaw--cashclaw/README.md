@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ertugrulakben/cashclaw](https://github.com/ertugrulakben/cashclaw/tree/main/skills/cashclaw-social-media/SKILL.md)
+Original source: [ertugrulakben/cashclaw](https://github.com/ertugrulakben/cashclaw/tree/main/skills/cashclaw-data-scraper/SKILL.md)
 
 ---
 
