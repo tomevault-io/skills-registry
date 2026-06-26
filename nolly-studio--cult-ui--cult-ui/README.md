@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nolly-studio/cult-ui](https://github.com/nolly-studio/cult-ui/tree/main/.agents/skills/components-build/SKILL.md)
+Original source: [nolly-studio/cult-ui](https://github.com/nolly-studio/cult-ui/tree/main/.claude/skills/fixing-motion-performance/SKILL.md)
 
 ---
 
