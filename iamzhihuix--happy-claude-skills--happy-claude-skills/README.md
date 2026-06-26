@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [iamzhihuix/happy-claude-skills](https://github.com/iamzhihuix/happy-claude-skills/tree/main/skills/happy-audio-gen/SKILL.md)
+Original source: [iamzhihuix/happy-claude-skills](https://github.com/iamzhihuix/happy-claude-skills/tree/main/skills/happy-image-gen/SKILL.md)
 
 ---
 
