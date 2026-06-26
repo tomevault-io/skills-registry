@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bitsky-tech/bridgic](https://github.com/bitsky-tech/bridgic/tree/main/skills/bridgic-amphibious/SKILL.md)
+Original source: [bitsky-tech/bridgic](https://github.com/bitsky-tech/bridgic/tree/main/packages/bridgic-amphibious/tests/skills/code-review/SKILL.md)
 
 ---
 
