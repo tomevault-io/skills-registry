@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes/tree/main/skills/pr-to-video/SKILL.md)
+Original source: [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes/tree/main/skills/general-video/SKILL.md)
 
 ---
 
