@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mlopscommunity/Coding-Agents-Conference-skills](https://github.com/mlopscommunity/Coding-Agents-Conference-skills/tree/main/skills/parallel-agent-management/SKILL.md)
+Original source: [mlopscommunity/Coding-Agents-Conference-skills](https://github.com/mlopscommunity/Coding-Agents-Conference-skills/tree/main/skills/context-window-management/SKILL.md)
 
 ---
 
