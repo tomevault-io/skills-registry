@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [garrytan/gbrain](https://github.com/garrytan/gbrain/tree/main/test/fixtures/openclaw-reference-minimal/skills/signal-detector/SKILL.md)
+Original source: [garrytan/gbrain](https://github.com/garrytan/gbrain/tree/main/test/fixtures/openclaw-compact-resolver/skills/executive-assistant/SKILL.md)
 
 ---
 
