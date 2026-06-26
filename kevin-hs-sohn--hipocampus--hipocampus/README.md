@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kevin-hs-sohn/hipocampus](https://github.com/kevin-hs-sohn/hipocampus/tree/main/skills/core/SKILL.md)
+Original source: [kevin-hs-sohn/hipocampus](https://github.com/kevin-hs-sohn/hipocampus/tree/main/skills/flush/SKILL.md)
 
 ---
 
