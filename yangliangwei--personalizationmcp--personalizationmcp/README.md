@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [YangLiangwei/PersonalizationMCP](https://github.com/YangLiangwei/PersonalizationMCP/tree/main/skills/personalhub-youtube/SKILL.md)
+Original source: [YangLiangwei/PersonalizationMCP](https://github.com/YangLiangwei/PersonalizationMCP/tree/main/skills/personalhub-manager/SKILL.md)
 
 ---
 
