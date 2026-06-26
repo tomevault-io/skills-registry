@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [withastro/flue](https://github.com/withastro/flue/tree/main/.agents/skills/documentation-writer/SKILL.md)
+Original source: [withastro/flue](https://github.com/withastro/flue/tree/main/examples/imported-skill/src/skills/review/SKILL.md)
 
 ---
 
