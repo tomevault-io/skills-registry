@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cxuu/golang-skills](https://github.com/cxuu/golang-skills/tree/main/skills/go-data-structures/SKILL.md)
+Original source: [cxuu/golang-skills](https://github.com/cxuu/golang-skills/tree/main/skills/go-functional-options/SKILL.md)
 
 ---
 
