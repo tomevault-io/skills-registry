@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [apache/airflow](https://github.com/apache/airflow/tree/main/.agents/skills/prepare-providers-documentation/SKILL.md)
+Original source: [apache/airflow](https://github.com/apache/airflow/tree/main/providers/common/ai/src/airflow/providers/common/ai/example_dags/skills/aip-tracker/SKILL.md)
 
 ---
 
