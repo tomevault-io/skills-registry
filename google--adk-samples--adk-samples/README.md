@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google/adk-samples](https://github.com/google/adk-samples/tree/main/python/agents/youtube-analyst/youtube_analyst/skills/industry-landscape-briefing/SKILL.md)
+Original source: [google/adk-samples](https://github.com/google/adk-samples/tree/main/python/agents/travel-planner-google-maps-mcp/travel_planner_agent/skills/travel-concierge/SKILL.md)
 
 ---
 
