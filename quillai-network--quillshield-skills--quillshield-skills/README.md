@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [quillai-network/quillshield_skills](https://github.com/quillai-network/quillshield_skills/tree/main/plugins/defender/skills/defender/SKILL.md)
+Original source: [quillai-network/quillshield_skills](https://github.com/quillai-network/quillshield_skills/tree/main/plugins/external-call-safety/skills/external-call-safety/SKILL.md)
 
 ---
 
