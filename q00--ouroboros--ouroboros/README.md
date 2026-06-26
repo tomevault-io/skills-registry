@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Q00/ouroboros](https://github.com/Q00/ouroboros/tree/main/.claude-plugin/skills/tutorial/SKILL.md)
+Original source: [Q00/ouroboros](https://github.com/Q00/ouroboros/tree/main/.claude-plugin/skills/evaluate/SKILL.md)
 
 ---
 
