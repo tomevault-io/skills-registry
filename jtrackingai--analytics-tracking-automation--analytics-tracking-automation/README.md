@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jtrackingai/analytics-tracking-automation](https://github.com/jtrackingai/analytics-tracking-automation/tree/main/skills/tracking-discover/SKILL.md)
+Original source: [jtrackingai/analytics-tracking-automation](https://github.com/jtrackingai/analytics-tracking-automation/tree/main/skills/tracking-live-gtm/SKILL.md)
 
 ---
 
