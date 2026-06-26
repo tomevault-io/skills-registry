@@ -1,0 +1,13 @@
+# finito
+
+> Skill by [finitoapp](https://github.com/finitoapp/finito) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [finitoapp/finito](https://github.com/finitoapp/finito/tree/main/skills/finito-e2e/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
