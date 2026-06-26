@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [moonrepo/moon](https://github.com/moonrepo/moon/tree/main/skills/debug-task/SKILL.md)
+Original source: [moonrepo/moon](https://github.com/moonrepo/moon/tree/main/.agents/skills/doc-coauthoring/SKILL.md)
 
 ---
 
