@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [huytdps13400/react-native-ssl-manager](https://github.com/huytdps13400/react-native-ssl-manager/tree/main/.agents/skills/react-native-mmkv/SKILL.md)
+Original source: [huytdps13400/react-native-ssl-manager](https://github.com/huytdps13400/react-native-ssl-manager/tree/main/.agents/skills/build-nitro-modules/SKILL.md)
 
 ---
 
