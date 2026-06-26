@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Nunchi-trade/agent-cli](https://github.com/Nunchi-trade/agent-cli/tree/main/cli/skill.md)
+Original source: [Nunchi-trade/agent-cli](https://github.com/Nunchi-trade/agent-cli/tree/main/skills/apex/SKILL.md)
 
 ---
 
