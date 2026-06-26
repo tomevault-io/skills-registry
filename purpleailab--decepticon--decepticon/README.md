@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PurpleAILAB/Decepticon](https://github.com/PurpleAILAB/Decepticon/tree/main/packages/decepticon/decepticon/skills/standard/analyst/bounty-hunting/SKILL.md)
+Original source: [PurpleAILAB/Decepticon](https://github.com/PurpleAILAB/Decepticon/tree/main/packages/decepticon/decepticon/skills/standard/contracts/mev-sandwich/SKILL.md)
 
 ---
 
