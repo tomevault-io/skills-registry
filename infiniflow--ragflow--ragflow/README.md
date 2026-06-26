@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [infiniflow/ragflow](https://github.com/infiniflow/ragflow/tree/main/.agents/skills/go-naming/SKILL.md)
+Original source: [infiniflow/ragflow](https://github.com/infiniflow/ragflow/tree/main/web/.agents/skills/tanstack-query-best-practices/SKILL.md)
 
 ---
 
