@@ -1,13 +1,13 @@
 # store-quirks
 
-> Skill by [tramlinehq](https://github.com/tramlinehq/store-quirks) — distributed by [TomeVault](https://tomevault.io/claim/tramlinehq)
+> Skill by [tramlinehq](https://github.com/tramlinehq/store-quirks) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tramlinehq/store-quirks](https://github.com/tramlinehq/store-quirks/tree/main/store-quirks)
+Original source: [tramlinehq/store-quirks](https://github.com/tramlinehq/store-quirks/tree/main/store-quirks/SKILL.md)
 
 ---
 
 Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
-Is this your repo? [Claim it](https://tomevault.io/claim/tramlinehq) to manage distribution.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
