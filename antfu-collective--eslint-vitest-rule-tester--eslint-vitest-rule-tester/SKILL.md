@@ -146,5 +146,5 @@ describe('rule-name', () => {
 - **Error format** - Use `errors: [{ messageId: 'errorId' }]` for structured errors, or `errors: ['errorId']` for simple cases
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/antfu-collective) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [antfu-collective/eslint-vitest-rule-tester](https://github.com/antfu-collective/eslint-vitest-rule-tester) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
