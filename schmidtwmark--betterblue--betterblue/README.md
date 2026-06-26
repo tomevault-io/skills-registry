@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [schmidtwmark/BetterBlue](https://github.com/schmidtwmark/BetterBlue/tree/main/.claude/skills/brand-region-client/SKILL.md)
+Original source: [schmidtwmark/BetterBlue](https://github.com/schmidtwmark/BetterBlue/tree/main/BetterBlue/.claude/skills/brand-region-client/SKILL.md)
 
 ---
 
