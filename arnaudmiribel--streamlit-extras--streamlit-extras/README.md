@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [arnaudmiribel/streamlit-extras](https://github.com/arnaudmiribel/streamlit-extras/tree/main/.claude/skills/implementing-extra/SKILL.md)
+Original source: [arnaudmiribel/streamlit-extras](https://github.com/arnaudmiribel/streamlit-extras/tree/main/.claude/skills/building-streamlit-custom-components-v2/SKILL.md)
 
 ---
 
