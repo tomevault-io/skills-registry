@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ShinChven/nano-banana-skills](https://github.com/ShinChven/nano-banana-skills/tree/main/skills/j-idol/SKILL.md)
+Original source: [ShinChven/nano-banana-skills](https://github.com/ShinChven/nano-banana-skills/tree/main/skills/j-cover/SKILL.md)
 
 ---
 
