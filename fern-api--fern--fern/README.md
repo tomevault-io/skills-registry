@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fern-api/fern](https://github.com/fern-api/fern/tree/main/seed/cli/query-parameters-openapi/no-custom-config/.agents/skills/custom-commands/SKILL.md)
+Original source: [fern-api/fern](https://github.com/fern-api/fern/tree/main/seed/cli/cli-multi-spec-namespaced/no-custom-config/.agents/skills/custom-commands/SKILL.md)
 
 ---
 
