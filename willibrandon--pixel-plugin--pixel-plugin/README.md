@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [willibrandon/pixel-plugin](https://github.com/willibrandon/pixel-plugin/tree/main/skills/pixel-art-exporter/SKILL.md)
+Original source: [willibrandon/pixel-plugin](https://github.com/willibrandon/pixel-plugin/tree/main/skills/pixel-art-animator/SKILL.md)
 
 ---
 
