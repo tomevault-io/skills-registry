@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [googleworkspace/cli](https://github.com/googleworkspace/cli/tree/main/skills/recipe-create-vacation-responder/SKILL.md)
+Original source: [googleworkspace/cli](https://github.com/googleworkspace/cli/tree/main/skills/recipe-generate-report-from-sheet/SKILL.md)
 
 ---
 
