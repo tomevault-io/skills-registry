@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ruvnet/ruflo](https://github.com/ruvnet/ruflo/tree/main/.agents/skills/agent-base-template-generator/SKILL.md)
+Original source: [ruvnet/ruflo](https://github.com/ruvnet/ruflo/tree/main/.agents/skills/agent-hierarchical-coordinator/SKILL.md)
 
 ---
 
