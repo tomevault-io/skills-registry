@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes/tree/main/skills/faceless-explainer/SKILL.md)
+Original source: [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes/tree/main/skills/product-launch-video/SKILL.md)
 
 ---
 
