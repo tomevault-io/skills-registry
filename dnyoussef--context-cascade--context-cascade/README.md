@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DNYoussef/context-cascade](https://github.com/DNYoussef/context-cascade/tree/main/skills/platforms/advanced-agentdb-vector-search-implementation/SKILL.md)
+Original source: [DNYoussef/context-cascade](https://github.com/DNYoussef/context-cascade/tree/main/skills/research/when-analyzing-user-intent-use-intent-analyzer/SKILL.md)
 
 ---
 
