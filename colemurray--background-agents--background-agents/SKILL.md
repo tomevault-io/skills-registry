@@ -1,340 +1,213 @@
 ---
-name: onboarding
-description: You are guiding the user through deploying their own instance of Open-Inspect. This is a multi-phase Use when this capability is needed.
+name: visual-verification
+description: Verify application UI changes with uploaded screenshot or video artifacts Use when this capability is needed.
 metadata:
   author: ColeMurray
 ---
 
-# Open-Inspect Deployment Guide
+# visual-verification
 
-You are guiding the user through deploying their own instance of Open-Inspect. This is a multi-phase
-process requiring user interaction for credential collection and external service configuration.
+Use this skill when the goal is to verify UI changes inside the application and return visual
+evidence in the Open-Inspect session.
 
-## Before Starting
+`agent-browser` remains the low-level browser tool. This skill defines the workflow contract for
+using it reliably.
 
-Use TodoWrite to create a checklist tracking these phases:
+## Key Fact
 
-1. Initial setup questions
-2. Repository setup
-3. Credential collection (Cloudflare, Vercel, Modal, Anthropic)
-4. GitHub App creation (+ Google OAuth if enabled)
-5. Slack App creation (if enabled)
-6. Security secrets generation
-7. Terraform configuration
-8. Terraform deployment (two phases)
-9. Post-deployment Slack setup (if enabled)
-10. Post-deployment GitHub Bot setup (if enabled)
-11. Web app deployment
-12. Verification
-13. CI/CD setup (optional)
+`upload-media` is a **bash command** installed on PATH. Run it with your Bash tool, not as an MCP
+tool or tool binding. For videos, use `agent-browser record` directly, then probe and upload the
+resulting MP4 with `upload-media`.
 
-## Phase 1: Initial Questions
+## When To Use It
 
-First, generate a random suffix suggestion for the user:
+- Verify a UI change after editing code
+- Capture before/after screenshots for comparison
+- Confirm responsive layout differences at a chosen viewport
+- Produce an uploaded screenshot or short video artifact the user can review in-session
 
-```bash
-echo "Suggested deployment name: $(openssl rand -hex 3)"
-```
+## Success Criteria
 
-Use AskUserQuestion to gather:
+The task is not complete until all of these are true:
 
-1. **Directory location** - Where to create the project (default: current directory or
-   ~/workplace/open-inspect-{suffix})
-2. **GitHub account** - Which account/org hosts the private repo
-3. **Deployment name** - A globally unique identifier for URLs (e.g., their GitHub username, company
-   name, or the random suffix generated above). Explain this creates URLs like
-   `open-inspect-{deployment_name}.vercel.app` and must be unique across all Vercel users.
-4. **Slack integration** - Yes or No
-5. **GitHub bot integration** - Yes or No (automated PR reviews and comment-triggered actions)
-6. **Prerequisites confirmation** - Confirm they have accounts on Cloudflare, Vercel, Modal,
-   Anthropic
+1. The changed UI is opened in the browser.
+2. The capture mode is chosen explicitly: viewport screenshot, full-page screenshot, or video.
+3. The viewport is set explicitly or reported as a deliberate default.
+4. A screenshot or video is uploaded in the same prompt.
+5. The returned `artifactId` is reported back to the user.
+6. The response states what was verified and what dimensions/mode were used.
 
-## Phase 2: Repository Setup
+## Required Workflow
 
-Execute these commands (substitute values from Phase 1):
+1. Open the target page with `agent-browser open`.
+2. If viewport matters, set it explicitly with `agent-browser set viewport <width> <height>`.
+3. Wait for the page to settle before capture.
+4. Choose one of:
+   - Viewport screenshot for above-the-fold or device-specific review
+   - Full-page screenshot for full document review
+   - Video recording for interaction flows, animations, transitions, or multi-step behavior
+5. Upload the capture immediately with matching metadata.
+6. Report the result with the artifact ID and actual capture settings.
 
-```bash
-mkdir -p {directory_path}
-gh repo create {github_account}/open-inspect-{name} --private --description "Open-Inspect deployment"
-cd {directory_path}
-git clone git@github.com:ColeMurray/open-inspect.git .
-git remote rename origin upstream
-git remote add origin git@github.com:{github_account}/open-inspect-{name}.git
-git push -u origin main
-npm install
-npm run build -w @open-inspect/shared
-```
+## Default Decision Rules
 
-## Phase 3: Credential Collection
+- Use a viewport screenshot when validating a specific visible state, modal, interaction, or
+  desktop/mobile layout.
+- Use a full-page screenshot when the user asks for the whole page or when vertical content is part
+  of the verification.
+- If the user names a device or screen size, set the viewport explicitly.
+- If the user does not specify dimensions and layout matters, choose a reasonable viewport and
+  report it.
+- If the screenshot is intended to prove a fix, prefer stating exactly what was checked, not only
+  that a screenshot was taken.
+- Use a video when the proof depends on seeing interaction over time, such as opening a menu,
+  dragging, typing, navigating between states, or watching an animation complete.
 
-Hand off to user for each service. Use AskUserQuestion to collect credentials.
+## Using Screenshots From Other Sources
 
-### Cloudflare
-
-Tell the user:
-
-- **Account ID**: Found in dashboard URL or account overview
-- **Workers Subdomain**: Workers & Pages → Overview, **bottom-right** panel shows
-  `*.YOUR-SUBDOMAIN.workers.dev`
-- **API Token**: Create at https://dash.cloudflare.com/profile/api-tokens with template "Edit
-  Cloudflare Workers" + permissions for Workers KV Storage (Edit), Workers R2 Storage (Edit), D1
-  (Edit)
-
-### R2 Bucket
-
-Check wrangler login status, then create bucket:
+If the screenshot already exists as a file — for example, captured via Playwright MCP
+(`playwright_browser_take_screenshot`), a manual capture, or any other tool — skip the
+`agent-browser` steps and upload the file directly:
 
 ```bash
-wrangler whoami
-wrangler r2 bucket create open-inspect-{name}-tf-state
+upload-media /path/to/existing-screenshot.png \
+  --caption "Description of what was captured" \
+  --source-url "$URL"
 ```
 
-Tell user to create R2 API Token at R2 → Overview → Manage R2 API Tokens with "Object Read & Write"
-permission.
+Add `--full-page` or `--viewport '{"width":1512,"height":982}'` as appropriate. The same reporting
+template and guardrails below still apply.
 
-### Vercel
+For a dedicated upload-only workflow, see the `upload-screenshot` skill.
 
-- **API Token**: https://vercel.com/account/tokens
-- **Team/Account ID**: Settings → "Your ID" (even personal accounts have one, usually starts with
-  `team_`)
+## Recommended Commands
 
-### Modal
-
-- **Token ID and Secret**: https://modal.com/settings or `modal token new`
-- **Workspace name**: Visible in Modal dashboard URL
-
-Then set the token:
+Viewport capture:
 
 ```bash
-modal token set --token-id {token_id} --token-secret {token_secret}
-modal profile current
+agent-browser open "$URL" && \
+agent-browser set viewport 1512 982 && \
+agent-browser wait 2000 && \
+agent-browser screenshot --json /tmp/verify.png && \
+upload-media /tmp/verify.png \
+  --caption "UI verification screenshot" \
+  --source-url "$URL" \
+  --viewport '{"width":1512,"height":982}'
 ```
 
-### Anthropic
-
-- **API Key**: https://console.anthropic.com (starts with `sk-ant-`)
-
-## Phase 4: GitHub App Setup
-
-Guide user through creating a GitHub App (handles both OAuth and repo access):
-
-1. Go to https://github.com/settings/apps → "New GitHub App"
-2. **Name**: `Open-Inspect-{YourName}` (globally unique)
-3. **Homepage URL**: `https://open-inspect-{deployment_name}.vercel.app`
-4. **Webhook**: Uncheck "Active"
-5. **Callback URL** (under "Identifying and authorizing users"):
-   `https://open-inspect-{deployment_name}.vercel.app/api/auth/callback/github`
-   - **CRITICAL**: Must match deployed Vercel URL exactly!
-6. **Repository permissions**: Contents (Read & Write), Issues (Read & Write), Pull requests (Read &
-   Write), Metadata (Read-only)
-7. Create app, note **App ID**
-8. Generate **Client Secret**, note **Client ID** and **Client Secret**
-9. Generate **Private Key** (downloads .pem file)
-10. Install app on account, note **Installation ID** from URL
-
-After receiving the .pem path, convert to PKCS#8:
+Full-page capture:
 
 ```bash
-openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in {pem_path} -out /tmp/github-app-key-pkcs8.pem
-cat /tmp/github-app-key-pkcs8.pem
+agent-browser open "$URL" && \
+agent-browser set viewport 1512 982 && \
+agent-browser wait 2000 && \
+agent-browser screenshot --full --json /tmp/verify-full.png && \
+upload-media /tmp/verify-full.png \
+  --caption "Full-page verification screenshot" \
+  --source-url "$URL" \
+  --viewport '{"width":1512,"height":982}' \
+  --full-page
 ```
 
-## Phase 4b: Google OAuth Setup (If Enabled)
-
-Only if the user wants Google login for non-developer users (PMs, support agents). Skip for
-GitHub-only deployments — leave `google_client_id` and `google_client_secret` empty.
-
-Guide user:
-
-1. https://console.cloud.google.com/apis/credentials → "Create Credentials" → "OAuth client ID"
-2. **Application type**: Web application
-3. **Authorized redirect URI**:
-   `https://open-inspect-{deployment_name}.vercel.app/api/auth/callback/google` (or your
-   `*.workers.dev` web URL if `web_platform = "cloudflare"`)
-   - **CRITICAL**: Must match deployed web URL exactly!
-4. OAuth consent screen: request only `openid`, `email`, `profile` scopes (non-sensitive — no Google
-   verification review required)
-5. Note **Client ID** and **Client Secret**
-
-Then in `terraform.tfvars`:
-
-- Set `google_client_id` and `google_client_secret` (both required together; leave both empty to
-  disable)
-- Add at least one entry to `allowed_emails` (exact addresses, e.g. `pm@gmail.com`) or
-  `allowed_email_domains`. Prefer `allowed_emails` for shared domains like gmail.com.
-
-Terraform derives `NEXT_PUBLIC_GOOGLE_ENABLED` automatically when both Google credentials are set,
-which reveals the "Sign in with Google" button. Google users get the same flat access; their PRs
-fall back to the App bot unless the same verified email is also a linked GitHub identity.
-
-## Phase 5: Slack App Setup (If Enabled)
-
-Guide user:
-
-1. https://api.slack.com/apps → "Create New App" → "From scratch"
-2. OAuth & Permissions → Add scopes: `app_mentions:read`, `chat:write`, `channels:history`,
-   `channels:read`, `groups:history`, `groups:read`, `im:history`, `im:read`, `reactions:write`
-3. Install to Workspace, note **Bot Token** (`xoxb-...`)
-4. Basic Information → note **Signing Secret**
-5. **App Home and Event Subscriptions configured AFTER deployment** (worker must be running for URL
-   verification)
-
-## Phase 6: Generate Security Secrets
+Annotated capture for review/debugging:
 
 ```bash
-echo "token_encryption_key: $(openssl rand -base64 32)"
-echo "repo_secrets_encryption_key: $(openssl rand -base64 32)"
-echo "internal_callback_secret: $(openssl rand -base64 32)"
-echo "nextauth_secret: $(openssl rand -base64 32)"
-echo "modal_api_secret: $(openssl rand -hex 32)"
-echo "github_webhook_secret: $(openssl rand -hex 32)"  # Only if GitHub bot enabled
+agent-browser open "$URL" && \
+agent-browser wait 2000 && \
+agent-browser screenshot --annotate --json /tmp/verify-annotated.png && \
+upload-media /tmp/verify-annotated.png \
+  --caption "Annotated UI verification screenshot" \
+  --source-url "$URL" \
+  --annotated
 ```
 
-## Phase 7: Terraform Configuration
+Video recording for interaction flows:
 
-Create `terraform/environments/production/backend.tfvars`:
+```bash
+set -e
+agent-browser open "$URL"
+agent-browser set viewport 1512 982
+agent-browser snapshot -i
 
-```hcl
-access_key = "{r2_access_key}"
-secret_key = "{r2_secret_key}"
-bucket     = "open-inspect-{name}-tf-state"
-endpoints = {
-  s3 = "https://{cloudflare_account_id}.r2.cloudflarestorage.com"
+STARTED_AT_MS=$(date +%s%3N)
+agent-browser record start /tmp/opencode/menu-recording.mp4
+recording_started=1
+cleanup_recording() {
+  if [ "${recording_started:-0}" = "1" ]; then
+    agent-browser record stop || true
+  fi
 }
+trap cleanup_recording EXIT
+
+interaction_exit_code=0
+agent-browser click "[data-testid=settings]" || interaction_exit_code=$?
+agent-browser wait 1000 || interaction_exit_code=$?
+
+agent-browser record stop
+recording_started=0
+trap - EXIT
+
+ENDED_AT_MS=$(date +%s%3N)
+PROBE_JSON=$(ffprobe -v error -print_format json -show_streams -show_format /tmp/opencode/menu-recording.mp4)
+DURATION_MS=$(node -e 'const p=JSON.parse(process.argv[1]); const v=(p.streams||[]).find((s)=>s.codec_type==="video")||{}; const d=Number(v.duration ?? p.format?.duration); console.log(Math.max(1, Math.round(d * 1000)));' "$PROBE_JSON")
+DIMENSIONS=$(node -e 'const p=JSON.parse(process.argv[1]); const v=(p.streams||[]).find((s)=>s.codec_type==="video")||{}; console.log(JSON.stringify({width:Number(v.width),height:Number(v.height)}));' "$PROBE_JSON")
+upload-media /tmp/opencode/menu-recording.mp4 \
+  --artifact-type video \
+  --caption "Menu interaction recording" \
+  --source-url "$URL" \
+  --duration-ms "$DURATION_MS" \
+  --recording-started-at "$STARTED_AT_MS" \
+  --recording-ended-at "$ENDED_AT_MS" \
+  --dimensions "$DIMENSIONS" \
+  --truncated false \
+  --has-audio false
+exit "$interaction_exit_code"
 ```
 
-Create `terraform/environments/production/terraform.tfvars` with all collected values. Set:
+## Reporting Template
 
-```hcl
-enable_durable_object_bindings = false
-enable_service_bindings        = false
+Include the following in the final response:
+
+- What UI change or state was verified
+- Whether the capture was viewport, full-page, or video
+- The viewport used
+- The source URL
+- The uploaded artifact ID
+- Any limitation, such as auth gating, loading issues, or unverified states
+
+Example:
+
+```text
+Verified the updated settings page header.
+Capture mode: viewport
+Viewport: 1512x982
+Source: http://127.0.0.1:3000/settings
+Uploaded artifact: abc123
 ```
 
-If GitHub bot is enabled, also set:
+## Guardrails
 
-```hcl
-enable_github_bot     = true
-github_webhook_secret = "{generated_value}"
-github_bot_username   = "{app-slug}[bot]"
-```
+- Do not claim the screenshot or video was uploaded unless the upload command returned an artifact
+  ID.
+- Do not report viewport metadata you did not explicitly set or verify.
+- Do not use `upload-media` in a later prompt; it is prompt-scoped.
+- Do not leave an active recording open. Always run `agent-browser record stop` if a recording was
+  started.
+- If the user asked for a full-page screenshot, do not use viewport-only capture.
+- If the UI requires interaction before it matches the expected state, perform that interaction
+  before capturing.
+- For video metadata, use the encoded MP4 dimensions and duration from `ffprobe`; do not reuse the
+  requested viewport as video dimensions.
+- Prefer stable selectors such as `[data-testid=...]`, `[data-clear-completed]`, or `#todo-title`.
+  Run `agent-browser snapshot -i` before recording when selectors or accessible names are uncertain.
 
-## Phase 8: Terraform Deployment (Two-Phase)
+## Relationship To `agent-browser`
 
-**Important**: Build the workers before running Terraform (Terraform references the built bundles):
-
-```bash
-npm run build -w @open-inspect/control-plane -w @open-inspect/slack-bot -w @open-inspect/github-bot
-```
-
-**Phase 1** (bindings disabled):
-
-```bash
-cd terraform/environments/production
-terraform init -backend-config=backend.tfvars
-terraform apply
-```
-
-**Phase 2** (after Phase 1 succeeds): Update tfvars to set both bindings to `true`, then:
-
-```bash
-terraform apply
-```
-
-## Phase 9: Complete Slack Setup (If Enabled)
-
-After Terraform deployment, guide user:
-
-### Enable App Home
-
-1. App Home → Show Tabs → Enable **"Home Tab"**
-2. Save Changes
-
-The App Home provides a settings interface where users can configure their preferred Claude model.
-
-### Configure Event Subscriptions
-
-1. Event Subscriptions → Enable → Request URL:
-   `https://open-inspect-slack-bot-{deployment_name}.{subdomain}.workers.dev/events`
-2. Wait for "Verified" checkmark
-3. Subscribe to bot events: `app_home_opened`, `app_mention`, `message.im`
-
-### Configure Interactivity
-
-4. Interactivity → Enable → Request URL:
-   `https://open-inspect-slack-bot-{deployment_name}.{subdomain}.workers.dev/interactions`
-
-### Invite Bot to Channels
-
-5. Invite bot to channels: `/invite @BotName`
-
-## Phase 10: Complete GitHub Bot Setup (If Enabled)
-
-After Terraform deployment, guide user:
-
-### Configure Webhook on GitHub App
-
-1. Go to GitHub App settings → your app
-2. Under **Webhook**: check **"Active"**
-3. **Webhook URL**:
-   `https://open-inspect-github-bot-{deployment_name}.{subdomain}.workers.dev/webhooks/github`
-4. **Webhook secret**: Enter the `github_webhook_secret` value
-5. Under **Subscribe to events**, check: **Pull requests**, **Issue comments**, **Pull request
-   review comments**
-6. Save changes
-
-### Find Bot Username
-
-The bot username is the App's slug with `[bot]` appended. E.g., if the app is `My-Inspect-App`, the
-bot username is `my-inspect-app[bot]`. Confirm this matches `github_bot_username` in
-terraform.tfvars.
-
-### Usage
-
-- **Code Review**: Assign the bot as a PR reviewer
-- **Comment Actions**: @mention the bot in a PR comment with instructions
-
-## Phase 11: Web App Deployment
-
-```bash
-npx vercel link --project open-inspect-{deployment_name}
-npx vercel --prod
-```
-
-## Phase 12: Verification
-
-```bash
-curl https://open-inspect-control-plane-{deployment_name}.{subdomain}.workers.dev/health
-curl https://{workspace}--open-inspect-api-health.modal.run
-curl -I https://open-inspect-{deployment_name}.vercel.app
-```
-
-Present deployment summary table. Instruct user to test: visit web app, sign in with GitHub, create
-session, send prompt.
-
-## Phase 13: CI/CD Setup (Optional)
-
-Ask if user wants GitHub Actions CI/CD. If yes, use `gh secret set` for all required secrets.
-
-## Error Handling
-
-- **"redirect_uri is not associated"**: Callback URL mismatch - update GitHub App settings
-- **Durable Object errors**: Must follow two-phase deployment
-- **Slack bot not responding**: Check Event Subscriptions URL verified, bot invited to channel,
-  reinstall if scopes changed
-- **GitHub bot not responding**: Check webhook URL, secret, `enable_github_bot = true`, and
-  `github_bot_username` matches the App's bot login
-- **Vercel build fails**: Terraform configures the monorepo build commands automatically
-- **"no such file or directory" for dist/index.js**: Build workers before Terraform:
-  `npm run build -w @open-inspect/control-plane -w @open-inspect/slack-bot -w @open-inspect/github-bot`
-- **Worker deployment fails**: Build shared package first: `npm run build -w @open-inspect/shared`
-
-## Important Notes
-
-- Track all collected credentials securely throughout the process
-- Never log sensitive values
-- The callback URL MUST match the actual deployed Vercel URL
-- Two-phase Terraform deployment is required due to Cloudflare Durable Object constraints
+- Use `agent-browser` directly for open-ended browsing, debugging, auth flows, snapshots, and custom
+  inspection.
+- Use `visual-verification` when the deliverable is proof that a UI change works and the user should
+  receive an uploaded screenshot or video artifact.
 
 ---
 > Source: [ColeMurray/background-agents](https://github.com/ColeMurray/background-agents) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-25 -->
+<!-- tomevault:4.0:skill_md:2026-06-26 -->
