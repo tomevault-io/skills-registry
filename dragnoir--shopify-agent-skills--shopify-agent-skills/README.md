@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dragnoir/Shopify-agent-skills](https://github.com/dragnoir/Shopify-agent-skills/tree/main/skills/liquid-templating/SKILL.md)
+Original source: [dragnoir/Shopify-agent-skills](https://github.com/dragnoir/Shopify-agent-skills/tree/main/skills/headless-hydrogen/SKILL.md)
 
 ---
 
