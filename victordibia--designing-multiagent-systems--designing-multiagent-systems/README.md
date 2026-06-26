@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [victordibia/designing-multiagent-systems](https://github.com/victordibia/designing-multiagent-systems/tree/main/picoagents/src/picoagents/skills/debug/SKILL.md)
+Original source: [victordibia/designing-multiagent-systems](https://github.com/victordibia/designing-multiagent-systems/tree/main/picoagents/src/picoagents/skills/code-review/SKILL.md)
 
 ---
 
