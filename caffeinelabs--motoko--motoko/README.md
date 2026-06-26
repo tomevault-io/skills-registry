@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [caffeinelabs/motoko](https://github.com/caffeinelabs/motoko/tree/main/.agents/skills/migrating-motoko/SKILL.md)
+Original source: [caffeinelabs/motoko](https://github.com/caffeinelabs/motoko/tree/main/.agents/skills/bump-rust-nightly/SKILL.md)
 
 ---
 
