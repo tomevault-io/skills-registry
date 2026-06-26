@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [keep-starknet-strange/garaga](https://github.com/keep-starknet-strange/garaga/tree/main/.claude/skills/cairo-coding/SKILL.md)
+Original source: [keep-starknet-strange/garaga](https://github.com/keep-starknet-strange/garaga/tree/main/.claude/skills/benchmarking-cairo/SKILL.md)
 
 ---
 
