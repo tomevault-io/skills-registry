@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Golden2002/legal-research-skill](https://github.com/Golden2002/legal-research-skill/tree/main/docx/SKILL.md)
+Original source: [Golden2002/legal-research-skill](https://github.com/Golden2002/legal-research-skill/tree/main/legal-research/SKILL.md)
 
 ---
 
