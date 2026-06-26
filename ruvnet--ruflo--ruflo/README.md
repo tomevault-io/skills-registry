@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ruvnet/ruflo](https://github.com/ruvnet/ruflo/tree/main/plugins/ruflo-goals/skills/horizon-track/SKILL.md)
+Original source: [ruvnet/ruflo](https://github.com/ruvnet/ruflo/tree/main/.claude/skills/github-workflow-automation/SKILL.md)
 
 ---
 
