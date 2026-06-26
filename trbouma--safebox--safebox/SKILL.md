@@ -1,0 +1,1193 @@
+---
+name: safebox
+description: When starting a new session, fetch these files before executing any workflows: Use when this capability is needed.
+metadata:
+  author: trbouma
+---
+# Agent API Skill
+
+## Bootstrap
+
+When starting a new session, fetch these files before executing any workflows:
+
+| File | Path |
+|------|-----|
+| This skill | `skills/agent-api/SKILL.md` |
+| MS-02 Market Spec | `docs/specs/mkt/MS-02-entitlement-market.md` |
+| MS-02 Scenario | `docs/specs/mkt/MS-02-END-TO-END-SCENARIO.md` |
+| MS-02 Conformance | `docs/specs/mkt/MS-02-CONFORMANCE.md` |
+| MS-02 Operator Guide | `docs/operators/ms02-agent-operator-guide.md` |
+| WS Conformance | `docs/specs/WS-CONFORMANCE.md` |
+
+Resolve paths from the repository root of the current checkout (current branch).
+If using HTTP fetches, map these paths onto the same branch/source used to load this skill.
+Do not rely on cached or summarized versions.
+
+Do not load `MS-01` by default. It is deprecated and retained only as a legacy reference.
+
+For agent-operated MS-02 trading, treat the operator guide as the canonical workflow document for:
+
+- seller/buyer role setup,
+- end-to-end trade execution,
+- kind-0 social profile publication,
+- `custom_handle` assignment,
+- `name`, `display_name`, `nip05`, and `lud16` setup.
+
+## Purpose
+
+Use this skill when an autonomous agent needs to operate a Safebox wallet through the header-authenticated Agent API (no browser cookies, no interactive UI).
+
+Primary outcomes:
+
+- Onboard a wallet from invite code
+- Read wallet info and balance
+- Read transaction history
+- Create and pay Lightning invoices
+- Pay Lightning addresses directly
+- Execute zaps to notes/profiles via agent endpoint
+- Send secure direct messages to npub/NIP-05 recipients
+- Issue and accept Cashu ecash tokens
+- Create recipient-first offer QR payloads so humans can send grants by scanning agent QR
+
+## Inputs
+
+Required:
+
+- `base_url` (example: `https://skills.example.com`)
+
+Conditional:
+
+- `invite_code` for onboarding
+- `access_key` for authenticated wallet actions
+- `invoice` string for pay flow
+- `lightning_address` and `amount_sats` for direct LN-address pay flow
+- `event` and `amount_sats` (or `amount` + `currency`) for zap flow
+- `amount` (sat integer) for create/issue flows
+- `ecash_token` for accept flow
+
+## Auth Model
+
+- Authenticated calls require header: `X-Access-Key: <access_key>`
+- Onboarding does not require `X-Access-Key`; it returns new credentials
+
+## DM Paths (Quick Reference)
+
+Use these exact paths for private messaging flows:
+
+- Read DMs: `GET /agent/read_dms?limit=<n>&kind=1059`
+- Read replies to event: `GET /agent/nostr/replies?event_id=<event_id>&limit=<n>`
+- Send secure DM: `POST /agent/secure_dm`
+- Stream DMs (WS): `WS /agent/ws/read_dms?limit=<n>&kind=1059`
+
+Minimum read example:
+
+```bash
+curl -sS \
+  -H "X-Access-Key: ${API_KEY}" \
+  "${BASE_URL}/agent/read_dms?limit=20&kind=1059"
+```
+
+Notes:
+
+- `kind=1059` is the default private DM transport for agent reads.
+- If inbox appears empty, retry with explicit relay override:
+  `GET /agent/read_dms?limit=20&kind=1059&relays=wss://relay.getsafebox.app,wss://relay.damus.io,wss://relay.primal.net`
+
+## CLI Surfaces (Use Both)
+
+This repo now has two CLI entry points. Agents may use either, but should choose based on task:
+
+- `acorn` / `safebox` (`safebox/cli_acorn.py`):
+  - local wallet/core operations
+  - direct Acorn behaviors
+  - legacy/manual operator workflows
+- `agent` (`safebox/cli_agent.py`):
+  - header-authenticated `/agent/*` API workflows
+  - market endpoints (`/agent/market/order`, `/agent/market/orders`)
+  - DM/read_dms/zap receipt automation flows
+
+Selection rule:
+
+- Prefer `agent` for anything that maps to documented `/agent/*` endpoints.
+- Use `acorn` for local core tasks not exposed through `/agent/*`.
+
+Non-interference rule:
+
+- Do not modify `safebox/cli_acorn.py` or `safebox/acorn.py` when extending `agent` CLI flows.
+
+## Canonical Endpoints
+
+- `POST /agent/onboard`
+- `GET /agent/info`
+- `GET /agent/whoami`
+- `GET /agent/balance`
+- `GET /agent/tx_history`
+- `GET /agent/proof_safety_audit`
+- `GET /agent/supported_currencies`
+- `POST /agent/set_custom_handle`
+- `GET /agent/read_dms`
+- `WS /agent/ws/read_dms`
+- `WS /agent/ws/offers/receive/{intent_id}`
+- `GET /agent/nostr/latest_kind1`
+- `GET /agent/nostr/discovery/latest_kind1`
+- `GET /agent/nostr/my_latest_kind1`
+- `GET /agent/nostr/zap_receipts`
+- `GET /agent/nostr/replies`
+- `GET /agent/nostr/kind0`
+- `GET /agent/nostr/followers`
+- `GET /agent/nostr/following/latest_kind1`
+- `WS /agent/ws/nostr/latest_kind1`
+- `WS /agent/ws/nostr/discovery/latest_kind1`
+- `WS /agent/ws/nostr/my_latest_kind1`
+- `WS /agent/ws/nostr/following/latest_kind1`
+- `GET /agent/market/orders`
+- `POST /agent/nostr/format_mention`
+- `POST /agent/nostr/compose_mentions`
+- `POST /agent/create_invoice`
+- `GET /agent/invoice_status/{quote}`
+- `POST /agent/pay_invoice`
+- `POST /agent/pay_lightning_address`
+- `POST /agent/zap`
+- `POST /agent/publish_kind0`
+- `POST /agent/publish_kind1`
+- `POST /agent/delete_request`
+- `POST /agent/market/order`
+- `POST /agent/market/ms02/generate_entitlement`
+- `POST /agent/market/ms02/encrypt_entitlement_nip44`
+- `POST /agent/market/ms02/decrypt_entitlement_nip44`
+- `POST /agent/market/ms02/validate_buyer_delivery`
+- `POST /agent/market/ms02/generate_wrapper`
+- `POST /agent/market/ms02/derive_wrapper_commitment`
+- `POST /agent/market/ms02/construct_ask`
+- `POST /agent/market/ms02/publish_ask`
+- `POST /agent/market/ms02/parse_ask_event`
+- `GET /agent/market/ms02/asks`
+- `GET /agent/market/ms02/settlement_receipts`
+- `GET /agent/market/ms02/clear_order`
+- `POST /agent/market/ms02/deliver_wrapper_secret`
+- `POST /agent/market/secret_hash/derive`
+- `POST /agent/market/secret_hash/verify`
+- `POST /agent/secure_dm`
+- `POST /agent/react`
+- `POST /agent/reply`
+- `POST /agent/follow`
+- `POST /agent/unfollow`
+- `POST /agent/issue_ecash`
+- `POST /agent/accept_ecash`
+- `POST /agent/terminal/ascii_qr`
+- `POST /agent/offers/receive/create`
+- `GET /agent/offers/receive/{intent_id}/wait`
+- `POST /agent/offers/create`
+- `GET /agent/offers/{offer_id}/status`
+- `POST /agent/offers/{offer_id}/capture`
+- `POST /agent/offers/{offer_id}/send`
+- `GET /agent/offers/{offer_id}/delivery`
+
+## Execution Recipes
+
+### 1) Onboard Wallet
+
+1. Call `POST /agent/onboard` with `invite_code`.
+2. Persist returned (REQUIRED before any further action):
+   - `wallet.access_key`
+   - `wallet.nsec`
+   - `wallet.seed_phrase`
+   - `wallet.emergency_code`
+3. Treat response as sensitive secret material.
+4. Immediately verify persistence:
+   - confirm `wallet.access_key` is non-empty and saved in the agent’s durable identity store
+   - confirm handle + access_key mapping is stored as an atomic pair
+   - do not proceed to other API calls until the key is confirmed saved
+
+Operational guardrail:
+
+- If onboarding succeeds but key persistence fails, mark wallet as `INCOMPLETE_ONBOARDING` and retry/save before any production use.
+- If profile/bootstrap identity setup fails, mark wallet as `INCOMPLETE_PROFILE_SETUP` and retry before DM/social workflows.
+
+Expected response includes:
+
+- `wallet.handle`, `wallet.npub`, `wallet.home_relay`
+- `session.access_token` (optional for external systems; agent calls should still use `X-Access-Key`)
+
+### 1a) Immediate Social Identity Setup (Required)
+
+Right after onboarding, before social actions:
+
+1. Claim a memorable custom lightning handle via `POST /agent/set_custom_handle`.
+   - Choose a human-rememberable local-part (for example `lumen`, `nova`, `pixel`).
+2. Publish kind-0 profile via `POST /agent/publish_kind0` with at least:
+   - `name`
+   - `picture` (avatar/logo URL)
+   - `nip05`
+   - `lud16`
+   - Recommended default avatar source: RoboHash URL for deterministic agent identity images.
+   - Example: `https://robohash.org/<stable-agent-seed>?set=set4`
+3. Identity rule:
+   - `nip05` MUST equal `lud16` for Safebox-managed agent identities.
+   - Example: `lumen@safebox.dev` for both fields.
+4. Verify profile visibility:
+   - `GET /agent/nostr/kind0?identifier=<nip05>`
+
+Operational guardrail:
+
+- Do not run DM-first or mention/zap response workflows until kind-0 includes valid `nip05` + `lud16` + `picture`.
+
+Operator note:
+
+- For the full identity and operator-facing setup procedure, use:
+  - `docs/operators/ms02-agent-operator-guide.md`
+- That guide is the canonical reference for:
+  - `custom_handle`
+  - `name`
+  - `display_name`
+  - `lud16`
+  - MS-02 seller/buyer preparation
+
+### 2) Read Wallet State
+
+1. Call `GET /agent/info` with `X-Access-Key`.
+   - Includes `lightning_address` derived from request host.
+2. Call `GET /agent/whoami` when the workflow also needs the authenticated wallet's latest kind-0 social profile.
+   - Returns `identity`, parsed `profile`, raw `profile_event`, and `profile_lookup_error` if no kind-0 profile is visible.
+3. Call `GET /agent/balance` for lightweight polling or confirmation.
+4. Call `GET /agent/tx_history` for recent transaction audit context.
+
+### 2a) Set Wallet Custom Handle
+
+1. Call `POST /agent/set_custom_handle` with:
+   - `custom_handle` (required): desired local-part for wallet lightning address.
+2. Handle validation/uniqueness outcomes:
+   - `400` for invalid or missing handle.
+   - `409` when the handle is already taken.
+3. Use returned `lightning_address` for subsequent payment identity display.
+
+### 3) Create Invoice (Receive Payment)
+
+1. Call `POST /agent/create_invoice` with sat amount and optional comment.
+2. Return invoice immediately to payer.
+3. Use returned `quote` and `status_path` to monitor settlement:
+   - poll `GET /agent/invoice_status/{quote}`
+   - terminal state is `quote_status: PAID`
+4. Optionally confirm final wallet state with `GET /agent/balance` or `GET /agent/tx_history`.
+
+### 3a) MS-02 Ask Construction (Generic Entitlement Profile)
+
+Use the dedicated constructor before publishing an MS-02 ask:
+
+1. Prepare entitlement profile artifacts:
+   - `wrapper_ref`
+   - `wrapper_commitment`
+2. Call `POST /agent/market/ms02/construct_ask` with:
+   - required: `wrapper_ref`, `price_sats`, `expiry`, `wrapper_commitment`
+   - optional: `wrapper_scheme` (defaults to `nostr_keypair_v1`)
+   - optional: `fulfillment_mode` (defaults to `provider_resolved_v1`)
+   - required for decryptable delivery: `sealed_delivery_alg`, `encrypted_entitlement`
+   - optional: `content_format` (`yaml` default, `plain` supported)
+3. Use returned:
+   - `content` (human-readable ask preview)
+   - `tags`, `order_details_jcs`, and `ask_id` (authoritative machine data)
+4. Publish the constructed ask with `POST /agent/market/ms02/publish_ask` using the returned `content` and exact `tags`.
+
+Human-readability vs authority:
+
+- `content` is a preview for operators and includes warning text.
+- Long identifiers are shortened in YAML display fields (`*_display`).
+- Machines MUST parse/verify from `tags` and `order_details_jcs`, not from preview text.
+
+Example:
+
+```bash
+curl -sS -X POST \
+  -H "X-Access-Key: ${SELLER_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "wrapper_ref":"npub1...",
+    "price_sats":21,
+    "expiry":"2026-03-31T23:59:59Z",
+    "wrapper_commitment":"7f3a9c2d41b8d4479c31c6f3a4b7a1e1d0f9d8c7b6a5e4d3c2b1a09182736455"
+  }' \
+  "${BASE_URL}/agent/market/ms02/construct_ask"
+```
+
+Publish example:
+
+```bash
+curl -sS -X POST \
+  -H "X-Access-Key: ${SELLER_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content":"ASK #MS02 ...",
+    "tags":[["mkt","MS-02"],["side","ask"]],
+    "kind":1
+  }' \
+  "${BASE_URL}/agent/market/ms02/publish_ask"
+```
+
+Consumer-side helpers:
+
+- `GET /agent/market/ms02/asks`
+  - list published MS-02 asks from relays
+  - defaults to `kind=1`
+  - accepts an alternate `kind` when needed
+- `POST /agent/market/ms02/parse_ask_event`
+  - parse and validate a full ask event or fetch by `event_id`
+- `GET /agent/market/ms02/settlement_receipts`
+  - fetch zap receipts for a published ask event id
+- `GET /agent/market/ms02/clear_order`
+  - evaluate receipts and determine whether the ask is `OPEN`, `CLEARED`, or `EXPIRED`
+  - when cleared, identify the winning buyer deterministically
+- `POST /agent/market/ms02/deliver_wrapper_secret`
+  - deliver the wrapper secret to the cleared winner via secure DM
+
+Consumer rule:
+
+- agents MUST treat `tags` and `order_details_jcs` as authoritative
+- agents MUST NOT treat the human-readable `content` preview as the source of truth
+
+### 3b) MS-02 Entitlement Generator
+
+Agent API helper endpoint:
+
+- `POST /agent/market/ms02/generate_entitlement`
+
+Purpose:
+
+- generate provider-native entitlement inputs for the MS-02 wrapper flow
+- normalize explicitly provided entitlement inputs without changing them
+
+Behavior:
+
+- if no values are passed, returns a generated test entitlement
+- if one value is missing, generates only the missing value
+- if both values are passed, returns the normalized values
+
+Returns:
+
+- `entitlement_code`
+- `entitlement_secret`
+- generation flags indicating whether test/default values were created
+
+### 3c) MS-02 NIP-44 Entitlement Encryption
+
+Agent API helper endpoint:
+
+- `POST /agent/market/ms02/encrypt_entitlement_nip44`
+
+Purpose:
+
+- produce `encrypted_entitlement` for `buyer_decryptable_v1`
+- encrypt the provider-native entitlement material to the wrapper public key
+
+Inputs:
+
+- `wrapper_ref`
+- `entitlement_code`
+- `entitlement_secret`
+
+Returns:
+
+- `sealed_delivery_alg=nip44_v2`
+- `encrypted_entitlement`
+- `plaintext_payload_jcs`
+
+Usage rule:
+
+- use the returned `sealed_delivery_alg` and `encrypted_entitlement` in `POST /agent/market/ms02/construct_ask` when `fulfillment_mode=buyer_decryptable_v1`
+
+### 3d) MS-02 Buyer Decrypt + Validation
+
+Agent API helper endpoints:
+
+- `POST /agent/market/ms02/decrypt_entitlement_nip44`
+- `POST /agent/market/ms02/validate_buyer_delivery`
+
+Purpose:
+
+- let the buyer recover `entitlement_code` and `entitlement_secret` from `encrypted_entitlement`
+- let the buyer verify that the delivered wrapper secret actually matches the published ask
+
+`decrypt_entitlement_nip44`:
+
+- input:
+  - `wrapper_secret_nsec`
+  - either `encrypted_entitlement`, `ask_event_id`, or a full ask `event`
+  - optional `sender_pubkey` when decrypting without ask lookup
+- returns:
+  - `decrypted_entitlement`
+  - `plaintext_payload_jcs`
+  - resolved `wrapper_ref`
+
+`validate_buyer_delivery`:
+
+- input:
+  - `wrapper_secret_nsec`
+  - `ask_event_id` or full ask `event`
+- verifies:
+  - derived `wrapper_ref` matches the ask
+  - recomputed `wrapper_commitment` matches the ask
+  - decrypted entitlement contains:
+    - `entitlement_code`
+    - `entitlement_secret`
+
+### 3e) MS-02 Wrapper Generator
+
+Agent API helper endpoint:
+
+- `POST /agent/market/ms02/generate_wrapper`
+
+Purpose:
+
+- generate a fresh Nostr-native trading wrapper for MS-02
+- or normalize an explicitly supplied `nsec`
+
+Returns:
+
+- `wrapper_scheme=nostr_keypair_v1`
+- `wrapper_ref`
+- `wrapper_secret_nsec`
+- `wrapper_commitment_hint`
+
+Usage note:
+
+- `wrapper_secret_nsec` is sensitive and should not be logged
+- `wrapper_commitment_hint` is not the full MS-02 wrapper commitment over entitlement data; it is only a wrapper-key-derived hint
+
+### 3e) MS-02 Wrapper Commitment Derivation
+
+Agent API helper endpoint:
+
+- `POST /agent/market/ms02/derive_wrapper_commitment`
+
+Purpose:
+
+- derive the full MS-02 `wrapper_commitment` from:
+  - wrapper secret
+  - `entitlement_code`
+  - `entitlement_secret`
+
+Returns:
+
+- `wrapper_ref`
+- `wrapper_commitment`
+- canonical commitment payload JSON (`commitment_payload_jcs`)
+
+Implementation rule:
+
+- this is the authoritative helper for the current MS-02 wrapper-commitment convention
+- it binds raw wrapper secret material, not just the delivered `nsec` string
+
+### 3f) Market Secret Hash Helpers
+
+Use these helpers when an agent needs deterministic secret-hash derivation or verification without reimplementing the market hashing convention incorrectly.
+
+Endpoints:
+
+- `POST /agent/market/secret_hash/derive`
+- `POST /agent/market/secret_hash/verify`
+
+Purpose:
+
+- derive a canonical market `secret_hash` from stable inputs
+- verify that a provided preimage/input set matches a published `secret_hash`
+
+Usage rule:
+
+- prefer these helpers when constructing or validating market commitments that must match Safebox market conventions exactly
+- treat the full returned `secret_hash` as authoritative
+- never use shortened display hashes for matching, clearing, or redemption decisions
+
+### Currency Preflight (Before Address Payments)
+
+1. Call `GET /agent/supported_currencies`.
+2. Confirm requested currency appears with `available=true`.
+3. Prefer `SAT` if rate metadata is unavailable for a fiat code.
+4. Then call `POST /agent/pay_lightning_address`.
+
+The same preflight applies to `POST /agent/zap` when using `amount` + `currency`.
+
+### Nostr Preflight (Before Event Zaps)
+
+1. Call `GET /agent/nostr/latest_kind1?nip05=<name@domain>&limit=<n>`.
+   - The `nip05` target MUST already be present in the wallet kind-3 follow list.
+   - If not followed, endpoint returns `403`.
+2. Read returned `events[]` and choose the target `event_id` (or `event_id_hex` / `id`).
+3. Pass that value as `event_id` (or `event`) in `POST /agent/zap`.
+4. This avoids client-side note parsing and gives deterministic zap selection.
+
+Discovery variant:
+
+- If the target is not in follow-list scope, use:
+  `GET /agent/nostr/discovery/latest_kind1?nip05=<name@domain>&limit=<n>`
+
+### NIP-09 Delete Request (Kind 5)
+
+Use this when the wallet author wants to publish a deletion request event for
+their own previously published events.
+
+1. Call `POST /agent/delete_request` with at least one reference:
+   - `event_ids` (list of `note1...` or 64-char hex ids), and/or
+   - `a_tags` (list of NIP-01 coordinates: `<kind>:<pubkey>:<d-identifier>`).
+2. Optionally include:
+   - `kinds` (list of integers; recommended when known)
+   - `reason` (free text, becomes kind-5 `content`)
+   - `relays` override
+3. Response returns published delete event metadata and final tags.
+
+Notes:
+
+- This publishes a NIP-09 request (`kind=5`); deletion enforcement is relay/client dependent.
+- Agents SHOULD only request deletion for events authored by the same wallet pubkey.
+
+### Self Post Lookup (Authenticated Wallet)
+
+1. Call `GET /agent/nostr/my_latest_kind1?limit=<n>`.
+2. Optional relay override: `&relays=<relay1,relay2,...>`.
+3. Use returned `events[].event_id` for self-audit, reaction/reply targets, or automation workflows.
+
+### Zap Receipt Lookup (NIP-57)
+
+1. Call `GET /agent/nostr/zap_receipts?event_id=<event_id>&limit=<n>`.
+2. Endpoint queries kind `9735` receipts filtered by `#e=<event_id>`.
+3. For each receipt, inspect:
+   - `zapper_pubkey` / `zapper_npub` (derived from zap request `description.pubkey`, fallback `P` tag)
+   - `zapper_identity_source` to confirm identity provenance
+   - `lnurl_provider_pubkey` / `lnurl_provider_npub` are receipt signer identities, not zapper identities
+   - `zap_request_raw` (original embedded kind-9734 JSON string)
+   - `zap_request` (parsed embedded kind-9734 object)
+   - `zap_amount_msat` and `invoice_amount_msat`
+   - `amount_matches`, `description_hash_matches`, `matches_target_event`
+4. Treat `zapper_*` as the claimed payer identity from NIP-57 flow; enforce stricter policy using the validation flags before trust-sensitive actions.
+5. For mentions, always resolve from `zapper_npub` (or run `/agent/nostr/format_mention` on `zapper_pubkey`/NIP-05), never from receipt signer fields.
+
+### Reply Lookup (Kind-1 Replies to Event)
+
+1. Call `GET /agent/nostr/replies?event_id=<event_id>&limit=<n>`.
+2. Endpoint queries kind `1` events filtered by `#e=<event_id>`.
+3. Use returned fields:
+   - `replies[].event_id`
+   - `replies[].pubkey`
+   - `replies[].content`
+   - `replies[].reply_to_event_ids`
+   - `replies[].is_direct_reply`
+4. Use `is_direct_reply=true` when you need strict top-level reply matching; otherwise treat list as thread-related replies.
+
+### Reactions (NIP-25)
+
+Use `POST /agent/react` for reactions.
+
+#### A) React to a Nostr event (kind `7`)
+
+- Provide `event_id` plus optional:
+  - `content` (`+`, `-`, emoji, or `:shortcode:`)
+  - `reacted_pubkey`
+  - `reacted_kind`
+  - `relay_hint`
+  - `a_tag` (for addressable target coordinates)
+  - `extra_tags`
+
+Behavior:
+
+- Publishes a kind `7` event with target `e`/`p` tags.
+- If multiple `e`/`p` tags are present, target `e`/`p` are placed last for NIP-25 compatibility guidance.
+
+#### B) React to external content (kind `17`)
+
+- Omit `event_id`.
+- Provide:
+  - `external_tags` including at least one `k` tag and one `i` tag
+  - optional `content`, `extra_tags`
+
+Example external tags:
+
+- `["k","web"]`
+- `["i","https://example.com"]`
+
+Behavior:
+
+- Publishes a kind `17` event for external-content reactions.
+
+### Following Feed Lookup (Kind-1 from Follow List)
+
+1. Call `GET /agent/nostr/following/latest_kind1?limit=<n>`.
+2. Optional relay override: `&relays=<relay1,relay2,...>`.
+3. Response returns latest posts from authors in wallet's latest kind-3 contact list.
+4. Use returned `events[].event_id` for reaction/reply/zap workflows.
+
+### Followers Lookup (Kind-3 Reverse Discovery)
+
+1. Call `GET /agent/nostr/followers`.
+   - Default: returns followers of the authenticated wallet (`self`).
+2. To query another identity, pass:
+   - `identifier=<nip05|npub|pubhex>`
+3. Optional controls:
+   - `limit=<n>` (default `100`, max `500`)
+   - `strict=true|false` (default `true`)
+   - `relays=<relay1,relay2,...>`
+4. Response fields include:
+   - `target_identifier`
+   - `target_pubkey`
+   - `count`
+   - `followers[]` with `follower_pubkey`, `follower_npub`, `event_id`, `created_at`, `relay_hint`
+
+Strict mode behavior:
+
+- `strict=true` verifies each candidate follower against their latest known kind-3 contacts event to reduce stale false positives.
+- `strict=false` is faster and candidate-based, but may include stale follows.
+
+### Kind-1 Streaming (WebSocket)
+
+Use these endpoints when an agent needs push-style updates instead of polling:
+
+- `WS /agent/ws/nostr/latest_kind1?nip05=<name@domain>&limit=<n>&poll_seconds=<n>&access_key=<key>`
+- `WS /agent/ws/nostr/discovery/latest_kind1?nip05=<name@domain>&limit=<n>&poll_seconds=<n>&access_key=<key>`
+- `WS /agent/ws/nostr/my_latest_kind1?limit=<n>&poll_seconds=<n>&access_key=<key>`
+- `WS /agent/ws/nostr/following/latest_kind1?limit=<n>&poll_seconds=<n>&access_key=<key>`
+
+Access rule:
+
+- `ws/nostr/latest_kind1` only streams for identifiers in the wallet kind-3 follow list.
+- `ws/nostr/discovery/latest_kind1` is unrestricted by follow-list and intended for open lookup.
+- For broad discovery, use `ws/nostr/following/latest_kind1`.
+
+Auth notes:
+
+- Preferred: send `X-Access-Key` header during websocket handshake.
+- Fallback: pass `access_key` query parameter if client cannot set websocket headers.
+
+Stream payload types:
+
+- `type=connected`: connection accepted and stream initialized
+- `type=events`: changed event set detected, includes full `events[]`
+- `type=heartbeat`: no change detected at this poll interval
+
+Post-deploy validation:
+
+- Run WebSocket smoke checks in `docs/specs/AGENT-API.md`:
+  - `WS-CONN-001`
+  - `WS-DATA-002`
+  - `WS-HEARTBEAT-003`
+  - `WS-POLICY-004`
+  - `WS-FALLBACK-005`
+- Runnable command reference: `docs/specs/WS-CONFORMANCE.md`
+
+Environment compatibility:
+
+- Some browser/sandbox runtimes expose `WebSocket` but do not reliably return async stream callbacks to the agent.
+- If WS streaming is unavailable or unreadable, fall back to polling with equivalent `GET` endpoints:
+  - `WS /agent/ws/read_dms` -> `GET /agent/read_dms`
+  - `WS /agent/ws/nostr/latest_kind1` -> `GET /agent/nostr/latest_kind1`
+  - `WS /agent/ws/nostr/discovery/latest_kind1` -> `GET /agent/nostr/discovery/latest_kind1`
+  - `WS /agent/ws/nostr/my_latest_kind1` -> `GET /agent/nostr/my_latest_kind1`
+  - `WS /agent/ws/nostr/following/latest_kind1` -> `GET /agent/nostr/following/latest_kind1`
+- Keep the same filters (`nip05`, `limit`, `relays`) and poll interval policy when using `GET`.
+
+### Market Order Discovery (Dedicated Path)
+
+Use dedicated endpoint:
+
+- `GET /agent/market/orders?limit=<n>&kind=1&market=safebox-v1`
+- optional filters: `side=bid|ask`, `asset=<asset_label>`, `relays=<relay1,relay2,...>`
+
+Behavior:
+
+- Queries followed npubs only.
+- Uses `kind=1` by default (explicitly parameterized for future migration to other kinds).
+- Returns only events tagged for the selected market namespace (`mkt=safebox-v1` by default).
+
+### Follow / Unfollow Management
+
+Safebox core supports following and unfollowing by identifier via:
+
+- `Acorn.follow(identifier, relay_hint=None, relays=None)`
+- `Acorn.unfollow(identifier, relays=None)`
+
+Accepted identifiers:
+
+- NIP-05 (`name@domain`)
+- `npub1...`
+- 64-char pubhex
+
+Suggested workflow:
+
+1. Follow identity (core or API route, if exposed).
+2. Query `GET /agent/nostr/following/latest_kind1` to verify feed changes.
+3. Unfollow identity when needed and re-check feed.
+
+### Kind-0 Profile Lookup by Identifier
+
+Use agent endpoint:
+
+- `GET /agent/nostr/kind0?identifier=<value>`
+- optional: `&relays=<relay1,relay2,...>`
+
+Accepted identifier inputs:
+
+- NIP-05 (`name@domain`)
+- `npub1...`
+- 64-char pubhex
+
+Returns latest kind-0 event data with parsed JSON profile content:
+
+- `profile_event.id`
+- `profile_event.pubkey`
+- `profile_event.created_at`
+- `profile_event.content` (object)
+
+Use this when an agent needs authoritative profile metadata before social actions (for example pre-zap context, identity checks, or local profile caching).
+
+### Social Identity Preflight (Before DM Flows)
+
+Before running `POST /agent/secure_dm` or expecting stable sender resolution in clients:
+
+1. Ensure kind-0 is fully populated for the sending wallet via `POST /agent/publish_kind0`:
+   - `name`
+   - `display_name` (recommended)
+   - `about` (recommended)
+   - `picture` (recommended)
+   - `nip05` (required for verified identity)
+   - `lud16` (required for zappable identity)
+2. Identity consistency rule:
+   - `lud16` SHOULD match `nip05` for Safebox-managed identities (same handle/address).
+   - Example: `nip05=lumen@safebox.dev` and `lud16=lumen@safebox.dev`.
+3. Verify profile visibility with `GET /agent/nostr/kind0?identifier=<nip05_or_npub>` before DM-heavy workflows.
+
+Operational note:
+
+- Incomplete kind-0 metadata can cause degraded or missing sender identity rendering in some clients and can destabilize DM-adjacent social workflows.
+
+### Read Private Messages (NIP-17 Gift Wrap Transport)
+
+Use agent endpoint:
+
+- `GET /agent/read_dms?limit=<n>&kind=1059`
+- optional relay override: `&relays=<relay1,relay2,...>`
+
+Behavior:
+
+- reads incoming gift-wrapped messages using existing wallet record retrieval
+- defaults to kind `1059` (private DM transport)
+- returns newest-first messages with bounded `limit`
+
+DM streaming variant:
+
+- `WS /agent/ws/read_dms?limit=<n>&kind=1059&poll_seconds=<n>&access_key=<key>`
+- same `kind`/`relays` semantics as `GET /agent/read_dms`
+- emits `connected`, `messages`, and `heartbeat` frames
+
+### 4) Pay Invoice
+
+1. Call `POST /agent/pay_invoice` with BOLT11 invoice.
+2. Check `status == OK`.
+3. Use returned `balance` as post-payment state; optionally verify with `GET /agent/balance`.
+
+### 5) Issue Ecash
+
+1. Call `POST /agent/issue_ecash` with sat amount.
+2. Capture returned `ecash_token`.
+3. Treat token as bearer value until redeemed.
+
+### 6) Pay Lightning Address
+
+1. Call `POST /agent/pay_lightning_address` with:
+   - `lightning_address` (for example `alice@example.com`)
+   - either `amount_sats` (integer sats) OR `amount` + `currency` (floating-point amount in selected currency)
+   - optional `comment`, `tendered_amount`, `tendered_currency`
+2. Server performs LNURL resolution and payment using wallet core logic.
+3. Verify `status == OK` and review `fees_paid`.
+4. Use returned `balance` as post-payment state; optionally confirm with `GET /agent/balance`.
+
+Why prefer this over manual LNURL flow:
+
+- avoids client-side LNURL fetch/parse bugs
+- avoids millisat conversion errors
+- gives consistent behavior across LN-address providers
+- centralizes error handling for unresolved/invalid addresses
+
+### 7) Accept Ecash
+
+1. Call `POST /agent/accept_ecash` with `ecash_token`.
+2. Verify success and `accepted_amount`.
+3. Confirm final wallet state via `GET /agent/balance`.
+
+### 8) Zap Event/Profile
+
+1. Call `POST /agent/zap` with:
+   - `event` or `event_id` (one required): `note1...`, `npub1...`, NIP-05 (`name@domain`), or 64-char hex event id
+   - either `amount_sats` OR `amount` + `currency`
+   - optional `comment`
+2. Endpoint resolves target/profile metadata and creates zap request + invoice flow server-side.
+3. Verify `status == OK`.
+4. Confirm post-zap state with returned `balance` and optionally `GET /agent/tx_history`.
+
+Notes:
+
+- Use `GET /agent/supported_currencies` before fiat-denominated zap requests.
+- If zap metadata/profile lookup fails, endpoint returns `400` with `Zap failed: ...`.
+
+Zap by recent-event workflow:
+
+1. Fetch recent events:
+   - `GET /agent/nostr/latest_kind1?nip05=trbouma@safebox.dev&limit=5`
+2. Pick `events[i].id` from response.
+3. Zap selected event id:
+   - `POST /agent/zap` with `{"event_id":"<hex_event_id>","amount_sats":21,"comment":"nice post"}`
+
+### 9) Publish Kind-0 Metadata (NIP-01)
+
+1. Call `POST /agent/publish_kind0` with any subset of:
+   - `name`, `about`, `picture`
+   - optional: `display_name`, `nip05`, `banner`, `website`, `lud16`
+   - optional: `extra_fields` (object), `relays` (array)
+2. Server publishes a kind-0 event and persists the updated profile snapshot in wallet records.
+3. Confirm returned `event_id` and profile fields.
+
+Identity-separation warning:
+
+- Treat each Safebox as a separate social identity surface.
+- Do not copy the agent's own stable identity metadata into Safebox profiles if anonymity is desired.
+- An agent may operate many Safeboxes with distinct kind-0 identities that should not be trivially correlated back to the controlling agent.
+
+### 10) Publish Kind-1 Text Note (NIP-01)
+
+1. Call `POST /agent/publish_kind1` with:
+   - `content` (required)
+   - optional `relays` array override
+2. Server signs and publishes a kind-1 event on configured relays.
+3. Confirm returned `event_id`.
+
+### 10a) Create Market Order (Bid/Ask, Kind-1)
+
+1. Call `POST /agent/market/order` with:
+   - `side`: `buy`/`sell` (also accepts `bid`/`ask`)
+   - `asset`: market asset label/id
+   - `market`: market namespace (`mkt` tag value), default `safebox-v1`
+   - `price_sats`: integer sats
+   - optional: `quantity`, `order_id`, `content`, `flow`, `relays`
+2. Server publishes a structured market intent as a kind-1 event.
+3. Use returned `event_id` as anchor for acceptance/reply/zap-settlement flow.
+
+Mentions in posts:
+
+- Preferred format: `nostr:npub1...` (NIP-27 URI form).
+- Fallback format (client-dependent): `@npub1...`.
+- Recommendation: when onboarding a new client/app combination, publish a one-time compatibility post containing both formats and verify rendering on target clients (for example Amethyst/Primal) before standardizing.
+
+Mention helper endpoints:
+
+- `POST /agent/nostr/format_mention`
+  - input: `identifier` + optional `style` (`nostr_uri`, `at_npub`, `both`)
+  - output: normalized mention string and resolved npub/pubkey
+- `POST /agent/nostr/compose_mentions`
+  - input: `base_text`, `identifiers[]`, optional `style`
+  - output: mention-ready post content for direct use with `POST /agent/publish_kind1`
+
+### 11) Send Secure DM (NIP-44 Gift Wrap)
+
+1. Call `POST /agent/secure_dm` with:
+   - `recipient` (required): NIP-05 (`name@domain`), `npub1...`, or 64-char pubhex
+   - `message` (required): plaintext message to encrypt and send
+   - optional `relays` array override (defaults to server `PUBLIC_RELAYS`)
+2. Server resolves recipient key, encrypts with wallet `secure_dm`, and publishes gift-wrapped DM events.
+3. Confirm `status == OK` and inspect returned relay list.
+
+Example:
+
+```json
+{
+  "recipient": "alice@example.com",
+  "message": "Hello from Safebox agent",
+  "relays": ["wss://relay.damus.io", "wss://relay.primal.net"]
+}
+```
+
+### 12) Publish Reaction (NIP-25 Kind 7)
+
+1. Call `POST /agent/react` with:
+   - `event_id` (required): target event id (hex or note id)
+   - optional `content` (default `❤️`)
+   - optional target context: `reacted_pubkey`, `reacted_kind`, `relay_hint`, `a_tag`
+   - optional `extra_tags` and `relays`
+2. Server signs and publishes kind-7 reaction tags (`e`, `p`, `k` when available).
+3. Confirm returned `event_id` and `tags`.
+
+Example:
+
+```json
+{
+  "event_id": "<hex_event_id>",
+  "content": "❤️"
+}
+```
+
+### 13) Publish Reply (Kind 1)
+
+1. Call `POST /agent/reply` with:
+   - `event_id` (required): target event id (hex or note id)
+   - `content` (required): reply text
+   - optional target context: `target_pubkey`, `target_kind`, `relay_hint`
+   - optional `extra_tags` and `relays`
+2. Server signs and publishes a kind-1 reply with `e`/`p`/`k` reply tags.
+3. Confirm returned `event_id` and `tags`.
+
+### 14) Recipient-First Offer Request (Agent Shows QR)
+
+Use this flow when a human Safebox user will send a grant to the agent wallet by scanning a QR shown by the agent.
+
+1. Call `POST /agent/offers/receive/create` with:
+   - optional `ttl_seconds` and `compact_qr` (default `true`)
+   - optional `include_ascii_qr=true` to receive a terminal-renderable text QR in the same response
+   - optional `grant_kind` and `grant_name` metadata (not required for handshake)
+2. Display `qr_text` (or `qr_image_url`) to the human sender.
+   - For terminal-native agents, print `ascii_qr` when requested.
+3. Sender scans QR from Safebox offer UI.
+4. Sender transmits grant through existing offer flow.
+5. Agent waits for grant with:
+   - `GET /agent/offers/receive/{intent_id}/wait?timeout_seconds=<n>&poll_seconds=<n>`
+   - or websocket stream `WS /agent/ws/offers/receive/{intent_id}?timeout_seconds=<n>&poll_seconds=<n>`
+
+Expected response includes:
+
+- `intent.intent_id`, `intent.expires_at`
+- `recipient.recipient_nauth`
+- `qr_payload`, `qr_text`, `qr_image_url`
+- optional `ascii_qr` (present only when `include_ascii_qr=true`)
+
+Field usage:
+
+- Agent management fields: `status`, `intent`, and `recipient`.
+- Human scan fields: `qr_text` (raw `recipient_nauth`) or `qr_image_url`.
+- Terminal render field: `ascii_qr` (human-agent boundary over terminal sessions).
+- Structured optional context: `qr_payload` (for debugging/advanced clients).
+
+Protocol note:
+
+- Recipient-side nauth uses `scope=offer_request`.
+- Scanner routing is expected to detect `offer_request` and redirect into records offer flow instead of generic accept flow.
+
+Flow model note:
+
+- Human-to-human and human-to-agent use the same relay/auth protocol primitives (`21061` auth, `21062` transmittal).
+- Human-to-agent is intent-driven; handshake completion and record ingest are separate stages.
+- Do not treat handshake success as completion until ingest/persist succeeds.
+
+### Copy/Paste Quickstart For OpenClaw
+
+```bash
+BASE_URL="https://skills.example.com"
+API_KEY="your-wallet-access-key"
+
+curl -sS -X POST \
+  -H "X-Access-Key: ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "ttl_seconds": 120,
+    "compact_qr": true,
+    "include_ascii_qr": true
+  }' \
+  "${BASE_URL}/agent/offers/receive/create"
+```
+
+Use returned `ascii_qr` for terminal display and `qr_text` (raw `recipient_nauth`) as canonical QR payload content.
+
+Then wait for delivery using the returned `intent.intent_id`:
+
+```bash
+INTENT_ID="<intent_id_from_create_response>"
+curl -sS \
+  -H "X-Access-Key: ${API_KEY}" \
+  "${BASE_URL}/agent/offers/receive/${INTENT_ID}/wait?timeout_seconds=120&poll_seconds=2"
+```
+
+Wait endpoint behavior:
+
+- Returns `status=OK` with `grant` when a new grant is received during the window.
+- Returns `status=TIMEOUT` when no grant arrives before timeout/expiry.
+- Uses optional `relays` query override for record lookup.
+
+WebSocket wait behavior:
+
+- `WS /agent/ws/offers/receive/{intent_id}` emits:
+  - `type=connected` when stream is active
+  - `type=heartbeat` while waiting
+  - `type=received` with `grant` when delivery is detected
+  - `type=timeout` if no grant arrives before timeout/expiry
+- Auth the same as other agent websockets:
+  - preferred: `X-Access-Key` header
+  - fallback: `?access_key=<key>` query parameter
+- HTTP fallback remains:
+  - `GET /agent/offers/receive/{intent_id}/wait`
+
+Terminal success criteria (recipient-first):
+
+1. Handshake completes for the active intent.
+2. At least one new transmittal record is observed for the matched presenter/context.
+3. Record decrypt + `put_record` persist succeeds.
+4. Wait endpoint/stream reaches terminal receive state (`status=OK` with `grant` or `type=received`).
+
+Troubleshooting guidance:
+
+1. If you see handshake logs but no terminal receive state, treat as incomplete ingest.
+2. If the receiver loop repeats with seen IDs only, regenerate a fresh intent/QR and retry to avoid stale replay windows.
+3. Timeout without `grant` means the sender path did not produce a matching transmittal for this intent window.
+4. Validate completion using API state (`wait`/WS terminal payload), not sender UI success alone.
+
+Compact behavior:
+
+- `compact_qr=true` (default): `qr_text` stays raw `recipient_nauth`; structured metadata is available in `qr_payload`.
+- `compact_qr=false`: QR includes explicit auth/transmittal relay metadata and KEM public metadata.
+- Backward compatibility: `compact` is accepted as an alias for older clients.
+- `include_ascii_qr=true`: embed text QR directly in create response (preferred for terminal agents).
+
+Fallback text-QR helper:
+
+- `POST /agent/terminal/ascii_qr` with body:
+  - `qr_text` (required)
+  - `invert` (optional, default `true`)
+- Use when a flow returns only `qr_text` and terminal rendering is needed after the fact.
+
+### 15) Sender-Side Offer Dispatch Lifecycle
+
+Use this flow when the agent is the sender and needs explicit dispatch states.
+
+1. Create offer:
+   - `POST /agent/offers/create` with `grant_kind`, `grant_name`
+2. Wait for recipient auth:
+   - `GET /agent/offers/{offer_id}/status?wait_seconds=30`
+3. If needed, capture recipient nauth manually:
+   - `POST /agent/offers/{offer_id}/capture`
+4. Send grant:
+   - `POST /agent/offers/{offer_id}/send`
+5. Check dispatch result:
+   - `GET /agent/offers/{offer_id}/delivery`
+
+Status semantics:
+
+- `offer_status`: `WAITING_RECIPIENT`, `RECIPIENT_READY`, `SENDING`, `SENT`, `FAILED`
+- `delivery_status`: `PENDING`, `DISPATCHED`, `FAILED`
+
+Note:
+
+- `delivery_status=DISPATCHED` means sender-side dispatch completed.
+- It does not prove recipient-side application-level receipt acknowledgment.
+
+### Sender Flow Quick Test (Copy/Paste)
+
+```bash
+BASE_URL="https://skills.example.com"
+API_KEY="your-wallet-access-key"
+GRANT_KIND=34104
+GRANT_NAME="Passport"
+RECIPIENT_NAUTH="nauth1..."   # optional if using manual capture
+```
+
+1. Create offer:
+
+```bash
+OFFER_ID=$(curl -sS -X POST \
+  -H "X-Access-Key: ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"grant_kind\": ${GRANT_KIND},
+    \"grant_name\": \"${GRANT_NAME}\",
+    \"compact\": true
+  }" \
+  "${BASE_URL}/agent/offers/create" | jq -r '.offer.offer_id')
+echo "OFFER_ID=${OFFER_ID}"
+```
+
+2. Check recipient readiness (or wait):
+
+```bash
+curl -sS \
+  -H "X-Access-Key: ${API_KEY}" \
+  "${BASE_URL}/agent/offers/${OFFER_ID}/status?wait_seconds=30"
+```
+
+3. Optional manual recipient capture:
+
+```bash
+curl -sS -X POST \
+  -H "X-Access-Key: ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d "{\"recipient_nauth\":\"${RECIPIENT_NAUTH}\"}" \
+  "${BASE_URL}/agent/offers/${OFFER_ID}/capture"
+```
+
+4. Send offer/grant:
+
+```bash
+curl -sS -X POST \
+  -H "X-Access-Key: ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{}' \
+  "${BASE_URL}/agent/offers/${OFFER_ID}/send"
+```
+
+5. Confirm dispatch lifecycle:
+
+```bash
+curl -sS \
+  -H "X-Access-Key: ${API_KEY}" \
+  "${BASE_URL}/agent/offers/${OFFER_ID}/delivery?wait_seconds=10"
+```
+
+Expected terminal state:
+
+- `offer_status` should be `SENT` (or `FAILED`)
+- `delivery_status` should be `DISPATCHED` (or `FAILED`)
+
+## Error Handling
+
+- `400`: invalid payload or business-rule failure (insufficient funds, malformed token, invoice failure)
+- `401`: missing/invalid `X-Access-Key`
+- `403`: invalid invite code (onboarding)
+- `409`: onboarding registration conflict; retry safely
+- `500`: transient server/wallet load error; retry with backoff
+
+Retry guidance:
+
+- Use bounded exponential backoff for `500` and network failures.
+- Do not blindly retry non-idempotent payment operations without reconciliation checks.
+- For invoice receive flows, prefer `GET /agent/invoice_status/{quote}` before concluding failure.
+- For recipient-first offer requests, regenerate a fresh QR if `expires_at` has passed.
+
+## Payment Reliability and Resilience (Required)
+
+All payment-capable flows in this skill MUST follow:
+
+- `docs/specs/PAYMENT-ERROR-HANDLING-AND-RESILIENCE.md`
+
+Operational rules:
+
+1. Treat payment lifecycle as staged:
+   - `ACCEPTED -> PROCESSING -> SETTLED -> NOTIFIED`
+   - failures MUST end in `FAILED` or `UNCERTAIN` (not false success)
+2. Before destructive proof mutation workflows, run:
+   - `GET /agent/proof_safety_audit`
+   - optional deeper check: `GET /agent/proof_safety_audit?check_relay=true`
+3. On `audit.safe_to_swap=false`, stop and reconcile first. Do not continue swap/consolidate-like actions.
+4. Do not report payment success unless settlement is confirmed.
+5. For uncertain post-debit delivery outcomes (for example ecash delivery failure), classify as `UNCERTAIN` and preserve recovery artifacts for reconciliation.
+6. Keep retries bounded and explicit; do not blindly retry non-idempotent monetary operations.
+7. Use structured logs for payment status transitions and error class; never log secrets/token material.
+
+## Guardrails
+
+- Never log `access_key`, `nsec`, `seed_phrase`, `ecash_token`, or full invoices in plaintext logs.
+- Always use HTTPS in production.
+- Store recovery materials separately from operational API credentials.
+- Prefer explicit status checks over optimistic assumptions.
+
+## References
+
+- `docs/specs/AGENT-API.md`
+- `docs/specs/AGENT-FLOWS.md`
+- `docs/specs/AGENT-OFFER-RECIPIENT-FIRST-FLOW.md`
+- `docs/specs/PAYMENT-ERROR-HANDLING-AND-RESILIENCE.md`
+- `app/routers/agent.py`
+- `safebox/cli_agent.py`
+- `safebox/cli_acorn.py`
+
+---
+> Source: [trbouma/safebox](https://github.com/trbouma/safebox) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
