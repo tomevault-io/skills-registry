@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zplug/zplug](https://github.com/zplug/zplug/tree/main/.claude/skills/zsh-lint/SKILL.md)
+Original source: [zplug/zplug](https://github.com/zplug/zplug/tree/main/.claude/skills/zsh-expert/SKILL.md)
 
 ---
 
