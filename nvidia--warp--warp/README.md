@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA/warp](https://github.com/NVIDIA/warp/tree/main/.claude/skills/release-notes/SKILL.md)
+Original source: [NVIDIA/warp](https://github.com/NVIDIA/warp/tree/main/.codex/skills/changelog-audit/SKILL.md)
 
 ---
 
