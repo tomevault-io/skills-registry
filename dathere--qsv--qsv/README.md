@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dathere/qsv](https://github.com/dathere/qsv/tree/main/.claude/skills/skills/qsv-performance/SKILL.md)
+Original source: [dathere/qsv](https://github.com/dathere/qsv/tree/main/.claude/skills/skills/genai-disclaimer/SKILL.md)
 
 ---
 
