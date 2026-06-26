@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheGreatGildo/nerv-ui](https://github.com/TheGreatGildo/nerv-ui/tree/main/SKILL.md)
+Original source: [TheGreatGildo/nerv-ui](https://github.com/TheGreatGildo/nerv-ui/tree/main/v1-old/SKILL.md)
 
 ---
 
