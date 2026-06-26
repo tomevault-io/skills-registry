@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nathnotifia/ai-coding-workflow](https://github.com/nathnotifia/ai-coding-workflow/tree/main/skills/gh-issue-merge/SKILL.md)
+Original source: [nathnotifia/ai-coding-workflow](https://github.com/nathnotifia/ai-coding-workflow/tree/main/skills/agent-learnings/SKILL.md)
 
 ---
 
