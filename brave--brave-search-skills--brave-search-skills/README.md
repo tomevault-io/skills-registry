@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [brave/brave-search-skills](https://github.com/brave/brave-search-skills/tree/main/skills/answers/SKILL.md)
+Original source: [brave/brave-search-skills](https://github.com/brave/brave-search-skills/tree/main/skills/suggest/SKILL.md)
 
 ---
 
