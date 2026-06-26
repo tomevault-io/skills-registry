@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [RKiding/Awesome-finance-skills](https://github.com/RKiding/Awesome-finance-skills/tree/main/skills/skill-creator/SKILL.md)
+Original source: [RKiding/Awesome-finance-skills](https://github.com/RKiding/Awesome-finance-skills/tree/main/skills/alphaear-news/SKILL.md)
 
 ---
 
