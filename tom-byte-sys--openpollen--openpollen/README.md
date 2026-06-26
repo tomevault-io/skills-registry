@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tom-byte-sys/OpenPollen](https://github.com/tom-byte-sys/OpenPollen/tree/main/skills/code-review/SKILL.md)
+Original source: [tom-byte-sys/OpenPollen](https://github.com/tom-byte-sys/OpenPollen/tree/main/skills/data-analyst/SKILL.md)
 
 ---
 
