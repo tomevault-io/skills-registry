@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HOPPINZQ/hoppinai-agent](https://github.com/HOPPINZQ/hoppinai-agent/tree/main/hoppinzq-module-agent-web/src/main/resources/skills/git/SKILL.md)
+Original source: [HOPPINZQ/hoppinai-agent](https://github.com/HOPPINZQ/hoppinai-agent/tree/main/hoppinzq-module-agent-web/src/main/resources/skills/test/SKILL.md)
 
 ---
 
