@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lisbeth718/pseo-skills](https://github.com/lisbeth718/pseo-skills/tree/main/skills/pseo-scale/SKILL.md)
+Original source: [lisbeth718/pseo-skills](https://github.com/lisbeth718/pseo-skills/tree/main/skills/pseo-audit/SKILL.md)
 
 ---
 
