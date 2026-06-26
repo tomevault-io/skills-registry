@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [genkit-ai/genkit](https://github.com/genkit-ai/genkit/tree/main/skills/developing-genkit-tooling/SKILL.md)
+Original source: [genkit-ai/genkit](https://github.com/genkit-ai/genkit/tree/main/js/plugins/middleware/examples/skills/coding/SKILL.md)
 
 ---
 
