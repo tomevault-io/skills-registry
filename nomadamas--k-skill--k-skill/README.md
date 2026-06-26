@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NomaDamas/k-skill](https://github.com/NomaDamas/k-skill/tree/main/legacy/unsupported-skills/blue-ribbon-nearby/SKILL.md)
+Original source: [NomaDamas/k-skill](https://github.com/NomaDamas/k-skill/tree/main/tools/k-skill-qa-bot/test/fixtures/skills/k-dart/SKILL.md)
 
 ---
 
