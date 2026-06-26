@@ -1,27 +1,91 @@
 ---
-name: nemo-rl-docs
-description: Documentation conventions for NeMo-RL. Covers docs/index.md updates and docstring format. Do NOT use for: bug fixes, test fixes, dependency bumps, refactoring, CI/CD changes, performance tuning, or any task that does not involve writing or updating documentation. Use when this capability is needed.
+name: build-and-dependency
+description: Build and dependency management for NeMo-RL. Covers Docker image building and running, uv usage, venv setup, and adding dependencies. Use when this capability is needed.
 metadata:
   author: NVIDIA-NeMo
 ---
 
-# Documentation Conventions
+# Build and Dependency Guide
 
-## Keep docs/index.md Up to Date
+---
 
-When a new markdown doc is added under `docs/**/*.md` or a markdown file is renamed, ensure that @docs/index.md is updated and the document appears in the most appropriate section.
+## Docker Images
 
-## Docstring Format
+Build the release image (includes all dependencies and pre-fetched venvs):
 
-Use [Google style](https://google.github.io/styleguide/pyguide.html) docstrings for classes and functions. These are parseable by Sphinx.
+```bash
+# Build from local source
+docker buildx build -f docker/Dockerfile --tag nemo-rl:latest .
 
-For interfaces that may be used outside a file, prefer docstrings over comments. Comments should be reserved for code within a function or interfaces local to a file.
+# Build from a specific git ref (no local clone needed)
+docker buildx build -f docker/Dockerfile \
+    --build-arg NRL_GIT_REF=main \
+    --tag nemo-rl:latest \
+    https://github.com/NVIDIA-NeMo/RL.git
+```
 
-## Document New Features
+Skip optional backends to reduce build time:
 
-When a new feature is added, update or create documentation in the `docs/` directory that most closely matches the feature. Look at existing docs to find the best fit — if none exists, create a new doc and add it to @docs/index.md.
+```bash
+# Skip vLLM and SGLang
+docker buildx build -f docker/Dockerfile \
+    --build-arg SKIP_VLLM_BUILD=1 \
+    --build-arg SKIP_SGLANG_BUILD=1 \
+    --tag nemo-rl:latest .
+```
 
-Documentation changes are **not required** for bug fixes or CI-related changes.
+See @docs/docker.md for full options.
+
+---
+
+## Always Use uv
+
+**Never use `pip install` directly** — always go through `uv`.
+
+```bash
+# Run a script
+uv run examples/run_grpo.py
+
+# Run tests
+uv run --group test bash tests/run_unit.sh
+
+# Install all deps from lockfile
+uv sync --locked
+```
+
+Exception: `Dockerfile.ngc_pytorch` is exempt from this rule.
+
+---
+
+## Adding Dependencies
+
+```bash
+# Add a runtime dependency
+uv add <package>
+
+# Add an optional dependency
+uv add --optional --extra <group> <package>
+
+# Regenerate the lockfile after changes
+uv lock
+```
+
+Commit both `pyproject.toml` and `uv.lock` together:
+
+```bash
+git add pyproject.toml uv.lock
+git commit -s -m "build: add <package> dependency"
+```
+
+---
+
+## Common Pitfalls
+
+| Problem | Cause | Fix |
+|---------|-------|-----|
+| `uv sync --locked` fails | Dependency conflict or stale lockfile | Re-run `uv lock` and commit updated lock |
+| `ModuleNotFoundError` after pip install | pip installed outside uv-managed venv | Use `uv add` + `uv sync`, never bare `pip install` |
+| Docker build fails at vLLM | vLLM build time overhead | Pass `--build-arg SKIP_VLLM_BUILD=1` |
 
 ---
 > Source: [NVIDIA-NeMo/RL](https://github.com/NVIDIA-NeMo/RL) — distributed by [TomeVault](https://tomevault.io).
