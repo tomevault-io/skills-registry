@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [apache/fory](https://github.com/apache/fory/tree/main/.agents/skills/fory-version-bump/SKILL.md)
+Original source: [apache/fory](https://github.com/apache/fory/tree/main/.agents/skills/fory-performance-optimization/SKILL.md)
 
 ---
 
