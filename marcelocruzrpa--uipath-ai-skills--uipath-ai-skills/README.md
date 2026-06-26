@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marcelocruzrpa/uipath-ai-skills](https://github.com/marcelocruzrpa/uipath-ai-skills/tree/main/uipath-core/SKILL.md)
+Original source: [marcelocruzrpa/uipath-ai-skills](https://github.com/marcelocruzrpa/uipath-ai-skills/tree/main/uipath-tasks/SKILL.md)
 
 ---
 
