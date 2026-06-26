@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Sagart-cactus/claude-k8s-plugin](https://github.com/Sagart-cactus/claude-k8s-plugin/tree/main/skills/k8s-templates/SKILL.md)
+Original source: [Sagart-cactus/claude-k8s-plugin](https://github.com/Sagart-cactus/claude-k8s-plugin/tree/main/skills/k8s-crd-design/SKILL.md)
 
 ---
 
