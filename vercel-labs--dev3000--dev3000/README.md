@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vercel-labs/dev3000](https://github.com/vercel-labs/dev3000/tree/main/.agents/skills/deepsec/SKILL.md)
+Original source: [vercel-labs/dev3000](https://github.com/vercel-labs/dev3000/tree/main/.agents/skills/analyze-bundle/SKILL.md)
 
 ---
 
