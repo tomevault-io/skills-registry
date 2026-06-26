@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ychampion/cskill-agents](https://github.com/ychampion/cskill-agents/tree/main/agents/claude-code/skills/prevent-continuation-stop-hook-contract/SKILL.md)
+Original source: [ychampion/cskill-agents](https://github.com/ychampion/cskill-agents/tree/main/agents/codex/skills/turn-zero-vs-inter-turn-skill-discovery-split/SKILL.md)
 
 ---
 
