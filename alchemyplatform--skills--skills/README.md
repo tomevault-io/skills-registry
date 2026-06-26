@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alchemyplatform/skills](https://github.com/alchemyplatform/skills/tree/main/plugins/alchemy/skills/alchemy-mcp/SKILL.md)
+Original source: [alchemyplatform/skills](https://github.com/alchemyplatform/skills/tree/main/plugins/alchemy/skills/alchemy-cli/SKILL.md)
 
 ---
 
