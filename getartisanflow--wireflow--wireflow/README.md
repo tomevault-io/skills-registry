@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [getartisanflow/wireflow](https://github.com/getartisanflow/wireflow/tree/main/resources/boost/skills/wireflow-development/SKILL.md)
+Original source: [getartisanflow/wireflow](https://github.com/getartisanflow/wireflow/tree/main/resources/boost/skills/alpineflow-development/SKILL.md)
 
 ---
 
