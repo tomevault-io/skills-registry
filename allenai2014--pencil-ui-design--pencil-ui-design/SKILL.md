@@ -2,7 +2,7 @@
 name: pencil-ui-design
 description: 使用 Pencil MCP 创建工业级 UI 设计的完整工作流和组件库 Use when this capability is needed.
 metadata:
-  author: allenai2014
+  author: AllenAI2014
 ---
 
 # Pencil MCP 工业级 UI 设计 Skills
@@ -483,5 +483,5 @@ mcp_pencil_replace_all_matching_properties({
 - [ ] 间距遵循 4px 网格
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/allenai2014) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [AllenAI2014/pencil-ui-design](https://github.com/AllenAI2014/pencil-ui-design) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
