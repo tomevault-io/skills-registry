@@ -1,101 +1,64 @@
 ---
-name: ort-build
-description: Build ONNX Runtime from source. Use this skill when asked to build, compile, or generate CMake files for ONNX Runtime. Use when this capability is needed.
+name: python-kwargs-setattr-security
+description: When reviewing or fixing Python code that uses setattr() with user-controlled kwargs to configure C++ extension objects (SessionOptions, RunOptions, etc.) in ONNX Runtime. Use this to apply the allowlist pattern that prevents arbitrary file writes and other attacks via reflected property access. Use when this capability is needed.
 metadata:
   author: microsoft
 ---
 
-# Building ONNX Runtime
+## Problem Pattern
 
-The build scripts `build.sh` (Linux/macOS) and `build.bat` (Windows) delegate to `tools/ci_build/build.py`.
+Using `hasattr(obj, k) / setattr(obj, k, v)` with user-controlled kwargs is insecure. The `hasattr` check is NOT a security guard — it returns True for ALL exposed properties including dangerous ones.
 
-## Build phases
-
-Three phases, controlled by flags:
-
-- `--update` — generate CMake build files
-- `--build` — compile (add `--parallel` to speed this up)
-- `--test` — run tests
-
-For native builds, if none are specified (and `--skip_tests` is not passed), **all three run by default**. For cross-compiled builds, the default is `--update` + `--build` only.
-
-### When to use `--update`
-
-You need `--update` when:
-- First build in a new build directory
-- New source files are added (some CMake targets use glob patterns, others use explicit file lists — re-run to pick up new files either way)
-- CMake configuration changes (new flags, updated CMakeLists.txt)
-
-You do **not** need `--update` when only modifying existing `.cc`/`.h` files — just use `--build`. Skipping it saves time.
-
-## Examples
-
-```bash
-# Full build (update + build + test)
-./build.sh --config Release --parallel
-.\build.bat --config Release --parallel     # Windows
-
-# Just regenerate CMake files
-./build.sh --config Release --update
-
-# Just compile (skip CMake regeneration and tests)
-./build.sh --config Release --build --parallel
-
-# Just run tests (after a prior build)
-./build.sh --config Release --test
-
-# Build with CUDA execution provider
-./build.sh --config Release --parallel --use_cuda --cuda_home /usr/local/cuda --cudnn_home /usr/local/cuda
-
-# Build Python wheel
-./build.sh --config Release --parallel --build_wheel
-
-# Build a specific CMake target (much faster than a full build)
-./build.sh --config Release --build --parallel --target onnxruntime_common
-
-# Load flags from an option file (one flag per line)
-./build.sh "@./custom_options.opt" --build --parallel
+```python
+# INSECURE — do not use
+for k, v in kwargs.items():
+    if hasattr(options, k):
+        setattr(options, k, v)
 ```
 
-## Key flags
+## Fix: Explicit Allowlist
 
-| Flag | Description |
-|------|-------------|
-| `--config` | `Debug`, `MinSizeRel`, `Release`, or `RelWithDebInfo` |
-| `--parallel` | Enable parallel compilation (recommended) |
-| `--skip_tests` | Skip running tests after build |
-| `--build_wheel` | Build the Python wheel package |
-| `--use_cuda` | Enable CUDA EP. Requires `--cuda_home`/`--cudnn_home` or `CUDA_HOME`/`CUDNN_HOME` env vars. On Windows, only `cuda_home`/`CUDA_HOME` is validated. |
-| `--target T` | Build a specific CMake target (requires `--build`; e.g., `onnxruntime_common`, `onnxruntime_test_all`) |
-| `--use_webgpu` | Enable WebGPU EP. To run its tests locally on Linux without a GPU, see the `webgpu-local-testing` skill. |
-| `--cmake_extra_defines onnxruntime_QUICK_BUILD=ON` | Faster CUDA build: instantiates a reduced kernel set. **Side effect:** Flash is compiled for head_dim 128 only, so most attention shapes fall back to **MEA** (changes which attention kernel is compiled/dispatched). Don't use it to characterize Flash-vs-arch behavior. |
-| `--build_dir` | Build output directory |
+Define a module-level frozenset of safe attribute names. Raise RuntimeError for known-but-blocked attrs; silently ignore unknown keys.
 
-## Build output path
+```python
+# Define at module level, before the class
+_ALLOWED_SESSION_OPTIONS = frozenset({
+    "enable_cpu_mem_arena",
+    "enable_mem_pattern",
+    # ... only explicitly reviewed safe attrs
+})
 
-Default: `build/<Platform>/<Config>/` where Platform is `Linux`, `MacOS`, or `Windows`.
+# In the method
+for k, v in kwargs.items():
+    if k in _ALLOWED_SESSION_OPTIONS:
+        setattr(options, k, v)
+    elif hasattr(options, k):  # reuse the existing instance, don't create new
+        raise RuntimeError(
+            f"SessionOptions attribute '{k}' is not permitted via the backend API. "
+            f"Allowed attributes: {', '.join(sorted(_ALLOWED_SESSION_OPTIONS))}"
+        )
+    # else: silently ignore (may be kwargs for a different config object)
+```
 
-With Visual Studio multi-config generators, the config name appears twice (e.g., `build/Windows/Release/Release/`).
+## Key Rules
 
-It may be customized with `--build_dir`.
+1. **Use the existing object** in `hasattr(options, k)` — never `hasattr(ClassName(), k)` (creates throwaway C++ objects per iteration)
+2. **RuntimeError** is the ORT convention for API misuse errors (not ValueError)
+3. **Silent ignore for one path is OK when kwargs are forwarded to both paths**: `run_model()` passes the same kwargs dict to both `prepare()` (validates SessionOptions) and `rep.run()` (validates RunOptions). A RunOptions kwarg unknown to SessionOptions is silently ignored by `prepare()` — this is correct because `rep.run()` will validate it. Only raise RuntimeError when the attr exists on the target object but is blocked.
+4. **Frozenset constant naming**: `_ALLOWED_<CLASSNAME>` — ALL_CAPS, Google Style
+5. **No type annotations** on module-level constants (ORT Python convention)
 
-## Agent tips
+## Dangerous SessionOptions Properties (never allowlist)
 
-- **Activate a Python virtual environment** before building. See "Python > Virtual environment" in `AGENTS.md`.
-- **Build flags can silently reroute which kernel/code path executes.** A build option can
-  change *which* kernel is compiled, and therefore which code path actually runs — so a CI
-  failure can live in a different code path than your local build exercises. Before
-  hypothesizing a hardware- or algorithm-specific cause (e.g. "this GPU arch miscomputes"),
-  first identify **which kernel actually ran** for the failing configuration (see the
-  `ort-test` skill → "Verify which path/kernel actually executed"). Concrete instance:
-  `onnxruntime_QUICK_BUILD=ON` compiles FlashAttention for head_dim 128 only, so most
-  attention shapes silently dispatch to Memory-Efficient Attention instead of Flash —
-  details in the `cuda-attention-kernel-patterns` skill.
-- **Prefer `python tools/ci_build/build.py` directly** over `build.bat`/`build.sh` when redirecting output. The `.bat` wrapper runs in `cmd.exe`, which breaks PowerShell redirection.
-- **Redirect output to a file** (e.g., `> build_log.txt 2>&1`). Build output is large and will overflow terminal buffers.
-- **Run builds in the background** — a full build can take tens of minutes to over an hour. Poll the log for `"Build complete"` or errors.
-- **Use `--parallel`** by default unless the user says otherwise.
-- Ask the user what they want to build (config, execution providers, wheel, etc.) if not clear from their prompt.
+- `optimized_model_filepath` — triggers Model::Save(), overwrites arbitrary files
+- `profile_file_prefix` + `enable_profiling` — writes profiling JSON to arbitrary path
+- `register_custom_ops_library` — loads arbitrary shared libraries (method, not property)
+
+## Files in ONNX Runtime
+
+- `onnxruntime/python/backend/backend.py` — `_ALLOWED_SESSION_OPTIONS`
+- `onnxruntime/python/backend/backend_rep.py` — `_ALLOWED_RUN_OPTIONS`
+- Tests: `onnxruntime/test/python/onnxruntime_test_python_backend.py` — `TestBackendKwargsAllowlist`
 
 ---
 > Source: [microsoft/onnxruntime](https://github.com/microsoft/onnxruntime) — distributed by [TomeVault](https://tomevault.io).
