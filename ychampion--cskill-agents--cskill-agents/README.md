@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ychampion/cskill-agents](https://github.com/ychampion/cskill-agents/tree/main/skills/cache-prefix-stability-for-subagents/SKILL.md)
+Original source: [ychampion/cskill-agents](https://github.com/ychampion/cskill-agents/tree/main/skills/fallback-source-presence-sufficiency/SKILL.md)
 
 ---
 
