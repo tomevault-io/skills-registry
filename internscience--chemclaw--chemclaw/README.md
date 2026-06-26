@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [InternScience/ChemClaw](https://github.com/InternScience/ChemClaw/tree/main/skills/literature-parsing/SKILL.md)
+Original source: [InternScience/ChemClaw](https://github.com/InternScience/ChemClaw/tree/main/skills/mol-image-to-smiles/SKILL.md)
 
 ---
 
