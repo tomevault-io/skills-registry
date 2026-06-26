@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [open-gitagent/gitagent](https://github.com/open-gitagent/gitagent/tree/main/skills/gmail-email/SKILL.md)
+Original source: [open-gitagent/gitagent](https://github.com/open-gitagent/gitagent/tree/main/skills/example-skill/SKILL.md)
 
 ---
 
