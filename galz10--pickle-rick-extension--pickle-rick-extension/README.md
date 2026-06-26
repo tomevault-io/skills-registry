@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [galz10/pickle-rick-extension](https://github.com/galz10/pickle-rick-extension/tree/main/skills/plan-reviewer/SKILL.md)
+Original source: [galz10/pickle-rick-extension](https://github.com/galz10/pickle-rick-extension/tree/main/skills/ticket-manager/SKILL.md)
 
 ---
 
