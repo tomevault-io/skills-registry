@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vikiboss/60s-skills](https://github.com/vikiboss/60s-skills/tree/main/skills/entertainment/SKILL.md)
+Original source: [vikiboss/60s-skills](https://github.com/vikiboss/60s-skills/tree/main/skills/daily-news-60s/SKILL.md)
 
 ---
 
