@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HacktronAI/skills](https://github.com/HacktronAI/skills/tree/main/finding-triage/SKILL.md)
+Original source: [HacktronAI/skills](https://github.com/HacktronAI/skills/tree/main/patch-diff-analyzer/SKILL.md)
 
 ---
 
