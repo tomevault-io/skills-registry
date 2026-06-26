@@ -59,5 +59,5 @@ Always:
 - Keep chat output low-noise: prefer paths (`wrote: docs/*`) over pasting long `FAIL` lists.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/snakeying) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [snakeying/Textum](https://github.com/snakeying/Textum) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
