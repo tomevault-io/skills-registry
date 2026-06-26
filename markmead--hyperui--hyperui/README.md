@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [markmead/hyperui](https://github.com/markmead/hyperui/tree/main/.agents/skills/hyperui-github-manager/SKILL.md)
+Original source: [markmead/hyperui](https://github.com/markmead/hyperui/tree/main/.agents/skills/hyperui-component-builder/SKILL.md)
 
 ---
 
