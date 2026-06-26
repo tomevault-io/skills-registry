@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentopology/agentopology](https://github.com/agentopology/agentopology/tree/main/.claude/skills/parser-dev/SKILL.md)
+Original source: [agentopology/agentopology](https://github.com/agentopology/agentopology/tree/main/.claude/skills/agentopology-skill/SKILL.md)
 
 ---
 
