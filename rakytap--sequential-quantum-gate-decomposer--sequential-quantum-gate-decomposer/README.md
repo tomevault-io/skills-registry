@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rakytap/sequential-quantum-gate-decomposer](https://github.com/rakytap/sequential-quantum-gate-decomposer/tree/main/.cursor/skills/test-density-matrix/SKILL.md)
+Original source: [rakytap/sequential-quantum-gate-decomposer](https://github.com/rakytap/sequential-quantum-gate-decomposer/tree/main/.cursor/skills/spec-driven-development/SKILL.md)
 
 ---
 
