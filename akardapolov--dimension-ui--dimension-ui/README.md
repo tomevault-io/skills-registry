@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [akardapolov/dimension-ui](https://github.com/akardapolov/dimension-ui/tree/main/.claude/skills/config-migration/SKILL.md)
+Original source: [akardapolov/dimension-ui](https://github.com/akardapolov/dimension-ui/tree/main/.claude/skills/runtime-diagnosis/SKILL.md)
 
 ---
 
