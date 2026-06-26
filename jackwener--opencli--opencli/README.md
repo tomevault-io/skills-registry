@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jackwener/opencli](https://github.com/jackwener/opencli/tree/main/clis/antigravity/SKILL.md)
+Original source: [jackwener/opencli](https://github.com/jackwener/opencli/tree/main/skills/smart-search/SKILL.md)
 
 ---
 
