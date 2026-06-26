@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nealcaren/social-data-analysis](https://github.com/nealcaren/social-data-analysis/tree/main/plugins/genre-skill-builder/skills/genre-skill-builder/SKILL.md)
+Original source: [nealcaren/social-data-analysis](https://github.com/nealcaren/social-data-analysis/tree/main/plugins/revision-coordinator/skills/revision-coordinator/SKILL.md)
 
 ---
 
