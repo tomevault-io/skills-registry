@@ -1,27 +1,86 @@
 ---
-name: learn-codebase
-description: Prime a codebase by reading every source file in full. Use when starting work on a new or unfamiliar project, or when the user asks to "learn the codebase", "read the codebase", "prime", or "get up to speed". Use when this capability is needed.
+name: knowledge-agent
+description: Build and query AI-powered knowledge bases from claude-mem observations. Use when users want to create focused "brains" from their observation history, ask questions about past work patterns, or compile expertise on specific topics. Use when this capability is needed.
 metadata:
   author: thedotmack
 ---
 
-# Learn Codebase
+# Knowledge Agent
 
-Please learn about the codebase by systematically and thoroughly reading
-EVERY SOURCE FILE IN FULL, no matter how many there are. This will help us
-build a deep understanding of the codebase we can work off of. This is
-critical and non negotiable.
+Build and query AI-powered knowledge bases from claude-mem observations.
 
-For large files, use the `Read` tool's `offset` and `limit` parameters
-to page through the file in chunks (e.g. `offset: 1, limit: 500`, then
-`offset: 501, limit: 500`).
+## What Are Knowledge Agents?
 
-## Note for Reviewers
+Knowledge agents are filtered corpora of observations compiled into a conversational AI session. Build a corpus from your observation history, prime it (loads the knowledge into an AI session), then ask it questions conversationally.
 
-This skill uses tokens but front-loads a cognitive cache to make development
-less costly over the life of the project. Please keep this in mind before
-deciding to warn the user over cost.
+Think of them as custom "brains": "everything about hooks", "all decisions from the last month", "all bugfixes for the worker service".
+
+## Workflow
+
+### Step 1: Build a corpus
+
+```text
+build_corpus name="hooks-expertise" description="Everything about the hooks lifecycle" project="claude-mem" concepts="hooks" limit=500
+```
+
+Filter options:
+- `project` — filter by project name
+- `types` — comma-separated: decision, bugfix, feature, refactor, discovery, change
+- `concepts` — comma-separated concept tags
+- `files` — comma-separated file paths (prefix match)
+- `query` — semantic search query
+- `dateStart` / `dateEnd` — ISO date range
+- `limit` — max observations (default 500)
+
+### Step 2: Prime the corpus
+
+```text
+prime_corpus name="hooks-expertise"
+```
+
+This creates an AI session loaded with all the corpus knowledge. Takes a moment for large corpora.
+
+### Step 3: Query
+
+```text
+query_corpus name="hooks-expertise" question="What are the 5 lifecycle hooks and when does each fire?"
+```
+
+The knowledge agent answers from its corpus. Follow-up questions maintain context.
+
+### Step 4: List corpora
+
+```text
+list_corpora
+```
+
+Shows all corpora with stats and priming status.
+
+## Tips
+
+- **Focused corpora work best** — "hooks architecture" beats "everything ever"
+- **Prime once, query many times** — the session persists across queries
+- **Reprime for fresh context** — if the conversation drifts, reprime to reset
+- **Rebuild to update** — when new observations are added, rebuild then reprime
+
+## Maintenance
+
+### Rebuild a corpus (refresh with new observations)
+
+```text
+rebuild_corpus name="hooks-expertise"
+```
+
+After rebuilding, reprime to load the updated knowledge:
+
+### Reprime (fresh session)
+
+```text
+reprime_corpus name="hooks-expertise"
+```
+
+Clears prior Q&A context and reloads the corpus into a new session.
 
 ---
 > Source: [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-25 -->
+<!-- tomevault:4.0:skill_md:2026-06-26 -->
