@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agno-agi/agno](https://github.com/agno-agi/agno/tree/main/cookbook/02_agents/16_skills/sample_skills/code-review/SKILL.md)
+Original source: [agno-agi/agno](https://github.com/agno-agi/agno/tree/main/cookbook/02_agents/16_skills/sample_skills/git-workflow/SKILL.md)
 
 ---
 
