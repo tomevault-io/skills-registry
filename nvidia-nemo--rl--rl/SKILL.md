@@ -1,92 +1,127 @@
 ---
-name: build-and-dependency
-description: Build and dependency management for NeMo-RL. Covers Docker image building and running, uv usage, venv setup, and adding dependencies. Use when this capability is needed.
+name: linting-and-formatting
+description: Code style guidelines for NeMo-RL (Python and shell). Covers naming, indentation, comments, docstrings, reflection avoidance, and uv usage. Use when this capability is needed.
 metadata:
   author: NVIDIA-NeMo
 ---
 
-# Build and Dependency Guide
+# Code Style
 
----
+## Style Guides
 
-## Docker Images
+- Python: [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
+- Shell: [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
 
-Build the release image (includes all dependencies and pre-fetched venvs):
+This repository is Python-first.
 
+## uv
+
+Use `uv run` to execute scripts. Do not activate a virtual environment and call `python` directly.
+
+**Do:**
 ```bash
-# Build from local source
-docker buildx build -f docker/Dockerfile --tag nemo-rl:latest .
-
-# Build from a specific git ref (no local clone needed)
-docker buildx build -f docker/Dockerfile \
-    --build-arg NRL_GIT_REF=main \
-    --tag nemo-rl:latest \
-    https://github.com/NVIDIA-NeMo/RL.git
-```
-
-Skip optional backends to reduce build time:
-
-```bash
-# Skip vLLM and SGLang
-docker buildx build -f docker/Dockerfile \
-    --build-arg SKIP_VLLM_BUILD=1 \
-    --build-arg SKIP_SGLANG_BUILD=1 \
-    --tag nemo-rl:latest .
-```
-
-See @docs/docker.md for full options.
-
----
-
-## Always Use uv
-
-**Never use `pip install` directly** — always go through `uv`.
-
-```bash
-# Run a script
 uv run examples/run_grpo.py
+```
 
-# Run tests
-uv run --group test bash tests/run_unit.sh
-
-# Install all deps from lockfile
-uv sync --locked
+**Don't:**
+```bash
+source .venv/bin/activate
+python examples/run_grpo.py
 ```
 
 Exception: `Dockerfile.ngc_pytorch` is exempt from this rule.
 
----
+## Python Standard
 
-## Adding Dependencies
+Code must conform to Python 3.13.13+.
 
-```bash
-# Add a runtime dependency
-uv add <package>
+## Indentation
 
-# Add an optional dependency
-uv add --optional --extra <group> <package>
+Indent with 4 spaces. Do not use tabs.
 
-# Regenerate the lockfile after changes
-uv lock
+## Naming
+
+| Kind | Convention | Example |
+|------|-----------|---------|
+| Files | snake_case | `some_file.py` |
+| Classes | PascalCase | `class SomeClass` |
+| Functions/methods | snake_case | `def my_awesome_function():` |
+| Local variables | snake_case | `my_variable = ...` |
+| Variables starting with a number | prefix `k` | `k_99th_percentile = ...` |
+| Global variables | upper snake_case + prefix `G` | `G_MY_GLOBAL = ...` |
+| Constants | upper snake_case | `MY_CONSTANT = ...` |
+
+- Avoid shadowing variables declared in an outer scope.
+- Initialize all externally visible members of a class in the constructor.
+
+## Comments
+
+- For interfaces used outside a file, prefer docstrings over comments.
+- Comments are for code within a function or file-local interfaces.
+- Commented-out code must have a comment explaining why it is commented out. Otherwise remove it before merging.
+
+## Docstrings
+
+Use [Google style](https://google.github.io/styleguide/pyguide.html) docstrings (parseable by Sphinx).
+
+## Enforce Keyword Arguments for Ambiguous Parameters
+
+When a function has multiple parameters of the same type that could easily be swapped by mistake, use a bare `*` to force keyword-only arguments starting from where the ambiguity begins. This prevents callers from accidentally transposing arguments.
+
+**Don't:**
+```python
+def loss_fn(input: Tensor, cp_group: ProcessGroup, tp_group: ProcessGroup, cp_rank: int, tp_rank: int):
+    ...
+
+# Caller can silently swap cp_group/tp_group or cp_rank/tp_rank
+loss_fn(x, tp_group, cp_group, tp_rank, cp_rank)  # wrong order, no error
 ```
 
-Commit both `pyproject.toml` and `uv.lock` together:
+**Do:**
+```python
+def loss_fn(input: Tensor, *, cp_group: ProcessGroup, tp_group: ProcessGroup, cp_rank: int, tp_rank: int):
+    ...
 
-```bash
-git add pyproject.toml uv.lock
-git commit -s -m "build: add <package> dependency"
+# Caller must name every argument — swaps are impossible
+loss_fn(x, cp_group=cp_group, tp_group=tp_group, cp_rank=cp_rank, tp_rank=tp_rank)
 ```
 
----
+## Avoid Reflection
 
-## Common Pitfalls
+Do not use reflection when functionality can be achieved without it.
 
-| Problem | Cause | Fix |
-|---------|-------|-----|
-| `uv sync --locked` fails | Dependency conflict or stale lockfile | Re-run `uv lock` and commit updated lock |
-| `ModuleNotFoundError` after pip install | pip installed outside uv-managed venv | Use `uv add` + `uv sync`, never bare `pip install` |
-| Docker build fails at vLLM | vLLM build time overhead | Pass `--build-arg SKIP_VLLM_BUILD=1` |
+**Don't:**
+```python
+def make_complex(*args):
+    x, y = args
+    return dict(**locals())
+```
+
+**Do:**
+```python
+def make_complex(x, y):
+    return {'x': x, 'y': y}
+```
+
+## Type Annotations
+
+Annotate new functions and methods — both parameters and return type. When you add a parameter to an
+existing signature, type it, and **match the type already used at the call site** (don't leave a new arg
+untyped while the caller already declares it, e.g. `def __init__(self, teacher_worker_groups=None)` when the
+caller passes `teacher_worker_groups: Optional[dict[str, Any]]`).
+
+When you add a new module under a type-checked area, **add it to `pyrefly.toml` `project-includes`**.
+`pyrefly` checks an explicit allow-list of files, so a new file that isn't listed silently escapes
+type-checking and its annotations are never verified.
+
+## Imports
+
+Put imports at module top. Defer an `import` into a function body ONLY to break a circular import or to avoid
+loading a heavy/optional dependency in a path that shouldn't need it — and when you do, add a one-line comment
+saying which. An in-function `import` with no such reason should move to the top. In particular, deferring
+stdlib (`concurrent.futures`, `collections`, …) or a module that is *already* imported at module top buys
+nothing — hoist it.
 
 ---
 > Source: [NVIDIA-NeMo/RL](https://github.com/NVIDIA-NeMo/RL) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-25 -->
+<!-- tomevault:4.0:skill_md:2026-06-26 -->
