@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [solar-luna/Fully-automatic-article-generation-skill](https://github.com/solar-luna/Fully-automatic-article-generation-skill/tree/main/skills/wechat-draft-publisher/SKILL.md)
+Original source: [solar-luna/Fully-automatic-article-generation-skill](https://github.com/solar-luna/Fully-automatic-article-generation-skill/tree/main/skills/wechat-article-formatter/SKILL.md)
 
 ---
 
