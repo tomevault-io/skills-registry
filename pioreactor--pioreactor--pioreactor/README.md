@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Pioreactor/pioreactor](https://github.com/Pioreactor/pioreactor/tree/main/.agents/skills/pioreactor-cli/SKILL.md)
+Original source: [Pioreactor/pioreactor](https://github.com/Pioreactor/pioreactor/tree/main/.agents/skills/pioreactor-automations/SKILL.md)
 
 ---
 
