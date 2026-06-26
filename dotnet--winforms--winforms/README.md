@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dotnet/winforms](https://github.com/dotnet/winforms/tree/main/.github/skills/gdi-rendering-tests/SKILL.md)
+Original source: [dotnet/winforms](https://github.com/dotnet/winforms/tree/main/.github/skills/using-and-extending-gdi-plus/SKILL.md)
 
 ---
 
