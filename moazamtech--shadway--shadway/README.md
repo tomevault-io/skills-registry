@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [moazamtech/shadway](https://github.com/moazamtech/shadway/tree/main/skills/image-to-code-skill/SKILL.md)
+Original source: [moazamtech/shadway](https://github.com/moazamtech/shadway/tree/main/skills/imagegen-frontend-web/SKILL.md)
 
 ---
 
