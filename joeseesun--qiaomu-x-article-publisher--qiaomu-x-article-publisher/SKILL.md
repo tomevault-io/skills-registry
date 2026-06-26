@@ -68,11 +68,11 @@ Located in `~/.claude/skills/x-article-publisher/scripts/`:
 ### publish_article.py (主脚本 - 一键发布)
 **推荐使用** - 自动完成所有发布步骤：
 ```bash
-# 基本用法（默认显示浏览器）
+# 基本用法
 python publish_article.py --file article.md
 
-# 隐藏浏览器（后台运行）
-python publish_article.py --file article.md --headless
+# 显示浏览器（调试用）
+python publish_article.py --file article.md --show-browser
 
 # 自定义标题
 python publish_article.py --file article.md --title "自定义标题"
@@ -269,4 +269,4 @@ Output:
 
 ---
 > Source: [joeseesun/qiaomu-x-article-publisher](https://github.com/joeseesun/qiaomu-x-article-publisher) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-17 -->
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
