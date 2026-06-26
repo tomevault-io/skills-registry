@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/WindowsAppSDK](https://github.com/microsoft/WindowsAppSDK/tree/main/.github/skills/issue-triage-report/SKILL.md)
+Original source: [microsoft/WindowsAppSDK](https://github.com/microsoft/WindowsAppSDK/tree/main/.github/skills/triage-meeting-prep/SKILL.md)
 
 ---
 
