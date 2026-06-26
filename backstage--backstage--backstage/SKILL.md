@@ -1,657 +1,559 @@
 ---
-name: app-frontend-system-migration
-description: Migrate a Backstage app from the old frontend system to the new one. Use this skill when converting an app to use the new extension-based frontend system, including the hybrid migration phase and the full migration of routes, sidebar, plugins, APIs, themes, and other app-level concerns. Use when this capability is needed.
+name: plugin-full-frontend-system-migration
+description: Fully migrate a Backstage plugin to the new frontend system, dropping all old system support. Use this skill for internal plugins that only need to run in a single app, or when you are ready to remove backward compatibility entirely. Use when this capability is needed.
 metadata:
   author: backstage
 ---
 
-# App Frontend System Migration Skill
+# Full Plugin Migration to the New Frontend System
 
-This skill helps migrate a Backstage app package (`packages/app`) from the old frontend system (`@backstage/app-defaults`) to the new extension-based frontend system (`@backstage/frontend-defaults`).
+This skill helps fully migrate an existing Backstage plugin from the old frontend system to the new one. Unlike adding dual support (which keeps the old system working), this is a complete migration that removes all `@backstage/core-plugin-api` usage and makes the plugin work exclusively with the new frontend system.
 
-The migration follows a two-phase approach: first get the app running in hybrid mode with compatibility helpers, then gradually remove legacy code until the app is fully on the new system.
+This is the preferred approach for internal plugins that are only used in a single app, since there is no need to maintain backward compatibility. It can also be used for published plugins when you're ready to drop old system support entirely.
 
-## Key Concepts
+It is highly recommended to be on Backstage version 1.49.x or above before starting this, although not mandatory, you may face issues with some of the instructions below. This can be verified by looking in the `backstage.json` file in the root of the repository.
 
-- **Old system:** `createApp` from `@backstage/app-defaults`, plugins installed via `<Route>` elements in `FlatRoutes`, manual app shell with `AppRouter` + `Root`
-- **New system:** `createApp` from `@backstage/frontend-defaults`, plugins installed as `features`, extensions wired into an extension tree, no manual app shell
-- **Feature discovery:** The new system can automatically discover and install plugins from your app's dependencies — no manual imports needed. This is the default for new apps and should be enabled early in migration.
-- **Hybrid mode:** The new `createApp` with `convertLegacyAppRoot` and `convertLegacyAppOptions` from `@backstage/core-compat-api` to bridge old code
+## Key Differences from Dual Support
 
-## Feature Discovery
+| Aspect           | Dual Support                                      | Full Migration                                              |
+| ---------------- | ------------------------------------------------- | ----------------------------------------------------------- |
+| Entry point      | Old `src/plugin.ts` + new `src/alpha.tsx`         | Single `src/plugin.tsx`                                     |
+| Plugin creation  | Both `createPlugin` and `createFrontendPlugin`    | Only `createFrontendPlugin`                                 |
+| Core dependency  | Keeps `@backstage/core-plugin-api`                | Removes it, uses only `@backstage/frontend-plugin-api`      |
+| Route refs       | Reuses `@backstage/core-plugin-api` refs directly | Uses `createRouteRef` from `@backstage/frontend-plugin-api` |
+| Page shell       | Old pages keep `Page`/`Header`, NFS pages skip it | All pages rely on framework's `PageLayout`/`PluginHeader`   |
+| Internal routing | May keep legacy `<Route>` trees in components     | Replaced with `SubPageBlueprint` tabbed pages               |
+| Compatibility    | Not needed                                        | Not needed                                                  |
 
-Feature discovery is one of the biggest quality-of-life improvements in the new frontend system. Once enabled, any plugin added as a `package.json` dependency that exports a new-system plugin is automatically detected and installed — no code changes in `App.tsx` needed.
+## Step 1: Migrate Route Refs
 
-### Enabling Feature Discovery
-
-Add this to your `app-config.yaml`:
-
-```yaml
-app:
-  packages: all
-```
-
-This is the **recommended default** for all apps using the new frontend system. Enable it as early as Phase 1.
-
-### Filtering Discovered Packages
-
-You can control which packages are discovered using `include` or `exclude` filters:
-
-```yaml
-# Only discover specific packages
-app:
-  packages:
-    include:
-      - '@backstage/plugin-catalog'
-      - '@backstage/plugin-scaffolder'
-```
-
-```yaml
-# Discover all except specific packages
-app:
-  packages:
-    exclude:
-      - '@backstage/plugin-techdocs'
-```
-
-### Disabling Individual Extensions
-
-Even with feature discovery enabled, you can disable specific extensions via config without removing the package:
-
-```yaml
-app:
-  extensions:
-    - page:techdocs: false
-    - page:search: false
-```
-
-### How Discovery Works with Manual Imports
-
-Plugins that are both manually imported in `features` and auto-discovered are deduplicated — no conflicts. This means you can safely enable discovery while still explicitly importing plugins that need customization via `.withOverrides()`.
-
-### When NOT to Use Discovery
-
-Omit `app.packages` from config entirely (not `app.packages: none` — just leave it out) to disable discovery. You might do this if:
-
-- You need full control over which plugins are loaded
-- You're in early Phase 1 and want to introduce features one at a time
-- You're running in an environment where the `@backstage/cli` webpack integration isn't available
-
-Feature discovery requires that the app is built using `@backstage/cli`, which is the default for all Backstage apps.
-
-## Phase 1: Minimal Hybrid Migration
-
-### Step 1: Switch `createApp`
-
-Replace the import source for `createApp`:
+Replace `createRouteRef` / `createSubRouteRef` / `createExternalRouteRef` imports:
 
 ```typescript
-// OLD
-import { createApp } from '@backstage/app-defaults';
+// OLD (src/routes.ts)
+import {
+  createRouteRef,
+  createSubRouteRef,
+  createExternalRouteRef,
+} from '@backstage/core-plugin-api';
 
-// NEW
-import { createApp } from '@backstage/frontend-defaults';
+export const rootRouteRef = createRouteRef({ id: 'my-plugin' });
+export const detailsRouteRef = createSubRouteRef({
+  id: 'my-plugin-details',
+  parent: rootRouteRef,
+  path: '/details/:id',
+});
+export const externalDocsRouteRef = createExternalRouteRef({ id: 'docs' });
+
+// NEW (src/routes.ts)
+import {
+  createRouteRef,
+  createSubRouteRef,
+  createExternalRouteRef,
+} from '@backstage/frontend-plugin-api';
+
+export const rootRouteRef = createRouteRef();
+export const detailsRouteRef = createSubRouteRef({
+  path: '/details/:id',
+  parent: rootRouteRef,
+});
+export const externalDocsRouteRef = createExternalRouteRef({
+  defaultTarget: 'techdocs.docRoot',
+});
 ```
 
-### Step 2: Convert `createApp` options
+Key differences:
 
-Use `convertLegacyAppOptions` to wrap legacy options (`apis`, `icons`, `featureFlags`, `components`, `themes`) as a feature:
+- `createRouteRef()` no longer takes an `id` — the ID is derived from the extension
+- `createSubRouteRef` path must start with `/` and must not end with `/`
+- `createExternalRouteRef()` no longer takes an `id` or `optional` flag
+
+### Set Default Targets for External Route Refs
+
+When migrating external route refs, always set `defaultTarget` to the most common binding target. This removes the need for apps to explicitly bind routes via `bindRoutes` for standard plugin combinations:
+
+```typescript
+export const createComponentRouteRef = createExternalRouteRef({
+  defaultTarget: 'scaffolder.root',
+});
+
+export const viewTechDocRouteRef = createExternalRouteRef({
+  params: ['namespace', 'kind', 'name'],
+  defaultTarget: 'techdocs.docRoot',
+});
+
+export const catalogEntityRouteRef = createExternalRouteRef({
+  params: ['namespace', 'kind', 'name'],
+  defaultTarget: 'catalog.catalogEntity',
+});
+```
+
+The `defaultTarget` string uses the `<pluginId>.<routeName>` format, where `routeName` matches a key in the target plugin's `routes` map. The default is only activated when the target plugin is installed — otherwise the route stays unbound and `useRouteRef` returns `undefined`.
+
+This is especially important for a full migration because in the old system, apps typically had explicit `bindRoutes` calls. With default targets, most of those bindings become unnecessary, improving the plug-and-play experience.
+
+## Step 2: Migrate the Plugin Definition
+
+Replace `src/plugin.ts` with a `createFrontendPlugin`-based definition:
 
 ```tsx
-import { createApp } from '@backstage/frontend-defaults';
-import { convertLegacyAppOptions } from '@backstage/core-compat-api';
+// NEW (src/plugin.tsx)
+import { createFrontendPlugin } from '@backstage/frontend-plugin-api';
+import { RiToolsLine } from '@remixicon/react';
+import { rootRouteRef, externalDocsRouteRef } from './routes';
+import { myPage } from './extensions';
+import { myPluginApi } from './apis';
 
-const convertedOptionsModule = convertLegacyAppOptions({
-  apis,
-  icons: { alert: AlarmIcon },
-  featureFlags: [
-    {
-      name: 'scaffolder-next-preview',
-      description: 'Preview the new Scaffolder Next',
-      pluginId: '',
-    },
-  ],
-  components: {
-    SignInPage: props => (
-      <SignInPage
-        {...props}
-        providers={['guest', 'custom', ...providers]}
-        title="Select a sign-in method"
-        align="center"
-      />
-    ),
+export default createFrontendPlugin({
+  pluginId: 'my-plugin',
+  title: 'My Plugin',
+  icon: <RiToolsLine />,
+  info: {
+    packageJson: () => import('../package.json'),
   },
-});
-
-const app = createApp({
-  features: [convertedOptionsModule],
+  routes: {
+    root: rootRouteRef,
+  },
+  externalRoutes: {
+    docs: externalDocsRouteRef,
+  },
+  extensions: [myPluginApi, myPage],
 });
 ```
 
-### Step 3: Convert the app root
+For the plugin `icon`, prefer using [Remix Icons](https://remixicon.com/) from `@remixicon/react`. If the plugin already has an existing MUI icon, it can be kept with `fontSize="inherit"` (e.g. `<CategoryIcon fontSize="inherit" />`), but for new icons Remix is the recommended choice.
 
-Use `convertLegacyAppRoot` to convert the entire app element tree (routes, sidebar, root elements) into features:
+Since this is the only entry point now, export it as default from `src/index.ts` or update `package.json` exports accordingly. If the plugin was previously consumed via its main entry point, you can make the main entry point export the new plugin:
 
-```tsx
-import { convertLegacyAppRoot } from '@backstage/core-compat-api';
-
-const convertedRootFeatures = convertLegacyAppRoot(
-  <>
-    <AlertDisplay transientTimeoutMs={2500} />
-    <OAuthRequestDialog />
-    <AppRouter>
-      <VisitListener />
-      <Root>{routes}</Root>
-    </AppRouter>
-  </>,
-);
-
-const app = createApp({
-  features: [convertedOptionsModule, ...convertedRootFeatures],
-});
-
-export default app.createRoot();
+```json
+{
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  }
+}
 ```
 
-Note: `app.createRoot()` now takes **no arguments** and returns a React **element** (not a component).
+```typescript
+// src/index.ts
+export { default } from './plugin';
+export { rootRouteRef } from './routes';
+```
 
-### Step 4: Update `index.tsx`
-
-The default export is now an element, not a component:
+## Step 3: Migrate API Factories to `ApiBlueprint`
 
 ```typescript
 // OLD
-import App from './App';
-ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
+import {
+  createApiFactory,
+  discoveryApiRef,
+  fetchApiRef,
+} from '@backstage/core-plugin-api';
 
-// NEW
-import app from './App';
-ReactDOM.createRoot(document.getElementById('root')!).render(app);
-```
+export const myApiFactory = createApiFactory({
+  api: myPluginApiRef,
+  deps: { discoveryApi: discoveryApiRef, fetchApi: fetchApiRef },
+  factory: ({ discoveryApi, fetchApi }) =>
+    new MyPluginClient({ discoveryApi, fetchApi }),
+});
 
-### Step 5: Update `App.test.tsx`
+// NEW (src/apis.ts)
+import {
+  ApiBlueprint,
+  discoveryApiRef,
+  fetchApiRef,
+} from '@backstage/frontend-plugin-api';
+import { myPluginApiRef } from './api';
 
-Same change for the test file:
-
-```typescript
-import app from './App';
-
-const rendered = render(app);
-```
-
-## Phase 2: Full Migration
-
-Once the app works in hybrid mode, gradually remove legacy code and compatibility helpers.
-
-### Migrating `createApp` Options
-
-Legacy options become extensions. App-level extensions (themes, icons, sign-in page, translations) must be installed via `createFrontendModule` targeting `pluginId: 'app'`:
-
-```typescript
-import { createFrontendModule } from '@backstage/frontend-plugin-api';
-
-const app = createApp({
-  features: [
-    createFrontendModule({
-      pluginId: 'app',
-      extensions: [
-        lightTheme,
-        signInPage,
-        exampleIconBundle,
-        catalogTranslations,
-      ],
+export const myPluginApi = ApiBlueprint.make({
+  params: defineParams =>
+    defineParams({
+      api: myPluginApiRef,
+      deps: { discoveryApi: discoveryApiRef, fetchApi: fetchApiRef },
+      factory: ({ discoveryApi, fetchApi }) =>
+        new MyPluginClient({ discoveryApi, fetchApi }),
     }),
-  ],
 });
 ```
 
-#### APIs → `ApiBlueprint`
-
-In the new system, APIs are extensions that follow **ownership rules**. Understanding which `pluginId` to use when wrapping an API in a `createFrontendModule` is critical — using the wrong one will cause conflict errors at runtime.
-
-**Ownership rules:**
-
-- Each API has an **owner plugin**. This can be set explicitly via `pluginId` on the `ApiRef`, or inferred from the `ApiRef` ID string:
-  - Explicit `pluginId` on the ref (recommended) → that plugin owns it
-  - `core.*` ID → owned by the `app` plugin
-  - `plugin.<pluginId>.*` ID → owned by that plugin (e.g. `plugin.catalog.starred-entities` is owned by `catalog`)
-  - Other ID prefixes → the prefix itself is the owner
-- **Only modules for the owning plugin can provide or override an API.** If plugin `A` tries to provide an API owned by plugin `B`, the system reports an `API_FACTORY_CONFLICT` error and rejects the override.
-- **Modules for the same plugin override the plugin's own factory.** This is how apps replace default implementations.
-
-The recommended way to create API refs in the new system uses the builder pattern with an explicit `pluginId`:
+Also update the API ref creation to the new builder pattern with explicit `pluginId`:
 
 ```typescript
+// OLD
+import { createApiRef } from '@backstage/core-plugin-api';
+
+export const myPluginApiRef = createApiRef<MyPluginApi>({
+  id: 'plugin.my-plugin.client',
+});
+
+// NEW (recommended builder pattern with explicit pluginId)
 import { createApiRef } from '@backstage/frontend-plugin-api';
 
-// Recommended: explicit pluginId makes ownership unambiguous
-const myApiRef = createApiRef<MyApi>().with({
-  id: 'plugin.my-plugin.my-api',
+export const myPluginApiRef = createApiRef<MyPluginApi>().with({
+  id: 'plugin.my-plugin.client',
   pluginId: 'my-plugin',
 });
-
-// Legacy form: ownership inferred from the id string pattern
-const legacyRef = createApiRef<MyApi>({ id: 'plugin.my-plugin.my-api' });
 ```
 
-The builder form (`createApiRef<T>().with(...)`) is preferred because the `pluginId` is explicit rather than parsed from the ID string. The `id` must still be globally unique across the app — the `pluginId` is ownership metadata, not a namespace prefix.
+The builder form (`createApiRef<T>().with(...)`) is preferred because ownership is explicit via `pluginId` rather than parsed from the ID string. The `id` must still be globally unique across the app — the `pluginId` is ownership metadata, not a namespace prefix.
 
-**Practical impact for app migration:**
+### API Ownership and Override Rules
 
-Most APIs that were in the old `createApp({ apis: [...] })` are either core APIs (owned by `app`) or plugin-specific APIs. You need to group them into the right modules:
+The new system enforces **API ownership** — only the owning plugin (or a module targeting it) can provide or override a given API. Ownership is determined by:
 
-```typescript
-import { createFrontendModule, ApiBlueprint } from '@backstage/frontend-plugin-api';
+1. The explicit `pluginId` on the `ApiRef` (if set via the builder pattern)
+2. Falling back to inference from the `ApiRef` ID string:
+   - `plugin.<pluginId>.*` → owned by that plugin
+   - `core.*` → owned by the `app` plugin
 
-// Core/app-level APIs → module for 'app'
-const appApisModule = createFrontendModule({
-  pluginId: 'app',
-  extensions: [
-    ApiBlueprint.make({
-      name: 'scm-integrations',
-      params: defineParams =>
-        defineParams({
-          api: scmIntegrationsApiRef,
-          deps: { configApi: configApiRef },
-          factory: ({ configApi }) => ScmIntegrationsApi.fromConfig(configApi),
-        }),
-    }),
-  ],
-});
+If app adopters want to replace your plugin's default API implementation, they must use a `createFrontendModule` with `pluginId` matching your plugin — they cannot override it from a different plugin or from a generic `app` module. This is a stricter model than the old system where any API could be overridden from the app's `apis` array.
 
-// Overriding a plugin's API → module for THAT plugin
-const catalogApiOverride = createFrontendModule({
-  pluginId: 'catalog',
-  extensions: [
-    ApiBlueprint.make({
-      params: defineParams =>
-        defineParams({
-          api: catalogApiRef,  // id: 'plugin.catalog'
-          deps: { ... },
-          factory: ({ ... }) => new CustomCatalogClient({ ... }),
-        }),
-    }),
-  ],
-});
+## Step 4: Migrate Pages to `PageBlueprint`
 
-const app = createApp({
-  features: [appApisModule, catalogApiOverride],
-});
-```
-
-**Common mistake:** Putting all API overrides in a single `createFrontendModule({ pluginId: 'app' })`. This only works for APIs owned by `app` (i.e. `core.*` APIs like `core.config`, `core.discovery`, etc.). Plugin-specific APIs like `plugin.catalog.*` or `plugin.scaffolder.*` must be overridden using a module with the matching `pluginId`.
-
-The old `createApp({ apis: [...] })` pattern didn't have these restrictions — any API could be overridden from the app. In the new system, the ownership model is stricter to prevent accidental conflicts between plugins.
-
-#### Sign-in Page → `SignInPageBlueprint`
+### Simple Page (No Sub-Routes)
 
 ```tsx
-import { SignInPageBlueprint } from '@backstage/plugin-app-react';
+// src/extensions.tsx
+import { PageBlueprint } from '@backstage/frontend-plugin-api';
+import { rootRouteRef } from './routes';
 
-const signInPage = SignInPageBlueprint.make({
+export const myPage = PageBlueprint.make({
   params: {
-    loader: async () => props =>
-      (
-        <SignInPage
-          {...props}
-          provider={{
-            id: 'github-auth-provider',
-            title: 'GitHub',
-            message: 'Sign in using GitHub',
-            apiRef: githubAuthApiRef,
-          }}
-        />
-      ),
+    path: '/my-plugin',
+    routeRef: rootRouteRef,
+    loader: () => import('./components/MyPage').then(m => <m.MyPage />),
   },
 });
 ```
 
-#### Themes → `ThemeBlueprint`
+The `MyPage` component should **not** include `Page`, `Header`, or `PageWithHeader` from `@backstage/core-components`. The framework's `PageLayout` renders `PluginHeader` automatically.
+
+The `title` and `icon` params on `PageBlueprint` are only needed if they should differ from the plugin's own `title` and `icon` (set in `createFrontendPlugin`). If omitted, the plugin-level values are used.
+
+### Page with `Header` for Custom Actions
+
+If your page needs a subtitle or action buttons below the framework header, use `Header` from `@backstage/ui`:
 
 ```tsx
-import { ThemeBlueprint } from '@backstage/plugin-app-react';
+// src/components/MyPage/MyPage.tsx
+import { Header } from '@backstage/ui';
+import { Content } from '@backstage/core-components';
 
-const customLightTheme = ThemeBlueprint.make({
-  name: 'custom-light',
+export function MyPage() {
+  return (
+    <>
+      <Header
+        title="Subtitle or description"
+        customActions={
+          <>
+            <CreateButton title="Create" to="/my-plugin/create" />
+            <SupportButton>Help text</SupportButton>
+          </>
+        }
+      />
+      <Content>
+        <MyPageContent />
+      </Content>
+    </>
+  );
+}
+```
+
+### Page Without Header
+
+For pages that manage their own layout entirely (e.g. home page, dashboards), set `noHeader: true`:
+
+```tsx
+export const myPage = PageBlueprint.make({
   params: {
-    theme: {
-      id: 'custom-light',
-      title: 'Light Theme',
-      variant: 'light',
-      icon: <LightIcon />,
-      Provider: ({ children }) => (
-        <UnifiedThemeProvider theme={customLightTheme} children={children} />
-      ),
-    },
+    path: '/my-plugin',
+    routeRef: rootRouteRef,
+    noHeader: true,
+    loader: () => import('./components/MyPage').then(m => <m.MyPage />),
   },
 });
 ```
 
-#### Icons → `IconBundleBlueprint`
+## Step 5: Replace Internal Routing with Sub-Pages
 
-Icon bundles attach to the `app` plugin's icons input, so they must be installed via a module for `app`:
+Old frontend plugins often use React Router `<Route>` trees inside a router component to handle internal navigation. Before migrating, determine which routing pattern fits the plugin.
 
-```typescript
-import { IconBundleBlueprint } from '@backstage/plugin-app-react';
-import { createFrontendModule } from '@backstage/frontend-plugin-api';
+### Decide Which Routing Pattern to Use
 
-const exampleIconBundle = IconBundleBlueprint.make({
-  name: 'example-bundle',
+Not all internal routing maps to tabs. Read the plugin's existing router component and ask the user:
+
+> "Does your plugin use top-level tabs that users navigate between via a header (e.g. Overview / Settings)? Or does it use detail/drill-down routes (e.g. `/my-plugin/items/:id`)?"
+
+Use `SubPageBlueprint` when:
+
+- The sub-routes represent top-level tabs/sections of the plugin
+- Users navigate between them via the header
+
+Keep internal routing within a `PageBlueprint` `loader` when:
+
+- Routes are detail/drill-down pages (e.g. `/my-plugin/items/:id`)
+- The routing is deeply nested or dynamic
+
+**If the plugin uses drill-down routing only**, use a `PageBlueprint` with a `loader` that handles its own `<Routes>` and skip the rest of this step:
+
+```tsx
+export const myPage = PageBlueprint.make({
   params: {
-    icons: { user: MyOwnUserIcon },
-  },
-});
-
-const app = createApp({
-  features: [
-    createFrontendModule({
-      pluginId: 'app',
-      extensions: [exampleIconBundle],
-    }),
-  ],
-});
-```
-
-#### Translations → `TranslationBlueprint`
-
-Translations attach to the `app` plugin's translations input. Note that `createTranslationMessages` takes a `messages` object with key-value pairs:
-
-```typescript
-import { TranslationBlueprint } from '@backstage/plugin-app-react';
-import { createTranslationMessages } from '@backstage/frontend-plugin-api';
-import { catalogTranslationRef } from '@backstage/plugin-catalog/alpha';
-
-const catalogTranslations = TranslationBlueprint.make({
-  name: 'catalog-overrides',
-  params: {
-    resource: createTranslationMessages({
-      ref: catalogTranslationRef,
-      messages: {
-        'indexPage.title': 'Service directory',
-        'indexPage.createButtonTitle': 'Register new service',
-      },
-    }),
-  },
-});
-
-const app = createApp({
-  features: [
-    createFrontendModule({
-      pluginId: 'app',
-      extensions: [catalogTranslations],
-    }),
-  ],
-});
-```
-
-For adding full language translations, use `createTranslationResource` instead:
-
-```typescript
-import { createTranslationResource } from '@backstage/frontend-plugin-api';
-
-const userSettingsTranslations = TranslationBlueprint.make({
-  name: 'user-settings-zh',
-  params: {
-    resource: createTranslationResource({
-      ref: userSettingsTranslationRef,
-      translations: {
-        zh: () => import('./userSettings-zh'),
-      },
-    }),
+    path: '/my-plugin',
+    routeRef: rootRouteRef,
+    loader: () => import('./components/Router').then(m => <m.MyPluginRouter />),
   },
 });
 ```
 
-### Migrating Root Elements
+**If the plugin uses top-level tabs**, continue with the `SubPageBlueprint` migration below.
 
-Built-in elements like `AlertDisplay`, `OAuthRequestDialog`, and `VisitListener` are provided by the framework automatically. Remove them from `convertLegacyAppRoot`:
+### Old Pattern: Internal Router
 
 ```tsx
-// Before
-const convertedRootFeatures = convertLegacyAppRoot(
-  <>
-    <AlertDisplay transientTimeoutMs={2500} />
-    <OAuthRequestDialog />
-    <AppRouter>
-      <VisitListener />
-      <Root>{routes}</Root>
-    </AppRouter>
-  </>,
-);
+// OLD — plugin owns its own routing
+import { Route, Routes } from 'react-router-dom';
 
-// After
-const convertedRootFeatures = convertLegacyAppRoot(routes);
+export function MyPluginRouter() {
+  return (
+    <Page themeId="tool">
+      <Header title="My Plugin" />
+      <HeaderTabs
+        tabs={[
+          { id: 'overview', label: 'Overview' },
+          { id: 'settings', label: 'Settings' },
+        ]}
+      />
+      <Content>
+        <Routes>
+          <Route path="/" element={<OverviewPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+        </Routes>
+      </Content>
+    </Page>
+  );
+}
 ```
 
-Custom root elements use `AppRootElementBlueprint`, and custom wrappers use `AppRootWrapperBlueprint` from `@backstage/plugin-app-react`.
-
-### Migrating the Sidebar
-
-Create a `NavContentBlueprint` extension to replace the legacy `Root` component:
+### New Pattern: `PageBlueprint` + `SubPageBlueprint`
 
 ```tsx
-import { NavContentBlueprint } from '@backstage/plugin-app-react';
-import { createFrontendModule } from '@backstage/frontend-plugin-api';
+// src/extensions.tsx
+import {
+  PageBlueprint,
+  SubPageBlueprint,
+} from '@backstage/frontend-plugin-api';
 
-const SidebarContent = NavContentBlueprint.make({
+// Parent page WITHOUT a loader — uses built-in tabbed rendering
+export const myPluginPage = PageBlueprint.make({
   params: {
-    component: ({ navItems }) => {
-      const nav = navItems.withComponent(item => (
-        <SidebarItem icon={() => item.icon} to={item.href} text={item.title} />
-      ));
-
-      return (
-        <Sidebar>
-          <SidebarLogo />
-          <SidebarGroup label="Search" icon={<SearchIcon />} to="/search">
-            <SidebarSearchModal />
-          </SidebarGroup>
-          <SidebarDivider />
-          <SidebarGroup label="Menu" icon={<MenuIcon />}>
-            {nav.take('page:catalog')}
-            {nav.take('page:scaffolder')}
-            <SidebarDivider />
-            <SidebarScrollWrapper>
-              {nav.rest({ sortBy: 'title' })}
-            </SidebarScrollWrapper>
-          </SidebarGroup>
-        </Sidebar>
-      );
-    },
+    path: '/my-plugin',
+    routeRef: rootRouteRef,
   },
 });
 
-export const navModule = createFrontendModule({
-  pluginId: 'app',
-  extensions: [SidebarContent],
+export const overviewSubPage = SubPageBlueprint.make({
+  name: 'overview',
+  params: {
+    path: 'overview',
+    title: 'Overview',
+    loader: () =>
+      import('./components/OverviewPage').then(m => <m.OverviewPageContent />),
+  },
+});
+
+export const settingsSubPage = SubPageBlueprint.make({
+  name: 'settings',
+  params: {
+    path: 'settings',
+    title: 'Settings',
+    loader: () =>
+      import('./components/SettingsPage').then(m => <m.SettingsPageContent />),
+  },
 });
 ```
 
-Nav items are auto-discovered from page extensions. Use `nav.take('page:<pluginId>')` to place specific items, and `nav.rest()` for the remainder. Items that are `take`n are excluded from `rest()`.
+How this works:
 
-### Migrating Routes
+- `PageBlueprint` **without a `loader`** automatically renders its sub-pages as tabs
+- The first sub-page becomes the default (index redirect)
+- Each `SubPageBlueprint` gets a tab in the header with its `title`
+- Sub-page `path` values are **relative** (no leading `/`)
+- Sub-page components render **content only** — no `Page`, `Header`, or `HeaderTabs`
 
-Remove routes from `FlatRoutes` one at a time. With feature discovery enabled (the recommended default), this is the only step needed — the new plugin version is already discovered and waiting; it was simply overridden by the legacy route which had higher priority:
+If the sub-page content needs padding, use `Container` from `@backstage/ui` as a wrapper inside the component.
+
+## Step 6: Update Hooks and Imports
+
+Replace all `@backstage/core-plugin-api` imports with `@backstage/frontend-plugin-api`:
+
+```typescript
+// OLD
+import { useApi, useRouteRef, configApiRef } from '@backstage/core-plugin-api';
+
+// NEW
+import {
+  useApi,
+  useRouteRef,
+  configApiRef,
+} from '@backstage/frontend-plugin-api';
+```
+
+### `useRouteRef` Behavior Change
+
+In the new system, `useRouteRef` may return `undefined` for external route refs that aren't bound. Handle this:
+
+```typescript
+// OLD — throws if not bound
+const docsLink = useRouteRef(externalDocsRouteRef);
+// Always a function
+
+// NEW — returns undefined if not bound
+const docsLink = useRouteRef(externalDocsRouteRef);
+if (docsLink) {
+  // render link
+}
+```
+
+### Common Import Mappings
+
+| Old Import (`@backstage/core-plugin-api`) | New Import (`@backstage/frontend-plugin-api`)       |
+| ----------------------------------------- | --------------------------------------------------- |
+| `createPlugin`                            | `createFrontendPlugin`                              |
+| `createRouteRef`                          | `createRouteRef`                                    |
+| `createSubRouteRef`                       | `createSubRouteRef`                                 |
+| `createExternalRouteRef`                  | `createExternalRouteRef`                            |
+| `createApiRef`                            | `createApiRef`                                      |
+| `createApiFactory`                        | `ApiBlueprint.make`                                 |
+| `useApi`                                  | `useApi`                                            |
+| `useRouteRef`                             | `useRouteRef`                                       |
+| `configApiRef`                            | `configApiRef`                                      |
+| `discoveryApiRef`                         | `discoveryApiRef`                                   |
+| `fetchApiRef`                             | `fetchApiRef`                                       |
+| `identityApiRef`                          | `identityApiRef`                                    |
+| `storageApiRef`                           | `storageApiRef`                                     |
+| `analyticsApiRef`                         | `analyticsApiRef`                                   |
+| `createRoutableExtension`                 | `PageBlueprint.make`                                |
+| `createComponentExtension`                | Depends on context — blueprint or `createExtension` |
+
+## Step 7: Remove Old System Code
+
+1. Delete `src/plugin.ts` (old `createPlugin`)
+2. Delete any `createRoutableExtension` / `createComponentExtension` usage
+3. Remove `Page`, `Header`, `PageWithHeader` wrapping from page components
+4. Remove `HeaderTabs` if replaced by `SubPageBlueprint` tabs
+5. Remove internal `<Routes>`/`<Route>` trees if replaced by sub-pages
+6. Remove `@backstage/core-plugin-api` from `package.json` `dependencies`
+7. Remove `@backstage/core-compat-api` from `package.json` `dependencies` if present
+
+## Step 8: Update Page Components for BUI
+
+With the full migration, page components should use `@backstage/ui` components and patterns. See the `mui-to-bui-migration` skill for detailed component migration guidance.
+
+Key page-level changes:
+
+- Replace `PageWithHeader` / `Page` + `Header` with framework-provided `PluginHeader` (automatic via `PageLayout`)
+- Use `Header` from `@backstage/ui` for optional subtitle/custom actions
+- Use `Content` from `@backstage/core-components` for page body padding (this is still used even in NFS pages)
+- Replace `ContentHeader` with `Header`'s `customActions` prop
+- Replace `HeaderTabs` with `SubPageBlueprint` (tabs are rendered by the framework)
+
+## Real Example: Auth Plugin (Fully Migrated)
+
+The `@backstage/plugin-auth` plugin is a fully migrated example with no `@backstage/core-plugin-api` dependency:
 
 ```tsx
-// BEFORE: plugin page as a legacy route
-const routes = (
-  <FlatRoutes>
-    <Route path="/create" element={<ScaffolderPage />} />
-    <Route path="/catalog" element={<CatalogIndexPage />} />
-  </FlatRoutes>
-);
+// plugins/auth/src/routes.ts
+import { createRouteRef } from '@backstage/frontend-plugin-api';
 
-// AFTER: just remove the route — discovery handles the rest
-const routes = (
-  <FlatRoutes>
-    <Route path="/catalog" element={<CatalogIndexPage />} />
-  </FlatRoutes>
-);
-```
+export const rootRouteRef = createRouteRef();
 
-If you are **not** using feature discovery, you need to manually import and install the new plugin version:
+// plugins/auth/src/plugin.tsx
+import {
+  createFrontendPlugin,
+  PageBlueprint,
+} from '@backstage/frontend-plugin-api';
+import { rootRouteRef } from './routes';
 
-```typescript
-import scaffolderPlugin from '@backstage/plugin-scaffolder/alpha';
+export const AuthPage = PageBlueprint.make({
+  params: {
+    path: '/oauth2',
+    routeRef: rootRouteRef,
+    loader: () => import('./components/Router').then(m => <m.Router />),
+  },
+});
 
-const app = createApp({
-  features: [scaffolderPlugin, ...convertedRootFeatures],
+export default createFrontendPlugin({
+  pluginId: 'auth',
+  extensions: [AuthPage],
+  routes: {
+    root: rootRouteRef,
+  },
 });
 ```
 
-#### All-at-once rule for plugin routes
+## Real Example: Scaffolder Sub-Pages
 
-Only one version of a plugin can be active in the app at a time. When legacy routes remain in `FlatRoutes`, `convertLegacyAppRoot` creates a plugin from them using the same plugin ID as the real plugin. This shadow plugin overrides the new-system version entirely. Because of this:
-
-- **All routes from a single plugin must be removed at the same time.** You cannot migrate one route of a multi-route plugin while keeping others in `FlatRoutes`. For example, if a plugin provides both `/foo` and `/foo/settings`, you must remove both routes together.
-- **Entity page content counts as part of the plugin.** Many plugins contribute both a top-level route (in `FlatRoutes`) _and_ entity page cards/content (in the entity pages). These are all part of the same plugin. If you remove the route from `FlatRoutes` but keep the entity page card as JSX in your entity pages, the old entity card JSX is now orphaned — and the new plugin may auto-provide its own version of that card, leading to duplicates or missing content.
-
-The practical consequence: when you migrate a plugin, remove _all_ of its legacy touchpoints — routes _and_ entity page extensions — at the same time.
-
-### Migrating Entity Pages
-
-Entity pages are typically the most complex part of the migration because they pull in content from many different plugins. The `entityPage` option in `convertLegacyAppRoot` provides a way to migrate them gradually.
-
-#### Setting up gradual entity page migration
-
-Pass your entity pages to `convertLegacyAppRoot`:
-
-```typescript
-const convertedRootFeatures = convertLegacyAppRoot(routes, { entityPage });
-```
-
-This converts your legacy entity page JSX tree into extensions. The structural pieces (`EntityLayout`, `EntitySwitch`) are preserved, while entity cards and content are converted into extensions that live alongside any auto-discovered new-system cards.
-
-#### Migrating the catalog plugin itself
-
-The catalog plugin is special because it owns both the `/catalog` route and the entity page route (`/catalog/:namespace/:kind/:name`). You must migrate both together:
-
-1. Remove the catalog routes from `FlatRoutes`:
+The scaffolder plugin demonstrates the sub-page pattern (though it still has dual support — the pattern itself is what a full migration targets):
 
 ```tsx
-const routes = (
-  <FlatRoutes>
-    {/* Remove both catalog routes */}
-    {/* <Route path="/catalog" element={<CatalogIndexPage />} /> */}
-    {/* <Route path="/catalog/:namespace/:kind/:name" element={<CatalogEntityPage />}> */}
-    {/*   {entityPage} */}
-    {/* </Route> */}
-    <Route path="/create" element={<ScaffolderPage />} />
-  </FlatRoutes>
-);
-```
+// PageBlueprint WITHOUT loader — framework renders tabs
+export const scaffolderPage = PageBlueprint.make({
+  params: {
+    path: '/create',
+    routeRef: rootRouteRef,
+  },
+});
 
-2. Install the catalog plugin explicitly (before the converted features so it takes priority):
+// Sub-pages with content only
+export const templatesSubPage = SubPageBlueprint.make({
+  name: 'templates',
+  params: {
+    path: 'templates',
+    title: 'Templates',
+    loader: () => import('./TemplatesPage').then(m => <m.TemplatesSubPage />),
+  },
+});
 
-```typescript
-import catalogPlugin from '@backstage/plugin-catalog/alpha';
-
-const app = createApp({
-  features: [catalogPlugin, convertedOptionsModule, ...convertedRootFeatures],
+export const tasksSubPage = SubPageBlueprint.make({
+  name: 'tasks',
+  params: {
+    path: 'tasks',
+    title: 'Tasks',
+    loader: () => import('./TasksPage').then(m => <m.TasksSubPage />),
+  },
 });
 ```
-
-3. Pass `entityPage` to `convertLegacyAppRoot` (if not already done) so your existing entity page layout is preserved.
-
-#### Migrating individual plugins out of entity pages
-
-Once the catalog plugin itself is migrated, you can gradually remove legacy entity content from the entity pages. For each plugin that provides entity cards or content:
-
-1. **Remove the legacy JSX** from your entity page components (e.g. remove `<EntityAboutCard />`, `<EntityTechdocsContent />`, `<EntityKubernetesContent />`)
-2. The new-system plugin auto-provides these as `EntityCardBlueprint` / `EntityContentBlueprint` extensions that are discovered automatically
-
-If you see **duplicate cards** after removing routes but before removing entity page JSX, that's expected — the new plugin is auto-providing cards while the legacy JSX still renders them. Remove the legacy JSX to resolve the duplication.
-
-#### Migrating entity page tabs
-
-Tabs in entity pages (the `EntityLayout.Route` entries) are provided by `EntityContentBlueprint` extensions in the new system. As you remove legacy entity content JSX, the tabs are automatically sourced from the new-system extensions. The order and grouping of tabs can be configured via `app-config.yaml`:
-
-```yaml
-app:
-  extensions:
-    - page:catalog/entity:
-        config:
-          groups:
-            - overview:
-                title: Overview
-            - documentation:
-                title: Docs
-```
-
-#### When is it done?
-
-Once all plugins contributing to entity pages have been migrated, the `entityPage` option can be removed from `convertLegacyAppRoot`, and the entity page component files in `packages/app/src/components/catalog/` can be deleted.
-
-### Migrating Route Bindings
-
-In the new system, plugins should define `defaultTarget` on their external route refs (e.g. `createExternalRouteRef({ defaultTarget: 'scaffolder.root' })`). When plugins set sensible defaults, most `bindRoutes` calls in the app become unnecessary — the routes resolve automatically when the target plugin is installed.
-
-Review your existing `bindRoutes` configuration and remove any bindings that are already covered by default targets in the plugins. For the remaining cases that need custom bindings, you can still use `bindRoutes` or configure them via static config:
-
-```yaml
-# app-config.yaml
-app:
-  routes:
-    bindings:
-      catalog.createComponent: scaffolder.root
-```
-
-## Dependencies
-
-| Purpose               | Old Package                  | New Package                      |
-| --------------------- | ---------------------------- | -------------------------------- |
-| App creation          | `@backstage/app-defaults`    | `@backstage/frontend-defaults`   |
-| Plugin/extension APIs | `@backstage/core-plugin-api` | `@backstage/frontend-plugin-api` |
-| App components        | `@backstage/core-components` | `@backstage/ui` + CSS Modules    |
-| Compatibility bridge  | —                            | `@backstage/core-compat-api`     |
-| App blueprints        | —                            | `@backstage/plugin-app-react`    |
 
 ## Migration Checklist
 
-### Phase 1 (Hybrid)
-
-1. [ ] Add `@backstage/frontend-defaults` and `@backstage/core-compat-api` dependencies
-2. [ ] Switch `createApp` import to `@backstage/frontend-defaults`
-3. [ ] Enable feature discovery: add `app.packages: all` to `app-config.yaml`
-4. [ ] Wrap legacy options with `convertLegacyAppOptions`
-5. [ ] Wrap app element tree with `convertLegacyAppRoot`
-6. [ ] Change `app.createRoot()` to take no arguments
-7. [ ] Update `index.tsx` to render element instead of component
-8. [ ] Update `App.test.tsx`
-9. [ ] Verify app starts and works in hybrid mode
-
-### Phase 2 (Full Migration)
-
-1. [ ] Convert APIs to `ApiBlueprint` extensions
-2. [ ] Convert sign-in page to `SignInPageBlueprint`
-3. [ ] Convert themes to `ThemeBlueprint`
-4. [ ] Convert icons to `IconBundleBlueprint`
-5. [ ] Convert translations to `TranslationBlueprint`
-6. [ ] Migrate sidebar to `NavContentBlueprint`
-7. [ ] Remove built-in root elements (`AlertDisplay`, `OAuthRequestDialog`, etc.)
-8. [ ] Migrate routes from `FlatRoutes` to plugin features (one plugin at a time, removing all routes + entity content for each plugin together)
-9. [ ] Set up entity page migration with `convertLegacyAppRoot(routes, { entityPage })`
-10. [ ] Migrate catalog plugin: remove catalog routes from `FlatRoutes`, install `catalogPlugin` as a feature
-11. [ ] Gradually remove legacy entity card/content JSX as each contributing plugin is migrated
-12. [ ] Remove `entityPage` option and legacy entity page component files
-13. [ ] Remove `convertLegacyAppRoot` and `convertLegacyAppOptions` calls
-14. [ ] Remove `@backstage/app-defaults`, `@backstage/core-app-api` dependencies
-15. [ ] Run `yarn tsc` and `yarn lint` to verify
-
-## Troubleshooting
-
-- Install `@backstage/plugin-app-visualizer` to inspect the extension tree at `/visualizer`
-- Duplicate entity cards: remove legacy card JSX from entity pages — plugins auto-provide them
-- `Invalid element inside FlatRoutes`: push `FeatureFlagged`/`RequirePermissions` wrappers into plugin code instead of the route table
+1. [ ] Migrate route refs to `@backstage/frontend-plugin-api` (`createRouteRef`, `createSubRouteRef`, `createExternalRouteRef`)
+2. [ ] Replace `createPlugin` with `createFrontendPlugin`
+3. [ ] Convert all API factories to `ApiBlueprint` extensions
+4. [ ] Convert pages to `PageBlueprint`
+5. [ ] Replace internal tab routing with `SubPageBlueprint` where appropriate
+6. [ ] Remove `Page`/`Header`/`PageWithHeader` from page components
+7. [ ] Add `Header` from `@backstage/ui` where subtitle/custom actions are needed
+8. [ ] Replace `HeaderTabs` with `SubPageBlueprint` tabs
+9. [ ] Update all `@backstage/core-plugin-api` imports to `@backstage/frontend-plugin-api`
+10. [ ] Handle `useRouteRef` possibly returning `undefined`
+11. [ ] Remove `src/plugin.ts` (old system entry point)
+12. [ ] Remove `src/alpha.tsx` if it existed (merge into main entry)
+13. [ ] Remove `@backstage/core-plugin-api` from `package.json` dependencies
+14. [ ] Remove `@backstage/core-compat-api` from `package.json` dependencies
+15. [ ] Update `package.json` exports (remove `./alpha` if merged into main)
+16. [ ] Run `yarn tsc` to check for type errors
+17. [ ] Run `yarn lint` to check for missing dependencies
+18. [ ] Run `yarn build:api-reports` to update API reports (if the project uses API reports)
+19. [ ] Test in a new-system app (`packages/app`)
 
 ## Reference
 
-- [App migration guide](https://backstage.io/docs/frontend-system/building-apps/migrating)
-- [Architecture overview](https://backstage.io/docs/frontend-system/architecture/index)
+- [Plugin migration guide](https://backstage.io/docs/frontend-system/building-plugins/migrating)
 - [Extension blueprints](https://backstage.io/docs/frontend-system/building-plugins/common-extension-blueprints)
-- [Installing plugins](https://backstage.io/docs/frontend-system/building-apps/installing-plugins)
+- [Utility APIs](https://backstage.io/docs/frontend-system/utility-apis/creating)
+- MUI to BUI migration: `mui-to-bui-migration` skill
 
 ---
 > Source: [backstage/backstage](https://github.com/backstage/backstage) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-25 -->
+<!-- tomevault:4.0:skill_md:2026-06-26 -->
