@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ArabelaTso/Skills-4-SE](https://github.com/ArabelaTso/Skills-4-SE/tree/main/skills/abstract-state-analyzer/SKILL.md)
+Original source: [ArabelaTso/Skills-4-SE](https://github.com/ArabelaTso/Skills-4-SE/tree/main/skills/tlaplus-model-reduction/SKILL.md)
 
 ---
 
