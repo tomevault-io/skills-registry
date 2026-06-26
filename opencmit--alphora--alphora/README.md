@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [opencmit/alphora](https://github.com/opencmit/alphora/tree/main/examples/chat_excel/skills/data-analysis/SKILL.md)
+Original source: [opencmit/alphora](https://github.com/opencmit/alphora/tree/main/examples/deep_research/skills/deep-research/SKILL.md)
 
 ---
 
