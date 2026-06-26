@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HET-AGI/ColliderAgent](https://github.com/HET-AGI/ColliderAgent/tree/main/src/skills/feynrules-model-generator/SKILL.md)
+Original source: [HET-AGI/ColliderAgent](https://github.com/HET-AGI/ColliderAgent/tree/main/src/skills/pheno-pipeline-orchestrator/SKILL.md)
 
 ---
 
