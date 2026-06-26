@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [iamtouchskyer/memex](https://github.com/iamtouchskyer/memex/tree/main/skills/memex-recall/SKILL.md)
+Original source: [iamtouchskyer/memex](https://github.com/iamtouchskyer/memex/tree/main/skills/memex-organize/SKILL.md)
 
 ---
 
