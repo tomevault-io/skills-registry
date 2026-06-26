@@ -1,0 +1,121 @@
+---
+name: research-idea-explorer
+description: Use when the user wants cross-disciplinary research ideas generated as concise research cards with Title, Abstract, Design, Distinctiveness, and Significance rather than one-shot prompting.
+metadata:
+  author: jameslemon2002
+---
+
+# Research Idea Explorer Skill
+
+Use this skill when the task is to generate, refine, or compare research ideas across disciplines.
+
+## Default policy
+
+If the machine has the packaged CLI installed, prefer calling:
+
+- `research-idea-explorer`
+- or `rie`
+
+Use the repo-local fallback `python -m research_idea_explorer.cli` only when the packaged command is unavailable but the repository is present in the workspace.
+
+Default to `literature-first` for every non-pure-functional invocation.
+
+That means:
+
+- If the user asks to generate, refine, compare, extend, red-team, or continue research ideas, search literature first.
+- Treat literature retrieval as the default prelude, not an optional extra, unless the user explicitly says not to use it.
+- Keep `hybrid` retrieval as the default strategy unless the user explicitly prefers `lexical`, `embedding`, or `graph`.
+- Only skip retrieval for pure utility actions such as:
+  - formatting an existing result
+  - inspecting `graph`, `summary`, or `neighbors`
+  - writing `feedback`
+  - explaining the output schema or command usage
+
+The workflow is:
+
+1. Start with a literature-guided single-pass divergence across multiple research moves. The built-in persona set remains an internal way to keep those moves orthogonal, but it should not dominate the user-facing framing.
+2. Convert only the strongest brainstorm seeds into the shared internal schema:
+   `Object`, `Puzzle`, `Claim`, `Contrast`, `Evidence`, `Scope`, `Stakes`.
+3. Reject ideas that are obvious near-duplicates or amount to a thin "method + topic" pairing.
+4. If the user asks to deepen, branch, compare, or continue from an accepted direction, run a second literature-guided mutation round around the retained frontier families.
+5. Push each retained idea one step further by adding:
+   data source, minimal runnable design, likely failure mode, and why the question matters now.
+6. When available, use the persistent memory graph so the session does not keep revisiting the same research neighborhoods.
+
+## Preference handling
+
+When the user expresses stable preferences in conversation, carry them into the CLI call instead of treating them as disposable chat context.
+
+Typical examples:
+
+- preferred direction:
+  `prefer causal identification`, `focus on policy relevance`
+- constraints:
+  `avoid survey`, `don't do LLM`, `less benchmark work`
+
+Default behavior:
+
+- Pass those signals through `--preference-note`.
+- Use `--remember-preferences topic` when the preference is specific to the current topic.
+- Use `--remember-preferences global` only when the user clearly wants the same preference to apply across topics.
+- Reuse the same memory path so stored preferences can affect the next `ideas` run.
+
+## CLI mapping
+
+When you want the packaged command to do the work instead of manually re-creating the flow:
+
+- generate ideas:
+  `research-idea-explorer ideas --query "..."`
+- inspect memory:
+  `research-idea-explorer graph --memory ./data/memory/cli-memory.json`
+- list ideas for feedback:
+  `research-idea-explorer feedback --memory ./data/memory/cli-memory.json`
+- accept or reject an idea:
+  `research-idea-explorer feedback --memory ./data/memory/cli-memory.json --idea-id <idea-id> --decision accepted`
+- generate ideas while storing the user's conversation preferences:
+  `research-idea-explorer ideas --query "..." --preference-note "prefer causal identification, avoid survey" --remember-preferences topic`
+- store preferences during feedback on a retained idea:
+  `research-idea-explorer feedback --memory ./data/memory/cli-memory.json --idea-id <idea-id> --decision accepted --note "prefer causal identification, avoid survey" --remember-preferences topic`
+- inspect stored preference profiles:
+  `research-idea-explorer graph --memory ./data/memory/cli-memory.json --view preferences`
+
+If only the repo-local version is available, the same commands can be run with `python -m research_idea_explorer.cli`.
+
+## Guardrails
+
+- Do not output only titles. Output brainstorm seeds first when useful, then concise research cards.
+- Do not overuse `Blind spot` if a stronger puzzle such as `Conflict`, `Distortion`, or `Mechanism unknown` is available.
+- Treat `Scale` and `Counterfactual` as part of contrast and scope unless the user explicitly wants them foregrounded.
+- Search literature by default before proposing ideas, and use metadata to identify crowded areas before proposing ideas.
+- Prefer diversity of research moves over superficial variation in wording.
+
+## Diagram provenance
+
+If you produce a diagram, distinguish clearly between:
+
+- a computed graph generated from stored nodes and edges
+- a literature-derived map synthesized from retrieved papers
+- a conceptual sketch synthesized by the agent
+
+Do not present a hand-authored conceptual diagram as an automatically generated network graph.
+
+## Output shape
+
+Each default research card should contain:
+
+- `Title`
+- `Abstract`
+- `Design`
+- `Distinctiveness`
+- `Significance`
+
+The richer internal schema can still be used when deeper analysis is needed, but the default user-facing card should stay concise.
+
+## References
+
+Read [references/schema.md](references/schema.md) when you need the field meanings, internal move set, or puzzle definitions.
+Read [references/retrieval.md](references/retrieval.md) when literature retrieval is available and you need to decide between lexical, embedding, or graph expansion.
+
+---
+> Source: [jameslemon2002/research-idea-explorer](https://github.com/jameslemon2002/research-idea-explorer) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
