@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aristoteleo/dynamo-release](https://github.com/aristoteleo/dynamo-release/tree/main/skills/dynamo-geneid-convert/SKILL.md)
+Original source: [aristoteleo/dynamo-release](https://github.com/aristoteleo/dynamo-release/tree/main/skills/dynamo-pseudotime-velocity/SKILL.md)
 
 ---
 
