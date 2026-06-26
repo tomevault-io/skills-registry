@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheHotwireClub/hotwire_club-skills](https://github.com/TheHotwireClub/hotwire_club-skills/tree/main/skills/hwc-navigation-content/SKILL.md)
+Original source: [TheHotwireClub/hotwire_club-skills](https://github.com/TheHotwireClub/hotwire_club-skills/tree/main/skills/hwc-stimulus-fundamentals/SKILL.md)
 
 ---
 
