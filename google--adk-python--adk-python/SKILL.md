@@ -1,46 +1,18 @@
 ---
-name: bigquery-ai-ml
-description: | Use when this capability is needed.
+name: adk-python
+description: ______________________________________________________________________ Use when this capability is needed.
 metadata:
   author: google
 ---
+______________________________________________________________________
 
-# Skill: bigquery-ai-ml
+## name: weather-skill description: A skill that provides weather information based on reference data.
 
-This skill defines the usage and rules for BigQuery AI/ML functions,
-preferring SQL-based Skills over dedicated BigQuery tools.
-
-## 1. Skill vs Tool Preference (BigQuery AI/ML)
-
-Agents should **prefer using the Skill (SQL via `execute_sql()`)** over
-dedicated BigQuery tools for functionalities like Forecasting and Anomaly
-Detection.
-
-Use `execute_sql()` with the standard BigQuery `AI.*` functions for these tasks
-instead of the corresponding high-level tools.
-
-## 2. Mandatory Reference Routing
-
-This skill file does not contain the syntax for these functions. You **MUST**
-read the associated reference file before generating SQL.
-
-**CRITICAL**: DO NOT GUESS filenames. You MUST only use the exact paths
-provided below.
-
-| Function | Description | Required Reference File to Retrieve |
-| :--- | :--- | :--- |
-| **AI.FORECAST** | Time-series forecasting via the pre-trained TimesFM model | `references/bigquery_ai_forecast.md` |
-| **AI.CLASSIFY** | Categorize unstructured data into predefined labels | `references/bigquery_ai_classify.md` |
-| **AI.DETECT_ANOMALIES** | Identify deviations in time-series data via the pre-trained TimesFM model | `references/bigquery_ai_detect_anomalies.md` |
-| **AI.GENERATE** | General-purpose text and content generation | `references/bigquery_ai_generate.md` |
-| **AI.GENERATE_BOOL** | Generate a boolean value (TRUE/FALSE) based on a prompt | `references/bigquery_ai_generate_bool.md` |
-| **AI.GENERATE_DOUBLE** | Generate a floating-point number based on a prompt | `references/bigquery_ai_generate_double.md` |
-| **AI.GENERATE_INT** | Generate an integer value based on a prompt | `references/bigquery_ai_generate_int.md` |
-| **AI.IF** | Evaluate a natural-language boolean condition | `references/bigquery_ai_if.md` |
-| **AI.SCORE** | Rank items by semantic relevance (use with ORDER BY) | `references/bigquery_ai_score.md` |
-| **AI.SIMILARITY** | Compute cosine similarity between two inputs | `references/bigquery_ai_similarity.md` |
-| **AI.SEARCH** | Semantic search on tables with autonomous embedding generation | `references/bigquery_ai_search.md` |
+Step 1: Check 'references/weather_info.md' for the current weather.
+Step 2: If humidity is requested, use run 'scripts/get_humidity.py' with the `location` argument.
+Step 3: If wind speed is requested, use the `get_wind_speed` tool.
+Step 4: Provide the update to the user.
 
 ---
 > Source: [google/adk-python](https://github.com/google/adk-python) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-25 -->
+<!-- tomevault:4.0:skill_md:2026-06-26 -->
