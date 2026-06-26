@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mohitmishra786/low-level-dev-skills](https://github.com/mohitmishra786/low-level-dev-skills/tree/main/skills/profilers/linux-perf/SKILL.md)
+Original source: [mohitmishra786/low-level-dev-skills](https://github.com/mohitmishra786/low-level-dev-skills/tree/main/skills/zig/zig-build-system/SKILL.md)
 
 ---
 
