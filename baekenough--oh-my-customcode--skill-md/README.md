@@ -7,7 +7,7 @@ oh-my-zsh style customization framework for Claude Code
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [baekenough/oh-my-customcode](https://github.com/baekenough/oh-my-customcode/tree/main/templates/.claude/skills/omcustom-auto-improve/SKILL.md)
+Original source: [baekenough/oh-my-customcode](https://github.com/baekenough/oh-my-customcode/tree/main/templates/.claude/skills/pipeline/SKILL.md)
 
 ---
 
