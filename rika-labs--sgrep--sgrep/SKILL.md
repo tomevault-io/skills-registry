@@ -2,7 +2,7 @@
 name: sgrep
 description: Use sgrep for semantic code search. Use when you need to find code by meaning rather than exact text matching. Perfect for finding concepts like "authentication logic", "error handling patterns", or "database connection pooling". Use when this capability is needed.
 metadata:
-  author: rika-labs
+  author: Rika-Labs
 ---
 
 # sgrep - Semantic Code Search
@@ -144,5 +144,5 @@ Results show:
 6. **Use JSON for automation**: Use `--json` for structured output in scripts
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/rika-labs) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-13 -->
+> Source: [Rika-Labs/sgrep](https://github.com/Rika-Labs/sgrep) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-26 -->
