@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [finitoapp/finito](https://github.com/finitoapp/finito/tree/main/skills/finito-e2e/SKILL.md)
+Original source: [finitoapp/finito](https://github.com/finitoapp/finito/tree/main/skills/finito-i18n/SKILL.md)
 
 ---
 
