@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SawyerHood/sawyer-mart](https://github.com/SawyerHood/sawyer-mart/tree/main/plugins/library-docs/skills/library-docs/SKILL.md)
+Original source: [SawyerHood/sawyer-mart](https://github.com/SawyerHood/sawyer-mart/tree/main/plugins/change-walkthrough/skills/change-walkthrough/SKILL.md)
 
 ---
 
