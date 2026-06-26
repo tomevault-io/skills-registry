@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jkitchin/skillz](https://github.com/jkitchin/skillz/tree/main/skills/development/version-control/SKILL.md)
+Original source: [jkitchin/skillz](https://github.com/jkitchin/skillz/tree/main/skills/programming/python-plotting/SKILL.md)
 
 ---
 
