@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HeshamFS/materials-simulation-skills](https://github.com/HeshamFS/materials-simulation-skills/tree/main/skills/simulation-workflow/simulation-orchestrator/SKILL.md)
+Original source: [HeshamFS/materials-simulation-skills](https://github.com/HeshamFS/materials-simulation-skills/tree/main/skills/verification-validation/benchmark-and-mms-planner/SKILL.md)
 
 ---
 
