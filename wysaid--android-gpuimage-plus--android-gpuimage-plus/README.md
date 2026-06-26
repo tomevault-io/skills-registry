@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wysaid/android-gpuimage-plus](https://github.com/wysaid/android-gpuimage-plus/tree/main/.github/skills/pr-review/SKILL.md)
+Original source: [wysaid/android-gpuimage-plus](https://github.com/wysaid/android-gpuimage-plus/tree/main/.github/skills/pr-submit/SKILL.md)
 
 ---
 
