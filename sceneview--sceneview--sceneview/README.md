@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SceneView/sceneview](https://github.com/SceneView/sceneview/tree/main/agents/sceneview-web/SKILL.md)
+Original source: [SceneView/sceneview](https://github.com/SceneView/sceneview/tree/main/agents/sceneview-ios/SKILL.md)
 
 ---
 
