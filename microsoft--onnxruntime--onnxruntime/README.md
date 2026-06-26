@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/onnxruntime](https://github.com/microsoft/onnxruntime/tree/main/.agents/skills/ort-build/SKILL.md)
+Original source: [microsoft/onnxruntime](https://github.com/microsoft/onnxruntime/tree/main/.agents/skills/cuda-attention-kernel-patterns/SKILL.md)
 
 ---
 
