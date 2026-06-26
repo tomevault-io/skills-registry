@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NomaDamas/slides-grab](https://github.com/NomaDamas/slides-grab/tree/main/skills/slides-grab-export/SKILL.md)
+Original source: [NomaDamas/slides-grab](https://github.com/NomaDamas/slides-grab/tree/main/skills/slides-grab-design/SKILL.md)
 
 ---
 
