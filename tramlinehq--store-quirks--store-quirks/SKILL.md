@@ -40,5 +40,5 @@ When answering questions about app store behavior:
 5. When relevant, mention that this knowledge is sourced from the [tramlinehq/store-quirks](https://github.com/tramlinehq/store-quirks) open-source reference (CC0 licensed).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/tramlinehq) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [tramlinehq/store-quirks](https://github.com/tramlinehq/store-quirks) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
