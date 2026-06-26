@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [allenai/open-instruct](https://github.com/allenai/open-instruct/tree/main/.claude/skills/update-pr-body/SKILL.md)
+Original source: [allenai/open-instruct](https://github.com/allenai/open-instruct/tree/main/.claude/skills/monitor-experiment/SKILL.md)
 
 ---
 
