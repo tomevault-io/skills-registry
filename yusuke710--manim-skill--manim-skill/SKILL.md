@@ -2,7 +2,7 @@
 name: manim-skill
 description: Create mathematical animations with Manim Community Edition(manimce). Generates distinctive, production-grade animations that avoid generic "AI slop" aesthetics. Use when user wants to animate concepts, equations, illustrate proofs, visualize algorithms, create math explainers, or produce 3Blue1Brown-style videos. Use when this capability is needed.
 metadata:
-  author: yusuke710
+  author: Yusuke710
 ---
 
 ## Project Structure
@@ -185,5 +185,5 @@ When user provides feedback:
 5. Run the viewer command again
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/yusuke710) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-13 -->
+> Source: [Yusuke710/manim-skill](https://github.com/Yusuke710/manim-skill) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
