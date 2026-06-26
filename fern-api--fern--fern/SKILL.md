@@ -1,15 +1,15 @@
 ---
-name: api-wide-base-path-with-default-custom-commands
-description: How to author custom commands for the api-wide-base-path-with-default CLI using the co-generated SDK. Use when this capability is needed.
+name: oauth-client-credentials-openapi-custom-commands
+description: How to author custom commands for the oauth-client-credentials-openapi CLI using the co-generated SDK. Use when this capability is needed.
 metadata:
   author: fern-api
 ---
 
-# Custom Commands for `api-wide-base-path-with-default`
+# Custom Commands for `oauth-client-credentials-openapi`
 
 ## Overview
 
-The `api-wide-base-path-with-default` CLI supports user-authored custom commands that are
+The `oauth-client-credentials-openapi` CLI supports user-authored custom commands that are
 compiled into the binary alongside the auto-generated API commands.
 Custom commands get a fully-wired SDK client that inherits the CLI's
 auth, retries, TLS, base URL, and global headers — zero configuration required.
@@ -17,34 +17,34 @@ auth, retries, TLS, base URL, and global headers — zero configuration required
 ## Architecture
 
 ```
-cli/api-wide-base-path-with-default/custom.rs    ← Your command handlers (protected by .fernignore)
-cli/api-wide-base-path-with-default/sdk_glue.rs  ← Generated bridge: sdk_client() + block_on()
-cli/api-wide-base-path-with-default/main.rs      ← Generated entrypoint (calls custom::register)
-api-wide-base-path-with-default-sdk/             ← Co-generated typed SDK crate
-api-wide-base-path-with-default-types/           ← Co-generated typed model crate
+cli/oauth-client-credentials-openapi/custom.rs    ← Your command handlers (protected by .fernignore)
+cli/oauth-client-credentials-openapi/sdk_glue.rs  ← Generated bridge: sdk_client() + block_on()
+cli/oauth-client-credentials-openapi/main.rs      ← Generated entrypoint (calls custom::register)
+oauth-client-credentials-openapi-sdk/             ← Co-generated typed SDK crate
+oauth-client-credentials-openapi-types/           ← Co-generated typed model crate
 ```
 
 ## Adding a Custom Command
 
-### 1. Edit `cli/api-wide-base-path-with-default/custom.rs`
+### 1. Edit `cli/oauth-client-credentials-openapi/custom.rs`
 
 This file is protected by `.fernignore` — `fern generate` will never
 overwrite it. Register commands in the `register()` function:
 
 ```rust
-use api_wide_base_path_with_default_sdk::api::*;
+use oauth_client_credentials_openapi_sdk::api::*;
 
 pub fn register(app: CliApp) -> CliApp {
     let app = app.command(
-        clap::Command::new("widgets-create")
-            .about("Run widgets widgets-create")
-            .arg(clap::Arg::new("apiVersion").required(true))
+        clap::Command::new("get")
+            .about("Get a plant by ID")
+            .arg(clap::Arg::new("plantId").required(true))
         ,
         |matches, ctx| {
-            let api_version = matches.get_one::<String>("apiVersion").unwrap();
+            let plant_id = matches.get_one::<String>("plantId").unwrap();
             let client = super::sdk_glue::sdk_client(ctx);
             let result = super::sdk_glue::block_on(
-                client.widgets.widgets_create(api_version),
+                client.plants.get(plant_id),
             )?;
             println!("{}", serde_json::to_string_pretty(&result).unwrap());
             Ok(())
@@ -57,17 +57,18 @@ pub fn register(app: CliApp) -> CliApp {
 Then build and test:
 ```bash
 cargo build
-api-wide-base-path-with-default widgets-create <apiVersion>
+oauth-client-credentials-openapi get <plantId>
 ```
 
 ### 2. Available SDK Clients
 
-The `sdk_glue::sdk_client(ctx)` call returns a `api_wide_base_path_with_default_sdk::api::Client`
+The `sdk_glue::sdk_client(ctx)` call returns a `oauth_client_credentials_openapi_sdk::api::Client`
 with the following sub-clients:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `client.widgets` | `api_wide_base_path_with_default_sdk::api::WidgetsClient` | widgets operations |
+| `client.identity` | `oauth_client_credentials_openapi_sdk::api::IdentityClient` | identity operations |
+| `client.plants` | `oauth_client_credentials_openapi_sdk::api::PlantsClient` | plants operations |
 
 ### 3. Key Patterns
 
@@ -85,18 +86,18 @@ let result = super::sdk_glue::block_on(
 
 **Use typed models for request/response serialization:**
 ```rust
-use api_wide_base_path_with_default_sdk::api::*;
+use oauth_client_credentials_openapi_sdk::api::*;
 ```
 
 ## Regeneration Safety
 
 | File | Regenerated? | Notes |
 |------|-------------|-------|
-| `cli/api-wide-base-path-with-default/custom.rs` | **No** | Protected by `.fernignore` |
-| `cli/api-wide-base-path-with-default/sdk_glue.rs` | Yes | Bridges AppContext → SDK client |
-| `cli/api-wide-base-path-with-default/main.rs` | Yes | Calls `custom::register(app)` |
-| `api-wide-base-path-with-default-sdk/` | Yes | Co-generated typed SDK crate |
-| `api-wide-base-path-with-default-types/` | Yes | Co-generated typed models |
+| `cli/oauth-client-credentials-openapi/custom.rs` | **No** | Protected by `.fernignore` |
+| `cli/oauth-client-credentials-openapi/sdk_glue.rs` | Yes | Bridges AppContext → SDK client |
+| `cli/oauth-client-credentials-openapi/main.rs` | Yes | Calls `custom::register(app)` |
+| `oauth-client-credentials-openapi-sdk/` | Yes | Co-generated typed SDK crate |
+| `oauth-client-credentials-openapi-types/` | Yes | Co-generated typed models |
 
 After running `fern generate`, your `custom.rs` is preserved. All
 generated code (SDK, types, glue, main.rs) is updated to match the
@@ -110,10 +111,10 @@ sub-clients), update your `custom.rs` to match.
 cargo build
 
 # Run your custom command
-api-wide-base-path-with-default <your-command> [args]
+oauth-client-credentials-openapi <your-command> [args]
 
 # Run with verbose output for debugging
-RUST_LOG=debug api-wide-base-path-with-default <your-command> [args]
+RUST_LOG=debug oauth-client-credentials-openapi <your-command> [args]
 ```
 
 ---
