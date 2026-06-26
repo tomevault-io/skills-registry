@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [al-one/hass-xiaomi-miot](https://github.com/al-one/hass-xiaomi-miot/tree/main/.agents/skills/miot-docs/SKILL.md)
+Original source: [al-one/hass-xiaomi-miot](https://github.com/al-one/hass-xiaomi-miot/tree/main/.agents/skills/hass-docs/SKILL.md)
 
 ---
 
