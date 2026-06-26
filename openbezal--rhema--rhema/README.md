@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openbezal/rhema](https://github.com/openbezal/rhema/tree/main/.agents/skills/rust-best-practices/SKILL.md)
+Original source: [openbezal/rhema](https://github.com/openbezal/rhema/tree/main/.agents/skills/vercel-react-best-practices/SKILL.md)
 
 ---
 
