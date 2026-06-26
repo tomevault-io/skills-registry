@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xenitV1/Antigravity-Workflows](https://github.com/xenitV1/Antigravity-Workflows/tree/main/skills/python-patterns/SKILL.md)
+Original source: [xenitV1/Antigravity-Workflows](https://github.com/xenitV1/Antigravity-Workflows/tree/main/skills/parallel-agents/SKILL.md)
 
 ---
 
