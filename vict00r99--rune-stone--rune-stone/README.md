@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vict00r99/Rune-stone](https://github.com/vict00r99/Rune-stone/tree/main/skills/rune-multi-lang/SKILL.md)
+Original source: [vict00r99/Rune-stone](https://github.com/vict00r99/Rune-stone/tree/main/skills/rune-test-generator/SKILL.md)
 
 ---
 
