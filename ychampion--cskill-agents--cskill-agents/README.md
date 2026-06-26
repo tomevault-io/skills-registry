@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ychampion/cskill-agents](https://github.com/ychampion/cskill-agents/tree/main/skills/required-argument-aware-flag-validation/SKILL.md)
+Original source: [ychampion/cskill-agents](https://github.com/ychampion/cskill-agents/tree/main/agents/codex/skills/api-round-message-grouping/SKILL.md)
 
 ---
 
