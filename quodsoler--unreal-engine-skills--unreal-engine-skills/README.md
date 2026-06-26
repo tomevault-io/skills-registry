@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [quodsoler/unreal-engine-skills](https://github.com/quodsoler/unreal-engine-skills/tree/main/skills/ue-data-assets-tables/SKILL.md)
+Original source: [quodsoler/unreal-engine-skills](https://github.com/quodsoler/unreal-engine-skills/tree/main/skills/ue-character-movement/SKILL.md)
 
 ---
 
