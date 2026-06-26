@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jpcaparas/superpowers-laravel](https://github.com/jpcaparas/superpowers-laravel/tree/main/skills/data-chunking-large-datasets/SKILL.md)
+Original source: [jpcaparas/superpowers-laravel](https://github.com/jpcaparas/superpowers-laravel/tree/main/skills/form-requests-and-validation/SKILL.md)
 
 ---
 
