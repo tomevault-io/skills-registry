@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vikiboss/60s-skills](https://github.com/vikiboss/60s-skills/tree/main/skills/weather-query/SKILL.md)
+Original source: [vikiboss/60s-skills](https://github.com/vikiboss/60s-skills/tree/main/skills/utility-tools/SKILL.md)
 
 ---
 
