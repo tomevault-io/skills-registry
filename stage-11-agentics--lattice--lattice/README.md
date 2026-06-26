@@ -1,11 +1,11 @@
 # lattice
 
-> Skill by [stage-11-agentics](https://github.com/stage-11-agentics/lattice) — distributed by [TomeVault](https://tomevault.io)
+> Skill by [Stage-11-Agentics](https://github.com/Stage-11-Agentics/lattice) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stage-11-agentics/lattice](https://github.com/stage-11-agentics/lattice/tree/main/skills/lattice)
+Original source: [Stage-11-Agentics/lattice](https://github.com/Stage-11-Agentics/lattice/tree/main/skills/lattice/SKILL.md)
 
 ---
 
