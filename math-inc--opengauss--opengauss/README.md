@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [math-inc/OpenGauss](https://github.com/math-inc/OpenGauss/tree/main/skills/media/songsee/SKILL.md)
+Original source: [math-inc/OpenGauss](https://github.com/math-inc/OpenGauss/tree/main/skills/mcp/native-mcp/SKILL.md)
 
 ---
 
