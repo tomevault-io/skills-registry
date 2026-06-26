@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [team-attention/plugins-for-claude-natives](https://github.com/team-attention/plugins-for-claude-natives/tree/main/plugins/youtube-digest/skills/youtube-digest/SKILL.md)
+Original source: [team-attention/plugins-for-claude-natives](https://github.com/team-attention/plugins-for-claude-natives/tree/main/plugins/google-calendar/skills/google-calendar/SKILL.md)
 
 ---
 
