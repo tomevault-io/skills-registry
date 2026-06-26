@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NoEdgeAI/iphoneclaw](https://github.com/NoEdgeAI/iphoneclaw/tree/main/.claude/skills/iphoneclaw/SKILL.md)
+Original source: [NoEdgeAI/iphoneclaw](https://github.com/NoEdgeAI/iphoneclaw/tree/main/skills/iphoneclaw-action-scripts/SKILL.md)
 
 ---
 
