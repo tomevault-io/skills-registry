@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mohitmishra786/low-level-dev-skills](https://github.com/mohitmishra786/low-level-dev-skills/tree/main/skills/build-systems/cmake/SKILL.md)
+Original source: [mohitmishra786/low-level-dev-skills](https://github.com/mohitmishra786/low-level-dev-skills/tree/main/skills/compilers/cross-gcc/SKILL.md)
 
 ---
 
