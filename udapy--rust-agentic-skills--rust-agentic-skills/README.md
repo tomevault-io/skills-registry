@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [udapy/rust-agentic-skills](https://github.com/udapy/rust-agentic-skills/tree/main/skills/router/SKILL.md)
+Original source: [udapy/rust-agentic-skills](https://github.com/udapy/rust-agentic-skills/tree/main/skills/rust-core/SKILL.md)
 
 ---
 
