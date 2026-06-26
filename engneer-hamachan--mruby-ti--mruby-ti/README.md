@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [engneer-hamachan/mruby-ti](https://github.com/engneer-hamachan/mruby-ti/tree/main/skills/ti-install-sig/SKILL.md)
+Original source: [engneer-hamachan/mruby-ti](https://github.com/engneer-hamachan/mruby-ti/tree/main/skills/ti-add-comments/SKILL.md)
 
 ---
 
