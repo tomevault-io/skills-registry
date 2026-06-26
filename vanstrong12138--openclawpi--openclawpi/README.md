@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vanstrong12138/OpenClawPi](https://github.com/vanstrong12138/OpenClawPi/tree/main/skills/voice_skill/SKILL.md)
+Original source: [vanstrong12138/OpenClawPi](https://github.com/vanstrong12138/OpenClawPi/tree/main/skills/vl_vision_skill/SKILL.md)
 
 ---
 
