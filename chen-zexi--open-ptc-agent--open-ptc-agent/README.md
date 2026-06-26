@@ -1,0 +1,13 @@
+# open-ptc-agent
+
+> Skill by [Chen-zexi](https://github.com/Chen-zexi/open-ptc-agent) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [Chen-zexi/open-ptc-agent](https://github.com/Chen-zexi/open-ptc-agent/tree/main/skills/pdf/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
