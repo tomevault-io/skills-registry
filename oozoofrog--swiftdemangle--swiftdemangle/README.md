@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oozoofrog/SwiftDemangle](https://github.com/oozoofrog/SwiftDemangle/tree/main/.claude/skills/test-manglings/SKILL.md)
+Original source: [oozoofrog/SwiftDemangle](https://github.com/oozoofrog/SwiftDemangle/tree/main/.claude/skills/sync-with-swift/SKILL.md)
 
 ---
 
