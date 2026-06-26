@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [affaan-m/ECC](https://github.com/affaan-m/ECC/tree/main/skills/scientific-thinking-literature-review/SKILL.md)
+Original source: [affaan-m/ECC](https://github.com/affaan-m/ECC/tree/main/docs/zh-CN/skills/content-hash-cache-pattern/SKILL.md)
 
 ---
 
