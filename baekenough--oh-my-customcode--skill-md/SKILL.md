@@ -1,275 +1,175 @@
 ---
-name: scout
-description: Analyze external URL to evaluate fit with oh-my-customcode project and auto-create GitHub issue with verdict Use when this capability is needed.
+name: sec-agentshield-wrapper
+description: Pre-flight security analysis before code changes — identifies trust boundary risks, dangerous patterns, and provides proceed/caution/block advisory before implementation starts Use when this capability is needed.
 metadata:
   author: baekenough
 ---
 
-# /scout — External Link Analysis
+# 보안 사전 분석 Wrapper (sec-agentshield-wrapper)
 
-Analyze an external URL (tech blog, tool, library, methodology) to evaluate its fit with the oh-my-customcode project and auto-create a GitHub issue with a structured verdict.
+코드 작업을 시작하기 전에 보안 위험을 사전 식별하는 pre-flight 스킬.
+작업 진입 전 단계에서 트러스트 경계, 위험 패턴, 권한 변경을 분석하여 진행 여부 advisory를 제공한다.
 
-## Usage
+## 기존 보안 자산과의 차별점
 
-```
-/scout <url>
-/scout https://news.hada.io/topic?id=27673
-/scout https://github.com/user/repo
-```
+| 자산 | 시점 | 강점 | 약점 |
+|------|------|------|------|
+| `sec-codeql-expert` | post-write (작성 후 분석) | CodeQL 정적 분석, CVE 매칭, SARIF 출력 | 코드가 이미 작성된 후 문제 발견 |
+| `adversarial-review` | post-write (리뷰 단계) | 공격자 마인드, STRIDE+OWASP 4단계 리뷰 | 구현 완료 후 대규모 수정 필요할 수 있음 |
+| `cve-triage` | issue-triggered (CVE 발생 후) | CVE 평가, 재현 분석, 패치 검증 | 알려진 CVE에만 반응, 사전 예방 불가 |
+| **sec-agentshield-wrapper** | **pre-write (작업 시작 전)** | **사전 차단, 작업 진입 전 위험 식별** | 휴리스틱 기반, 구현 세부사항 미파악 |
 
-## Verdict Taxonomy
+**핵심 차별점**: 이 스킬은 코드를 쓰기 _전에_ 실행한다. 작업 범위와 의도만으로 위험 패턴을 식별하여 설계 단계에서 보안 방향을 잡는다.
 
-| Verdict | Meaning | Label | Follow-up |
-|---------|---------|-------|-----------|
-| **INTERNALIZE** | Aligns with project philosophy; should become a skill/agent/guide | `scout:internalize` + `P1`/`P2`/`P3` | `/research` or direct implementation |
-| **INTEGRATE** | Useful but best kept as external dependency | `scout:integrate` + `P2`/`P3` | Plugin/MCP integration review |
-| **SKIP** | Irrelevant or duplicates existing functionality | `scout:skip` | Issue created then closed |
+## 워크플로우
 
-## Pre-flight Guards
-
-### Pre-flight Execution Checklist (MANDATORY before Phase 1)
-
-**Both guards MUST be executed before entering Phase 1.** Skipping either guard is a workflow violation.
-
-- [ ] Guard 1: URL Validity check passed (abort if invalid)
-- [ ] Guard 2: Duplicate Scout check passed (warn and confirm if duplicate found)
-
-Proceed to Phase 1 only after both checkboxes are satisfied.
-
-### Guard 1: URL Validity (GATE)
-
-Before any work, validate the URL:
-
-```bash
-# Check URL is syntactically valid
-echo "$URL" | grep -qE '^https?://'
-```
-
-If invalid: `[Pre-flight] GATE: Invalid or unreachable URL. Please check and retry.` — abort.
-
-### Guard 2: Duplicate Scout (WARN)
-
-Search existing GitHub issues for prior scout reports on the same URL domain:
-
-```bash
-DOMAIN=$(echo "$URL" | cut -d'/' -f3)
-gh issue list --state all --label "scout:internalize,scout:integrate,scout:skip" \
-  --json number,title,body --jq ".[] | select(.body | contains(\"$DOMAIN\"))" 2>/dev/null
-```
-
-If found: `[Pre-flight] WARN: Similar URL already scouted in issue #N. Proceed anyway? [Y/n]`
-
-> **Why mandatory?** Guard 2 생략으로 인해 동일 도메인 중복 scout 이슈가 생성된 사례 발생 (세션 회고 #1281). 중복 triage 낭비를 방지하기 위해 Pre-flight 체크리스트로 승격.
-
-## Display Format
-
-Before execution, show the plan:
+### 입력 형식
 
 ```
-[Scout] {url}
-├── Phase 1: 콘텐츠 수집 및 요약
-├── Phase 2: 프로젝트 철학 로드
-├── Phase 3: 적합성 분석 (sonnet)
-└── Phase 4: 이슈 생성
-
-예상: ~1분 | 비용: ~$0.5-1.5
-실행하시겠습니까? [Y/n]
+/sec-agentshield-wrapper "<변경 대상 파일/영역> — <변경 의도>"
 ```
 
-> **암묵 승인 시 필수**: "되면 /scout으로 보고", "실행해줘" 등 묵시적 승인인 경우에도 위 plan 요약을 **반드시 1줄 이상 표시한 뒤 진행**한다 (R015 intent transparency). plan 표시 없이 바로 Phase 1으로 진입하는 것은 위반.
-
-## Workflow
-
-### Phase 1: Fetch & Summarize
-
-1. `WebFetch(url)` — retrieve page content
-2. Extract core information:
-   - Title and purpose
-   - Key technology / methodology
-   - Approach and principles
-3. If fetch fails — report error, abort
-
-> **External quantitative-fact source tagging** (#1298): WebFetch가 산출한 구체적 정량 주장(benchmark 수치, table 값, metric)은 이슈 본문에 `WebFetch-derived (unverified)`로 태깅한다 — 검증된 사실로 제시하지 않는다. WebFetch는 small fast model + 15분 URL 캐시를 사용하므로, 동일 URL을 여러 번 fetch해도 독립 교차검증이 아니다. load-bearing 수치는 primary PDF/원문으로 1회 검증하거나 명시적으로 unverified로 표기한다. (R020 Read-Before-Characterize, R023 Verifier Ground-Truth for cross-cutting facts)
-
-### Phase 2: Load Project Philosophy
-
-1. `Read(CLAUDE.md)` — extract architecture philosophy:
-   - Compilation metaphor (source -> build -> artifact)
-   - Separation of concerns (R006)
-   - Dynamic agent creation ("no expert? create one")
-   - Skill/agent/guide/rule structure
-2. `Read(README.md)` — extract project overview and component inventory
-3. `Glob(.claude/skills/*/SKILL.md)` — list existing skills for overlap detection
-
-### Phase 3: Fit Analysis
-
-> **MUST**: Agent tool 호출 시 반드시 `mode: "bypassPermissions"` 파라미터를 포함해야 한다 (R010 Universal bypassPermissions). CC Agent tool의 기본값은 `acceptEdits`이며, 이는 agent frontmatter의 `permissionMode`를 덮어쓴다. `mode` 누락 시 Bash/WebFetch 권한 프롬프트가 발생하여 비대화형 실행이 중단된다.
->
-> ```
-> ❌ Agent(subagent_type: "general-purpose", prompt: "...")
-> ✓  Agent(subagent_type: "general-purpose", mode: "bypassPermissions", prompt: "...")
-> ```
-
-Spawn 1 sonnet agent with `mode: "bypassPermissions"` and the following analysis prompt.
-
-**Inputs**:
-- Fetched content summary (Phase 1)
-- Project philosophy context (Phase 2)
-- Existing skill list (Phase 2)
-
-**Analysis dimensions**:
-
-| Dimension | Question |
-|-----------|----------|
-| Philosophy alignment | Does it match the compilation metaphor, separation of concerns, "create experts on demand"? |
-| Technical fit | Does it complement or overlap with existing skills/agents/guides? |
-| Integration effort | How much work to internalize vs. use externally? |
-| Value proposition | What concrete benefit does it bring to the project? |
-
-**Agent prompt template**:
-
+예시:
 ```
-You are a project fit analyst. Given:
-
-1. External content summary:
-{phase1_summary}
-
-2. Project philosophy:
-{phase2_philosophy}
-
-3. Existing skills ({skill_count} total):
-{skill_list}
-
-Analyze the external content against the project philosophy across 4 dimensions:
-- Philosophy alignment
-- Technical fit (overlap with existing skills?)
-- Integration effort (XS/S/M/L)
-- Value proposition
-
-Return a structured verdict:
-- verdict: INTERNALIZE | INTEGRATE | SKIP
-- priority: P1 | P2 | P3
-- rationale: 2-3 sentences
-- philosophy_table: criterion/fit/rationale for each dimension
-- recommendation: specific integration plan or skip reason
-- next_steps: 2-3 actionable items
-- IMPORTANT: Write all analysis output in Korean. Technical terms, code references, label names, and skill/agent names stay in English.
-- escalation: true/false (INTERNALIZE + M/L effort = true)
+/sec-agentshield-wrapper "auth-middleware.ts — refresh token 처리 추가"
+/sec-agentshield-wrapper "UserController.java — 외부 API 호출 기능 추가"
+/sec-agentshield-wrapper "upload.py — 파일 업로드 엔드포인트 신규 구현"
 ```
 
-**Output**: Structured verdict with rationale.
+### 1단계: 트러스트 경계 영역 식별
 
-### Phase 4: Issue Creation
+변경 대상 파일/영역이 트러스트 경계에 해당하는지 판단한다.
 
-> **NOTE**: Phase 4는 orchestrator가 직접 `gh issue create` (Bash)로 처리한다. 만약 이슈 생성을 Agent(mgr-gitnerd 등)에 위임할 경우, 해당 Agent tool 호출에도 반드시 `mode: "bypassPermissions"`를 포함해야 한다 (R010).
+**고위험 영역 분류**:
 
-1. Ensure scout labels exist (defensive, idempotent):
-```bash
-gh label create "scout:internalize" --color "0E8A16" --description "Scout: should be internalized" 2>/dev/null || true
-gh label create "scout:integrate" --color "1D76DB" --description "Scout: keep as external" 2>/dev/null || true
-gh label create "scout:skip" --color "D4C5F9" --description "Scout: skip" 2>/dev/null || true
-```
+| 영역 유형 | 예시 | 위험 수준 |
+|-----------|------|-----------|
+| 인증/인가 로직 | auth, jwt, session, permission | CRITICAL |
+| 외부 입력 처리 | request body, query params, file upload | HIGH |
+| 외부 API 호출 | HTTP client, SDK wrapper, webhook | HIGH |
+| 데이터 직렬화 | JSON parse, YAML, XML | MEDIUM |
+| 파일 시스템 접근 | read/write path, temp files | MEDIUM |
+| 설정/환경 변수 | config, env, secrets | HIGH |
+| 데이터베이스 쿼리 | raw SQL, ORM query builder | HIGH |
 
-2. Create GitHub issue:
-```bash
-gh issue create \
-  --title "[scout:{verdict}] {content_title}" \
-  --label "scout:{verdict},P{n}" \
-  --body "{issue_body}"
-```
+CRG `query_graph` 활용 권장 — 변경 함수의 caller 체인을 추적하여 트러스트 경계 도달 여부를 확인한다.
 
-3. If verdict is `SKIP`: auto-close the issue:
-```bash
-gh issue close {number} -c "Auto-closed: scout verdict is SKIP"
-```
+### 2단계: 위험 패턴 매칭
 
-### Issue Body Template
+변경 의도에서 다음 위험 패턴을 식별한다:
+
+**자동 트리거 패턴**:
+
+| 패턴 키워드 | 위험 유형 | 체크 항목 |
+|-------------|-----------|-----------|
+| token, jwt, session | 토큰 위조/재사용 | 서명 검증, 만료 처리, 재사용 방지 |
+| refresh, rotation | 토큰 갱신 경쟁 조건 | 원자성, 동시 요청 처리 |
+| upload, file, multipart | 파일 업로드 공격 | 확장자 검증, 경로 탐색, 크기 제한 |
+| admin, role, permission | 권한 상승 | 역할 검증, 최소 권한, 기본값 |
+| external, api, webhook | SSRF/외부 요청 | URL 화이트리스트, 타임아웃, 재시도 |
+| query, sql, filter | SQL 인젝션 | 파라미터화 쿼리, ORM 사용 여부 |
+| eval, exec, subprocess | 코드 실행 | 입력 새니타이즈, 허용 명령 목록 |
+| serialize, deserialize, pickle | 역직렬화 공격 | 신뢰할 수 없는 데이터 처리 여부 |
+| redirect, url, callback | 오픈 리다이렉트 | URL 검증, 도메인 화이트리스트 |
+
+### 3단계: Advisory 출력
+
+분석 결과를 3가지 레벨로 출력한다:
+
+- **PROCEED** — 식별된 고위험 패턴 없음, 표준 구현 진행 가능
+- **CAUTION** — 주의 필요 항목 존재, 체크리스트와 함께 진행
+- **BLOCK** — 설계 재검토 권장, 보안 전문가 리뷰 후 진행
+
+## 출력 형식
 
 ```markdown
-## Scout 리포트: {title}
+## 보안 사전 분석 — sec-agentshield-wrapper
 
-**출처**: {url}
-**판정**: {INTERNALIZE / INTEGRATE / SKIP}
-**우선순위**: {P1 / P2 / P3}
+**대상**: {파일/영역}
+**의도**: {변경 의도}
+**Advisory**: PROCEED | CAUTION | BLOCK
 
-## 요약
-{외부 콘텐츠에 대한 2-3문장 요약}
+### 트러스트 경계 분석
 
-## 프로젝트 철학 정합성
-| 기준 | 적합 | 근거 |
-|------|------|------|
-| Compilation metaphor | {check/cross} | {설명} |
-| Separation of concerns (R006) | {check/cross} | {설명} |
-| Dynamic agent creation | {check/cross} | {설명} |
-| 기존 스킬 중복 | {check/cross} | {중복 스킬 목록} |
+| 영역 | 해당 여부 | 위험 수준 |
+|------|-----------|-----------|
+| {영역명} | Yes/No | CRITICAL/HIGH/MEDIUM/LOW |
 
-## 권장 사항
-{구체적 통합 계획 — 어떤 skill/agent/guide를 생성할지, 또는 건너뛰는 이유}
+### 식별된 위험 패턴
 
-## 다음 단계
-- [ ] {후속 조치 1}
-- [ ] {후속 조치 2}
+| 패턴 | 위험 유형 | 권장 사항 |
+|------|-----------|-----------|
+| {패턴} | {유형} | {권장} |
 
----
-`/scout`에 의해 생성됨
+### 구현 전 체크리스트
+
+- [ ] {체크 항목 1}
+- [ ] {체크 항목 2}
+
+### 권장 후속 작업
+
+- 구현 후: `adversarial-review` 로 공격자 관점 리뷰
+- 패턴 기반 분석: `sec-codeql-expert` 로 CodeQL 정적 분석
+- CVE 관련: `cve-triage` 로 의존성 취약점 확인
 ```
 
-## Escalation
+## 호출 패턴 예시
 
-When verdict is `INTERNALIZE` and integration effort is M or L:
-
+**단일 파일**:
 ```
-[Advisory] 심층 분석 권장.
-└── 실행 검토: /research {url}
+/sec-agentshield-wrapper "auth-middleware.ts — refresh token 처리 추가"
 ```
 
-## Result Display
-
+**여러 파일/영역**:
 ```
-[Scout 완료] {title}
-├── 판정: {INTERNALIZE / INTEGRATE / SKIP}
-├── 우선순위: {P1 / P2 / P3}
-├── 이슈: #{number}
-└── 에스컬레이션: {/research 권장 | 없음}
+/sec-agentshield-wrapper "UserService.java, AuthController.java — OAuth2 로그인 플로우 추가"
 ```
 
-## Model Selection
+**신규 기능**:
+```
+/sec-agentshield-wrapper "upload/ 디렉토리 — 사용자 파일 업로드 기능 신규 구현"
+```
 
-| Phase | Model | Rationale |
-|-------|-------|-----------|
-| Phase 1 (Fetch) | orchestrator | Simple WebFetch, no agent needed |
-| Phase 2 (Load) | orchestrator | Simple Read/Glob, no agent needed |
-| Phase 3 (Analysis) | sonnet | Balanced reasoning for fit analysis |
-| Phase 4 (Issue) | orchestrator | gh issue create via Bash |
+## 다른 자산과의 조합
 
-## Integration
+권장 보안 파이프라인:
 
-| Rule | How |
-|------|-----|
-| R009 | Single agent in Phase 3 — no parallelism needed |
-| R010 | Orchestrator manages phases 1/2/4; analysis delegated to sonnet agent in Phase 3 |
-| R015 | Display scout plan before execution (Display Format section) |
+```
+sec-agentshield-wrapper (pre-write)
+  → 구현
+  → adversarial-review (post-write, 공격자 관점)
+  → sec-codeql-expert (post-write, 정적 분석)
+```
 
-## When NOT to Use
+CVE 발생 시 별도 트리거:
+```
+cve-triage (CVE 이슈 수신 시)
+  → sec-codeql-expert (영향 범위 분석)
+```
 
-| Scenario | Better Alternative |
-|----------|--------------------|
-| Deep multi-source research | `/research <url>` |
-| Internal project analysis | `/omcustom:analysis` |
-| Known tool evaluation | Direct agent conversation |
-| Bulk URL analysis (5+) | `/research` with URL list |
+## CRG 통합 (선택)
 
-## Differences from /research
+CRG MCP 연결 시 1단계 트러스트 경계 분석 정확도가 향상된다:
 
-| Aspect | /scout | /research |
-|--------|--------|-----------|
-| Purpose | Quick fit evaluation | Deep multi-dimensional analysis |
-| Teams | 1 agent | 10 teams |
-| Cost | ~$0.5-1.5 | ~$8-15 |
-| Duration | 1-2 min | 10-20 min |
-| Output | Issue with verdict | Full report with ADOPT/ADAPT/AVOID |
-| When | First contact with new link | Deep dive after scout recommends |
+| CRG 도구 | 활용 목적 |
+|----------|-----------|
+| `query_graph` | 변경 함수의 caller 체인 추적, 트러스트 경계 도달 여부 확인 |
+| `get_impact_radius` | 변경의 영향 반경 파악, 위험 확산 범위 예측 |
+| `detect_changes` | 보안 관련 함수의 의미적 변경 감지 |
+
+CRG 미연결 시 Grep + Read 조합으로 fallback.
+
+## 한계
+
+- **휴리스틱 기반**: 키워드 매칭과 영역 분류 기반이므로 100% recall을 보장하지 않음
+- **구현 세부사항 미파악**: 실제 코드가 없으므로 로직 플로우 분석 불가
+- **False positive 가능성**: 보안 관련 키워드가 포함되어도 실제 위험이 없을 수 있음
+- **보완 필요**: 구현 후 `adversarial-review` + `sec-codeql-expert` 조합으로 보완 권장
+
+## Permission Mode
+
+이 스킬에서 Agent 도구를 사용하여 에이전트를 스폰할 경우, 항상 `mode: "bypassPermissions"` 를 전달해야 한다. Agent 도구의 기본값(`acceptEdits`)은 에이전트 frontmatter `permissionMode` 를 덮어쓰므로 무인 실행 중 권한 프롬프트가 발생할 수 있다.
 
 ---
 > Source: [baekenough/oh-my-customcode](https://github.com/baekenough/oh-my-customcode) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-25 -->
+<!-- tomevault:4.0:skill_md:2026-06-26 -->
