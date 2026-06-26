@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google-gemini/gemini-skills](https://github.com/google-gemini/gemini-skills/tree/main/skills/gemini-live-api-dev/SKILL.md)
+Original source: [google-gemini/gemini-skills](https://github.com/google-gemini/gemini-skills/tree/main/skills/gemini-interactions-api/SKILL.md)
 
 ---
 
