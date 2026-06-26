@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LeslieLinXinxiang/dde-agent-skills](https://github.com/LeslieLinXinxiang/dde-agent-skills/tree/main/skills/dde-ext-brainstorm/SKILL.md)
+Original source: [LeslieLinXinxiang/dde-agent-skills](https://github.com/LeslieLinXinxiang/dde-agent-skills/tree/main/skills/dde-ext-cpp-testing/SKILL.md)
 
 ---
 
