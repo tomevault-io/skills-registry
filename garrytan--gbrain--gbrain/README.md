@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [garrytan/gbrain](https://github.com/garrytan/gbrain/tree/main/skills/webhook-transforms/SKILL.md)
+Original source: [garrytan/gbrain](https://github.com/garrytan/gbrain/tree/main/skills/daily-task-manager/SKILL.md)
 
 ---
 
