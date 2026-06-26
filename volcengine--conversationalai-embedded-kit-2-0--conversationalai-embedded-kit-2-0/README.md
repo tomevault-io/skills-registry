@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [volcengine/ConversationalAI-Embedded-Kit-2.0](https://github.com/volcengine/ConversationalAI-Embedded-Kit-2.0/tree/main/ai_scripts/AI_Generated_Code_Reading_Guide_Skill/SKILL.md)
+Original source: [volcengine/ConversationalAI-Embedded-Kit-2.0](https://github.com/volcengine/ConversationalAI-Embedded-Kit-2.0/tree/main/.trae/skills/AI_Generated_Code_Reading_Guide_Skill/SKILL.md)
 
 ---
 
