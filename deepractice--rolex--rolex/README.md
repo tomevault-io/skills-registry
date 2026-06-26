@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Deepractice/RoleX](https://github.com/Deepractice/RoleX/tree/main/skills/prototype-authoring/SKILL.md)
+Original source: [Deepractice/RoleX](https://github.com/Deepractice/RoleX/tree/main/skills/resource-management/SKILL.md)
 
 ---
 
