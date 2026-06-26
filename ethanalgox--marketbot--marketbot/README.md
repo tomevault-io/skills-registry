@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [EthanAlgoX/MarketBot](https://github.com/EthanAlgoX/MarketBot/tree/main/marketbot/skills/self-improving-agent/SKILL.md)
+Original source: [EthanAlgoX/MarketBot](https://github.com/EthanAlgoX/MarketBot/tree/main/marketbot/skills/daily-stock-screener/SKILL.md)
 
 ---
 
