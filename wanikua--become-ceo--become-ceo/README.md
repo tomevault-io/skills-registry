@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wanikua/become-ceo](https://github.com/wanikua/become-ceo/tree/main/skills/quadrants/SKILL.md)
+Original source: [wanikua/become-ceo](https://github.com/wanikua/become-ceo/tree/main/skills/browser-use/SKILL.md)
 
 ---
 
