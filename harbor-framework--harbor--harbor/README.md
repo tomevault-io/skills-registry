@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [harbor-framework/harbor](https://github.com/harbor-framework/harbor/tree/main/examples/jobs/skills-merge/skills/runtime-proof/SKILL.md)
+Original source: [harbor-framework/harbor](https://github.com/harbor-framework/harbor/tree/main/examples/tasks/hello-skills/environment/skills/generate-greeting/SKILL.md)
 
 ---
 
