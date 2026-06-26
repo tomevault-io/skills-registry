@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [letta-ai/learning-sdk](https://github.com/letta-ai/learning-sdk/tree/main/examples/claude_email_agent/agent/.claude/skills/action-creator/SKILL.md)
+Original source: [letta-ai/learning-sdk](https://github.com/letta-ai/learning-sdk/tree/main/examples/claude_email_agent/agent/.claude/skills/listener-creator/SKILL.md)
 
 ---
 
