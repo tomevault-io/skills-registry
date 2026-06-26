@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [skill-mill/agent-skill-harbor](https://github.com/skill-mill/agent-skill-harbor/tree/main/.claude/skills/manage-governance/SKILL.md)
+Original source: [skill-mill/agent-skill-harbor](https://github.com/skill-mill/agent-skill-harbor/tree/main/.claude/skills/manage-harbor-config/SKILL.md)
 
 ---
 
