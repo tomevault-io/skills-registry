@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PaddlePaddle/FastDeploy](https://github.com/PaddlePaddle/FastDeploy/tree/main/.claude/skills/research-report/SKILL.md)
+Original source: [PaddlePaddle/FastDeploy](https://github.com/PaddlePaddle/FastDeploy/tree/main/.claude/skills/write-fastdeploy-unittest/SKILL.md)
 
 ---
 
