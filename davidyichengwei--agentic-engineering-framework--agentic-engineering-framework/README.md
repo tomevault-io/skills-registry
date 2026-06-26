@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [davidYichengWei/agentic-engineering-framework](https://github.com/davidYichengWei/agentic-engineering-framework/tree/main/skills/bp-component-design/SKILL.md)
+Original source: [davidYichengWei/agentic-engineering-framework](https://github.com/davidYichengWei/agentic-engineering-framework/tree/main/skills/workflow-code-review/SKILL.md)
 
 ---
 
