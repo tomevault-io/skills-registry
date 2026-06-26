@@ -293,5 +293,5 @@ Generate a VVM program from a natural language description. Analyzes intent, map
 6. **Explicit parallelism** - Only `pmap` runs concurrently
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/karanchawla) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [karanchawla/vvm](https://github.com/karanchawla/vvm) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
