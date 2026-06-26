@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [glittercowboy/taches-cc-resources](https://github.com/glittercowboy/taches-cc-resources/tree/main/skills/create-meta-prompts/SKILL.md)
+Original source: [glittercowboy/taches-cc-resources](https://github.com/glittercowboy/taches-cc-resources/tree/main/skills/expertise/macos-apps/SKILL.md)
 
 ---
 
