@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [victorGPT/vibeusage](https://github.com/victorGPT/vibeusage/tree/main/design-system/SKILL.md)
+Original source: [victorGPT/vibeusage](https://github.com/victorGPT/vibeusage/tree/main/.agents/skills/insforge/SKILL.md)
 
 ---
 
