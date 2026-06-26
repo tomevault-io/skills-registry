@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [facebookincubator/velox](https://github.com/facebookincubator/velox/tree/main/.claude/skills/ci-failure-analysis/SKILL.md)
+Original source: [facebookincubator/velox](https://github.com/facebookincubator/velox/tree/main/.claude/skills/write-commit-message/SKILL.md)
 
 ---
 
