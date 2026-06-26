@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [inerba/filament-db-config](https://github.com/inerba/filament-db-config/tree/main/resources/boost/skills/filament-db-config)
+Original source: [inerba/filament-db-config](https://github.com/inerba/filament-db-config/tree/main/resources/boost/skills/filament-db-config/SKILL.md)
 
 ---
 
