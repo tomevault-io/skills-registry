@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nathnotifia/ai-coding-workflow](https://github.com/nathnotifia/ai-coding-workflow/tree/main/skills/prd-epic-workflow/SKILL.md)
+Original source: [nathnotifia/ai-coding-workflow](https://github.com/nathnotifia/ai-coding-workflow/tree/main/skills/requirements-clarity/SKILL.md)
 
 ---
 
