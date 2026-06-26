@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PurpleAILAB/Decepticon](https://github.com/PurpleAILAB/Decepticon/tree/main/packages/decepticon/decepticon/skills/standard/ad/asrep-roasting/SKILL.md)
+Original source: [PurpleAILAB/Decepticon](https://github.com/PurpleAILAB/Decepticon/tree/main/packages/decepticon/decepticon/skills/standard/cloud/s3-takeover/SKILL.md)
 
 ---
 
