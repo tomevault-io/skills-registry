@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [EasyCorp/EasyAdminBundle](https://github.com/EasyCorp/EasyAdminBundle/tree/main/.claude/skills/symfony-ux/SKILL.md)
+Original source: [EasyCorp/EasyAdminBundle](https://github.com/EasyCorp/EasyAdminBundle/tree/main/.claude/skills/twig-component/SKILL.md)
 
 ---
 
