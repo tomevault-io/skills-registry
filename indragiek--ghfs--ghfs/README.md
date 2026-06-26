@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [indragiek/GHFS](https://github.com/indragiek/GHFS/tree/main/.agents/skills/sosumi/SKILL.md)
+Original source: [indragiek/GHFS](https://github.com/indragiek/GHFS/tree/main/.agents/skills/lat-md/SKILL.md)
 
 ---
 
