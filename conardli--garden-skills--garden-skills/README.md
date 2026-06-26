@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ConardLi/garden-skills](https://github.com/ConardLi/garden-skills/tree/main/skills/web-design-engineer/SKILL.md)
+Original source: [ConardLi/garden-skills](https://github.com/ConardLi/garden-skills/tree/main/skills/web-video-presentation/SKILL.md)
 
 ---
 
