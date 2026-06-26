@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mrvladd-d/memobank](https://github.com/mrvladd-d/memobank/tree/main/skills/mb-analysis/SKILL.md)
+Original source: [mrvladd-d/memobank](https://github.com/mrvladd-d/memobank/tree/main/skills/mb-red-verify/SKILL.md)
 
 ---
 
