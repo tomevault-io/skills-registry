@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marswei/seaseed-clawerse](https://github.com/marswei/seaseed-clawerse/tree/main/skill.md)
+Original source: [marswei/seaseed-clawerse](https://github.com/marswei/seaseed-clawerse/tree/main/frontend/public/skill.md)
 
 ---
 
