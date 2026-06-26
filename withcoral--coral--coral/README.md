@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [withcoral/coral](https://github.com/withcoral/coral/tree/main/plugins/coral/skills/coral-create-source-spec/SKILL.md)
+Original source: [withcoral/coral](https://github.com/withcoral/coral/tree/main/plugins/coral/skills/coral-review-source-spec/SKILL.md)
 
 ---
 
