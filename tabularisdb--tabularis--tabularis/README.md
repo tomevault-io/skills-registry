@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TabularisDB/tabularis](https://github.com/TabularisDB/tabularis/tree/main/.claude/skills/gitnexus/debugging/SKILL.md)
+Original source: [TabularisDB/tabularis](https://github.com/TabularisDB/tabularis/tree/main/.agents/skills/gitnexus/refactoring/SKILL.md)
 
 ---
 
