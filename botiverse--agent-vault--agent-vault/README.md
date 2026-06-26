@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [botiverse/agent-vault](https://github.com/botiverse/agent-vault/tree/main/skills/agent-vault/SKILL.md)
+Original source: [botiverse/agent-vault](https://github.com/botiverse/agent-vault/tree/main/.claude/skills/release/SKILL.md)
 
 ---
 
