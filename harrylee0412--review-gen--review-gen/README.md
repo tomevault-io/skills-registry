@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [harrylee0412/review-gen](https://github.com/harrylee0412/review-gen/tree/main/skills/openalex-ajg-insights/SKILL.md)
+Original source: [harrylee0412/review-gen](https://github.com/harrylee0412/review-gen/tree/main/skills/management-review-writer/SKILL.md)
 
 ---
 
