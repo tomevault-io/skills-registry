@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentic-box/owlex](https://github.com/agentic-box/owlex/tree/main/skills/codex/SKILL.md)
+Original source: [agentic-box/owlex](https://github.com/agentic-box/owlex/tree/main/skills/gemini/SKILL.md)
 
 ---
 
