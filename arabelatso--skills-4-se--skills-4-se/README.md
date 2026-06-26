@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ArabelaTso/Skills-4-SE](https://github.com/ArabelaTso/Skills-4-SE/tree/main/skills/semantic-equivalence-verifier/SKILL.md)
+Original source: [ArabelaTso/Skills-4-SE](https://github.com/ArabelaTso/Skills-4-SE/tree/main/skills/mutation-test-suite-optimizer/SKILL.md)
 
 ---
 
