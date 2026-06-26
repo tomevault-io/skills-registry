@@ -122,5 +122,5 @@ NEVER write `protected static string $navigationIcon` — always include `| Back
 - NEVER forget union types — navigationIcon must be `string | BackedEnum | null`
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/inerba) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [inerba/filament-db-config](https://github.com/inerba/filament-db-config) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
