@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentscope-ai/skills](https://github.com/agentscope-ai/skills/tree/main/skills/nano-memory/SKILL.md)
+Original source: [agentscope-ai/skills](https://github.com/agentscope-ai/skills/tree/main/skills/agentscope-skill/SKILL.md)
 
 ---
 
