@@ -2,7 +2,7 @@
 name: chinese-style-guide
 description: This skill should be used when the user asks to "写文档", "撰写文章", "写邮件", "编辑中文", "检查格式", "修正排版", "中英文混排", "格式化文档", "review 文档格式", "proofread", or when the user is preparing to write or edit Chinese documents, emails, messages, or any formal Chinese text content. This skill provides formatting and typographical corrections based on the Chinese Style Guide, focusing on layout and formatting without altering the author's intended expression. Use when this capability is needed.
 metadata:
-  author: rightcapitalhq
+  author: RightCapitalHQ
 ---
 
 # 中文写作排版风格指南 Skill
@@ -219,5 +219,5 @@ python .claude/skills/chinese-style-guide/scripts/check_format.py <file.md>
 - Chicago Manual of Style（英文部分）
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/rightcapitalhq) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [RightCapitalHQ/chinese-style-guide](https://github.com/RightCapitalHQ/chinese-style-guide) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-24 -->
