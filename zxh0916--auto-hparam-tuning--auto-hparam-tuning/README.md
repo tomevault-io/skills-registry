@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zxh0916/auto-hparam-tuning](https://github.com/zxh0916/auto-hparam-tuning/tree/main/skills/aht-init/SKILL.md)
+Original source: [zxh0916/auto-hparam-tuning](https://github.com/zxh0916/auto-hparam-tuning/tree/main/skills/auto-hparam-tuning/SKILL.md)
 
 ---
 
