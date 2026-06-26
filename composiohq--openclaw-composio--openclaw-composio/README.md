@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ComposioHQ/openclaw-composio](https://github.com/ComposioHQ/openclaw-composio/tree/main/skills/bear-notes/SKILL.md)
+Original source: [ComposioHQ/openclaw-composio](https://github.com/ComposioHQ/openclaw-composio/tree/main/skills/voice-call/SKILL.md)
 
 ---
 
