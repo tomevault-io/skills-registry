@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gaearon/woodshed](https://github.com/gaearon/woodshed/tree/main/test/root/skills/helper/correct/SKILL.md)
+Original source: [gaearon/woodshed](https://github.com/gaearon/woodshed/tree/main/example/skills/ascii-art/baseline/SKILL.md)
 
 ---
 
