@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [edwardkim/rhwp](https://github.com/edwardkim/rhwp/tree/main/.claude/skills/rhwp-cli/SKILL.md)
+Original source: [edwardkim/rhwp](https://github.com/edwardkim/rhwp/tree/main/.claude/skills/rhwp-exam-ingest/SKILL.md)
 
 ---
 
