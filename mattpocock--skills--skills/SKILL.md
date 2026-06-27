@@ -1,136 +1,132 @@
 ---
-name: qa
-description: Interactive QA session where user reports bugs or issues conversationally, and the agent files GitHub issues. Explores the codebase in the background for context and domain language. Use when user wants to report bugs, do QA, file issues conversationally, or mentions "QA session". Use when this capability is needed.
+name: setup-matt-pocock-skills
+description: Configure this repo for the engineering skills — set up its issue tracker, triage label vocabulary, and domain doc layout. Run once before first use of the other engineering skills. Use when this capability is needed.
 metadata:
   author: mattpocock
 ---
 
-# QA Session
+# Setup Matt Pocock's Skills
 
-Run an interactive QA session. The user describes problems they're encountering. You clarify, explore the codebase for context, and file GitHub issues that are durable, user-focused, and use the project's domain language.
+Scaffold the per-repo configuration that the engineering skills assume:
 
-## For each issue the user raises
+- **Issue tracker** — where issues live (GitHub by default; local markdown is also supported out of the box)
+- **Triage labels** — the strings used for the five canonical triage roles
+- **Domain docs** — where `CONTEXT.md` and ADRs live, and the consumer rules for reading them
 
-### 1. Listen and lightly clarify
+This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
 
-Let the user describe the problem in their own words. Ask **at most 2-3 short clarifying questions** focused on:
+## Process
 
-- What they expected vs what actually happened
-- Steps to reproduce (if not obvious)
-- Whether it's consistent or intermittent
+### 1. Explore
 
-Do NOT over-interview. If the description is clear enough to file, move on.
+Look at the current repo to understand its starting state. Read whatever exists; don't assume:
 
-### 2. Explore the codebase in the background
+- `git remote -v` and `.git/config` — is this a GitHub repo? Which one?
+- `AGENTS.md` and `CLAUDE.md` at the repo root — does either exist? Is there already an `## Agent skills` section in either?
+- `CONTEXT.md` and `CONTEXT-MAP.md` at the repo root
+- `docs/adr/` and any `src/*/docs/adr/` directories
+- `docs/agents/` — does this skill's prior output already exist?
+- `.scratch/` — sign that a local-markdown issue tracker convention is already in use
 
-While talking to the user, kick off an Agent (subagent_type=Explore) in the background to understand the relevant area. The goal is NOT to find a fix — it's to:
+### 2. Present findings and ask
 
-- Learn the domain language used in that area (check UBIQUITOUS_LANGUAGE.md)
-- Understand what the feature is supposed to do
-- Identify the user-facing behavior boundary
+Summarise what's present and what's missing. Then walk the user through the three decisions **one at a time** — present a section, get the user's answer, then move to the next. Don't dump all three at once.
 
-This context helps you write a better issue — but the issue itself should NOT reference specific files, line numbers, or internal implementation details.
+Assume the user does not know what these terms mean. Each section starts with a short explainer (what it is, why these skills need it, what changes if they pick differently). Then show the choices and the default.
 
-### 3. Assess scope: single issue or breakdown?
+**Section A — Issue tracker.**
 
-Before filing, decide whether this is a **single issue** or needs to be **broken down** into multiple issues.
+> Explainer: The "issue tracker" is where issues live for this repo. Skills like `to-issues`, `triage`, `to-prd`, and `qa` read from and write to it — they need to know whether to call `gh issue create`, write a markdown file under `.scratch/`, or follow some other workflow you describe. Pick the place you actually track work for this repo.
 
-Break down when:
+Default posture: these skills were designed for GitHub. If a `git remote` points at GitHub, propose that. If a `git remote` points at GitLab (`gitlab.com` or a self-hosted host), propose GitLab. Otherwise (or if the user prefers), offer:
 
-- The fix spans multiple independent areas (e.g. "the form validation is wrong AND the success message is missing AND the redirect is broken")
-- There are clearly separable concerns that different people could work on in parallel
-- The user describes something that has multiple distinct failure modes or symptoms
+- **GitHub** — issues live in the repo's GitHub Issues (uses the `gh` CLI)
+- **GitLab** — issues live in the repo's GitLab Issues (uses the [`glab`](https://gitlab.com/gitlab-org/cli) CLI)
+- **Local markdown** — issues live as files under `.scratch/<feature>/` in this repo (good for solo projects or repos without a remote)
+- **Other** (Jira, Linear, etc.) — ask the user to describe the workflow in one paragraph; the skill will record it as freeform prose
 
-Keep as a single issue when:
+If — and only if — the user picked **GitHub** or **GitLab**, ask one follow-up:
 
-- It's one behavior that's wrong in one place
-- The symptoms are all caused by the same root behavior
+> Explainer: Open-source repos often receive feature requests as pull requests, not just issues — a PR is an issue with attached code. If you turn this on, `/triage` pulls *external* PRs into the same queue and runs them through the same labels and states as issues (collaborators' in-flight PRs are left alone). Leave it off if PRs aren't a request surface for you.
 
-### 4. File the GitHub issue(s)
+- **PRs as a request surface** — yes / no (default: no). Record the answer in `docs/agents/issue-tracker.md`. For local-markdown and other trackers, skip this question — there are no PRs.
 
-Create issues with `gh issue create`. Do NOT ask the user to review first — just file and share URLs.
+**Section B — Triage label vocabulary.**
 
-Issues must be **durable** — they should still make sense after major refactors. Write from the user's perspective.
+> Explainer: When the `triage` skill processes an incoming issue, it moves it through a state machine — needs evaluation, waiting on reporter, ready for an AFK agent to pick up, ready for a human, or won't fix. To do that, it needs to apply labels (or the equivalent in your issue tracker) that match strings *you've actually configured*. If your repo already uses different label names (e.g. `bug:triage` instead of `needs-triage`), map them here so the skill applies the right ones instead of creating duplicates.
 
-#### For a single issue
+The five canonical roles:
 
-Use this template:
+- `needs-triage` — maintainer needs to evaluate
+- `needs-info` — waiting on reporter
+- `ready-for-agent` — fully specified, AFK-ready (an agent can pick it up with no human context)
+- `ready-for-human` — needs human implementation
+- `wontfix` — will not be actioned
 
+Default: each role's string equals its name. Ask the user if they want to override any. If their issue tracker has no existing labels, the defaults are fine.
+
+**Section C — Domain docs.**
+
+> Explainer: Some skills (`improve-codebase-architecture`, `diagnosing-bugs`, `tdd`) read a `CONTEXT.md` file to learn the project's domain language, and `docs/adr/` for past architectural decisions. They need to know whether the repo has one global context or multiple (e.g. a monorepo with separate frontend/backend contexts) so they look in the right place.
+
+Confirm the layout:
+
+- **Single-context** — one `CONTEXT.md` + `docs/adr/` at the repo root. Most repos are this.
+- **Multi-context** — `CONTEXT-MAP.md` at the root pointing to per-context `CONTEXT.md` files (typically a monorepo).
+
+### 3. Confirm and edit
+
+Show the user a draft of:
+
+- The `## Agent skills` block to add to whichever of `CLAUDE.md` / `AGENTS.md` is being edited (see step 4 for selection rules)
+- The contents of `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md`, `docs/agents/domain.md`
+
+Let them edit before writing.
+
+### 4. Write
+
+**Pick the file to edit:**
+
+- If `CLAUDE.md` exists, edit it.
+- Else if `AGENTS.md` exists, edit it.
+- If neither exists, ask the user which one to create — don't pick for them.
+
+Never create `AGENTS.md` when `CLAUDE.md` already exists (or vice versa) — always edit the one that's already there.
+
+If an `## Agent skills` block already exists in the chosen file, update its contents in-place rather than appending a duplicate. Don't overwrite user edits to the surrounding sections.
+
+The block:
+
+```markdown
+## Agent skills
+
+### Issue tracker
+
+[one-line summary of where issues are tracked, plus whether external PRs are a triage surface]. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+[one-line summary of the label vocabulary]. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+[one-line summary of layout — "single-context" or "multi-context"]. See `docs/agents/domain.md`.
 ```
-## What happened
 
-[Describe the actual behavior the user experienced, in plain language]
+Then write the three docs files using the seed templates in this skill folder as a starting point:
 
-## What I expected
+- [issue-tracker-github.md](./issue-tracker-github.md) — GitHub issue tracker
+- [issue-tracker-gitlab.md](./issue-tracker-gitlab.md) — GitLab issue tracker
+- [issue-tracker-local.md](./issue-tracker-local.md) — local-markdown issue tracker
+- [triage-labels.md](./triage-labels.md) — label mapping
+- [domain.md](./domain.md) — domain doc consumer rules + layout
 
-[Describe the expected behavior]
+For "other" issue trackers, write `docs/agents/issue-tracker.md` from scratch using the user's description.
 
-## Steps to reproduce
+### 5. Done
 
-1. [Concrete, numbered steps a developer can follow]
-2. [Use domain terms from the codebase, not internal module names]
-3. [Include relevant inputs, flags, or configuration]
-
-## Additional context
-
-[Any extra observations from the user or from codebase exploration that help frame the issue — e.g. "this only happens when using the Docker layer, not the filesystem layer" — use domain language but don't cite files]
-```
-
-#### For a breakdown (multiple issues)
-
-Create issues in dependency order (blockers first) so you can reference real issue numbers.
-
-Use this template for each sub-issue:
-
-```
-## Parent issue
-
-#<parent-issue-number> (if you created a tracking issue) or "Reported during QA session"
-
-## What's wrong
-
-[Describe this specific behavior problem — just this slice, not the whole report]
-
-## What I expected
-
-[Expected behavior for this specific slice]
-
-## Steps to reproduce
-
-1. [Steps specific to THIS issue]
-
-## Blocked by
-
-- #<issue-number> (if this issue can't be fixed until another is resolved)
-
-Or "None — can start immediately" if no blockers.
-
-## Additional context
-
-[Any extra observations relevant to this slice]
-```
-
-When creating a breakdown:
-
-- **Prefer many thin issues over few thick ones** — each should be independently fixable and verifiable
-- **Mark blocking relationships honestly** — if issue B genuinely can't be tested until issue A is fixed, say so. If they're independent, mark both as "None — can start immediately"
-- **Create issues in dependency order** so you can reference real issue numbers in "Blocked by"
-- **Maximize parallelism** — the goal is that multiple people (or agents) can grab different issues simultaneously
-
-#### Rules for all issue bodies
-
-- **No file paths or line numbers** — these go stale
-- **Use the project's domain language** (check UBIQUITOUS_LANGUAGE.md if it exists)
-- **Describe behaviors, not code** — "the sync service fails to apply the patch" not "applyPatch() throws on line 42"
-- **Reproduction steps are mandatory** — if you can't determine them, ask the user
-- **Keep it concise** — a developer should be able to read the issue in 30 seconds
-
-After filing, print all issue URLs (with blocking relationships summarized) and ask: "Next issue, or are we done?"
-
-### 5. Continue the session
-
-Keep going until the user says they're done. Each issue is independent — don't batch them.
+Tell the user the setup is complete and which engineering skills will now read from these files. Mention they can edit `docs/agents/*.md` directly later — re-running this skill is only necessary if they want to switch issue trackers or restart from scratch.
 
 ---
 > Source: [mattpocock/skills](https://github.com/mattpocock/skills) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-24 -->
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
