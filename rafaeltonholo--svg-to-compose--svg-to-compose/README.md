@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rafaeltonholo/svg-to-compose](https://github.com/rafaeltonholo/svg-to-compose/tree/main/.ai/skills/unit-test-author/SKILL.md)
+Original source: [rafaeltonholo/svg-to-compose](https://github.com/rafaeltonholo/svg-to-compose/tree/main/.ai/skills/kotlin-gradle-standalone-plugin/SKILL.md)
 
 ---
 
