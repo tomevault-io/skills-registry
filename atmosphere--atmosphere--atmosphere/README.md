@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Atmosphere/atmosphere](https://github.com/Atmosphere/atmosphere/tree/main/modules/ai/src/test/resources/fixtures/openclaw/skills/example-skill/SKILL.md)
+Original source: [Atmosphere/atmosphere](https://github.com/Atmosphere/atmosphere/tree/main/modules/ai/src/test/resources/META-INF/skills/spec-test-with-frontmatter/SKILL.md)
 
 ---
 
