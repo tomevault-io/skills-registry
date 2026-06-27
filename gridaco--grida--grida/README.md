@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gridaco/grida](https://github.com/gridaco/grida/tree/main/.agents/skills/io-grida/SKILL.md)
+Original source: [gridaco/grida](https://github.com/gridaco/grida/tree/main/.agents/skills/research/SKILL.md)
 
 ---
 
