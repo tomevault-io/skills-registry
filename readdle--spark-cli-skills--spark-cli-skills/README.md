@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [readdle/spark-cli-skills](https://github.com/readdle/spark-cli-skills/tree/main/skills/recipe-end-of-day/SKILL.md)
+Original source: [readdle/spark-cli-skills](https://github.com/readdle/spark-cli-skills/tree/main/skills/persona-team-lead/SKILL.md)
 
 ---
 
