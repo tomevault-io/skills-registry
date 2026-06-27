@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [proffesor-for-testing/sentinel-api-testing](https://github.com/proffesor-for-testing/sentinel-api-testing/tree/main/.claude/skills/technical-writing/SKILL.md)
+Original source: [proffesor-for-testing/sentinel-api-testing](https://github.com/proffesor-for-testing/sentinel-api-testing/tree/main/.claude/skills/github-code-review/SKILL.md)
 
 ---
 
