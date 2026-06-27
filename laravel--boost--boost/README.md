@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [laravel/boost](https://github.com/laravel/boost/tree/main/tests/Fixtures/skills/test-skill/SKILL.md)
+Original source: [laravel/boost](https://github.com/laravel/boost/tree/main/.ai/pennant/skill/pennant-development/SKILL.md)
 
 ---
 
