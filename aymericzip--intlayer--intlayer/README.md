@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aymericzip/intlayer](https://github.com/aymericzip/intlayer/tree/main/.agents/skills/intlayer-compiler/SKILL.md)
+Original source: [aymericzip/intlayer](https://github.com/aymericzip/intlayer/tree/main/.agents/skills/intlayer-remote-content/SKILL.md)
 
 ---
 
