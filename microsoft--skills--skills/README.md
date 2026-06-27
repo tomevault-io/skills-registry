@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/skills](https://github.com/microsoft/skills/tree/main/.github/plugins/azure-sdk-python/skills/azure-storage-file-share-py/SKILL.md)
+Original source: [microsoft/skills](https://github.com/microsoft/skills/tree/main/.github/plugins/azure-sdk-dotnet/skills/azure-mgmt-apicenter-dotnet/SKILL.md)
 
 ---
 
