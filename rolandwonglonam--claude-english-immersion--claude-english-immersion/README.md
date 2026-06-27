@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rolandwonglonam/claude-english-immersion](https://github.com/rolandwonglonam/claude-english-immersion/tree/main/pte/SKILL.md)
+Original source: [rolandwonglonam/claude-english-immersion](https://github.com/rolandwonglonam/claude-english-immersion/tree/main/english-immersion/SKILL.md)
 
 ---
 
