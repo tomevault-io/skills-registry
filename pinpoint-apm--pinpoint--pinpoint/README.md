@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pinpoint-apm/pinpoint](https://github.com/pinpoint-apm/pinpoint/tree/main/web-frontend/src/main/v3/.claude/skills/add-translation/SKILL.md)
+Original source: [pinpoint-apm/pinpoint](https://github.com/pinpoint-apm/pinpoint/tree/main/web-frontend/src/main/v3/.claude/skills/create-component/SKILL.md)
 
 ---
 
