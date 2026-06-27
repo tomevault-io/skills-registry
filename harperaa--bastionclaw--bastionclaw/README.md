@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [harperaa/bastionclaw](https://github.com/harperaa/bastionclaw/tree/main/container/skills/agent-browser/SKILL.md)
+Original source: [harperaa/bastionclaw](https://github.com/harperaa/bastionclaw/tree/main/container/skills/generate-image/SKILL.md)
 
 ---
 
