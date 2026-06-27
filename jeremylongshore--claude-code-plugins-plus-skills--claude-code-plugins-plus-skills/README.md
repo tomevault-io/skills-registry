@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jeremylongshore/claude-code-plugins-plus-skills](https://github.com/jeremylongshore/claude-code-plugins-plus-skills/tree/main/plugins/devops/monitoring-stack-deployer/skills/deploying-monitoring-stacks/SKILL.md)
+Original source: [jeremylongshore/claude-code-plugins-plus-skills](https://github.com/jeremylongshore/claude-code-plugins-plus-skills/tree/main/plugins/database/data-seeder-generator/skills/generating-database-seed-data/SKILL.md)
 
 ---
 
