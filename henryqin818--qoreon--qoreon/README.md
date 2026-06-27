@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HenryQin818/qoreon](https://github.com/HenryQin818/qoreon/tree/main/examples/minimal-project/skills/data-contract/SKILL.md)
+Original source: [HenryQin818/qoreon](https://github.com/HenryQin818/qoreon/tree/main/examples/minimal-project/skills/master-control/SKILL.md)
 
 ---
 
