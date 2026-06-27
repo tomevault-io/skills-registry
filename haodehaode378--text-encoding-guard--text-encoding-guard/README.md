@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [haodehaode378/text-encoding-guard](https://github.com/haodehaode378/text-encoding-guard/tree/main/.agents/skills/text-encoding-guard/SKILL.md)
+Original source: [haodehaode378/text-encoding-guard](https://github.com/haodehaode378/text-encoding-guard/tree/main/.claude/skills/text-encoding-guard/SKILL.md)
 
 ---
 
