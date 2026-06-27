@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PowerShell/vscode-powershell](https://github.com/PowerShell/vscode-powershell/tree/main/.github/skills/release/SKILL.md)
+Original source: [PowerShell/vscode-powershell](https://github.com/PowerShell/vscode-powershell/tree/main/.github/skills/update-npm-packages/SKILL.md)
 
 ---
 
