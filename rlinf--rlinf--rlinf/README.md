@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [RLinf/RLinf](https://github.com/RLinf/RLinf/tree/main/.cursor/skills/install-check/SKILL.md)
+Original source: [RLinf/RLinf](https://github.com/RLinf/RLinf/tree/main/.codex/skills/add-publication-docs/SKILL.md)
 
 ---
 
