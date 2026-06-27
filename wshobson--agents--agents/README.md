@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wshobson/agents](https://github.com/wshobson/agents/tree/main/plugins/signed-audit-trails/skills/signed-audit-trails-recipe/SKILL.md)
+Original source: [wshobson/agents](https://github.com/wshobson/agents/tree/main/plugins/developer-essentials/skills/sql-optimization-patterns/SKILL.md)
 
 ---
 
