@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [elbruno/elbruno.localembeddings](https://github.com/elbruno/elbruno.localembeddings/tree/main/.copilot/skills/test-discipline/SKILL.md)
+Original source: [elbruno/elbruno.localembeddings](https://github.com/elbruno/elbruno.localembeddings/tree/main/.copilot/skills/session-recovery/SKILL.md)
 
 ---
 
