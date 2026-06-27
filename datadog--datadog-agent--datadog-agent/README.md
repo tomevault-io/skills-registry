@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DataDog/datadog-agent](https://github.com/DataDog/datadog-agent/tree/main/.claude/skills/update-3rd-party-libs/SKILL.md)
+Original source: [DataDog/datadog-agent](https://github.com/DataDog/datadog-agent/tree/main/.claude/skills/create-runtime-setting/SKILL.md)
 
 ---
 
