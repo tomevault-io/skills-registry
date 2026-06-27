@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fabric8io/kubernetes-client](https://github.com/fabric8io/kubernetes-client/tree/main/.claude/skills/gh-issue-release/SKILL.md)
+Original source: [fabric8io/kubernetes-client](https://github.com/fabric8io/kubernetes-client/tree/main/.claude/skills/regen-java-models-from-upstream/SKILL.md)
 
 ---
 
