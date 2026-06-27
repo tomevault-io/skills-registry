@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/benchmark/tasks/suspicion-infection/mimic-suspicion-infection/skills/suspicion-of-infection/SKILL.md)
+Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/benchmark/tasks/creatinine-baseline/mimic-creatinine-baseline/skills-decoy/comorbidity-score/SKILL.md)
 
 ---
 
