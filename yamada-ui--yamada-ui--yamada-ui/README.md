@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yamada-ui/yamada-ui](https://github.com/yamada-ui/yamada-ui/tree/main/.agents/skills/fix-issue/SKILL.md)
+Original source: [yamada-ui/yamada-ui](https://github.com/yamada-ui/yamada-ui/tree/main/.agents/skills/create-issue/SKILL.md)
 
 ---
 
