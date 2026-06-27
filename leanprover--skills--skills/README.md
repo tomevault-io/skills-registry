@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [leanprover/skills](https://github.com/leanprover/skills/tree/main/skills/lean-proof/SKILL.md)
+Original source: [leanprover/skills](https://github.com/leanprover/skills/tree/main/skills/mathlib-pr/SKILL.md)
 
 ---
 
