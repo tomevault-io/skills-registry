@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [useautumn/autumn](https://github.com/useautumn/autumn/tree/main/packages/atmn-tests/.claude/skills/autumn-billing-page/SKILL.md)
+Original source: [useautumn/autumn](https://github.com/useautumn/autumn/tree/main/packages/atmn-tests/.claude/skills/autumn-modelling-pricing-plans/SKILL.md)
 
 ---
 
