@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GoogleCloudPlatform/cloud-foundation-fabric](https://github.com/GoogleCloudPlatform/cloud-foundation-fabric/tree/main/skills/maintenance/release-process/SKILL.md)
+Original source: [GoogleCloudPlatform/cloud-foundation-fabric](https://github.com/GoogleCloudPlatform/cloud-foundation-fabric/tree/main/tools/skill-turn-harness/test/fixtures/mock-tool-use-skill/SKILL.md)
 
 ---
 
