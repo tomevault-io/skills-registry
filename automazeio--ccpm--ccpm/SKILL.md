@@ -85,4 +85,4 @@ Report a bug:       "found a bug in issue 42" / "testing issue 42 revealed X"
 
 ---
 > Source: [automazeio/ccpm](https://github.com/automazeio/ccpm) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-05-28 -->
+<!-- tomevault:4.0:skill_md:2026-06-27 -->
