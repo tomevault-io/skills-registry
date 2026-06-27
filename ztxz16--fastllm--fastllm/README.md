@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ztxz16/fastllm](https://github.com/ztxz16/fastllm/tree/main/.codex/skills/fastllm-triton-ops/SKILL.md)
+Original source: [ztxz16/fastllm](https://github.com/ztxz16/fastllm/tree/main/.codex/skills/git-commit-zh-split/SKILL.md)
 
 ---
 
