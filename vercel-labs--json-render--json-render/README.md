@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vercel-labs/json-render](https://github.com/vercel-labs/json-render/tree/main/skills/react-three-fiber/SKILL.md)
+Original source: [vercel-labs/json-render](https://github.com/vercel-labs/json-render/tree/main/skills/remotion-best-practices/SKILL.md)
 
 ---
 
