@@ -1,301 +1,100 @@
 ---
-name: opencli-autofix
-description: Automatically fix broken OpenCLI adapters when commands fail. Load this skill when an opencli command fails — it guides you through collecting a trace artifact, patching the adapter, retrying, and filing an upstream GitHub issue after a verified fix. Works with any AI agent. Use when this capability is needed.
+name: opencli-browser-sitemap
+description: Use when driving a website with opencli browser and sitemap context is available, requested, or needed to avoid blind navigation. Guides agents to consume site sitemap files lazily, choose adapter/browser fallback paths, resume from state signatures, and mark stale sitemap entries without trusting them over live browser state.
 metadata:
   author: jackwener
 ---
 
-# OpenCLI AutoFix — Automatic Adapter Self-Repair
+# opencli-browser-sitemap
 
-When an `opencli` command fails because a website changed its DOM, API, or response schema, **automatically diagnose, fix the adapter, and retry** — don't just report the error.
+Use this skill when `opencli browser open` or `opencli browser analyze` reports `sitemap.available: true`, or when the user asks you to use a site's sitemap.
 
-## Safety Boundaries
+The sitemap is **prior knowledge**, not ground truth. It should reduce blind clicking, but it must never override the live browser state.
 
-**Before starting any repair, check these hard stops:**
-
-- **`AUTH_REQUIRED`** (exit code 77) — **STOP.** Do not modify code. Tell the user to log into the site in Chrome.
-- **`BROWSER_CONNECT`** (exit code 69) — **STOP.** Do not modify code. Tell the user to run `opencli doctor`.
-- **CAPTCHA / rate limiting** — **STOP.** Not an adapter issue.
-
-**Scope constraint:**
-- **Only modify the file at `adapterSourcePath` in the trace `summary.md` front matter** — this is the authoritative adapter location (may be `clis/<site>/` in repo or `~/.opencli/clis/<site>/` for npm installs)
-- **Never modify** `src/`, `extension/`, `tests/`, `package.json`, or `tsconfig.json`
-
-**Retry budget:** Max **3 repair rounds** per failure. If 3 rounds of diagnose → fix → retry don't resolve it, stop and report what was tried.
-
-## Prerequisites
-
-```bash
-opencli doctor    # Verify extension + daemon connectivity
-```
-
-## When to Use This Skill
-
-Use when `opencli <site> <command>` fails with repairable errors:
-- **SELECTOR** — element not found (DOM changed)
-- **EMPTY_RESULT** — no data returned (API response changed)
-- **API_ERROR** / **NETWORK** — endpoint moved or broke
-- **PAGE_CHANGED** — page structure no longer matches
-- **COMMAND_EXEC** — runtime error in adapter logic
-- **TIMEOUT** — page loads differently, adapter waits for wrong thing
-
-## Before Entering Repair: "Empty" ≠ "Broken"
-
-`EMPTY_RESULT` — and sometimes a structurally-valid `SELECTOR` that returns nothing — is often **not an adapter bug**. Platforms actively degrade results under anti-scrape heuristics, and a "not found" response from the site doesn't mean the content is actually missing. Rule this out **before** committing to a repair round:
-
-- **Retry with an alternative query or entry point.** If `opencli xiaohongshu search "X"` returns 0 but `opencli xiaohongshu search "X 攻略"` returns 20, the adapter is fine — the platform was shaping results for the first query.
-- **Spot-check in a normal Chrome tab.** If the data is visible in the user's own browser but the adapter comes back empty, the issue is usually authentication state, rate limiting, or a soft block — not a code bug. The fix is `opencli doctor` / re-login, not editing source.
-- **Look for soft 404s.** Sites like xiaohongshu / weibo / douyin return HTTP 200 with an empty payload instead of a real 404 when an item is hidden or deleted. The snapshot will look structurally correct. A retry 2-3 seconds later often distinguishes "temporarily hidden" from "actually gone".
-- **"0 results" from a search is an answer.** If the adapter successfully reached the search endpoint, got an HTTP 200, and the platform returned `results: []`, that is a valid answer — report it to the user as "no matches for this query" rather than patching the adapter.
-
-Only proceed to Step 1 if the empty/selector-missing result is **reproducible across retries and alternative entry points**. Otherwise you're patching a working adapter to chase noise, and the patched version will break the next working path.
-
-## Step 1: Collect Trace Context
-
-Run the failing command with failure-retained trace enabled:
-
-```bash
-opencli <site> <command> [args...] --trace retain-on-failure 2>trace-error.yaml
-```
-
-On failure, stderr contains the normal error envelope plus a small `trace` block:
-
-```yaml
-ok: false
-error:
-  code: SELECTOR
-  message: "Could not find element: .old-selector"
-trace:
-  schemaVersion: 1
-  opencliVersion: "..."
-  traceId: "..."
-  dir: "/path/to/.opencli/profiles/default/traces/..."
-  summaryPath: "/path/to/.opencli/profiles/default/traces/.../summary.md"
-  receiptPath: "/path/to/.opencli/profiles/default/traces/.../receipt.json"
-```
-
-Read `summaryPath` first. It is the LLM-oriented entry point and includes front matter:
-
-```yaml
 ---
-schemaVersion: 1
-opencliVersion: "..."
-traceId: "..."
-status: failure
-site: "example"
-command: "example/search"
-adapterSourcePath: "/path/to/clis/example/search.js"
-errorCode: "SELECTOR"
-errorMessage: "Could not find element: .old-selector"
----
-```
 
-The artifact directory contains:
+## Consumption Loop
+
+1. Run or reuse `opencli browser <session> state` to know the current page.
+2. Read only the smallest relevant sitemap files:
+   - `SITE.md` for site-level orientation.
+   - One matching `pages/<page-id>.md` for current state.
+   - One matching `workflows/<task-id>.md` for the user goal.
+   - `pitfalls.md` only when blocked or warned by the workflow.
+3. Prefer the workflow's **Best path**. If it names an adapter such as `opencli twitter post`, use that before raw browser actions.
+4. If the adapter is unavailable or fails, use the **Fallback path** browser workflow.
+5. After each navigation or state-changing action, refresh `state` and compare the workflow's `state_signature`.
+6. If reality disagrees, trust reality, continue probing, and write a local stale note or draft patch.
+7. If an action recovery includes `adapter_health_update: <adapter> -> suspect|broken`, update the local overlay workflow that references that adapter so future agents go straight to the fallback path.
+
+---
+
+## Lookup Order
+
+Read local overlay first, then global seed:
 
 ```text
-summary.md      # start here
-receipt.json    # machine-readable trace receipt
-trace.jsonl     # full redacted timeline
-network.jsonl   # redacted network events
-console.jsonl   # redacted console events
-state/          # final snapshots when available
-screenshots/    # final screenshots when available
+~/.opencli/sites/<site>/sitemap/    # local overlay
+sitemaps/<site>/                    # repo seed (top-level)
 ```
 
-If you redirected stderr to a file, read that file and copy `trace.summaryPath`.
+Local files override global files with the same stable id.
 
-Do not ask the user to rerun with legacy diagnostic env vars. Trace is the repair evidence path.
+Do not load an entire large sitemap into context. If the directory is large, list filenames first and then read only the page/workflow you need.
 
-## Step 2: Analyze the Failure
+---
 
-Read the trace summary and the adapter source. Classify the root cause:
+## Trust Reality Rule
 
-| Error Code | Likely Cause | Repair Strategy |
-|-----------|-------------|-----------------|
-| SELECTOR | DOM restructured, class/id renamed | Explore current DOM → find new selector |
-| EMPTY_RESULT | API response schema changed, or data moved | Check network → find new response path |
-| API_ERROR | Endpoint URL changed, new params required | Discover new API via network intercept |
-| AUTH_REQUIRED | Login flow changed, cookies expired | **STOP** — tell user to log in, do not modify code |
-| TIMEOUT | Page loads differently, spinner/lazy-load | Add/update wait conditions |
-| PAGE_CHANGED | Major redesign | May need full adapter rewrite |
+If sitemap says a button, URL, route, or API should exist but the browser does not show it:
 
-**Key questions to answer:**
-1. What is the adapter trying to do? (Read the file at `adapterSourcePath`)
-2. What did the page look like when it failed? (Read `summary.md`, then `state/` if needed)
-3. What network requests happened? (Read `Failed Network` in `summary.md`, then `network.jsonl` if needed)
-4. What's the gap between what the adapter expects and what the page provides?
+- Re-run `state` or `find` with semantic anchors.
+- Check whether login, locale, viewport, A/B test, or route state differs.
+- Follow the real page if a safe path is visible.
+- Mark the sitemap item stale in local overlay.
 
-## Step 3: Explore the Current Website
+Never keep clicking because "the sitemap says it should work."
 
-Use `opencli browser` to inspect the live website. **Never use the broken adapter** — it will just fail again.
+---
 
-### DOM changed (SELECTOR errors)
+## Stale / Draft Notes
 
-```bash
-# Open the page and inspect current DOM
-opencli browser open https://example.com/target-page && opencli browser state
+When you discover drift, write a small local note under the relevant page/workflow file or a draft file in the local overlay:
 
-# Look for elements that match the adapter's intent
-# Compare the snapshot with what the adapter expects
+```md
+Stale note:
+- observed_at: YYYY-MM-DD
+- current_url:
+- expected:
+- actual:
+- next_probe:
 ```
 
-### API changed (API_ERROR, EMPTY_RESULT)
+Do not edit global seed files unless the task is explicitly a sitemap-authoring or repo PR task.
 
-```bash
-# Open page with network interceptor, then trigger the action manually
-opencli browser open https://example.com/target-page && opencli browser state
+## Adapter Health Write-Back
 
-# Interact to trigger API calls
-opencli browser click <N> && opencli browser network
+When an adapter fails and the sitemap action or workflow tells you to update adapter health:
 
-# Narrow to the request you care about by the fields its body should have
-opencli browser network --filter author,text,likes
+1. Find the local workflow file under `~/.opencli/sites/<site>/sitemap/workflows/` whose `Best path` references the adapter command.
+2. If no local workflow exists, copy the matching global workflow into the local overlay first; never edit the global seed directly during browser task execution.
+3. Set `adapter_health: suspect` or `broken` as directed.
+4. Add a short stale note with observed error, current URL, and timestamp.
+5. Continue with the browser fallback path.
 
-# Inspect specific API response (key is the `key` field from the default JSON output)
-opencli browser network --detail <key>
-```
+This write-back is the memory loop: the current agent falls back once, and the next agent does not waste a turn retrying a known-suspect adapter.
 
-## Step 4: Patch the Adapter
+---
 
-Read the adapter source file at `adapterSourcePath` from the trace summary front matter and make targeted fixes. This path is authoritative — it may be in the repo (`clis/`) or user-local (`~/.opencli/clis/`).
+## Output Discipline
 
-Use the `Read` tool on the exact path from summary.md front matter.
+When reporting back, include:
 
-### Common Fixes
+- Path chosen: adapter best path or browser fallback.
+- Checkpoint reached: current URL/state signature.
+- Sitemap health: used as-is, stale marked, or missing workflow.
 
-**Selector update:**
-```typescript
-// Before: page.evaluate('document.querySelector(".old-class")...')
-// After:  page.evaluate('document.querySelector(".new-class")...')
-```
-
-**API endpoint change:**
-```typescript
-// Before: const resp = await page.evaluate(`fetch('/api/v1/old-endpoint')...`)
-// After:  const resp = await page.evaluate(`fetch('/api/v2/new-endpoint')...`)
-```
-
-**Response schema change:**
-```typescript
-// Before: const items = data.results
-// After:  const items = data.data.items  // API now nests under "data"
-```
-
-**Wait condition update:**
-```typescript
-// Before: await page.wait({ selector: '.loading-spinner', hidden: true })
-// After:  await page.wait({ selector: '[data-loaded="true"]' })
-```
-
-### Rules for Patching
-
-1. **Make minimal changes** — fix only what's broken, don't refactor
-2. **Keep the same output structure** — `columns` and return format must stay compatible
-3. **Prefer API over DOM scraping** — if you discover a JSON API during exploration, switch to it
-4. **Use `@jackwener/opencli/*` imports only** — never add third-party package imports
-5. **Test after patching** — run the command again to verify
-6. **Never relax `verify/<cmd>.json` fixtures to silence a failure.** A failing `patterns` / `notEmpty` / `mustNotContain` / `mustBeTruthy` rule means the adapter's output is broken. Tighten the adapter so it produces correct values; do not loosen the fixture to accept the broken values. The one legitimate reason to edit a fixture during repair is when the **site itself** changed shape (e.g. URL format migration) — in that case update the fixture and note the change in `~/.opencli/sites/<site>/notes.md`. Otherwise editing the fixture is covering up a silent correctness regression.
-
-## Step 5: Verify the Fix
-
-```bash
-# Run the command normally
-opencli <site> <command> [args...]
-```
-
-If it still fails, go back to Step 1 and collect a fresh trace. You have a budget of **3 repair rounds** (trace → fix → retry). If the same error persists after a fix, try a different approach. After 3 rounds, stop and report what was tried.
-
-## Step 6: File an Upstream Issue
-
-If the retry **passes**, the local adapter has drifted from upstream. File a GitHub issue so the fix flows back to `jackwener/OpenCLI`.
-
-**Do NOT file for:**
-- `AUTH_REQUIRED`, `BROWSER_CONNECT`, `ARGUMENT`, `CONFIG` — environment/usage issues, not adapter bugs
-- CAPTCHA or rate limiting — not fixable upstream
-- Failures you couldn't actually fix (3 rounds exhausted)
-
-**Only file after a verified local fix** — the retry must pass first.
-
-**Procedure:**
-
-1. Prepare the issue content from the trace summary you already have:
-   - **Title:** `[autofix] <site>/<command>: <error_code>` (e.g. `[autofix] zhihu/hot: SELECTOR`)
-   - **Body** (use this template):
-
-```markdown
-## Summary
-OpenCLI autofix repaired this adapter locally, and the retry passed.
-
-## Adapter
-- Site: `<site>`
-- Command: `<command>`
-- OpenCLI version: `<version from opencli --version>`
-
-## Original failure
-- Error code: `<error_code>`
-
-~~~
-<error_message>
-~~~
-
-## Local fix summary
-
-~~~
-<1-2 sentence description of what you changed and why>
-~~~
-
-_Issue filed by OpenCLI autofix after a verified local repair._
-```
-
-2. **Ask the user before filing.** Show them the draft title and body. Only proceed if they confirm.
-
-3. If the user approves and `gh auth status` succeeds:
-
-```bash
-gh issue create --repo jackwener/OpenCLI \
-  --title "[autofix] <site>/<command>: <error_code>" \
-  --body "<the body above>"
-```
-
-If `gh` is not installed or not authenticated, tell the user and skip — do not error out.
-
-## When to Stop
-
-**Hard stops (do not modify code):**
-- **AUTH_REQUIRED / BROWSER_CONNECT** — environment issue, not adapter bug
-- **Site requires CAPTCHA** — can't automate this
-- **Rate limited / IP blocked** — not an adapter issue
-
-**Soft stops (report after attempting):**
-- **3 repair rounds exhausted** — stop, report what was tried and what failed
-- **Feature completely removed** — the data no longer exists
-- **Major redesign** — needs full adapter rewrite via `opencli-adapter-author` skill
-
-In all stop cases, clearly communicate the situation to the user rather than making futile patches.
-
-## Example Repair Session
-
-```
-1. User runs: opencli zhihu hot
-   → Fails: SELECTOR "Could not find element: .HotList-item"
-
-2. AI runs: opencli zhihu hot --trace retain-on-failure 2>trace-error.yaml
-   → Gets trace summary with final state and failed action evidence
-
-3. AI reads summary/state: page loaded but uses ".HotItem" instead of ".HotList-item"
-
-4. AI explores: opencli browser open https://www.zhihu.com/hot && opencli browser state
-   → Confirms new class name ".HotItem" with child ".HotItem-content"
-
-5. AI patches: Edit adapter at `adapterSourcePath` — replace ".HotList-item" with ".HotItem"
-
-6. AI verifies: opencli zhihu hot
-   → Success: returns hot topics
-
-7. AI prepares upstream issue draft, shows it to the user
-
-8. User approves → AI runs: gh issue create --repo jackwener/OpenCLI --title "[autofix] zhihu/hot: SELECTOR" --body "..."
-```
+Keep the report task-focused. Do not summarize the whole sitemap.
 
 ---
 > Source: [jackwener/opencli](https://github.com/jackwener/opencli) — distributed by [TomeVault](https://tomevault.io).
