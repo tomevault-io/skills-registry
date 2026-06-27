@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [missingfaktor/akar](https://github.com/missingfaktor/akar/tree/main/.agents/skills/release/SKILL.md)
+Original source: [missingfaktor/akar](https://github.com/missingfaktor/akar/tree/main/.agents/skills/git-commit/SKILL.md)
 
 ---
 
