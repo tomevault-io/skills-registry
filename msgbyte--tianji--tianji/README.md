@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [msgbyte/tianji](https://github.com/msgbyte/tianji/tree/main/skills/tianji-data-query/SKILL.md)
+Original source: [msgbyte/tianji](https://github.com/msgbyte/tianji/tree/main/website/i18n/id/docusaurus-plugin-content-docs/current/skill/skill.md)
 
 ---
 
