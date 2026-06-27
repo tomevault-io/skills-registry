@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nexu-io/open-design](https://github.com/nexu-io/open-design/tree/main/skills/field-notes-editorial-template/SKILL.md)
+Original source: [nexu-io/open-design](https://github.com/nexu-io/open-design/tree/main/skills/after-hours-editorial-template/SKILL.md)
 
 ---
 
