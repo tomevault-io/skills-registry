@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mkdev-me/agent-skills](https://github.com/mkdev-me/agent-skills/tree/main/openai-image-generator/SKILL.md)
+Original source: [mkdev-me/agent-skills](https://github.com/mkdev-me/agent-skills/tree/main/gemini-image-generator/SKILL.md)
 
 ---
 
