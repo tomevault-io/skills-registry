@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sonofmagic/weapp-tailwindcss](https://github.com/sonofmagic/weapp-tailwindcss/tree/main/skills/weapp-tailwindcss/SKILL.md)
+Original source: [sonofmagic/weapp-tailwindcss](https://github.com/sonofmagic/weapp-tailwindcss/tree/main/.codex/skills/playwright-cli/SKILL.md)
 
 ---
 
