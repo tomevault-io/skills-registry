@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AgoraIO/skills](https://github.com/AgoraIO/skills/tree/main/skills/agora/SKILL.md)
+Original source: [AgoraIO/skills](https://github.com/AgoraIO/skills/tree/main/skills/agora/references/testing-guidance/SKILL.md)
 
 ---
 
