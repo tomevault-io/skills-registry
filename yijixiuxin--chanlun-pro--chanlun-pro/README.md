@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yijixiuxin/chanlun-pro](https://github.com/yijixiuxin/chanlun-pro/tree/main/cookbook/skills/chanlun-pro-data/SKILL.md)
+Original source: [yijixiuxin/chanlun-pro](https://github.com/yijixiuxin/chanlun-pro/tree/main/cookbook/skills/chanlun-pro-guide/SKILL.md)
 
 ---
 
