@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [laravel/boost](https://github.com/laravel/boost/tree/main/.ai/tailwindcss/3/skill/tailwindcss-development/SKILL.md)
+Original source: [laravel/boost](https://github.com/laravel/boost/tree/main/tests/Fixtures/vendor-skills/livewire-development/SKILL.md)
 
 ---
 
