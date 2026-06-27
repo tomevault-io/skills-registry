@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [demozx/gf_cms](https://github.com/demozx/gf_cms/tree/main/.agents/skills/gf-cms/SKILL.md)
+Original source: [demozx/gf_cms](https://github.com/demozx/gf_cms/tree/main/.agents/skills/goframe-v2/SKILL.md)
 
 ---
 
