@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [davepoon/buildwithclaude](https://github.com/davepoon/buildwithclaude/tree/main/plugins/all-skills/skills/artifacts-builder/SKILL.md)
+Original source: [davepoon/buildwithclaude](https://github.com/davepoon/buildwithclaude/tree/main/plugins/agent-triforce/skills/release-check/SKILL.md)
 
 ---
 
