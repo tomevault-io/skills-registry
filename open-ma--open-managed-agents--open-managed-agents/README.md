@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [open-ma/open-managed-agents](https://github.com/open-ma/open-managed-agents/tree/main/skills/openma/SKILL.md)
+Original source: [open-ma/open-managed-agents](https://github.com/open-ma/open-managed-agents/tree/main/skills/create-agent/SKILL.md)
 
 ---
 
