@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [thinking-machines-lab/tinker-cookbook](https://github.com/thinking-machines-lab/tinker-cookbook/tree/main/skills/debug/SKILL.md)
+Original source: [thinking-machines-lab/tinker-cookbook](https://github.com/thinking-machines-lab/tinker-cookbook/tree/main/skills/research/SKILL.md)
 
 ---
 
