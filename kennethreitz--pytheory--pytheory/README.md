@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kennethreitz/pytheory](https://github.com/kennethreitz/pytheory/tree/main/plugin/plugins/composing-with-pytheory/skills/scales-modes-and-tunings-with-pytheory/SKILL.md)
+Original source: [kennethreitz/pytheory](https://github.com/kennethreitz/pytheory/tree/main/plugin/plugins/composing-with-pytheory/skills/transcription-and-notation-with-pytheory/SKILL.md)
 
 ---
 
