@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kayba-ai/recursive-improve](https://github.com/kayba-ai/recursive-improve/tree/main/recursive_improve/data/SKILL.md)
+Original source: [kayba-ai/recursive-improve](https://github.com/kayba-ai/recursive-improve/tree/main/.agents/skills/benchmark/SKILL.md)
 
 ---
 
