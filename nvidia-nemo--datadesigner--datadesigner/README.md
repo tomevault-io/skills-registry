@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA-NeMo/DataDesigner](https://github.com/NVIDIA-NeMo/DataDesigner/tree/main/skills/data-designer/SKILL.md)
+Original source: [NVIDIA-NeMo/DataDesigner](https://github.com/NVIDIA-NeMo/DataDesigner/tree/main/.agents/skills/commit/SKILL.md)
 
 ---
 
