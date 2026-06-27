@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ariel-frischer/autospec](https://github.com/ariel-frischer/autospec/tree/main/.agents/skills/autospec-tasks/SKILL.md)
+Original source: [ariel-frischer/autospec](https://github.com/ariel-frischer/autospec/tree/main/.agents/skills/autospec-analyze/SKILL.md)
 
 ---
 
