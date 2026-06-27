@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/SkillOpt](https://github.com/microsoft/SkillOpt/tree/main/plugins/codex/skills/skillopt-sleep/SKILL.md)
+Original source: [microsoft/SkillOpt](https://github.com/microsoft/SkillOpt/tree/main/plugins/claude-code/skills/skillopt-sleep/SKILL.md)
 
 ---
 
