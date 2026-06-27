@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [elevanaltd/octave-mcp](https://github.com/elevanaltd/octave-mcp/tree/main/src/octave_mcp/resources/skills/octave-mastery/SKILL.md)
+Original source: [elevanaltd/octave-mcp](https://github.com/elevanaltd/octave-mcp/tree/main/src/octave_mcp/resources/skills/octave-literacy/SKILL.md)
 
 ---
 
