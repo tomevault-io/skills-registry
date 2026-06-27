@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google/nomulus](https://github.com/google/nomulus/tree/main/.gemini/skills/pr-polisher/SKILL.md)
+Original source: [google/nomulus](https://github.com/google/nomulus/tree/main/.gemini/skills/java-ast-refactoring/SKILL.md)
 
 ---
 
