@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Human-Agent-Society/CORAL](https://github.com/Human-Agent-Society/CORAL/tree/main/coral/template/skills/deep-research/SKILL.md)
+Original source: [Human-Agent-Society/CORAL](https://github.com/Human-Agent-Society/CORAL/tree/main/coral/template/skills/organize-files/SKILL.md)
 
 ---
 
