@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheOrcDev/8bitcn-ui](https://github.com/TheOrcDev/8bitcn-ui/tree/main/.claude/skills/fumadocs-mdx-structure/SKILL.md)
+Original source: [TheOrcDev/8bitcn-ui](https://github.com/TheOrcDev/8bitcn-ui/tree/main/.claude/skills/bundle-dynamic-imports/SKILL.md)
 
 ---
 
