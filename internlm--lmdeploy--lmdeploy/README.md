@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [InternLM/lmdeploy](https://github.com/InternLM/lmdeploy/tree/main/.claude/skills/docker-build/SKILL.md)
+Original source: [InternLM/lmdeploy](https://github.com/InternLM/lmdeploy/tree/main/.claude/skills/support-new-model/SKILL.md)
 
 ---
 
