@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LalitMaganti/syntaqlite](https://github.com/LalitMaganti/syntaqlite/tree/main/.agents/skills/debug-formatter/SKILL.md)
+Original source: [LalitMaganti/syntaqlite](https://github.com/LalitMaganti/syntaqlite/tree/main/integrations/claude-code/skills/parse/SKILL.md)
 
 ---
 
