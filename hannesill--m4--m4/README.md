@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/benchmark/tasks/apsiii/mimic-apsiii-24h-raw/skills-decoy/sofa-score/SKILL.md)
+Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/benchmark/tasks/charlson/mimic-charlson-raw/skills-decoy/sofa-score/SKILL.md)
 
 ---
 
