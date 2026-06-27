@@ -1,0 +1,13 @@
+# claude-router
+
+> Skill by [0xrdan](https://github.com/0xrdan/claude-router) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [0xrdan/claude-router](https://github.com/0xrdan/claude-router/tree/main/skills/learn/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
