@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [greptileai/skills](https://github.com/greptileai/skills/tree/main/check-pr/SKILL.md)
+Original source: [greptileai/skills](https://github.com/greptileai/skills/tree/main/greploop/SKILL.md)
 
 ---
 
