@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sickn33/antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills/tree/main/plugins/antigravity-bundle-typescript-javascript/skills/nextjs-app-router-patterns/SKILL.md)
+Original source: [sickn33/antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills/tree/main/plugins/antigravity-bundle-aas-mobile-app-builder/skills/react-native-architecture/SKILL.md)
 
 ---
 
