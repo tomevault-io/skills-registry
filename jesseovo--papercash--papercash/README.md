@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Jesseovo/PaperCash](https://github.com/Jesseovo/PaperCash/tree/main/.augment/skills/papercash/SKILL.md)
+Original source: [Jesseovo/PaperCash](https://github.com/Jesseovo/PaperCash/tree/main/.windsurf/skills/papercash/SKILL.md)
 
 ---
 
