@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kotest/kotest](https://github.com/kotest/kotest/tree/main/skills/kotest/SKILL.md)
+Original source: [kotest/kotest](https://github.com/kotest/kotest/tree/main/skills/kotlin-tooling-kotest/SKILL.md)
 
 ---
 
