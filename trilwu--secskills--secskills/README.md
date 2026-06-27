@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [trilwu/secskills](https://github.com/trilwu/secskills/tree/main/secskills/skills/password-attacks/SKILL.md)
+Original source: [trilwu/secskills](https://github.com/trilwu/secskills/tree/main/secskills/skills/active-directory-attacks/SKILL.md)
 
 ---
 
