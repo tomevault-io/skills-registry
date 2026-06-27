@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dohooo/helmor](https://github.com/dohooo/helmor/tree/main/.agents/skills/helmor-cli/SKILL.md)
+Original source: [dohooo/helmor](https://github.com/dohooo/helmor/tree/main/.agents/skills/helmor-release/SKILL.md)
 
 ---
 
