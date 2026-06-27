@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openxlings/xlings](https://github.com/openxlings/xlings/tree/main/.agents/skills/xlings-build/SKILL.md)
+Original source: [openxlings/xlings](https://github.com/openxlings/xlings/tree/main/.agents/skills/xlings-usage/SKILL.md)
 
 ---
 
