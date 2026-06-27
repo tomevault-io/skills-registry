@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agent0ai/space-agent](https://github.com/agent0ai/space-agent/tree/main/app/L0/_all/mod/_core/admin/ext/skills/development/SKILL.md)
+Original source: [agent0ai/space-agent](https://github.com/agent0ai/space-agent/tree/main/app/L0/_all/mod/_core/admin/ext/skills/file-download/SKILL.md)
 
 ---
 
