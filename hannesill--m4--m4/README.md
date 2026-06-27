@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/benchmark/tasks/ventilation/mimic-ventilation-raw/skills-rawsql/mimic-ventilation-raw/SKILL.md)
+Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/benchmark/tasks/urine-output-rate/mimic-urine-output-rate-raw/skills/urine-output-rate/SKILL.md)
 
 ---
 
