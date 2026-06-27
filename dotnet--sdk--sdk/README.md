@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dotnet/sdk](https://github.com/dotnet/sdk/tree/main/.claude/skills/swa-pack-format/SKILL.md)
+Original source: [dotnet/sdk](https://github.com/dotnet/sdk/tree/main/.claude/skills/swa-troubleshooting/SKILL.md)
 
 ---
 
