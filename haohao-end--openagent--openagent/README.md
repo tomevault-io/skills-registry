@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Haohao-end/openagent](https://github.com/Haohao-end/openagent/tree/main/api/internal/core/skills/catalog/jupyter-notebook/SKILL.md)
+Original source: [Haohao-end/openagent](https://github.com/Haohao-end/openagent/tree/main/api/internal/core/skills/catalog/migrate-to-codex/SKILL.md)
 
 ---
 
