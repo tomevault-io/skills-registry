@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MiniMax-AI/skills](https://github.com/MiniMax-AI/skills/tree/main/skills/buddy-sings/SKILL.md)
+Original source: [MiniMax-AI/skills](https://github.com/MiniMax-AI/skills/tree/main/skills/flutter-dev/SKILL.md)
 
 ---
 
