@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marcusschiesser/edge-pi](https://github.com/marcusschiesser/edge-pi/tree/main/packages/edge-pi-cli/test/fixtures/skills/nested/child-skill/SKILL.md)
+Original source: [marcusschiesser/edge-pi](https://github.com/marcusschiesser/edge-pi/tree/main/packages/edge-pi-cli/test/fixtures/skills/missing-description/SKILL.md)
 
 ---
 
