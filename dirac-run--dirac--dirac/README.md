@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dirac-run/dirac](https://github.com/dirac-run/dirac/tree/main/src/core/prompts/skills/new-tool/SKILL.md)
+Original source: [dirac-run/dirac](https://github.com/dirac-run/dirac/tree/main/src/core/prompts/skills/delete-tool/SKILL.md)
 
 ---
 
