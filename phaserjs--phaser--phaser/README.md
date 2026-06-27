@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [phaserjs/phaser](https://github.com/phaserjs/phaser/tree/main/skills/filters-and-postfx/SKILL.md)
+Original source: [phaserjs/phaser](https://github.com/phaserjs/phaser/tree/main/skills/v3-to-v4-migration/SKILL.md)
 
 ---
 
