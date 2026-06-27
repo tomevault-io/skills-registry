@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lnxjedi/gopherbot](https://github.com/lnxjedi/gopherbot/tree/main/.agents/skills/gopherbot-architecture-guardrails/SKILL.md)
+Original source: [lnxjedi/gopherbot](https://github.com/lnxjedi/gopherbot/tree/main/.claude/skills/gopherbot-architecture-guardrails/SKILL.md)
 
 ---
 
