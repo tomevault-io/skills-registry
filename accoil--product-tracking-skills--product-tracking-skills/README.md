@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Accoil/product-tracking-skills](https://github.com/Accoil/product-tracking-skills/tree/main/skills/product-tracking-audit-current-tracking/SKILL.md)
+Original source: [Accoil/product-tracking-skills](https://github.com/Accoil/product-tracking-skills/tree/main/skills/product-tracking-instrument-new-feature/SKILL.md)
 
 ---
 
