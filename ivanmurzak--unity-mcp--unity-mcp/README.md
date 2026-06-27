@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [IvanMurzak/Unity-MCP](https://github.com/IvanMurzak/Unity-MCP/tree/main/Unity-MCP-Plugin/.claude/skills/type-get-json-schema/SKILL.md)
+Original source: [IvanMurzak/Unity-MCP](https://github.com/IvanMurzak/Unity-MCP/tree/main/Unity-MCP-Plugin/.claude/skills/editor-selection-get/SKILL.md)
 
 ---
 
