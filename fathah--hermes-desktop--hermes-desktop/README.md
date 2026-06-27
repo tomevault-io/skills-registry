@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fathah/hermes-desktop](https://github.com/fathah/hermes-desktop/tree/main/.agents/skills/electron-pro/SKILL.md)
+Original source: [fathah/hermes-desktop](https://github.com/fathah/hermes-desktop/tree/main/.agents/skills/typescript-expert/SKILL.md)
 
 ---
 
