@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [superplanehq/superplane](https://github.com/superplanehq/superplane/tree/main/.agents/skills/clean-code/SKILL.md)
+Original source: [superplanehq/superplane](https://github.com/superplanehq/superplane/tree/main/.cursor/skills/superplane-changelog/SKILL.md)
 
 ---
 
