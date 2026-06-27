@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [georgeguimaraes/claude-code-elixir](https://github.com/georgeguimaraes/claude-code-elixir/tree/main/plugins/elixir/skills/ecto-thinking/SKILL.md)
+Original source: [georgeguimaraes/claude-code-elixir](https://github.com/georgeguimaraes/claude-code-elixir/tree/main/plugins/elixir/skills/elixir-thinking/SKILL.md)
 
 ---
 
