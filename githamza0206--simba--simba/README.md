@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GitHamza0206/simba](https://github.com/GitHamza0206/simba/tree/main/.claude/skills/simba/deploy/skill.md)
+Original source: [GitHamza0206/simba](https://github.com/GitHamza0206/simba/tree/main/.claude/skills/customer-service-expert/SKILL.md)
 
 ---
 
