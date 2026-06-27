@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [glincker/claude-code-marketplace](https://github.com/glincker/claude-code-marketplace/tree/main/skills/devops/pr-reviewer/SKILL.md)
+Original source: [glincker/claude-code-marketplace](https://github.com/glincker/claude-code-marketplace/tree/main/skills/agents/qa-engineer/SKILL.md)
 
 ---
 
