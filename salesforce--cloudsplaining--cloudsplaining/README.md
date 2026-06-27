@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [salesforce/cloudsplaining](https://github.com/salesforce/cloudsplaining/tree/main/.claude/skills/qa-report/SKILL.md)
+Original source: [salesforce/cloudsplaining](https://github.com/salesforce/cloudsplaining/tree/main/.claude/skills/iterate-pr/SKILL.md)
 
 ---
 
