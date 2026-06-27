@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [guanyang/antigravity-skills](https://github.com/guanyang/antigravity-skills/tree/main/skills/subagent-driven-development/SKILL.md)
+Original source: [guanyang/antigravity-skills](https://github.com/guanyang/antigravity-skills/tree/main/skills/finishing-a-development-branch/SKILL.md)
 
 ---
 
