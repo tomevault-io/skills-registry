@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openvinotoolkit/nncf](https://github.com/openvinotoolkit/nncf/tree/main/.github/skills/bump_version/SKILL.md)
+Original source: [openvinotoolkit/nncf](https://github.com/openvinotoolkit/nncf/tree/main/.github/skills/workflow_writer/SKILL.md)
 
 ---
 
