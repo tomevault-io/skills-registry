@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Atipico1/hyperscribe](https://github.com/Atipico1/hyperscribe/tree/main/skills/hyperscribe-slides/SKILL.md)
+Original source: [Atipico1/hyperscribe](https://github.com/Atipico1/hyperscribe/tree/main/plugins/hyperscribe/skills/hyperscribe/SKILL.md)
 
 ---
 
