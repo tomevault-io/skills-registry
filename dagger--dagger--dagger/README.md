@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dagger/dagger](https://github.com/dagger/dagger/tree/main/skills/dagger-chores/SKILL.md)
+Original source: [dagger/dagger](https://github.com/dagger/dagger/tree/main/skills/telemetry-capture/SKILL.md)
 
 ---
 
