@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eosphoros-ai/DB-GPT](https://github.com/eosphoros-ai/DB-GPT/tree/main/skills/skill-creator/SKILL.md)
+Original source: [eosphoros-ai/DB-GPT](https://github.com/eosphoros-ai/DB-GPT/tree/main/skills/agent-browser/SKILL.md)
 
 ---
 
