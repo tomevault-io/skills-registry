@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vibeinging/YiYi](https://github.com/vibeinging/YiYi/tree/main/app/src-tauri/skills/docx/SKILL.md)
+Original source: [vibeinging/YiYi](https://github.com/vibeinging/YiYi/tree/main/app/src-tauri/skills/xlsx/SKILL.md)
 
 ---
 
