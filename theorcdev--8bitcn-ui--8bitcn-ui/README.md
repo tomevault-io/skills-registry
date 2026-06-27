@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheOrcDev/8bitcn-ui](https://github.com/TheOrcDev/8bitcn-ui/tree/main/.claude/skills/rerender-memo/SKILL.md)
+Original source: [TheOrcDev/8bitcn-ui](https://github.com/TheOrcDev/8bitcn-ui/tree/main/.claude/skills/js-early-exit/SKILL.md)
 
 ---
 
