@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [davepoon/buildwithclaude](https://github.com/davepoon/buildwithclaude/tree/main/plugins/mortgage/skills/mortgage-loan-officer/SKILL.md)
+Original source: [davepoon/buildwithclaude](https://github.com/davepoon/buildwithclaude/tree/main/plugins/startup-superpowers/skills/interviews/SKILL.md)
 
 ---
 
