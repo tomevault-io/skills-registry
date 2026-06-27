@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cjmellor/level-up](https://github.com/cjmellor/level-up/tree/main/resources/boost/skills/level-up-upgrade-v2/SKILL.md)
+Original source: [cjmellor/level-up](https://github.com/cjmellor/level-up/tree/main/resources/boost/skills/level-up-development/SKILL.md)
 
 ---
 
