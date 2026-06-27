@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [okteto/okteto](https://github.com/okteto/okteto/tree/main/.claude/skills/lessons/SKILL.md)
+Original source: [okteto/okteto](https://github.com/okteto/okteto/tree/main/.claude/skills/fix-cves/SKILL.md)
 
 ---
 
