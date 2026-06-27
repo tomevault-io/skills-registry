@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA-NeMo/Gym](https://github.com/NVIDIA-NeMo/Gym/tree/main/.claude/skills/nemo-gym-pivot-datasets/SKILL.md)
+Original source: [NVIDIA-NeMo/Gym](https://github.com/NVIDIA-NeMo/Gym/tree/main/.codex/skills/nemo-gym-reward-profiling/SKILL.md)
 
 ---
 
