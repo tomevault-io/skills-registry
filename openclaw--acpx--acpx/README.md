@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openclaw/acpx](https://github.com/openclaw/acpx/tree/main/skills/acpx/SKILL.md)
+Original source: [openclaw/acpx](https://github.com/openclaw/acpx/tree/main/.agents/skills/crabbox/SKILL.md)
 
 ---
 
