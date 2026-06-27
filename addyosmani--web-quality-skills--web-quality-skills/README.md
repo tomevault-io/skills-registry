@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [addyosmani/web-quality-skills](https://github.com/addyosmani/web-quality-skills/tree/main/skills/core-web-vitals/SKILL.md)
+Original source: [addyosmani/web-quality-skills](https://github.com/addyosmani/web-quality-skills/tree/main/skills/web-quality-audit/SKILL.md)
 
 ---
 
