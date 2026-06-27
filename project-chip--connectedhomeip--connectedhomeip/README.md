@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [project-chip/connectedhomeip](https://github.com/project-chip/connectedhomeip/tree/main/.agents/skills/code-driven-cluster-migration/SKILL.md)
+Original source: [project-chip/connectedhomeip](https://github.com/project-chip/connectedhomeip/tree/main/.agents/skills/code-driven-cluster-development/SKILL.md)
 
 ---
 
