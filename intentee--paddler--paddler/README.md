@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [intentee/paddler](https://github.com/intentee/paddler/tree/main/.claude/skills/running-coverage/SKILL.md)
+Original source: [intentee/paddler](https://github.com/intentee/paddler/tree/main/.claude/skills/running-all-tests/SKILL.md)
 
 ---
 
