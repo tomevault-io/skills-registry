@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wshobson/agents](https://github.com/wshobson/agents/tree/main/plugins/cloud-infrastructure/skills/hybrid-cloud-networking/SKILL.md)
+Original source: [wshobson/agents](https://github.com/wshobson/agents/tree/main/plugins/reverse-engineering/skills/binary-analysis-patterns/SKILL.md)
 
 ---
 
