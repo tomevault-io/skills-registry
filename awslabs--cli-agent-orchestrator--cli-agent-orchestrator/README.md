@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [awslabs/cli-agent-orchestrator](https://github.com/awslabs/cli-agent-orchestrator/tree/main/src/cli_agent_orchestrator/skills/cao-session-management/SKILL.md)
+Original source: [awslabs/cli-agent-orchestrator](https://github.com/awslabs/cli-agent-orchestrator/tree/main/src/cli_agent_orchestrator/skills/cao-supervisor-protocols/SKILL.md)
 
 ---
 
