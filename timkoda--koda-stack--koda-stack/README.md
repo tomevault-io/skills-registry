@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [timkoda/koda-stack](https://github.com/timkoda/koda-stack/tree/main/skills/storyboard/SKILL.md)
+Original source: [timkoda/koda-stack](https://github.com/timkoda/koda-stack/tree/main/skills/art-direction/SKILL.md)
 
 ---
 
