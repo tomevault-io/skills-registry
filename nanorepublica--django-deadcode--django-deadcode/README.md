@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nanorepublica/django-deadcode](https://github.com/nanorepublica/django-deadcode/tree/main/.claude/skills/frontend-responsive/SKILL.md)
+Original source: [nanorepublica/django-deadcode](https://github.com/nanorepublica/django-deadcode/tree/main/.claude/skills/global-coding-style/SKILL.md)
 
 ---
 
