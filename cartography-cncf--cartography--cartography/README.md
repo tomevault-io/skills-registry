@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cartography-cncf/cartography](https://github.com/cartography-cncf/cartography/tree/main/.agents/skills/cubic-audit/SKILL.md)
+Original source: [cartography-cncf/cartography](https://github.com/cartography-cncf/cartography/tree/main/.agents/skills/analysis-jobs/SKILL.md)
 
 ---
 
