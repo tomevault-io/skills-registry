@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dog-qiuqiu/invincat](https://github.com/dog-qiuqiu/invincat/tree/main/invincat_cli/built_in_skills/docx/SKILL.md)
+Original source: [dog-qiuqiu/invincat](https://github.com/dog-qiuqiu/invincat/tree/main/invincat_cli/built_in_skills/pptx/SKILL.md)
 
 ---
 
