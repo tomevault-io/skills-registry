@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openJiuwen-ai/jiuwenswarm](https://github.com/openJiuwen-ai/jiuwenswarm/tree/main/jiuwenswarm/resources/agent/workspace/skills/ascend-moe-optimizer-auto-trace/SKILL.md)
+Original source: [openJiuwen-ai/jiuwenswarm](https://github.com/openJiuwen-ai/jiuwenswarm/tree/main/jiuwenswarm/resources/agent/workspace/skills/cross-channel-history-retrieval/SKILL.md)
 
 ---
 
