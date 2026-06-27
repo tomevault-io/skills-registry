@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lestrrat-go/jwx](https://github.com/lestrrat-go/jwx/tree/main/agents/plugin/skills/guide/SKILL.md)
+Original source: [lestrrat-go/jwx](https://github.com/lestrrat-go/jwx/tree/main/.claude/skills/jwx-companion-bulk/SKILL.md)
 
 ---
 
