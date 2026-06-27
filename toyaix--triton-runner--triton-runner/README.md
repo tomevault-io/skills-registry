@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [toyaix/triton-runner](https://github.com/toyaix/triton-runner/tree/main/skills/triton-version-support/SKILL.md)
+Original source: [toyaix/triton-runner](https://github.com/toyaix/triton-runner/tree/main/skills/triton-generate-artifacts/SKILL.md)
 
 ---
 
