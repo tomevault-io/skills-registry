@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [josstei/maestro-orchestrate](https://github.com/josstei/maestro-orchestrate/tree/main/claude/src/skills/shared/code-review/SKILL.md)
+Original source: [josstei/maestro-orchestrate](https://github.com/josstei/maestro-orchestrate/tree/main/plugins/maestro/skills/debug-workflow/SKILL.md)
 
 ---
 
