@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xigua-wang/skill-doctor](https://github.com/xigua-wang/skill-doctor/tree/main/examples/demo-workspace/.agents/skills/release-guard/SKILL.md)
+Original source: [xigua-wang/skill-doctor](https://github.com/xigua-wang/skill-doctor/tree/main/examples/demo-workspace/.codex/skills/release-guard-v2/SKILL.md)
 
 ---
 
