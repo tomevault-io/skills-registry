@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [firebase/firebase-tools](https://github.com/firebase/firebase-tools/tree/main/.agent/skills/update-pubsub-emulator/SKILL.md)
+Original source: [firebase/firebase-tools](https://github.com/firebase/firebase-tools/tree/main/.agent/skills/resolve-docker-vulnerabilities/SKILL.md)
 
 ---
 
