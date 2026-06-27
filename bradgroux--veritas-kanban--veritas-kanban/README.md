@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [BradGroux/veritas-kanban](https://github.com/BradGroux/veritas-kanban/tree/main/server/src/__fixtures__/skill-security/malicious/persistence/SKILL.md)
+Original source: [BradGroux/veritas-kanban](https://github.com/BradGroux/veritas-kanban/tree/main/server/src/__fixtures__/skill-security/benign/review-checklist/SKILL.md)
 
 ---
 
