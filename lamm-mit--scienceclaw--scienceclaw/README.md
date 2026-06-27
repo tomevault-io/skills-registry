@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lamm-mit/scienceclaw](https://github.com/lamm-mit/scienceclaw/tree/main/skills/iso-13485-certification/SKILL.md)
+Original source: [lamm-mit/scienceclaw](https://github.com/lamm-mit/scienceclaw/tree/main/skills/multi-omics-integration/SKILL.md)
 
 ---
 
