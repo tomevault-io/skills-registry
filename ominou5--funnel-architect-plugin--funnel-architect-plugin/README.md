@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ominou5/funnel-architect-plugin](https://github.com/ominou5/funnel-architect-plugin/tree/main/skills/webinar-funnel/SKILL.md)
+Original source: [ominou5/funnel-architect-plugin](https://github.com/ominou5/funnel-architect-plugin/tree/main/skills/deploy-netlify/SKILL.md)
 
 ---
 
