@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [boshi-xixixi/TraeSkill](https://github.com/boshi-xixixi/TraeSkill/tree/main/.trae/Skills/.agents/skills/create-architectural-decision-record/SKILL.md)
+Original source: [boshi-xixixi/TraeSkill](https://github.com/boshi-xixixi/TraeSkill/tree/main/.trae/Skills/.agents/skills/java-add-graalvm-native-image-support/SKILL.md)
 
 ---
 
