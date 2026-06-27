@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [minhnv0807/ai-business-skills](https://github.com/minhnv0807/ai-business-skills/tree/main/modules/personal-branding/en/25-voice-clone-podcast-global/SKILL.md)
+Original source: [minhnv0807/ai-business-skills](https://github.com/minhnv0807/ai-business-skills/tree/main/modules/personal-branding/en/24-ai-avatar-production-global/SKILL.md)
 
 ---
 
