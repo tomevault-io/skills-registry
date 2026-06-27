@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [worktale/worktale-cli](https://github.com/worktale/worktale-cli/tree/main/worktale-plugin/skills/worktale/SKILL.md)
+Original source: [worktale/worktale-cli](https://github.com/worktale/worktale-cli/tree/main/worktale-codex-plugin/skills/worktale/SKILL.md)
 
 ---
 
