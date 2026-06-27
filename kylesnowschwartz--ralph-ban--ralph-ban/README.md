@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kylesnowschwartz/ralph-ban](https://github.com/kylesnowschwartz/ralph-ban/tree/main/skills/db-state-qa/SKILL.md)
+Original source: [kylesnowschwartz/ralph-ban](https://github.com/kylesnowschwartz/ralph-ban/tree/main/skills/rb-brainstorm/SKILL.md)
 
 ---
 
