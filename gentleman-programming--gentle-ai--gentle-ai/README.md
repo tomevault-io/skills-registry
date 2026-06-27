@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Gentleman-Programming/gentle-ai](https://github.com/Gentleman-Programming/gentle-ai/tree/main/internal/assets/skills/sdd-tasks/SKILL.md)
+Original source: [Gentleman-Programming/gentle-ai](https://github.com/Gentleman-Programming/gentle-ai/tree/main/internal/assets/skills/sdd-verify/SKILL.md)
 
 ---
 
