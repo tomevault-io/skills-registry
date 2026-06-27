@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [keploy/keploy](https://github.com/keploy/keploy/tree/main/.claude/skills/keploy-e2e-test/SKILL.md)
+Original source: [keploy/keploy](https://github.com/keploy/keploy/tree/main/.claude/skills/keploy-pr-workflow/SKILL.md)
 
 ---
 
