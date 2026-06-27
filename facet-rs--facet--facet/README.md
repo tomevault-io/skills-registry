@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [facet-rs/facet](https://github.com/facet-rs/facet/tree/main/.claude/skills/debug-with-valgrind/SKILL.md)
+Original source: [facet-rs/facet](https://github.com/facet-rs/facet/tree/main/.claude/skills/reproduce-reduce-regress/SKILL.md)
 
 ---
 
