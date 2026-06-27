@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [guanyang/antigravity-skills](https://github.com/guanyang/antigravity-skills/tree/main/skills/context-optimization/SKILL.md)
+Original source: [guanyang/antigravity-skills](https://github.com/guanyang/antigravity-skills/tree/main/skills/multi-agent-patterns/SKILL.md)
 
 ---
 
