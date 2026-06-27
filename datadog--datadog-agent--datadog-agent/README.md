@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DataDog/datadog-agent](https://github.com/DataDog/datadog-agent/tree/main/.claude/skills/quality-gate-size-analysis/SKILL.md)
+Original source: [DataDog/datadog-agent](https://github.com/DataDog/datadog-agent/tree/main/.claude/skills/agent-supply-chain-newsletter/SKILL.md)
 
 ---
 
