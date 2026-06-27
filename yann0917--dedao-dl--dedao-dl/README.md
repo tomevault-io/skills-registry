@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yann0917/dedao-dl](https://github.com/yann0917/dedao-dl/tree/main/skills/dedao-dl-usage/SKILL.md)
+Original source: [yann0917/dedao-dl](https://github.com/yann0917/dedao-dl/tree/main/skills/dedao-dl-commands/SKILL.md)
 
 ---
 
