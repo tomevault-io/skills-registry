@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bartholomej/node-csfd-api](https://github.com/bartholomej/node-csfd-api/tree/main/.agent/skills/add_mcp_tool/SKILL.md)
+Original source: [bartholomej/node-csfd-api](https://github.com/bartholomej/node-csfd-api/tree/main/.agent/skills/validate_changes/SKILL.md)
 
 ---
 
