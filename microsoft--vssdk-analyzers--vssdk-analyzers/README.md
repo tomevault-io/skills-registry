@@ -1,0 +1,13 @@
+# VSSDK-Analyzers
+
+> Skill by [microsoft](https://github.com/microsoft/VSSDK-Analyzers) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [microsoft/VSSDK-Analyzers](https://github.com/microsoft/VSSDK-Analyzers/tree/main/.github/skills/update-library-template/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
