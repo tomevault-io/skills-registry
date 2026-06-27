@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dexhunter/seedance2-skill](https://github.com/dexhunter/seedance2-skill/tree/main/SKILL.md)
+Original source: [dexhunter/seedance2-skill](https://github.com/dexhunter/seedance2-skill/tree/main/zh/SKILL.md)
 
 ---
 
