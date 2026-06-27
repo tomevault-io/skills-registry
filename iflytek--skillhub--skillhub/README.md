@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [iflytek/skillhub](https://github.com/iflytek/skillhub/tree/main/.agents/skills/dev-workflow/SKILL.md)
+Original source: [iflytek/skillhub](https://github.com/iflytek/skillhub/tree/main/.agents/skills/pr-submission/SKILL.md)
 
 ---
 
