@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Apicurio/apicurio-registry](https://github.com/Apicurio/apicurio-registry/tree/main/.claude/skills/sdk-update/SKILL.md)
+Original source: [Apicurio/apicurio-registry](https://github.com/Apicurio/apicurio-registry/tree/main/.claude/skills/security-review/SKILL.md)
 
 ---
 
