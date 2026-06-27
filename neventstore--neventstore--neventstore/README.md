@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NEventStore/NEventStore](https://github.com/NEventStore/NEventStore/tree/main/.agents/skills/git-gh-pat-auth/SKILL.md)
+Original source: [NEventStore/NEventStore](https://github.com/NEventStore/NEventStore/tree/main/.agents/skills/add-persistence-or-serializer/SKILL.md)
 
 ---
 
