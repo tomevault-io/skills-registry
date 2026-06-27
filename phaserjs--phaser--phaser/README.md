@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [phaserjs/phaser](https://github.com/phaserjs/phaser/tree/main/skills/curves-and-paths/SKILL.md)
+Original source: [phaserjs/phaser](https://github.com/phaserjs/phaser/tree/main/skills/geometry-and-math/SKILL.md)
 
 ---
 
