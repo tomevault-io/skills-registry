@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stablyai/orca](https://github.com/stablyai/orca/tree/main/skills/orca-emulator/SKILL.md)
+Original source: [stablyai/orca](https://github.com/stablyai/orca/tree/main/skills/orchestration/SKILL.md)
 
 ---
 
