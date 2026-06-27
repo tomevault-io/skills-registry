@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gmh5225/awesome-game-security](https://github.com/gmh5225/awesome-game-security/tree/main/.claude/skills/graphics-api/SKILL.md)
+Original source: [gmh5225/awesome-game-security](https://github.com/gmh5225/awesome-game-security/tree/main/.claude/skills/windows-kernel/SKILL.md)
 
 ---
 
