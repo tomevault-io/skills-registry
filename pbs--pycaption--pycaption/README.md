@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pbs/pycaption](https://github.com/pbs/pycaption/tree/main/.claude/skills/check-scc-compliance/skill.md)
+Original source: [pbs/pycaption](https://github.com/pbs/pycaption/tree/main/.claude/skills/check-vtt-compliance/skill.md)
 
 ---
 
