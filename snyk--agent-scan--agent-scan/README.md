@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [snyk/agent-scan](https://github.com/snyk/agent-scan/tree/main/tests/skills/xlsx/SKILL.md)
+Original source: [snyk/agent-scan](https://github.com/snyk/agent-scan/tree/main/tests/skills/pptx/SKILL.md)
 
 ---
 
