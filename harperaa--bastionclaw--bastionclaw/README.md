@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [harperaa/bastionclaw](https://github.com/harperaa/bastionclaw/tree/main/.claude/skills/youtube-content-creator/SKILL.md)
+Original source: [harperaa/bastionclaw](https://github.com/harperaa/bastionclaw/tree/main/container/skills/youtube-content-creator/SKILL.md)
 
 ---
 
