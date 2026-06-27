@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bytonylee/future-slide-skill](https://github.com/bytonylee/future-slide-skill/tree/main/skills/html-slide/SKILL.md)
+Original source: [bytonylee/future-slide-skill](https://github.com/bytonylee/future-slide-skill/tree/main/skills/slide-design/SKILL.md)
 
 ---
 
