@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tokio-rs/toasty](https://github.com/tokio-rs/toasty/tree/main/.agents/skills/write-tests/SKILL.md)
+Original source: [tokio-rs/toasty](https://github.com/tokio-rs/toasty/tree/main/.agents/skills/dynamodb-tests/SKILL.md)
 
 ---
 
