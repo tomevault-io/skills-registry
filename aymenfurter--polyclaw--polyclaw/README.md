@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aymenfurter/polyclaw](https://github.com/aymenfurter/polyclaw/tree/main/plugins/second-brain-workiq/skills/weekly-review/SKILL.md)
+Original source: [aymenfurter/polyclaw](https://github.com/aymenfurter/polyclaw/tree/main/plugins/foundry-agents/skills/foundry-agent-chat/SKILL.md)
 
 ---
 
