@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MCKRUZ/ComfyUI-Expert](https://github.com/MCKRUZ/ComfyUI-Expert/tree/main/skills/comfyui-api/SKILL.md)
+Original source: [MCKRUZ/ComfyUI-Expert](https://github.com/MCKRUZ/ComfyUI-Expert/tree/main/skills/video-assembly/SKILL.md)
 
 ---
 
