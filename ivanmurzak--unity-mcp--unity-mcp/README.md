@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [IvanMurzak/Unity-MCP](https://github.com/IvanMurzak/Unity-MCP/tree/main/Unity-MCP-Plugin/.claude/skills/profiler-get-memory-stats/SKILL.md)
+Original source: [IvanMurzak/Unity-MCP](https://github.com/IvanMurzak/Unity-MCP/tree/main/Unity-MCP-Plugin/.claude/skills/profiler-get-script-stats/SKILL.md)
 
 ---
 
