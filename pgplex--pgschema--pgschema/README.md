@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pgplex/pgschema](https://github.com/pgplex/pgschema/tree/main/.claude/skills/postgres_syntax/SKILL.md)
+Original source: [pgplex/pgschema](https://github.com/pgplex/pgschema/tree/main/.claude/skills/review_comments/SKILL.md)
 
 ---
 
