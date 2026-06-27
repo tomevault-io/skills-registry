@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dmno-dev/varlock](https://github.com/dmno-dev/varlock/tree/main/packages/varlock-website/public/.well-known/agent-skills/varlock-docs-search/SKILL.md)
+Original source: [dmno-dev/varlock](https://github.com/dmno-dev/varlock/tree/main/packages/varlock-website/public/.well-known/agent-skills/varlock-agent-readiness/SKILL.md)
 
 ---
 
