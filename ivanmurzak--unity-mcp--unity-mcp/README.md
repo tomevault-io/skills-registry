@@ -1,0 +1,13 @@
+# Unity-MCP
+
+> Skill by [IvanMurzak](https://github.com/IvanMurzak/Unity-MCP) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [IvanMurzak/Unity-MCP](https://github.com/IvanMurzak/Unity-MCP/tree/main/.claude/skills/build-cli/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
