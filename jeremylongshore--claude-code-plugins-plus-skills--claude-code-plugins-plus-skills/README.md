@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jeremylongshore/claude-code-plugins-plus-skills](https://github.com/jeremylongshore/claude-code-plugins-plus-skills/tree/main/plugins/crypto/crypto-derivatives-tracker/skills/tracking-crypto-derivatives/SKILL.md)
+Original source: [jeremylongshore/claude-code-plugins-plus-skills](https://github.com/jeremylongshore/claude-code-plugins-plus-skills/tree/main/plugins/database/database-sharding-manager/skills/managing-database-sharding/SKILL.md)
 
 ---
 
