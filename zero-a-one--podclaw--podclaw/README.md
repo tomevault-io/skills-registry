@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ZERO-A-ONE/PodClaw](https://github.com/ZERO-A-ONE/PodClaw/tree/main/podcast-generator/SKILL.md)
+Original source: [ZERO-A-ONE/PodClaw](https://github.com/ZERO-A-ONE/PodClaw/tree/main/zotero-inbox-builder/SKILL.md)
 
 ---
 
