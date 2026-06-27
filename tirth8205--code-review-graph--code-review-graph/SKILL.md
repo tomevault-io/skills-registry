@@ -1,43 +1,34 @@
 ---
-name: build-graph
-description: Build or update the code review knowledge graph. Run this first to initialize, or let hooks keep it updated automatically. Use when this capability is needed.
+name: explore-codebase
+description: Navigate and understand codebase structure using the knowledge graph Use when this capability is needed.
 metadata:
   author: tirth8205
 ---
 
-# Build Graph
+## Explore Codebase
 
-Build or incrementally update the persistent code knowledge graph for this repository.
+Use the code-review-graph MCP tools to explore and understand the codebase.
 
-## Steps
+### Steps
 
-1. **Check graph status** by calling the `list_graph_stats_tool` MCP tool.
-   - If the graph has never been built (last_updated is null), proceed with a full build.
-   - If the graph exists, proceed with an incremental update.
+1. Run `list_graph_stats` to see overall codebase metrics.
+2. Run `get_architecture_overview_tool` for high-level community structure.
+3. Use `list_communities_tool` to find major modules, then `get_community` for details.
+4. Use `semantic_search_nodes_tool` to find specific functions or classes.
+5. Use `query_graph_tool` with patterns like `callers_of`, `callees_of`, `imports_of` to trace relationships.
+6. Use `list_flows` and `get_flow` to understand execution paths.
 
-2. **Build the graph** by calling the `build_or_update_graph_tool` MCP tool:
-   - For first-time setup: `build_or_update_graph_tool(full_rebuild=True)`
-   - For updates: `build_or_update_graph_tool()` (incremental by default)
+### Tips
 
-3. **Verify** by calling `list_graph_stats_tool` again and report the results:
-   - Number of files parsed
-   - Number of nodes and edges created
-   - Languages detected
-   - Any errors encountered
+- Start broad (stats, architecture) then narrow down to specific areas.
+- Use `children_of` on a file to see all its functions and classes.
+- Use `find_large_functions` to identify complex code.
 
-## When to Use
-
-- First time setting up the graph for a repository
-- After major refactoring or branch switches
-- If the graph seems stale or out of sync
-- The graph auto-updates via hooks on edit/commit, so manual builds are rarely needed
-
-## Notes
-
-- The graph is stored as a SQLite database (`.code-review-graph/graph.db`) in the repo root
-- Binary files, generated files, and patterns in `.code-review-graphignore` are skipped
-- Supported languages: Python, TypeScript/JavaScript, Vue, Go, Rust, Java, Scala, C#, Ruby, Kotlin, Swift, PHP, Solidity, C/C++
+## Token Efficiency Rules
+- ALWAYS start with `get_minimal_context(task="<your task>")` before any other graph tool.
+- Use `detail_level="minimal"` on all calls. Only escalate to "standard" when minimal is insufficient.
+- Target: complete any review/debug/refactor task in ≤5 tool calls and ≤800 total output tokens.
 
 ---
 > Source: [tirth8205/code-review-graph](https://github.com/tirth8205/code-review-graph) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-24 -->
+<!-- tomevault:4.0:skill_md:2026-06-25 -->
