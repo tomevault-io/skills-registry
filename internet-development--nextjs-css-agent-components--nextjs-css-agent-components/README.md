@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [internet-development/nextjs-css-agent-components](https://github.com/internet-development/nextjs-css-agent-components/tree/main/public/skills/build-app-page/SKILL.md)
+Original source: [internet-development/nextjs-css-agent-components](https://github.com/internet-development/nextjs-css-agent-components/tree/main/public/skills/export-component-to-other-repo/SKILL.md)
 
 ---
 
