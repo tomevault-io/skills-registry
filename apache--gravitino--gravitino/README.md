@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [apache/gravitino](https://github.com/apache/gravitino/tree/main/agent-skills/trino-test/SKILL.md)
+Original source: [apache/gravitino](https://github.com/apache/gravitino/tree/main/agent-skills/gravitino-release/SKILL.md)
 
 ---
 
