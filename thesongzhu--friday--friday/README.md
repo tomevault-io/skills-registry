@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [thesongzhu/Friday](https://github.com/thesongzhu/Friday/tree/main/managed-skills/webchat-channel-status/SKILL.md)
+Original source: [thesongzhu/Friday](https://github.com/thesongzhu/Friday/tree/main/managed-skills/system-health-snapshot/SKILL.md)
 
 ---
 
