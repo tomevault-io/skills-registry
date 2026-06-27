@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tomascupr/sandstorm](https://github.com/tomascupr/sandstorm/tree/main/examples/security-auditor/.claude/skills/owasp-top-10/SKILL.md)
+Original source: [tomascupr/sandstorm](https://github.com/tomascupr/sandstorm/tree/main/src/sandstorm/starters/security-audit/claude-skills/owasp-top-10/SKILL.md)
 
 ---
 
