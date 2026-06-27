@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gogs/gogs](https://github.com/gogs/gogs/tree/main/.agents/skills/ghsa/SKILL.md)
+Original source: [gogs/gogs](https://github.com/gogs/gogs/tree/main/.agents/skills/react-doctor/SKILL.md)
 
 ---
 
