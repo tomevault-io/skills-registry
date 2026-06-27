@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [datachain-ai/datachain](https://github.com/datachain-ai/datachain/tree/main/src/datachain/skill/core/SKILL.md)
+Original source: [datachain-ai/datachain](https://github.com/datachain-ai/datachain/tree/main/src/datachain/skill/jobs/SKILL.md)
 
 ---
 
