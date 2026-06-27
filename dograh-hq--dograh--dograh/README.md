@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dograh-hq/dograh](https://github.com/dograh-hq/dograh/tree/main/.agents/skills/review-pr/SKILL.md)
+Original source: [dograh-hq/dograh](https://github.com/dograh-hq/dograh/tree/main/.agents/skills/review-agents-md/SKILL.md)
 
 ---
 
