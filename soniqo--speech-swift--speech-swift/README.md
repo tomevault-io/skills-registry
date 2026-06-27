@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [soniqo/speech-swift](https://github.com/soniqo/speech-swift/tree/main/.claude/skills/test/SKILL.md)
+Original source: [soniqo/speech-swift](https://github.com/soniqo/speech-swift/tree/main/.claude/skills/build/SKILL.md)
 
 ---
 
