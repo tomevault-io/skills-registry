@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jmagar/claude-homelab](https://github.com/jmagar/claude-homelab/tree/main/skills/bytestash/SKILL.md)
+Original source: [jmagar/claude-homelab](https://github.com/jmagar/claude-homelab/tree/main/skills/notebooklm/SKILL.md)
 
 ---
 
