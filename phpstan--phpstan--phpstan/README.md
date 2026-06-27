@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [phpstan/phpstan](https://github.com/phpstan/phpstan/tree/main/.claude/skills/run-on-3v4l/SKILL.md)
+Original source: [phpstan/phpstan](https://github.com/phpstan/phpstan/tree/main/.claude/skills/analyse-with-phpstan/SKILL.md)
 
 ---
 
