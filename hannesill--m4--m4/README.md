@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/benchmark/tasks/urine-output-rate/mimic-urine-output-rate-raw/skills-rawsql/mimic-urine-output-rate-raw/SKILL.md)
+Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/benchmark/tasks/vasopressor-equivalents/mimic-vasopressor-equivalents-raw/skills-decoy/kdigo-aki-staging/SKILL.md)
 
 ---
 
