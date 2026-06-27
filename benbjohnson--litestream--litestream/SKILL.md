@@ -321,5 +321,5 @@ Run `scripts/validate-setup.sh` to verify your development environment is
 correctly configured for Litestream development.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/benbjohnson) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [benbjohnson/litestream](https://github.com/benbjohnson/litestream) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-27 -->
