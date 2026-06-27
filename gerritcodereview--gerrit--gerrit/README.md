@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GerritCodeReview/gerrit](https://github.com/GerritCodeReview/gerrit/tree/main/configs/skills/gerrit_hygiene_operations/SKILL.md)
+Original source: [GerritCodeReview/gerrit](https://github.com/GerritCodeReview/gerrit/tree/main/configs/skills/gerrit_commit_message_review/SKILL.md)
 
 ---
 
