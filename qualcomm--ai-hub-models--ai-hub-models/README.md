@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [qualcomm/ai-hub-models](https://github.com/qualcomm/ai-hub-models/tree/main/.claude/skills/kb-weekly-update/SKILL.md)
+Original source: [qualcomm/ai-hub-models](https://github.com/qualcomm/ai-hub-models/tree/main/.claude/skills/scorecard-analyze/SKILL.md)
 
 ---
 
