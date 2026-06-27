@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AditiKraft/Krafter](https://github.com/AditiKraft/Krafter/tree/main/.opencode/skill/aspire/SKILL.md)
+Original source: [AditiKraft/Krafter](https://github.com/AditiKraft/Krafter/tree/main/.github/skills/aspire/SKILL.md)
 
 ---
 
