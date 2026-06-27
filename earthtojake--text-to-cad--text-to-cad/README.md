@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad/tree/main/skills/gcode/SKILL.md)
+Original source: [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad/tree/main/skills/step-parts/SKILL.md)
 
 ---
 
