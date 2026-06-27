@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gricha/dangerous-skills](https://github.com/gricha/dangerous-skills/tree/main/skills/pr-summary/SKILL.md)
+Original source: [gricha/dangerous-skills](https://github.com/gricha/dangerous-skills/tree/main/skills/test-helper/SKILL.md)
 
 ---
 
