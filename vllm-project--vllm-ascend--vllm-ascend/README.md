@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vllm-project/vllm-ascend](https://github.com/vllm-project/vllm-ascend/tree/main/.agents/skills/vllm-ascend-release/SKILL.md)
+Original source: [vllm-project/vllm-ascend](https://github.com/vllm-project/vllm-ascend/tree/main/.agents/skills/vllm-ascend-model-adapter/SKILL.md)
 
 ---
 
