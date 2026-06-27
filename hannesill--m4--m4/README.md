@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/benchmark/tasks/oasis/mimic-oasis-24h-raw/skills/oasis-score/SKILL.md)
+Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/benchmark/tasks/gcs/mimic-gcs-24h-raw/skills/gcs-calculation/SKILL.md)
 
 ---
 
