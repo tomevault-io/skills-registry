@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GoogleCloudPlatform/k8s-config-connector](https://github.com/GoogleCloudPlatform/k8s-config-connector/tree/main/.gemini/skills/kcc-direct-base-types-implementer/SKILL.md)
+Original source: [GoogleCloudPlatform/k8s-config-connector](https://github.com/GoogleCloudPlatform/k8s-config-connector/tree/main/mockgcp/.gemini/skills/move-away-from-grpc-gateway/skill.md)
 
 ---
 
