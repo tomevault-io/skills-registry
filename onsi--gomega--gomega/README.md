@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [onsi/gomega](https://github.com/onsi/gomega/tree/main/plugins/gomega/skills/gbytes/SKILL.md)
+Original source: [onsi/gomega](https://github.com/onsi/gomega/tree/main/plugins/gomega/skills/gstruct/SKILL.md)
 
 ---
 
