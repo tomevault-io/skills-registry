@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DeepFundAI/ai-browser](https://github.com/DeepFundAI/ai-browser/tree/main/resources/skills/page-summary/SKILL.md)
+Original source: [DeepFundAI/ai-browser](https://github.com/DeepFundAI/ai-browser/tree/main/resources/skills/research-report/SKILL.md)
 
 ---
 
