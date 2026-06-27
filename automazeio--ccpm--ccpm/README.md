@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [automazeio/ccpm](https://github.com/automazeio/ccpm/tree/main/skill/ccpm)
+Original source: [automazeio/ccpm](https://github.com/automazeio/ccpm/tree/main/skill/ccpm/SKILL.md)
 
 ---
 
