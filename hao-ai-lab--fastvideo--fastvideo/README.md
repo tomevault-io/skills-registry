@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hao-ai-lab/FastVideo](https://github.com/hao-ai-lab/FastVideo/tree/main/.agents/skills/summarize-run/SKILL.md)
+Original source: [hao-ai-lab/FastVideo](https://github.com/hao-ai-lab/FastVideo/tree/main/.agents/skills/add-rl-method/SKILL.md)
 
 ---
 
