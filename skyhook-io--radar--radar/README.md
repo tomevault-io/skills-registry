@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [skyhook-io/radar](https://github.com/skyhook-io/radar/tree/main/.agents/skills/test-radar/SKILL.md)
+Original source: [skyhook-io/radar](https://github.com/skyhook-io/radar/tree/main/.agents/skills/visual-test/SKILL.md)
 
 ---
 
