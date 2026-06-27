@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [haseeb-heaven/gworkspace-agent](https://github.com/haseeb-heaven/gworkspace-agent/tree/main/skills/check-pr/SKILL.md)
+Original source: [haseeb-heaven/gworkspace-agent](https://github.com/haseeb-heaven/gworkspace-agent/tree/main/skills/greploop/SKILL.md)
 
 ---
 
