@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gotalab/cc-sdd](https://github.com/gotalab/cc-sdd/tree/main/.agents/skills/cc-sdd-new-agent/SKILL.md)
+Original source: [gotalab/cc-sdd](https://github.com/gotalab/cc-sdd/tree/main/tools/cc-sdd/templates/agents/codex-skills/skills/kiro-impl/SKILL.md)
 
 ---
 
