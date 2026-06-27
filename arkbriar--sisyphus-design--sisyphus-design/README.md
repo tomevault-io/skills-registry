@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [arkbriar/sisyphus-design](https://github.com/arkbriar/sisyphus-design/tree/main/codex/SKILL.md)
+Original source: [arkbriar/sisyphus-design](https://github.com/arkbriar/sisyphus-design/tree/main/skills/design/SKILL.md)
 
 ---
 
