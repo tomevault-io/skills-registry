@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TanStack/db](https://github.com/TanStack/db/tree/main/packages/react-db/skills/react-db/SKILL.md)
+Original source: [TanStack/db](https://github.com/TanStack/db/tree/main/packages/solid-db/skills/solid-db/SKILL.md)
 
 ---
 
