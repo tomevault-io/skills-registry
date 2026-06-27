@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [inclusionAI/AWorld](https://github.com/inclusionAI/AWorld/tree/main/examples/aworld_quick_start/cli/skills/read_large_webpage/skill.md)
+Original source: [inclusionAI/AWorld](https://github.com/inclusionAI/AWorld/tree/main/tests/fixtures/plugins/legacy_agents_only/skills/demo/SKILL.md)
 
 ---
 
