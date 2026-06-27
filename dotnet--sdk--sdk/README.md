@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dotnet/sdk](https://github.com/dotnet/sdk/tree/main/.github/skills/incremental-test/SKILL.md)
+Original source: [dotnet/sdk](https://github.com/dotnet/sdk/tree/main/.github/skills/migrate-xunit-to-mstest/SKILL.md)
 
 ---
 
