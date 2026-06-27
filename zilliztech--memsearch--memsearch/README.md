@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zilliztech/memsearch](https://github.com/zilliztech/memsearch/tree/main/plugins/codex/skills/memory-config/SKILL.md)
+Original source: [zilliztech/memsearch](https://github.com/zilliztech/memsearch/tree/main/plugins/openclaw/skills/memory-recall/SKILL.md)
 
 ---
 
