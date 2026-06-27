@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/azure-sdk-for-js](https://github.com/Azure/azure-sdk-for-js/tree/main/.github/skills/azsdk-common-sdk-release/SKILL.md)
+Original source: [Azure/azure-sdk-for-js](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/ai/ai-projects/.github/skills/author-tests/SKILL.md)
 
 ---
 
