@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [letta-ai/letta-code](https://github.com/letta-ai/letta-code/tree/main/src/skills/builtin/acquiring-skills/SKILL.md)
+Original source: [letta-ai/letta-code](https://github.com/letta-ai/letta-code/tree/main/src/skills/builtin/scheduling-tasks/SKILL.md)
 
 ---
 
