@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [every-app/open-seo](https://github.com/every-app/open-seo/tree/main/.agents/skills/competitive-landscape/SKILL.md)
+Original source: [every-app/open-seo](https://github.com/every-app/open-seo/tree/main/.claude/skills/openseo-release-notes/SKILL.md)
 
 ---
 
