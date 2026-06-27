@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/src/m4/skills/clinical/gcs-calculation/SKILL.md)
+Original source: [hannesill/m4](https://github.com/hannesill/m4/tree/main/src/m4/skills/system/mimic-eicu-mapping/SKILL.md)
 
 ---
 
