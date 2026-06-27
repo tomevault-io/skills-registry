@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [akiver/cs-demo-manager](https://github.com/akiver/cs-demo-manager/tree/main/skills/i18n/SKILL.md)
+Original source: [akiver/cs-demo-manager](https://github.com/akiver/cs-demo-manager/tree/main/skills/process-communication/SKILL.md)
 
 ---
 
