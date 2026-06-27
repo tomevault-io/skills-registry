@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vercel-labs/zero-native](https://github.com/vercel-labs/zero-native/tree/main/skills/zero-native/SKILL.md)
+Original source: [vercel-labs/zero-native](https://github.com/vercel-labs/zero-native/tree/main/skill-data/automation/SKILL.md)
 
 ---
 
