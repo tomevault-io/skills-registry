@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Alex8791-cyber/cognithor](https://github.com/Alex8791-cyber/cognithor/tree/main/skills/gmail_sync/SKILL.md)
+Original source: [Alex8791-cyber/cognithor](https://github.com/Alex8791-cyber/cognithor/tree/main/skills/wetter_abfrage/SKILL.md)
 
 ---
 
