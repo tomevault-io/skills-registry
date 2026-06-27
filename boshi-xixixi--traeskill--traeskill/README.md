@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [boshi-xixixi/TraeSkill](https://github.com/boshi-xixixi/TraeSkill/tree/main/.trae/Skills/.agents/skills/gtm-0-to-1-launch/SKILL.md)
+Original source: [boshi-xixixi/TraeSkill](https://github.com/boshi-xixixi/TraeSkill/tree/main/.trae/Skills/.agents/skills/shuffle-json-data/SKILL.md)
 
 ---
 
