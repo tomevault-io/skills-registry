@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [talesofai/neta-skills](https://github.com/talesofai/neta-skills/tree/main/skills/zh_cn/neta-character/SKILL.md)
+Original source: [talesofai/neta-skills](https://github.com/talesofai/neta-skills/tree/main/skills/zh_cn/neta-adventure/SKILL.md)
 
 ---
 
