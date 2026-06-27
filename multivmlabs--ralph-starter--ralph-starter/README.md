@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [multivmlabs/ralph-starter](https://github.com/multivmlabs/ralph-starter/tree/main/skills/ralph-notion/SKILL.md)
+Original source: [multivmlabs/ralph-starter](https://github.com/multivmlabs/ralph-starter/tree/main/skills/ralph-github/SKILL.md)
 
 ---
 
