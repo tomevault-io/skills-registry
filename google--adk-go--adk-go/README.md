@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google/adk-go](https://github.com/google/adk-go/tree/main/examples/skills/skills/weather/SKILL.md)
+Original source: [google/adk-go](https://github.com/google/adk-go/tree/main/examples/skills/skills/grocery-prices/SKILL.md)
 
 ---
 
