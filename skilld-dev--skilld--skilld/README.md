@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [skilld-dev/skilld](https://github.com/skilld-dev/skilld/tree/main/.claude/skills/unjs-citty/SKILL.md)
+Original source: [skilld-dev/skilld](https://github.com/skilld-dev/skilld/tree/main/.claude/skills/sqlite-vec-skilld/SKILL.md)
 
 ---
 
