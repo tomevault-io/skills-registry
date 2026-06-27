@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [raphaelmansuy/edgequake](https://github.com/raphaelmansuy/edgequake/tree/main/.github/skills/doc-traceability-validator/SKILL.md)
+Original source: [raphaelmansuy/edgequake](https://github.com/raphaelmansuy/edgequake/tree/main/.github/skills/copilotkit-nextjs-integration/SKILL.md)
 
 ---
 
