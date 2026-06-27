@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [runcat-dev/RunCat365](https://github.com/runcat-dev/RunCat365/tree/main/.claude/skills/create-pr/SKILL.md)
+Original source: [runcat-dev/RunCat365](https://github.com/runcat-dev/RunCat365/tree/main/.claude/skills/add-locale/SKILL.md)
 
 ---
 
