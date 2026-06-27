@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mraza007/echovault](https://github.com/mraza007/echovault/tree/main/skills/echovault/SKILL.md)
+Original source: [mraza007/echovault](https://github.com/mraza007/echovault/tree/main/.codex/skills/echovault/SKILL.md)
 
 ---
 
