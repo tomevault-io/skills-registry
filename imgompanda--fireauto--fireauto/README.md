@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [imgompanda/fireauto](https://github.com/imgompanda/fireauto/tree/main/plugin/skills/fireauto-ui-guide/SKILL.md)
+Original source: [imgompanda/fireauto](https://github.com/imgompanda/fireauto/tree/main/plugin/skills/fireauto-prd-guide/SKILL.md)
 
 ---
 
