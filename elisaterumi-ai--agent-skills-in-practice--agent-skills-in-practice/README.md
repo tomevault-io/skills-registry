@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [elisaterumi-ai/agent-skills-in-practice](https://github.com/elisaterumi-ai/agent-skills-in-practice/tree/main/examples/prompt-optimizer/SKILL.md)
+Original source: [elisaterumi-ai/agent-skills-in-practice](https://github.com/elisaterumi-ai/agent-skills-in-practice/tree/main/examples/financial-analyzer/SKILL.md)
 
 ---
 
