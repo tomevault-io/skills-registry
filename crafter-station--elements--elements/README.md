@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [crafter-station/elements](https://github.com/crafter-station/elements/tree/main/.claude/skills/elements/SKILL.md)
+Original source: [crafter-station/elements](https://github.com/crafter-station/elements/tree/main/.claude/skills/tech-logos/SKILL.md)
 
 ---
 
