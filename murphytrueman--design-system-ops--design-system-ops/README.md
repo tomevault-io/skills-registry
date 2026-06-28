@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [murphytrueman/design-system-ops](https://github.com/murphytrueman/design-system-ops/tree/main/skills/component-decision-tree/SKILL.md)
+Original source: [murphytrueman/design-system-ops](https://github.com/murphytrueman/design-system-ops/tree/main/skills/ai-component-description/SKILL.md)
 
 ---
 
