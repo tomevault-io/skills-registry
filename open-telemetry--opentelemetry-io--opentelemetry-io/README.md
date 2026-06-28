@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [open-telemetry/opentelemetry.io](https://github.com/open-telemetry/opentelemetry.io/tree/main/.claude/skills/update-old-blog-ignores/SKILL.md)
+Original source: [open-telemetry/opentelemetry.io](https://github.com/open-telemetry/opentelemetry.io/tree/main/.claude/skills/refresh-refcache-pr-fix/SKILL.md)
 
 ---
 
