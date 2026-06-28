@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit/tree/main/dist/plugins/dependency-updater/skills/dependency-updater/SKILL.md)
+Original source: [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit/tree/main/dist/plugins/daily-meeting-update/skills/daily-meeting-update/SKILL.md)
 
 ---
 
