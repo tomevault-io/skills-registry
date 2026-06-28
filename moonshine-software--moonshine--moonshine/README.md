@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [moonshine-software/moonshine](https://github.com/moonshine-software/moonshine/tree/main/skills/moonshine-field/SKILL.md)
+Original source: [moonshine-software/moonshine](https://github.com/moonshine-software/moonshine/tree/main/skills/moonshine-layout/SKILL.md)
 
 ---
 
