@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [WUBING2023/PaperSpine](https://github.com/WUBING2023/PaperSpine/tree/main/dist/codex/skills/paper-spine-rewrite/SKILL.md)
+Original source: [WUBING2023/PaperSpine](https://github.com/WUBING2023/PaperSpine/tree/main/dist/claude/skills/paper-spine-intake/SKILL.md)
 
 ---
 
