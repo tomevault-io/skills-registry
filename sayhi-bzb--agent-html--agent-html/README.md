@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Sayhi-bzb/Agent-HTML](https://github.com/Sayhi-bzb/Agent-HTML/tree/main/.claude/skills/gitnexus/gitnexus-exploring/SKILL.md)
+Original source: [Sayhi-bzb/Agent-HTML](https://github.com/Sayhi-bzb/Agent-HTML/tree/main/.claude/skills/gitnexus/gitnexus-debugging/SKILL.md)
 
 ---
 
