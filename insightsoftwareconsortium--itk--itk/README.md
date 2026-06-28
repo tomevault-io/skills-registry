@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [InsightSoftwareConsortium/ITK](https://github.com/InsightSoftwareConsortium/ITK/tree/main/Utilities/Maintenance/ExternalDataUpload/SKILL.md)
+Original source: [InsightSoftwareConsortium/ITK](https://github.com/InsightSoftwareConsortium/ITK/tree/main/.github/skills/update-third-party/SKILL.md)
 
 ---
 
