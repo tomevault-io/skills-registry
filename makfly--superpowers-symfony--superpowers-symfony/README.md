@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MakFly/superpowers-symfony](https://github.com/MakFly/superpowers-symfony/tree/main/skills/executing-plans/SKILL.md)
+Original source: [MakFly/superpowers-symfony](https://github.com/MakFly/superpowers-symfony/tree/main/skills/runner-selection/SKILL.md)
 
 ---
 
