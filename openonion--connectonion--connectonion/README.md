@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openonion/connectonion](https://github.com/openonion/connectonion/tree/main/connectonion/useful_skills/ship-feature/SKILL.md)
+Original source: [openonion/connectonion](https://github.com/openonion/connectonion/tree/main/connectonion/cli/co_ai/skills/builtin/commit/SKILL.md)
 
 ---
 
