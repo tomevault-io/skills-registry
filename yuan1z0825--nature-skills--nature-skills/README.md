@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills/tree/main/skills/nature-polishing/SKILL.md)
+Original source: [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills/tree/main/skills/nature-paper2ppt/SKILL.md)
 
 ---
 
