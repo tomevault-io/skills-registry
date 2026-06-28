@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [garrettjsmith/localseoskills](https://github.com/garrettjsmith/localseoskills/tree/main/skills/gbp-suspension-recovery/SKILL.md)
+Original source: [garrettjsmith/localseoskills](https://github.com/garrettjsmith/localseoskills/tree/main/skills/local-competitor-analysis/SKILL.md)
 
 ---
 
