@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [peteonrails/voxtype](https://github.com/peteonrails/voxtype/tree/main/.claude/skills/update-docs/SKILL.md)
+Original source: [peteonrails/voxtype](https://github.com/peteonrails/voxtype/tree/main/.claude/skills/docker-test/SKILL.md)
 
 ---
 
