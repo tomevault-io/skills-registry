@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shopperlabs/shopper](https://github.com/shopperlabs/shopper/tree/main/packages/admin/resources/boost/skills/shopper-development/SKILL.md)
+Original source: [shopperlabs/shopper](https://github.com/shopperlabs/shopper/tree/main/packages/admin/resources/boost/skills/shopper-customization/SKILL.md)
 
 ---
 
