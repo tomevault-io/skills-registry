@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [civitai/civitai](https://github.com/civitai/civitai/tree/main/.claude/skills/quick-mockups/SKILL.md)
+Original source: [civitai/civitai](https://github.com/civitai/civitai/tree/main/.claude/skills/xguard-manager/SKILL.md)
 
 ---
 
