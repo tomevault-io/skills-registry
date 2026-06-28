@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [baotoq/micro-commerce](https://github.com/baotoq/micro-commerce/tree/main/.agents/skills/vercel-react-best-practices/SKILL.md)
+Original source: [baotoq/micro-commerce](https://github.com/baotoq/micro-commerce/tree/main/.agents/skills/vercel-composition-patterns/SKILL.md)
 
 ---
 
