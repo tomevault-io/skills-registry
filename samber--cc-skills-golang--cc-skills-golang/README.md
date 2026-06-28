@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang/tree/main/skills/golang-spf13-viper/SKILL.md)
+Original source: [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang/tree/main/skills/golang-concurrency/SKILL.md)
 
 ---
 
