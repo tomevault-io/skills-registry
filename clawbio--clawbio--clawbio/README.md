@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ClawBio/ClawBio](https://github.com/ClawBio/ClawBio/tree/main/skills/locuscompare-region-render/SKILL.md)
+Original source: [ClawBio/ClawBio](https://github.com/ClawBio/ClawBio/tree/main/skills/omics-target-evidence-mapper/SKILL.md)
 
 ---
 
