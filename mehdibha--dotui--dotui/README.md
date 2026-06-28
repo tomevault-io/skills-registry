@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mehdibha/dotUI](https://github.com/mehdibha/dotUI/tree/main/.claude/skills/tanstack-router-ssr/SKILL.md)
+Original source: [mehdibha/dotUI](https://github.com/mehdibha/dotUI/tree/main/.claude/skills/tanstack-start-core/SKILL.md)
 
 ---
 
