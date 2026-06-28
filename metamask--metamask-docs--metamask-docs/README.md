@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MetaMask/metamask-docs](https://github.com/MetaMask/metamask-docs/tree/main/.cursor/skills/author-page/SKILL.md)
+Original source: [MetaMask/metamask-docs](https://github.com/MetaMask/metamask-docs/tree/main/.cursor/skills/style-review/SKILL.md)
 
 ---
 
