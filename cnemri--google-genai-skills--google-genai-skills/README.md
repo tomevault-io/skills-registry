@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cnemri/google-genai-skills](https://github.com/cnemri/google-genai-skills/tree/main/skills/google-genai-sdk-python/SKILL.md)
+Original source: [cnemri/google-genai-skills](https://github.com/cnemri/google-genai-skills/tree/main/skills/google-developer-knowledge/SKILL.md)
 
 ---
 
