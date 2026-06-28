@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [XueshiQiao/macos-app-scaffold](https://github.com/XueshiQiao/macos-app-scaffold/tree/main/skills/macos-app-scaffold-new/SKILL.md)
+Original source: [XueshiQiao/macos-app-scaffold](https://github.com/XueshiQiao/macos-app-scaffold/tree/main/skills/macos-app-scaffold-enhance/SKILL.md)
 
 ---
 
