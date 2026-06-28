@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [huggingface/OpenEnv](https://github.com/huggingface/OpenEnv/tree/main/.claude/skills/simplify/SKILL.md)
+Original source: [huggingface/OpenEnv](https://github.com/huggingface/OpenEnv/tree/main/.claude/skills/deploy-hf/SKILL.md)
 
 ---
 
