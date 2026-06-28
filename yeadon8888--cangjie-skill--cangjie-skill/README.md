@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Yeadon8888/cangjie-skill](https://github.com/Yeadon8888/cangjie-skill/tree/main/examples/adler-perspective/SKILL.md)
+Original source: [Yeadon8888/cangjie-skill](https://github.com/Yeadon8888/cangjie-skill/tree/main/examples/paul-graham-perspective/SKILL.md)
 
 ---
 
