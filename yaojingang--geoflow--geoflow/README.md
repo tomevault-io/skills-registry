@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yaojingang/GEOFlow](https://github.com/yaojingang/GEOFlow/tree/main/.cursor/skills/configuring-horizon/SKILL.md)
+Original source: [yaojingang/GEOFlow](https://github.com/yaojingang/GEOFlow/tree/main/.agents/skills/laravel-best-practices/SKILL.md)
 
 ---
 
