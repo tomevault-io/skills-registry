@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [browser-act/skills](https://github.com/browser-act/skills/tree/main/solutions/video-platforms/youtube-influencer-finder-api-skill/SKILL.md)
+Original source: [browser-act/skills](https://github.com/browser-act/skills/tree/main/solutions/lead-generation/industry-key-contact-radar-api-skill/SKILL.md)
 
 ---
 
