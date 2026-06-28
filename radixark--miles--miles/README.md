@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [radixark/miles](https://github.com/radixark/miles/tree/main/.claude/skills/manage-gh-runners/SKILL.md)
+Original source: [radixark/miles](https://github.com/radixark/miles/tree/main/.claude/skills/mechanical-refactor-verify/SKILL.md)
 
 ---
 
