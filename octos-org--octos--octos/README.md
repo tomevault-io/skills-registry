@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [octos-org/octos](https://github.com/octos-org/octos/tree/main/crates/app-skills/deep-crawl/SKILL.md)
+Original source: [octos-org/octos](https://github.com/octos-org/octos/tree/main/crates/octos-agent/skills/git/SKILL.md)
 
 ---
 
