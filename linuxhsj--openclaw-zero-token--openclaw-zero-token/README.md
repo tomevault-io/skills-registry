@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [linuxhsj/openclaw-zero-token](https://github.com/linuxhsj/openclaw-zero-token/tree/main/extensions/tavily/skills/tavily/SKILL.md)
+Original source: [linuxhsj/openclaw-zero-token](https://github.com/linuxhsj/openclaw-zero-token/tree/main/extensions/acpx/skills/acp-router/SKILL.md)
 
 ---
 
