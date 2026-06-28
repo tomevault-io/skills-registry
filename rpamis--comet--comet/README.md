@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rpamis/comet](https://github.com/rpamis/comet/tree/main/assets/skills/comet/SKILL.md)
+Original source: [rpamis/comet](https://github.com/rpamis/comet/tree/main/assets/skills-zh/comet/SKILL.md)
 
 ---
 
