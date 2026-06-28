@@ -1,13 +1,13 @@
 # actionbook
 
-> Skill by [actionbook](https://github.com/actionbook/actionbook) — distributed by [TomeVault](https://tomevault.io/claim/actionbook)
+> Skill by [actionbook](https://github.com/actionbook/actionbook) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [actionbook/actionbook](https://github.com/actionbook/actionbook/tree/main/playground/rust-learner/skills/actionbook)
+Original source: [actionbook/actionbook](https://github.com/actionbook/actionbook/tree/main/skills/extract/SKILL.md)
 
 ---
 
 Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
-Is this your repo? [Claim it](https://tomevault.io/claim/actionbook) to manage distribution.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
