@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ElliotJLT/Claude-Skill-Potions](https://github.com/ElliotJLT/Claude-Skill-Potions/tree/main/skills/obsidian-vault-init/SKILL.md)
+Original source: [ElliotJLT/Claude-Skill-Potions](https://github.com/ElliotJLT/Claude-Skill-Potions/tree/main/skills/obsidian-note-create/SKILL.md)
 
 ---
 
