@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [atomicojs/atomico](https://github.com/atomicojs/atomico/tree/main/.agents/skills/atomico-css-styling/SKILL.md)
+Original source: [atomicojs/atomico](https://github.com/atomicojs/atomico/tree/main/.agents/skills/atomico-hooks-props/SKILL.md)
 
 ---
 
