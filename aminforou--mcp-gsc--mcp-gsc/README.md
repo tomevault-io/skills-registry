@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AminForou/mcp-gsc](https://github.com/AminForou/mcp-gsc/tree/main/skills/indexing-audit/SKILL.md)
+Original source: [AminForou/mcp-gsc](https://github.com/AminForou/mcp-gsc/tree/main/skills/seo-weekly-report/SKILL.md)
 
 ---
 
