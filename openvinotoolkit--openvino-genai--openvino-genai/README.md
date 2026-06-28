@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openvinotoolkit/openvino.genai](https://github.com/openvinotoolkit/openvino.genai/tree/main/.github/skills/model-checker/SKILL.md)
+Original source: [openvinotoolkit/openvino.genai](https://github.com/openvinotoolkit/openvino.genai/tree/main/.github/skills/wwb-fail-analyzer/SKILL.md)
 
 ---
 
