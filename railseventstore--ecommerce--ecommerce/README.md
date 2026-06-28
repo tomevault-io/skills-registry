@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [RailsEventStore/ecommerce](https://github.com/RailsEventStore/ecommerce/tree/main/.claude/skills/new-feature/SKILL.md)
+Original source: [RailsEventStore/ecommerce](https://github.com/RailsEventStore/ecommerce/tree/main/.claude/skills/upgrade-rails/SKILL.md)
 
 ---
 
