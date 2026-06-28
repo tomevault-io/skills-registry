@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [romeerez/orchid-orm](https://github.com/romeerez/orchid-orm/tree/main/.agents/skills/spec/SKILL.md)
+Original source: [romeerez/orchid-orm](https://github.com/romeerez/orchid-orm/tree/main/.agents/skills/code-doc/SKILL.md)
 
 ---
 
