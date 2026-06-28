@@ -388,5 +388,5 @@ See [concurrency.md](references/concurrency.md) for thread safety details.
 - [Deprecated](references/deprecated.md) - Migration guide
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/ml-explore) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [ml-explore/mlx-swift](https://github.com/ml-explore/mlx-swift) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-28 -->
