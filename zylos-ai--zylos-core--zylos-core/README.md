@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zylos-ai/zylos-core](https://github.com/zylos-ai/zylos-core/tree/main/skills/health-check/SKILL.md)
+Original source: [zylos-ai/zylos-core](https://github.com/zylos-ai/zylos-core/tree/main/skills/check-context/SKILL.md)
 
 ---
 
