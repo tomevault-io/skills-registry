@@ -1,157 +1,100 @@
 ---
-name: flow-next-spec-completion-review
-description: Spec completion review - verifies all spec tasks implement the spec requirements. Triggers on /flow-next:spec-completion-review. Use when this capability is needed.
+name: flow-next-drive
+description: Drive any UI surface like a real user - a web app, a Chromium-backed desktop app (Electron / WebView2, reached over CDP), or a genuinely native app (macOS AppKit/SwiftUI, or a non-CDP webview) reached via the Cua Driver / Computer Use. Detects the surface, picks the best available driver, degrades gracefully. Use to navigate sites, verify deployed UI, test web or desktop apps, capture baseline screenshots, drive a sign-in flow, scrape data, fill forms, run an e2e check, or inspect current page state. Triggers on "check the page", "verify UI", "test the site", "test this app", "drive the app", "automate this desktop app", "read docs at", "look up API", "visit URL", "browse", "screenshot", "scrape", "e2e test", "login flow", "capture baseline", "see how it looks", "inspect current", "before redesign", "Electron app", "native app". Use when this capability is needed.
 metadata:
   author: gmickel
 ---
 
-# Spec Completion Review Mode
+# flow-next-drive — surface-aware UI automation
 
-**Workflow is backend-split. Read [workflow-common.md](workflow-common.md) for Phase 0 (backend detection + philosophy), then read ONLY the file matching your active backend:**
+Drive any UI surface the way a real user would. Whatever driver the environment has, the work is the same shape: **observe / navigate → snapshot → act on fresh refs → capture evidence → release**. This skill is a *router*: it detects the surface, picks the highest available driver on a ladder, degrades gracefully when a richer driver is absent, and hands off to a per-rung reference for the command detail.
 
-- `BACKEND=codex` → [workflow-codex.md](workflow-codex.md)
-- `BACKEND=copilot` → [workflow-copilot.md](workflow-copilot.md)
-- `BACKEND=rp` → [workflow-rp.md](workflow-rp.md)
+It orchestrates drivers — it does not reimplement them. The default rung (Vercel's `agent-browser` CLI) is the only driver assumed present; every other rung is detected and optional. A pass must succeed with whatever the environment actually has — most cloud VMs, Linux, and CI have no Computer Use, so it is never a hard dependency and never on a headless/no-display path.
 
-Do not load the other two — only the active backend's file is needed.
+> Driver ladder + universal-flow structure adapted from Ray Fernando's `running-bug-review-board` skill (Apache-2.0) — see CHANGELOG.
 
-Verify that the combined implementation of all tasks in a spec satisfies the spec requirements. This is NOT a code quality review (that's impl-review's job) — this confirms spec compliance only.
+## Step 1 — Detect the surface, then branch
 
-**Role**: Spec Completion Review Coordinator (NOT the reviewer)
-**Backends**: RepoPrompt (rp), Codex CLI (codex), or GitHub Copilot CLI (copilot)
+Classify the target into one of three buckets and take the matching path. The universal flow (Step 2) is shared; only the actuation and the per-surface reference differ.
 
-## Preamble
+| # | Surface | What it is | Path |
+|---|---------|------------|------|
+| A | **Web app** | A URL in a browser (localhost dev server, staging, production) | **Web ladder** (Step 3) |
+| B | **Chromium-backed desktop app** | Electron / Windows WebView2 — Chromium under the hood, exposes a CDP debug port | **Web ladder** (Step 3), attaching over CDP to the app's remote-debugging port |
+| C | **True-native / non-CDP surface** | macOS AppKit/SwiftUI, Catalyst, or a webview exposing no CDP (macOS WKWebView, which Tauri uses on macOS) | **Native rung** (Step 4) — **Cua Driver** → **Computer Use** (attended); **Cua Sandbox** (headless/CI) |
 
-**CRITICAL: flowctl is BUNDLED — NOT installed globally.** `which flowctl` will fail (expected). Define once; subsequent blocks (here and in `workflow-*.md`) use `$FLOWCTL`:
+How to decide:
 
-```bash
-FLOWCTL="$HOME/.codex/scripts/flowctl"
-[ -x "$FLOWCTL" ] || FLOWCTL=".flow/bin/flowctl"
+- A bare URL, or a dev/staging/prod web app → **A**.
+- A desktop app you can launch with `--remote-debugging-port=<n>` (or one already exposing one) → **B**. Electron and Windows WebView2 are Chromium; the web ladder drives them by CDP-attach. Do **not** route these to Computer Use.
+- A desktop app with no CDP port — genuinely native (AppKit/SwiftUI), or a macOS WKWebView / Tauri-on-macOS app — → **C**. Per-platform caveat: **Windows WebView2 is CDP-drivable (→ B); macOS WKWebView generally is not (→ C)** — verify per platform.
+
+When unsure whether a desktop app exposes CDP, probe for B first (try to launch/attach with a debug port). If no port is reachable, fall to C.
+
+## Step 2 — The universal flow (all surfaces)
+
+```
+observe / list what's open
+navigate to the target (URL, or focus the app window)
+snapshot              → fresh element refs (REQUIRED before each act)
+act                   → click / fill / type / press / scroll toward the next step
+verify                → confirm the expected text / state appeared
+capture               → screenshot + console/errors at the moment of interest (and on failure)
+release               → close the tab / end the session when fully done
 ```
 
-## Backend Selection
+Refs (`@e1`, `@e2`, …) go **stale** after any navigation, click, or form submit. Always re-snapshot. "Element X has pointer-events: none" or "ref not found" almost always means a stale snapshot, not a real bug — re-snapshot before concluding.
 
-**Priority** (first match wins):
-1. `--review=rp|codex|copilot|none` argument
-2. `FLOW_REVIEW_BACKEND` env var — bare backend (`rp`, `codex`, `copilot`, `none`) OR spec form (`codex:gpt-5.4:xhigh`, `copilot:claude-opus-4.5`)
-3. `.flow/config.json` → `review.backend` (same bare / spec forms)
-4. **Error** - no auto-detection
+## Step 3 — Web ladder (surfaces A and B)
 
-### Parse from arguments first
+Probe availability top-down and use the **highest rung that passes**; fail soft to the next; the terminal rung is manual. Never hard-depend on any rung above the default.
 
-Check $ARGUMENTS for:
-- `--review=rp` or `--review rp` → use rp
-- `--review=codex` or `--review codex` → use codex
-- `--review=copilot` or `--review copilot` → use copilot
-- `--review=none` or `--review none` → skip review
+| Rung | Driver | Use when | Reference |
+|------|--------|----------|-----------|
+| 1 (default) | **agent-browser** CLI | Always assumed present. CDP-based, headless-safe, no extra install. Drives web apps; drives Electron / WebView2 over CDP (`--cdp <port>` / `--auto-connect`). | `references/agent-browser.md` |
+| 2 | **chrome-devtools-mcp** | You want built-in auto-wait (fewer stale-ref failures), DevTools-grade network/console inspection, Lighthouse, or to **attach to your real signed-in Chrome** (`--browser-url` / `--autoConnect`) so bot defenses don't challenge an automated profile. | `references/chrome-devtools-mcp.md` |
+| 3 | **Playwright** (CLI or MCP) | The repo already has Playwright configured, or you need a headless CI-style run / large cross-browser regression suite. | `references/playwright.md` |
+| 4 | **cursor-ide-browser** MCP | Running inside Cursor with this MCP installed and you want its snapshot YAML + `browser_cdp` control. | `references/cursor-ide-browser.md` |
+| 5 (terminal) | **Manual + screenshot relay** | No browser driver available — drive yourself, paste console errors and screenshots into chat. | — |
 
-If found, use that backend and skip all other detection.
+**Surface B note:** the SAME ladder drives Electron / WebView2 apps — attach to the app's remote-debugging port (`agent-browser --cdp <port>` / `--auto-connect`; chrome-devtools-mcp `--browser-url=http://127.0.0.1:<port>`). Launch the app with a dedicated debug port and a dedicated user-data-dir; treat the open debug port as a security exposure (any local app can drive that session).
 
-### Otherwise read from config
+> **agent-browser command detail lives in the rung reference, not here.** The default-rung reference [`references/agent-browser.md`](references/agent-browser.md) is the entry point — setup/version check, the universal flow in agent-browser commands, the Chromium-desktop (Electron / WebView2) CDP driver, the `--headed` daemon-reuse gotcha, and an index into the per-topic references it folds: `commands.md`, `advanced.md` (CDP attach), `auth.md`, `snapshot-refs.md`, `session-management.md`, `proxy.md`, `debugging.md`.
 
-```bash
-BACKEND=$($FLOWCTL review-backend)
+## Step 4 — Native rung (surface C): Cua Driver, then Computer Use
 
-if [[ "$BACKEND" == "ASK" ]]; then
- echo "Error: No review backend configured."
- echo "Run /flow-next:setup to configure, or pass --review=rp|codex|copilot|none"
- exit 1
-fi
+A genuinely native app (or a non-CDP webview) has no browser tab to attach to — the model has to drive the live machine. This rung is provider-agnostic; probe for the best available driver in this order, prefer the highest that passes, degrade to the next:
 
-echo "Review backend: $BACKEND (override: --review=rp|codex|copilot|none)"
-```
+| Probe | Driver | Reference |
+|-------|--------|-----------|
+| `cua-driver` MCP registered / `command -v cua-driver` (real display) | **Cua Driver** — MIT, provider-agnostic, **background** (no focus steal), macOS/Windows (Linux pre-release), accessibility-tree-based. Preferred when present. | `references/cua.md` |
+| Codex CU available, or a Claude Computer-Use harness present | **Computer Use** — Codex CU (macOS/Windows) / Anthropic Claude CU (the API `computer` tool via its own harness). Screen-takeover. | `references/computer-use.md` |
+| **Headless / CI** (no display) and a sandbox backend (`lume`/Docker/QEMU, or opted-in cloud) | **Cua Sandbox** — drive inside an isolated VM/container; the **only** native option with no real screen. Opt-in per run, torn down each run; local backend default, cua.ai cloud explicit opt-in. | `references/cua.md` |
+| None present | **Documented limitation** — document the gap and stop; never fail silently. | — |
 
-### Backend at a glance
+All share the universal flow (Step 2) — `observe → act → verify → capture`, described as goal + success state, not pixel coordinates; only the actuation differs. **Detect, never assume** (`command -v`, MCP list, `uname -s`); no native driver is ever a hard dependency. **Attended vs headless splits the precedence:** on a real display, prefer the background Cua Driver → Computer Use; on a **headless/CI** host (no screen) the **Cua Sandbox** is the only native option — the explicit ordering, the local-default/cloud-opt-in split, and provisioning/teardown live in `references/cua.md`.
 
-- **rp** — RepoPrompt (macOS GUI); builder auto-selects context. Primary backend.
-- **codex** — Codex CLI (cross-platform); uses OpenAI models (default `gpt-5.5`). `FLOW_CODEX_MODEL` / `FLOW_CODEX_EFFORT` env vars, or `--spec codex:gpt-5.4:xhigh`.
-- **copilot** — GitHub Copilot CLI (cross-platform); supports Claude Opus/Sonnet/Haiku 4.5 and GPT-5.2 families via a Copilot subscription. `FLOW_COPILOT_MODEL` / `FLOW_COPILOT_EFFORT` env vars, or `--spec copilot:claude-opus-4.5:xhigh`.
+→ Read `references/cua.md` for Cua Driver detection, the install/permission walkthrough (multi-host MCP wiring), the AX-tree driving loop, the macOS permission-split evidence mode, the Native-rung precedence list, licensing, and degradation.
+→ Read `references/computer-use.md` for Computer Use availability detection, the enable/permission walkthrough, the driving loop, safety/hygiene, and the full graceful-degradation table.
 
-**Spec grammar:** `backend[:model[:effort]]` — `FLOW_REVIEW_BACKEND` and `.flow/config.json review.backend` both accept this. Examples: `codex`, `codex:gpt-5.2`, `copilot:claude-opus-4.5:xhigh`. Per-spec `default_review` (set via `flowctl spec set-backend`) overrides env.
+## Driver detection & graceful degradation (all surfaces)
 
-## Critical Rules
+1. **Probe, don't assume.** Detect each non-default rung before planning around it (`command -v`, MCP list, `uname -s` for the macOS-only paths). Treat anything above the default rung — incl. **Cua Driver** and **Computer Use** — as *probably absent*.
+2. **Pick the highest rung that passes; fail soft to the next.** The terminal rung is always manual / documented-limitation — the pass still completes.
+3. **No native driver is required or on a headless/CI path.** Neither the local Cua Driver nor Computer Use runs without a real display; most VMs/Linux/CI lack both. (Headless/CI native driving is the opt-in **Cua Sandbox** surface — see `references/cua.md`.)
+4. **Graceful degradation on the native rung (C):** *(Determine attended vs headless first — `$CI` ⇒ headless, else the empirical `cua-driver call get_screen_size` display probe; NOT `$DISPLAY` on macOS. See `references/cua.md` § "Determining headless / CI".)*
+   - **Attended (real display):** prefer **Cua Driver** (background, provider-agnostic) when present → else **Computer Use** (screen-takeover) → else **documented-limitation** (document, don't fail).
+   - **Headless / CI (no display):** the **Cua Sandbox** is the only native option (provision a hermetic VM, drive, tear down each run); local backend is the default, cua.ai cloud is explicit opt-in (bills + egress). No backend and no opted-in cloud → documented-limitation. See `references/cua.md`.
+   - A **Chromium-backed app (B)** still drives via the web-ladder CDP attach (Step 3), or by driving its local dev-server URL in a browser. Note that shell-level integration (system tray, native menus, OS dialogs) can't be reached this way — surface that limitation.
+   - A **genuinely native app (C)** with no native driver at all → document the limitation rather than fail.
+   - On macOS, the Cua Driver's **Accessibility-vs-Screen-Recording permission split** means driving can work while screenshots don't — surface "AX-only evidence, no screenshot" rather than emit an empty one (`references/cua.md`).
+5. **agent-browser stays the only assumed-present driver.** No MCP server, Cua Driver, or Computer Use is ever a hard install dependency; flowctl never imports any of them.
 
-**For rp backend:**
-1. **DO NOT REVIEW CODE YOURSELF** - you coordinate, RepoPrompt reviews
-2. **MUST WAIT for actual RP response** - never simulate/skip the review
-3. **MUST use `setup-review (5-15 min, DO NOT RETRY)`** - handles window selection + builder atomically
-4. **DO NOT add --json flag to chat-send (2-10 min, DO NOT RETRY)** - it suppresses the review response
-5. **Re-reviews MUST stay in SAME chat** - omit `--new-chat` after first review
+## Boundaries
 
-**For codex backend:**
-1. Use `$FLOWCTL codex completion-review` exclusively
-2. Pass `--receipt` for session continuity on re-reviews
-3. Parse verdict from command output
-
-**For copilot backend:**
-1. Use `$FLOWCTL copilot completion-review` exclusively
-2. Pass `--receipt` for session continuity on re-reviews (session only resumes when prior receipt has `mode == "copilot"`)
-3. Model + effort resolved via (first match wins): `--spec backend:model:effort` flag, per-spec `default_review`, `FLOW_REVIEW_BACKEND` spec, `FLOW_COPILOT_MODEL` / `FLOW_COPILOT_EFFORT` env vars, registry defaults
-4. Parse verdict from command output
-
-**For all backends:**
-- If `REVIEW_RECEIPT_PATH` set: write receipt after SHIP verdict (RP writes manually after fix loop; codex writes automatically via `--receipt`)
-- Any failure → output `<promise>RETRY</promise>` and stop
-
-**FORBIDDEN**:
-- Self-declaring SHIP without actual backend verdict
-- Mixing backends mid-review (stick to one)
-- Skipping review silently (must inform user and exit cleanly when backend is "none")
-
-## Input
-
-Arguments: $ARGUMENTS
-Format: `<spec-id> [--review=rp|codex|copilot|none]`
-
-- Spec ID - Required, e.g. `fn-1` or `fn-22-53k`
-- `--review` - Optional backend override
-
-## Workflow
-
-```bash
-REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
-```
-
-### Step 0: Parse Arguments
-
-Parse $ARGUMENTS for:
-- First positional arg matching `fn-*` → `SPEC_ID`
-- `--review=<backend>` → backend override
-- Remaining args → focus areas
-
-### Step 1: Detect Backend + Load Workflow
-
-1. Read [workflow-common.md](workflow-common.md) and execute its Phase 0 to resolve `$BACKEND`.
-2. Then read **only** the file for that backend:
-
-| `$BACKEND` | File to read |
-|------------|--------------|
-| `codex` | [workflow-codex.md](workflow-codex.md) |
-| `copilot` | [workflow-copilot.md](workflow-copilot.md) |
-| `rp` | [workflow-rp.md](workflow-rp.md) |
-
-**Do not read the other backend files.** Each is self-contained for its backend; loading the others wastes context.
-
-### Step 2: Execute the backend workflow
-
-Follow the phases in the per-backend file end-to-end. Each file owns its own Identify → Execute → Verdict → Receipt steps (and, for RP, the full Phase 1-4 setup-review (5-15 min, DO NOT RETRY) / chat-send (2-10 min, DO NOT RETRY) / receipt build).
-
-## Fix Loop (INTERNAL - do not exit to Ralph)
-
-**CRITICAL: Do NOT ask user for confirmation. Automatically fix ALL valid issues and re-review — our goal is complete spec compliance. Never use the plain-text numbered prompt in this loop.**
-
-If verdict is NEEDS_WORK, loop internally until SHIP:
-
-1. **Parse issues** from reviewer feedback (missing requirements, incomplete implementations)
-2. **Fix code** and run tests/lints
-3. **Commit fixes** (mandatory before re-review)
-4. **Re-review**:
- - **Codex**: Re-run `flowctl codex completion-review` (receipt enables context)
- - **Copilot**: Re-run `flowctl copilot completion-review` (receipt enables context; must be `mode == "copilot"` to resume)
- - **RP**: `$FLOWCTL rp chat-send (2-10 min, DO NOT RETRY) --window "$W" --tab "$T" --message-file /tmp/re-review.md` (NO `--new-chat`)
-5. **Repeat** until `<verdict>SHIP</verdict>`
-
-**CRITICAL**: For RP, re-reviews must stay in the SAME chat so reviewer has context. Only use `--new-chat` on the FIRST review.
+- **iOS / iPadOS app driving is out of scope** — defer to the community iOS simulator skills. Never spin up an iOS simulator for a web-only app.
+- This skill provides driver/actuation + the surface conditional. The full native-desktop QA *workflow* (scenario authoring, bug filing, verdict) is a downstream `/flow-next:qa` concern.
+- Don't reinvent what a driver already does (Playwright, Computer Use) — orchestrate, don't replace.
 
 ---
 > Source: [gmickel/flow-next](https://github.com/gmickel/flow-next) — distributed by [TomeVault](https://tomevault.io).
