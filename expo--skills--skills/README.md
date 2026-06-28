@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [expo/skills](https://github.com/expo/skills/tree/main/plugins/expo/skills/upgrading-expo/SKILL.md)
+Original source: [expo/skills](https://github.com/expo/skills/tree/main/plugins/expo/skills/expo-api-routes/SKILL.md)
 
 ---
 
