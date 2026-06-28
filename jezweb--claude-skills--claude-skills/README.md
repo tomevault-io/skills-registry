@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jezweb/claude-skills](https://github.com/jezweb/claude-skills/tree/main/plugins/cloudflare/skills/d1-migration/SKILL.md)
+Original source: [jezweb/claude-skills](https://github.com/jezweb/claude-skills/tree/main/plugins/writing/skills/proposal-writer/SKILL.md)
 
 ---
 
