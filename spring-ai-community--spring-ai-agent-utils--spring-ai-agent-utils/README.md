@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [spring-ai-community/spring-ai-agent-utils](https://github.com/spring-ai-community/spring-ai-agent-utils/tree/main/examples/code-agent-demo/src/main/resources/.claude/skills/pdf/SKILL.md)
+Original source: [spring-ai-community/spring-ai-agent-utils](https://github.com/spring-ai-community/spring-ai-agent-utils/tree/main/examples/skills-demo/src/main/resources/.claude/skills/ai-tutor/SKILL.md)
 
 ---
 
