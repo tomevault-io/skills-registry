@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cachix/devenv](https://github.com/cachix/devenv/tree/main/tests/opencode/fixtures/skills-dir/alpha/SKILL.md)
+Original source: [cachix/devenv](https://github.com/cachix/devenv/tree/main/docs/src/.well-known/agent-skills/devenv-setup/SKILL.md)
 
 ---
 
