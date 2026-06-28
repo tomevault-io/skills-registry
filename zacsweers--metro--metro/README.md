@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ZacSweers/metro](https://github.com/ZacSweers/metro/tree/main/.claude/skills/add-metro-option/SKILL.md)
+Original source: [ZacSweers/metro](https://github.com/ZacSweers/metro/tree/main/.agents/skills/analyze-perfetto-trace/SKILL.md)
 
 ---
 
