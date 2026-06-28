@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kylecorry31/Trail-Sense](https://github.com/kylecorry31/Trail-Sense/tree/main/.agents/skills/android-check-pr-translations/SKILL.md)
+Original source: [kylecorry31/Trail-Sense](https://github.com/kylecorry31/Trail-Sense/tree/main/.agents/skills/trail-sense-database-persistence/SKILL.md)
 
 ---
 
