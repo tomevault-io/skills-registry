@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gotocx/superpowers-trae](https://github.com/gotocx/superpowers-trae/tree/main/.trae/skills/preserving-productive-tensions/SKILL.md)
+Original source: [gotocx/superpowers-trae](https://github.com/gotocx/superpowers-trae/tree/main/.trae/skills/verification-before-completion/SKILL.md)
 
 ---
 
