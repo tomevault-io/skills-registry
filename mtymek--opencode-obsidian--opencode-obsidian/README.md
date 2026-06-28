@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mtymek/opencode-obsidian](https://github.com/mtymek/opencode-obsidian/tree/main/.opencode/skills/openspec-continue-change/SKILL.md)
+Original source: [mtymek/opencode-obsidian](https://github.com/mtymek/opencode-obsidian/tree/main/.opencode/skills/openspec-bulk-archive-change/SKILL.md)
 
 ---
 
