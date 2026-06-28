@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [baotoq/micro-commerce](https://github.com/baotoq/micro-commerce/tree/main/.agents/skills/argocd-expert/SKILL.md)
+Original source: [baotoq/micro-commerce](https://github.com/baotoq/micro-commerce/tree/main/.agents/skills/prompt-lookup/SKILL.md)
 
 ---
 
