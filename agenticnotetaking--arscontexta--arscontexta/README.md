@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agenticnotetaking/arscontexta](https://github.com/agenticnotetaking/arscontexta/tree/main/skill-sources/graph/SKILL.md)
+Original source: [agenticnotetaking/arscontexta](https://github.com/agenticnotetaking/arscontexta/tree/main/skill-sources/tasks/SKILL.md)
 
 ---
 
