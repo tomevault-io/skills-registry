@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [JinFanZheng/kode-sdk-csharp](https://github.com/JinFanZheng/kode-sdk-csharp/tree/main/examples/Kode.Agent.WebApiAssistant/skills/data-analysis/SKILL.md)
+Original source: [JinFanZheng/kode-sdk-csharp](https://github.com/JinFanZheng/kode-sdk-csharp/tree/main/examples/Kode.Agent.WebApiAssistant/skills/frontend-design/SKILL.md)
 
 ---
 
