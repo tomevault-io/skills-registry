@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [FoundatioFx/Foundatio](https://github.com/FoundatioFx/Foundatio/tree/main/.agents/skills/foundatio/SKILL.md)
+Original source: [FoundatioFx/Foundatio](https://github.com/FoundatioFx/Foundatio/tree/main/.agents/skills/dump-collect/SKILL.md)
 
 ---
 
