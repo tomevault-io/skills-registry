@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Mesh-LLM/mesh-llm](https://github.com/Mesh-LLM/mesh-llm/tree/main/.agents/skills/metrics-server/SKILL.md)
+Original source: [Mesh-LLM/mesh-llm](https://github.com/Mesh-LLM/mesh-llm/tree/main/.agents/skills/skippy-spec-bench/SKILL.md)
 
 ---
 
