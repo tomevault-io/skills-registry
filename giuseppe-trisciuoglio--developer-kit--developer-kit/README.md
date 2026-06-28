@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [giuseppe-trisciuoglio/developer-kit](https://github.com/giuseppe-trisciuoglio/developer-kit/tree/main/plugins/developer-kit-typescript/skills/tailwind-css-patterns/SKILL.md)
+Original source: [giuseppe-trisciuoglio/developer-kit](https://github.com/giuseppe-trisciuoglio/developer-kit/tree/main/plugins/developer-kit-typescript/skills/nestjs-best-practices/SKILL.md)
 
 ---
 
