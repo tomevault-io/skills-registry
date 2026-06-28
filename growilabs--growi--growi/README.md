@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [growilabs/growi](https://github.com/growilabs/growi/tree/main/apps/app/.claude/skills/vendor-styles-components/SKILL.md)
+Original source: [growilabs/growi](https://github.com/growilabs/growi/tree/main/apps/app/.claude/skills/learned/fix-broken-next-symlinks/SKILL.md)
 
 ---
 
