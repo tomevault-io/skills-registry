@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sketch7/FluentlyHttpClient](https://github.com/sketch7/FluentlyHttpClient/tree/main/.agents/skills/dotnet-10-csharp-14/SKILL.md)
+Original source: [sketch7/FluentlyHttpClient](https://github.com/sketch7/FluentlyHttpClient/tree/main/.agents/skills/csharp-async-patterns/SKILL.md)
 
 ---
 
