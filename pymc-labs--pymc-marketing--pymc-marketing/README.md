@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pymc-labs/pymc-marketing](https://github.com/pymc-labs/pymc-marketing/tree/main/.cursor/skills/implement/SKILL.md)
+Original source: [pymc-labs/pymc-marketing](https://github.com/pymc-labs/pymc-marketing/tree/main/.claude/skills/make-plan/SKILL.md)
 
 ---
 
