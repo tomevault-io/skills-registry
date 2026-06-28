@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [juspay/hyperswitch-prism](https://github.com/juspay/hyperswitch-prism/tree/main/.skills/sdk-integration/SKILL.md)
+Original source: [juspay/hyperswitch-prism](https://github.com/juspay/hyperswitch-prism/tree/main/.skills/coverage-report/SKILL.md)
 
 ---
 
