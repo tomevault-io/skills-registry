@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sipyourdrink-ltd/bernstein](https://github.com/sipyourdrink-ltd/bernstein/tree/main/packages/cursor-plugin/skills/bernstein-plan/SKILL.md)
+Original source: [sipyourdrink-ltd/bernstein](https://github.com/sipyourdrink-ltd/bernstein/tree/main/packages/cursor-plugin/skills/bernstein-cost/SKILL.md)
 
 ---
 
