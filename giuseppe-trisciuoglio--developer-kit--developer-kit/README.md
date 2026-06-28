@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [giuseppe-trisciuoglio/developer-kit](https://github.com/giuseppe-trisciuoglio/developer-kit/tree/main/plugins/developer-kit-aws/skills/aws-cloudformation/aws-cloudformation-cloudwatch/SKILL.md)
+Original source: [giuseppe-trisciuoglio/developer-kit](https://github.com/giuseppe-trisciuoglio/developer-kit/tree/main/plugins/developer-kit-aws/skills/aws-cloudformation/aws-cloudformation-elasticache/SKILL.md)
 
 ---
 
