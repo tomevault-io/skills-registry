@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ZhgChgLi/linkyee](https://github.com/ZhgChgLi/linkyee/tree/main/.claude/skills/linkyee-plugin-builder/SKILL.md)
+Original source: [ZhgChgLi/linkyee](https://github.com/ZhgChgLi/linkyee/tree/main/.claude/skills/linkyee-style-designer/SKILL.md)
 
 ---
 
