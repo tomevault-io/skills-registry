@@ -411,5 +411,5 @@ This pattern works for any skill where accumulating data adds value and where gi
 **See also**: README.md for deeper technical details and implementation guide.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/jakedahn) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [jakedahn/pomodoro](https://github.com/jakedahn/pomodoro) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-28 -->
