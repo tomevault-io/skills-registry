@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [karmab/kcli](https://github.com/karmab/kcli/tree/main/skills/kcli-cluster-deployment/SKILL.md)
+Original source: [karmab/kcli](https://github.com/karmab/kcli/tree/main/skills/kcli-provider-development/SKILL.md)
 
 ---
 
