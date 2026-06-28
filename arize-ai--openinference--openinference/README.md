@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Arize-ai/openinference](https://github.com/Arize-ai/openinference/tree/main/.agents/skills/phoenix-cli/SKILL.md)
+Original source: [Arize-ai/openinference](https://github.com/Arize-ai/openinference/tree/main/.agents/skills/js-docs-sync/SKILL.md)
 
 ---
 
