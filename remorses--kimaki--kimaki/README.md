@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [remorses/kimaki](https://github.com/remorses/kimaki/tree/main/skills/new-skill/SKILL.md)
+Original source: [remorses/kimaki](https://github.com/remorses/kimaki/tree/main/skills/npm-package/SKILL.md)
 
 ---
 
