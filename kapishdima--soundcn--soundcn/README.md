@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kapishdima/soundcn](https://github.com/kapishdima/soundcn/tree/main/.agents/skills/baseline-ui/SKILL.md)
+Original source: [kapishdima/soundcn](https://github.com/kapishdima/soundcn/tree/main/.agents/skills/fixing-metadata/SKILL.md)
 
 ---
 
