@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [getsentry/sentry-python](https://github.com/getsentry/sentry-python/tree/main/.agents/skills/find-bugs/SKILL.md)
+Original source: [getsentry/sentry-python](https://github.com/getsentry/sentry-python/tree/main/.agents/skills/code-review/SKILL.md)
 
 ---
 
