@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cwinvestments/memstack](https://github.com/cwinvestments/memstack/tree/main/skills/deployment/docker-setup/SKILL.md)
+Original source: [cwinvestments/memstack](https://github.com/cwinvestments/memstack/tree/main/skills/product/roadmap-builder/SKILL.md)
 
 ---
 
