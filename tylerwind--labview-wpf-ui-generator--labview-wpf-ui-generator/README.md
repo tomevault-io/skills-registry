@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tylerwind/LabVIEW-WPF-UI-Generator](https://github.com/tylerwind/LabVIEW-WPF-UI-Generator/tree/main/.agent/skills/writing-skills/SKILL.md)
+Original source: [tylerwind/LabVIEW-WPF-UI-Generator](https://github.com/tylerwind/LabVIEW-WPF-UI-Generator/tree/main/.agent/skills/executing-plans/SKILL.md)
 
 ---
 
