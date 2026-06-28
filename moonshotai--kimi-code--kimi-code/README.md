@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MoonshotAI/kimi-code](https://github.com/MoonshotAI/kimi-code/tree/main/packages/agent-core/src/skill/builtin/sub-skill/review/SKILL.md)
+Original source: [MoonshotAI/kimi-code](https://github.com/MoonshotAI/kimi-code/tree/main/packages/agent-core/src/skill/builtin/sub-skill/consolidate/SKILL.md)
 
 ---
 
