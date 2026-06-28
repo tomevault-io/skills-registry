@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kenn-io/roborev](https://github.com/kenn-io/roborev/tree/main/internal/skills/claude/roborev-review-branch/SKILL.md)
+Original source: [kenn-io/roborev](https://github.com/kenn-io/roborev/tree/main/internal/skills/codex/roborev-design-review-branch/SKILL.md)
 
 ---
 
