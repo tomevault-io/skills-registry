@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shynlee04/hivemind-plugin](https://github.com/shynlee04/hivemind-plugin/tree/main/assets/.hivemind/skills/hf-l2-command-dev/SKILL.md)
+Original source: [shynlee04/hivemind-plugin](https://github.com/shynlee04/hivemind-plugin/tree/main/assets/.hivemind/skills/hf-l2-meta-builder/SKILL.md)
 
 ---
 
