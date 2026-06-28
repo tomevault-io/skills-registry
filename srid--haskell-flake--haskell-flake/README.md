@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [srid/haskell-flake](https://github.com/srid/haskell-flake/tree/main/.claude/skills/elegance/SKILL.md)
+Original source: [srid/haskell-flake](https://github.com/srid/haskell-flake/tree/main/.claude/skills/forge-pr/SKILL.md)
 
 ---
 
