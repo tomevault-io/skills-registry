@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Soju06/codex-lb](https://github.com/Soju06/codex-lb/tree/main/.agents/skills/openspec-continue-change/SKILL.md)
+Original source: [Soju06/codex-lb](https://github.com/Soju06/codex-lb/tree/main/.agents/skills/vercel-react-best-practices/SKILL.md)
 
 ---
 
