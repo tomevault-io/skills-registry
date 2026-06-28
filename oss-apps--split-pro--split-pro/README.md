@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oss-apps/split-pro](https://github.com/oss-apps/split-pro/tree/main/.opencode/skills/shadcn/SKILL.md)
+Original source: [oss-apps/split-pro](https://github.com/oss-apps/split-pro/tree/main/.opencode/skills/find-docs/SKILL.md)
 
 ---
 
