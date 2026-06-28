@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [clawwork-ai/ClawWork](https://github.com/clawwork-ai/ClawWork/tree/main/.claude/skills/pr-cleaner-master/SKILL.md)
+Original source: [clawwork-ai/ClawWork](https://github.com/clawwork-ai/ClawWork/tree/main/.claude/skills/sync-gateway-docs/SKILL.md)
 
 ---
 
