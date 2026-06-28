@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google/oss-fuzz](https://github.com/google/oss-fuzz/tree/main/infra/experimental/agent-skills/fuzzing-rust-expert/SKILL.md)
+Original source: [google/oss-fuzz](https://github.com/google/oss-fuzz/tree/main/infra/experimental/agent-skills/fuzzing-python-expert/SKILL.md)
 
 ---
 
