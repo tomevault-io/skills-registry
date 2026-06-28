@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kyegomez/swarms](https://github.com/kyegomez/swarms/tree/main/examples/single_agent/agent_skill_examples/data-visualization/SKILL.md)
+Original source: [kyegomez/swarms](https://github.com/kyegomez/swarms/tree/main/examples/single_agent/agent_skill_examples/financial-analysis/SKILL.md)
 
 ---
 
