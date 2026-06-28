@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HorizonRobotics/HoloMotion](https://github.com/HorizonRobotics/HoloMotion/tree/main/.agents/skills/isaaclab-source-lookup/SKILL.md)
+Original source: [HorizonRobotics/HoloMotion](https://github.com/HorizonRobotics/HoloMotion/tree/main/.agents/skills/holomotion-train-interpreter/SKILL.md)
 
 ---
 
