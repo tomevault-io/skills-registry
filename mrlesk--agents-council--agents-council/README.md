@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MrLesk/agents-council](https://github.com/MrLesk/agents-council/tree/main/.agents/skills/context-hunter/SKILL.md)
+Original source: [MrLesk/agents-council](https://github.com/MrLesk/agents-council/tree/main/.agents/skills/backlog-technical-project-manager/SKILL.md)
 
 ---
 
