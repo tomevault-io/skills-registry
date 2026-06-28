@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/Ontology-Playground](https://github.com/microsoft/Ontology-Playground/tree/main/.github/skills/ontology-catalog-import/SKILL.md)
+Original source: [microsoft/Ontology-Playground](https://github.com/microsoft/Ontology-Playground/tree/main/.github/skills/ontology-school-path-generator/SKILL.md)
 
 ---
 
