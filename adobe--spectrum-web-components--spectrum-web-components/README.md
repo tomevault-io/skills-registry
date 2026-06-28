@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [adobe/spectrum-web-components](https://github.com/adobe/spectrum-web-components/tree/main/.ai/skills/migration-prep/SKILL.md)
+Original source: [adobe/spectrum-web-components](https://github.com/adobe/spectrum-web-components/tree/main/.ai/skills/migration-a11y/SKILL.md)
 
 ---
 
