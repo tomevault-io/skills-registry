@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Hyk260/PureChat](https://github.com/Hyk260/PureChat/tree/main/.agents/skills/code-review/SKILL.md)
+Original source: [Hyk260/PureChat](https://github.com/Hyk260/PureChat/tree/main/.agents/skills/create-skill/SKILL.md)
 
 ---
 
