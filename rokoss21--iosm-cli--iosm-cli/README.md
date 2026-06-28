@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rokoss21/iosm-cli](https://github.com/rokoss21/iosm-cli/tree/main/test/fixtures/skills/nested/child-skill/SKILL.md)
+Original source: [rokoss21/iosm-cli](https://github.com/rokoss21/iosm-cli/tree/main/test/fixtures/skills/invalid-name-chars/SKILL.md)
 
 ---
 
