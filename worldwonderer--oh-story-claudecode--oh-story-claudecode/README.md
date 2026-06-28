@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [worldwonderer/oh-story-claudecode](https://github.com/worldwonderer/oh-story-claudecode/tree/main/skills/story-review/SKILL.md)
+Original source: [worldwonderer/oh-story-claudecode](https://github.com/worldwonderer/oh-story-claudecode/tree/main/skills/story-long-scan/SKILL.md)
 
 ---
 
