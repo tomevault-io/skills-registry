@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nrslib/takt](https://github.com/nrslib/takt/tree/main/builtins/skill/SKILL.md)
+Original source: [nrslib/takt](https://github.com/nrslib/takt/tree/main/builtins/skill-codex/SKILL.md)
 
 ---
 
