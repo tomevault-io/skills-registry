@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [castacks/AirStack](https://github.com/castacks/AirStack/tree/main/.agents/skills/write-mkdocs-documentation/SKILL.md)
+Original source: [castacks/AirStack](https://github.com/castacks/AirStack/tree/main/.agents/skills/integrate-module-into-layer/SKILL.md)
 
 ---
 
