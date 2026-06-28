@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jakedahn/pomodoro](https://github.com/jakedahn/pomodoro/tree/main/src/SKILL.md)
+Original source: [jakedahn/pomodoro](https://github.com/jakedahn/pomodoro/tree/main/dist/skills/pomodoro/SKILL.md)
 
 ---
 
