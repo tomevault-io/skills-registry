@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xstongxue/best-skills](https://github.com/xstongxue/best-skills/tree/main/skills/drawio-diagram/SKILL.md)
+Original source: [xstongxue/best-skills](https://github.com/xstongxue/best-skills/tree/main/skills/codegen-diagram/SKILL.md)
 
 ---
 
