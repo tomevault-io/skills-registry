@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MJbae/awesome-novel-studio](https://github.com/MJbae/awesome-novel-studio/tree/main/skills/rewrite/SKILL.md)
+Original source: [MJbae/awesome-novel-studio](https://github.com/MJbae/awesome-novel-studio/tree/main/skills/propose/SKILL.md)
 
 ---
 
