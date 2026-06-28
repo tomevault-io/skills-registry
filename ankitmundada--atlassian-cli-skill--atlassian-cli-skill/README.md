@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ankitmundada/atlassian-cli-skill](https://github.com/ankitmundada/atlassian-cli-skill/tree/main/smart-commits/SKILL.md)
+Original source: [ankitmundada/atlassian-cli-skill](https://github.com/ankitmundada/atlassian-cli-skill/tree/main/atlassian-cli-skill/SKILL.md)
 
 ---
 
