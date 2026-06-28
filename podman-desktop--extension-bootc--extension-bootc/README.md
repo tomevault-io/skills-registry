@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [podman-desktop/extension-bootc](https://github.com/podman-desktop/extension-bootc/tree/main/.agents/skills/backend-api/SKILL.md)
+Original source: [podman-desktop/extension-bootc](https://github.com/podman-desktop/extension-bootc/tree/main/.agents/skills/unit-testing/SKILL.md)
 
 ---
 
