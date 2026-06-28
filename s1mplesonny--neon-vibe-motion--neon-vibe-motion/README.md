@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [S1mpleSonny/neon-vibe-motion](https://github.com/S1mpleSonny/neon-vibe-motion/tree/main/skills/neon/SKILL.md)
+Original source: [S1mpleSonny/neon-vibe-motion](https://github.com/S1mpleSonny/neon-vibe-motion/tree/main/skills/neon-replicate/SKILL.md)
 
 ---
 
