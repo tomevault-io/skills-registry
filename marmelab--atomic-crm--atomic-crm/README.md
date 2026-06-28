@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marmelab/atomic-crm](https://github.com/marmelab/atomic-crm/tree/main/.claude/skills/e2e-conventions/SKILL.md)
+Original source: [marmelab/atomic-crm](https://github.com/marmelab/atomic-crm/tree/main/.claude/skills/playwright-testing/SKILL.md)
 
 ---
 
