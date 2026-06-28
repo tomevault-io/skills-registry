@@ -1,284 +1,208 @@
 ---
-name: kcli-vm-operations
-description: Guides VM lifecycle operations with kcli. Use when creating, managing, or troubleshooting virtual machines across providers. Use when this capability is needed.
+name: kcli-provider-development
+description: Guides implementation of new virtualization providers for kcli. Use when adding support for a new cloud platform, hypervisor, or infrastructure provider. Use when this capability is needed.
 metadata:
   author: karmab
 ---
 
-> **Important**: Before creating a VM, always run `kcli create vm -h` to check the latest available flags and examples.
+# kcli Provider Development
 
-# kcli VM Operations
+## Provider Architecture
 
-## VM Lifecycle Commands
+Providers are located in `kvirt/providers/` as subdirectories. Each provider implements the interface defined in `kvirt/providers/sampleprovider.py` (class `Kbase`).
 
-### Create VM
-```bash
-# From image
-kcli create vm -i fedora40 myvm
+## Required Implementation Steps
 
-# With parameters
-kcli create vm -i centos9stream -P memory=4096 -P numcpus=4 -P disks=[20,50] myvm
-
-# From profile
-kcli create vm -p myprofile myvm
-
-# Create multiple VMs at once with -c (count)
-kcli create vm -c 3 myvm
-
-# Create 3 VMs to emulate baremetal
-kcli create vm -P start=false -P memory=20480 -P numcpus=16 -P disks=[200] -P uefi=true -P nets=[default] -c 3 myvm
-
-# Create a VM with a static IP
-kcli create vm -i centos9stream -P nets=['{"name":"default","ip":"192.168.122.250","netmask":"24","gateway":"192.168.122.1"}'] myvm
-
-# Create a VM with a DNS reservation
-kcli create vm -i centos9stream -P nets=['{"name":"default","reservedns":"true"}'] myvm
-
-# Create a VM with a DHCP reservation
-kcli create vm -i centos9stream -P nets=['{"name":"default","ip":"192.168.122.250","reserveip":"true"}'] myvm
+### 1. Create Provider Directory
+```
+kvirt/providers/yourprovider/
+├── __init__.py      # Contains your Kyourprovider class
+└── (optional helpers)
 ```
 
-### List VMs
-```bash
-kcli list vm                    # All VMs
-kcli list vm -o yaml            # YAML output
-kcli list vm -o json            # JSON output
+### 2. Implement the Provider Class
+
+Your class must:
+- Set `self.conn` attribute in `__init__` (set to `None` if backend unreachable)
+- Set `self.debug` from the debug parameter
+- Return standardized response dicts from methods
+
+**Return Value Pattern:**
+```python
+# Success
+return {'result': 'success'}
+
+# Failure
+return {'result': 'failure', 'reason': "VM %s not found" % name}
 ```
 
-### VM Info
-```bash
-kcli info vm myvm               # Full info
-kcli info vm myvm -f ip         # Specific field
-kcli info vm myvm -o yaml       # YAML format
+### 3. Core Methods to Implement
+
+**VM Lifecycle (required):**
+- `create()` - Create VM with all parameters (cpus, memory, disks, nets, etc.)
+- `start(name)` - Start VM
+- `stop(name, soft=False)` - Stop VM
+- `restart(name)` - Restart VM (default calls start)
+- `delete(name, snapshots=False, keep_disks=False)` - Delete VM
+- `list()` - Return list of `[name, state, ip, source, plan, profile]`
+- `info(name, output, fields, values, vm, debug)` - Return VM details dict
+- `exists(name)` - Check if VM exists
+- `status(name)` - Return VM status
+- `ip(name)` - Return IP string
+- `clone(old, new, full=False, start=False)` - Clone VM
+- `export(name, image=None)` - Export VM as image
+- `console(name, tunnel, tunnelhost, tunnelport, tunneluser, web)` - Graphical console
+- `serialconsole(name, web)` - Serial console
+
+**Storage:**
+- `create_pool(name, poolpath, pooltype, user, thinpool)`
+- `delete_pool(name, full)`
+- `list_pools()` - Return list of pool names
+- `get_pool_path(pool)` - Get pool path
+- `add_disk(name, size, pool, thin, image, shareable, existing, interface, novm, overrides)`
+- `delete_disk(name, diskname, pool, novm)`
+- `create_disk(name, size, pool, thin, image)` - Create standalone disk
+- `list_disks()` - Return dict `{'diskname': {'pool': poolname, 'path': name}}`
+- `disk_exists(pool, name)` - Check if disk exists
+- `detach_disks(name)` - Detach all disks from VM
+
+**Networking:**
+- `create_network(name, cidr, dhcp, nat, domain, plan, overrides)`
+- `delete_network(name, cidr, force)`
+- `update_network(name, dhcp, nat, domain, plan, overrides)`
+- `list_networks()` - Return dict of networks
+- `info_network(name)` - Get network info
+- `net_exists(name)` - Check if network exists
+- `network_ports(name)` - List ports on network
+- `add_nic(name, network, model)`
+- `delete_nic(name, interface)`
+- `update_nic(name, index, network)` - Update NIC
+
+**Subnets (cloud providers):**
+- `create_subnet(name, cidr, dhcp, nat, domain, plan, overrides)`
+- `delete_subnet(name, force)`
+- `update_subnet(name, overrides)`
+- `list_subnets()` - Return subnet dict
+- `info_subnet(name)` - Get subnet info
+
+**Images:**
+- `volumes(iso=False, extended=False)` - List available images
+- `add_image(url, pool, short, cmds, name, size, convert)`
+- `delete_image(image, pool)`
+
+**Snapshots:**
+- `create_snapshot(name, base)` - Create snapshot
+- `delete_snapshot(name, base)` - Delete snapshot
+- `list_snapshots(base)` - List snapshots (returns list)
+- `revert_snapshot(name, base)` - Revert to snapshot
+
+**Update Operations:**
+- `update_metadata(name, metatype, metavalue, append)`
+- `update_memory(name, memory)`
+- `update_cpus(name, numcpus)`
+- `update_start(name, start)` - Set autostart
+- `update_information(name, information)` - Update info metadata
+- `update_iso(name, iso)` - Change attached ISO
+- `update_flavor(name, flavor)` - Change VM flavor
+
+**Buckets (object storage):**
+- `create_bucket(bucket, public)` - Create storage bucket
+- `delete_bucket(bucket)` - Delete bucket
+- `list_buckets()` - List all buckets
+- `list_bucketfiles(bucket)` - List files in bucket
+- `upload_to_bucket(bucket, path, overrides, temp_url, public)`
+- `download_from_bucket(bucket, path)`
+- `delete_from_bucket(bucket, path)`
+
+**Security Groups (cloud providers):**
+- `create_security_group(name, overrides)`
+- `delete_security_group(name)`
+- `update_security_group(name, overrides)`
+- `list_security_groups(network)` - List security groups
+
+**DNS:**
+- `reserve_dns(name, nets, domain, ip, alias, force, primary, instanceid)`
+- `list_dns_zones()` - List DNS zones
+- `dnsinfo(name)` - Return (dnsclient, domain) for VM
+
+**Other:**
+- `close()` - Clean up connection
+- `info_host()` - Return host info dict
+- `vm_ports(name)` - List ports on VM
+- `list_flavors()` - Return `[[name, numcpus, memory], ...]` if platform supports flavors
+
+### 4. Register Provider in config.py
+
+Add import and instantiation in `kvirt/config.py` (around lines 102-220):
+
+```python
+elif self.type == 'yourprovider':
+    # Get provider-specific options
+    option1 = options.get('option1')
+    if option1 is None:
+        error("Missing option1 in configuration. Leaving")
+        sys.exit(1)
+    try:
+        from kvirt.providers.yourprovider import Kyourprovider
+    except Exception as e:
+        exception = e if debug else None
+        dependency_error('yourprovider', exception)
+    k = Kyourprovider(option1=option1, debug=debug)
 ```
 
-### Start/Stop/Restart
-```bash
-kcli start vm myvm
-kcli stop vm myvm
-kcli restart vm myvm
+### 5. Add Dependencies to setup.py
+
+```python
+YOURPROVIDER = ['required-package1', 'required-package2']
+
+# Add to extras_require dict:
+extras_require={
+    'yourprovider': YOURPROVIDER,
+    # ...
+}
+
+# Add to ALL list if needed:
+ALL = EXTRAS + AWS + ... + YOURPROVIDER
 ```
 
-### Delete VM
-```bash
-kcli delete vm myvm             # With confirmation
-kcli delete vm myvm --yes       # Skip confirmation
-kcli delete vm myvm --snapshots # Delete snapshots too
-```
+## Info Method Structure
 
-## SSH Access
+The `info()` method should build a dict with these keys:
+- `name`, `autostart`, `plan`, `profile`, `image`, `ip`, `memory`, `numcpus`, `creationdate`
+- `nets`: list of `{'device': device, 'mac': mac, 'net': network, 'type': network_type}`
+- `disks`: list of `{'device': device, 'size': disksize, 'format': diskformat, 'type': drivertype, 'path': path}`
+- `snapshots`: list of `{'snapshot': snapshot, 'current': current}`
 
-```bash
-kcli ssh myvm                   # SSH as default user
-kcli ssh -u root myvm           # SSH as specific user
-kcli ssh -l myvm                # List SSH command only
-```
+Then call: `common.print_info(yamlinfo, output=output, fields=fields, values=values)`
 
-## Console Access
+## Reference Implementations
 
-```bash
-kcli console myvm               # Graphical console (VNC/SPICE)
-kcli console myvm --serial      # Serial console
-```
+Study these existing providers:
+- `kvirt/providers/kvm/` - Libvirt (most complete reference, ~4300 lines)
+- `kvirt/providers/aws/` - AWS cloud (~2200 lines)
+- `kvirt/providers/gcp/` - Google Cloud Platform (~2100 lines)
+- `kvirt/providers/kubevirt/` - KubeVirt on Kubernetes (~1900 lines)
+- `kvirt/providers/vsphere/` - VMware vSphere (~1900 lines)
+- `kvirt/providers/azure/` - Microsoft Azure (~1500 lines)
+- `kvirt/providers/ibm/` - IBM Cloud (~1500 lines)
+- `kvirt/providers/ovirt/` - oVirt/RHV (~1400 lines)
+- `kvirt/providers/openstack/` - OpenStack (~1350 lines)
+- `kvirt/providers/proxmox/` - Proxmox VE (~1200 lines)
+- `kvirt/providers/hcloud/` - Hetzner Cloud (~550 lines)
+- `kvirt/providers/web/` - Web-based provider (~530 lines)
+- `kvirt/providers/fake/` - Minimal stub for testing (~20 lines)
 
-## Disk Operations
+## Provider Complexity Guide
 
-```bash
-# Add disk
-kcli create disk -s 20 -p default myvm  # 20GB disk
-kcli create disk -s 50 --thin myvm      # Thin provisioned
+Not all providers need to implement every method. Focus on:
 
-# Delete disk
-kcli delete disk myvm-disk1 myvm
+1. **Minimum viable**: `create`, `delete`, `list`, `info`, `start`, `stop`, `exists`, `status`, `ip`
+2. **Storage**: `add_disk`, `delete_disk`, `list_disks`, `create_pool`, `delete_pool`, `list_pools`
+3. **Networking**: `create_network`, `delete_network`, `list_networks`, `net_exists`
+4. **Images**: `volumes`, `add_image`, `delete_image`
+5. **Advanced**: Snapshots, cloning, export, buckets, security groups (as needed)
 
-# List disks
-kcli list disk
-```
-
-## NIC Operations
-
-```bash
-# Add NIC
-kcli create nic -n mynetwork myvm
-
-# Delete NIC
-kcli delete nic eth1 myvm
-
-# Update NIC
-kcli update nic -n newnetwork myvm --index 0
-```
-
-## Snapshots
-
-```bash
-# Create snapshot
-kcli create snapshot myvm mysnapshot
-
-# List snapshots
-kcli list snapshot myvm
-
-# Revert to snapshot
-kcli revert snapshot myvm mysnapshot
-
-# Delete snapshot
-kcli delete snapshot myvm mysnapshot
-```
-
-## VM Configuration
-
-### Configuration Hierarchy
-Parameters are resolved in order (later overrides earlier):
-1. `kvirt/defaults.py` - Built-in defaults
-2. `~/.kcli/config.yml` default section
-3. Provider-specific section in config.yml
-4. Profile definition (`~/.kcli/profiles.yml`)
-5. Plan file parameters
-6. Command-line `-P` overrides
-
-### Common Parameters
-```yaml
-# Compute
-numcpus: 2                      # CPU count
-memory: 512                     # Memory in MB
-cpumodel: host-model            # CPU model
-
-# Storage
-pool: default                   # Storage pool
-disks:                          # Disk configuration
-  - size: 20                    # Size in GB
-  - size: 50
-    pool: otherpool
-    thin: true
-
-# Network
-nets:                           # Network configuration
-  - default                     # Simple: network name only
-  - name: mynet                 # Advanced: with options
-    ip: 192.168.1.10
-    netmask: 255.255.255.0
-    gateway: 192.168.1.1
-    mac: aa:bb:cc:dd:ee:ff
-
-# OS Customization
-image: fedora40                 # Base image
-cloudinit: true                 # Enable cloud-init
-keys:                           # SSH public keys
-  - ssh-rsa AAAA... user@host
-cmds:                           # Post-boot commands
-  - dnf -y update
-  - systemctl enable nginx
-files:                          # Files to inject
-  - path: /etc/myconfig
-    content: |
-      key=value
-```
-
-## Images
-
-```bash
-# List available images
-kcli list image
-
-# Download image
-kcli download image fedora40
-kcli download image centos9stream -p mypool
-
-# Delete image
-kcli delete image fedora40
-
-# List all available images (from kcli catalog)
-kcli list available-images
-```
-
-## Profiles
-
-Profiles in `~/.kcli/profiles.yml`:
-```yaml
-small:
-  numcpus: 1
-  memory: 1024
-  disks:
-    - size: 10
-
-medium:
-  numcpus: 2
-  memory: 2048
-  disks:
-    - size: 20
-
-webserver:
-  image: centos9stream
-  numcpus: 2
-  memory: 4096
-  nets:
-    - default
-  cmds:
-    - dnf -y install nginx
-    - systemctl enable --now nginx
-```
-
-Usage:
-```bash
-kcli create vm -p webserver myweb
-```
-
-## Update Operations
-
-```bash
-# Update memory
-kcli update vm myvm -P memory=8192
-
-# Update CPUs
-kcli update vm myvm -P numcpus=4
-
-# Update metadata
-kcli update vm myvm -P information="Production server"
-```
-
-## Clone VM
-
-```bash
-kcli clone vm myvm myclone
-kcli clone vm myvm myclone --full  # Full clone (not linked)
-```
-
-## Export VM
-
-```bash
-kcli export vm myvm                 # Export to image
-kcli export vm myvm --image myimage # Custom image name
-```
-
-## Troubleshooting
-
-### VM Won't Start
-```bash
-kcli -d start vm myvm              # Debug output
-sudo virsh list --all               # Check libvirt state
-sudo virsh start myvm               # Try direct start
-```
-
-### No IP Address
-```bash
-# Check DHCP is enabled on network
-kcli info network default
-
-# Check cloud-init completed
-kcli ssh myvm
-cat /var/log/cloud-init.log
-```
-
-### SSH Connection Issues
-```bash
-# Get SSH command details
-kcli ssh -l myvm
-
-# Check VM has IP
-kcli info vm myvm -f ip
-
-# Try direct SSH
-ssh -i ~/.kcli/id_rsa user@<ip>
-```
+Methods can return `{'result': 'success'}` with a `print("not implemented")` for optional features.
 
 ---
 > Source: [karmab/kcli](https://github.com/karmab/kcli) — distributed by [TomeVault](https://tomevault.io).
