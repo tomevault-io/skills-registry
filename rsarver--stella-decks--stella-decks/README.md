@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rsarver/stella-decks](https://github.com/rsarver/stella-decks/tree/main/.claude/skills/design-setup/SKILL.md)
+Original source: [rsarver/stella-decks](https://github.com/rsarver/stella-decks/tree/main/.claude/skills/narrative-review/SKILL.md)
 
 ---
 
