@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dotnet/docker-tools](https://github.com/dotnet/docker-tools/tree/main/.github/skills/triaging-pull-requests/SKILL.md)
+Original source: [dotnet/docker-tools](https://github.com/dotnet/docker-tools/tree/main/.github/skills/investigating-pipeline/SKILL.md)
 
 ---
 
