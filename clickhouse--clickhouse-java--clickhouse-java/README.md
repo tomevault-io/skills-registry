@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ClickHouse/clickhouse-java](https://github.com/ClickHouse/clickhouse-java/tree/main/.cursor/skills/code-review/SKILL.md)
+Original source: [ClickHouse/clickhouse-java](https://github.com/ClickHouse/clickhouse-java/tree/main/.cursor/skills/update-keyword-engine-lists/SKILL.md)
 
 ---
 
