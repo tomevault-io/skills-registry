@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zhizhuodemao/ai-reverse-toolkit](https://github.com/zhizhuodemao/ai-reverse-toolkit/tree/main/skills/find-crypto-entry/SKILL.md)
+Original source: [zhizhuodemao/ai-reverse-toolkit](https://github.com/zhizhuodemao/ai-reverse-toolkit/tree/main/skills/ast-deobfuscate/SKILL.md)
 
 ---
 
