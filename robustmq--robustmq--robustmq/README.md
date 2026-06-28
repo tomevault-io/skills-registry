@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [robustmq/robustmq](https://github.com/robustmq/robustmq/tree/main/.claude/skills/review-and-fix/SKILL.md)
+Original source: [robustmq/robustmq](https://github.com/robustmq/robustmq/tree/main/.claude/skills/update-api-docs/skill.md)
 
 ---
 
