@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [iFurySt/open-browser-use](https://github.com/iFurySt/open-browser-use/tree/main/skills/open-browser-use/SKILL.md)
+Original source: [iFurySt/open-browser-use](https://github.com/iFurySt/open-browser-use/tree/main/docs/references/chrome/0.1.7/skills/chrome/SKILL.md)
 
 ---
 
