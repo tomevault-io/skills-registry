@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aws-samples/sample-ai-powered-sdlc-patterns-with-aws](https://github.com/aws-samples/sample-ai-powered-sdlc-patterns-with-aws/tree/main/implementation/implement-autonomous-iteration-agent-cli/lib/skills/aws-sam/SKILL.md)
+Original source: [aws-samples/sample-ai-powered-sdlc-patterns-with-aws](https://github.com/aws-samples/sample-ai-powered-sdlc-patterns-with-aws/tree/main/implementation/implement-autonomous-iteration-agent-cli/lib/skills/react-vite/SKILL.md)
 
 ---
 
