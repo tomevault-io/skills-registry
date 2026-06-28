@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit/tree/main/dist/plugins/domain-name-brainstormer/skills/domain-name-brainstormer/SKILL.md)
+Original source: [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit/tree/main/dist/plugins/professional-communication/skills/professional-communication/SKILL.md)
 
 ---
 
