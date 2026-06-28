@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openLuat/LuatOS](https://github.com/openLuat/LuatOS/tree/main/skill-packs/luatos-demo-spec/SKILL.md)
+Original source: [openLuat/LuatOS](https://github.com/openLuat/LuatOS/tree/main/.claude/skills/luatos-hw-test/SKILL.md)
 
 ---
 
