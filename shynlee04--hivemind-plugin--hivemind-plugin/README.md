@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shynlee04/hivemind-plugin](https://github.com/shynlee04/hivemind-plugin/tree/main/assets/.hivemind/skills/hm-l3-deep-research/SKILL.md)
+Original source: [shynlee04/hivemind-plugin](https://github.com/shynlee04/hivemind-plugin/tree/main/assets/skills/gate-l3-lifecycle-integration/SKILL.md)
 
 ---
 
