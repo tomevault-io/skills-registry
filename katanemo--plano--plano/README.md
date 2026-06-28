@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [katanemo/plano](https://github.com/katanemo/plano/tree/main/.claude/skills/test-python/SKILL.md)
+Original source: [katanemo/plano](https://github.com/katanemo/plano/tree/main/skills/plano-cli-operations/SKILL.md)
 
 ---
 
