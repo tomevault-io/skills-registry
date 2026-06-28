@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alpic-ai/skybridge](https://github.com/alpic-ai/skybridge/tree/main/skills/skybridge)
+Original source: [alpic-ai/skybridge](https://github.com/alpic-ai/skybridge/tree/main/skills/skybridge/SKILL.md)
 
 ---
 
