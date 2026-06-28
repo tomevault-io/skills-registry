@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [growilabs/growi](https://github.com/growilabs/growi/tree/main/.claude/skills/kiro-spec-init/SKILL.md)
+Original source: [growilabs/growi](https://github.com/growilabs/growi/tree/main/.claude/skills/kiro-spec-quick/SKILL.md)
 
 ---
 
