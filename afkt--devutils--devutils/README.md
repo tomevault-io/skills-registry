@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [afkT/DevUtils](https://github.com/afkT/DevUtils/tree/main/.cursor/skills/code-method-normalize/SKILL.md)
+Original source: [afkT/DevUtils](https://github.com/afkT/DevUtils/tree/main/.cursor/skills/ui-devsimple-viewtheme/SKILL.md)
 
 ---
 
