@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hardkoded/puppeteer-sharp](https://github.com/hardkoded/puppeteer-sharp/tree/main/.claude/skills/prune-worktrees/SKILL.md)
+Original source: [hardkoded/puppeteer-sharp](https://github.com/hardkoded/puppeteer-sharp/tree/main/.claude/skills/work-on-open-issues/SKILL.md)
 
 ---
 
