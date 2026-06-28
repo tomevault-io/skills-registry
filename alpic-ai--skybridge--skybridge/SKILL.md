@@ -1,5 +1,5 @@
 ---
-name: skybridge
+name: chatgpt-app-builder
 description: | Use when this capability is needed.
 metadata:
   author: alpic-ai
@@ -7,9 +7,9 @@ metadata:
 
 # Creating Apps For LLMs
 
-Those are conversational experiences that extend AI assistants through tools and custom UI widgets. They're built as MCP servers invoked during conversations.
+ChatGPT apps are conversational experiences that extend ChatGPT through tools and custom UI views. They're built as MCP servers invoked during conversations.
 
-⚠️ The app is consumed by two users at once: the **human** and the **AI Assistant LLM**. They collaborate through the widget—the human interacts with it, the LLM sees its state. Internalize this before writing code: the widget is your shared surface.
+⚠️ The app is consumed by two users at once: the **human** and the **ChatGPT LLM**. They collaborate through the view—the human interacts with it, the LLM sees its state. Internalize this before writing code: the view is your shared surface.
 
 SPEC.md keeps track of the app's requirements and design decisions. Keep it up to date as you work on the app.
 
@@ -20,7 +20,7 @@ SPEC.md keeps track of the app's requirements and design decisions. Keep it up t
 ## Setup
 
 1. **Copy template** → [copy-template.md](references/copy-template.md): when starting a new project with ready SPEC.md
-2. **Run locally** → [run-locally.md](references/run-locally.md): when ready to test, need dev server or ChatGPT/Claude connection
+2. **Run locally** → [run-locally.md](references/run-locally.md): when ready to test, need dev server or ChatGPT connection
 
 ## Architecture
 
@@ -28,9 +28,9 @@ Design or evolve UX flows and API shape → [architecture.md](references/archite
 
 ## Implementation
 
-- **Fetch and render data** → [fetch-and-render-data.md](references/fetch-and-render-data.md): when implementing server handlers and widget data fetching
-- **State and context** → [state-and-context.md](references/state-and-context.md): when persisting widget UI state and updating LLM context
-- **Prompt LLM** → [prompt-llm.md](references/prompt-llm.md): when widget needs to trigger LLM response
+- **Fetch and render data** → [fetch-and-render-data.md](references/fetch-and-render-data.md): when implementing server handlers and view data fetching
+- **State and context** → [state-and-context.md](references/state-and-context.md): when persisting view UI state and updating LLM context
+- **Prompt LLM** → [prompt-llm.md](references/prompt-llm.md): when view needs to trigger LLM response
 - **UI guidelines** → [ui-guidelines.md](references/ui-guidelines.md): display modes, layout constraints, theme, device, and locale
 - **External links** → [open-external-links.md](references/open-external-links.md): when redirecting to external URLs or setting "open in app" target
 - **OAuth** → [oauth.md](references/oauth.md): when tools need user authentication to access user-specific data
@@ -39,10 +39,10 @@ Design or evolve UX flows and API shape → [architecture.md](references/archite
 ## Deploy
 
 - **Ship to production** → [deploy.md](references/deploy.md): when ready to deploy via Alpic
-- **Publish to ChatGPT/Claude Directories** → [publish.md](references/publish.md): when ready to submit for review
+- **Publish to ChatGPT Directory** → [publish.md](references/publish.md): when ready to submit for review
 
 Full API docs: [https://docs.skybridge.tech/api-reference.md](https://docs.skybridge.tech/api-reference.md)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/alpic-ai) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [alpic-ai/skybridge](https://github.com/alpic-ai/skybridge) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-28 -->
