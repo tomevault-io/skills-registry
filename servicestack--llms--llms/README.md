@@ -1,0 +1,13 @@
+# llms
+
+> Skill by [ServiceStack](https://github.com/ServiceStack/llms) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [ServiceStack/llms](https://github.com/ServiceStack/llms/tree/main/llms/extensions/skills/ui/skills/create-plan/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
