@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [garrettjsmith/localseoskills](https://github.com/garrettjsmith/localseoskills/tree/main/skills/screaming-frog-tool/SKILL.md)
+Original source: [garrettjsmith/localseoskills](https://github.com/garrettjsmith/localseoskills/tree/main/skills/local-content-briefs/SKILL.md)
 
 ---
 
