@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [live-codes/livecodes](https://github.com/live-codes/livecodes/tree/main/.agents/skills/livecodes/sdk-methods/SKILL.md)
+Original source: [live-codes/livecodes](https://github.com/live-codes/livecodes/tree/main/.agents/skills/livecodes/self-hosting/SKILL.md)
 
 ---
 
