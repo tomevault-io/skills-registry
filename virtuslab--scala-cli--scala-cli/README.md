@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [VirtusLab/scala-cli](https://github.com/VirtusLab/scala-cli/tree/main/agentskills/adding-directives/SKILL.md)
+Original source: [VirtusLab/scala-cli](https://github.com/VirtusLab/scala-cli/tree/main/agentskills/deprecating-features/SKILL.md)
 
 ---
 
