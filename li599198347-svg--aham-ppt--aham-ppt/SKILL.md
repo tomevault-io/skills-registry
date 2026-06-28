@@ -1,0 +1,117 @@
+---
+name: aham-ppt
+description: > Use when this capability is needed.
+metadata:
+  author: li599198347-svg
+---
+
+# Aham PPT 技能 — Aham UI v6.1 · Office 轨 · PPT
+
+> **版本 v2.4**（更稳的流程 · 更准的版式）：八阶段**强制逐步执行**（防跳步 + 卡点等待 + 进度可见）、**版式库去重 + 单一选择决策表 + 首选核心集**、**数据强制图表化三环硬门禁**（规划/设计/质检）；并含 v2.3 仓库清理（去悬空引用/死代码、规范单一事实源）。详见 `CHANGELOG.md`。
+>
+> **v2.2**（表现力增强 · 防平淡）新增 **9 类数据图表组件 `charts.py`、C 高表现力档（深色模板 `cover_dark/section_dark/quote_dark`）、防平淡规则链**（数据强制图表化 + 图形化占比下限 + 防平淡审计）。
+>
+> **v2.1**（双档主题 + 工具链修复）新增：A 克制档 / B 现代专业档（默认 B）、
+> 启动选档步骤、转换器字宽修复、线性图标库与关系图组件库、强调色语义 QC、内容方法论。
+> 详见 `references/theme-tiers.md`、`references/designer-rules.md`（设计补充）、`CHANGELOG.md`。
+
+---
+
+## Step 1 · 加载规范（优先级顺序）
+
+**优先级 1（主路径）：**
+```
+view references/brand-spec/brand.md
+view references/brand-spec/track-rules.md
+```
+重点提取 PPT 相关内容：Action Title 规则、版式、色值、字体（Office 轨 · PPT 子模型，落地取值见 `brand.md` §7 + `tokens.css` §10）。
+
+**优先级 2（PPT 专项规范）：**
+```
+view references/designer-rules.md
+view references/phase-01.md  ← 规范加载阶段
+（按执行阶段依次读取对应 phase-XX.md）
+```
+
+**优先级 3（降级兜底）：**
+使用本文件末尾「降级基线」。
+
+加载 pptx 文档生成技能：
+```
+view /mnt/skills/public/pptx/SKILL.md
+```
+
+**视觉档规范（务必加载）：**
+```
+view references/theme-tiers.md     ← 三档主题：A 克制 / B 现代专业 / C 高表现（默认 B）
+```
+（v2.1 的字宽修复 / 强调色语义 QC / 图标组件 / 内容方法论已并入 `designer-rules.md`、`phase-02.md` 与组件代码，不再单列文件。）
+图标与组件资产位于 `assets/components/`：`icons.py`（~40 线性图标 + icon_circle）、
+`components.py`（泳道/蓝图/箭头/KPI/状态/设备屏/占位框）、`charts.py`（**9 类数据图表：柱/横柱/折线/瀑布/漏斗/甘特/子弹/堆叠/坡度**，一行调用、已 brand §7.5 合规、转换实测可编辑）、`themes.py`（A/B 封面/目录/章节/页眉模板 + **C 档深色模板 `cover_dark/section_dark/quote_dark`**）。
+
+---
+
+## Step 1.5 · 选择视觉档（默认 B · 现代专业档）
+
+加载规范后、解析材料前，向用户确认一次视觉档（回车默认 B）：
+
+```
+这份 PPT 用哪种视觉档？
+  A 克制档     —— 纯白极简，适合高层正式汇报、严谨决策
+  B 现代专业档 —— 图标 + 关系图 + 设计化封面/目录/章节（默认，适合多数客户方案）
+  C 高表现力档 —— B 的一切 + 深色重音页（封面/章节/金句）+ 数据图表占主导，适合路演/竞标/重点客户（偏“演说稿”，严肃决策仍用 A）
+直接回车 = B。
+```
+
+记录 `theme = A | B | C`。**三档共用同一套内容与组件**，只切换主题层：A/B 切换封面/目录/章节模板 + 页眉皮肤；C 在 B 之上再叠加深色重音页（封面/章节/金句）。
+三档都坚持单一品牌主色 + 中性灰，**不引入多色体系**（多色实测"AI 感/营销感"偏重）。
+phase-05（版式）/ phase-07（出片）按 `theme` 取用 `themes.py` 对应模板：A/B 用 `cover/toc/section/chrome`；**C 用 `cover_dark/section_dark/quote_dark`（封面/章节/金句）+ `chrome`（内容页沿用 B 皮肤）+ `charts` 组件（数据页占主导）**。详见 `references/theme-tiers.md`。
+
+---
+
+## Step 2 · 八阶段执行（逐阶段加载 · 卡点等待 · 不可跳步）
+
+> ⚠️ **执行铁律（最高优先级，覆盖"尽快出片"的默认倾向）：**
+>
+> 1. **逐阶段加载**：进入第 N 阶段前，**必须先 `view references/phase-0N.md`** 并完整执行其中的「强制等待锚点」与全部步骤——**禁止只凭下方阶段名脑补着做**。
+> 2. **卡点等待**：每个阶段结束必须输出该阶段「完成卡」，并**等用户确认后**才进入下一阶段；用户未确认，不得继续。
+> 3. **不可跳步 / 不可合并**：八阶段按序逐个执行，禁止跳过（尤其 P3 论点提炼、P4 叙事骨架、P6 样稿确认这三个最易被省的环节），禁止把多个阶段并成一次产出。
+> 4. **进度可见**：每个阶段开头先输出一行 `【阶段 N/8 · 名称 · 已加载 phase-0N.md】`，让执行轨迹可被监督（各 phase 文件顶部已重申此要求）。
+> 5. **Phase 1 ≠ Step 1**：Step 1 只完成规范 `view`；phase-01 的受众问答（强制等待锚点）与受众卡/完成卡**仍须照常执行**，不得因 Step 1 已加载文件就跳过 Phase 1 的实质工作。
+
+阶段一览（**名称仅供索引，不能据此直接产出**；详细指引各见对应文件）：
+
+| # | 阶段 | 文件 |
+|---|---|---|
+| 1 | 规范与受众定义（Step 1 仅加载规范；受众卡/完成卡须按 phase-01 执行，**不可视作已完成**） | `references/phase-01.md` |
+| 2 | 材料解析与关键信息提取 | `references/phase-02.md` |
+| 3 | 核心论点提炼（金字塔原理） | `references/phase-03.md` |
+| 4 | 叙事骨架搭建（Ghost Deck） | `references/phase-04.md` |
+| 5 | 大纲与版式规划 | `references/phase-05.md` |
+| 6 | 样稿确认（与用户对齐） | `references/phase-06.md` |
+| 7 | 逐页设计输出 | `references/phase-07.md` |
+| 8 | 质检交付（QC 清单） | `references/phase-08.md` |
+
+---
+
+## 降级基线（无法读取外部规范时）
+
+> ⚠️ 未找到外部规范，使用内嵌基线（Aham UI v6.1 · Office 轨 · PPT）。
+
+**PPT 核心规则（北极星：极简克制的桌面 AI 气质 · 冷色的纸 · 蓝是点缀）：**
+- **底永远纯白 `#FFFFFF`**；三层灰 `#FFFFFF`/`#F3F3F3`/`#E7E7E7`；墨四级 `#262626`/`#6E6E6E`/`#9B9B9B`/`#C4C4C4`。**禁纯黑 `#000`。**
+- **蓝 `#336EE8` 只点缀**（品牌点/主操作/选中/推荐/单个高亮数据点/封面短线）；**无顶部蓝条、绝不铺底**。
+- Action Title：每页完整结论句、**无衬线 bold `#262626`**（无蓝竖线、无衬线）。
+- 字体：**单一无衬线** `Inter, 'PingFang SC', 'Microsoft YaHei', sans-serif`（禁衬线）；数字一律 mono `'JetBrains Mono', Consolas, monospace`。
+- 卡片**无边框无阴影**；分块靠留白 + `#E7E7E7` 细横线；选中=扁平灰非蓝。
+- 表格**只横线**、无竖线、无整行底色；数字右对齐 mono；表头/合计加粗。状态 = **6px 点 + 文字**（禁红黄绿灯/pill）。
+- 图表灰阶 `#9B9B9B`/`#C8C8C8` + **一个** `#336EE8` 高亮；无 3D/阴影/渐变/饼图。
+- 标题字号：内容 24pt、封面 32–40pt（左对齐）、正文 14–16pt、大数字 mono 44–60pt。
+- 禁用：纯黑#000 / 渐变 / 3D / 投影 / 衬线 / 第二装饰彩色 / emoji / 饼图 / 表格竖线 / 蓝铺底 / 红黄绿灯。
+- 禁用词：赋能·颠覆·生态·闭环·最佳实践·全链路·一站式·显著·大幅。
+- 数字格式：货币 ¥1,200,000；百分比 37.5%；日期 YYYY-MM-DD；数字用等宽 mono。
+- 每页一个核心结论，表格优于文字堆砌。
+
+---
+> Source: [li599198347-svg/aham-ppt](https://github.com/li599198347-svg/aham-ppt) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-28 -->
