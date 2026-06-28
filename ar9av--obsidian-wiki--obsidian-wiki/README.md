@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Ar9av/obsidian-wiki](https://github.com/Ar9av/obsidian-wiki/tree/main/.skills/wiki-dedup/SKILL.md)
+Original source: [Ar9av/obsidian-wiki](https://github.com/Ar9av/obsidian-wiki/tree/main/.skills/wiki-agent/SKILL.md)
 
 ---
 
