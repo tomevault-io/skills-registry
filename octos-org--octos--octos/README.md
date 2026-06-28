@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [octos-org/octos](https://github.com/octos-org/octos/tree/main/crates/app-skills/harness-starter-report/SKILL.md)
+Original source: [octos-org/octos](https://github.com/octos-org/octos/tree/main/crates/app-skills/harness-starter-generic/SKILL.md)
 
 ---
 
