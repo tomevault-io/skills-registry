@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [timeplus-io/proton](https://github.com/timeplus-io/proton/tree/main/.claude/skills/sql-usage/SKILL.md)
+Original source: [timeplus-io/proton](https://github.com/timeplus-io/proton/tree/main/.claude/skills/cpp-coding/SKILL.md)
 
 ---
 
