@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DataDog/dd-trace-dotnet](https://github.com/DataDog/dd-trace-dotnet/tree/main/.claude/skills/analyze-error/SKILL.md)
+Original source: [DataDog/dd-trace-dotnet](https://github.com/DataDog/dd-trace-dotnet/tree/main/.claude/skills/azure-functions/SKILL.md)
 
 ---
 
