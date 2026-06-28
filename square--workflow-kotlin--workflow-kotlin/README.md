@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [square/workflow-kotlin](https://github.com/square/workflow-kotlin/tree/main/workflow-testing/.agents/skills/workflow-testing/SKILL.md)
+Original source: [square/workflow-kotlin](https://github.com/square/workflow-kotlin/tree/main/samples/tutorial/.firebender/skills/create-workflow/SKILL.md)
 
 ---
 
