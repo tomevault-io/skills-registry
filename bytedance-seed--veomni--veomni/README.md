@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ByteDance-Seed/VeOmni](https://github.com/ByteDance-Seed/VeOmni/tree/main/.agents/skills/veomni-uv-update/SKILL.md)
+Original source: [ByteDance-Seed/VeOmni](https://github.com/ByteDance-Seed/VeOmni/tree/main/.agents/skills/veomni-migrate-transformers-v5/SKILL.md)
 
 ---
 
