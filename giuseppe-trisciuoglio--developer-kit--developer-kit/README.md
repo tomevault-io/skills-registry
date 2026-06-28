@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [giuseppe-trisciuoglio/developer-kit](https://github.com/giuseppe-trisciuoglio/developer-kit/tree/main/plugins/developer-kit-java/skills/spring-boot-resilience4j/SKILL.md)
+Original source: [giuseppe-trisciuoglio/developer-kit](https://github.com/giuseppe-trisciuoglio/developer-kit/tree/main/plugins/developer-kit-java/skills/spring-boot-saga-pattern/SKILL.md)
 
 ---
 
