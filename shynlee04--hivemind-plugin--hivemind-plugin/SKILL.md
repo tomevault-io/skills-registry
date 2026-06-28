@@ -1,185 +1,111 @@
 ---
-name: gate-l3-lifecycle-integration
-description: > Use when this capability is needed.
+name: hm-l3-opencode-non-interactive-shell
+description: This skill should be used when the user asks to "write shell commands", "run non-interactive shell", "CI=true safety", "banned shell commands", "shell environment variables", "headless agent execution", "shell command safety", "avoid interactive prompts", or "non-interactive flags". Use when this capability is needed.
 metadata:
   author: shynlee04
 ---
 
-# Gate: Lifecycle Integration
+## Overview
 
-Internal quality gate for Hivemind harness architecture compliance. Not for end-user
-shipping. Activates during every gatekeeping workflow related to harness or OpenCode
-integration work.
+Shell command safety guide for headless agent execution environments. Use when writing shell commands for CI/CD pipelines, automated scripts, or any context without a TTY. Provides banned command lists, non-interactive flag patterns, and environment variable conventions for safe unattended execution.
 
-## Activation Detection
-
-Load this skill when:
-- Code review of files in `src/` (any subdirectory)
-- Phase audit or milestone verification touching harness modules
-- Integration check after tool/hook/delegation changes
-- Deployment readiness for `hivemind` npm package
-- Any workflow referencing `gate-lifecycle-integration`
-
-## Do NOT Load
-
-Skip when working on `.opencode/` soft meta-concept authoring, end-user feature
-development, non-Hivemind code reviews, documentation, or artifacts in
-`src/shared/`/`src/schema-kernel/` (use lighter classification check instead).
-
-## Two-Halves Classification (Q6)
-
-Every artifact must land in exactly one of three roots:
-
-| Root | Contents | State Authority |
-|------|----------|-----------------|
-| `src/` (Hard Harness) | Tools, hooks, plugin, shared, lib | Writes to `.hivemind/` via managers only |
-| `.opencode/` (Soft Meta-Concepts) | Skills, agents, commands, rules | No persistent state — OpenCode primitives only |
-| `.hivemind/` (Deep Module State) | Journals, continuity, delegation records | Canonical state root (Q6) |
-
-Cross-contamination between roots is a **BLOCK** finding. Tools never write to
-`.opencode/`. Hooks never write to `.hivemind/` directly — they route through
-`DelegationManager` or `continuity.ts`.
-
-## 9-Surface Mutation Authority
-
-The architecture defines 9 surfaces across write-side (4), read-side (3), and
-assembly (1). Each artifact must conform to its surface's authority boundaries.
-
-> **Full table with constraints**: `references/nine-surface-authority.md`
->
-> Source: `.planning/codebase/ARCHITECTURE.md` § "9-Surface Mutation Authority"
-
-Quick summary — write-side: `continuity.ts`, `delegation-persistence.ts`,
-`session-journal.ts`, `DelegationManager`. Read-side: hooks, tools, sidecar.
-Assembly: `plugin.ts`.
-
-## OpenCode SDK Surface Compliance
-
-Validate against the real `@opencode-ai/plugin` v1.14.28 API surface. Three areas:
-
-1. **tool() factory**: `description`, `args` (Zod), `execute` → string. Registered in plugin.ts.
-2. **Hook handlers**: Exactly 4 hooks (`tool.execute.before/after`, `experimental.session.compacting`, `shell.env`).
-3. **Plugin composition**: Async function, type-only imports, no inline business logic, lazy PTY.
-
-> **Full checklists with real signatures**: `references/sdk-compliance.md`
->
-> Additional context: `stack-opencode` skill for broader SDK reference.
-
-## CQRS Boundary Enforcement
-
-Write-side (tools) mutate state via managers. Read-side (hooks) observe events.
-Events flow write→read, never reverse. 7 BLOCK-level anti-patterns detect violations
-(e.g., `AP-WRITE-FROM-READ`, `AP-CROSS-ROOT-WRITE`, `AP-BYPASS-MANAGER`).
-
-> **Full write/read checklists + anti-pattern table**: `references/cqrs-boundaries.md`
->
-> Expanded anti-pattern catalog: `references/anti-patterns.md`
-
-## Delegation Hierarchy Constraints
-
-Validate against runtime constants from `src/lib/types.ts`:
-
-| Constant | Value | Meaning |
-|----------|-------|---------|
-| `MAX_DELEGATION_DEPTH` | 3 | Max nested delegation depth |
-| `MAX_DESCENDANTS_PER_ROOT` | 10 | Max child delegations per root session |
-| `STABLE_POLLS_REQUIRED` | 3 | Consecutive unchanged polls for completion |
-| `TASK_CLEANUP_DELAY_MS` | 600000 | Grace period before cleanup (10 min) |
-
-Check: uses `DelegationManager.dispatch()`, valid category, depth ≤ 3, WaiterModel
-dispatch, dual-signal completion, recovery guarantee via `recoverPending()`.
-
-## Decision Tree
+## The Iron Law
 
 ```
-START → Classify the artifact by file location:
-  ├─ src/tools/*.ts → TOOL: tool() registration, Zod, response envelope,
-  │     SDK mutation via session-api.ts, state via continuity.ts, LOC < 200
-  ├─ src/hooks/*.ts → HOOK: factory pattern, real SDK signature, CQRS readonly
-  ├─ src/lib/*.ts → LIBRARY: dependency ≤ 2 levels, LOC < 500, no `any`, tests
-  ├─ src/plugin.ts → COMPOSITION: LOC < 200, all registered, no inline logic
-  ├─ src/shared/*.ts, src/schema-kernel/*.ts → LEAF: cross-cutting utility
-  └─ DELEGATION participant? → DelegationManager, category, depth, dual-signal
+NEVER run a command that waits for user input. The shell has no TTY. Interactive = hang.
 ```
 
-For each branch, execute the detailed checklist in `references/evaluation-checklist.md`.
+## Core Mandates
+
+1. **Assume `CI=true`**: Act as if running in a headless CI/CD pipeline.
+2. **No Editors/Pagers**: `vim`, `nano`, `less`, `more`, `man` are BANNED.
+3. **Force & Yes with care**: Supply `--yes`, `--non-interactive`, or equivalent flags for safe installers/tooling; do not use force flags for destructive operations unless the user explicitly authorized that exact operation.
+4. **Use OpenCode Tools**: Prefer `Read`/`Write`/`Edit` tools over shell manipulation (`sed`, `echo`, `cat`).
+5. **No Interactive Modes**: Never use `-i` or `-p` flags that require user input.
+6. **Danger tier before execution**: Classify commands as ALLOW, WARN, or BLOCK before running. Adapted from Nanostack guard tiers, but this skill reports safety facts and leaves final judgment to the controlling agent/user.
+
+## Danger Tier Matrix
+
+| Tier | Examples | Action |
+|------|----------|--------|
+| ALLOW | `npm test -- --runInBand`, `npx --yes <tool> --help`, `git --no-pager log -n 5` | Run with timeout/non-interactive flags when relevant |
+| WARN | package installs, long-running servers, Docker pulls, network fetches | Add timeout/background strategy and explain side effects |
+| BLOCK | `git clean`, `git reset --hard`, force push, recursive deletion, production database commands, unreviewed remote-code execution | Do not run unless explicit user instruction overrides and project rules allow it |
+
+## Reference Map
+
+| File | When to Read |
+|------|-------------|
+| `references/command-tables.md` | Need specific command syntax (package managers, git, docker, system) |
+| `references/env-variables.md` | Need environment variable configurations |
+| `references/cognitive-patterns.md` | Need cognitive optimization patterns (BAD vs GOOD framing) |
+| `references/prompt-handling.md` | Need workaround patterns for stubborn prompts |
+| `references/source-evidence.md` | RICH source replacement and bundled-resource scorecard |
+
+## Cognitive & Behavioral Standards
+
+**Context:** OpenCode's shell environment is strictly **non-interactive**. It lacks a TTY/PTY, meaning any command that waits for user input, confirmation, or launches a UI (editor/pager) will hang indefinitely.
+
+**Key Behaviors:**
+1. **Process Continuity**: Never stop after a tool output to "wait for instructions" unless the task is complete. Drive the workflow.
+2. **Explicit Action Framing**: Follow "GOOD" (positive) instructions, ignore "BAD" (negative) assumptions. See `references/cognitive-patterns.md`.
+3. **Environment Rigor**: Assume a headless CI environment where any prompt = failure.
+
+## Anti-Patterns
+
+| Anti-Pattern | Detection | Correction |
+|-------------|-----------|------------|
+| **The Prompter** | Runs commands without non-interactive flags | Always add `-y`, `--yes`, `--non-interactive`, or pipe `yes \|` |
+| **The Editor** | Uses `vim`, `nano`, `less`, `man` | Use OpenCode `Read`/`Write`/`Edit` tools instead |
+| **The REPL** | Runs `python`, `node` without `-c` or script | Use `python -c "code"` or `python script.py` |
+| **The Git Pager** | Runs `git log` without `--no-pager` | Always add `--no-pager` or `-n <count>` |
+| **The Silent Hang** | No timeout on potentially interactive commands | Wrap with `timeout 30 ...` as last resort |
+| **The Unsafe Force** | Adds `--force` to destructive commands to avoid prompts | Stop; force is not a substitute for authorization |
+
+## RICH Gate Source Decisions
+
+| Source | Decision | Local adaptation |
+|--------|----------|------------------|
+| `garagon/nanostack` guard | ADAPT | ALLOW/WARN/BLOCK danger tiers are adapted as a reasoning aid, not copied as blocking governance scripts. |
+| Hermes OpenCode search evidence | REPLACED | Raw Hermes OpenCode skill source was not inspectable in this workspace, so it is not cited as reviewed evidence. Replacement evidence is official OpenCode command/platform docs plus local repomix OpenCode source pack; see `references/source-evidence.md`. |
+| OpenCode official docs | ADAPT | Commands may inject shell output; command authors must keep injected commands non-interactive and bounded. |
+
+## Independence Notes
+
+This skill applies to arbitrary shell-capable OpenCode projects. It must not assume GNU-only flags on macOS/BSD; prefer portable flags or document platform-specific alternatives. Do not assume HiveMind state paths.
 
 ## Self-Correction
 
-### Mode 1: When Classification Is Ambiguous
+### When the Task Keeps Failing
 
-If a file straddles two classification roots (e.g., a test helper in `src/shared/` that also reads `.hivemind/` state), classify by primary purpose. Helpers that are pure utility = LEAF (src/shared/). Helpers that read persistent state = suspect — check if they route through a manager. Never classify as LEAF to bypass the lifecycle gate.
+[Detection] If shell commands keep hanging or timing out, check whether any command in the chain has an interactive prompt — package managers, installers, and some tools default to interactive mode without explicit non-interactive flags. Verify that commands using pipes or redirections are not accidentally waiting for input from the wrong source. If timeout is the issue, increase the timeout or split long-running operations into smaller steps with progress tracking.
 
-### Mode 2: When CQRS Boundary Is Fuzzy
+[Recovery] Add `--yes`, `--non-interactive`, `--no-pager`, or equivalent flags. Wrap suspect commands with `timeout 30`. If a command truly requires interaction, report it as BLOCKED and suggest an alternative approach.
 
-Some tools produce side effects that look like state reads (e.g., delegation-status.ts reads delegation records). This is correct CQRS: the tool reads through a query API, not by subscribing to events. Distinguish: direct event subscription in a tool = BLOCK; query API call in a tool = PASS.
+### When Unsure About the Next Step
 
-### Mode 3: When Plugin.ts Exceeds LOC Limit
+[Detection] If you cannot determine a command's danger tier, default to WARN — assume potential side effects and add timeout/background strategy. If you cannot find a non-interactive flag for a specific tool, check `references/command-tables.md` for known patterns, then search the tool's documentation for CI/headless flags. If no non-interactive option exists, classify as BLOCKED.
 
-If plugin.ts exceeds 200 LOC but the excess is purely registration boilerplate (many tools/hooks), document the finding as WARNING rather than BLOCK. If the excess includes inline business logic, BLOCK. Registration-only LOC inflation is acceptable; logic inflation is not.
+[Recovery] Consult `references/command-tables.md` first. If the tool is not documented, search the tool's `--help` output for non-interactive or CI flags.
 
-### Mode 4: When Delegation Depth Is At Limit
+### When the User Contradicts Skill Guidance
 
-A delegation chain at exactly MAX_DELEGATION_DEPTH (3) is PASS — the limit is inclusive. However, if depth=3 and the chain also uses queue keys without buildDelegationQueueKey(), flag as WARNING. At-limit depth with correct queue key construction = PASS. At-limit depth with manual key construction = WARNING (fragile).
+[Detection] If the user explicitly requests a BLOCK-tier command (e.g., git clean, force push), warn them about the specific risk but proceed if they confirm — the danger tier matrix reports safety facts, it does not block authorized operations. If the user wants to run a command without non-interactive flags, warn about potential hangs and suggest adding flags, but honor the user's choice if they insist. Document the override and risk in any session log.
 
-## Gate Orchestrator Integration
+[Recovery] Document BLOCK-tier overrides with timestamp, exact command, and user confirmation. Never silently run BLOCK-tier commands — always require explicit user authorization.
 
-This gate participates in the triad orchestrated by `hm-gate-orchestrator`. The orchestrator manages triad sequencing, state persistence, and cross-gate handoff. When invoked within an orchestrator workflow, this skill is the ENTRY gate. It receives a gate context from the orchestrator and returns a structured lifecycle verdict. See `hm-gate-orchestrator` for full triad lifecycle management.
+### When an Edge Case Is Encountered
 
-## Cross-Skill Routing
+[Detection] If a command works locally but fails in CI (different OS, shell, or environment), check for platform-specific flags — macOS uses BSD variants of some commands where GNU flags differ. If environment variables are needed but their values are unknown, do not guess; report the missing variable and its purpose. If a command produces output that needs parsing but the output format is unpredictable, avoid fragile parsing and use structured alternatives (JSON output flags, dedicated query tools).
 
-- **PASSES** → Route to `gate-spec-compliance` (spec-level verification)
-- **FAILS (classification)** → STOP. Redesign required — root misplacement needs file move.
-- **FAILS (other)** → Document in gate report, fix, re-run before routing to `gate-spec-compliance`.
+[Recovery] For platform differences, consult `references/command-tables.md` for portable alternatives. For missing env vars, report the variable name and what it controls. For fragile parsing, switch to structured output formats.
 
-### Triad Flow
+## Cross-References
 
-```
-gate-lifecycle-integration  →  gate-spec-compliance  →  gate-evidence-truth
-  (entry — this skill)          (spec verification)       (terminal — evidence)
-```
-
-## Remediation Routing (on FAIL)
-
-| Finding Type | Route To | Action |
-|-------------|----------|--------|
-| Classification violation | `hm-coordinating-loop` | Move file to correct root |
-| Lifecycle wiring issue | `hm-phase-execution` | Fix registration wiring |
-| Structural/architectural | `hm-refactor` | Split module, break cycle |
-| CQRS boundary violation | `hm-phase-execution` | Fix CQRS wiring |
-| Delegation hierarchy | `hm-coordinating-loop` | Redesign dispatch patterns |
-| Unknown/unclear failure | `hm-debug` | Root-cause investigation |
-| Completion verification | `hm-completion-looping` | Verification loop |
-| Triad orchestration | `hm-gate-orchestrator` | Full triad lifecycle, state persistence, re-run |
-
-> Full routing table: `references/remediation-paths.md`
-
-## Evaluation Output
-
-1. Fill `templates/gate-report.md` with findings per dimension
-2. Record PASS/FAIL per anti-pattern check
-3. Record which 9-surface authority boundary was checked
-4. If PASS: note routing to `gate-spec-compliance`
-5. If FAIL: list remediations with file:line references and routing target
-
-## Bundled Resources
-
-| Resource | Purpose |
-|----------|---------|
-| `references/evaluation-checklist.md` | Per-artifact-type audit criteria |
-| `references/perspective-rubrics.md` | PM/Architect/Dev scoring rubrics |
-| `references/anti-patterns.md` | Full anti-pattern catalog |
-| `references/adopted-patterns.md` | Synthesized third-party patterns |
-| `references/remediation-paths.md` | Per-finding routing to hm-* skills |
-| `references/nine-surface-authority.md` | Full 9-surface mutation authority table |
-| `references/sdk-compliance.md` | OpenCode SDK compliance checklists |
-| `references/cqrs-boundaries.md` | CQRS boundary rules + BLOCK anti-patterns |
-| `references/gap-documentation.md` | Full gap catalog |
-| `references/triad-flow.md` | Inter-gate handoff contracts |
-| `metrics/rich-gate-scorecard.md` | RICH-8 scorecard |
-| `evals/evals.json` | Test scenarios |
-| `templates/gate-report.md` | Standardized report template |
-| `scripts/run-gate-eval.sh` | Deterministic evaluation runner |
+| Related Skill | Boundary |
+|---------------|----------|
+| `command-dev` | command-dev = how to write OpenCode slash commands. This skill = shell safety for any command execution. |
+| `opencode-platform-reference` | platform-reference = what platform features exist. This skill = how to safely execute shell commands. |
 
 ---
 > Source: [shynlee04/hivemind-plugin](https://github.com/shynlee04/hivemind-plugin) — distributed by [TomeVault](https://tomevault.io).
