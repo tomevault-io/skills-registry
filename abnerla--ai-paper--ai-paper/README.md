@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Abnerla/AI_paper](https://github.com/Abnerla/AI_paper/tree/main/Management/skills_src/diagram-template-library/SKILL.md)
+Original source: [Abnerla/AI_paper](https://github.com/Abnerla/AI_paper/tree/main/Management/skills_src/research-question-refiner/SKILL.md)
 
 ---
 
