@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vitorpamplona/amethyst](https://github.com/vitorpamplona/amethyst/tree/main/.claude/skills/find-missing-translations/SKILL.md)
+Original source: [vitorpamplona/amethyst](https://github.com/vitorpamplona/amethyst/tree/main/.claude/skills/compose-state-deferred-reads/SKILL.md)
 
 ---
 
