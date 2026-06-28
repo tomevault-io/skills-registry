@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [docfork/docfork](https://github.com/docfork/docfork/tree/main/plugins/claude/docfork/skills/docfork-docs/SKILL.md)
+Original source: [docfork/docfork](https://github.com/docfork/docfork/tree/main/plugins/cursor/docfork/skills/docfork-docs/SKILL.md)
 
 ---
 
