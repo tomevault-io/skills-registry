@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [basecamp/lexxy](https://github.com/basecamp/lexxy/tree/main/.claude/skills/bugs-reproducer/SKILL.md)
+Original source: [basecamp/lexxy](https://github.com/basecamp/lexxy/tree/main/.claude/skills/mass-bug-fixing/SKILL.md)
 
 ---
 
