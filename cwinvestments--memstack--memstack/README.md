@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cwinvestments/memstack](https://github.com/cwinvestments/memstack/tree/main/skills/development/webapp-testing/SKILL.md)
+Original source: [cwinvestments/memstack](https://github.com/cwinvestments/memstack/tree/main/skills/automation/content-pipeline/SKILL.md)
 
 ---
 
