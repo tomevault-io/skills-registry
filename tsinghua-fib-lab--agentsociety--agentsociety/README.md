@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tsinghua-fib-lab/agentsociety](https://github.com/tsinghua-fib-lab/agentsociety/tree/main/extension/skills/agentsociety-run-experiment/v1.0.0/SKILL.md)
+Original source: [tsinghua-fib-lab/agentsociety](https://github.com/tsinghua-fib-lab/agentsociety/tree/main/extension/skills/agentsociety-research-pipeline/v1.0.0/SKILL.md)
 
 ---
 
