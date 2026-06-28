@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [selemondev/spark-ui](https://github.com/selemondev/spark-ui/tree/main/.agents/skills/vitepress/SKILL.md)
+Original source: [selemondev/spark-ui](https://github.com/selemondev/spark-ui/tree/main/.agents/skills/vue-best-practices/SKILL.md)
 
 ---
 
