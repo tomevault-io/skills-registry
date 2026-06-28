@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mozilla-ai/cq](https://github.com/mozilla-ai/cq/tree/main/plugins/cq/skills/cq/SKILL.md)
+Original source: [mozilla-ai/cq](https://github.com/mozilla-ai/cq/tree/main/sdk/python/src/cq/prompts/SKILL.md)
 
 ---
 
