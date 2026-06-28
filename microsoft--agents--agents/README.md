@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/Agents](https://github.com/microsoft/Agents/tree/main/agent-plugins/agents-for-net/skills/bf-to-agents-sdk-dotnet-migration/SKILL.md)
+Original source: [microsoft/Agents](https://github.com/microsoft/Agents/tree/main/agent-plugins/agents-for-net/skills/agents-sdk-dotnet-activityhandler-migration/SKILL.md)
 
 ---
 
