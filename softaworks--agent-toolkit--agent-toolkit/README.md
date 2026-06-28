@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit/tree/main/dist/plugins/openapi-to-typescript/skills/openapi-to-typescript/SKILL.md)
+Original source: [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit/tree/main/dist/plugins/game-changing-features/skills/game-changing-features/SKILL.md)
 
 ---
 
