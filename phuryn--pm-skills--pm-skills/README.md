@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [phuryn/pm-skills](https://github.com/phuryn/pm-skills/tree/main/pm-marketing-growth/skills/product-name/SKILL.md)
+Original source: [phuryn/pm-skills](https://github.com/phuryn/pm-skills/tree/main/pm-go-to-market/skills/beachhead-segment/SKILL.md)
 
 ---
 
