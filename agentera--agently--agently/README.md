@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AgentEra/Agently](https://github.com/AgentEra/Agently/tree/main/examples/agent_auto_orchestration/skills/market-research-brief/SKILL.md)
+Original source: [AgentEra/Agently](https://github.com/AgentEra/Agently/tree/main/examples/agent_auto_orchestration/skills/launch-risk-assessment/SKILL.md)
 
 ---
 
