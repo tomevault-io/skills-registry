@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA/GenerativeAIExamples](https://github.com/NVIDIA/GenerativeAIExamples/tree/main/industries/energy/simulation-workflow-agent/sim_agent/src/simulator_agent/skills/simulation_skill/SKILL.md)
+Original source: [NVIDIA/GenerativeAIExamples](https://github.com/NVIDIA/GenerativeAIExamples/tree/main/industries/energy/simulation-workflow-agent/sim_agent/src/simulator_agent/skills/input_file_skill/SKILL.md)
 
 ---
 
