@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sirius-db/sirius](https://github.com/sirius-db/sirius/tree/main/.claude/skills/race-check/SKILL.md)
+Original source: [sirius-db/sirius](https://github.com/sirius-db/sirius/tree/main/.claude/skills/update-docs/SKILL.md)
 
 ---
 
