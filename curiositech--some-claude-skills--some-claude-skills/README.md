@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [curiositech/some_claude_skills](https://github.com/curiositech/some_claude_skills/tree/main/.claude/skills/dark-mode-design-expert/SKILL.md)
+Original source: [curiositech/some_claude_skills](https://github.com/curiositech/some_claude_skills/tree/main/.claude/skills/windows-95-web-designer/SKILL.md)
 
 ---
 
