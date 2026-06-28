@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [i2y/castella](https://github.com/i2y/castella/tree/main/skills/castella-a2ui/SKILL.md)
+Original source: [i2y/castella](https://github.com/i2y/castella/tree/main/skills/castella-agent-ui/SKILL.md)
 
 ---
 
