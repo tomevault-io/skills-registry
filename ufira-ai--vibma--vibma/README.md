@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ufira-ai/Vibma](https://github.com/ufira-ai/Vibma/tree/main/.claude/skills/vibma-dev/SKILL.md)
+Original source: [ufira-ai/Vibma](https://github.com/ufira-ai/Vibma/tree/main/.claude/skills/figma-start-macos/SKILL.md)
 
 ---
 
