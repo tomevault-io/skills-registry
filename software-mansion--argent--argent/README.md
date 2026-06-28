@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [software-mansion/argent](https://github.com/software-mansion/argent/tree/main/packages/skills/skills/argent-screenshot-diff/SKILL.md)
+Original source: [software-mansion/argent](https://github.com/software-mansion/argent/tree/main/packages/skills/skills/argent-ios-simulator-setup/SKILL.md)
 
 ---
 
