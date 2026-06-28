@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [automateyournetwork/netclaw](https://github.com/automateyournetwork/netclaw/tree/main/workspace/skills/f5-health-check/SKILL.md)
+Original source: [automateyournetwork/netclaw](https://github.com/automateyournetwork/netclaw/tree/main/workspace/skills/aruba-cx-system/SKILL.md)
 
 ---
 
