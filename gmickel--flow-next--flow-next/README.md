@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gmickel/flow-next](https://github.com/gmickel/flow-next/tree/main/optimization/capture/baseline/SKILL.md)
+Original source: [gmickel/flow-next](https://github.com/gmickel/flow-next/tree/main/optimization/make-pr/baseline/SKILL.md)
 
 ---
 
