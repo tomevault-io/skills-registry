@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [garrettjsmith/localseoskills](https://github.com/garrettjsmith/localseoskills/tree/main/skills/bing-places/SKILL.md)
+Original source: [garrettjsmith/localseoskills](https://github.com/garrettjsmith/localseoskills/tree/main/skills/ahrefs-tool/SKILL.md)
 
 ---
 
