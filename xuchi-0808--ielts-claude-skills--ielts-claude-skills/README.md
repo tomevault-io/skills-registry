@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xuchi-0808/ielts-claude-skills](https://github.com/xuchi-0808/ielts-claude-skills/tree/main/ielts-reading/SKILL.md)
+Original source: [xuchi-0808/ielts-claude-skills](https://github.com/xuchi-0808/ielts-claude-skills/tree/main/ielts-speaking/SKILL.md)
 
 ---
 
