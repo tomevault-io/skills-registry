@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [symfony/ai](https://github.com/symfony/ai/tree/main/.claude/skills/run-examples/SKILL.md)
+Original source: [symfony/ai](https://github.com/symfony/ai/tree/main/.claude/skills/llms-txt-update/SKILL.md)
 
 ---
 
