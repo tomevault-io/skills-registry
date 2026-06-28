@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Leeroo-AI/superml](https://github.com/Leeroo-AI/superml/tree/main/skills/ml-research/SKILL.md)
+Original source: [Leeroo-AI/superml](https://github.com/Leeroo-AI/superml/tree/main/skills/using-superml/SKILL.md)
 
 ---
 
