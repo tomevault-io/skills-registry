@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tolibear/goalbuddy](https://github.com/tolibear/goalbuddy/tree/main/goalbuddy/SKILL.md)
+Original source: [tolibear/goalbuddy](https://github.com/tolibear/goalbuddy/tree/main/plugins/goalbuddy/skills/goalbuddy/SKILL.md)
 
 ---
 
