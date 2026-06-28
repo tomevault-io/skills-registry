@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stripe/ai](https://github.com/stripe/ai/tree/main/skills/stripe-directory/SKILL.md)
+Original source: [stripe/ai](https://github.com/stripe/ai/tree/main/skills/stripe-best-practices/SKILL.md)
 
 ---
 
