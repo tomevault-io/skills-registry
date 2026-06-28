@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [epam/ai-dial-chat](https://github.com/epam/ai-dial-chat/tree/main/.claude/skills/openspec-explore/SKILL.md)
+Original source: [epam/ai-dial-chat](https://github.com/epam/ai-dial-chat/tree/main/.claude/skills/dial-development/SKILL.md)
 
 ---
 
