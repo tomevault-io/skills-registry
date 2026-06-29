@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [awslabs/agent-plugins](https://github.com/awslabs/agent-plugins/tree/main/plugins/deploy-on-aws/skills/elastic-beanstalk/SKILL.md)
+Original source: [awslabs/agent-plugins](https://github.com/awslabs/agent-plugins/tree/main/plugins/sagemaker-ai/skills/dataset-evaluation/SKILL.md)
 
 ---
 
