@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wintermeyer/heinzel](https://github.com/wintermeyer/heinzel/tree/main/.claude/skills/heinzel-fleet-audit/SKILL.md)
+Original source: [wintermeyer/heinzel](https://github.com/wintermeyer/heinzel/tree/main/.claude/skills/heinzel-housekeeping/SKILL.md)
 
 ---
 
