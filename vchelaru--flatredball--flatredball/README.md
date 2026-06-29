@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vchelaru/FlatRedBall](https://github.com/vchelaru/FlatRedBall/tree/main/FRBDK/Glue/.claude/skills/refactor/SKILL.md)
+Original source: [vchelaru/FlatRedBall](https://github.com/vchelaru/FlatRedBall/tree/main/FRBDK/Glue/.claude/skills/gum-codegen/SKILL.md)
 
 ---
 
