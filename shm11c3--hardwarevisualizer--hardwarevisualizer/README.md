@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shm11C3/HardwareVisualizer](https://github.com/shm11C3/HardwareVisualizer/tree/main/.agents/skills/change-kind-naming/SKILL.md)
+Original source: [shm11C3/HardwareVisualizer](https://github.com/shm11C3/HardwareVisualizer/tree/main/.agents/skills/gh-ai-review-triage/SKILL.md)
 
 ---
 
