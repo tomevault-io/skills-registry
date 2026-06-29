@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [brucemcpherson/gas-fakes](https://github.com/brucemcpherson/gas-fakes/tree/main/gf_agent/SKILL.md)
+Original source: [brucemcpherson/gas-fakes](https://github.com/brucemcpherson/gas-fakes/tree/main/.agents/skills/gas-fakes-dev/SKILL.md)
 
 ---
 
