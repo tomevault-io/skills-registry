@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tisu19021997/langclaw](https://github.com/tisu19021997/langclaw/tree/main/langclaw/agents/defaults/skills/cron/SKILL.md)
+Original source: [tisu19021997/langclaw](https://github.com/tisu19021997/langclaw/tree/main/langclaw/agents/defaults/skills/skill-creator/SKILL.md)
 
 ---
 
