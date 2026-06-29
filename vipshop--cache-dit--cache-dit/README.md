@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vipshop/cache-dit](https://github.com/vipshop/cache-dit/tree/main/.copilot/skills/operator-migration/SKILL.md)
+Original source: [vipshop/cache-dit](https://github.com/vipshop/cache-dit/tree/main/.copilot/skills/cutlass-cpp-kernel/SKILL.md)
 
 ---
 
