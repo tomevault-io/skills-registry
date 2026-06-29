@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [molon/hunkwise](https://github.com/molon/hunkwise/tree/main/skills/install-hunkwise/SKILL.md)
+Original source: [molon/hunkwise](https://github.com/molon/hunkwise/tree/main/.claude/skills/copilot-review-loop/SKILL.md)
 
 ---
 
