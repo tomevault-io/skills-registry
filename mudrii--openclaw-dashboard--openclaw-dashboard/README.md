@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mudrii/openclaw-dashboard](https://github.com/mudrii/openclaw-dashboard/tree/main/.codex/skills/project-ops/SKILL.md)
+Original source: [mudrii/openclaw-dashboard](https://github.com/mudrii/openclaw-dashboard/tree/main/.codex/skills/frontend-dashboard/SKILL.md)
 
 ---
 
