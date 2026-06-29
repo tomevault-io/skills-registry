@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Yahddyyp/MacOS-Dotfiles](https://github.com/Yahddyyp/MacOS-Dotfiles/tree/main/opencode/.config/opencode/skills/ship/SKILL.md)
+Original source: [Yahddyyp/MacOS-Dotfiles](https://github.com/Yahddyyp/MacOS-Dotfiles/tree/main/opencode/.config/opencode/skills/agents_guidelines/SKILL.md)
 
 ---
 
