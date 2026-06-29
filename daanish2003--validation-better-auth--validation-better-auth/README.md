@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Daanish2003/validation-better-auth](https://github.com/Daanish2003/validation-better-auth/tree/main/.agents/skills/triage/SKILL.md)
+Original source: [Daanish2003/validation-better-auth](https://github.com/Daanish2003/validation-better-auth/tree/main/.agents/skills/grill-me/SKILL.md)
 
 ---
 
