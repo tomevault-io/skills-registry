@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aws/agent-toolkit-for-aws](https://github.com/aws/agent-toolkit-for-aws/tree/main/skills/core-skills/aws-iam/SKILL.md)
+Original source: [aws/agent-toolkit-for-aws](https://github.com/aws/agent-toolkit-for-aws/tree/main/plugins/aws-core/skills/aws-cdk/SKILL.md)
 
 ---
 
