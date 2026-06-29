@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [celltype/celltype-agent](https://github.com/celltype/celltype-agent/tree/main/.claude/skills/openspec-onboard/SKILL.md)
+Original source: [celltype/celltype-agent](https://github.com/celltype/celltype-agent/tree/main/.claude/skills/openspec-explore/SKILL.md)
 
 ---
 
