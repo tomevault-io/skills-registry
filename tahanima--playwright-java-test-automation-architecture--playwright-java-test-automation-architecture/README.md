@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Tahanima/playwright-java-test-automation-architecture](https://github.com/Tahanima/playwright-java-test-automation-architecture/tree/main/.gemini/skills/code-reviewer/SKILL.md)
+Original source: [Tahanima/playwright-java-test-automation-architecture](https://github.com/Tahanima/playwright-java-test-automation-architecture/tree/main/.gemini/skills/healing-agent/SKILL.md)
 
 ---
 
