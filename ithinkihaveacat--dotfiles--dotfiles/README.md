@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ithinkihaveacat/dotfiles](https://github.com/ithinkihaveacat/dotfiles/tree/main/skills/adb/SKILL.md)
+Original source: [ithinkihaveacat/dotfiles](https://github.com/ithinkihaveacat/dotfiles/tree/main/skills/jetpack/SKILL.md)
 
 ---
 
