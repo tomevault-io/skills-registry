@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [redongreen/uSpec](https://github.com/redongreen/uSpec/tree/main/skills/create-motion/SKILL.md)
+Original source: [redongreen/uSpec](https://github.com/redongreen/uSpec/tree/main/skills/create-anatomy/SKILL.md)
 
 ---
 
