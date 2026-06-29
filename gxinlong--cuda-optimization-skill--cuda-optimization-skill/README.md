@@ -1,0 +1,13 @@
+# cuda-optimization-skill
+
+> Skill by [gxinlong](https://github.com/gxinlong/cuda-optimization-skill) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [gxinlong/cuda-optimization-skill](https://github.com/gxinlong/cuda-optimization-skill/tree/main/skills/cuda-optimize/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
