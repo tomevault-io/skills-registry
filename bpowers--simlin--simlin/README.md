@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bpowers/simlin](https://github.com/bpowers/simlin/tree/main/.claude/skills/i-bolder/SKILL.md)
+Original source: [bpowers/simlin](https://github.com/bpowers/simlin/tree/main/.agents/skills/i-harden/SKILL.md)
 
 ---
 
