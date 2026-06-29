@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yurkinh/Plugin.Maui.Calendar](https://github.com/yurkinh/Plugin.Maui.Calendar/tree/main/.claude/skills/maui-devflow-debug/SKILL.md)
+Original source: [yurkinh/Plugin.Maui.Calendar](https://github.com/yurkinh/Plugin.Maui.Calendar/tree/main/.claude/skills/maui-devflow-onboard/SKILL.md)
 
 ---
 
