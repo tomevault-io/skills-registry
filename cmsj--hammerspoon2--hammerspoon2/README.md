@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cmsj/Hammerspoon2](https://github.com/cmsj/Hammerspoon2/tree/main/.claude/skills/HSTests/SKILL.md)
+Original source: [cmsj/Hammerspoon2](https://github.com/cmsj/Hammerspoon2/tree/main/.claude/skills/HSModule/SKILL.md)
 
 ---
 
