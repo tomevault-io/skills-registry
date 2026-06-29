@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tx7do/go-wind-admin](https://github.com/tx7do/go-wind-admin/tree/main/frontend/admin/vue-element/.qoder/skills/gowind-admin-dev/SKILL.md)
+Original source: [tx7do/go-wind-admin](https://github.com/tx7do/go-wind-admin/tree/main/frontend/admin/react/.qoder/skills/go-wind-admin-react-guide/SKILL.md)
 
 ---
 
