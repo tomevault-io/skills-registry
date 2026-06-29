@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [strands-agents/samples](https://github.com/strands-agents/samples/tree/main/python/01-learn/15-skills/skills/returns-policy/SKILL.md)
+Original source: [strands-agents/samples](https://github.com/strands-agents/samples/tree/main/python/01-learn/15-skills/skills/technical-troubleshooting/SKILL.md)
 
 ---
 
