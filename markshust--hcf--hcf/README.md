@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [markshust/hcf](https://github.com/markshust/hcf/tree/main/skills/plan-orchestrate/SKILL.md)
+Original source: [markshust/hcf](https://github.com/markshust/hcf/tree/main/skills/plan-create/SKILL.md)
 
 ---
 
