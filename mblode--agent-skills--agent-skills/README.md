@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mblode/agent-skills](https://github.com/mblode/agent-skills/tree/main/skills/typography-audit/SKILL.md)
+Original source: [mblode/agent-skills](https://github.com/mblode/agent-skills/tree/main/skills/define-architecture/SKILL.md)
 
 ---
 
