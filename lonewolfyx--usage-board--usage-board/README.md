@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lonewolfyx/usage-board](https://github.com/lonewolfyx/usage-board/tree/main/.codex/skills/usage-board-refactor/SKILL.md)
+Original source: [lonewolfyx/usage-board](https://github.com/lonewolfyx/usage-board/tree/main/.codex/skills/code-convergence-and-abstraction-boundary/SKILL.md)
 
 ---
 
