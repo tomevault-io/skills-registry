@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rjdellecese/confect](https://github.com/rjdellecese/confect/tree/main/.claude/skills/writing-commit-messages/SKILL.md)
+Original source: [rjdellecese/confect](https://github.com/rjdellecese/confect/tree/main/.claude/skills/writing-technical-documentation/SKILL.md)
 
 ---
 
