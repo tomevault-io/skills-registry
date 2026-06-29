@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shouldnotappearcalm/a-share-skill](https://github.com/shouldnotappearcalm/a-share-skill/tree/main/a-share-data/SKILL.md)
+Original source: [shouldnotappearcalm/a-share-skill](https://github.com/shouldnotappearcalm/a-share-skill/tree/main/a-share-paper-trading/SKILL.md)
 
 ---
 
