@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sashiko-dev/sashiko](https://github.com/sashiko-dev/sashiko/tree/main/skills/review-pr/SKILL.md)
+Original source: [sashiko-dev/sashiko](https://github.com/sashiko-dev/sashiko/tree/main/skills/sashiko-feature/SKILL.md)
 
 ---
 
