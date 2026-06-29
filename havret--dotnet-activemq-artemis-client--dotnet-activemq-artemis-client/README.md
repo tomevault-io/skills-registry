@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Havret/dotnet-activemq-artemis-client](https://github.com/Havret/dotnet-activemq-artemis-client/tree/main/.claude/skills/unit-test-style/SKILL.md)
+Original source: [Havret/dotnet-activemq-artemis-client](https://github.com/Havret/dotnet-activemq-artemis-client/tree/main/.claude/skills/integration-test-style/SKILL.md)
 
 ---
 
