@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mpecan/tokf](https://github.com/mpecan/tokf/tree/main/crates/tokf-cli/skills/tokf-filter/SKILL.md)
+Original source: [mpecan/tokf](https://github.com/mpecan/tokf/tree/main/crates/tokf-cli/skills/tokf-discover/SKILL.md)
 
 ---
 
