@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [0xZhangKe/Fread](https://github.com/0xZhangKe/Fread/tree/main/.codex/skills/voyager2nav3/SKILL.md)
+Original source: [0xZhangKe/Fread](https://github.com/0xZhangKe/Fread/tree/main/.codex/skills/screen2navkey/SKILL.md)
 
 ---
 
