@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GCWing/BitFun](https://github.com/GCWing/BitFun/tree/main/src/crates/assembly/core/builtin_skills/gstack-office-hours/SKILL.md)
+Original source: [GCWing/BitFun](https://github.com/GCWing/BitFun/tree/main/src/crates/assembly/core/builtin_skills/gstack-design-review/SKILL.md)
 
 ---
 
