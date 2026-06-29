@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dahlia/logtape](https://github.com/dahlia/logtape/tree/main/.agents/skills/skills/release/SKILL.md)
+Original source: [dahlia/logtape](https://github.com/dahlia/logtape/tree/main/packages/logtape/skills/logtape/SKILL.md)
 
 ---
 
