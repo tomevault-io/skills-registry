@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [onesuper/tui-use](https://github.com/onesuper/tui-use/tree/main/skills/tui-use/SKILL.md)
+Original source: [onesuper/tui-use](https://github.com/onesuper/tui-use/tree/main/plugins/tui-use/skills/tui-use/SKILL.md)
 
 ---
 
