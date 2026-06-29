@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wooters/miniDSP](https://github.com/wooters/miniDSP/tree/main/.github/skills/openspec-explore/SKILL.md)
+Original source: [wooters/miniDSP](https://github.com/wooters/miniDSP/tree/main/.github/skills/openspec-propose/SKILL.md)
 
 ---
 
