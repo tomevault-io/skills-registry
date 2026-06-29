@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [maxhbr/myconfig](https://github.com/maxhbr/myconfig/tree/main/.opencode/skills/add-nixos-host/SKILL.md)
+Original source: [maxhbr/myconfig](https://github.com/maxhbr/myconfig/tree/main/.opencode/skills/apply-pr-to-flake/SKILL.md)
 
 ---
 
