@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [BankrBot/claude-plugins](https://github.com/BankrBot/claude-plugins/tree/main/bankr-agent-dev/skills/bankr-sign-submit-api/SKILL.md)
+Original source: [BankrBot/claude-plugins](https://github.com/BankrBot/claude-plugins/tree/main/bankr-agent-dev/skills/bankr-client-patterns/SKILL.md)
 
 ---
 
