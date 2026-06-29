@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [syhily/kobato](https://github.com/syhily/kobato/tree/main/.agents/skills/web-design-guidelines/SKILL.md)
+Original source: [syhily/kobato](https://github.com/syhily/kobato/tree/main/.agents/skills/tailwind-design-system/SKILL.md)
 
 ---
 
