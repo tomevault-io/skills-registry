@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [josefbacik/systing](https://github.com/josefbacik/systing/tree/main/skills/systing-trace/SKILL.md)
+Original source: [josefbacik/systing](https://github.com/josefbacik/systing/tree/main/skills/systing-analyze/SKILL.md)
 
 ---
 
