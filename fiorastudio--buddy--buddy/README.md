@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fiorastudio/buddy](https://github.com/fiorastudio/buddy/tree/main/.codex/skills/buddy-graph/SKILL.md)
+Original source: [fiorastudio/buddy](https://github.com/fiorastudio/buddy/tree/main/.claude-plugin/skills/buddy/SKILL.md)
 
 ---
 
