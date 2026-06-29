@@ -162,7 +162,7 @@ output: {
   baseUrl: '/api/v2',                   // API base URL
   // or from spec:
   // baseUrl: { getBaseUrlFromSpecification: true, index: 0, variables: { environment: 'api.dev' } },
-  mock: true,                           // Generate MSW handlers (boolean or config object)
+  mocks: true,                          // Generate MSW + Faker mocks (boolean, object, or function)
   docs: true,                           // Generate TypeDoc documentation
   // docs: { configPath: './typedoc.config.mjs' },
   allParamsOptional: true,              // Make all params optional (except path params)
@@ -253,5 +253,5 @@ orval --input ./spec.yaml --output ./api.ts  # Direct generation
 - [Sample Projects](https://github.com/orval-labs/orval/tree/master/samples)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/orval-labs) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [orval-labs/orval](https://github.com/orval-labs/orval) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-29 -->
