@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [diillson/chatcli](https://github.com/diillson/chatcli/tree/main/.agent/skills/app-builder/templates/SKILL.md)
+Original source: [diillson/chatcli](https://github.com/diillson/chatcli/tree/main/.agent/skills/game-development/vr-ar/SKILL.md)
 
 ---
 
