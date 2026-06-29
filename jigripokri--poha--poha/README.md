@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jigripokri/POHA](https://github.com/jigripokri/POHA/tree/main/skills/draft/SKILL.md)
+Original source: [jigripokri/POHA](https://github.com/jigripokri/POHA/tree/main/skills/wildcard/SKILL.md)
 
 ---
 
