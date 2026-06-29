@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SamSaffron/term-llm](https://github.com/SamSaffron/term-llm/tree/main/internal/contain/images/agent/bootstrap/skills/self/SKILL.md)
+Original source: [SamSaffron/term-llm](https://github.com/SamSaffron/term-llm/tree/main/internal/contain/images/agent/bootstrap/skills/jobs/SKILL.md)
 
 ---
 
