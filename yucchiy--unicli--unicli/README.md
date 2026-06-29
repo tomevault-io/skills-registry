@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yucchiy/UniCli](https://github.com/yucchiy/UniCli/tree/main/.agents/skills/unity-development/SKILL.md)
+Original source: [yucchiy/UniCli](https://github.com/yucchiy/UniCli/tree/main/.claude-plugin/unicli/skills/unity-development/SKILL.md)
 
 ---
 
