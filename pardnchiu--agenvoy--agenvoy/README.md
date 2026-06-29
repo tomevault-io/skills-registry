@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pardnchiu/Agenvoy](https://github.com/pardnchiu/Agenvoy/tree/main/extensions/skills/version-generate/SKILL.md)
+Original source: [pardnchiu/Agenvoy](https://github.com/pardnchiu/Agenvoy/tree/main/extensions/skills/scheduler-skill-creator/SKILL.md)
 
 ---
 
