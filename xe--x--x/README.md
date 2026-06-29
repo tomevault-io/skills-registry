@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Xe/x](https://github.com/Xe/x/tree/main/.claude/skills/xe-go-style/SKILL.md)
+Original source: [Xe/x](https://github.com/Xe/x/tree/main/.claude/skills/xe-writing-style/SKILL.md)
 
 ---
 
