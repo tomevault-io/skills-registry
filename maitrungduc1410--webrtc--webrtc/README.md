@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [maitrungduc1410/webrtc](https://github.com/maitrungduc1410/webrtc/tree/main/agents/skills/gn-check-autofix/SKILL.md)
+Original source: [maitrungduc1410/webrtc](https://github.com/maitrungduc1410/webrtc/tree/main/agents/skills/webrtc-changelog/SKILL.md)
 
 ---
 
