@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mono424/sp00ky](https://github.com/mono424/sp00ky/tree/main/packages/client-solid/skills/sp00ky-solid/SKILL.md)
+Original source: [mono424/sp00ky](https://github.com/mono424/sp00ky/tree/main/packages/query-builder/skills/sp00ky-query-builder/SKILL.md)
 
 ---
 
