@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Bownlux/Retromod](https://github.com/Bownlux/Retromod/tree/main/.claude/skills/add-version-shim/SKILL.md)
+Original source: [Bownlux/Retromod](https://github.com/Bownlux/Retromod/tree/main/.claude/skills/mod-loader-compat/SKILL.md)
 
 ---
 
