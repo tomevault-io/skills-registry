@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Clawland-AI/Geneclaw](https://github.com/Clawland-AI/Geneclaw/tree/main/nanobot/skills/tmux/SKILL.md)
+Original source: [Clawland-AI/Geneclaw](https://github.com/Clawland-AI/Geneclaw/tree/main/nanobot/skills/cron/SKILL.md)
 
 ---
 
