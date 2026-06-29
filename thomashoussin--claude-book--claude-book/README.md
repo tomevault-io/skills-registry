@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ThomasHoussin/Claude-Book](https://github.com/ThomasHoussin/Claude-Book/tree/main/.claude/skills/book-analyzer/SKILL.md)
+Original source: [ThomasHoussin/Claude-Book](https://github.com/ThomasHoussin/Claude-Book/tree/main/.claude/skills/perplexity-improver/SKILL.md)
 
 ---
 
