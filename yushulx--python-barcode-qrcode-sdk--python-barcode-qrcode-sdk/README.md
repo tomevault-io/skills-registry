@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yushulx/python-barcode-qrcode-sdk](https://github.com/yushulx/python-barcode-qrcode-sdk/tree/main/examples/official/annotation_tool/template-optimizer/SKILL.md)
+Original source: [yushulx/python-barcode-qrcode-sdk](https://github.com/yushulx/python-barcode-qrcode-sdk/tree/main/examples/official/annotation_tool/.github/skills/template-optimizer/SKILL.md)
 
 ---
 
