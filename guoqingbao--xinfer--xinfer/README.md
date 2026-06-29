@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [guoqingbao/xinfer](https://github.com/guoqingbao/xinfer/tree/main/.cursor/skills/add-model/SKILL.md)
+Original source: [guoqingbao/xinfer](https://github.com/guoqingbao/xinfer/tree/main/.cursor/skills/check-model/SKILL.md)
 
 ---
 
