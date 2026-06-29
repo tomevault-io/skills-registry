@@ -1,408 +1,464 @@
 ---
-name: javascript-testing-expert
-description: Expert-level JavaScript testing skill focused on writing high-quality tests that find bugs, serve as documentation, and prevent regressions. Advocates for property-based testing with fast-check and protects against indeterministic code in tests. Does not cover black-box e2e testing. Use when this capability is needed.
+name: release
+description: >- Use when this capability is needed.
 metadata:
   author: dahlia
 ---
 
-# JavaScript testing expert
+Release skill
+=============
 
-> **⚠️ Scope:** Testing functions and components, not black-box e2e.
+This skill automates the release process for the Optique project.  There are
+two types of releases: patch releases and major/minor releases.
 
-**🏅 Main objectives:** use tests as a way to...
 
-1. uncover hard to detect bugs
-2. document how to use the code
-3. avoid regressions
-4. challenge the code
+Prerequisites
+-------------
 
-**🔧 Recommended tooling for Optique:** `node:test`, `node:assert/strict`, and `fast-check`.
-**✅ Do** try to install only missing and relevant tooling.
-**✅ Do** recommend Node's built-in test libraries for Optique tests.
-**✅ Do** adapt yourself to missing tools.
+Before starting any release:
 
-## File and code layout
+1.  Verify the remote repository name:
 
-**✅ Do** mimic the existing test structure of the project when adding new tests
+    ~~~~ bash
+    git remote -v
+    ~~~~
 
-**✅ Do** use one test file per code file
+    Use the correct remote name (usually `origin` or `upstream`) in all push
+    commands.
 
-**👍 Prefer** using `.test.ts` extension (e.g., `fileName.ts` → `fileName.test.ts`) and colocating tests with the source file, matching the project's existing examples
+2.  Ensure you're on the correct branch and it's up to date.
 
-**✅ Do** put `it` within `describe`, when using `it`
+3.  Run tests to ensure everything passes:
 
-**👍 Prefer** `it` over `test`
+    ~~~~ bash
+    mise test
+    mise check
+    ~~~~
 
-**✅ Do** name the `describe` with the name of the function being tested
 
-**✅ Do** use a dedicated `describe` for each function being tested
+Patch releases
+--------------
 
-**✅ Do** start `it` names with "should"; keep them clear, concise, and readable as a sentence implicitly prefixed by "it"
+Patch releases (e.g., 1.2.3) are for bug fixes and small improvements.
+They are created from `X.Y-maintenance` branches.
 
-**✅ Do** start with simple and documenting tests
+### Step 1: prepare the release
 
-**✅ Do** continue with advanced tests looking for edge-cases
+1.  Check out the maintenance branch:
 
-**❌ Don't** explicitly separate simple from advanced tests; just put them in the right order
+    ~~~~ bash
+    git checkout 1.2-maintenance
+    git pull
+    ~~~~
 
-**✅ Do** put helper functions specific to the file after all the `describe`s just below a comment `// Helpers` stating the beginning of the helpers tailored for this file
+2.  Update *CHANGES.md*: Find the section for the version being released and
+    change “To be released.” to “Released on {Month} {Day}, {Year}.” using
+    the current date in English.  For example:
 
-## Core guidelines
+    ~~~~ markdown
+    Version 1.2.3
+    -------------
 
-**✅ Do** follow the AAA pattern and make it visible in the test
+    Released on January 5, 2026.
+    ~~~~
 
-```ts
-it('should...', () => {
-  // Arrange
-  code;
+3.  Commit the changes:
 
-  // Act
-  code;
+    ~~~~ bash
+    git add CHANGES.md
+    git commit -m "Release 1.2.3"
+    ~~~~
 
-  // Assert
-  code;
-});
-```
+4.  Create the tag (without `v` prefix).  Always use `-m` to provide a tag
+    message to avoid opening an editor for GPG-signed tags:
 
-**✅ Do** keep tests focused, try to assert on one precise aspect
+    ~~~~ bash
+    git tag -m "Optique 1.2.3" 1.2.3
+    ~~~~
 
-**✅ Do** keep tests simple
+### Step 2: prepare next version
 
-**👎 Avoid** complex logic in tests or its helpers
+1.  Add a new section at the top of *CHANGES.md* for the next patch version:
 
-**❌ Don't** test internal details
+    ~~~~ markdown
+    Version 1.2.4
+    -------------
 
-**👍 Prefer** stubs over mocks, the first one provides an alternate implementation, the second one helps to assert on calls being done or not
-Why? Often, asserting the number of calls is not something critical for the user of the function but purely an internal detail
+    To be released.
 
-**❌ Don't** rely on network call, stub it with `msw`
 
-**✅ Do** reset globals and mocks in `beforeEach` if any `it` plays with mocks or spies or alter globals
-Prefer explicit cleanup that works across Node.js, Deno, and Bun.
+    Version 1.2.3
+    -------------
 
-**👍 Prefer** realistic data for documentation-like tests
-Eg.: use real names if you have to build instances of users
+    Released on January 5, 2026.
+    ~~~~
 
-**❌ Don't** overuse snapshot tests; only snapshot things when the "what is expected to be seen in the snapshot" is clear
-Why? Snapshots tests tend to capture too many details in the snapshot, making them hard to update given future reader is lost on what was the real thing being tested
+2.  Bump the version in *packages/core/deno.json*:
 
-**👍 Prefer** snapshots when shape and structure are important (component hierarchy, attributes, non-regression on output structure)
+    Change `"version": "1.2.3"` to `"version": "1.2.4"`.
 
-**👍 Prefer** screenshots when final render is important (visual styling, layout)
+3.  Run the version sync script:
 
-**✅ Do** warn developer when the code under tests requires too many parameters and/or too many mocks/stubs to be forged (more than 10)
-Why? Code being hardly testable is often a code smell pinpointing an API having to be changed. Code is harder to evolve, harder to reason about and often handling too many responsibilities. Recommend the single-responsibility principle (SRP)
+    ~~~~ bash
+    mise check-versions --fix
+    ~~~~
 
-**✅ Do** extract helper functions only when repetition is substantial or expresses a distinct behavioral intent
+4.  Commit the version bump:
 
-**✅ Do** keep small repeated assertion patterns inline in Optique tests unless a helper would clarify behavior
+    ~~~~ bash
+    git add -A
+    git commit -m "Version bump
 
-**✅ Do** group substantial shared logic under a function having a clear and explicit name, follow SRP for these helpers
-Eg.: avoid functions with many optional parameters or several responsibilities
+    [ci skip]"
+    ~~~~
 
-**❌ Don't** write a big `prepare` function re-used by all tests in their act part, but make the name clearer and eventually split it into multiple functions
+### Step 3: push
 
-**✅ Do** make sure your test breaks if you drop the thing supposed to make it pass
-Eg.: When your test says "should do X when Y" make sure that if you don't have Y it fails before keeping it.
+Push the tag and branch to the remote:
 
-**👎 Avoid** writing tests with entities specifying hardcoded values on unused fields
-
-Example of test content
-
-```ts
-const user: User = {
-  name: 'Paul', // unused
-  birthday: '2010-02-03',
-};
-const age = computeAge(user);
-//...
-```
+~~~~ bash
+git push origin 1.2.3 1.2-maintenance
+~~~~
 
-**👍 Prefer** leveraging `fast-check` with `node:test`
+### Step 4: cascade merges
 
-```ts
-import assert from "node:assert/strict";
-import * as fc from "fast-check";
-import { describe, it } from "node:test";
+After creating a patch release, you must merge it forward to newer maintenance
+branches and eventually to `main`.
 
-describe('computeAge', () => {
-  it('should compute a positive age', () => {
-    fc.assert(
-      fc.property(fc.string(), (name) => {
-        const user: User = {
-          name, // unused
-          birthday: '2010-02-03',
-        };
+1.  Check if a newer maintenance branch exists (e.g., `1.3-maintenance`):
 
-        const age = computeAge(user, new Date('2020-02-03'));
+    ~~~~ bash
+    git branch -a | grep maintenance
+    ~~~~
 
-        assert.ok(age > 0);
-      }),
-    );
-  });
-});
-```
+2.  If a newer maintenance branch exists:
 
-**👍 Prefer** leveraging `fast-check` for property-based tests
+    1)  Check out the newer branch and merge the tag:
 
-**👎 Avoid** writing tests depending on unstable values
-Eg.: in the example above `computeAge` depends on the current date
-Remark: same for locales and plenty other platform dependent values
+        ~~~~ bash
+        git checkout 1.3-maintenance
+        git merge 1.2.3
+        ~~~~
 
-**👍 Prefer** passing today as an explicit dependency when the API allows it
+    2)  Resolve any conflicts (commonly in *CHANGES.md*, *deno.json*, and
+        *package.json* files).
 
-**👍 Prefer** controlling today with a generated date in a `fast-check` property
-Why? You check the code against one new today at each run, but if it happens to fail one day you will be reported with the exact date causing the problem
+    3)  **Copy changelog entries**: After resolving conflicts, copy the
+        changelog entries from the merged tag's version into the current
+        branch's unreleased version section.  The entries should be:
 
-```ts
-fc.assert(
-  fc.property(
-    fc.date({ min: new Date('2010-02-04'), noInvalidDate: true }),
-    (today) => {
-      const user: User = {
-        name: "Paul", // unused
-        birthday: '2010-02-03',
-      };
+         -  Grouped by package (e.g., `### @optique/core`, `### @optique/run`)
+         -  Inserted *above* any existing entries in each package section
+         -  Issue/PR reference definitions (e.g., `[#123]: ...`) should not
+            be duplicated if they already exist
 
-      const age = computeAge(user, today);
+        For example, if merging 1.2.3 into 1.3-maintenance where 1.3.2 is
+        pending:
 
-      assert.ok(age >= 0);
-    },
-  ),
-);
-```
+        *Before* (1.3-maintenance):
 
-**👎 Avoid** writing tests depending on random values or entities
+        ~~~~ markdown
+        Version 1.3.2
+        -------------
 
-**👍 Prefer** controlling randomly generated values by relying on `fast-check`
+        To be released.
 
-**✅ Do** use property based tests for any test with a notion of always or never
-Eg.: name being "should always do x when y" or "should never do x when y"
-Remark: consider these tests as advanced and put them after the documentation tests and not with them
+        ### @optique/run
 
-**👍 Prefer** using property based testing for edge case detection instead of writing all cases one by one
+         -  Added new logging features.  [[#125]]
 
-**❌ Don't** try to test 100% of the algorithm cases using property-based testing
-Why? Property-based testing and example-based testing are complementary. Property-based tests are excellent for uncovering edge cases and validating general properties, while example-based tests provide clear documentation and cover specific important scenarios. Use both approaches together for comprehensive test coverage.
+        [#125]: https://github.com/dahlia/optique/issues/125
+        ~~~~
 
-```ts
-// for all a, b, c strings
-// b is a substring of a + b + c
-it('should detect the substring', () => {
-  fc.assert(
-    fc.property(fc.string(), fc.string(), fc.string(), (a, b, c) => {
-      // Arrange
-      const text = a + b + c;
-      const pattern = b;
+        *Merged tag 1.2.3 contains*:
 
-      // Act
-      const result = isSubstring(text, pattern);
+        ~~~~ markdown
+        Version 1.2.3
+        -------------
 
-      // Assert
-      assert.ok(result);
-    }),
-  );
-});
-```
+        Released on January 6, 2026.
 
-**✅ Do** extract complex logic from components into dedicated and testable functions
+        ### @optique/run
 
-**❌ Don't** test trivial component logic that has zero complexity
+         -  Fixed a crash on startup.  [[#123]]
 
-**👍 Prefer** testing the DOM structure and user interactions when using testing-library
+        [#123]: https://github.com/dahlia/optique/issues/123
+        ~~~~
 
-**👍 Prefer** testing the visual display and user interactions when using browser testing
+        *After* (1.3-maintenance):
 
-**👍 Prefer** querying by accessible attributes and user-visible text by relying on `getByRole`, `getByLabelText`, `getByText` over `getByTestId` whenever possible for testing-library and browser testing
+        ~~~~ markdown
+        Version 1.3.2
+        -------------
 
-**✅ Do** ensure non visual regression of Design System components and more generally visual components by leveraging screenshot tests in browser when available
-**✅ Do** fallback to snapshot tests capturing the DOM structure if screenshot tests cannot be ran
+        To be released.
 
-## Guidelines for properties
+        ### @optique/run
 
-This section assumes the context is property-based tests.
+         -  Fixed a crash on startup.  [[#123]]
+         -  Added new logging features.  [[#125]]
 
-**⚠️ Important:** In Optique tests, use `fc.assert` with `fc.property` or `fc.asyncProperty` directly.
+        [#123]: https://github.com/dahlia/optique/issues/123
+        [#125]: https://github.com/dahlia/optique/issues/125
+        ~~~~
 
-**❌ Don't** generate inputs directly
-The risk being that you may end up rewriting the code being tested in the test
+    4)  Run tests to verify:
 
-**✅ Do** construct values to build some inputs where you know the expected outcome
+        ~~~~ bash
+        mise test
+        mise check
+        ~~~~
 
-**❌ Don't** expect the returned value in details, in many cases you won't have enough details to be able to assert the full value
+    5)  Complete the merge commit (use default message).
 
-**✅ Do** expect some aspects and characteristics of the returned value
+    6)  Create a new patch release for this branch by repeating Steps 1-3
+        for version 1.3.x (e.g., 1.3.1).
 
-**❌ NEVER** specify any `maxLength` on an arbitrary if it is not a requirement of the algorithm
-**👍 Prefer** specifying a `size: '-1'` if you feel that the algorithm will take very long on large inputs (by default fast-check generates up to 10 items, so only use `size` when clearly required)
-Eg.: No `fc.string({maxLength: 5})` or `fc.array(arb, {maxLength: 8})` except when it is a strict requirement
+    7)  Continue cascading to even newer maintenance branches if they exist.
 
-**❌ NEVER** specify any constraint on an arbitrary if it is not a requirement of the arbitrary, use defaults as much as possible
-Eg.: if the algorithm should accept any integer just ask an integer without specifying any min and max
+3.  If no newer maintenance branch exists, merge to `main`:
 
-**👎 Avoid** overusing `.filter` and `fc.pre`
-Why? They slow down the generation of values by dropping some generated ones
-
-**👍 Prefer** using options provided by arbitraries to directly generate valid values
-Eg.: use `fc.string({ minLength: 2 })` instead of `fc.string().filter(s => s.length >= 2)`
-Eg.: use `fc.integer({ min: 1 })` instead of `fc.integer().filter(n => n >= 1)`, or use `fc.nat()` instead of `fc.integer().filter(n => n >= 0)`
+    ~~~~ bash
+    git checkout main
+    git merge 1.2.3  # or the last tag you created (e.g., 1.3.1)
+    ~~~~
 
-**👍 Prefer** using `map` over `filter` when a `map` trick can avoid filtering
-Eg.: use `fc.nat().map(n => n * 2)` for even numbers
-Eg.: use `fc.tuple(fc.string(), fc.string()).map(([start, end]) => start + 'A' + end)` for strings always having an 'A' character
-
-**👍 Prefer** bigint type over number type for integer computations used within predicates when there is a risk of overflow (eg.: when running pow, multiply.. on generated values)
-
-Some classical properties:
-
-1. Characteristics independent of the inputs. _Eg.: for any floating point number d, Math.floor(d) is an integer. for any integer n, Math.abs(n) ≥ 0_
-2. Characteristics derived from the inputs. _Eg.: for any a and b integers, the average of a and b is between a and b. for any n, the product of all numbers in the prime factor decomposition of n equals n. for any array of data, sorted(data) and data contains the same elements. for any n1, n2 integers such that n1 != n2, romanString(n1) != romanString(n2). for any floating point number d, Math.floor(d) is an integer such as d-1 ≤ Math.floor(d) ≤ d_
-3. Restricted set of inputs with useful characteristics. _Eg.: for any array data with no duplicates, the result of removing duplicates from data is data itself. for any a, b and c strings, the concatenation of a, b and c always contains b. for any prime number p, its decomposition into prime factors is itself_
-4. Characteristics on combination of functions. _Eg.: zipping then unzipping a file should result in the original file. lcm(a,b) times gcd(a,b) must be equal to a times b_
-5. Comparison with a simpler implementation. _Eg.: c is contained inside sorted array data for binary search is equivalent to c is contained inside data for linear search_
-
-## Guidelines for race conditions
-
-**✅ Do** write tests checking for race conditions and exploring resolution order when an algorithm accepts asynchronous functions as input
-
-**✅ Do** leverage `fast-check` and its `fc.scheduler()` arbitrary, together with `s.scheduleFunction` and `s.waitFor`, to explore ordering deterministically
-
-Turn:
-
-```ts
-it('should resolve in call order', async () => {
-  // Arrange
-  const seenAnswers = [];
-  const call = (v) => Promise.resolve(v);
-
-  // Act
-  // `queue` is a helper that serializes async calls.
-  const queued = queue(call);
-  await Promise.all([queued(1).then((v) => seenAnswers.push(v)), queued(2).then((v) => seenAnswers.push(v))]);
-
-  // Assert
-  assert.deepEqual(seenAnswers, [1, 2]);
-});
-```
-
-Into:
-
-```ts
-it('should resolve in call order', async () => {
-  await fc.assert(
-    fc.asyncProperty(fc.scheduler(), async (s) => {
-      // Arrange
-      const seenAnswers = [];
-      const call = (v) => Promise.resolve(v);
-
-      // Act
-      // `queue` is a helper that serializes scheduled async calls.
-      const queued = queue(s.scheduleFunction(call));
-      await s.waitFor(
-        Promise.all([queued(1).then((v) => seenAnswers.push(v)), queued(2).then((v) => seenAnswers.push(v))]),
-      );
-
-      // Assert
-      assert.deepEqual(seenAnswers, [1, 2]);
-    }),
-  );
-});
-```
-
-## Recommendation for faker users
-
-If using `faker` to fake data, we recommend wiring any fake data generation within `fast-check` by leveraging this code snippet:
-
-```ts
-// Source: https://fast-check.dev/blog/2024/07/18/integrating-faker-with-fast-check/
-import { Faker, Randomizer, base } from '@faker-js/faker';
-import fc from 'fast-check';
-
-class FakerBuilder<TValue> extends fc.Arbitrary<TValue> {
-  constructor(private readonly generator: (faker: Faker) => TValue) {
-    super();
-  }
-  generate(mrng: fc.Random, biasFactor: number | undefined): fc.Value<TValue> {
-    const randomizer: Randomizer = {
-      next: (): number => mrng.nextDouble(),
-      seed: () => {}, // no-op, no support for updates of the seed, could even throw
-    };
-    const customFaker = new Faker({ locale: base, randomizer });
-    return new fc.Value(this.generator(customFaker), undefined);
-  }
-  canShrinkWithoutContext(value: unknown): value is TValue {
-    return false;
-  }
-  shrink(value: TValue, context: unknown): fc.Stream<fc.Value<TValue>> {
-    return fc.Stream.nil();
-  }
-}
-
-function fakerToArb<TValue>(generator: (faker: Faker) => TValue): fc.Arbitrary<TValue> {
-  return new FakerBuilder(generator);
-}
-```
-
-Example of usage
-
-```ts
-fc.assert(
-  fc.property(
-    fakerToArb((faker) => faker.person.firstName),
-    fakerToArb((faker) => faker.person.lastName),
-    (firstName, lastName) => {
-      // code
-    },
-  ),
-);
-```
-
-## Using `fast-check` with `node:test`
-
-Example 1.
-
-```ts
-import * as fc from "fast-check";
-import { it } from "node:test";
-
-it("...", () => {
-  fc.assert(
-    fc.property(fc.string(), (value) => {
-      //...
-    }),
-  );
-});
-```
-
-Example 2.
-
-```ts
-import * as fc from "fast-check";
-import { it } from "node:test";
-
-it("...", () => {
-  fc.assert(
-    fc.property(...arbitraries, (...values) => {
-      //...
-    }),
-  );
-});
-```
-
-Example 3. If the predicate is asynchronous, the property has to be instantiated via `asyncProperty` and `assert` has to be awaited.
-
-```ts
-import * as fc from "fast-check";
-import { it } from "node:test";
-
-it("...", async () => {
-  await fc.assert(
-    fc.asyncProperty(...arbitraries, async (...values) => {
-      //...
-    }),
-  );
-});
-```
+    Resolve conflicts, run tests, and push:
+
+    ~~~~ bash
+    mise test
+    mise check
+    git push origin main
+    ~~~~
+
+
+    > [!IMPORTANT]
+    > Do *not* copy changelog entries to `main`.  The `main` branch tracks
+    > the next major/minor release, so patch release entries should not be
+    > duplicated there.  Just resolve conflicts and keep the existing
+    > unreleased section as-is.
+
+
+Major/minor releases
+--------------------
+
+Major/minor releases (e.g., 1.3.0, 2.0.0) introduce new features or breaking
+changes.  They are always created from the `main` branch with patch version 0.
+
+### Step 1: prepare the release on main
+
+1.  Check out and update main:
+
+    ~~~~ bash
+    git checkout main
+    git pull
+    ~~~~
+
+2.  Update *CHANGES.md*: Find the section for the version being released and
+    change “To be released.” to “Released on {Month} {Day}, {Year}.” using
+    the current date in English.  For example:
+
+    ~~~~ markdown
+    Version 1.3.0
+    -------------
+
+    Released on January 5, 2026.
+    ~~~~
+
+3.  Commit the changes:
+
+    ~~~~ bash
+    git add CHANGES.md
+    git commit -m "Release 1.3.0"
+    ~~~~
+
+4.  Create the tag (without `v` prefix).  Always use `-m` to provide a tag
+    message to avoid opening an editor for GPG-signed tags:
+
+    ~~~~ bash
+    git tag -m "Optique 1.3.0" 1.3.0
+    ~~~~
+
+### Step 2: prepare next version on main
+
+1.  Add a new section at the top of *CHANGES.md* for the next minor version:
+
+    ~~~~ markdown
+    Version 1.4.0
+    -------------
+
+    To be released.
+
+
+    Version 1.3.0
+    -------------
+
+    Released on January 5, 2026.
+    ~~~~
+
+2.  Bump the version in *packages/core/deno.json*:
+
+    Change `"version": "1.3.0"` to `"version": "1.4.0"`.
+
+3.  Run the version sync script:
+
+    ~~~~ bash
+    mise check-versions --fix
+    ~~~~
+
+4.  Commit the version bump:
+
+    ~~~~ bash
+    git add -A
+    git commit -m "Version bump
+
+    [ci skip]"
+    ~~~~
+
+### Step 3: push main and tag
+
+~~~~ bash
+git push origin 1.3.0 main
+~~~~
+
+### Step 4: create maintenance branch
+
+1.  Create the maintenance branch from the release tag:
+
+    ~~~~ bash
+    git branch 1.3-maintenance 1.3.0
+    ~~~~
+
+2.  Check out the maintenance branch:
+
+    ~~~~ bash
+    git checkout 1.3-maintenance
+    ~~~~
+
+3.  Add a section for the first patch version in *CHANGES.md*:
+
+    ~~~~ markdown
+    Version 1.3.1
+    -------------
+
+    To be released.
+
+
+    Version 1.3.0
+    -------------
+
+    Released on January 5, 2026.
+    ~~~~
+
+4.  Bump the version in *packages/core/deno.json*:
+
+    Change `"version": "1.3.0"` to `"version": "1.3.1"`.
+
+5.  Run the version sync script:
+
+    ~~~~ bash
+    mise check-versions --fix
+    ~~~~
+
+6.  Commit the version bump:
+
+    ~~~~ bash
+    git add -A
+    git commit -m "Version bump
+
+    [ci skip]"
+    ~~~~
+
+7.  Push the maintenance branch:
+
+    ~~~~ bash
+    git push origin 1.3-maintenance
+    ~~~~
+
+
+Version format reference
+------------------------
+
+ -  Patch releases: `X.Y.Z` where Z > 0 (e.g., 1.2.3, 1.2.4)
+ -  Minor releases: `X.Y.0` (e.g., 1.3.0, 1.4.0)
+ -  Major releases: `X.0.0` (e.g., 2.0.0, 3.0.0)
+ -  Maintenance branches: `X.Y-maintenance` (e.g., 1.2-maintenance)
+ -  Tags: No `v` prefix (e.g., `1.2.3`, not `v1.2.3`)
+ -  Tag messages: `Optique X.Y.Z` format (use `-m` flag to avoid editor)
+
+
+CHANGES.md format
+-----------------
+
+Each version section follows this format:
+
+~~~~ markdown
+Version X.Y.Z
+-------------
+
+Released on {Month} {Day}, {Year}.
+
+### @optique/core
+
+ -  Change description.  [[#123]]
+
+### @optique/run
+
+ -  Change description.
+
+[#123]: https://github.com/dahlia/optique/issues/123
+~~~~
+
+For unreleased versions:
+
+~~~~ markdown
+Version X.Y.Z
+-------------
+
+To be released.
+~~~~
+
+
+Checklist summary
+-----------------
+
+### Patch release checklist
+
+ -  [ ] Check out `X.Y-maintenance` branch
+ -  [ ] Update *CHANGES.md* release date
+ -  [ ] Commit with message “Release X.Y.Z”
+ -  [ ] Create tag `X.Y.Z` with `-m "Optique X.Y.Z"`
+ -  [ ] Add next version section to *CHANGES.md*
+ -  [ ] Bump version in *packages/core/deno.json*
+ -  [ ] Run `mise check-versions --fix`
+ -  [ ] Commit with message `Version bump\n\n[ci skip]`
+ -  [ ] Push tag and branch
+ -  [ ] Cascade merge to newer maintenance branches (if any):
+     -  [ ] Merge tag into newer branch
+     -  [ ] Copy changelog entries to unreleased version (above existing
+        entries)
+     -  [ ] Run tests and complete merge commit
+     -  [ ] Create patch release for that branch
+ -  [ ] Merge to `main` (if no newer maintenance branches)
+
+### Major/minor release checklist
+
+ -  [ ] Check out `main` branch
+ -  [ ] Update *CHANGES.md* release date
+ -  [ ] Commit with message “Release X.Y.0”
+ -  [ ] Create tag `X.Y.0` with `-m "Optique X.Y.0"`
+ -  [ ] Add next version section to *CHANGES.md*
+ -  [ ] Bump version in *packages/core/deno.json*
+ -  [ ] Run `mise check-versions --fix`
+ -  [ ] Commit with message `Version bump\n\n[ci skip]`
+ -  [ ] Push tag and `main` branch
+ -  [ ] Create `X.Y-maintenance` branch from tag
+ -  [ ] Check out maintenance branch
+ -  [ ] Add patch version section to *CHANGES.md*
+ -  [ ] Bump version to X.Y.1 in *packages/core/deno.json*
+ -  [ ] Run `mise check-versions --fix`
+ -  [ ] Commit with message `Version bump\n\n[ci skip]`
+ -  [ ] Push maintenance branch
 
 ---
 > Source: [dahlia/optique](https://github.com/dahlia/optique) — distributed by [TomeVault](https://tomevault.io).
