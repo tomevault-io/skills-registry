@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ndycode/codex-multi-auth](https://github.com/ndycode/codex-multi-auth/tree/main/skills/codex-auth-setup/SKILL.md)
+Original source: [ndycode/codex-multi-auth](https://github.com/ndycode/codex-multi-auth/tree/main/.github/plugin-scanner-fixtures/good/skills/example/SKILL.md)
 
 ---
 
