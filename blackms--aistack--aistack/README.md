@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [blackms/aistack](https://github.com/blackms/aistack/tree/main/plugin/skills/memory/SKILL.md)
+Original source: [blackms/aistack](https://github.com/blackms/aistack/tree/main/plugin/skills/orchestrate/SKILL.md)
 
 ---
 
