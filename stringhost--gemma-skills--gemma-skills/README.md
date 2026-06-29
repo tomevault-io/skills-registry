@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [StrinGhost/gemma-skills](https://github.com/StrinGhost/gemma-skills/tree/main/skills/fire-service-advisor/SKILL.md)
+Original source: [StrinGhost/gemma-skills](https://github.com/StrinGhost/gemma-skills/tree/main/skills/legal-service-advisor/SKILL.md)
 
 ---
 
