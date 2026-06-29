@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TippingGame/F8Framework](https://github.com/TippingGame/F8Framework/tree/main/Tests/AISkills/f8framework-skills/features/f8-features-event-workflow/SKILL.md)
+Original source: [TippingGame/F8Framework](https://github.com/TippingGame/F8Framework/tree/main/Tests/AISkills/f8framework-skills/features/f8-features-obfuz-workflow/SKILL.md)
 
 ---
 
