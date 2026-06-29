@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rvdbreemen/OTGW-firmware](https://github.com/rvdbreemen/OTGW-firmware/tree/main/.github/skills/template-skill/SKILL.md)
+Original source: [rvdbreemen/OTGW-firmware](https://github.com/rvdbreemen/OTGW-firmware/tree/main/.github/skills/doc-coauthoring/SKILL.md)
 
 ---
 
