@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tazo90/next-openapi-gen](https://github.com/tazo90/next-openapi-gen/tree/main/.agents/skills/github-actions-writer/SKILL.md)
+Original source: [tazo90/next-openapi-gen](https://github.com/tazo90/next-openapi-gen/tree/main/.agents/skills/next-cache-components/SKILL.md)
 
 ---
 
