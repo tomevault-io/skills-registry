@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pushpalroy/JetLime](https://github.com/pushpalroy/JetLime/tree/main/.claude/skills/edge-to-edge/SKILL.md)
+Original source: [pushpalroy/JetLime](https://github.com/pushpalroy/JetLime/tree/main/.claude/skills/compose-expert/SKILL.md)
 
 ---
 
