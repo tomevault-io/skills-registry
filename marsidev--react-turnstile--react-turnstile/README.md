@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marsidev/react-turnstile](https://github.com/marsidev/react-turnstile/tree/main/packages/lib/skills/multiple-widgets/SKILL.md)
+Original source: [marsidev/react-turnstile](https://github.com/marsidev/react-turnstile/tree/main/packages/lib/skills/widget-customization/SKILL.md)
 
 ---
 
