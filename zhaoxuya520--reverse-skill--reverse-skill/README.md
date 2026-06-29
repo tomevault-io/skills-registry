@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zhaoxuya520/reverse-skill](https://github.com/zhaoxuya520/reverse-skill/tree/main/CTF-Sandbox-Orchestrator/competition-supply-chain/SKILL.md)
+Original source: [zhaoxuya520/reverse-skill](https://github.com/zhaoxuya520/reverse-skill/tree/main/CTF-Sandbox-Orchestrator/competition-crypto-mobile/SKILL.md)
 
 ---
 
