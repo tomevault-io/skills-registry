@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rsclaw-ai/rsclaw](https://github.com/rsclaw-ai/rsclaw/tree/main/skills/football-hub/SKILL.md)
+Original source: [rsclaw-ai/rsclaw](https://github.com/rsclaw-ai/rsclaw/tree/main/skills/web-scan-login/SKILL.md)
 
 ---
 
