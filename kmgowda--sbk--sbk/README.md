@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kmgowda/SBK](https://github.com/kmgowda/SBK/tree/main/.devin/skills/sbk-benchmark-runner/SKILL.md)
+Original source: [kmgowda/SBK](https://github.com/kmgowda/SBK/tree/main/.devin/skills/sbk-driver-development/SKILL.md)
 
 ---
 
