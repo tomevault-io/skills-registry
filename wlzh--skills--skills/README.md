@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wlzh/skills](https://github.com/wlzh/skills/tree/main/video-voice-changer/SKILL.md)
+Original source: [wlzh/skills](https://github.com/wlzh/skills/tree/main/youtube-to-blog-post/SKILL.md)
 
 ---
 
