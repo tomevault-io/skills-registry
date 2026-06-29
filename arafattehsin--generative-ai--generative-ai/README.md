@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [arafattehsin/generative-ai](https://github.com/arafattehsin/generative-ai/tree/main/samples/dotnet/maf-skill-incident-command-center/backend/skills/incident-triage/SKILL.md)
+Original source: [arafattehsin/generative-ai](https://github.com/arafattehsin/generative-ai/tree/main/samples/dotnet/maf-skill-incident-command-center/backend/skills/incident-communications/SKILL.md)
 
 ---
 
