@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dahlia/optique](https://github.com/dahlia/optique/tree/main/.agents/skills/javascript-testing-expert/SKILL.md)
+Original source: [dahlia/optique](https://github.com/dahlia/optique/tree/main/.agents/skills/release/SKILL.md)
 
 ---
 
