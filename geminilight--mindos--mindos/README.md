@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GeminiLight/MindOS](https://github.com/GeminiLight/MindOS/tree/main/skills/mindos-max-zh/SKILL.md)
+Original source: [GeminiLight/MindOS](https://github.com/GeminiLight/MindOS/tree/main/packages/web/data/skills/mindos/SKILL.md)
 
 ---
 
