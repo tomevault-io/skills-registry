@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tan-yong-sheng/ai-vision-mcp](https://github.com/tan-yong-sheng/ai-vision-mcp/tree/main/plugins/design-eval/skills/wcag-compliance/SKILL.md)
+Original source: [tan-yong-sheng/ai-vision-mcp](https://github.com/tan-yong-sheng/ai-vision-mcp/tree/main/.claude/skills/access-control-policy-design/SKILL.md)
 
 ---
 
