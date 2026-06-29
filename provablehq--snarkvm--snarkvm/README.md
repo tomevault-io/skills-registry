@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ProvableHQ/snarkVM](https://github.com/ProvableHQ/snarkVM/tree/main/.claude/skills/snarkvm-review/SKILL.md)
+Original source: [ProvableHQ/snarkVM](https://github.com/ProvableHQ/snarkVM/tree/main/.claude/skills/snarkvm-github/SKILL.md)
 
 ---
 
