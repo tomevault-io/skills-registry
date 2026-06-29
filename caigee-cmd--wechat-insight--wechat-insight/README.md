@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [caigee-cmd/wechat-insight](https://github.com/caigee-cmd/wechat-insight/tree/main/SKILL.md)
+Original source: [caigee-cmd/wechat-insight](https://github.com/caigee-cmd/wechat-insight/tree/main/plugins/wechat-insight/skills/analyzing-wechat-chats/SKILL.md)
 
 ---
 
