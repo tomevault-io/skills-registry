@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AI-Shell-Team/aish](https://github.com/AI-Shell-Team/aish/tree/main/skills/prompt-designer/SKILL.md)
+Original source: [AI-Shell-Team/aish](https://github.com/AI-Shell-Team/aish/tree/main/crates/aish-shell/prompts/skill.md)
 
 ---
 
