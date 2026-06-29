@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marinasundstrom/raven](https://github.com/marinasundstrom/raven/tree/main/.agents/skills/raven-debug-compiler/SKILL.md)
+Original source: [marinasundstrom/raven](https://github.com/marinasundstrom/raven/tree/main/.agents/skills/raven-feature-workflow/SKILL.md)
 
 ---
 
