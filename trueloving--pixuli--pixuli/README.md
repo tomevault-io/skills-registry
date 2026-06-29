@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [trueLoving/Pixuli](https://github.com/trueLoving/Pixuli/tree/main/.cursor/skills/ref-issue-pr/SKILL.md)
+Original source: [trueLoving/Pixuli](https://github.com/trueLoving/Pixuli/tree/main/.cursor/skills/storage-provider/SKILL.md)
 
 ---
 
