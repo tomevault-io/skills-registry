@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hyqibot/token-free-openclaw](https://github.com/hyqibot/token-free-openclaw/tree/main/fastapi/.agents/skills/fastapi/SKILL.md)
+Original source: [hyqibot/token-free-openclaw](https://github.com/hyqibot/token-free-openclaw/tree/main/copaw/agents/skills/exe_bundle/SKILL.md)
 
 ---
 
