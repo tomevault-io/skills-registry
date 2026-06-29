@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alex-on-ai/WebReaper](https://github.com/alex-on-ai/WebReaper/tree/main/.agents/skills/to-prd/SKILL.md)
+Original source: [alex-on-ai/WebReaper](https://github.com/alex-on-ai/WebReaper/tree/main/.agents/skills/caveman/SKILL.md)
 
 ---
 
