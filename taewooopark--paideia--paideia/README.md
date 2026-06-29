@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TaewoooPark/PAIDEIA](https://github.com/TaewoooPark/PAIDEIA/tree/main/plugins/paideia/skills/exam-drill/SKILL.md)
+Original source: [TaewoooPark/PAIDEIA](https://github.com/TaewoooPark/PAIDEIA/tree/main/plugins/paideia/skills/vision-ocr/SKILL.md)
 
 ---
 
