@@ -243,7 +243,7 @@ Collect the hint for inclusion in the Step 10 Follow-ups (not Known gaps). Conti
 
 ### Step 8.5: Reconciliation (typed disagreement handling)
 
-After the three specialist caches land and before the Step 9.5 integrity gate, run a deterministic reconciliation pass. This step is **typed dispatch, not reasoning** — it recognizes exactly 3 classes of disagreement between the dictionary and the specialist outputs, and dispatches the right response for each.
+After the three specialist caches land and before the Step 9.5 integrity gate, run a deterministic reconciliation pass. This step is **typed dispatch, not reasoning** — it recognizes exactly 4 classes of disagreement (3 actionable + 1 benign) between the dictionary and the specialist outputs, and dispatches the right response for each.
 
 **Load the dictionary + the three mismatch lists.**
 
@@ -251,13 +251,16 @@ After the three specialist caches land and before the Step 9.5 integrity gate, r
 2. Read the `data._extractionArtifacts.dictionaryMismatches[]` arrays from the three specialist caches (`structure.json`, `color.json`, `voice.json`). Missing or empty arrays are fine — they indicate the specialist agreed with the dictionary.
 3. Read `reconciliation.autoRetry` from `uspecs.config.json` (default: `true` when the key is absent). When `false`, skip retries and surface coverage gaps directly as `high` Known-gaps entries. Still run auto-rewrites for vocabulary drift.
 
-**Classify every mismatch** into one of three buckets:
+**Classify every mismatch** into one of four buckets:
 
 | Class | Detection rule | Response |
 |---|---|---|
 | **Vocabulary drift** | Dictionary has `{axis.name, value.figmaValue, value.runtimeCondition}`; specialist emitted a column / label that matches `figmaValue` but the dictionary canonical is `runtimeCondition` (or vice versa — a simple rename). Or the specialist's sub-component name matches a dictionary `subComponents[].name` modulo casing / whitespace / suffix. | **Auto-rewrite in place.** Open the specialist's cache file, rewrite the drifted labels/columns/section names to the dictionary canonical, add a reconciliation log entry. No retry. |
 | **Coverage gap (scope miss)** | Dictionary lists a value/sub-component/state that has no corresponding row/column/section in the specialist's cache AND the value exists somewhere in `_base.json` as real evidence (variant option, revealed sub-component, etc.). | **Re-dispatch the specialist as a single subagent** with `optionalContext = "create-component-md retry: <comma-list of missing items>"` prepended to the original `optionalContext`. Max 1 retry per specialist per invocation. After the retry returns, re-run this entire Step 8.5 from the top — a successful retry may resolve gaps that would otherwise trigger further retries. |
-| **Semantic conflict** | Dictionary and specialist disagree on a fact that cannot be auto-rewritten (e.g., API declares `size: small \| medium \| large`; Structure measured `compact` + `regular` which have no `figmaValue` in the dictionary). | **Surface as `high` Known gap immediately.** NEVER auto-resolve. NEVER retry (a retry will not fix a semantic disagreement — it needs human judgment). |
+| **Benign value-extra** | A `kind: "value-extra"` mismatch (specialist documented something the dictionary's `axes[]` does not list) where the observed item **resolves to a real part of the API surface**: it matches a `dictionary.booleanProps[]` entry by camelCase name (a top-level boolean like `isDisabled`/`isLoading`), or a `dictionary.states[]` entry by `figmaValue` / `apiAssignments` key, or a `_base.json` variant axis option. The specialist was correct to document it; the only "gap" is that booleans/decomposed states are intentionally absent from `axes[]`. | **Log to `reviewedBenign[]` and move on.** No rewrite, no retry, NO Known-gaps entry. This is the disposition for the systemic false-positive that the specialist-side `value-extra` guard (extract-* Step 2.5) now prevents at the source; this bucket catches any that still arrive from older or standalone caches. |
+| **Semantic conflict** | Dictionary and specialist disagree on a fact that cannot be auto-rewritten AND the observed item resolves to nothing in the dictionary or `_base.json` (e.g., API declares `size: small \| medium \| large`; Structure measured `compact` + `regular` which have no `figmaValue` in the dictionary and no backing axis option). | **Surface as `high` Known gap immediately.** NEVER auto-resolve. NEVER retry (a retry will not fix a semantic disagreement — it needs human judgment). |
+
+A `value-extra` that does NOT resolve to `booleanProps[]` / `states[]` / a variant axis is a **semantic conflict**, not benign — it goes to `high`. Benign classification requires the observed item to trace to a real API-surface element; never use `reviewedBenign[]` as a dumping ground for unexplained extras.
 
 **Retry loop (bounded, serial, no declared specialist priority):**
 
@@ -284,6 +287,7 @@ while (any specialist has unresolved coverage gaps AND its retryCount < 1 AND re
 - Any remaining coverage gap becomes a `high` Known-gaps entry (the auto-retry couldn't recover it).
 - Every semantic conflict is already a `high` Known-gaps entry.
 - Every vocabulary drift has already been auto-rewritten in place; it becomes a `low`-severity informational entry in the auto-reconciled list (see renderer).
+- Every benign value-extra is already logged to `reviewedBenign[]`; it produces NO Known-gaps entry and NO confidence downgrade — it is an audit-trail note only.
 
 **Write the reconciliation artifact.** Every pass (auto-rewrite, retry, unresolved) is logged to `{cachePath}/{componentSlug}-reconciliations.json`. Envelope:
 
@@ -322,10 +326,21 @@ while (any specialist has unresolved coverage gaps AND its retryCount < 1 AND re
         "detail": "<scannable summary ≤160 chars>",
         "severity": "high"
       }
+    ],
+    "reviewedBenign": [
+      {
+        "class": "value-extra",
+        "specialist": "structure" | "color" | "voice",
+        "observed": "<the value-extra the specialist emitted>",
+        "resolvesTo": "booleanProps:isDisabled" | "states:loading" | "variantAxis:<name>=<option>",
+        "note": "<why it is part of the API surface and not a gap; ≤160 chars>"
+      }
     ]
   }
 }
 ```
+
+`reviewedBenign[]` is the formal home for the **Benign value-extra** class — it is an audit trail only, never a defect list. The renderer does NOT surface it in Known gaps. When there is nothing benign to log, emit `reviewedBenign: []`. Do **not** invent ad-hoc keys (e.g. a leading-underscore `_reviewedBenign`) — `reviewedBenign[]` is the schema-defined bucket and Step 9.5 validates its shape.
 
 When `data.retries[].outcome === "resolved"`, the corresponding mismatch disappears from the specialist's cache on the next classification pass — that is how the re-run loop confirms success. When `"still-missing"`, the item is promoted into `unresolved[]` with severity `high`.
 
@@ -334,7 +349,7 @@ When `data.retries[].outcome === "resolved"`, the corresponding mismatch disappe
 - A subagent returns a failure line → abort the whole orchestrator with a diagnostic naming the failing specialist and retry number. Do NOT continue past Step 8.5 with a half-broken cache set.
 - A specialist's retry overwrites its cache file with a malformed envelope (missing `_meta`/`data`) → abort with the same diagnostic.
 
-**Flush the reconciliation working context.** Keep only: the path `{cachePath}/{componentSlug}-reconciliations.json` + counts `(auto-rewrites=<A>, retries=<R>, unresolved=<U>)`.
+**Flush the reconciliation working context.** Keep only: the path `{cachePath}/{componentSlug}-reconciliations.json` + counts `(auto-rewrites=<A>, retries=<R>, unresolved=<U>, benign=<B>)`.
 
 **Render-meta handoff note.** Step 9's render-meta builder consumes `data.autoReconciled[]` to do drift-aware name lookups when resolving `sectionTargets[*].nodeId` / `groupTargets[*][*].nodeId` against `_base.json.variants[<default>].layoutTree`. When a section/group label was rewritten here (e.g., `"Clear button"` → `"clear (X) button"`), render-meta retries the layer lookup with both `entry.before` and `entry.after` so a successful auto-rewrite never silently breaks ID resolution. This is a downstream-consumer relationship only — render-meta does NOT itself trigger further reconciliation, and Step 8.5 owns every rewrite that lives in the cache files.
 
@@ -359,6 +374,7 @@ Read:
    - `propertyDefinitions` (full) — for render-meta `propertyDefs` + `booleanDefs` + `slotContents`
    - `slotHostGeometry` — for render-meta `slotContents.preferredComponents` enrichment
    - `variants[<defaultVariantName>].layoutTree` (full walk) — for render-meta `sectionTargets[*].nodeId` + `groupTargets[*][*].nodeId` resolution
+   - `variants[<defaultVariantName>].treeHierarchical` (full walk) — for the `{{ANATOMY_SCAFFOLD}}` layer-composition tree (mechanical pass-through; see `agent-component-md-instruction.md` > ## Anatomy scaffold)
    - `variants[*]._selfCheck.missingChildren` — for Known gaps
    - `subComponentVariantWalks` (when present) — for render-meta `subComponents[*].subCompVariantAxesDefaults`
    - This widening from the prior `_childComposition` + `_extractionNotes.warnings` + `component.componentName` + `_selfCheck` set is intentional: render-meta needs the canonical pre-interpretation shape and the four domain caches do not preserve it. Read these fields once, then re-flush.
@@ -372,6 +388,7 @@ Follow `agent-component-md-instruction.md` section by section to produce:
 - `{{OVERVIEW_PARAGRAPH}}` (synthesis — 2–4 sentences drawn from all four `data` objects).
 - `{{VARIANT_AXES_SUMMARY}}` (one-liner from the structure axes).
 - `{{COMPOSITION_SUBSECTION}}` (rendered from `_base.json` top-level `_childComposition`).
+- `{{ANATOMY_SCAFFOLD}}` (mechanical pass-through of `variants[<default>].treeHierarchical` into a `### Anatomy` tree at the top of the Structure section — see `agent-component-md-instruction.md` > ## Anatomy scaffold).
 - `{{API_BODY}}`, `{{STRUCTURE_BODY}}`, `{{COLOR_BODY}}`, `{{VOICE_BODY}}` (per-section renderers). API body's Referenced components subsection consumes `_base.json._childComposition.children[]` filtered to `classification === "referenced"`. The Voice body ends with the hidden `<!-- voice-render-meta v=1 ... -->` focus-stop layer-name carry (see `agent-component-md-instruction.md` > Voice body rendering step 5) so `create-voice` can resolve focus markers from the `.md` alone.
 - `{{CROSS_SECTION_INVARIANTS}}` and `{{CROSS_REFERENCES}}` (computed from the `_extractionArtifacts` blocks).
 - **`{{RENDER_META_JSON}}`** — built per `agent-component-md-instruction.md > ## RENDER_META_JSON`. Source: `_base.json` (the narrow fields above) + structure cache `data.sections[]` — modern caches stamp `section._anchor` and group-header `row._layerName` / `row._layerId` directly, which the resolver consumes as mechanical pass-through (preferred path). Reconciliations cache is consulted only by the legacy name-walk fallback for caches produced before identity stamping. Render-meta is mechanical pass-through — never read it from `api.json` even where the fields overlap.
@@ -397,6 +414,7 @@ For each of { _base.json, api.json, api-dictionary.json, structure.json, color.j
 api-dictionary.json:
 - [ ] data.componentName equals api.data.componentName
 - [ ] data.axes is a non-empty array when api.data.mainTable.properties has at least one enum-typed row
+- [ ] data.booleanProps is an array (possibly empty). Its length equals the count of api.data.mainTable.properties[] rows whose `values === "true, false"`; every entry has `{ name, default }`. (This is the canonical home for top-level booleans like isDisabled/isLoading; without it the specialists emit perpetual value-extra mismatches.)
 - [ ] data.states is an array (possibly empty). When api.data._extractionArtifacts.stateAxisMapping[] is present, data.states.length === stateAxisMapping.length
 - [ ] data.slots is an array (possibly empty). When api.data._extractionArtifacts.slotResolverStrategy[] is present, data.slots.length === slotResolverStrategy.length
 
@@ -406,12 +424,14 @@ reconciliations.json:
 - [ ] data.retries is an array. Every entry has { specialist, missingItems[], attemptedAt, outcome, retryCount }. retryCount ≤ 1 per specialist.
 - [ ] data.unresolved is an array. Every entry has { class: "coverage-gap" | "semantic-conflict", specialist, detail, severity: "high" }
 - [ ] For every data.unresolved[] entry, the Known gaps block the renderer is about to emit MUST include a matching high-severity summary line. This check runs AFTER a dry render of the Known gaps block (the renderer materializes the block string first, then this check greps it for each unresolved detail substring). Missing any → abort with a diagnostic naming the unresolved entry.
+- [ ] data.reviewedBenign is an array (possibly empty). Every entry has { class: "value-extra", specialist, observed, resolvesTo, note }, and `resolvesTo` is non-empty (it must name the API-surface element the extra traced to — e.g. `booleanProps:isDisabled`, `states:loading`, `variantAxis:size=large`). NO data.reviewedBenign[] entry may appear in the Known gaps block. Reject any leading-underscore variant key (e.g. `_reviewedBenign`) — the canonical bucket is `reviewedBenign` with no underscore; its presence means a non-conformant writer.
 
 api.json:
 - [ ] data.componentName equals _base.json.component.componentName
 - [ ] If _base.json.slotHostGeometry.boolGatedFillers is non-empty, every SubComponentApiTable that corresponds to a boolean-gated filler has _identityResolved set (true | false). Missing _identityResolved is tolerated only when boolGatedFillers is empty or when the table's role does not correspond to a boolean-gated filler.
 - [ ] No sub-component table title matches the regex /^[a-z]+=/ (i.e., no "size=medium"-style variant short names leaked through)
 - [ ] data._deltaExtractions is an array (possibly empty)
+- [ ] data.configurationExamples is an array (1–4 entries). Every entry has a non-empty `title` string and a `properties` array; every `properties[]` row has `property`, `value`, and `notes` keys. No entry carries a `name`, `description`, or `code` field (those are the renderer's old, wrong shape — their presence means a stale producer). The renderer consumes `title` + `properties[]` only (see `{{ref:component-md/agent-component-md-instruction.md}}` > API body rendering step 4).
 - [ ] data._extractionArtifacts.booleanRelationshipAnalysis exists and is an array
 - [ ] For every entry in booleanRelationshipAnalysis[]: evidence[] is non-empty OR relationship === "independent" with at least one negative-evidence signal in evidence[]
 - [ ] Every sub-component in _base.json.propertyDefinitions.booleans (grouped by associatedLayerName) has a matching booleanRelationshipAnalysis[] entry whose subComponentName resolves to the same sub-component
@@ -445,7 +465,7 @@ Cross-file:
 - [ ] variantAxes sets match across structure._extractionArtifacts, color._extractionArtifacts, voice._extractionArtifacts — any mismatch must appear in reconciliations.json (either auto-rewritten or surfaced as high). Unreconciled drift is a blocking failure.
 - [ ] Every _deltaExtractions[] entry has { purpose, script, byteCount, timestamp }
 - [ ] _base.json._extractionNotes.warnings is represented in the severity buckets the renderer will emit
-- [ ] **Dictionary mismatch budget.** Let totalRows be the sum of row-level items across the three specialist caches (structure.sections[].rows + color element entries + voice state×platform tables). Let mismatchRows be the sum of _extractionArtifacts.dictionaryMismatches[] lengths minus the count of entries that were auto-reconciled. When mismatchRows / totalRows > 0.25 (hard 25% cap), abort with a diagnostic: "Dictionary mismatch rate exceeds 25% — API over-normalized the vocabulary and every specialist is flagging rows. Re-run extract-api with tighter naming discipline before continuing." The 25% threshold catches the pathological case where the dictionary renames a Figma value to something none of the specialists can evidence.
+- [ ] **Dictionary mismatch budget.** Let totalRows be the sum of row-level items across the three specialist caches (structure.sections[].rows + color element entries + voice state×platform tables). Let mismatchRows be the sum of _extractionArtifacts.dictionaryMismatches[] lengths minus the count of entries that were auto-reconciled **minus the count of entries logged to reconciliations.json > data.reviewedBenign[]** (benign value-extras are not real mismatches — subtract them so a component with several benign boolean states cannot trip the cap). When mismatchRows / totalRows > 0.25 (hard 25% cap), abort with a diagnostic: "Dictionary mismatch rate exceeds 25% — API over-normalized the vocabulary and every specialist is flagging rows. Re-run extract-api with tighter naming discipline before continuing." The 25% threshold catches the pathological case where the dictionary renames a Figma value to something none of the specialists can evidence.
 - [ ] **Dictionary availability.** When any specialist cache records `_dictionaryUnavailable: true`, surface it as a `medium`-severity Known gap (the specialist ran without the canonical vocabulary and may name things idiosyncratically). Do not abort — standalone-runs of a specialist outside the orchestrator are legal.
 
 Render-meta (these gates run on the about-to-render render-meta object before it is serialized into the .md):
@@ -532,7 +552,7 @@ Do NOT auto-chain runs. The manifest is terminal output for this invocation only
 - **Never run the interpretation skills in parallel inside the parent's own context.** Running them as parallel subagents (one per specialist) after `extract-api` completes is explicitly allowed and is the prescribed Step 6 fan-out shape — each subagent holds its own `_base.json` + dictionary read and writes to a distinct cache file, so the parent's context is never exposed to three specialists simultaneously. Do not inline their reasoning into the parent.
 - **Never lose quality for token savings.** Each interpretation skill is expected to carry the full reasoning chain from its `create-*` parent. If you notice a skill skipping steps, fix the skill, not the orchestrator.
 - **Never rewrite the cache JSONs during rendering.** They are the interpretation skills' product. The **only** legal rewrite is Step 8.5's typed auto-reconciliation (vocabulary drift → in-place label rewrite), and every such rewrite must be logged to `{slug}-reconciliations.json > data.autoReconciled[]`.
-- **Typed reconciliation only.** Step 8.5 recognizes exactly three disagreement classes: (1) **vocabulary drift** — auto-rewrite and log, no retry; (2) **coverage gap** — re-dispatch the specialist once as a subagent with an expanded `optionalContext`, then re-run Step 8.5; (3) **semantic conflict** — surface as `high` Known gap, never auto-resolve. Any disagreement that does not fit cleanly into one of these three classes is a `high` Known gap by default. Do NOT introduce a fourth class, do NOT run a free-form "reasoning pass" over the four JSONs, and do NOT silently reconcile classes (1) or (2).
+- **Typed reconciliation only.** Step 8.5 recognizes exactly four disagreement classes: (1) **vocabulary drift** — auto-rewrite and log, no retry; (2) **coverage gap** — re-dispatch the specialist once as a subagent with an expanded `optionalContext`, then re-run Step 8.5; (3) **benign value-extra** — a `value-extra` whose observed item resolves to a real API-surface element (`dictionary.booleanProps[]`, `dictionary.states[]`, or a `_base.json` variant axis), logged to `reviewedBenign[]` with no gap and no retry; (4) **semantic conflict** — surface as `high` Known gap, never auto-resolve. Any disagreement that does not fit cleanly into one of these four classes is a `high` Known gap by default. Do NOT introduce a fifth class, do NOT run a free-form "reasoning pass" over the four JSONs, do NOT silently reconcile classes (1) or (2), and do NOT use class (3) for any extra that cannot be traced to a real API-surface element (that is a semantic conflict → `high`).
 - **Retries are bounded and serial.** Each specialist can be re-dispatched at most once per `create-component-md` invocation. When multiple specialists need retries, dispatch them one at a time in the original run order (Structure → Color → Voice — this is iteration order, not a priority relationship), and re-run Step 8.5 after each retry returns. A successful retry may resolve gaps that would otherwise trigger further retries, shortening the chain.
 - **Never silently continue past a missing cache file.** If any interpretation skill fails, abort, report which phase failed, and let the user decide whether to retry.
 - **Never commit the `.uspec-cache/` directory.** It is gitignored. The `.md` file is the only artifact that should live in version control.
