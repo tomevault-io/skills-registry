@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shouldnotappearcalm/a-share-skill](https://github.com/shouldnotappearcalm/a-share-skill/tree/main/tuige-shortline-trading/SKILL.md)
+Original source: [shouldnotappearcalm/a-share-skill](https://github.com/shouldnotappearcalm/a-share-skill/tree/main/macd-second-golden-cross/SKILL.md)
 
 ---
 
