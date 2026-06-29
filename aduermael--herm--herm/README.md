@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aduermael/herm](https://github.com/aduermael/herm/tree/main/.claude/skills/create-plan/SKILL.md)
+Original source: [aduermael/herm](https://github.com/aduermael/herm/tree/main/.claude/skills/execute-plan/SKILL.md)
 
 ---
 
