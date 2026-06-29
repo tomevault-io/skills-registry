@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [samuelhe52/AniShelf](https://github.com/samuelhe52/AniShelf/tree/main/.codex/skills/openspec-apply-change/SKILL.md)
+Original source: [samuelhe52/AniShelf](https://github.com/samuelhe52/AniShelf/tree/main/.claude/skills/openspec-apply-change/SKILL.md)
 
 ---
 
