@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [josephschmitt/monocle](https://github.com/josephschmitt/monocle/tree/main/skills/get-feedback/SKILL.md)
+Original source: [josephschmitt/monocle](https://github.com/josephschmitt/monocle/tree/main/skills/review-plan-wait/SKILL.md)
 
 ---
 
