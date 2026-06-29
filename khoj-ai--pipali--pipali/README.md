@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [khoj-ai/pipali](https://github.com/khoj-ai/pipali/tree/main/src/server/skills/builtin/skill-creator/SKILL.md)
+Original source: [khoj-ai/pipali](https://github.com/khoj-ai/pipali/tree/main/src/server/skills/builtin/document-creator/SKILL.md)
 
 ---
 
