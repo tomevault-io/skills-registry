@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [m98/fluent](https://github.com/m98/fluent/tree/main/.claude/skills/fluent-db-updater/SKILL.md)
+Original source: [m98/fluent](https://github.com/m98/fluent/tree/main/.claude/skills/fluent-sm2-calculator/SKILL.md)
 
 ---
 
