@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eddmpython/dartlab](https://github.com/eddmpython/dartlab/tree/main/src/dartlab/skills/specs/engines/fixedIncome/SKILL.md)
+Original source: [eddmpython/dartlab](https://github.com/eddmpython/dartlab/tree/main/src/dartlab/skills/specs/engines/macro/SKILL.md)
 
 ---
 
