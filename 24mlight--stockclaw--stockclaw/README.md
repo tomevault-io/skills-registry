@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [24mlight/StockClaw](https://github.com/24mlight/StockClaw/tree/main/skills/technical-indicators/SKILL.md)
+Original source: [24mlight/StockClaw](https://github.com/24mlight/StockClaw/tree/main/skills/crypto-stock-market-data/SKILL.md)
 
 ---
 
