@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zirkelc/ai-retry](https://github.com/zirkelc/ai-retry/tree/main/.agents/skills/commit/SKILL.md)
+Original source: [zirkelc/ai-retry](https://github.com/zirkelc/ai-retry/tree/main/.claude/skills/commit/SKILL.md)
 
 ---
 
