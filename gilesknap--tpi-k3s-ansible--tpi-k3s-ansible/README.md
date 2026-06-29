@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gilesknap/tpi-k3s-ansible](https://github.com/gilesknap/tpi-k3s-ansible/tree/main/.claude/skills/ansible/SKILL.md)
+Original source: [gilesknap/tpi-k3s-ansible](https://github.com/gilesknap/tpi-k3s-ansible/tree/main/.claude/skills/rkllama/SKILL.md)
 
 ---
 
