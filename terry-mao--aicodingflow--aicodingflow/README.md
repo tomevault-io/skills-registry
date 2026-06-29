@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Terry-Mao/AICodingFlow](https://github.com/Terry-Mao/AICodingFlow/tree/main/.github/skills/security-review-spec/SKILL.md)
+Original source: [Terry-Mao/AICodingFlow](https://github.com/Terry-Mao/AICodingFlow/tree/main/.github/skills/product-change-report/SKILL.md)
 
 ---
 
