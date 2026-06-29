@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ardanlabs/kronk](https://github.com/ardanlabs/kronk/tree/main/.agents/default/skills/kronk-mcp/SKILL.md)
+Original source: [ardanlabs/kronk](https://github.com/ardanlabs/kronk/tree/main/.agents/default/skills/writing-go/SKILL.md)
 
 ---
 
