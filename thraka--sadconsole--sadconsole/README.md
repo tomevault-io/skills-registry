@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Thraka/SadConsole](https://github.com/Thraka/SadConsole/tree/main/.copilot/skills/agent-collaboration/SKILL.md)
+Original source: [Thraka/SadConsole](https://github.com/Thraka/SadConsole/tree/main/.copilot/skills/github-multi-account/SKILL.md)
 
 ---
 
