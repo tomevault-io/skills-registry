@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ploi/roadmap](https://github.com/ploi/roadmap/tree/main/.claude/skills/pest-testing/SKILL.md)
+Original source: [ploi/roadmap](https://github.com/ploi/roadmap/tree/main/.claude/skills/socialite-development/SKILL.md)
 
 ---
 
