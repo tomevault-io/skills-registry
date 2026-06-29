@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [riba2534/happyclaw](https://github.com/riba2534/happyclaw/tree/main/container/skills/install-skill/SKILL.md)
+Original source: [riba2534/happyclaw](https://github.com/riba2534/happyclaw/tree/main/container/skills/post-test-cleanup/SKILL.md)
 
 ---
 
