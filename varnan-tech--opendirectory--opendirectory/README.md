@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Varnan-Tech/opendirectory](https://github.com/Varnan-Tech/opendirectory/tree/main/skills/meta-tribeV2-skill/SKILL.md)
+Original source: [Varnan-Tech/opendirectory](https://github.com/Varnan-Tech/opendirectory/tree/main/skills/llms-txt-generator/SKILL.md)
 
 ---
 
