@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eng-cc/oasis7](https://github.com/eng-cc/oasis7/tree/main/.agents/skills/xiaohongshu-note-analyzer/SKILL.md)
+Original source: [eng-cc/oasis7](https://github.com/eng-cc/oasis7/tree/main/.agents/skills/writing-repo-owned-skills/SKILL.md)
 
 ---
 
