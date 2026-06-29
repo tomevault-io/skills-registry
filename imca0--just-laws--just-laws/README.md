@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ImCa0/just-laws](https://github.com/ImCa0/just-laws/tree/main/.agents/skills/markitdown/SKILL.md)
+Original source: [ImCa0/just-laws](https://github.com/ImCa0/just-laws/tree/main/.agents/skills/law-pipeline/SKILL.md)
 
 ---
 
