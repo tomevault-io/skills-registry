@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hyxnj666-creator/ai-memory](https://github.com/hyxnj666-creator/ai-memory/tree/main/docs/assets/demo/scenario/.claude/skills/ai-memory-coding-conventions/SKILL.md)
+Original source: [hyxnj666-creator/ai-memory](https://github.com/hyxnj666-creator/ai-memory/tree/main/docs/assets/demo/scenario/.claude/skills/ai-memory-system-architecture/SKILL.md)
 
 ---
 
