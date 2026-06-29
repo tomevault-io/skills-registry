@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kakasoo/DeepStrictTypes](https://github.com/kakasoo/DeepStrictTypes/tree/main/.claude/skills/fix-type/SKILL.md)
+Original source: [kakasoo/DeepStrictTypes](https://github.com/kakasoo/DeepStrictTypes/tree/main/.claude/skills/write-test/SKILL.md)
 
 ---
 
