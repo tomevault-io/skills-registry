@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Dataojitori/nocturne_memory](https://github.com/Dataojitori/nocturne_memory/tree/main/docs/skills/memory-audit/SKILL.md)
+Original source: [Dataojitori/nocturne_memory](https://github.com/Dataojitori/nocturne_memory/tree/main/docs/skills/memory-audit-belief-duel/SKILL.md)
 
 ---
 
