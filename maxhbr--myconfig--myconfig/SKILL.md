@@ -1,0 +1,66 @@
+---
+name: apply-pr-to-flake
+description: Apply a nixpkgs PR override to the flake.nix configuration Use when this capability is needed.
+metadata:
+  author: maxhbr
+---
+
+## What I do
+
+Apply a nixpkgs PR to flake.nix by creating an input and overlay to override a specific package version. This follows the documented pattern in flake.nix lines 120-137.
+
+## When to use me
+
+Use this when you want to apply a PR from the main nixpkgs repository to override a package version in your flake without merging it upstream yet.
+
+## Questions I'll ask
+
+1. **PR number** - The pull request number (e.g., 500995)
+2. **Repository** - Which nixpkgs repository to use (default: NixOS/nixpkgs)
+3. **Package name** - Which nixpkgs package to override
+4. **Input name** - Descriptive name for the input (e.g., pr500995, pr471984)
+5. **Version check** - Should I verify the package version is not newer than a specific version? (default: null, no check)
+   - If yes: Provide the maximum allowed version in semantic version format (e.g., "8401")
+   - If no: Set to null to skip version checking
+6. **Create module file** - Should I create `modules/pr-overlays.nix` for declarative management?
+   - Yes: Creates a NixOS module with option `myconfig.prOverlays.enable` and list of overlays [{package, prNumber, inputName, maxVersion?, prUrl}]
+   - No: Only modify flake.nix
+   - Default: Yes for new setups
+
+## Implementation steps
+
+1. Get the PR commit hash by fetching PR details
+2. Create the input in the `inputs` section after other inputs:
+   ```
+   {input}.url = "github:{owner}/{repo}/{commit-hash}";
+   ```
+3. Add the overlay in the PR patch section using the pattern:
+   ```
+   nixpkgs.overlays = map
+     ({ input, pkg }:
+     (_: _:
+       { "${pkg}" =
+         (import inputs."${input}" {
+           inherit (pkgs) config system;
+         })."${pkg}";
+       })
+     )
+     [
+       { input = "{input}"; pkg = "{package}"; }
+     ];
+   ```
+4. Run `./nixfmtall.sh` to format all Nix files
+5. Run `nix flake check` to validate the configuration
+
+## Notes
+
+- Follow the pattern exactly by placing the overlay module after the core system module and before other overlays
+- Use descriptive input names: `pr<PR-number>` is preferred (e.g., pr500995)
+- Comment out the URL in the template section for easy reference
+- Always run `nix flake check` after making changes to ensure validity
+- The overlay will only override the package; other packages remain from the main nixpkgs
+- The entry should be placed near the other PR-related comments in the PR template section
+
+---
+> Source: [maxhbr/myconfig](https://github.com/maxhbr/myconfig) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-29 -->
