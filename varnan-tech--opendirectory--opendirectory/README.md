@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Varnan-Tech/opendirectory](https://github.com/Varnan-Tech/opendirectory/tree/main/skills/yc-intent-radar-skill/yc-jobs-scraper/SKILL.md)
+Original source: [Varnan-Tech/opendirectory](https://github.com/Varnan-Tech/opendirectory/tree/main/skills/twitter-GTM-find-skill/twitter-GTM-find/SKILL.md)
 
 ---
 
