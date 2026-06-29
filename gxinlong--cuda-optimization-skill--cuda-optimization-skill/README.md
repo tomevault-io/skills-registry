@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gxinlong/cuda-optimization-skill](https://github.com/gxinlong/cuda-optimization-skill/tree/main/skills/ncu-rep-analyze/SKILL.md)
+Original source: [gxinlong/cuda-optimization-skill](https://github.com/gxinlong/cuda-optimization-skill/tree/main/skills/kernel-benchmark/SKILL.md)
 
 ---
 
