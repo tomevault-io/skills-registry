@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SSWConsulting/SSW.VerticalSliceArchitecture](https://github.com/SSWConsulting/SSW.VerticalSliceArchitecture/tree/main/.agents/skills/aspire/SKILL.md)
+Original source: [SSWConsulting/SSW.VerticalSliceArchitecture](https://github.com/SSWConsulting/SSW.VerticalSliceArchitecture/tree/main/.claude/skills/bump-version/SKILL.md)
 
 ---
 
