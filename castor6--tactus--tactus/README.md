@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Castor6/tactus](https://github.com/Castor6/tactus/tree/main/.claude/skills/design-style/SKILL.md)
+Original source: [Castor6/tactus](https://github.com/Castor6/tactus/tree/main/resources/tactus_skills/fetch-linuxdo-post/SKILL.md)
 
 ---
 
