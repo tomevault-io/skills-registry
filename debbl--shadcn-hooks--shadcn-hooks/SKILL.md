@@ -1,136 +1,293 @@
 ---
-name: shadcn-hooks
-description: Apply shadcn-hooks React hooks where appropriate to build concise, maintainable React features. Use when this capability is needed.
+name: add-hook
+description: Step-by-step guide for adding a new React hook to the shadcn-hooks project. Use when the user wants to create, add, or implement a new hook in this repository. Use when this capability is needed.
 metadata:
-  author: debbl
+  author: Debbl
 ---
 
-# shadcn-hooks
+# Add Hook
 
-This skill is a decision-and-implementation guide for [shadcn-hooks](https://github.com/Debbl/shadcn-hooks) in React projects. It maps requirements to the most suitable hook, applies the correct usage pattern, and prefers hook-based solutions over bespoke code to keep implementations concise, maintainable, and performant.
+Guide for adding a new hook to the shadcn-hooks project. The source of truth is `src/registry/hooks/`. The `packages/shadcn-hooks/` directory is auto-generated and should NOT be edited manually. Do NOT run any `sync` command as part of this skill; the user will run it manually when needed.
 
-## When to Apply
+## Checklist
 
-- Apply this skill whenever assisting user development work in React / Next.js.
-- Always check first whether a shadcn-hooks function can fulfill the requirement.
-- Prefer shadcn-hooks over custom code to improve readability, maintainability, and performance.
-- Map requirements to the most appropriate hook and follow the hook's invocation rule.
-- Please refer to the `Invocation` field in the below functions table. For example:
-  - `AUTO`: Use automatically when applicable.
-  - `EXTERNAL`: Use only if the user already installed the required external dependency; otherwise reconsider, and ask to install only if truly needed.
+Copy this checklist and track progress:
+
+```
+Add Hook: use-<name>
+- [ ] Step 1: Create registry entry (src/registry/hooks/use-<name>/)
+- [ ] Step 2: Register in meta.json
+- [ ] Step 3: Update introduction.mdx
+- [ ] Step 4: Create skill reference doc
+- [ ] Step 5: Update skill SKILL.md function table
+- [ ] Step 6: Verify (lint + test)
+```
+
+## Step 1: Create Registry Entry
+
+Create directory `src/registry/hooks/use-<name>/` with 5 files:
+
+### 1a. `index.ts` — Hook implementation
+
+Rules:
+
+- Use `@/registry/hooks/...` and `@/registry/lib/...` import aliases
+- Named export: `export function use<Name>(...)`
+- Export all public types from the same file
+- TypeScript strict, no `any`
+- Reuse existing hooks where possible (e.g. `useBoolean`, `useEventListener`, `useMemoizedFn`)
+
+Reference example — simple hook:
+
+```ts
+// src/registry/hooks/use-previous/index.ts
+import { useRef } from 'react'
+
+export type ShouldUpdateFunc<T> = (prev?: T, next?: T) => boolean
+const defaultShouldUpdate = <T>(a?: T, b?: T) => !Object.is(a, b)
+
+export default function usePrevious<T>(
+  state: T,
+  shouldUpdate: ShouldUpdateFunc<T> = defaultShouldUpdate,
+): T | undefined {
+  const prevRef = useRef<T>()
+  const curRef = useRef<T>()
+
+  if (shouldUpdate(curRef.current, state)) {
+    prevRef.current = curRef.current
+    curRef.current = state
+  }
+
+  return prevRef.current
+}
+```
+
+Reference example — hook composing other hooks:
+
+```ts
+// src/registry/hooks/use-hover/index.ts
+import { useBoolean } from '@/registry/hooks/use-boolean'
+import { useEventListener } from '@/registry/hooks/use-event-listener'
+import type { BasicTarget } from '@/registry/lib/create-effect-with-target'
+
+export interface UseHoverOptions {
+  onEnter?: () => void
+  onLeave?: () => void
+  onChange?: (isHovering: boolean) => void
+}
+
+export function useHover(
+  target: BasicTarget,
+  options?: UseHoverOptions,
+): boolean {
+  const { onEnter, onLeave, onChange } = options || {}
+  const [state, { setTrue, setFalse }] = useBoolean(false)
+  useEventListener(
+    'mouseenter',
+    () => {
+      onEnter?.()
+      setTrue()
+      onChange?.(true)
+    },
+    { target },
+  )
+  useEventListener(
+    'mouseleave',
+    () => {
+      onLeave?.()
+      setFalse()
+      onChange?.(false)
+    },
+    { target },
+  )
+  return state
+}
+```
+
+### 1b. `registry-item.json` — Dependencies
+
+```json
+{
+  "registryDependencies": [
+    "@shadcnhooks/use-dependency-a",
+    "@shadcnhooks/use-dependency-b"
+  ]
+}
+```
+
+- List all hooks/libs this hook depends on, prefixed with `@shadcnhooks/`
+- If no dependencies: `{ "registryDependencies": [] }`
+
+### 1c. `demo/demo-01.tsx` — Demo component
+
+```tsx
+'use client'
+import { use<Name> } from '..'
+
+export function Demo01() {
+  // Interactive demo showcasing the hook
+}
+```
+
+Rules:
+
+- Must be a client component (`'use client'`)
+- Import hook from `'..'` (parent directory)
+- Use shadcn UI components from `~/components/ui/...` (e.g. `Button`, `Card`, `Input`)
+- Demo should be interactive and clearly show the hook's behavior
+
+### 1d. `index.mdx` — Documentation page
+
+```mdx
+---
+title: use<Name>
+description: A hook to <description>
+---
+
+import { Demo01 } from './demo/demo-01'
+
+<Demo01 />
 
 ## Installation
 
-**Prefer the shadcn CLI** — it copies only the hooks you need into your project (zero extra runtime dependencies, tree-shake friendly):
+<Tabs items={['CLI', 'Manual']}>
+  <Tab>
+    <InstallCLI value='use-<name>' />
+  </Tab>
+  <Tab>
+    Copy and paste the following code into your project.
+    <RegistrySourceCode value='use-<name>' />
+  </Tab>
+</Tabs>
 
-```bash
-# Install a single hook (recommended)
-npx shadcn@latest add @shadcnhooks/use-boolean
+## API
 
-# Install multiple hooks at once
-npx shadcn@latest add @shadcnhooks/use-boolean @shadcnhooks/use-mount @shadcnhooks/use-debounce
+\`\`\`ts
+// Full type declarations here
+\`\`\`
+
+## Credits
+
+- [use-<name>](credit-link)
 ```
 
-Alternatively, install the full npm package (all hooks bundled):
+Notes:
 
-```bash
-npm install shadcn-hooks
+- If the hook has internal dependencies, add multiple `<RegistrySourceCode>` entries under the Manual tab (see `use-boolean` which includes `use-toggle`)
+- The API section should contain full TypeScript type declarations
+
+### 1e. `index.test.ts` — Tests
+
+```ts
+import { act, renderHook } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
+import { use<Name> } from './index'
+
+describe('use<Name>', () => {
+  it('should ...', () => {
+    const { result } = renderHook(() => use<Name>(...))
+    expect(result.current).toBe(...)
+  })
+})
 ```
 
-> When using the shadcn CLI, import from the local path (e.g. `import { useBoolean } from "@/hooks/use-boolean"`).
-> When using the npm package, import from `"shadcn-hooks"` (e.g. `import { useBoolean } from "shadcn-hooks"`).
+Rules:
 
-## Functions
+- Use `vitest` + `@testing-library/react`
+- Import from `'./index'`
+- Cover: default behavior, state changes, edge cases, callbacks
+- For DOM-based hooks, create elements in `beforeEach` / clean up in `afterEach`
 
-All functions listed below are part of [shadcn-hooks](https://shadcn-hooks.com/). Each section categorizes functions based on their functionality.
+## Step 2: Register in `meta.json`
 
-IMPORTANT: Each function entry includes a short `Description` and a detailed `Reference`. When using any function, always consult the corresponding document in `./references` for Usage details and Type Declarations.
+Add `"use-<name>"` to `src/registry/hooks/meta.json` under the appropriate category:
 
-### State
+- `---State---` — state management hooks
+- `---Advanced---` — memoization, refs, advanced patterns
+- `---Lifecycle---` — effects, timers, mount/unmount
+- `---Browser---` — DOM, events, browser APIs
+- `---Dev---` — development/debug utilities
+- `---External---` — wrappers around external libraries
 
-| Function                                                     | Description                                                       | Invocation |
-| ------------------------------------------------------------ | ----------------------------------------------------------------- | ---------- |
-| [`useBoolean`](references/useBoolean.md)                     | Boolean state with `set`, `setTrue`, `setFalse`, `toggle` helpers | AUTO       |
-| [`useControllableValue`](references/useControllableValue.md) | Supports both controlled and uncontrolled component patterns      | AUTO       |
-| [`useCounter`](references/useCounter.md)                     | Counter with `inc`, `dec`, `set`, `reset` helpers                 | AUTO       |
-| [`useDebounce`](references/useDebounce.md)                   | Debounced reactive value                                          | AUTO       |
-| [`useResetState`](references/useResetState.md)               | State with a `reset` function to restore the initial value        | AUTO       |
-| [`useThrottle`](references/useThrottle.md)                   | Throttled reactive value                                          | AUTO       |
-| [`useToggle`](references/useToggle.md)                       | Toggle between two values with utility actions                    | AUTO       |
+## Step 3: Update Introduction Page
 
-### Advanced
+Add the new hook to `content/docs/introduction.mdx` under the appropriate category section:
 
-| Function                                                         | Description                                           | Invocation |
-| ---------------------------------------------------------------- | ----------------------------------------------------- | ---------- |
-| [`useCreation`](references/useCreation.md)                       | Memoized factory with deep dependency comparison      | AUTO       |
-| [`useCustomCompareEffect`](references/useCustomCompareEffect.md) | `useEffect` with a custom dependency comparator       | AUTO       |
-| [`useLatest`](references/useLatest.md)                           | Ref that always holds the latest value                | AUTO       |
-| [`useLockFn`](references/useLockFn.md)                           | Prevents concurrent execution of an async function    | AUTO       |
-| [`useMemoizedFn`](references/useMemoizedFn.md)                   | Stable function reference that never changes identity | AUTO       |
-| [`usePrevious`](references/usePrevious.md)                       | Returns the previous value of a state                 | AUTO       |
+- **State Management** — state management hooks
+- **Advanced** — memoization, refs, advanced patterns
+- **Lifecycle & Effects** — effects, timers, mount/unmount
+- **Browser** — DOM, events, browser APIs
+- **Dev** — development/debug utilities
+- **External Libraries** — wrappers around external libraries
 
-### Lifecycle
+Add a line in alphabetical order within the category:
 
-| Function                                                                 | Description                                                     | Invocation |
-| ------------------------------------------------------------------------ | --------------------------------------------------------------- | ---------- |
-| [`useDebounceEffect`](references/useDebounceEffect.md)                   | Debounced `useEffect`                                           | AUTO       |
-| [`useDebounceFn`](references/useDebounceFn.md)                           | Debounced function with `run`, `cancel`, `flush` controls       | AUTO       |
-| [`useDeepCompareEffect`](references/useDeepCompareEffect.md)             | `useEffect` with deep dependency comparison                     | AUTO       |
-| [`useDeepCompareLayoutEffect`](references/useDeepCompareLayoutEffect.md) | `useLayoutEffect` with deep dependency comparison               | AUTO       |
-| [`useEffectEvent`](references/useEffectEvent.md)                         | Ponyfill for React 19's `useEffectEvent`                        | AUTO       |
-| [`useEffectWithTarget`](references/useEffectWithTarget.md)               | `useEffect` that supports target DOM element(s) as dependencies | AUTO       |
-| [`useInterval`](references/useInterval.md)                               | Interval timer with auto-cleanup                                | AUTO       |
-| [`useIsHydrated`](references/useIsHydrated.md)                           | Returns `true` after client hydration completes                 | AUTO       |
-| [`useIsomorphicLayoutEffect`](references/useIsomorphicLayoutEffect.md)   | `useLayoutEffect` on client, `useEffect` on server              | AUTO       |
-| [`useMount`](references/useMount.md)                                     | Runs a callback only on component mount                         | AUTO       |
-| [`useThrottleEffect`](references/useThrottleEffect.md)                   | Throttled `useEffect`                                           | AUTO       |
-| [`useThrottleFn`](references/useThrottleFn.md)                           | Throttled function with `run`, `cancel`, `flush` controls       | AUTO       |
-| [`useTimeout`](references/useTimeout.md)                                 | Timeout timer with auto-cleanup                                 | AUTO       |
-| [`useUnmount`](references/useUnmount.md)                                 | Runs cleanup on component unmount                               | AUTO       |
-| [`useUpdate`](references/useUpdate.md)                                   | Returns a function that forces component re-render              | AUTO       |
-| [`useUpdateEffect`](references/useUpdateEffect.md)                       | `useEffect` that skips the first render                         | AUTO       |
+```md
+- [`use<Name>`](/docs/hooks/use-<name>) - <Short description>
+```
 
-### Browser
+## Step 4: Create Skill Reference
 
-| Function                                                       | Description                                       | Invocation |
-| -------------------------------------------------------------- | ------------------------------------------------- | ---------- |
-| [`useActiveElement`](references/useActiveElement.md)           | Track the currently focused element               | AUTO       |
-| [`useBattery`](references/useBattery.md)                       | Reactive battery level and charging information   | AUTO       |
-| [`useClickAnyWhere`](references/useClickAnyWhere.md)           | Listen to click events anywhere on the document   | AUTO       |
-| [`useClickAway`](references/useClickAway.md)                   | Detect clicks outside of target element(s)        | AUTO       |
-| [`useClipboard`](references/useClipboard.md)                   | Reactive Clipboard API with read/write support    | AUTO       |
-| [`useDocumentVisibility`](references/useDocumentVisibility.md) | Reactive document visibility state                | AUTO       |
-| [`useElementSize`](references/useElementSize.md)               | Reactive element size via ResizeObserver          | AUTO       |
-| [`useEventListener`](references/useEventListener.md)           | Declarative event listener with auto-cleanup      | AUTO       |
-| [`useFps`](references/useFps.md)                               | Reactive FPS (frames per second) measurement      | AUTO       |
-| [`useFullscreen`](references/useFullscreen.md)                 | Reactive Fullscreen API                           | AUTO       |
-| [`useHash`](references/useHash.md)                             | Reactive `window.location.hash`                   | AUTO       |
-| [`useHover`](references/useHover.md)                           | Reactive hover state of an element                | AUTO       |
-| [`useInViewport`](references/useInViewport.md)                 | Track element visibility via IntersectionObserver | AUTO       |
-| [`useIsMatchMedia`](references/useIsMatchMedia.md)             | Reactive CSS media query matching                 | AUTO       |
-| [`useIsOnline`](references/useIsOnline.md)                     | Reactive online/offline network status            | AUTO       |
-| [`useMouse`](references/useMouse.md)                           | Reactive pointer coordinates for mouse/touch      | AUTO       |
-| [`useNetwork`](references/useNetwork.md)                       | Reactive network connection information           | AUTO       |
-| [`useOs`](references/useOs.md)                                 | Reactive browser operating system detection       | AUTO       |
-| [`useScrollLock`](references/useScrollLock.md)                 | Lock/unlock scroll on a target element            | AUTO       |
-| [`useTextSelection`](references/useTextSelection.md)           | Reactive text selection state with bounding rect  | AUTO       |
-| [`useTitle`](references/useTitle.md)                           | Reactive document title management                | AUTO       |
+Create `skills/shadcn-hooks/references/use<Name>.md`:
 
-### Dev
+```md
+# use<Name>
 
-| Function                                                 | Description                                           | Invocation |
-| -------------------------------------------------------- | ----------------------------------------------------- | ---------- |
-| [`useWhyDidYouUpdate`](references/useWhyDidYouUpdate.md) | Logs which props changed between renders (debug only) | AUTO       |
+<One-line description>.
 
-### External
+## Usage
 
-| Function                                             | Description                                                                                          | Invocation |
-| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------- |
-| [`useMcp`](references/useMcp.md)                     | Model Context Protocol client hook from [`use-mcp`](https://github.com/modelcontextprotocol/use-mcp) | EXTERNAL   |
-| [`useQuery`](references/useQuery.md)                 | Data fetching hook from [`@tanstack/react-query`](https://tanstack.com/query)                        | EXTERNAL   |
-| [`useStickToBottom`](references/useStickToBottom.md) | Scroll-stick behavior from [`use-stick-to-bottom`](https://github.com/nicejmkim/use-stick-to-bottom) | EXTERNAL   |
-| [`useSWR`](references/useSWR.md)                     | Data fetching hook from [`swr`](https://swr.vercel.app/)                                             | EXTERNAL   |
+\`\`\`tsx
+import { use<Name> } from '@/hooks/use-<name>'
+
+function Component() {
+// Minimal usage example
+}
+\`\`\`
+
+## Type Declarations
+
+\`\`\`ts
+// Full type signatures
+\`\`\`
+
+## Parameters
+
+| Parameter | Type | Default | Description |
+| --------- | ---- | ------- | ----------- |
+| ...       | ...  | ...     | ...         |
+
+## Returns
+
+| Type | Description |
+| ---- | ----------- |
+| ...  | ...         |
+```
+
+## Step 5: Update Skill Function Table
+
+Add an entry to the appropriate category table in `skills/shadcn-hooks/SKILL.md`:
+
+```md
+| [`use<Name>`](references/use<Name>.md) | <description> | AUTO |
+```
+
+- Use `AUTO` for standalone hooks
+- Use `EXTERNAL` for hooks that wrap external npm packages
+
+## Step 6: Verify
+
+1. Run linter: check edited files for lint errors
+2. Run tests: `pnpm test run src/registry/hooks/use-<name>/index.test.ts`
+3. Verify the dev server renders the doc page correctly (if running)
+4. Do not modify `packages/shadcn-hooks/` and do not run `pnpm run sync` or `pnpm --dir packages/shadcn-hooks sync`; leave that step to the user
+
+## Notes
+
+- `packages/shadcn-hooks/` is auto-generated. Never edit files in that directory manually as part of this skill.
+- Do not execute any `sync` command from this skill. The user will run sync manually after reviewing the changes.
+- `packages/shadcn-hooks/src/index.ts` exports are also auto-managed — no manual editing needed.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/debbl) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [Debbl/shadcn-hooks](https://github.com/Debbl/shadcn-hooks) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-29 -->
