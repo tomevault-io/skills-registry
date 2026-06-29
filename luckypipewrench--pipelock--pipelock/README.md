@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [luckyPipewrench/pipelock](https://github.com/luckyPipewrench/pipelock/tree/main/internal/skillscan/testdata/combo-skill/SKILL.md)
+Original source: [luckyPipewrench/pipelock](https://github.com/luckyPipewrench/pipelock/tree/main/internal/skillscan/testdata/clean-skill/SKILL.md)
 
 ---
 
