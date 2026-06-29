@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Priivacy-ai/spec-kitty](https://github.com/Priivacy-ai/spec-kitty/tree/main/src/doctrine/skills/spec-kitty-mission-system/SKILL.md)
+Original source: [Priivacy-ai/spec-kitty](https://github.com/Priivacy-ai/spec-kitty/tree/main/src/doctrine/skills/spec-kitty-runtime-review/SKILL.md)
 
 ---
 
