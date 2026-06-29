@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [whoschek/bzfs](https://github.com/whoschek/bzfs/tree/main/.agents/skills/bzfs-improve-code-coverage/SKILL.md)
+Original source: [whoschek/bzfs](https://github.com/whoschek/bzfs/tree/main/.agents/skills/bzfs-experimental-script-generator/SKILL.md)
 
 ---
 
