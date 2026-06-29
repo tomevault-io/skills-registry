@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AxDSan/mnemosyne](https://github.com/AxDSan/mnemosyne/tree/main/.agents/skills/no-mistakes/SKILL.md)
+Original source: [AxDSan/mnemosyne](https://github.com/AxDSan/mnemosyne/tree/main/.claude/skills/no-mistakes/SKILL.md)
 
 ---
 
