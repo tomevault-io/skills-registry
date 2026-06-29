@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [comarkdown/comark](https://github.com/comarkdown/comark/tree/main/docs/skills/comark/SKILL.md)
+Original source: [comarkdown/comark](https://github.com/comarkdown/comark/tree/main/docs/skills/migrate-mdc-to-comark/SKILL.md)
 
 ---
 
