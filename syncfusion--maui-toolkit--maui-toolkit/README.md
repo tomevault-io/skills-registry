@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [syncfusion/maui-toolkit](https://github.com/syncfusion/maui-toolkit/tree/main/.github/skills/testing-guide/SKILL.md)
+Original source: [syncfusion/maui-toolkit](https://github.com/syncfusion/maui-toolkit/tree/main/.github/skills/multi-model-analysis/SKILL.md)
 
 ---
 
