@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vixues/LeAgent](https://github.com/vixues/LeAgent/tree/main/backend/leagent/skills/builtin/workflow-helper/SKILL.md)
+Original source: [vixues/LeAgent](https://github.com/vixues/LeAgent/tree/main/backend/leagent/skills/builtin/document-processor/SKILL.md)
 
 ---
 
