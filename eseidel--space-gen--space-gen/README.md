@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eseidel/space_gen](https://github.com/eseidel/space_gen/tree/main/.claude/skills/release/SKILL.md)
+Original source: [eseidel/space_gen](https://github.com/eseidel/space_gen/tree/main/.claude/skills/spec-iteration/SKILL.md)
 
 ---
 
