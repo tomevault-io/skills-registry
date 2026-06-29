@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [BTMuli/TeyvatGuide](https://github.com/BTMuli/TeyvatGuide/tree/main/.trae/skills/teyvat-guide/SKILL.md)
+Original source: [BTMuli/TeyvatGuide](https://github.com/BTMuli/TeyvatGuide/tree/main/.trae/skills/typescript-standards/SKILL.md)
 
 ---
 
