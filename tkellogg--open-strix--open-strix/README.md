@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tkellogg/open-strix](https://github.com/tkellogg/open-strix/tree/main/open_strix/builtin_skills/ui/SKILL.md)
+Original source: [tkellogg/open-strix](https://github.com/tkellogg/open-strix/tree/main/optional-skills/github-poller/SKILL.md)
 
 ---
 
