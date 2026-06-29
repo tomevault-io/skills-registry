@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Puiching-Memory/TAAC_2026](https://github.com/Puiching-Memory/TAAC_2026/tree/main/.agents/skills/taac-platform-api-inspection/SKILL.md)
+Original source: [Puiching-Memory/TAAC_2026](https://github.com/Puiching-Memory/TAAC_2026/tree/main/.agents/skills/taac-competition-environment/SKILL.md)
 
 ---
 
