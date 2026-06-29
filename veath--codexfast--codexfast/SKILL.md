@@ -1,0 +1,112 @@
+---
+name: codexfast-development-flow
+description: Use when iterating on codexfast features, bundle-patch signatures, compatibility gates, recovery behavior, or repo documentation in the codexfast repository.
+metadata:
+  author: Veath
+---
+
+# Codexfast Development Flow
+
+## Overview
+
+Use this skill for day-to-day `codexfast` feature work.
+
+This repo is high risk because it launches and can test runtime patches against a real `/Applications/Codex.app` bundle. Public `launch` must leave the app bundle untouched. Legacy bundle mutation, file-patch, archive rewrite, re-sign, and restore flows have been removed.
+
+## When To Use
+
+- Adding or updating a patch target in `src/targets/*` or `src/patcher-targets.mts`
+- Adapting to a new Codex bundle version
+- Changing compatibility gating or bundle metadata handling
+- Updating runtime launch, CDP interception, generated CLI composition, or hidden watcher cleanup
+- Updating repo docs because behavior, support scope, or release guidance changed
+
+Do not use this skill for release-only work. Use `codexfast-release-flow` for that.
+
+## Core Rules
+
+- Keep the generated CLI self-contained.
+- Edit `src/*` as the source of truth, then run `pnpm build` to regenerate `bin/codexfast`.
+- Preserve the runtime-only launcher. Do not reintroduce bundle unpack/repack, archive rewrite, persistent `Contents/Resources/app`, local `codesign`, or restore paths.
+- Treat patch-signature and runtime interception changes as one unit.
+- Do not add new public watcher commands. Current `launch` removes legacy auto-repair watcher files installed by older releases.
+- Do not claim app behavior is fixed from code inspection alone. The regression suite must pass.
+
+## Workflow
+
+1. Inspect the current repo state.
+   - Read `AGENTS.md`, `src/cli.mts`, the relevant `src/cli-*.mts` module, `src/patcher-targets.mts`, the relevant `src/targets/*` module, `test/runtime-launch-flow.mts`, `test/re-sign-flow.sh`, and the relevant README sections.
+   - Use `src/targets/speed.mts`, `src/targets/plugins.mts`, and `src/targets/models.mts` for feature-specific target definitions; keep shared target builders in `src/targets/builders.mts`.
+   - For runtime launch behavior, inspect `src/cli-runtime-launch.mts`, `src/cli-runtime-patcher.mts`, `src/cli-cdp.mts`, and `src/cli.mts` together because the generated CLI inlines those modules.
+   - For app environment or watcher behavior, inspect `src/cli-app-environment.mts`, `src/cli-watcher.mts`, and `src/cli.mts` together.
+   - If the change is bundle-specific, identify the exact gated text key, target file shape, and runtime URL shape first.
+   - Do not trust a missing runtime match as proof that a feature target is gone. For every expected feature path, search the extracted bundle by stable needles such as `settings.agent.speed.label`, `composer.speedSlashCommand.title`, `composer.intelligenceDropdown.speed.title`, `featureRequirements?.fast_mode`, `sidebarElectron.pluginsDisabledTooltip`, `skills.pluginsAuthBlockedToast.title`, `pluginDeepLinkAuthBlocked`, `openai-curated-marketplaces-hidden`, `skills.appsPage.pluginsLimitedCatalog`, `4218407052`, `plugins.install.connectorUnavailable`, `plugins.installModal.about`, `directoryApps`, `appsNeedingAuth`, and nearby `serviceTierSettings` / auth-method gates.
+   - For Fast support, verify the source hook that computes service-tier allowance and request-tier fallback, the request helper that computes `serviceTier` for send/edit/resume paths, and the visible consumers. Settings, `/fast`, and composer Speed controls are not sufficient if `use-service-tier-settings-*.js` or an equivalent shared hook still collapses custom API users to standard, if a helper near `Failed to read service tier for request` still gates non-ChatGPT auth methods with `:!1`, if stale conversation-level service-tier state overrides Settings Fast, or if latest-turn `params.serviceTier` from stop/edit/resend flows locks the current conversation to Standard.
+   - For Plugins catalog support, trace both the backend result and the UI consumption path. A successful `list-plugins` response with `openai-curated` plugins is not enough if `use-plugins-*.js` later excludes marketplace names, applies build-flavor filtering, or `plugins-page-selectors-*.js` selects only bundled sections. Inspect `Ne(t.marketplaces, ...)`, `He({buildFlavor,...})`, vertical-catalog flags such as `4218407052`, and selector defaults when the page shows only a sparse list.
+   - Distinguish "target absent" from "target present but regex stale". A target is absent only after broad non-locale JS search shows the user-facing needle and adjacent gate are no longer present anywhere in `webview/assets`.
+   - For runtime launch work, inspect the real CDP request URLs as well as the extracted archive paths. Current `26.513.20950` serves renderer JavaScript as `app://-/assets/*.js`, while older assumptions used `app://-/webview/assets/*.js`.
+   - For runtime launch interception issues, verify the browser-level CDP auto-attach path first: `Target.setAutoAttach` must use `waitForDebuggerOnStart` and flattened sessions, `Fetch.enable` must run in the renderer `sessionId` before `Runtime.runIfWaitingForDebugger`, and the heartbeat should stay browser-level rather than page-level.
+
+2. Make the smallest viable code change.
+   - Keep patch logic narrow.
+   - Prefer adding a new target spec over refactoring unrelated logic.
+   - For compatibility gating, update the whitelist and surface the detected version/build clearly in output.
+   - If changing the generated entrypoint, edit the source pieces, update `scripts/build-codexfast.mts` when a new `src/cli-*.mts` module must be inlined, and regenerate `bin/codexfast`.
+
+3. Update regression coverage in the same change.
+   - Extend `test/runtime-launch-flow.mts` for every new target, runtime path, hidden watcher cleanup path, or compatibility guard. Keep `test/re-sign-flow.sh` as the compatibility entrypoint.
+   - Cover both positive and negative cases when relevant.
+   - When changing runtime launch, cover generated single-file behavior. A source-level `patch-engine` import is not enough because the embedded runtime engine is extracted from generated `__PATCHER_SOURCE__`.
+
+4. Update repo docs in the same change.
+   - Update `README.md` when usage, compatibility policy, supported features, or recovery guidance changes.
+   - Update `README.zh-CN.md` with the same behavior changes.
+   - Keep README compatibility lists newest-first when adding or reordering verified Codex builds.
+   - Keep public README usage focused on `launch`, `help`, and `version`.
+   - Update `AGENTS.md` when the maintenance checklist or validation expectations change.
+   - Update `CHANGELOG.md` under the active unreleased or target release section.
+
+5. Verify before calling the work done.
+   - Run `pnpm build:check`.
+   - Run `pnpm typecheck`.
+   - Run `pnpm test` or, for a narrow local check, `bash test/re-sign-flow.sh`.
+   - If package metadata changed, also inspect `package.json` and `bin/codexfast`.
+   - If packaging or docs changed materially, run `pnpm pack --dry-run`.
+   - For runtime launch changes, run a real installed-app `launch` pass when possible, then confirm `app.asar`, `Info.plist`, and the app signature are unchanged.
+
+## Codexfast-Specific Checklist
+
+- Settings-side Fast patch still works.
+- The shared Fast service-tier allowance/source hook still lets custom API users compute, persist, and send the selected Fast tier while preserving official ChatGPT `fast_mode` requirements.
+- The Fast request service-tier helper still lets send/edit/resume paths compute and send Fast for non-ChatGPT auth methods while preserving official ChatGPT `fast_mode` requirements.
+- The shared Fast service-tier fallback path still ignores stale conversation-level service-tier state, so reopened conversations fall back to the configured Settings tier instead of forcing Standard.
+- The shared Fast service-tier fallback path still ignores stale latest-turn `params.serviceTier`, so stopping a Fast response, editing the message, and resending in the same conversation does not force Standard or lock speed changes until restart.
+- Composer `/fast` patch still works.
+- Composer-side `Speed` menu patch still works for the target bundle:
+  - `Add files and more / +` Speed submenu on builds that still expose the add-context path.
+  - Composer `Intelligence` dropdown Speed submenu on newer builds where the add-context Speed entry moved.
+- Every Plugins gate required by the target build still works, including sidebar access, page content, plugin detail redirects, curated catalog visibility, install-button availability, install-modal content, plugin detail app-connect content, and post-install app connect where present.
+- Curated catalog validation checks the visible page, not only the backend. For builds with curated catalog support, the page must not collapse to only bundled addable plugins such as Computer Use and LaTeX after `list-plugins` returns the OpenAI curated marketplace.
+- Unsupported versions are blocked before runtime launch starts Codex.
+- Generated CLI extraction still runs the embedded runtime patch engine.
+- Public help and the interactive menu must not advertise `status`, `apply`, `restore`, `install-watcher`, or `uninstall-watcher`.
+- Public `launch` removes legacy auto-repair watcher files when present.
+
+## Common Mistakes
+
+- Updating source target regexes without regenerating and inspecting the generated CLI.
+- Treating a missing target as product behavior. First prove whether the bundle still contains the feature needle in a moved file or with a renamed minified hook.
+- Validating Fast support only by making controls visible. Trace the selected tier back to the shared service-tier hook, the request helper used by send/edit/resume commands, the request/config path, and conversation reload fallback so Fast is not silently normalized back to standard after relaunch, history restore, or edit/resend with changed reasoning effort.
+- Assuming `serviceTierForRequest` covers every send path. Newer bundles can also call a helper near `Failed to read service tier for request`; if that helper returns false for non-ChatGPT auth methods, UI can show Fast while outgoing requests still omit `service_tier`.
+- Treating latest-turn `params.serviceTier` as safe request state. Stop/edit/resend flows can leave stale Standard there; tests must prove `serviceTierForRequest` falls back to the configured Settings tier.
+- Validating Plugins catalog support only by calling `list-plugins`. Trace the returned marketplaces through `use-plugins-*.js` and `plugins-page-selectors-*.js`; a later exclusion can still hide `openai-curated` from the actual page.
+- Assuming old Plugins sidebar/page/detail gates are required on every new build. Some builds remove those gates but add new catalog or install gates, so required initial targets must stay build-specific.
+- Writing a fixture assertion that passes on both guarded and patched code. For hidden-control fixes, assert both the patched replacement and the removal of the original guard, for example `if(!n)return null;` is gone.
+- Describing a Codex build as supported before adding tests and whitelist coverage.
+- Updating only one README and leaving English/Chinese docs out of sync.
+- Publishing behavior changes without moving the maintenance checklist forward.
+- Validating runtime launch only against extracted fixture files or source imports; generated CLI extraction and CDP timing can fail independently.
+
+---
+> Source: [Veath/codexfast](https://github.com/Veath/codexfast) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-29 -->
