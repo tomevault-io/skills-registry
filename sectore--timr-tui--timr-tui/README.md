@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sectore/timr-tui](https://github.com/sectore/timr-tui/tree/main/.agents/skills/update-changelog/SKILL.md)
+Original source: [sectore/timr-tui](https://github.com/sectore/timr-tui/tree/main/.agents/skills/update-cargo-deps/SKILL.md)
 
 ---
 
