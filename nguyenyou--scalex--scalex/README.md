@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nguyenyou/scalex](https://github.com/nguyenyou/scalex/tree/main/.claude/skills/capture-banners/SKILL.md)
+Original source: [nguyenyou/scalex](https://github.com/nguyenyou/scalex/tree/main/.claude/skills/benchmark/SKILL.md)
 
 ---
 
