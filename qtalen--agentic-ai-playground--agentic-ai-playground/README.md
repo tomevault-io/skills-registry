@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [qtalen/agentic-ai-playground](https://github.com/qtalen/agentic-ai-playground/tree/main/15_OpenSpec_Reflection_Harness/en/openspec-workflow/SKILL.md)
+Original source: [qtalen/agentic-ai-playground](https://github.com/qtalen/agentic-ai-playground/tree/main/14_Agent_Skills_in_Enterprise_LLM_Agent/.agents/skills/tavily-best-practices/SKILL.md)
 
 ---
 
