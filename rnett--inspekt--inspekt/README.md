@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rnett/inspekt](https://github.com/rnett/inspekt/tree/main/.agents/skills/compiler-plugin-dev/SKILL.md)
+Original source: [rnett/inspekt](https://github.com/rnett/inspekt/tree/main/.agents/skills/kotlin-update-release/SKILL.md)
 
 ---
 
