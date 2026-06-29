@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Darkdragon14/VolumeVault](https://github.com/Darkdragon14/VolumeVault/tree/main/.agents/skills/inertia-vue-development/SKILL.md)
+Original source: [Darkdragon14/VolumeVault](https://github.com/Darkdragon14/VolumeVault/tree/main/.agents/skills/tailwindcss-development/SKILL.md)
 
 ---
 
