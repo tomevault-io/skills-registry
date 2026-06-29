@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Icy-Cat/x-viral-monitor](https://github.com/Icy-Cat/x-viral-monitor/tree/main/.claude/skills/release/SKILL.md)
+Original source: [Icy-Cat/x-viral-monitor](https://github.com/Icy-Cat/x-viral-monitor/tree/main/.claude/skills/xvm-tune-content-filter/SKILL.md)
 
 ---
 
