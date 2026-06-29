@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pexoai/pexo-skills](https://github.com/pexoai/pexo-skills/tree/main/skills/make-a-video/SKILL.md)
+Original source: [pexoai/pexo-skills](https://github.com/pexoai/pexo-skills/tree/main/skills/launch-video/SKILL.md)
 
 ---
 
