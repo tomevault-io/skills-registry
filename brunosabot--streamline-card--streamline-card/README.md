@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [brunosabot/streamline-card](https://github.com/brunosabot/streamline-card/tree/main/.agents/skills/changelog-generator/SKILL.md)
+Original source: [brunosabot/streamline-card](https://github.com/brunosabot/streamline-card/tree/main/.agents/skills/issue-to-regression-test/SKILL.md)
 
 ---
 
