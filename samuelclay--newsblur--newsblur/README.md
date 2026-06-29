@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [samuelclay/NewsBlur](https://github.com/samuelclay/NewsBlur/tree/main/.agents/skills/newsblur-cli/SKILL.md)
+Original source: [samuelclay/NewsBlur](https://github.com/samuelclay/NewsBlur/tree/main/.claude/skills/make-interfaces-feel-better/SKILL.md)
 
 ---
 
