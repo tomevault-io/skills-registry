@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ClickHouse/agent-skills](https://github.com/ClickHouse/agent-skills/tree/main/skills/clickhouse-architecture-advisor/SKILL.md)
+Original source: [ClickHouse/agent-skills](https://github.com/ClickHouse/agent-skills/tree/main/skills/clickhouse-managed-postgres-rca/SKILL.md)
 
 ---
 
