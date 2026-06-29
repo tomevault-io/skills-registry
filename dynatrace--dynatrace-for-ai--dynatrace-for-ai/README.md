@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Dynatrace/dynatrace-for-ai](https://github.com/Dynatrace/dynatrace-for-ai/tree/main/skills/dt-obs-services/SKILL.md)
+Original source: [Dynatrace/dynatrace-for-ai](https://github.com/Dynatrace/dynatrace-for-ai/tree/main/skills/dt-obs-frontends/SKILL.md)
 
 ---
 
