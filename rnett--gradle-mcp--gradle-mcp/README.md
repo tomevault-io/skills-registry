@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rnett/gradle-mcp](https://github.com/rnett/gradle-mcp/tree/main/src/main/skills/gradle/SKILL.md)
+Original source: [rnett/gradle-mcp](https://github.com/rnett/gradle-mcp/tree/main/src/main/skills/verifying_compose_ui/SKILL.md)
 
 ---
 
