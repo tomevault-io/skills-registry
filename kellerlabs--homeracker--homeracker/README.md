@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kellerlabs/homeracker](https://github.com/kellerlabs/homeracker/tree/main/.github/skills/decision-records/SKILL.md)
+Original source: [kellerlabs/homeracker](https://github.com/kellerlabs/homeracker/tree/main/.github/skills/makerworld-description/SKILL.md)
 
 ---
 
