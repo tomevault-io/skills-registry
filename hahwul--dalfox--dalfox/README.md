@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hahwul/dalfox](https://github.com/hahwul/dalfox/tree/main/skills/dalfox/SKILL.md)
+Original source: [hahwul/dalfox](https://github.com/hahwul/dalfox/tree/main/docs/static/.well-known/agent-skills/dalfox/SKILL.md)
 
 ---
 
