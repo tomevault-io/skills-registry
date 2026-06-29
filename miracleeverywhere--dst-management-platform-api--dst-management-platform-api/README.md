@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [miracleEverywhere/dst-management-platform-api](https://github.com/miracleEverywhere/dst-management-platform-api/tree/main/.claude/skills/zh-cn/SKILL.md)
+Original source: [miracleEverywhere/dst-management-platform-api](https://github.com/miracleEverywhere/dst-management-platform-api/tree/main/.claude/skills/no-build/SKILL.md)
 
 ---
 
