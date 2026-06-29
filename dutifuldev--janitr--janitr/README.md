@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dutifuldev/janitr](https://github.com/dutifuldev/janitr/tree/main/.agent/skills/simpledoc/SKILL.md)
+Original source: [dutifuldev/janitr](https://github.com/dutifuldev/janitr/tree/main/.agent/skills/huggingface/SKILL.md)
 
 ---
 
