@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [techygarg/lattice](https://github.com/techygarg/lattice/tree/main/skills/atoms/context-anchoring/SKILL.md)
+Original source: [techygarg/lattice](https://github.com/techygarg/lattice/tree/main/plugins/lattice/skills/bug-fix/SKILL.md)
 
 ---
 
