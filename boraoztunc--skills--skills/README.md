@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [boraoztunc/skills](https://github.com/boraoztunc/skills/tree/main/stop-slop/SKILL.md)
+Original source: [boraoztunc/skills](https://github.com/boraoztunc/skills/tree/main/impeccable/SKILL.md)
 
 ---
 
