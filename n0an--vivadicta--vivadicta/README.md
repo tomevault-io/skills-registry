@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [n0an/VivaDicta](https://github.com/n0an/VivaDicta/tree/main/.agents/skills/ios-log-capture/SKILL.md)
+Original source: [n0an/VivaDicta](https://github.com/n0an/VivaDicta/tree/main/.agents/skills/asc-release-flow/SKILL.md)
 
 ---
 
