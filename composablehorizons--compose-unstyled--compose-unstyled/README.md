@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [composablehorizons/compose-unstyled](https://github.com/composablehorizons/compose-unstyled/tree/main/.agents/skills/cut-release/SKILL.md)
+Original source: [composablehorizons/compose-unstyled](https://github.com/composablehorizons/compose-unstyled/tree/main/.agents/skills/android-test-emulator/SKILL.md)
 
 ---
 
