@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [itmisx/deepx-code](https://github.com/itmisx/deepx-code/tree/main/skill/skills/test-driven-development/SKILL.md)
+Original source: [itmisx/deepx-code](https://github.com/itmisx/deepx-code/tree/main/skill/skills/dispatching-parallel-agents/SKILL.md)
 
 ---
 
