@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SatyamVyas04/sensory-ui](https://github.com/SatyamVyas04/sensory-ui/tree/main/.agents/skills/generating-sounds-with-ai/SKILL.md)
+Original source: [SatyamVyas04/sensory-ui](https://github.com/SatyamVyas04/sensory-ui/tree/main/.agents/skills/12-principles-of-animation/SKILL.md)
 
 ---
 
