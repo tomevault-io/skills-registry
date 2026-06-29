@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azhi-ss/academic-figure-skills](https://github.com/Azhi-ss/academic-figure-skills/tree/main/academic-figure-workflow/SKILL.md)
+Original source: [Azhi-ss/academic-figure-skills](https://github.com/Azhi-ss/academic-figure-skills/tree/main/academic-figure-color-expert/SKILL.md)
 
 ---
 
