@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [callstackincubator/rozenite](https://github.com/callstackincubator/rozenite/tree/main/packages/cli/skills/rozenite-agent/SKILL.md)
+Original source: [callstackincubator/rozenite](https://github.com/callstackincubator/rozenite/tree/main/packages/cli/skills/rozenite-agent-sdk/SKILL.md)
 
 ---
 
