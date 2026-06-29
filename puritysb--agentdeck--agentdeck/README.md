@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [puritysb/AgentDeck](https://github.com/puritysb/AgentDeck/tree/main/.agents/skills/session-end/SKILL.md)
+Original source: [puritysb/AgentDeck](https://github.com/puritysb/AgentDeck/tree/main/.agents/skills/sdc-diagnose/SKILL.md)
 
 ---
 
