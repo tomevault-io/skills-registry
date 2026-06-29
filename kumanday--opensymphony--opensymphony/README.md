@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kumanday/OpenSymphony](https://github.com/kumanday/OpenSymphony/tree/main/.agents/skills/debug/SKILL.md)
+Original source: [kumanday/OpenSymphony](https://github.com/kumanday/OpenSymphony/tree/main/.agents/skills/commit/SKILL.md)
 
 ---
 
