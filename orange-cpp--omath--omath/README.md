@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [orange-cpp/omath](https://github.com/orange-cpp/omath/tree/main/.agents/skills/code-style/SKILL.md)
+Original source: [orange-cpp/omath](https://github.com/orange-cpp/omath/tree/main/.claude/skills/code-style/SKILL.md)
 
 ---
 
