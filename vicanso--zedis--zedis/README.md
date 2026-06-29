@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vicanso/zedis](https://github.com/vicanso/zedis/tree/main/.claude/skills/github-pull-request-description/SKILL.md)
+Original source: [vicanso/zedis](https://github.com/vicanso/zedis/tree/main/.claude/skills/generate-component-documentation/SKILL.md)
 
 ---
 
