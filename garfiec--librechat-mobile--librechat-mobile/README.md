@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [garfiec/Librechat-Mobile](https://github.com/garfiec/Librechat-Mobile/tree/main/.claude/skills/audit-deps/SKILL.md)
+Original source: [garfiec/Librechat-Mobile](https://github.com/garfiec/Librechat-Mobile/tree/main/.claude/skills/sync-upstream/SKILL.md)
 
 ---
 
