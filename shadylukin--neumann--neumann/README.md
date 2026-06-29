@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Shadylukin/Neumann](https://github.com/Shadylukin/Neumann/tree/main/skills/neumann-query/SKILL.md)
+Original source: [Shadylukin/Neumann](https://github.com/Shadylukin/Neumann/tree/main/skills/neumann-vector/SKILL.md)
 
 ---
 
