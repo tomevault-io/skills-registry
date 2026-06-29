@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MarketSquare/robotframework-browser](https://github.com/MarketSquare/robotframework-browser/tree/main/.github/skills/node-unit-test/SKILL.md)
+Original source: [MarketSquare/robotframework-browser](https://github.com/MarketSquare/robotframework-browser/tree/main/.github/skills/grill-with-docs/SKILL.md)
 
 ---
 
