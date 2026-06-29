@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DY-2026/ParanoiaSkills](https://github.com/DY-2026/ParanoiaSkills/tree/main/game-experience-density-optimizer/SKILL.md)
+Original source: [DY-2026/ParanoiaSkills](https://github.com/DY-2026/ParanoiaSkills/tree/main/paranoia-ai-system-evolver/SKILL.md)
 
 ---
 
