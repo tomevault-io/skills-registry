@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [castorini/rank_llm](https://github.com/castorini/rank_llm/tree/main/.claude/skills/rank-llm-eval/SKILL.md)
+Original source: [castorini/rank_llm](https://github.com/castorini/rank_llm/tree/main/.claude/skills/rank-llm-verify/SKILL.md)
 
 ---
 
