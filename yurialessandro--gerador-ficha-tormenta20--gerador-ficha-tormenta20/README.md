@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [YuriAlessandro/gerador-ficha-tormenta20](https://github.com/YuriAlessandro/gerador-ficha-tormenta20/tree/main/.claude/skills/release-post/SKILL.md)
+Original source: [YuriAlessandro/gerador-ficha-tormenta20](https://github.com/YuriAlessandro/gerador-ficha-tormenta20/tree/main/.claude/skills/build-tormenta20/SKILL.md)
 
 ---
 
