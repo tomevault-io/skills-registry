@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pa001024/dna-builder](https://github.com/pa001024/dna-builder/tree/main/skills/dna-builder-data-mcp-query/SKILL.md)
+Original source: [pa001024/dna-builder](https://github.com/pa001024/dna-builder/tree/main/skills/dna-builder-script-mcp-debug/SKILL.md)
 
 ---
 
