@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [breimanntools/aaanalysis](https://github.com/breimanntools/aaanalysis/tree/main/.claude/skills/agentic-engineering/SKILL.md)
+Original source: [breimanntools/aaanalysis](https://github.com/breimanntools/aaanalysis/tree/main/.claude/skills/agent-readiness-audit/SKILL.md)
 
 ---
 
