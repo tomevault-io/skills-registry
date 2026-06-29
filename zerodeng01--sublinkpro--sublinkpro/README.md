@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ZeroDeng01/sublinkPro](https://github.com/ZeroDeng01/sublinkPro/tree/main/.agents/skills/doc-sync-check/SKILL.md)
+Original source: [ZeroDeng01/sublinkPro](https://github.com/ZeroDeng01/sublinkPro/tree/main/.agents/skills/security-review/SKILL.md)
 
 ---
 
