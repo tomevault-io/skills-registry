@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CHANG-JUI-LIN/Yuedu-reader](https://github.com/CHANG-JUI-LIN/Yuedu-reader/tree/main/.claude/skills/yuedu-tour/SKILL.md)
+Original source: [CHANG-JUI-LIN/Yuedu-reader](https://github.com/CHANG-JUI-LIN/Yuedu-reader/tree/main/.claude/skills/yuedu-ios-design/SKILL.md)
 
 ---
 
