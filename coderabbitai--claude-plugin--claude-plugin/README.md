@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [coderabbitai/claude-plugin](https://github.com/coderabbitai/claude-plugin/tree/main/skills/autofix/SKILL.md)
+Original source: [coderabbitai/claude-plugin](https://github.com/coderabbitai/claude-plugin/tree/main/skills/code-review/SKILL.md)
 
 ---
 
