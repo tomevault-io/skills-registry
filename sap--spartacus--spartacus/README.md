@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SAP/spartacus](https://github.com/SAP/spartacus/tree/main/.claude/skills/ssr/SKILL.md)
+Original source: [SAP/spartacus](https://github.com/SAP/spartacus/tree/main/.claude/skills/schematics/SKILL.md)
 
 ---
 
