@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Varnan-Tech/opendirectory](https://github.com/Varnan-Tech/opendirectory/tree/main/skills/reddit-icp-monitor/SKILL.md)
+Original source: [Varnan-Tech/opendirectory](https://github.com/Varnan-Tech/opendirectory/tree/main/skills/cold-email-verifier/SKILL.md)
 
 ---
 
