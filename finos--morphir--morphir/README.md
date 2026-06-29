@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [finos/morphir](https://github.com/finos/morphir/tree/main/.claude/skills/release-manager/SKILL.md)
+Original source: [finos/morphir](https://github.com/finos/morphir/tree/main/.claude/skills/technical-writer/SKILL.md)
 
 ---
 
