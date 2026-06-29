@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SikandarJODD/cnblocks](https://github.com/SikandarJODD/cnblocks/tree/main/skills/svelte5-best-practices/SKILL.md)
+Original source: [SikandarJODD/cnblocks](https://github.com/SikandarJODD/cnblocks/tree/main/.agents/skills/svelte5-best-practices/SKILL.md)
 
 ---
 
