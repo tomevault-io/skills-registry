@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MaxGfeller/open-harness](https://github.com/MaxGfeller/open-harness/tree/main/.agents/skills/changeset/SKILL.md)
+Original source: [MaxGfeller/open-harness](https://github.com/MaxGfeller/open-harness/tree/main/.agents/skills/release-local/SKILL.md)
 
 ---
 
