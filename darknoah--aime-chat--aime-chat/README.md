@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DarkNoah/aime-chat](https://github.com/DarkNoah/aime-chat/tree/main/assets/market/skill/skill-creator/SKILL.md)
+Original source: [DarkNoah/aime-chat](https://github.com/DarkNoah/aime-chat/tree/main/assets/market/skill/aime-chat-docs/SKILL.md)
 
 ---
 
