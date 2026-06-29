@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [entropy-cloud/nop-entropy](https://github.com/entropy-cloud/nop-entropy/tree/main/.opencode/skills/nop-orm-modeler/SKILL.md)
+Original source: [entropy-cloud/nop-entropy](https://github.com/entropy-cloud/nop-entropy/tree/main/.opencode/skills/nop-git-worktree/SKILL.md)
 
 ---
 
