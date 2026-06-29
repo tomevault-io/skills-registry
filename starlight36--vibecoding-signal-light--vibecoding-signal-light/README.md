@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [starlight36/vibecoding-signal-light](https://github.com/starlight36/vibecoding-signal-light/tree/main/.claude/skills/speckit-checklist/SKILL.md)
+Original source: [starlight36/vibecoding-signal-light](https://github.com/starlight36/vibecoding-signal-light/tree/main/.agents/skills/speckit-implement/SKILL.md)
 
 ---
 
