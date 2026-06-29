@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [levnikolaevich/claude-code-skills](https://github.com/levnikolaevich/claude-code-skills/tree/main/plugins/codebase-audit-suite/skills/ln-634-test-coverage-auditor/SKILL.md)
+Original source: [levnikolaevich/claude-code-skills](https://github.com/levnikolaevich/claude-code-skills/tree/main/plugins/codebase-audit-suite/skills/ln-635-test-isolation-auditor/SKILL.md)
 
 ---
 
