@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fengshao1227/ccg-workflow](https://github.com/fengshao1227/ccg-workflow/tree/main/templates/skills/tools/override-refusal/SKILL.md)
+Original source: [fengshao1227/ccg-workflow](https://github.com/fengshao1227/ccg-workflow/tree/main/.agents/skills/openspec-continue-change/SKILL.md)
 
 ---
 
