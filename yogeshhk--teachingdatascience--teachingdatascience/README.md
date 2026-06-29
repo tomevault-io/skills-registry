@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yogeshhk/TeachingDataScience](https://github.com/yogeshhk/TeachingDataScience/tree/main/Code/claudecode/MattPocock/dot_claude/skills/ubiquitous-language/SKILL.md)
+Original source: [yogeshhk/TeachingDataScience](https://github.com/yogeshhk/TeachingDataScience/tree/main/Code/claudecode/MattPocock/dot_claude/skills/request-refactor-plan/SKILL.md)
 
 ---
 
