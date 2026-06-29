@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [growthxai/output](https://github.com/growthxai/output/tree/main/coding_assistants/claude/plugins/outputai/skills/output-workflow-run/SKILL.md)
+Original source: [growthxai/output](https://github.com/growthxai/output/tree/main/coding_assistants/claude/plugins/outputai/skills/output-workflow-stop/SKILL.md)
 
 ---
 
