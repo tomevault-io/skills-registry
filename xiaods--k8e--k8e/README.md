@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xiaods/k8e](https://github.com/xiaods/k8e/tree/main/skills/k8e-sandbox/SKILL.md)
+Original source: [xiaods/k8e](https://github.com/xiaods/k8e/tree/main/pkg/sandboxcli/skills/k8e-sandbox/SKILL.md)
 
 ---
 
