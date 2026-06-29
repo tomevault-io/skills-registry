@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TencentCloudBase/CloudBase-MCP](https://github.com/TencentCloudBase/CloudBase-MCP/tree/main/skills/codebase-audit/SKILL.md)
+Original source: [TencentCloudBase/CloudBase-MCP](https://github.com/TencentCloudBase/CloudBase-MCP/tree/main/skills/docs-workflows/SKILL.md)
 
 ---
 
