@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google/xrblocks](https://github.com/google/xrblocks/tree/main/src/addons/lipsync/SKILL.md)
+Original source: [google/xrblocks](https://github.com/google/xrblocks/tree/main/skills/xb-uiblocks/SKILL.md)
 
 ---
 
