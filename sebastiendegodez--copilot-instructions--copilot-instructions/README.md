@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SebastienDegodez/copilot-instructions](https://github.com/SebastienDegodez/copilot-instructions/tree/main/plugins/minimal-context-tools/skills/finding-files/SKILL.md)
+Original source: [SebastienDegodez/copilot-instructions](https://github.com/SebastienDegodez/copilot-instructions/tree/main/plugins/superpowers-whetstone/skills/outside-in-tdd/SKILL.md)
 
 ---
 
