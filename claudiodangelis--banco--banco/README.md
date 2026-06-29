@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [claudiodangelis/banco](https://github.com/claudiodangelis/banco/tree/main/src/skills/tidy/SKILL.md)
+Original source: [claudiodangelis/banco](https://github.com/claudiodangelis/banco/tree/main/src/skills/hello-world/SKILL.md)
 
 ---
 
