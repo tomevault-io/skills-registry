@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GoogleChrome/chromium-dashboard](https://github.com/GoogleChrome/chromium-dashboard/tree/main/.agents/skills/chromestatus-frontend/SKILL.md)
+Original source: [GoogleChrome/chromium-dashboard](https://github.com/GoogleChrome/chromium-dashboard/tree/main/.agents/skills/chromestatus-adding-a-field/SKILL.md)
 
 ---
 
