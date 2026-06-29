@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [joybro/obsidian-similar-notes](https://github.com/joybro/obsidian-similar-notes/tree/main/.claude/skills/bump-version/SKILL.md)
+Original source: [joybro/obsidian-similar-notes](https://github.com/joybro/obsidian-similar-notes/tree/main/.claude/skills/beta-release/SKILL.md)
 
 ---
 
