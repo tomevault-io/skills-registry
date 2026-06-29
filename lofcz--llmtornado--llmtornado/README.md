@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lofcz/LlmTornado](https://github.com/lofcz/LlmTornado/tree/main/src/LlmTornado.Tests/Static/Files/Skills/skill-generator/SKILL.md)
+Original source: [lofcz/LlmTornado](https://github.com/lofcz/LlmTornado/tree/main/src/LlmTornado.Tests/Static/Files/Skills/deep-researcher/SKILL.md)
 
 ---
 
