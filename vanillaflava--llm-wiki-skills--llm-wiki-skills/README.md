@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vanillaflava/llm-wiki-skills](https://github.com/vanillaflava/llm-wiki-skills/tree/main/wiki-integrate/SKILL.md)
+Original source: [vanillaflava/llm-wiki-skills](https://github.com/vanillaflava/llm-wiki-skills/tree/main/wiki-crystallize/SKILL.md)
 
 ---
 
