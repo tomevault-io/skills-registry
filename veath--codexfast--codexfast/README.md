@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Veath/codexfast](https://github.com/Veath/codexfast/tree/main/.agents/skills/codexfast-release-flow/SKILL.md)
+Original source: [Veath/codexfast](https://github.com/Veath/codexfast/tree/main/.agents/skills/codexfast-development-flow/SKILL.md)
 
 ---
 
