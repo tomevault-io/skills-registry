@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [KouShenhai/KCloud-Platform-IoT](https://github.com/KouShenhai/KCloud-Platform-IoT/tree/main/.agent/skills/openspec-apply-change/SKILL.md)
+Original source: [KouShenhai/KCloud-Platform-IoT](https://github.com/KouShenhai/KCloud-Platform-IoT/tree/main/.codex/skills/openspec-apply-change/SKILL.md)
 
 ---
 
