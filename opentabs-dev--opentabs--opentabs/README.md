@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [opentabs-dev/opentabs](https://github.com/opentabs-dev/opentabs/tree/main/.agents/skills/bump-version/SKILL.md)
+Original source: [opentabs-dev/opentabs](https://github.com/opentabs-dev/opentabs/tree/main/.claude/skills/bump-version/SKILL.md)
 
 ---
 
