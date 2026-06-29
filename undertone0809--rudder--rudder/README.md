@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Undertone0809/rudder](https://github.com/Undertone0809/rudder/tree/main/.agents/skills/maintainer/rudder-desktop-dev-recovery-maintainer/SKILL.md)
+Original source: [Undertone0809/rudder](https://github.com/Undertone0809/rudder/tree/main/.agents/skills/maintainer/development-lifecycle-router-maintainer/SKILL.md)
 
 ---
 
