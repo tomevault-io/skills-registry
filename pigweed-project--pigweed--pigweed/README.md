@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pigweed-project/pigweed](https://github.com/pigweed-project/pigweed/tree/main/.agents/skills/pw_rpc_creating_services/SKILL.md)
+Original source: [pigweed-project/pigweed](https://github.com/pigweed-project/pigweed/tree/main/.agents/skills/run_presubmit_checks/SKILL.md)
 
 ---
 
