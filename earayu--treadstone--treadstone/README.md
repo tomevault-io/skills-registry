@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [earayu/treadstone](https://github.com/earayu/treadstone/tree/main/.agents/skills/openapi-spec-conventions/SKILL.md)
+Original source: [earayu/treadstone](https://github.com/earayu/treadstone/tree/main/.agents/skills/architecture-data-flow-trace/SKILL.md)
 
 ---
 
