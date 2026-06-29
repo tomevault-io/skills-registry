@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [baseballyama/rsvelte](https://github.com/baseballyama/rsvelte/tree/main/.claude/skills/repo-hygiene/SKILL.md)
+Original source: [baseballyama/rsvelte](https://github.com/baseballyama/rsvelte/tree/main/.claude/skills/upgrade-svelte/SKILL.md)
 
 ---
 
