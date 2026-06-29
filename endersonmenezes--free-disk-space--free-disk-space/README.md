@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [endersonmenezes/free-disk-space](https://github.com/endersonmenezes/free-disk-space/tree/main/.github/skills/release-manager/SKILL.md)
+Original source: [endersonmenezes/free-disk-space](https://github.com/endersonmenezes/free-disk-space/tree/main/.github/skills/changelog-maintainer/SKILL.md)
 
 ---
 
