@@ -1,0 +1,13 @@
+# olcchi.me
+
+> Skill by [olcchi](https://github.com/olcchi/olcchi.me) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [olcchi/olcchi.me](https://github.com/olcchi/olcchi.me/tree/main/.agent/skills/code-logic-cleaner/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
