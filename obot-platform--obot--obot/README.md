@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [obot-platform/obot](https://github.com/obot-platform/obot/tree/main/.claude/skills/draft-release/SKILL.md)
+Original source: [obot-platform/obot](https://github.com/obot-platform/obot/tree/main/.claude/skills/draft-release-blog/SKILL.md)
 
 ---
 
