@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Parsifal-M/backstage-opa-plugins](https://github.com/Parsifal-M/backstage-opa-plugins/tree/main/.claude/skills/opa-authz-react/SKILL.md)
+Original source: [Parsifal-M/backstage-opa-plugins](https://github.com/Parsifal-M/backstage-opa-plugins/tree/main/.claude/skills/opa-service-integration/SKILL.md)
 
 ---
 
