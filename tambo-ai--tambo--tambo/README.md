@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tambo-ai/tambo](https://github.com/tambo-ai/tambo/tree/main/.claude/skills/creating-styled-wrappers/SKILL.md)
+Original source: [tambo-ai/tambo](https://github.com/tambo-ai/tambo/tree/main/.claude/skills/validating-accessibility/SKILL.md)
 
 ---
 
