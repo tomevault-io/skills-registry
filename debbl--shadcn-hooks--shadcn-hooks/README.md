@@ -1,13 +1,13 @@
 # shadcn-hooks
 
-> Skill by [debbl](https://github.com/debbl/shadcn-hooks) — distributed by [TomeVault](https://tomevault.io/claim/debbl)
+> Skill by [Debbl](https://github.com/Debbl/shadcn-hooks) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [debbl/shadcn-hooks](https://github.com/debbl/shadcn-hooks/tree/main/skills/shadcn-hooks)
+Original source: [Debbl/shadcn-hooks](https://github.com/Debbl/shadcn-hooks/tree/main/skills/shadcn-hooks/SKILL.md)
 
 ---
 
 Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
-Is this your repo? [Claim it](https://tomevault.io/claim/debbl) to manage distribution.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
