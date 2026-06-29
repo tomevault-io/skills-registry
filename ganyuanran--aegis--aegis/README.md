@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GanyuanRan/Aegis](https://github.com/GanyuanRan/Aegis/tree/main/skills/anti-entropy-governance/SKILL.md)
+Original source: [GanyuanRan/Aegis](https://github.com/GanyuanRan/Aegis/tree/main/skills/first-principles-review/SKILL.md)
 
 ---
 
