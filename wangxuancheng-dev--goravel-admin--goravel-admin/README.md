@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wangxuancheng-dev/goravel-admin](https://github.com/wangxuancheng-dev/goravel-admin/tree/main/.cursor/skills/goravel-admin-backend/SKILL.md)
+Original source: [wangxuancheng-dev/goravel-admin](https://github.com/wangxuancheng-dev/goravel-admin/tree/main/.cursor/skills/goravel-admin-frontend/SKILL.md)
 
 ---
 
