@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [asnunes/mathml-to-latex](https://github.com/asnunes/mathml-to-latex/tree/main/.claude/skills/version-bump/SKILL.md)
+Original source: [asnunes/mathml-to-latex](https://github.com/asnunes/mathml-to-latex/tree/main/.claude/skills/create-release/SKILL.md)
 
 ---
 
