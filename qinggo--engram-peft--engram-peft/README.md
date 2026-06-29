@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [QingGo/engram-peft](https://github.com/QingGo/engram-peft/tree/main/.agents/skills/short-term-memory/SKILL.md)
+Original source: [QingGo/engram-peft](https://github.com/QingGo/engram-peft/tree/main/.agents/skills/api-source-tracing/SKILL.md)
 
 ---
 
