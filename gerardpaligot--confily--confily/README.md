@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GerardPaligot/Confily](https://github.com/GerardPaligot/Confily/tree/main/.github/skills/kotlin-linting/SKILL.md)
+Original source: [GerardPaligot/Confily](https://github.com/GerardPaligot/Confily/tree/main/.github/skills/exposed-migration/SKILL.md)
 
 ---
 
