@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jazzyalex/agent-sessions](https://github.com/jazzyalex/agent-sessions/tree/main/skills/agent-support-matrix/SKILL.md)
+Original source: [jazzyalex/agent-sessions](https://github.com/jazzyalex/agent-sessions/tree/main/skills/agent-session-format-check/SKILL.md)
 
 ---
 
