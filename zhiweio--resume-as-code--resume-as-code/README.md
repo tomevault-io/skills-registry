@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zhiweio/resume-as-code](https://github.com/zhiweio/resume-as-code/tree/main/skills/timeline-polishing/SKILL.md)
+Original source: [zhiweio/resume-as-code](https://github.com/zhiweio/resume-as-code/tree/main/skills/interview-preparation/SKILL.md)
 
 ---
 
