@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [StChiotis/Library-First-Engineering](https://github.com/StChiotis/Library-First-Engineering/tree/main/.agents/skills/lfe-archivist/SKILL.md)
+Original source: [StChiotis/Library-First-Engineering](https://github.com/StChiotis/Library-First-Engineering/tree/main/.agents/skills/lfe-perf-check/SKILL.md)
 
 ---
 
