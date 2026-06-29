@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [EtienneLescot/n8n-as-code](https://github.com/EtienneLescot/n8n-as-code/tree/main/plugins/cursor/n8n-as-code/skills/n8n-architect/SKILL.md)
+Original source: [EtienneLescot/n8n-as-code](https://github.com/EtienneLescot/n8n-as-code/tree/main/plugins/openclaw/n8n-as-code/skills/n8n-architect/SKILL.md)
 
 ---
 
