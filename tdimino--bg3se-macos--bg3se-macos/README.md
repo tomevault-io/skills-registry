@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tdimino/bg3se-macos](https://github.com/tdimino/bg3se-macos/tree/main/tools/skills/bg3se-macos-ghidra/SKILL.md)
+Original source: [tdimino/bg3se-macos](https://github.com/tdimino/bg3se-macos/tree/main/tools/automation/skills/bg3-steam-launcher/SKILL.md)
 
 ---
 
