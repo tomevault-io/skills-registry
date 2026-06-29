@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DjangoPeng/agentic-ai](https://github.com/DjangoPeng/agentic-ai/tree/main/openclaw-skills/examples/crypto-monitor/SKILL.md)
+Original source: [DjangoPeng/agentic-ai](https://github.com/DjangoPeng/agentic-ai/tree/main/financial-automation/skills/financial-expense-automation/SKILL.md)
 
 ---
 
