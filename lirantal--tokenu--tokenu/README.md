@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lirantal/tokenu](https://github.com/lirantal/tokenu/tree/main/.claude/skills/testing-guidelines/SKILL.md)
+Original source: [lirantal/tokenu](https://github.com/lirantal/tokenu/tree/main/.gemini/skills/testing-guidelines/SKILL.md)
 
 ---
 
