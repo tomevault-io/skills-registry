@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [techygarg/lattice](https://github.com/techygarg/lattice/tree/main/skills/atoms/secure-coding/SKILL.md)
+Original source: [techygarg/lattice](https://github.com/techygarg/lattice/tree/main/skills/molecules/code-forge/SKILL.md)
 
 ---
 
