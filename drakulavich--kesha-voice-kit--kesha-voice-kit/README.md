@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [drakulavich/kesha-voice-kit](https://github.com/drakulavich/kesha-voice-kit/tree/main/.claude/skills/release-engine/SKILL.md)
+Original source: [drakulavich/kesha-voice-kit](https://github.com/drakulavich/kesha-voice-kit/tree/main/.claude/skills/openspec-explore/SKILL.md)
 
 ---
 
