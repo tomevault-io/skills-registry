@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [JKHeadley/instar](https://github.com/JKHeadley/instar/tree/main/skills/instar-dev/SKILL.md)
+Original source: [JKHeadley/instar](https://github.com/JKHeadley/instar/tree/main/skills/agent-memory/SKILL.md)
 
 ---
 
