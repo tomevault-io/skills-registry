@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [JasonBoy/msw-mcp](https://github.com/JasonBoy/msw-mcp/tree/main/skills/msw-cli/SKILL.md)
+Original source: [JasonBoy/msw-mcp](https://github.com/JasonBoy/msw-mcp/tree/main/skills/msw-setup/SKILL.md)
 
 ---
 
