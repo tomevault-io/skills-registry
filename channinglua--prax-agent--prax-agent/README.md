@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ChanningLua/prax-agent](https://github.com/ChanningLua/prax-agent/tree/main/src/prax/skills/domestic-integration/SKILL.md)
+Original source: [ChanningLua/prax-agent](https://github.com/ChanningLua/prax-agent/tree/main/src/prax/assets/claude/skills/prax-native/SKILL.md)
 
 ---
 
