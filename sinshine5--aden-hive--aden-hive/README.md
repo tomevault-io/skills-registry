@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SinShine5/aden-hive](https://github.com/SinShine5/aden-hive/tree/main/.claude/skills/building-agents-patterns/SKILL.md)
+Original source: [SinShine5/aden-hive](https://github.com/SinShine5/aden-hive/tree/main/.claude/skills/building-agents-construction/SKILL.md)
 
 ---
 
