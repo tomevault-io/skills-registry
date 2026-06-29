@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jmcentire/pact](https://github.com/jmcentire/pact/tree/main/skills/simulacrum/SKILL.md)
+Original source: [jmcentire/pact](https://github.com/jmcentire/pact/tree/main/skills/pact-engineer/SKILL.md)
 
 ---
 
