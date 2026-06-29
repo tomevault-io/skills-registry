@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Pipelex/pipelex](https://github.com/Pipelex/pipelex/tree/main/.claude/skills/test-model/SKILL.md)
+Original source: [Pipelex/pipelex](https://github.com/Pipelex/pipelex/tree/main/.claude/skills/update-graph-ui/SKILL.md)
 
 ---
 
