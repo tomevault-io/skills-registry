@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PierreZ/moonpool](https://github.com/PierreZ/moonpool/tree/main/.claude/skills/writing-a-workload/SKILL.md)
+Original source: [PierreZ/moonpool](https://github.com/PierreZ/moonpool/tree/main/.claude/skills/discover-properties/SKILL.md)
 
 ---
 
