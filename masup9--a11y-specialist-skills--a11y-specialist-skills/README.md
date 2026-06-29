@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [masuP9/a11y-specialist-skills](https://github.com/masuP9/a11y-specialist-skills/tree/main/skills/auditing-wcag/SKILL.md)
+Original source: [masuP9/a11y-specialist-skills](https://github.com/masuP9/a11y-specialist-skills/tree/main/skills/reviewing-a11y/SKILL.md)
 
 ---
 
