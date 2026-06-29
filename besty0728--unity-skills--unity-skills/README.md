@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Besty0728/Unity-Skills](https://github.com/Besty0728/Unity-Skills/tree/main/SkillsForUnity/unity-skills~/skills/physics/SKILL.md)
+Original source: [Besty0728/Unity-Skills](https://github.com/Besty0728/Unity-Skills/tree/main/SkillsForUnity/unity-skills~/skills/terrain/SKILL.md)
 
 ---
 
