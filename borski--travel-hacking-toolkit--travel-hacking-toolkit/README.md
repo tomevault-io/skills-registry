@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [borski/travel-hacking-toolkit](https://github.com/borski/travel-hacking-toolkit/tree/main/plugins/travel-hacking-toolkit/skills/wheretocredit/SKILL.md)
+Original source: [borski/travel-hacking-toolkit](https://github.com/borski/travel-hacking-toolkit/tree/main/plugins/travel-hacking-toolkit/skills/deutsche-bahn/SKILL.md)
 
 ---
 
