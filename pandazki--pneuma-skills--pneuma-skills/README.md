@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pandazki/pneuma-skills](https://github.com/pandazki/pneuma-skills/tree/main/modes/project-onboard/skill/SKILL.md)
+Original source: [pandazki/pneuma-skills](https://github.com/pandazki/pneuma-skills/tree/main/modes/mode-maker/seed/skill/SKILL.md)
 
 ---
 
