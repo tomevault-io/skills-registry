@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Snowflake-Labs/cocoplus](https://github.com/Snowflake-Labs/cocoplus/tree/main/.cortex/skills/cocoscout/SKILL.md)
+Original source: [Snowflake-Labs/cocoplus](https://github.com/Snowflake-Labs/cocoplus/tree/main/.cortex/skills/cocowatch/SKILL.md)
 
 ---
 
