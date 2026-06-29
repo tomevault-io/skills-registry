@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lakernote/EasyPostman](https://github.com/lakernote/EasyPostman/tree/main/.codex/skills/swing-ui-test-headless-guard/SKILL.md)
+Original source: [lakernote/EasyPostman](https://github.com/lakernote/EasyPostman/tree/main/.codex/skills/module-architecture-boundaries/SKILL.md)
 
 ---
 
