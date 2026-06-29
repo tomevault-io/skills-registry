@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [iPythoning/b2b-sdr-agent-template](https://github.com/iPythoning/b2b-sdr-agent-template/tree/main/skills/supermemory/SKILL.md)
+Original source: [iPythoning/b2b-sdr-agent-template](https://github.com/iPythoning/b2b-sdr-agent-template/tree/main/skills/sdr-humanizer/SKILL.md)
 
 ---
 
