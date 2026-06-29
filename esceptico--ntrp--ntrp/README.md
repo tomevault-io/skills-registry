@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [esceptico/ntrp](https://github.com/esceptico/ntrp/tree/main/apps/server/skills/propose-skill/SKILL.md)
+Original source: [esceptico/ntrp](https://github.com/esceptico/ntrp/tree/main/apps/server/skills/propose-automation/SKILL.md)
 
 ---
 
