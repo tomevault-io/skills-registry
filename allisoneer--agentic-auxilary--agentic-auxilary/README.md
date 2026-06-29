@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [allisoneer/agentic_auxilary](https://github.com/allisoneer/agentic_auxilary/tree/main/vendor/codex/.codex/skills/code-review/SKILL.md)
+Original source: [allisoneer/agentic_auxilary](https://github.com/allisoneer/agentic_auxilary/tree/main/vendor/codex/.codex/skills/remote-tests/SKILL.md)
 
 ---
 
