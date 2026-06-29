@@ -1,110 +1,56 @@
 ---
-name: cross-squad
-description: Create work in another squad's repository Use when this capability is needed.
+name: pending-wrap-resolution
+description: Pattern for resolving PendingWrap before forward cursor movement in the terminal Writer Use when this capability is needed.
 metadata:
   author: Thraka
 ---
 
 ## Context
-When an organization runs multiple Squad instances (e.g., platform-squad, frontend-squad, data-squad), those squads need to discover each other, share context, and hand off work across repository boundaries. This skill teaches agents how to coordinate across squads without creating tight coupling.
+The SadConsole terminal Writer uses a deferred-wrap model (PendingWrap flag) per ECMA-48 §7.1. When the cursor reaches the right margin, the wrap is deferred until the next printable character. Cursor-movement handlers must decide whether to just clear the flag (most handlers) or resolve the wrap first (advance to next line, col 0).
 
-Cross-squad orchestration applies when:
-- A task requires capabilities owned by another squad
-- An architectural decision affects multiple squads
-- A feature spans multiple repositories with different squads
-- A squad needs to request infrastructure, tooling, or support from another squad
+## Pattern: Forward-Movement PendingWrap Resolution
 
-## Patterns
+Any handler that moves the cursor **forward along the line** (increasing column) must **resolve** PendingWrap, not just clear it. Without resolution, forward movement from the right margin is clamped to `width-1` → a no-op.
 
-### Discovery via Manifest
-Each squad publishes a `.squad/manifest.json` declaring its name, capabilities, and contact information. Squads discover each other through:
-1. **Well-known paths**: Check `.squad/manifest.json` in known org repos
-2. **Upstream config**: Squads already listed in `.squad/upstream.json` are checked for manifests
-3. **Explicit registry**: A central `squad-registry.json` can list all squads in an org
+### Detection Rule
+A handler is AT RISK if:
+1. It moves the cursor forward (increasing column index)
+2. The movement is relative to the current position
+3. The target is clamped at `width - 1`
 
-```json
-{
-  "name": "platform-squad",
-  "version": "1.0.0",
-  "description": "Platform infrastructure team",
-  "capabilities": ["kubernetes", "helm", "monitoring", "ci-cd"],
-  "contact": {
-    "repo": "org/platform",
-    "labels": ["squad:platform"]
-  },
-  "accepts": ["issues", "prs"],
-  "skills": ["helm-developer", "operator-developer", "pipeline-engineer"]
-}
+### Fix Template
+```csharp
+case 'X': // Forward-moving handler
+    if (State.PendingWrap && State.AutoWrap)
+    {
+        State.PendingWrap = false;
+        State.CursorColumn = 0;
+        LineFeed();
+    }
+    else
+    {
+        State.PendingWrap = false;
+    }
+    ApplyForwardMovement(Param(parameters, 0, 1));
+    break;
 ```
 
-### Context Sharing
-When delegating work, share only what the target squad needs:
-- **Capability list**: What this squad can do (from manifest)
-- **Relevant decisions**: Only decisions that affect the target squad
-- **Handoff context**: A concise description of why this work is being delegated
+### Handlers That Need This
+- CUF (CSI C) — forward cursor movement
+- CHT (CSI I) — forward tab
+- C0 HT (0x09) — tab character
 
-Do NOT share:
-- Internal team state (casting history, session logs)
-- Full decision archives (send only relevant excerpts)
-- Authentication credentials or secrets
-
-### Work Handoff Protocol
-1. **Check manifest**: Verify the target squad accepts the work type (issues, PRs)
-2. **Create issue**: Use `gh issue create` in the target repo with:
-   - Title: `[cross-squad] <description>`
-   - Label: `squad:cross-squad` (or the squad's configured label)
-   - Body: Context, acceptance criteria, and link back to originating issue
-3. **Track**: Record the cross-squad issue URL in the originating squad's orchestration log
-4. **Poll**: Periodically check if the delegated issue is closed/completed
-
-### Feedback Loop
-Track delegated work completion:
-- Poll target issue status via `gh issue view`
-- Update originating issue with status changes
-- Close the feedback loop when delegated work merges
-
-## Examples
-
-### Discovering squads
-```bash
-# List all squads discoverable from upstreams and known repos
-squad discover
-
-# Output:
-#   platform-squad  →  org/platform  (kubernetes, helm, monitoring)
-#   frontend-squad  →  org/frontend  (react, nextjs, storybook)
-#   data-squad      →  org/data      (spark, airflow, dbt)
-```
-
-### Delegating work
-```bash
-# Delegate a task to the platform squad
-squad delegate platform-squad "Add Prometheus metrics endpoint for the auth service"
-
-# Creates issue in org/platform with cross-squad label and context
-```
-
-### Manifest in squad.config.ts
-```typescript
-export default defineSquad({
-  manifest: {
-    name: 'platform-squad',
-    capabilities: ['kubernetes', 'helm'],
-    contact: { repo: 'org/platform', labels: ['squad:platform'] },
-    accepts: ['issues', 'prs'],
-    skills: ['helm-developer', 'operator-developer'],
-  },
-});
-```
+### Handlers That Do NOT Need This
+- Absolute positioning (CUP, CHA, VPA, DECSTBM, DECOM) — target is independent of current position
+- Backward/vertical relative (CUU, CUD, CUB, CNL, CPL, CBT) — movement from right margin is meaningful, not clamped
 
 ## Anti-Patterns
-- **Direct file writes across repos** — Never modify another squad's `.squad/` directory. Use issues and PRs as the communication protocol.
-- **Tight coupling** — Don't depend on another squad's internal structure. Use the manifest as the public API contract.
-- **Unbounded delegation** — Always include acceptance criteria and a timeout. Don't create open-ended requests.
-- **Skipping discovery** — Don't hardcode squad locations. Use manifests and the discovery protocol.
-- **Sharing secrets** — Never include credentials, tokens, or internal URLs in cross-squad issues.
-- **Circular delegation** — Track delegation chains. If squad A delegates to B which delegates back to A, something is wrong.
+- **Blanket PendingWrap=false in dispatcher epilogue** — this is the opt-out model that caused the original b5-ans01.ans bug. Each handler manages its own PendingWrap clearing.
+- **Just clearing PendingWrap for forward movement** — clearing without resolution makes forward movement from the right margin a no-op.
+
+## Examples
+See `Writer.cs` CUF handler (case 'C'), CHT handler (case 'I'), and C0 HT in OnC0Control for the canonical implementations.
 
 ---
 > Source: [Thraka/SadConsole](https://github.com/Thraka/SadConsole) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-28 -->
+<!-- tomevault:4.0:skill_md:2026-06-29 -->
