@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ofajs/ofa.js](https://github.com/ofajs/ofa.js/tree/main/skills/ofajs-docs/SKILL.md)
+Original source: [ofajs/ofa.js](https://github.com/ofajs/ofa.js/tree/main/skills/ofajs-docs-en/SKILL.md)
 
 ---
 
