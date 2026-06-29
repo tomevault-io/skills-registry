@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mostafazke/ng-whiteboard](https://github.com/mostafazke/ng-whiteboard/tree/main/.github/skills/nx-generate/SKILL.md)
+Original source: [mostafazke/ng-whiteboard](https://github.com/mostafazke/ng-whiteboard/tree/main/.github/skills/nx-workspace/SKILL.md)
 
 ---
 
