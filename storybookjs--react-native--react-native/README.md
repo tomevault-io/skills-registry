@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [storybookjs/react-native](https://github.com/storybookjs/react-native/tree/main/skills/upgrading-react-native-storybook/SKILL.md)
+Original source: [storybookjs/react-native](https://github.com/storybookjs/react-native/tree/main/skills/writing-react-native-storybook-stories/SKILL.md)
 
 ---
 
