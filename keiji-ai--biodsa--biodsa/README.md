@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Keiji-AI/BioDSA](https://github.com/Keiji-AI/BioDSA/tree/main/biodsa-agent-dev-skills/SKILL.md)
+Original source: [Keiji-AI/BioDSA](https://github.com/Keiji-AI/BioDSA/tree/main/biodsa-agent-exec-skills/SKILL.md)
 
 ---
 
