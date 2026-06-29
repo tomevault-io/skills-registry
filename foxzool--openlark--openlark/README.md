@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [foxzool/openlark](https://github.com/foxzool/openlark/tree/main/.agents/skills/openlark-api/SKILL.md)
+Original source: [foxzool/openlark](https://github.com/foxzool/openlark/tree/main/.agents/skills/openlark-naming/SKILL.md)
 
 ---
 
