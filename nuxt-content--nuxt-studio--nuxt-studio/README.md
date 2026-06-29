@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nuxt-content/nuxt-studio](https://github.com/nuxt-content/nuxt-studio/tree/main/skills/migrate-mdc-to-comark/SKILL.md)
+Original source: [nuxt-content/nuxt-studio](https://github.com/nuxt-content/nuxt-studio/tree/main/skills/make-content-editable/SKILL.md)
 
 ---
 
