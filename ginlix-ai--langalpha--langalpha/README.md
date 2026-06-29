@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ginlix-ai/LangAlpha](https://github.com/ginlix-ai/LangAlpha/tree/main/skills/self-improve/SKILL.md)
+Original source: [ginlix-ai/LangAlpha](https://github.com/ginlix-ai/LangAlpha/tree/main/skills/morning-note/SKILL.md)
 
 ---
 
