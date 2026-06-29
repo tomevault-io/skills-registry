@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [guoliang1114-boop/AriaAI](https://github.com/guoliang1114-boop/AriaAI/tree/main/skills/ma-tax-due-diligence/SKILL.md)
+Original source: [guoliang1114-boop/AriaAI](https://github.com/guoliang1114-boop/AriaAI/tree/main/skills/group-audit-strategy/SKILL.md)
 
 ---
 
