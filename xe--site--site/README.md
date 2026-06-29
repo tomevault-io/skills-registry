@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Xe/site](https://github.com/Xe/site/tree/main/.agents/skills/templ-http/SKILL.md)
+Original source: [Xe/site](https://github.com/Xe/site/tree/main/.agents/skills/templ-syntax/SKILL.md)
 
 ---
 
