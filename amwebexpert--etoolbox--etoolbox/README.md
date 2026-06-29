@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [amwebexpert/etoolbox](https://github.com/amwebexpert/etoolbox/tree/main/.claude/skills/to-issues-as-json/SKILL.md)
+Original source: [amwebexpert/etoolbox](https://github.com/amwebexpert/etoolbox/tree/main/.claude/skills/react-single-responsibility/SKILL.md)
 
 ---
 
