@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [awslabs/agent-plugins](https://github.com/awslabs/agent-plugins/tree/main/plugins/sagemaker-ai/skills/hyperpod-node-debugger/SKILL.md)
+Original source: [awslabs/agent-plugins](https://github.com/awslabs/agent-plugins/tree/main/plugins/sagemaker-ai/skills/dataset-transformation/SKILL.md)
 
 ---
 
