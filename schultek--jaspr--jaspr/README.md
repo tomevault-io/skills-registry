@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [schultek/jaspr](https://github.com/schultek/jaspr/tree/main/packages/jaspr/skills/jaspr-styling/SKILL.md)
+Original source: [schultek/jaspr](https://github.com/schultek/jaspr/tree/main/packages/jaspr/skills/jaspr-js-interop/SKILL.md)
 
 ---
 
