@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lirantal/tokenu](https://github.com/lirantal/tokenu/tree/main/.tessl/tiles/mcollina/skills/skills/octocat/SKILL.md)
+Original source: [lirantal/tokenu](https://github.com/lirantal/tokenu/tree/main/.tessl/tiles/mcollina/skills/skills/typescript-magician/SKILL.md)
 
 ---
 
