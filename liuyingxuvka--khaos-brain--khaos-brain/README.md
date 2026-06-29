@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [liuyingxuvka/Khaos-Brain](https://github.com/liuyingxuvka/Khaos-Brain/tree/main/.agents/skills/local-kb-retrieve/SKILL.md)
+Original source: [liuyingxuvka/Khaos-Brain](https://github.com/liuyingxuvka/Khaos-Brain/tree/main/.agents/skills/khaos-brain-open-ui/SKILL.md)
 
 ---
 
