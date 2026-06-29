@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [filiptrivan/spiderly](https://github.com/filiptrivan/spiderly/tree/main/claude-plugins/skills/spiderly-upgrade/SKILL.md)
+Original source: [filiptrivan/spiderly](https://github.com/filiptrivan/spiderly/tree/main/claude-plugins/skills/ef-migrations/SKILL.md)
 
 ---
 
