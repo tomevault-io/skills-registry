@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tsubotax/melta-ui](https://github.com/tsubotax/melta-ui/tree/main/skills/ban-pattern/SKILL.md)
+Original source: [tsubotax/melta-ui](https://github.com/tsubotax/melta-ui/tree/main/skills/design-review/SKILL.md)
 
 ---
 
