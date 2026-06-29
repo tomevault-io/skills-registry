@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dyoshikawa/rulesync](https://github.com/dyoshikawa/rulesync/tree/main/.rulesync/skills/playwright-cli/SKILL.md)
+Original source: [dyoshikawa/rulesync](https://github.com/dyoshikawa/rulesync/tree/main/.rulesync/skills/release-dry-run/SKILL.md)
 
 ---
 
