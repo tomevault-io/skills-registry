@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Lingyuzhou111/dow-ipad-859](https://github.com/Lingyuzhou111/dow-ipad-859/tree/main/workspace/skills/cron-task/SKILL.md)
+Original source: [Lingyuzhou111/dow-ipad-859](https://github.com/Lingyuzhou111/dow-ipad-859/tree/main/workspace/skills/music-search/SKILL.md)
 
 ---
 
