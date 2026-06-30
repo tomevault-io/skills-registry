@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pnsk-lab/saizeriya](https://github.com/pnsk-lab/saizeriya/tree/main/skills/saizeriya-cli/SKILL.md)
+Original source: [pnsk-lab/saizeriya](https://github.com/pnsk-lab/saizeriya/tree/main/.agents/menu-image-assets/SKILL.md)
 
 ---
 
