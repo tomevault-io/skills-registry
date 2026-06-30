@@ -225,5 +225,5 @@ feishu-docx update "https://xxx.feishu.cn/docx/xxx" -b blk123abc -c "新内容"
 - `tenant_access_token` manages app cloud space, `user_access_token` manages personal cloud space
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/leemysw) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [leemysw/feishu-docx](https://github.com/leemysw/feishu-docx) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-30 -->
