@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tallstackui/tallstackui](https://github.com/tallstackui/tallstackui/tree/main/.claude/skills/review-pr-development/SKILL.md)
+Original source: [tallstackui/tallstackui](https://github.com/tallstackui/tallstackui/tree/main/.claude/skills/validate-task-development/SKILL.md)
 
 ---
 
