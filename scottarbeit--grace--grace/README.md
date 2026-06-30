@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ScottArbeit/Grace](https://github.com/ScottArbeit/Grace/tree/main/skills/grace/SKILL.md)
+Original source: [ScottArbeit/Grace](https://github.com/ScottArbeit/Grace/tree/main/skills/code-review-stabilizer/SKILL.md)
 
 ---
 
