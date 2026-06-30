@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Cod-e-Codes/marchat](https://github.com/Cod-e-Codes/marchat/tree/main/.cursor/skills/protocol-marchat/SKILL.md)
+Original source: [Cod-e-Codes/marchat](https://github.com/Cod-e-Codes/marchat/tree/main/.cursor/skills/releasing-marchat/SKILL.md)
 
 ---
 
