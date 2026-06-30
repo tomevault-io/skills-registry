@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/ghqr](https://github.com/microsoft/ghqr/tree/main/.github/skills/tui-developer/SKILL.md)
+Original source: [microsoft/ghqr](https://github.com/microsoft/ghqr/tree/main/.github/skills/code-simplifier/SKILL.md)
 
 ---
 
