@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wkylin/pro-react-admin](https://github.com/wkylin/pro-react-admin/tree/main/.agents/skills/tavily-research/SKILL.md)
+Original source: [wkylin/pro-react-admin](https://github.com/wkylin/pro-react-admin/tree/main/agent/skills/tavily-dynamic-search/SKILL.md)
 
 ---
 
