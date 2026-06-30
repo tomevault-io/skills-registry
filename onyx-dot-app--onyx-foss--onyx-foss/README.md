@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [onyx-dot-app/onyx-foss](https://github.com/onyx-dot-app/onyx-foss/tree/main/.cursor/skills/playwright/SKILL.md)
+Original source: [onyx-dot-app/onyx-foss](https://github.com/onyx-dot-app/onyx-foss/tree/main/backend/onyx/skills/builtin/pptx/SKILL.md)
 
 ---
 
