@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hyperledger-cacti/cacti](https://github.com/hyperledger-cacti/cacti/tree/main/.github/skills/ci-triage/SKILL.md)
+Original source: [hyperledger-cacti/cacti](https://github.com/hyperledger-cacti/cacti/tree/main/.github/skills/_template/SKILL.md)
 
 ---
 
