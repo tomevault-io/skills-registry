@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [scylladb/scylla-operator](https://github.com/scylladb/scylla-operator/tree/main/.opencode/skills/release-notes-generator/SKILL.md)
+Original source: [scylladb/scylla-operator](https://github.com/scylladb/scylla-operator/tree/main/.opencode/skills/must-gather-investigation/SKILL.md)
 
 ---
 
