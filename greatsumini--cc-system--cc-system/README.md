@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [greatSumini/cc-system](https://github.com/greatSumini/cc-system/tree/main/.claude/skills/google-calendar/SKILL.md)
+Original source: [greatSumini/cc-system](https://github.com/greatSumini/cc-system/tree/main/.claude/skills/discord-message/SKILL.md)
 
 ---
 
