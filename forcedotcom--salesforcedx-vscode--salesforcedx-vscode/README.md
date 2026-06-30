@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [forcedotcom/salesforcedx-vscode](https://github.com/forcedotcom/salesforcedx-vscode/tree/main/.claude/skills/lsp-custom-requests/SKILL.md)
+Original source: [forcedotcom/salesforcedx-vscode](https://github.com/forcedotcom/salesforcedx-vscode/tree/main/.claude/skills/ts4023-effect-errors/SKILL.md)
 
 ---
 
