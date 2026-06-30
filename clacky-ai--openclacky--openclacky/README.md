@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [clacky-ai/openclacky](https://github.com/clacky-ai/openclacky/tree/main/lib/clacky/default_skills/recall-memory/SKILL.md)
+Original source: [clacky-ai/openclacky](https://github.com/clacky-ai/openclacky/tree/main/lib/clacky/default_skills/code-explorer/SKILL.md)
 
 ---
 
