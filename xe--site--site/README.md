@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Xe/site](https://github.com/Xe/site/tree/main/.agents/skills/writing-clearly-and-concisely/SKILL.md)
+Original source: [Xe/site](https://github.com/Xe/site/tree/main/.agents/skills/no-way-to-prevent-this-memory-safety/SKILL.md)
 
 ---
 
