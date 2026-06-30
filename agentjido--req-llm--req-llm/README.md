@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentjido/req_llm](https://github.com/agentjido/req_llm/tree/main/.agents/skills/pr-harden/SKILL.md)
+Original source: [agentjido/req_llm](https://github.com/agentjido/req_llm/tree/main/.agents/skills/pr-review/SKILL.md)
 
 ---
 
