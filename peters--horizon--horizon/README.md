@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [peters/horizon](https://github.com/peters/horizon/tree/main/assets/plugins/codex/skills/horizon-notify/SKILL.md)
+Original source: [peters/horizon](https://github.com/peters/horizon/tree/main/assets/plugins/claude-code/skills/horizon-notify/SKILL.md)
 
 ---
 
