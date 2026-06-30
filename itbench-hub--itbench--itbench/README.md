@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [itbench-hub/ITBench](https://github.com/itbench-hub/ITBench/tree/main/.claude/skills/sre/fault-scaffolding/SKILL.md)
+Original source: [itbench-hub/ITBench](https://github.com/itbench-hub/ITBench/tree/main/.claude/skills/sre/scenario-scaffolding/SKILL.md)
 
 ---
 
