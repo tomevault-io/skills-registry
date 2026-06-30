@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shuigedeng/taotao-cloud-project](https://github.com/shuigedeng/taotao-cloud-project/tree/main/.claude/skills/ttc-event-storming/SKILL.md)
+Original source: [shuigedeng/taotao-cloud-project](https://github.com/shuigedeng/taotao-cloud-project/tree/main/.claude/skills/ttc-crud-generator/SKILL.md)
 
 ---
 
