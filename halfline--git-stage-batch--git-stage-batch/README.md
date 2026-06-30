@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [halfline/git-stage-batch](https://github.com/halfline/git-stage-batch/tree/main/assets/codex-skills/decompose-and-commit-unstaged-changes/SKILL.md)
+Original source: [halfline/git-stage-batch](https://github.com/halfline/git-stage-batch/tree/main/assets/claude-skills/decompose-and-commit-unstaged-changes/SKILL.md)
 
 ---
 
