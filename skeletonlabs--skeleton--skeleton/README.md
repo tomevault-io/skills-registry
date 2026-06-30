@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [skeletonlabs/skeleton](https://github.com/skeletonlabs/skeleton/tree/main/.claude/skills/create-playground-entry/SKILL.md)
+Original source: [skeletonlabs/skeleton](https://github.com/skeletonlabs/skeleton/tree/main/.claude/skills/create-tailwind-utility/SKILL.md)
 
 ---
 
