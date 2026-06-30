@@ -1,0 +1,13 @@
+# eclaire
+
+> Skill by [eclaire-labs](https://github.com/eclaire-labs/eclaire) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [eclaire-labs/eclaire](https://github.com/eclaire-labs/eclaire/tree/main/config/ai/skills/admin-guide/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
