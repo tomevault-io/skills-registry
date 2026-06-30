@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zhu1090093659/spec_driven_develop](https://github.com/zhu1090093659/spec_driven_develop/tree/main/plugins/spec-driven-develop/skills/deep-discuss/SKILL.md)
+Original source: [zhu1090093659/spec_driven_develop](https://github.com/zhu1090093659/spec_driven_develop/tree/main/plugins/spec-driven-develop/skills/spec-driven-develop/SKILL.md)
 
 ---
 
