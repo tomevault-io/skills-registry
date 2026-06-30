@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [weapp-vite/weapp-vite](https://github.com/weapp-vite/weapp-vite/tree/main/skills/weapp-devtools-e2e-best-practices/SKILL.md)
+Original source: [weapp-vite/weapp-vite](https://github.com/weapp-vite/weapp-vite/tree/main/skills/native-to-weapp-vite-wevu-migration/SKILL.md)
 
 ---
 
