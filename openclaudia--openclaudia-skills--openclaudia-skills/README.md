@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OpenClaudia/openclaudia-skills](https://github.com/OpenClaudia/openclaudia-skills/tree/main/skills/competitor-analysis/SKILL.md)
+Original source: [OpenClaudia/openclaudia-skills](https://github.com/OpenClaudia/openclaudia-skills/tree/main/skills/content-repurposing/SKILL.md)
 
 ---
 
