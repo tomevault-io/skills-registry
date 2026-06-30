@@ -1,0 +1,13 @@
+# agents
+
+> Skill by [astronomer](https://github.com/astronomer/agents) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [astronomer/agents](https://github.com/astronomer/agents/tree/main/skills/airflow/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
