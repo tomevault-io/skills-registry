@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [breadboard-ai/breadboard](https://github.com/breadboard-ai/breadboard/tree/main/.agent/skills/idiomatic-ts-lit/SKILL.md)
+Original source: [breadboard-ai/breadboard](https://github.com/breadboard-ai/breadboard/tree/main/.agent/skills/opal-backend-api/SKILL.md)
 
 ---
 
