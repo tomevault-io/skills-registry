@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nginx/kubernetes-ingress](https://github.com/nginx/kubernetes-ingress/tree/main/.github/skills/nic-debugging/SKILL.md)
+Original source: [nginx/kubernetes-ingress](https://github.com/nginx/kubernetes-ingress/tree/main/.github/skills/nic-structure/SKILL.md)
 
 ---
 
