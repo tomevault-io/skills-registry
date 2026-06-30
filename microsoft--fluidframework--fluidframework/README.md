@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/FluidFramework](https://github.com/microsoft/FluidFramework/tree/main/.agency/plugins/nori/skills/testing-anti-patterns/SKILL.md)
+Original source: [microsoft/FluidFramework](https://github.com/microsoft/FluidFramework/tree/main/.agency/plugins/nori/skills/receiving-code-review/SKILL.md)
 
 ---
 
