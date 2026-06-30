@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aklofas/kicad-happy](https://github.com/aklofas/kicad-happy/tree/main/skills/lcsc/SKILL.md)
+Original source: [aklofas/kicad-happy](https://github.com/aklofas/kicad-happy/tree/main/skills/kidoc/SKILL.md)
 
 ---
 
