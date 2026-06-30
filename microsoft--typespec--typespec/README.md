@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/typespec](https://github.com/microsoft/typespec/tree/main/.github/skills/emitter-prep-for-pr/SKILL.md)
+Original source: [microsoft/typespec](https://github.com/microsoft/typespec/tree/main/.github/skills/csharp-spector-coverage-gaps/SKILL.md)
 
 ---
 
