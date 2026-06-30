@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/copilot-for-eclipse](https://github.com/microsoft/copilot-for-eclipse/tree/main/.github/skills/endgame/SKILL.md)
+Original source: [microsoft/copilot-for-eclipse](https://github.com/microsoft/copilot-for-eclipse/tree/main/.github/skills/ui-action/SKILL.md)
 
 ---
 
