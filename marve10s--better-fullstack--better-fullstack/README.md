@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Marve10s/Better-Fullstack](https://github.com/Marve10s/Better-Fullstack/tree/main/.agents/skills/remotion-animation/SKILL.md)
+Original source: [Marve10s/Better-Fullstack](https://github.com/Marve10s/Better-Fullstack/tree/main/.agents/skills/modern-short-video/SKILL.md)
 
 ---
 
