@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nuxt-modules/og-image](https://github.com/nuxt-modules/og-image/tree/main/.claude/skills/takumi-rs-core-skilld/SKILL.md)
+Original source: [nuxt-modules/og-image](https://github.com/nuxt-modules/og-image/tree/main/.claude/skills/parcel-bundler-lightningcss/SKILL.md)
 
 ---
 
