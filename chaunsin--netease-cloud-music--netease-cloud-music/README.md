@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chaunsin/netease-cloud-music](https://github.com/chaunsin/netease-cloud-music/tree/main/skills/ncmctl/SKILL.md)
+Original source: [chaunsin/netease-cloud-music](https://github.com/chaunsin/netease-cloud-music/tree/main/.claude/skills/ncmctl-dev/SKILL.md)
 
 ---
 
