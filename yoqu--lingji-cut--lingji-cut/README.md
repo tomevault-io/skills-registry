@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yoqu/lingji-cut](https://github.com/yoqu/lingji-cut/tree/main/.claude/skills/lingji-script-edit/SKILL.md)
+Original source: [yoqu/lingji-cut](https://github.com/yoqu/lingji-cut/tree/main/resources/agent-skills/lingji-video-workflow/SKILL.md)
 
 ---
 
