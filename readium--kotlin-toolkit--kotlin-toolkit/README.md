@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [readium/kotlin-toolkit](https://github.com/readium/kotlin-toolkit/tree/main/.claude/skills/update-changelog/SKILL.md)
+Original source: [readium/kotlin-toolkit](https://github.com/readium/kotlin-toolkit/tree/main/.claude/skills/write-release-announcement/SKILL.md)
 
 ---
 
