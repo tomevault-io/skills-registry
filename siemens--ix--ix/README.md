@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [siemens/ix](https://github.com/siemens/ix/tree/main/.github/skills/create-changeset/SKILL.md)
+Original source: [siemens/ix](https://github.com/siemens/ix/tree/main/.github/skills/changeset-decision/SKILL.md)
 
 ---
 
