@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [christopherkarani/Wax](https://github.com/christopherkarani/Wax/tree/main/Resources/skills/public/wax/SKILL.md)
+Original source: [christopherkarani/Wax](https://github.com/christopherkarani/Wax/tree/main/Resources/skills/public/wax-performance-audit/SKILL.md)
 
 ---
 
