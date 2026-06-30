@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CharlesWiltgen/Axiom](https://github.com/CharlesWiltgen/Axiom/tree/main/.claude-plugin/plugins/axiom/skills/axiom-tools/SKILL.md)
+Original source: [CharlesWiltgen/Axiom](https://github.com/CharlesWiltgen/Axiom/tree/main/.claude-plugin/plugins/axiom/skills/axiom-macos/SKILL.md)
 
 ---
 
