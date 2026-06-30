@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zhu1090093659/deepseek-pp](https://github.com/zhu1090093659/deepseek-pp/tree/main/core/skill/officecli-official/skills/officecli-word-form/SKILL.md)
+Original source: [zhu1090093659/deepseek-pp](https://github.com/zhu1090093659/deepseek-pp/tree/main/core/skill/officecli-official/skills/officecli-pitch-deck/SKILL.md)
 
 ---
 
