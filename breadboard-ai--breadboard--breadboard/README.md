@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [breadboard-ai/breadboard](https://github.com/breadboard-ai/breadboard/tree/main/hives/swarm-test/skills/use-opal-sdk/SKILL.md)
+Original source: [breadboard-ai/breadboard](https://github.com/breadboard-ai/breadboard/tree/main/hives/ui-builder/skills/use-opal-sdk/SKILL.md)
 
 ---
 
