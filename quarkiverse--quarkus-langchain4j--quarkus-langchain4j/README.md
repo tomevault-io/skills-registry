@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [quarkiverse/quarkus-langchain4j](https://github.com/quarkiverse/quarkus-langchain4j/tree/main/samples/skills/src/main/resources/skills/poem-writing/SKILL.md)
+Original source: [quarkiverse/quarkus-langchain4j](https://github.com/quarkiverse/quarkus-langchain4j/tree/main/skills/deployment/src/test/resources/skills/foobar-skill/SKILL.md)
 
 ---
 
