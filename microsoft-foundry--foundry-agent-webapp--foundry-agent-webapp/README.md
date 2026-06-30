@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft-foundry/foundry-agent-webapp](https://github.com/microsoft-foundry/foundry-agent-webapp/tree/main/.github/skills/implementing-chat-streaming/SKILL.md)
+Original source: [microsoft-foundry/foundry-agent-webapp](https://github.com/microsoft-foundry/foundry-agent-webapp/tree/main/.github/skills/writing-unit-tests-typescript/SKILL.md)
 
 ---
 
