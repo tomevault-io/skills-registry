@@ -78,5 +78,5 @@ import 'package:oref/oref.dart';
 4. Avoid guessing versions; read the user's `pubspec.yaml` or ask them to confirm.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/medz) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [medz/oref](https://github.com/medz/oref) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-30 -->
