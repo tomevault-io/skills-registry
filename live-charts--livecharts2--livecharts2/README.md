@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Live-Charts/LiveCharts2](https://github.com/Live-Charts/LiveCharts2/tree/main/.claude/skills/render-chart/SKILL.md)
+Original source: [Live-Charts/LiveCharts2](https://github.com/Live-Charts/LiveCharts2/tree/main/.claude/skills/repro-and-fix/SKILL.md)
 
 ---
 
