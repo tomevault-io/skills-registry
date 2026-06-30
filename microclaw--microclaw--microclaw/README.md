@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microclaw/microclaw](https://github.com/microclaw/microclaw/tree/main/skills/built-in/testing/SKILL.md)
+Original source: [microclaw/microclaw](https://github.com/microclaw/microclaw/tree/main/skills/built-in/datetime/SKILL.md)
 
 ---
 
