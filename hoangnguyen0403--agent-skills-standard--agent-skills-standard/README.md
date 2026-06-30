@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HoangNguyen0403/agent-skills-standard](https://github.com/HoangNguyen0403/agent-skills-standard/tree/main/skills/quality-engineering/quality-engineering-appium-mcp/SKILL.md)
+Original source: [HoangNguyen0403/agent-skills-standard](https://github.com/HoangNguyen0403/agent-skills-standard/tree/main/cli/temp_e2e_test/.agents/skills/flutter/flutter-navigation/SKILL.md)
 
 ---
 
