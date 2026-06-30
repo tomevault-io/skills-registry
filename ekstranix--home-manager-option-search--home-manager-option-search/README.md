@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ekstranix/home-manager-option-search](https://github.com/ekstranix/home-manager-option-search/tree/main/.claude/skills/openspec-apply-change/SKILL.md)
+Original source: [ekstranix/home-manager-option-search](https://github.com/ekstranix/home-manager-option-search/tree/main/.claude/skills/openspec-archive-change/SKILL.md)
 
 ---
 
