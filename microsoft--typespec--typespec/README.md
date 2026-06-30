@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/typespec](https://github.com/microsoft/typespec/tree/main/packages/http-client-python/.github/skills/diff-upstream/SKILL.md)
+Original source: [microsoft/typespec](https://github.com/microsoft/typespec/tree/main/packages/http-client-python/.github/skills/test-unbranded-emitter/SKILL.md)
 
 ---
 
