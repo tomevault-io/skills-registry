@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [amanning3390/hermeshub](https://github.com/amanning3390/hermeshub/tree/main/skills/paperclip/SKILL.md)
+Original source: [amanning3390/hermeshub](https://github.com/amanning3390/hermeshub/tree/main/skills/scrapling/SKILL.md)
 
 ---
 
