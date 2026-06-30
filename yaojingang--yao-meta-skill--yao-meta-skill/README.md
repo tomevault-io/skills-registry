@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yaojingang/yao-meta-skill](https://github.com/yaojingang/yao-meta-skill/tree/main/examples/simple-note-cleanup/generated-skill/SKILL.md)
+Original source: [yaojingang/yao-meta-skill](https://github.com/yaojingang/yao-meta-skill/tree/main/examples/team-frontend-review/generated-skill/SKILL.md)
 
 ---
 
