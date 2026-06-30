@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dotnet/SqlClient](https://github.com/dotnet/SqlClient/tree/main/.github/skills/fetch-milestone-prs/SKILL.md)
+Original source: [dotnet/SqlClient](https://github.com/dotnet/SqlClient/tree/main/.github/skills/generate-mstest-filter/SKILL.md)
 
 ---
 
