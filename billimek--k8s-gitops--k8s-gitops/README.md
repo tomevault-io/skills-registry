@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [billimek/k8s-gitops](https://github.com/billimek/k8s-gitops/tree/main/.claude/skills/tune-renovate-review/SKILL.md)
+Original source: [billimek/k8s-gitops](https://github.com/billimek/k8s-gitops/tree/main/.claude/skills/check-minecraft-plugin-compat/SKILL.md)
 
 ---
 
