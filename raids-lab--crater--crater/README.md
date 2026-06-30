@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [raids-lab/crater](https://github.com/raids-lab/crater/tree/main/skills/crater-devel-shared/SKILL.md)
+Original source: [raids-lab/crater](https://github.com/raids-lab/crater/tree/main/skills/crater-devel-review/SKILL.md)
 
 ---
 
