@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Kocoro-lab/Kocoro](https://github.com/Kocoro-lab/Kocoro/tree/main/internal/skills/bundled/skills/canvas-design/SKILL.md)
+Original source: [Kocoro-lab/Kocoro](https://github.com/Kocoro-lab/Kocoro/tree/main/internal/skills/bundled/skills/theme-factory/SKILL.md)
 
 ---
 
