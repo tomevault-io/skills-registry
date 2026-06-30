@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jgerton/brand-toolkit](https://github.com/jgerton/brand-toolkit/tree/main/skills/brand-positioning/SKILL.md)
+Original source: [jgerton/brand-toolkit](https://github.com/jgerton/brand-toolkit/tree/main/skills/brand-landing-page/SKILL.md)
 
 ---
 
