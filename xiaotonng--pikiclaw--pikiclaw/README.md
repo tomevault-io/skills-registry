@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xiaotonng/pikiclaw](https://github.com/xiaotonng/pikiclaw/tree/main/.pikiloom/skills/reddit-snipe/SKILL.md)
+Original source: [xiaotonng/pikiclaw](https://github.com/xiaotonng/pikiclaw/tree/main/.pikiloom/skills/auto-promote/SKILL.md)
 
 ---
 
