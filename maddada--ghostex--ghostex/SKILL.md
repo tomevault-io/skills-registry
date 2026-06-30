@@ -1,66 +1,140 @@
 ---
-name: writing-commit-messages
+name: ghostex-agent-orchestration
 description: >- Use when this capability is needed.
 metadata:
   author: maddada
 ---
 
-# Writing Commit Messages
+# ghostex-agent-orchestration
 
-Write commit messages that follow commit style guidelines for the project.
+Use this skill when a task needs Ghostex session coordination from the CLI.
+Before choosing commands, run or read:
 
-## Format
-
-```
-<subsystem>: <summary>
-
-<reference issues/PRs/etc.>
-
-<long form description>
+```bash
+ghostex --help
 ```
 
-## Rules
+Treat that help output as the source of truth for current command names,
+selectors, flags, and aliases.
 
-### Subject line
+## Core Loop
 
-- **Subsystem prefix**: Use a short, lowercase identifier for the
-  area of code changed (e.g., `terminal`, `vt`, `lib`, `config`,
-  `font`). Determine this from the file paths in the diff. If
-  changes span the macOS app, use `macos`. For GTK, use `gtk`. For
-  build system, use `build`. Use nested subsystems with `/` when
-  helpful and exclusive (e.g., `terminal/osc`).
-- **Summary**: Lowercase start (not capitalized), imperative mood,
-  no trailing period. Keep it concise—ideally under 60 characters
-  total for the whole subject line.
+1. Inspect the workspace and available sessions:
 
-### References
+   ```bash
+   ghostex sessions --json
+   ghostex state
+   ```
 
-- If the change relates to a GitHub issue, PR, or discussion, list
-  the relevant numbers on their own lines after the subject, separated
-  by a blank line. E.g. `#1234`
-- If there are no references, omit this section entirely (no blank
-  line).
+2. Pick stable selectors. Prefer session ids from JSON output. Titles and
+   `project:title` selectors are acceptable for human-scale use, but exact ids
+   are safer for automation.
+3. Act through Ghostex CLI commands.
+4. Verify with `ghostex sessions --json`, `ghostex read-text`, `ghostex wait-for`,
+   or `ghostex assert-card`.
 
-### Long form description
+## Create Panes And Agents
 
-- Describe **what changed**, **what the previous behavior was**,
-  and **how the new behavior works** at a high level.
-- Use plain prose, not bullet points. Wrap lines at ~72 characters.
-- Focus on the _why_ and _how_ rather than restating the diff.
-- Keep the tone direct and technical without no filler phrases.
-- Don't exceed a handful of paragraphs; less is more.
+- Create a terminal pane:
 
-## Workflow
+  ```bash
+  ghostex create-session "Build watcher" --project-id <projectId> --group-id <groupId> --input "npm run dev"
+  ```
 
-- If `.jj` is present, use `jj` instead of `git` for all commands.
-- Run a diff to see what changes are present since the last commit.
-- Identify the subsystem from the changed file paths.
-- Identify any referenced issues/PRs from the diff context or
-  branch name.
-- Draft the commit message following the format above.
-- Apply the commit
-- Don't push the commit; leave that to the user.
+- Create a configured agent pane:
+
+  ```bash
+  ghostex create-agent <agentId> --group-id <groupId>
+  ```
+
+- Create or reuse a visible configured agent session and send it a prompt:
+
+  ```bash
+  ghostex send-message <agentId> "Please investigate the failing test and report findings."
+  ```
+
+When project or group matters, pass explicit `--project-id` or `--group-id`
+instead of relying on whichever project is currently focused in the UI.
+
+## Message Other Agent Sessions
+
+- Send a complete message and Enter:
+
+  ```bash
+  ghostex send-message <selector> "Status check: please summarize what you are doing and any blockers."
+  ```
+
+- Type without Enter, then send Enter separately:
+
+  ```bash
+  ghostex send-text <selector> "Please run the focused test."
+  ghostex send-enter <selector>
+  ```
+
+- Press Enter in another session without typing new text:
+
+  ```bash
+  ghostex send-enter <selector>
+  ```
+
+- Send control keys:
+
+  ```bash
+  ghostex send-key <selector> ctrl-c
+  ```
+
+Use concise messages with the exact request, expected output, and whether the
+other agent should keep working or stop after reporting back.
+
+## Check Status And Read Output
+
+- List sessions and statuses:
+
+  ```bash
+  ghostex sessions --json
+  ```
+
+- Read the last N lines from another session. Ghostex uses zmx under the hood
+  for this, but agents should call the exposed Ghostex command:
+
+  ```bash
+  ghostex read-text <selector> --lines 80 --json
+  ```
+
+- Read only currently visible text when that matters:
+
+  ```bash
+  ghostex read-text <selector> --visible --json
+  ```
+
+- Wait for a sidebar card projection or assert its state:
+
+  ```bash
+  ghostex wait-for <selector> --timeout-ms 30000
+  ghostex assert-card <selector> --visible true
+  ```
+
+## Manage Sessions
+
+Use Ghostex commands for lifecycle and focus:
+
+```bash
+ghostex focus <selector> --json
+ghostex sleep <selector> --json
+ghostex wake <selector> --json
+ghostex kill <selector> --json
+```
+
+Selectors can be an alias, session id, title, or `project:title`. Numeric
+aliases come from the last `ghostex sessions` or `gx sessions` list.
+
+## Boundaries
+
+- Do not drive Ghostex panes through raw zmx/tmux commands when a Ghostex CLI
+  command exists.
+- Use `$ghostex-browser-use` for embedded CEF browser panes.
+- Use `$ghostex-computer-use` for native macOS apps outside Ghostex.
 
 ---
 > Source: [maddada/Ghostex](https://github.com/maddada/Ghostex) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-29 -->
+<!-- tomevault:4.0:skill_md:2026-06-30 -->
