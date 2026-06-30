@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [briiirussell/cybersecurity-skills](https://github.com/briiirussell/cybersecurity-skills/tree/main/skills/finding-triage/SKILL.md)
+Original source: [briiirussell/cybersecurity-skills](https://github.com/briiirussell/cybersecurity-skills/tree/main/skills/disk-forensics/SKILL.md)
 
 ---
 
