@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aitytech/agentkits-memory](https://github.com/aitytech/agentkits-memory/tree/main/skills/memory/SKILL.md)
+Original source: [aitytech/agentkits-memory](https://github.com/aitytech/agentkits-memory/tree/main/plugin/skills/memory-workflow/SKILL.md)
 
 ---
 
