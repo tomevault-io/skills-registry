@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gastownhall/gascity](https://github.com/gastownhall/gascity/tree/main/internal/bootstrap/packs/core/skills/gc-rigs/SKILL.md)
+Original source: [gastownhall/gascity](https://github.com/gastownhall/gascity/tree/main/internal/bootstrap/packs/core/skills/gc-work/SKILL.md)
 
 ---
 
