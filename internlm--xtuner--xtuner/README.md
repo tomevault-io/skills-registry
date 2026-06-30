@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [InternLM/xtuner](https://github.com/InternLM/xtuner/tree/main/.claude/skills/model_patch/SKILL.md)
+Original source: [InternLM/xtuner](https://github.com/InternLM/xtuner/tree/main/.claude/skills/add_hf_model/SKILL.md)
 
 ---
 
