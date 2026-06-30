@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [duriantaco/skylos](https://github.com/duriantaco/skylos/tree/main/.agents/skills/skylos-security/SKILL.md)
+Original source: [duriantaco/skylos](https://github.com/duriantaco/skylos/tree/main/.claude/skills/skylos-security/SKILL.md)
 
 ---
 
