@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [whiteguo233/OpenBiliClaw](https://github.com/whiteguo233/OpenBiliClaw/tree/main/skills/comment_analysis/SKILL.md)
+Original source: [whiteguo233/OpenBiliClaw](https://github.com/whiteguo233/OpenBiliClaw/tree/main/skills/openbiliclaw-adapter/SKILL.md)
 
 ---
 
