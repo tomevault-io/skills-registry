@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SponsioLabs/Sponsio](https://github.com/SponsioLabs/Sponsio/tree/main/sponsio/skills/sponsio/SKILL.md)
+Original source: [SponsioLabs/Sponsio](https://github.com/SponsioLabs/Sponsio/tree/main/ts/packages/sdk/skills/SKILL.md)
 
 ---
 
