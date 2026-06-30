@@ -2,7 +2,7 @@
 name: shadcn-vue-admin
 description: Build and maintain the shadcn-vue-admin Vue 3 + Vite + TypeScript admin dashboard with shadcn-vue, Tailwind, Pinia, Vue Router, i18n, and TanStack Query. Use for UI/layout changes, page additions, routing updates, theme/auth work, and component integration in this repo. Use when this capability is needed.
 metadata:
-  author: whbbit1999
+  author: Whbbit1999
 ---
 
 ## Purpose and scope
@@ -48,7 +48,7 @@ Requirements:
 ## Design and implementation conventions
 
 - Use Vue 3 Composition API with TypeScript.
-- Prefer vee-validate + zod for form validation.
+- Prefer tanstack/vue-form + zod for form validation.
 - Follow existing theming strategy in `src/assets/` and `src/stores/theme.ts`.
 - Follow the existing structure for i18n in `src/plugins/i18n/`.
 
@@ -75,5 +75,5 @@ Requirements:
 After changes, provide a concise summary and list any commands run (if any).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/whbbit1999) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [Whbbit1999/shadcn-vue-admin](https://github.com/Whbbit1999/shadcn-vue-admin) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-30 -->
