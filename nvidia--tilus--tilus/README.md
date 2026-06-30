@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA/tilus](https://github.com/NVIDIA/tilus/tree/main/.claude/skills/write-docs/SKILL.md)
+Original source: [NVIDIA/tilus](https://github.com/NVIDIA/tilus/tree/main/.claude/skills/ncu-report/SKILL.md)
 
 ---
 
