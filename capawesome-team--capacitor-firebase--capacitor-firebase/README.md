@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [capawesome-team/capacitor-firebase](https://github.com/capawesome-team/capacitor-firebase/tree/main/.agents/skills/firebase-basics/SKILL.md)
+Original source: [capawesome-team/capacitor-firebase](https://github.com/capawesome-team/capacitor-firebase/tree/main/.agents/skills/firebase-auth-basics/SKILL.md)
 
 ---
 
