@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [astronomer/agents](https://github.com/astronomer/agents/tree/main/skills/creating-openlineage-extractors/SKILL.md)
+Original source: [astronomer/agents](https://github.com/astronomer/agents/tree/main/astro-airflow-mcp/.claude/skills/airflow-adapter/SKILL.md)
 
 ---
 
