@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cyhhao/vibe-remote](https://github.com/cyhhao/vibe-remote/tree/main/skills/use-vibe-remote/SKILL.md)
+Original source: [cyhhao/vibe-remote](https://github.com/cyhhao/vibe-remote/tree/main/skills/background-watch-hook/SKILL.md)
 
 ---
 
