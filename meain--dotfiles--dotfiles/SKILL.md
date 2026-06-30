@@ -1,164 +1,291 @@
 ---
-name: my-weekly-report
+name: optimize-skill
 description: > Use when this capability is needed.
 metadata:
   author: meain
 ---
 
-# /my-weekly-report — Weekly Status Update Generator
+# Optimize Skill - Extract Deterministic Commands
 
-Generate a concise weekly update in the team's standard format, based on the
-current Jira sprint tickets assigned to you.
+Analyze agent skills and extract multi-step deterministic command chains into standalone scripts.
 
-## Format
+## When to Use
 
-The output should follow the team format exactly:
+- User says "optimize this skill", "check if we can improve this skill"
+- User points to a skill directory or SKILL.md file
+- After creating a new skill with complex command sequences
+- Periodic skill maintenance/refactoring
 
+## Principle
+
+From "Stop Using AI For This" video:
+> Don't make AI execute deterministic logic repeatedly. Write the logic once as a script, 
+> let AI decide when to call it.
+
+## What to Extract
+
+### Extract when you see:
+
+1. **Multi-step pipelines** — query → filter → transform → output
+   ```bash
+   # Before: encoded in skill
+   curl ... | jq '.data' | filter | transform
+   ```
+   ```bash
+   # After: single script call
+   ~/.agents/skills/foo/scripts/fetch-data.sh
+   ```
+
+2. **Parallel operations** — multiple commands with wait/merge logic
+   ```bash
+   # Before: skill describes parallel pattern
+   for repo in ...; do cmd & done; wait; merge
+   ```
+   ```bash
+   # After: script handles parallelism
+   ~/.agents/skills/foo/scripts/gather-parallel.sh
+   ```
+
+3. **Complex conditionals** — date calculations, token extraction, nested if/else
+   ```bash
+   # Before: case statement in skill
+   case "$DAY" in Sat) date -d "3 days ago" ;; ...
+   ```
+   ```bash
+   # After: script handles logic
+   ~/.agents/skills/foo/scripts/calculate-date.sh
+   ```
+
+4. **GraphQL/API queries** — hardcoded query structure with filtering
+   ```bash
+   # Before: 10+ lines of query + curl + jq
+   curl -H "..." -d '{"query":"... 100 chars ..."}'
+   ```
+   ```bash
+   # After: script encapsulates query
+   ~/.agents/skills/foo/scripts/graphql-query.sh
+   ```
+
+5. **Data gathering that's reused** — same fetch pattern across skills
+   ```bash
+   # Can be shared across skills
+   ~/.agents/skills/common/scripts/fetch-sprint-tickets.sh
+   ```
+
+### Do NOT extract:
+
+- Single CLI tool calls (`jira issue list ...`)
+- Simple file operations (`cat`, `echo`, basic `jq`)
+- Context-dependent decisions (which skill to invoke, which tool to use)
+- Commands where arguments vary significantly each time
+- Operations that need immediate user feedback
+
+## Analysis Steps
+
+### 1. Read the Skill
+
+Read the SKILL.md file(s) in the target directory.
+
+### 2. Identify Command Patterns
+
+Scan for these patterns:
+- Code blocks with `bash` or `sh` language
+- Multi-line command sequences
+- Hardcoded queries or data structures
+- Comments like "run in parallel", "wait for all", "filter results"
+- Repeated patterns (same command structure appears multiple times)
+- Token calculations (date math, string extraction, credential fetching)
+
+### 3. Score Each Command Block
+
+For each command block, score on:
+- **Complexity**: 0 (single command) to 5 (multi-step pipeline)
+- **Determinism**: 0 (highly variable) to 5 (always runs the same)
+- **Reusability**: 0 (one-off) to 5 (used across skills)
+- **Token cost**: estimate tokens saved per invocation
+
+**Extract if**: Complexity ≥ 2 AND Determinism ≥ 3
+
+### 4. Group Related Commands
+
+Look for:
+- Commands that always run together
+- Commands with shared setup (export variables, cd to directory)
+- Commands that feed into each other (output of A → input of B)
+
+### 5. Propose Scripts
+
+For each extraction candidate, propose:
+- Script name and location (`scripts/<name>.sh`)
+- Script purpose (comment header)
+- Input parameters (if any)
+- Output format (JSON, text, exit code)
+- Error handling strategy
+
+### 6. Show Before/After
+
+Present side-by-side:
+
+**Before:**
+```markdown
+### Step 3: Fetch Data
+\`\`\`bash
+TOKEN=$(security find-generic-password -s "..." -w)
+if [[ "$TOKEN" == go-keyring-base64:* ]]; then
+  TOKEN=$(echo "${TOKEN#go-keyring-base64:}" | base64 -d)
+fi
+curl -H "Authorization: bearer $TOKEN" \
+  -d '{"query":"..."}' https://api.github.com/graphql | jq '.data.nodes'
+\`\`\`
 ```
-## Abin Simon
 
-**What I worked on:**
-- <bullet for each Done/In Progress ticket, plus any notable non-Jira work from backlog>
-
-**What's next:**
-- <bullet for each To Do ticket in the sprint>
-
-**Blockers:** None
-**Upcoming leaves:** None
-**Unplanned leaves last week:** None
+**After:**
+```markdown
+### Step 3: Fetch Data
+\`\`\`bash
+~/.agents/skills/skill-name/scripts/fetch-github-data.sh
+\`\`\`
+Returns JSON array of nodes.
 ```
 
-Always output the report directly in the chat — do NOT write to a file.
-
-## Steps
-
-### 1. Find Active Sprint
-
+**Script:** `scripts/fetch-github-data.sh`
 ```bash
-jira sprint list --plain
+#!/usr/bin/env bash
+set -e
+# Fetch GitHub data via GraphQL
+# Returns: JSON array of nodes
+TOKEN=$(security find-generic-password -s "gh:github.com" -w 2>&1)
+if [[ "$TOKEN" == go-keyring-base64:* ]]; then
+  TOKEN=$(echo "${TOKEN#go-keyring-base64:}" | base64 -d)
+fi
+curl -s -H "Authorization: bearer $TOKEN" -H "Content-Type: application/json" \
+  -d '{"query":"{ ... }"}' https://api.github.com/graphql | jq -c '.data.nodes'
 ```
 
-Find the active sprint whose name contains "EARN" (that's the user's primary sprint).
-Note its ID.
+### 7. Estimate Impact
 
-### 2. Get Sprint Tickets
+Calculate savings:
+- Token reduction per skill invocation
+- Number of times skill is typically invoked per day/week
+- Total weekly token savings
+- Reliability improvement (deterministic execution)
 
-```bash
-~/.agents/skills/my-weekly-report/scripts/sprint-tickets.sh
+### 8. Ask for Confirmation
+
+Present the analysis and proposed changes. Ask:
+1. Should I create these scripts?
+2. Should I update the skill file to reference them?
+3. Any scripts to skip or modify?
+
+### 9. Implement (if approved)
+
+For each approved script:
+1. Create `scripts/` directory in skill folder if needed
+2. Write script with proper shebang, error handling, comments
+3. Make executable (`chmod +x`)
+4. Update SKILL.md to replace inline commands with script call
+5. Test the script (run it, check output format)
+6. Report any issues
+
+### 10. Document Changes
+
+Create a summary file at `/tmp/skill-optimization-<skill-name>.md`:
+- Scripts created
+- Skill sections modified
+- Token savings estimate
+- Test results
+
+## Output Format
+
+Present findings as:
+
+```markdown
+# Skill Optimization Analysis: <skill-name>
+
+## Summary
+- X command blocks analyzed
+- Y extraction candidates found
+- Estimated Z tokens saved per invocation
+
+## Candidates for Extraction
+
+### 1. <name> (Complexity: 4, Determinism: 5, Tokens: ~150)
+**Current:** Steps 3-4 in SKILL.md (lines X-Y)
+**Proposed:** `scripts/<name>.sh`
+**Savings:** ~150 tokens per invocation
+**Rationale:** Multi-step pipeline with hardcoded GraphQL query
+
+[Show before/after]
+
+### 2. <name> (Complexity: 3, Determinism: 4, Tokens: ~80)
+...
+
+## Scripts NOT Worth Extracting
+
+### Step 6: Simple file read
+**Reason:** Single command, context-dependent path
+**Keep as-is:** `cat /path/to/file`
+
+## Recommendations
+
+1. Extract candidates 1, 2, 4 (high impact)
+2. Leave candidates 3, 5 inline (low complexity)
+3. Consider sharing candidate 2 with <other-skill>
+
+Proceed? [y/n]
 ```
 
-Returns JSON with tickets grouped by status: `done`, `in_progress`, `to_do`.
+## Edge Cases
 
-### 3. Check Backlog for Notable Non-Jira Work
+- **Skill uses MCP tools**: Don't extract MCP calls, they're already encapsulated
+- **Skill has existing scripts/**: Analyze if they can be improved or consolidated
+- **Multi-skill extraction**: If multiple skills share a pattern, propose a shared script location
+- **Sandbox requirements**: Note if scripts need `dangerouslyDisableSandbox: true`
+- **Credentials**: Ensure scripts handle token/password extraction properly
 
-Read `/Users/meain/.local/share/sbdb/Backlog/Backlog.md` (first ~50 lines).
+## Testing Protocol
 
-Look at **Today** and **This Week** sections for completed items (`- [x]`) that are
-work-related and don't already have a corresponding Jira ticket. Include any notable
-ones in "What I worked on".
+For each created script:
+1. Run with typical inputs
+2. Verify output format matches expectations
+3. Check error handling (missing deps, failed commands)
+4. Test cross-platform compatibility (GNU vs BSD date, etc.)
+5. Ensure it works from skill context (paths, environment)
 
-### 4. Check GitHub PRs
+**Common pitfalls to check:**
+- **Tab-delimited output**: If parsing `--plain` output from CLIs, check for variable tab alignment. Prefer `--raw` or `--json` flags when available.
+- **Date commands**: Use `date --version` to detect GNU vs BSD, not `uname`
+- **Temp files**: Use `mktemp` for safe temp filenames, especially when names contain slashes
+- **JSON parsing**: Always prefer native JSON output (`--raw`, `--json`) over parsing formatted text
 
-```bash
-~/.agents/skills/my-weekly-report/scripts/user-prs.sh "@me" $(cat ~/.config/datafiles/prs-repos)
-```
+**Tool-specific flags:**
+- `jira issue list --raw` → JSON array of issues
+- `jira sprint list --plain` → No JSON mode, grep/awk is fine
+- `gh pr list --json <fields>` → JSON output
+- `confluence search --cql` → No JSON mode, text parsing necessary
 
-Returns JSON array of PRs created or merged this week. Include merged PRs as
-evidence of completed work. PRs still in review signal active "What I worked on"
-items. Do NOT list PRs as separate bullets — use them to enrich Jira ticket bullets
-or add a single "PR reviews" bullet if you reviewed several PRs by others.
+## Examples
 
-### 5. Check Confluence for Recent Pages
+See existing optimized skills:
+- `backlog/scripts/` — date calculation, GraphQL query, sprint tickets (uses `--raw`)
+- `my-weekly-report/scripts/` — parallel PR fetching, confluence search
+- `copy-for-teams/copy_teams.py` — clipboard HTML formatting
+- `recall/scripts/` — session search and reading
 
-```bash
-~/.agents/skills/my-weekly-report/scripts/confluence-updates.sh
-```
+**Key improvements from testing:**
+- `sprint-tickets.sh`: Switched from `--plain --columns` to `--raw` for reliable JSON parsing
+- `user-prs.sh`: Used `mktemp` instead of hardcoded temp file paths with slashes
+- `date-before.sh`: Detects date command flavor via `--version`, not OS name
 
-Returns text listing of pages modified this week. Parse the output to extract page titles.
-If any design docs, runbooks, or notable pages were created or updated this week, add a
-bullet for them in "What I worked on" (e.g. "Created design doc for Org Anchoring").
+## Notes
 
-### 6. Build the Report
-
-**What I worked on:**
-- For Done tickets: one bullet per ticket, brief summary + Jira link
-- For In Progress/IN REVIEW tickets: one bullet per ticket, brief summary + Jira link
-- For any notable backlog completions: one bullet each
-
-**What's next:**
-- For To Do tickets: one bullet per ticket, brief summary + Jira link
-- Keep bullets concise — match the style of prior updates in
-  `/Users/meain/.local/share/sbdb/InfraCloud/Weekly Updates Submitted/`
-
-**Blockers / leaves:**
-- Default all three fields to "None" unless backlog or Jira indicates otherwise
-- Check backlog for any explicit blocker notes or upcoming leave entries
-
-### 7. Open in Emacs for Review
-
-Write the draft to `/tmp/weekly-report-<YYYY-MM-DD>.md` and open it for editing:
-
-```bash
-emacsclient /tmp/weekly-report-<YYYY-MM-DD>.md
-```
-
-Use `dangerouslyDisableSandbox: true` and `timeout: 600000`. Wait for the user to
-finish editing (they'll do `C-x #` to close). Read back the edited content from
-the system-reminder diff or by re-reading the file.
-
-Also print the draft in the chat before opening Emacs so the user can see it.
-
-### 8. Update Confluence
-
-Once the user confirms the draft is good (or after Emacs closes without objection),
-update the weekly updates Confluence page with the edited content.
-
-Find the page ID by searching for "Updates for week of <current Monday's date>":
-
-```bash
-confluence search 'title = "Updates for week of <YYYY-MM-DD>" AND space = "~712020cccc16439d5041339f95122d8d977f63"' --cql 2>/dev/null
-```
-
-Read the current page (`confluence read -f markdown <pageId>`), replace only the
-Abin Simon section with the edited content, write the full updated page to a temp
-file, then update:
-
-```bash
-confluence update <pageId> -f /tmp/weekly-update-full-<YYYY-MM-DD>.md --format markdown
-```
-
-Use `dangerouslyDisableSandbox: true` for all confluence CLI calls.
-
-Do NOT save the report locally — do not write to any file under
-`/Users/meain/.local/share/sbdb/InfraCloud/Weekly Updates Submitted/`.
-
-## Reference Format
-
-See `/Users/meain/.local/share/sbdb/InfraCloud/Weekly Updates Submitted/2026/W17.md`
-for the exact style. The Abin Simon section there is the canonical example:
-
-```
-## Abin Simon
-
-**What I worked on:**
-- Worked on separating earn query and ingestion service
-- Working on pushing JSON schema validation to prod
-- Security fixes in multiple repos
-- Working with Rushikesh's (Veeam Employee) onboarding
-- ADK SKU change and dropping DR for eventhub
-- PR reviews
-**What's next:**
-- Org Anchoring
-- Help with onboarding Rushikesh and work on synthetic monitoring
-
-**Blockers:** None
-**Upcoming leaves:** None
-**Unplanned leaves last week:** April 14, 15
-```
-
-Note: bullets are short phrases, not full sentences. Jira links are optional but
-preferred for tickets — include them when the ticket ID is known.
+- Always show full before/after for user review
+- Don't optimize prematurely — wait for complexity to appear
+- Scripts should be self-contained and testable
+- Prefer simple bash over complex awk/sed unless necessary
+- Use jq for JSON manipulation when available
+- **Test scripts with real data before committing** — tab alignment, temp files, date commands all have edge cases
 
 ---
 > Source: [meain/dotfiles](https://github.com/meain/dotfiles) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-29 -->
+<!-- tomevault:4.0:skill_md:2026-06-30 -->
