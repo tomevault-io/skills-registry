@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [addfox/addfox](https://github.com/addfox/addfox/tree/main/.agents/skills/harden/SKILL.md)
+Original source: [addfox/addfox](https://github.com/addfox/addfox/tree/main/.agents/skills/onboard/SKILL.md)
 
 ---
 
