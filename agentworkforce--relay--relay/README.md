@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AgentWorkforce/relay](https://github.com/AgentWorkforce/relay/tree/main/.claude/skills/prpm-json-best-practices-skill/SKILL.md)
+Original source: [AgentWorkforce/relay](https://github.com/AgentWorkforce/relay/tree/main/.claude/skills/github-oauth-nango-integration/SKILL.md)
 
 ---
 
