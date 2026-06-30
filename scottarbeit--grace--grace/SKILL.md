@@ -1,102 +1,249 @@
 ---
-name: grace
-description: Grace repository workflow, architecture, and implementation guidance. Use when working in a Grace repo or on Grace planning, GitHub issue orchestration, F#/.NET code, Orleans actors, Giraffe HTTP APIs, SDK or CLI surfaces, DTOs/events/parameters, authorization, webhooks and approval requests, manifest-backed storage, tests, Aspire/runtime, docs, CONTRIBUTING, or AGENTS updates. Use when this capability is needed.
+name: code-review-stabilizer
+description: >- Use when this capability is needed.
 metadata:
   author: ScottArbeit
 ---
 
-# Grace
+# Code Review Stabilizer
 
-Use this skill to work in the Grace repository without loading every domain-specific playbook up front.
+Use this skill when a Grace pull request is stuck in repeated code-review back-and-forth, or when the orchestrator sees
+review findings that suggest the implementation model is under-specified.
 
-## Start Here
+This skill exists to stop expensive one-off patch loops. When review findings keep moving to adjacent edge cases, pause
+normal fix-and-review iteration, name the missing invariants, prove them, and only then request another review.
 
-1. Read the repo-local instructions before editing:
-   - `AGENTS.md`
-   - the closest nested `AGENTS.md`, usually under `src/`
-   - `docs/Development process.md` for non-trivial tracked work
-1. Inspect the current code, commands, and tests before answering behavior questions. Grace changes quickly.
-1. Keep planning-only requests in chat. Create issues, branches, worktrees, or PRs only when the user asks for tracked
-   implementation or tracker setup.
-1. For tracked implementation, use the Grace issue-owned workflow and validation profile from
-   [workflow.md](references/workflow.md).
-1. Load only the reference files needed for the task.
+## Trigger thresholds
 
-## Reference Router
+Count a **substantive review cycle** as:
 
-Read these files on demand:
+1. A reviewer, usually Codex Code Review, reports one or more behavior, correctness, security, durability, concurrency,
+   contract, or maintainability findings.
+1. A worker pushes a fix commit or fix series.
+1. The next review reports another substantive finding on the new head.
 
-| Task | Load |
-| ---- | ---- |
-| Issue-owned work, epics, DAGs, review loops, branch/worktree cleanup, validation profiles | [workflow.md](references/workflow.md) |
-| Finding code, choosing project boundaries, understanding the repo layout | [project-map.md](references/project-map.md) |
-| DTOs, domain events, parameters, serializers, shared helpers, role semantics | [contracts-and-shared.md](references/contracts-and-shared.md) |
-| HTTP routes, Giraffe handlers, endpoint authorization, SDK, CLI, public command behavior | [public-surfaces.md](references/public-surfaces.md) |
-| Orleans grains, event-sourced decisions, idempotency, reminders, durable state transitions | [actors-and-durability.md](references/actors-and-durability.md) |
-| Auth, RBAC, PATs, OIDC, TestAuth, path permissions, security review points | [security-and-auth.md](references/security-and-auth.md) |
-| Manifest-backed uploads, ContentBlocks, Service Bus, webhooks, Aspire, hosted/runtime work | [runtime-and-storage.md](references/runtime-and-storage.md) |
-| Server integration tests, CLI tests, contract tests, authorization tests, validation commands | [tests.md](references/tests.md) |
-| README, CONTRIBUTING, AGENTS, Markdown, HTML/process docs, contributor guidance | [docs-and-contributing.md](references/docs-and-contributing.md) |
+Do not count purely administrative comments, duplicate comments, formatting-only nits, CI flakes, stale review threads
+that were already resolved, or reviewer comments that the orchestrator explicitly classifies as invalid.
 
-## Sub-skill Router
+### Default threshold
 
-Use these sibling skills when the task needs a specialized workflow:
+- **Cycle 1:** normal review/fix behavior is acceptable.
+- **Cycle 2:** continue, but watch for repeated themes and add a short prevention note to the PR.
+- **Cycle 3:** pause normal patching and start a stabilization pass.
+- **Cycle 4:** hard stop. Do not request another review until a stabilization ledger and self-review are posted.
 
-| Task | Load |
-| ---- | ---- |
-| Repeated Codex Code Review Bot findings, review/fix loop monitoring, stabilization ledgers, hard-stop review thresholds | [code-review-stabilizer](../code-review-stabilizer/SKILL.md) |
+### High-risk threshold
 
-## Grace Defaults
+Start the stabilization pass after **2 substantive cycles** when the touched surface includes any of these:
 
-- Prefer repo evidence over memory, guesses, or old plans.
-- Preserve Grace vocabulary: work items, promotion sets, queues, gates, policies, attestations, review reports,
-  webhooks, approval policies, approval requests, UploadSessions, FileManifests, ContentBlocks, and
-  ManifestContributionWorkflows.
-- Keep changes vertically sliced through the nearest public boundary whenever possible.
-- For tracked coding issues, write existing issue-detail fields as review-prevention guidance and require worker
-  handoffs to include bot-prevention self-review evidence before the pull request review loop.
-- When implementing an epic, always use the `epic/<parent-issue>-<slug>` integration branch mode described in
-  `references/workflow.md`. Route sub-issue pull requests to that epic branch; do not use direct-to-`main` epic slices.
-- Coordinate across `Grace.Types`, `Grace.Shared`, `Grace.Server`, `Grace.Actors`, `Grace.SDK`, `Grace.CLI`, and tests
-  when one surface changes another.
-- Prefer `pwsh ./scripts/validate.ps1 -Fast`; use `-Full` when Aspire, emulators, Service Bus, storage, Redis,
-  deployment/runtime behavior, or cross-service integration is affected.
-- Use PowerShell examples before bash / zsh in docs.
+- storage routing, CAS, object placement, blob reads/writes, cleanup, retention, or compaction
+- Orleans actors, idempotency, replay, retries, reminders, timers, or durable actor state
+- metadata accounting, reference counts, dedupe indexes, or garbage-collection eligibility
+- auth, authorization, ownership, tenant/repository scope, secrets, or token authority
+- public HTTP DTOs, OpenAPI, SDKs, CLI contracts, serialized events, or persisted shapes
+- concurrency, TOCTOU windows, async side-effect ordering, partial failure, or recovery
+- migrations, data reset assumptions, destructive operations, or irreversible state transitions
 
-## PowerShell Text Editing and Quoting
+A fourth substantive cycle is always a hard stop, even outside high-risk areas.
 
-Use PowerShell deliberately when writing or updating text. Most Grace orchestration and GitHub body updates run from
-PowerShell, so quoting mistakes can silently flatten Markdown, expand variables, or pass malformed arguments.
+## Immediate stop signals
 
-- Prefer file-based edits for multiline GitHub issue, pull request, or Markdown bodies. Write a temporary `.md` file,
-  validate it, then pass it with `--body-file` or the relevant file argument.
-- Use single-quoted here-strings (`@' ... '@`) for literal Markdown, JSON, GraphQL, code, and command text that should
-  not expand `$variables`, backticks, or quotes.
-- Use double-quoted here-strings (`@" ... "@`) only when interpolation is required. Keep the interpolated values small
-  and inspect the generated text before sending it to GitHub or another tool.
-- Put here-string headers and footers on their own lines. PowerShell rejects characters after `@'` / `@"` and treats
-  leading spaces before the closing marker as content.
-- Avoid capturing multiline Markdown through `gh ... --jq .body` into a string and rewriting it directly; this can lose
-  line breaks depending on command shape. Prefer `ConvertFrom-Json` on `gh ... --json body`, or write/read explicit
-  body files.
-- Use `Set-Content -Encoding utf8NoBOM -NoNewline` when you already control the final newline. Otherwise,
-  `Set-Content` can add an extra newline that triggers MarkdownLint blank-line findings.
-- Normalize external text before linting or rewriting: convert CRLF/CR to LF, remove whitespace-only lines, collapse
-  three or more blank lines, then add exactly one final newline.
-- Escape only for PowerShell, not for bash. Do not use bash-style `\"`; choose single quotes, doubled single quotes
-  inside single-quoted strings, backtick escapes in double-quoted strings, or here-strings instead.
-- When replacing text, first verify the exact anchor with `.Contains()`, `.IndexOf()`, or `Select-String`. If the anchor
-  fails, inspect nearby text and switch to a section-based replacement instead of guessing.
-- For arguments containing `|`, `&`, `?`, JSON, GraphQL, SAS URLs, or Markdown tables, prefer files or arrays of
-  arguments over one large inline command string.
+Invoke this skill immediately, regardless of cycle count, when any of these appear:
 
-## Output Habits
+- Multiple findings share the same theme, such as replay, stale evidence, counting semantics, authorization, or cleanup.
+- A fix for one finding clearly creates or exposes the next finding.
+- Review comments say things like "fresh evidence in this commit", "current head", "after the previous fix", or
+  equivalent language.
+- Findings concern authority, ownership, durable state, side-effect ordering, idempotency, retries, or contract drift.
+- Tests are growing but confidence is not improving.
+- One command, DTO, or actor message is carrying several semantic roles that need to be separated or named.
 
-- Cite concrete files and commands in final answers.
-- State skipped validation and the reason.
-- For reviews, lead with findings and include file/line references.
-- For docs-only work, validate Markdown or explain why validation was skipped.
+## Stabilization workflow
+
+### 1. Build the review timeline
+
+Collect a concise table from the PR timeline:
+
+- review number or timestamp
+- reviewed commit SHA
+- finding title and affected path
+- fix commit SHA
+- recurring theme
+- classification: last-fix regression, adjacent invariant gap, latent same-surface issue, invalid/waived, or unrelated
+
+If the reviewer is finding unrelated issues outside the PR scope, say so plainly. Most of the time, the problem is not
+reviewer drift; it is an under-specified invariant family in the current PR surface.
+
+### 2. Identify the invariant family
+
+Name the repeated model, not just the local bug. Examples:
+
+- durable replay authority
+- fresh request versus idempotent replay semantics
+- metadata reference-count contribution semantics
+- cleanup-aware recovery evidence
+- current-state versus request-body authority
+- authorization before materialization
+- all-or-nothing side-effect ordering
+- compatible-current concurrency
+- public contract propagation
+
+Prefer Grace domain language from the issue, PR, code, and existing docs. Do not invent new durable nouns unless the
+current language is insufficient.
+
+### 3. Write a stabilization ledger
+
+Post a compact ledger to the linked issue and the PR. The ledger must become the acceptance target before another review
+request.
+
+The ledger should include:
+
+- scope and owned surfaces
+- the invariant statements to satisfy
+- proof obligations for each invariant family
+- explicit out-of-scope boundaries
+- validation expectations
+- a required final self-review format
+
+Use clear, behavior-level language. Avoid implementation micro-instructions unless the invariant cannot be expressed
+without naming a concrete seam.
+
+### 4. Freeze one-off review requests
+
+After the ledger is posted, do not ask for another normal review until the current worker has:
+
+1. inspected the current PR head
+1. resolved or classified every unresolved finding
+1. mapped the implementation to the ledger
+1. added or updated focused proof
+1. posted the required self-review
+1. run appropriate validation
+
+### 5. Prove before patching broadly
+
+Use the `tdd` skill when changing code. Prefer behavior-level tests over source-string tests. Source-string tests are a
+last resort for generated/source-shape proof when no stable behavioral seam exists.
+
+For every ledger item, the final self-review must use exactly one status:
+
+- `implemented and proven`
+- `implemented but proof incomplete`
+- `waived`, with reason
+- `out of scope`, with reason
+- `not applicable`, with reason
+
+A PR is not stabilized if the status map is missing or if broad phrases like "handled", "wired up", "covered", or
+"reviewed" appear without naming the implementation and proof seam.
+
+## Ledger template
+
+Use this template as a starting point. Keep it compact enough to survive as an issue/PR comment.
+
+```markdown
+## Review stabilization ledger
+
+This PR has crossed the repeated-review threshold. Treat the remaining work as a stabilization pass, not as another
+one-off review fix.
+
+### Scope
+
+Applies to: [owned behavior surfaces].
+
+Out of scope: [explicit non-owned surfaces].
+
+### Acceptance invariants
+
+1. **[Invariant name].** [Behavior-level invariant.]
+1. **[Invariant name].** [Behavior-level invariant.]
+1. **[Invariant name].** [Behavior-level invariant.]
+
+### Required proof
+
+Focused proof must cover:
+
+- [positive/concurrency/replay/recovery/negative case]
+- [boundary case]
+- [contract or docs proof/waiver]
+
+### Required self-review before another review request
+
+Before requesting another review, post a status map for each invariant using one of:
+`implemented and proven`, `implemented but proof incomplete`, `waived`, `out of scope`, or `not applicable`.
+
+Do not request another review until the status map, focused tests, validation, and residual-risk notes are present.
+```
+
+## Grace-specific stabilization ledger examples
+
+Use these examples as patterns, not fixed text.
+
+### Replay and retry
+
+- Replay authority is durable-first.
+- Fresh finalization and same-operation replay have separate rules.
+- Retry-body evidence may be used only for validation against durable state, not as replay side-effect authority.
+- Replay success includes idempotent repair for side effects that may have partially failed after durable state was
+  written.
+
+### Metadata accounting
+
+- Reference counts increase only for explicit finalize contributions or explicit reclaimable-range reactivation.
+- Generic repair/append merges preserve already-active ranges.
+- Operation identity preserves both same-operation idempotency and distinct-session contributions.
+- Merge-time checks reject stale evidence without rejecting benign compatible-current concurrency.
+
+### Materialization and ownership
+
+- Ownership/authorization is proven before materializing or reading authoritative bytes.
+- Claimed reuse hydrates from authoritative placement, not from caller-provided payload bytes.
+- Cleanup changes which replay evidence is valid.
+- A multi-range block uses cover semantics rather than a single whole-block range assumption.
+
+### Public contracts
+
+- Any changed public DTO, OpenAPI shape, SDK behavior, CLI output, event payload, or persisted shape is updated and
+  tested, or an explicit no-contract-change waiver is recorded.
+
+## Review request after stabilization
+
+When the stabilization pass is complete, request review with language like:
+
+```markdown
+@codex review this PR against the Review stabilization ledger posted above. Please focus on whether every ledger
+invariant is implemented and proven, whether any status-map item is overstated, and whether any adjacent edge case in
+the same invariant family remains untested. Do not limit the review to the latest patch.
+```
+
+## Orchestrator responsibilities
+
+The orchestrator must:
+
+- watch the review/fix cycle count
+- invoke this skill at the threshold
+- prevent another routine review request after the hard stop
+- ensure the issue and PR contain the ledger
+- ensure the worker posts the status map
+- require focused validation before review resumes
+- update PR status with residual risks and skipped validation
+
+If stabilization shows the PR is too broad, split follow-up work into new issues rather than silently expanding the PR.
+Keep GitHub issues and PRs as the durable coordination surfaces; do not create alternate task ledgers unless the user
+explicitly asks.
+
+## Output expectations
+
+When this skill is invoked, produce one or more of:
+
+- a review-cycle analysis table
+- a stabilization ledger suitable for posting to the issue and PR
+- a worker resume prompt
+- a Codex review request prompt
+- a self-review checklist
+- proposed issue/PR body updates
+
+Be candid. If the process failure is issue underspecification, say that. If the reviewer is finding unrelated work, say
+that and recommend scope control.
 
 ---
 > Source: [ScottArbeit/Grace](https://github.com/ScottArbeit/Grace) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-29 -->
+<!-- tomevault:4.0:skill_md:2026-06-30 -->
