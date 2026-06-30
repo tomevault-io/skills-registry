@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tmck-code/yet-another-statusline](https://github.com/tmck-code/yet-another-statusline/tree/main/skills/config/SKILL.md)
+Original source: [tmck-code/yet-another-statusline](https://github.com/tmck-code/yet-another-statusline/tree/main/.claude/skills/yas-demo-text/SKILL.md)
 
 ---
 
