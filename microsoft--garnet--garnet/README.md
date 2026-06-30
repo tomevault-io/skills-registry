@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/garnet](https://github.com/microsoft/garnet/tree/main/.github/skills/pr-finalize/SKILL.md)
+Original source: [microsoft/garnet](https://github.com/microsoft/garnet/tree/main/.github/skills/add-garnet-command/SKILL.md)
 
 ---
 
