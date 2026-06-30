@@ -1,0 +1,13 @@
+# open-relay
+
+> Skill by [slaveOftime](https://github.com/slaveOftime/open-relay) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [slaveOftime/open-relay](https://github.com/slaveOftime/open-relay/tree/main/.github/skills/oly/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
