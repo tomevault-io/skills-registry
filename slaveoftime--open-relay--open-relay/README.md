@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [slaveOftime/open-relay](https://github.com/slaveOftime/open-relay/tree/main/.github/skills/oly/SKILL.md)
+Original source: [slaveOftime/open-relay](https://github.com/slaveOftime/open-relay/tree/main/.github/skills/oly-apps/SKILL.md)
 
 ---
 
