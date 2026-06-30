@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google/mcp-security](https://github.com/google/mcp-security/tree/main/extensions/google-secops/skills/triage/SKILL.md)
+Original source: [google/mcp-security](https://github.com/google/mcp-security/tree/main/extensions/google-secops/skills/investigate/SKILL.md)
 
 ---
 
