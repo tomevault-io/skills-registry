@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [prof18/feed-flow](https://github.com/prof18/feed-flow/tree/main/.ai/skills/translation-release-audit/SKILL.md)
+Original source: [prof18/feed-flow](https://github.com/prof18/feed-flow/tree/main/.ai/skills/run-maestro-release-tests/SKILL.md)
 
 ---
 
