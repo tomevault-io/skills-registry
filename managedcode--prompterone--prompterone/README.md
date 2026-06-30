@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [managedcode/PrompterOne](https://github.com/managedcode/PrompterOne/tree/main/.codex/skills/dotnet-microsoft-agent-framework/SKILL.md)
+Original source: [managedcode/PrompterOne](https://github.com/managedcode/PrompterOne/tree/main/.codex/skills/dotnet-mcaf-human-review-planning/SKILL.md)
 
 ---
 
