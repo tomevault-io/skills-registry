@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [coctostan/pi-superpowers-plus](https://github.com/coctostan/pi-superpowers-plus/tree/main/skills/requesting-code-review/SKILL.md)
+Original source: [coctostan/pi-superpowers-plus](https://github.com/coctostan/pi-superpowers-plus/tree/main/skills/test-driven-development/SKILL.md)
 
 ---
 
