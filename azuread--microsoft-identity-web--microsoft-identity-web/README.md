@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AzureAD/microsoft-identity-web](https://github.com/AzureAD/microsoft-identity-web/tree/main/.github/skills/entra-id-aspire-provisioning/SKILL.md)
+Original source: [AzureAD/microsoft-identity-web](https://github.com/AzureAD/microsoft-identity-web/tree/main/.github/skills/entra-id-aspire-authentication/SKILL.md)
 
 ---
 
