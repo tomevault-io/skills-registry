@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AAASS554/codex-academic-paper-skills](https://github.com/AAASS554/codex-academic-paper-skills/tree/main/skills/academic-paper-composer/SKILL.md)
+Original source: [AAASS554/codex-academic-paper-skills](https://github.com/AAASS554/codex-academic-paper-skills/tree/main/skills/academic-paper-strategist/SKILL.md)
 
 ---
 
