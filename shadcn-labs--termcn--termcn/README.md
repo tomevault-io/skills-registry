@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shadcn-labs/termcn](https://github.com/shadcn-labs/termcn/tree/main/.agents/skills/opentui/SKILL.md)
+Original source: [shadcn-labs/termcn](https://github.com/shadcn-labs/termcn/tree/main/.agents/skills/web-haptics/SKILL.md)
 
 ---
 
