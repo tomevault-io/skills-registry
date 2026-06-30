@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [imroc/req](https://github.com/imroc/req/tree/main/.codebuddy/skills/pr-review/SKILL.md)
+Original source: [imroc/req](https://github.com/imroc/req/tree/main/.codebuddy/skills/ci-triage/SKILL.md)
 
 ---
 
