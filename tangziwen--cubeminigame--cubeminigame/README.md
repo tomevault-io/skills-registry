@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tangziwen/CubeMiniGame](https://github.com/tangziwen/CubeMiniGame/tree/main/.agents/skills/cp-plan/SKILL.md)
+Original source: [tangziwen/CubeMiniGame](https://github.com/tangziwen/CubeMiniGame/tree/main/.agents/skills/cp-apply/SKILL.md)
 
 ---
 
