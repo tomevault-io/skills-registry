@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mintlify/docs](https://github.com/mintlify/docs/tree/main/skill.md)
+Original source: [mintlify/docs](https://github.com/mintlify/docs/tree/main/skills/mintlify-api/SKILL.md)
 
 ---
 
