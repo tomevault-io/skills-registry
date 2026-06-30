@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aneasystone/weekly-practice](https://github.com/aneasystone/weekly-practice/tree/main/.claude/skills/libtv-cli-skill/SKILL.md)
+Original source: [aneasystone/weekly-practice](https://github.com/aneasystone/weekly-practice/tree/main/.claude/skills/writing-style/SKILL.md)
 
 ---
 
