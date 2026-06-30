@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [matevip/mateclaw](https://github.com/matevip/mateclaw/tree/main/mateclaw-server/src/main/resources/skills/baoyu-infographic/SKILL.md)
+Original source: [matevip/mateclaw](https://github.com/matevip/mateclaw/tree/main/mateclaw-server/src/main/resources/skills/popular-web-designs/SKILL.md)
 
 ---
 
