@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AltimateAI/altimate-code](https://github.com/AltimateAI/altimate-code/tree/main/.opencode/skills/query-optimize/SKILL.md)
+Original source: [AltimateAI/altimate-code](https://github.com/AltimateAI/altimate-code/tree/main/.opencode/skills/altimate-setup/SKILL.md)
 
 ---
 
