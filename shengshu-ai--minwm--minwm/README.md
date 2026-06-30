@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shengshu-ai/minWM](https://github.com/shengshu-ai/minWM/tree/main/.claude/skills/debug-world-model/SKILL.md)
+Original source: [shengshu-ai/minWM](https://github.com/shengshu-ai/minWM/tree/main/.claude/skills/integrate-new-backbone/SKILL.md)
 
 ---
 
