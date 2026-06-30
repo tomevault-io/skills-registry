@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [letstri/permix](https://github.com/letstri/permix/tree/main/permix/skills/permix-ssr/SKILL.md)
+Original source: [letstri/permix](https://github.com/letstri/permix/tree/main/permix/skills/permix-check/SKILL.md)
 
 ---
 
