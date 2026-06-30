@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stophobia/deerflow2.0-enhanced](https://github.com/stophobia/deerflow2.0-enhanced/tree/main/skills/public/video-generation/SKILL.md)
+Original source: [stophobia/deerflow2.0-enhanced](https://github.com/stophobia/deerflow2.0-enhanced/tree/main/skills/public/podcast-generation/SKILL.md)
 
 ---
 
