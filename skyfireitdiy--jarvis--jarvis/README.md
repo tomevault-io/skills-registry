@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [skyfireitdiy/Jarvis](https://github.com/skyfireitdiy/Jarvis/tree/main/builtin/rules/superpowers/skills/finishing-a-development-branch/SKILL.md)
+Original source: [skyfireitdiy/Jarvis](https://github.com/skyfireitdiy/Jarvis/tree/main/builtin/rules/superpowers/skills/verification-before-completion/SKILL.md)
 
 ---
 
