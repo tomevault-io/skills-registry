@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ReflexioAI/claude-smart](https://github.com/ReflexioAI/claude-smart/tree/main/.agents/skills/sync-agent-instructions/SKILL.md)
+Original source: [ReflexioAI/claude-smart](https://github.com/ReflexioAI/claude-smart/tree/main/.claude/skills/sync-agent-instructions/SKILL.md)
 
 ---
 
