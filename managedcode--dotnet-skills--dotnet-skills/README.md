@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills/tree/main/catalog/Tools/Official-DotNet-Diagnostics/skills/dotnet-trace-collect/SKILL.md)
+Original source: [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills/tree/main/external-sources/upstreams/dotnet-skills/dotnet/skills/csharp-scripts/SKILL.md)
 
 ---
 
