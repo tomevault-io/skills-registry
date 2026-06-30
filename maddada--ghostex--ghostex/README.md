@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [maddada/Ghostex](https://github.com/maddada/Ghostex/tree/main/skills/ghostex-manage-beads/SKILL.md)
+Original source: [maddada/Ghostex](https://github.com/maddada/Ghostex/tree/main/skills/ghostex-computer-use/SKILL.md)
 
 ---
 
