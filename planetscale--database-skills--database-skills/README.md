@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [planetscale/database-skills](https://github.com/planetscale/database-skills/tree/main/skills/neki/SKILL.md)
+Original source: [planetscale/database-skills](https://github.com/planetscale/database-skills/tree/main/skills/mysql/SKILL.md)
 
 ---
 
