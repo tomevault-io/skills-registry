@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AgentWorkforce/relay](https://github.com/AgentWorkforce/relay/tree/main/.claude/skills/deploying-to-staging-environment/SKILL.md)
+Original source: [AgentWorkforce/relay](https://github.com/AgentWorkforce/relay/tree/main/.claude/skills/browser-testing-with-screenshots/SKILL.md)
 
 ---
 
