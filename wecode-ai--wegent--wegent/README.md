@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wecode-ai/Wegent](https://github.com/wecode-ai/Wegent/tree/main/backend/init_data/skills/mermaid-diagram/SKILL.md)
+Original source: [wecode-ai/Wegent](https://github.com/wecode-ai/Wegent/tree/main/backend/init_data/skills/wegent-knowledge/SKILL.md)
 
 ---
 
