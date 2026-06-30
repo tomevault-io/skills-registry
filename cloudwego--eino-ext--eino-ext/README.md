@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cloudwego/eino-ext](https://github.com/cloudwego/eino-ext/tree/main/skills/eino-guide/SKILL.md)
+Original source: [cloudwego/eino-ext](https://github.com/cloudwego/eino-ext/tree/main/skills/eino-compose/SKILL.md)
 
 ---
 
