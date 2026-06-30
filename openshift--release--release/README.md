@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openshift/release](https://github.com/openshift/release/tree/main/ci-operator/config/redhat-developer/rhdh/.claude/skills/rhdh-ocp-coverage/SKILL.md)
+Original source: [openshift/release](https://github.com/openshift/release/tree/main/ci-operator/config/redhat-developer/rhdh/.claude/skills/rhdh-ocp-lifecycle/SKILL.md)
 
 ---
 
