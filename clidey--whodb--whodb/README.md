@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [clidey/whodb](https://github.com/clidey/whodb/tree/main/cli/external-plugin/whodb/skills/query-builder/SKILL.md)
+Original source: [clidey/whodb](https://github.com/clidey/whodb/tree/main/cli/external-plugin/whodb/skills/schema-designer/SKILL.md)
 
 ---
 
