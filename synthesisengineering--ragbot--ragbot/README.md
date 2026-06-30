@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [synthesisengineering/ragbot](https://github.com/synthesisengineering/ragbot/tree/main/src/synthesis_engine/skills/starter_pack/fact-check-claims/SKILL.md)
+Original source: [synthesisengineering/ragbot](https://github.com/synthesisengineering/ragbot/tree/main/src/synthesis_engine/skills/starter_pack/agent-self-review/SKILL.md)
 
 ---
 
