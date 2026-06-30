@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TanStack/intent](https://github.com/TanStack/intent/tree/main/packages/intent/meta/tree-generator/SKILL.md)
+Original source: [TanStack/intent](https://github.com/TanStack/intent/tree/main/packages/intent/meta/generate-skill/SKILL.md)
 
 ---
 
