@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chongdashu/phaserjs-oakwoods](https://github.com/chongdashu/phaserjs-oakwoods/tree/main/.codex/skills/playwright-testing/SKILL.md)
+Original source: [chongdashu/phaserjs-oakwoods](https://github.com/chongdashu/phaserjs-oakwoods/tree/main/.claude/skills/playwright-testing/SKILL.md)
 
 ---
 
