@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agents-flex/agents-flex](https://github.com/agents-flex/agents-flex/tree/main/demos/skills-demo/src/main/resources/.claude/skills/pdf/SKILL.md)
+Original source: [agents-flex/agents-flex](https://github.com/agents-flex/agents-flex/tree/main/demos/skills-demo/src/main/resources/.claude/skills/ai-tutor/SKILL.md)
 
 ---
 
