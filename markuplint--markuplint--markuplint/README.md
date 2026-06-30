@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [markuplint/markuplint](https://github.com/markuplint/markuplint/tree/main/packages/@markuplint/astro-parser/SKILL.md)
+Original source: [markuplint/markuplint](https://github.com/markuplint/markuplint/tree/main/packages/@markuplint/svelte-parser/SKILL.md)
 
 ---
 
