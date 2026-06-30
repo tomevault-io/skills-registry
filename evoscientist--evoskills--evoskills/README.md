@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [EvoScientist/EvoSkills](https://github.com/EvoScientist/EvoSkills/tree/main/skills/paper-figures/SKILL.md)
+Original source: [EvoScientist/EvoSkills](https://github.com/EvoScientist/EvoSkills/tree/main/skills/paper-writing/SKILL.md)
 
 ---
 
