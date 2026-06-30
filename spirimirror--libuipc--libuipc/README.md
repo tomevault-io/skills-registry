@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [spiriMirror/libuipc](https://github.com/spiriMirror/libuipc/tree/main/.cursor/skills/xmake-workflow/SKILL.md)
+Original source: [spiriMirror/libuipc](https://github.com/spiriMirror/libuipc/tree/main/.cursor/skills/cmake-workflow/SKILL.md)
 
 ---
 
