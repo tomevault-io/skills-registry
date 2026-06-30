@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neovateai/neovate-code](https://github.com/neovateai/neovate-code/tree/main/.claude/skills/add-nodebridge-handler/SKILL.md)
+Original source: [neovateai/neovate-code](https://github.com/neovateai/neovate-code/tree/main/.claude/skills/test-nodebridge-handler/SKILL.md)
 
 ---
 
