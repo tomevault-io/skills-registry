@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [XueHua-s/fast-md5-web](https://github.com/XueHua-s/fast-md5-web/tree/main/skills/fast-md5-web-project-spec/SKILL.md)
+Original source: [XueHua-s/fast-md5-web](https://github.com/XueHua-s/fast-md5-web/tree/main/skills/software-design-philosophy/SKILL.md)
 
 ---
 
