@@ -1,0 +1,13 @@
+# carbon
+
+> Skill by [Sage](https://github.com/Sage/carbon) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [Sage/carbon](https://github.com/Sage/carbon/tree/main/skills/carbon-react/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
