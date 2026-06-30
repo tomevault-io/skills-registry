@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oracle/graalvm-reachability-metadata](https://github.com/oracle/graalvm-reachability-metadata/tree/main/skills/review-library-bulk-update/SKILL.md)
+Original source: [oracle/graalvm-reachability-metadata](https://github.com/oracle/graalvm-reachability-metadata/tree/main/skills/review-fixes-java-run-fail/SKILL.md)
 
 ---
 
