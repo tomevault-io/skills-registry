@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [justrach/dhi](https://github.com/justrach/dhi/tree/main/skills/dhi-python/SKILL.md)
+Original source: [justrach/dhi](https://github.com/justrach/dhi/tree/main/skills/dhi-typescript/SKILL.md)
 
 ---
 
