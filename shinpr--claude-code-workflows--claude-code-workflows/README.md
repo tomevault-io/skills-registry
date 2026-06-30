@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shinpr/claude-code-workflows](https://github.com/shinpr/claude-code-workflows/tree/main/dev-workflows-fullstack/skills/recipe-front-design/SKILL.md)
+Original source: [shinpr/claude-code-workflows](https://github.com/shinpr/claude-code-workflows/tree/main/dev-workflows-fullstack/skills/ai-development-guide/SKILL.md)
 
 ---
 
