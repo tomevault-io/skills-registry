@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [foxminchan/BookWorm](https://github.com/foxminchan/BookWorm/tree/main/.agents/skills/vercel-react-best-practices/SKILL.md)
+Original source: [foxminchan/BookWorm](https://github.com/foxminchan/BookWorm/tree/main/.agents/skills/speckit-agent-context-update/SKILL.md)
 
 ---
 
