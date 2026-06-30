@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ai-dynamo/aiperf](https://github.com/ai-dynamo/aiperf/tree/main/.agents/skills/aiperf-code-review/SKILL.md)
+Original source: [ai-dynamo/aiperf](https://github.com/ai-dynamo/aiperf/tree/main/.agents/skills/aiperf-llm-ergonomics-review/SKILL.md)
 
 ---
 
