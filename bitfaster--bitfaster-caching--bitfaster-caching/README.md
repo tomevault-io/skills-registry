@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bitfaster/BitFaster.Caching](https://github.com/bitfaster/BitFaster.Caching/tree/main/.claude/skills/split-asm/skill.md)
+Original source: [bitfaster/BitFaster.Caching](https://github.com/bitfaster/BitFaster.Caching/tree/main/.claude/skills/bench-fast/skill.md)
 
 ---
 
