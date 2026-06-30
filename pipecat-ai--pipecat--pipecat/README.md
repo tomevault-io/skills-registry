@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pipecat-ai/pipecat](https://github.com/pipecat-ai/pipecat/tree/main/.claude/skills/pr-description/SKILL.md)
+Original source: [pipecat-ai/pipecat](https://github.com/pipecat-ai/pipecat/tree/main/.claude/skills/squash-commits/SKILL.md)
 
 ---
 
