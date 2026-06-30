@@ -1,292 +1,278 @@
 ---
-name: openlark-api-validation
-description: OpenLark API 覆盖率验证技能。用于验证各 crate 的 API 实现数量与覆盖率，基于 tools/validate_apis.py 脚本和 api_list_export.csv 对比实际代码实现。触发关键词：API 验证、API 覆盖率、验证 API 数量、检查 API 实现、API 统计 Use when this capability is needed.
+name: openlark-api-field-verify
+description: OpenLark API 字段核对技能。用于新增/重构飞书 API 后，核对 Rust 实现的请求体/响应体字段是否与飞书官方文档一致。通过 playwright 渲染飞书 SPA 文档页面，提取真实的请求/响应字段定义，对比代码实现找出不符项。触发关键词：字段核对、字段验证、字段不符、文档核对、核对请求字段、核对响应字段、飞书文档字段、推断字段、user 级接口、用户级接口字段 Use when this capability is needed.
 metadata:
   author: foxzool
 ---
 
-# OpenLark API 覆盖率验证技能
+# OpenLark API 字段核对技能
 
 ## 🧭 技能路由指南
 
 **本技能适用场景：**
-- 需要统计某个 crate/bizTag 的 API 覆盖率
-- 需要输出缺失 API 清单与完成率报告
-- 需要对比 `api_list_export.csv` 与实际落盘实现
+- 新增/重构飞书 API 后，需要核对请求体/响应体字段是否与官方文档一致
+- 怀疑某个 API 的字段是"推断"而非来自真实文档（如参照同族接口复制）
+- 用户级（user_access_token）接口的字段核对（这类接口字段常与应用级不同）
+- `fetch_docpath.py` 抓取失败（返回占位文本），需要替代方案
 
 **其他技能：**
-- 项目级规范体检（架构/API/导出/校验一体）→ `Skill(openlark-code-standards)`
-- 新增/重构具体 API → `Skill(openlark-api)`
-- 审查整体架构与公共 API 收敛 → `Skill(openlark-design-review)`
+- 添加/重构 API 的实现规范 → `Skill(openlark-api)`
+- 统计 API 覆盖率/缺失清单 → `Skill(openlark-api-validation)`
+- 代码规范、风格一致性 → `Skill(openlark-code-standards)`
 
 ### 关键词触发映射
 
-- 覆盖率、缺失 API、实现数量、CSV 对比、验证脚本、报告 → `openlark-api-validation`
-- 新增 API、重构 API、Builder、Request/Response、mod.rs 导出 → `openlark-api`
-- 代码规范、规范检查、风格一致性、体检 → `openlark-code-standards`
-- 架构设计、public API、收敛方案、feature gating、兼容策略 → `openlark-design-review`
-- validate、必填校验、validate_required、空白字符串、校验聚合 → `openlark-validation-style`
+- 字段核对、字段验证、字段不符、文档核对、核对请求字段、核对响应字段 → `openlark-api-field-verify`
+- 新增 API、重构 API、Builder、Request/Response → `openlark-api`
+- 覆盖率、缺失 API、CSV 对比 → `openlark-api-validation`
 
 ### 双向跳转规则
 
-- 若发现缺失 API 的根因是架构分层/范式混乱，转 `openlark-design-review`。
-- 若发现问题是具体 API 尚未实现，转 `openlark-api` 落地实现。
-- 若需要把覆盖率问题归因到全仓规范一致性，转 `openlark-code-standards`。
+- 若核对发现字段不符需要修正实现，转 `openlark-api` 落地修正
+- 若核对发现是 API 尚未实现，转 `openlark-api` 补齐
+- 若核对根源是覆盖率脚本误报，转 `openlark-api-validation`
 
 ## 🎯 技能用途
 
-本技能用于验证 OpenLark 项目中各 crate 的 API 实现覆盖率，通过对比 `api_list_export.csv` 中的 API 定义与实际代码实现，生成详细的覆盖率报告。
+飞书开放平台文档是 **SPA（单页应用）**，内容靠 JS 动态渲染。常见的两种抓取方式各有局限：
 
-## 📋 快速工作流
+| 方式 | 问题 |
+|------|------|
+| `fetch_docpath.py`（项目 skill 脚本） | 对**新接口**常返回占位文本，抓不到字段表 |
+| 直接 HTTP 请求文档 URL | 只拿到 SPA 外壳，正文为空 |
+| web reader / 搜索引擎 | 新接口搜不到，SPA 抓不到 |
 
-### 1. 验证单个 crate 的 API 覆盖率
+**本技能用 playwright 真实渲染页面**，等待 JS 执行后提取 `innerText`，拿到完整的字段表。这是目前唯一可靠的方式。
 
-```bash
-# 验证 openlark-docs crate
-python3 tools/validate_apis.py --crate openlark-docs
+## 📋 核心工作流
 
-# 验证 openlark-communication crate
-python3 tools/validate_apis.py --crate openlark-communication
+### 第 0 步：判断是否需要核对
 
-# 验证 openlark-meeting crate
-python3 tools/validate_apis.py --crate openlark-meeting
-```
+以下情况**必须核对**（字段易错）：
+- ✅ 用户级（user_access_token）接口 —— 字段常与应用级不同（无 user_id，从 token 推断）
+- ✅ 参照"同族接口"复制的实现 —— 字段名/结构可能已变
+- ✅ 新上的飞书接口 —— 文档可能尚未被旧脚本收录
+- ✅ 请求体有数组/嵌套对象的接口 —— 上限、子字段易漏
 
-**输出位置：** `reports/api_validation/{crate}.md`
+以下情况可跳过：
+- ⏭️ 直接照抄飞书官方 JSON 示例实现的（已有真实样本）
+- ⏭️ 仅改端点 URL、字段未动的重构
 
-### 2. 列出所有可用的 crate 映射
+### 第 1 步：找到正确的文档 URL
 
-```bash
-# 查看所有 crate → bizTag 映射
-python3 tools/validate_apis.py --list-crates
-```
+**这是最易错的一步。** 飞书文档 URL 有两种路径格式，**不能混用**：
 
-**示例输出（以实际 `--list-crates` 输出为准）：**
-```
-📄 映射文件: tools/api_coverage.toml
+| 文档类型 | URL 格式 | 说明 |
+|---------|---------|------|
+| 旧版/server-docs | `/document/server-docs/{project}-{version}/{resource}-{name}` | 用 `-` 连接，如 `approval-v4/task-pass` |
+| **新版/reference** | `/document/uAjLw4CM/ukTMukTMukTM/reference/{project}/{version}/{resource}/{name}` | 用 `/` 分层 |
 
-- openlark-analytics: src=crates/openlark-analytics/src biz_tags=[search, report]
-- openlark-application: src=crates/openlark-application/src biz_tags=[application, workplace]
-- openlark-auth: src=crates/openlark-auth/src biz_tags=[auth, passport, verification_information, human_authentication]
-...
-```
-
-> 映射共 **15 个 crate**（核对自 `tools/api_coverage.toml`）。新增 crate 时，在 `tools/api_coverage.toml` 追加 `[crates.<name>]` 段（`src` + `biz_tags`，可选 `dashboard_groups`）即自动纳入 `--crate`/`--all-crates`/`--list-crates`，无需改脚本。
-
-### 3. 自定义验证范围
+**判断方法：从 `api_list_export.csv` 的 `fullPath` 字段取真实路径**，不要自己拼：
 
 ```bash
-# 指定源码目录和业务标签
-python3 tools/validate_apis.py \
-  --csv api_list_export.csv \
-  --src crates/openlark-docs/src \
-  --filter ccm base baike \
-  --output custom_report.md
-
-# 包含旧版本 API
-python3 tools/validate_apis.py --crate openlark-docs --include-old
+# 从 CSV 查某个 API 的真实 fullPath（用 url 反查）
+python3 -c "
+import csv
+with open('api_list_export.csv', encoding='utf-8-sig') as f:
+    for row in csv.DictReader(f):
+        if 'approval/v4/tasks/pass' in row['url']:
+            print(row['fullPath'])  # 真实路径，拼到 https://open.feishu.cn 后面
+"
 ```
 
-### 4. 验证所有 crates（批量）
+> ⚠️ 若用错路径格式，页面会显示 "The documentation could not be found."，**这不是抓取失败，是 URL 错了**。
+
+### 第 2 步：用 playwright 渲染抓取
+
+#### 环境准备
 
 ```bash
-# 一条命令验证映射里的全部 crate，并生成汇总报告 + 仪表盘
-python3 tools/validate_apis.py --all-crates
-
-# 等价的日常快捷命令（just recipe）
-just api-coverage
+# 确认 playwright + chromium 已装（agent-browser 自带的版本可能不匹配）
+node -e "require('playwright')" 2>/dev/null && echo "playwright ok" || npm i -g playwright
+npx playwright install chromium  # 装匹配版本（约 170MB）
 ```
 
-`--all-crates` 遍历 `tools/api_coverage.toml` 中映射的 15 个 crate 做汇总统计，产出（**注意：不逐个刷新 per-crate 报告**）：
+> ⚠️ `agent-browser` CLI 绑定的 playwright 版本可能与系统全局版不一致，导致 "Executable doesn't exist"。**优先用本技能自带的 `scripts/fetch_doc.js`**，它自动用匹配的 playwright。
 
-- `reports/api_validation/summary.md` / `summary.json` —— 全仓汇总
-- `reports/api_validation/dashboards/<group>.{md,json}` —— 按 `dashboard_groups` 分组（如 `core_business`）
+#### 抓取单页
 
-> ⚠️ per-crate 的 `reports/api_validation/<crate>.md` **不会被 `--all-crates` 刷新**（会保持陈旧，可能与 SUMMARY 数据漂移——例如曾出现 per-crate 报告显示 100% 而 SUMMARY 显示 41.9% 的矛盾）。要拿某 crate 的最新详细报告/缺失清单，单独跑 `python3 tools/validate_apis.py --crate <crate-name>`（如 `--crate openlark-workflow`）。
+```bash
+node .agents/skills/openlark-api-field-verify/scripts/fetch_doc.js \
+  "https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/reference/approval-v4/task/pass" \
+  /tmp/doc_pass.txt
+```
 
-## 📊 报告解读
+脚本会 `waitUntil: 'networkidle'` + 多次延时 + 滚动触发懒加载，导出完整 `innerText`。正常应抓到 5000-8000 字符；若 < 500 字符，说明 URL 错或页面没渲染（回第 1 步检查 URL）。
 
-### 报告结构
+#### 批量抓取
 
-生成的 Markdown 报告包含以下部分：
+```bash
+node .agents/skills/openlark-api-field-verify/scripts/fetch_doc.js \
+  --batch \
+  approval-v4/instance/add_cc \
+  approval-v4/instance/detail \
+  approval-v4/task/pass \
+  --out-dir /tmp/docs
+```
 
-#### 一、总体统计
-- **API 总数**：CSV 中定义的 API 数量
-- **已实现**：已实现的 API 数量
-- **未实现**：缺失的 API 数量
-- **完成率**：实现百分比
-- **额外文件**：代码中存在但 CSV 中未定义的文件
+#### 批量自动化（推荐用于多接口/全 crate 核对）
 
-#### 二、模块统计
-按 bizTag 分组的统计信息，展示各业务域的完成率。
+对于多接口或全 crate 核对，使用自动化工具而非手动逐个：
 
-#### 三、未实现的 API
-详细列出所有未实现的 API，包括：
-- API ID
-- 预期文件路径
-- API URL
-- 文档链接
+```bash
+# 快速模式：全仓代码自检（秒级，不抓文档）
+# 无参数裸跑 = 扫描整个 crates，生成 reports/api_field_verify/all.md
+python3 tools/verify_api_fields.py
 
-#### 四、额外的实现文件
-列出不匹配 CSV 定义的额外文件（可能是辅助文件或需要更新 CSV）。
+# 快速模式：单个 crate
+python3 tools/verify_api_fields.py --crate openlark-workflow
 
-#### 五、已实现的 API
-按模块分组列出所有已实现的 API。
+# 完整模式：抓飞书文档对比字段（慢，约 8 秒/API，默认跳过已缓存）
+python3 tools/verify_api_fields.py --crate openlark-workflow --fetch-docs
 
-### 示例报告片段
+# 单个 API 调试（只跑可疑模式检测，不抓文档）
+python3 tools/verify_api_fields.py --api-id 7642253323628383198
+```
 
-> 以下数字仅为格式示意，**以实际生成的报告为准**，请勿当作覆盖率基线。
+工具自动完成路径解析、字段提取、文档抓取、差异对比，输出 `reports/api_field_verify/` 报告。
+设计文档见 `docs/superpowers/specs/2026-06-16-api-field-verify-tool-design.md`。
+
+### 第 3 步：解析字段
+
+抓取到的 `innerText` 是拍平的表格（参数名、类型、必填、描述交错成行）。解析规则：
+
+**POST 接口的 Request body**（最常见）：
+```
+Request body（第二次出现）... Request example 之间
+每段：参数名行 → 类型行(string/int/string[]/-) → 必填行(Yes/No) → 描述
+```
+
+**GET 接口的 Query parameters**：
+```
+Query parameters ... Request example 之间
+结构同上
+```
+
+**Response body 的 data 子字段**：
+- 外层只有 `code/msg/data`
+- `data` 的子字段在折叠的 "Show sublists" 里，innerText 拿不到
+- **改从 Response body example 的 JSON 提取字段名**：`grep -oE '"[a-z_]+"\s*:' doc.txt | sort -u`
+
+#### 解析辅助命令
+
+```bash
+# 提取 POST 请求体字段（参数名/类型/必填）
+awk '/^Request body$/{c++; if(c==2){p=1; next}} /^Request example$/{p=0} p' doc_xxx.txt \
+  | grep -E "^[a-z_]+$|^(Yes|No)$|^(string|int|boolean|string\[\]|object|-)$" \
+  | grep -vE "^(parameter|type|required|description)$"
+
+# 提取响应示例里的所有字段名（用于完整建模响应体）
+awk '/^Response body example$/{p=1} /^Error code$/{p=0} p' doc_xxx.txt \
+  | grep -oE '"[a-z_]+"\s*:' | tr -d '":' | sort -u
+
+# 确认 POST 响应的 data 是否空对象（决定 Response struct 是否留空）
+awk '/^Response body example$/{p=1} /^Error code$/{p=0} p' doc_xxx.txt \
+  | grep -oE '"data".{0,30}' | head -1
+```
+
+### 第 4 步：对比实现，列出差异
+
+把真实字段与代码实现逐项对比，常见差异类型：
+
+| 差异类型 | 例子 | 危害 |
+|---------|------|------|
+| **多余字段** | 用户级接口不该有 `user_id`（从 token 推断） | 序列化发出多余字段，可能被服务端拒绝 |
+| **缺字段** | `remind` 漏了 `task_ids[]` | 功能不完整 |
+| **字段名错** | `transfer_to_user_id` → `transfer_user_id` | 调用必失败 |
+| **上限错** | `cc_user_ids` 上限 20 而非 1000 | 校验过松 |
+| **类型错** | `add_sign_type` 是 int 不是 string | 序列化类型不符 |
+| **响应字段缺失** | detail 响应有 10+ 字段，只建了 3 个 | 用户拿不到数据 |
+
+**重点核对用户级接口**：请求体**不含** `user_id`/`approval_code`（这些是应用级接口的字段，用户级从 token 推断）。
+
+### 第 5 步：修正实现
+
+按 `openlark-api` 技能的实现规范修正：
+- 请求体字段：严格对齐真实文档（必填校验依赖它）
+- 响应体字段：按真实示例完整建模（用 `#[serde(default)]` 容忍未列出的可选字段）
+- 修正后跑 `just fmt && just lint && just test` 验证
+
+## 🔧 配套脚本
+
+### scripts/fetch_doc.js
+
+playwright 渲染抓取脚本，两种用法：
+- 单页：`node fetch_doc.js <url> <out.txt>`
+- 批量：`node fetch_doc.js --batch <path1> <path2> ... --out-dir <dir>`
+
+脚本自动处理：`networkidle` 等待、滚动触发懒加载、导出 `innerText`。
+
+> 依赖：`playwright` npm 包 + chromium。首次用前跑 `npx playwright install chromium`。
+
+## 🚨 常见陷阱
+
+### 1. URL 路径格式错（最高频）
+
+症状：抓到的内容 < 500 字符，含 "The documentation could not be found."
+
+原因：用了 `server-docs/xxx-yyy` 格式，但接口实际在 `reference/xxx/yyy` 下。
+
+解决：**永远从 CSV 的 `fullPath` 取真实路径**，不要自己拼。reference 类（新版）文档用 `/` 分层，server-docs 类（旧版）用 `-` 连接。
+
+### 2. 响应 data 子字段在折叠区
+
+症状：Response body 段只显示外层 `code/msg/data`，看不到 data 内部字段。
+
+原因：data 的子字段在 "Show sublists" 折叠区，innerText 拿不到。
+
+解决：从 **Response body example 的 JSON** 提取字段名（`grep -oE '"[a-z_]+"\s*:'`），示例里出现的字段就是真实字段。
+
+### 3. playwright 版本不匹配
+
+症状：`Executable doesn't exist at .../chromium_headless_shell-XXXX`。
+
+原因：`agent-browser` CLI 绑定的 playwright 版本与已装的 chromium build 号不一致。
+
+解决：在本技能脚本所在目录跑 `npx playwright install chromium`，让它装匹配版本；或直接用 `scripts/fetch_doc.js`（它会用全局匹配的 playwright）。
+
+### 4. 用户级 vs 应用级字段混淆
+
+症状：用户级接口的请求体多了 `user_id`、`approval_code`。
+
+原因：参照了应用级同族接口（如 `approve.rs`）复制字段。
+
+解决：用户级接口（需 `user_access_token`）的请求体**不含** `user_id`——操作者身份从 token 推断。核对时优先排除这类字段。
+
+## 📝 核对报告模板
+
+核对完成后，输出对比清单供决策：
 
 ```markdown
-## 一、总体统计
+## 字段核对结果：<接口名>
 
-| 指标 | 数量 |
-|------|------|
-| **API 总数** | 254 |
-| **已实现** | 240 |
-| **未实现** | 14 |
-| **完成率** | 94.5% |
-| **额外文件** | 3 |
+### 请求体差异
+| 字段 | 真实文档 | 当前实现 | 问题 |
+|------|---------|---------|------|
+| user_id | ❌ 不存在 | ✅ 有 | 多余（用户级从 token 推断） |
+| task_ids | ✅ 必填 string[] | ❌ 缺失 | 缺字段 |
 
-## 二、模块统计
+### 响应体差异
+- 真实字段：definition_name, start_time, status, form, tasks[]（10+ 字段）
+- 当前实现：仅 3 字段
+- 建议：完整建模
 
-| 模块 | API 数量 | 已实现 | 未实现 | 完成率 |
-|------|---------|--------|--------|--------|
-| BASE | 49 | 48 | 1 | 98.0% |
-| BAIKE | 27 | 27 | 0 | 100.0% |
-| CCM | 174 | 160 | 14 | 92.0% |
-| MINUTES | 4 | 4 | 0 | 100.0% |
+### 修正建议
+- [ ] 删除 user_id/approval_code
+- [ ] 补 task_ids 字段
+- [ ] 响应体完整建模
 ```
-
-## 🔧 配置文件
-
-### tools/api_coverage.toml
-
-定义 crate → bizTag 映射关系，用于自动补全验证参数。
-
-**格式：**
-```toml
-[crates.{crate_name}]
-src = "crates/{crate_name}/src"
-biz_tags = ["bizTag1", "bizTag2", ...]
-```
-
-**添加新 crate 映射：**
-1. 编辑 `tools/api_coverage.toml`
-2. 追加 `[crates.<name>]` 段（`src` + `biz_tags`，可选 `dashboard_groups`）
-3. 运行 `--list-crates` 验证配置
-
-### tools/api_priority.toml
-
-缺失 API 的**业务优先级模型**，把“有多少 API 没实现”升级为“缺口按价值怎么排序”。
-
-- **综合分公式**（核对自 `tools/validate_apis.py` 的 `priority_formula()`）：
-
-  `综合分 = 业务价值×0.50 + 高频场景×0.30 + (6 - 实现复杂度)×0.20`
-
-  三个维度均取 1–5（`[defaults]` 默认各为 3），实现复杂度在综合分里**反向计入**（越难分越低）。
-- **评分来源**：`[defaults]` 基线 + `[[rules]]` 覆盖（按声明顺序匹配，后面的更具体规则覆盖前面的；可按 `biz_tags` / `expected_file_prefixes` / `methods` / `name_prefixes` 命中）。
-- **分层**：`[[priority_tiers]]` 定义 P0/P1/P2/P3 阈值（如 `min_score = 4.4` → P0）。
-- **覆盖路径**：脚本默认 `--priority-config tools/api_priority.toml`（见 `tools/validate_apis.py` 参数定义）；如需切换模型可用该参数指向别的 toml。
-- **输出条件**：仅当该 crate **存在缺失 API** 时，才在报告里写「缺失 API 优先级清单」段（含综合分、P 级、判定规则）；无缺口则不输出。
-
-## 🚨 常见问题
-
-### 1. CSV 文件不存在
-
-**错误：** `❌ 错误: CSV 文件不存在: api_list_export.csv`
-
-**解决：**
-- 确保 `api_list_export.csv` 在项目根目录
-- 或使用 `--csv` 参数指定路径
-
-### 2. 源码目录不存在
-
-**错误：** `❌ 错误: 源码目录不存在: crates/xxx/src`
-
-**解决：**
-- 检查 crate 名称是否正确（使用 `--list-crates` 查看）
-- 或使用 `--src` 参数手动指定路径
-
-### 3. 完成率异常
-
-**现象：** 完成率超过 100% 或有大量"额外文件"
-
-**可能原因：**
-- 命名规范不匹配（文件命名与 CSV 定义不一致）
-- 存在辅助文件（service.rs、models.rs 等）
-- CSV 定义过时
-
-**解决：**
-- 检查命名规范：`src/{bizTag}/{project}/{version}/{resource}/{name}.rs`
-- 更新 CSV 文件
-- 检查是否需要更新 `tools/api_coverage.toml` 映射
-
-### 4. 「额外文件」白名单（预期，非缺陷）
-
-**现象：** 报告「额外的实现文件」段里反复出现一批非 API 文件，完成率看着偏低。
-
-**说明：** 以下文件是 crate 的组织骨架/聚合层/测试，**本就不对应任何 CSV 中的 API**，不计入 API 覆盖，出现属预期：
-
-- `prelude.rs`、`mod.rs` —— 模块聚合 / 导出预导出
-- `versions.rs` —— 版本聚合入口
-- `models.rs`、`models/` —— Serde 模型集中存放
-- `services.rs`、`service.rs` —— Service/Client 注册表
-- `tests.rs`、`tests/` —— 测试
-
-只有当「额外文件」里出现**疑似真实 API 落盘但命名不匹配 CSV**（例如拼错 bizTag / version / resource）时，才需要按命名规范排查。
-
-## 📝 命名规范
-
-API 文件路径严格遵循以下规范：
-
-```
-src/{bizTag}/{project}/{version}/{resource}/{name}.rs
-```
-
-**规则：**
-- `meta.resource` 中的 `.` 转换为 `/` 作为子目录
-- `meta.name` 中的 `/` 转换为 `/` 作为子目录
-- `meta.name` 中的 `:` 替换为 `_`（路径参数）
-- 使用 snake_case 命名
-
-**示例：**
-| API | 文件路径 |
-|-----|----------|
-| `bizTag=ccm, project=drive, version=v1, resource=file, name=create` | `src/ccm/drive/v1/file/create.rs` |
-| `bizTag=base, project=bitable, version=v1, resource=app.table, name=record/create` | `src/base/bitable/v1/app/table/record/create.rs` |
 
 ## 🔗 相关技能
 
-- **添加新 API**：`Skill(openlark-api)`
-- **设计审查**：`Skill(openlark-design-review)`
-- **校验风格**：`Skill(openlark-validation-style)`
-
-## 📚 工作流集成
-
-### CI/CD 接线（已存在，勿重复造）
-
-仓库**没有** `.github/workflows/api-validation.yml`，也**没有** pre-commit hook 跑覆盖率。真实接线分布在两个 workflow：
-
-- **release.yml**（`.github/workflows/release.yml:70`）—— 打 tag 发版时，`github-release` job 执行 `python3 tools/validate_apis.py --all-crates`，生成全仓覆盖率汇总。
-- **pre-release-compatibility.yml**（`.github/workflows/pre-release-compatibility.yml`）—— 当 `tools/validate_apis.py`（以及 release.yml、相关 docs/scripts、`src/lib.rs`）改动时触发；它调用 `scripts/check-pre-release-compatibility.sh`，并上传 `reports/api_validation/{summary.json,summary.md,dashboards/core_business.json,dashboards/core_business.md}` 作为 artifact（`pre-release-compatibility-report`）。
-
-### 日常本地
-
-```bash
-just api-coverage   # 等价 python3 tools/validate_apis.py --all-crates
-```
-
-> 仓库未配置 pre-commit hook，本地验证靠 `just api-coverage` 或直接跑脚本。
-
-## 🎓 最佳实践
-
-1. **定期验证**：每次添加新 API 后运行验证
-2. **保持同步**：确保 CSV 文件与飞书官方文档同步
-3. **更新映射**：添加新 crate 时及时更新 `api_coverage.toml`
-4. **审查报告**：关注"额外文件"，可能需要更新 CSV 或重构代码
-5. **100% 目标**：确保核心 API 实现率达到 100%
+- **添加/重构 API 实现**：`Skill(openlark-api)` —— 字段核对后，用它落地修正
+- **覆盖率验证**：`Skill(openlark-api-validation)` —— 核对文件落盘是否完整
+- **校验风格**：`Skill(openlark-validation-style)` —— `validate_required` vs `validate_required_list` 用法
 
 ---
 > Source: [foxzool/openlark](https://github.com/foxzool/openlark) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-29 -->
+<!-- tomevault:4.0:skill_md:2026-06-30 -->
