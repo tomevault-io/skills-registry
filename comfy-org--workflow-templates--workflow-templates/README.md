@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Comfy-Org/workflow_templates](https://github.com/Comfy-Org/workflow_templates/tree/main/.claude/skills/managing-thumbnails/SKILL.md)
+Original source: [Comfy-Org/workflow_templates](https://github.com/Comfy-Org/workflow_templates/tree/main/.claude/skills/importing-subgraphs/SKILL.md)
 
 ---
 
