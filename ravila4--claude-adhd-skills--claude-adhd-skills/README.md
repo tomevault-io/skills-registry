@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ravila4/claude-adhd-skills](https://github.com/ravila4/claude-adhd-skills/tree/main/skills/nudge/SKILL.md)
+Original source: [ravila4/claude-adhd-skills](https://github.com/ravila4/claude-adhd-skills/tree/main/skills/daily-journal/SKILL.md)
 
 ---
 
