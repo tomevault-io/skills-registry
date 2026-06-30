@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vmDeshpande/ai-agent-automation](https://github.com/vmDeshpande/ai-agent-automation/tree/main/.agents/skills/deploy-to-vercel/SKILL.md)
+Original source: [vmDeshpande/ai-agent-automation](https://github.com/vmDeshpande/ai-agent-automation/tree/main/.agents/skills/wcag-audit-patterns/SKILL.md)
 
 ---
 
