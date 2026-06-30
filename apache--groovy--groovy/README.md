@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [apache/groovy](https://github.com/apache/groovy/tree/main/.agents/skills/groovy-reproducer/SKILL.md)
+Original source: [apache/groovy](https://github.com/apache/groovy/tree/main/.agents/skills/groovy-fix-workflow/SKILL.md)
 
 ---
 
