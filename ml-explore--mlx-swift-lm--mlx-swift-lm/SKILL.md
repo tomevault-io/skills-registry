@@ -420,5 +420,5 @@ await session.clear()
 | `wiredMemoryTicket` | Coordinate policy-based wired-memory limits |
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/ml-explore) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [ml-explore/mlx-swift-lm](https://github.com/ml-explore/mlx-swift-lm) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-06-30 -->
