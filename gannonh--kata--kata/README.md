@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gannonh/kata](https://github.com/gannonh/kata/tree/main/apps/cli/skills/kata-execute-issue/SKILL.md)
+Original source: [gannonh/kata](https://github.com/gannonh/kata/tree/main/apps/cli/skills/kata-update-project/SKILL.md)
 
 ---
 
