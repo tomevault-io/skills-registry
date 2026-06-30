@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [youtube/cobalt](https://github.com/youtube/cobalt/tree/main/third_party/jni_zero/skills/jni-zero/SKILL.md)
+Original source: [youtube/cobalt](https://github.com/youtube/cobalt/tree/main/.agent/skills/cobalt-new-checkout/SKILL.md)
 
 ---
 
