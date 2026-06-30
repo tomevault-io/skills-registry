@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [higgsfield-ai/skills](https://github.com/higgsfield-ai/skills/tree/main/higgsfield-marketplace-cards/SKILL.md)
+Original source: [higgsfield-ai/skills](https://github.com/higgsfield-ai/skills/tree/main/higgsfield-product-photoshoot/SKILL.md)
 
 ---
 
