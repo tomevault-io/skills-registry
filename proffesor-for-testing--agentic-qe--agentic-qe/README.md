@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [proffesor-for-testing/agentic-qe](https://github.com/proffesor-for-testing/agentic-qe/tree/main/assets/skills/debug-loop/SKILL.md)
+Original source: [proffesor-for-testing/agentic-qe](https://github.com/proffesor-for-testing/agentic-qe/tree/main/assets/skills/strict-tdd/SKILL.md)
 
 ---
 
