@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mizchi/actrun](https://github.com/mizchi/actrun/tree/main/.claude/skills/actrun-init/SKILL.md)
+Original source: [mizchi/actrun](https://github.com/mizchi/actrun/tree/main/.claude/skills/actrun-debug/SKILL.md)
 
 ---
 
