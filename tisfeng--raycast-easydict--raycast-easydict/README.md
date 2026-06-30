@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tisfeng/Raycast-Easydict](https://github.com/tisfeng/Raycast-Easydict/tree/main/.agents/skills/fireworks-tech-graph/SKILL.md)
+Original source: [tisfeng/Raycast-Easydict](https://github.com/tisfeng/Raycast-Easydict/tree/main/.agents/skills/worktree-rebase-merge/SKILL.md)
 
 ---
 
