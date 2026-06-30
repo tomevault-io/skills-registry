@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aifuxi/fuxiaochen](https://github.com/aifuxi/fuxiaochen/tree/main/.agents/skills/web-design-guidelines/SKILL.md)
+Original source: [aifuxi/fuxiaochen](https://github.com/aifuxi/fuxiaochen/tree/main/.agents/skills/framer-motion-animator/SKILL.md)
 
 ---
 
