@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [udecode/kitcn](https://github.com/udecode/kitcn/tree/main/.agents/skills/toast/SKILL.md)
+Original source: [udecode/kitcn](https://github.com/udecode/kitcn/tree/main/.agents/skills/deslop/SKILL.md)
 
 ---
 
