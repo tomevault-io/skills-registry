@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/FluidFramework](https://github.com/microsoft/FluidFramework/tree/main/.claude/skills/fluid-pr/SKILL.md)
+Original source: [microsoft/FluidFramework](https://github.com/microsoft/FluidFramework/tree/main/.claude/skills/api-changes/SKILL.md)
 
 ---
 
