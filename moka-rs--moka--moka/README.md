@@ -1,0 +1,13 @@
+# moka
+
+> Skill by [moka-rs](https://github.com/moka-rs/moka) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [moka-rs/moka](https://github.com/moka-rs/moka/tree/main/.claude/skills/openspec-explore/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
