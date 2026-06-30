@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fourteenwm/ppc-ai-skills](https://github.com/fourteenwm/ppc-ai-skills/tree/main/neg-conflict-finder/SKILL.md)
+Original source: [fourteenwm/ppc-ai-skills](https://github.com/fourteenwm/ppc-ai-skills/tree/main/google-ads-api-setup/SKILL.md)
 
 ---
 
