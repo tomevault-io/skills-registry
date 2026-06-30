@@ -1,75 +1,67 @@
 ---
-name: writing-clearly-and-concisely
-description: William Strunk Jr.'s _The Elements of Style_ (1918) teaches you to write clearly Use when this capability is needed.
+name: no-way-to-prevent-this-memory-safety
+description: Use when asked to generate a "no way to prevent this" / no-way-to-prevent-this satire post for a memory-safety CVE (out-of-bounds write/read, buffer/heap overflow, use-after-free, integer overflow) in a C or C++ project, given a CVE number or NVD link.
 metadata:
   author: Xe
 ---
 
-# Writing Clearly and Concisely
+# Generate a "no way to prevent this" memory-safety post
 
 ## Overview
 
-William Strunk Jr.'s _The Elements of Style_ (1918) teaches you to write clearly
-and cut ruthlessly.
+`cmd/no-way-to-prevent-this` is a Go generator that writes an Onion-style satire post
+("'No way to prevent this' say users of only language where this regularly happens")
+for a memory-safety CVE. It fills a template from CLI flags and writes the result to
+`lume/src/shitposts/no-way-to-prevent-this/<template>/<CVE>.md`.
 
-**WARNING:** `elements-of-style.md` consumes ~12,000 tokens. Read it only when
-writing or editing prose.
+## Workflow
 
-## When to Use This Skill
+1. **Read the flags.** Run `go run ./cmd/no-way-to-prevent-this --help` to confirm the
+   current flag set before composing the command.
+2. **Look up the CVE.** Fetch the NVD page (or the link the user gave) to extract:
+   - the affected **project** name
+   - the **vulnerability type** and a one-line technical description (function, root cause)
+   - whether the project is **C or C++** (C is the default; pass `-c++` only for C++)
+3. **Find the real project homepage.** Web-search for the official homepage — do NOT
+   guess or construct the URL. Use the canonical site (e.g. `https://libssh2.org/`),
+   not a package mirror or the GitHub repo unless that is genuinely the home.
+4. **Run the generator** with the flags filled in (see below).
+5. **Read the generated file** to confirm it reads correctly, then report the flag
+   values you used and the output path.
 
-Use this skill whenever you write prose for humans:
+## Flags
 
-- Documentation, README files, technical explanations
-- Commit messages, pull request descriptions
-- Error messages, UI copy, help text, comments
-- Reports, summaries, or any explanation
-- Editing to improve clarity
+| Flag | Value |
+|------|-------|
+| `-cve` | CVE id, e.g. `CVE-2026-55200` (also names the output file) |
+| `-cve-link` | the NVD/advisory URL |
+| `-project` | affected project name |
+| `-project-link` | the **web-searched** official homepage |
+| `-summary` | concise technical description of the flaw and its impact; flows into the sentence "...to fix `<summary>`." Write it to read naturally there. |
+| `-c++` | add only if the project is C++ (omit for C — it is the default) |
+| `-date` | defaults to today; override only if backdating |
+| `-template` | defaults to `memory-safety`; use `supply-chain` for that variant |
 
-**If you're writing sentences for a human to read, use this skill.**
+## Example
 
-## Limited Context Strategy
+```bash
+go run ./cmd/no-way-to-prevent-this \
+  -cve "CVE-2026-55200" \
+  -cve-link "https://nvd.nist.gov/vuln/detail/CVE-2026-55200" \
+  -project "libssh2" \
+  -project-link "https://libssh2.org/" \
+  -summary "an out-of-bounds write in ssh2_transport_read() due to a missing upper bound check on the packet_length field, resulting in heap corruption and potential remote code execution"
+```
 
-When context is tight:
+Writes `lume/src/shitposts/no-way-to-prevent-this/memory-safety/CVE-2026-55200.md`.
 
-1. Write your draft using judgment
-2. Dispatch a subagent with your draft and `elements-of-style.md`
-3. Have the subagent copyedit and return the revision
+## Common mistakes
 
-## All Rules
-
-### Elementary Rules of Usage (Grammar/Punctuation)
-
-1. Form possessive singular by adding 's
-2. Use comma after each term in series except last
-3. Enclose parenthetic expressions between commas
-4. Comma before conjunction introducing co-ordinate clause
-5. Don't join independent clauses by comma
-6. Don't break sentences in two
-7. Participial phrase at beginning refers to grammatical subject
-
-### Elementary Principles of Composition
-
-8. One paragraph per topic
-9. Begin paragraph with topic sentence
-10. **Use active voice**
-11. **Put statements in positive form**
-12. **Use definite, specific, concrete language**
-13. **Omit needless words**
-14. Avoid succession of loose sentences
-15. Express co-ordinate ideas in similar form
-16. **Keep related words together**
-17. Keep to one tense in summaries
-18. **Place emphatic words at end of sentence**
-
-### Section V: Words and Expressions Commonly Misused
-
-Alphabetical reference for usage questions
-
-## Bottom Line
-
-Writing for humans? Read `elements-of-style.md` and apply the rules. Low on
-tokens? Dispatch a subagent to copyedit with the guide.
+- **Guessing `-project-link`.** Always web-search for the homepage; a wrong/constructed URL ships a broken link.
+- **Passing `-c++` for a C project.** C is the default; the flag changes the post's wording. Only set it when the affected code is actually C++.
+- **A summary that doesn't fit the sentence.** It is appended after "to fix " — read it back in context so the grammar works.
+- **Expecting stdout.** The command is silent on success; verify by checking the new file under `lume/src/shitposts/no-way-to-prevent-this/`.
 
 ---
 > Source: [Xe/site](https://github.com/Xe/site) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-29 -->
+<!-- tomevault:4.0:skill_md:2026-06-30 -->
