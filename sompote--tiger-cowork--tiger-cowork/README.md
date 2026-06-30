@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Sompote/tiger_cowork](https://github.com/Sompote/tiger_cowork/tree/main/Tiger_bot/skills/word-docx/SKILL.md)
+Original source: [Sompote/tiger_cowork](https://github.com/Sompote/tiger_cowork/tree/main/Tiger_bot/skills/duckduckgo-search/SKILL.md)
 
 ---
 
