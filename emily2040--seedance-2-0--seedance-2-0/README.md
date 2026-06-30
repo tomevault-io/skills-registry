@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Emily2040/seedance-2.0](https://github.com/Emily2040/seedance-2.0/tree/main/skills/seedance-recipes/SKILL.md)
+Original source: [Emily2040/seedance-2.0](https://github.com/Emily2040/seedance-2.0/tree/main/skills/seedance-lighting/SKILL.md)
 
 ---
 
