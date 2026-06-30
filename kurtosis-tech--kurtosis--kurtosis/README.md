@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kurtosis-tech/kurtosis](https://github.com/kurtosis-tech/kurtosis/tree/main/skills/portal/SKILL.md)
+Original source: [kurtosis-tech/kurtosis](https://github.com/kurtosis-tech/kurtosis/tree/main/skills/gateway/SKILL.md)
 
 ---
 
