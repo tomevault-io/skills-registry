@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [awslabs/awsome-distributed-ai](https://github.com/awslabs/awsome-distributed-ai/tree/main/1.architectures/7.sagemaker-hyperpod-eks/slinky-slurm/.opencode/skills/build-slurm-image/SKILL.md)
+Original source: [awslabs/awsome-distributed-ai](https://github.com/awslabs/awsome-distributed-ai/tree/main/1.architectures/7.sagemaker-hyperpod-eks/slinky-slurm/.opencode/skills/validate-deployment/SKILL.md)
 
 ---
 
