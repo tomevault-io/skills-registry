@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [callstack/react-native-brownfield](https://github.com/callstack/react-native-brownfield/tree/main/skills/brownie/SKILL.md)
+Original source: [callstack/react-native-brownfield](https://github.com/callstack/react-native-brownfield/tree/main/skills/brownfield-navigation/SKILL.md)
 
 ---
 
