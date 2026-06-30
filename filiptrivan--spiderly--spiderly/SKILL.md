@@ -1,172 +1,273 @@
 ---
-name: spiderly-upgrade
-description: Upgrade a Spiderly consumer app's package version (NuGet + npm) to a newer Spiderly release. Use when the user asks to upgrade Spiderly, bump the Spiderly version, jump to a newer Spiderly release, or migrate to a newer Spiderly package version. Do NOT use for EF Core schema migrations (see ef-migrations skill). Use when this capability is needed.
+name: api-keys
+description: Add the API-keys feature to a Spiderly app — per-key authentication via an X-Api-Key header, where each key is a first-class principal carrying its own roles. Use when a project needs machine/partner/agent access to its REST API (generate, scope-to-roles, expire, revoke). Opt-in; not part of the default app. Use when this capability is needed.
 metadata:
   author: filiptrivan
 ---
 
-# Spiderly Upgrade
+# Add API Keys
 
-End-to-end version upgrade for apps consuming Spiderly via the NuGet packages (`Spiderly.Shared`, `Spiderly.Security`, `Spiderly.Infrastructure`, `Spiderly.SourceGenerators`) and the `spiderly` npm package. (`Spiderly.CLI` is a `dotnet tool`, not a project reference — out of scope.)
+This builds the API-keys feature into a Spiderly consumer app: external clients authenticate with an `X-Api-Key` header, and each key is a **first-class principal** (`PrincipalKinds.ApiKey`) that carries its **own roles** — it is not an impersonation of a user. Authorization resolves a key's permissions through the same principal pipeline as a user, so `[HasPermission]` endpoints accept either a JWT or a key with no per-endpoint change.
 
-Invocation forms:
+**This is opt-in.** API keys are not part of a default Spiderly app — nothing here exists until you run this skill, and an app without it has zero API-key surface. Don't add it unless the project actually needs machine/partner/agent API access.
 
-- `/spiderly-upgrade <version>` — explicit target (e.g. `21.2.0`)
-- `/spiderly-upgrade latest` — fetch latest stable from NuGet
-- `/spiderly-upgrade` — same as `latest`
+## Why a key is a principal (read once)
 
-Spiderly has no backward-compatibility commitment — every release can break public API. This skill closes that gap by reading what changed on GitHub, scanning the user's app for what actually affects them, asking once, then applying everything with build-verification and self-healing retries.
+An API key must be **individually revocable** and **separately expirable** — a stateless token (e.g. a long-lived JWT) can't be revoked without either rotating the signing key (logging out every user) or a per-request denylist. So a key is an opaque random secret, stored **hashed**, checked against a row on every request. The framework owns that mechanism (`Spiderly.Security`); this skill assembles the per-app pieces on top.
 
-## Step 1 — Pre-flight
+Modeling the key as its own `ISecurityPrincipal` (rather than "resolve to the owning user + cap permissions") means:
+- The key's authority = the union of **its own** roles' permissions. A role-less key has **no** permissions.
+- The owning `User` is just **management metadata** (who created/lists/revokes it), decoupled from authority.
+- No runtime permission-cap machinery — authorization treats the key like any other principal.
 
-Follow Spiderly's fail-loudly convention: every refused-to-start condition exits non-zero with an actionable message. Cache the parsed csproj and `package.json` contents from this step — Step 6 reuses them.
+## Step 0 — Prerequisites
 
-1. **Locate the app.** Glob `**/*.csproj` and `**/package.json` from CWD (skip `node_modules`, `bin`, `obj`). Identify the Backend (csproj with `Spiderly.*` PackageReferences) and Frontend (package.json with `"spiderly"` dep). If neither is found, exit:
+1. **Spiderly version** — confirm the compiled mechanism is present. It must expose `Spiderly.Security.Authentication.IApiKeyAuthenticator`, `AddSpiderlyApiKeyAuthentication`, and `PrincipalKinds.ApiKey`. If a `using Spiderly.Security.Authentication;` doesn't resolve those, the app is on too old a Spiderly version — upgrade first (see the `spiderly-upgrade` skill).
+2. **The app must already use Spiderly auth** — it registers a human principal (`AddSpiderlyPrincipal<User>(PrincipalKinds.User)`) and calls `spiderly.AddAuthentication()`. API keys add a *second* principal kind alongside it.
 
-   > Not a Spiderly app: no `Spiderly.*` PackageReference or `spiderly` npm dep found from this directory.
+Decide with the user up front: **do they want an admin UI** to manage keys, or **API/agent-only** (drive generation via the REST endpoints / a management skill)? The backend is identical either way; the UI is the optional Step 8.
 
-2. **Reject local-dev consumers.** If any csproj has a `<ProjectReference Include="...\spiderly\...">` pointing at a sibling Spiderly checkout, exit:
+## Step 1 — The `ApiKey` entity (+ junction + navs)
 
-   > This skill is for NuGet/npm consumers. You're using local ProjectReferences to a sibling `spiderly/` directory — upgrade by `git pull` in that directory instead.
+Create the entity in the Business project's `Entities/`. Adapt the namespace and the `User`/`Role` types to the app.
 
-3. **Require clean git state.** Run `git status --porcelain`. If non-empty, exit:
+```csharp
+[Index(nameof(KeyHash), IsUnique = true)]
+[SpiderlyEntity]
+public class ApiKey : BusinessObject<long>, IApiKey
+{
+    [UIDoNotGenerate]
+    [Required]
+    [StringLength(64, MinimumLength = 1)]
+    public string KeyHash { get; set; }            // SHA-256 of the key; the plaintext is never stored
 
-   > Working tree must be clean before upgrading. Commit or stash your changes first — the upgrade will make many edits, and a clean tree is your `git restore .` safety net.
+    [Required]
+    [StringLength(100, MinimumLength = 1)]
+    [DisplayName]
+    public string Name { get; set; }
 
-4. **Detect current version.** Read all `Spiderly.*` `PackageReference` `Version=` values across every csproj, plus the `"spiderly"` value in `Frontend/package.json`. They should agree. If they drift, list the values and ask the user which to treat as "current".
+    // Creator — the principal (any kind) that minted this key. Audit metadata, auto-stamped at creation.
+    // A soft reference (no FK): the creator can be any principal kind (User, ApiKey, ...), so it's stored
+    // as principal id + kind rather than a typed navigation.
+    [UIDoNotGenerate]
+    public long CreatedById { get; set; }
 
-5. **Multi-solution monorepo.** If multiple Backend dirs (each with their own Spiderly refs) exist, ask the user which one to upgrade. One app per invocation.
+    [UIDoNotGenerate]
+    [Required]
+    [StringLength(50, MinimumLength = 1)]
+    public string CreatedByPrincipalKind { get; set; }
 
-## Step 2 — Resolve target version
+    public DateTime? ExpiresAt { get; set; }
 
-- If arg is `latest` or omitted: WebFetch `https://api.nuget.org/v3-flatcontainer/spiderly.shared/index.json`, parse the `versions` array, pick the highest stable (no `-` suffix), confirm with the user.
-- Otherwise validate the arg as `X.Y.Z` (or `X.Y.Z-preview.N` if the user is explicitly opting into a preview — warn that preview release notes are usually thin).
-- Reject downgrades: if target < current, exit `Downgrades are not supported. To downgrade, edit Spiderly.* PackageReference Version= attributes and the "spiderly" npm dep manually, then run dotnet restore and npm install.`
-- Reject no-op: if target == current, exit `Already on {version}.`
+    public bool? IsRevoked { get; set; }
 
-## Step 3 — Fetch what changed
+    // ISecurityPrincipal: the key's authority is the union of its own roles' permissions (M2M, like User.Roles).
+    public virtual List<Role> Roles { get; } = new(); // M2M
+    IReadOnlyCollection<IRole> ISecurityPrincipal.Roles => Roles;
 
-Fire these two WebFetch calls **in parallel** (same message, two tool calls):
-
-1. **Diff between tags.** `https://api.github.com/repos/filiptrivan/spiderly/compare/v{current}...v{target}` (three-dot syntax). Response has `files[]` with `filename` and `patch`. Filter client-side to the user-facing paths below — GitHub's compare endpoint has no path-filter parameter. If `truncated: true`, warn the user the diff was capped and proceed with what was returned.
-
-2. **All release notes in one call.** `https://api.github.com/repos/filiptrivan/spiderly/releases?per_page=100`. Returns every release. Filter in-memory to tags `v{X.Y.Z}` strictly above current and ≤ target. Concatenate `body` fields in ascending version order. (One call, not N — Spiderly's total release count fits in one page.)
-
-On 403 rate-limited: ask the user to export `GH_TOKEN` (no scopes needed) and retry.
-
-### User-facing file paths (filter the compare response client-side)
-
-**Include** — changes here affect consumers:
-
-- `Spiderly.Shared/**/*.cs` — public attributes, contracts, builders
-- `Spiderly.Security/**/*.cs` — auth interfaces, attributes
-- `Spiderly.Infrastructure/**/*.cs` — DI extensions, base services
-- `Spiderly.SourceGenerators/**/*.cs` — generator output shape changes (may break consumer overrides)
-- `Spiderly.Shared/Helpers/NetAndAngularFilesGenerator.cs` — init template; drift here implies existing apps may need mirroring edits (new service registration, new file in scaffold)
-- `Angular/projects/spiderly/src/lib/**/*.ts`
-- `Angular/projects/spiderly/src/public-api.ts`
-
-**Exclude** — `*.Tests/**`, `tests/**`, `Spiderly.CLI/**` (consumers don't reference CLI internals — flag CLI flag/command changes only via release notes), `Angular/node_modules/**`, `Angular/dist/**`, `.github/**`, `.claude-plugin/**`, `claude-plugins/**`, `*.csproj`, `package.json`, `*.md`.
-
-## Step 4 — Impact scan and plan
-
-Read the combined release notes + filtered diff in a single pass. Identify changes that likely affect a consumer:
-
-- New / renamed / removed public types, methods, attributes in `Spiderly.Shared`, `Spiderly.Security`, `Spiderly.Infrastructure`
-- Changes in source-generator output shape (consumers may have overrides that no longer compile)
-- Changes in the init template — signals what NEW apps look like; existing apps may need to mirror (e.g. a new `services.AddTransient<X>()`)
-- Changes in the Angular library's public surface (`public-api.ts` exports, component/service contracts)
-- CLI command/flag changes (if the user has CI scripts invoking `spiderly`)
-
-For each candidate change:
-
-1. Describe in one line what changed.
-2. Use Grep over the user's codebase to find real usages. Read context, don't just match symbol names blindly.
-3. If no real usages exist, drop the item from the plan.
-
-Plan format:
-
-```
-Spiderly upgrade: 19.5.0 → 21.2.0
-
-Code edits (N items affect you):
-  1. <change> — <N> usages in <files>
-  2. ...
-
-Manual steps after upgrade:
-  - <step the agent can't do for you>
-
-Version bumps: Spiderly.*  19.5.0 → 21.2.0  (4 csproj + Frontend/package.json[ + .claude/settings.json legacy-plugin removal])
-
-After approval: apply → bump → migrate guidance + config → restore + install (parallel) → build → agent-sync. Up to 2 build-fix retries on failure.
+    public bool? IsDisabled { get; set; }
+}
 ```
 
-## Step 5 — Single approval gate
+`IApiKey` (which extends `ISecurityPrincipal`) is `Spiderly.Security.Interfaces`; `IRole` is `Spiderly.Shared.Interfaces`. The entity implements `IApiKey` so the framework's default authenticator (Step 2) reads it generically.
 
-Present the plan and ask the user explicitly. Don't proceed without a clear yes.
+Add the M2M junction (mirrors the app's `UserRole`):
 
-## Step 6 — Apply
+```csharp
+[M2M]
+[SpiderlyEntity]
+public class ApiKeyRole
+{
+    [M2MWithMany(nameof(ApiKey.Roles))]
+    public virtual ApiKey ApiKey { get; set; }
 
-In this order. A failure at any step is a hard stop until the recovery procedure in Step 7.
-
-1. **Code edits.** Apply each plan item via Edit. Read each target file first.
-2. **Version bumps.** Iterate the csproj list cached in Step 1: rewrite every `<PackageReference Include="Spiderly.X" Version="OLD" />` to the new version. Rewrite `"spiderly": "OLD"` in `Frontend/package.json`. Don't re-glob.
-3. **Migrate agent guidance off the legacy plugin.** Spiderly's AI-agent guidance now ships *inside* the `spiderly` npm package (projected by `spiderly agent-sync` in item 7 below), replacing the old `spiderly@spiderly` Claude Code plugin. If `.claude/settings.json` contains `extraKnownMarketplaces.spiderly` and/or `enabledPlugins."spiderly@spiderly"`, remove just those keys (leave any other settings intact; delete the file only if it becomes an empty `{}`). No settings file or no spiderly entries → skip.
-4. **Migrate `spiderly.json` → `.spiderly/config.json`.** Recent Spiderly moved the generator/api config out of a root `spiderly.json` into `.spiderly/config.json`. If the app has a `spiderly.json` registered via `<AdditionalFiles Include="spiderly.json" />`, `git mv` it to `.spiderly/config.json` and rewrite that csproj line to `<AdditionalFiles Include=".spiderly/config.json" />`. No `spiderly.json` → skip.
-5. **Restore packages in parallel.** Same message, two Bash calls: `dotnet restore` in Backend and `npm install` in Frontend. They share no locks. If either fails, surface the actual error and exit.
-6. **`dotnet build`** from the Backend dir. On failure, go to Step 7.
-7. **Sync agent guidance.** Run `spiderly agent-sync` from the app root. It reads the freshly-installed `Frontend/node_modules/spiderly/agent` bundle and reconciles `AGENTS.md` (doc index + `@AGENTS.md` in `CLAUDE.md`) and `.claude/skills/spiderly-*` (junctions, pruning any renamed/removed skill). Idempotent; non-fatal if it warns the bundle is missing (an older package predating the bundle).
-
-## Step 7 — Build-failure recovery (max 2 retries)
-
-Loop up to 2 times — stop on first green build:
-
-1. Scan output for the **first `SPIDERLY`-prefixed diagnostic** (these are the root cause; downstream `CS0246` errors about missing `*DTO` types are noise). Fall back to the first `CS` error only if no SPIDERLY diagnostic exists.
-2. Read the offending file. Apply the most likely fix using the error message + the diff context from Step 3.
-3. Re-run `dotnet build`.
-
-After 2 failed attempts, stop:
-
-```
-Upgrade halted after 2 build-fix attempts.
-
-Build error still present:
-  <paste the diagnostic>
-
-Attempted fixes:
-  1. <what>
-  2. <what>
-
-The in-progress upgrade is in your working tree.
-  - To roll back: git restore .
-  - To continue manually: fix the error, run `dotnet build`, then commit.
+    [M2MWithMany(nameof(Role.ApiKeys))]
+    public virtual Role Role { get; set; }
+}
 ```
 
-## Step 8 — Done
+Add the inverse M2M nav `public virtual List<ApiKey> ApiKeys { get; } = new(); // M2M` on **`Role`**. There is **no** nav on `User` — the creator is a soft reference (id + kind), not a navigation.
 
-Print summary:
+## Step 2 — The authenticator (you don't write one)
 
-- Versions bumped (from → to)
-- Files edited (count + list)
-- Manual steps remaining (re-print verbatim from the plan)
+The framework ships `DefaultApiKeyAuthenticator<TApiKey>`, which does the hash→active-id lookup over your `ApiKey` entity generically (it reads it via the `IApiKey` interface, so it stays decoupled from your namespace). You get it for free from the Step 4 registration — there is **no authenticator to hand-write**.
 
-Do **not** auto-commit. The user reviews the diff and commits themselves.
+Only implement your own `IApiKeyAuthenticator` for a non-standard lookup (e.g. an external key store). If you do, register it **before** `AddSpiderlyApiKeyAuthentication<ApiKey>()` — the framework adds the default with `TryAdd`, so your registration wins.
 
-## Refresh AI-agent guidance
+## Step 3 — `ApiKeyService` hooks (generate + hash + show-once)
 
-After the new `spiderly` package is installed, project the version-matched guidance:
+Extend the generated `ApiKeyServiceGenerated` so the admin/CRUD save path mints the key, stores only its hash, and returns the plaintext **exactly once**:
 
-```bash
-spiderly agent-sync
+```csharp
+[SpiderlyService]
+public class ApiKeyService : ApiKeyServiceGenerated
+{
+    private readonly AuthenticationService _authenticationService;
+    private readonly AuthorizationService _authorizationService;   // the app's most-derived authorization service
+    private string _generatedPlainTextKey;
+
+    public ApiKeyService(EntityServiceDependencies deps, AuthenticationService authenticationService, AuthorizationService authorizationService) : base(deps)
+    {
+        _authenticationService = authenticationService;
+        _authorizationService = authorizationService;
+    }
+
+    protected override async Task OnBeforeSaveApiKeyAndReturnMainUIFormDTO(ApiKeySaveBodyDTO saveBodyDTO)
+    {
+        if (saveBodyDTO.ApiKeyDTO.Id <= 0)
+        {
+            string plainTextKey = ApiKeyHelper.GenerateRandomKey();
+            saveBodyDTO.ApiKeyDTO.KeyHash = ApiKeyHelper.ComputeSha256Hash(plainTextKey);
+            _generatedPlainTextKey = plainTextKey;
+            saveBodyDTO.ApiKeyDTO.CreatedById = _authenticationService.GetCurrentUserId();
+            saveBodyDTO.ApiKeyDTO.CreatedByPrincipalKind = _authenticationService.GetCurrentPrincipalKind();
+        }
+        else
+        {
+            saveBodyDTO.ApiKeyDTO.KeyHash = await _deps.Context.DbSet<ApiKey>()
+                .AsNoTracking().Where(x => x.Id == saveBodyDTO.ApiKeyDTO.Id).Select(x => x.KeyHash).FirstAsync();
+        }
+    }
+
+    protected override async Task OnAfterSaveApiKeyAndReturnMainUIFormDTO(ApiKeySaveBodyDTO saveBodyDTO, ApiKeyMainUIFormDTO mainUIFormDTO)
+    {
+        if (_generatedPlainTextKey != null)
+        {
+            mainUIFormDTO.PlainTextKey = _generatedPlainTextKey;   // add this property via a partial ApiKeyMainUIFormDTO (Step 6)
+            _generatedPlainTextKey = null;
+        }
+    }
+
+    // Guard EVERY role-assignment path, not just the Generate endpoint: an admin may only grant a key roles
+    // whose permissions they themselves hold. This is the M2M role-mutation method, so guarding it here covers
+    // the admin roles editor (and any future caller) by construction.
+    public override async Task UpdateRolesForApiKey(long id, List<int> selectedIds)
+    {
+        await _authorizationService.AuthorizeApiKeyRoleAssignmentAsync(selectedIds);
+        await base.UpdateRolesForApiKey(id, selectedIds);
+    }
+}
 ```
 
-This is idempotent and reconciling: it rewrites the static `AGENTS.md` docs pointer, ensures `CLAUDE.md` imports it (`@AGENTS.md`), and adds/refreshes/prunes `.claude/skills/spiderly-*` junctions so renamed or removed skills self-heal. Re-running it is always safe.
+`ApiKeyHelper` is `Spiderly.Security.Authentication`. If the app's authorization service has a different class name, inject that.
 
-## Rules
+## Step 4 — Register the principal + the auth scheme
 
-- **Never auto-revert.** Leave the in-progress state in the working tree so the user can see what was attempted; they roll back with `git restore .`
-- **Never silently drop a candidate breaking change.** If the diff shows one but you can't determine impact, include it in the plan as "verify manually".
+In the app's service-registration (where `AddSpiderlyPrincipal<User>` is called, **after** `AddSpiderly(...)`):
+
+```csharp
+services.AddSpiderlyPrincipal<ApiKey>(PrincipalKinds.ApiKey);
+services.AddSpiderlyApiKeyAuthentication<ApiKey>();
+```
+
+`AddSpiderlyApiKeyAuthentication` registers the `ApiKey` scheme **and** a forwarding policy scheme set as the default — so `X-Api-Key` requests route to the key handler and everything else to JWT, with no per-endpoint `[Authorize(AuthenticationSchemes=...)]` churn. Registering a second principal kind makes the app multi-principal; the JWT login already stamps `PrincipalKinds.User`, the key handler stamps `PrincipalKinds.ApiKey`, so both satisfy the now-required `principal_kind` claim.
+
+## Step 5 — The issuance guard (authorization service)
+
+In the app's authorization service (the `[SpiderlyService]` extending `AuthorizationServiceGenerated`), add the guard the `UpdateRolesForApiKey` override and the Generate endpoint both call:
+
+```csharp
+/// <summary>
+/// Issuance guard: the principal creating a key may only grant it roles whose permissions that principal
+/// already holds, so a key can never be minted more powerful than its creator. The creator can be any
+/// principal kind (a user, a service account, another key), so the ceiling is resolved principal-agnostically
+/// via GetCurrentPrincipalPermissionCodesAsync() (not the User-typed GetCurrentUserPermissionCodes). No
+/// runtime cap — a key authorizes through its own roles — so this is enforced once, at assignment.
+/// </summary>
+public async Task AuthorizeApiKeyRoleAssignmentAsync(List<int> roleIds)
+{
+    if (roleIds == null || roleIds.Count == 0)
+        return;
+
+    HashSet<string> creatorPermissions = (await GetCurrentPrincipalPermissionCodesAsync()).ToHashSet();
+
+    List<string> targetRolePermissions = await _context.DbSet<Role>()
+        .AsNoTracking()
+        .Where(r => roleIds.Contains(r.Id))
+        .SelectMany(r => r.Permissions)
+        .Select(p => p.Code)
+        .Distinct()
+        .ToListAsync();
+
+    if (!targetRolePermissions.All(p => creatorPermissions.Contains(p)))
+        throw new BusinessException(_localizer["ApiKeyRoleExceedsYourPermissionsException"]);
+}
+```
+
+Add the `ApiKeyRoleExceedsYourPermissionsException` translation key (see the `backend-localization` doc).
+
+## Step 6 — Generate / Revoke endpoints + DTOs
+
+These are the machine-facing REST surface (also what a management skill drives). Add to a `[SpiderlyController]` (e.g. the security controller). DTOs go in the Admin DTO folder; the `PlainTextKey` extension is a **partial** of the generated `ApiKeyMainUIFormDTO` and must use the bare `...Business.DTO` namespace (see the `entity-design` doc on partial-DTO namespacing).
+
+```csharp
+// GenerateApiKeyRequestDTO:  string Name; int? ExpiresInDays; [Required] List<int> RoleIds = new();
+// GenerateApiKeyResponseDTO: string Key; string Name; DateTime? ExpiresAt; [Required] List<int> RoleIds = new(); [Required] List<string> RoleNames = new();
+// RevokeApiKeyRequestDTO:    [Required] long ApiKeyId;
+// partial ApiKeyMainUIFormDTO (bare DTO namespace): [UIDoNotGenerate][StringLength(64)] string PlainTextKey;
+
+[HttpPost, AuthGuard]
+public async Task<GenerateApiKeyResponseDTO> GenerateApiKey([FromBody] GenerateApiKeyRequestDTO request)
+{
+    await _authorizationService.AuthorizeAndThrowAsync(PermissionCodes.InsertApiKey);   // principal-agnostic — any principal kind can create a key
+    long currentUserId = _authenticationService.GetCurrentUserId();
+
+    List<Role> roles = new();
+    if (request.RoleIds != null && request.RoleIds.Count > 0)
+    {
+        roles = await _context.DbSet<Role>().Where(x => request.RoleIds.Contains(x.Id)).ToListAsync();
+        List<int> missing = request.RoleIds.Except(roles.Select(r => r.Id)).ToList();
+        if (missing.Count > 0) throw new BusinessException($"Role(s) not found: {string.Join(", ", missing)}.");
+        await _authorizationService.AuthorizeApiKeyRoleAssignmentAsync(request.RoleIds);
+    }
+
+    string plainTextKey = ApiKeyHelper.GenerateRandomKey();
+    DateTime? expiresAt = request.ExpiresInDays.HasValue ? DateTime.UtcNow.AddDays(request.ExpiresInDays.Value) : null;
+
+    ApiKey apiKey = new() { KeyHash = ApiKeyHelper.ComputeSha256Hash(plainTextKey), Name = request.Name,
+        CreatedById = currentUserId, CreatedByPrincipalKind = _authenticationService.GetCurrentPrincipalKind(),
+        ExpiresAt = expiresAt, IsRevoked = false };
+    apiKey.Roles.AddRange(roles);
+    _context.DbSet<ApiKey>().Add(apiKey);
+    await _context.SaveChangesAsync();
+
+    return new GenerateApiKeyResponseDTO { Key = plainTextKey, Name = request.Name, ExpiresAt = expiresAt,
+        RoleIds = roles.Select(r => r.Id).ToList(), RoleNames = roles.Select(r => r.Name).ToList() };
+}
+
+[HttpPost, AuthGuard]
+public async Task RevokeApiKey([FromBody] RevokeApiKeyRequestDTO request)
+{
+    await _authorizationService.AuthorizeAndThrowAsync(PermissionCodes.UpdateApiKey);
+    ApiKey apiKey = await _context.DbSet<ApiKey>().FirstOrDefaultAsync(x => x.Id == request.ApiKeyId)
+        ?? throw new BusinessException("API key not found.");
+    apiKey.IsRevoked = true;
+    await _context.SaveChangesAsync();
+}
+```
+
+## Step 7 — Seed the `ApiKey` permissions + migrate
+
+1. **Seed permissions** so the `PermissionCodes.{Read,Insert,Update,Delete}ApiKey` constants generate — add `Permission` seed rows (codes `ReadApiKey`/`InsertApiKey`/`UpdateApiKey`/`DeleteApiKey`) in the app's DbContext seed data, alongside the existing User/Role permission seeds, and grant them to the admin role.
+2. **Migration** — add + apply an EF migration for the new `ApiKey` + `ApiKeyRole` tables (see the `ef-migrations` skill). If you're converting an *existing* single-`Role` API-key table to this M2M model, make the migration **data-preserving**: create the junction first, `INSERT ... SELECT` the old `RoleId`s into it, then drop the old column.
+
+## Step 8 — (Optional) admin UI
+
+Only if the user wants a clickable admin surface (otherwise skip — keys are managed via the endpoints / a management skill). Scaffold the list + details pages for the `ApiKey` entity (see the `add-entity` skill for pages/routes/menu), then customize the details page to show the generated key **once**: intercept the save response, and if it carries `plainTextKey`, show it in a read-only "copy this — it won't be shown again" dialog and suppress the auto-reroute until the dialog closes. A roles editor on the form routes through `UpdateRolesForApiKey`, which Step 3 already guards.
+
+To keep the feature **headless** instead, add `[UIDoNotGenerate]` to the `ApiKey` class and don't create pages.
+
+## Step 9 — Verify
+
+Build the backend (`dotnet build` the Business project, then the WebAPI project). Then sanity-check the flow: generate a key (admin JWT) → call any `[HasPermission]` endpoint the key's roles cover with `X-Api-Key: <key>` → revoke it → confirm the same call now returns 401.
+
+## Invariants to preserve
+
+- **Store only the hash.** The plaintext is returned once at generation and never persisted.
+- **Guard every role-assignment path.** Both the Generate endpoint and `UpdateRolesForApiKey` call `AuthorizeApiKeyRoleAssignmentAsync` — a key can never be minted more powerful than its creator.
+- **A role-less key has no permissions** (deny), by design. Assign an admin role for a full-access key.
+- **Revocation/expiry/disabled are checked live** in `DefaultApiKeyAuthenticator` on every request — that's the whole point of opaque keys over JWTs.
 
 ---
 > Source: [filiptrivan/spiderly](https://github.com/filiptrivan/spiderly) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:skill_md:2026-06-29 -->
+<!-- tomevault:4.0:skill_md:2026-06-30 -->
