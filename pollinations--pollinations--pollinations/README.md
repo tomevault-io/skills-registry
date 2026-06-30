@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pollinations/pollinations](https://github.com/pollinations/pollinations/tree/main/.claude/skills/abuse-detection/SKILL.md)
+Original source: [pollinations/pollinations](https://github.com/pollinations/pollinations/tree/main/.claude/skills/sync-production/SKILL.md)
 
 ---
 
