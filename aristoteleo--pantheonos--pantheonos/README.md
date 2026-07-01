@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aristoteleo/PantheonOS](https://github.com/aristoteleo/PantheonOS/tree/main/pantheon/factory/templates/skills/omics/gene_panel_selection/SKILL.md)
+Original source: [aristoteleo/PantheonOS](https://github.com/aristoteleo/PantheonOS/tree/main/pantheon/factory/templates/skills/omics/general_data_analysis/SKILL.md)
 
 ---
 
