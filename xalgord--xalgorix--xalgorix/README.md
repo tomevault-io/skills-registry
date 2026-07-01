@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xalgord/xalgorix](https://github.com/xalgord/xalgorix/tree/main/internal/tools/skills/data/web-application-security/exploiting-mass-assignment-in-rest-apis/SKILL.md)
+Original source: [xalgord/xalgorix](https://github.com/xalgord/xalgorix/tree/main/internal/tools/skills/data/penetration-testing/conducting-wireless-network-penetration-test/SKILL.md)
 
 ---
 
