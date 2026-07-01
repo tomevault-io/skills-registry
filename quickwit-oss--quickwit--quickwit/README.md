@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [quickwit-oss/quickwit](https://github.com/quickwit-oss/quickwit/tree/main/.claude/skills/fix-clippy/SKILL.md)
+Original source: [quickwit-oss/quickwit](https://github.com/quickwit-oss/quickwit/tree/main/.claude/skills/bump-tantivy/SKILL.md)
 
 ---
 
