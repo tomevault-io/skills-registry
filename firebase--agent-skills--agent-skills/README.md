@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [firebase/agent-skills](https://github.com/firebase/agent-skills/tree/main/skills/firebase-ai-logic-basics/SKILL.md)
+Original source: [firebase/agent-skills](https://github.com/firebase/agent-skills/tree/main/skills/firebase-app-hosting-basics/SKILL.md)
 
 ---
 
