@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [open-gsd/gsd-pi](https://github.com/open-gsd/gsd-pi/tree/main/src/resources/skills/debug-like-expert/SKILL.md)
+Original source: [open-gsd/gsd-pi](https://github.com/open-gsd/gsd-pi/tree/main/src/resources/skills/userinterface-wiki/SKILL.md)
 
 ---
 
