@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LarsCowe/bmalph](https://github.com/LarsCowe/bmalph/tree/main/bmad/bmm/workflows/3-solutioning/bmad-create-architecture/SKILL.md)
+Original source: [LarsCowe/bmalph](https://github.com/LarsCowe/bmalph/tree/main/bmad/bmm/workflows/1-analysis/research/bmad-domain-research/SKILL.md)
 
 ---
 
