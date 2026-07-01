@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hegeldev/hegel-rust](https://github.com/hegeldev/hegel-rust/tree/main/.agents/skills/self-review/SKILL.md)
+Original source: [hegeldev/hegel-rust](https://github.com/hegeldev/hegel-rust/tree/main/.agents/skills/new-generator/SKILL.md)
 
 ---
 
