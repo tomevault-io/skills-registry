@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hamen/compose_skill](https://github.com/hamen/compose_skill/tree/main/skills/compose-agent/SKILL.md)
+Original source: [hamen/compose_skill](https://github.com/hamen/compose_skill/tree/main/skills/jetpack-compose-audit/SKILL.md)
 
 ---
 
