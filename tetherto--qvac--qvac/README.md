@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tetherto/qvac](https://github.com/tetherto/qvac/tree/main/.cursor/skills/qv-qip-triage/SKILL.md)
+Original source: [tetherto/qvac](https://github.com/tetherto/qvac/tree/main/.cursor/skills/qv-asana-sync/SKILL.md)
 
 ---
 
