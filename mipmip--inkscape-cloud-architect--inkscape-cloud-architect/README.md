@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mipmip/inkscape-cloud-architect](https://github.com/mipmip/inkscape-cloud-architect/tree/main/.claude/skills/openspec-apply-change/SKILL.md)
+Original source: [mipmip/inkscape-cloud-architect](https://github.com/mipmip/inkscape-cloud-architect/tree/main/.claude/skills/openspec-archive-change/SKILL.md)
 
 ---
 
