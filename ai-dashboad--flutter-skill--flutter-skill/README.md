@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ai-dashboad/flutter-skill](https://github.com/ai-dashboad/flutter-skill/tree/main/skills/e2e-testing/SKILL.md)
+Original source: [ai-dashboad/flutter-skill](https://github.com/ai-dashboad/flutter-skill/tree/main/skills-submission/flutter-skill/SKILL.md)
 
 ---
 
