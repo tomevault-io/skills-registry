@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/mcp](https://github.com/microsoft/mcp/tree/main/tools/Azure.Mcp.Tools.AzureBackup/skills/azurebackup-add-tool/SKILL.md)
+Original source: [microsoft/mcp](https://github.com/microsoft/mcp/tree/main/tools/Azure.Mcp.Tools.AzureBackup/skills/azurebackup-telemetry-report/SKILL.md)
 
 ---
 
