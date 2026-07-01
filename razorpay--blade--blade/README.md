@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [razorpay/blade](https://github.com/razorpay/blade/tree/main/.agents/skills/review-pr/SKILL.md)
+Original source: [razorpay/blade](https://github.com/razorpay/blade/tree/main/.agents/skills/code-review/SKILL.md)
 
 ---
 
