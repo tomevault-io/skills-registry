@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PhyAgentOS/PhyAgentOS](https://github.com/PhyAgentOS/PhyAgentOS/tree/main/PhyAgentOS/skills/github/SKILL.md)
+Original source: [PhyAgentOS/PhyAgentOS](https://github.com/PhyAgentOS/PhyAgentOS/tree/main/PhyAgentOS/skills/clawhub/SKILL.md)
 
 ---
 
