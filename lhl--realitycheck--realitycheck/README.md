@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lhl/realitycheck](https://github.com/lhl/realitycheck/tree/main/integrations/pi/skills/rc-extract/SKILL.md)
+Original source: [lhl/realitycheck](https://github.com/lhl/realitycheck/tree/main/integrations/amp/skills/rc-export/SKILL.md)
 
 ---
 
