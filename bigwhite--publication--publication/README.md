@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bigwhite/publication](https://github.com/bigwhite/publication/tree/main/column/timegeek/build-agent-harness-from-scratch/ch10/go-tiny-claw/workspace/.claw/skills/git-workflow/SKILL.md)
+Original source: [bigwhite/publication](https://github.com/bigwhite/publication/tree/main/column/timegeek/build-agent-harness-from-scratch/ch22/go-tiny-claw/workspace/.claw/skills/ops_troubleshoot/SKILL.md)
 
 ---
 
