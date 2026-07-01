@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [maze-agent/Maze](https://github.com/maze-agent/Maze/tree/main/system_catalog/skills/algorithmic-art/SKILL.md)
+Original source: [maze-agent/Maze](https://github.com/maze-agent/Maze/tree/main/system_catalog/skills/slack-gif-creator/SKILL.md)
 
 ---
 
