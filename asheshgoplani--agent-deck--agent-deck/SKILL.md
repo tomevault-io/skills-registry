@@ -1,352 +1,269 @@
 ---
-name: agent-deck
-description: Terminal session manager for AI coding agents. Use when user mentions "agent-deck", "session", "sub-agent", "MCP attach", "git worktree", or needs to (1) create/start/stop/restart/fork sessions, (2) attach/detach MCPs, (3) manage groups/profiles, (4) get session output, (5) configure agent-deck, (6) troubleshoot issues, (7) launch sub-agents, or (8) create/manage worktree sessions. Covers CLI commands, TUI shortcuts, config.toml options, and automation. Use when this capability is needed.
+name: watcher-creator
+description: Guide for creating agent-deck watchers conversationally. This skill should be used when users want to set up a new watcher (webhook, ntfy, github, slack, gmail) to route events to a conductor. It walks the user through selecting an adapter type, gathering required settings, generating watcher.toml and clients.json entries, and emits the exact `agent-deck watcher create` command to run. Use when this capability is needed.
 metadata:
   author: asheshgoplani
 ---
 
-# Agent Deck
+# Watcher Creator
 
-Terminal session manager for AI coding agents. Built with Go + Bubble Tea.
+## Overview
 
-**Version:** 0.8.98 | **Repo:** [github.com/asheshgoplani/agent-deck](https://github.com/asheshgoplani/agent-deck) | **Discord:** [discord.gg/e4xSs6NBN8](https://discord.gg/e4xSs6NBN8)
+This skill guides users through setting up a new agent-deck watcher from scratch. A watcher listens for incoming events (webhooks, ntfy notifications, GitHub events, Slack messages, or Gmail messages) and routes them to the appropriate conductor session. The skill asks clarifying questions, collects required settings, and emits the exact CLI command and configuration files to create a working watcher.
 
-## Script Path Resolution (IMPORTANT)
+## When to use
 
-This skill includes helper scripts in its `scripts/` subdirectory. When Claude Code loads this skill, it shows a line like:
+Invoke this skill when a user says things like:
+- "I want to set up a new watcher"
+- "How do I connect GitHub webhooks to agent-deck?"
+- "Help me route Slack messages to a conductor"
+- "Create a watcher for my Gmail inbox"
+- "I need agent-deck to listen for ntfy notifications"
 
-```
-Base directory for this skill: /path/to/.../skills/agent-deck
-```
+## Step-by-step conversational flow
 
-**You MUST use that base directory path to resolve all script references.** Store it as `SKILL_DIR`:
+### Step 1: Choose adapter type
 
-```bash
-# Set SKILL_DIR to the base directory shown when this skill was loaded
-SKILL_DIR="/path/shown/in/base-directory-line"
+Ask the user which source they want to receive events from. Present the five options:
 
-# Then run scripts as:
-$SKILL_DIR/scripts/launch-subagent.sh "Title" "Prompt" --wait
-```
+1. **webhook** - Generic HTTP POST webhook (any service that can send HTTP)
+2. **ntfy** - ntfy.sh push notification topic
+3. **github** - GitHub repository webhooks (issues, PRs, pushes)
+4. **slack** - Slack messages via a Cloudflare Worker bridge to ntfy
+5. **gmail** - Gmail inbox via Google Cloud Pub/Sub watch
 
-**Common mistake:** Do NOT use `<project-root>/scripts/launch-subagent.sh`. The scripts live inside the skill's own directory (plugin cache or project skills folder), NOT in the user's project root.
+### Step 2: Gather required settings for the chosen type
 
-**For plugin users**, the path looks like: `~/.claude/plugins/cache/agent-deck/agent-deck/<hash>/skills/agent-deck/scripts/`
-**For local development**, the path looks like: `<repo>/skills/agent-deck/scripts/`
+Once the user picks a type, ask for the settings specific to that adapter (see the per-type sections below). Ask for each required setting one at a time to avoid overwhelming the user.
 
-## Quick Start
+Also ask:
+- **Watcher name**: A short lowercase identifier (e.g., `my-webhook`, `github-alerts`). This becomes the directory name under the effective watcher data dir (`${XDG_DATA_HOME:-$HOME/.local/share}/agent-deck/watcher` for new users; legacy `~/.agent-deck/watcher` remains in use when existing watcher state is present).
+- **Conductor**: Which conductor session this watcher should route events to by default (the `conductor` field in `clients.json`).
+- **Group**: Which group the conductor session lives in (the `group` field in `clients.json`).
 
-```bash
-# Launch TUI
-agent-deck
+### Step 3: Generate a watcher.toml block
 
-# Create and start a session
-agent-deck add -t "Project" -c claude /path/to/project
-agent-deck session start "Project"
+Produce a TOML configuration block for the user to save as `${XDG_DATA_HOME:-$HOME/.local/share}/agent-deck/watcher/<name>/watcher.toml`, or the legacy `~/.agent-deck/watcher/<name>/watcher.toml` if agent-deck is already using legacy watcher state.
 
-# Send message and get output
-agent-deck session send "Project" "Analyze this codebase"
-agent-deck session output "Project"
-```
-
-## Essential Commands
-
-| Command | Purpose |
-|---------|---------|
-| `agent-deck` | Launch interactive TUI |
-| `agent-deck add -t "Name" -c claude /path` | Create session |
-| `agent-deck session start/stop/restart <name>` | Control session |
-| `agent-deck session send <name> "message"` | Send message |
-| `agent-deck session output <name>` | Get last response |
-| `agent-deck session current [-q\|--json]` | Auto-detect current session |
-| `agent-deck session fork <name>` | Fork Claude conversation |
-| `agent-deck mcp list` | List available MCPs |
-| `agent-deck mcp attach <name> <mcp>` | Attach MCP (then restart) |
-| `agent-deck status` | Quick status summary |
-| `agent-deck add --worktree <branch>` | Create session in git worktree |
-| `agent-deck worktree list` | List worktrees with sessions |
-| `agent-deck worktree cleanup` | Find orphaned worktrees/sessions |
-
-**Status:** `●` running | `◐` waiting | `○` idle | `✕` error
-
-## Sub-Agent Launch
-
-**Use when:** User says "launch sub-agent", "create sub-agent", "spawn agent"
-
-```bash
-$SKILL_DIR/scripts/launch-subagent.sh "Title" "Prompt" [--mcp name] [--wait]
-```
-
-The script auto-detects current session/profile and creates a child session.
-
-### Retrieval Modes
-
-| Mode | Command | Use When |
-|------|---------|----------|
-| **Fire & forget** | (no --wait) | Default. Tell user: "Ask me to check when ready" |
-| **On-demand** | `agent-deck session output "Title"` | User asks to check |
-| **Blocking** | `--wait` flag | Need immediate result |
-
-### Recommended MCPs
-
-| Task Type | MCPs |
-|-----------|------|
-| Web research | `exa`, `firecrawl` |
-| Code documentation | `context7` |
-| Complex reasoning | `sequential-thinking` |
-
-## Consult Another Agent (Codex, Gemini)
-
-**Use when:** User says "consult with codex", "ask gemini", "get codex's opinion", "what does codex think", "consult another agent", "brainstorm with codex/gemini", "get a second opinion"
-
-**IMPORTANT:** You MUST use the `--tool` flag to specify which agent. Without it, the script defaults to Claude.
-
-### Quick Reference
-
-```bash
-# Consult Codex (MUST include --tool codex)
-$SKILL_DIR/scripts/launch-subagent.sh "Consult Codex" "Your question here" --tool codex --wait --timeout 120
-
-# Consult Gemini (MUST include --tool gemini)
-$SKILL_DIR/scripts/launch-subagent.sh "Consult Gemini" "Your question here" --tool gemini --wait --timeout 120
-```
-
-**DO NOT** try to create Codex/Gemini sessions manually with `agent-deck add`. Always use the script above. It handles tool-specific initialization, readiness detection, and output retrieval automatically.
-
-### Full Options
-
-```bash
-$SKILL_DIR/scripts/launch-subagent.sh "Title" "Prompt" \
-  --tool codex|gemini \     # REQUIRED for non-Claude agents
-  --path /project/dir \     # Working directory (auto-inherits parent path if omitted)
-  --wait \                  # Block until response is ready
-  --timeout 180 \           # Seconds to wait (default: 300)
-  --mcp exa                 # Attach MCP servers (can repeat)
-```
-
-### Supported Tools
-
-| Tool | Flag | Notes |
-|------|------|-------|
-| Claude | `--tool claude` | Default, no flag needed |
-| Codex | `--tool codex` | Requires `codex` CLI installed |
-| Gemini | `--tool gemini` | Requires `gemini` CLI installed |
-
-### How It Works
-
-1. Script auto-detects current session and profile
-2. Creates a child session with the specified tool in the parent's project directory
-3. Waits for the tool to initialize (handles Codex approval prompts automatically)
-4. Sends the question/prompt
-5. With `--wait`: polls until the agent responds, then returns the full output
-6. Without `--wait`: returns immediately, check output later with `agent-deck session output "Title"`
-
-### Examples
-
-```bash
-# Code review from Codex
-$SKILL_DIR/scripts/launch-subagent.sh "Codex Review" "Read cmd/main.go and suggest improvements" --tool codex --wait --timeout 180
-
-# Architecture feedback from Gemini
-$SKILL_DIR/scripts/launch-subagent.sh "Gemini Arch" "Review the project structure and suggest better patterns" --tool gemini --wait --timeout 180
-
-# Both in parallel (consult both, compare answers)
-$SKILL_DIR/scripts/launch-subagent.sh "Ask Codex" "Best way to handle errors in Go?" --tool codex --wait --timeout 120 &
-$SKILL_DIR/scripts/launch-subagent.sh "Ask Gemini" "Best way to handle errors in Go?" --tool gemini --wait --timeout 120 &
-wait
-```
-
-### Cleanup
-
-After getting the response, remove the consultation session:
-
-```bash
-agent-deck remove "Consult Codex"
-# Or remove multiple at once:
-agent-deck remove "Codex Review" && agent-deck remove "Gemini Arch"
-```
-
-## TUI Keyboard Shortcuts
-
-### Navigation
-| Key | Action |
-|-----|--------|
-| `j/k` or `↑/↓` | Move up/down |
-| `h/l` or `←/→` | Collapse/expand groups |
-| `Enter` | Attach to session |
-
-### Session Actions
-| Key | Action |
-|-----|--------|
-| `n` | New session |
-| `r/R` | Restart (reloads MCPs) |
-| `m` | MCP Manager |
-| `s` | Skills Manager (Claude) |
-| `f/F` | Fork Claude session |
-| `d` | Delete |
-| `M` | Move to group |
-
-### Search & Filter
-| Key | Action |
-|-----|--------|
-| `/` | Local search |
-| `G` | Global search (all Claude conversations) |
-| `!@#$` | Filter by status (running/waiting/idle/error) |
-
-### Global
-| Key | Action |
-|-----|--------|
-| `?` | Help overlay |
-| `Ctrl+Q` | Detach (keep tmux running) |
-| `q` | Quit |
-
-## MCP Management
-
-**Default:** Do NOT attach MCPs unless user explicitly requests.
-
-```bash
-# List available
-agent-deck mcp list
-
-# Attach and restart
-agent-deck mcp attach <session> <mcp-name>
-agent-deck session restart <session>
-
-# Or attach on create
-agent-deck add -t "Task" -c claude --mcp exa /path
-```
-
-**Scopes:**
-- **LOCAL** (default) - `.mcp.json` in project, affects only that session
-- **GLOBAL** (`--global`) - Claude config, affects all projects
-
-## Worktree Workflows
-
-### Create Session in Git Worktree
-
-When working on a feature that needs isolation from main branch:
-
-```bash
-# Create session with new worktree and branch
-agent-deck add /path/to/repo -t "Feature Work" -c claude --worktree feature/my-feature --new-branch
-
-# Create session in existing branch's worktree
-agent-deck add . --worktree develop -c claude
-```
-
-### List and Manage Worktrees
-
-```bash
-# List all worktrees and their associated sessions
-agent-deck worktree list
-
-# Show detailed info for a session's worktree
-agent-deck worktree info "My Session"
-
-# Find orphaned worktrees/sessions (dry-run)
-agent-deck worktree cleanup
-
-# Actually clean up orphans
-agent-deck worktree cleanup --force
-```
-
-### When to Use Worktrees
-
-| Use Case | Benefit |
-|----------|---------|
-| **Parallel agent work** | Multiple agents on same repo, different branches |
-| **Feature isolation** | Keep main branch clean while agent experiments |
-| **Code review** | Agent reviews PR in worktree while main work continues |
-| **Hotfix work** | Quick branch off main without disrupting feature work |
-
-## Configuration
-
-**File:** `~/.agent-deck/config.toml`
-
+Example for webhook:
 ```toml
-[claude]
-config_dir = "~/.claude-work"    # Custom Claude profile
-dangerous_mode = true            # --dangerously-skip-permissions
+[watcher]
+name = "my-webhook"
+type = "webhook"
 
-[logs]
-max_size_mb = 10                 # Max before truncation
-max_lines = 10000                # Lines to keep
+[adapter]
+port = "18460"
+bind = "127.0.0.1"
 
-[mcps.exa]
-command = "npx"
-args = ["-y", "exa-mcp-server"]
-env = { EXA_API_KEY = "key" }
-description = "Web search"
+[routing]
+conductor = "main-conductor"
+group = "inbox"
 ```
 
-See [config-reference.md](references/config-reference.md) for all options.
+### Step 4: Generate a clients.json entry
 
-## Troubleshooting
+Produce the JSON entry keyed by the expected sender. The key format depends on adapter type:
 
-| Issue | Solution |
-|-------|----------|
-| Session shows error | `agent-deck session start <name>` |
-| MCPs not loading | `agent-deck session restart <name>` |
-| Flag not working | Put flags BEFORE arguments: `-m "msg" name` not `name -m "msg"` |
+- webhook: the `X-Webhook-Sender` header value the sender will use (e.g., an IP or a service name)
+- ntfy: `ntfy:<topic>@<server-host>` (e.g., `ntfy:my-topic@ntfy.sh`)
+- github: `<github-username>@github.com`
+- slack: `slack:<CHANNEL_ID>` (e.g., `slack:C0AABSF5GKD`)
+- gmail: the sender's email address (e.g., `user@example.com`)
 
-### Get Help
-
-- **Discord:** [discord.gg/e4xSs6NBN8](https://discord.gg/e4xSs6NBN8) for quick questions and community support
-- **GitHub Issues:** For bug reports and feature requests
-
-### Report a Bug
-
-If something isn't working, create a GitHub issue with context:
-
-```bash
-# Gather debug info
-agent-deck version
-agent-deck status --json
-cat ~/.agent-deck/config.toml | grep -v "KEY\|TOKEN\|SECRET"  # Sanitized config
-
-# Create issue at:
-# https://github.com/asheshgoplani/agent-deck/issues/new
+Entry format:
+```json
+{
+  "sender-key": {
+    "conductor": "main-conductor",
+    "group": "inbox",
+    "name": "Human-readable label"
+  }
+}
 ```
 
-**Include:**
-1. What you tried (command/action)
-2. What happened vs expected
-3. Output of commands above
-4. Relevant log: `tail -100 ~/.agent-deck/logs/agentdeck_<session>_*.log`
+### Step 5: Emit the exact agent-deck watcher create command
 
-See [troubleshooting.md](references/troubleshooting.md) for detailed diagnostics.
+Show the user the full CLI command to run. Only emit commands — do not execute them.
 
-## Session Sharing
+## Supported watcher types and required fields
 
-Share Claude sessions between developers for collaboration or handoff.
+### webhook
 
-**Use when:** User says "share session", "export session", "send to colleague", "import session"
+The webhook adapter runs a local HTTP server. Any service that can POST to an HTTP endpoint can deliver events.
 
-```bash
-# Export current session to file (session-share is a sibling skill)
-$SKILL_DIR/../session-share/scripts/export.sh
-# Output: ~/session-shares/session-<date>-<title>.json
+**Required settings:**
+- `port` (string): TCP port to listen on. Default is `"18460"`. Must be available on the local machine.
 
-# Import received session
-$SKILL_DIR/../session-share/scripts/import.sh ~/Downloads/session-file.json
+**Optional settings:**
+- `bind` (string): Bind address. Default is `"127.0.0.1"` (loopback only, per security policy T-14-04). Use `"0.0.0.0"` only if the sender is remote and you understand the exposure.
+
+**Sender key in clients.json:** Set the `X-Webhook-Sender` header from the sending service, or use the remote IP if the header is absent.
+
+**Create command:**
+```
+agent-deck watcher create webhook --name <name> --port <port>
 ```
 
-**See:** [session-share skill](../session-share/SKILL.md) for full documentation.
+### ntfy
 
-## Critical Rules
+The ntfy adapter subscribes to an ntfy.sh topic via NDJSON streaming. It auto-reconnects with exponential backoff.
 
-1. **Flags before arguments:** `session start -m "Hello" name` (not `name -m "Hello"`)
-2. **Restart after MCP attach:** Always run `session restart` after `mcp attach`
-3. **Never poll from other agents** - can interfere with target session
+**Required settings:**
+- `topic` (string): The ntfy topic name (e.g., `"my-alerts"`).
 
-## References
+**Optional settings:**
+- `server` (string): ntfy server URL. Default is `"https://ntfy.sh"`.
 
-- [cli-reference.md](references/cli-reference.md) - Complete CLI command reference
-- [config-reference.md](references/config-reference.md) - All config.toml options
-- [tui-reference.md](references/tui-reference.md) - TUI features and shortcuts
-- [troubleshooting.md](references/troubleshooting.md) - Common issues and bug reporting
-- [session-share skill](../session-share/SKILL.md) - Export/import sessions for collaboration
+**Sender key in clients.json:** `ntfy:<topic>@<server-host>` (e.g., `ntfy:my-alerts@ntfy.sh`).
+
+**Create command:**
+```
+agent-deck watcher create ntfy --name <name> --topic <topic>
+```
+
+### github
+
+The GitHub adapter runs a local HTTP server that receives GitHub webhook POST requests and verifies HMAC-SHA256 signatures.
+
+**Required settings:**
+- `secret` (string): The webhook secret configured in GitHub (Settings > Webhooks > Secret). Used for HMAC-SHA256 signature verification.
+
+**Optional settings:**
+- `port` (string): TCP port to listen on. Default is `"18461"`.
+- `bind` (string): Bind address. Default is `"127.0.0.1"`. Use a public address or set up a tunnel (e.g., ngrok) if GitHub must reach this machine.
+
+**Supported event types:** issues, pull_request, push. Unknown event types produce a generic event.
+
+**Sender key in clients.json:** `<github-username>@github.com` (e.g., `octocat@github.com`).
+
+**Create command:**
+```
+agent-deck watcher create github --name <name> --secret <secret>
+```
+
+### slack
+
+The Slack adapter subscribes to an ntfy topic that receives bridged Slack events from a Cloudflare Worker. It supports both v1 (plain text) and v2 (structured JSON) payloads.
+
+**Required settings:**
+- `topic` (string): The ntfy topic that the Cloudflare Worker posts Slack events to.
+
+**Optional settings:**
+- `server` (string): ntfy server URL. Default is `"https://ntfy.sh"`.
+
+**Sender key in clients.json:** `slack:<CHANNEL_ID>` (e.g., `slack:C0AABSF5GKD`). The channel ID comes from the Slack API or the channel URL in the Slack app.
+
+**Create command:**
+```
+agent-deck watcher create slack --name <name> --topic <topic>
+```
+
+### gmail
+
+The Gmail adapter delivers normalized events from a Gmail account via Google Cloud Pub/Sub. It requires initial OAuth setup and a Pub/Sub topic + subscription.
+
+**Required settings:**
+- `topic` (string): Full Pub/Sub topic resource name: `projects/<project-id>/topics/<topic-name>`.
+- `subscription` (string): Full Pub/Sub subscription resource name: `projects/<project-id>/subscriptions/<sub-name>`.
+
+**Optional settings:**
+- `credentials_path` (string): Path to the OAuth client credentials JSON file (downloaded from Google Cloud Console). Default: `<effective watcher data dir>/<name>/credentials.json`.
+- `token_path` (string): Path to the persisted OAuth token JSON. Default: `<effective watcher data dir>/<name>/token.json`.
+- `labels` (string): Comma-separated Gmail label filter (e.g., `"INBOX,UNREAD"`). If absent, all messages pass through.
+- `account` (string): Informational Gmail address for display purposes.
+
+**Pre-requisites before running agent-deck watcher create:**
+1. Create a Google Cloud project and enable the Gmail API and Cloud Pub/Sub API.
+2. Create a Pub/Sub topic and subscription.
+3. Grant the Gmail service account (`gmail-api-push@system.gserviceaccount.com`) the `Pub/Sub Publisher` role on the topic.
+4. Download OAuth client credentials (Desktop app type) to `credentials.json`.
+5. Run `agent-deck watcher oauth login` (Phase 19+) or manually place a `token.json` in the watcher directory.
+
+**Sender key in clients.json:** The sender's email address (e.g., `contact@example.com`).
+
+**Create command:**
+```
+agent-deck watcher create gmail --name <name>
+```
+
+## Validation checklist
+
+Before emitting the final `agent-deck watcher create` command, confirm:
+
+1. **Name is valid:** Lowercase letters, numbers, and hyphens only. No spaces or special characters.
+2. **Port is available (webhook/github):** The chosen port is not already in use by another watcher or service.
+3. **Conductor session exists:** The conductor name matches an active agent-deck session (check with `agent-deck session list`).
+4. **Required settings collected:** All required fields for the chosen adapter type are present and non-empty.
+5. **clients.json entry is correct:** The sender key format matches the adapter's normalization (e.g., `slack:CHANNEL_ID` not just `CHANNEL_ID`).
+
+## Example walkthrough
+
+**User:** I want to set up a watcher for GitHub webhook events on my repo.
+
+**Skill response:**
+Great, let me help you set up a GitHub watcher.
+
+1. What name should this watcher have? (e.g., `github-myrepo`)
+2. What port should it listen on? (default: 18461)
+3. What webhook secret will you use? (you'll configure the same value in GitHub Settings > Webhooks)
+4. Which conductor session should receive the events? (e.g., `main-conductor`)
+5. Which group is that conductor in? (e.g., `dev`)
+
+**User:** Name: github-myrepo, port: 18461, secret: mysecret, conductor: main-conductor, group: dev
+
+**Skill response:**
+Here is your configuration.
+
+Save this as `${XDG_DATA_HOME:-$HOME/.local/share}/agent-deck/watcher/github-myrepo/watcher.toml` for a new install, or under legacy `~/.agent-deck/watcher/github-myrepo/watcher.toml` if agent-deck is already using legacy watcher state:
+```toml
+[watcher]
+name = "github-myrepo"
+type = "github"
+
+[adapter]
+secret = "mysecret"
+port = "18461"
+bind = "127.0.0.1"
+
+[routing]
+conductor = "main-conductor"
+group = "dev"
+```
+
+Add this entry to `${XDG_DATA_HOME:-$HOME/.local/share}/agent-deck/watcher/clients.json` (key is `<your-github-username>@github.com`), or the legacy watcher `clients.json` if that is the effective watcher data dir:
+```json
+{
+  "octocat@github.com": {
+    "conductor": "main-conductor",
+    "group": "dev",
+    "name": "My GitHub Repo"
+  }
+}
+```
+
+Now run:
+```
+agent-deck watcher create github --name github-myrepo --secret mysecret
+```
+
+Then start the watcher:
+```
+agent-deck watcher start github-myrepo
+```
+
+Configure GitHub to send webhooks to `http://<your-server>:18461/github`.
+
+## Notes
+
+This skill is read-only (D-22): it guides you through configuration and emits commands to run, but it does NOT execute `agent-deck watcher create` itself. Copy and run the commands shown above in your terminal.
+
+All five adapter types (webhook, ntfy, github, slack, gmail) route incoming events through the same engine. Events are matched against `<effective watcher data dir>/clients.json` by sender. Unknown senders are sent to triage in Phase 18+.
+
+Install this skill to your pool with:
+```
+agent-deck watcher install-skill watcher-creator
+```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/asheshgoplani) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [asheshgoplani/agent-deck](https://github.com/asheshgoplani/agent-deck) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-01 -->
