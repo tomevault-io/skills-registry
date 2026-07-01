@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tetherto/qvac](https://github.com/tetherto/qvac/tree/main/.cursor/skills/cpp-string-api-review/SKILL.md)
+Original source: [tetherto/qvac](https://github.com/tetherto/qvac/tree/main/.cursor/skills/qv-devops-daily-update/SKILL.md)
 
 ---
 
