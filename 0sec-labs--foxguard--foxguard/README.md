@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [0sec-labs/foxguard](https://github.com/0sec-labs/foxguard/tree/main/plugins/claude-code/skills/setup/SKILL.md)
+Original source: [0sec-labs/foxguard](https://github.com/0sec-labs/foxguard/tree/main/plugins/claude-code/skills/triage/SKILL.md)
 
 ---
 
