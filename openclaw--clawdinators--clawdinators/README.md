@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openclaw/clawdinators](https://github.com/openclaw/clawdinators/tree/main/clawdinator/workspace/skills/distill-pr-intent/SKILL.md)
+Original source: [openclaw/clawdinators](https://github.com/openclaw/clawdinators/tree/main/clawdinator/workspace/skills/distill-pr-intent-orchestrator/SKILL.md)
 
 ---
 
