@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [duotify/GitHubClawToolkit](https://github.com/duotify/GitHubClawToolkit/tree/main/templates/codex-felo/.agents/skills/felo-slides/SKILL.md)
+Original source: [duotify/GitHubClawToolkit](https://github.com/duotify/GitHubClawToolkit/tree/main/templates/codex-felo/.agents/skills/felo-x-search/SKILL.md)
 
 ---
 
