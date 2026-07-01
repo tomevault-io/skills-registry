@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/SqlScriptDOM](https://github.com/microsoft/SqlScriptDOM/tree/main/.agents/skills/add-feature/SKILL.md)
+Original source: [microsoft/SqlScriptDOM](https://github.com/microsoft/SqlScriptDOM/tree/main/.agents/skills/verify-and-test-tsql-syntax/SKILL.md)
 
 ---
 
