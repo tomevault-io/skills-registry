@@ -1,0 +1,13 @@
+# hyperdx
+
+> Skill by [hyperdxio](https://github.com/hyperdxio/hyperdx) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [hyperdxio/hyperdx](https://github.com/hyperdxio/hyperdx/tree/main/.claude/skills/playwright/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
