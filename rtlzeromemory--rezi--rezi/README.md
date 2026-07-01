@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [RtlZeroMemory/Rezi](https://github.com/RtlZeroMemory/Rezi/tree/main/.codex/skills/rezi-forms/SKILL.md)
+Original source: [RtlZeroMemory/Rezi](https://github.com/RtlZeroMemory/Rezi/tree/main/.claude/skills/rezi-forms/SKILL.md)
 
 ---
 
