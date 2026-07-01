@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GoogleCloudPlatform/devrel-demos](https://github.com/GoogleCloudPlatform/devrel-demos/tree/main/ai-ml/mcp-servers/godoctor/skills/go-backend-dev/SKILL.md)
+Original source: [GoogleCloudPlatform/devrel-demos](https://github.com/GoogleCloudPlatform/devrel-demos/tree/main/ai-ml/mcp-servers/godoctor/skills/go-test-expert/SKILL.md)
 
 ---
 
