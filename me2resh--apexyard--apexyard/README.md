@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [me2resh/apexyard](https://github.com/me2resh/apexyard/tree/main/marketplace/audit-pack/.claude/skills/seo-audit/SKILL.md)
+Original source: [me2resh/apexyard](https://github.com/me2resh/apexyard/tree/main/marketplace/audit-pack/.claude/skills/docs-audit/SKILL.md)
 
 ---
 
