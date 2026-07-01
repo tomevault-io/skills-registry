@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marcus/td](https://github.com/marcus/td/tree/main/td-task-management/SKILL.md)
+Original source: [marcus/td](https://github.com/marcus/td/tree/main/.claude/skills/td-integration-test/SKILL.md)
 
 ---
 
