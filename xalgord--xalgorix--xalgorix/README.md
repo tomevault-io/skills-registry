@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xalgord/xalgorix](https://github.com/xalgord/xalgorix/tree/main/internal/tools/skills/data/container-security/implementing-container-image-minimal-base-with-distroless/SKILL.md)
+Original source: [xalgord/xalgorix](https://github.com/xalgord/xalgorix/tree/main/internal/tools/skills/data/vulnerability-management/implementing-cloud-vulnerability-posture-management/SKILL.md)
 
 ---
 
