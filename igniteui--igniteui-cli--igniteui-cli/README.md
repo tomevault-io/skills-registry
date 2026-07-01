@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [IgniteUI/igniteui-cli](https://github.com/IgniteUI/igniteui-cli/tree/main/packages/cli/templates/webcomponents/igc-ts/projects/ai-config/files/skills/igniteui-wc-customize-component-theme/SKILL.md)
+Original source: [IgniteUI/igniteui-cli](https://github.com/IgniteUI/igniteui-cli/tree/main/packages/cli/templates/webcomponents/igc-ts/projects/ai-config/files/skills/igniteui-wc-generate-from-image-design/SKILL.md)
 
 ---
 
