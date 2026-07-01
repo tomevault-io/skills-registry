@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kubernetes-sigs/kueue](https://github.com/kubernetes-sigs/kueue/tree/main/cmd/experimental/skills/reviewer/security/feature-gated-insecure-paths/SKILL.md)
+Original source: [kubernetes-sigs/kueue](https://github.com/kubernetes-sigs/kueue/tree/main/cmd/experimental/skills/reviewer/architectural-decisions/misplaced-logic/SKILL.md)
 
 ---
 
