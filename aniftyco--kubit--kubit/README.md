@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aniftyco/kubit](https://github.com/aniftyco/kubit/tree/main/.claude/skills/kubit-validating-design/SKILL.md)
+Original source: [aniftyco/kubit](https://github.com/aniftyco/kubit/tree/main/.claude/skills/kubit-expanding-skeleton/SKILL.md)
 
 ---
 
