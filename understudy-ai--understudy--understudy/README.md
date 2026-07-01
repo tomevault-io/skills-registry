@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [understudy-ai/understudy](https://github.com/understudy-ai/understudy/tree/main/packages/gateway/src/__tests__/fixtures/handwritten-playbook-demo/skills/render-brief-assets/SKILL.md)
+Original source: [understudy-ai/understudy](https://github.com/understudy-ai/understudy/tree/main/packages/gateway/src/__tests__/fixtures/handwritten-playbook-demo/skills/target-brief-studio/SKILL.md)
 
 ---
 
