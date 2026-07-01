@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Yrzhe/pagefly](https://github.com/Yrzhe/pagefly/tree/main/config/skills/linker/SKILL.md)
+Original source: [Yrzhe/pagefly](https://github.com/Yrzhe/pagefly/tree/main/config/skills/review/SKILL.md)
 
 ---
 
