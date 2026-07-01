@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Y80/bmm](https://github.com/Y80/bmm/tree/main/.agents/skills/readme-i18n/SKILL.md)
+Original source: [Y80/bmm](https://github.com/Y80/bmm/tree/main/.agents/skills/create-readme/SKILL.md)
 
 ---
 
