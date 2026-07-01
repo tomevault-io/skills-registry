@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [glassflow/clickhouse-etl](https://github.com/glassflow/clickhouse-etl/tree/main/ui/.claude/skills/frontend-design/SKILL.md)
+Original source: [glassflow/clickhouse-etl](https://github.com/glassflow/clickhouse-etl/tree/main/ui/.agents/skills/next-best-practices/SKILL.md)
 
 ---
 
