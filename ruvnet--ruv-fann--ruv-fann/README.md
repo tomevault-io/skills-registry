@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ruvnet/ruv-FANN](https://github.com/ruvnet/ruv-FANN/tree/main/.claude/skills/skill-builder/SKILL.md)
+Original source: [ruvnet/ruv-FANN](https://github.com/ruvnet/ruv-FANN/tree/main/.claude/skills/swarm-advanced/SKILL.md)
 
 ---
 
