@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mkurman/zorai](https://github.com/mkurman/zorai/tree/main/skills/scientific-skills/pufferlib/SKILL.md)
+Original source: [mkurman/zorai](https://github.com/mkurman/zorai/tree/main/skills/scientific-skills/neurokit2/SKILL.md)
 
 ---
 
