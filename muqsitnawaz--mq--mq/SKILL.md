@@ -247,5 +247,5 @@ mq config.md ".section('Options') | .text"  # Extract options
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/muqsitnawaz) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [muqsitnawaz/mq](https://github.com/muqsitnawaz/mq) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-01 -->
