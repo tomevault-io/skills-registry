@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [getlarge/nestjs-tools](https://github.com/getlarge/nestjs-tools/tree/main/.agents/skills/legreffier-onboarding/SKILL.md)
+Original source: [getlarge/nestjs-tools](https://github.com/getlarge/nestjs-tools/tree/main/.claude/skills/legreffier-onboarding/SKILL.md)
 
 ---
 
