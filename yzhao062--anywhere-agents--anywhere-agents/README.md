@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yzhao062/anywhere-agents](https://github.com/yzhao062/anywhere-agents/tree/main/skills/my-router/SKILL.md)
+Original source: [yzhao062/anywhere-agents](https://github.com/yzhao062/anywhere-agents/tree/main/skills/ci-mockup-figure/SKILL.md)
 
 ---
 
