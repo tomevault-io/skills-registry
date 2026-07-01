@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agent-sh/agnix](https://github.com/agent-sh/agnix/tree/main/tests/fixtures/per_client_skills/.cursor/skills/test-skill/SKILL.md)
+Original source: [agent-sh/agnix](https://github.com/agent-sh/agnix/tree/main/tests/fixtures/per_client_skills/.windsurf/skills/test-skill/SKILL.md)
 
 ---
 
