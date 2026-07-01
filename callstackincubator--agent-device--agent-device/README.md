@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [callstackincubator/agent-device](https://github.com/callstackincubator/agent-device/tree/main/skills/agent-device)
+Original source: [callstackincubator/agent-device](https://github.com/callstackincubator/agent-device/tree/main/skills/dogfood/SKILL.md)
 
 ---
 
