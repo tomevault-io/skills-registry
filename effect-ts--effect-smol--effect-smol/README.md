@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Effect-TS/effect-smol](https://github.com/Effect-TS/effect-smol/tree/main/.agents/skills/grill-me/SKILL.md)
+Original source: [Effect-TS/effect-smol](https://github.com/Effect-TS/effect-smol/tree/main/.agents/skills/scratchpad/SKILL.md)
 
 ---
 
