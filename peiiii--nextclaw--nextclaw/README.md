@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Peiiii/nextclaw](https://github.com/Peiiii/nextclaw/tree/main/skills/codex-narp-runtime/SKILL.md)
+Original source: [Peiiii/nextclaw](https://github.com/Peiiii/nextclaw/tree/main/.agents/skills/project-os/SKILL.md)
 
 ---
 
