@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [whtoo/How_to_implment_PL_in_Antlr4](https://github.com/whtoo/How_to_implment_PL_in_Antlr4/tree/main/.claude/skills/test-dev/SKILL.md)
+Original source: [whtoo/How_to_implment_PL_in_Antlr4](https://github.com/whtoo/How_to_implment_PL_in_Antlr4/tree/main/.claude/skills/antlr4-dev/SKILL.md)
 
 ---
 
