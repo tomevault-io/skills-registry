@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tektoncd/cli](https://github.com/tektoncd/cli/tree/main/.agents/skills/release-notes/SKILL.md)
+Original source: [tektoncd/cli](https://github.com/tektoncd/cli/tree/main/.agents/skills/commit-message/SKILL.md)
 
 ---
 
