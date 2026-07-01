@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rust-dd/stochastic-rs](https://github.com/rust-dd/stochastic-rs/tree/main/.claude/skills/python-bindings/SKILL.md)
+Original source: [rust-dd/stochastic-rs](https://github.com/rust-dd/stochastic-rs/tree/main/.claude/skills/stats-estimator/SKILL.md)
 
 ---
 
