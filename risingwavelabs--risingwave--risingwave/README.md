@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [risingwavelabs/risingwave](https://github.com/risingwavelabs/risingwave/tree/main/.agents/skills/risingwave-rust-analyzer/SKILL.md)
+Original source: [risingwavelabs/risingwave](https://github.com/risingwavelabs/risingwave/tree/main/.agents/skills/risingwave-slt-authoring/SKILL.md)
 
 ---
 
