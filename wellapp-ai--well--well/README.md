@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [WellApp-ai/Well](https://github.com/WellApp-ai/Well/tree/main/cursor-rules/skills/debug/SKILL.md)
+Original source: [WellApp-ai/Well](https://github.com/WellApp-ai/Well/tree/main/cursor-rules/skills/setup/SKILL.md)
 
 ---
 
