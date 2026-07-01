@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [seed4j/seed4j](https://github.com/seed4j/seed4j/tree/main/.claude/skills/test-app/SKILL.md)
+Original source: [seed4j/seed4j](https://github.com/seed4j/seed4j/tree/main/.claude/skills/test-module/SKILL.md)
 
 ---
 
