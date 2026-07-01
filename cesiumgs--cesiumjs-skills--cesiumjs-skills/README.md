@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CesiumGS/cesiumjs-skills](https://github.com/CesiumGS/cesiumjs-skills/tree/main/skills/cesiumjs-time-properties/SKILL.md)
+Original source: [CesiumGS/cesiumjs-skills](https://github.com/CesiumGS/cesiumjs-skills/tree/main/skills/cesiumjs-models-particles/SKILL.md)
 
 ---
 
