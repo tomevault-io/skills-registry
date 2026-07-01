@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GoogleCloudPlatform/devrel-demos](https://github.com/GoogleCloudPlatform/devrel-demos/tree/main/agents/skills/video-description/SKILL.md)
+Original source: [GoogleCloudPlatform/devrel-demos](https://github.com/GoogleCloudPlatform/devrel-demos/tree/main/agents/skills/latest-software-version/SKILL.md)
 
 ---
 
