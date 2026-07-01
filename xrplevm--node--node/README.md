@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xrplevm/node](https://github.com/xrplevm/node/tree/main/.claude/skills/security-issue/SKILL.md)
+Original source: [xrplevm/node](https://github.com/xrplevm/node/tree/main/.claude/skills/security-audit/SKILL.md)
 
 ---
 
