@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xalgord/xalgorix](https://github.com/xalgord/xalgorix/tree/main/internal/tools/skills/data/phishing-defense/implementing-google-workspace-phishing-protection/SKILL.md)
+Original source: [xalgord/xalgorix](https://github.com/xalgord/xalgorix/tree/main/internal/tools/skills/data/malware-analysis/reverse-engineering-ransomware-encryption-routine/SKILL.md)
 
 ---
 
