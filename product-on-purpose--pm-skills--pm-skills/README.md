@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [product-on-purpose/pm-skills](https://github.com/product-on-purpose/pm-skills/tree/main/skills/define-opportunity-tree/SKILL.md)
+Original source: [product-on-purpose/pm-skills](https://github.com/product-on-purpose/pm-skills/tree/main/hooks/fixtures/skills/define-x/SKILL.md)
 
 ---
 
