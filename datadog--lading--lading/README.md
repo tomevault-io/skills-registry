@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DataDog/lading](https://github.com/DataDog/lading/tree/main/.claude/skills/release/SKILL.md)
+Original source: [DataDog/lading](https://github.com/DataDog/lading/tree/main/.claude/skills/lading-optimize-hunt/SKILL.md)
 
 ---
 
