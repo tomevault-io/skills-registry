@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [transilienceai/communitytools](https://github.com/transilienceai/communitytools/tree/main/skills/pentest-engagement/SKILL.md)
+Original source: [transilienceai/communitytools](https://github.com/transilienceai/communitytools/tree/main/skills/social-engineering/SKILL.md)
 
 ---
 
