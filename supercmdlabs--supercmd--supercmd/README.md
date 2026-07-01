@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SuperCmdLabs/SuperCmd](https://github.com/SuperCmdLabs/SuperCmd/tree/main/.agents/skills/design-taste-frontend/SKILL.md)
+Original source: [SuperCmdLabs/SuperCmd](https://github.com/SuperCmdLabs/SuperCmd/tree/main/.agents/skills/redesign-existing-projects/SKILL.md)
 
 ---
 
