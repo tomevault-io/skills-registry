@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kevmoo/dash_skills](https://github.com/kevmoo/dash_skills/tree/main/skills/dart-doc-validation/SKILL.md)
+Original source: [kevmoo/dash_skills](https://github.com/kevmoo/dash_skills/tree/main/skills/dart-modern-features/SKILL.md)
 
 ---
 
