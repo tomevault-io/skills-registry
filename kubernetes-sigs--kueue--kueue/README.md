@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kubernetes-sigs/kueue](https://github.com/kubernetes-sigs/kueue/tree/main/cmd/experimental/skills/reviewer/code-style/imprecise-names/SKILL.md)
+Original source: [kubernetes-sigs/kueue](https://github.com/kubernetes-sigs/kueue/tree/main/cmd/experimental/skills/reviewer/code-style/code-style-typos/SKILL.md)
 
 ---
 
