@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentscope-ai/agentscope-samples](https://github.com/agentscope-ai/agentscope-samples/tree/main/alias/src/alias/agent/agents/_built_in_skill/data/csv_excel/SKILL.md)
+Original source: [agentscope-ai/agentscope-samples](https://github.com/agentscope-ai/agentscope-samples/tree/main/alias/src/alias/agent/agents/_built_in_skill/data/relational_database/SKILL.md)
 
 ---
 
