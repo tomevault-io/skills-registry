@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [langfuse/langfuse-docs](https://github.com/langfuse/langfuse-docs/tree/main/.agents/skills/langfuse-integration-page/SKILL.md)
+Original source: [langfuse/langfuse-docs](https://github.com/langfuse/langfuse-docs/tree/main/.agents/skills/add-yourself-to-team-langfuse/SKILL.md)
 
 ---
 
