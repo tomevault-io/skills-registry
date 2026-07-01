@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hyperdxio/hyperdx](https://github.com/hyperdxio/hyperdx/tree/main/.claude/skills/page-layout/SKILL.md)
+Original source: [hyperdxio/hyperdx](https://github.com/hyperdxio/hyperdx/tree/main/.claude/skills/refactor-component/SKILL.md)
 
 ---
 
