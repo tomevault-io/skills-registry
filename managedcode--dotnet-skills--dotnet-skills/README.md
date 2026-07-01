@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills/tree/main/external-sources/upstreams/dotnet-skills/dotnet-msbuild/skills/property-patterns/SKILL.md)
+Original source: [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills/tree/main/external-sources/upstreams/dotnet-skills/dotnet-msbuild/skills/build-parallelism/SKILL.md)
 
 ---
 
