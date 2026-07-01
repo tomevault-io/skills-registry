@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DataRecce/recce](https://github.com/DataRecce/recce/tree/main/.claude/skills/recce-mcp-dev/SKILL.md)
+Original source: [DataRecce/recce](https://github.com/DataRecce/recce/tree/main/.claude/skills/recce-mcp-e2e/SKILL.md)
 
 ---
 
