@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rapidsai/cudf](https://github.com/rapidsai/cudf/tree/main/.agents/skills/build-test-cudf/SKILL.md)
+Original source: [rapidsai/cudf](https://github.com/rapidsai/cudf/tree/main/.agents/skills/debug-cudf-pandas/SKILL.md)
 
 ---
 
