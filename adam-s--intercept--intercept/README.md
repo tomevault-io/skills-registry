@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [adam-s/intercept](https://github.com/adam-s/intercept/tree/main/.claude/skills/dashboard-builder/SKILL.md)
+Original source: [adam-s/intercept](https://github.com/adam-s/intercept/tree/main/.claude/skills/instruction-tuning/SKILL.md)
 
 ---
 
