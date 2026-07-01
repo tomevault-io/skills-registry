@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/powerplatform-build-tools](https://github.com/microsoft/powerplatform-build-tools/tree/main/.claude/skills/pac-cli-update/SKILL.md)
+Original source: [microsoft/powerplatform-build-tools](https://github.com/microsoft/powerplatform-build-tools/tree/main/.claude/skills/security-alerts/SKILL.md)
 
 ---
 
