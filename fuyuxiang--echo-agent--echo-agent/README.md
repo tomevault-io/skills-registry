@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fuyuxiang/echo-agent](https://github.com/fuyuxiang/echo-agent/tree/main/skills/learning/flashcards/SKILL.md)
+Original source: [fuyuxiang/echo-agent](https://github.com/fuyuxiang/echo-agent/tree/main/skills/utility/file-convert/SKILL.md)
 
 ---
 
