@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [volcengine/SearchCLI](https://github.com/volcengine/SearchCLI/tree/main/skills/vs-item-onboarding/SKILL.md)
+Original source: [volcengine/SearchCLI](https://github.com/volcengine/SearchCLI/tree/main/skills/vs-app-dataset-bind/SKILL.md)
 
 ---
 
