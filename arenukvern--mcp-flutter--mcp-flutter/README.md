@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Arenukvern/mcp_flutter](https://github.com/Arenukvern/mcp_flutter/tree/main/.claude/skills/gitnexus/gitnexus-cli/SKILL.md)
+Original source: [Arenukvern/mcp_flutter](https://github.com/Arenukvern/mcp_flutter/tree/main/.agents/skills/skill-source-citations/SKILL.md)
 
 ---
 
