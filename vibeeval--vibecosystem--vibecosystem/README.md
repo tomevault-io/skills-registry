@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vibeeval/vibecosystem](https://github.com/vibeeval/vibecosystem/tree/main/skills/saas-analytics-patterns/SKILL.md)
+Original source: [vibeeval/vibecosystem](https://github.com/vibeeval/vibecosystem/tree/main/skills/springboot-verification/SKILL.md)
 
 ---
 
