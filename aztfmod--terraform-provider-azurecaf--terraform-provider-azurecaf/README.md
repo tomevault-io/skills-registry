@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aztfmod/terraform-provider-azurecaf](https://github.com/aztfmod/terraform-provider-azurecaf/tree/main/.github/skills/terraform-mock-test/SKILL.md)
+Original source: [aztfmod/terraform-provider-azurecaf](https://github.com/aztfmod/terraform-provider-azurecaf/tree/main/.github/skills/pr-compliance-check/SKILL.md)
 
 ---
 
