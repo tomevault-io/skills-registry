@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ecency/ecency-mobile](https://github.com/ecency/ecency-mobile/tree/main/.claude/skills/add-query/SKILL.md)
+Original source: [ecency/ecency-mobile](https://github.com/ecency/ecency-mobile/tree/main/.claude/skills/add-sheet/SKILL.md)
 
 ---
 
