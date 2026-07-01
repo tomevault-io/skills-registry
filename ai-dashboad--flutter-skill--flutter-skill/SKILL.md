@@ -1,22 +1,24 @@
 ---
 name: flutter-skill
-description: Control and automate Flutter applications - inspect UI, perform gestures, validate state, take screenshots, and debug. Connects AI agents to running Flutter apps via Dart VM Service Protocol. Use when this capability is needed.
+description: Automate and test Flutter applications — launch apps, inspect widgets, tap elements, enter text, scroll, swipe, take screenshots, validate state, and debug via Dart VM Service Protocol. Use when the user wants to run Flutter app tests, automate Flutter UI interactions, inspect widget trees, debug a running Flutter app, or perform gesture-based testing. Use when this capability is needed.
 metadata:
   author: ai-dashboad
 ---
 
 # Flutter Skill
 
-Give your AI Agent eyes and hands inside your Flutter app. This skill enables comprehensive control of Flutter applications for testing, debugging, and automation.
+Control running Flutter applications for testing, debugging, and automation. Connects AI agents to Flutter apps via the Dart VM Service Protocol, exposing tools for UI inspection, gestures, state validation, screenshots, and log access.
 
 ## Installation
 
 ### Option 1: npx (Recommended)
 ```json
 {
-  "flutter-skill": {
-    "command": "npx",
-    "args": ["flutter-skill"]
+  "mcpServers": {
+    "flutter-skill": {
+      "command": "npx",
+      "args": ["flutter-skill"]
+    }
   }
 }
 ```
@@ -26,91 +28,81 @@ Give your AI Agent eyes and hands inside your Flutter app. This skill enables co
 dart pub global activate flutter_skill
 ```
 
-Then configure:
 ```json
 {
-  "flutter-skill": {
-    "command": "flutter_skill",
-    "args": ["server"]
+  "mcpServers": {
+    "flutter-skill": {
+      "command": "flutter_skill",
+      "args": ["server"]
+    }
   }
 }
 ```
 
-## Available Tools
+## Key Tools
 
-### Connection
-- `connect_app` - Connect to a running Flutter app via WebSocket URI
-- `launch_app` - Launch a Flutter app with auto-setup (adds dependencies, patches main.dart)
+| Category | Tools | Purpose |
+|----------|-------|---------|
+| **Connection** | `launch_app`, `connect_app` | Start or attach to a Flutter app |
+| **Inspection** | `inspect`, `get_widget_tree`, `find_by_type` | Discover UI elements and widget structure |
+| **Interaction** | `tap`, `enter_text`, `swipe`, `scroll_to`, `long_press`, `drag` | Perform gestures and input |
+| **Validation** | `wait_for_element`, `wait_for_gone`, `get_text_value`, `get_checkbox_state` | Assert UI state |
+| **Screenshots** | `screenshot`, `screenshot_element` | Capture visual state |
+| **Navigation** | `go_back`, `get_current_route`, `get_navigation_stack` | Control and inspect navigation |
+| **Debug** | `get_logs`, `get_errors`, `hot_reload`, `get_performance` | Diagnose issues |
 
-### UI Inspection
-- `inspect` - Get interactive elements (buttons, text fields, etc.)
-- `get_widget_tree` - Full widget tree structure with configurable depth
-- `get_widget_properties` - Widget details (size, position, visibility)
-- `get_text_content` - Extract all visible text from screen
-- `find_by_type` - Find all widgets of a specific type
+## Workflow
 
-### Interactions
-- `tap` - Tap element by key or text
-- `double_tap` - Double tap gesture
-- `long_press` - Long press gesture
-- `swipe` - Swipe up/down/left/right
-- `drag` - Drag from one element to another
-- `scroll_to` - Scroll element into view
-- `enter_text` - Input text into text field
+### Core Testing Loop
 
-### State Validation
-- `get_text_value` - Get text field value
-- `get_checkbox_state` - Get checkbox checked state
-- `get_slider_value` - Get slider current value
-- `wait_for_element` - Wait for element to appear (with timeout)
-- `wait_for_gone` - Wait for element to disappear
-
-### Screenshots
-- `screenshot` - Capture full app screenshot (base64 PNG)
-- `screenshot_element` - Capture specific element screenshot
-
-### Navigation
-- `get_current_route` - Get current route name
-- `go_back` - Navigate back
-- `get_navigation_stack` - Get navigation history
-
-### Debug & Logs
-- `get_logs` - Application logs
-- `get_errors` - Error messages
-- `get_performance` - Performance metrics
-- `clear_logs` - Clear log buffer
-- `hot_reload` - Trigger hot reload
-
-## Usage Examples
-
-### Test a Counter App
 ```
-1. Launch the app: launch_app with project_path="/path/to/app"
-2. Inspect UI: inspect
-3. Tap increment: tap with key="increment_button"
-4. Verify: get_text_content to see updated counter
+launch_app(project_path: "/path/to/app")
+  → screenshot()
+  → inspect()
+  → tap(key: "element_key") / enter_text(key: "field_key", text: "value")
+  → screenshot()
+  → verify with wait_for_element / get_text_value
 ```
 
-### Test a Login Flow
+### Example: Login Flow
+
 ```
-1. Enter email: enter_text with key="email_field", text="user@example.com"
-2. Enter password: enter_text with key="password_field", text="password123"
-3. Tap login: tap with key="login_button"
-4. Wait for home: wait_for_element with key="home_screen", timeout=5000
+launch_app(project_path: "/path/to/app")
+screenshot()
+inspect()
+enter_text(key: "email_field", text: "user@example.com")
+enter_text(key: "password_field", text: "password123")
+tap(key: "login_button")
+wait_for_element(key: "home_screen", timeout: 5000)
+screenshot()
 ```
 
-### Debug an Issue
+**If `wait_for_element` times out:** Call `screenshot()` to see the current state, then `get_errors()` to check for crashes or failed network requests.
+
+### Example: Debug a Running App
+
 ```
-1. Connect: connect_app with uri="ws://127.0.0.1:xxxxx/ws"
-2. Check errors: get_errors
-3. View logs: get_logs
-4. Take screenshot: screenshot
+connect_app(uri: "ws://127.0.0.1:50000/ws")
+get_errors()
+get_logs()
+screenshot()
+inspect()
 ```
 
-## Best Practices
+## Validation Checkpoints
 
-### Use Widget Keys
-For reliable element identification, target apps should use `ValueKey`:
+- **After `launch_app()`**: Verify a VM Service URI was returned. If not, check that Flutter is installed and the app compiles.
+- **After `inspect()`**: Confirm interactive elements are returned. If empty, the app may still be loading — call `screenshot()` and retry.
+- **After gestures** (`tap`, `enter_text`, `swipe`): Call `screenshot()` to confirm the UI updated as expected.
+- **After navigation**: Use `wait_for_element(key: "target")` with a timeout. On timeout, call `get_errors()` to diagnose.
+
+## Element Targeting Priority
+
+1. **`key:`** (most reliable) — widget key set by the developer via `ValueKey`
+2. **`text:`** — visible text content (breaks if text changes)
+3. **`type:`** — widget type via `find_by_type` (may match multiple elements)
+
+For reliable targeting, apps should use `ValueKey` on interactive elements:
 ```dart
 ElevatedButton(
   key: const ValueKey('submit_button'),
@@ -119,11 +111,6 @@ ElevatedButton(
 )
 ```
 
-### Element Finding Priority
-1. **Key** (most reliable): `tap with key="submit_button"`
-2. **Text content**: `tap with text="Submit"`
-3. **Widget type**: `find_by_type with type="ElevatedButton"`
-
 ## Links
 
 - [GitHub Repository](https://github.com/ai-dashboad/flutter-skill)
@@ -131,5 +118,5 @@ ElevatedButton(
 - [npm Package](https://www.npmjs.com/package/flutter-skill)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/ai-dashboad) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [ai-dashboad/flutter-skill](https://github.com/ai-dashboad/flutter-skill) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-01 -->
