@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agent-sh/agnix](https://github.com/agent-sh/agnix/tree/main/tests/fixtures/invalid/skills/string-boolean-invocable/SKILL.md)
+Original source: [agent-sh/agnix](https://github.com/agent-sh/agnix/tree/main/tests/fixtures/per_client_skills/.roo/skills/test-skill/SKILL.md)
 
 ---
 
