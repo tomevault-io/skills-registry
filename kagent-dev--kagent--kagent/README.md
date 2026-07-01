@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kagent-dev/kagent](https://github.com/kagent-dev/kagent/tree/main/.claude/skills/kagent/SKILL.md)
+Original source: [kagent-dev/kagent](https://github.com/kagent-dev/kagent/tree/main/.claude/skills/kagent-dev/SKILL.md)
 
 ---
 
