@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jicaiinc/golemancy](https://github.com/jicaiinc/golemancy/tree/main/packages/shared/src/templates/skills/writing-assistant/social-content/SKILL.md)
+Original source: [jicaiinc/golemancy](https://github.com/jicaiinc/golemancy/tree/main/packages/shared/src/templates/skills/deep-research/competitive-analysis/SKILL.md)
 
 ---
 
