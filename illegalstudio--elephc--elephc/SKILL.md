@@ -1,0 +1,151 @@
+---
+name: verify-release
+description: Pre-release verification — checks README, docs, roadmap, test coverage, examples, and runs the full test suite to catch regressions. Use when this capability is needed.
+metadata:
+  author: illegalstudio
+---
+
+# Pre-Release Verification
+
+You are a meticulous release engineer for the elephc PHP-to-native compiler. Your job is to verify that everything is consistent, documented, tested, and working before a version tag across the supported target matrix.
+
+This skill is an explicit exception to the normal implementation workflow in `AGENTS.md`: because release verification is specifically requested, run the full local suite unless the user asks to skip it. For ordinary feature/bug-fix work, do not invoke full-suite commands locally; rely on focused tests and the CI matrix.
+
+## Steps
+
+### 1. README.md Completeness
+
+Read `README.md`. Cross-check against the actual codebase:
+
+- **Built-in functions list**: the canonical builtin registry is `src/types/checker/builtins/catalog.rs` (with `src/types/signatures.rs`); the active EIR lowering lives in `src/codegen_ir/lower_inst/builtins/`. The legacy `src/codegen/builtins/` path is frozen — do not use it as the source of truth. Compare the catalog against the README's "Built-in functions" section. Report any function that is implemented but not listed in the README.
+- **Supported constructs table**: check that all statement types (if, while, for, foreach, do-while, break, continue, include/require, type casting, etc.) are listed.
+- **Constants**: check that all constants recognized in the lexer (INF, NAN, PHP_INT_MAX, etc.) are mentioned.
+- **Type system section**: verify the type count and descriptions match reality.
+- **Project structure**: verify directory tree matches actual `src/` layout.
+
+### 2. Documentation (docs/)
+
+Docs use the current Astro-compatible tree: `docs/README.md`, `docs/getting-started/`, `docs/how-to/`, `docs/compiling/` (the compiler CLI and the compilation process), `docs/php/` (standard PHP), `docs/beyond-php/` (compiler extensions), and `docs/internals/` (compiler internals). Every Markdown file must have YAML frontmatter with `title`, `description`, and `sidebar.order`, and body content must not add a top-level `#` heading.
+
+Read the relevant pages for each category:
+
+- **Data types** (`docs/php/types.md`): verify each type's "Supported" status is accurate.
+- **Operators** (`docs/php/operators.md`): verify all `BinOp` variants in `src/parser/ast.rs` are documented.
+- **Built-in functions** (`docs/php/strings.md`, `arrays.md`, `math.md`, `system-and-io.md`, `functions.md`, `types.md`): for EVERY function in the canonical catalog (`src/types/checker/builtins/catalog.rs`), verify it appears in the relevant doc page with correct signature. Pointer and buffer helpers belong under `docs/beyond-php/`.
+- **Compiler extensions** (`docs/beyond-php/*.md`): verify pointers, buffers, packed classes, extern FFI, and ifdef features match the codebase.
+- **Compilation CLI and process** (`docs/compiling/*.md`): verify `docs/compiling/cli-reference.md` documents EVERY flag and environment variable parsed in `src/cli.rs` (and that each flag's default and accepted values match), and that the pipeline, targets, and optimization pages match `src/pipeline.rs`, `src/codegen/platform/`, and `src/ir_passes/` (the EIR optimization pass driver). A new or renamed flag with no matching `cli-reference.md` entry is a release blocker.
+- **Internals** (`docs/internals/*.md`): verify architecture, lexer, parser, type checker, codegen, runtime, optimizer, EIR / IR passes, and memory model pages match the current source tree.
+- **"Not supported yet" notes**: verify none of them refer to features that have actually been implemented.
+- **Known incompatibilities**: verify they are still accurate.
+- **Cross-links**: verify relative Markdown links point to existing files. Ignore fenced code blocks and inline code spans when scanning links/headings.
+
+### 3. ROADMAP.md Consistency
+
+Read the current version section in `ROADMAP.md`:
+
+- For every `[x]` item: verify the feature actually exists (grep for the function name, check for the AST node, etc.).
+- For every `[ ]` item: confirm it is genuinely not implemented.
+- Report any implemented feature that is missing from the roadmap entirely.
+
+### 4. Test Coverage
+
+Read test function names from all test files (`tests/*.rs` and `tests/**/*.rs`). For each implemented feature, check:
+
+- **Codegen tests** (`tests/codegen_tests.rs`, `tests/codegen/`): every built-in function should have at least 1 test. Every operator should have at least 1 test. Every statement type should have at least 1 test. List functions/features with ZERO tests.
+- **Error tests** (`tests/error_tests.rs`, `tests/error_tests/`): every built-in function that validates argument count should have an error test. List functions missing error tests.
+- **Lexer tests** (`tests/lexer_tests.rs`): every new token type should have a test.
+- **Parser tests** (`tests/parser_tests.rs`): every new AST construct should have a test.
+
+### 5. Examples Coverage
+
+List all directories in `examples/`. For each major feature category, check that at least one example demonstrates it:
+
+- Basic types (int, float, string, bool, null, array)
+- Control flow (if, while, for, foreach)
+- Functions and recursion
+- String operations
+- Type operations (casting, gettype, empty)
+- Math functions
+- Include/require
+- Any other significant feature
+
+Report features that have no example coverage.
+
+### 6. Code Style Compliance
+
+Check that the codebase follows the project's mandatory conventions from `AGENTS.md`:
+
+- **Rust module preambles**: every repo-owned `*.rs` file must start with a module-level `//!` preamble before any `use`, `mod`, item, or test helper code. The preamble must explain the file's purpose, where it is called from, and key details/invariants. Exclude generated/build output such as `target/`. Report every missing or incomplete preamble.
+- **Assembly comment policy**: every `emitter.instruction(...)` call in the codegen and active EIR backend MUST have an inline `//` comment. Scan both `src/codegen/` and `src/codegen_ir/` (the active backend) and report any instruction line WITHOUT a comment. Use this check:
+  ```
+  grep -rn 'emitter.instruction(' src/codegen/ src/codegen_ir/ | grep -v '//' | head -20
+  ```
+  Multi-line calls such as `emitter.instruction(&format!(` carry their comment after the closing `));`; those are compliant false positives, not violations.
+- **Comment alignment**: the `//` on instruction lines must start at column 81. Run the alignment verification script from `AGENTS.md` on all codegen files and report misaligned lines.
+- **Block comments**: related instruction groups should have `// -- description --` block comments before them. Spot-check a few files for missing block comments.
+- **File organization**: builtins and runtime emitters should stay cohesive and avoid mixed responsibilities. Leaf builtin/runtime emitter files should usually contain one emitter function; dispatcher/re-export files (`mod.rs`), runtime data emission, tests, and tightly cohesive multi-helper runtime modules should be reviewed for responsibility boundaries rather than flagged mechanically.
+- **Zero compiler warnings**: `cargo build` must produce zero warnings.
+- **No Co-Authored-By**: verify no commit in the recent history has a Co-Authored-By line.
+
+### 7. Full Test Suite Execution
+
+Run `cargo build` first to verify zero warnings, then run `cargo test` and report. This full local suite is appropriate here because the user invoked pre-release verification. If the user explicitly asks to skip tests, do not run `cargo test` or target Docker scripts; mark the test-suite section as skipped by request and still run the non-test checks.
+
+- Total test count per test file
+- Any failures (with details)
+- Any compiler warnings
+
+## Output Format
+
+Structure your report as:
+
+```
+## Pre-Release Verification Report
+
+### 1. README.md
+Status: PASS / FAIL
+Issues: (list if any)
+
+### 2. Language Reference
+Status: PASS / FAIL
+Issues: (list if any)
+
+### 3. Roadmap
+Status: PASS / FAIL
+Issues: (list if any)
+
+### 4. Test Coverage
+Status: PASS / FAIL
+Missing tests: (list if any)
+
+### 5. Examples
+Status: PASS / FAIL
+Missing coverage: (list if any)
+
+### 6. Code Style
+Status: PASS / FAIL
+Missing Rust preambles: (count/list if any)
+Uncommented instructions: (count)
+Misaligned comments: (count)
+Multi-function files: (list if any)
+
+### 7. Test Suite
+Build: PASS / FAIL (warnings: N)
+Tests: X passed, Y failed
+Failures: (details if any)
+
+### Summary
+Release ready: YES / NO
+Action items: (numbered list of things to fix before tagging)
+```
+
+## Important
+
+- Be thorough. Read actual files, don't guess.
+- Only report ACTIONABLE issues — things that need fixing.
+- Do NOT make changes yourself. Only report findings.
+- Run targeted test commands first (e.g., `cargo test test_new_feature`) before the full suite to catch obvious failures early.
+
+---
+> Source: [illegalstudio/elephc](https://github.com/illegalstudio/elephc) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-01 -->
