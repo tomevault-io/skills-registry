@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [airockchip/clawchips](https://github.com/airockchip/clawchips/tree/main/skills/rk-rag/SKILL.md)
+Original source: [airockchip/clawchips](https://github.com/airockchip/clawchips/tree/main/skills/rk-asr/SKILL.md)
 
 ---
 
