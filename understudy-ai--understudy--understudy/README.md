@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [understudy-ai/understudy](https://github.com/understudy-ai/understudy/tree/main/skills/imsg/SKILL.md)
+Original source: [understudy-ai/understudy](https://github.com/understudy-ai/understudy/tree/main/skills/slack/SKILL.md)
 
 ---
 
