@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/sre-agent](https://github.com/microsoft/sre-agent/tree/main/labs/zava-aks-postgres/.github/skills/running-demo/SKILL.md)
+Original source: [microsoft/sre-agent](https://github.com/microsoft/sre-agent/tree/main/labs/zava-aks-postgres/.github/skills/managing-sre-agent/SKILL.md)
 
 ---
 
