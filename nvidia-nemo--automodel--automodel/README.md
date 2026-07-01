@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA-NeMo/Automodel](https://github.com/NVIDIA-NeMo/Automodel/tree/main/skills/nemo-automodel-recipe-development/SKILL.md)
+Original source: [NVIDIA-NeMo/Automodel](https://github.com/NVIDIA-NeMo/Automodel/tree/main/.agents/contributor-skills/parity-testing/SKILL.md)
 
 ---
 
