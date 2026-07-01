@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheSoftwareHouse/copilot-collections](https://github.com/TheSoftwareHouse/copilot-collections/tree/main/.github/skills/tsh-creating-agents/SKILL.md)
+Original source: [TheSoftwareHouse/copilot-collections](https://github.com/TheSoftwareHouse/copilot-collections/tree/main/.github/skills/tsh-task-extracting/SKILL.md)
 
 ---
 
