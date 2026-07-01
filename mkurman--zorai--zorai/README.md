@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mkurman/zorai](https://github.com/mkurman/zorai/tree/main/skills/scientific-skills-gdm/alphagenome_single_variant_analysis/SKILL.md)
+Original source: [mkurman/zorai](https://github.com/mkurman/zorai/tree/main/skills/nontechnical/startup-founder-skills/earned-media-outreach/SKILL.md)
 
 ---
 
