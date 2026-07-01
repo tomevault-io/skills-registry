@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [axone-protocol/axoned](https://github.com/axone-protocol/axoned/tree/main/.agents/skills/axone-proto-specification/SKILL.md)
+Original source: [axone-protocol/axoned](https://github.com/axone-protocol/axoned/tree/main/.agents/skills/axone-contributor-workflow/SKILL.md)
 
 ---
 
