@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [final-run/finalrun-agent](https://github.com/final-run/finalrun-agent/tree/main/skills/finalrun-use-cli/SKILL.md)
+Original source: [final-run/finalrun-agent](https://github.com/final-run/finalrun-agent/tree/main/skills/finalrun-test-and-fix/SKILL.md)
 
 ---
 
