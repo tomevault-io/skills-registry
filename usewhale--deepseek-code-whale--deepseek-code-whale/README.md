@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [usewhale/DeepSeek-Code-Whale](https://github.com/usewhale/DeepSeek-Code-Whale/tree/main/.agents/skills/find-skills/SKILL.md)
+Original source: [usewhale/DeepSeek-Code-Whale](https://github.com/usewhale/DeepSeek-Code-Whale/tree/main/.agents/skills/skill-creator/SKILL.md)
 
 ---
 
