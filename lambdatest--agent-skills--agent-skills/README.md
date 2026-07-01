@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LambdaTest/agent-skills](https://github.com/LambdaTest/agent-skills/tree/main/specflow-skill/SKILL.md)
+Original source: [LambdaTest/agent-skills](https://github.com/LambdaTest/agent-skills/tree/main/cucumber-skill/SKILL.md)
 
 ---
 
