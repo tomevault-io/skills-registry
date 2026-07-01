@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hyhmrright/brooks-lint](https://github.com/hyhmrright/brooks-lint/tree/main/skills/brooks-review/SKILL.md)
+Original source: [hyhmrright/brooks-lint](https://github.com/hyhmrright/brooks-lint/tree/main/skills/brooks-health/SKILL.md)
 
 ---
 
