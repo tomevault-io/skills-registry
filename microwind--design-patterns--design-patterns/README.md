@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microwind/design-patterns](https://github.com/microwind/design-patterns/tree/main/practice-projects/spring-ai/skills/spring-ai-rag-media-pgvector/SKILL.md)
+Original source: [microwind/design-patterns](https://github.com/microwind/design-patterns/tree/main/practice-projects/spring-ai/skills/spring-ai-boot4-project-starter/SKILL.md)
 
 ---
 
