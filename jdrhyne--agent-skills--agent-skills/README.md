@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jdrhyne/agent-skills](https://github.com/jdrhyne/agent-skills/tree/main/skills/task-orchestrator/SKILL.md)
+Original source: [jdrhyne/agent-skills](https://github.com/jdrhyne/agent-skills/tree/main/clawdbot/gallery-scraper/SKILL.md)
 
 ---
 
