@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lc2panda/wps-skills](https://github.com/lc2panda/wps-skills/tree/main/skills/wps-excel/SKILL.md)
+Original source: [lc2panda/wps-skills](https://github.com/lc2panda/wps-skills/tree/main/skills/wps-office/SKILL.md)
 
 ---
 
