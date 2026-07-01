@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Fraunhofer-AISEC/cpg](https://github.com/Fraunhofer-AISEC/cpg/tree/main/.agents/skills/suggest-concepts/SKILL.md)
+Original source: [Fraunhofer-AISEC/cpg](https://github.com/Fraunhofer-AISEC/cpg/tree/main/codyze-console/src/test/resources/skills/tagging/SKILL.md)
 
 ---
 
