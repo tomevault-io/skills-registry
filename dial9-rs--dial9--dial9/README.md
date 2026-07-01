@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dial9-rs/dial9](https://github.com/dial9-rs/dial9/tree/main/dial9-viewer/skills/dial9-runtime/SKILL.md)
+Original source: [dial9-rs/dial9](https://github.com/dial9-rs/dial9/tree/main/dial9-viewer/skills/dial9-toolkit/SKILL.md)
 
 ---
 
