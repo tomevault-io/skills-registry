@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mkurman/zorai](https://github.com/mkurman/zorai/tree/main/skills/scientific-skills-gdm/alphafold_database_fetch_and_analyze/SKILL.md)
+Original source: [mkurman/zorai](https://github.com/mkurman/zorai/tree/main/plugins/zorai-plugin-science/openfda-database/scienceskillscommon/SKILL.md)
 
 ---
 
