@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [WellApp-ai/Well](https://github.com/WellApp-ai/Well/tree/main/plugins/well/skills/querying-well-data/SKILL.md)
+Original source: [WellApp-ai/Well](https://github.com/WellApp-ai/Well/tree/main/plugins/well/skills/cash-flow-forecast/SKILL.md)
 
 ---
 
