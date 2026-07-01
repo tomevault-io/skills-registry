@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mirage-project/mirage](https://github.com/mirage-project/mirage/tree/main/.claude/skills/test-mode/SKILL.md)
+Original source: [mirage-project/mirage](https://github.com/mirage-project/mirage/tree/main/.claude/skills/add-mpk-task/SKILL.md)
 
 ---
 
