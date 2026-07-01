@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ContextLab/storytelling-with-data](https://github.com/ContextLab/storytelling-with-data/tree/main/assignments/assignment-3/.agents/skills/speckit-constitution/SKILL.md)
+Original source: [ContextLab/storytelling-with-data](https://github.com/ContextLab/storytelling-with-data/tree/main/assignments/assignment-3/.agents/skills/speckit-taskstoissues/SKILL.md)
 
 ---
 
