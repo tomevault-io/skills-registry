@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xalgord/xalgorix](https://github.com/xalgord/xalgorix/tree/main/internal/tools/skills/data/cryptography/configuring-tls-1-3-for-secure-communications/SKILL.md)
+Original source: [xalgord/xalgorix](https://github.com/xalgord/xalgorix/tree/main/internal/tools/skills/data/cryptography/implementing-envelope-encryption-with-aws-kms/SKILL.md)
 
 ---
 
