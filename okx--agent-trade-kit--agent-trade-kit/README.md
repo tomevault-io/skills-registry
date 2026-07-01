@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [okx/agent-trade-kit](https://github.com/okx/agent-trade-kit/tree/main/skills/okx-cex-portfolio/SKILL.md)
+Original source: [okx/agent-trade-kit](https://github.com/okx/agent-trade-kit/tree/main/skills/okx-cex-smartmoney/SKILL.md)
 
 ---
 
