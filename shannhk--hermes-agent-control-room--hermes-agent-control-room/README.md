@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shannhk/hermes-agent-control-room](https://github.com/shannhk/hermes-agent-control-room/tree/main/skills/agent-backup-manager/SKILL.md)
+Original source: [shannhk/hermes-agent-control-room](https://github.com/shannhk/hermes-agent-control-room/tree/main/skills/agent-registry-manager/SKILL.md)
 
 ---
 
