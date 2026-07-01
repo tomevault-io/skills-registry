@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [davidvkimball/obsidian-astro-composer](https://github.com/davidvkimball/obsidian-astro-composer/tree/main/.agent/skills/obsidian-dev/SKILL.md)
+Original source: [davidvkimball/obsidian-astro-composer](https://github.com/davidvkimball/obsidian-astro-composer/tree/main/.agent/skills/obsidian-ref/SKILL.md)
 
 ---
 
