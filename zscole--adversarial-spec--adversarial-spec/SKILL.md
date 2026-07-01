@@ -884,5 +884,5 @@ python3 debate.py send-final --models MODEL_LIST --doc-type TYPE --rounds N < sp
 - `--codex-search` - Enable web search for Codex CLI models (allows researching current info)
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/zscole) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [zscole/adversarial-spec](https://github.com/zscole/adversarial-spec) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-01 -->
