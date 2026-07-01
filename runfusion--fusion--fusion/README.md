@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Runfusion/Fusion](https://github.com/Runfusion/Fusion/tree/main/plugins/fusion-plugin-compound-engineering/src/skills/ce-ideate/SKILL.md)
+Original source: [Runfusion/Fusion](https://github.com/Runfusion/Fusion/tree/main/plugins/fusion-plugin-compound-engineering/src/skills/ce-commit/SKILL.md)
 
 ---
 
