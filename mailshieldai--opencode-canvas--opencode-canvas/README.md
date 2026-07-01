@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mailshieldai/opencode-canvas](https://github.com/mailshieldai/opencode-canvas/tree/main/.opencode/skill/flight/SKILL.md)
+Original source: [mailshieldai/opencode-canvas](https://github.com/mailshieldai/opencode-canvas/tree/main/.opencode/skill/calendar/SKILL.md)
 
 ---
 
