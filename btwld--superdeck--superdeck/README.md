@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [btwld/superdeck](https://github.com/btwld/superdeck/tree/main/.agents/skills/flutter-localizing-apps/SKILL.md)
+Original source: [btwld/superdeck](https://github.com/btwld/superdeck/tree/main/.agents/skills/flutter-building-plugins/SKILL.md)
 
 ---
 
