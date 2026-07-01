@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [canyonroad/agentsh](https://github.com/canyonroad/agentsh/tree/main/internal/skillcheck/testdata/skills/minimal/SKILL.md)
+Original source: [canyonroad/agentsh](https://github.com/canyonroad/agentsh/tree/main/internal/skillcheck/testdata/skills/eval-env/SKILL.md)
 
 ---
 
