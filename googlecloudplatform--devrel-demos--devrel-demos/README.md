@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GoogleCloudPlatform/devrel-demos](https://github.com/GoogleCloudPlatform/devrel-demos/tree/main/ai-ml/dev-signal/.agent/skills/agent-containerizer/SKILL.md)
+Original source: [GoogleCloudPlatform/devrel-demos](https://github.com/GoogleCloudPlatform/devrel-demos/tree/main/ai-ml/dev-signal/.agent/skills/mcp-connector-generator/SKILL.md)
 
 ---
 
