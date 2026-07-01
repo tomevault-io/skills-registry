@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fetus-hina/stat.ink](https://github.com/fetus-hina/stat.ink/tree/main/.claude/skills/release/SKILL.md)
+Original source: [fetus-hina/stat.ink](https://github.com/fetus-hina/stat.ink/tree/main/.claude/skills/sync-dev/SKILL.md)
 
 ---
 
