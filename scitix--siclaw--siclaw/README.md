@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [scitix/siclaw](https://github.com/scitix/siclaw/tree/main/skills/core/volcano-scheduler-logs/SKILL.md)
+Original source: [scitix/siclaw](https://github.com/scitix/siclaw/tree/main/skills/core/volcano-queue-diagnose/SKILL.md)
 
 ---
 
