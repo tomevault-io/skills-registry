@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA/Model-Optimizer](https://github.com/NVIDIA/Model-Optimizer/tree/main/.agents/skills/release-cherry-pick/SKILL.md)
+Original source: [NVIDIA/Model-Optimizer](https://github.com/NVIDIA/Model-Optimizer/tree/main/.agents/skills/quant-recipe-search/SKILL.md)
 
 ---
 
