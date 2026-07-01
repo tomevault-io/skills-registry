@@ -1,0 +1,13 @@
+# operator
+
+> Skill by [tektoncd](https://github.com/tektoncd/operator) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [tektoncd/operator](https://github.com/tektoncd/operator/tree/main/.agents/skills/release-notes/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
