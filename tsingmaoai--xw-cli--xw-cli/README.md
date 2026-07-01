@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TsingmaoAI/xw-cli](https://github.com/TsingmaoAI/xw-cli/tree/main/.claude/skills/test-device/SKILL.md)
+Original source: [TsingmaoAI/xw-cli](https://github.com/TsingmaoAI/xw-cli/tree/main/.claude/skills/test-version/SKILL.md)
 
 ---
 
