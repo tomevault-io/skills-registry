@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [docker/docker-agent](https://github.com/docker/docker-agent/tree/main/.agents/skills/bump-config-version/SKILL.md)
+Original source: [docker/docker-agent](https://github.com/docker/docker-agent/tree/main/.agents/skills/bump-go-dependencies/SKILL.md)
 
 ---
 
