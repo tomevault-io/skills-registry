@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cglab-public/agenfk](https://github.com/cglab-public/agenfk/tree/main/skills/opencode/agenfk-flow/SKILL.md)
+Original source: [cglab-public/agenfk](https://github.com/cglab-public/agenfk/tree/main/skills/claude-code/agenfk-flow/SKILL.md)
 
 ---
 
