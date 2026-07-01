@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jpicklyk/task-orchestrator](https://github.com/jpicklyk/task-orchestrator/tree/main/.claude/skills/review-quality/SKILL.md)
+Original source: [jpicklyk/task-orchestrator](https://github.com/jpicklyk/task-orchestrator/tree/main/.claude/skills/prepare-release/SKILL.md)
 
 ---
 
