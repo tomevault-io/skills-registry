@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Peiiii/nextclaw](https://github.com/Peiiii/nextclaw/tree/main/.agents/skills/node-pnpm-locator/SKILL.md)
+Original source: [Peiiii/nextclaw](https://github.com/Peiiii/nextclaw/tree/main/.agents/skills/long-chain-debugging/SKILL.md)
 
 ---
 
