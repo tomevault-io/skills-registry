@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [steipete/agent-scripts](https://github.com/steipete/agent-scripts/tree/main/skills/speaking/SKILL.md)
+Original source: [steipete/agent-scripts](https://github.com/steipete/agent-scripts/tree/main/skills/wrangler/SKILL.md)
 
 ---
 
