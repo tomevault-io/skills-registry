@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gotalab/skillport](https://github.com/gotalab/skillport/tree/main/.skills/experimental/opus-4-5-migration/SKILL.md)
+Original source: [gotalab/skillport](https://github.com/gotalab/skillport/tree/main/.skills/experimental/git-branch-cleanup/SKILL.md)
 
 ---
 
