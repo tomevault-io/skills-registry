@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [conorluddy/xclaude-plugin](https://github.com/conorluddy/xclaude-plugin/tree/main/skills/state-management/SKILL.md)
+Original source: [conorluddy/xclaude-plugin](https://github.com/conorluddy/xclaude-plugin/tree/main/skills/ios-testing-patterns/SKILL.md)
 
 ---
 
