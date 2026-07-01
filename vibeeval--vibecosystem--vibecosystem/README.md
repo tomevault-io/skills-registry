@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vibeeval/vibecosystem](https://github.com/vibeeval/vibecosystem/tree/main/skills/memory-palace/SKILL.md)
+Original source: [vibeeval/vibecosystem](https://github.com/vibeeval/vibecosystem/tree/main/skills/project-audit/SKILL.md)
 
 ---
 
