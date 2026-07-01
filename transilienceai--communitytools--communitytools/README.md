@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [transilienceai/communitytools](https://github.com/transilienceai/communitytools/tree/main/skills/blockchain-security/SKILL.md)
+Original source: [transilienceai/communitytools](https://github.com/transilienceai/communitytools/tree/main/skills/pci-secure-software/SKILL.md)
 
 ---
 
