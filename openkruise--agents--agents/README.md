@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openkruise/agents](https://github.com/openkruise/agents/tree/main/.qoder/skills/deploy-components/SKILL.md)
+Original source: [openkruise/agents](https://github.com/openkruise/agents/tree/main/.qoder/skills/create-upstream-pr/SKILL.md)
 
 ---
 
