@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rrg92/powershai](https://github.com/rrg92/powershai/tree/main/tests/pester/001-core/fixtures/skills/basic-no-script/SKILL.md)
+Original source: [rrg92/powershai](https://github.com/rrg92/powershai/tree/main/tests/pester/001-core/fixtures/skills/echo-with-script/SKILL.md)
 
 ---
 
