@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aquaproj/aqua-registry](https://github.com/aquaproj/aqua-registry/tree/main/.claude/skills/fetch-doc/SKILL.md)
+Original source: [aquaproj/aqua-registry](https://github.com/aquaproj/aqua-registry/tree/main/.agents/skills/review-change/SKILL.md)
 
 ---
 
