@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [redhat-developer/rhdh](https://github.com/redhat-developer/rhdh/tree/main/.cursor/skills/e2e-reproduce-failure/SKILL.md)
+Original source: [redhat-developer/rhdh](https://github.com/redhat-developer/rhdh/tree/main/.claude/skills/e2e-reproduce-failure/SKILL.md)
 
 ---
 
