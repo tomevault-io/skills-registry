@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google/skia](https://github.com/google/skia/tree/main/agents/skills/skia-add-test/SKILL.md)
+Original source: [google/skia](https://github.com/google/skia/tree/main/agents/skills/skia-gn-workflow/SKILL.md)
 
 ---
 
