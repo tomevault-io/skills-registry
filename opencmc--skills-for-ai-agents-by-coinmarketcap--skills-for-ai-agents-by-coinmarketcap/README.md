@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openCMC/skills-for-ai-agents-by-CoinMarketCap](https://github.com/openCMC/skills-for-ai-agents-by-CoinMarketCap/tree/main/skills/cmc-api-market/SKILL.md)
+Original source: [openCMC/skills-for-ai-agents-by-CoinMarketCap](https://github.com/openCMC/skills-for-ai-agents-by-CoinMarketCap/tree/main/skills/cmc-api-crypto/SKILL.md)
 
 ---
 
