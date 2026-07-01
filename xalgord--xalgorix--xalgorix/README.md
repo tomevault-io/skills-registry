@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xalgord/xalgorix](https://github.com/xalgord/xalgorix/tree/main/internal/tools/skills/data/threat-hunting/detecting-golden-ticket-attacks-in-kerberos-logs/SKILL.md)
+Original source: [xalgord/xalgorix](https://github.com/xalgord/xalgorix/tree/main/internal/tools/skills/data/identity-access-management/implementing-pam-for-database-access/SKILL.md)
 
 ---
 
