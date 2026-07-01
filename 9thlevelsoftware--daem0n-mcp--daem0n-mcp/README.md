@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [9thLevelSoftware/Daem0n-MCP](https://github.com/9thLevelSoftware/Daem0n-MCP/tree/main/.claude/skills/summon_daem0n/SKILL.md)
+Original source: [9thLevelSoftware/Daem0n-MCP](https://github.com/9thLevelSoftware/Daem0n-MCP/tree/main/.claude/skills/daem0nmcp-protocol/SKILL.md)
 
 ---
 
