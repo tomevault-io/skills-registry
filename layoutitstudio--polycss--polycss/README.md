@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LayoutitStudio/polycss](https://github.com/LayoutitStudio/polycss/tree/main/.agents/skills/chrome-trace/SKILL.md)
+Original source: [LayoutitStudio/polycss](https://github.com/LayoutitStudio/polycss/tree/main/.agents/skills/compat-hunter/SKILL.md)
 
 ---
 
