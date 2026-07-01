@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [broadinstitute/viral-ngs](https://github.com/broadinstitute/viral-ngs/tree/main/.agents/skills/container-vulns/SKILL.md)
+Original source: [broadinstitute/viral-ngs](https://github.com/broadinstitute/viral-ngs/tree/main/.agents/skills/regression-testing/SKILL.md)
 
 ---
 
