@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [blessonism/openclaw-skills](https://github.com/blessonism/openclaw-skills/tree/main/mineru-extract/SKILL.md)
+Original source: [blessonism/openclaw-skills](https://github.com/blessonism/openclaw-skills/tree/main/gitclaw-backup/SKILL.md)
 
 ---
 
