@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MicrosoftDocs/Agent-Skills](https://github.com/MicrosoftDocs/Agent-Skills/tree/main/skills/azure-data-api-builder/SKILL.md)
+Original source: [MicrosoftDocs/Agent-Skills](https://github.com/MicrosoftDocs/Agent-Skills/tree/main/skills/azure-well-architected/SKILL.md)
 
 ---
 
