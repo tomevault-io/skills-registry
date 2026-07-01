@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Rugved1652/vayu-ui](https://github.com/Rugved1652/vayu-ui/tree/main/skills/api-call-tanstack-query/SKILL.md)
+Original source: [Rugved1652/vayu-ui](https://github.com/Rugved1652/vayu-ui/tree/main/skills/react-hook-form-zod-validation/SKILL.md)
 
 ---
 
