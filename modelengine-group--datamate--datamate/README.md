@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ModelEngine-Group/DataMate](https://github.com/ModelEngine-Group/DataMate/tree/main/.claude/skills/frontend-design/SKILL.md)
+Original source: [ModelEngine-Group/DataMate](https://github.com/ModelEngine-Group/DataMate/tree/main/.claude/skills/backend-architect/SKILL.md)
 
 ---
 
