@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [thin-edge/thin-edge.io](https://github.com/thin-edge/thin-edge.io/tree/main/.claude/skills/openspec-archive-change/SKILL.md)
+Original source: [thin-edge/thin-edge.io](https://github.com/thin-edge/thin-edge.io/tree/main/.claude/skills/openspec-continue-change/SKILL.md)
 
 ---
 
