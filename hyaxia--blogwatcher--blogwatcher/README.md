@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Hyaxia/blogwatcher](https://github.com/Hyaxia/blogwatcher/tree/main/SKILL.md)
+Original source: [Hyaxia/blogwatcher](https://github.com/Hyaxia/blogwatcher/tree/main/skills/SKILL.md)
 
 ---
 
