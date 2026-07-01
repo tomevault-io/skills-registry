@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [allenporter/flux-local](https://github.com/allenporter/flux-local/tree/main/.agent/skills/developer/SKILL.md)
+Original source: [allenporter/flux-local](https://github.com/allenporter/flux-local/tree/main/.agent/skills/gh-release/SKILL.md)
 
 ---
 
