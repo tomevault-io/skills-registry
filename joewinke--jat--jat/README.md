@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [joewinke/jat](https://github.com/joewinke/jat/tree/main/.agents/skills/frontend-design/SKILL.md)
+Original source: [joewinke/jat](https://github.com/joewinke/jat/tree/main/.agents/skills/teach-impeccable/SKILL.md)
 
 ---
 
