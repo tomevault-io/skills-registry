@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SCStelz/security-investigator](https://github.com/SCStelz/security-investigator/tree/main/.github/skills/context-memory-review/SKILL.md)
+Original source: [SCStelz/security-investigator](https://github.com/SCStelz/security-investigator/tree/main/.github/skills/authentication-tracing/SKILL.md)
 
 ---
 
