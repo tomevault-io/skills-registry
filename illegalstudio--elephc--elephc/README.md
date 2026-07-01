@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [illegalstudio/elephc](https://github.com/illegalstudio/elephc/tree/main/.claude/skills/doc-update/SKILL.md)
+Original source: [illegalstudio/elephc](https://github.com/illegalstudio/elephc/tree/main/.claude/skills/analyze-using-rustrover/SKILL.md)
 
 ---
 
