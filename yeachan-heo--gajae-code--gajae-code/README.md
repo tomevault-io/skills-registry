@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Yeachan-Heo/gajae-code](https://github.com/Yeachan-Heo/gajae-code/tree/main/packages/coding-agent/test/fixtures/gjc-plugins/invalid-phase/subskills/badphase/SKILL.md)
+Original source: [Yeachan-Heo/gajae-code](https://github.com/Yeachan-Heo/gajae-code/tree/main/packages/coding-agent/test/fixtures/gjc-plugins/invalid-parent/subskills/reviewer/SKILL.md)
 
 ---
 
