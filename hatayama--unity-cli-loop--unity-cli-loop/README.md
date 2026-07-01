@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hatayama/unity-cli-loop](https://github.com/hatayama/unity-cli-loop/tree/main/Packages/src/Editor/Api/McpTools/SimulateKeyboard/Skill/SKILL.md)
+Original source: [hatayama/unity-cli-loop](https://github.com/hatayama/unity-cli-loop/tree/main/Assets/Editor/CustomCommandSamples/GetProjectInfo/Skill/SKILL.md)
 
 ---
 
