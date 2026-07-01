@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [firstbatchxyz/watchmen](https://github.com/firstbatchxyz/watchmen/tree/main/plugin/skills/brief/SKILL.md)
+Original source: [firstbatchxyz/watchmen](https://github.com/firstbatchxyz/watchmen/tree/main/plugin-codex/skills/setup/SKILL.md)
 
 ---
 
