@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pulumi/pulumi-aws](https://github.com/pulumi/pulumi-aws/tree/main/.claude/skills/upstream-patches/SKILL.md)
+Original source: [pulumi/pulumi-aws](https://github.com/pulumi/pulumi-aws/tree/main/.claude/skills/provider-code-review/SKILL.md)
 
 ---
 
