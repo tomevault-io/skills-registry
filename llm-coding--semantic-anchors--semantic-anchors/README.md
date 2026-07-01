@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LLM-Coding/Semantic-Anchors](https://github.com/LLM-Coding/Semantic-Anchors/tree/main/skill/semantic-anchor-translator/SKILL.md)
+Original source: [LLM-Coding/Semantic-Anchors](https://github.com/LLM-Coding/Semantic-Anchors/tree/main/skill/socratic-code-theory-recovery/SKILL.md)
 
 ---
 
