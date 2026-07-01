@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [onsi/ginkgo](https://github.com/onsi/ginkgo/tree/main/plugins/ginkgo/skills/ordering-and-flakes/SKILL.md)
+Original source: [onsi/ginkgo](https://github.com/onsi/ginkgo/tree/main/plugins/ginkgo/skills/tables-and-dynamic-specs/SKILL.md)
 
 ---
 
