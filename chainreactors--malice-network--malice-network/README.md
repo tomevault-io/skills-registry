@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chainreactors/malice-network](https://github.com/chainreactors/malice-network/tree/main/skills/iom-pentest/SKILL.md)
+Original source: [chainreactors/malice-network](https://github.com/chainreactors/malice-network/tree/main/.claude/commands/iom-pentest/SKILL.md)
 
 ---
 
