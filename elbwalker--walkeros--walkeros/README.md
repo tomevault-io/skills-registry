@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [elbwalker/walkerOS](https://github.com/elbwalker/walkerOS/tree/main/skills/walkeros-using-step-examples/SKILL.md)
+Original source: [elbwalker/walkerOS](https://github.com/elbwalker/walkerOS/tree/main/skills/walkeros-understanding-stores/SKILL.md)
 
 ---
 
