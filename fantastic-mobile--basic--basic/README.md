@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fantastic-mobile/basic](https://github.com/fantastic-mobile/basic/tree/main/skills/fm-framework-settings/SKILL.md)
+Original source: [fantastic-mobile/basic](https://github.com/fantastic-mobile/basic/tree/main/.agents/skills/fm-page-optimizer/SKILL.md)
 
 ---
 
