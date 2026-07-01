@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [radix-ng/primitives](https://github.com/radix-ng/primitives/tree/main/.claude/skills/angular-developer/SKILL.md)
+Original source: [radix-ng/primitives](https://github.com/radix-ng/primitives/tree/main/.claude/skills/project-knowledge/SKILL.md)
 
 ---
 
