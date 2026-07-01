@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mkurman/zorai](https://github.com/mkurman/zorai/tree/main/plugins/zorai-plugin-science/ncbi-sequence-fetch/scienceskillscommon/SKILL.md)
+Original source: [mkurman/zorai](https://github.com/mkurman/zorai/tree/main/plugins/zorai-plugin-science/opentargets-database/scienceskillscommon/SKILL.md)
 
 ---
 
