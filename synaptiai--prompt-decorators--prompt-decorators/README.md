@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [synaptiai/prompt-decorators](https://github.com/synaptiai/prompt-decorators/tree/main/claude-code-plugin/skills/authoring-decorators/SKILL.md)
+Original source: [synaptiai/prompt-decorators](https://github.com/synaptiai/prompt-decorators/tree/main/claude-code-plugin/skills/prompt-decorators-usage/SKILL.md)
 
 ---
 
