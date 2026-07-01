@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rampstackco/claude-skills](https://github.com/rampstackco/claude-skills/tree/main/skills/analytics-strategy/SKILL.md)
+Original source: [rampstackco/claude-skills](https://github.com/rampstackco/claude-skills/tree/main/skills/lead-magnet-design/SKILL.md)
 
 ---
 
