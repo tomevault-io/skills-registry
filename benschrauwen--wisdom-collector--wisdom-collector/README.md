@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [benschrauwen/wisdom-collector](https://github.com/benschrauwen/wisdom-collector/tree/main/skills/data-system-tradeoff-design/SKILL.md)
+Original source: [benschrauwen/wisdom-collector](https://github.com/benschrauwen/wisdom-collector/tree/main/skills/trusted-next-action-workflow/SKILL.md)
 
 ---
 
