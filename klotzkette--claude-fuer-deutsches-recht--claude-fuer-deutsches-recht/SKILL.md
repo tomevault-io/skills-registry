@@ -1,48 +1,27 @@
 ---
-name: workflow-redteam-qualitygate
-description: Wenn es um Red-Team Qualitygate in Common-Law-Kompass für deutsche Wirtschaftsjuristen geht: zerlegt Ergebnis, Frist, Zuständigkeit, Beweislast und Gegenposition; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: cic-can-0228
+description: Wenn es um CIC can. 228 - Buch II - Volk Gottes in Römisch-katholisches Kirchenrecht CIC und Katechismus geht: ordnet Sachverhalt, Norm, Beweislast, Gegenargumente und nächsten Schritt; liefert ein direkt nutzbares Arbeitsprodukt mit Prüfpunkten, Risiken und nächstem Schritt. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Red-Team Qualitygate
+# CIC can. 228 - Buch II - Volk Gottes
 
-## Arbeitsauftrag
+## Auftrag
 
-Dieser Arbeitsgang macht **Red-Team Qualitygate** im Bereich **common-law-kompass** sofort bearbeitbar: erst Akte lesen, dann Rollen, Ziel, Fristen, Belege und Entscheidungspunkte ordnen. Rückfragen kommen nur, wenn sie die rechtliche Weiche, den richtigen Adressaten oder das Arbeitsprodukt wirklich verändern.
+Dieser Skill ist der Direktzugang zu **can. 228 CIC**. Er dient nicht dazu, den Canon aus dem Gedächtnis zu paraphrasieren, sondern dazu, den aktuellen amtlichen Text im Kontext von Buch II - Volk Gottes zu prüfen und daraus eine kirchenrechtlich saubere Arbeitsausgabe zu bauen.
 
-## Aktenstart ohne Leerlauf
+## Prüfprogramm
 
-1. Vorhandene Dokumente, Dateinamen, Metadaten, Anlagen und erkennbare Fristen auswerten, bevor Fragen gestellt werden.
-2. Sichere Tatsachen, plausible Annahmen, streitige Behauptungen und fehlende Belege in vier getrennten Spalten erfassen.
-3. Parteirolle, Gegner/Behörde/Gericht, Zuständigkeit, Verfahrensstand und gewünschtes Ergebnis knapp bestimmen.
-4. Sofortige Risiken markieren: Notfrist, Zustellung/Zugang, Verjährung, Sanktion, Vollstreckung, Register-/Portalfrist, Beweisverlust.
-5. Danach nur noch die fehlenden Punkte fragen, die den nächsten Schritt ändern.
+1. Amtlichen Text von can. 228 live prüfen und Ausgabejahr/Sprachfassung notieren.
+2. Systemstelle bestimmen: Buch II - Volk Gottes, Normbereich can. 204-746, Nachbarcanones und mögliche Spezialnormen.
+3. Tatbestand, Rechtsfolge, Zuständigkeit, Form, Frist und Beweisfrage trennen.
+4. Verhältnis zu Katechismus, Partikularrecht, päpstlichen Sondernormen und staatlichem Recht klären.
+5. Ergebnis katholisch, papsttreu, pastoral klar und mehrsprachig ausgeben, wenn gewünscht.
 
-## Fachliche Anker
+## Ausgabe
 
-- EUV, AEUV, GRCh, Rom-I/Rom-II, Brüssel Ia, LugÜ, CISG und nationales Kollisionsrecht je nach Fall.
-- Gerichtsstand, anwendbares Recht, Sprache, Zustellung, Beweis, Vollstreckung und zwingendes Recht getrennt prüfen.
-- Rechtsvergleich nur als Vergleich markieren; nicht als deutsches Recht ausgeben.
-
-## Arbeitsprodukt
-
-- **Kurzdiagnose:** Was ist wahrscheinlich los, welche Rechtsfrage trägt den Fall, was ist sofort zu tun?
-- **Belegmatrix:** Tatsache, Quelle, Fundstelle/Anlage, Beweiswert, Lücke, Nachforderung.
-- **Risikoampel:** Grün/gelb/rot mit knapper Begründung und nächstem sicheren Schritt.
-- **Entwurf:** je nach Fall E-Mail, Mandantenmemo, Behörden-/Gerichtsschreiben, Checkliste, Tabelle oder Fristenplan.
-- **Fehlerbremse:** keine erfundenen Normen, keine Blindzitate, keine Tatsachenergänzung ohne Aktenbeleg.
-
-## Ergänzende Hinweise
-
-## Red-Team-Checks für Common-Law-Berührung
-
-- **False Friends:** "Indemnity" ist keine Schadensersatzhaftung deutschen Stils, sondern eine vertragliche Freistellung, oft unabhängig vom Verschulden — Abgrenzung zu § 280 BGB klären.
-- **Consideration:** Keine Vertragsbindung ohne consideration im US/UK-Recht (ausgenommen deed/seal-Konstruktionen); deutsche Verträge erfüllen das oft nicht ausdrücklich, aber als implied bargain.
-- **Discovery (US Federal: FRCP 26–37):** Erheblich weiter als deutsche Beweiserhebung (§§ 142, 144 ZPO, § 810 BGB); "fishing expedition"-Verbot beachten; § 1782 USC für Hilfe aus US-Gerichten an ausländische Verfahren.
-- **Verbot der Präjudizienbindungs-Übertragung:** Deutsche Anwälte dürfen "binding precedent" nicht in deutsche Argumentation überspielen — in Deutschland gibt es keine stare-decisis-Wirkung (Ausnahme § 31 BVerfGG).
-- **Keine erfundenen Aktenzeichen:** US-Federal-Cite-Format (z. B. "_F.3d_") nur bei verifizierter Reporter-Fundstelle; Neutral-Citation (z. B. [2023] UKSC 12) auf bailii prüfen.
-- **Rechtsdienstleistungsverbot:** Beratung zu US/UK-Recht durch deutsche Anwälte ohne Zulassung dort grds. unzulässig — local counsel hinzuziehen (§ 4 EuRAG, RDG-Restrisiko).
+Normkarte, Aktenvermerk, kanonistisches Kurzvotum, mehrsprachige Erklärung, Dekret-/Briefbaustein oder Red-Team der bisherigen Anwendung.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
