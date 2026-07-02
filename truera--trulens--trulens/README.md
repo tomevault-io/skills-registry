@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [truera/trulens](https://github.com/truera/trulens/tree/main/src/core/trulens/.agents/skills/trulens-dataset-curation/SKILL.md)
+Original source: [truera/trulens](https://github.com/truera/trulens/tree/main/src/core/trulens/.agents/skills/trulens-notebook-execution/SKILL.md)
 
 ---
 
