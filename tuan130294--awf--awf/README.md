@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TUAN130294/awf](https://github.com/TUAN130294/awf/tree/main/awf_skills/awf-error-translator/SKILL.md)
+Original source: [TUAN130294/awf](https://github.com/TUAN130294/awf/tree/main/awf_skills/awf-adaptive-language/SKILL.md)
 
 ---
 
