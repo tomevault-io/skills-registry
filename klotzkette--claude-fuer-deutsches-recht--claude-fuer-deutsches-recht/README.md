@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/verlagsrecht-buchpreisbindung/skills/verl-008-open-access-creative-commons-und-verlagspolitik/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/verlagsrecht-buchpreisbindung/skills/verl-010-rabatte-bibliotheken-schulen-bundles-und-serien/SKILL.md)
 
 ---
 
