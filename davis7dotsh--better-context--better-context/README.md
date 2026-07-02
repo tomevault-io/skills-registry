@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [davis7dotsh/better-context](https://github.com/davis7dotsh/better-context/tree/main/skills/btca-cli/SKILL.md)
+Original source: [davis7dotsh/better-context](https://github.com/davis7dotsh/better-context/tree/main/skills/btca-local/SKILL.md)
 
 ---
 
