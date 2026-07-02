@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [quarto-dev/q2](https://github.com/quarto-dev/q2/tree/main/.claude/skills/triage/SKILL.md)
+Original source: [quarto-dev/q2](https://github.com/quarto-dev/q2/tree/main/.claude/skills/investigate-beads/SKILL.md)
 
 ---
 
