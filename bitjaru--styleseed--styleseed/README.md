@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bitjaru/styleseed](https://github.com/bitjaru/styleseed/tree/main/engine/.claude/skills/ss-update/SKILL.md)
+Original source: [bitjaru/styleseed](https://github.com/bitjaru/styleseed/tree/main/engine/.claude/skills/ss-motion/SKILL.md)
 
 ---
 
