@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [primer/react](https://github.com/primer/react/tree/main/.github/skills/changesets/SKILL.md)
+Original source: [primer/react](https://github.com/primer/react/tree/main/.github/skills/deprecations/SKILL.md)
 
 ---
 
