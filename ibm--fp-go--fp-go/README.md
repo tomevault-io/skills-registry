@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [IBM/fp-go](https://github.com/IBM/fp-go/tree/main/skills/fp-go-logging/SKILL.md)
+Original source: [IBM/fp-go](https://github.com/IBM/fp-go/tree/main/skills/fp-go-pipe-flow/SKILL.md)
 
 ---
 
