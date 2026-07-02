@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/verbraucherschutzverband-durchsetzung/skills/reiseveranstalter-registertext-schreiben/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/verlagsrecht-buchpreisbindung/skills/onlineportal-paywall-datenbankrecht-schnittstelle/SKILL.md)
 
 ---
 
