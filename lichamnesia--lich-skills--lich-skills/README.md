@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LichAmnesia/lich-skills](https://github.com/LichAmnesia/lich-skills/tree/main/skills/frontend-design/SKILL.md)
+Original source: [LichAmnesia/lich-skills](https://github.com/LichAmnesia/lich-skills/tree/main/skills/build-until-pass/SKILL.md)
 
 ---
 
