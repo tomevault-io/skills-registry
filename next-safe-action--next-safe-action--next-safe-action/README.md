@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [next-safe-action/next-safe-action](https://github.com/next-safe-action/next-safe-action/tree/main/.agents/skills/pnpm/SKILL.md)
+Original source: [next-safe-action/next-safe-action](https://github.com/next-safe-action/next-safe-action/tree/main/.agents/skills/tsdown/SKILL.md)
 
 ---
 
