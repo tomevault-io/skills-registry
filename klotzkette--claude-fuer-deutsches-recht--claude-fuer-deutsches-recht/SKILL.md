@@ -1,58 +1,47 @@
 ---
-name: mac-ordinary-course
-description: Wenn es um MAC Ordinary Course Covenants in Großkanzlei Corporate/M&A geht: ordnet Sachverhalt, Norm, Beweislast, Gegenargumente und nächsten Schritt; liefert ein direkt nutzbares Arbeitsprodukt mit Prüfpunkten, Risiken und nächstem Schritt. Use when this capability is needed.
+name: output-waehlen
+description: Wenn es um Output wählen in Fachanwalt Urheber Medienrecht geht: erstellt den passenden Entwurf aus Sachverhalt, Norm, Beweis und Antrag; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# MAC Ordinary Course Covenants
+# Output wählen
 
-## Fachlicher Anker
+## Einsatzlage
 
-- **Normenradar:** Paragraf 15, 16, 40, 43, 46 GmbHG; Paragraf 76, 93, 111 AktG; HGB-, UmwG-, GWB- und AWV-Bezug nur, wenn der konkrete Vorgang ihn trägt.
-- **Rechtsprechungsanker:** BGH, 21.04.1997 - II ZR 175/95 für Organpflichten; BGH, 20.11.2018 - II ZR 12/17 für Gesellschafterlisten. Weitere Entscheidungen nur mit frei prüfbarer Quelle.
-- **Quellenhygiene:** `references/quellenhygiene.md` und `references/zitierweise.md` beachten.
+Diese Output-Weiche für **Fachanwalt Urheber Medienrecht** entscheidet, ob Memo, Antrag, Schriftsatz, Tabelle, Risikoampel, Fragenliste oder Mandantenbrief der richtige nächste Schritt ist.
 
-## Fachkern: MAC Ordinary Course Covenants
-- **Prüfachse:** Ordne den konkreten Auftrag nach Gesellschaftsform, Dokument, Entscheidungsträger, Form, Frist, Beleg und Rechtsfolge; Spezialnormen nur nennen, wenn sie den Fall tragen.
-- **Entscheidende Weiche:** Trenne Sachverhalt, Zuständigkeit, Zustimmung, Haftung, Vollzug und taktischen nächsten Schritt.
-- **Arbeitsprodukt:** Liefere eine verwertbare Matrix mit `Tatsache / Norm / Beleg / Wertung / Gegenargument / nächster Schritt` und bei Bedarf einen ausformulierten Textbaustein.
+## Fachlandkarte dieses Plugins
 
-## Intake
-Frage nicht breit, sondern dealpraktisch. Wenn Material schon vorliegt, extrahiere die Antworten selbst und markiere nur echte Luecken.
+- `abmahnung-sonderfall-edge-case` — Abmahnung Sonderfall Bild Eigenen
+- `erstgespraech-mandatsannahme` — Erstgespraech Mandatsannahme Fachanwalt
+- `workflow-mandantenkommunikation` — FA Urheber Medien Mandant Redteam Gate
+- `einstieg-schnelltriage-fallrouting` — FA Urheber Medien Start Chronologie Fristen
+- `erstpruefung-und-mandatsziel` — Fachanwalt Gewerblicher Kanzlei
+- `filesharing-stoererhaftung` — Filesharing Stoererhaftung
+- `filmrecht-paragraf-89-urhg` — Filmrecht Paragraf 89 Urhg
+- `gegendarstellung-fehlerkatalog` — Gegendarstellung Fehlerkatalog
+- `gegendarstellung-presse` — Gegendarstellung Presse Mandat Triage
+- `gegendarstellung-presse` — Gegendarstellung Presse MOD Erklaerung
+- `link-haftung-paragraf-7-tmg` — Link Haftung Paragraf 7 TMG
+- `medienrecht-fristen-form-und-zustaendigkeit` — Medienrecht Lizenzvertrag Urhmr
+- `medienstaatsvertrag-quellenkarte` — Medienstaatsvertrag Quellenkarte
+- `anschluss-routing` — Anschluss Routing
+- `dokumente-intake` — Dokumente Intake
 
-| Feld | Worum es geht |
-| --- | --- |
-| Deal-Perspektive | Buy-side, Sell-side, Target, Vorstand/Geschäftsführung, Bank, Investor, W&I-Versicherer oder Local Counsel. |
-| Phase | Screening, NDA, Term Sheet, Datenraum, DD, SPA/APA, Signing, Closing, PMI, Streit oder Post-Mortem. |
-| Material | Closing-Zeitraum, Geschäftsbetrieb, Zustimmungsvorbehalte, Regulatory Timing, aktuelle Ereignisse. |
-| Frist | Signing, Closing, Q&A, Filing, Board, Beurkundung, Angebotsfrist, CP-Deadline oder keine Eile erkennbar. |
-| Ziel-Output | Covenant-Register, MAC-Risikoanalyse, Consent-Workflow, Notice-Text und Eskalationsplan. |
+## Arbeitsweg
 
-## Padlet- und Tabellen-Ausgabe
-Biete bei komplexen Aufgaben eine visuelle Arbeitsflaeche an:
+- Ergebnistyp bestimmen: Schriftsatz an Mandant, Gegner, zuständiges Gericht oder Behörde, etwaige Sachverständige oder beauftragte Stellen, Mandantenmemo, Risikobericht, Vertragsentwurf, Entscheidungsvorlage, Behörden-Stellungnahme — was braucht der Mandant wirklich?
+- Pflichtformate festlegen: Tenor / Antrag / Begründung (Anspruchsgrundlage, Tatbestand, Subsumtion, Ergebnis); konkrete Norm-Pinpoints im Fachanwalt Urheber Medienrecht (KUG, UWG, UrhG) einarbeiten.
+- Adressat-Klarheit: Sprache, Detailtiefe und juristische Vorbildung des Empfängers berücksichtigen; bei Mandant ohne Vorbildung Klartext-Zusammenfassung voranstellen.
+- Beweis- und Anlagenstruktur planen (chronologisch, thematisch, K- und B-Anlagen); Bezugnahmen sauber kennzeichnen.
+- Quellenfußnoten und Zitierweise sichern; offene Punkte und Annahmen explizit als solche kennzeichnen.
 
-| Karte/Spalte | Inhalt | Status | Owner | Quelle | Naechster Schritt |
-| --- | --- | --- | --- | --- | --- |
-| Issue | Konkretes Thema oder Dokument | offen / in Prüfung / entschieden | Person oder Workstream | Datenraum, Register, Vertrag, Call | konkrete Aktion |
+## Qualitätsanker
 
-Für Tabellen nie nur Ueberschriften liefern. Jede Zeile braucht mindestens: Befund, rechtliche Bedeutung, wirtschaftliche Bedeutung, Evidenz, Risikoampel und Follow-up.
-
-## Standard-Deliverables
-- Kurzbild für Partner oder Mandant.
-- Workstream-Tabelle mit Ampel und Owner.
-- Issue-/Risk-Liste mit Priorisierung.
-- Entwurf oder Textbausteine, soweit der Input reicht.
-- Offene Punkte mit genauem Nachforderungswortlaut.
-
-## Quality Gate
-Vor Ausgabe immer prüfen:
-
-- Ist die Partei-Perspektive klar?
-- Sind alle Fristen und Vollzugsrisiken markiert?
-- Sind Annahmen von gesicherten Tatsachen getrennt?
-- Gibt es mindestens einen konkreten naechsten Schritt?
-- Sind Tabellen, Klauseln oder Memos so formatiert, dass ein Deal-Team sofort weiterarbeiten kann?
+- Normen und Rechtsprechung nach `references/quellenhygiene.md` und `references/zitierweise.md` behandeln.
+- Wenn eine Spezialfrage sichtbar wird, den passenden Skill nennen und kurz erklären, warum genau dieser Arbeitsgang passt.
+- Bei Zeitdruck zuerst Frist, Zuständigkeit, Form und Beweislast sichern.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
