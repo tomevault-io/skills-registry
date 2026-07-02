@@ -1,413 +1,260 @@
 ---
-name: tsdown
-description: Bundle TypeScript and JavaScript libraries with blazing-fast speed powered by Rolldown. Use when building libraries, generating type declarations, bundling for multiple formats, or migrating from tsup. Use when this capability is needed.
+name: tsdown-migrate
+description: Migrate TypeScript library projects from tsup to tsdown. Provides complete option mappings, config transformation rules, default value differences, and unsupported option alternatives so AI agents can intelligently perform migrations. Use when this capability is needed.
 metadata:
   author: rolldown
 ---
 
-# tsdown - The Elegant Library Bundler
+# Migrating from tsup to tsdown
 
-Blazing-fast bundler for TypeScript/JavaScript libraries powered by Rolldown and Oxc.
+Knowledge base for AI agents to migrate tsup projects to tsdown — the Rolldown-powered library bundler.
+
+## Runtime Requirement
+
+`tsdown` requires **Node.js 22.18.0 or higher to run** (build-time only). The bundled output can still target lower Node.js versions via the [`target`](../tsdown/references/option-target.md) option, so a library that previously supported Node.js 18 / 20 with tsup can continue to do so after migrating.
+
+Recommended workflow when supporting Node.js 18 / 20:
+
+- **Build with Node.js 22+ in CI**, setting an explicit `target` such as `'node18'` or `'node20'`.
+- **Test the built output (or the packed tarball) on the lower Node.js versions** you need to support.
 
 ## When to Use
 
-- Building TypeScript/JavaScript libraries for npm
-- Generating TypeScript declaration files (.d.ts)
-- Bundling for multiple formats (ESM, CJS, IIFE, UMD)
-- Optimizing bundles with tree shaking and minification
-- Migrating from tsup with minimal changes
-- Building React, Vue, Solid, or Svelte component libraries
+- Migrating a project from tsup to tsdown
+- Understanding differences between tsup and tsdown options
+- Reviewing or fixing post-migration configuration issues
+- Advising users on tsup→tsdown compatibility
 
-## Quick Start
+## Migration Overview
 
-```bash
-# Install
-pnpm add -D tsdown
+Follow these steps to migrate a tsup project:
 
-# Basic usage
-npx tsdown
+1. **Rename config file**: `tsup.config.*` → `tsdown.config.*`
+2. **Update imports**: `'tsup'` → `'tsdown'`
+3. **Apply option mappings**: Rename/transform options per tables below
+4. **Preserve tsup defaults**: Explicitly set options that differ (format, clean, dts, target)
+5. **Update package.json**: Dependencies, scripts, root config field
+6. **Remove unsupported options**: Replace with alternatives where available
+7. **Test build**: Run `tsdown` and verify output
 
-# With config file
-npx tsdown --config tsdown.config.ts
+## Config File Migration
 
-# Watch mode
-npx tsdown --watch
+### File Rename
 
-# Migrate from tsup
-npx tsdown-migrate
-```
+| tsup | tsdown |
+|------|--------|
+| `tsup.config.ts` | `tsdown.config.ts` |
+| `tsup.config.cts` | `tsdown.config.cts` |
+| `tsup.config.mts` | `tsdown.config.mts` |
+| `tsup.config.js` | `tsdown.config.js` |
+| `tsup.config.cjs` | `tsdown.config.cjs` |
+| `tsup.config.mjs` | `tsdown.config.mjs` |
+| `tsup.config.json` | `tsdown.config.json` |
 
-## Basic Configuration
+### Import and Identifier Changes
 
 ```ts
-import { defineConfig } from 'tsdown'
+// Before
+import { defineConfig } from 'tsup'
 
+// After
+import { defineConfig } from 'tsdown'
+```
+
+Replace all identifiers: `tsup` → `tsdown`, `TSUP` → `TSDOWN`.
+
+## Option Mappings
+
+### Property Renames
+
+| tsup | tsdown | Notes |
+|------|--------|-------|
+| `cjsInterop` | `cjsDefault` | CJS default export handling |
+| `esbuildPlugins` | `plugins` | Now uses Rolldown/Unplugin plugins |
+| `outExtension` | `outExtensions` | Custom output extensions |
+
+### Deprecated but Compatible
+
+These tsup options still work in tsdown for backward compatibility, but emit deprecation warnings and **will be removed in a future version**. Migrate them immediately.
+
+| tsup (deprecated) | tsdown (preferred) | Notes |
+|--------------------|--------------------|-------|
+| `entryPoints` | `entry` | Also deprecated in tsup itself |
+| `publicDir` | `copy` | Copy static files to output |
+| `bundle: true` | _(remove)_ | Bundle is default behavior |
+| `bundle: false` | `unbundle: true` | Preserve file structure |
+| `removeNodeProtocol: true` | `nodeProtocol: 'strip'` | Strip `node:` prefix |
+| `injectStyle: true` | `css: { inject: true }` | CSS injection |
+| `injectStyle: false` | _(remove)_ | Default behavior |
+| `external: [...]` | `deps: { neverBundle: [...] }` | Moved to deps namespace |
+| `noExternal: [...]` | `deps: { alwaysBundle: [...] }` | Moved to deps namespace |
+| `skipNodeModulesBundle` | `deps: { skipNodeModulesBundle: true }` | Moved to deps namespace |
+
+### Output Filename Differences
+
+For IIFE builds, `tsdown` emits names like `[name].iife.js`, while `tsup` commonly emitted `[name].global.js`. `outExtensions` customizes extensions or suffixes, but it does not remove the built-in `.iife` or `.umd` segment. Use `outputOptions.entryFileNames: '[name].global.js'` to preserve old IIFE filenames.
+
+### Dependency Namespace Moves
+
+Dependencies config moved under `deps` namespace. If both `external` and `noExternal` exist, merge into a single `deps` object:
+
+```ts
+// Before (tsup)
 export default defineConfig({
-  entry: ['./src/index.ts'],
-  format: ['esm', 'cjs'],
-  dts: true,
-  clean: true,
+  external: ['react'],
+  noExternal: ['lodash-es'],
+})
+
+// After (tsdown)
+export default defineConfig({
+  deps: {
+    neverBundle: ['react'],
+    alwaysBundle: ['lodash-es'],
+  },
 })
 ```
 
-## Core References
+tsdown also adds `deps.onlyBundle` (whitelist of allowed bundled packages) — no tsup equivalent.
+
+### Plugin Import Transforms
+
+```ts
+// Before (tsup - esbuild plugins)
+import plugin from 'unplugin-example/esbuild'
+
+// After (tsdown - Rolldown plugins)
+import plugin from 'unplugin-example/rolldown'
+```
+
+All `unplugin-*/esbuild` imports should change to `unplugin-*/rolldown`.
+
+For complete before/after examples of every transformation, see [guide-option-mappings.md](references/guide-option-mappings.md).
+
+## Default Value Differences
+
+tsdown changes several defaults from tsup. When migrating, explicitly set these to preserve tsup behavior, then let the user decide which new defaults to adopt.
+
+| Option | tsup Default | tsdown Default | Migration Action |
+|--------|-------------|----------------|-----------------|
+| `format` | `'cjs'` | `'esm'` | Set `format: 'cjs'` to preserve |
+| `clean` | `false` | `true` | Set `clean: false` to preserve |
+| `dts` | `false` | Auto-enabled if `types`/`typings` in package.json | Set `dts: false` to preserve |
+| `target` | _(none)_ | Auto-reads from `engines.node` in package.json | Set `target: false` to preserve |
+
+After migration, suggest the user review these — tsdown's defaults are generally better:
+- ESM is the modern standard
+- Cleaning output prevents stale files
+- Auto DTS from package.json reduces config
+- Auto target from engines.node ensures consistency
+
+## Unsupported Options
+
+These tsup options have no direct equivalent in tsdown. Remove them and inform the user.
+
+| tsup Option | Status | Alternative |
+|-------------|--------|-------------|
+| `splitting` | Always enabled | Remove — code splitting cannot be disabled in tsdown |
+| `metafile` | Not available | Suggest `devtools: true` for Vite DevTools bundle analysis |
+| `swc` | Not supported | Remove — tsdown uses oxc for transformation (built-in) |
+| `experimentalDts` | Not supported | Use the `dts` option instead |
+| `legacyOutput` | Not supported | Remove — no alternative |
+| `plugins` (tsup experimental) | Incompatible | Migrate to Rolldown plugins manually; tsup's plugin API differs from Rolldown's |
+
+## Package.json Migration
+
+### Scripts
+
+Replace `tsup` and `tsup-node` with `tsdown` in all script commands:
+
+```json
+// Before
+{
+  "scripts": {
+    "build": "tsup src/index.ts",
+    "dev": "tsup --watch"
+  }
+}
+
+// After
+{
+  "scripts": {
+    "build": "tsdown src/index.ts",
+    "dev": "tsdown --watch"
+  }
+}
+```
+
+### Dependencies
+
+| Location | Action |
+|----------|--------|
+| `dependencies.tsup` | Rename to `dependencies.tsdown` |
+| `devDependencies.tsup` | Rename to `devDependencies.tsdown` |
+| `optionalDependencies.tsup` | Rename to `optionalDependencies.tsdown` |
+| `peerDependencies.tsup` | Rename to `peerDependencies.tsdown` |
+| `peerDependenciesMeta.tsup` | Rename to `peerDependenciesMeta.tsdown` |
+
+### Root Config Field
+
+If package.json has a root-level `tsup` field (inline config), rename to `tsdown`:
+
+```json
+// Before
+{ "tsup": { "entry": ["src/index.ts"] } }
+
+// After
+{ "tsdown": { "entry": ["src/index.ts"] } }
+```
+
+For detailed package.json examples, see [guide-package-json.md](references/guide-package-json.md).
+
+## New tsdown Features
+
+After migration, suggest these tsdown-exclusive features to the user:
+
+| Feature | Config | Description |
+|---------|--------|-------------|
+| Node protocol | `nodeProtocol: true \| 'strip'` | Add or strip `node:` prefix on built-in imports |
+| Workspace | `workspace: 'packages/*'` | Build multiple packages in a monorepo |
+| Package exports | `exports: true` | Auto-generate `exports` field in package.json |
+| Package validation | `publint: true`, `attw: true` | Lint package and check type correctness |
+| Executable | `exe: true` | Bundle as Node.js standalone executable (SEA) |
+| DevTools | `devtools: true` | Vite DevTools integration for bundle analysis |
+| Hooks | `hooks: { 'build:done': ... }` | Lifecycle hooks: `build:prepare`, `build:before`, `build:done` |
+| CSS modules | `css: { modules: { ... } }` | Scoped class names for `.module.css` files |
+| Glob import | `globImport: true` | Support `import.meta.glob` (Vite-style) |
+
+For detailed comparisons, see [guide-differences-detailed.md](references/guide-differences-detailed.md).
+
+## References
 
 | Topic | Description | Reference |
 |-------|-------------|-----------|
-| Getting Started | Installation, first bundle, CLI basics | [guide-getting-started](references/guide-getting-started.md) |
-| Configuration File | Config file formats, multiple configs, workspace | [option-config-file](references/option-config-file.md) |
-| CLI Reference | All CLI commands and options | [reference-cli](references/reference-cli.md) |
-| Migrate from tsup | Migration guide and compatibility notes | [guide-migrate-from-tsup](references/guide-migrate-from-tsup.md) |
-| Plugins | Rolldown, Rollup, Unplugin support | [advanced-plugins](references/advanced-plugins.md) |
+| Option Mappings | Complete before/after for every option transform | [guide-option-mappings](references/guide-option-mappings.md) |
+| Detailed Differences | Architecture, features, compatibility comparison | [guide-differences-detailed](references/guide-differences-detailed.md) |
+| Package.json | Dependency, script, and config field migration | [guide-package-json](references/guide-package-json.md) |
 
-> For comprehensive migration assistance with complete option mappings, install the dedicated [`tsdown-migrate`](../tsdown-migrate/SKILL.md) skill: `npx skills add rolldown/tsdown --skill tsdown-migrate`
-| Hooks | Lifecycle hooks for custom logic | [advanced-hooks](references/advanced-hooks.md) |
-| Programmatic API | Build from Node.js scripts | [advanced-programmatic](references/advanced-programmatic.md) |
-| Rolldown Options | Pass options directly to Rolldown | [advanced-rolldown-options](references/advanced-rolldown-options.md) |
-| CI Environment | CI detection, `'ci-only'` / `'local-only'` values | [advanced-ci](references/advanced-ci.md) |
+## Migration Checklist
 
-## Build Options
+Use this checklist when performing a migration:
 
-| Option | Usage | Reference |
-|--------|-------|-----------|
-| Entry points | `entry: ['src/*.ts', '!**/*.test.ts']` | [option-entry](references/option-entry.md) |
-| Output formats | `format: ['esm', 'cjs', 'iife', 'umd']` | [option-output-format](references/option-output-format.md) |
-| Output directory | `outDir: 'dist'`, `outExtensions` | [option-output-directory](references/option-output-directory.md) |
-| Type declarations | `dts: true`, `dts: { sourcemap, compilerOptions, vue }` | [option-dts](references/option-dts.md) |
-| Target environment | `target: 'es2020'`, `target: 'esnext'` | [option-target](references/option-target.md) |
-| Platform | `platform: 'node'`, `platform: 'browser'` | [option-platform](references/option-platform.md) |
-| Tree shaking | `treeshake: true`, custom options | [option-tree-shaking](references/option-tree-shaking.md) |
-| Minification | `minify: true`, `minify: 'dce-only'` | [option-minification](references/option-minification.md) |
-| Source maps | `sourcemap: true`, `'inline'`, `'hidden'` | [option-sourcemap](references/option-sourcemap.md) |
-| Watch mode | `watch: true`, watch options | [option-watch-mode](references/option-watch-mode.md) |
-| Cleaning | `clean: true`, clean patterns | [option-cleaning](references/option-cleaning.md) |
-| Log level | `logLevel: 'silent'`, `failOnWarn: false` | [option-log-level](references/option-log-level.md) |
-
-## Dependency Handling
-
-| Feature | Usage | Reference |
-|---------|-------|-----------|
-| Never bundle | `deps: { neverBundle: ['react', /^@myorg\//] }` | [option-dependencies](references/option-dependencies.md) |
-| Always bundle | `deps: { alwaysBundle: ['dep-to-bundle'] }` | [option-dependencies](references/option-dependencies.md) |
-| Only bundle | `deps: { onlyBundle: ['cac', 'bumpp'] }` - Whitelist | [option-dependencies](references/option-dependencies.md) |
-| Skip node_modules | `deps: { skipNodeModulesBundle: true }` | [option-dependencies](references/option-dependencies.md) |
-| Auto external | Automatic dependency/peer/optional externalization | [option-dependencies](references/option-dependencies.md) |
-
-## Output Enhancement
-
-| Feature | Usage | Reference |
-|---------|-------|-----------|
-| Shims | `shims: true` - Add ESM/CJS compatibility | [option-shims](references/option-shims.md) |
-| CJS default | `cjsDefault: true` (default) / `false` | [option-cjs-default](references/option-cjs-default.md) |
-| Package exports | `exports: true` - Auto-generate exports field | [option-package-exports](references/option-package-exports.md) |
-| CSS handling | **[experimental]** `css: { ... }` — full pipeline with preprocessors, Lightning CSS, PostCSS, CSS modules, code splitting; requires `@tsdown/css` | [option-css](references/option-css.md) |
-| CSS modules | `css: { modules: { localsConvention: 'camelCase' } }` — scoped class names for `.module.css` files | [option-css](references/option-css.md) |
-| CSS inject | `css: { inject: true }` — preserve CSS imports in JS output | [option-css](references/option-css.md) |
-| Unbundle mode | `unbundle: true` - Preserve directory structure | [option-unbundle](references/option-unbundle.md) |
-| Root directory | `root: 'src'` - Control output directory mapping | [option-root](references/option-root.md) |
-| Executable | **[experimental]** `exe: true` - Bundle as standalone executable, cross-platform via `@tsdown/exe` | [option-exe](references/option-exe.md) |
-| Package validation | `publint: true`, `attw: true` - Validate package | [option-lint](references/option-lint.md) |
-
-## Framework & Runtime Support
-
-| Framework | Guide | Reference |
-|-----------|-------|-----------|
-| React | JSX transform, React Compiler | [recipe-react](references/recipe-react.md) |
-| Vue | SFC support, JSX | [recipe-vue](references/recipe-vue.md) |
-| Solid | SolidJS JSX transform | [recipe-solid](references/recipe-solid.md) |
-| Svelte | Svelte component libraries (source distribution recommended) | [recipe-svelte](references/recipe-svelte.md) |
-| WASM | WebAssembly modules via `rolldown-plugin-wasm` | [recipe-wasm](references/recipe-wasm.md) |
-
-## Common Patterns
-
-### Basic Library Bundle
-
-```ts
-export default defineConfig({
-  entry: ['src/index.ts'],
-  format: ['esm', 'cjs'],
-  dts: true,
-  clean: true,
-})
 ```
-
-### Multiple Entry Points
-
-```ts
-export default defineConfig({
-  entry: {
-    index: 'src/index.ts',
-    utils: 'src/utils.ts',
-    cli: 'src/cli.ts',
-  },
-  format: ['esm', 'cjs'],
-  dts: true,
-})
+- [ ] Rename tsup.config.* → tsdown.config.*
+- [ ] Update import from 'tsup' to 'tsdown'
+- [ ] Replace tsup/TSUP identifiers with tsdown/TSDOWN
+- [ ] Apply property renames (cjsInterop→cjsDefault, esbuildPlugins→plugins, outExtension→outExtensions)
+- [ ] Migrate deprecated options (publicDir→copy, bundle→unbundle, removeNodeProtocol→nodeProtocol, injectStyle→css.inject)
+- [ ] Move external/noExternal/skipNodeModulesBundle into deps namespace
+- [ ] Update unplugin imports from /esbuild to /rolldown
+- [ ] Set explicit defaults to preserve tsup behavior (format, clean, dts, target)
+- [ ] Remove unsupported options (splitting, metafile, swc, etc.)
+- [ ] Update package.json scripts (tsup→tsdown)
+- [ ] Update package.json dependencies
+- [ ] Rename root-level tsup config field if present
+- [ ] Run tsdown and verify build output
+- [ ] Suggest new tsdown features to the user
 ```
-
-### Browser Library (IIFE/UMD)
-
-```ts
-export default defineConfig({
-  entry: ['src/index.ts'],
-  format: ['iife'],
-  globalName: 'MyLib',
-  platform: 'browser',
-  minify: true,
-})
-```
-
-### React Component Library
-
-```ts
-export default defineConfig({
-  entry: ['src/index.tsx'],
-  format: ['esm', 'cjs'],
-  dts: true,
-  deps: {
-    neverBundle: ['react', 'react-dom'],
-  },
-  inputOptions: {
-    jsx: { runtime: 'automatic' },
-  },
-})
-```
-
-### Preserve Directory Structure
-
-```ts
-export default defineConfig({
-  entry: ['src/**/*.ts', '!**/*.test.ts'],
-  unbundle: true, // Preserve file structure
-  format: ['esm'],
-  dts: true,
-})
-```
-
-### CI-Aware Configuration
-
-```ts
-export default defineConfig({
-  entry: ['src/index.ts'],
-  format: ['esm', 'cjs'],
-  dts: true,
-  failOnWarn: 'ci-only',  // opt-in: fail on warnings in CI
-  publint: 'ci-only',
-  attw: 'ci-only',
-})
-```
-
-### WASM Support
-
-```ts
-import { wasm } from 'rolldown-plugin-wasm'
-import { defineConfig } from 'tsdown'
-
-export default defineConfig({
-  entry: ['src/index.ts'],
-  plugins: [wasm()],
-})
-```
-
-### Library with CSS and Sass
-
-```ts
-export default defineConfig({
-  entry: ['src/index.ts'],
-  format: ['esm', 'cjs'],
-  dts: true,
-  target: 'chrome100',
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@use "src/styles/variables" as *;`,
-      },
-    },
-  },
-})
-```
-
-### Standalone Executable
-
-```ts
-export default defineConfig({
-  entry: ['src/cli.ts'],
-  exe: true,
-})
-```
-
-### Cross-Platform Executable (requires `@tsdown/exe`)
-
-```ts
-export default defineConfig({
-  entry: ['src/cli.ts'],
-  exe: {
-    targets: [
-      { platform: 'linux', arch: 'x64', nodeVersion: '25.7.0' },
-      { platform: 'darwin', arch: 'arm64', nodeVersion: '25.7.0' },
-      { platform: 'win', arch: 'x64', nodeVersion: '25.7.0' },
-    ],
-  },
-})
-```
-
-### Advanced with Hooks
-
-```ts
-export default defineConfig({
-  entry: ['src/index.ts'],
-  format: ['esm', 'cjs'],
-  dts: true,
-  hooks: {
-    'build:before': async (context) => {
-      console.log('Building...')
-    },
-    'build:done': async (context) => {
-      console.log('Build complete!')
-    },
-  },
-})
-```
-
-## Configuration Features
-
-### Multiple Configs
-
-Export an array for multiple build configurations:
-
-```ts
-export default defineConfig([
-  {
-    entry: ['src/index.ts'],
-    format: ['esm', 'cjs'],
-    dts: true,
-  },
-  {
-    entry: ['src/cli.ts'],
-    format: ['esm'],
-    platform: 'node',
-  },
-])
-```
-
-### Conditional Config
-
-Use functions for dynamic configuration:
-
-```ts
-export default defineConfig((options) => {
-  const isDev = options.watch
-  return {
-    entry: ['src/index.ts'],
-    format: ['esm', 'cjs'],
-    minify: !isDev,
-    sourcemap: isDev,
-  }
-})
-```
-
-### Workspace/Monorepo
-
-Use glob patterns to build multiple packages:
-
-```ts
-export default defineConfig({
-  workspace: 'packages/*',
-  entry: ['src/index.ts'],
-  format: ['esm', 'cjs'],
-  dts: true,
-})
-```
-
-## CLI Quick Reference
-
-```bash
-# Basic commands
-tsdown                          # Build once
-tsdown --watch                  # Watch mode
-tsdown --config custom.ts       # Custom config
-npx tsdown-migrate              # Migrate from tsup
-
-# Output options
-tsdown --format esm,cjs        # Multiple formats
-tsdown -d lib                  # Custom output directory (--out-dir)
-tsdown --minify                # Enable minification
-tsdown --dts                   # Generate declarations
-tsdown --exe                   # Bundle as standalone executable
-tsdown --unbundle              # Bundleless mode
-
-# Entry options
-tsdown src/index.ts            # Single entry
-tsdown src/*.ts                # Glob patterns
-tsdown src/a.ts src/b.ts       # Multiple entries
-
-# Workspace / Monorepo
-tsdown -W                      # Enable workspace mode
-tsdown -W -F my-package        # Filter specific package
-tsdown --filter /^pkg-/        # Filter by regex
-
-# Development
-tsdown --watch                 # Watch mode
-tsdown --sourcemap             # Generate source maps
-tsdown --clean                 # Clean output directory
-tsdown --from-vite             # Reuse Vite config
-tsdown --tsconfig tsconfig.build.json  # Custom tsconfig
-```
-
-## Best Practices
-
-1. **Always generate type declarations** for TypeScript libraries:
-   ```ts
-   { dts: true }
-   ```
-
-2. **Externalize dependencies** to avoid bundling unnecessary code:
-   ```ts
-   { deps: { neverBundle: [/^react/, /^@myorg\//] } }
-   ```
-
-3. **Use tree shaking** for optimal bundle size:
-   ```ts
-   { treeshake: true }
-   ```
-
-4. **Enable minification** for production builds:
-   ```ts
-   { minify: true }
-   ```
-
-5. **Add shims** for better ESM/CJS compatibility:
-   ```ts
-   { shims: true }  // Adds __dirname, __filename, etc.
-   ```
-
-6. **Auto-generate package.json exports**:
-   ```ts
-   { exports: true }  // Creates proper exports field
-   ```
-
-7. **Use watch mode** during development:
-   ```bash
-   tsdown --watch
-   ```
-
-8. **Preserve structure** for utilities with many files:
-   ```ts
-   { unbundle: true }  // Keep directory structure
-   ```
-
-9. **Validate packages** in CI before publishing:
-   ```ts
-   { publint: 'ci-only', attw: 'ci-only' }
-   ```
-
-## Resources
-
-- Documentation: https://tsdown.dev
-- GitHub: https://github.com/rolldown/tsdown
-- Rolldown: https://rolldown.rs
-- Migration Guide: https://tsdown.dev/guide/migrate-from-tsup
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/rolldown) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [rolldown/tsdown](https://github.com/rolldown/tsdown) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-02 -->
