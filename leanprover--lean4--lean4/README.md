@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [leanprover/lean4](https://github.com/leanprover/lean4/tree/main/.claude/skills/ci-log-retrieval/SKILL.md)
+Original source: [leanprover/lean4](https://github.com/leanprover/lean4/tree/main/.claude/skills/stage2-olean-test/SKILL.md)
 
 ---
 
