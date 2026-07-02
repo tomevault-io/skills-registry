@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Hack23/cia](https://github.com/Hack23/cia/tree/main/.github/skills/product-quality-analysis/SKILL.md)
+Original source: [Hack23/cia](https://github.com/Hack23/cia/tree/main/.github/skills/github-actions-workflows/SKILL.md)
 
 ---
 
