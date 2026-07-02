@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [react-cosmos/react-cosmos](https://github.com/react-cosmos/react-cosmos/tree/main/.agents/skills/gh-release-notes/SKILL.md)
+Original source: [react-cosmos/react-cosmos](https://github.com/react-cosmos/react-cosmos/tree/main/.agents/skills/review-dep-upgrade/SKILL.md)
 
 ---
 
