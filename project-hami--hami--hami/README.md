@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Project-HAMi/HAMi](https://github.com/Project-HAMi/HAMi/tree/main/skill/k8s-debug-gpu-pod/SKILL.md)
+Original source: [Project-HAMi/HAMi](https://github.com/Project-HAMi/HAMi/tree/main/skill/hami-vgpu-metrics-summary/SKILL.md)
 
 ---
 
