@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Planetable/Planet](https://github.com/Planetable/Planet/tree/main/tools/claude-code-skill/SKILL.md)
+Original source: [Planetable/Planet](https://github.com/Planetable/Planet/tree/main/tools/apple-localization/SKILL.md)
 
 ---
 
