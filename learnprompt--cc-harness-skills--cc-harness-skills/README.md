@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LearnPrompt/cc-harness-skills](https://github.com/LearnPrompt/cc-harness-skills/tree/main/skills/kairos-lite/SKILL.md)
+Original source: [LearnPrompt/cc-harness-skills](https://github.com/LearnPrompt/cc-harness-skills/tree/main/skills/dream-memory/SKILL.md)
 
 ---
 
