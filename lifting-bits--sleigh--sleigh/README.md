@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lifting-bits/sleigh](https://github.com/lifting-bits/sleigh/tree/main/.agents/skills/debug-test-failures/SKILL.md)
+Original source: [lifting-bits/sleigh](https://github.com/lifting-bits/sleigh/tree/main/.agents/skills/sleigh-ghidra-release/SKILL.md)
 
 ---
 
