@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [telagod/code-abyss](https://github.com/telagod/code-abyss/tree/main/test/fixtures/skill-contract/invalid-tools/tools/invalid-tools/SKILL.md)
+Original source: [telagod/code-abyss](https://github.com/telagod/code-abyss/tree/main/test/fixtures/skill-contract/missing-description/tools/missing-description/SKILL.md)
 
 ---
 
