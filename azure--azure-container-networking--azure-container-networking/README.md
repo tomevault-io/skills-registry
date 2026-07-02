@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/azure-container-networking](https://github.com/Azure/azure-container-networking/tree/main/.github/skills/acn-go-control-plane-contracts/SKILL.md)
+Original source: [Azure/azure-container-networking](https://github.com/Azure/azure-container-networking/tree/main/.github/skills/acn-go-interfaces-dependencies/SKILL.md)
 
 ---
 
