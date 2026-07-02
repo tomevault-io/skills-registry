@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [quarqlabs/agent-oss](https://github.com/quarqlabs/agent-oss/tree/main/tools/composio/skill.md)
+Original source: [quarqlabs/agent-oss](https://github.com/quarqlabs/agent-oss/tree/main/tools/coding_agent/skill.md)
 
 ---
 
