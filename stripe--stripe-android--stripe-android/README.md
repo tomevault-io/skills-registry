@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stripe/stripe-android](https://github.com/stripe/stripe-android/tree/main/.claude/skills/network-tests/SKILL.md)
+Original source: [stripe/stripe-android](https://github.com/stripe/stripe-android/tree/main/.claude/skills/write-unit-tests/SKILL.md)
 
 ---
 
