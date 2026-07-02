@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/weltraumrecht/skills/space-071-lunar-base-governance-safety-zones-interoperabilitaet/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/weltraumrecht/skills/space-004-registrierung-register-staat-zustaendigkeit-kontrolle/SKILL.md)
 
 ---
 
