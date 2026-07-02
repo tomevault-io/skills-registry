@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AkaraChen/aghub](https://github.com/AkaraChen/aghub/tree/main/.agents/skills/bolder/SKILL.md)
+Original source: [AkaraChen/aghub](https://github.com/AkaraChen/aghub/tree/main/.agents/skills/harden/SKILL.md)
 
 ---
 
