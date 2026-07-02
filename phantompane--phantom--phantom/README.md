@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [phantompane/phantom](https://github.com/phantompane/phantom/tree/main/.codex/skills/create-pull-request/SKILL.md)
+Original source: [phantompane/phantom](https://github.com/phantompane/phantom/tree/main/.codex/skills/phantom-design-system/SKILL.md)
 
 ---
 
