@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LambdaTest/kane-cli](https://github.com/LambdaTest/kane-cli/tree/main/skill-installer/skills/SKILL.md)
+Original source: [LambdaTest/kane-cli](https://github.com/LambdaTest/kane-cli/tree/main/.agents/skills/kane-cli/SKILL.md)
 
 ---
 
