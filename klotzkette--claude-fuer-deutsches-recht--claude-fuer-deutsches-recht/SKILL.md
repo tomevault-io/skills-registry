@@ -1,152 +1,67 @@
 ---
-name: anlagen-bezeichnen-sortieren-sozialgericht
-description: Wenn es um Anlagen zur Klage — sortieren und bezeichnen in selbstvertreter-sozialgericht geht: erstellt den passenden Entwurf aus Sachverhalt, Norm, Beweis und Antrag; liefert einen verwertbaren Entwurf mit Anträgen, Begründung und Anlagenlogik. Use when this capability is needed.
+name: berufungsfest-beschluss-bauen-beweisbeschluss
+description: Wenn es um Berufungsfestigkeit prüfen in Urteilsbauer und Relationsmacher geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Auswahlstichwort: Berufungsfest Beschluss Bauen Beweisbeschluss; Arbeitsfeld: Urteilsbauer und Relationsmacher. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Anlagen zur Klage — sortieren und bezeichnen
+# Berufungsfestigkeit prüfen
 
-## Fachlicher Anker
+## Arbeitsbereich
 
-- **Normen:** § 7, § 7a, §§ 20.
-- **Entscheidungs-/Quellenanker:** Tragende Rechtsprechung nur mit Gericht, Datum, Aktenzeichen und frei prüfbarer Quelle einsetzen; keine Entscheidung aus Modellwissen erzwingen.
-- **Quellenhygiene:** `references/quellenhygiene.md` und `references/zitierweise.md` beachten.
+Fertiges Urteil gegen häufigste Aufhebungsgründe selbst prüfen: Richter will vor Urteilsversand Aufhebungsrisiken minimieren. Normen: § 529 ZPO (Tatsachenfeststellung Berufung), § 546 ZPO (Rechtsverletzung), § 547 Nr. 6 ZPO (Begründungsmangel). Prüfraster: Tatsachenfeststellung vollständig, kein Verfahrensmangel, keine uebergangenen Angriffs-/Verteidigungsmittel, Begründungstiefe ausreichend. Output Berufungsfest-Checkliste mit Ampelstatus. Abgrenzung: Revisionsfestigkeitsprüfung siehe revisionsfest-prüfen; Tenorierung siehe tenor-bauen-zivil. Arbeite entlang dieser konkreten Prüfungslinie und trenne Rolle, Frist, Zuständigkeit, Beweislast und gewünschten Output.
 
-## Worum geht es?
+## Arbeitsweg
 
-Ihre Klage hat Anlagen: Bescheid, Atteste, Briefe. Wenn diese unsortiert ankommen, wird Ihnen niemand folgen können. Diese Skill zeigt, wie Sie Anlagen ordentlich vorbereiten.
+- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
+- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
+- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## In einfacher Sprache
+## Triage zu Beginn — kläre vor dem Selbstcheck
 
-Sie haben viele Papiere als Beweis. Ordnen Sie diese. Nummerieren Sie sie. So findet das Gericht alles schnell. Und Sie auch.
+1. Ist das Urteil bereits vollständig ausformuliert und unterzeichnet?
+2. Wurde die Hinweispflicht (§ 139 ZPO) im gesamten Verfahren beachtet?
+3. Sind alle Anträge beschieden (§ 308 ZPO — ne ultra petita)?
+4. Ist der Tenor vollstreckungsfähig und bestimmt genug?
+5. Besteht eine Berufungszulassungsfrage (§ 511 Abs. 4 ZPO — Streitwert unter 600 EUR)?
 
-## Wann brauchen Sie diese Skill?
+## Aktuelle Rechtsprechung zu Berufungsgründen
 
-- Sie reichen Klage ein und haben viele Belege.
-- Sie wollen, dass das Gericht Ihre Sache schnell versteht.
+## Zentrale Normen
 
-## Fachbegriffe (kurz erklaert)
+- § 529 ZPO — Tatsachenfeststellung als Grundlage des Berufungsgerichts
+- § 546 ZPO — Revisionsgrund: fehlerhafte Rechtsanwendung
+- § 547 ZPO — Absolute Revisionsgründe (Nr. 6: fehlende Begründung)
+- § 139 ZPO — Hinweispflicht des Gerichts
+- § 511 ZPO — Statthaftigkeit der Berufung; Beschwer 600 EUR
+- § 538 Abs. 2 ZPO — Zurückverweisung durch Berufungsgericht bei Verfahrensmangel
 
-- **Anlage**: Beilage zum Schriftsatz.
-- **Anlagenverzeichnis**: Liste aller Anlagen am Ende oder Anfang.
-- **K-Anlage / B-Anlage**: K für Kläger, B für Beklagte.
-- **Konvolut**: Mehrere zusammen geheftete Dokumente.
+## Haeufige Aufhebungsgründe
 
-## Rechtsgrundlagen
+1. **Fehlerhafte Tatsachenfeststellung** (§ 529 ZPO) — konkrete Anhaltspunkte für Unrichtigkeit
+2. **Verfahrensmangel** — Verstoß gegen rechtliches Gehör (Art. 103 Abs. 1 GG), falsche Beweisaufnahme, falsche Zuständigkeit
+3. **Falsche Rechtsanwendung** (§ 546 ZPO)
+4. **Begründungsmangel** — § 547 Nr. 6 ZPO absoluter Revisionsgrund
+5. **Verletzung der Hinweispflicht** § 139 ZPO
+6. **Nichtberücksichtigung erheblichen Vorbringens** — § 286 ZPO Verletzung freier Beweiswürdigung
 
-- **§ 92 Abs. 2 SGG** — Anlagen sollen beigefuegt werden.
-- **§ 93 SGG** — Abschriften.
-- Allgemeine Praxis der Sozialgerichtsbarkeit.
+## Checkliste vor Verkündung
 
-## Schritt-für-Schritt-Anleitung
-
-### Schritt 1 — Was wirklich noetig?
-
-Nicht alles muss als Anlage rein. Nur das, was Ihren Vortrag belegt. Drei Kategorien:
-
-- **Muss**: Bescheid, Widerspruchsbescheid, eigene Schreiben an Behörde.
-- **Sollte**: Atteste, aerztliche Berichte, Kontoauszuege bei Geld-Sachen.
-- **Kann**: Allgemeines Informations-Material, Fotos der Wohnung etc. (selten noetig).
-
-### Schritt 2 — Bezeichnung
-
-Bewaehrt: K1, K2, K3 für Kläger-Anlagen. (Beklagte nutzt B1, B2 etc.)
-
-Beispiele:
-
-- K1: Bescheid der DRV vom 22.4.2026
-- K2: Widerspruchsbescheid vom 12.7.2026
-- K3: Hausarzt-Bericht Dr. Mueller vom 1.2.2026
-- K4: Facharzt-Bericht Dr. Schmidt vom 15.3.2026
-
-### Schritt 3 — Sortierung
-
-Sortiere chronologisch oder thematisch:
-
-- Chronologisch: aelteste zuerst (wenn Verfahrenshistorie wichtig)
-- Thematisch: Bescheide zusammen, dann Atteste, dann sonstiges
-
-Wenn beides geht: nach Thema, innerhalb chronologisch.
-
-### Schritt 4 — Anlagenverzeichnis
-
-Am Ende der Klage:
-
-```
-Anlagenverzeichnis:
-
-K1: Bescheid DRV vom 22.4.2026 (3 Seiten)
-K2: Widerspruchsbescheid vom 12.7.2026 (4 Seiten)
-K3: Hausarzt-Bericht Dr. Mueller vom 1.2.2026 (2 Seiten)
-K4: Facharzt-Bericht Dr. Schmidt vom 15.3.2026 (3 Seiten)
-K5: Pflegeprotokoll vom 1.1. bis 15.1.2026 (15 Seiten)
-```
-
-### Schritt 5 — Auf jedes Dokument K-Nummer
-
-Oben rechts auf der ersten Seite jedes Dokuments handschriftlich oder mit Stempel: "K3" o.ae. So findet jeder schnell.
-
-### Schritt 6 — Heften und vorbereiten
-
-- Locher-Loecher: nicht über die Schrift.
-- Klammern: am Rand oben links.
-- Konvolut: alle Anlagen zusammenhalten.
-
-Pro Beklagter ein vollstaendiges Anlagenpaket.
-
-### Schritt 7 — Bei Originalen
-
-Originale behalten Sie. Senden Sie Kopien. Auf der Kopie: "Kopie" oder "Abschrift".
-
-Wenn das Gericht ein Original braucht (z.B. Original-Vollmacht), wird es ausdruecklich angefordert.
-
-## Worauf Sie besonders achten müssen
-
-- **Lesbarkeit**: Kopien müssen lesbar sein. Bei verblassten Originalen vorher digital korrigieren.
-- **Personenbezogene Daten**: Was nicht zum Streit gehoert, schwaerzen Sie (z.B. Geburtsdatum von Familienmitgliedern).
-- **Datenschutz**: Bei Arztberichten anderer Personen schwaerzen.
-- **Aktuelle Bezeichnung**: Wenn die Behörde umgewandelt wurde (z.B. MDK zu MD), kurz darauf hinweisen.
-
-## Typische Fehler
-
-- Originale eingesandt → Kopien reichen
-- Keine Nummerierung → schwer auffindbar
-- Kein Anlagenverzeichnis → Verwirrung
-- Falsche Reihenfolge → chronologisch oder thematisch sortieren
-
-## Quellen und Aktualitaet
-
-Stand: 05/2026. Praxis der Sozialgerichtsbarkeit. Standard ist K- bzw. B-Bezeichnung.
-
-## Normen und Rechtsprechung
-
-### Kuratierte Normen-Bibliothek
-
-- § 1 SGG (Sachliche Zuständigkeit Sozialgerichte)
-- §§ 51-55 SGG (Klagearten)
-- §§ 73, 73a SGG (Prozessbevollmächtigte, PKH)
-- §§ 86a, 86b SGG (aufschiebende Wirkung, einstweiliger Rechtsschutz)
-- § 105 SGG (Gerichtsbescheid)
-- § 109 SGG (Sachverständiger nach Wahl)
-- § 131 SGG (Urteilsformen)
-- §§ 183-197a SGG (Kosten)
-- §§ 12, 14 SGB I (Auskunft, Beratung)
-- § 44 SGB X (Zugunstenverfahren)
-
-### Leitentscheidungen
-
-- BSG B 1 KR 12/15 R (sozialgerichtlicher Anspruchsbegriff)
-- BSG B 4 AS 22/15 R (SGB II Eingliederungsverwaltungsakt)
-- BVerfG 1 BvL 1/09 (Regelbedarf)
-- BSG B 14 AS 19/21 R (Sanktionsmaßstäbe)
-- BVerfG 1 BvR 1106/08 (effektiver Rechtsschutz Sozialgericht)
-
-### Anwendung im Skill
-
-- Untaetigkeitsklage § 88 SGG nach 6 Monaten; Zustaendigkeit nach § 51 SGG vor Klageerhebung prüfen.
-- PKH § 73a SGG: Bediduerftigkeit + Erfolgsaussicht; ablehnender Beschluss mit § 73a Abs. 1 SGG-Beschwerde angreifbar.
-- Zugunstenverfahren § 44 SGB X erlaubt Korrektur bestandskraeftiger Bescheide; 4-Jahres-Frist beachten.
+- [ ] Sind alle Anträge beschieden?
+- [ ] Sind alle erheblichen Tatsachen festgestellt?
+- [ ] Beweisaufnahme im Tatbestand erwähnt?
+- [ ] Beweiswürdigung in den Entscheidungsgründen mit konkreter Würdigung?
+- [ ] Konkrete Bezugnahmen statt pauschaler Verweise (§ 313 Abs. 2 S. 2 ZPO)?
+- [ ] Tenor vollstreckbar und bestimmt?
+- [ ] Kostenentscheidung rechnerisch richtig?
+- [ ] Vorläufige Vollstreckbarkeit angeordnet?
+- [ ] Streitwert festgesetzt (§ 63 GKG)?
+- [ ] Berufungszulassung erforderlich (§ 511 Abs. 4 ZPO)?
+- [ ] Rechtsmittelbelehrung beigefügt (§ 232 ZPO)?
+- [ ] Unterschrift der erkennenden Richter (§ 315 Abs. 1 ZPO)?
+- [ ] Hinweispflicht § 139 ZPO dokumentiert?
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
