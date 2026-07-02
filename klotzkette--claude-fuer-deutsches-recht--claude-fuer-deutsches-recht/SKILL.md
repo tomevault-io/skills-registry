@@ -1,154 +1,217 @@
 ---
-name: bwa-betriebsergebnis-deckungsbeitrag
-description: Wenn es um Betriebsergebnis und Deckungsbeitrag in der BWA in Steuerrecht – Steuerberater und Anwälte geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Auswahlstichwort: Bwa Betriebsergebnis Deckungsbeitrag; Arbeitsfeld: Steuerrecht – Steuerberater und Anwälte. Use when this capability is needed.
+name: muster-buchpreisfreigabe-dokumentation
+description: Wenn es um Muster-Buchpreisfreigabe-Dokumentation in Verlagsrecht und Buchpreisbindung geht: ordnet Akteninhalt, Belege, Lücken und Nachforderungen; liefert ein direkt nutzbares Arbeitsprodukt mit Prüfpunkten, Risiken und nächstem Schritt. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Betriebsergebnis und Deckungsbeitrag in der BWA
+# Muster-Buchpreisfreigabe-Dokumentation
 
-## Fachlicher Anker
+## Arbeitsweg
 
-- **Normen:** § 6a, § 275 HGB, § 238 HGB.
-- **Entscheidungs-/Quellenanker:** Tragende Rechtsprechung nur mit Gericht, Datum, Aktenzeichen und frei prüfbarer Quelle einsetzen; keine Entscheidung aus Modellwissen erzwingen.
-- **Quellenhygiene:** `references/quellenhygiene.md` und `references/zitierweise.md` beachten.
+- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
+- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
+- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Kernsachverhalt
+## Zweck dieses Skills
 
-Die Standard-BWA weist ein Betriebsergebnis nach Block-Logik aus. Für Steuerungszwecke ist aber die Deckungsbeitragsrechnung mit Stufenkonzept ergiebiger: Sie trennt variable von fixen Kosten und zeigt, ab welcher Umsatzhoehe das Unternehmen profitabel arbeitet. Der Steuerberater muss die Standard-BWA so umkonfigurieren oder ergaenzen, dass DB I, DB II und EBITDA/EBIT/EBT klar ablesbar sind. Insbesondere bei Industrie- und Handelsmandanten ist die Deckungsbeitragsstruktur Standard.
+Erstellt und prüft die vollständige **Preisbindungs-Dokumentation** eines Verlags für ein konkretes Buch oder eine Titelgruppe. Die Dokumentation umfasst den gesamten Lebenszyklus des gebundenen Ladenpreises: von der Erstfestsetzung über erlaubte Aktionspreise und Sonderkonditionen bis hin zur rechtssicheren Aufhebung der Preisbindung.
 
-## Kaltstart-Rueckfragen
+Korrekte Dokumentation ist nicht nur eine rechtliche Pflicht nach **BuchPrG §§ 3 und 7**, sondern dient auch als Beweismittel im Streitfall. Behörden (Kartellamt), der Börsenverein und klagebefugte Verbände können jederzeit Nachweis verlangen. Fehlt die Dokumentation, drohen Bußgelder nach **BuchPrG § 13** und zivilrechtliche Unterlassungsansprüche.
 
-1. Welche Branche und welches Geschäftsmodell — Industrie mit Fertigung, Handel mit Lagerumschlag, Dienstleistung mit Stundensaetzen?
-2. Welche Kosten sind variabel (mit Umsatz schwankend), welche fix (unabhaengig vom Umsatz)?
-3. Ist eine Stufendeckungsbeitragsrechnung gewuenscht (DB I, DB II, DB III)?
-4. Welche Ergebniskennzahlen benoetigt der Mandant — EBITDA für Banken, EBIT für interne Steuerung?
-5. Werden kalkulatorische Positionen ausgewiesen (kalk. Unternehmerlohn, kalk. Miete)?
-6. Internationale Stakeholder vorhanden (Mutter, Investor), die UKV-Format bevorzugen?
-7. Welche Kostenstellenstruktur ist hinterlegt (Profit Center, Cost Center)?
-8. Wird eine Produktdeckungsbeitrags-Auswertung benoetigt (Auftragskalkulation)?
+Der Skill richtet sich an Verlagscontrolling, Vertriebsleiter und Rechtsabteilungen, die Preisbindungsvorgänge rechtssicher nachweisen wollen.
 
-## Rechtlicher Rahmen
+## Rechtsgrundlagen
 
-### Primaernormen
+| Norm | Inhalt | Quelle (URL) |
+|------|--------|-------------|
+| BuchPrG § 3 | Preisbindungspflicht; Festsetzung des Ladenpreises durch Verleger | https://www.gesetze-im-internet.de/buchprg/__3.html |
+| BuchPrG § 4 | Bindung des Letztabnehmers | https://www.gesetze-im-internet.de/buchprg/__4.html |
+| BuchPrG § 5 | Ausnahmen für Letztabnehmer | https://www.gesetze-im-internet.de/buchprg/__5.html |
+| BuchPrG § 6 | Ausnahmen von der Preisbindung | https://www.gesetze-im-internet.de/buchprg/__6.html |
+| BuchPrG § 7 | Aufhebung der Preisbindung | https://www.gesetze-im-internet.de/buchprg/__7.html |
+| BuchPrG § 9 | Durchsetzung; Klagebefugnis | https://www.gesetze-im-internet.de/buchprg/__9.html |
+| BuchPrG § 13 | Bußgeld | https://www.gesetze-im-internet.de/buchprg/__13.html |
+| MwStG / UStG | Mehrwertsteuer auf Bücher (7 % ermäßigt) | https://www.gesetze-im-internet.de/ustg_1980/__12.html |
 
-**§ 275 HGB** — GuV-Gliederung GKV (Abs. 2) oder UKV (Abs. 3); Wahlrecht. Deckungsbeitragsrechnung ist mit UKV besser abbildbar.
+## Dokumentationsstruktur: Lebenszyklus eines Ladenpreises
 
-**§ 238 HGB** — Buchfuehrungspflicht.
+### Phase 1: Erstfestsetzung des Ladenpreises
 
-**§ 252 HGB** — Bewertungsstetigkeit; Wechsel der BWA-Form muss begruendet werden.
+#### Pflichtinhalt der Preisfestsetzungs-Dokumentation
 
-### Standards
+| Dokument-Element | Inhalt | Pflichtfeld? |
+|-----------------|--------|-------------|
+| Titel / ISBN-13 | Eindeutige Werkidentifikation | Ja |
+| Verlag (Name, Adresse) | Rechtsträger der Preisbindung | Ja |
+| Festgesetzter Ladenpreis (brutto) | Inkl. 7 % MwSt. | Ja |
+| Nettopreis (netto) | Ladenpreis ÷ 1,07 | Ja |
+| Gültig ab (Datum) | Datum der Preisbindungswirkung | Ja |
+| Erscheinungsdatum | Datum der Erstauslieferung | Ja |
+| VLB-Meldung | Datum und Bestätigungsnummer | Empfohlen |
+| Zuständige Person | Unterzeichner im Verlag | Empfohlen |
 
-- IDW PS 480 — Erstellungsgrundsaetze (analog auf BWA).
-- DATEV BWA-Formen 01 (Standard), 11 (Bewegungs-BWA), 21 (Branchen-BWA).
-
-## Workflow
-
-### Phase 1 — Kostenstruktur analysieren
-
-| Kostenart | Typische Zuordnung |
-|---|---|
-| Wareneinsatz/Materialeinsatz | Variable Kosten (mit Umsatz schwankend) |
-| Fremdleistungen | Variable Kosten (auftragsabhaengig) |
-| Akkord-/Stueck-Lohn | Variable Kosten |
-| Zeitlohn/Festgehalt | Fixe Kosten |
-| Miete/Pacht | Fixe Kosten |
-| Versicherungen | Fixe Kosten |
-| Werbung Standard | Fixe Kosten |
-| Provisionen | Variable Kosten |
-| Abschreibungen | Fixe Kosten (Strukturkosten) |
-| Zinsen | Finanzkosten (separat) |
-
-### Phase 2 — Stufendeckungsbeitrag konfigurieren
+#### VLB-Meldeprozess
 
 ```
-Umsatzerloese [Umsatz]
-- Variable Kosten (Material, FL, var. Lohn) [Var. K]
-= DECKUNGSBEITRAG I (Rohgewinn) [DB I]
-- Fixkosten der Kostenstelle / des Produkts [Fix-KSt]
-= DECKUNGSBEITRAG II [DB II]
-- Allgemeine Fixkosten Unternehmen [Allg. Fix]
-= BETRIEBSERGEBNIS / EBITDA [BE]
-- Abschreibungen [AfA]
-= EBIT
-- Zinsergebnis [Zins]
-= EBT (Ergebnis vor Steuern)
-- Ertragsteuern [Steuern]
-= JAHRESUEBERSCHUSS
+Schritt 1: Titeldaten im VLB/Midas eingeben (ISBN, Titel, Preis, Erscheinungsdatum)
+Schritt 2: Preis als "Ladenpreis DE" mit Mehrwertsteuersatz 7 % anlegen
+Schritt 3: Auslieferungsanweisung an Auslieferung: Ladenpreis = EUR [X,XX] ab [Datum]
+Schritt 4: Bestätigung der Meldung archivieren (VLB-Datenbankstand mit Zeitstempel)
+Schritt 5: Sicherungskopie der Preismeldung in Verlagsakte
 ```
 
-### Phase 3 — DATEV/Addison-Konfiguration
+### Phase 2: Preisänderungen während der Bindungsdauer
 
-- DATEV: BWA-Form 21 (Branchen-BWA) oder individuelle BWA-Form über Berater-Konfiguration. Klickpfad: Rechnungswesen → Stammdaten → Auswertungspakete → Eigene BWA-Form definieren.
-- Addison: BWA-Definition mit eigenen Bloecken im Auswertungsmanager.
-- Kostenstellen-Zuordnung über DATEV-Kostenrechnung (Modul Kostenrechnung Classic/Comfort) oder Sachkontenmasken mit Kostenstellen-Feld.
+#### Zulässige Preisänderungen
 
-### Phase 4 — Break-even-Analyse
+| Art der Änderung | Zulässig? | Dokumentationspflicht |
+|-----------------|----------|----------------------|
+| Reguläre Preiserhöhung | Ja | Neue VLB-Meldung mit Datum; alte Preisbindung bis Datum X, neue ab Datum Y |
+| Preissenkung (dauerhafte) | Ja | Neue VLB-Meldung |
+| Zeitlich befristete Aktion (§ 6 Abs. 1 Nr. 1 BuchPrG) | Ja, max. 3 Jahre nach Erscheinen | Aktionsdokument: Titel, Aktionspreis, Laufzeit (von–bis), Begründung |
+| Mängelexemplar-Preis (§ 6 Abs. 1 Nr. 2 BuchPrG) | Ja | Mängelnachweis: Art des Mangels, Exemplar-Menge, Neuer Preis |
+| Subskriptionspreis | Ja, vor Erscheinen | Subskriptionsangebot dokumentieren |
 
-- Break-even-Umsatz = Fixkosten geteilt durch Deckungsbeitragsrate.
-- Deckungsbeitragsrate = DB I geteilt durch Umsatz.
-- Sicherheitsmarge = (Ist-Umsatz minus Break-even-Umsatz) geteilt durch Ist-Umsatz.
-- Rechenbeispiel: Fixkosten 100.000 EUR, DB-Rate 40 Prozent ergibt einen Break-even-Umsatz von 250.000 EUR. Liegt der Ist-Umsatz bei 300.000 EUR, betraegt die Sicherheitsmarge rund 17 Prozent.
+#### Mängelexemplar-Dokumentation (§ 6 Abs. 1 Nr. 2 BuchPrG)
 
-### Phase 5 — Reporting und Erläuterung
+```
+Datum: [TT.MM.JJJJ]
+ISBN: [978-3-XXXXX-XXX-X]
+Exemplar-Anzahl: [Anzahl]
+Art des Mangels: □ Druckfehler (Seite ___) □ Beschädigung □ Vergilbung □ Sonstiges: ___
+Mängelpreis: EUR [X,XX] (entspricht [XX] % Nachlass auf Ladenpreis)
+Gültig ab: [Datum]
+Verantwortlicher: [Name, Funktion]
+Unterschrift: ___________________
+```
 
-- BWA mit Stufendeckung auf einer Seite.
-- Erläuterung Schwellenwerte: Break-even, Sicherheitsmarge.
-- Bei sinkendem DB I: Prüfung Wareneinsatz, Lieferantenkonditionen.
-- Bei steigenden Fixkosten ohne Umsatzaequivalent: Fixkostenstruktur hinterfragen.
+### Phase 3: Ausnahmen nach § 6 BuchPrG
 
-### Phase 6 — Quartalsgespraech mit Mandant
+#### Vollständige Ausnahmen-Übersicht
 
-- DB-Struktur erläutern, Mandant für die Stellschrauben sensibilisieren.
-- Maßnahmen-Plan bei kritischer Marge: Preiserhoehung, Sortimentsbereinigung, Fixkostensenkung.
+| Ausnahme | Norm | Bedingung | Dokumentation |
+|----------|------|-----------|---------------|
+| Bücher außerhalb des Anwendungsbereichs | § 1 BuchPrG | Nicht in DE/AT erschienen und nicht in DE/AT angeboten | Nachweis: Erscheinungsland, kein Angebot in DE |
+| Mängelexemplare | § 6 Abs. 1 Nr. 2 | Sichtbarer Mangel, übliche Verkaufsbezeichnung erkennbar | Mängelprotokoll |
+| Bücher aus Bibliotheken und Restbuchhandlungen | § 6 Abs. 1 Nr. 3 | Bibliothek/Restbuchhandlung verkauft eigenen Bestand | Nachweis: Herkunft aus eigener Bibliothek |
+| Export ins Ausland | § 6 Abs. 1 Nr. 4 | Letztabnehmer außerhalb Deutschlands | Nachweis: Lieferadresse außerhalb DE |
+| Zeitlich begrenzte Sonderaktion bei Neuerscheinungen | § 6 Abs. 2 | Maximal 3 Jahre nach Ersterscheinen | Aktionsdokument (s.o.) |
+| Schulbücher (öffentliche Beschaffung) | § 5 Abs. 2 | Kauf durch Schule/Behörde | Bestellnachweis Schule/Behörde |
 
-## Strategie und Praxis-Tipps
+### Phase 4: Aufhebung der Preisbindung (§ 7 BuchPrG)
 
-- Stufendeckungsbeitrag ist bei Handel und Industrie Pflicht; bei Dienstleistung haeufig Stunden-DB sinnvoller.
-- EBITDA ist Bank-Standard für Schuldendienstpruefung (EBITDA-Multiple).
-- Bei kalkulatorischen Positionen Mandant darauf hinweisen, dass es sich um Sicht der Betriebswirtschaft handelt, nicht um steuerliche Behandlung.
-- DB-Rate als Kennzahl monatlich tracken — sinkende DB-Rate bei steigendem Umsatz ist Alarmsignal (Preisdruck).
-- StBVV: Individuelle BWA-Konfiguration als Zusatzauftrag mit Zeithonorar abrechnen.
+#### Aufhebungs-Pflichtdokument
 
-## Quellen und Updates
+```
+BUCHPREISFREIGABE-DOKUMENT
+==========================
+Datum der Aufhebung: [TT.MM.JJJJ]
+ISBN-13: [978-3-XXXXX-XXX-X]
+Titel: [Werktitel]
+Bisheriger Ladenpreis: EUR [X,XX] (brutto, 7 % MwSt.)
+Grund der Aufhebung: □ Vergriffenheit (§ 17 VerlG / keine Lieferbarkeit mehr)
+ □ Ablauf der geplanten Lieferbarkeit
+ □ Verlagsauflösung/-verkauf
+ □ Sonstiger Grund: ___________________________
+Lagerbestand bei Aufhebung: [Anzahl] Exemplare
+Verbleib Restbestand: □ Veräußerung ohne Preisbindung □ Einmakulierung □ Weitergabe an Restbuchhandlung
+VLB-Abmeldung: □ Erfolgt am [Datum] □ Bestätigung Nr. [___]
+Auslieferungs-Information: □ Informiert am [Datum] per [E-Mail/Schreiben]
+Buchhandels-Information: □ Informiert am [Datum] per [E-Mail/Schreiben]
+Verantwortlicher: [Name, Funktion]
+Unterschrift: ___________________
+```
 
-Stand: 05/2026.
+#### Fristen und Pflichten bei Aufhebung
 
-- HGB §§ 238, 252, 275.
-- IDW PS 480.
-- DATEV BWA-Form 01, 11, 21.
-- Schweitzer/Kuepper, Systeme der Kostenrechnung (Standardlehrbuch).
-- Coenenberg, Kostenrechnung und Kostenanalyse.
+| Schritt | Inhalt | Frist |
+|---------|--------|-------|
+| VLB-Abmeldung | Preis als aufgehoben melden; Lieferstatus auf „vergriffen" | Unverzüglich |
+| Auslieferungs-Information | Auslieferung über Preisaufhebung informieren | Gleichzeitig mit VLB |
+| Buchhandels-Information | Sofern Restexemplare noch im Buchhandel | Unverzüglich |
+| Interne Archivierung | Aufhebungs-Dokument in Verlagsakte | Dauerhaft (10 Jahre empfohlen) |
+| Steuerliche Behandlung | MwSt.-Anpassung prüfen bei Restverkauf unter bisherigem Preis | Mit Aufhebung |
 
-## Normen und Rechtsprechung
+## Dokumentation für digitale Produkte (E-Books)
 
-### Kuratierte Normen-Bibliothek
+E-Books unterliegen nach deutschem Recht ebenfalls der **Buchpreisbindung** (BGH, Urt. v. 20.05.2021 — I ZR 136/20). Für digitale Produkte gelten besondere Dokumentationspflichten:
 
-- § 8 AO (Wohnsitz, Aufenthalt)
-- §§ 33, 34 AO (Steuerpflichtiger, gesetzliche Vertreter)
-- § 42 AO (Gestaltungsmissbrauch)
-- §§ 169-171 AO (Festsetzungsverjährung)
-- §§ 233a, 235 AO (Verzinsung, Hinterziehungszinsen)
-- § 370 AO (Steuerhinterziehung)
-- §§ 153, 371 AO (Berichtigungserklärung, Selbstanzeige)
-- §§ 15, 32a EStG (Einkünfte aus Gewerbebetrieb, Tarif)
-- § 8 KStG, § 7 GewStG (Einkommen, Gewerbeertrag)
-- §§ 1, 15 UStG (Steuerbare Umsätze, Vorsteuerabzug)
+| Dokument-Element | E-Book | Print |
+|-----------------|--------|-------|
+| Preis-Dokumentation | Ja, pro Plattform | Ja |
+| Plattform-Rabatte | Gesondert dokumentieren | n/a |
+| MwSt. | 7 % (ab 2020) | 7 % |
+| Aufhebung bei Rückzug von Plattform | Plattformvertrag kündigen + Preisaufhebungsdokument | VLB-Abmeldung |
 
-### Leitentscheidungen
+### Plattform-Preisbindungs-Protokoll (E-Book)
 
-- BFH I R 36/18 (Hinzurechnungsbesteuerung AStG)
-- BFH XI R 11/22 (Reverse-Charge-Verfahren)
-- BFH IX R 49/13 (Liebhaberei vs. Einkunftserzielungsabsicht)
-- BVerfG 2 BvL 1/03 (Steuerfreistellung Existenzminimum)
-- EuGH C-280/10 (Vorsteuerabzug bei wirtschaftlicher Tätigkeit)
+```
+Plattform: [Amazon KDP / Tolino / Apple Books / ...]
+ASIN/EAN: [Kennung auf Plattform]
+Festgesetzter Preis: EUR [X,XX] (inkl. 7 % MwSt.)
+Plattform-Rabatt: [XX] % (nach Plattformvertrag)
+Nettoerlös Verlag: EUR [X,XX]
+Datum Einstellung auf Plattform: [TT.MM.JJJJ]
+Datum Preisänderung: [TT.MM.JJJJ] → Neuer Preis: EUR [X,XX]
+Datum Rückzug von Plattform: [TT.MM.JJJJ]
+Preisaufhebung erklärt: □ Ja, Datum: [___] □ Nein, weiter auf anderer Plattform verfügbar
+```
 
-### Anwendung im Skill
+## Revisionssichere Archivierung
 
-- Beraterhaftung gegen Mandantenpflicht (§§ 153, 154 AO) klar trennen; Selbstanzeige nach § 371 AO ist eine Strafnorm, kein Steueroptimierungs-Tool.
-- Festsetzungsverjaehrung nach §§ 169-171 AO im Zweifel zugunsten des Steuerpflichtigen; Hemmung durch Aussenpruefung beachten.
-- Bei Gestaltungsmissbrauch § 42 AO immer alternative Wirtschaftsgruende dokumentieren.
+### Aufbewahrungsfristen
+
+| Dokument | Aufbewahrungsfrist | Basis |
+|----------|--------------------|-------|
+| Preisfestsetzungs-Dokument | Mindestens 10 Jahre nach Aufhebung | Handelsrechtliche Grundsätze |
+| VLB-Meldungsbelege | Mindestens 10 Jahre | Handelsrechtliche Grundsätze |
+| Mängelexemplar-Protokolle | 5 Jahre nach Verkauf | Verjährungsrecht |
+| Aufhebungs-Dokumentation | Dauerhaft (Empfehlung) | Beweis im Streitfall |
+| Ausnahmen-Belege (§ 6) | 5 Jahre nach Vorgang | Verjährungsrecht |
+
+## Typische Fallen
+
+- **VLB nicht aktualisiert**: Preis im VLB weicht von tatsächlichem Ladenpreis ab → Preisbindungsverletzung durch Buchhandel möglich.
+- **Mängelexemplar ohne Kennzeichnung**: „Als Mängelexemplar gekennzeichnet" muss sichtbar auf dem Buch stehen (Klebeband oder Stempel) — fehlt die Kennzeichnung, greift § 6 Abs. 1 Nr. 2 nicht.
+- **Exportnachweis lückenhaft**: Verlag behauptet Export ins Ausland, kann aber Lieferadresse nicht nachweisen → Preisbindungsverstoß.
+- **E-Book-Plattformrabatt nicht dokumentiert**: Plattform gewährt eigenmächtig Rabatt → Verlag muss widersprechen und dokumentieren.
+- **Aufhebung nicht kommuniziert**: Buchhandel verkauft Restexemplare weiter zum alten Preis, obwohl Preisbindung aufgehoben → Verwirrung; Verlag muss proaktiv informieren.
+
+## Checkliste Buchpreisfreigabe-Dokumentation
+
+- [ ] Preisfestsetzungs-Dokument für jede ISBN vorhanden
+- [ ] VLB-Meldung mit Zeitstempel archiviert
+- [ ] Alle Preisänderungen chronologisch dokumentiert
+- [ ] Mängelexemplar-Protokolle für Preisreduzierungen vorhanden
+- [ ] Ausnahmen nach § 6 BuchPrG mit Belegen versehen
+- [ ] E-Book-Plattformpreise pro Plattform dokumentiert
+- [ ] Aufhebungs-Dokument bei Vergriffenheit erstellt
+- [ ] VLB bei Aufhebung aktualisiert
+- [ ] Auslieferung und Buchhandel informiert
+- [ ] Aufbewahrungsfristen eingehalten (mind. 10 Jahre)
+- [ ] Steuerliche Behandlung (MwSt.) bei Aufhebung geprüft
+
+## Quellenreferenzen
+
+- BuchPrG § 3: https://www.gesetze-im-internet.de/buchprg/__3.html
+- BuchPrG § 6: https://www.gesetze-im-internet.de/buchprg/__6.html
+- BuchPrG § 7: https://www.gesetze-im-internet.de/buchprg/__7.html
+- BuchPrG § 13: https://www.gesetze-im-internet.de/buchprg/__13.html
+- BGH I ZR 136/20 (E-Book-Preisbindung): https://www.bgh.de/
+- dejure.org BuchPrG: https://dejure.org/gesetze/BuchPrG
+- UStG § 12 (ermäßigter Steuersatz): https://www.gesetze-im-internet.de/ustg_1980/__12.html
+
+## Output-Formate
+
+- Preisfestsetzungs-Vorlage (ausfüllbares Formular)
+- Mängelexemplar-Protokoll-Vorlage
+- Aufhebungs-Dokument-Vorlage (§ 7 BuchPrG)
+- E-Book-Plattform-Preisbindungsprotokoll
+- Checkliste Preisbindungs-Compliance (jährliche Revisionskontrolle)
+- Ausnahmen-Belegliste nach § 6 BuchPrG
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
