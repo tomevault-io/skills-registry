@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [RhysSullivan/executor](https://github.com/RhysSullivan/executor/tree/main/.agents/skills/wrdn-package-boundaries/SKILL.md)
+Original source: [RhysSullivan/executor](https://github.com/RhysSullivan/executor/tree/main/.agents/skills/wrdn-effect-typed-errors/SKILL.md)
 
 ---
 
