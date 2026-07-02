@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [langchain-ai/docs](https://github.com/langchain-ai/docs/tree/main/src/code-samples/deepagents/skills/langgraph-docs/SKILL.md)
+Original source: [langchain-ai/docs](https://github.com/langchain-ai/docs/tree/main/src/code-samples/deepagents/skills/write-timestamp/SKILL.md)
 
 ---
 
