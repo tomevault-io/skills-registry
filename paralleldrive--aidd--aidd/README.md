@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [paralleldrive/aidd](https://github.com/paralleldrive/aidd/tree/main/ai/skills/aidd-structure/SKILL.md)
+Original source: [paralleldrive/aidd](https://github.com/paralleldrive/aidd/tree/main/ai/skills/aidd-riteway-ai/SKILL.md)
 
 ---
 
