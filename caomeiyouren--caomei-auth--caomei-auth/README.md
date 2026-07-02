@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CaoMeiYouRen/caomei-auth](https://github.com/CaoMeiYouRen/caomei-auth/tree/main/.github/skills/test-engineer/SKILL.md)
+Original source: [CaoMeiYouRen/caomei-auth](https://github.com/CaoMeiYouRen/caomei-auth/tree/main/.github/skills/quality-guardian/SKILL.md)
 
 ---
 
