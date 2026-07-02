@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [anotb/management-consulting-plugin](https://github.com/anotb/management-consulting-plugin/tree/main/skills/thought-leadership/SKILL.md)
+Original source: [anotb/management-consulting-plugin](https://github.com/anotb/management-consulting-plugin/tree/main/skills/process-excellence/SKILL.md)
 
 ---
 
