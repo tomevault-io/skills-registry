@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [prisma/prisma-next](https://github.com/prisma/prisma-next/tree/main/skills-contrib/review-triage-phase/SKILL.md)
+Original source: [prisma/prisma-next](https://github.com/prisma/prisma-next/tree/main/skills/prisma-next-migration-review/SKILL.md)
 
 ---
 
