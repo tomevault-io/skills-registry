@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aboul3ata/lazyweb-skill](https://github.com/aboul3ata/lazyweb-skill/tree/main/SKILL.md)
+Original source: [aboul3ata/lazyweb-skill](https://github.com/aboul3ata/lazyweb-skill/tree/main/skills/lazyweb-update/SKILL.md)
 
 ---
 
