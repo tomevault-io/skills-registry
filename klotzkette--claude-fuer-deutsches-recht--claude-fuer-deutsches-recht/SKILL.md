@@ -1,108 +1,209 @@
 ---
-name: slot-pfaendung-planen
-description: Wenn es um Slot – Pfändung planen in Luftrecht und Flughafenrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: dora-ikt-vertragspruefung
+description: Wenn es um DORA-IKT-Vertragsprüfung in Regulatorisches Recht – Plugin für deutsches geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Slot – Pfändung planen
+# DORA-IKT-Vertragsprüfung
 
-## Arbeitsweg
+## Zweck
 
-- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: LuftVG; LuftSiG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+Prüft Verträge mit IKT-Drittdienstleistern, die ein **Finanzunternehmen** i. S. v. Art. 2 DORA (Kreditinstitute, Zahlungs-/E-Geld-Institute, Wertpapierfirmen, Versicherer, Verwalter alternativer Investmentfonds, KVGen, OGAW, Zentralverwahrer, ZGP, Handelsplätze, Krypto-Dienstleister u. a.) abgeschlossen hat oder abschließen will, auf die Anforderungen der **Verordnung (EU) 2022/2554** (Digital Operational Resilience Act – "DORA") sowie der **dazu erlassenen RTS/ITS und EBA-/ESA-Leitlinien**.
 
-## Mandantenfall
+Ergebnis ist eine tabellarische Lückenanalyse mit:
 
-- Gläubiger beantragt Pfändung der Slots einer Airline nach Urteil; Vollstreckungsgericht fragt nach Vollstreckungsgegenstand.
-- Insolvenzverwalter prüft ob Slot-Pool-Zuweisung für Insolvenz-Plan genutzt werden kann.
-- Airline-Käufer will sicherstellen dass Slots auf ihn übergehen; rechtliche Gestaltungsfrage.
+- Klauseltext (Ist),
+- DORA-Anker (Soll),
+- Lückenbewertung (konform / teilkonform / nicht konform / fehlt),
+- konkretem Verbesserungsvorschlag inkl. Klausel-Entwurf,
+- Kritikalitäts-Score (1 = niedrig … 5 = "kritisch oder wichtig" i. S. v. Art. 28 III DORA, § 28 BaFin-Auslegungshilfe).
 
-## Erste Schritte
+Anwendungsfälle: Vertragsanbindung eines neuen IKT-Dienstleisters; Re-Papering bestehender Cloud-/SaaS-/Outsourcing-Verträge zum Geltungsbeginn 17. Januar 2025; ad-hoc-Prüfung im Rahmen einer BaFin-Sonderprüfung nach § 44 KWG / § 306 VAG.
 
-1. Sachverhalt strukturieren: Parteien betroffene Luftfahrzeuge/Einrichtungen beteiligte Behörden und laufende Fristen.
-2. Einschlägige Normen identifizieren: VO EWG 95/93 EuGH C-272/06 ZPO InsO LuftVG §§ 27a-27d.
-3. Register prüfen: LBA-Luftfahrzeugrolle AG-Braunschweig-Pfandrechtsregister ICAO-Cape-Town-Register je nach Fallrelevanz.
-4. Zuständigkeit klären: LBA vs. Landesbehörde vs. EASA vs. Verwaltungsgericht.
-5. Fristen sichern: Widerspruch (1 Monat) Klage (1 Monat) Insolvenzantrag (3/6 Wochen).
-6. Handlungsbedarf dokumentieren: Ampel-Vermerk mit konkreten nächsten Schritten.
+## Eingaben
 
-## Rechtsrahmen
+1. **Vertragsdokument** (PDF/DOCX/MD) inkl. aller Anlagen, SLAs, DPAs, Sub-Outsourcing-Listen.
+2. **Klassifikation der Funktion** (kritisch / wichtig / sonstige) gem. Art. 28 II DORA i. V. m. RTS (Delegierte VO (EU) 2024/1773).
+3. **Finanzunternehmens-Profil:** Aufsichtsregime (KWG, ZAG, KAGB, VAG, MiCAR), Größe (Art. 2 IV DORA – Verhältnismäßigkeitsklausel).
+4. **Dienstart:** Cloud (IaaS/PaaS/SaaS), Managed Service, Software-Lizenz, Datenanalyse, Konnektivität.
+5. **Datenkategorien:** personenbezogene Daten (DSGVO), Kundengeheimnis (§ 9 KWG / § 311 VAG), Berufsgeheimnis (§ 203 StGB).
 
-VO EWG 95/93 EuGH C-272/06 ZPO InsO LuftVG §§ 27a-27d – die einschlägigen Normen werden je nach Sachverhaltsebene (nationaler Betrieb EU-Recht internationales Recht) herangezogen und zu jedem Normzitat kurz erläutert.
+## Rechtlicher Rahmen
 
-- **LuftVG §§ 6 20 29 31 64**: Genehmigung Betrieb Register Aufsicht.
-- **LuftSiG §§ 7-9**: Zuverlässigkeitsüberprüfung Sicherheitsprogramme Aufsicht.
-- **EU-VO 1008/2008 Art. 3-9**: Betriebsgenehmigung finanzielle Leistungsfähigkeit Überwachung.
-- **Cape Town Convention Art. 2-16**: Internationale Sicherungsinteressen ICAO-Register.
-- **LuftFzgG §§ 1-28**: Nationales Pfandrecht Vollstreckung AG Braunschweig.
-- **InsO §§ 15a 17-19 47 50**: Insolvenzantragspflicht Gläubigerrechte.
-- **VwGO §§ 68 74 80**: Widerspruch Klage aufschiebende Wirkung.
-- **VO EWG 95/93 Art. 8**: Historische Slots (Grandfather Rights); Nutzungsquote 80/20.
-- **LuftVG § 27a**: Deutsche Koordinierungsstelle (Fluko); Rechtsstellung und Aufgaben.
-- **BVerwG Urt. v. 26.01.2012 – 3 C 8.11**: Slot-Entzug als Verwaltungsakt; Rechtsweg VG.
+### Primärrecht
+- **DORA-Verordnung:** VO (EU) 2022/2554 v. 14.12.2022, ABl. L 333/1; Geltungsbeginn 17.01.2025 (Art. 64 II).
+- **DORA-Änderungs-RL:** RL (EU) 2022/2556 (Anpassung sektoraler Rechtsakte).
+- **Art. 28 DORA** – allgemeine Grundsätze für Vertragsvereinbarungen mit IKT-Drittdienstleistern.
+- **Art. 29 DORA** – Vorabbewertung des IKT-Konzentrationsrisikos.
+- **Art. 30 DORA** – **Pflichtinhalte** des IKT-Drittdienstleistervertrags.
+- **Art. 30 III DORA** – verschärfte Pflichtinhalte bei **kritischen oder wichtigen Funktionen**.
+- **Art. 31–44 DORA** – Aufsichtsrahmen kritischer Drittdienstleister (Lead Overseer ESA).
 
-## Prüfraster
+### Tertiärrecht / RTS / ITS
+- Delegierte VO (EU) 2024/1773 v. 13.03.2024 (RTS zu Subunternehmer-Ketten, Art. 30 V DORA).
+- Delegierte VO (EU) 2024/1772 (RTS Klassifizierung schwerwiegender IKT-Vorfälle).
+- Delegierte VO (EU) 2024/1505 (ergänzende RTS-Pakete der ESAs).
+- DurchführungsVO (EU) 2024/2956 (ITS zum Informationsregister).
+- Vollständiger RTS-/ITS-Bestand siehe `references/dora-rechtsquellen.md` und Live-Abruf via EUR-Lex-Connector.
 
-1. Ist zuständige Behörde korrekt adressiert?
-2. Sind alle Register vollständig abgefragt?
-3. Laufen Fristen – sind alle gesichert?
-4. Besteht Cape-Town-Registrierung mit IDERA?
-5. Ist Insolvenzrisiko bewertet?
-6. Sind Sicherheitsauflagen auf Verhältnismäßigkeit geprüft?
-7. Ist die 80/20-Nutzungsquote (VO EWG 95/93 Art. 8) im letzten IATA-Season eingehalten?
-8. Sind Force-Majeure-Ausnahmen (COVID-Pandemie-Sonderregeln) korrekt beantragt?
+### Soft Law
+- ESA Joint Final Reports zu RTS/ITS DORA (JC 2023/Y).
+- BaFin-Merkblatt "DORA – Hinweise zur Anwendung", Stand 2024 (laufend aktualisiert).
+- EBA Outsourcing Guidelines EBA/GL/2019/02 (für CRR-Institute; durch DORA überlagert, aber Auslegungshilfe).
+- EIOPA Outsourcing Guidelines (Versicherungen).
+- BaFin BAIT/VAIT/KAIT/ZAIT – soweit nicht durch DORA verdrängt (Stand: BaFin-Konsultation zur Aufhebung 2024/2025).
 
-## Typische Fallstricke
+### Deutsches Aufsichtsrecht (flankierend)
+- § 25b KWG (Auslagerung; weiterhin Auffanglinie für Nicht-IKT-Auslagerungen).
+- § 24 ZAG; § 32 VAG; § 36 KAGB.
+- FISG 2021 (Verschärfung Auslagerungsrecht).
+- Datenschutz: Art. 28 DSGVO AVV, § 11 BDSG.
 
-- Falsche Behörde adressiert; Frist läuft unbemerkt ab.
-- Cape-Town-Register nicht abgefragt; internationale Belastungen unerkannt.
-- Insolvenzfrühzeichen ignoriert; Antragspflicht ausgelöst ohne Reaktion.
-- Sicherheitsauflage als verhältnismäßig hingenommen ohne eigene Prüfung.
-- Slot-Rückgabe zu spät angezeigt; keine Waiver-Ausnahme mehr möglich.
-- Slot-Übertragung als privatrechtlich behandelt; VO EWG 95/93 erlaubt keine freie Übertragung.
+### Leitentscheidungen / Auslegung / Aktualität
 
-## Vertiefung Pfändungsrecht
+Stand 05/2026. DORA ist seit dem 17.01.2025 voll anwendbar. Wichtigste Entwicklungen seit Geltungsbeginn:
 
-Die Pfändung eines Luftfahrzeugs erfordert besondere Vorbereitung:
+- **Liste kritischer IKT-Drittdienstleister:** Die ESAs (EBA, EIOPA, ESMA) haben im November 2025 erstmals 19 kritische IKT-Drittdienstleister benannt (u. a. Amazon, Microsoft, Google). Für diese werden ab 2026 Joint Examination Teams (JET) eingerichtet und Lead Overseers benannt. Aktuelle Liste über die ESA-Webseiten (EBA, ESMA, EIOPA) verifizieren.
+- **BaFin DORA-Informationsregister:** Erste Meldefrist 11.04.2025; folgende reguläre Frist BaFin 09.–30.03.2026; Pflichtfelder nach DurchführungsVO (EU) 2024/2956. Aktualität über [bafin.de/DORA](https://www.bafin.de/DE/Aufsicht/DORA/DORA_node.html).
+- **BaFin-Auslegungshinweise:** Fachartikel "Im Aufsichtsfokus: Wenn Konzentrationen zum Risiko werden" (BaFin 07.01.2025) und nachfolgende Hinweise zum vereinfachten IKT-Risikomanagementrahmen und Drittparteienrisiken. Live über [bafin.de](https://www.bafin.de) prüfen.
 
-- **Standortermittlung**: Aktueller Flugplan (ATC) und Flughafenslotbelegung geben Aufschluss über Standort; Abstimmung mit Flughafenoperator nötig.
-- **Arrestantrag**: Zuständiges Gericht am Belegenheitsort; Arrestgrund glaubhaft machen.
-- **Betriebsunterbrechung**: Pfändung eines Linienflugzeugs löst Betriebsunterbrechung aus; Schadensersatz bei unberechtigtem Arrest.
-- **Cape Town Priorität**: Vor Pfändung ICAO-Register prüfen; vorrangige Sicherungsinteressen können Arrest verhindern.
+Literatur nur mit Nutzerquelle oder lizenziertem Live-Zugriff. Rechtsprechung im Mandat live verifizieren — keine Aktenzeichen aus Modellwissen.
 
-## Quellen
+## Ablauf
 
-- LuftVG: https://www.gesetze-im-internet.de/luftvg/BJNR006810922.html
-- Cape Town Convention: https://www.unidroit.org/instruments/security-interests/aircraft-protocol/
-- LuftFzgG: https://www.gesetze-im-internet.de/luftfzgg/
-- InsO: https://www.gesetze-im-internet.de/inso/
-- VO EWG 95/93: https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A31993R0095
-- LBA/Fluko: https://www.lba.de
-- BVerwG: https://www.bverwg.de
+1. **Dokumentenaufnahme.** Vertrag, Anlagen, DPA, SLA, Sub-Listen einlesen; Funktionsklassifikation (kritisch/wichtig vs. sonstige) festhalten.
+2. **Konnektor aufrufen.** EUR-Lex-Connector: aktuellste konsolidierte Fassung VO 2022/2554 inkl. aller Anhänge + delegierter RTS/ITS abrufen (siehe Abschnitt "Konnektor & Datenquellen"). Versionsstand im Output dokumentieren.
+3. **Pflichtklausel-Matrix anwenden.** Jede Pflicht aus Art. 30 II DORA (alle Verträge) und Art. 30 III DORA (kritische/wichtige Funktionen) sowie aus den RTS gegen den Vertrag mappen. Vorlage in `references/dora-klauselmatrix.md`.
+4. **Lücken markieren.** Für jede Pflicht: zitierte Vertragsstelle (Klausel-Nr., Wortlaut) oder "fehlt"; Bewertung; Kritikalitätsstufe.
+5. **Verbesserungsvorschläge formulieren.** Pro Lücke konkreter Klauselentwurf (DE), bei Bedarf EN-Übersetzung; Berücksichtigung Verhältnismäßigkeit Art. 4 DORA.
+6. **Sekundärthemen prüfen.** Datenschutz (Art. 28 DSGVO, § 203 III StGB Berufsgeheimnis-Klausel), AGB-Kontrolle (§§ 305 ff. BGB, B2B-Strahlwirkung), § 9 KWG Kundengeheimnis, Exit-/Wiederherstellbarkeit, Subunternehmer-Kette gemäß RTS 2024/1773.
+7. **Konzentrationsrisiko (Art. 29).** Wenn Lead-Overseer-Kandidat oder erheblicher Marktanteil: gesonderter Abschnitt mit Konzentrationsanalyse, Multi-Vendor-Empfehlung.
+8. **Output erzeugen.** Tabular Review (siehe unten) + Executive Summary für die Geschäftsleitung + Klausel-Patch-Liste für Rechtsabteilung/Procurement.
+9. **Aufnahme in Informationsregister.** Hinweis: Pflichtfelder gem. DurchführungsVO 2024/2956 (Register of Information) im Output identifizieren und mappen.
 
-## Hinweise für die Praxis
+## Konnektor & Datenquellen
 
-Dieser Skill deckt den Bereich Slot-Koordination und Flughafenkapazität ab. Folgende praktische Hinweise ergänzen die obigen Ausführungen:
+| Quelle | Zweck | Aufruf |
+| --- | --- | --- |
+| EUR-Lex | Konsolidierte Fassung VO (EU) 2022/2554 + Anhänge | `eur-lex://celex/02022R2554-<DATUM>` |
+| EUR-Lex | Delegierte VOen 2024/1773, 2024/1772, 2024/1505, 2024/2956 | `eur-lex://celex/32024R1773` etc. |
+| ESA-Webseiten | Final Reports / Q&A | https://www.eba.europa.eu, www.esma.europa.eu, www.eiopa.europa.eu |
+| BaFin-Newsroom | nationale Auslegungshilfen, FAQ DORA | https://www.bafin.de/dora |
+| Bundesanzeiger | nationale Umsetzungsakte FISG/DORA-DurchfG | https://www.bundesanzeiger.de |
 
-- Luftfahrzeug nur pfänden wenn Standort und Verweildauer am Belegenheitsort gesichert.
-- Arrestantrag muss Arrestgrund (Eilbedürftigkeit) substantiiert darlegen.
-- Betriebsunterbrechung durch Pfändung kann Schadensersatzansprüche auslösen; Abwägung mit Vollstreckungsziel.
-- Cape-Town-Register vor Arrestantrag prüfen; vorrangige Berechtigte können Herausgabe verlangen.
+Empfohlene MCP-Konnektoren (s. `CONNECTORS.md`):
 
-### Dokumentationspflichten
+```jsonc
+{
+ "mcpServers": {
+ "eur-lex": { "command": "node", "args": ["./mcp/eur-lex.js"] },
+ "bafin": { "command": "node", "args": ["./mcp/bafin.js"] },
+ "esa-feeds": { "command": "node", "args": ["./mcp/esa-feeds.js"] }
+ }
+}
+```
 
-Für Mandate im Bereich Slot-Koordination und Flughafenkapazität sind folgende Dokumente regelmäßig anzufordern:
+Vor jeder Prüfung: **immer** konsolidierte Fassung der DORA-VO frisch abrufen, Versions-/Stand-Datum in der Output-Kopfzeile mitführen.
 
-- Aktueller LBA-Luftfahrzeugrolle-Auszug mit Eigentumsangaben
-- AG-Braunschweig-Registerauszug (Luftfahrzeugpfandrecht)
-- Cape-Town-Registerauszug (ICAO International Registry)
-- Gültige Betriebsgenehmigung und AOC-Kopie
-- Leasingvertrag oder Eigentumsnachweis
-- Aktuelle Behördenbescheide und Aufsichtskorrespondenz
+## Pflichtklausel-Matrix (Auszug Art. 30 DORA)
+
+| # | DORA-Anker | Pflichtinhalt (Soll) | Geltung |
+| --- | --- | --- | --- |
+| 1 | Art. 30 II lit. a | Vollständige und genaue Beschreibung aller Funktionen und Dienste, inkl. Sub-Funktionen | alle Verträge |
+| 2 | Art. 30 II lit. b | Standorte (Region/Land) der Erbringung und Datenverarbeitung | alle |
+| 3 | Art. 30 II lit. c | Verfügbarkeit, Authentizität, Integrität und Vertraulichkeit der Daten | alle |
+| 4 | Art. 30 II lit. d | Zugriff, Wiederherstellung und Rückgabe (Exit) personenbezogener und nicht-personenbezogener Daten | alle |
+| 5 | Art. 30 II lit. e | Service Level mit klaren Leistungszielen | alle |
+| 6 | Art. 30 II lit. f | Unterstützung bei IKT-Vorfällen (mit/ohne Zusatzkosten) | alle |
+| 7 | Art. 30 II lit. g | Volle Mitwirkung gegenüber zuständigen Behörden und Resolution Authority | alle |
+| 8 | Art. 30 II lit. h | Kündigungsrechte und Mindestkündigungsfristen | alle |
+| 9 | Art. 30 II lit. i | Teilnahme an IKT-Sicherheits-Awareness/Trainings (soweit relevant) | alle |
+| 10 | Art. 30 III lit. a | Ausführliche Beschreibung Service-Level inkl. Updates, Versionen | nur kritisch/wichtig |
+| 11 | Art. 30 III lit. b | Kündigungsfristen + Berichtspflichten zugunsten der Aufsicht | nur kritisch/wichtig |
+| 12 | Art. 30 III lit. c | Recht zur **Überwachung der Leistung** des Dienstleisters fortlaufend | nur kritisch/wichtig |
+| 13 | Art. 30 III lit. d | Operational and IKT-Sicherheitsanforderungen + Schulung | nur kritisch/wichtig |
+| 14 | Art. 30 III lit. e | Beteiligung an **TLPT** (Threat-Led Penetration Testing) gem. Art. 26/27 DORA | kritisch/wichtig |
+| 15 | Art. 30 III lit. f | **Uneingeschränkte Audit-/Einsichtsrechte** für Institut, externe Auditoren und zuständige Behörden, **inkl. Lead Overseer** | kritisch/wichtig |
+| 16 | Art. 30 III lit. g | **Exit-Strategie** mit angemessenem Übergangszeitraum, Datenmigration, keine Schlechterstellung | kritisch/wichtig |
+| 17 | Art. 30 III lit. h | Notfallpläne, Business Continuity, Wiederanlauf | kritisch/wichtig |
+| 18 | Art. 30 II lit. j + RTS 2024/1773 | Vorgaben für Subunternehmer-Kette inkl. Genehmigungs-/Anzeigepflichten | nach Risiko |
+| 19 | Art. 28 VII DORA | Keine vertragliche Verkürzung der Aufsichts-/Resolution-Rechte | alle |
+| 20 | DurchfVO 2024/2956 | Datenpunkte für Informationsregister identifizierbar | alle |
+
+Die vollständige Matrix mit allen Unterpunkten und Bewertungsschemata liegt in `references/dora-klauselmatrix.md`.
+
+## Ausgabeformat
+
+### A. Tabular Review (CSV/Markdown-Tabelle)
+
+| Pflicht-# | DORA-Anker | Soll | Klausel (Ist) | Bewertung | Kritikalität (1–5) | Verbesserungsvorschlag | Klausel-Entwurf |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 4 | Art. 30 II lit. d | Vollständige Rückgabe und Löschung der Daten in maschinenlesbarem Format binnen 30 Tagen | § 14.3 ("Daten werden auf Wunsch zurückgegeben") | teilkonform | 4 | Fristen, Format und Löschnachweis fehlen | "Der Auftragnehmer übergibt … binnen 30 Kalendertagen nach Vertragsbeendigung in einem branchenüblichen, maschinenlesbaren, nicht-proprietären Format und löscht alle Kopien einschließlich Backups innerhalb von 90 Tagen; die Löschung ist durch ein qualifiziertes Löschprotokoll nachzuweisen." |
+| 15 | Art. 30 III lit. f | Audit-/Einsichtsrechte inkl. Lead Overseer, ohne Kostenbeteiligung des Instituts | § 17 ("Audit einmal jährlich, Selbstkosten anteilig") | nicht konform | 5 | Erweiterung auf Behörden + Lead Overseer; Kostenklausel anpassen | "Der Auftragnehmer gewährt dem Auftraggeber, von ihm benannten externen Prüfern sowie der zuständigen Aufsichts- und Resolution-Behörde einschließlich des Lead Overseers im Sinne von Art. 31 ff. DORA … uneingeschränkte und kostenfreie Audit- und Einsichtsrechte …" |
+
+### B. Executive Summary (Memo, max. 1 Seite)
+
+- Gesamtbewertung (Ampel + Score-Mittelwert)
+- Top-3-Lücken (Kritikalität 5)
+- Re-Papering-Aufwand (Schätzung)
+- Empfehlung: vertraglich nachverhandelbar / Exit-/Alternativen-Prüfung notwendig
+- Hinweis auf Aufnahme ins Informationsregister
+- Quellenkopf mit Versionsstand der DORA-VO
+
+### C. Klausel-Patch-Liste (DOCX/Markdown)
+
+Pro Verbesserungsvorschlag ein Patch-Block mit:
+
+- Klauselnummer alt / neu
+- Diff (alt → neu)
+- Keine Kommentar-, Handbuch- oder Aufsatzfundstellen aus Modellwissen zitieren. Literatur nur nutzen, wenn der Nutzer die Quelle bereitstellt oder ein lizenzierter Live-Zugriff sie verifiziert.
+- Verhandlungsschwere (1–3)
+
+<!-- BEGIN ausformulierungspflicht (autogen) -->
+> **Ausformulierungspflicht und Formatstandard.** Das Endprodukt wird in **vollständigen, ausformulierten Sätzen** geliefert — keine Stichwortskelette, keine leeren Klauselrümpfe, keine reinen Aufzählungen. Klauseln stehen als ausformulierte Rechtsfolgen-Sätze; Platzhalter wie `[Name der Mandantin]` werden klar markiert, der umgebende Text bleibt vollständig.
+>
+> **Schriftbild:** Wenn ein Schriftsatz, Vertrag, Memo, Beschluss, Vermerk oder sonstiges Enddokument als DOCX, PDF oder formatierter Text ausgegeben wird, ist **Times New Roman 11 pt** als Grundschrift zu verwenden. Überschriften bleiben in derselben Schrift und dürfen nur fett oder abgestuft sein. Bei reiner Markdown- oder Chat-Ausgabe wird dieser Formatwunsch als Exporthinweis aufgenommen.
+>
+> **Nummerierung:** Gliederung ausschließlich dezimal (`1`, `1.1`, `1.1.1` und so weiter). Keine römischen Ziffern, keine Buchstaben- oder Mischgliederung.
+<!-- END ausformulierungspflicht (autogen) -->
+
+## Beispiel (Auszug Memo)
+
+> **Mandat:** Prüfung des Master Services Agreement zwischen X-Bank AG (CRR-Institut, BaFin-Aufsicht) und CloudCo Inc. (SaaS, Kernbanken-Modul). Funktionsklassifikation: **kritisch oder wichtig** i. S. v. Art. 28 II DORA.
+>
+> **Kurzantwort:** Der Vertrag ist in der aktuellen Fassung nicht DORA-konform. Von 20 Pflichtinhalten sind 7 vollständig, 9 teilkonform und 4 fehlend. Re-Papering bis 17.01.2025 erforderlich (Art. 64 II DORA).
+>
+> **Tragende Lücken:**
+> Quellenregel: Keine Kommentar-, Handbuch-, Aufsatz- oder Tabellenfundstellen aus Modellwissen; nur Nutzerquelle, amtliche/freie Quelle oder lizenzierte Live-Verifikation verwenden.
+> 2. Sub-Outsourcing-Liste ist statisch, ohne Anzeige- und Genehmigungspflichten. Delegierte VO (EU) 2024/1773 verlangt Materialitätsschwellen und Ex-ante-Anzeige.
+> 3. Exit-Strategie fehlt; § 18 MSA enthält nur eine Datenrückgabeklausel ohne Migrationsunterstützung – Verstoß gegen Art. 30 III lit. g DORA. Vgl. Zetzsche/Anker-Sørensen, EuZW 2023, 645 (648).
+> 4. Beteiligung an TLPT-Tests nicht vereinbart (Art. 30 III lit. e i. V. m. Art. 26, 27 DORA).
+>
+> **Empfehlung:** Klausel-Patch-Liste umsetzen (siehe Anlage); Eskalation bei CloudCo wegen Audit- und Exit-Klauseln; Aufnahme in Informationsregister (DurchfVO 2024/2956) vorbereiten.
+
+## Risiken und typische Fehler
+
+- **Fehlende Funktionsklassifikation.** Ohne Einstufung als "kritisch oder wichtig" werden Art.-30-III-Pflichten oft übersehen. Dokumentieren!
+- **AGB-Übernahme.** Standard-Cloud-AGB (Microsoft, AWS, GCP) sind regelmäßig **nicht** DORA-konform. Nachverhandlung über DORA-Addendum/SCC-ähnliche Anhänge erforderlich.
+- **Sub-Out-Ketten.** Mehrstufige Subunternehmer-Ketten müssen vollständig abgebildet werden (RTS 2024/1773). Materialitätsschwellen vereinbaren.
+- **Berufsgeheimnis.** § 203 III StGB-Klausel ("mitwirkende Personen") fehlt häufig – kritisch bei Daten, die unter § 203 StGB fallen (Banken: § 9 KWG; Versicherer: § 311 VAG; Rechtsanwälte: § 43a Abs. 2 BRAO).
+- **Datenschutz.** Art. 28 DSGVO AVV ist separat oder integriert, aber **immer** mitzuprüfen.
+- **Kündigungsrechte.** Art. 28 VII DORA setzt zwingende außerordentliche Kündigungsrechte voraus (z. B. behördliche Anordnung, schwerwiegende IKT-Vorfälle, Verstoß gegen anwendbares Recht).
+- **Verhältnismäßigkeit.** Art. 4 DORA – kleinere Institute (z. B. nach Art. 16 DORA "vereinfachter Rahmen") können geringere Anforderungen haben. Nicht überregulieren.
+- **Aktualität.** RTS/ITS-Pakete werden laufend nachgeschoben (ESA-Roadmap 2024–2026). Vor Audit immer EUR-Lex-Snapshot ziehen.
+- **Halluzinationsrisiko.** Bei jedem Klauselzitat: konkretes Aktenzeichen/Fundstelle prüfen.
+
+## Quellenpflicht
+
+Jede juristische Aussage in der tabellarischen Auswertung wird belegt nach [`../../../references/zitierweise.md`](../../../references/zitierweise.md). Mindestens:
+
+- DORA-Artikel mit Absatz/Buchstabe und Anhang (sofern Anhang einschlägig).
+- Einschlägige delegierte VO mit CELEX-Nr.
+- Mindestens ein BaFin- oder ESA-Verlautbarungs-Beleg, sofern vorhanden.
+- Quellenregel: Literatur nur mit Nutzerquelle oder lizenziertem Live-Zugriff; keine Kommentar-, Handbuch- oder Aufsatzfundstellen aus Modellwissen.
+
+Reihenfolge der Belege: EU-Recht vor nationalem Recht; Verordnung vor Soft Law; Rspr. vor Literatur (Rspr. zur DORA selbst liegt nur vereinzelt vor – ausdrücklich kennzeichnen: "Rspr. zu DORA liegt soweit ersichtlich noch nicht vor, vgl. aber …").
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
