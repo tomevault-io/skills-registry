@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kevinpbuckley/VibeUE](https://github.com/kevinpbuckley/VibeUE/tree/main/Content/Skills/sound-cues/SKILL.md)
+Original source: [kevinpbuckley/VibeUE](https://github.com/kevinpbuckley/VibeUE/tree/main/Content/Skills/frame-rate/SKILL.md)
 
 ---
 
