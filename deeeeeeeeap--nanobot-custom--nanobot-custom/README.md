@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [deeeeeeeeap/nanobot-custom](https://github.com/deeeeeeeeap/nanobot-custom/tree/main/nanobot/skills/tmux/SKILL.md)
+Original source: [deeeeeeeeap/nanobot-custom](https://github.com/deeeeeeeeap/nanobot-custom/tree/main/nanobot/skills/memory/SKILL.md)
 
 ---
 
