@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openteams-lab/openteams](https://github.com/openteams-lab/openteams/tree/main/openteams-cli/packages/openteams-cli/test/fixture/skills/cloudflare/SKILL.md)
+Original source: [openteams-lab/openteams](https://github.com/openteams-lab/openteams/tree/main/openteams-cli/packages/openteams-cli/test/fixture/skills/agents-sdk/SKILL.md)
 
 ---
 
