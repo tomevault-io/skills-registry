@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SandraAhlgrimm/ai-nutrition-planner](https://github.com/SandraAhlgrimm/ai-nutrition-planner/tree/main/embabel/src/main/resources/skills/current-month/SKILL.md)
+Original source: [SandraAhlgrimm/ai-nutrition-planner](https://github.com/SandraAhlgrimm/ai-nutrition-planner/tree/main/spring-ai/src/main/resources/skills/current-month/SKILL.md)
 
 ---
 
