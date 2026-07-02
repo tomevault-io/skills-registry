@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [smallnest/langgraphgo](https://github.com/smallnest/langgraphgo/tree/main/testdata/skills/coze-api/coze-api/SKILL.md)
+Original source: [smallnest/langgraphgo](https://github.com/smallnest/langgraphgo/tree/main/testdata/skills/artifacts-builder/SKILL.md)
 
 ---
 
