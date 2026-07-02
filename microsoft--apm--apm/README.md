@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/apm](https://github.com/microsoft/apm/tree/main/packages/apm-guide/.apm/skills/apm-usage/SKILL.md)
+Original source: [microsoft/apm](https://github.com/microsoft/apm/tree/main/packages/batch-bug-shepherd/.apm/skills/batch-bug-shepherd/SKILL.md)
 
 ---
 
