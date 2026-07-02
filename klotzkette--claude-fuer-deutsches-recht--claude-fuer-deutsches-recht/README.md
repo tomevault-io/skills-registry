@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/strassenrecht-infrastruktur/skills/str-097-tunnel-kostenlast-pruefen/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/strassenverkehrsrecht-stvo/skills/stv-091-schulstrasse-regel-pruefen/SKILL.md)
 
 ---
 
