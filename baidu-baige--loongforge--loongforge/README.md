@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [baidu-baige/LoongForge](https://github.com/baidu-baige/LoongForge/tree/main/skills/submit-pr/SKILL.md)
+Original source: [baidu-baige/LoongForge](https://github.com/baidu-baige/LoongForge/tree/main/skills/code-review/SKILL.md)
 
 ---
 
