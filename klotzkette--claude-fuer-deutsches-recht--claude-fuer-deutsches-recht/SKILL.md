@@ -1,70 +1,73 @@
 ---
-name: open-data-geschaeftsgeheimnis
-description: Wenn es um Open-Data-Portal und Nutzungsbedingungen — Datenbankrecht öffentlicher Stellen in Datenbankrecht und Datenbankherstellerrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: inhouse-interkommunal
+description: Wenn es um Inhouse Interkommunal in Fachanwalt Vergaberecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Open-Data-Portal und Nutzungsbedingungen — Datenbankrecht öffentlicher Stellen
+# Inhouse-Geschäft und interkommunale Zusammenarbeit vergaberechtlich prüfen: öffentlicher Auftraggeber will ohne Ausschreibung an verbundene Einrichtung oder Schwester-Kommune vergeben
+
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: UrhG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Tragende Normen verifizieren: die vergaberechtlich einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Mandantenfall
+**Fokus:** Inhouse-Geschäft und interkommunale Zusammenarbeit vergaberechtlich prüfen: öffentlicher Auftraggeber will ohne Ausschreibung an verbundene Einrichtung oder Schwester-Kommune vergeben. Normen: § 108 GWB (Ausnahmen), Teckal-Doktrin EuGH C-107/98, Hamburg-Stadtreinigung EuGH C-480/06. Prüfraster: Kontrolltest wie über eigene Dienststelle, Wesentlichkeitstest 80 Prozent Taetigkeit für Kontrollierende, Privatkapitalverbot mit Ausnahmen, horizontale Zusammenarbeit § 108 Abs. 6 GWB. Output Inhouse-Prüfvermerk, Vertragsentwurf-Modul. Abgrenzung: De-facto-Vergabe siehe fachanwalt-vergaberecht-de-facto-vergabe-klage.
 
-- Startup möchte Daten eines behördlichen Open-Data-Portals kommerziell weiterverarbeiten und fragt, ob die angebotene Lizenz (dl-de/by-2-0) dies erlaubt.
-- Behörde stellt fest, dass ein privates Unternehmen ihre Open-Data-Datenbank vollständig kopiert und kommerziell anbietet — kann sie dagegen vorgehen?
-- Forschungsprojekt kombiniert Open-Data-Bestände verschiedener EU-Länder und muss Lizenz-Kompatibilität und Datenbankschutz klären.
+### Inhouse und interkommunale Zusammenarbeit
 
-## Erste Schritte
+## Einstieg
+1. Wer ist Auftraggeber, wer ist Auftragnehmer (gleicher öffentlicher Auftraggeber, Tochter, Schwester-Kommune)?
+2. Beherrschungsstruktur (Anteile, Beirats-/Aufsichtsmehrheit)?
+3. Privater Kapitalanteil am Auftragnehmer?
+4. Wesentlichkeit: Mindestens 80 Prozent Taetigkeit für kontrollierende öffentliche Hand?
+5. Bei horizontaler Kooperation: gemeinsames Ziel im Gemeinwohlinteresse?
 
-1. Open-Data-Lizenz identifizieren: Welche Lizenz gilt (dl-de/by-2-0, CC BY 4.0, Open Government Licence, Public Domain)? Sind Namensnennung oder Sharealike-Bedingungen vorgesehen?
-2. IWG und Open-Data-RL prüfen: Gilt das Informationsweiterverwendungsgesetz (IWG)? Welche Daten sind nach Open-Data-Richtlinie 2019/1024 zur Weiterverwendung freizugeben?
-3. Datenbankherstellerrecht öffentlicher Stellen bewerten: Öffentliche Stellen können Hersteller nach § 87a UrhG sein — aber Open-Data-Lizenzen können das Recht einschränken.
-4. Lizenzbedingungen auf Weiterverwendungsfall anwenden: Erlaubt die Lizenz kommerzielle Nutzung, Bearbeitung, Weitergabe und Sublizenzierung?
-5. Sharealike-Pflichten klären: Gilt Copyleft-Effekt für abgeleitete Datenbanken (ODbL)?
-6. Behördliche Ausnahmen prüfen: Ausnahmen nach § 1 Abs. 2 IWG (Sicherheit, Datenschutz, Drittrechte).
+## Prüfraster Inhouse § 108 Abs. 1-5 GWB
+### 1. Kontrolltest
+Auftraggeber muss aehnliche Kontrolle wie über eigene Dienststelle ausueben (Teckal-Doktrin EuGH C-107/98).
+- Personelle Steuerung: Bestellung der Mehrheit der Leitungsorgane.
+- Strategische Steuerung: Weisungsbefugnis.
+- Auch durch gemeinsame Kontrolle mehrerer öffentlicher Auftraggeber möglich (§ 108 Abs. 4 GWB).
 
-## Rechtsrahmen
+### 2. Wesentlichkeitstest
+Mindestens 80 Prozent der Taetigkeit des kontrollierten Auftragnehmers für die kontrollierende öffentliche Hand. Restliche Taetigkeiten nur nebenbei (EuGH C-340/04 Carbotermo).
 
-- Open-Data-Richtlinie 2019/1024 (Nachfolge PSI-RL 2003/98/EG): Weiterverwendungsrecht für Daten öffentlicher Stellen.
-- IWG (Informationsweiterverwendungsgesetz): Nationale Umsetzung — Anspruch auf Weiterverwendung, Diskriminierungsverbot, Gebührenrahmen.
-- § 87a UrhG: Öffentliche Stellen als mögliche Datenbankherstellerinnen.
-- § 5 UrhG: Amtliche Werke (Gesetze, Verordnungen) genießen keinen Urheberrechtsschutz — aber strukturierte Zusammenstellungen können Datenbankschutz genießen.
-- CC BY 4.0 / ODbL: Lizenzbedingungen für Open-Data-Veröffentlichungen — Attribution, Sharealike, Bearbeitung.
-- Art. 4 Open-Data-RL: Grundsatz der Weiterverwendbarkeit; Ausnahmen bei Schutzrechten Dritter.
+### 3. Privatkapital
+Grundsätzlich keine private Beteiligung. Ausnahme § 108 Abs. 1 Nr. 3 GWB: bestimmte nicht-kontrollierende Beteiligungen aufgrund gesetzlicher Anordnung.
 
-## Prüfraster
+## Prüfraster Horizontale Kooperation § 108 Abs. 6 GWB
+1. Auftraggeber kooperieren auf vertraglicher Basis.
+2. Kooperation dient gemeinsamem Gemeinwohlziel.
+3. Kooperation wird von rein öffentlichen Erwaegungen geleitet.
+4. Weniger als 20 Prozent der vertragsgegenstaendlichen Taetigkeiten werden am Markt erbracht (EuGH C-480/06 Hamburg-Stadtreinigung).
 
-- Gilt für das Portal das IWG — ist die bereitstellende Stelle eine öffentliche Stelle im Sinne des § 2 IWG?
-- Welche Lizenz ist auf das Portal anwendbar, und erlaubt sie die geplante Nutzungsform?
-- Besteht ein eigenes Datenbankherstellerrecht der Behörde trotz Open-Data-Lizenz (z. B. für Teile mit wesentlicher Investition)?
-- Sind Drittrechte (Urheberrechte einzelner Datenurheber, Persönlichkeitsrechte) in der Lizenz berücksichtigt?
-- Gilt ein Copyleft-Effekt (ODbL Sharealike) für das geplante abgeleitete Produkt?
-- Sind personenbezogene Daten in der Open-Data-Datenbank enthalten — welche DSGVO-Rechtsgrundlage gilt für Weiterverwendung?
-- Hat die bereitstellende Behörde Ausnahmen nach § 1 Abs. 2 IWG geltend gemacht?
+## Vertragliche Umsetzung
+- Inhouse-Vertrag: Gesellschafterstruktur, Kontrollrechte, Taetigkeitsbegrenzung, Reporting.
+- Interkommunaler Vertrag: gemeinsames Ziel definieren, Marktteil < 20 Prozent festschreiben, Beendigungsrechte.
 
-## Typische Fallstricke
+## Risiken bei Verlust der Inhouse-Eigenschaft
+- Aufnahme privaten Kapitals -> Verlust Kontroll-Test.
+- Steigender Marktanteil -> Verlust Wesentlichkeitstest.
+- Fehlende Dokumentation -> Beweislast in Nachpruefungsverfahren beim Auftraggeber.
+- Folge: De-facto-Vergabe, § 135 Abs. 1 Nr. 2 GWB -> Vertrag unwirksam.
 
-- „Open Data" bedeutet nicht automatisch „keine Rechte" — Datenbankherstellerrecht und Urheberrecht können trotz Open-Data-Lizenz bestehen.
-- Lizenzverstoß (z. B. fehlende Namensnennung bei dl-de/by) kann die Lizenz zum Erlöschen bringen und Haftung auslösen.
-- ODbL-Sharealike verpflichtet zur Weitergabe abgeleiteter Datenbanken unter ODbL — wird oft unterschätzt.
-- Behörden dürfen nach IWG keine exklusiven Vereinbarungen über Weiterverwendung schließen (Diskriminierungsverbot).
-- Nicht alle Behördendaten fallen unter IWG — Ausnahmen für Sicherheit, Gerichte, Rundfunk und Forschungseinrichtungen.
+## Quellenregel
+EuGH-Linie (Teckal, Carbotermo, Hamburg-Stadtreinigung, Datenlotsen) und neuere BGH/OLG-Entscheidungen vor Ausgabe über curia.europa.eu und dejure.org verifizieren.
 
-## Quellen
+## Vergabe-Workbench-Boost v61.2
 
-- [Open-Data-Richtlinie 2019/1024 — EUR-Lex](https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A32019L1024)
-- [IWG — gesetze-im-internet.de](https://www.gesetze-im-internet.de/iwg/index.html)
-- [§ 87a UrhG — dejure.org](https://dejure.org/gesetze/UrhG/87a.html)
-- [§ 5 UrhG amtliche Werke — dejure.org](https://dejure.org/gesetze/UrhG/5.html)
-- [RL 96/9/EG — EUR-Lex](https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A31996L0009)
-- [Art. 4 Open-Data-RL 2019/1024 — EUR-Lex](https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A32019L1024)
+- Starte jedes Mandat mit Rolle, Verfahrensstand, Schwellenwert/Rechtsweg, Frist und Dokumentenlage.
+- Biete bei mehr als drei Einzelthemen ein Padlet oder eine Tabelle an: Vergabefehler, Belege, Norm, Kausalitaet, Abhilfe, Risiko.
+- Für Anfaenger: erklaere `Ruge`, `Nachpruefung`, `Stillhaltefrist`, `Eignung`, `Zuschlag`, `Auftragswert` und `Praeklusion` jeweils in einem Satz und arbeite dann praktisch weiter.
+- Für Profis: liefere sofort Schriftsatzkern, Vergabevermerk, Bewertungsmatrix oder Entscheidungsvorlage.
+- Prüfe Schwellenwerte 2026/2027, Paragraph 134 GWB, Paragraph 135 GWB, Paragraph 160 Abs. 3 GWB und Paragraph 171 GWB nie aus dem Bauch heraus, sondern als Fristen-/Quellen-Gate.
+- Auftraggeber-Output braucht immer Dokumentationslogik; Bieter-Output braucht immer Ruge-/Kausalitaets-/Chance-Logik.
+- Wenn eine Position schwach ist, benenne die Schwachstelle freundlich und repariere sie: fehlender Beleg, falscher Rechtsweg, zu pauschale Ruge, unsaubere Wertung, fehlende Kausalitaet oder verspaetete Reaktion.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
