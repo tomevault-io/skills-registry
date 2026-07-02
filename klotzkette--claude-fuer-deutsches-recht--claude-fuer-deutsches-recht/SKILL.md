@@ -1,138 +1,37 @@
 ---
-name: klageerwiderung-fristen-274-zpo
-description: Wenn es um Sie sind verklagt: Welche Fristen laufen? in selbstvertreter-amtsgericht geht: erstellt den passenden Entwurf aus Sachverhalt, Norm, Beweis und Antrag; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: workflow-anschluss-skills-router
+description: Wenn es um Anschluss-Skills Router in Verkehrs- und Infrastrukturrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Sie sind verklagt: Welche Fristen laufen?
+# Anschluss-Skills Router
 
-## Worum geht es?
+## Arbeitsauftrag
 
-Wenn Sie eine Klage zugestellt bekommen, beginnen sofort Fristen zu laufen. Das Gericht ordnet zwischen zwei Verfahrenswegen ein: **schriftliches Vorverfahren** (§ 276 ZPO) oder **frueher erster Termin** (§ 275 ZPO). In beiden Faellen müssen Sie reagieren — und zwar pflichtschuldig. Wenn Sie nichts tun, kassieren Sie ein Versaeumnisurteil.
+Dieser Arbeitsgang macht **Anschluss-Skills Router** im Bereich **verkehr-infrastrukturrecht** sofort bearbeitbar: erst Akte lesen, dann Rollen, Ziel, Fristen, Belege und Entscheidungspunkte ordnen. Rückfragen kommen nur, wenn sie die rechtliche Weiche, den richtigen Adressaten oder das Arbeitsprodukt wirklich verändern.
 
-## Wann brauchen Sie diese Skill?
+## Aktenstart ohne Leerlauf
 
-- Sie haben eine Klage zugestellt bekommen.
-- Sie wollen wissen, wie viele Tage Sie haben.
-- Sie haben unterschiedliche Fristen-Schreiben bekommen und sind verwirrt.
+1. Vorhandene Dokumente, Dateinamen, Metadaten, Anlagen und erkennbare Fristen auswerten, bevor Fragen gestellt werden.
+2. Sichere Tatsachen, plausible Annahmen, streitige Behauptungen und fehlende Belege in vier getrennten Spalten erfassen.
+3. Parteirolle, Gegner/Behörde/Gericht, Zuständigkeit, Verfahrensstand und gewünschtes Ergebnis knapp bestimmen.
+4. Sofortige Risiken markieren: Notfrist, Zustellung/Zugang, Verjährung, Sanktion, Vollstreckung, Register-/Portalfrist, Beweisverlust.
+5. Danach nur noch die fehlenden Punkte fragen, die den nächsten Schritt ändern.
 
-## Fachbegriffe (kurz erklaert)
+## Fachliche Anker
 
-- **Klageerwiderung**: Schriftsatz, in dem Sie der Klage widersprechen.
-- **Verteidigungsanzeige**: Kurze Erklaerung "ich verteidige mich" — innerhalb der **Notfrist** (i. d. R. 2 Wochen).
-- **Notfrist**: Eine vom Gesetz besonders geschuetzte Frist; Versaeumnis fuehrt zu sofortigem Versaeumnisurteil.
-- **Schriftliches Vorverfahren**: Gericht lässt zunaechst Schriftsaetze laufen, dann Termin.
-- **Frueher erster Termin**: Gericht beraumt sofort Termin an, oft mit Auflage zur Klageerwiderung.
+- Rechtsgrundlage, Zuständigkeit, Frist, Form, Beweislast und Rechtsfolge aus dem jeweiligen Fachgebiet ausdrücklich benennen.
+- Spezialnormen aus den angrenzenden Fachskills dieses Plugins vor Ausgabe gegen Gesetzestext oder amtliche Quelle prüfen.
+- Keine Rechtsprechung oder Literatur aus Modellwissen erzwingen; nur verifizierte, frei prüfbare Fundstellen verwenden.
 
-## Rechtsgrundlagen
+## Arbeitsprodukt
 
-- **§ 274 ZPO** — Klageerwiderungs-Frist.
-- **§ 275 ZPO** — Frueher erster Termin.
-- **§ 276 ZPO** — Schriftliches Vorverfahren.
-- **§ 296 ZPO** — Praeklusion.
-- **§ 330 ZPO** — Versaeumnisurteil.
-
-## Schritt-für-Schritt-Anleitung
-
-### Schritt 1 — Klage in Empfang nehmen
-
-Prüfen Sie:
-
-- Datum der Zustellung (Datum auf gelbem Umschlag oder Empfangsbekenntnis).
-- Anlagen vollstaendig?
-- Welches Gericht?
-- Was ist gegen Sie geltend gemacht?
-
-Zustellungsdatum ist Fristbeginn. Skill `fristbeginn-zustellung-protokollieren`.
-
-### Schritt 2 — Verfahrensweg prüfen
-
-Das Gericht legt fest, welcher Weg gilt:
-
-- **Schriftliches Vorverfahren (§ 276 ZPO)**: Verfuegung des Vorsitzenden mit Fristen.
-- **Frueher erster Termin (§ 275 ZPO)**: Sofortige Ladung zu einem Termin.
-
-Lesen Sie die Verfuegung genau!
-
-### Schritt 3 — Schriftliches Vorverfahren
-
-§ 276 I ZPO setzt zwei Fristen:
-
-- **2 Wochen Notfrist** für **Verteidigungsanzeige** — kurze Erklaerung, dass Sie verteidigen wollen.
-- **Mindestens 2 weitere Wochen** für die **Klageerwiderung** — eigene Stellungnahme inhaltlich.
-
-Beispiel: Zustellung am 5.5.2026, Verteidigungsanzeige bis 19.5.2026, Klageerwiderung dann bis 2.6.2026 (oder so, wie vom Gericht gesetzt).
-
-### Schritt 4 — Frueher erster Termin
-
-§ 275 ZPO: Gericht ordnet sofort Termin an, oft mit Auflage zur Klageerwiderung **bis zum Termin** oder bis zu einem konkreten Datum.
-
-Pflichten:
-
-- Erscheinen im Termin.
-- Klageerwiderung bis zur gesetzten Frist.
-
-### Schritt 5 — Verteidigungsanzeige (kurz!)
-
-Muster:
-
-```
-Aktenzeichen: [AZ]
-
-In der Sache [Klaeger] ./. [Sie]
-zeige ich an, dass ich mich gegen die
-Klage verteidige.
-
-Eine ausfuehrliche Klageerwiderung folgt
-fristgerecht.
-
-[Ort, Datum, Unterschrift]
-```
-
-Das reicht, um das Versaeumnisurteil-Risiko vor Verteidigungsanzeige-Frist zu bannen.
-
-### Schritt 6 — Klageerwiderung vorbereiten
-
-Skill `klageerwiderung-checkliste-alle-punkte`.
-
-Erstellen Sie systematisch:
-
-- Sachvortrag gegen Kläger-Sachvortrag.
-- Substantiiertes Bestreiten (Skill `substantiiertes-bestreiten-138-iv-zpo`).
-- Einreden (Skill `einreden-aktiv-geltend-machen`).
-- Beweisangebote.
-- Antrag (Klage-Abweisung).
-
-### Schritt 7 — Wenn Frist nicht ausreicht
-
-Sie können Fristverlaengerung beantragen (Skill `fristverlaengerung-antrag-225-zpo`). Aber: bei Notfrist (Verteidigungsanzeige) ist Verlaengerung schwierig — i. d. R. **keine** Verlaengerung der Notfrist!
-
-Bei der inhaltlichen Klageerwiderungs-Frist (kein Notfrist): Verlaengerung möglich.
-
-### Schritt 8 — Folge des Versaeumnisses
-
-Wenn Sie:
-
-- Verteidigungsanzeige nicht binnen 2 Wochen → Kläger kann **Versaeumnisurteil** beantragen. Skill `saeumnis-vermeiden-330-ff-zpo`.
-- Klageerwiderung versaeumen → Praeklusion (Vortrag verworfen) oder Versaeumnisurteil im Termin.
-
-## Worauf Sie besonders achten müssen
-
-- **Zustellung-Datum festhalten**: Auf gelbem Umschlag/Postzustellungsurkunde.
-- **Notfrist 2 Wochen — KEINE Verlaengerung**: Verteidigungsanzeige rechtzeitig.
-- **Klageerwiderung umfassend**: jeder Kläger-Punkt eine Antwort.
-- **Aktenzeichen** auf jedem Schriftsatz.
-
-## Typische Fehler
-
-- "Ich warte, ob die nochmal schreiben." → Tempelt Versaeumnisurteil.
-- "Verteidigungsanzeige reicht." → Reicht **nur für den Moment** — Klageerwiderung muss folgen.
-- "Ich rufe Gericht an und sage das telefonisch." → Telefon ist kein Schriftsatz.
-
-## Quellen und Aktualitaet
-
-Stand: 05/2026. §§ 274 ff. ZPO unveraendert.
+- **Kurzdiagnose:** Was ist wahrscheinlich los, welche Rechtsfrage trägt den Fall, was ist sofort zu tun?
+- **Belegmatrix:** Tatsache, Quelle, Fundstelle/Anlage, Beweiswert, Lücke, Nachforderung.
+- **Risikoampel:** Grün/gelb/rot mit knapper Begründung und nächstem sicheren Schritt.
+- **Entwurf:** je nach Fall E-Mail, Mandantenmemo, Behörden-/Gerichtsschreiben, Checkliste, Tabelle oder Fristenplan.
+- **Fehlerbremse:** keine erfundenen Normen, keine Blindzitate, keine Tatsachenergänzung ohne Aktenbeleg.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
