@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [recomby-ai/recomby-geo](https://github.com/recomby-ai/recomby-geo/tree/main/plugins/recomby-geo/skills/meta-tags-optimizer/SKILL.md)
+Original source: [recomby-ai/recomby-geo](https://github.com/recomby-ai/recomby-geo/tree/main/plugins/recomby-geo/skills/internal-linking-optimizer/SKILL.md)
 
 ---
 
