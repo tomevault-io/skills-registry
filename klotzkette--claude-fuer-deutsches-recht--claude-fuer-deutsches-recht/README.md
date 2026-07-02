@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/verbraucherinsolvenz-schuldenbereinigung/skills/verbraucherinsolvenz-nachtraegliche-glaeubiger/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/steuerrecht-anwalt-und-berater/skills/ust-rechnungspflicht-ustg-vorsteuerabzug-vga-pruefraster/SKILL.md)
 
 ---
 
