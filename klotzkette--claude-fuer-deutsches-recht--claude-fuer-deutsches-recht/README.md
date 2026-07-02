@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/verbraucherschutzrecht-pruefer/skills/verbraucherrecht-abo-falle-schlichtung-klagepfad-vergleich/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/verbraucherschutzrecht-pruefer/skills/verbraucherrecht-inkasso-mahnung-einordnen-gewaehrleistung/SKILL.md)
 
 ---
 
