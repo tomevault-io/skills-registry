@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google/agents-cli](https://github.com/google/agents-cli/tree/main/skills/google-agents-cli-workflow/SKILL.md)
+Original source: [google/agents-cli](https://github.com/google/agents-cli/tree/main/skills/google-agents-cli-scaffold/SKILL.md)
 
 ---
 
