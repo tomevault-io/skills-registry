@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jabrena/cursor-rules-java](https://github.com/jabrena/cursor-rules-java/tree/main/skills/121-java-object-oriented-design/SKILL.md)
+Original source: [jabrena/cursor-rules-java](https://github.com/jabrena/cursor-rules-java/tree/main/skills/142-java-functional-programming/SKILL.md)
 
 ---
 
