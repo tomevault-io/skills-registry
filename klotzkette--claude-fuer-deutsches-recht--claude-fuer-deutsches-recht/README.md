@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/verbraucherschutzrecht-pruefer/skills/vbr-080-digitale-inhalte-behoerdenmeldung-prue/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/verbraucherschutzrecht-pruefer/skills/vbr-087-saas-fuer-verbraucher-schlichtung-waeh/SKILL.md)
 
 ---
 
