@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [staskh/trading_skills](https://github.com/staskh/trading_skills/tree/main/.claude/skills/ib-option-chain/SKILL.md)
+Original source: [staskh/trading_skills](https://github.com/staskh/trading_skills/tree/main/.claude/skills/risk-assessment/SKILL.md)
 
 ---
 
