@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/weltraumrecht/skills/space-072-mars-sample-return-haftung-quarantaene-und-importrecht/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/weltraumrecht/skills/space-046-arbeitsrecht-mission-control-schichtbetrieb-sicherheit/SKILL.md)
 
 ---
 
