@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [crmeb/CRMEB](https://github.com/crmeb/CRMEB/tree/main/.codebuddy/skills/php-api/SKILL.md)
+Original source: [crmeb/CRMEB](https://github.com/crmeb/CRMEB/tree/main/.trae/skills/admin-element/SKILL.md)
 
 ---
 
