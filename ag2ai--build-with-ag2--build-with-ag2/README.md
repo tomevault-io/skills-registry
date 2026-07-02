@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ag2ai/build-with-ag2](https://github.com/ag2ai/build-with-ag2/tree/main/.agents/skills/ag2-telemetry/SKILL.md)
+Original source: [ag2ai/build-with-ag2](https://github.com/ag2ai/build-with-ag2/tree/main/.agents/skills/ag2-middleware/SKILL.md)
 
 ---
 
