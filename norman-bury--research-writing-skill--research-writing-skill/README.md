@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Norman-bury/research-writing-skill](https://github.com/Norman-bury/research-writing-skill/tree/main/skills/figures-diagram/SKILL.md)
+Original source: [Norman-bury/research-writing-skill](https://github.com/Norman-bury/research-writing-skill/tree/main/skills/writing-chapters/SKILL.md)
 
 ---
 
