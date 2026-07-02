@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills/tree/main/examples/weekly-trade-strategy/skills/stanley-druckenmiller-investment/SKILL.md)
+Original source: [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills/tree/main/examples/weekly-trade-strategy/.claude/skills/us-market-bubble-detector/SKILL.md)
 
 ---
 
