@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/azure-sdk-for-android](https://github.com/Azure/azure-sdk-for-android/tree/main/.github/skills/azsdk-common-pipeline-troubleshooting/SKILL.md)
+Original source: [Azure/azure-sdk-for-android](https://github.com/Azure/azure-sdk-for-android/tree/main/.github/skills/azsdk-common-apiview-feedback-resolution/SKILL.md)
 
 ---
 
