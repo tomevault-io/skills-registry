@@ -1,37 +1,32 @@
 ---
-name: workflow-anschluss-skills-router
-description: Wenn es um Anschluss-Skills Router in Verkehrs- und Infrastrukturrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: krankenversicherung-selbstaendig
+description: Wenn es um Sozialversicherung und Vorsorge: Prüft gesetzlich/privat in Solo-Selbstständige Praxis geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Anschluss-Skills Router
+# Sozialversicherung und Vorsorge: Prüft gesetzlich/privat
 
-## Arbeitsauftrag
+## Arbeitsweg
 
-Dieser Arbeitsgang macht **Anschluss-Skills Router** im Bereich **verkehr-infrastrukturrecht** sofort bearbeitbar: erst Akte lesen, dann Rollen, Ziel, Fristen, Belege und Entscheidungspunkte ordnen. Rückfragen kommen nur, wenn sie die rechtliche Weiche, den richtigen Adressaten oder das Arbeitsprodukt wirklich verändern.
+- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
+- Fristen und Eilrisiken zuerst markieren: SGB IV § 7a Statusanfrage in jedem Stadium, § 28p Betriebsprüfung 4 Jahre Rückwirkung (10 Jahre bei Vorsatz), UStG § 19 Umsatzgrenze 22.000 EUR / 50.000 EUR.
+- Tragende Normen verifizieren: SGB IV § 7 (Scheinselbstständigkeit), SGB VI § 2 Nr. 9 (Rentenversicherungspflicht), UStG §§ 1, 19, EStG §§ 15, 18, GewO § 14, BGB §§ 611, 631, 305 ff., HGB §§ 1, 2, BBG (Beitragsbemessung) — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Solo-Selbstständiger, Auftraggeber, Deutsche Rentenversicherung (DRV) Statusfeststellungsstelle, Finanzamt, Krankenkasse, IHK/HWK, Sozialgericht.
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Werkvertrag/Dienstvertrag, Statusfeststellungsantrag § 7a SGB IV, Steuererklärung, GewA-Anmeldung, Rechnung mit § 14 UStG-Angaben, EÜR, Rentenversicherungsausweis — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Aktenstart ohne Leerlauf
+## Ergebnis
 
-1. Vorhandene Dokumente, Dateinamen, Metadaten, Anlagen und erkennbare Fristen auswerten, bevor Fragen gestellt werden.
-2. Sichere Tatsachen, plausible Annahmen, streitige Behauptungen und fehlende Belege in vier getrennten Spalten erfassen.
-3. Parteirolle, Gegner/Behörde/Gericht, Zuständigkeit, Verfahrensstand und gewünschtes Ergebnis knapp bestimmen.
-4. Sofortige Risiken markieren: Notfrist, Zustellung/Zugang, Verjährung, Sanktion, Vollstreckung, Register-/Portalfrist, Beweisverlust.
-5. Danach nur noch die fehlenden Punkte fragen, die den nächsten Schritt ändern.
+- Kurzdiagnose in normalem Deutsch
+- To-do-Liste mit Fristen und Belegen
+- Risiko-/Geldfolge-Ampel
+- konkreter Textbaustein oder Dokumentenplan
 
-## Fachliche Anker
+## Quellen- und Qualitätsregeln
 
-- Rechtsgrundlage, Zuständigkeit, Frist, Form, Beweislast und Rechtsfolge aus dem jeweiligen Fachgebiet ausdrücklich benennen.
-- Spezialnormen aus den angrenzenden Fachskills dieses Plugins vor Ausgabe gegen Gesetzestext oder amtliche Quelle prüfen.
-- Keine Rechtsprechung oder Literatur aus Modellwissen erzwingen; nur verifizierte, frei prüfbare Fundstellen verwenden.
-
-## Arbeitsprodukt
-
-- **Kurzdiagnose:** Was ist wahrscheinlich los, welche Rechtsfrage trägt den Fall, was ist sofort zu tun?
-- **Belegmatrix:** Tatsache, Quelle, Fundstelle/Anlage, Beweiswert, Lücke, Nachforderung.
-- **Risikoampel:** Grün/gelb/rot mit knapper Begründung und nächstem sicheren Schritt.
-- **Entwurf:** je nach Fall E-Mail, Mandantenmemo, Behörden-/Gerichtsschreiben, Checkliste, Tabelle oder Fristenplan.
-- **Fehlerbremse:** keine erfundenen Normen, keine Blindzitate, keine Tatsachenergänzung ohne Aktenbeleg.
+- Prüfe aktuelle Beträge, Grenzwerte und Fristen in amtlichen Quellen, insbesondere Gesetze im Internet, ELSTER, DRV, KSK, Bundesagentur für Arbeit und BMWK-Existenzgründungsportal.
+- Keine Steuer- oder Sozialversicherungsentscheidung ohne Hinweis, welche Angaben geschätzt sind und welche Belege fehlen.
+- Rechtsprechung nur mit Gericht, Datum, Aktenzeichen und frei zugänglichem Fundlink ausgeben; keine BeckRS-/Juris-/Kommentar-Blindzitate.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
