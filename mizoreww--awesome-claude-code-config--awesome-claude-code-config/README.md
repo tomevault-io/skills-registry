@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Mizoreww/awesome-claude-code-config](https://github.com/Mizoreww/awesome-claude-code-config/tree/main/skills/paper-reading/SKILL.md)
+Original source: [Mizoreww/awesome-claude-code-config](https://github.com/Mizoreww/awesome-claude-code-config/tree/main/skills/update-config/SKILL.md)
 
 ---
 
