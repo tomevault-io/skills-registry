@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [poco-ai/poco-claw](https://github.com/poco-ai/poco-claw/tree/main/backend/assets/skills/gif-sticker-maker/SKILL.md)
+Original source: [poco-ai/poco-claw](https://github.com/poco-ai/poco-claw/tree/main/backend/assets/skills/minimax-multimodal-toolkit/SKILL.md)
 
 ---
 
