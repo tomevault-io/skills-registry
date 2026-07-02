@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [carapace-sh/carapace-bin](https://github.com/carapace-sh/carapace-bin/tree/main/skills/cobra/SKILL.md)
+Original source: [carapace-sh/carapace-bin](https://github.com/carapace-sh/carapace-bin/tree/main/skills/carapace/SKILL.md)
 
 ---
 
