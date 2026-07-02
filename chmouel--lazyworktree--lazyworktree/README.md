@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chmouel/lazyworktree](https://github.com/chmouel/lazyworktree/tree/main/.claude/skills/theme-audit/SKILL.md)
+Original source: [chmouel/lazyworktree](https://github.com/chmouel/lazyworktree/tree/main/.claude/skills/sanity-check/SKILL.md)
 
 ---
 
