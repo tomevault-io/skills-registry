@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [smallnest/langgraphgo](https://github.com/smallnest/langgraphgo/tree/main/examples/comic_skill_example/skills/baoyu-comic/SKILL.md)
+Original source: [smallnest/langgraphgo](https://github.com/smallnest/langgraphgo/tree/main/examples/comic_skill_example/skills/baoyu-image-gen/SKILL.md)
 
 ---
 
