@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neohaskell/NeoHaskell](https://github.com/neohaskell/NeoHaskell/tree/main/.claude/skills/feature-pipeline-preview/12-security-impl/04-record/SKILL.md)
+Original source: [neohaskell/NeoHaskell](https://github.com/neohaskell/NeoHaskell/tree/main/.claude/skills/integration-pipeline-preview/11-build-loop/04-hlint/SKILL.md)
 
 ---
 
