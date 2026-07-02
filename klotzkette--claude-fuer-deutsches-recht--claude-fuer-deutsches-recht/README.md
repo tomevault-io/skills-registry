@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/weltraumrecht/skills/space-037-esa-vertrag-programmbeitraege-industrie-rueckfluss/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/weltraumrecht/skills/space-028-finanzierung-satellitenprojekt-projektfinanzierung/SKILL.md)
 
 ---
 
