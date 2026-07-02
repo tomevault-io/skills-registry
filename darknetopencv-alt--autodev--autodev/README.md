@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [darknetopencv-alt/autodev](https://github.com/darknetopencv-alt/autodev/tree/main/plugins/pptx-plugin/skills/ppt-editing-skill/SKILL.md)
+Original source: [darknetopencv-alt/autodev](https://github.com/darknetopencv-alt/autodev/tree/main/plugins/pptx-plugin/skills/slide-making-skill/SKILL.md)
 
 ---
 
