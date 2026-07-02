@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism/tree/main/journalism-core/skills/fact-check-workflow/SKILL.md)
+Original source: [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism/tree/main/journalism-core/skills/source-verification/SKILL.md)
 
 ---
 
