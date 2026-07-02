@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openteams-lab/openteams](https://github.com/openteams-lab/openteams/tree/main/assets/skills/influxdb-cloud-automation/SKILL.md)
+Original source: [openteams-lab/openteams](https://github.com/openteams-lab/openteams/tree/main/assets/skills/ip2location-io-automation/SKILL.md)
 
 ---
 
