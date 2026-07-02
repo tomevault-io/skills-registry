@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bubbuild/bub](https://github.com/bubbuild/bub/tree/main/src/skills/telegram/SKILL.md)
+Original source: [bubbuild/bub](https://github.com/bubbuild/bub/tree/main/src/skills/skill-creator/SKILL.md)
 
 ---
 
