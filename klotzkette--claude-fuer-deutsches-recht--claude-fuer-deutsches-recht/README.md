@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/startup-hr-personalabteilung-berlin/skills/arbeitsvertrag-englisch-deutsch-bilingual/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/zitierweise-deutsches-recht/skills/aktenzeichen-schriftsatz-brief-und-memo-bausteine/SKILL.md)
 
 ---
 
