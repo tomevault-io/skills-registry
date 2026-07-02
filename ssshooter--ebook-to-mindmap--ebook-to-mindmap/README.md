@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SSShooter/ebook-to-mindmap](https://github.com/SSShooter/ebook-to-mindmap/tree/main/.agent/skills/streaming-mindmap-rendering/SKILL.md)
+Original source: [SSShooter/ebook-to-mindmap](https://github.com/SSShooter/ebook-to-mindmap/tree/main/.agents/skills/streaming-mindmap-rendering/SKILL.md)
 
 ---
 
