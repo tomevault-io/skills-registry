@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hiroppy/tmux-agent-sidebar](https://github.com/hiroppy/tmux-agent-sidebar/tree/main/.claude/skills/ui-showcase/SKILL.md)
+Original source: [hiroppy/tmux-agent-sidebar](https://github.com/hiroppy/tmux-agent-sidebar/tree/main/.claude/skills/version-release/SKILL.md)
 
 ---
 
