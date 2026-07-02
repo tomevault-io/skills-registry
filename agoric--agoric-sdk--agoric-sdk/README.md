@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Agoric/agoric-sdk](https://github.com/Agoric/agoric-sdk/tree/main/.agents/skills/depot-github-runners/SKILL.md)
+Original source: [Agoric/agoric-sdk](https://github.com/Agoric/agoric-sdk/tree/main/.agents/skills/depot-container-builds/SKILL.md)
 
 ---
 
