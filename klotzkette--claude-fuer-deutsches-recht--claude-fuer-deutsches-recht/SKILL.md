@@ -1,102 +1,70 @@
 ---
-name: plan-kaltstart-interview
-description: Wenn es um IV-integrierte Kaltstart-Interview in Insolvenzverwaltung - IV-Cockpit geht: klärt Rolle, Ziel, Frist, Unterlagen und den passenden nächsten Fachskill; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: open-data-geschaeftsgeheimnis
+description: Wenn es um Open-Data-Portal und Nutzungsbedingungen — Datenbankrecht öffentlicher Stellen in Datenbankrecht und Datenbankherstellerrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# IV-integrierte Kaltstart-Interview
+# Open-Data-Portal und Nutzungsbedingungen — Datenbankrecht öffentlicher Stellen
 
-## Direktstart: lesen, entscheiden, liefern
+## Arbeitsweg
 
-Beginne nicht mit einem Fragenkatalog. Wenn Material vorliegt, lies es zuerst und starte mit einer verwertbaren Arbeitshypothese:
+- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
+- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
+- Tragende Normen verifizieren: UrhG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-- Frist oder Sofortrisiko.
-- erkannte Rolle, Zielrichtung und Verfahrensstand.
-- tragende Tatsachen aus dem Material.
-- bester nächster Arbeitsschritt mit direkt nutzbarem Output.
+## Mandantenfall
 
-Frage höchstens zwei Punkte nach, und nur wenn ohne diese Antwort der nächste Schritt falsch oder riskant würde. Fehlt Material vollständig, verlange nicht allgemein alle Unterlagen, sondern nenne die drei wichtigsten Dokumente und arbeite mit sichtbaren Annahmen weiter.
+- Startup möchte Daten eines behördlichen Open-Data-Portals kommerziell weiterverarbeiten und fragt, ob die angebotene Lizenz (dl-de/by-2-0) dies erlaubt.
+- Behörde stellt fest, dass ein privates Unternehmen ihre Open-Data-Datenbank vollständig kopiert und kommerziell anbietet — kann sie dagegen vorgehen?
+- Forschungsprojekt kombiniert Open-Data-Bestände verschiedener EU-Länder und muss Lizenz-Kompatibilität und Datenbankschutz klären.
 
-Starte mit einem Arbeitsprodukt, nicht mit einer Inventarliste: Kurzvermerk, Fristenblatt, Prüfmatrix, Entwurf, Fragenliste oder Entscheidungsvorschlag. Routing ist nur Mittel zum Zweck. Wenn ein Fachskill eindeutig passt, arbeite unmittelbar in dessen Richtung weiter.
+## Erste Schritte
 
-Arbeitsmodus: Liefere zuerst einen nutzbaren Zwischenstand in höchstens sieben Sätzen und dann den nächsten konkreten Schritt. Frage nur nach, wenn Frist, Zuständigkeit, Beweis, Betrag oder Rechtsfolge sonst nicht belastbar bestimmbar sind. Tabellen nur für Fristen, Belege, Beträge, Varianten oder Streitstoff.
+1. Open-Data-Lizenz identifizieren: Welche Lizenz gilt (dl-de/by-2-0, CC BY 4.0, Open Government Licence, Public Domain)? Sind Namensnennung oder Sharealike-Bedingungen vorgesehen?
+2. IWG und Open-Data-RL prüfen: Gilt das Informationsweiterverwendungsgesetz (IWG)? Welche Daten sind nach Open-Data-Richtlinie 2019/1024 zur Weiterverwendung freizugeben?
+3. Datenbankherstellerrecht öffentlicher Stellen bewerten: Öffentliche Stellen können Hersteller nach § 87a UrhG sein — aber Open-Data-Lizenzen können das Recht einschränken.
+4. Lizenzbedingungen auf Weiterverwendungsfall anwenden: Erlaubt die Lizenz kommerzielle Nutzung, Bearbeitung, Weitergabe und Sublizenzierung?
+5. Sharealike-Pflichten klären: Gilt Copyleft-Effekt für abgeleitete Datenbanken (ODbL)?
+6. Behördliche Ausnahmen prüfen: Ausnahmen nach § 1 Abs. 2 IWG (Sicherheit, Datenschutz, Drittrechte).
 
-## Fachlicher Kern — Insolvenz- und Sanierungsrecht
-- **Problemfokus dieses Skills:** Bleibe beim konkreten Titel `IV-integrierte Kaltstart-Interview` und löse die dort angelegte Fachfrage; arbeite mit konkreten Tatbestandsmerkmalen, Beweisfragen und dem unmittelbar benötigten Arbeitsprodukt. Routingfragen bleiben Hilfsmittel, wenn Frist, Zuständigkeit oder Verfahrensart offen sind.
-- **Normenradar:** InsO §§ 1, 13, 15a, 17, 18, 19, 21, 38 ff., 47, 49 ff., 55, 80, 103 ff., 129-147, 165 ff., 217 ff., 270 ff., 343; StaRUG; COVInsAG/Übergangsrecht nur bei Altzeiträumen; SGB III § 165.
-- **Verifizierte Anker:** BGH, Urteil vom 10.02.2005 - IX ZR 211/02 (Grenzen § 133 InsO bei Zwangsvollstreckung/verschlepptem Antrag als Klassiker); ausländische Verfahren: § 343 InsO Anerkennung, kein deutsches Chapter-15-Verfahren, häufig inzidente Prüfung durch Register, Grundbuch, Prozessgericht und Banken.
-- **Arbeitsmodus:** Zuerst Insolvenzgrund, Frist, Organpflicht, Verfahrensstand, Sicherheiten, Massebezug und Anfechtungszeitraum klären; dann Sanierungsfähigkeit, Plan/StaRUG, Haftung und Dokumentationsschutz.
-- **Outputpflicht:** Krisenzeitachse, Liquiditätsstatus, Anfechtungsmatrix, Sicherheitenradar, IDW-S6-/Sanierungscheck, Register-/Grundbuch-Nachweispaket oder Schriftsatzbaustein.
-- **Fehlerbremse:** Tragende Normen/Entscheidungen live oder aus der Akte verifizieren; Rechtsprechung nur mit Gericht, Entscheidungsform, Datum, Aktenzeichen und frei prüfbarer Quelle. Keine BeckRS-, juris-, Kommentar- oder Aufsatz-Blindzitate aus Modellwissen.
+## Rechtsrahmen
 
-## Startet bei
+- Open-Data-Richtlinie 2019/1024 (Nachfolge PSI-RL 2003/98/EG): Weiterverwendungsrecht für Daten öffentlicher Stellen.
+- IWG (Informationsweiterverwendungsgesetz): Nationale Umsetzung — Anspruch auf Weiterverwendung, Diskriminierungsverbot, Gebührenrahmen.
+- § 87a UrhG: Öffentliche Stellen als mögliche Datenbankherstellerinnen.
+- § 5 UrhG: Amtliche Werke (Gesetze, Verordnungen) genießen keinen Urheberrechtsschutz — aber strukturierte Zusammenstellungen können Datenbankschutz genießen.
+- CC BY 4.0 / ODbL: Lizenzbedingungen für Open-Data-Veröffentlichungen — Attribution, Sharealike, Bearbeitung.
+- Art. 4 Open-Data-RL: Grundsatz der Weiterverwendbarkeit; Ausnahmen bei Schutzrechten Dritter.
 
-- neuem Planmandat oder Sanierungsprojekt
-- unvollständiger Datenlage
-- Vorbereitung von Insolvenzplan, Eigenverwaltung, Schutzschirm oder StaRUG
-- Prüfung eines vorhandenen Planentwurfs
+## Prüfraster
 
-## Geführter Workflow
+- Gilt für das Portal das IWG — ist die bereitstellende Stelle eine öffentliche Stelle im Sinne des § 2 IWG?
+- Welche Lizenz ist auf das Portal anwendbar, und erlaubt sie die geplante Nutzungsform?
+- Besteht ein eigenes Datenbankherstellerrecht der Behörde trotz Open-Data-Lizenz (z. B. für Teile mit wesentlicher Investition)?
+- Sind Drittrechte (Urheberrechte einzelner Datenurheber, Persönlichkeitsrechte) in der Lizenz berücksichtigt?
+- Gilt ein Copyleft-Effekt (ODbL Sharealike) für das geplante abgeleitete Produkt?
+- Sind personenbezogene Daten in der Open-Data-Datenbank enthalten — welche DSGVO-Rechtsgrundlage gilt für Weiterverwendung?
+- Hat die bereitstellende Behörde Ausnahmen nach § 1 Abs. 2 IWG geltend gemacht?
 
-1. Basisdaten aufnehmen: Firma, Rechtsform, Register, Standort, Branche, Organmitglieder, Berater, Gericht und Aktenzeichen.
-2. Krise erzählen lassen: Auslöser, Liquiditätslücke, Verlustquellen, Vertragsdruck, Finanzierung und operative Engpässe.
-3. Gläubigerlandschaft erfassen: Banken, Lieferanten, Vermieter, Finanzamt, Sozialversicherung, Arbeitnehmer, Gesellschafter, Sicherheiten.
-4. Unklare Antworten tolerieren, aber als Annahme, Rückfrage oder Prüfpunkt markieren.
+## Typische Fallstricke
 
-## Ausgabe
+- „Open Data" bedeutet nicht automatisch „keine Rechte" — Datenbankherstellerrecht und Urheberrecht können trotz Open-Data-Lizenz bestehen.
+- Lizenzverstoß (z. B. fehlende Namensnennung bei dl-de/by) kann die Lizenz zum Erlöschen bringen und Haftung auslösen.
+- ODbL-Sharealike verpflichtet zur Weitergabe abgeleiteter Datenbanken unter ODbL — wird oft unterschätzt.
+- Behörden dürfen nach IWG keine exklusiven Vereinbarungen über Weiterverwendung schließen (Diskriminierungsverbot).
+- Nicht alle Behördendaten fallen unter IWG — Ausnahmen für Sicherheit, Gerichte, Rundfunk und Forschungseinrichtungen.
 
-- Interviewprotokoll
-- Fehlende Unterlagen
-- Annahmenregister
-- Erste Planhypothese
+## Quellen
 
-<!-- BEGIN ausformulierungspflicht (autogen) -->
-> **Ausformulierungspflicht und Formatstandard.** Das Endprodukt wird in **vollständigen, ausformulierten Sätzen** geliefert — keine Stichwortskelette, keine leeren Klauselrümpfe, keine reinen Aufzählungen. Klauseln stehen als ausformulierte Rechtsfolgen-Sätze; Platzhalter wie `[Name der Mandantin]` werden klar markiert, der umgebende Text bleibt vollständig.
->
-> **Schriftbild:** Wenn ein Schriftsatz, Vertrag, Memo, Beschluss, Vermerk oder sonstiges Enddokument als DOCX, PDF oder formatierter Text ausgegeben wird, ist **Times New Roman 11 pt** als Grundschrift zu verwenden. Überschriften bleiben in derselben Schrift und dürfen nur fett oder abgestuft sein. Bei reiner Markdown- oder Chat-Ausgabe wird dieser Formatwunsch als Exporthinweis aufgenommen.
->
-> **Nummerierung:** Gliederung ausschließlich dezimal (`1`, `1.1`, `1.1.1` und so weiter). Keine römischen Ziffern, keine Buchstaben- oder Mischgliederung.
-<!-- END ausformulierungspflicht (autogen) -->
-
-## Qualitätsgates
-
-- Keine Rechtswirkung ohne genaue Betroffenengruppe, Betrag, Zeitpunkt und Beleg.
-- Vergleichsrechnung, Planrechnung und Sanierungskonzept müssen zueinander passen.
-- Annahmen, Schätzungen und fehlende Quellen werden sichtbar markiert.
-- Berufsgeheimnis, Datenschutz, Geschäftsgeheimnisse und gerichtliche Fristen bleiben vorrangig.
-
-## Rückfragen
-
-Wenn Angaben fehlen, stelle höchstens acht konkrete Fragen und gruppiere sie nach Zahlen, Recht, Stakeholdern und Verfahren. Bei Eilfällen liefere zuerst eine Minimalroute mit Stoppern.
-
-## Arbeitsstil
-
-Freundlich, ruhig, präzise und planarchitektonisch. Der Skill erklärt, warum eine Information wichtig ist, und macht aus unsortiertem Material einen belastbaren nächsten Arbeitsschritt.
-
-## IV-Einordnung
-
-Diese integrierte Fassung ist für Insolvenzverwalter, Sachwalter und vorläufige Verwaltung zugeschnitten. Sie priorisiert Masseinteresse, Berichtsfähigkeit gegenüber Gericht und Gläubigerausschuss, Rollenreinheit, Dokumentation von Belegen und spätere Planvollzugsfähigkeit.
-
-## Rechtliche Grundlagen und BGH-Leitentscheidungen
-
-- Rechtsprechung: keine Entscheidung aus Modellwissen zitieren; vor Ausgabe über offizielle oder frei zugängliche Quelle mit Gericht, Entscheidungsform, Datum, Aktenzeichen und tragender Aussage verifizieren.
-
-## Paragrafenkette (IV-Insolvenzplan)
-
-§ 217 InsO (Plan-Option) → § 218 InsO (Vorlage durch IV) → §§ 220-221 InsO (Plan-Inhalte) → § 222 InsO (Gruppenbildung) → §§ 235-244 InsO (Abstimmung) → § 245 InsO (Obstruktionsverbot) → § 248 InsO (Bestaetigung) → § 254 InsO (Wirkung) → §§ 49-51 InsO (Absonderungsrechte in Plan)
-
-## Triage — IV-Plan
-
-Bevor losgelegt wird, klaere:
-1. **Plan sinnvoller als Liquidation?** Vergleichsrechnung: Plan-Quote vs. Liquidationsquote.
-2. **Gruppenbildung konsistent?** § 222 InsO: gesicherte, nicht gesicherte, Kleinglaeubieger, Arbeitnehmer.
-3. **Mehrheiten realistisch?** Simulation Kopf- + Summenmehrheit je Gruppe.
-4. **Cramdown-Szenario?** § 245 InsO: ablehnende Gruppe ueberstimmbar wenn Best-Interest-Test bestanden.
-
-## IV-Einordnung
-
-Diese integrierte Fassung ist für Insolvenzverwalter, Sachwalter und voraeufige Verwaltung zugeschnitten. Sie priorisiert Masseinteresse, Berichtsfaehigkeit gegenueber Gericht und Gläubigerausschuss sowie Planvollzugsfaehigkeit.
+- [Open-Data-Richtlinie 2019/1024 — EUR-Lex](https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A32019L1024)
+- [IWG — gesetze-im-internet.de](https://www.gesetze-im-internet.de/iwg/index.html)
+- [§ 87a UrhG — dejure.org](https://dejure.org/gesetze/UrhG/87a.html)
+- [§ 5 UrhG amtliche Werke — dejure.org](https://dejure.org/gesetze/UrhG/5.html)
+- [RL 96/9/EG — EUR-Lex](https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A31996L0009)
+- [Art. 4 Open-Data-RL 2019/1024 — EUR-Lex](https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A32019L1024)
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
