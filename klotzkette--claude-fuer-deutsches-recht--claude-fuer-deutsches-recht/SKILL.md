@@ -1,20 +1,20 @@
 ---
-name: cic-can-0632
-description: Wenn es um CIC can. 632 - Buch II - Volk Gottes in Römisch-katholisches Kirchenrecht CIC und Katechismus geht: ordnet Sachverhalt, Norm, Beweislast, Gegenargumente und nächsten Schritt; liefert ein direkt nutzbares Arbeitsprodukt mit Prüfpunkten, Risiken und nächstem Schritt. Use when this capability is needed.
+name: cic-can-1556
+description: Wenn es um CIC can. 1556 - Buch VII - Prozesse in Römisch-katholisches Kirchenrecht CIC und Katechismus geht: ordnet Sachverhalt, Norm, Beweislast, Gegenargumente und nächsten Schritt; liefert ein direkt nutzbares Arbeitsprodukt mit Prüfpunkten, Risiken und nächstem Schritt. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# CIC can. 632 - Buch II - Volk Gottes
+# CIC can. 1556 - Buch VII - Prozesse
 
 ## Auftrag
 
-Dieser Skill ist der Direktzugang zu **can. 632 CIC**. Er dient nicht dazu, den Canon aus dem Gedächtnis zu paraphrasieren, sondern dazu, den aktuellen amtlichen Text im Kontext von Buch II - Volk Gottes zu prüfen und daraus eine kirchenrechtlich saubere Arbeitsausgabe zu bauen.
+Dieser Skill ist der Direktzugang zu **can. 1556 CIC**. Er dient nicht dazu, den Canon aus dem Gedächtnis zu paraphrasieren, sondern dazu, den aktuellen amtlichen Text im Kontext von Buch VII - Prozesse zu prüfen und daraus eine kirchenrechtlich saubere Arbeitsausgabe zu bauen.
 
 ## Prüfprogramm
 
-1. Amtlichen Text von can. 632 live prüfen und Ausgabejahr/Sprachfassung notieren.
-2. Systemstelle bestimmen: Buch II - Volk Gottes, Normbereich can. 204-746, Nachbarcanones und mögliche Spezialnormen.
+1. Amtlichen Text von can. 1556 live prüfen und Ausgabejahr/Sprachfassung notieren.
+2. Systemstelle bestimmen: Buch VII - Prozesse, Normbereich can. 1400-1752, Nachbarcanones und mögliche Spezialnormen.
 3. Tatbestand, Rechtsfolge, Zuständigkeit, Form, Frist und Beweisfrage trennen.
 4. Verhältnis zu Katechismus, Partikularrecht, päpstlichen Sondernormen und staatlichem Recht klären.
 5. Ergebnis katholisch, papsttreu, pastoral klar und mehrsprachig ausgeben, wenn gewünscht.
