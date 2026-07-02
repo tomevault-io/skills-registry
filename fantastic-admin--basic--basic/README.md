@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fantastic-admin/basic](https://github.com/fantastic-admin/basic/tree/main/skills/fa-feedback/SKILL.md)
+Original source: [fantastic-admin/basic](https://github.com/fantastic-admin/basic/tree/main/skills/fa-slot-creator/SKILL.md)
 
 ---
 
