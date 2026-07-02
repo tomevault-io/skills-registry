@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tinyfish-io/tinyfish-cookbook](https://github.com/tinyfish-io/tinyfish-cookbook/tree/main/skills/tech-stack-detective/SKILL.md)
+Original source: [tinyfish-io/tinyfish-cookbook](https://github.com/tinyfish-io/tinyfish-cookbook/tree/main/skills/stalk-my-interviewer/SKILL.md)
 
 ---
 
