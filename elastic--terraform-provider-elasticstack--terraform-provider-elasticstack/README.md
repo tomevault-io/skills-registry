@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [elastic/terraform-provider-elasticstack](https://github.com/elastic/terraform-provider-elasticstack/tree/main/.agents/skills/flaky-test-catcher/SKILL.md)
+Original source: [elastic/terraform-provider-elasticstack](https://github.com/elastic/terraform-provider-elasticstack/tree/main/.agents/skills/pr-monitoring-loop/SKILL.md)
 
 ---
 
