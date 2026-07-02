@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LerianStudio/ring](https://github.com/LerianStudio/ring/tree/main/default/skills/writing-skills/SKILL.md)
+Original source: [LerianStudio/ring](https://github.com/LerianStudio/ring/tree/main/default/skills/executing-plans/SKILL.md)
 
 ---
 
