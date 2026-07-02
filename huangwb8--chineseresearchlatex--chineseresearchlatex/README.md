@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [huangwb8/ChineseResearchLaTeX](https://github.com/huangwb8/ChineseResearchLaTeX/tree/main/skills/nsfc-humanization/SKILL.md)
+Original source: [huangwb8/ChineseResearchLaTeX](https://github.com/huangwb8/ChineseResearchLaTeX/tree/main/skills/nsfc-ref-alignment/SKILL.md)
 
 ---
 
