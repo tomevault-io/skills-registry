@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills/tree/main/examples/weekly-trade-strategy/skills/market-news-analyst/SKILL.md)
+Original source: [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills/tree/main/examples/weekly-trade-strategy/skills/breadth-chart-analyst/SKILL.md)
 
 ---
 
