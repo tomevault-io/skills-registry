@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [scverse/spatialdata](https://github.com/scverse/spatialdata/tree/main/.claude/skills/pyspy/SKILL.md)
+Original source: [scverse/spatialdata](https://github.com/scverse/spatialdata/tree/main/.claude/skills/memray/SKILL.md)
 
 ---
 
