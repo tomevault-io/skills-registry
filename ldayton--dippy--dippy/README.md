@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ldayton/Dippy](https://github.com/ldayton/Dippy/tree/main/.claude/skills/verify-counts/SKILL.md)
+Original source: [ldayton/Dippy](https://github.com/ldayton/Dippy/tree/main/.claude/skills/check-coverage/SKILL.md)
 
 ---
 
