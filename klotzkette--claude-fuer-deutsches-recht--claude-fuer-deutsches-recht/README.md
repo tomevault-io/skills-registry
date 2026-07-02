@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/weltraumrecht/skills/weltraummuell-debris-mitigation-und-betreiberpflichten/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/weltraumrecht/skills/exportkontrolle-itar-ear-eu-dual-use-bei-raumfahrttech/SKILL.md)
 
 ---
 
