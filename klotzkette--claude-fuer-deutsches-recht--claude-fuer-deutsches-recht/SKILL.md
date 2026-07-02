@@ -1,67 +1,48 @@
 ---
-name: berufungsfest-beschluss-bauen-beweisbeschluss
-description: Wenn es um Berufungsfestigkeit prüfen in Urteilsbauer und Relationsmacher geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Auswahlstichwort: Berufungsfest Beschluss Bauen Beweisbeschluss; Arbeitsfeld: Urteilsbauer und Relationsmacher. Use when this capability is needed.
+name: reiseveranstalter-kommunikation-steuer
+description: Wenn es um Reiseveranstalter Kommunikation Steuer in Verbraucherschutzverband Durchsetzung geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Berufungsfestigkeit prüfen
-
-## Arbeitsbereich
-
-Fertiges Urteil gegen häufigste Aufhebungsgründe selbst prüfen: Richter will vor Urteilsversand Aufhebungsrisiken minimieren. Normen: § 529 ZPO (Tatsachenfeststellung Berufung), § 546 ZPO (Rechtsverletzung), § 547 Nr. 6 ZPO (Begründungsmangel). Prüfraster: Tatsachenfeststellung vollständig, kein Verfahrensmangel, keine uebergangenen Angriffs-/Verteidigungsmittel, Begründungstiefe ausreichend. Output Berufungsfest-Checkliste mit Ampelstatus. Abgrenzung: Revisionsfestigkeitsprüfung siehe revisionsfest-prüfen; Tenorierung siehe tenor-bauen-zivil. Arbeite entlang dieser konkreten Prüfungslinie und trenne Rolle, Frist, Zuständigkeit, Beweislast und gewünschten Output.
+# Reiseveranstalter Kommunikation Steuer
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Tragende Normen verifizieren: VDuG; UKlaG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Triage zu Beginn — kläre vor dem Selbstcheck
+## Normenanker
 
-1. Ist das Urteil bereits vollständig ausformuliert und unterzeichnet?
-2. Wurde die Hinweispflicht (§ 139 ZPO) im gesamten Verfahren beachtet?
-3. Sind alle Anträge beschieden (§ 308 ZPO — ne ultra petita)?
-4. Ist der Tenor vollstreckungsfähig und bestimmt genug?
-5. Besteht eine Berufungszulassungsfrage (§ 511 Abs. 4 ZPO — Streitwert unter 600 EUR)?
+Vor einer rechtlichen Schlussfolgerung diese Anker am aktuellen Normtext prüfen; Spezial- und Landesrecht nur hinzunehmen, wenn es den konkreten Auftrag traegt:
 
-## Aktuelle Rechtsprechung zu Berufungsgründen
+- `§ 13 BGB` — Verbraucherbegriff.
+- `§ 14 BGB` — Unternehmerbegriff.
+- `§ 312c BGB` — Fernabsatzvertrag.
+- `§ 312d BGB` — Informationspflichten.
+- `§ 355 Abs. 1 BGB` — Widerrufsrecht.
+- `§ 357 BGB` — Rechtsfolgen des Widerrufs.
+- `§ 434 BGB` — Sachmangel.
+- `§ 475 BGB` — Verbrauchsgüterkauf.
+- `§ 477 BGB` — Beweislastumkehr.
+- `§ 5 UWG` — irrefuehrende geschäftliche Handlung.
 
-## Zentrale Normen
+Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
+- UKlaG, UWG, VDuG, KapMuG-Schnittstellen
+- Qualifizierte Einrichtungen und Verbandsklagebefugnis
+- Abmahnung, Unterlassung, Muster, Sammelverfahren
+- Verjährungshemmung, Register, Vergleich und Vollstreckung
 
-- § 529 ZPO — Tatsachenfeststellung als Grundlage des Berufungsgerichts
-- § 546 ZPO — Revisionsgrund: fehlerhafte Rechtsanwendung
-- § 547 ZPO — Absolute Revisionsgründe (Nr. 6: fehlende Begründung)
-- § 139 ZPO — Hinweispflicht des Gerichts
-- § 511 ZPO — Statthaftigkeit der Berufung; Beschwer 600 EUR
-- § 538 Abs. 2 ZPO — Zurückverweisung durch Berufungsgericht bei Verfahrensmangel
+## Prüfroutine
 
-## Haeufige Aufhebungsgründe
-
-1. **Fehlerhafte Tatsachenfeststellung** (§ 529 ZPO) — konkrete Anhaltspunkte für Unrichtigkeit
-2. **Verfahrensmangel** — Verstoß gegen rechtliches Gehör (Art. 103 Abs. 1 GG), falsche Beweisaufnahme, falsche Zuständigkeit
-3. **Falsche Rechtsanwendung** (§ 546 ZPO)
-4. **Begründungsmangel** — § 547 Nr. 6 ZPO absoluter Revisionsgrund
-5. **Verletzung der Hinweispflicht** § 139 ZPO
-6. **Nichtberücksichtigung erheblichen Vorbringens** — § 286 ZPO Verletzung freier Beweiswürdigung
-
-## Checkliste vor Verkündung
-
-- [ ] Sind alle Anträge beschieden?
-- [ ] Sind alle erheblichen Tatsachen festgestellt?
-- [ ] Beweisaufnahme im Tatbestand erwähnt?
-- [ ] Beweiswürdigung in den Entscheidungsgründen mit konkreter Würdigung?
-- [ ] Konkrete Bezugnahmen statt pauschaler Verweise (§ 313 Abs. 2 S. 2 ZPO)?
-- [ ] Tenor vollstreckbar und bestimmt?
-- [ ] Kostenentscheidung rechnerisch richtig?
-- [ ] Vorläufige Vollstreckbarkeit angeordnet?
-- [ ] Streitwert festgesetzt (§ 63 GKG)?
-- [ ] Berufungszulassung erforderlich (§ 511 Abs. 4 ZPO)?
-- [ ] Rechtsmittelbelehrung beigefügt (§ 232 ZPO)?
-- [ ] Unterschrift der erkennenden Richter (§ 315 Abs. 1 ZPO)?
-- [ ] Hinweispflicht § 139 ZPO dokumentiert?
+1. **Scope:** Was genau soll entschieden, beantragt, abgewehrt oder dokumentiert werden? Welche Einheit ist betroffen und welches Recht gilt wirklich?
+2. **Zuständigkeit:** Behörde, Gericht, Register, Aufsicht, Verband, Unternehmen oder internationale Stelle sauber benennen; falsche Adressaten als Risiko ausweisen.
+3. **Tatbestand:** Die relevanten Merkmale einzeln mit Belegen füllen. Unklare Tatsachen als Rückfrage oder Beweispunkt markieren, nicht glattbügeln.
+4. **Rechtsfolge:** Anspruch, Ermessen, Verbot, Pflicht, Gebührenfolge, Nebenfolge, Haftung, Vollzug oder Rechtsschutz getrennt ausgeben.
+5. **Taktik:** Schnellster sinnvoller Weg, sauberster Weg und Eskalationsweg nebeneinander stellen; bei Laien zusätzlich eine kurze Erklärung in Alltagssprache.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
