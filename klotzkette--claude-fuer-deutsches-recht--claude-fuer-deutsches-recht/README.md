@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/verkehrsowi-verteidiger/skills/vowi-akteneinsicht-rohmessdaten-leitfaden/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/urteilsbauer-relationsmacher/skills/entscheidungsgruende-zivil-schreiben/SKILL.md)
 
 ---
 
