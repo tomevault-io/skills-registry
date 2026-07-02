@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [icloudza/algokiller-plugin](https://github.com/icloudza/algokiller-plugin/tree/main/skills/general/SKILL.md)
+Original source: [icloudza/algokiller-plugin](https://github.com/icloudza/algokiller-plugin/tree/main/skills/ciphertext/SKILL.md)
 
 ---
 
