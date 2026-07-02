@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [arklexai/arksim](https://github.com/arklexai/arksim/tree/main/integrations/claude_code/skills/arksim-results/SKILL.md)
+Original source: [arklexai/arksim](https://github.com/arklexai/arksim/tree/main/integrations/claude_code/skills/arksim-evaluate/SKILL.md)
 
 ---
 
