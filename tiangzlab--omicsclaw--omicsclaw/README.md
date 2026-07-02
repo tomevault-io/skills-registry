@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TianGzlab/OmicsClaw](https://github.com/TianGzlab/OmicsClaw/tree/main/knowledge_base/bulk-omics-clustering/SKILL.md)
+Original source: [TianGzlab/OmicsClaw](https://github.com/TianGzlab/OmicsClaw/tree/main/knowledge_base/lasso-biomarker-panel/SKILL.md)
 
 ---
 
