@@ -1,71 +1,132 @@
 ---
-name: schufa-eintrag-scoring-negativeintrag
-description: Wenn es um SCHUFA-Eintrag prüfen in Verbraucher im Rechtsstaat Alltag geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: stb-lohn-vermoegenswirksame-leistungen
+description: Wenn es um Vermoegenswirksame Leistungen (VL) und AN-Sparzulage in Steuerrecht – Steuerberater und Anwälte geht: erstellt den passenden Entwurf aus Sachverhalt, Norm, Beweis und Antrag; liefert einen verwertbaren Entwurf mit Anträgen, Begründung und Anlagenlogik. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# SCHUFA-Eintrag prüfen
+# Vermoegenswirksame Leistungen (VL) und AN-Sparzulage
 
-## Normenanker
+## Kernsachverhalt
 
-Vor einer rechtlichen Schlussfolgerung diese Anker am aktuellen Normtext prüfen; Spezial- und Landesrecht nur hinzunehmen, wenn es den konkreten Auftrag traegt:
+Vermoegenswirksame Leistungen (VL) sind Sparleistungen, die der AG fuer den AN auf ein VL-faehiges Sparkonto einzahlt. Hoehe und Vertragsgestaltung sind tariflich oder einzelvertraglich vereinbart. Bei Einkommens-Schwellenwerten kommt die AN-Sparzulage als staatliche Foerderung hinzu (5. VermBG). Die VL sind lohnsteuerpflichtig und SV-pflichtig — keine steuerliche Foerderung der AG-Leistung selbst.
 
-- `§ 13 BGB` — Verbraucherbegriff.
-- `§ 14 BGB` — Unternehmerbegriff.
-- `§ 312c BGB` — Fernabsatzvertrag.
-- `§ 312d BGB` — Informationspflichten.
-- `§ 355 Abs. 1 BGB` — Widerrufsrecht.
-- `§ 357 BGB` — Rechtsfolgen des Widerrufs.
-- `§ 434 BGB` — Sachmangel.
-- `§ 475 BGB` — Verbrauchsgüterkauf.
-- `§ 477 BGB` — Beweislastumkehr.
-- `§ 5 UWG` — irrefuehrende geschäftliche Handlung.
+## Kaltstart-Rueckfragen
 
-Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
+1. Liegt VL-Vereinbarung im Arbeitsvertrag oder Tarifvertrag vor?
+2. Welche Hoehe — AG-Zuschuss pro Monat (typisch 6,65 oder 40 EUR)?
+3. Welche VL-Sparform — Bausparen, Aktien-Fonds, Banksparen?
+4. Welches Einkommen hat der AN (Sparzulage-Grenze)?
+5. Hat der AN bereits VL-Antrag bei Anlage-Institut gestellt?
+6. Bei verheirateten AN: Familienverhaeltnisse fuer Sparzulage-Grenze?
+7. Anzahl VL-Vertraege (max. 1 fuer Sparzulage)?
+8. Welche Dauer (Sperrfrist 7 Jahre Standard)?
 
-## Arbeitsweg
+## Rechtlicher Rahmen
 
-- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+### Primaernormen
 
-## Fachkern: SCHUFA-Eintrag prüfen
-- **Normen-/Quellenanker:** BGB-Verbraucherrecht, VwVfG/VwGO, ZPO/Mahnverfahren, SGB-Schnittstellen, Datenschutz, Widerruf, Gewährleistung, Fristen und Zuständigkeit.
-- **Entscheidende Weiche:** Dokument zuerst verstehen: Rolle, Frist, Anspruch, Behörde/Gegner, Belege, Risiko der freiwilligen Auskunft und nächster sicherer Schritt.
-- **Arbeitsprodukt:** Erzeuge eine konkrete Prüf- oder Entscheidungsmatrix mit Norm, Tatbestand, Beleg, Einwand, Risikoampel und nächstem Schritt; Anschluss-Skills nur bei echter Vertiefung nennen.
+**5. VermBG** — 5. Vermoegensbildungsgesetz.
 
-## Sofortsortierung
+**§ 13 5. VermBG** — AN-Sparzulage (Anspruchsgrundlage; Saetze und Einkommensgrenzen in §§ 13, 14 5. VermBG; bei Gesetzesaenderung Norm-Bestand pruefen).
 
-1. Beteiligte, Rolle und Kommunikationskanal klären: Verbraucher, Behörde, Kammer, Gericht, Plattform, Bank, Kammer oder Verfahrensgegner.
-2. Fristen, Zustellungen, Aktenzeichen, Anhörungen, Mahnungen, Bescheide und Vollstreckungsdrohungen zuerst isolieren.
-3. Zahlungen, Anerkenntnisse, Aussagen gegenüber Polizei/Behörde/Kammer und irreversible Handlungen als rote Zone markieren.
-4. Fehlende Belege konkret nachfordern: Vertrag, Rechnung, AGB, Screenshot, Sendungsnummer, Bescheid, Protokoll, Vollmacht, Zustellnachweis.
-5. Den kleinsten sicheren nächsten Schritt formulieren, bevor ein großer Streit eröffnet wird.
+**§ 19 EStG** — VL als Arbeitslohn (AG-Zuschuss ist steuerpflichtig; Foerderung ausschliesslich AN-seitig ueber Sparzulage).
 
-## Prüfprogramm
+### Verwaltungsanweisungen
 
-- **Normen- und Quellenanker:** DSGVO, BDSG, Auskunfteirecht, BGH-/EuGH-Rechtsprechung nur verifiziert und Score-Transparenz live prüfen.
-- **Tatsachenmatrix:** sichere Tatsachen, streitige Tatsachen, fehlende Dokumente und Beweisrisiken getrennt ausgeben.
-- **Kommunikationsstrategie:** sachlich, knapp, fristwahrend; keine unnötigen Zusatzinformationen, keine vorschnellen Schuldanerkenntnisse.
-- **Gegenposition:** die stärkste plausible Gegenseite darstellen und sagen, welche Unterlage oder Norm sie trägt oder entkräftet.
-- **Entscheidungspfad:** sofort handeln, nachfordern, zahlen unter Vorbehalt, widersprechen, Beschwerde, Rechtsbehelf, Vergleich oder professionelle Hilfe.
+- BMF zur Sparzulage.
+- BZSt-Vordrucke.
 
-## Typische Stolperstellen
+## Workflow
 
-- Eintrag kann trotz Forderungsstreit unzulässig sein.
-- Erledigung und Löschung unterscheiden.
-- Identitätsdaten sparsam einsetzen.
+### Phase 1 — VL-Hoehe und Vertragsform
 
-## Arbeitsprodukte
+- Tariflich: oft 6,65 oder 26,59 oder 40 EUR/Monat AG-Zuschuss.
+- Einzelvertraglich: vereinbart.
+- VL bis 480 EUR jaehrlich (40 EUR/Monat) staatlich foerderungsfaehig.
 
-Erzeuge Auskunftsantrag, Löschungsbegehren, Forderungsbestreiten und Beschwerdeplan.
+### Phase 2 — AN-Sparzulage Voraussetzungen
 
-## Prompts, die dieser Skill stellen soll
+| Sparform | Sparzulage | Einkommensgrenze (zu versteuerndes Einkommen, Stand 2025) |
+|---|---|---|
+| Bausparen / wohnungswirtschaftliche Verwendung | 9 Prozent (max. 43 EUR/Jahr) | 17.900 EUR ledig / 35.800 verheiratet |
+| Aktien-Fonds / Beteiligung am AG-Unternehmen | 20 Prozent (max. 80 EUR/Jahr) | 20.000 EUR ledig / 40.000 verheiratet |
 
-- Welcher Eintrag, Datum, Forderung bekannt, bestritten, erledigt?
+(Werte Stand 2025, 5. VermBG; bei Gesetzesaenderung ueber BZSt pruefen.)
+
+### Phase 3 — Lohnabrechnung
+
+- AG-Zuschuss in DATEV LODAS als Lohnzuschlag eingeben.
+- LSt-pflichtig: AN versteuert den Zuschuss.
+- SV-pflichtig.
+- AN-Sparbeitrag aus Netto (Eigenanteil moeglich, aber nicht gefoerdert).
+
+### Phase 4 — Sparzulage-Antrag
+
+- AN beantragt jaehrlich beim FA ueber Anlage VL der Steuererklaerung.
+- Sparzulage wird mit Einkommensteuer-Erstattung ausgezahlt.
+- Auszahlung erst nach Ablauf der Sperrfrist (7 Jahre).
+
+### Phase 5 — Sperrfrist
+
+- 7 Jahre ab Vertragsabschluss.
+- Bei Aufloesung vor Ablauf: Sparzulage zurueckzuzahlen.
+- Ausnahmen: Tod, dauernde Erwerbsunfaehigkeit, Arbeitslosigkeit ueber 1 Jahr.
+
+### Phase 6 — VL-Bescheinigung
+
+- Anlageinstitut erstellt jaehrliche Bescheinigung.
+- AG benoetigt die Bescheinigung als Beleg.
+- Im Lohnordner archivieren.
+
+## Output
+
+- VL in Lohnabrechnung konfiguriert.
+- Sparzulage-Berechnung fuer Steuererklaerung.
+- VL-Bescheinigung im Lohnordner.
+
+<!-- BEGIN ausformulierungspflicht (autogen) -->
+> **Ausformulierungspflicht und Formatstandard.** Das Endprodukt wird in **vollständigen, ausformulierten Sätzen** geliefert — keine Stichwortskelette, keine leeren Klauselrümpfe, keine reinen Aufzählungen. Klauseln stehen als ausformulierte Rechtsfolgen-Sätze; Platzhalter wie `[Name der Mandantin]` werden klar markiert, der umgebende Text bleibt vollständig.
+>
+> **Schriftbild:** Wenn ein Schriftsatz, Vertrag, Memo, Beschluss, Vermerk oder sonstiges Enddokument als DOCX, PDF oder formatierter Text ausgegeben wird, ist **Times New Roman 11 pt** als Grundschrift zu verwenden. Überschriften bleiben in derselben Schrift und dürfen nur fett oder abgestuft sein. Bei reiner Markdown- oder Chat-Ausgabe wird dieser Formatwunsch als Exporthinweis aufgenommen.
+>
+> **Nummerierung:** Gliederung ausschließlich dezimal (`1`, `1.1`, `1.1.1` und so weiter). Keine römischen Ziffern, keine Buchstaben- oder Mischgliederung.
+<!-- END ausformulierungspflicht (autogen) -->
+
+## Strategie und Praxis-Tipps
+
+- VL ist KEINE steuerliche Sonderfoerderung des AG-Zuschusses — Zuschuss ist normaler Lohn.
+- Die staatliche Foerderung kommt ueber AN-Sparzulage (Einkommensabhaengig).
+- Bei Bauspar-VL und Aktien-VL beide Hoechstgrenzen separat (Doppelfoerderung max. 123 EUR/Jahr).
+- AN mit Einkommen ueber Grenzen: VL wirtschaftlich nur als zusaetzliches Sparen ohne staatliche Zulage.
+- StBVV: in Lohnpauschale.
+- DATEV-Tipp: DATEV LODAS VL-Konfiguration mit Anlageinstitut-Schnittstelle.
+
+## Querverweise
+
+- `stb-lohn-betriebliche-altersversorgung-grundlagen` — bAV.
+- `stb-lohn-arbeitsvertrag-pruefung-lohn-relevant` — Vertragspruefung.
+- `stb-lohn-sv-beitraege-grundlagen` — SV.
+
+## Quellen und Updates
+
+Stand: 05/2026.
+
+- 5. VermBG.
+- EStG § 19.
+- BMF zur Sparzulage.
+- Sparzulage-Saetze 2025: Bausparen 9% (max. 43 EUR/Jahr, Grenze 17.900 EUR ledig), Aktien-Fonds 20% (max. 80 EUR/Jahr, Grenze 20.000 EUR ledig); 5. VermBG; BZSt pruefen.
+
+<!-- AUDIT 27.05.2026 | welle 6 | 3 Marker aufgeloest: 2 bestaetigt (VermBG-Saetze 2025 eingesetzt), 1 ersetzt (Normbestand Pruefhinweis ohne Marker) -->
+
+
+## Qualitäts-Hardening
+
+- Arbeite aktennah: Tatsachen, Belege, Fristen, Zuständigkeit und gewünschtes Arbeitsprodukt zuerst klären.
+- Keine Rechtsprechung aus Modellwissen zitieren. Jede Entscheidung vor Ausgabe mit Gericht, Entscheidungsform, Datum, Aktenzeichen und frei oder amtlich prüfbarer Quelle absichern.
+- Keine BeckRS-, juris-, Kommentar-, Handbuch- oder Aufsatz-Blindzitate. Literatur nur verwenden, wenn der Nutzer sie bereitstellt oder ein lizenzierter Live-Zugriff im konkreten Arbeitsschritt dokumentiert ist.
+- Wenn eine Quelle, Randnummer, Behördenpraxis oder Frist nicht sicher geprüft ist, sichtbar als Prüfpunkt markieren und keine Scheinpräzision erzeugen.
+- Ergebnisse so liefern, dass sie sofort weiterverwendbar sind: Kurzbild, Prüfpfad, Risikoampel, Lückenliste und konkrete nächste Schritte.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
