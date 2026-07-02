@@ -1,73 +1,58 @@
 ---
-name: inhouse-interkommunal
-description: Wenn es um Inhouse Interkommunal in Fachanwalt Vergaberecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: mac-ordinary-course
+description: Wenn es um MAC Ordinary Course Covenants in Großkanzlei Corporate/M&A geht: ordnet Sachverhalt, Norm, Beweislast, Gegenargumente und nächsten Schritt; liefert ein direkt nutzbares Arbeitsprodukt mit Prüfpunkten, Risiken und nächstem Schritt. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Inhouse-Geschäft und interkommunale Zusammenarbeit vergaberechtlich prüfen: öffentlicher Auftraggeber will ohne Ausschreibung an verbundene Einrichtung oder Schwester-Kommune vergeben
+# MAC Ordinary Course Covenants
 
+## Fachlicher Anker
 
-## Arbeitsweg
+- **Normenradar:** Paragraf 15, 16, 40, 43, 46 GmbHG; Paragraf 76, 93, 111 AktG; HGB-, UmwG-, GWB- und AWV-Bezug nur, wenn der konkrete Vorgang ihn trägt.
+- **Rechtsprechungsanker:** BGH, 21.04.1997 - II ZR 175/95 für Organpflichten; BGH, 20.11.2018 - II ZR 12/17 für Gesellschafterlisten. Weitere Entscheidungen nur mit frei prüfbarer Quelle.
+- **Quellenhygiene:** `references/quellenhygiene.md` und `references/zitierweise.md` beachten.
 
-- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: die vergaberechtlich einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+## Fachkern: MAC Ordinary Course Covenants
+- **Prüfachse:** Ordne den konkreten Auftrag nach Gesellschaftsform, Dokument, Entscheidungsträger, Form, Frist, Beleg und Rechtsfolge; Spezialnormen nur nennen, wenn sie den Fall tragen.
+- **Entscheidende Weiche:** Trenne Sachverhalt, Zuständigkeit, Zustimmung, Haftung, Vollzug und taktischen nächsten Schritt.
+- **Arbeitsprodukt:** Liefere eine verwertbare Matrix mit `Tatsache / Norm / Beleg / Wertung / Gegenargument / nächster Schritt` und bei Bedarf einen ausformulierten Textbaustein.
 
-**Fokus:** Inhouse-Geschäft und interkommunale Zusammenarbeit vergaberechtlich prüfen: öffentlicher Auftraggeber will ohne Ausschreibung an verbundene Einrichtung oder Schwester-Kommune vergeben. Normen: § 108 GWB (Ausnahmen), Teckal-Doktrin EuGH C-107/98, Hamburg-Stadtreinigung EuGH C-480/06. Prüfraster: Kontrolltest wie über eigene Dienststelle, Wesentlichkeitstest 80 Prozent Taetigkeit für Kontrollierende, Privatkapitalverbot mit Ausnahmen, horizontale Zusammenarbeit § 108 Abs. 6 GWB. Output Inhouse-Prüfvermerk, Vertragsentwurf-Modul. Abgrenzung: De-facto-Vergabe siehe fachanwalt-vergaberecht-de-facto-vergabe-klage.
+## Intake
+Frage nicht breit, sondern dealpraktisch. Wenn Material schon vorliegt, extrahiere die Antworten selbst und markiere nur echte Luecken.
 
-### Inhouse und interkommunale Zusammenarbeit
+| Feld | Worum es geht |
+| --- | --- |
+| Deal-Perspektive | Buy-side, Sell-side, Target, Vorstand/Geschäftsführung, Bank, Investor, W&I-Versicherer oder Local Counsel. |
+| Phase | Screening, NDA, Term Sheet, Datenraum, DD, SPA/APA, Signing, Closing, PMI, Streit oder Post-Mortem. |
+| Material | Closing-Zeitraum, Geschäftsbetrieb, Zustimmungsvorbehalte, Regulatory Timing, aktuelle Ereignisse. |
+| Frist | Signing, Closing, Q&A, Filing, Board, Beurkundung, Angebotsfrist, CP-Deadline oder keine Eile erkennbar. |
+| Ziel-Output | Covenant-Register, MAC-Risikoanalyse, Consent-Workflow, Notice-Text und Eskalationsplan. |
 
-## Einstieg
-1. Wer ist Auftraggeber, wer ist Auftragnehmer (gleicher öffentlicher Auftraggeber, Tochter, Schwester-Kommune)?
-2. Beherrschungsstruktur (Anteile, Beirats-/Aufsichtsmehrheit)?
-3. Privater Kapitalanteil am Auftragnehmer?
-4. Wesentlichkeit: Mindestens 80 Prozent Taetigkeit für kontrollierende öffentliche Hand?
-5. Bei horizontaler Kooperation: gemeinsames Ziel im Gemeinwohlinteresse?
+## Padlet- und Tabellen-Ausgabe
+Biete bei komplexen Aufgaben eine visuelle Arbeitsflaeche an:
 
-## Prüfraster Inhouse § 108 Abs. 1-5 GWB
-### 1. Kontrolltest
-Auftraggeber muss aehnliche Kontrolle wie über eigene Dienststelle ausueben (Teckal-Doktrin EuGH C-107/98).
-- Personelle Steuerung: Bestellung der Mehrheit der Leitungsorgane.
-- Strategische Steuerung: Weisungsbefugnis.
-- Auch durch gemeinsame Kontrolle mehrerer öffentlicher Auftraggeber möglich (§ 108 Abs. 4 GWB).
+| Karte/Spalte | Inhalt | Status | Owner | Quelle | Naechster Schritt |
+| --- | --- | --- | --- | --- | --- |
+| Issue | Konkretes Thema oder Dokument | offen / in Prüfung / entschieden | Person oder Workstream | Datenraum, Register, Vertrag, Call | konkrete Aktion |
 
-### 2. Wesentlichkeitstest
-Mindestens 80 Prozent der Taetigkeit des kontrollierten Auftragnehmers für die kontrollierende öffentliche Hand. Restliche Taetigkeiten nur nebenbei (EuGH C-340/04 Carbotermo).
+Für Tabellen nie nur Ueberschriften liefern. Jede Zeile braucht mindestens: Befund, rechtliche Bedeutung, wirtschaftliche Bedeutung, Evidenz, Risikoampel und Follow-up.
 
-### 3. Privatkapital
-Grundsätzlich keine private Beteiligung. Ausnahme § 108 Abs. 1 Nr. 3 GWB: bestimmte nicht-kontrollierende Beteiligungen aufgrund gesetzlicher Anordnung.
+## Standard-Deliverables
+- Kurzbild für Partner oder Mandant.
+- Workstream-Tabelle mit Ampel und Owner.
+- Issue-/Risk-Liste mit Priorisierung.
+- Entwurf oder Textbausteine, soweit der Input reicht.
+- Offene Punkte mit genauem Nachforderungswortlaut.
 
-## Prüfraster Horizontale Kooperation § 108 Abs. 6 GWB
-1. Auftraggeber kooperieren auf vertraglicher Basis.
-2. Kooperation dient gemeinsamem Gemeinwohlziel.
-3. Kooperation wird von rein öffentlichen Erwaegungen geleitet.
-4. Weniger als 20 Prozent der vertragsgegenstaendlichen Taetigkeiten werden am Markt erbracht (EuGH C-480/06 Hamburg-Stadtreinigung).
+## Quality Gate
+Vor Ausgabe immer prüfen:
 
-## Vertragliche Umsetzung
-- Inhouse-Vertrag: Gesellschafterstruktur, Kontrollrechte, Taetigkeitsbegrenzung, Reporting.
-- Interkommunaler Vertrag: gemeinsames Ziel definieren, Marktteil < 20 Prozent festschreiben, Beendigungsrechte.
-
-## Risiken bei Verlust der Inhouse-Eigenschaft
-- Aufnahme privaten Kapitals -> Verlust Kontroll-Test.
-- Steigender Marktanteil -> Verlust Wesentlichkeitstest.
-- Fehlende Dokumentation -> Beweislast in Nachpruefungsverfahren beim Auftraggeber.
-- Folge: De-facto-Vergabe, § 135 Abs. 1 Nr. 2 GWB -> Vertrag unwirksam.
-
-## Quellenregel
-EuGH-Linie (Teckal, Carbotermo, Hamburg-Stadtreinigung, Datenlotsen) und neuere BGH/OLG-Entscheidungen vor Ausgabe über curia.europa.eu und dejure.org verifizieren.
-
-## Vergabe-Workbench-Boost v61.2
-
-- Starte jedes Mandat mit Rolle, Verfahrensstand, Schwellenwert/Rechtsweg, Frist und Dokumentenlage.
-- Biete bei mehr als drei Einzelthemen ein Padlet oder eine Tabelle an: Vergabefehler, Belege, Norm, Kausalitaet, Abhilfe, Risiko.
-- Für Anfaenger: erklaere `Ruge`, `Nachpruefung`, `Stillhaltefrist`, `Eignung`, `Zuschlag`, `Auftragswert` und `Praeklusion` jeweils in einem Satz und arbeite dann praktisch weiter.
-- Für Profis: liefere sofort Schriftsatzkern, Vergabevermerk, Bewertungsmatrix oder Entscheidungsvorlage.
-- Prüfe Schwellenwerte 2026/2027, Paragraph 134 GWB, Paragraph 135 GWB, Paragraph 160 Abs. 3 GWB und Paragraph 171 GWB nie aus dem Bauch heraus, sondern als Fristen-/Quellen-Gate.
-- Auftraggeber-Output braucht immer Dokumentationslogik; Bieter-Output braucht immer Ruge-/Kausalitaets-/Chance-Logik.
-- Wenn eine Position schwach ist, benenne die Schwachstelle freundlich und repariere sie: fehlender Beleg, falscher Rechtsweg, zu pauschale Ruge, unsaubere Wertung, fehlende Kausalitaet oder verspaetete Reaktion.
+- Ist die Partei-Perspektive klar?
+- Sind alle Fristen und Vollzugsrisiken markiert?
+- Sind Annahmen von gesicherten Tatsachen getrennt?
+- Gibt es mindestens einen konkreten naechsten Schritt?
+- Sind Tabellen, Klauseln oder Memos so formatiert, dass ein Deal-Team sofort weiterarbeiten kann?
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
