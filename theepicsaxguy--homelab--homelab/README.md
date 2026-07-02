@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [theepicsaxguy/homelab](https://github.com/theepicsaxguy/homelab/tree/main/.claude/skills/agents-md-updater/SKILL.md)
+Original source: [theepicsaxguy/homelab](https://github.com/theepicsaxguy/homelab/tree/main/.claude/skills/minecraft-plugin-updater/SKILL.md)
 
 ---
 
