@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chalk-lab/Mooncake.jl](https://github.com/chalk-lab/Mooncake.jl/tree/main/.claude/skills/inspect/SKILL.md)
+Original source: [chalk-lab/Mooncake.jl](https://github.com/chalk-lab/Mooncake.jl/tree/main/.claude/skills/minimise/SKILL.md)
 
 ---
 
