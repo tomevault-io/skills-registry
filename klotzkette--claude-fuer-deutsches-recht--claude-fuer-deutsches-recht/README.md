@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/urteilsbauer-relationsmacher/skills/spezial-input-compliance-dokumentation-und-akte/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/startup-hr-personalabteilung-berlin/skills/fristentracker-befristung-probezeit-visa/SKILL.md)
 
 ---
 
