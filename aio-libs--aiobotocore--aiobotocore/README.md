@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aio-libs/aiobotocore](https://github.com/aio-libs/aiobotocore/tree/main/plugins/aiobotocore-bot/skills/draft-release/SKILL.md)
+Original source: [aio-libs/aiobotocore](https://github.com/aio-libs/aiobotocore/tree/main/plugins/aiobotocore-bot/skills/pyright-delta/SKILL.md)
 
 ---
 
