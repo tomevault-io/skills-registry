@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shinpr/ai-coding-project-boilerplate](https://github.com/shinpr/ai-coding-project-boilerplate/tree/main/.claude/skills-ja/documentation-criteria/SKILL.md)
+Original source: [shinpr/ai-coding-project-boilerplate](https://github.com/shinpr/ai-coding-project-boilerplate/tree/main/.claude/skills-en/integration-e2e-testing/SKILL.md)
 
 ---
 
