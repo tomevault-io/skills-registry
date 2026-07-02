@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openteams-lab/openteams](https://github.com/openteams-lab/openteams/tree/main/assets/skills/wolfram-alpha-api-automation/SKILL.md)
+Original source: [openteams-lab/openteams](https://github.com/openteams-lab/openteams/tree/main/assets/skills/onesignal_rest_api-automation/SKILL.md)
 
 ---
 
