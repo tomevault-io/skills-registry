@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mikeckennedy/fastapi-chameleon](https://github.com/mikeckennedy/fastapi-chameleon/tree/main/docs/skill.md)
+Original source: [mikeckennedy/fastapi-chameleon](https://github.com/mikeckennedy/fastapi-chameleon/tree/main/docs/.well-known/skills/default/SKILL.md)
 
 ---
 
