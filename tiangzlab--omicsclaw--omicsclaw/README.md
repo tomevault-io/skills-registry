@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TianGzlab/OmicsClaw](https://github.com/TianGzlab/OmicsClaw/tree/main/knowledge_base/survival-analysis-clinical/SKILL.md)
+Original source: [TianGzlab/OmicsClaw](https://github.com/TianGzlab/OmicsClaw/tree/main/knowledge_base/genetic-variant-annotation/SKILL.md)
 
 ---
 
