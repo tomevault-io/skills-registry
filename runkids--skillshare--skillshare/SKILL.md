@@ -1,178 +1,252 @@
 ---
-name: skillshare
-description: | Use when this capability is needed.
+name: skillshare-implement-feature
+description: >- Use when this capability is needed.
 metadata:
   author: runkids
 ---
 
-# Skillshare CLI
+Implement a feature following TDD workflow. $ARGUMENTS is a spec file path (e.g., `specs/my-feature.md`) or a plain-text feature description.
 
-Global: `~/.config/skillshare/skills/` → all AI CLIs. Project: `.skillshare/skills/` → repo-local.
-Auto-detects project mode when `.skillshare/config.yaml` exists. Force with `-p` or `-g`.
+**Scope**: This skill writes Go code and tests. It does NOT update website docs (use `update-docs` after) or CHANGELOG (use `changelog` after).
 
-## Recipes
+## Workflow
 
-### Getting Started
-```bash
-skillshare init --no-copy --all-targets --git --skill  # Fresh global setup
-skillshare init -p --targets "claude,cursor"            # Fresh project setup
-skillshare init --copy-from claude --all-targets --git  # Import from existing CLI
-skillshare init --discover --select "windsurf"          # Add new AI tool later
-```
-### Installing Skills
-```bash
-skillshare install user/repo -s pdf,commit       # Select specific skills
-skillshare install user/repo --all               # Install everything
-skillshare install user/repo --into frontend     # Place in subdirectory
-skillshare install gitlab.com/team/repo          # Any Git host
-skillshare install user/repo --track             # Enable `update` later
-skillshare install user/repo -b develop --all    # Install from branch
-skillshare install user/repo --track -b develop  # Track specific branch
-skillshare install user/repo -s pdf -p           # Install to project
-skillshare install                               # Reinstall all tracked remotes from config
-skillshare sync                                  # Always sync after install
-```
-### Extras (Rules, Commands, Prompts)
-```bash
-skillshare extras init rules --target ~/.claude/rules --target ~/.cursor/rules
-skillshare extras init commands --target ~/.claude/commands --mode copy
-skillshare extras init rules --target ~/.claude/rules --source ~/shared/rules  # custom source (global only)
-skillshare extras init rules --target ~/.cursor/rules --force                  # overwrite existing
-skillshare extras init                               # Interactive TUI wizard (incl. source step)
-skillshare extras source                             # Show current extras_source
-skillshare extras source ~/shared/extras             # Set global extras_source
-skillshare extras list                               # Show status per target
-skillshare extras list --json                        # JSON with source_type field
-skillshare extras collect rules                      # Pull local files into source
-skillshare extras remove rules                       # Remove from config (source preserved)
-skillshare extras init agents --target ~/.claude/agents --flatten  # Flatten subdirs into root
-skillshare extras rules --mode copy                  # Change sync mode of a target
-skillshare extras agents --flatten                   # Enable flatten on existing target
-skillshare sync extras                               # Sync all extras to targets
-skillshare sync extras --dry-run --force             # Preview / overwrite conflicts
-skillshare sync --all                                # Sync skills + extras together
-```
-See [extras.md](references/extras.md) for details.
-### Creating & Discovering Skills
-```bash
-skillshare new my-skill                          # Create with interactive pattern selection
-skillshare new my-skill -P reviewer              # Use reviewer pattern directly
-skillshare search "react testing"                # Search GitHub for skills
-skillshare collect                               # Pull target-local changes back to source
-```
-### Removing Skills
-```bash
-skillshare uninstall my-skill                    # Remove one (moves to trash)
-skillshare uninstall skill-a skill-b             # Remove multiple
-skillshare uninstall -G frontend                 # Remove entire group
-skillshare sync                                  # Always sync after uninstall
-```
-### Enable / Disable Skills
-```bash
-skillshare disable draft-*                       # Hide from sync (adds to .skillignore)
-skillshare enable draft-*                        # Restore (removes from .skillignore)
-skillshare disable my-skill -p                   # Project mode
-skillshare disable my-skill --dry-run            # Preview
-# TUI: press E in `skillshare list` to toggle
-skillshare sync                                  # Always sync after toggle
-```
-### Team / Organization
-```bash
-# Creator: init project (see Getting Started) → add skills → commit .skillshare/
-skillshare install -p && skillshare sync                  # Member: clone → install → sync
-skillshare install github.com/team/repo --track -p        # Track shared repo
-skillshare push                                           # Cross-machine: push on A
-skillshare pull                                           # Cross-machine: pull on B
-```
-### Skill Hubs
-```bash
-skillshare hub add https://example.com/hub.json          # Save a hub source
-skillshare hub add https://example.com/hub.json --label my-hub  # With custom label
-skillshare hub list                                      # List saved hubs
-skillshare hub default my-hub                            # Set default hub
-skillshare hub remove my-hub                             # Remove a hub
-skillshare hub index --source ~/.config/skillshare/skills/ --full --audit  # Build hub index
-```
-### Controlling Where Skills Go
-```bash
-# SKILL.md frontmatter: targets: [claude]        → only syncs to Claude
-skillshare target claude --add-include "team-*"   # glob filter
-skillshare target claude --add-exclude "_legacy*"  # exclude pattern
-skillshare target codex --mode copy && skillshare sync --force  # copy mode
-# .skillignore — hide skills/dirs from discovery (gitignore syntax)
-#   Root-level: <source>/.skillignore (affects all commands)
-#   Repo-level: <source>/_repo/.skillignore (scoped to that repo)
-#   .skillignore.local — local override (not committed), negation overrides base
-```
-See [targets.md](references/targets.md) for details.
-### Updates & Maintenance
-```bash
-skillshare check                              # See what has updates
-skillshare update my-skill && skillshare sync  # Update one
-skillshare update --all && skillshare sync     # Update all
-skillshare update --all --diff                 # Show what changed
-```
-### Scripting & CI/CD
-```bash
-skillshare status --json                       # Full status as JSON
-skillshare check --json                        # Update status as JSON
-skillshare sync --json                         # Sync results as JSON
-skillshare diff --json                         # Diff results as JSON
-skillshare install user/repo --json            # Install result as JSON (implies --force --all)
-skillshare update --all --json                 # Update results as JSON
-skillshare uninstall my-skill --json           # Uninstall result as JSON (implies --force)
-skillshare collect claude --json               # Collect result as JSON (implies --force)
-skillshare target list --json                  # Target list as JSON
-skillshare list --json                         # Skill list as JSON
-skillshare search react --json                 # Search results as JSON
-skillshare audit --format json                 # Audit results as JSON
-skillshare doctor --json                       # Health check as JSON (exit 1 on errors)
-```
-### Recovery & Troubleshooting
-```bash
-skillshare trash restore <name> && skillshare sync  # Undo delete
-skillshare sync                                     # Skill missing? Re-sync
-skillshare doctor && skillshare status              # Diagnose issues
-skillshare install user/repo --force                 # Override audit block
-skillshare install user/repo --skip-audit            # Bypass scan entirely
-```
-See [TROUBLESHOOTING.md](references/TROUBLESHOOTING.md) for more.
+### Step 1: Understand Requirements
 
-## Quick Lookup
-| Commands | Project? | `--json`? |
-|----------|:--------:|:---------:|
-| `status`, `diff`, `list`, `doctor` | ✓ (auto) | ✓ |
-| `sync`, `collect` | ✓ (auto) | ✓ |
-| `install`, `uninstall`, `update`, `check`, `search`, `new` | ✓ (`-p`) | ✓ (except new) |
-| `target`, `audit`, `analyze`, `trash`, `log`, `hub` | ✓ (`-p`) | ✓ (target list, audit, analyze, log) |
-| `extras init/list/remove/collect/source/mode` | ✓ (`-p`, except source) | ✓ (list, mode) |
-| `enable`, `disable` | ✓ (auto) | ✗ |
-| `push`, `pull`, `backup`, `restore` | ✗ | ✗ |
-| `tui`, `upgrade` | ✗ | ✗ |
-| `ui` | ✓ (`-p`) | ✗ |
+If $ARGUMENTS is a file path:
+1. Read the spec file
+2. Extract acceptance criteria and edge cases
+3. Identify affected packages
 
-## AI Caller Rules
-1. **Non-interactive** — AI cannot answer prompts. Use `--force`, `--all`, `-s`, `--targets`, `--no-copy`, `--all-targets`, `--yes`.
-2. **Sync after mutations** — `install`, `uninstall`, `update`, `collect`, `target` all need `sync`.
-3. **Audit** — `install` auto-scans; CRITICAL blocks. `--force` to override, `--skip-audit` to bypass. Detects hardcoded secrets (API keys, tokens, private keys).
-4. **Uninstall safely** — moves to trash (7 days). `trash restore <name>` to undo. **NEVER** `rm -rf` symlinks.
-5. **Output** — `--json` for structured data (12 commands support it, see Quick Lookup). `--no-tui` for plain text on TUI commands (`list`, `log`, `audit`, `analyze`, `diff`, `trash list`, `backup list`, `target list`). `tui off` disables TUI globally. `--dry-run` to preview.
+If $ARGUMENTS is a description:
+1. Search existing code for related functionality
+2. Identify the right package to extend
+3. Confirm scope with user before proceeding
 
-## References
-| Topic | File |
-|-------|------|
-| Init flags | [init.md](references/init.md) |
-| Sync/collect/push/pull | [sync.md](references/sync.md) |
-| Install/update/uninstall/new | [install.md](references/install.md) |
-| Status/diff/list/search/check | [status.md](references/status.md) |
-| Security audit | [audit.md](references/audit.md) |
-| Trash | [trash.md](references/trash.md) |
-| Operation log | [log.md](references/log.md) |
-| Targets | [targets.md](references/targets.md) |
-| Extras (rules/commands/prompts) | [extras.md](references/extras.md) |
-| Backup/restore | [backup.md](references/backup.md) |
-| Troubleshooting | [TROUBLESHOOTING.md](references/TROUBLESHOOTING.md) |
+### Step 2: Identify Affected Files
+
+List all files that will be created or modified:
+
+```bash
+# Typical pattern for a new command
+cmd/skillshare/<command>.go          # Command handler
+cmd/skillshare/<command>_project.go  # Project-mode handler (if dual-mode)
+internal/<package>/<feature>.go      # Core logic
+tests/integration/<command>_test.go  # Integration test
+```
+
+Display the file list and continue. If scope is unclear, ask the user.
+
+### Step 3: Write Failing Tests First (RED)
+
+Write integration tests using `testutil.Sandbox`:
+
+```go
+func TestFeature_BasicCase(t *testing.T) {
+    sb := testutil.NewSandbox(t)
+    defer sb.Cleanup()
+
+    // Setup
+    sb.CreateSkill("test-skill", map[string]string{
+        "SKILL.md": "---\nname: test-skill\n---\n# Content",
+    })
+
+    // Act
+    result := sb.RunCLI("command", "args...")
+
+    // Assert
+    result.AssertSuccess()
+    result.AssertOutputContains("expected output")
+}
+```
+
+Verify tests fail:
+```bash
+make test-int
+# or run specific test:
+go test ./tests/integration -run TestFeature_BasicCase
+```
+
+### Step 4: Implement (GREEN)
+
+Write minimal code to make tests pass:
+
+1. Follow existing patterns in `cmd/skillshare/` and `internal/`
+2. Use `internal/ui` for terminal output (colors, spinners, boxes)
+3. Add oplog instrumentation for mutating commands:
+   ```go
+   start := time.Now()
+   // ... do work ...
+   e := oplog.NewEntry("command-name", statusFromErr(err), time.Since(start))
+   oplog.Write(configPath, oplog.OpsFile, e)
+   ```
+4. Register command in `main.go` commands map if new command
+
+Verify tests pass:
+```bash
+make test-int
+```
+
+### Step 5: Refactor and Verify
+
+1. Clean up code while keeping tests green
+2. Run full quality check:
+   ```bash
+   make check  # fmt-check + lint + test
+   ```
+3. Fix any formatting or lint issues
+
+## Project Patterns Reference
+
+These patterns appear throughout the codebase. Follow them when implementing new features.
+
+### Handler Split Convention
+
+Large commands are split by concern rather than kept in a single file. When a command handler grows beyond ~300 lines, split it:
+
+| Suffix | Purpose | Example |
+|--------|---------|---------|
+| `<cmd>.go` | Flag parsing + mode routing (dispatch) | `install.go` |
+| `_handlers.go` | Core handler logic | `install_handlers.go` |
+| `_render.go` / `_audit_render.go` | Output rendering | `audit_render.go` |
+| `_prompt.go` / `_prompt_tui.go` | Decision/prompt logic | `install_prompt.go` |
+| `_tui.go` | Full-screen TUI (bubbletea) | `list_tui.go` |
+| `_batch.go` | Batch operation orchestration | `update_batch.go` |
+| `_resolve.go` | Target/skill resolution | `update_resolve.go` |
+| `_context.go` | Mode-specific context struct | `install_context.go` |
+| `_format.go` | Output formatting helpers | `log_format.go` |
+
+**Principle**: dispatch file does ONLY flag parsing + mode routing. Logic goes in sub-files.
+
+### Dual-Mode Command Pattern
+
+Most commands support both global (`-g`) and project (`-p`) mode:
+
+```go
+func handleMyCommand(args []string) error {
+    mode, rest, err := parseModeArgs(args)
+    if err != nil { return err }
+
+    switch mode {
+    case modeProject:
+        return handleMyCommandProject(rest)
+    default:
+        return handleMyCommandGlobal(rest)
+    }
+}
+```
+
+Create `<cmd>_project.go` for project-mode handler. Use `parseModeArgs()` from `mode.go`.
+
+### TUI Components (bubbletea)
+
+All interactive prompts use **bubbletea** (not survey). Key components:
+
+- `checklist_tui.go` — shared checklist/radio picker
+- `list_tui.go` — filterable list with detail panel
+- `search_tui.go` — multi-select checkbox list
+
+Color palette: cyan `Color("6")`, gray `Color("8")`, yellow `#D4D93C`.
+
+Dispatch order: JSON output → TUI (if TTY + items + !`--no-tui`) → empty check → plain text.
+
+### Web API Endpoint
+
+If the feature needs a Web UI endpoint, add `internal/server/handler_<name>.go`:
+
+```go
+func (s *Server) handle<Name>(w http.ResponseWriter, r *http.Request) {
+    // ...
+    writeJSON(w, result)       // 200 OK with JSON
+    // writeError(w, 400, msg) // for errors
+}
+```
+
+Register in `server.go` route setup. Branch on `s.IsProjectMode()` for mode-specific behavior.
+
+### Oplog Instrumentation
+
+All mutating commands log to `operations.log` (JSONL):
+
+```go
+start := time.Now()
+// ... do work ...
+e := oplog.NewEntry("command-name", statusFromErr(err), time.Since(start))
+e.Args = map[string]any{"key": value}
+oplog.Write(configPath, oplog.OpsFile, e)
+```
+
+Security scans write to `oplog.AuditFile` instead.
+
+### Step 6: E2E Runbook (Major Features Only)
+
+If the feature meets **any** of these criteria, generate an E2E runbook:
+- New command or subcommand
+- Changes to install/uninstall/sync flow
+- Security-related (audit, hash verification, rollback)
+- Multi-step user workflow (init → install → sync → verify)
+- Edge cases that integration tests alone can't cover (Docker, network, file permissions)
+
+Generate `ai_docs/tests/<slug>_runbook.md` following the existing convention:
+
+```markdown
+# CLI E2E Runbook: <Title>
+
+<One-line summary of what this validates.>
+
+**Origin**: <version> — <why this runbook exists>
+
+## Scope
+
+- <bullet list of behaviors being validated>
+
+## Environment
+
+Run inside devcontainer with `ssenv` isolation.
+
+## Steps
+
+### 1. Setup: <description>
+
+\```bash
+<commands>
+\```
+
+**Expected**: <what should happen>
+
+### 2. <Action>: <description>
+...
+
+## Pass Criteria
+
+- All steps marked PASS
+- <additional criteria>
+```
+
+Key conventions:
+- YAML-free, pure Markdown
+- Each step has `bash` block + `Expected` block
+- `ss` = `skillshare`, `~` = ssenv-isolated HOME
+- Runbook can be executed by the `cli-e2e-test` skill
+
+If the feature does not meet the criteria above, skip this step.
+
+### Step 7: Stage and Report
+
+1. List all created/modified files
+2. Confirm each acceptance criterion is met with test evidence
+3. Remind user to run `update-docs` if the feature affects CLI flags or user-visible behavior
+
+## Rules
+
+- **Test-first** — always write failing test before implementation
+- **Minimal code** — only write what's needed to pass tests
+- **Follow patterns** — match existing code style in each package
+- **3-strike rule** — if a test fails 3 times after fixes, stop and report what's blocking
+- **No docs** — this skill writes code only; use `update-docs` for documentation
+- **No changelog** — use `changelog` skill for release notes
+- **Spec ambiguity** — ask the user rather than guessing
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/runkids) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [runkids/skillshare](https://github.com/runkids/skillshare) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-02 -->
