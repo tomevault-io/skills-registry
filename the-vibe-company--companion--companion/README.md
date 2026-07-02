@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [The-Vibe-Company/companion](https://github.com/The-Vibe-Company/companion/tree/main/archived/legacy-companion/.agents/skills/distill/SKILL.md)
+Original source: [The-Vibe-Company/companion](https://github.com/The-Vibe-Company/companion/tree/main/archived/legacy-companion/.agents/skills/quieter/SKILL.md)
 
 ---
 
