@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [JSingletonAI/dejavu](https://github.com/JSingletonAI/dejavu/tree/main/dejavu-plugin/skills/dejavu-mcp/SKILL.md)
+Original source: [JSingletonAI/dejavu](https://github.com/JSingletonAI/dejavu/tree/main/dejavu-openclaw/skills/memory-dream/SKILL.md)
 
 ---
 
