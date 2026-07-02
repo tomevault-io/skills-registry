@@ -1,114 +1,154 @@
 ---
-name: strafbefehl-einlassung-deal-verstaendigung
-description: Wenn es um Beweis und Einlassung im Strafbefehlsverfahren in Strafbefehl-Verteidiger geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: bwa-betriebsergebnis-deckungsbeitrag
+description: Wenn es um Betriebsergebnis und Deckungsbeitrag in der BWA in Steuerrecht – Steuerberater und Anwälte geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Auswahlstichwort: Bwa Betriebsergebnis Deckungsbeitrag; Arbeitsfeld: Steuerrecht – Steuerberater und Anwälte. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Beweis und Einlassung im Strafbefehlsverfahren
+# Betriebsergebnis und Deckungsbeitrag in der BWA
 
-## Arbeitsbereich
+## Fachlicher Anker
 
-Beweisprüfung und Einlassungsstrategie im Strafbefehlsverfahren. Schweigen nach § 136 StPO darf nicht nachteilig gewertet werden (BGH st. Rspr.). Gestaendnis vs. Bestreiten Strategie. Beweisanträge § 244 StPO. Einlassung schriftlich oder muendlich. Beweisverwertungsverbote § 136a StPO. Arbeite entlang dieser konkreten Prüfungslinie und trenne Rolle, Frist, Zuständigkeit, Beweislast und gewünschten Output.
+- **Normen:** § 6a, § 275 HGB, § 238 HGB.
+- **Entscheidungs-/Quellenanker:** Tragende Rechtsprechung nur mit Gericht, Datum, Aktenzeichen und frei prüfbarer Quelle einsetzen; keine Entscheidung aus Modellwissen erzwingen.
+- **Quellenhygiene:** `references/quellenhygiene.md` und `references/zitierweise.md` beachten.
 
-## Arbeitsweg
+## Kernsachverhalt
 
-- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+Die Standard-BWA weist ein Betriebsergebnis nach Block-Logik aus. Für Steuerungszwecke ist aber die Deckungsbeitragsrechnung mit Stufenkonzept ergiebiger: Sie trennt variable von fixen Kosten und zeigt, ab welcher Umsatzhoehe das Unternehmen profitabel arbeitet. Der Steuerberater muss die Standard-BWA so umkonfigurieren oder ergaenzen, dass DB I, DB II und EBITDA/EBIT/EBT klar ablesbar sind. Insbesondere bei Industrie- und Handelsmandanten ist die Deckungsbeitragsstruktur Standard.
 
-## Triage zu Beginn
+## Kaltstart-Rueckfragen
 
-1. **Was bestreitet der Mandant?** — Tathandlung, Fahrereigenschaft, Vorsatz, Schuld? Klare Abgrenzung der streitigen Punkte.
-2. **Aktenlage:** Welche Beweismittel hat die Staatsanwaltschaft — Zeugen, Messgeraet, Video, Gestaendnis im Anhörungsbogen?
-3. **Hat der Mandant sich bereits gegenueber der Polizei gaeussert?** — Aussagen im Anhörungsverfahren oder Vernehmung können belastend sein.
-4. **Anhörungsbogen ausgefuellt oder unterschrieben?** — Nur schriftliche Bekanntgabe, kein Gestaendnis; Unterschrift kann als Einraeuming der Fahrereigenschaft ausgelegt werden.
-5. **Dauer der Hauptverhandlung und Ressourcen des Mandanten** — Einlassung mit Kostenpruefung abstimmen.
-6. **Smartphone-, Polizei- oder Versammlungsaufnahme?** — Bei Strafbefehl wegen Filmens/Audioaufnahme sofort `strafbefehl-polizeifilmerei-201-kug` hinzuziehen: § 201 StGB, § 201a StGB und KunstUrhG/KUG dürfen nicht vermischt werden.
+1. Welche Branche und welches Geschäftsmodell — Industrie mit Fertigung, Handel mit Lagerumschlag, Dienstleistung mit Stundensaetzen?
+2. Welche Kosten sind variabel (mit Umsatz schwankend), welche fix (unabhaengig vom Umsatz)?
+3. Ist eine Stufendeckungsbeitragsrechnung gewuenscht (DB I, DB II, DB III)?
+4. Welche Ergebniskennzahlen benoetigt der Mandant — EBITDA für Banken, EBIT für interne Steuerung?
+5. Werden kalkulatorische Positionen ausgewiesen (kalk. Unternehmerlohn, kalk. Miete)?
+6. Internationale Stakeholder vorhanden (Mutter, Investor), die UKV-Format bevorzugen?
+7. Welche Kostenstellenstruktur ist hinterlegt (Profit Center, Cost Center)?
+8. Wird eine Produktdeckungsbeitrags-Auswertung benoetigt (Auftragskalkulation)?
 
-## Zentrale Normen
+## Rechtlicher Rahmen
 
-- **§ 136 StPO** — Schweigrecht; Belehrung vor jeder Vernehmung
-- **§ 136a StPO** — Verbotene Vernehmungsmethoden; Verstoss = absolutes Beweisverwertungsverbot
-- **§ 163a StPO** — Vernehmung des Beschuldigten durch die Polizei; Belehrungspflicht
-- **§ 244 StPO** — Beweisantragsrecht; Gericht muss jeden Beweisantrag bescheiden
-- **§ 257c StPO** — Verstaendigung (Deal); auch im vereinfachten Verfahren möglich
-- **§ 46 StGB** — Strafzumessung; Gestaendnis als Milderungsgrund
-- **§§ 22, 23, 33 KunstUrhG/KUG** — Bildnisveröffentlichung; bloße Anfertigung von Bildern getrennt prüfen
-- **§§ 201, 201a StGB** — Tonaufnahmen und höchstpersönliche Bildinhalte; Nichtöffentlichkeit, Schutzbereich und Rechtfertigung sauber trennen
+### Primaernormen
 
-## Aktuelle Rechtsprechung
+**§ 275 HGB** — GuV-Gliederung GKV (Abs. 2) oder UKV (Abs. 3); Wahlrecht. Deckungsbeitragsrechnung ist mit UKV besser abbildbar.
 
-- Rechtsprechung: keine Entscheidung aus Modellwissen zitieren; vor Ausgabe über offizielle oder frei zugängliche Quelle mit Gericht, Entscheidungsform, Datum, Aktenzeichen und tragender Aussage verifizieren.
+**§ 238 HGB** — Buchfuehrungspflicht.
 
-## Entscheidungsbaum Einlassungsstrategie
+**§ 252 HGB** — Bewertungsstetigkeit; Wechsel der BWA-Form muss begruendet werden.
 
-```
-Mandant bestreitet Tat?
-├─ Ja, substantiiert (Alibi, Messversagen, Fahreridentitaet)
-│ ├─ Schweigen bis Hauptverhandlung empfehlen
-│ ├─ Beweisantraege vorbereiten (§ 244 StPO)
-│ └─ Einlassung in HV formulieren
-├─ Nein, Tat anerkannt, nur Strafmass angreifbar
-│ ├─ Gestaendnis-Strategie: frueh und glaubhaft (§ 46 Abs. 2 StGB)
-│ ├─ Wiedergutmachung als Milderungsgrund (§ 46a StGB)
-│ └─ § 153a-Antrag bei Staatsanwaltschaft pruefen
-└─ Fahrereigenschaft bestreitbar
- ├─ Lichtbildabgleich anfordern
- ├─ Keine Aussagen zur Fahreridentifikation
- └─ Beweisantrag auf Sachverstaendigen für Lichtbild-Identifikation
+### Standards
 
-Anhörungsbogen ausgefuellt?
-├─ Nein → gut; Schweigen weiter empfehlen bis Akteneinsicht
-├─ Ja, Tat zugegeben → Gestaendnis-Wert pruefen für § 153a oder Strafmassreduzierung
-└─ Ja, Einwaende gemacht → auf diese aufbauen, widerspruchsfrei vertiefen
-```
+- IDW PS 480 — Erstellungsgrundsaetze (analog auf BWA).
+- DATEV BWA-Formen 01 (Standard), 11 (Bewegungs-BWA), 21 (Branchen-BWA).
 
-## Schritt-für-Schritt-Workflow
+## Workflow
 
-1. **Akteneinsicht anfordern** (§ 147 StPO) — Basis für jede Einlassungsstrategie.
-2. **Beweislage analysieren:** Welche Beweismittel hat die Anklage? Sind sie verwertbar (Belehrungsfehler, § 136a-Verstoss)?
-3. **Mandantengespraech: Sachverhaltsschilderung vollstaendig aufnehmen** — ohne Bewertung, nur erfassen.
-4. **Strategie festlegen** (s. Entscheidungsbaum) — schriftlich dokumentieren, Mandant über Risiken aufklaeren.
-5. **Einlassung formulieren oder Schweigen anordnen** — bei Schweigen Mandanten anweisen, keine Angaben gegenueber Polizei/Staatsanwaltschaft zu machen.
-6. **Beweisantraege formulieren** (§ 244 StPO) — konkret: Beweisthema und Beweismittel benennen.
-7. **Wenn Gestaendnis:** Timing und Umfang mit Mandant absprechen; Gestaendnis in HV fruehzeitig abgeben für optimalen Strafzumessungseffekt.
+### Phase 1 — Kostenstruktur analysieren
 
-## Output-Template Einlassungsschreiben
+| Kostenart | Typische Zuordnung |
+|---|---|
+| Wareneinsatz/Materialeinsatz | Variable Kosten (mit Umsatz schwankend) |
+| Fremdleistungen | Variable Kosten (auftragsabhaengig) |
+| Akkord-/Stueck-Lohn | Variable Kosten |
+| Zeitlohn/Festgehalt | Fixe Kosten |
+| Miete/Pacht | Fixe Kosten |
+| Versicherungen | Fixe Kosten |
+| Werbung Standard | Fixe Kosten |
+| Provisionen | Variable Kosten |
+| Abschreibungen | Fixe Kosten (Strukturkosten) |
+| Zinsen | Finanzkosten (separat) |
 
-**Adressat:** Gericht — Tonfall: sachlich-juristisch
+### Phase 2 — Stufendeckungsbeitrag konfigurieren
 
 ```
-In der Strafsache gegen [NAME MANDANT]
-Az.: [AKTENZEICHEN]
-
-Einlassung zur Sache
-
-Namens und im Auftrag des Angeklagten erklaere ich wie folgt:
-
-[Variante A — Bestreiten:]
-Der Angeklagte bestreitet die ihm zur Last gelegte Tat.
-[Sachverhaltsschilderung aus Mandantenperspektive]
-
-[Variante B — Gestaendnis:]
-Der Angeklagte gibt zu, [Sachverhalt] getan zu haben.
-Er bedauert dies aufrichtig und hat [Wiedergutmachungshandlung]
-vorgenommen.
-
-Strafmildernd ist zu beruecksichtigen:
-- Ersttatveraechtigter / kein Vorregister
-- [Weitere Umstaende]
+Umsatzerloese [Umsatz]
+- Variable Kosten (Material, FL, var. Lohn) [Var. K]
+= DECKUNGSBEITRAG I (Rohgewinn) [DB I]
+- Fixkosten der Kostenstelle / des Produkts [Fix-KSt]
+= DECKUNGSBEITRAG II [DB II]
+- Allgemeine Fixkosten Unternehmen [Allg. Fix]
+= BETRIEBSERGEBNIS / EBITDA [BE]
+- Abschreibungen [AfA]
+= EBIT
+- Zinsergebnis [Zins]
+= EBT (Ergebnis vor Steuern)
+- Ertragsteuern [Steuern]
+= JAHRESUEBERSCHUSS
 ```
 
-## Harte Leitplanken
+### Phase 3 — DATEV/Addison-Konfiguration
 
-- Keine Einlassung vor vollstaendiger Akteneinsicht.
-- Schweigrecht nach § 136 StPO ausueben bis Aktenlage klar ist.
-- Gestaendnis nur nach Mandantenruecksprache und Aufklaerung über Tragweite.
-- Beweisverwertungsverbote aktiv prüfen — Fehler der Ermittlungsbehoerden nicht verschenken.
-- Anwaltliche Endkontrolle bei jedem Schritt.
+- DATEV: BWA-Form 21 (Branchen-BWA) oder individuelle BWA-Form über Berater-Konfiguration. Klickpfad: Rechnungswesen → Stammdaten → Auswertungspakete → Eigene BWA-Form definieren.
+- Addison: BWA-Definition mit eigenen Bloecken im Auswertungsmanager.
+- Kostenstellen-Zuordnung über DATEV-Kostenrechnung (Modul Kostenrechnung Classic/Comfort) oder Sachkontenmasken mit Kostenstellen-Feld.
+
+### Phase 4 — Break-even-Analyse
+
+- Break-even-Umsatz = Fixkosten geteilt durch Deckungsbeitragsrate.
+- Deckungsbeitragsrate = DB I geteilt durch Umsatz.
+- Sicherheitsmarge = (Ist-Umsatz minus Break-even-Umsatz) geteilt durch Ist-Umsatz.
+- Rechenbeispiel: Fixkosten 100.000 EUR, DB-Rate 40 Prozent ergibt einen Break-even-Umsatz von 250.000 EUR. Liegt der Ist-Umsatz bei 300.000 EUR, betraegt die Sicherheitsmarge rund 17 Prozent.
+
+### Phase 5 — Reporting und Erläuterung
+
+- BWA mit Stufendeckung auf einer Seite.
+- Erläuterung Schwellenwerte: Break-even, Sicherheitsmarge.
+- Bei sinkendem DB I: Prüfung Wareneinsatz, Lieferantenkonditionen.
+- Bei steigenden Fixkosten ohne Umsatzaequivalent: Fixkostenstruktur hinterfragen.
+
+### Phase 6 — Quartalsgespraech mit Mandant
+
+- DB-Struktur erläutern, Mandant für die Stellschrauben sensibilisieren.
+- Maßnahmen-Plan bei kritischer Marge: Preiserhoehung, Sortimentsbereinigung, Fixkostensenkung.
+
+## Strategie und Praxis-Tipps
+
+- Stufendeckungsbeitrag ist bei Handel und Industrie Pflicht; bei Dienstleistung haeufig Stunden-DB sinnvoller.
+- EBITDA ist Bank-Standard für Schuldendienstpruefung (EBITDA-Multiple).
+- Bei kalkulatorischen Positionen Mandant darauf hinweisen, dass es sich um Sicht der Betriebswirtschaft handelt, nicht um steuerliche Behandlung.
+- DB-Rate als Kennzahl monatlich tracken — sinkende DB-Rate bei steigendem Umsatz ist Alarmsignal (Preisdruck).
+- StBVV: Individuelle BWA-Konfiguration als Zusatzauftrag mit Zeithonorar abrechnen.
+
+## Quellen und Updates
+
+Stand: 05/2026.
+
+- HGB §§ 238, 252, 275.
+- IDW PS 480.
+- DATEV BWA-Form 01, 11, 21.
+- Schweitzer/Kuepper, Systeme der Kostenrechnung (Standardlehrbuch).
+- Coenenberg, Kostenrechnung und Kostenanalyse.
+
+## Normen und Rechtsprechung
+
+### Kuratierte Normen-Bibliothek
+
+- § 8 AO (Wohnsitz, Aufenthalt)
+- §§ 33, 34 AO (Steuerpflichtiger, gesetzliche Vertreter)
+- § 42 AO (Gestaltungsmissbrauch)
+- §§ 169-171 AO (Festsetzungsverjährung)
+- §§ 233a, 235 AO (Verzinsung, Hinterziehungszinsen)
+- § 370 AO (Steuerhinterziehung)
+- §§ 153, 371 AO (Berichtigungserklärung, Selbstanzeige)
+- §§ 15, 32a EStG (Einkünfte aus Gewerbebetrieb, Tarif)
+- § 8 KStG, § 7 GewStG (Einkommen, Gewerbeertrag)
+- §§ 1, 15 UStG (Steuerbare Umsätze, Vorsteuerabzug)
+
+### Leitentscheidungen
+
+- BFH I R 36/18 (Hinzurechnungsbesteuerung AStG)
+- BFH XI R 11/22 (Reverse-Charge-Verfahren)
+- BFH IX R 49/13 (Liebhaberei vs. Einkunftserzielungsabsicht)
+- BVerfG 2 BvL 1/03 (Steuerfreistellung Existenzminimum)
+- EuGH C-280/10 (Vorsteuerabzug bei wirtschaftlicher Tätigkeit)
+
+### Anwendung im Skill
+
+- Beraterhaftung gegen Mandantenpflicht (§§ 153, 154 AO) klar trennen; Selbstanzeige nach § 371 AO ist eine Strafnorm, kein Steueroptimierungs-Tool.
+- Festsetzungsverjaehrung nach §§ 169-171 AO im Zweifel zugunsten des Steuerpflichtigen; Hemmung durch Aussenpruefung beachten.
+- Bei Gestaltungsmissbrauch § 42 AO immer alternative Wirtschaftsgruende dokumentieren.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
