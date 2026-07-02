@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [everruns/bashkit](https://github.com/everruns/bashkit/tree/main/.agents/skills/ship/SKILL.md)
+Original source: [everruns/bashkit](https://github.com/everruns/bashkit/tree/main/.agents/skills/process-issues/SKILL.md)
 
 ---
 
