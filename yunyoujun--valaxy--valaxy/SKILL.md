@@ -1,109 +1,143 @@
 ---
-name: valaxy
-description: > Use when this capability is needed.
+name: doc-i18n
+description: Bilingual documentation translation and synchronization for path-based i18n projects. This skill should be used when users need to translate, compare, or synchronize documentation between Chinese and English versions. Triggers include requests to translate docs, sync i18n, compare zh/en docs, translate this page, check translation coverage, or any task involving bilingual Markdown documentation alignment. Supports both zh-to-en and en-to-zh translation directions. Use when this capability is needed.
 metadata:
   author: YunYouJun
 ---
 
-# Valaxy
+# doc-i18n: Bilingual Documentation Translation Skill
 
-Next-generation static blog framework: Vue 3 + Vite + UnoCSS + file-based routing + markdown-it.
+## Purpose
 
-## Quick Reference
+Translate, compare, and synchronize bilingual (Chinese / English) Markdown documentation in path-based i18n projects. Ensure structural alignment, content consistency, and adherence to project-specific conventions.
 
-```bash
-pnpm create valaxy          # scaffold new site
-pnpm i                      # MUST use pnpm
-pnpm dev                    # dev server at localhost:4859
-pnpm build                  # SSG build to dist/
+## When to Use
+
+- Translating a documentation file from one language to another
+- Comparing two language versions for content drift or missing sections
+- Checking translation coverage across the documentation tree
+- Fixing heading IDs, internal links, or container syntax after translation
+- Creating a new translation file from an existing source
+
+## Workflow
+
+### Phase 1: Analyze
+
+Before making any changes, analyze the task:
+
+1. **Identify the source and target files.** Determine the translation direction:
+   - English to Chinese: `docs/pages/{path}.md` to `docs/pages/zh/{path}.md`
+   - Chinese to English: `docs/pages/zh/{path}.md` to `docs/pages/{path}.md`
+
+2. **Read both files** (source and target). If the target file does not exist, note that a new file must be created.
+
+3. **Generate a diff report** listing:
+   - Headings present in source but missing/untranslated in target
+   - Paragraphs or sections with untranslated content (e.g., Chinese text in the English file)
+   - Structural differences (extra/missing sections, reordered content)
+   - Code blocks or examples that differ
+   - Internal link path issues (see Link Rules below)
+   - Heading ID mismatches (see Heading ID Rules below)
+
+4. **Present the report** to the user before proceeding. If the task is a full translation, proceed directly after the report.
+
+### Phase 2: Translate
+
+Apply translations following these rules:
+
+#### Content Rules
+
+- **Translate prose, keep code.** Translate all natural language (paragraphs, tips, blockquotes, list items, headings). Keep code blocks, inline code, file paths, CLI commands, component names, and API identifiers unchanged.
+- **Translate code comments.** Comments inside code blocks should be translated to match the target language.
+- **Preserve Markdown structure exactly.** Keep the same heading hierarchy, list nesting, blockquote depth, container syntax, and blank line patterns.
+- **Frontmatter.** Only translate the `title` field. Keep all other frontmatter fields (categories, tags, layout, etc.) identical.
+- **Tone.** For Chinese: use concise technical Chinese (技术文档风格). For English: use clear, direct technical English.
+
+#### Container Syntax
+
+Use exactly **3 colons** for container directives:
+
+```md
+::: tip
+Content here.
+:::
+
+::: warning
+Content here.
+:::
+
+::: details Title
+Content here.
+:::
 ```
 
-**Two config files:**
-- `site.config.ts` — site metadata (title, author, social, search, comments) via `defineSiteConfig()`
-- `valaxy.config.ts` — framework config (theme, addons, markdown, vite) via `defineValaxyConfig<ThemeConfig>()`
-- Optional `theme.config.ts` — theme-specific via `defineThemeConfig()`
+Never use 4 or 5 colons. When the project convention differs, read `references/conventions.md` for project-specific overrides.
 
-**Posts** go in `pages/posts/*.md`. Frontmatter controls title, date, tags, categories, cover, draft, encryption, layout, etc.
+#### Heading ID Rules
 
-## Key Patterns
+All headings with explicit IDs (`{#slug}`) must use **English slugs** in both language versions for cross-language anchor consistency.
 
-### Config Merging
-
-Config sources merge via `defu` (user wins): Default → Theme → Addons → User.
-
-### File Resolution (Roots System)
-
-```txt
-roots = [clientRoot, themeRoot, ...addonRoots, userRoot]
+For **English files**: headings auto-generate English slugs, so explicit IDs are optional:
+```md
+## Getting Started
 ```
 
-User components/layouts/styles override theme which overrides core — by filename matching.
-
-### Routing
-
-File-based via `vue-router/vite`. Files in `pages/` become routes. Layout auto-assigned:
-- `pages/posts/**` → `post` layout
-- `pages/tags/**` → `tags` layout
-- `pages/categories/**` → `categories` layout
-
-Override with `layout: xxx` in frontmatter.
-
-### Collections
-
-Define in `pages/collections/{name}/index.ts` using `defineCollection()`:
-
-```ts
-import { defineCollection } from 'valaxy'
-
-export default defineCollection({
-  key: 'hamster',
-  title: 'Hamster Stories',
-  items: [
-    { title: 'Chapter 1', key: '1' },
-  ],
-})
+For **Chinese files**: headings must include explicit English IDs:
+```md
+## 起步 {#getting-started}
 ```
 
-### i18n
+**Slug format**: lowercase, hyphens for spaces, strip possessives, e.g.:
+- `Get User's Valaxy Config` → `{#get-users-valaxy-config}`
+- `Previous/Next Post` → `{#previous-next-post}`
+- `Table of Contents` → `{#table-of-contents}`
 
-- CSS-based bilingual: `::: zh-CN` / `::: en` containers in markdown
-- File-based: `locales/*.yml`
-- Frontmatter: `title: { en: 'Title', 'zh-CN': '标题' }`
-- Tags: `$locale:tag.notes` syntax
+#### Link Rules
 
-### Custom Styles
+Internal documentation links must use the correct path prefix:
 
-Create `styles/index.ts` (or `.scss`/`.css`) — auto-loaded. Override CSS vars for theming.
+- **English docs** (`docs/pages/{path}.md`): links without prefix, e.g., `/guide/getting-started`
+- **Chinese docs** (`docs/pages/zh/{path}.md`): links with `/zh/` prefix, e.g., `/zh/guide/getting-started`
+- **Anchor links**: always use English slugs, e.g., `[全局状态管理](#global-state-management)`
+- **External links**: keep unchanged
 
-### Custom Components
+#### Code Block Labels
 
-Place `.vue` files in `components/` — auto-registered, overrides theme/core components by name.
-
-## Monorepo Development
-
-When working on the Valaxy core framework itself:
-
-```bash
-pnpm i                     # install all workspace deps
-pnpm run build             # build core: utils → valaxy → devtools
-pnpm dev:lib               # watch core packages
-pnpm demo                  # run demo site
-pnpm docs:dev              # run docs site
-pnpm test                  # unit tests (vitest)
-pnpm e2e                   # E2E tests (playwright)
-pnpm lint                  # eslint
-pnpm typecheck             # type check
+Preserve file path labels in code blocks:
+```md
+```ts [site.config.ts]
+// code here
+```　
 ```
 
-### Repository URL Normalization
+### Phase 3: Verify
 
-When displaying repository URLs from package.json, import and use `normalizeRepositoryUrl()` from `@valaxyjs/utils` to remove the `git+` prefix.
+After translation, run verification:
 
-## References
+1. **Heading count check**: both files should have the same number of headings at each level
+2. **Heading ID alignment**: all `{#id}` slugs in the Chinese file must match the auto-generated slugs in the English file
+3. **Link check**: verify internal links use correct path prefixes
+4. **Container syntax check**: verify all containers use 3 colons
+5. **No mixed language**: verify the target file doesn't contain untranslated source-language text (except in code blocks and proper nouns)
+6. **Frontmatter check**: verify frontmatter structure matches (only `title` differs)
 
-- **Framework architecture, virtual modules, composables, components**: Read [references/architecture.md](references/architecture.md)
-- **Theme/addon development, post frontmatter, addon gallery**: Read [references/theme-addon-dev.md](references/theme-addon-dev.md)
+Report any remaining issues to the user.
+
+## Translation Coverage Check
+
+When asked to check translation coverage across the documentation:
+
+1. List all `.md` files under `docs/pages/` (excluding `docs/pages/zh/`)
+2. For each file, check if a corresponding file exists under `docs/pages/zh/`
+3. Report:
+   - ✅ Files with both versions
+   - ❌ Files missing Chinese translation
+   - Files with significant size differences (more than 50% difference suggests incomplete translation)
+
+## Reference Files
+
+- `references/conventions.md` — Project-specific formatting conventions and overrides. Read this file when working on any project for the first time to understand project-specific rules.
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/YunYouJun) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-16 -->
+> Source: [YunYouJun/valaxy](https://github.com/YunYouJun/valaxy) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-03 -->
