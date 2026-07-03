@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [succinctlabs/sp1](https://github.com/succinctlabs/sp1/tree/main/.claude/skills/ci-clippy/SKILL.md)
+Original source: [succinctlabs/sp1](https://github.com/succinctlabs/sp1/tree/main/.claude/skills/sp1-profiling/SKILL.md)
 
 ---
 
