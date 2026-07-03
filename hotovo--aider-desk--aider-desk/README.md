@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hotovo/aider-desk](https://github.com/hotovo/aider-desk/tree/main/.aider-desk/skills/writing-tests/SKILL.md)
+Original source: [hotovo/aider-desk](https://github.com/hotovo/aider-desk/tree/main/resources/skills/extension-creator/SKILL.md)
 
 ---
 
