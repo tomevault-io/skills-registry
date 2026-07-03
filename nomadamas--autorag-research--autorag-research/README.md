@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NomaDamas/AutoRAG-Research](https://github.com/NomaDamas/AutoRAG-Research/tree/main/.agents/skills/autorag-query/SKILL.md)
+Original source: [NomaDamas/AutoRAG-Research](https://github.com/NomaDamas/AutoRAG-Research/tree/main/.claude/skills/resolve-conversation/SKILL.md)
 
 ---
 
