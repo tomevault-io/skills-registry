@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lunasaw/voglander](https://github.com/lunasaw/voglander/tree/main/.claude/skills/debug-sip-comm/SKILL.md)
+Original source: [lunasaw/voglander](https://github.com/lunasaw/voglander/tree/main/.agents/skills/diagnose-error-logs/SKILL.md)
 
 ---
 
