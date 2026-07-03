@@ -1,29 +1,26 @@
 ---
-name: btm-026-cannabis-therapiepfad-pruefen
-description: Wenn es um Cannabis Therapiepfad Pruefen in Betäubungsmittelrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: autobahnprojekt-vertrag-scopen
+description: Wenn es um Autobahnprojekt Vertrag Scopen in Öffentliches Wirtschaftsrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Cannabis Therapiepfad Pruefen
+# Autobahnprojekt Vertrag Scopen
 
-## Arbeitsauftrag
+## Arbeitsweg
 
-Cannabis Therapiepfad Pruefen wird nicht als abstraktes Schema beantwortet, sondern als Arbeitsgang im Bereich Betäubungsmittelrecht: erst Zuständigkeit und Normpfad, dann Tatsachen und Belege, dann Fristen und taktische Option, danach ein verwertbarer Output.
-
-## Einstieg ohne Leerlauf
-
-1. Rolle klären: antragstellende Person, Behörde, Verband, Unternehmen, Anwalt, Gericht, Presse, Betroffene oder Projektträger.
-2. Ziel festlegen: Auskunft, Bescheidprüfung, Gestaltung, Verteidigung, Klage/Eilrechtsschutz, Dashboard, Vertrags-/Registerprüfung oder Entscheidungsvermerk.
-3. Dokumente einsammeln: Bescheid, Antrag, Vertrag, Registerauszug, Haushaltsstelle, Behördenmail, Foto/Scan, Zeitachse, Fristen und bisherige Kommunikation.
-4. Rechtsstand als Live-Check markieren, wenn Landesrecht, EU-Recht, internationale Regeln, Gebührenordnungen oder aktuelle Rechtsprechung betroffen sind.
+- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
+- Fristen und Eilrisiken zuerst markieren: GWB § 160 Abs. 3 Rüge unverzüglich/10 Kalendertage, § 161 Abs. 1 Nachprüfungsantrag 15 Kalendertage, AEUV Art. 108 (3) Notifizierung vor Durchführung, KonzVgV-Bekanntmachungsfristen.
+- Tragende Normen verifizieren: GG Art. 12, 14, 28 Abs. 2, GO NRW/BayGO/KomVG Brandenburg (Kommunalwirtschaftsrecht), GWB §§ 97 ff., AEUV Art. 107, 108 (Beihilferecht), KonzVgV, SektVO, GO NRW § 107 ff., LHO/BHO §§ 7, 55, KomHV-Doppik — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Kommune, kommunales Unternehmen, Aufsichtsrat, Kommunalaufsicht, Vergabekammer, EU-KOM (DG COMP), Rechnungshof.
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Vergabevermerk, Konzessionsvertrag, Beihilfenotifizierung, Wirtschaftlichkeitsuntersuchung nach BHO § 7, Beteiligungsbericht, Inhouse-Vergabe-Prüfung, Beschluss Gemeinderat — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
 ## Norm- und Quellenanker
 
-- BtMG, BtMVV, Medizinalcannabis, Apotheken-/Arzneimittelrecht
-- Erlaubnis, Verschreibung, Substitution, Besitz/Handel, Einziehung
-- Strafrecht/OWi, Berufsrecht, Fahreignung, Aufsicht
-- EU-/internationaler Grenzverkehr live prüfen
+- ÖPP/PPP, Vergabe, Beihilfe, Konzession, kommunale Unternehmen
+- Daseinsvorsorge, Scheinprivatisierung, Inhouse, Projektfinanzierung
+- Wirtschaftlichkeitsvergleich, Risikoallokation, Haushalts- und Kommunalrecht
+- EU-Grundfreiheiten, Wettbewerbs-/Beihilferecht, Transparenz
 
 ## Prüfroutine
 
@@ -32,31 +29,6 @@ Cannabis Therapiepfad Pruefen wird nicht als abstraktes Schema beantwortet, sond
 3. **Tatbestand:** Die relevanten Merkmale einzeln mit Belegen füllen. Unklare Tatsachen als Rückfrage oder Beweispunkt markieren, nicht glattbügeln.
 4. **Rechtsfolge:** Anspruch, Ermessen, Verbot, Pflicht, Gebührenfolge, Nebenfolge, Haftung, Vollzug oder Rechtsschutz getrennt ausgeben.
 5. **Taktik:** Schnellster sinnvoller Weg, sauberster Weg und Eskalationsweg nebeneinander stellen; bei Laien zusätzlich eine kurze Erklärung in Alltagssprache.
-
-## Typische Artefakte
-
-- BtM-Rollen- und Stoffcheck
-- Verschreibungs-/Dokumentationsmatrix
-- Verteidigungs- oder Compliance-Vermerk
-- Aufsichts- und Nachweisordner
-
-## Red-Team-Fragen
-
-- Stoff/Anlage falsch
-- Therapie/Handel/Besitz vermischt
-- Dokumentationspflichten unterschätzt
-- Fahreignung und Berufsrecht vergessen
-
-## Ausgabeformat
-
-- **Kurzbefund:** ein Absatz, der die Lage und den nächsten Schritt verständlich macht.
-- **Arbeitsmatrix:** Norm, Tatsache, Beleg, Risiko, offener Punkt, nächster Schritt.
-- **Entwurf:** Antrag, Schreiben, Vermerk, Widerspruch, Klagebaustein, Dashboard-Zeile oder Checkliste nach Bedarf.
-- **Quellenblock:** nur amtliche/frei prüfbare Quellen oder vom Nutzer bereitgestellte Quellen; keine Blindzitate, keine BeckRS-/juris-Behauptungen ohne Nutzerquelle.
-
-## Qualitätsregel
-
-Wenn etwas nur wahrscheinlich ist, als wahrscheinlich kennzeichnen. Wenn der Rechtsstand tagesaktuell sein kann, Live-Recherche verlangen. Wenn die Akte widersprüchlich ist, den Widerspruch stehen lassen und daraus eine Entscheidungsvorlage bauen.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
