@@ -1,0 +1,13 @@
+# nx-console
+
+> Skill by [nrwl](https://github.com/nrwl/nx-console) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [nrwl/nx-console](https://github.com/nrwl/nx-console/tree/main/.cursor/skills/monitor-ci/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
