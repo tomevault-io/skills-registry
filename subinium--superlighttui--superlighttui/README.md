@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [subinium/SuperLightTUI](https://github.com/subinium/SuperLightTUI/tree/main/.claude/skills/slt/SKILL.md)
+Original source: [subinium/SuperLightTUI](https://github.com/subinium/SuperLightTUI/tree/main/.agents/skills/slt-migration/SKILL.md)
 
 ---
 
