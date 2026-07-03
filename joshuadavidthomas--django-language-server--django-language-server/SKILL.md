@@ -1,0 +1,50 @@
+---
+name: djls-domain-conventions
+description: Use when editing Django template parser tags, validation errors, diagnostics, environment scanning, inspector data, Python environment inventory, or DJLS domain model code. Handles project-specific semantic and parser conventions.
+metadata:
+  author: joshuadavidthomas
+---
+
+# DJLS Domain Conventions
+
+Use this for changes to template parsing, semantic validation, environment scanning, diagnostics, and inspector-derived project data.
+
+## Template parser
+
+- `Node::Tag.bits` excludes the tag name.
+- Example: `{% load i18n %}` becomes `name: "load"`, `bits: ["i18n"]`.
+- Functions processing `bits` work with tag arguments only.
+- Extracted text and its span are computed by the same parse, in the crate that owns the syntax. Do not re-derive quote/content spans in semantic or IDE consumers.
+
+## Environment scanning
+
+- External rule/model scan orchestration lives in `crates/djls-db/src/scanning.rs`.
+- Project context, inspector data, and module resolution live in `crates/djls-semantic/src/project/`:
+  - `project.rs` defines `Project`.
+  - `symbols.rs` defines `TemplateLibraries`, `TemplateLibrary`, `TemplateSymbol`, and inspector response types.
+  - `resolve.rs` handles Python module and model-file discovery.
+  - `python.rs` handles interpreter discovery.
+- Static Python extraction lives in `crates/djls-semantic/src/python/`.
+
+## Validation errors
+
+When adding or removing `ValidationError` variants, update:
+
+- `errors.rs`
+- `djls-ide/src/diagnostics.rs` S-code mapping
+- test helpers
+
+Use:
+
+```bash
+rg "ValidationError" crates/ -g '*.rs'
+```
+
+## Local runtime state
+
+- Server logs: `~/.cache/djls/djls.log.YYYY-MM-DD`
+- Inspector cache: `~/.cache/djls/inspector/`
+
+---
+> Source: [joshuadavidthomas/django-language-server](https://github.com/joshuadavidthomas/django-language-server) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-02 -->
