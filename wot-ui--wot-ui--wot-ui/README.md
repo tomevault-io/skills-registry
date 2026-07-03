@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wot-ui/wot-ui](https://github.com/wot-ui/wot-ui/tree/main/.agents/skills/vue-comment/SKILL.md)
+Original source: [wot-ui/wot-ui](https://github.com/wot-ui/wot-ui/tree/main/.agents/skills/create-test/SKILL.md)
 
 ---
 
