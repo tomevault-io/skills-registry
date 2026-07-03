@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [trpc-group/trpc-agent-go](https://github.com/trpc-group/trpc-agent-go/tree/main/examples/skillrun/skills/file_tools/SKILL.md)
+Original source: [trpc-group/trpc-agent-go](https://github.com/trpc-group/trpc-agent-go/tree/main/examples/skillrun/skills/python_math/SKILL.md)
 
 ---
 
