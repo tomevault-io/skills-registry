@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mcowger/plexus](https://github.com/mcowger/plexus/tree/main/.agents/skills/agent-browser/SKILL.md)
+Original source: [mcowger/plexus](https://github.com/mcowger/plexus/tree/main/.agents/skills/plexus-management/SKILL.md)
 
 ---
 
