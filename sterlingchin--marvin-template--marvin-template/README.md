@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SterlingChin/marvin-template](https://github.com/SterlingChin/marvin-template/tree/main/skills/start/SKILL.md)
+Original source: [SterlingChin/marvin-template](https://github.com/SterlingChin/marvin-template/tree/main/skills/harden/SKILL.md)
 
 ---
 
