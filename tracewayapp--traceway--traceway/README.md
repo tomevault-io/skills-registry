@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tracewayapp/traceway](https://github.com/tracewayapp/traceway/tree/main/skills/traceway/SKILL.md)
+Original source: [tracewayapp/traceway](https://github.com/tracewayapp/traceway/tree/main/skills/traceway-setup/SKILL.md)
 
 ---
 
