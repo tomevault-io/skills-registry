@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [warpdotdev/oz-skills](https://github.com/warpdotdev/oz-skills/tree/main/.agents/skills/seo-aeo-audit/SKILL.md)
+Original source: [warpdotdev/oz-skills](https://github.com/warpdotdev/oz-skills/tree/main/.agents/skills/webapp-testing/SKILL.md)
 
 ---
 
