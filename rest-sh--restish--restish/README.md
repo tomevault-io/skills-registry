@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rest-sh/restish](https://github.com/rest-sh/restish/tree/main/.agents/skills/rsh-docs/SKILL.md)
+Original source: [rest-sh/restish](https://github.com/rest-sh/restish/tree/main/.agents/skills/rsh-test/SKILL.md)
 
 ---
 
