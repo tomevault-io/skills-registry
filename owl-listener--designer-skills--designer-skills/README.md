@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Owl-Listener/designer-skills](https://github.com/Owl-Listener/designer-skills/tree/main/ui-design/skills/aesthetic-usability/SKILL.md)
+Original source: [Owl-Listener/designer-skills](https://github.com/Owl-Listener/designer-skills/tree/main/ux-strategy/skills/design-principles/SKILL.md)
 
 ---
 
