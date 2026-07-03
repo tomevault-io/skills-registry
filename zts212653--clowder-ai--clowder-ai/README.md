@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zts212653/clowder-ai](https://github.com/zts212653/clowder-ai/tree/main/cat-cafe-skills/memory-navigation/SKILL.md)
+Original source: [zts212653/clowder-ai](https://github.com/zts212653/clowder-ai/tree/main/cat-cafe-skills/browser-automation/SKILL.md)
 
 ---
 
