@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AIOSAI/AIPass](https://github.com/AIOSAI/AIPass/tree/main/.codex/skills/prep/SKILL.md)
+Original source: [AIOSAI/AIPass](https://github.com/AIOSAI/AIPass/tree/main/.codex/skills/memo/SKILL.md)
 
 ---
 
