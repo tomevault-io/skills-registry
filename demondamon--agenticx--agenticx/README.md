@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DemonDamon/AgenticX](https://github.com/DemonDamon/AgenticX/tree/main/agenticx/skills/bundled/feature-loop/SKILL.md)
+Original source: [DemonDamon/AgenticX](https://github.com/DemonDamon/AgenticX/tree/main/agenticx/skills/agenticx-tool-creator/SKILL.md)
 
 ---
 
