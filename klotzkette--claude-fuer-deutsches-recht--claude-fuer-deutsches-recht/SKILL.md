@@ -1,122 +1,39 @@
 ---
-name: leasing-in-sanierungsgutachten
-description: Wenn es um Leasing im Sanierungsgutachten (IDW S6) in Leasingrecht Praxis geht: ordnet Sachverhalt, Norm, Beweislast, Gegenargumente und nächsten Schritt; liefert ein direkt nutzbares Arbeitsprodukt mit Prüfpunkten, Risiken und nächstem Schritt. Use when this capability is needed.
+name: lph-04-mandantenbericht
+description: Wenn es um Lph 04 Mandantenbericht in HOAI Leistungsphasen Praxis geht: ordnet Akteninhalt, Belege, Lücken und Nachforderungen; liefert eine Dokumentenmatrix mit Nachforderungsliste. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Leasing im Sanierungsgutachten (IDW S6)
+# LPH 4 Genehmigungsplanung: Erstellt verständlichen statusbericht mit ampel und nächstem schritt
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Tragende Normen verifizieren: HOAI §§ 1-13, 14-37 (Objektplanung), 38-52 (Flachbau, Ingenieurbauwerke), BGB §§ 631 ff., VOB/B — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## IDW S6: Grundstruktur des Sanierungsgutachtens
+## Ergebnis
 
-IDW S6 (Stand 2018) gliedert das Sanierungsgutachten in:
-1. Auftragsumfang und Grundlagen
-2. Beschreibung des Unternehmens
-3. Analyse der Unternehmenskrise (Ursachen)
-4. Leitbild des sanierten Unternehmens
-5. Maßnahmenplan
-6. Integrierter Sanierungsplan (GuV, Bilanz, Cashflow)
-7. Fortführungsprognose
+- LPH-4-Prüfmatrix
+- fehlende Unterlagen und offene Entscheidungen
+- Honorar-/Nachtragsnotiz
+- kurzer Textbaustein für Bauherr, Planer, Unternehmer oder Anwalt
 
-## Leasingverhältnisse in der Krisenanalyse
+## Quellen- und Qualitätsregeln
 
-### Leasingkosten als Krisenursache
-- Zu hohe Leasingverpflichtungen für Anlagegüter: Fixkostenblock in Krise
-- Operating-Lease-Kosten (bei HGB-Bilanzierer): Nicht in Bilanz, aber in GuV
-- IFRS 16 bilanzierende Unternehmen: Leasingverbindlichkeiten sichtbar in Bilanz
+- HOAI § 34 und Anlage 10 als Primäranker verwenden; andere Leistungsbilder gesondert prüfen.
+- BGB §§ 650p bis 650t und Bauvertragsrecht nur dort einbeziehen, wo der Sachverhalt sie auslöst.
+- Keine Rechtsprechung aus Modellwissen zitieren; nur verifizierte Entscheidungen mit Gericht, Datum, Aktenzeichen und freiem Link.
 
-### Identifikation der Leasingverhältnisse
-- Vollständige Liste aller Leasingverträge (Anlage zum Gutachten)
-- Je Vertrag: Objekt, LG, Laufzeit, Rate, Restwert, Eigentümer
-- Off-Balance-Verpflichtungen: Im Anhang des Jahresabschlusses (§ 285 Nr. 3a HGB)?
+## Besonderer Blick in LPH 4
 
-## Leasingkostenanalyse im Sanierungsplan
-
-### Marktpreisvergleich
-- Sind die aktuellen Leasingraten marktüblich?
-- Wenn zu hoch (z.B. in Boomzeiten abgeschlossen): Neuverhandlung möglich?
-
-### Kündbarkeit und Exit-Optionen
-- Vorzeitige Kündigung: Schadensersatz nach BGH, Urteil vom 14.03.2007 - VIII ZR 68/06 (Abzinsungspflicht)
-- Sale-and-Lease-Back: Rückgabe und Neuleasing zu günstigeren Konditionen?
-- Rückgabe nicht mehr benötigter Anlagegüter: Fristige Kündigung bei Änderung des Leasinggegenstands
-
-### IFRS-16-Effekte
-- Leasingverbindlichkeit als Schuld: Zählmetriken für Kreditgeber (Debt/EBITDA)
-- Restrukturierungsmaßnahme: Vorzeitige Kündigung → Entschuldung (aber Schadensersatz)
-
-## Fortführungsprognose: Leasingverpflichtungen
-
-### Cashflow-Projektion
-- Leasingraten im Plan-Cashflow erfassen
-- Endfällige Zahlungen (Restwert) besonders kritisch: Fälligkeitsprofil prüfen
-
-### Sanierungsmaßnahmen mit Leasingbezug
-1. Kündigung von Verträgen für nicht mehr benötigte Objekte
-2. Ratenreduktion durch Verlängerung der Laufzeit
-3. Sale-and-Lease-Back für neue Liquidität
-4. Stundungsvereinbarungen mit LG
-
-### Integrierter Plan
-- GuV: Leasingaufwand (HGB) oder Zins + AfA (IFRS 16)
-- Bilanz: IFRS 16 – RoU und Verbindlichkeiten
-- Cashflow: Leasingzahlungen als Operating-/Financing-Cashflow
-
-## Regulatorische Pflichten
-
-### § 285 Nr. 3a HGB: Anhangspflicht
-Außerbilanzielle Verpflichtungen (incl. Operating-Leasing bei HGB) müssen im Anhang ausgewiesen werden, wenn wesentlich.
-
-### IFRS 16 Disclosure
-Detaillierte Angaben zu RoU, Leasingverbindlichkeiten, Laufzeiten und Cash-Auswirkungen.
-
-## Prüfprogramm
-
-1. Alle Leasingverträge identifiziert? Liste mit LG, Objekt, Rate, Laufzeit?
-2. Off-Balance-Verpflichtungen im Anhang § 285 HGB ausgewiesen?
-3. Leasingkosten im Marktvergleich: Angemessen oder zu hoch?
-4. Kündigungsoptionen: Vorzeitige Kündigung wirtschaftlich sinnvoll?
-5. Sale-and-Lease-Back möglich für neue Liquidität?
-6. Integrierter Plan: Leasingraten korrekt erfasst?
-
-## Typische Fallen
-
-- Off-Balance-Leasing vergessen → Cashflow-Plan unterschätzt Fixkostenblock
-- Vorzeitige Kündigung ohne Schadensersatzkalkulation → Liquiditätslücke
-- IFRS 16 Umstellung in Sanierungsphase → Bilanzkennzahlen verändern sich unerwartet
-- LG kooperiert nicht bei Stundung → Kündigung; Restforderung als InsO-Verbindlichkeit
-
-## Normen und Quellen
-
-- IDW S6 (Sanierungsgutachten): https://www.idw.de
-- § 285 Nr. 3a HGB (Anhang): https://www.gesetze-im-internet.de/hgb/__285.html
-- IFRS 16: https://eur-lex.europa.eu
-- §§ 217 ff. InsO (Insolvenzplan): https://www.gesetze-im-internet.de/inso/__217.html
-- BGH, Urteil vom 14.03.2007 - VIII ZR 68/06 (Schadensersatz Kündigung): https://www.bgh.de
-- § 3a EStG (Sanierungsgewinn): https://www.gesetze-im-internet.de/estg/__3a.html
-
-## Output-Formate
-
-- **Leasingvertrags-Liste**: Format für Gutachten-Anlage
-- **Cashflow-Leasing**: Zahlungsplan alle Verträge (Rate, Restwert, Fälligkeit)
-- **Sanierungsmaßnahmen-Matrix**: Option – Effekt – Kosten – Zeitplan
-- **IFRS-16-vs-HGB-Vergleich**: Bilanzielle Darstellung im Plan
-
-<!-- BEGIN ausformulierungspflicht (autogen) -->
-> **Ausformulierungspflicht und Formatstandard.** Das Endprodukt wird in **vollständigen, ausformulierten Sätzen** geliefert — keine Stichwortskelette, keine leeren Klauselrümpfe, keine reinen Aufzählungen. Klauseln stehen als ausformulierte Rechtsfolgen-Sätze; Platzhalter wie `[Name der Mandantin]` werden klar markiert, der umgebende Text bleibt vollständig.
->
-> **Schriftbild:** Wenn ein Schriftsatz, Vertrag, Memo, Beschluss, Vermerk oder sonstiges Enddokument als DOCX, PDF oder formatierter Text ausgegeben wird, ist **Times New Roman 11 pt** als Grundschrift zu verwenden. Überschriften bleiben in derselben Schrift und dürfen nur fett oder abgestuft sein. Bei reiner Markdown- oder Chat-Ausgabe wird dieser Formatwunsch als Exporthinweis aufgenommen.
->
-> **Nummerierung:** Gliederung ausschließlich dezimal (`1`, `1.1`, `1.1.1` und so weiter). Keine römischen Ziffern, keine Buchstaben- oder Mischgliederung.
-<!-- END ausformulierungspflicht (autogen) -->
+- Phase: Genehmigungsplanung
+- Praktischer Kern: öffentlich-rechtlich genehmigungsfähige Unterlagen, Anträge, Behördenabstimmung und Auflagenlogik
+- Bewertungsanker Gebäude/Innenräume: 3 % Gebäude / 2 % Innenräume
+- Warnung: Nicht automatisch auf andere HOAI-Leistungsbilder übertragen; erst Leistungsbild und Anlage live bestimmen.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
