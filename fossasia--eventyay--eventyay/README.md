@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fossasia/eventyay](https://github.com/fossasia/eventyay/tree/main/.agents/skills/django-create-model/SKILL.md)
+Original source: [fossasia/eventyay](https://github.com/fossasia/eventyay/tree/main/.agents/skills/pull-request-workflow/SKILL.md)
 
 ---
 
