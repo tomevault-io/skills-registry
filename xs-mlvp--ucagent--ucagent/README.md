@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [XS-MLVP/UCAgent](https://github.com/XS-MLVP/UCAgent/tree/main/ucagent/SKILL.md)
+Original source: [XS-MLVP/UCAgent](https://github.com/XS-MLVP/UCAgent/tree/main/ucagent/scripts/ucagent-client/SKILL.md)
 
 ---
 
