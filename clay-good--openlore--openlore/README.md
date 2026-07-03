@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [clay-good/OpenLore](https://github.com/clay-good/OpenLore/tree/main/examples/opencode-skills/openlore-plan-refactor/SKILL.md)
+Original source: [clay-good/OpenLore](https://github.com/clay-good/OpenLore/tree/main/examples/opencode-skills/openlore-review-changes/SKILL.md)
 
 ---
 
