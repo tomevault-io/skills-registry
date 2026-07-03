@@ -1,180 +1,83 @@
 ---
-name: airline-standardausreden-annullierung
-description: Wenn es um Airline-Standardausreden — Katalog und Gegenargumente in Fluggastrechte geht: zerlegt Ergebnis, Frist, Zuständigkeit, Beweislast und Gegenposition; liefert eine Fristen- und Risikoampel mit Sofortschritten. Auswahlstichwort: Airline Standardausreden Annullierung; Arbeitsfeld: Fluggastrechte. Use when this capability is needed.
+name: bmjv-verbraucherschutz-unlauterer
+description: Wenn es um Verbraucherschutz und Wettbewerbsrecht (UWG) (BMJV) in Legistik-Werkstatt geht: ordnet Akteninhalt, Belege, Lücken und Nachforderungen; liefert eine Schnittstellenkarte mit Kollisions-, Zuständigkeits- und Nachweisfragen. Auswahlstichwort: Bmjv Verbraucherschutz Unlauterer; Arbeitsfeld: Legistik-Werkstatt. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Airline-Standardausreden — Katalog und Gegenargumente
+# Verbraucherschutz und Wettbewerbsrecht (UWG) (BMJV)
 
-## Arbeitsweg
+> Vierter und tiefster Skill in der Ressort-Kette: Sachfeld-Kompass für das Spezialthema Verbraucherschutz und Wettbewerbsrecht (UWG) im Geschäftsbereich BMJV. Liefert dem Normgeber Normbestand, Akteure, EU-Bezug und Prüfpunkte für dieses eine Sachfeld.
 
-- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: VO 261/2004 keine Anmeldefrist, Verjährung 3 Jahre § 195 BGB, MontÜ Art. 35 zweijährige Ausschlussfrist, Anzeige Gepäckschaden 7/21 Tage Art. 31 MontÜ.
-- Tragende Normen verifizieren: EU-Fluggastrechte-VO 261/2004 Art. 5, 6, 7, 8, 9, EU-VO 2027/97 (Montrealer Übereinkommen), MontÜ Art. 17, 19, 22, BGB §§ 631, 651a ff. (Pauschalreise), LuftVG, AGB der Luftfahrtunternehmen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Fluggast, Luftfahrtunternehmen (EU-Carrier / Non-EU), Reisebüro, SÖP (Schlichtungsstelle Öffentlicher Personenverkehr), LBA (Luftfahrt-Bundesamt), AG/LG am Sitz des Carriers oder Abflug/Ankunft.
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Buchungsbestätigung, Boardingpass, Verspätungsbestätigung, Foto Anzeigetafel, Abrechnung Auslagen, Ablehnungsschreiben, Klageschrift AG, SÖP-Antrag — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+## Eingaben
 
-## Beweislast
+- Auftragsblatt aus `legistik-auftragsaufnahme`
+- Ressort-Kompass aus `legw-ressort-bmjv`
+- Aufgabenmatrix aus `legw-ressortaufgaben-bmjv`
+- Konkrete Sachfrage oder konkretes Normvorhaben in diesem Sachbereich
 
-**Generell**: Beweislast für außergewöhnliche Umstände und für die Ergreifung aller zumutbaren Maßnahmen liegt bei der **Airline** (Art. 5 Abs. 3 VO 261/2004 — Wortlaut "nachweisen kann"). Pauschale Behauptungen ohne Belege reichen nicht.
+## Normbestand
 
-## Katalog
+Kernbestand des Sachfelds: UWG; UKlaG; BGB-Verbraucherrecht; ProdSG; PreisangabenV.
 
-### 1. "Technischer Defekt am Flugzeug"
+Prüfreihenfolge: Verfassungsrang vor Bundesgesetz vor Rechtsverordnung vor Verwaltungsvorschrift. Bei EU-Bezug zuerst Unionsrecht (Vorrang und Anwendungsbefehl), dann nationale Umsetzungs- und Begleitnormen.
 
-**Airline-Argument**: technischer Defekt sei außergewöhnlich. Hilft uns nicht.
+## Akteure und Aufsicht
 
-**Gegenargument**:
+BMJV; vzbv; Wettbewerbszentrale; Landesbehoerden Verbraucherschutz.
 
-> EuGH, Urt. v. 22.12.2008, C-549/07 (Wallentin-Hermann) — technische Defekte sind grundsätzlich Teil der normalen Tätigkeit eines Luftfahrtunternehmens und kein außergewöhnlicher Umstand. Volltext auf curia.europa.eu vor Versand aufrufen und Randnummer (typisch Rn. 24 ff.) einsetzen.
->
-> Ausnahme: versteckter Konstruktionsfehler des Herstellers — EuGH, Urt. v. 13.6.2025, C-411/23 (curia.europa.eu) — kann ausnahmsweise außergewöhnlich sein, auch wenn die Airline Monate vor dem Flug informiert war.
+Akteurskarte erstellen: federfuehrende Einheit im Haus; mitzeichnende Ressorts; nachgeordnete Behörden im Vollzug; betroffene Länderbehoerden; Verbaende; wissenschaftliche Beiraete; zuständige Gerichtsbarkeit.
 
-Nur ausnahmsweise gilt etwas anderes wenn zB ein vom Hersteller bekannt gegebener Fehler kurz vor dem Flug entdeckt wird oder Sabotage durch Dritte vorliegt.
+## EU- und voelkerrechtlicher Bezug
 
-### 2. "Wilder Streik unserer Mitarbeiter"
+Verbraucherrechte-RL; Omnibus-RL; Geoblocking-VO; DSA.
 
-**Gegenargument**:
+Prüfen: einschlaegige Verordnung oder Richtlinie? Umsetzungsfrist? Notifizierungspflicht? Beihilferechtlicher Vorbehalt? Vorabentscheidungsverfahren absehbar?
 
-> Streiks der eigenen Mitarbeiter (auch "wilde Streiks") gehören zum betrieblichen Risikobereich der Airline. EuGH-Linie zum Personalmangel beziehungsweise Streik der eigenen Belegschaft konkret anhand offener Quelle (curia.europa.eu) und konkretem Aktenzeichen zitieren — nicht aus Modellwissen.
+## Typische Legistik-Aufgaben
 
-### 3. "Streik einer Gewerkschaft mit ordentlichem Aufruf"
+Verbotstatbestaende; Abmahnwesen; Sammel- und Musterklage; Verbraucherdurchsetzungs-Mechanismus.
 
-**Differenziertes Bild**:
+Schrittfolge für den Normgeber:
 
-> Auch Streiks mit ordentlichem Gewerkschaftsaufruf liegen typischerweise im betrieblichen Risikobereich, soweit sie das eigene Personal betreffen. EuGH-Linie konkret aus curia.europa.eu mit Aktenzeichen und Randnummer einsetzen; nicht aus Modellwissen pauschalisieren.
+1. Sachverhalt und Regelungsziel in diesem Sachfeld prüfen
+2. Vorhandene Normen kartieren; Lueckenanalyse
+3. Eingriffsintensitaet und Adressatenkreis bestimmen
+4. Verfassungs- und Europarechtskonformitaet prüfen
+5. Tatbestand und Rechtsfolge sauber fassen; Bestimmtheit prüfen
+6. Vollzugs- und Aufsichtsstruktur kontrollieren
+7. Begleit- und Folgenormen (Verordnungen; Verwaltungsvorschriften) mitplanen
 
-Praktisch: oft im Detail strittig — Airlines berufen sich pauschal; aber zumutbare Maßnahmen sind regelmäßig nicht hinreichend dargelegt.
+## Stolpersteine und Prüfpunkte
 
-### 4. "Crew-Engpass — Crew nicht verfügbar"
+Rechtsmissbraeuchliche Abmahnungen; Sammelklage-Befugnis; Verhältnis zum AGB-Recht.
 
-**Gegenargument**:
+Erweiterte Prüfpunkte: Bestimmtheitsgebot; Verhältnismäßigkeit; Rueckwirkungsverbot; Gleichheitssatz; Datenschutz-Grundverordnung bei Datenverarbeitung; Wechselwirkungen zu anderen Ressorts; Befristung und Evaluation.
 
-> Crew-Mangel gehört zu den **typischen Betriebsrisiken** einer Airline. Reserve-Crews vorzuhalten ist ureigene Aufgabe; eine fehlende Reserve-Crew ist kein außergewöhnlicher Umstand.
+## Normenanker
 
-### 5. "Vorheriger Flug verspätet — Kettenreaktion"
+Arbeitsfokus: **Verbraucherschutz und Wettbewerbsrecht (UWG) (BMJV)**. Prüfe diese Anker am Sachverhalt; ergänze nur Normen, die denselben Output, dieselbe Frist oder dieselbe Beweisfrage tragen:
 
-**Gegenargument**:
+- `Art. 20 Abs. 3 GG` — Gesetzesbindung.
+- `Art. 76 Abs. 1 GG` — Gesetzesinitiative.
+- `Art. 77 Abs. 1 GG` — Gesetzesbeschluss.
+- `Art. 80 Abs. 1 GG` — Verordnungsermächtigung.
+- `Art. 84 Abs. 1 GG` — Verwaltungsvollzug.
+- `§ 42 Abs. 1 GGO` — Gesetzgebungsvorhaben.
+- `§ 43 Abs. 1 GGO` — Ressortabstimmung.
+- `§ 44 Abs. 1 GGO` — Gesetzesfolgen.
+- `§ 45 GGO` — Beteiligung.
+- `§ 46 GGO` — Rechtsförmlichkeit.
 
-> EuGH ständige Rechtsprechung: Verspätungen die aus einer Kette der gleichen Maschine resultieren sind nur dann außergewöhnlich wenn der **erste** Vorgang in der Kette selbst außergewöhnlich war und die späteren Verspätungen sich daraus zwingend ergeben. Wenn der erste Vorflug aus Routine-Gründen verspätet war ist die Kette nicht außergewöhnlich.
+Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
 
-### 6. "Wetterverhältnisse"
+## Anschluss an die Legistik-Kette
 
-**Differenziert**:
+- `legistik-auftragsaufnahme` -> `legw-ressort-router` -> `legw-ressort-bmjv` -> `legw-ressortaufgaben-bmjv` -> `legw-bmjv-verbraucherschutz-und-unlauterer-wettbewerb` (hier) -> `normhierarchie-routing` und Querprueferei.
 
-> Extreme Wetterverhältnisse (Vulkanasche Hurrikan Schneesturm in untypischen Gebieten) sind außergewöhnlich. Normaler Schneefall im Winter in mitteleuropaeischen Regionen ist regelmäßig kein außergewöhnlicher Umstand — Schneeraeumung und Enteisung gehören zum normalen Betrieb.
+## Abgrenzung
 
-### 7. "Slot-Verschiebung durch die Flugverkehrsleitung"
-
-**Differenziert**:
-
-> Wenn der Slot wegen kapazitätsbedingter Überlastung verschoben wird ist das **regelmäßig kein außergewöhnlicher Umstand** (Teil normalen Flugbetriebs). Bei Sicherheits- oder Wetterrücksichten kann die Bewertung anders ausfallen.
-
-### 8. "Vogelschlag"
-
-**Außergewöhnlich aber**:
-
-> EuGH, Urt. v. 4.5.2017, C-315/15 (Pesková) — Vogelschlag ist grundsätzlich außergewöhnlicher Umstand i.S.v. Art. 5 Abs. 3 VO 261/2004 (curia.europa.eu). Vor Versand Volltext aufrufen und Randnummer einsetzen.
->
-> ABER: die Airline muss zusätzlich nachweisen dass alle **zumutbaren Maßnahmen** ergriffen wurden — z. B. zuegige technische Prüfung schnellstmögliche Wiederinbetriebnahme Umbuchung auf anderen Flug.
-
-### 16. "Blitzschlag in das Flugzeug"
-
-**Außergewöhnlich aber**:
-
-> EuGH, Urt. v. 16.10.2025, C-399/24 — Blitzschlag mit nachfolgender sicherheitsbedingter Prüfung kann außergewöhnlicher Umstand sein (curia.europa.eu).
->
-> ABER: zumutbare Maßnahmen sind weiterhin nachzuweisen (Ersatzflugzeug, Umbuchung, Information).
-
-### 17. "Flug vorverlegt — keine Entschädigung"
-
-**Gegenargument**:
-
-> EuGH, Urt. v. 9.1.2025, C-394/23 — Vorverlegung eines Fluges um mehr als eine Stunde ist einer Annullierung gleichzusetzen. Ausgleichsanspruch nach Art. 7 VO 261/2004 entsteht (curia.europa.eu).
-
-### 9. "Sie haben die Störung nicht binnen X Tagen gemeldet"
-
-**Gegenargument**:
-
-> Die VO 261/2004 sieht **keine** Anzeigefrist für die Geltendmachung des Anspruchs vor. Es gilt allein die **gesetzliche Verjährung** drei Jahre nach § 195 BGB iVm § 199 Abs. 1 BGB ab Schluss des Jahres in dem Anspruch entstand und Kenntnis vorlag.
-
-### 10. "Sie haben die Umbuchung / Voucher akzeptiert"
-
-**Gegenargument**:
-
-> Akzeptanz einer Ersatzbeförderung schließt den Ausgleichsanspruch nach Art. 7 VO 261/2004 nicht aus. Anspruchsgrundlage Art. 7 ist eigenständig und greift parallel zur Erstattung oder Ersatzbeförderung (Art. 8 VO 261/2004).
->
-> Voucher können Ausgleichsanspruch nur dann ersetzen wenn der Fluggast **schriftlich und ausdrücklich** auf seinen Ausgleichsanspruch verzichtet hat. Ein blosser Voucher-Erhalt ohne Verzichtserklärung ist kein Anspruchsverzicht.
-
-### 11. "Wir sind nicht zuständig (Codeshare)"
-
-**Gegenargument**:
-
-> Nach Art. 2 lit. b VO 261/2004 ist Anspruchsgegner das **ausführende Luftfahrtunternehmen** (operating carrier) — nicht das vermarktende. Die ausführende Airline kann sich nicht auf Codeshare-Konstruktionen berufen um ihre Verpflichtung zu vermeiden.
-
-### 12. "Sie haben uns die Daten nicht binnen 24 Stunden gegeben"
-
-**Gegenargument**:
-
-> Die VO 261/2004 enthält keine Frist für Verbraucher zur Geltendmachung. Auch interne Service-Richtlinien der Airline binden den Verbraucher nicht.
-
-### 13. "Konzern-Beleg / Mitversorgung"
-
-**Differenziert**: Wenn der Verbraucher kostenfreie Mahlzeit Hotel und Transport tatsächlich erhalten hat sind die Auslagenanspruechen nach Art. 9 VO 261/2004 erfüllt. Anspruch nach Art. 7 (Ausgleich) bleibt davon **unberuehrt**.
-
-### 14. "Sie haben aus Komforterwägungen das Hotel selbst gebucht"
-
-**Gegenargument**:
-
-> Wenn die Airline kein Hotel angeboten hat oder das angebotene nicht akzeptabel war ist der Verbraucher zu eigenem Vorgehen berechtigt und die Airline schuldet Erstattung der **erforderlichen** Auslagen (Art. 9 VO 261/2004 — angemessenes Hotel inkl. Transfer).
-
-### 15. "Sie waren nicht puenktlich am Check-in"
-
-**Gegenargument**:
-
-> Wer rechtzeitig am Check-in war (in der Regel 45 Minuten vor planmäßigem Abflug oder gemäß Airline-AGB) hat den Anspruch behalten. Beweis durch Boardingpass oder Check-in-Bestätigung.
-
-## Versand-Hinweis
-
-Diesen Katalog vor jedem Mahnungsschreiben durchgehen — Standardausreden mit Pinpoint kontern. Den entsprechenden Punkt **wortlautnah** zitieren mit Az der EuGH-Entscheidung.
-
-## Ausgabe
-
-- `airline-ausreden-gegenargumente.md` zur Vorbereitung von Mahnung oder Klage.
-- Verweis auf entsprechenden Pinpoint im EuGH-Rspr-Katalog (`references/eugh-rechtsprechung-fluggastrechte.md`).
-
-<!-- BEGIN ausformulierungspflicht (autogen) -->
-> **Ausformulierungspflicht und Formatstandard.** Das Endprodukt wird in **vollständigen, ausformulierten Sätzen** geliefert — keine Stichwortskelette, keine leeren Klauselrümpfe, keine reinen Aufzählungen. Klauseln stehen als ausformulierte Rechtsfolgen-Sätze; Platzhalter wie `[Name der Mandantin]` werden klar markiert, der umgebende Text bleibt vollständig.
->
-> **Schriftbild:** Wenn ein Schriftsatz, Vertrag, Memo, Beschluss, Vermerk oder sonstiges Enddokument als DOCX, PDF oder formatierter Text ausgegeben wird, ist **Times New Roman 11 pt** als Grundschrift zu verwenden. Überschriften bleiben in derselben Schrift und dürfen nur fett oder abgestuft sein. Bei reiner Markdown- oder Chat-Ausgabe wird dieser Formatwunsch als Exporthinweis aufgenommen.
->
-> **Nummerierung:** Gliederung ausschließlich dezimal (`1`, `1.1`, `1.1.1` und so weiter). Keine römischen Ziffern, keine Buchstaben- oder Mischgliederung.
-<!-- END ausformulierungspflicht (autogen) -->
-
-## Normen und Rechtsprechung
-
-### Kuratierte Normen-Bibliothek
-
-- § 71 GVG
-- § 29 VwVfG
-- § 2 HRG
-- § 4 HRG
-- § 7 HRG
-- § 15 HRG
-- § 16 HRG
-- § 70 VwG
-- § 123 VwG
-- Art. 13 DSGVO
-- § 14 UKlaG
-
-### Leitentscheidungen
-
-- EuGH C-402/07
-- EuGH C-549/07
-- EuGH C-204/08
-- EuGH C-394/23
-- EuGH C-188/20
+Abgrenzung zu legistik-auftragsaufnahme (Erstaufnahme), normhierarchie-routing (Normwahl), normenkartierung (Bestand), verfassungsmaessigkeit-quercheck (Verfassungsfragen), europarechtskonformitaet (EU-Bezug), folgenabschaetzung-* (Folgenabschaetzung). Dieser Skill dient als Sachfeld-Kompass; er ersetzt nicht die Normprueferei, sondern liefert das Sachverstaendnis für den Normgeber.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
