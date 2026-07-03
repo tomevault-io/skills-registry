@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/waza](https://github.com/microsoft/waza/tree/main/.squad/skills/squad-conventions/SKILL.md)
+Original source: [microsoft/waza](https://github.com/microsoft/waza/tree/main/.squad-templates/skills/squad-conventions/SKILL.md)
 
 ---
 
