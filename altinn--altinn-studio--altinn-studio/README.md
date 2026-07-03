@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Altinn/altinn-studio](https://github.com/Altinn/altinn-studio/tree/main/.claude/skills/rebase-stacked-pr/SKILL.md)
+Original source: [Altinn/altinn-studio](https://github.com/Altinn/altinn-studio/tree/main/.claude/skills/tekstforfatter-docs/SKILL.md)
 
 ---
 
