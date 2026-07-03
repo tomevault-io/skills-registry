@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ludoguenet/laravel-zap](https://github.com/ludoguenet/laravel-zap/tree/main/resources/boost/skills/zap-recurrence/SKILL.md)
+Original source: [ludoguenet/laravel-zap](https://github.com/ludoguenet/laravel-zap/tree/main/resources/boost/skills/zap-availability/SKILL.md)
 
 ---
 
