@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [samchon/ttsc](https://github.com/samchon/ttsc/tree/main/.codex/skills/documentation/SKILL.md)
+Original source: [samchon/ttsc](https://github.com/samchon/ttsc/tree/main/.codex/skills/typescript-go-sync/SKILL.md)
 
 ---
 
