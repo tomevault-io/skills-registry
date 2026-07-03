@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jolars/panache](https://github.com/jolars/panache/tree/main/.claude/skills/perf-investigation/SKILL.md)
+Original source: [jolars/panache](https://github.com/jolars/panache/tree/main/.claude/skills/math-parser-formatter/SKILL.md)
 
 ---
 
