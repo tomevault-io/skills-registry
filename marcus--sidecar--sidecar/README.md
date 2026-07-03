@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marcus/sidecar](https://github.com/marcus/sidecar/tree/main/.claude/skills/profile-memory/SKILL.md)
+Original source: [marcus/sidecar](https://github.com/marcus/sidecar/tree/main/.claude/skills/merge-strategy/SKILL.md)
 
 ---
 
