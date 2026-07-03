@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/azure-sdk-for-rust](https://github.com/Azure/azure-sdk-for-rust/tree/main/.github/skills/update-emitter/SKILL.md)
+Original source: [Azure/azure-sdk-for-rust](https://github.com/Azure/azure-sdk-for-rust/tree/main/.github/skills/create-perf-test/SKILL.md)
 
 ---
 
