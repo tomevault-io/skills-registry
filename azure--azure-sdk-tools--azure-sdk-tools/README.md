@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/azure-sdk-tools](https://github.com/Azure/azure-sdk-tools/tree/main/plugins/azure-sdk-tools/skills/markdown-token-optimizer/SKILL.md)
+Original source: [Azure/azure-sdk-tools](https://github.com/Azure/azure-sdk-tools/tree/main/plugins/azure-sdk-tools/skills/pipeline-troubleshooting/SKILL.md)
 
 ---
 
