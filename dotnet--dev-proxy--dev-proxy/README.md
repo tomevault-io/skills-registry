@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dotnet/dev-proxy](https://github.com/dotnet/dev-proxy/tree/main/.github/skills/publish-to-winget/SKILL.md)
+Original source: [dotnet/dev-proxy](https://github.com/dotnet/dev-proxy/tree/main/.github/skills/upgrade-devproxy-version/SKILL.md)
 
 ---
 
