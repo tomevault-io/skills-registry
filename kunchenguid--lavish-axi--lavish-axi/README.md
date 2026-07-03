@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kunchenguid/lavish-axi](https://github.com/kunchenguid/lavish-axi/tree/main/skills/lavish/SKILL.md)
+Original source: [kunchenguid/lavish-axi](https://github.com/kunchenguid/lavish-axi/tree/main/.agents/skills/lavish-design/SKILL.md)
 
 ---
 
