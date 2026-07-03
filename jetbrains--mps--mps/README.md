@@ -1,0 +1,13 @@
+# MPS
+
+> Skill by [JetBrains](https://github.com/JetBrains/MPS) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [JetBrains/MPS](https://github.com/JetBrains/MPS/tree/main/plugins/mcp-tools/resources/jetbrains/mps/agents/mcp/skills/mps-ide-plugin/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
