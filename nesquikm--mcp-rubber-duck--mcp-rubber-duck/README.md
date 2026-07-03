@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nesquikm/mcp-rubber-duck](https://github.com/nesquikm/mcp-rubber-duck/tree/main/.claude/skills/update-pricing/SKILL.md)
+Original source: [nesquikm/mcp-rubber-duck](https://github.com/nesquikm/mcp-rubber-duck/tree/main/.claude/skills/setup-mcp-server/SKILL.md)
 
 ---
 
