@@ -1,57 +1,60 @@
 ---
-name: begruendung-fuer-ungediente
-description: Wenn es um Begründung Ungediente in Kriegsdienstverweigerung und Wehrdienst geht: erstellt den passenden Entwurf aus Sachverhalt, Norm, Beweis und Antrag; liefert einen verwertbaren Entwurf mit Anträgen, Begründung und Anlagenlogik. Use when this capability is needed.
+name: telekommunikation-nummernverwaltung
+description: Wenn es um Telekommunikation: Nummernverwaltung in Bundesnetzagentur-Verfahren geht: ordnet Sachverhalt, Norm, Beweislast, Gegenargumente und nächsten Schritt; liefert ein direkt nutzbares Arbeitsprodukt mit Prüfpunkten, Risiken und nächstem Schritt. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Begründung Ungediente
+# Telekommunikation: Nummernverwaltung
+
+## Normenanker
+
+Vor einer rechtlichen Schlussfolgerung diese Anker am aktuellen Normtext prüfen; Spezial- und Landesrecht nur hinzunehmen, wenn es den konkreten Auftrag traegt:
+
+- `§ 29 EnWG` — Festlegung und Genehmigung durch Regulierungsbehoerde.
+- `§ 65 EnWG` — Aufsichtsmassnahmen.
+- `§ 75 EnWG` — Beschwerde gegen Entscheidungen der Regulierungsbehoerde.
+- `§ 80 EnWG` — Rechtsbeschwerde.
+- `§ 67 TKG` — Anordnungen der Bundesnetzagentur.
+- `§ 149 TKG` — Bussgeldvorschriften.
+- `§ 40 PostG` — Aufsicht.
+- `§ 44 VwVfG` — Nichtigkeit Verwaltungsakt.
+- `§ 80 Abs. 5 VwGO` — Eilrechtsschutz.
+- `§ 123 Abs. 1 VwGO` — einstweilige Anordnung.
+
+Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: GG Art. 4 Abs. 3, KDVG, ZDG, Wehrpflichtgesetz (ausgesetzt), § 12 KDVG, SG §§ 30, 31; Art. 4 Abs; KDVG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+- Fristen und Eilrisiken zuerst markieren: Anhörung i.d.R. 4-6 Wochen, Beschlussfristen sektorspezifisch (EnWG Festlegungen, TKG Marktanalyse 3 Jahre), Beschwerde nach VwGO/EnWG.
+- Tragende Normen verifizieren: BNetzAG, EnWG §§ 21 ff. (Anreizregulierung), TKG §§ 9 ff. (Frequenz/Marktregulierung), PostG, EisbG, MessEG, NIS2-Aufsicht, BSI-KritisV, DigiNetzG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: BNetzA, Beschlusskammer, betroffenes Unternehmen (Netzbetreiber, TK-Unternehmen, Postunternehmen), Bundeskartellamt, OVG NRW, BVerwG.
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Festlegungsbeschluss, Anhörungsschreiben, Marktdefinition/-analyse, Konsultationsdokument, Beschwerdeschrift, Konzessionsbescheid — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Fachkern: Begründung Ungediente
-- **Normen-/Quellenanker:** Art. 4 Abs. 3 GG, KDVG, WPflG/Wehrrecht, VwVfG/VwGO, Gewissensprüfung, Soldatenstatus und Eilrechtsschutz.
-- **Entscheidende Weiche:** Gewissensentscheidung, politisches Motiv, Status, Zuständigkeit, Bescheid, Untätigkeit, Frist und gerichtlicher Rechtsschutz trennen.
-- **Arbeitsprodukt:** Liefere eine fallbezogene `Norm / Tatsache / Beleg / Wertung / Gegenargument / nächster Schritt`-Matrix und einen direkt nutzbaren Textbaustein, wenn der Nutzer einen Entwurf braucht.
+## Fachkern: Telekommunikation: Nummernverwaltung
+- **Normen- und Behördenanker:** TKG, TDDDG, EECC-Rahmen, Frequenz-/Rufnummernzuteilung, Universaldienst, Marktregulierung, Missbrauchsaufsicht, Kundenschutz und BNetzA-Schlichtung.
+- **Spezifische Weiche:** Prüfe zuerst, ob es um Endkundenrechte, Zugang/Interconnection, Frequenzen, Rufnummern, Sicherheit/Resilienz oder Marktregulierung geht; davon hängen Formular, Beschlusskammer, Beiladung und Rechtsweg ab.
+- **Beleglogik:** Jede Zahl, Schwelle, Netzkomponente, Frist oder technische Behauptung braucht Quelle: Bescheid, Konsultationsdokument, Erhebungsbogen, Registerauszug, Vertrag, Messdaten, Ticket oder Behördenmail.
+- **Taktischer Output:** Erzeuge nicht nur eine Checkliste, sondern eine Beschlusskammer-taugliche Kurzposition mit Antrag/Einwand, Beleganlage, offener Live-Quelle und nächstem Verfahrensschritt.
 
-## Fachlicher Kern
-Spezialwerkstatt für ungediente Antragsteller ohne Umkehrproblem. Die Antwort muss den konkreten Status, das Datum, die Behörde und die aktuelle Verfahrenslage aufnehmen. Bei KDV ist die innere Gewissensentscheidung nicht vollständig beweisbar wie eine äußere Tatsache; sie muss aber persönlich, plausibel und widerspruchsbewusst dargestellt werden.
+## Fachliche Weichenfragen
+- Wer fragt in welcher Rolle und welches Arbeitsergebnis wird gebraucht?
+- Welche Frist, Zuständigkeit, Behörde, Gericht oder Vertragssituation ist erkennbar?
+- Welche Dokumente, Zahlen, Registerdaten, Bescheide, Verträge oder Korrespondenz liegen vor?
+- Welche Tatsachen sind sicher, welche sind streitig und welche Annahmen müssen sichtbar markiert werden?
+- Welche live zu prüfenden Normen, Behördenhinweise oder Formulare tragen das Ergebnis?
 
-## Sofortfragen
-1. Welche Personengruppe liegt vor: ungedient, wehrpflichtig, FWDL, SaZ, Berufssoldat, Reservist, frühere Soldatin/früherer Soldat oder Sonderfall?
-2. Gibt es bereits Antrag, Eingangsbestätigung, Personenkennziffer, Musterungsbescheid, BAFzA-Schreiben, Anhörung oder Bescheid?
-3. Geht es um Kriegsdienst mit der Waffe als Gewissensproblem oder um Politik, Gesundheit, Angst, Karriere, Familie oder Totalverweigerung?
-4. Welche Frist läuft und welcher Nachweis liegt für Zugang oder Bekanntgabe vor?
+## Prüf- und Arbeitslogik
+1. **Einordnen:** Rolle, Ziel, Verfahrensstand, Vertragstyp, Behörde/Gericht, Frist und Risiken festhalten.
+2. **Normen live prüfen:** Vor tragenden Aussagen den aktuellen Stand aus amtlichen oder frei zugänglichen Quellen kontrollieren. Besonders prüfen: die im Fachkern genannten Normen-/Quellenanker, aktuellen amtlichen oder frei zugänglichen Fachquellen und die für diese Speziallage tragenden Formulare/Behördenhinweise.
+3. **Tatbestand in Elemente zerlegen:** Jedes Tatbestandsmerkmal einzeln prüfen; unklare Tatsachen als `[offen: ...]` markieren.
+4. **Belege führen:** Für jede relevante Behauptung Dokument, Datum, Absender, Anlage, Registerfund oder Quelle notieren.
+5. **Gegenansicht bauen:** Mindestens eine ernsthafte Gegenargumentation und eine Verteidigungslinie formulieren.
+6. **Ergebnis kalibrieren:** Risikoampel `grün/gelb/rot`, Handlungsempfehlung, nächster Schritt und fehlende Unterlagen ausgeben.
 
-## Arbeitsgang
-1. Status und anwendbare Normen festlegen.
-2. Pflichtunterlagen und fehlende Dokumente markieren.
-3. Gewissenskern von bloßen Randmotiven trennen.
-4. Behördenweg BAPersBw -> BAFzA oder Soldaten-/Reservistenpfad bestimmen.
-5. Output knapp, würdig und nachweisbar formulieren.
-
-## Norm- und Quellenanker
-KDVG § 2; KDVG § 5
-
-## Rote Linien
-Keine fremde Mustervorlage produzieren; die Darstellung muss persönlich, wahrhaftig und aus der eigenen Sprache der Person entwickelt sein.
-
-## Anschluss-Skills
-- `kriegsdienstverweigerung-wehrdienst-allgemein` für Kaltstart und Routing.
-- `qualitaetsgate-vor-ausgabe` vor belastbarer Ausgabe.
-- `workflow-redteam-qualitygate` bei Gerichtsargumentation.
-
-## Quellen- und Aktualitätsregel
-- Aktuelle Fassung von GG, KDVG, WPflG, SG und VwGO in amtlichen Quellen prüfen.
-- BAFzA-Hinweise zum Antragsweg, zur hohen Antragslast und zu § 13 KDVG n. F. berücksichtigen.
-- Rechtsprechung nur mit Gericht, Datum, Aktenzeichen und frei zugänglichem Link nennen.
-- Keine BeckRS-, juris-, Kommentar- oder Aufsatzfundstellen aus Modellwissen.
+## Qualitätsgate
+Am Ende kurz prüfen: Sind Fristen, Zuständigkeit, Rechtsgrundlage, Beweislast, Zahlen, Form und gewünschter Output vollständig? Ist erkennbar, was sicher ist und was noch Sachverhaltsarbeit braucht?
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
