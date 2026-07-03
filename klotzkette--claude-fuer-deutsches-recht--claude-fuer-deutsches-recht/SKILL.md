@@ -1,70 +1,46 @@
 ---
-name: kolonialrecht-kritisch-einordnen
-description: Wenn es um Kolonialrecht kritisch einordnen in Deutsche Rechtsgeschichte geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: gesellschafterbeschluesse-textbausteine
+description: Wenn es um Gesellschafterbeschluesse: Schriftsatz-, Brief- und Memo-Bausteine in Gesellschaftsrecht geht: erstellt den passenden Entwurf aus Sachverhalt, Norm, Beweis und Antrag; liefert einen verwertbaren Entwurf mit Anträgen, Begründung und Anlagenlogik. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Kolonialrecht kritisch einordnen
-
-## Historische Quellenanker
-
-Vor einer rechtlichen Schlussfolgerung diese Anker am aktuellen Normtext prüfen; Spezial- und Landesrecht nur hinzunehmen, wenn es den konkreten Auftrag traegt:
-
-- `Art. 20 Abs. 3 GG` — rechtsstaatlicher Gegenwartsanker.
-- `Art. 1 Abs. 1 GG` — Menschenwuerde als Zäsur- und Kontinuitaetsmassstab.
-- `Art. 123 Abs. 1 GG` — Fortgeltung vorkonstitutionellen Rechts.
-- `Art. 125 GG` — Fortgeltung als Bundesrecht.
-- `Art. 126 GG` — Meinungsverschiedenheiten über Fortgeltung.
-- `Art. 20 Einigungsvertrag` — öffentlicher Dienst und Rechtsuebergang.
-- `Art. 21 Einigungsvertrag` — Verwaltungsvermögen.
-- `Art. 22 Einigungsvertrag` — Finanzvermoegen.
-- `§ 1 VermG` — Anwendungsbereich Vermögensgesetz.
-- `§ 3 VermG` — Rückübertragung.
-
-Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
+# Gesellschafterbeschluesse: Schriftsatz-, Brief- und Memo-Bausteine
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: historisch — Verjährung nach jeweiliger Quelle; heutige Relevanz über Art. 184 ff. EGBGB und Auslegungshilfe für Grundrechtsverständnis.
-- Tragende Normen verifizieren: Sachsenspiegel, Schwabenspiegel, Carolina (CCC 1532), Preußisches ALR 1794, Code civil (1804), Sächsisches BGB 1865, BGB 1900, WRV 1919, GG 1949; rechtshistorische Quellen MGH, Constitutiones — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Rechtshistoriker, Quelleneditionen, Lehrstühle für deutsche Rechtsgeschichte, Verfassungsrechtler (Auslegungshintergrund), Restitutionsverfahren mit historischem Anker.
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Quellenedition, rechtshistorisches Gutachten, Vorlesungsskript, dogmenhistorischer Aufsatz, Verfassungsentstehungsgeschichte — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
+- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Worum es geht
+## Fachlicher Kern — Gesellschaftsrecht und Corporate Law
+- **Problemfokus dieses Skills:** Bleibe beim konkreten Titel `Gesellschafterbeschluesse: Schriftsatz-, Brief- und Memo-Bausteine` und löse die dort angelegte Fachfrage; arbeite mit konkreten Tatbestandsmerkmalen, Beweisfragen und dem unmittelbar benötigten Arbeitsprodukt. Routingfragen bleiben Hilfsmittel, wenn Frist, Zuständigkeit oder Verfahrensart offen sind.
+- **Normenradar:** GmbHG Paragraf 3, 5, 13, 15, 16, 30, 34, 35, 40, 43, 46, 47, 49 ff.; AktG Paragraf 76, 93, 111, 119, 130, 243 ff.; HGB Paragraf 105 ff., 161 ff.; MoPeG/GesRÄndG-Folgen; UmwG; FamFG/Registerrecht; GWB/Fusionskontrolle bei Transaktionen.
+- **Rechtsprechungsanker:** BGH, 21.04.1997 - II ZR 175/95 für Organpflichten und Informationsgrundlage; BGH, 20.11.2018 - II ZR 12/17 für Listen- und Legitimationsfragen. Weitere Entscheidungen nur mit frei prüfbarer Quelle.
+- **Arbeitsmodus:** Erst Gesellschaftsform, Organ, Beschlussweg, Vertretung, Registerlage, wirtschaftliches Ziel und Minderheitenposition sortieren; dann Treuepflicht, Kapitalerhaltung, Haftung, Transaktions-Closing und Beweis-/Vollzugsrisiko prüfen.
+- **Outputpflicht:** Beschluss-/Listenmatrix, Register-To-do, Board-/Beiratsvorlage, Closing-CP-Liste, Treuepflicht-Red-Team, Geschäftsführerhaftungsmemo oder Mandanten-Decision-Paper.
+- **Fehlerbremse:** Tragende Normen/Entscheidungen live oder aus der Akte verifizieren; Rechtsprechung nur mit Gericht, Entscheidungsform, Datum, Aktenzeichen und frei prüfbarer Quelle. Keine BeckRS-, juris-, Kommentar- oder Aufsatz-Blindzitate aus Modellwissen.
 
-Das Deutsche Kaiserreich hatte von 1884/85 bis 1919 Kolonien in Afrika, dem Pazifik und in China. Das Schutzgebietsgesetz 1886 (RGBl. 1886, 75) war die Rechtsgrundlage. Das Kolonialrecht war ein System rassistischer Diskriminierung: Einheimische waren keine Reichsangehoerigen, unterlagen dem Kolonialrecht und hatten keine Grundrechte. Der Herero-Nama-Krieg (1904-1908) fuehrte zum ersten Voelkermord des 20. Jahrhunderts durch deutsche Truppen. Die Versailler Vertrag 1919 entzog Deutschland die Kolonien. Die Aufarbeitung des Kolonialrechts begann spaet; das Voelkermordanerkennung durch Deutschland erfolgte erst 2021.
+## Spezialwissen: Gesellschafterbeschluesse: Schriftsatz-, Brief- und Memo-Bausteine
+- **Normen-/Quellenanker:** AG, HRB, HRA.
 
-## Kernnormen / Kernquellen
+## Fallweichen
+Wenn Unterlagen vorhanden sind, arbeite zuerst aus den Unterlagen. Stelle nur Rückfragen, die die nächste Weiche verändern:
 
-- **Schutzgebietsgesetz 1886 (RGBl. 1886, 75)**: Rechtsgrundlage des deutschen Kolonialrechts
-- **Reichsangehoerigkeitsgesetz 1913 (RGBl. 1913, 583)**: Abstammungsprinzip, schloss Kolonisierte aus
-- **Versailler Vertrag 1919 Art. 118-127**: Abtretung der deutschen Kolonien
-- **Muensteraner Erklaerung 2021**: Deutsche Anerkennung des Herero-Nama-Voelkermords
-- **Voelkermordkonvention 1948 (BGBl. II 1954, 730)**: Internationales Referenzrecht
+1. Welche Rolle hat die fragende Person und wer ist Gegenüber?
+2. Welches konkrete Ziel soll erreicht oder verhindert werden?
+3. Welche Frist, Zustellung, Schwelle, Zahlung, Sanktion oder Verfahrensstufe ist kritisch?
+4. Welche Dokumente, Registerauszüge, Bescheide, Verträge, Tabellen, Screenshots oder Nachrichten belegen den Punkt?
+5. Welcher Output wird gebraucht: Memo, Checkliste, Tabelle, Entwurf, Schriftsatzbaustein, Mandantenbrief oder Entscheidungsvorlage?
 
-## Akteure und Institutionen
-
-- **Lothar von Trotha** (1848-1920): Kommandeur, Befehlsgeber des Herero-Vernichtungsbefehls 1904
-- **Kolonial-Verwaltungsamt**: Buerokratischer Apparat des Kolonialrechts
-- **Herero- und Nama-Fuehrer**: Opfer des Kolonialrechts und Widerstandsfuehrer
-- **Bundesregierung 2021**: Verhandlungen und Erklaerung zum Voelkermord
-
-## Typische Streitfragen / Forschungsfragen
-
-1. War der Herero-Befehl von 1904 ein Voelkermord nach heutigem Recht oder nach damaligem?
-2. Kolonialrecht als Rechtsgeschichte: Darf man nur aus rechtswissenschaftlicher Perspektive urteilen?
-3. Versailler Vertrag und Kolonialrecht: Endete das Kolonialrecht oder wurde es nur verschoben?
-4. Reparationsforderungen der Nachfahren: Gibt es Ansprueche nach deutschem oder Voelkerrecht?
-5. Aufarbeitung 2021: Genuegt die Erklaerung oder beduarf es weiterer rechtlicher Schritte?
-
-## Methodik
-
-- Schutzgebietsgesetz 1886: RGBl. 1886, 75 via ALEX/OeNB
-- Versailler Vertrag: BGBl. 1919, 687 via ALEX/OeNB; documentArchiv.de
-- Voelkermordkonvention: BGBl. II 1954, 730; eur-lex.europa.eu für EU-Aspekte
-- Sekundaerliteratur: Juergen Zimmerer, Deutsche Herrschaft über Afrikaner (2001)
+## Arbeitsworkflow
+1. **Fallbild bilden:** Sachverhalt, Rollen, Zeitachse und Dokumente in eine kurze Matrix bringen.
+2. **Rechtsrahmen setzen:** Normen, Zuständigkeiten, Fristen, Formfragen und Verfahrensstand zum Themenfeld **Gesellschafterbeschluesse** prüfen.
+3. **Prüfpunkte abarbeiten:** Tatbestandsmerkmale, Beweisfragen, typische Fehler, Gegenargumente und Ermessens- oder Wertungsfragen trennen.
+4. **Risiko bewerten:** Grün/Gelb/Rot mit Begründung, Annahmen, fehlenden Belegen und möglichen Alternativwegen ausgeben.
+5. **Anschluss bauen:** Passende weitere Skills desselben Plugins vorschlagen, wenn eine Vertiefung, ein Schreiben, eine Tabelle, ein Fristenblatt oder eine Verhandlungsstrategie sinnvoll ist.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
