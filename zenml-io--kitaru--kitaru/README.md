@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zenml-io/kitaru](https://github.com/zenml-io/kitaru/tree/main/examples/end_to_end/agent_harness_platform/skills/basic/default-agent/SKILL.md)
+Original source: [zenml-io/kitaru](https://github.com/zenml-io/kitaru/tree/main/examples/end_to_end/agent_harness_platform/skills/with-hitl/default-agent/SKILL.md)
 
 ---
 
