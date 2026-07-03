@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vfarcic/dot-ai](https://github.com/vfarcic/dot-ai/tree/main/.claude/skills/dot-ai-prd-close/SKILL.md)
+Original source: [vfarcic/dot-ai](https://github.com/vfarcic/dot-ai/tree/main/.claude/skills/dot-ai-recommend/SKILL.md)
 
 ---
 
