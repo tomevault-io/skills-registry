@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fossasia/eventyay](https://github.com/fossasia/eventyay/tree/main/.agents/skills/frontend-ui/SKILL.md)
+Original source: [fossasia/eventyay](https://github.com/fossasia/eventyay/tree/main/.agents/skills/documentation/SKILL.md)
 
 ---
 
