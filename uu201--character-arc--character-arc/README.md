@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [uu201/character-arc](https://github.com/uu201/character-arc/tree/main/resources/skills/oh-story-claudecode/story-short-scan/SKILL.md)
+Original source: [uu201/character-arc](https://github.com/uu201/character-arc/tree/main/resources/skills/Distilled-Novel-Toolbox/novel-pacing/SKILL.md)
 
 ---
 
