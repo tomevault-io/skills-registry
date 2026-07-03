@@ -1,51 +1,138 @@
 ---
-name: fahrtkosten-festsetzung-interessen
-description: Wenn es um Fahrtkosten: Behörden-, Gerichts- oder Registerweg in JVEG-Kostenprüfer geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: statthaftigkeit-47-vwgo
+description: Wenn es um Statthaftigkeit Paragraf 47 VwGO in Normenkontrolle Bauleitplanung — Paragraf 47 VwGO geht: erstellt den passenden Entwurf aus Sachverhalt, Norm, Beweis und Antrag; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Fahrtkosten: Behörden-, Gerichts- oder Registerweg
+# Statthaftigkeit § 47 VwGO
 
-## Arbeitsweg
+## Schritt 1 — Grundtatbestand § 47 Abs. 1 VwGO
 
-- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: JVEG § 2 Antragsfrist 3 Monate nach Beendigung der Tätigkeit, § 4 Erinnerung 2 Wochen, Beschwerde § 4 Abs. 3 unbefristet.
-- Tragende Normen verifizieren: JVEG §§ 1, 2, 4, 5, 7, 8, 9, 10, 12, 13, 14, 19, 22, 23, RVG (Anwalt), ZSEG (alt), KostO/GNotKG, GG Art. 12 — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Sachverständiger, Dolmetscher, Übersetzer, Geschäftsstelle, Kostenbeamter, Bezirksrevisor, Festsetzungsrichter, Erinnerung-/Beschwerdesenat.
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Vergütungsantrag, Stundennachweis, Reisekostenabrechnung, Festsetzungsbeschluss, Erinnerung, Beschwerde, Sachverständigenrechnung — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+### Wortlaut sinngemäß
+- Das Oberverwaltungsgericht entscheidet im Rahmen seiner Gerichtsbarkeit auf Antrag über die Gültigkeit
+- **Nr. 1**: von Satzungen, die nach den Vorschriften des Baugesetzbuchs erlassen sind, sowie von Rechtsverordnungen aufgrund § 246 Abs. 2 BauGB
+- **Nr. 2**: von anderen im Rang unter dem Landesgesetz stehenden Rechtsvorschriften, sofern das Landesrecht dies bestimmt
 
-## Fachkern: Fahrtkosten: Behörden-, Gerichts- oder Registerweg
-- **Normen-/Quellenanker:** JVEG, GKG/KostR-Schnittstellen, Festsetzungsverfahren, Beschwerde, Vorschuss, Entschädigung, Sachverständigenvergütung und Belegpflicht.
-- **Entscheidende Weiche:** Trenne Rolle Zeuge/Sachverständiger/Dolmetscher, Zeitaufwand, Auslagen, Verdienstausfall, Vorschuss, Frist und Belegwert.
+### Bayerische Landesregelung
+- Art. 5 BayAGVwGO erweitert die Statthaftigkeit auf andere im Rang unter dem Landesgesetz stehende Rechtsvorschriften
+- Damit auch örtliche Bauvorschriften, kommunale Satzungen, Verordnungen erfasst
 
-## Fallweichen
-Wenn Unterlagen vorhanden sind, arbeite zuerst aus den Unterlagen. Stelle nur Rückfragen, die die nächste Weiche verändern:
+## Schritt 2 — Bebauungsplan als Satzung
 
-1. Welche Rolle hat die fragende Person und wer ist Gegenüber?
-2. Welches konkrete Ziel soll erreicht oder verhindert werden?
-3. Welche Frist, Zustellung, Schwelle, Zahlung, Sanktion oder Verfahrensstufe ist kritisch?
-4. Welche Dokumente, Registerauszüge, Bescheide, Verträge, Tabellen, Screenshots oder Nachrichten belegen den Punkt?
-5. Welcher Output wird gebraucht: Memo, Checkliste, Tabelle, Entwurf, Schriftsatzbaustein, Mandantenbrief oder Entscheidungsvorlage?
+### Klassischer qualifizierter B-Plan
+- Erlassen als Satzung der Gemeinde § 10 Abs. 1 BauGB
+- Mindestfestsetzungen Art Maß Bauweise überbaubare Grundstücksfläche § 30 Abs. 1 BauGB
+- Statthaftigkeit unproblematisch
 
-## Arbeitsworkflow
-1. **Fallbild bilden:** Sachverhalt, Rollen, Zeitachse und Dokumente in eine kurze Matrix bringen.
-2. **Rechtsrahmen setzen:** Normen, Zuständigkeiten, Fristen, Formfragen und Verfahrensstand zum Themenfeld **Fahrtkosten** prüfen.
-3. **Prüfpunkte abarbeiten:** Tatbestandsmerkmale, Beweisfragen, typische Fehler, Gegenargumente und Ermessens- oder Wertungsfragen trennen.
-4. **Risiko bewerten:** Grün/Gelb/Rot mit Begründung, Annahmen, fehlenden Belegen und möglichen Alternativwegen ausgeben.
-5. **Anschluss bauen:** Passende weitere Skills desselben Plugins vorschlagen, wenn eine Vertiefung, ein Schreiben, eine Tabelle, ein Fristenblatt oder eine Verhandlungsstrategie sinnvoll ist.
+### Einfacher B-Plan
+- Festsetzungen unterhalb des qualifizierten Maßes
+- § 30 Abs. 3 BauGB
+- Trotzdem Satzung und statthaft
 
-## Fahrtkosten konkret nach JVEG
-- **§ 5 Abs. 1 JVEG:** PKW: 0,42 EUR je gefahrenem Kilometer. Bei mehreren Personen in einem PKW: keine Mehrung pro Person.
-- **§ 5 Abs. 2 JVEG:** öffentliche Verkehrsmittel: Erstattung der notwendigen Kosten (Bahn 2. Klasse, in Sonderfällen 1. Klasse mit Begründung); BahnCard (BC50/100) anteilig.
-- **§ 5 Abs. 3 JVEG:** Taxi nur, wenn andere Verkehrsmittel nicht zumutbar (Zeit, Witterung, Gepäck).
-- **§ 6 JVEG:** Tagegeld und Übernachtungsgeld nach BRKG (Bundesreisekostengesetz) -- Tagegeld z. B. 14 EUR (8-24 h), 28 EUR (volle Tage); Stand BRKG live prüfen.
-- **Sammelreise:** mehrere Termine an einem Tag werden in einer Reise zusammengefasst; Anteil pro Verfahren.
+### Vorhabenbezogener B-Plan § 12 BauGB
+- Vorhaben- und Erschließungsplan plus B-Plan
+- Wird als Satzung beschlossen § 10 BauGB
+- Statthaft
 
-## Häufige Streitpunkte
-- "Privatfahrzeug" vs. Dienstfahrzeug -- nur tatsächlich getragene Kosten.
-- Längere Reisedauer gegen kürzeren teureren Weg: Verhältnismäßigkeit (§ 8 Abs. 2 JVEG: nur erforderlicher Aufwand).
-- Belegpflicht bei Übernachtung: tatsächliche Hotelrechnung, max. Pauschalsatz nach BRKG.
+### B-Plan der Innenentwicklung § 13a BauGB
+- Beschleunigtes Verfahren
+- Verzicht auf Umweltprüfung im Einzelfall möglich
+- Trotzdem Satzung und statthaft
+- Häufiger Angriffspunkt: zu Unrecht beschleunigtes Verfahren gewählt
+
+### Vereinfachtes Verfahren § 13 BauGB
+- Bei Änderungen oder Ergänzungen die Grundzüge nicht berühren
+- Auch hier Satzung — Statthaftigkeit gegeben
+
+## Schritt 3 — Örtliche Bauvorschriften Art. 81 BayBO
+
+### Statthaftigkeitsgrundlage
+- Art. 81 BayBO ermächtigt zu örtlichen Bauvorschriften als Satzung
+- Insbesondere Stellplatzsatzung Art. 81 Abs. 1 Nr. 4 BayBO
+- Gestaltungssatzung Art. 81 Abs. 1 Nr. 1 BayBO
+- Werbeanlagensatzung Art. 81 Abs. 1 Nr. 2 BayBO
+- Satzungsform — Statthaftigkeit unproblematisch nach § 47 Abs. 1 Nr. 2 VwGO i.V.m. Art. 5 BayAGVwGO
+
+### Kombination mit B-Plan
+- Häufig erlässt Gemeinde mit dem B-Plan zugleich örtliche Bauvorschriften in derselben Satzung
+- Beide separat angreifbar — getrennte Anträge sinnvoll wenn Mängel unterschiedlich
+- Im Praxisfall ein einheitlicher Antrag mit getrennten Begründungsabschnitten
+
+## Schritt 4 — Flächennutzungsplan grundsätzlich nicht statthaft
+
+### Regelfall
+- FNP ist Selbstbindung der Gemeinde, kein Rechtsetzungsakt mit Außenwirkung
+- Bürger kann sich nicht unmittelbar darauf berufen
+- BVerwG, Urteil vom 26.4.2007 – 4 CN 3.06 (st. Rspr.)
+- Normenkontrolle gegen FNP regelmäßig unstatthaft
+
+### Ausnahme Außenwirkung
+- FNP-Darstellungen mit gesteigerter Außenwirkung sind statthaft
+- Konzentrationsflächen für Windenergie § 35 Abs. 3 S. 3 BauGB
+- BVerwG, Urteil vom 26.4.2007 – 4 CN 3.06 (Wendepunkt)
+- Hier ist Normenkontrolle gegen FNP statthaft
+
+### Inzident-Kontrolle
+- Wenn FNP nicht direkt angegriffen werden kann, gelegentlich Inzident-Kontrolle im Rahmen B-Plan-Normenkontrolle möglich (Anpassungsgebot § 8 Abs. 2 BauGB)
+
+## Schritt 5 — Inkrafttreten der Norm
+
+### Voraussetzung Bekanntmachung
+- B-Plan tritt mit Bekanntmachung in Kraft § 10 Abs. 3 BauGB
+- Ohne Inkrafttreten kein Normenkontrollgegenstand — Antrag wäre verfrüht
+- Aufstellungsbeschluss alleine reicht nicht
+
+### Nachträgliche Außerkraftsetzung
+- Wird der Plan aufgehoben oder ersetzt, entfällt das Rechtsschutzbedürfnis nicht zwangsläufig (Fortsetzungsfeststellungsinteresse möglich)
+
+## Schritt 6 — Abgrenzungen
+
+### Gegen Baugenehmigung
+- Wenn nur die konkrete Genehmigung stört — Anfechtungsklage gegen die Genehmigung
+- Inzident-Kontrolle des B-Plans im Anfechtungsprozess möglich
+- Parallel-Strategie: Normenkontrolle plus Anfechtung
+
+### Gegen Vorhabenbezogenen Durchführungsvertrag § 12 Abs. 1 S. 1 BauGB
+- Vertrag selbst nicht direkter Antragsgegenstand
+- Aber als Indiz für Vorfestlegung Stadt relevant für materielle Begründung
+
+### Gegen städtebaulichen Vertrag § 11 BauGB
+- Vertrag selbst nicht Antragsgegenstand
+- Inhalt im Rahmen Abwägungsprüfung relevant
+
+## Schritt 7 — Antrags-Bezeichnung im Schriftsatz
+
+### Präzise Antrags-Fassung
+- "Der Bebauungsplan Nr. X der Stadt Y mit dem Namen Z, bekanntgemacht im Amtsblatt der Stadt Y Nr. A vom B, wird für unwirksam erklärt."
+- Bei Teilangriff: "Der Bebauungsplan Nr. X wird in Bezug auf die textliche Festsetzung Nr. Y für unwirksam erklärt."
+- Teilangriff nur wenn restlicher Plan ohne den angegriffenen Teil sinnvoll bleibt (BVerwG-Linie zur Teilbarkeit)
+
+## Schritt 8 — Häufige Statthaftigkeits-Fallen
+
+- Mandant will FNP angreifen — Aufklärung erforderlich
+- Plan ist noch nicht in Kraft — Beschluss abwarten oder Eilantrag prüfen
+- Plan ist bereits aufgehoben — Fortsetzungsfeststellungsinteresse prüfen
+- Angegriffen wird städtebaulicher Vertrag oder Durchführungsvertrag — Hinweis Mandant
+- Plan eines anderen Bundeslandes — andere Landesregelung prüfen
+
+## Quellen
+
+- VwGO § 47 Abs. 1, Abs. 2, Abs. 6
+- BauGB §§ 8 10 11 12 13 13a 30 35 246
+- BayAGVwGO Art. 5
+- BayBO Art. 81
+- BVerwG, Urteil vom 26.4.2007 – 4 CN 3.06 (FNP Windenergie Konzentration)
+- BVerwG, Urteil vom 18.11.2010 – 4 CN 3.10 (Präklusion)
+- BVerwG, Beschluss vom 31.1.2017 – 4 BN 28.16 (Antragsbefugnis Nachbar)
+
+## Ergänzende Rechtsprechung (Stand 05/2026, verifiziert bverwg.de)
+
+- **BVerwG 14.10.2020, 4 CN 4.19**: Antragsbefugnis im Normenkontrollverfahren — § 47 Abs. 2 VwGO setzt Geltendmachung einer moeglichen Rechtsverletzung voraus; abwaegungsfehlerhafte Plaene begruenden Antragsbefugnis, wenn der Antragsteller einen abwaegungserheblichen Belang geltend macht. Quelle: bverwg.de.
+- **BVerwG 04.05.2022, 4 CN 2.21**: Konzentrationszonen-Bauleitplanung (Wind/Solar) — Anforderungen an Statthaftigkeit und Antragsbefugnis von Nachbarn ausserhalb der Konzentrationszone. Quelle: bverwg.de.
+- **BVerwG 11.04.2024, 4 BN 50.23**: Klimaschutz als Abwaegungs- und ggf. Antragsbefugnis-relevanter Belang. Quelle: bverwg.de.
+
+Konkrete Aktenzeichen vor Ausgabe per bverwg.de verifizieren.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
