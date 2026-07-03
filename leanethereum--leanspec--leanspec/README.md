@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [leanEthereum/leanSpec](https://github.com/leanEthereum/leanSpec/tree/main/.claude/skills/fill/SKILL.md)
+Original source: [leanEthereum/leanSpec](https://github.com/leanEthereum/leanSpec/tree/main/.claude/skills/audit/SKILL.md)
 
 ---
 
