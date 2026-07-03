@@ -1,48 +1,92 @@
 ---
-name: kreistag-eilantrag-vorbereiten
-description: Wenn es um Kreistag Eilantrag Vorbereiten in Kommunalrecht der Länder geht: erstellt den passenden Entwurf aus Sachverhalt, Norm, Beweis und Antrag; liefert einen verwertbaren Entwurf mit Anträgen, Begründung und Anlagenlogik. Use when this capability is needed.
+name: stornoreserve-training-material
+description: Wenn es um Stornoreserve im Handelsvertretervertrag — Zulässigkeit nach Paragraf 307 BGB und Paragraf 87a HGB in Handelsvertreterrecht und Vertriebsverträge geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Kreistag Eilantrag Vorbereiten
+# Stornoreserve im Handelsvertretervertrag — Zulässigkeit nach § 307 BGB und § 87a HGB
+
+## Arbeitsbereich
+
+Prüft Zulässigkeit und Umfang von Stornoreserven im Handelsvertretervertrag: Einbehalt von Provisionen als Sicherheit gegen Vertragsstornierungen, AGB-Konformität von Stornoreserveklauseln nach § 307 BGB, Auszahlungsbedingungen sowie Zusammenhang mit § 87a Abs. 2 HGB bei Nichtausführung von Verträgen. Arbeite entlang dieser konkreten Prüfungslinie und trenne Rolle, Frist, Zuständigkeit, Beweislast und gewünschten Output.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: GO der Länder, KomVG, KAG, GG Art. 28, BauGB, VwGO, KomHV-Doppik — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Tragende Normen verifizieren: HGB §§ 84-92c, EuGH zu Ausgleichsanspruch, BGB §§ 305 ff.; § 89b, Wettbewerbsverbot; § 90a und Vertriebsmodelle — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Normenanker
+## Überblick
 
-Vor einer rechtlichen Schlussfolgerung diese Anker am aktuellen Normtext prüfen; Spezial- und Landesrecht nur hinzunehmen, wenn es den konkreten Auftrag traegt:
+Unterstützt bei rechtlichen Fragen rund um Stornoreserve im Handelsvertretervertrag — Zulässigkeit nach § 307 BGB und § 87a HGB.
+Er deckt HGB §§ 84–92c und die EU-Handelsvertreterrichtlinie 86/653/EWG ab.
+Ziel: konkrete, umsetzbare Ergebnisse für Handelsvertreter und Unternehmer.
+Zwingende Normen (§ 92c HGB) schützen den Handelsvertreter auch bei ausländischer Rechtswahl.
+BGH und EuGH haben zentrale Rechtsfragen durch Leitentscheidungen geprägt.
 
-- `Art. 28 Abs. 2 GG` — kommunale Selbstverwaltung.
-- `§ 35 Satz 1 VwVfG` — Verwaltungsakt als Handlungsform.
-- `§ 40 VwVfG` — Ermessensausübung.
-- `§ 47 Abs. 1 VwGO` — Normenkontrolle gegen Satzungen, soweit landesrechtlich eroeffnet.
-- `§ 70 Abs. 1 VwGO` — Widerspruchsfrist.
-- `§ 74 Abs. 1 VwGO` — Klagefrist.
-- `§ 80 Abs. 5 VwGO` — Eilrechtsschutz.
-- `§ 123 Abs. 1 VwGO` — einstweilige Anordnung.
-- `§ 1 Abs. 1 KAG` — Kommunalabgabenrecht als Landesrecht live prüfen.
-- `§ 2 Abs. 1 KAG` — Satzungserfordernis im Abgabenrecht live nach Landesrecht prüfen.
+## Mandantenfall
 
-Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
-- Gemeindeordnungen, Landkreisordnungen, Kommunalverfassungen der Länder
-- Rat/Kreistag, Bürgermeister/Landrat, Ausschüsse, Bürgerbegehren
-- Kommunalaufsicht, Haushalt, Abgaben, Daseinsvorsorge, Satzungen
-- VwGO, § 47 VwGO, Kommunalwahlrecht-Schnittstellen
+- Unternehmer Y behält 20 % der Provision des Handelsvertreters X als Stornoreserve ein; X fragt, ob dieser Einbehalt zulässig und die Klausel AGB-konform ist.
+- Handelsvertreter X hat den Vertrag beendet; Unternehmer Y verweigert die Auszahlung der Stornoreserve und verrechnet sie mit angeblichen Stornierungen aus der Vergangenheit.
+- Handelsvertreter X fragt, wie lange Unternehmer Y eine Stornoreserve nach Vertragsende einbehalten darf und unter welchen Voraussetzungen sie auszuzahlen ist.
 
-## Prüfroutine
+## Erste Schritte
 
-1. **Scope:** Was genau soll entschieden, beantragt, abgewehrt oder dokumentiert werden? Welche Einheit ist betroffen und welches Recht gilt wirklich?
-2. **Zuständigkeit:** Behörde, Gericht, Register, Aufsicht, Verband, Unternehmen oder internationale Stelle sauber benennen; falsche Adressaten als Risiko ausweisen.
-3. **Tatbestand:** Die relevanten Merkmale einzeln mit Belegen füllen. Unklare Tatsachen als Rückfrage oder Beweispunkt markieren, nicht glattbügeln.
-4. **Rechtsfolge:** Anspruch, Ermessen, Verbot, Pflicht, Gebührenfolge, Nebenfolge, Haftung, Vollzug oder Rechtsschutz getrennt ausgeben.
-5. **Taktik:** Schnellster sinnvoller Weg, sauberster Weg und Eskalationsweg nebeneinander stellen; bei Laien zusätzlich eine kurze Erklärung in Alltagssprache.
+1. Stornoreserveklausel auf AGB-Konformität nach § 307 BGB prüfen.
+2. Höhe der Stornoreserve auf Angemessenheit und branchenübliche Praxis prüfen.
+3. Auszahlungsbedingungen und -fristen im Vertrag ermitteln.
+4. Zusammenhang zwischen Stornoreserve und § 87a Abs. 2 HGB (Nichtausführung) klären.
+5. Verrechnung der Stornoreserve mit anderen Forderungen auf Zulässigkeit prüfen.
+6. Anspruch auf Auszahlung der Stornoreserve nach Vertragsende geltend machen.
+
+## Rechtsrahmen
+
+- § 87a Abs. 2 HGB — Provisionsrückforderung bei Nichtausführung
+- § 307 BGB — AGB-Kontrolle der Stornoreserveklausel
+- § 87c HGB — Buchauszug als Grundlage für Stornoreserven-Kontrolle
+- § 87 HGB — Provisionsentstehung und Verrechnung
+- § 355 BGB — Verjährung des Auszahlungsanspruchs (analog)
+- Art. 11 RL 86/653/EWG — Rückforderungsbegrenzung auf Nichtausführung
+
+## Prüfraster
+
+- Ist die Stornoreserveklausel nach § 307 BGB wirksam und angemessen?
+- Entspricht die Höhe der Reserve dem branchenüblichen Maßstab?
+- Unter welchen Bedingungen und wann wird die Stornoreserve ausgezahlt?
+- Ist die Verrechnung der Reserve mit anderen Forderungen zulässig?
+- Haben tatsächliche Stornierungen stattgefunden, die die Reserve rechtfertigen?
+- Verjährt der Auszahlungsanspruch nach Vertragsende?
+
+## Typische Fallstricke
+
+- Unangemessen hohe Stornoreserve — Verstoß gegen § 307 BGB.
+- Keine Auszahlungsregelung im Vertrag — Reserve wird dauerhaft einbehalten.
+- Verrechnung mit fiktiven Stornierungen — unzulässige Eigenaufrechnung.
+- Buchauszug nicht eingeholt — Stornierungen nicht nachprüfbar.
+
+## Hintergrund und Kontext
+
+Das Handelsvertreterrecht steht im fünften Buch des HGB (§§ 84 bis 92c).
+Es gilt als Sonderprivatrecht zwischen Arbeits- und allgemeinem Handelsrecht.
+Die EU-Handelsvertreterrichtlinie 86/653/EWG setzt europäische Mindeststandards.
+Kernprinzipien: Selbständigkeit, Provisionsanspruch, Buchauszug, Ausgleich bei Vertragsende.
+Nachvertragliches Wettbewerbsverbot (§ 90a HGB) und Delkredere (§ 86b HGB) regeln Sonderlagen.
+Zwingende Vorschriften nach § 92c HGB schützen den Handelsvertreter.
+Entgegenstehende Klauseln sind nach § 134 BGB nichtig.
+Für grenzüberschreitende Sachverhalte bestimmt die Rom-I-Verordnung das anwendbare Recht.
+Zwingende Normen wie Ausgleich (§ 89b HGB) und Buchauszug (§ 87c HGB) stehen nicht zur Disposition.
+Bei Statusfragen (Selbständigkeit) ist das Statusfeststellungsverfahren nach § 7a SGB IV maßgeblich.
+
+## Quellen
+
+- [§ 87a HGB auf gesetze-im-internet.de](https://www.gesetze-im-internet.de/hgb/__87a.html)
+- [§ 307 BGB auf gesetze-im-internet.de](https://www.gesetze-im-internet.de/bgb/__307.html)
+- [§ 87c HGB auf gesetze-im-internet.de](https://www.gesetze-im-internet.de/hgb/__87c.html)
+- [§ 87 HGB auf gesetze-im-internet.de](https://www.gesetze-im-internet.de/hgb/__87.html)
+- [Dejure § 87a HGB](https://dejure.org/gesetze/HGB/87a.html)
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
