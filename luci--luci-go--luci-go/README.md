@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [luci/luci-go](https://github.com/luci/luci-go/tree/main/milo/ui/src/fleet/.agents/skills/ux-prototyping/SKILL.md)
+Original source: [luci/luci-go](https://github.com/luci/luci-go/tree/main/milo/ui/src/fleet/.agents/skills/senior-reviewer/SKILL.md)
 
 ---
 
