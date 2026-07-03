@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pymc-labs/CausalPy](https://github.com/pymc-labs/CausalPy/tree/main/.agents/skills/github-issues/SKILL.md)
+Original source: [pymc-labs/CausalPy](https://github.com/pymc-labs/CausalPy/tree/main/causalpy/skills/causal-detective/SKILL.md)
 
 ---
 
