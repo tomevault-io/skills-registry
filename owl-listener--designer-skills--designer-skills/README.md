@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Owl-Listener/designer-skills](https://github.com/Owl-Listener/designer-skills/tree/main/ui-design/skills/law-of-proximity/SKILL.md)
+Original source: [Owl-Listener/designer-skills](https://github.com/Owl-Listener/designer-skills/tree/main/designer-toolkit/skills/ux-writing/SKILL.md)
 
 ---
 
