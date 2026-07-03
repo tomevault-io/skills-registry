@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CoboGlobal/cobo-cli](https://github.com/CoboGlobal/cobo-cli/tree/main/skills/cobo-waas/SKILL.md)
+Original source: [CoboGlobal/cobo-cli](https://github.com/CoboGlobal/cobo-cli/tree/main/skills/cobo-payment/SKILL.md)
 
 ---
 
