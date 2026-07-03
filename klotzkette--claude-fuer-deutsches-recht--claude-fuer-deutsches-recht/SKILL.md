@@ -1,89 +1,70 @@
 ---
-name: postlauf-zustellung-pruefungsamt
-description: Wenn es um Postlauf und Zustellung Prüfungsamt in Prüfungsrecht an Hochschulen und Universitäten geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: kolonialrecht-kritisch-einordnen
+description: Wenn es um Kolonialrecht kritisch einordnen in Deutsche Rechtsgeschichte geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Postlauf und Zustellung Prüfungsamt
+# Kolonialrecht kritisch einordnen
 
-## Normenanker
+## Historische Quellenanker
 
 Vor einer rechtlichen Schlussfolgerung diese Anker am aktuellen Normtext prüfen; Spezial- und Landesrecht nur hinzunehmen, wenn es den konkreten Auftrag traegt:
 
-- `Art. 5 Abs. 3 Satz 1 GG` — Wissenschaftsfreiheit.
-- `Art. 12 Abs. 1 GG` — Berufswahl- und Ausbildungsbezug.
-- `Art. 3 Abs. 1 GG` — Gleichbehandlung und Bewertungsfairness.
-- `§ 2 HRG` — Aufgaben der Hochschulen.
-- `§ 4 HRG` — Freiheit von Forschung, Lehre und Studium.
-- `§ 7 HRG` — Ziel des Studiums.
-- `§ 15 HRG` — Prüfungen und Leistungspunktsystem.
-- `§ 16 HRG` — Prüfungsordnungen.
-- `§ 70 Abs. 1 VwGO` — Widerspruchsfrist.
-- `§ 123 Abs. 1 VwGO` — Eilrechtsschutz bei Studien-/Prüfungsentscheidungen.
+- `Art. 20 Abs. 3 GG` — rechtsstaatlicher Gegenwartsanker.
+- `Art. 1 Abs. 1 GG` — Menschenwuerde als Zäsur- und Kontinuitaetsmassstab.
+- `Art. 123 Abs. 1 GG` — Fortgeltung vorkonstitutionellen Rechts.
+- `Art. 125 GG` — Fortgeltung als Bundesrecht.
+- `Art. 126 GG` — Meinungsverschiedenheiten über Fortgeltung.
+- `Art. 20 Einigungsvertrag` — öffentlicher Dienst und Rechtsuebergang.
+- `Art. 21 Einigungsvertrag` — Verwaltungsvermögen.
+- `Art. 22 Einigungsvertrag` — Finanzvermoegen.
+- `§ 1 VermG` — Anwendungsbereich Vermögensgesetz.
+- `§ 3 VermG` — Rückübertragung.
 
 Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: GG Art. 12, BVerfGE 84, 34 (Antwortspielraum), BVerfGE 84, 59, HRG, JAG, HochschulG der Länder, VwVfG, VwGO § 80 — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+- Fristen und Eilrisiken zuerst markieren: historisch — Verjährung nach jeweiliger Quelle; heutige Relevanz über Art. 184 ff. EGBGB und Auslegungshilfe für Grundrechtsverständnis.
+- Tragende Normen verifizieren: Sachsenspiegel, Schwabenspiegel, Carolina (CCC 1532), Preußisches ALR 1794, Code civil (1804), Sächsisches BGB 1865, BGB 1900, WRV 1919, GG 1949; rechtshistorische Quellen MGH, Constitutiones — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Rechtshistoriker, Quelleneditionen, Lehrstühle für deutsche Rechtsgeschichte, Verfassungsrechtler (Auslegungshintergrund), Restitutionsverfahren mit historischem Anker.
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Quellenedition, rechtshistorisches Gutachten, Vorlesungsskript, dogmenhistorischer Aufsatz, Verfassungsentstehungsgeschichte — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Fachkern: Postlauf und Zustellung Prüfungsamt
-- **Normen-/Quellenanker:** Hochschulgesetz/Prüfungsordnung des Landes, VwVfG/VwGO, Art. 12/3 GG, Chancengleichheit, Bewertungsfehler, Rücktritt, Täuschung und Eilrechtsschutz.
-- **Entscheidende Weiche:** Prüfungsordnung, Bescheid, Frist, Bewertungsrüge, Verfahrensfehler, Nachteilsausgleich, Akteneinsicht und gerichtlicher Eilbedarf trennen.
-- **Arbeitsprodukt:** Erzeuge eine konkrete Prüf- oder Entscheidungsmatrix mit Norm, Tatbestand, Beleg, Einwand, Risikoampel und nächstem Schritt; Anschluss-Skills nur bei echter Vertiefung nennen.
+## Worum es geht
 
-## Wofür dieser Arbeitsgang da ist
+Das Deutsche Kaiserreich hatte von 1884/85 bis 1919 Kolonien in Afrika, dem Pazifik und in China. Das Schutzgebietsgesetz 1886 (RGBl. 1886, 75) war die Rechtsgrundlage. Das Kolonialrecht war ein System rassistischer Diskriminierung: Einheimische waren keine Reichsangehoerigen, unterlagen dem Kolonialrecht und hatten keine Grundrechte. Der Herero-Nama-Krieg (1904-1908) fuehrte zum ersten Voelkermord des 20. Jahrhunderts durch deutsche Truppen. Die Versailler Vertrag 1919 entzog Deutschland die Kolonien. Die Aufarbeitung des Kolonialrechts begann spaet; das Voelkermordanerkennung durch Deutschland erfolgte erst 2021.
 
-Dieser Skill vertieft ein konkretes Problem im Hochschulprüfungsrecht. Er ist für Prüfling, Prüfungsamt, Prüfungsausschuss, Hochschule, Prüferin oder Anwalt gedacht und soll aus unvollständigen Akten schnell eine belastbare Prüfspur machen.
+## Kernnormen / Kernquellen
 
-## Spezialfokus
+- **Schutzgebietsgesetz 1886 (RGBl. 1886, 75)**: Rechtsgrundlage des deutschen Kolonialrechts
+- **Reichsangehoerigkeitsgesetz 1913 (RGBl. 1913, 583)**: Abstammungsprinzip, schloss Kolonisierte aus
+- **Versailler Vertrag 1919 Art. 118-127**: Abtretung der deutschen Kolonien
+- **Muensteraner Erklaerung 2021**: Deutsche Anerkennung des Herero-Nama-Voelkermords
+- **Voelkermordkonvention 1948 (BGBl. II 1954, 730)**: Internationales Referenzrecht
 
-- **Konkreter Auftrag:** Prüft Zugang, Postlauf, E-Mail, Portalnachricht und Nachweisprobleme.
-- **Erste Trennlinie:** Ist das Problem wirklich Postlauf und Zustellung Prüfungsamt, oder liegt vorgelagert eine andere Entscheidung, Zuständigkeit oder Frist vor?
-- **Quellenarbeit:** Suche die aktuelle Landesnorm, Ordnung oder Satzung im Original und notiere Fundstelle, Fassung, Bekanntgabeweg und Geltungszeitpunkt.
-- **Aktenarbeit:** Markiere, welches Dokument die entscheidende Tatsache trägt; bloße Schilderungen bekommen eine eigene Unsicherheitsnote.
-- **Produkt:** Liefere am Ende nicht nur ein Ergebnis, sondern eine Handlung: Gesprächsfahrplan, Akteneinsicht, Antrag, Widerspruch/Remonstration, Eilrechtsschutz oder interne Entscheidungsvorlage.
+## Akteure und Institutionen
 
-### Typische Fallen in diesem Gebiet
+- **Lothar von Trotha** (1848-1920): Kommandeur, Befehlsgeber des Herero-Vernichtungsbefehls 1904
+- **Kolonial-Verwaltungsamt**: Buerokratischer Apparat des Kolonialrechts
+- **Herero- und Nama-Fuehrer**: Opfer des Kolonialrechts und Widerstandsfuehrer
+- **Bundesregierung 2021**: Verhandlungen und Erklaerung zum Voelkermord
 
-- Unzufriedenheit mit der Note, Bewertungsfehler, Verfahrensfehler und neue Tatsachen strikt auseinanderhalten.
-- Prüfungsordnung, Modulhandbuch, Bescheid, Portalnachricht, Bewertungsbogen und Akteneinsicht immer nebeneinander legen.
-- Bewertungsspielräume respektieren, aber Denkfehler, sachfremde Erwägungen, Gleichbehandlung und Chancengleichheit präzise prüfen.
-- Fristen, Unverzüglichkeit, Rücktritt, Täuschungsvorwurf, Nachteilsausgleich und Eilrechtsschutz als eigene Entscheidungspfade behandeln.
+## Typische Streitfragen / Forschungsfragen
 
-## Kaltstartfragen
+1. War der Herero-Befehl von 1904 ein Voelkermord nach heutigem Recht oder nach damaligem?
+2. Kolonialrecht als Rechtsgeschichte: Darf man nur aus rechtswissenschaftlicher Perspektive urteilen?
+3. Versailler Vertrag und Kolonialrecht: Endete das Kolonialrecht oder wurde es nur verschoben?
+4. Reparationsforderungen der Nachfahren: Gibt es Ansprueche nach deutschem oder Voelkerrecht?
+5. Aufarbeitung 2021: Genuegt die Erklaerung oder beduarf es weiterer rechtlicher Schritte?
 
-- In welchem Bundesland und bei welcher konkreten Einrichtung spielt der Fall?
-- Welche Entscheidung, Maßnahme, Satzung, Ordnung, E-Mail oder welches Protokoll liegt wirklich vor?
-- Welche Frist läuft, wann wurde bekanntgegeben und gibt es bereits Widerspruch, Remonstration, Antrag, Beschwerde oder Eilverfahren?
-- Welche Tatsachen sind durch Aktenstücke belegt und welche sind nur Erzählstand?
-- Welches Ziel soll erreicht werden: Aufhebung, Neubescheidung, Duldung, Gesprächslösung, Vergleich, Akteneinsicht oder nur Risikoeinschätzung?
+## Methodik
 
-## Prüfprogramm
-
-1. **Normhierarchie trennen:** Prüfungsordnung, Rahmenordnung, Landeshochschulgesetz, Verwaltungsverfahrensrecht, VwGO und konkrete Prüfungsakte nicht vermischen; die konkrete Ordnung und den Bescheid immer zuerst lesen.
-2. **Zuständigkeit und Verfahren prüfen:** Wer durfte entscheiden, wer musste beteiligt werden, welches Gremium war zuständig und welche Anhörung fehlt möglicherweise?
-3. **Materielle Grenze bestimmen:** Ermessen, Beurteilungs- oder Bewertungsspielraum respektieren, aber Willkür, Verfahrensfehler, Gleichbehandlung, Grundrechte und Verhältnismäßigkeit sauber herausarbeiten.
-4. **Beweisroute bauen:** Aktenstück, Protokoll, Chat, E-Mail, Attest, Bewertungsbogen, Satzungsauszug oder amtliche Quelle jeder Tatsachenbehauptung zuordnen.
-5. **Nächsten Schritt liefern:** knappe Lageeinschätzung, Fristenliste, Antrag, Widerspruch, Remonstration, Eilantragsgerüst, Gesprächsleitfaden oder Beschluss-/Bescheidkritik.
-
-## Fachliche Leitplanken
-
-- Landesrecht und Satzungsrecht sind dynamisch; vor einer konkreten Ausgabe müssen aktuelle amtliche Quellen oder Originalordnungen geprüft werden.
-- Rechtsprechung nur zitieren, wenn Gericht, Datum, Aktenzeichen und eine frei überprüfbare Quelle vorliegen.
-- Keine pauschalen Aussagen wie "immer rechtswidrig" oder "pädagogisch nicht angreifbar"; entscheidend sind Verfahrensspur, Dokumentation, Gleichbehandlung und konkrete Rechtsgrundlage.
-
-## Output-Muster
-
-- **Sofortlage:** Was ist entschieden, was läuft, was droht?
-- **Angriffspunkte:** Zuständigkeit, Verfahren, Begründung, Tatsachenbasis, Ermessen/Bewertungsspielraum, Verhältnismäßigkeit.
-- **Dokumentenbedarf:** fehlende Akten, Protokolle, Ordnungen, Atteste, Gremienbeschlüsse und Zustellnachweise.
-- **Entwurf:** präziser Antrag oder Schriftsatzbaustein mit Frist, Ziel und Begründung.
+- Schutzgebietsgesetz 1886: RGBl. 1886, 75 via ALEX/OeNB
+- Versailler Vertrag: BGBl. 1919, 687 via ALEX/OeNB; documentArchiv.de
+- Voelkermordkonvention: BGBl. II 1954, 730; eur-lex.europa.eu für EU-Aspekte
+- Sekundaerliteratur: Juergen Zimmerer, Deutsche Herrschaft über Afrikaner (2001)
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
