@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stencila/stencila](https://github.com/stencila/stencila/tree/main/.stencila/skills/site-config-review/SKILL.md)
+Original source: [stencila/stencila](https://github.com/stencila/stencila/tree/main/.stencila/skills/software-code-review/SKILL.md)
 
 ---
 
