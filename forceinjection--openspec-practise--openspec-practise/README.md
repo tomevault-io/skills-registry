@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ForceInjection/OpenSpec-practise](https://github.com/ForceInjection/OpenSpec-practise/tree/main/.qoder/skills/openspec-apply-change/SKILL.md)
+Original source: [ForceInjection/OpenSpec-practise](https://github.com/ForceInjection/OpenSpec-practise/tree/main/.qoder/skills/openspec-archive-change/SKILL.md)
 
 ---
 
