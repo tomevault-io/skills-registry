@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [greyhaven-ai/autocontext](https://github.com/greyhaven-ai/autocontext/tree/main/pi/skills/autocontext/SKILL.md)
+Original source: [greyhaven-ai/autocontext](https://github.com/greyhaven-ai/autocontext/tree/main/autocontext/skills/grid-ctf-ops/SKILL.md)
 
 ---
 
