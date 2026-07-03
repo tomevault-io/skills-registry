@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [firebase/firebase-cpp-sdk](https://github.com/firebase/firebase-cpp-sdk/tree/main/.agents/skills/firebase-cpp-test-runner/SKILL.md)
+Original source: [firebase/firebase-cpp-sdk](https://github.com/firebase/firebase-cpp-sdk/tree/main/.agents/skills/firebase-cpp-commenting-standards/SKILL.md)
 
 ---
 
