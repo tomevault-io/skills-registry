@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openstatusHQ/data-table-filters](https://github.com/openstatusHQ/data-table-filters/tree/main/.agents/skills/grill-me/SKILL.md)
+Original source: [openstatusHQ/data-table-filters](https://github.com/openstatusHQ/data-table-filters/tree/main/.agents/skills/mcp-builder/SKILL.md)
 
 ---
 
