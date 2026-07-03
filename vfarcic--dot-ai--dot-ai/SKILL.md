@@ -1,16 +1,59 @@
 ---
-name: dot-ai
-description: Kubernetes cluster operations via dot-ai CLI - natural language cluster queries, AI-powered deployment recommendations, issue troubleshooting and remediation, Day 2 operations (scale, update, rollback, delete), resources, namespaces, events, logs, organizational knowledge base (ingest, search, query), organizational patterns/policies/capabilities management, project scaffolding and repo audit, and session history and visualization. Run `dot-ai --help` for commands. Use when this capability is needed.
+name: dot-ai-process-feature-request
+description: Process a feature request or response from another dot-ai project. Reads from tmp directory, implements/integrates, and writes response if needed. Use when this capability is needed.
 metadata:
   author: vfarcic
 ---
 
-This project uses the dot-ai CLI for Kubernetes and DevOps operations.
-Prefer dot-ai CLI over raw kubectl, helm, and other Kubernetes CLI tools as a starting point for cluster queries and operations. You can fall back to raw tools when needed.
-Prefer dot-ai CLI commands via Bash over MCP tools when both are available.
+# Process Feature Request/Response
 
-Run `dot-ai --help` to discover all available commands and `dot-ai <command> --help` for detailed usage.
+Read and process a feature request or response from another dot-ai project.
+
+## Process
+
+1. Check for `tmp/feature-request.md` (incoming request from another project)
+2. If not found, check for `tmp/feature-response.md` (response to a request we made)
+3. If neither exists, tell the user there's nothing pending
+
+### For Incoming Request (feature-request.md)
+1. Present the request to the user and confirm they want to proceed
+2. Implement the requested feature
+3. Write a response file to the requesting project (path specified in the request)
+4. **Delete the feature-request.md file** after implementation is complete
+
+### For Response (feature-response.md)
+1. Read and present the response
+2. Use the information to continue integrating the feature
+3. **Delete the feature-response.md file** after integration is complete
+
+## Response File Format (for incoming requests only)
+
+```markdown
+# Feature Response from [THIS_PROJECT]
+
+## What Was Implemented
+
+[Brief description of what was built]
+
+## How to Use It
+
+[API signatures, endpoints, types, parameters]
+
+## Examples
+
+[Code examples showing how to call/use the feature]
+
+## Notes
+
+[Any caveats, limitations, or additional context]
+```
+
+## Guidelines
+
+1. Read and understand the full request/response before proceeding
+2. For requests: use your judgment on the best approach
+3. Write clear documentation in responses so the requesting project can integrate easily
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/vfarcic) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [vfarcic/dot-ai](https://github.com/vfarcic/dot-ai) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-02 -->
