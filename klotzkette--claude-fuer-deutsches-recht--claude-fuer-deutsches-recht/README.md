@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/berufsrecht-notare/skills/belehrungspflicht-verbraucher-faktenma/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/handelsrecht-hgb/skills/ohg-begriff-und-entstehung-paragraph-105/SKILL.md)
 
 ---
 
