@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Prismer-AI/PrismerCloud](https://github.com/Prismer-AI/PrismerCloud/tree/main/server/sdk/Skill.md)
+Original source: [Prismer-AI/PrismerCloud](https://github.com/Prismer-AI/PrismerCloud/tree/main/server/public/docs/Skill.md)
 
 ---
 
