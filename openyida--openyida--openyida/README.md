@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openyida/openyida](https://github.com/openyida/openyida/tree/main/yida-skills/skills/large-file-write/SKILL.md)
+Original source: [openyida/openyida](https://github.com/openyida/openyida/tree/main/yida-skills/skills/yida-create-page/SKILL.md)
 
 ---
 
