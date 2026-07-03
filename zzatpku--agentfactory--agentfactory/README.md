@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zzatpku/AgentFactory](https://github.com/zzatpku/AgentFactory/tree/main/skills/meta/modify_subagent/SKILL.md)
+Original source: [zzatpku/AgentFactory](https://github.com/zzatpku/AgentFactory/tree/main/skills/tools/mask/open_page/SKILL.md)
 
 ---
 
