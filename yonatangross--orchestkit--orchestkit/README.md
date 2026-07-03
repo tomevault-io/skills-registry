@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yonatangross/orchestkit](https://github.com/yonatangross/orchestkit/tree/main/plugins/ork/skills/skill-evolution/SKILL.md)
+Original source: [yonatangross/orchestkit](https://github.com/yonatangross/orchestkit/tree/main/src/skills/issue-progress-tracking/SKILL.md)
 
 ---
 
