@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DeepExperience/MMSkills](https://github.com/DeepExperience/MMSkills/tree/main/skills_library/libreoffice_calc/LIBREOFFICECALC_Sort_and_Filter_Calc_Tables/SKILL.md)
+Original source: [DeepExperience/MMSkills](https://github.com/DeepExperience/MMSkills/tree/main/skills_library/thunderbird/THUNDERBIRD_Compose_Format_and_Send_Thunderbird_Emails/SKILL.md)
 
 ---
 
