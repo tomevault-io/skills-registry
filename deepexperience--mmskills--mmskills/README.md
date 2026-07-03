@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DeepExperience/MMSkills](https://github.com/DeepExperience/MMSkills/tree/main/skills_library/gimp/GIMP_GIMP_Save_Projects_and_Export_Edited_Images/SKILL.md)
+Original source: [DeepExperience/MMSkills](https://github.com/DeepExperience/MMSkills/tree/main/skills_library/chrome/CHROME_Manage_Bookmarks_Reading_List_And_Shortcuts/SKILL.md)
 
 ---
 
