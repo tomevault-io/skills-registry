@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yonatangross/orchestkit](https://github.com/yonatangross/orchestkit/tree/main/plugins/ork/skills/ui-components/SKILL.md)
+Original source: [yonatangross/orchestkit](https://github.com/yonatangross/orchestkit/tree/main/plugins/ork/skills/swarm-migrate/SKILL.md)
 
 ---
 
