@@ -1,174 +1,88 @@
 ---
-name: erstgespraech-mandatsannahme
-description: Wenn es um Erstgespraech Mandatsannahme in Fachanwalt Verwaltungsrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: international-office-visum-status
+description: Wenn es um International Office, Visum und Status in Hochschulrecht der Bundesländer geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Strukturierter Erstgespraechsleitfaden für Allgemeines Verwaltungs- und Bauplanungsrecht: Erfassung der Konstellation, Konflikt- und GwG-Check, Vollmacht, Streitwert/Gebührenvereinbarung, Fristen-Erstprognose und Handlungsweichen.
+# International Office, Visum und Status
 
+## Normenanker
+
+Arbeitsfokus: **International Office, Visum und Status**. Prüfe diese Anker am Sachverhalt; ergänze nur Normen, die denselben Output, dieselbe Frist oder dieselbe Beweisfrage tragen:
+
+- `Art. 5 Abs. 3 Satz 1 GG` — Forschungsfreiheit.
+- `§ 25 HRG` — Forschung mit Mitteln Dritter.
+- `Art. 89 Abs. 1 DSGVO` — Forschungsdaten.
+- `§ 27 Abs. 1 BDSG` — wissenschaftliche Forschung.
+- `§ 42 ArbNErfG` — Hochschulerfindungen.
+- `§ 4 Abs. 1 AWG` — Außenwirtschaftsbeschränkungen.
+- `§ 5 AWG` — Embargo/Sanktionen.
+- `§ 7 Abs. 1 TierSchG` — Tierversuchszweck.
+- `§ 8 Abs. 1 TierSchG` — Tierversuchsgenehmigung.
+
+Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: VwGO; VwVfG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+- Fristen und Eilrisiken zuerst markieren: Widerspruch Prüfungsentscheidung i.d.R. 1 Monat (VwVfG/VwGO), Exmatrikulation/Beurlaubung semestergebunden, Promotionsverfahren landesrechtlich.
+- Tragende Normen verifizieren: HRG (Rahmen), 16 Landeshochschulgesetze (z. B. HG NRW, BayHIG, BerlHG, HmbHG), WissZeitVG, BAföG, HRK-Beschlüsse, Bologna-Erklärung, EU-RL anerkennung Berufsqualifikationen 2005/36 — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Studenten, Lehrer, Prüfungsausschuss, Dekanat, Rektorat, Wissenschaftsministerium des Landes, VG, OVG, Akkreditierungsrat.
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Studien-/Prüfungsordnung, Zulassungsbescheid, Prüfungsbescheid, Widerspruchsbescheid, Klage VG, Promotionsordnung, Berufungsvereinbarung — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-**Fokus:** Strukturierter Erstgespraechsleitfaden für Allgemeines Verwaltungs- und Bauplanungsrecht: Erfassung der Konstellation, Konflikt- und GwG-Check, Vollmacht, Streitwert/Gebührenvereinbarung, Fristen-Erstprognose und Handlungsweichen.
+## Fachkern: International Office, Visum und Status
+- **Normen-/Quellenanker:** Hochschulgesetze der Länder, Grundrechte, Hochschulsatzungen, Kapazitätsrecht, Berufungsrecht, Prüfungsrecht, Datenschutz und Arbeits-/Beamtenrecht.
+- **Entscheidende Weiche:** Bundesland, Statusgruppe, Gremium, Satzung, Verwaltungsakt, Beteiligungsrecht, Ministerium und Rechtsbehelf bestimmen.
+- **Arbeitsprodukt:** Erzeuge eine konkrete Prüf- oder Entscheidungsmatrix mit Norm, Tatbestand, Beleg, Einwand, Risikoampel und nächstem Schritt; Anschluss-Skills nur bei echter Vertiefung nennen.
 
-### Erstgespraech und Mandatsannahme im Allgemeines Verwaltungs- und Bauplanungsrecht
+## Wofür dieser Arbeitsgang da ist
 
-## Wann dieser Arbeitsgang greift
+Dieser Skill vertieft ein konkretes Problem im Hochschulrecht. Er ist für Hochschule, Fakultät, Ministerium, Gremium, Professorin, Studenten oder Kanzlei gedacht und soll aus unvollständigen Akten schnell eine belastbare Prüfspur machen.
 
-- Neue Anfrage aus dem Bereich Allgemeines Verwaltungs- und Bauplanungsrecht (Telefon, Mail, Empfehlung, Walk-in).
-- Mandantin oder Mandant beschreibt Sachverhalt unstrukturiert; viele Anlagen ohne System.
-- Vor jeder weiteren fachlichen Bearbeitung: erst Annahme klären, Konflikt- und GwG-Prüfung, Vollmacht, Streitwert/Vereinbarung, Fristen.
+## Spezialfokus
 
-## Phasen des Erstgespraechs
+- **Konkreter Auftrag:** Prüft hochschulische Bescheinigungen, Visum, Aufenthalt und Einschreibung.
+- **Erste Trennlinie:** Ist das Problem wirklich International Office, Visum und Status, oder liegt vorgelagert eine andere Entscheidung, Zuständigkeit oder Frist vor?
+- **Quellenarbeit:** Suche die aktuelle Landesnorm, Ordnung oder Satzung im Original und notiere Fundstelle, Fassung, Bekanntgabeweg und Geltungszeitpunkt.
+- **Aktenarbeit:** Markiere, welches Dokument die entscheidende Tatsache trägt; bloße Schilderungen bekommen eine eigene Unsicherheitsnote.
+- **Produkt:** Liefere am Ende nicht nur ein Ergebnis, sondern eine Handlung: Gesprächsfahrplan, Akteneinsicht, Antrag, Widerspruch/Remonstration, Eilrechtsschutz oder interne Entscheidungsvorlage.
 
-### 1. Aufnahme der Konstellation (10-15 Min.)
+### Typische Fallen in diesem Gebiet
 
-Standard-Fragenraster für Allgemeines Verwaltungs- und Bauplanungsrecht:
+- Landeshochschulgesetz, Grundordnung, Fakultäts-/Prüfungs-/Berufungsordnung und konkrete Gremienbeschlüsse strikt trennen.
+- Wissenschaftsfreiheit, Selbstverwaltungsrecht, Ministerialaufsicht und Haushaltsbindung jeweils gesondert abprüfen.
+- Bei Gremienfragen immer Statusgruppen, Befangenheit, Einladung, Beschlussfähigkeit, Protokoll und Zuständigkeit kontrollieren.
+- Bei Drittmitteln, Berufungen und Forschung nie ohne Rechtekette, Publikationsfreiheit, Compliance und Dokumentationsspur arbeiten.
 
-- Beteiligte (Vor-/Nachname, Geburtsdatum, Anschrift, Rolle: Klägerin/Beklagter, Antragsteller, Beschuldigter)
-- Konflikt-Kern in einem Satz ("Was ist Ihr Ziel?")
-- Konkrete fachliche Stossrichtung: VA, Widerspruch, Klage VG, Bauplanung, Gewerberecht, Beamtenrecht
-- Bisherige Korrespondenz (Bescheide, Schreiben der Gegenseite, anwaltliche Vertretung der Gegenseite?)
-- **Fristenscreening sofort:** anstehende Klage-/Widerspruchs-/Einspruchsfristen aus den vorgelegten Schreiben (z.B. Widerspruch, Anfechtungsklage VG, Verpflichtungsklage, Eilantrag § 80 Abs. 5 VwGO). Frist-Alarm an die Vorbereitung weitergeben.
+## Kaltstartfragen
 
-### 2. Konflikt-Prüfung und GwG-Check (5 Min.)
+- In welchem Bundesland und bei welcher konkreten Einrichtung spielt der Fall?
+- Welche Entscheidung, Maßnahme, Satzung, Ordnung, E-Mail oder welches Protokoll liegt wirklich vor?
+- Welche Frist läuft, wann wurde bekanntgegeben und gibt es bereits Widerspruch, Remonstration, Antrag, Beschwerde oder Eilverfahren?
+- Welche Tatsachen sind durch Aktenstücke belegt und welche sind nur Erzählstand?
+- Welches Ziel soll erreicht werden: Aufhebung, Neubescheidung, Duldung, Gesprächslösung, Vergleich, Akteneinsicht oder nur Risikoeinschätzung?
 
-- Konflikt-Check über Mandantsystem: Gegnerin, Streitgegenstand, frueherer Mandant?
-- GwG-Identifizierung: amtlicher Lichtbildausweis (Ausweisscan), bei juristischer Person Handelsregister-/Transparenzregister-Auszug, ggf. wirtschaftlich Berechtigte/n.
-- Risikobewertung (niedrig/mittel/hoch) abhaengig von Mandatscharakter, Bargeld, Auslandsbezug.
-- Doku im Mandatsbogen (Pflicht nach §§ 10 ff. GwG i.V.m. § 2 Abs. 1 Nr. 10 GwG für RA-Mandate).
+## Prüfprogramm
 
-### 3. Vollmacht und Schweigepflichtentbindung
+1. **Normhierarchie trennen:** Landeshochschulgesetz, Grundordnung, Satzung, Berufungsordnung, Haushaltsrecht, Verwaltungsverfahrensrecht und VwGO nicht vermischen; die konkrete Ordnung und den Bescheid immer zuerst lesen.
+2. **Zuständigkeit und Verfahren prüfen:** Wer durfte entscheiden, wer musste beteiligt werden, welches Gremium war zuständig und welche Anhörung fehlt möglicherweise?
+3. **Materielle Grenze bestimmen:** Ermessen, Beurteilungs- oder Bewertungsspielraum respektieren, aber Willkür, Verfahrensfehler, Gleichbehandlung, Grundrechte und Verhältnismäßigkeit sauber herausarbeiten.
+4. **Beweisroute bauen:** Aktenstück, Protokoll, Chat, E-Mail, Attest, Bewertungsbogen, Satzungsauszug oder amtliche Quelle jeder Tatsachenbehauptung zuordnen.
+5. **Nächsten Schritt liefern:** knappe Lageeinschätzung, Fristenliste, Antrag, Widerspruch, Remonstration, Eilantragsgerüst, Gesprächsleitfaden oder Beschluss-/Bescheidkritik.
 
-- Allgemeine Prozess-/Aussenvollmacht (BORA, ZPO, FamFG, je nach Fachgebiet).
-- Spezielle Vollmachten: ggf. Akteneinsicht Strafakte, KV-Abrechnungsdaten, Sozialdaten (Schweigepflichtentbindung gegenueber Krankenkasse, Arzt, Behörde).
-- Bei Eheleuten/GbR/GmbH: einzelvollmachtgebende Person und Vertretungsmacht klären.
+## Fachliche Leitplanken
 
-### 4. Streitwert und Gebührenvereinbarung
+- Landesrecht und Satzungsrecht sind dynamisch; vor einer konkreten Ausgabe müssen aktuelle amtliche Quellen oder Originalordnungen geprüft werden.
+- Rechtsprechung nur zitieren, wenn Gericht, Datum, Aktenzeichen und eine frei überprüfbare Quelle vorliegen.
+- Keine pauschalen Aussagen wie "immer rechtswidrig" oder "pädagogisch nicht angreifbar"; entscheidend sind Verfahrensspur, Dokumentation, Gleichbehandlung und konkrete Rechtsgrundlage.
 
-Standard-Streitwerte im Bereich Allgemeines Verwaltungs- und Bauplanungsrecht:
+## Output-Muster
 
-- Skizze: Streitwert grob abschaetzen (z.B. Hauptforderung, ggf. + Zinsen, Nebenforderungen).
-- RVG-Pauschalrechnung (Berechnungstool im Plugin) oder Stundenhonorarvereinbarung.
-- Beratungshilfe-/Prozesskostenhilfe-Antrag prüfen, wenn wirtschaftlich angezeigt.
-- Vorschussanforderung nach § 9 RVG.
-
-### 5. Strategie-Erstskizze
-
-Drei Weichen am Ende des Erstgespraechs:
-
-- **Mandat annehmen:** vollstaendig (Prüfung + Schriftsatz) oder begrenzt (nur Prüfung/Gutachten).
-- **Verweisen:** wenn Spezialgebiet ausserhalb der Fachanwaltschaft, oertlich unzuständig oder Konflikt.
-- **Ablehnen:** offensichtlich aussichtslos, GwG-Hit, Bauchgefuehl-Vorsicht.
-
-## Pflicht-Output am Ende
-
-1. **Mandatsbogen** mit Beteiligten, Konflikt-Check, GwG-Status, Streitwert.
-2. **Frist-Liste** (Sofortfristen, Verjährung, Ausschlussfristen, Beweisanforderungs-Fristen).
-3. **Anlagenverzeichnis** des uebergebenen Datenraums (Stand erstes Sortieren).
-4. **Naechster-Schritt-Plan:** binnen 24/48/72 h, Owner, Output.
-5. **Honorarvereinbarung** unterschrieben oder Vorbehalt notiert.
-
-## Relevante Rechtsgrundlagen und Standards
-
-- BORA, BRAO, FAO für Fachanwaltschaft Allgemeines Verwaltungs- und Bauplanungsrecht.
-- GwG, GwGMeldV, Identifizierungsleitfaden BRAK.
-- VwVfG, VwGO, BauGB, BauNVO, GewO, BBG/BeamtStG (für fachliche Erstpruefung).
-- DSGVO und BDSG für den Umgang mit Mandantendaten (Art. 6 DSGVO als Rechtsgrundlage, Art. 9 ggf. Gesundheitsdaten).
-
-## Typische Fehler im Erstgespraech
-
-- Frist uebersehen, weil Mandantin sie nicht selber genannt hat (immer aus jedem Schreiben Frist herausziehen).
-- Konflikt-Check nur nach Personennamen, nicht nach Sachzusammenhang (gleiche Liegenschaft, gleicher Sachverhalt).
-- Vollmachtsumfang unklar -> später Streit mit Mandantin über Befugnisse.
-- Honorarvereinbarung muendlich -> Beweisnot bei Streitwert-/Honorar-Streit.
-- GwG: kein Lichtbildausweis erfasst, kein Aktenvermerk über Risikobewertung.
-
-## Praxis-Checkliste
-
-- [ ] Personalien und Rolle aller Beteiligten erfasst
-- [ ] Konflikt-Check durchgefuehrt
-- [ ] GwG: Identifizierung + Risikobewertung notiert
-- [ ] Allgemeine Vollmacht unterschrieben
-- [ ] Speziale Vollmacht / Entbindungserklaerung (wo noetig) unterschrieben
-- [ ] Streitwert geschaetzt
-- [ ] Honorarvereinbarung unterschrieben oder ausdruecklich auf RVG verwiesen
-- [ ] Fristenliste angelegt und in Kalender eingetragen
-- [ ] Mandatsbogen vollstaendig
-- [ ] Naechster-Schritt-Plan dem Mandanten kommuniziert (E-Mail-Zusammenfassung)
-
-## Konkrete Praxis-Konstellationen
-
-### Konstellation A: Eilbeduerftigkeit
-
-Mandantin kommt am Donnerstag, Frist laeuft am Montag (Klage- oder Widerspruchsfrist im Bereich Allgemeines Verwaltungs- und Bauplanungsrecht). Handlungs-Sequenz:
-
-1. Sofort-Vollmacht und Sofort-Akteneinsicht (per beA, ELSTER, Behördenportal).
-2. Antrag auf Wiedereinsetzung (§ 233 ZPO, § 60 VwGO, § 110 AO) als Reserve dokumentieren.
-3. Spaeteste-Stunde-Versand-Plan: beA bevorzugt, mit qualifizierter Signatur und Empfangsbekenntnis.
-4. Honorarvereinbarung NICHT auf Eilzuschlag verzichten - aber transparent kommunizieren.
-
-### Konstellation B: Komplexer Sachverhalt, Datenraum unsortiert
-
-Mandant uebergibt 200+ Dateien (PDF-Scans, E-Mails, Excel-Listen). Vor jeder fachlichen Bewertung:
-
-1. Datenraum-Index in Excel: Datum, Absender, Empfaenger, Aktenzeichen, kurze Inhaltszeile.
-2. Chronologischer Verlauf als Zeitstrahl - Spielraum für Verjährungs- und Ausschlussfristen identifizieren.
-3. Loecher im Datenraum gezielt anfordern (Mandantenfragen-Katalog).
-
-### Konstellation C: Interessenkonflikt-Naehe
-
-Frueheres Mandat mit derselben Gegnerin oder gleichem Sachzusammenhang. Prüfung:
-
-1. § 43a Abs. 4 BRAO und § 3 BORA - Sachzusammenhang, nicht nur Personenidentitaet.
-2. Einwilligung beider Mandanten in Textform (mit konkreter Beschreibung).
-3. Bei Zweifel: Mandat ablehnen und an Kanzleikollegium ueberweisen.
-
-## Mandanten-Erwartungsmanagement
-
-- Realistische Erfolgs- und Kostenprognose (nicht "Wir gewinnen sicher").
-- Verfahrensdauer im Bereich Allgemeines Verwaltungs- und Bauplanungsrecht: Erfahrungswerte nach Instanz.
-- Vergleichschance vs. streitiges Urteil als Option offen halten.
-- Schriftliche Zusammenfassung des Erstgespraechs binnen 48 h.
-
-## Honorarvereinbarung - Best Practices
-
-- RVG-Basis als Default, Stundenhonorar nur mit gesondertem Hinweis nach § 3a RVG.
-- Erfolgshonorar nur in den engen Grenzen § 4a RVG.
-- Vorschuss in Höhe der voraussichtlichen 1. Instanz.
-- Klarstellung: Auslagen-Pauschale, USt, Reisekosten, Sachverstaendigenkosten gesondert.
-- Bei PKH/Beratungshilfe-Mandant: schriftliche Belehrung, dass eigene Beitraege möglich sind.
-
-## Mandatsbogen-Muster (Mindestinhalt)
-
-- Mandant (Name, Geburtsdatum, Anschrift, Telefon, E-Mail)
-- Gegner (Name, Anschrift, ggf. anwaltliche Vertretung)
-- Kurzbeschreibung Sachverhalt (5-10 Saetze)
-- Ziel des Mandats (eine Zeile)
-- Strittige Fragen (bullet)
-- Geprueft: Konflikt - GwG - Vollmacht
-- Streitwert (Schaetzung)
-- Honorarvereinbarung (RVG/Stunde/Pauschale)
-- Frist-Liste
-- Aktenanlage Datum
-- Naechster-Schritt
-
-## Leitentscheidungen Mandatsannahme / Erstkontakt
-
-- Rechtsprechung: keine Entscheidung aus Modellwissen zitieren; vor Ausgabe über offizielle oder frei zugängliche Quelle mit Gericht, Entscheidungsform, Datum, Aktenzeichen und tragender Aussage verifizieren.
-
-## Cross-Refs
-
-- `vergleichsverhandlung-strategie` (im selben Plugin) für den Fall, dass aussergerichtliche Loesung angestrebt wird.
-- `schriftsatzkern-substantiierung` (im selben Plugin) für den Schriftsatzaufbau, wenn Klage/Widerspruch eingereicht wird.
-- Kanzlei-Allgemein-Plugin `kanzlei-allgemein` für Konflikt-, GwG- und PEP-Prüfroutinen.
+- **Sofortlage:** Was ist entschieden, was läuft, was droht?
+- **Angriffspunkte:** Zuständigkeit, Verfahren, Begründung, Tatsachenbasis, Ermessen/Bewertungsspielraum, Verhältnismäßigkeit.
+- **Dokumentenbedarf:** fehlende Akten, Protokolle, Ordnungen, Atteste, Gremienbeschlüsse und Zustellnachweise.
+- **Entwurf:** präziser Antrag oder Schriftsatzbaustein mit Frist, Ziel und Begründung.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
