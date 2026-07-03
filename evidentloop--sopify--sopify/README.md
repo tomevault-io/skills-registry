@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [evidentloop/sopify](https://github.com/evidentloop/sopify/tree/main/.agents/skills/cross-review/SKILL.md)
+Original source: [evidentloop/sopify](https://github.com/evidentloop/sopify/tree/main/skills/zh/skills/sopify/design/SKILL.md)
 
 ---
 
