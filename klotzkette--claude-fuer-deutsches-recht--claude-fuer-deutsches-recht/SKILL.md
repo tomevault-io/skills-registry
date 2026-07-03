@@ -1,80 +1,67 @@
 ---
-name: akkreditiv-ucp-600
-description: Wenn es um Akkreditiv nach UCP 600 in Internationales Handelsrecht und Lex Mercatoria geht: ordnet Akteninhalt, Belege, Lücken und Nachforderungen; liefert eine Schnittstellenkarte mit Kollisions-, Zuständigkeits- und Nachweisfragen. Use when this capability is needed.
+name: kaltstart-bundesnetzagentur-mandat
+description: Wenn es um Kaltstart Bundesnetzagentur-Mandat in Bundesnetzagentur-Verfahren geht: klärt Rolle, Ziel, Frist, Unterlagen und den passenden nächsten Fachskill; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Akkreditiv nach UCP 600
+# Kaltstart Bundesnetzagentur-Mandat
 
-## Arbeitsweg
+## Direktstart: lesen, entscheiden, liefern
 
-- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: HGB §§ 1-7, 17-37 (Firma/Register), 48-58 (Prokura), 84-92c (Handelsvertreter), 343 ff. (Handelsgeschäfte), 373 ff. (Handelskauf); CISG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+Beginne nicht mit einem Fragenkatalog. Wenn Material vorliegt, lies es zuerst und starte mit einer verwertbaren Arbeitshypothese:
 
-## Worum es geht
+- Frist oder Sofortrisiko.
+- erkannte Rolle, Zielrichtung und Verfahrensstand.
+- tragende Tatsachen aus dem Material.
+- bester nächster Arbeitsschritt mit direkt nutzbarem Output.
 
-Das Dokumentenakkreditiv (Letter of Credit, L/C) ist die sicherste Zahlungsform im internationalen Handel: Die Bank des Käufers verpflichtet sich unwiderruflich zur Zahlung gegen konforme Dokumente. UCP 600 (ICC Uniform Customs and Practice for Documentary Credits, 2007, 39 Artikel) regelt weltweit den Standard. Wichtigste Neuerung: 5-Bankarbeitstage-Prüffrist (Art. 14 lit. b) und strengere Diskrepanzbehandlung.
+Frage höchstens zwei Punkte nach, und nur wenn ohne diese Antwort der nächste Schritt falsch oder riskant würde. Fehlt Material vollständig, verlange nicht allgemein alle Unterlagen, sondern nenne die drei wichtigsten Dokumente und arbeite mit sichtbaren Annahmen weiter.
 
-## Kernnormen / Kernquellen
+Starte mit einem Arbeitsprodukt, nicht mit einer Inventarliste: Kurzvermerk, Fristenblatt, Prüfmatrix, Entwurf, Fragenliste oder Entscheidungsvorschlag. Routing ist nur Mittel zum Zweck. Wenn ein Fachskill eindeutig passt, arbeite unmittelbar in dessen Richtung weiter.
 
-- **UCP 600 Art. 2**: Definitionen — Honour, Presentation, Complying Presentation
-- **UCP 600 Art. 5**: Dokumente (nicht Waren, Dienstleistungen, Vertragserfüllung)
-- **UCP 600 Art. 14**: Dokumentenprüfung — 5-Bankarbeitstage, Compliance-Standard
-- **UCP 600 Art. 16**: Diskrepante Dokumente — Ablehnung, Waiver, Halten auf Anweisung
-- **UCP 600 Art. 20**: Konnossement-Anforderungen
-- **eUCP v2.0 (ICC 2019)**: Elektronische Präsentation — Ergänzung zu UCP 600
+Arbeitsmodus: Liefere zuerst einen nutzbaren Zwischenstand in höchstens sieben Sätzen und dann den nächsten konkreten Schritt. Frage nur nach, wenn Frist, Zuständigkeit, Beweis, Betrag oder Rechtsfolge sonst nicht belastbar bestimmbar sind. Tabellen nur für Fristen, Belege, Beträge, Varianten oder Streitstoff.
 
-## Schlüsselbegriffe
+## Fachkern: Kaltstart Bundesnetzagentur-Mandat
+- **Normen- und Behördenanker:** VwVfG, VwGO, OWiG, IFG/UIG soweit einschlägig, sektorales Fachgesetz und aktuelle BNetzA-Formulare, Konsultationen und Beschlusskammerhinweise.
+- **Spezifische Weiche:** Kläre zuerst Sektor, Beschlusskammer, Verfahrensart, Beteiligtenstellung, Akteneinsicht, Anhörung, Frist, Eilbedarf und ob gerichtlicher Rechtsschutz zum VG/OVG oder über Spezialzuweisung läuft.
+- **Beleglogik:** Jede Zahl, Schwelle, Netzkomponente, Frist oder technische Behauptung braucht Quelle: Bescheid, Konsultationsdokument, Erhebungsbogen, Registerauszug, Vertrag, Messdaten, Ticket oder Behördenmail.
+- **Taktischer Output:** Erzeuge nicht nur eine Checkliste, sondern eine Beschlusskammer-taugliche Kurzposition mit Antrag/Einwand, Beleganlage, offener Live-Quelle und nächstem Verfahrensschritt.
 
-- Abstraktionsprinzip: Akkreditiv unabhängig von Grundgeschäft und Transportvertrag
-- Strikte Konformität: Dokumente müssen akkreditiv-konform sein (keine Substanzdivergenz geduldet)
-- Soft-Law: UCP 600 ist keine Rechtsverordnung — gilt nur durch Einbeziehung ("subject to UCP 600")
-- Diskrepanz: jede Abweichung vom Akkreditiv-Wortlaut → Ablehnung möglich
-- Fraud: Betrugsverdacht als einzige Ausnahme zum Abstraktionsprinzip (englisches/deutsches Recht)
+## Fachliche Weichenfragen
+- Was soll sofort entstehen: Kurztriage, Aktenplan, Fragenliste, Memo, Schriftsatz, Vertrag, Formular oder Mandantenbrief?
+- Wo drohen Fristen, Formerfordernisse, Bußgelder, Gebührennachteile, Verfahrensfehler oder irreversible Schritte?
+- Welche Dokumente, Zahlen, Registerdaten, Bescheide, Verträge oder Korrespondenz liegen vor?
+- Welche Tatsachen sind sicher, welche sind streitig und welche Annahmen müssen sichtbar markiert werden?
+- Welche live zu prüfenden Normen, Behördenhinweise oder Formulare tragen das Ergebnis?
 
-## Typische Streitfragen / Anwendungsfälle
+## Prüf- und Arbeitslogik
+1. **Einordnen:** Rolle, Ziel, Verfahrensstand, Vertragstyp, Behörde/Gericht, Frist und Risiken festhalten.
+2. **Normen live prüfen:** Vor tragenden Aussagen den aktuellen Stand aus amtlichen oder frei zugänglichen Quellen kontrollieren. Besonders prüfen: die im Fachkern genannten Normen-/Quellenanker, aktuellen amtlichen oder frei zugänglichen Fachquellen und die für diese Speziallage tragenden Formulare/Behördenhinweise.
+3. **Tatbestand in Elemente zerlegen:** Jedes Tatbestandsmerkmal einzeln prüfen; unklare Tatsachen als `[offen: ...]` markieren.
+4. **Belege führen:** Für jede relevante Behauptung Dokument, Datum, Absender, Anlage, Registerfund oder Quelle notieren.
+5. **Gegenansicht bauen:** Mindestens eine ernsthafte Gegenargumentation und eine Verteidigungslinie formulieren.
+6. **Ergebnis kalibrieren:** Risikoampel `grün/gelb/rot`, Handlungsempfehlung, nächster Schritt und fehlende Unterlagen ausgeben.
 
-1. Tippfehler im Dokumenten-Empfängernamen: Diskrepanz oder tolerierbar?
-2. Art. 14 lit. b: Was passiert wenn Bank 5-Tage-Frist überschreitet?
-3. Akkreditiv-Fraud: Wann kann Käufer Injunction gegen Zahlung erwirken?
-4. eUCP: Kann Konnossement als PDF-Dokument unter eUCP präsentiert werden?
-5. Transferables Akkreditiv Art. 38 UCP: Kann Händler L/C auf Zulieferer übertragen?
+## Normenanker
 
-## Methodik
+Vor einer rechtlichen Schlussfolgerung diese Anker am aktuellen Normtext prüfen; Spezial- und Landesrecht nur hinzunehmen, wenn es den konkreten Auftrag traegt:
 
-- Akkreditiv-Eröffnung: Alle Dokumentenanforderungen klar mit Käufer abstimmen
-- Dokumentenprüfung: Checkliste UCP 600 Art. 20-28 für jedes Dokumententyp
-- Diskrepanz-Management: Waiver-Anfrage vs. Neuvorlage vs. Ablehnung priorisieren
-- eUCP: nur wenn Akkreditiv ausdrücklich eUCP einbezieht
+- `§ 29 EnWG` — Festlegung und Genehmigung durch Regulierungsbehoerde.
+- `§ 65 EnWG` — Aufsichtsmassnahmen.
+- `§ 75 EnWG` — Beschwerde gegen Entscheidungen der Regulierungsbehoerde.
+- `§ 80 EnWG` — Rechtsbeschwerde.
+- `§ 67 TKG` — Anordnungen der Bundesnetzagentur.
+- `§ 149 TKG` — Bussgeldvorschriften.
+- `§ 40 PostG` — Aufsicht.
+- `§ 44 VwVfG` — Nichtigkeit Verwaltungsakt.
+- `§ 80 Abs. 5 VwGO` — Eilrechtsschutz.
+- `§ 123 Abs. 1 VwGO` — einstweilige Anordnung.
 
-## Normen und Rechtsprechung
+Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
 
-### Kuratierte Normen-Bibliothek
-
-- § 6 UStG
-- § 17 UWG
-- § 13b UStG
-- § 69a UrhG
-- § 9 GeschGehG
-- § 19 AktG
-- § 5 HGeschGehG
-- § 14 MarkenG
-- Art. 28 DSGVO
-- Art. 101 AEUV
-- Art. 29 EUV
-- Art. 215 AEUV
-
-### Leitentscheidungen
-
-- BGH VIII ZR 136/01
-- EuGH C-126/97
-- BGH VIII ZR 274/98
-- BGH VIII ZR 304/00
-- EuGH C-311/18
+## Qualitätsgate
+Am Ende kurz prüfen: Sind Fristen, Zuständigkeit, Rechtsgrundlage, Beweislast, Zahlen, Form und gewünschter Output vollständig? Ist erkennbar, was sicher ist und was noch Sachverhaltsarbeit braucht?
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
