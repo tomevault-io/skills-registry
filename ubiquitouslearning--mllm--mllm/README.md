@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [UbiquitousLearning/mllm](https://github.com/UbiquitousLearning/mllm/tree/main/.claude/skills/link-pymllm-lib/SKILL.md)
+Original source: [UbiquitousLearning/mllm](https://github.com/UbiquitousLearning/mllm/tree/main/.claude/skills/update-codeowners/SKILL.md)
 
 ---
 
