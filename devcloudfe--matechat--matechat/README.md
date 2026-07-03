@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DevCloudFE/MateChat](https://github.com/DevCloudFE/MateChat/tree/main/.agent/skills/matechat-ng/SKILL.md)
+Original source: [DevCloudFE/MateChat](https://github.com/DevCloudFE/MateChat/tree/main/.agent/skills/matechat-vue/SKILL.md)
 
 ---
 
