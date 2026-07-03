@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [radius-project/radius](https://github.com/radius-project/radius/tree/main/.github/skills/radius-build-cli/SKILL.md)
+Original source: [radius-project/radius](https://github.com/radius-project/radius/tree/main/.github/skills/radius-code-review/SKILL.md)
 
 ---
 
