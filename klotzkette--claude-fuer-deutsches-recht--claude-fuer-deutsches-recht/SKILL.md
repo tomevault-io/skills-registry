@@ -1,83 +1,56 @@
 ---
-name: bmjv-verbraucherschutz-unlauterer
-description: Wenn es um Verbraucherschutz und Wettbewerbsrecht (UWG) (BMJV) in Legistik-Werkstatt geht: ordnet Akteninhalt, Belege, Lücken und Nachforderungen; liefert eine Schnittstellenkarte mit Kollisions-, Zuständigkeits- und Nachweisfragen. Auswahlstichwort: Bmjv Verbraucherschutz Unlauterer; Arbeitsfeld: Legistik-Werkstatt. Use when this capability is needed.
+name: sanktion-durchsuchung-beschlagnahme
+description: Wenn es um Durchsuchung Beschlagnahme und Datenzugriff in Datenschutzrecht geht: ordnet Akteninhalt, Belege, Lücken und Nachforderungen; liefert eine Dokumentenmatrix mit Nachforderungsliste. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Verbraucherschutz und Wettbewerbsrecht (UWG) (BMJV)
+# Durchsuchung Beschlagnahme und Datenzugriff
 
-> Vierter und tiefster Skill in der Ressort-Kette: Sachfeld-Kompass für das Spezialthema Verbraucherschutz und Wettbewerbsrecht (UWG) im Geschäftsbereich BMJV. Liefert dem Normgeber Normbestand, Akteure, EU-Bezug und Prüfpunkte für dieses eine Sachfeld.
+## Kaltstart-Fragen
 
-## Eingaben
+1. Welches Schreiben oder welcher Verfahrensschritt liegt vor: informelle Anfrage, Art.-58-Auskunftsverlangen, Anhörung, Bußgeldbescheid, Einspruch, gerichtliches Bußgeldverfahren, Art.-58-Anordnung, Verwaltungsgericht oder Rechtsmittel?
+2. Welche Behörde handelt: Landesdatenschutzaufsicht, BfDI, kirchliche Datenschutzaufsicht, federführende EU-Aufsicht oder andere Spezialaufsicht?
+3. Wer ist Adressat und in welcher Rolle: Verantwortlicher, Auftragsverarbeiter, gemeinsame Verantwortliche, Konzernmutter, Tochter, öffentliche Stelle oder natürliche Person?
+4. Welche Frist läuft und wie wurde zugestellt oder bekanntgegeben?
+5. Welche Tatsachen sind durch Akte, Logs, Verträge, DSFA, TOM, AVV, DSB-Vermerk oder Zeugen belegbar?
+6. Soll die Ausgabe Akteneinsicht, Fristverlängerung, Stellungnahme, Einspruch, Klage, Eilantrag, Terminsmappe oder Management-Briefing sein?
 
-- Auftragsblatt aus `legistik-auftragsaufnahme`
-- Ressort-Kompass aus `legw-ressort-bmjv`
-- Aufgabenmatrix aus `legw-ressortaufgaben-bmjv`
-- Konkrete Sachfrage oder konkretes Normvorhaben in diesem Sachbereich
+## Rechtsanker
 
-## Normbestand
+- Art. 83 DSGVO
+- § 41 BDSG
+- §§ 49, 55, 65, 67, 68, 69, 71, 72, 73, 79 OWiG
+- § 147 StPO
 
-Kernbestand des Sachfelds: UWG; UKlaG; BGB-Verbraucherrecht; ProdSG; PreisangabenV.
+## Arbeitsprogramm
 
-Prüfreihenfolge: Verfassungsrang vor Bundesgesetz vor Rechtsverordnung vor Verwaltungsvorschrift. Bei EU-Bezug zuerst Unionsrecht (Vorrang und Anwendungsbefehl), dann nationale Umsetzungs- und Begleitnormen.
+1. **Spur trennen.** Bußgeld nach Art. 83 DSGVO/§ 41 BDSG/OWiG ist nicht dasselbe wie Verwaltungsrechtsschutz gegen Art.-58-Anordnungen nach § 20 BDSG. Parallelspuren getrennt führen.
+2. **Frist sichern.** Einspruchs- und Rechtsbehelfsfristen sofort mit Zustellnachweis notieren; weiche Behördenfristen separat behandeln.
+3. **Akteneinsicht und Beweisstand.** Keine endgültige Tatsachenstellungnahme ohne Akteneinsicht, wenn ein Bußgeldverfahren erkennbar ist. Technische Behauptungen anhand Logs, Systemarchitektur und Verantwortlichkeiten prüfen.
+4. **Materiell prüfen.** DSGVO-Norm, Verantwortlichenrolle, Pflichtverletzung, Vorsatz/Fahrlässigkeit, Art.-83-Bemessung oder Art.-58-Ermessensausübung sauber subsumieren.
+5. **Taktisch schreiben.** Kooperativ, aber geschützt: keine unnötigen Schuldeingeständnisse, keine nicht belegten Behauptungen, keine Vermischung von Datenschutzberatung und Verteidigung.
+6. **Nächsten Schritt auswerfen.** Immer mit Risikoampel, konkreten Unterlagen, Freigabeentscheidung und empfohlenen Anschlussskills schließen.
 
-## Akteure und Aufsicht
+## Typische Fehler, die der Skill vermeiden muss
 
-BMJV; vzbv; Wettbewerbszentrale; Landesbehoerden Verbraucherschutz.
+- Bußgeldverfahren als normales Verwaltungsverfahren behandeln.
+- Art.-58-Anordnung und Bußgeldbescheid in denselben Rechtsweg werfen.
+- "Anklage" sagen, wo es im OWiG um Bußgeldbescheid, Einspruch, Zwischenverfahren und gerichtliche Hauptverhandlung geht.
+- § 73 OWiG als Bezeichnung der mündlichen Verhandlung missverstehen; die Hauptverhandlung steht in § 71 OWiG.
+- EuGH C-807/21 als verschuldenslose Unternehmenshaftung lesen. Das ist falsch: keine Identifizierung einer natürlichen Person nötig, aber Vorsatz oder Fahrlässigkeit bleibt nötig.
+- Rechtsprechung oder Behördenpraxis ohne live verifizierbare Quelle zitieren.
 
-Akteurskarte erstellen: federfuehrende Einheit im Haus; mitzeichnende Ressorts; nachgeordnete Behörden im Vollzug; betroffene Länderbehoerden; Verbaende; wissenschaftliche Beiraete; zuständige Gerichtsbarkeit.
+## Übergabe an das Spezialplugin
 
-## EU- und voelkerrechtlicher Bezug
+Bei substanziellem Bußgeld-, Art.-58- oder Gerichtsrisiko lade zusätzlich `datenschutz-sanktionsverfahren-verteidigung` und dort insbesondere `kaltstart-verfahrensstand-und-mandatsziel`, `akteneinsicht-49-owig-147-stpo`, `zuständigkeit-amtsgericht-landgericht-41-bdsg`, `art-83-abs-2-kriterien-einzeln` und `art-58-anordnung-verwaltungsakt`.
 
-Verbraucherrechte-RL; Omnibus-RL; Geoblocking-VO; DSA.
+## Quellen- und Verifikationsregel
 
-Prüfen: einschlaegige Verordnung oder Richtlinie? Umsetzungsfrist? Notifizierungspflicht? Beihilferechtlicher Vorbehalt? Vorabentscheidungsverfahren absehbar?
-
-## Typische Legistik-Aufgaben
-
-Verbotstatbestaende; Abmahnwesen; Sammel- und Musterklage; Verbraucherdurchsetzungs-Mechanismus.
-
-Schrittfolge für den Normgeber:
-
-1. Sachverhalt und Regelungsziel in diesem Sachfeld prüfen
-2. Vorhandene Normen kartieren; Lueckenanalyse
-3. Eingriffsintensitaet und Adressatenkreis bestimmen
-4. Verfassungs- und Europarechtskonformitaet prüfen
-5. Tatbestand und Rechtsfolge sauber fassen; Bestimmtheit prüfen
-6. Vollzugs- und Aufsichtsstruktur kontrollieren
-7. Begleit- und Folgenormen (Verordnungen; Verwaltungsvorschriften) mitplanen
-
-## Stolpersteine und Prüfpunkte
-
-Rechtsmissbraeuchliche Abmahnungen; Sammelklage-Befugnis; Verhältnis zum AGB-Recht.
-
-Erweiterte Prüfpunkte: Bestimmtheitsgebot; Verhältnismäßigkeit; Rueckwirkungsverbot; Gleichheitssatz; Datenschutz-Grundverordnung bei Datenverarbeitung; Wechselwirkungen zu anderen Ressorts; Befristung und Evaluation.
-
-## Normenanker
-
-Arbeitsfokus: **Verbraucherschutz und Wettbewerbsrecht (UWG) (BMJV)**. Prüfe diese Anker am Sachverhalt; ergänze nur Normen, die denselben Output, dieselbe Frist oder dieselbe Beweisfrage tragen:
-
-- `Art. 20 Abs. 3 GG` — Gesetzesbindung.
-- `Art. 76 Abs. 1 GG` — Gesetzesinitiative.
-- `Art. 77 Abs. 1 GG` — Gesetzesbeschluss.
-- `Art. 80 Abs. 1 GG` — Verordnungsermächtigung.
-- `Art. 84 Abs. 1 GG` — Verwaltungsvollzug.
-- `§ 42 Abs. 1 GGO` — Gesetzgebungsvorhaben.
-- `§ 43 Abs. 1 GGO` — Ressortabstimmung.
-- `§ 44 Abs. 1 GGO` — Gesetzesfolgen.
-- `§ 45 GGO` — Beteiligung.
-- `§ 46 GGO` — Rechtsförmlichkeit.
-
-Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
-
-## Anschluss an die Legistik-Kette
-
-- `legistik-auftragsaufnahme` -> `legw-ressort-router` -> `legw-ressort-bmjv` -> `legw-ressortaufgaben-bmjv` -> `legw-bmjv-verbraucherschutz-und-unlauterer-wettbewerb` (hier) -> `normhierarchie-routing` und Querprueferei.
-
-## Abgrenzung
-
-Abgrenzung zu legistik-auftragsaufnahme (Erstaufnahme), normhierarchie-routing (Normwahl), normenkartierung (Bestand), verfassungsmaessigkeit-quercheck (Verfassungsfragen), europarechtskonformitaet (EU-Bezug), folgenabschaetzung-* (Folgenabschaetzung). Dieser Skill dient als Sachfeld-Kompass; er ersetzt nicht die Normprueferei, sondern liefert das Sachverstaendnis für den Normgeber.
+- Normen vor Ausgabe live prüfen, besonders DSGVO Art. 58, 78 und 83, BDSG § 20 und § 41 sowie OWiG §§ 49, 55, 65, 67, 68, 69, 71, 72, 73 und 79.
+- Rechtsprechung nur mit Gericht, Entscheidungsform, Datum, Aktenzeichen und offizieller oder frei zugänglicher Quelle verwenden. Keine BeckRS-, juris-, Kommentar- oder Aufsatz-Blindzitate.
+- EuGH C-807/21 und C-683/21 nur mit sauberer Kernaussage nutzen: unmittelbare Unternehmensgeldbuße ja; verschuldenslose Haftung nein.
+- Wenn ein Punkt nicht verifiziert ist, als Prüfpunkt markieren und keine Scheinpräzision erzeugen.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
