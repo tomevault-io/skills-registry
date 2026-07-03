@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CodeAlta/CodeAlta](https://github.com/CodeAlta/CodeAlta/tree/main/src/CodeAlta.Catalog/BuiltinSkills/codealta-plugin-runtime/SKILL.md)
+Original source: [CodeAlta/CodeAlta](https://github.com/CodeAlta/CodeAlta/tree/main/src/CodeAlta.Catalog/BuiltinSkills/codealta-plugin-runtime/samples/skill-root/skills/sample-plugin-skill/SKILL.md)
 
 ---
 
