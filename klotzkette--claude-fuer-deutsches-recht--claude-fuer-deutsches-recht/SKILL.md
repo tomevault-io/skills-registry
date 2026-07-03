@@ -1,140 +1,89 @@
 ---
-name: agb-online-altersverifikation-jugendschutz
-description: Wenn es um AGB im Online-Shop – Einbeziehung Paragraf 305 BGB in E-Commerce-Recht geht: ordnet Akteninhalt, Belege, Lücken und Nachforderungen; liefert ein direkt nutzbares Arbeitsprodukt mit Prüfpunkten, Risiken und nächstem Schritt. Use when this capability is needed.
+name: postlauf-zustellung-pruefungsamt
+description: Wenn es um Postlauf und Zustellung Prüfungsamt in Prüfungsrecht an Hochschulen und Universitäten geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# AGB im Online-Shop – Einbeziehung § 305 BGB
+# Postlauf und Zustellung Prüfungsamt
+
+## Normenanker
+
+Vor einer rechtlichen Schlussfolgerung diese Anker am aktuellen Normtext prüfen; Spezial- und Landesrecht nur hinzunehmen, wenn es den konkreten Auftrag traegt:
+
+- `Art. 5 Abs. 3 Satz 1 GG` — Wissenschaftsfreiheit.
+- `Art. 12 Abs. 1 GG` — Berufswahl- und Ausbildungsbezug.
+- `Art. 3 Abs. 1 GG` — Gleichbehandlung und Bewertungsfairness.
+- `§ 2 HRG` — Aufgaben der Hochschulen.
+- `§ 4 HRG` — Freiheit von Forschung, Lehre und Studium.
+- `§ 7 HRG` — Ziel des Studiums.
+- `§ 15 HRG` — Prüfungen und Leistungspunktsystem.
+- `§ 16 HRG` — Prüfungsordnungen.
+- `§ 70 Abs. 1 VwGO` — Widerspruchsfrist.
+- `§ 123 Abs. 1 VwGO` — Eilrechtsschutz bei Studien-/Prüfungsentscheidungen.
+
+Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Tragende Normen verifizieren: GG Art. 12, BVerfGE 84, 34 (Antwortspielraum), BVerfGE 84, 59, HRG, JAG, HochschulG der Länder, VwVfG, VwGO § 80 — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Fachkern: AGB im Online-Shop – Einbeziehung § 305 BGB
-- **Normen-/Quellenanker:** BGB Fernabsatz/Widerruf, PAngV, UWG, DSGVO, DDG/DSA, TDDDG, Produktsicherheit, Gewährleistung, Zahlungsdienste und Plattformrecht.
-- **Entscheidende Weiche:** Trenne Shop-Frontend, Bestellstrecke, Informationspflicht, Preis, Widerruf, Mängelrecht, Werbung, Tracking und Plattform-/Marketplace-Pflichten.
+## Fachkern: Postlauf und Zustellung Prüfungsamt
+- **Normen-/Quellenanker:** Hochschulgesetz/Prüfungsordnung des Landes, VwVfG/VwGO, Art. 12/3 GG, Chancengleichheit, Bewertungsfehler, Rücktritt, Täuschung und Eilrechtsschutz.
+- **Entscheidende Weiche:** Prüfungsordnung, Bescheid, Frist, Bewertungsrüge, Verfahrensfehler, Nachteilsausgleich, Akteneinsicht und gerichtlicher Eilbedarf trennen.
+- **Arbeitsprodukt:** Erzeuge eine konkrete Prüf- oder Entscheidungsmatrix mit Norm, Tatbestand, Beleg, Einwand, Risikoampel und nächstem Schritt; Anschluss-Skills nur bei echter Vertiefung nennen.
 
-## Worum geht es konkret
+## Wofür dieser Arbeitsgang da ist
 
-Allgemeine Geschäftsbedingungen (AGB) werden nur Vertragsbestandteil, wenn sie wirksam einbezogen wurden (§ 305 II BGB) und einer Inhaltskontrolle (§§ 307 ff. BGB) standhalten. Im Online-Shop entscheidet die Einbeziehung über die gesamte Vertragsgrundlage (Lieferung, Mängelhaftung, Eigentumsvorbehalt, Streitbeilegung). Der Skill ordnet Einbeziehung, Klauseltypen und Inhaltskontrolle.
+Dieser Skill vertieft ein konkretes Problem im Hochschulprüfungsrecht. Er ist für Prüfling, Prüfungsamt, Prüfungsausschuss, Hochschule, Prüferin oder Anwalt gedacht und soll aus unvollständigen Akten schnell eine belastbare Prüfspur machen.
 
-## Wann dieses Modul hilft / Kaltstart-Fragen
+## Spezialfokus
 
-- Wo sind die AGB im Bestellprozess platziert?
-- Wird vor Bestellabgabe ausdrücklich auf die AGB hingewiesen?
-- Sind die AGB unmittelbar abrufbar und speicherbar?
-- Welche Klauseln sind streitig (Versand, Vorkasse, Eigentumsvorbehalt, Haftungsausschluss, Gerichtsstand)?
-- B2C oder B2B?
-- Schon Abmahnung wegen unwirksamer AGB erhalten?
+- **Konkreter Auftrag:** Prüft Zugang, Postlauf, E-Mail, Portalnachricht und Nachweisprobleme.
+- **Erste Trennlinie:** Ist das Problem wirklich Postlauf und Zustellung Prüfungsamt, oder liegt vorgelagert eine andere Entscheidung, Zuständigkeit oder Frist vor?
+- **Quellenarbeit:** Suche die aktuelle Landesnorm, Ordnung oder Satzung im Original und notiere Fundstelle, Fassung, Bekanntgabeweg und Geltungszeitpunkt.
+- **Aktenarbeit:** Markiere, welches Dokument die entscheidende Tatsache trägt; bloße Schilderungen bekommen eine eigene Unsicherheitsnote.
+- **Produkt:** Liefere am Ende nicht nur ein Ergebnis, sondern eine Handlung: Gesprächsfahrplan, Akteneinsicht, Antrag, Widerspruch/Remonstration, Eilrechtsschutz oder interne Entscheidungsvorlage.
 
-## Rechtlicher Rahmen
+### Typische Fallen in diesem Gebiet
 
-- § 305 II BGB: Einbeziehung – ausdrücklicher Hinweis, zumutbare Kenntnisnahme, Einverständnis.
-- § 305c BGB: Überraschende Klauseln.
-- § 306 BGB: Rechtsfolge der Nichteinbeziehung/Unwirksamkeit – Vertrag im Übrigen wirksam.
-- §§ 307–309 BGB: Inhaltskontrolle, Klauselverbote.
-- § 310 BGB: Anwendungsbereich – AGB auch im B2B, jedoch ohne Verbraucherschutz §§ 308, 309.
-- UWG § 3a: Marktverhaltensregel.
-- UKlaG: Unterlassungsklage Verbraucherverbände.
-- BGH zur Online-AGB-Einbeziehung – ständige Rechtsprechung: Hinweis und Möglichkeit der Kenntnisnahme reichen; Pflicht zur Aktivbestätigung (Checkbox) nicht erforderlich, aber praktisch empfohlen.
+- Unzufriedenheit mit der Note, Bewertungsfehler, Verfahrensfehler und neue Tatsachen strikt auseinanderhalten.
+- Prüfungsordnung, Modulhandbuch, Bescheid, Portalnachricht, Bewertungsbogen und Akteneinsicht immer nebeneinander legen.
+- Bewertungsspielräume respektieren, aber Denkfehler, sachfremde Erwägungen, Gleichbehandlung und Chancengleichheit präzise prüfen.
+- Fristen, Unverzüglichkeit, Rücktritt, Täuschungsvorwurf, Nachteilsausgleich und Eilrechtsschutz als eigene Entscheidungspfade behandeln.
 
-## / Schritt für Schritt
+## Kaltstartfragen
 
-1. **Einbeziehungspfad prüfen.** Vor Bestellabgabe Hinweis "Es gelten unsere AGB"; Link unmittelbar zur Volltext-Fassung; Druck- und Speicherfunktion.
-2. **AGB-Inhalt strukturieren.**
- - Geltungsbereich,
- - Vertragsschluss / Angebot,
- - Lieferung und Versand,
- - Preise und Zahlung,
- - Eigentumsvorbehalt,
- - Mängelhaftung / Gewährleistung,
- - Haftungsbegrenzung,
- - Widerrufsrecht (Verlinkung),
- - Streitbeilegung / Gerichtsstand,
- - Datenschutz (Verweis).
-3. **Inhaltskontrolle.**
- - § 309 Nr. 7 BGB: Haftungsausschluss bei Vorsatz/grober Fahrlässigkeit/wesentlichen Pflichten unzulässig.
- - § 309 Nr. 8 BGB: Gewährleistungsausschluss bei Neuware unzulässig.
- - § 309 Nr. 9 BGB: Laufzeit Dauerschuldverhältnisse begrenzt.
- - § 309 Nr. 12 BGB: Vorausabtretung von Gegenforderungen.
-4. **Versionierung.** Stand-Vermerk, Archivierung, Verlauf.
-5. **Update-Mechanismus.** Bei wesentlichen Änderungen: Mitteilung mit Widerspruchsrecht.
-6. **Streitfall.** Klausel angreifen: nicht einbezogen oder unwirksam.
+- In welchem Bundesland und bei welcher konkreten Einrichtung spielt der Fall?
+- Welche Entscheidung, Maßnahme, Satzung, Ordnung, E-Mail oder welches Protokoll liegt wirklich vor?
+- Welche Frist läuft, wann wurde bekanntgegeben und gibt es bereits Widerspruch, Remonstration, Antrag, Beschwerde oder Eilverfahren?
+- Welche Tatsachen sind durch Aktenstücke belegt und welche sind nur Erzählstand?
+- Welches Ziel soll erreicht werden: Aufhebung, Neubescheidung, Duldung, Gesprächslösung, Vergleich, Akteneinsicht oder nur Risikoeinschätzung?
 
-## Trade-off-Matrix
+## Prüfprogramm
 
-| Klauseltyp | Wirksam B2C | Wirksam B2B |
-| --- | --- | --- |
-| Vollständiger Haftungsausschluss | unwirksam § 309 Nr. 7 | meist unwirksam § 307 |
-| Pauschaler Wertersatz Widerruf | unwirksam | – |
-| Verlängerungsautomatik Abo > 12 Monate | unwirksam § 309 Nr. 9 | unwirksam § 307 |
-| Gerichtsstandsklausel | grundsätzlich § 38 III ZPO | wirksam unter Kaufleuten |
-| Eigentumsvorbehalt | wirksam | wirksam |
+1. **Normhierarchie trennen:** Prüfungsordnung, Rahmenordnung, Landeshochschulgesetz, Verwaltungsverfahrensrecht, VwGO und konkrete Prüfungsakte nicht vermischen; die konkrete Ordnung und den Bescheid immer zuerst lesen.
+2. **Zuständigkeit und Verfahren prüfen:** Wer durfte entscheiden, wer musste beteiligt werden, welches Gremium war zuständig und welche Anhörung fehlt möglicherweise?
+3. **Materielle Grenze bestimmen:** Ermessen, Beurteilungs- oder Bewertungsspielraum respektieren, aber Willkür, Verfahrensfehler, Gleichbehandlung, Grundrechte und Verhältnismäßigkeit sauber herausarbeiten.
+4. **Beweisroute bauen:** Aktenstück, Protokoll, Chat, E-Mail, Attest, Bewertungsbogen, Satzungsauszug oder amtliche Quelle jeder Tatsachenbehauptung zuordnen.
+5. **Nächsten Schritt liefern:** knappe Lageeinschätzung, Fristenliste, Antrag, Widerspruch, Remonstration, Eilantragsgerüst, Gesprächsleitfaden oder Beschluss-/Bescheidkritik.
 
-## Praxistipps
+## Fachliche Leitplanken
 
-- Im Bestellprozess: Checkbox "Ich habe die AGB gelesen und akzeptiere sie" mit Link – einbeziehungssicher, aber nicht zwingend.
-- Versionsnummer + Datum in den AGB sichtbar – beweissicher.
-- Bei AGB-Update Bestandsverträge berücksichtigen – Vereinbarung erforderlich (Änderungskündigung oder Zustimmungslösung).
-- Klauseln aus Musterverträgen blind übernehmen – häufig veraltet, vor allem zu § 312k.
-- Internationale Lieferung: Rom-I-Anpassungen, Geo-Blocking-VO.
+- Landesrecht und Satzungsrecht sind dynamisch; vor einer konkreten Ausgabe müssen aktuelle amtliche Quellen oder Originalordnungen geprüft werden.
+- Rechtsprechung nur zitieren, wenn Gericht, Datum, Aktenzeichen und eine frei überprüfbare Quelle vorliegen.
+- Keine pauschalen Aussagen wie "immer rechtswidrig" oder "pädagogisch nicht angreifbar"; entscheidend sind Verfahrensspur, Dokumentation, Gleichbehandlung und konkrete Rechtsgrundlage.
 
-## Mustertexte
+## Output-Muster
 
-**Einbeziehungshinweis im Checkout:**
-"Mit Klick auf 'zahlungspflichtig bestellen' bestätigen Sie, dass Sie unsere Allgemeinen Geschäftsbedingungen [LINK] und die Widerrufsbelehrung [LINK] gelesen haben und einverstanden sind."
-
-**Standardklauseln (Kurzfassung):**
-- Vertragspartner: [Firma], [Anschrift], [HRB], [USt-IdNr.].
-- Angebot der Waren stellt unverbindliche Aufforderung dar; Vertragsschluss durch Annahmebestätigung des Anbieters.
-- Lieferung: [Standard innerhalb 3–5 Werktagen]; Versandkosten ausgewiesen.
-- Zahlung: [Kreditkarte, PayPal, Klarna, Vorkasse].
-- Eigentumsvorbehalt bis vollständige Zahlung.
-- Gewährleistung gesetzlich; bei Verbrauchern 2 Jahre.
-- Widerrufsbelehrung siehe Anlage.
-
-**Update-Mitteilung:**
-"Wir aktualisieren unsere AGB zum [Datum]. Wesentliche Änderungen: [...]. Sie können den Änderungen binnen 6 Wochen widersprechen; sonst gelten die neuen AGB als angenommen. Volltext: [LINK]."
-
-## Typische Fehler
-
-- AGB nur als PDF zum Download – Kenntnisnahme erschwert, oft nicht ausreichend.
-- Klausel zur Vorauszahlung bei Verbraucherkauf ohne Liefersicherung.
-- Pauschale Bearbeitungsgebühr bei Widerruf.
-- Gerichtsstand auf Sitz des Unternehmers für Verbraucher – unwirksam.
-- Klausel "AGB können jederzeit geändert werden" ohne konkreten Änderungsmechanismus – unwirksam.
-
-## Quellen Stand 06/2026
-
-- §§ 305–310 BGB – Volltext gesetze-im-internet.de.
-- UKlaG, UWG §§ 3a – Volltexte gesetze-im-internet.de.
-- BGH zur Online-AGB-Einbeziehung – ständige Rechtsprechung; Volltexte bundesgerichtshof.de.
-- EuGH C-186/16 (Andriciuc) und C-26/13 (Kasler) zur Klauselkontrolle – curia.europa.eu.
-- Verbraucherrechte-RL 2011/83/EU; Klausel-RL 93/13/EWG – EUR-Lex.
-- VZBV – Klagepraxis und Datenbank unwirksamer Klauseln.
-
-## Normen und Rechtsprechung
-
-### Kuratierte Normen-Bibliothek
-
-- § 5 DDG
-- § 5 UWG
-- § 1 EGBGB
-- § 6 DDG
-- § 27a UStG
-- § 3a UWG
-- § 26 DDG
-
-### Leitentscheidungen
-
-- EuGH C-249/21
-- EuGH C-208/19
-- EuGH C-186/16
+- **Sofortlage:** Was ist entschieden, was läuft, was droht?
+- **Angriffspunkte:** Zuständigkeit, Verfahren, Begründung, Tatsachenbasis, Ermessen/Bewertungsspielraum, Verhältnismäßigkeit.
+- **Dokumentenbedarf:** fehlende Akten, Protokolle, Ordnungen, Atteste, Gremienbeschlüsse und Zustellnachweise.
+- **Entwurf:** präziser Antrag oder Schriftsatzbaustein mit Frist, Ziel und Begründung.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
