@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hristo2612/jinn](https://github.com/hristo2612/jinn/tree/main/.claude/skills/release-jinn-cli/SKILL.md)
+Original source: [hristo2612/jinn](https://github.com/hristo2612/jinn/tree/main/packages/jinn/template/skills/new/SKILL.md)
 
 ---
 
