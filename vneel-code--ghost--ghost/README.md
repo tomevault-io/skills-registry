@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vNeeL-code/GHOST](https://github.com/vNeeL-code/GHOST/tree/main/app/src/main/assets/skills/click/SKILL.md)
+Original source: [vNeeL-code/GHOST](https://github.com/vNeeL-code/GHOST/tree/main/app/src/main/assets/skills/media/SKILL.md)
 
 ---
 
