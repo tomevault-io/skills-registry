@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ZenUml/web-sequence](https://github.com/ZenUml/web-sequence/tree/main/.claude/skills/land-pr/SKILL.md)
+Original source: [ZenUml/web-sequence](https://github.com/ZenUml/web-sequence/tree/main/.claude/skills/spot-check/SKILL.md)
 
 ---
 
