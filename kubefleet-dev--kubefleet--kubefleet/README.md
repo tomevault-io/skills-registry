@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kubefleet-dev/kubefleet](https://github.com/kubefleet-dev/kubefleet/tree/main/.squad/templates/skills/cross-squad/SKILL.md)
+Original source: [kubefleet-dev/kubefleet](https://github.com/kubefleet-dev/kubefleet/tree/main/.squad/templates/skills/git-workflow/SKILL.md)
 
 ---
 
