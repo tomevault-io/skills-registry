@@ -1,70 +1,48 @@
 ---
-name: kom-006-satzung-entwerfen-und-pruefen
-description: Wenn es um Satzung Entwerfen Und Pruefen in Kommunalrecht der Länder geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: behandlungsfehler-paragraf-630h-bgb
+description: Wenn es um Behandlungsfehler Paragraf 630h BGB in Fachanwalt Medizinrecht geht: zerlegt Ergebnis, Frist, Zuständigkeit, Beweislast und Gegenposition; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Satzung Entwerfen Und Pruefen
+# Behandlungsfehler § 630h BGB
 
-## Arbeitsauftrag
+## Worum es geht
 
-Satzung Entwerfen Und Pruefen wird nicht als abstraktes Schema beantwortet, sondern als Arbeitsgang im Bereich Kommunalrecht der Länder: erst Zuständigkeit und Normpfad, dann Tatsachen und Belege, dann Fristen und taktische Option, danach ein verwertbarer Output.
+Prüfe **Behandlungsfehler § 630h BGB** von der ersten Aktenordnung bis zur belastbaren Empfehlung: Norm, Tatsache, Beleg, Frist und prozessualer nächster Schritt müssen zusammenpassen.
 
-## Einstieg ohne Leerlauf
+## Normenanker
 
-1. Rolle klären: antragstellende Person, Behörde, Verband, Unternehmen, Anwalt, Gericht, Presse, Betroffene oder Projektträger.
-2. Ziel festlegen: Auskunft, Bescheidprüfung, Gestaltung, Verteidigung, Klage/Eilrechtsschutz, Dashboard, Vertrags-/Registerprüfung oder Entscheidungsvermerk.
-3. Dokumente einsammeln: Bescheid, Antrag, Vertrag, Registerauszug, Haushaltsstelle, Behördenmail, Foto/Scan, Zeitachse, Fristen und bisherige Kommunikation.
-4. Rechtsstand als Live-Check markieren, wenn Landesrecht, EU-Recht, internationale Regeln, Gebührenordnungen oder aktuelle Rechtsprechung betroffen sind.
+- § 630h BGB
+- § 630a Abs. 1 BGB
+- § 630c Abs. 2 BGB
+- § 630d Abs. 1 BGB
+- § 630e Abs. 1 und 2 BGB
+- § 630f Abs. 1 und 2 BGB
+- § 95 SGB V
+- § 13 Abs. 3 SGB V
+- § 78 AMG
+- § 1 ProdHaftG
 
-## Norm- und Quellenanker
+## Prüfpfad
 
-- Gemeindeordnungen, Landkreisordnungen, Kommunalverfassungen der Länder
-- Rat/Kreistag, Bürgermeister/Landrat, Ausschüsse, Bürgerbegehren
-- Kommunalaufsicht, Haushalt, Abgaben, Daseinsvorsorge, Satzungen
-- VwGO, § 47 VwGO, Kommunalwahlrecht-Schnittstellen
+1. **Rolle und Ziel klären:** Angriff, Verteidigung, Beratung, Behördenkontakt, Registervorgang oder gerichtliches Verfahren bestimmen.
+2. **Tatbestandsmerkmale zerlegen:** Jedes Merkmal mit Aktenstelle, Beleg, Beweisangebot, Gegentatsache und offener Recherchefrage verbinden.
+3. **Fristen und Zuständigkeit sichern:** Rechtsbehelfsfrist, Ausschlussfrist, Verjährung, Gerichtsstand, Behördenzuständigkeit und Verfahrensart vorab fixieren.
+4. **Beweislast und Darlegungslast trennen:** Wahrscheinliche Wahrheit genügt nicht; entscheidend ist, wer sie wann wie beweisen muss.
+5. **Risikoampel bilden:** Grün bei Norm + Tatsache + Beleg; Gelb bei Wertungsspielraum; Rot bei Frist-, Form-, Zuständigkeits- oder Beweislastbruch.
 
-## Prüfroutine
+## Entscheidungs- und Quellenhygiene
 
-1. **Scope:** Was genau soll entschieden, beantragt, abgewehrt oder dokumentiert werden? Welche Einheit ist betroffen und welches Recht gilt wirklich?
-2. **Zuständigkeit:** Behörde, Gericht, Register, Aufsicht, Verband, Unternehmen oder internationale Stelle sauber benennen; falsche Adressaten als Risiko ausweisen.
-3. **Tatbestand:** Die relevanten Merkmale einzeln mit Belegen füllen. Unklare Tatsachen als Rückfrage oder Beweispunkt markieren, nicht glattbügeln.
-4. **Rechtsfolge:** Anspruch, Ermessen, Verbot, Pflicht, Gebührenfolge, Nebenfolge, Haftung, Vollzug oder Rechtsschutz getrennt ausgeben.
-5. **Taktik:** Schnellster sinnvoller Weg, sauberster Weg und Eskalationsweg nebeneinander stellen; bei Laien zusätzlich eine kurze Erklärung in Alltagssprache.
+- Rechtsprechung nur einsetzen, wenn Gericht, Entscheidungsdatum, Aktenzeichen und eine frei prüfbare Quelle vorliegen.
+- Keine BeckRS-, juris- oder Kommentar-Fundstellen blind übernehmen. Fehlt eine verifizierte Entscheidung, ausdrücklich mit Normtext, Systematik, Beweislast und offenem Recherchepunkt arbeiten.
+- Bei divergierenden Obergerichten die regionale Zuständigkeit, den Instanzenzug und den Stand höchstrichterlicher Klärung kenntlich machen.
 
-## Typische Artefakte
+## Arbeitsprodukt
 
-- Landesrechts-Navigator
-- Beschluss-/Satzungscheck
-- Bürgerbegehren-Fristenmatrix
-- Kommunalaufsichts- und Haushaltsrisikoampel
-
-## Red-Team-Fragen
-
-- falsches Bundesland
-- Organrolle verwechselt
-- Satzungsbekanntmachung/Öffentlichkeit fehlt
-- kommunale Finanzierung übersehen
-
-## Ausgabeformat
-
-- **Kurzbefund:** ein Absatz, der die Lage und den nächsten Schritt verständlich macht.
-- **Arbeitsmatrix:** Norm, Tatsache, Beleg, Risiko, offener Punkt, nächster Schritt.
-- **Entwurf:** Antrag, Schreiben, Vermerk, Widerspruch, Klagebaustein, Dashboard-Zeile oder Checkliste nach Bedarf.
-- **Quellenblock:** nur amtliche/frei prüfbare Quellen oder vom Nutzer bereitgestellte Quellen; keine Blindzitate, keine BeckRS-/juris-Behauptungen ohne Nutzerquelle.
-
-<!-- BEGIN ausformulierungspflicht (autogen) -->
-> **Ausformulierungspflicht und Formatstandard.** Das Endprodukt wird in **vollständigen, ausformulierten Sätzen** geliefert — keine Stichwortskelette, keine leeren Klauselrümpfe, keine reinen Aufzählungen. Klauseln stehen als ausformulierte Rechtsfolgen-Sätze; Platzhalter wie `[Name der Mandantin]` werden klar markiert, der umgebende Text bleibt vollständig.
->
-> **Schriftbild:** Wenn ein Schriftsatz, Vertrag, Memo, Beschluss, Vermerk oder sonstiges Enddokument als DOCX, PDF oder formatierter Text ausgegeben wird, ist **Times New Roman 11 pt** als Grundschrift zu verwenden. Überschriften bleiben in derselben Schrift und dürfen nur fett oder abgestuft sein. Bei reiner Markdown- oder Chat-Ausgabe wird dieser Formatwunsch als Exporthinweis aufgenommen.
->
-> **Nummerierung:** Gliederung ausschließlich dezimal (`1`, `1.1`, `1.1.1` und so weiter). Keine römischen Ziffern, keine Buchstaben- oder Mischgliederung.
-<!-- END ausformulierungspflicht (autogen) -->
-
-## Qualitätsregel
-
-Wenn etwas nur wahrscheinlich ist, als wahrscheinlich kennzeichnen. Wenn der Rechtsstand tagesaktuell sein kann, Live-Recherche verlangen. Wenn die Akte widersprüchlich ist, den Widerspruch stehen lassen und daraus eine Entscheidungsvorlage bauen.
+- Kurzvermerk mit Normenanker, Tatsachenmatrix, Fristen, Belegen und Risikoampel.
+- Mandantenfähige Handlungsempfehlung mit nächstem Schritt, benötigten Unterlagen und Eskalationsoption.
+- Optional: Schriftsatz-, Behörden-, Gegner- oder Gerichtstext im Ton des jeweiligen Verfahrens.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
