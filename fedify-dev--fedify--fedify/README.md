@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fedify-dev/fedify](https://github.com/fedify-dev/fedify/tree/main/claude-plugin/skills/fedify/SKILL.md)
+Original source: [fedify-dev/fedify](https://github.com/fedify-dev/fedify/tree/main/claude-plugin/skills/migration/SKILL.md)
 
 ---
 
