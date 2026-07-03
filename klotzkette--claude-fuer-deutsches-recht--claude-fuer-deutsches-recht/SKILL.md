@@ -1,48 +1,62 @@
 ---
-name: behandlungsfehler-paragraf-630h-bgb
-description: Wenn es um Behandlungsfehler Paragraf 630h BGB in Fachanwalt Medizinrecht geht: zerlegt Ergebnis, Frist, Zuständigkeit, Beweislast und Gegenposition; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: btm-026-cannabis-therapiepfad-pruefen
+description: Wenn es um Cannabis Therapiepfad Pruefen in Betäubungsmittelrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Behandlungsfehler § 630h BGB
+# Cannabis Therapiepfad Pruefen
 
-## Worum es geht
+## Arbeitsauftrag
 
-Prüfe **Behandlungsfehler § 630h BGB** von der ersten Aktenordnung bis zur belastbaren Empfehlung: Norm, Tatsache, Beleg, Frist und prozessualer nächster Schritt müssen zusammenpassen.
+Cannabis Therapiepfad Pruefen wird nicht als abstraktes Schema beantwortet, sondern als Arbeitsgang im Bereich Betäubungsmittelrecht: erst Zuständigkeit und Normpfad, dann Tatsachen und Belege, dann Fristen und taktische Option, danach ein verwertbarer Output.
 
-## Normenanker
+## Einstieg ohne Leerlauf
 
-- § 630h BGB
-- § 630a Abs. 1 BGB
-- § 630c Abs. 2 BGB
-- § 630d Abs. 1 BGB
-- § 630e Abs. 1 und 2 BGB
-- § 630f Abs. 1 und 2 BGB
-- § 95 SGB V
-- § 13 Abs. 3 SGB V
-- § 78 AMG
-- § 1 ProdHaftG
+1. Rolle klären: antragstellende Person, Behörde, Verband, Unternehmen, Anwalt, Gericht, Presse, Betroffene oder Projektträger.
+2. Ziel festlegen: Auskunft, Bescheidprüfung, Gestaltung, Verteidigung, Klage/Eilrechtsschutz, Dashboard, Vertrags-/Registerprüfung oder Entscheidungsvermerk.
+3. Dokumente einsammeln: Bescheid, Antrag, Vertrag, Registerauszug, Haushaltsstelle, Behördenmail, Foto/Scan, Zeitachse, Fristen und bisherige Kommunikation.
+4. Rechtsstand als Live-Check markieren, wenn Landesrecht, EU-Recht, internationale Regeln, Gebührenordnungen oder aktuelle Rechtsprechung betroffen sind.
 
-## Prüfpfad
+## Norm- und Quellenanker
 
-1. **Rolle und Ziel klären:** Angriff, Verteidigung, Beratung, Behördenkontakt, Registervorgang oder gerichtliches Verfahren bestimmen.
-2. **Tatbestandsmerkmale zerlegen:** Jedes Merkmal mit Aktenstelle, Beleg, Beweisangebot, Gegentatsache und offener Recherchefrage verbinden.
-3. **Fristen und Zuständigkeit sichern:** Rechtsbehelfsfrist, Ausschlussfrist, Verjährung, Gerichtsstand, Behördenzuständigkeit und Verfahrensart vorab fixieren.
-4. **Beweislast und Darlegungslast trennen:** Wahrscheinliche Wahrheit genügt nicht; entscheidend ist, wer sie wann wie beweisen muss.
-5. **Risikoampel bilden:** Grün bei Norm + Tatsache + Beleg; Gelb bei Wertungsspielraum; Rot bei Frist-, Form-, Zuständigkeits- oder Beweislastbruch.
+- BtMG, BtMVV, Medizinalcannabis, Apotheken-/Arzneimittelrecht
+- Erlaubnis, Verschreibung, Substitution, Besitz/Handel, Einziehung
+- Strafrecht/OWi, Berufsrecht, Fahreignung, Aufsicht
+- EU-/internationaler Grenzverkehr live prüfen
 
-## Entscheidungs- und Quellenhygiene
+## Prüfroutine
 
-- Rechtsprechung nur einsetzen, wenn Gericht, Entscheidungsdatum, Aktenzeichen und eine frei prüfbare Quelle vorliegen.
-- Keine BeckRS-, juris- oder Kommentar-Fundstellen blind übernehmen. Fehlt eine verifizierte Entscheidung, ausdrücklich mit Normtext, Systematik, Beweislast und offenem Recherchepunkt arbeiten.
-- Bei divergierenden Obergerichten die regionale Zuständigkeit, den Instanzenzug und den Stand höchstrichterlicher Klärung kenntlich machen.
+1. **Scope:** Was genau soll entschieden, beantragt, abgewehrt oder dokumentiert werden? Welche Einheit ist betroffen und welches Recht gilt wirklich?
+2. **Zuständigkeit:** Behörde, Gericht, Register, Aufsicht, Verband, Unternehmen oder internationale Stelle sauber benennen; falsche Adressaten als Risiko ausweisen.
+3. **Tatbestand:** Die relevanten Merkmale einzeln mit Belegen füllen. Unklare Tatsachen als Rückfrage oder Beweispunkt markieren, nicht glattbügeln.
+4. **Rechtsfolge:** Anspruch, Ermessen, Verbot, Pflicht, Gebührenfolge, Nebenfolge, Haftung, Vollzug oder Rechtsschutz getrennt ausgeben.
+5. **Taktik:** Schnellster sinnvoller Weg, sauberster Weg und Eskalationsweg nebeneinander stellen; bei Laien zusätzlich eine kurze Erklärung in Alltagssprache.
 
-## Arbeitsprodukt
+## Typische Artefakte
 
-- Kurzvermerk mit Normenanker, Tatsachenmatrix, Fristen, Belegen und Risikoampel.
-- Mandantenfähige Handlungsempfehlung mit nächstem Schritt, benötigten Unterlagen und Eskalationsoption.
-- Optional: Schriftsatz-, Behörden-, Gegner- oder Gerichtstext im Ton des jeweiligen Verfahrens.
+- BtM-Rollen- und Stoffcheck
+- Verschreibungs-/Dokumentationsmatrix
+- Verteidigungs- oder Compliance-Vermerk
+- Aufsichts- und Nachweisordner
+
+## Red-Team-Fragen
+
+- Stoff/Anlage falsch
+- Therapie/Handel/Besitz vermischt
+- Dokumentationspflichten unterschätzt
+- Fahreignung und Berufsrecht vergessen
+
+## Ausgabeformat
+
+- **Kurzbefund:** ein Absatz, der die Lage und den nächsten Schritt verständlich macht.
+- **Arbeitsmatrix:** Norm, Tatsache, Beleg, Risiko, offener Punkt, nächster Schritt.
+- **Entwurf:** Antrag, Schreiben, Vermerk, Widerspruch, Klagebaustein, Dashboard-Zeile oder Checkliste nach Bedarf.
+- **Quellenblock:** nur amtliche/frei prüfbare Quellen oder vom Nutzer bereitgestellte Quellen; keine Blindzitate, keine BeckRS-/juris-Behauptungen ohne Nutzerquelle.
+
+## Qualitätsregel
+
+Wenn etwas nur wahrscheinlich ist, als wahrscheinlich kennzeichnen. Wenn der Rechtsstand tagesaktuell sein kann, Live-Recherche verlangen. Wenn die Akte widersprüchlich ist, den Widerspruch stehen lassen und daraus eine Entscheidungsvorlage bauen.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
