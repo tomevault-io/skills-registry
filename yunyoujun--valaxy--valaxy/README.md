@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [YunYouJun/valaxy](https://github.com/YunYouJun/valaxy/tree/main/skills/valaxy/SKILL.md)
+Original source: [YunYouJun/valaxy](https://github.com/YunYouJun/valaxy/tree/main/.codebuddy/skills/doc-i18n/SKILL.md)
 
 ---
 
