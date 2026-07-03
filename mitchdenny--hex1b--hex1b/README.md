@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mitchdenny/hex1b](https://github.com/mitchdenny/hex1b/tree/main/src/Hex1b.McpServer/SKILL.md)
+Original source: [mitchdenny/hex1b](https://github.com/mitchdenny/hex1b/tree/main/.claude/skills/aspire/SKILL.md)
 
 ---
 
