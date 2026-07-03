@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rexrainbow/phaser3-rex-notes](https://github.com/rexrainbow/phaser3-rex-notes/tree/main/skills/rexui/rexui-setup-and-factory/SKILL.md)
+Original source: [rexrainbow/phaser3-rex-notes](https://github.com/rexrainbow/phaser3-rex-notes/tree/main/skills/rexui/rexui-shapes-and-states/SKILL.md)
 
 ---
 
