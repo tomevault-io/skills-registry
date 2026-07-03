@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microbus-io/fabric](https://github.com/microbus-io/fabric/tree/main/.claude/skills/upgrade/upgrade-v1-27-1/SKILL.md)
+Original source: [microbus-io/fabric](https://github.com/microbus-io/fabric/tree/main/.claude/skills/upgrade/upgrade-v1-23-0/SKILL.md)
 
 ---
 
