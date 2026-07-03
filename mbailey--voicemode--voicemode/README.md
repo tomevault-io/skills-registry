@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mbailey/voicemode](https://github.com/mbailey/voicemode/tree/main/.claude/skills/voicemode-dj/SKILL.md)
+Original source: [mbailey/voicemode](https://github.com/mbailey/voicemode/tree/main/.claude/skills/voicemode-connect/SKILL.md)
 
 ---
 
