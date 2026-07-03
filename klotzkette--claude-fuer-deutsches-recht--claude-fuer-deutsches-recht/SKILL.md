@@ -1,125 +1,70 @@
 ---
-name: evaluierung-befristung-sunset-klausel
-description: Wenn es um NKR-Evaluierung, Befristung, Sunset-Klausel in Normenkontrollrat (NKR) — Prüfung von Gesetzentwuerfen geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Auswahlstichwort: Evaluierung Befristung Sunset Klausel; Arbeitsfeld: Normenkontrollrat (NKR) — Prüfung von Gesetzentwuerfen. Use when this capability is needed.
+name: kom-006-satzung-entwerfen-und-pruefen
+description: Wenn es um Satzung Entwerfen Und Pruefen in Kommunalrecht der Länder geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# NKR-Evaluierung, Befristung, Sunset-Klausel
+# Satzung Entwerfen Und Pruefen
 
-## Worum geht es konkret
+## Arbeitsauftrag
 
-Der NKR empfiehlt regelmaessig Evaluierungs- und Befristungsklauseln, wenn Wirksamkeit, Aufwand oder Zielereichung unsicher sind. Befristung (Sunset) heisst: das Gesetz tritt nach X Jahren automatisch ausser Kraft, wenn nicht verlaengert.
+Satzung Entwerfen Und Pruefen wird nicht als abstraktes Schema beantwortet, sondern als Arbeitsgang im Bereich Kommunalrecht der Länder: erst Zuständigkeit und Normpfad, dann Tatsachen und Belege, dann Fristen und taktische Option, danach ein verwertbarer Output.
 
-## Wann dieses Modul hilft / Kaltstart-Fragen
+## Einstieg ohne Leerlauf
 
-- Vorhaben mit hoher Wirksamkeitsunsicherheit
-- Vorhaben mit hohem Erfuellungsaufwand
-- Vorhaben in dynamischem Feld (Digital, IT, EU-Bezug)
-- Pilotcharakter
-- Eingriffsregelung mit Krisenbezug
+1. Rolle klären: antragstellende Person, Behörde, Verband, Unternehmen, Anwalt, Gericht, Presse, Betroffene oder Projektträger.
+2. Ziel festlegen: Auskunft, Bescheidprüfung, Gestaltung, Verteidigung, Klage/Eilrechtsschutz, Dashboard, Vertrags-/Registerprüfung oder Entscheidungsvermerk.
+3. Dokumente einsammeln: Bescheid, Antrag, Vertrag, Registerauszug, Haushaltsstelle, Behördenmail, Foto/Scan, Zeitachse, Fristen und bisherige Kommunikation.
+4. Rechtsstand als Live-Check markieren, wenn Landesrecht, EU-Recht, internationale Regeln, Gebührenordnungen oder aktuelle Rechtsprechung betroffen sind.
 
-Rueckfrage nur wenn unklar: *"Soll die Empfehlung lauten: Evaluierung, Befristung, oder Sunset (Inkrafttreten zeitlich begrenzt)?"*
+## Norm- und Quellenanker
 
-## Rechtlicher und methodischer Rahmen
+- Gemeindeordnungen, Landkreisordnungen, Kommunalverfassungen der Länder
+- Rat/Kreistag, Bürgermeister/Landrat, Ausschüsse, Bürgerbegehren
+- Kommunalaufsicht, Haushalt, Abgaben, Daseinsvorsorge, Satzungen
+- VwGO, § 47 VwGO, Kommunalwahlrecht-Schnittstellen
 
-- **§ 44 GGO** — Evaluierungspflicht in Begruendung
-- **NKRG** § 4, § 7 — methodische und berichtende Funktion
-- **Konzept zur Evaluierung neuer Regelungsvorhaben** der Bundesregierung
-- **Leitfaden BMI / NKR** — Evaluierungsmodul
-- **HdR** Teil C — Klauseltechnik für Inkrafttreten / Befristung
+## Prüfroutine
 
-## Drei Instrumente im Vergleich
+1. **Scope:** Was genau soll entschieden, beantragt, abgewehrt oder dokumentiert werden? Welche Einheit ist betroffen und welches Recht gilt wirklich?
+2. **Zuständigkeit:** Behörde, Gericht, Register, Aufsicht, Verband, Unternehmen oder internationale Stelle sauber benennen; falsche Adressaten als Risiko ausweisen.
+3. **Tatbestand:** Die relevanten Merkmale einzeln mit Belegen füllen. Unklare Tatsachen als Rückfrage oder Beweispunkt markieren, nicht glattbügeln.
+4. **Rechtsfolge:** Anspruch, Ermessen, Verbot, Pflicht, Gebührenfolge, Nebenfolge, Haftung, Vollzug oder Rechtsschutz getrennt ausgeben.
+5. **Taktik:** Schnellster sinnvoller Weg, sauberster Weg und Eskalationsweg nebeneinander stellen; bei Laien zusätzlich eine kurze Erklärung in Alltagssprache.
 
-| Instrument | Wirkung | Typische Frist |
-|---|---|---|
-| Evaluierungsklausel | Nach Frist Bericht über Wirksamkeit | 3-5 Jahre |
-| Befristung | Gesetz laeuft aus, soweit nicht verlaengert | 5-10 Jahre |
-| Sunset | Gesetz tritt automatisch ausser Kraft, ohne Verlaengerung neu | 5 Jahre |
+## Typische Artefakte
 
-## Prüfraster / Schritt für Schritt
+- Landesrechts-Navigator
+- Beschluss-/Satzungscheck
+- Bürgerbegehren-Fristenmatrix
+- Kommunalaufsichts- und Haushaltsrisikoampel
 
-### Wann Evaluierungsklausel
+## Red-Team-Fragen
 
-- Standardfall bei wesentlichem Erfuellungsaufwand
-- Wenn Indikatoren später messbar sind
-- Wenn ressortseitiges Evaluierungsinteresse besteht
+- falsches Bundesland
+- Organrolle verwechselt
+- Satzungsbekanntmachung/Öffentlichkeit fehlt
+- kommunale Finanzierung übersehen
 
-### Wann Befristung
+## Ausgabeformat
 
-- Wenn Geltungsbereich politisch zeitlich begrenzt (z.B. Krisenrecht)
-- Bei Pilotcharakter
-- Bei hoher Unsicherheit über Wirksamkeit
+- **Kurzbefund:** ein Absatz, der die Lage und den nächsten Schritt verständlich macht.
+- **Arbeitsmatrix:** Norm, Tatsache, Beleg, Risiko, offener Punkt, nächster Schritt.
+- **Entwurf:** Antrag, Schreiben, Vermerk, Widerspruch, Klagebaustein, Dashboard-Zeile oder Checkliste nach Bedarf.
+- **Quellenblock:** nur amtliche/frei prüfbare Quellen oder vom Nutzer bereitgestellte Quellen; keine Blindzitate, keine BeckRS-/juris-Behauptungen ohne Nutzerquelle.
 
-### Wann Sunset
-
-- Bei Eingriffsregelung in Krisensituation (z.B. Pandemie)
-- Bei verfassungsrechtlich sensiblen Eingriffen
-- Bei stark zeitabhaengigen Sachgegenstaenden
-
-### Indikatoren
-
-- Fallzahlen tatsaechlich vs. Schaetzung
-- Erfuellungsaufwand tatsaechlich vs. Schaetzung
-- Zielereichung (qualitativ und quantitativ)
-- Unbeabsichtigte Folgen
-- Vergleich mit Vorperiode
-
-## NKR-Sicht — was triggert eine kritische Stellungnahme
-
-- Keine Evaluierungsklausel bei wesentlichem Vorhaben
-- Klausel ohne Indikatoren ("wird evaluiert, sobald möglich")
-- Klausel mit unrealistisch kurzer / langer Frist
-- Keine Befristung bei Pilotvorhaben
-
-## Trade-off-Matrix
-
-| Vorhabenstyp | NKR-Empfehlung |
-|---|---|
-| Standard mit Aufwand > 1 Mio EUR | Evaluierungsklausel, 3-5 Jahre |
-| Hoher Aufwand > 100 Mio EUR | Evaluierungsklausel zwingend, 3 Jahre |
-| Pilotcharakter | Befristung, 5 Jahre |
-| Krisenrecht | Sunset, 1-3 Jahre |
-| EU-Umsetzung | Evaluierung mit Bezug auf EU-Folgenabschaetzung |
-
-## Mustertexte / Stellungnahme-Bausteine
-
-- "Der NKR empfiehlt, eine Evaluierungsklausel aufzunehmen, die [3 / 5] Jahre nach Inkrafttreten die tatsaechlichen Auswirkungen anhand der Indikatoren Fallzahl, Erfuellungsaufwand und Zielereichung überprüft."
-- "Der NKR weist darauf hin, dass das Vorhaben angesichts seiner Pilotnatur befristet werden sollte; eine Befristung auf [5 Jahre] mit Verlaengerungsoption nach Evaluierung erscheint angemessen."
-- "Der NKR begruesst die im Entwurf vorgesehene Evaluierungsklausel und die transparent benannten Indikatoren."
-
-### Klausel-Vorlage (Standardform)
-
-> *§ [Paragraph] Evaluierung*
+<!-- BEGIN ausformulierungspflicht (autogen) -->
+> **Ausformulierungspflicht und Formatstandard.** Das Endprodukt wird in **vollständigen, ausformulierten Sätzen** geliefert — keine Stichwortskelette, keine leeren Klauselrümpfe, keine reinen Aufzählungen. Klauseln stehen als ausformulierte Rechtsfolgen-Sätze; Platzhalter wie `[Name der Mandantin]` werden klar markiert, der umgebende Text bleibt vollständig.
 >
-> *(1) Das Bundesministerium [Federfuehrer] berichtet dem Bundestag bis zum [TT.MM.JJJJ] über die Anwendung und Wirksamkeit dieses Gesetzes. Der Bericht enthaelt insbesondere Aussagen zu*
-> *1. der tatsaechlichen Fallzahl der nach diesem Gesetz Verpflichteten,*
-> *2. dem tatsaechlichen Erfuellungsaufwand für Buerger, Wirtschaft und Verwaltung,*
-> *3. der Zielereichung im Sinne von [Konkretisierung],*
-> *4. unbeabsichtigten Folgen sowie Vorschlaegen zur Anpassung.*
-
-### Befristungs-Klausel (Sunset)
-
-> *§ [Paragraph] Geltungsdauer*
+> **Schriftbild:** Wenn ein Schriftsatz, Vertrag, Memo, Beschluss, Vermerk oder sonstiges Enddokument als DOCX, PDF oder formatierter Text ausgegeben wird, ist **Times New Roman 11 pt** als Grundschrift zu verwenden. Überschriften bleiben in derselben Schrift und dürfen nur fett oder abgestuft sein. Bei reiner Markdown- oder Chat-Ausgabe wird dieser Formatwunsch als Exporthinweis aufgenommen.
 >
-> *Dieses Gesetz tritt mit Ablauf des [TT.MM.JJJJ] ausser Kraft.*
+> **Nummerierung:** Gliederung ausschließlich dezimal (`1`, `1.1`, `1.1.1` und so weiter). Keine römischen Ziffern, keine Buchstaben- oder Mischgliederung.
+<!-- END ausformulierungspflicht (autogen) -->
 
-## Typische Fehler in Ressort-Entwuerfen
+## Qualitätsregel
 
-- "Eine Evaluierung erfolgt zu gegebener Zeit" — unverbindlich
-- "Bei Bedarf wird das Gesetz angepasst" — leerformelhaft
-- Indikatoren fehlen
-- Frist ohne Bezug zu Investitionszyklen
-
-## Quellen Stand 06/2026
-
-- § 44 GGO
-- NKRG vom 14.08.2006 (BGBl. I S. 1866) § 4, § 7
-- Konzept zur Evaluierung neuer Regelungsvorhaben der Bundesregierung (jeweils aktuelle Fassung)
-- Leitfaden zur Ermittlung und Darstellung des Erfuellungsaufwands (BMI / NKR)
-- Handbuch der Rechtsfoermlichkeit Teil C
-- NKR-Jahresbericht (jeweils aktuelle Ausgabe)
-- Live verifizieren über [www.normenkontrollrat.bund.de](https://www.normenkontrollrat.bund.de)
+Wenn etwas nur wahrscheinlich ist, als wahrscheinlich kennzeichnen. Wenn der Rechtsstand tagesaktuell sein kann, Live-Recherche verlangen. Wenn die Akte widersprüchlich ist, den Widerspruch stehen lassen und daraus eine Entscheidungsvorlage bauen.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
