@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wondelai/skills](https://github.com/wondelai/skills/tree/main/design-everyday-things/SKILL.md)
+Original source: [wondelai/skills](https://github.com/wondelai/skills/tree/main/hundred-million-offers/SKILL.md)
 
 ---
 
