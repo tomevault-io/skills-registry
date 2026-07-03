@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sarvamai/skills](https://github.com/sarvamai/skills/tree/main/chat/SKILL.md)
+Original source: [sarvamai/skills](https://github.com/sarvamai/skills/tree/main/translate/SKILL.md)
 
 ---
 
