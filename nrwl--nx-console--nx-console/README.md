@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nrwl/nx-console](https://github.com/nrwl/nx-console/tree/main/.gemini/skills/nx-generate/skill.md)
+Original source: [nrwl/nx-console](https://github.com/nrwl/nx-console/tree/main/.opencode/skills/monitor-ci/SKILL.md)
 
 ---
 
