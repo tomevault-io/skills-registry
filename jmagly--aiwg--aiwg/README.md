@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jmagly/aiwg](https://github.com/jmagly/aiwg/tree/main/agentic/code/frameworks/sdlc-complete/skills/sdlc-accelerate/SKILL.md)
+Original source: [jmagly/aiwg](https://github.com/jmagly/aiwg/tree/main/agentic/code/addons/semantic-memory/skills/memory-log-append/SKILL.md)
 
 ---
 
