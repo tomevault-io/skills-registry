@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DeepExperience/MMSkills](https://github.com/DeepExperience/MMSkills/tree/main/skills_library/vlc/VLC_Open_Local_Media_And_Verify_Playback_Surface/SKILL.md)
+Original source: [DeepExperience/MMSkills](https://github.com/DeepExperience/MMSkills/tree/main/skills_library/gimp/GIMP_GIMP_Save_Projects_and_Export_Edited_Images/SKILL.md)
 
 ---
 
