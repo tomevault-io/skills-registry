@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marin-community/marin](https://github.com/marin-community/marin/tree/main/.agents/skills/run-ferries/SKILL.md)
+Original source: [marin-community/marin](https://github.com/marin-community/marin/tree/main/.agents/skills/babysit-job/SKILL.md)
 
 ---
 
