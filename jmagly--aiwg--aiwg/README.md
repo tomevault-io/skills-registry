@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jmagly/aiwg](https://github.com/jmagly/aiwg/tree/main/agentic/code/frameworks/media-curator/skills/analyze-artist/SKILL.md)
+Original source: [jmagly/aiwg](https://github.com/jmagly/aiwg/tree/main/agentic/code/addons/testing-quality/skills/generate-factory/SKILL.md)
 
 ---
 
