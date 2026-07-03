@@ -1,138 +1,165 @@
 ---
-name: statthaftigkeit-47-vwgo
-description: Wenn es um Statthaftigkeit Paragraf 47 VwGO in Normenkontrolle Bauleitplanung — Paragraf 47 VwGO geht: erstellt den passenden Entwurf aus Sachverhalt, Norm, Beweis und Antrag; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: dfg-koselleck-500k-praeregistrierung
+description: Wenn es um Reinhart-Koselleck-Check in DFG-Förderantrag geht: erstellt den passenden Entwurf aus Sachverhalt, Norm, Beweis und Antrag; liefert einen verwertbaren Entwurf mit Anträgen, Begründung und Anlagenlogik. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Statthaftigkeit § 47 VwGO
+# Reinhart-Koselleck-Check
 
-## Schritt 1 — Grundtatbestand § 47 Abs. 1 VwGO
+## Regelungs- und Quellenanker
 
-### Wortlaut sinngemäß
-- Das Oberverwaltungsgericht entscheidet im Rahmen seiner Gerichtsbarkeit auf Antrag über die Gültigkeit
-- **Nr. 1**: von Satzungen, die nach den Vorschriften des Baugesetzbuchs erlassen sind, sowie von Rechtsverordnungen aufgrund § 246 Abs. 2 BauGB
-- **Nr. 2**: von anderen im Rang unter dem Landesgesetz stehenden Rechtsvorschriften, sofern das Landesrecht dies bestimmt
+Arbeitsfokus: **Reinhart-Koselleck-Check**. Prüfe diese Anker am Sachverhalt; ergänze nur Normen, die denselben Output, dieselbe Frist oder dieselbe Beweisfrage tragen:
 
-### Bayerische Landesregelung
-- Art. 5 BayAGVwGO erweitert die Statthaftigkeit auf andere im Rang unter dem Landesgesetz stehende Rechtsvorschriften
-- Damit auch örtliche Bauvorschriften, kommunale Satzungen, Verordnungen erfasst
+- `Art. 5 Abs. 3 Satz 1 GG` — Wissenschaftsfreiheit.
+- `Art. 91b Abs. 1 GG` — Forschungsförderung im Bund-Länder-System.
+- `§ 23 BHO` — Zuwendungsvoraussetzungen.
+- `§ 44 Abs. 1 BHO` — Bewilligung, Nachweis und Prüfung.
+- `§ 7 Abs. 1 BHO` — Wirtschaftlichkeit und Sparsamkeit.
+- `§ 48 Abs. 1 VwVfG` — Rücknahme rechtswidriger Bewilligungen.
+- `§ 49 Abs. 1 VwVfG` — Widerruf rechtmäßiger Bewilligungen.
+- `DFG-Kodex Leitlinie 1` — Redlichkeit.
+- `DFG-Kodex Leitlinie 7` — Qualitätssicherung.
+- `DFG-Kodex Leitlinie 14` — Autorschaft.
 
-## Schritt 2 — Bebauungsplan als Satzung
+Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
 
-### Klassischer qualifizierter B-Plan
-- Erlassen als Satzung der Gemeinde § 10 Abs. 1 BauGB
-- Mindestfestsetzungen Art Maß Bauweise überbaubare Grundstücksfläche § 30 Abs. 1 BauGB
-- Statthaftigkeit unproblematisch
+## Arbeitsweg
 
-### Einfacher B-Plan
-- Festsetzungen unterhalb des qualifizierten Maßes
-- § 30 Abs. 3 BauGB
-- Trotzdem Satzung und statthaft
+- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
+- Fristen und Eilrisiken zuerst markieren: DFG-Antragsfristen programmspezifisch (Sachbeihilfe rollierend, Schwerpunktprogramme stichtagsgebunden), Verwendungsnachweis 6 Monate nach Projektende, Zwischenbericht jährlich.
+- Tragende Normen verifizieren: DFG-Verwendungsrichtlinien, BGB §§ 611 ff. (Drittmittelvertrag), HRG/Landeshochschulgesetze, WissZeitVG, EU-Beihilferecht (Forschung), BMBF/BMWK-Förderrichtlinien, DFG-Kodex Leitlinien zur Sicherung guter wissenschaftlicher Praxis — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Antragsteller (Principal Investigator), DFG-Fachkollegien, DFG-Geschäftsstelle, Hochschulverwaltung/Forschungsreferat, BMBF/BMWK, Gutachter.
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Antragsformular elan, Projektbeschreibung, Lebenslauf mit Publikationsliste, Finanzplan, Letter of Intent, Verwendungsnachweis, Zwischenbericht, Abschlussbericht — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-### Vorhabenbezogener B-Plan § 12 BauGB
-- Vorhaben- und Erschließungsplan plus B-Plan
-- Wird als Satzung beschlossen § 10 BauGB
-- Statthaft
+## Worum geht es
 
-### B-Plan der Innenentwicklung § 13a BauGB
-- Beschleunigtes Verfahren
-- Verzicht auf Umweltprüfung im Einzelfall möglich
-- Trotzdem Satzung und statthaft
-- Häufiger Angriffspunkt: zu Unrecht beschleunigtes Verfahren gewählt
+Das Reinhart-Koselleck-Projekt ist die DFG-Schiene für **etablierte Forscher mit außergewöhnlich risikoreichen, visionären Vorhaben**. Volumen: 500.000 bis 1.250.000 Euro, in Stufen von 250.000 Euro, Laufzeit 5 Jahre. Antragsteller müssen ein außergewöhnliches wissenschaftliches Profil und einen Vertrauensvorschuss vorweisen können — die Begutachterinnen sollen dem Vorhaben Erfolg zutrauen, auch wenn nicht jeder Arbeitsschritt detailliert geplant ist.
 
-### Vereinfachtes Verfahren § 13 BauGB
-- Bei Änderungen oder Ergänzungen die Grundzüge nicht berühren
-- Auch hier Satzung — Statthaftigkeit gegeben
+**Alte-Hasen-Faustregel:** Koselleck ist kein "größerer Sachbeihilfeantrag mit Etikett". Wer das nicht versteht, wird abgelehnt mit dem Hinweis "passt eher in die Sachbeihilfe" — und hat dann monatelang verloren. Faustregel: Wenn Sie ein detailliertes Arbeitsprogramm mit harten Meilensteinen aufstellen können und wollen, sind Sie in der Sachbeihilfe. Wenn Sie ein Vorhaben verfolgen, das Sie selbst nicht fünf Jahre durchplanen können, weil es zu visionär ist — dann Koselleck.
 
-## Schritt 3 — Örtliche Bauvorschriften Art. 81 BayBO
+## Wann dieses Modul hilft / Kaltstart-Fragen
 
-### Statthaftigkeitsgrundlage
-- Art. 81 BayBO ermächtigt zu örtlichen Bauvorschriften als Satzung
-- Insbesondere Stellplatzsatzung Art. 81 Abs. 1 Nr. 4 BayBO
-- Gestaltungssatzung Art. 81 Abs. 1 Nr. 1 BayBO
-- Werbeanlagensatzung Art. 81 Abs. 1 Nr. 2 BayBO
-- Satzungsform — Statthaftigkeit unproblematisch nach § 47 Abs. 1 Nr. 2 VwGO i.V.m. Art. 5 BayAGVwGO
+Sie brauchen diesen Skill, wenn ein etablierter Antragsteller einen risikoreichen Großantrag plant, oder wenn aus einer Sachbeihilfe-Idee plötzlich die Frage aufkommt: "Wäre das vielleicht Koselleck?".
 
-### Kombination mit B-Plan
-- Häufig erlässt Gemeinde mit dem B-Plan zugleich örtliche Bauvorschriften in derselben Satzung
-- Beide separat angreifbar — getrennte Anträge sinnvoll wenn Mängel unterschiedlich
-- Im Praxisfall ein einheitlicher Antrag mit getrennten Begründungsabschnitten
+Kaltstartfragen:
 
-## Schritt 4 — Flächennutzungsplan grundsätzlich nicht statthaft
+1. **Profil:** Welche sichtbaren Belege gibt es für außergewöhnliche wissenschaftliche Eigenständigkeit? DFG-Projektzyklen, Spitzenpublikationen, Preise, Berufungen und internationale Resonanz sind Indizien, keine starre Checkliste.
+2. **Sichtbarkeit:** Spitzenpublikationen, Berufungen, Editorships, internationale Preise, Keynote-Einladungen?
+3. **Vorhaben:** Was ist das **eine** visionäre Ziel? Welches Paradigma soll verschoben werden?
+4. **Risiko-Logik:** Ist das Risiko **wissenschaftlich produktiv** (auch ein Scheitern bringt Erkenntnis) oder nur **Management-Risiko** (Personal könnte fehlen, Gerät könnte ausfallen)?
+5. **Warum nicht Sachbeihilfe?** Wenn die Antwort lautet "weil ich mehr Geld will" — dann doch Sachbeihilfe.
+6. **Vorprojekte:** Welche DFG- oder vergleichbaren Projekte mit klarem Abschlussbericht und sichtbarem Output gibt es?
 
-### Regelfall
-- FNP ist Selbstbindung der Gemeinde, kein Rechtsetzungsakt mit Außenwirkung
-- Bürger kann sich nicht unmittelbar darauf berufen
-- BVerwG, Urteil vom 26.4.2007 – 4 CN 3.06 (st. Rspr.)
-- Normenkontrolle gegen FNP regelmäßig unstatthaft
+## Programm- bzw. Sachrahmen
 
-### Ausnahme Außenwirkung
-- FNP-Darstellungen mit gesteigerter Außenwirkung sind statthaft
-- Konzentrationsflächen für Windenergie § 35 Abs. 3 S. 3 BauGB
-- BVerwG, Urteil vom 26.4.2007 – 4 CN 3.06 (Wendepunkt)
-- Hier ist Normenkontrolle gegen FNP statthaft
+**Finanzrahmen.**
 
-### Inzident-Kontrolle
-- Wenn FNP nicht direkt angegriffen werden kann, gelegentlich Inzident-Kontrolle im Rahmen B-Plan-Normenkontrolle möglich (Anpassungsgebot § 8 Abs. 2 BauGB)
+- 500.000, 750.000, 1.000.000 oder 1.250.000 Euro — nur diese vier Stufen, jeweils in 250.000-Schritten.
+- Laufzeit: 5 Jahre fest. Keine "Sachbeihilfe-Standard 3 Jahre" möglich.
+- Budgetpositionen: Personal (typisch der größte Block), Geräte, Verbrauchsmaterial, Reisen, Sonstiges, Publikation, Eigene Stelle ist normalerweise nicht Modul (Antragsteller hat Stelle).
 
-## Schritt 5 — Inkrafttreten der Norm
+**Antragsvoraussetzungen.**
 
-### Voraussetzung Bekanntmachung
-- B-Plan tritt mit Bekanntmachung in Kraft § 10 Abs. 3 BauGB
-- Ohne Inkrafttreten kein Normenkontrollgegenstand — Antrag wäre verfrüht
-- Aufstellungsbeschluss alleine reicht nicht
+- Berufene oder berufbare herausragende Wissenschaftlerin / Wissenschaftler.
+- Außergewöhnliche bisherige Leistung — sichtbar in Publikationsprofil, internationaler Resonanz, Preisen.
+- Sichtbarer Track Record, der den besonderen Vertrauensvorschuss trägt. Mehrere erfolgreich abgeschlossene DFG-Projekte sind ein starkes Praxisindiz, aber nicht als formales Muss behaupten, solange die aktuelle DFG-Quelle das nicht verlangt.
+- Projekt soll innovativ und positiv risikobehaftet sein und gerade nicht gut in das normale DFG-Verfahren passen.
 
-### Nachträgliche Außerkraftsetzung
-- Wird der Plan aufgehoben oder ersetzt, entfällt das Rechtsschutzbedürfnis nicht zwangsläufig (Fortsetzungsfeststellungsinteresse möglich)
+**Vertrauensvorschuss.** Im Unterschied zur Sachbeihilfe wird kein detailliertes Arbeitsprogramm mit harten Meilensteinen verlangt. Die Begutachterinnen sollen aufgrund des Profils und der Vision **Vertrauen** entwickeln — daher ist die Antragstellerseite (Profil, Vorarbeiten, Track Record) viel wichtiger als bei Sachbeihilfe.
 
-## Schritt 6 — Abgrenzungen
+## Praxisleitfaden
 
-### Gegen Baugenehmigung
-- Wenn nur die konkrete Genehmigung stört — Anfechtungsklage gegen die Genehmigung
-- Inzident-Kontrolle des B-Plans im Anfechtungsprozess möglich
-- Parallel-Strategie: Normenkontrolle plus Anfechtung
+**Was schnelle Genehmigung produziert.**
 
-### Gegen Vorhabenbezogenen Durchführungsvertrag § 12 Abs. 1 S. 1 BauGB
-- Vertrag selbst nicht direkter Antragsgegenstand
-- Aber als Indiz für Vorfestlegung Stadt relevant für materielle Begründung
+- **Eine echte Vision in einem Satz.** Reviewer müssen die "Paradigmenverschiebung" oder das "neue Forschungsfeld" in drei Sekunden verstehen.
+- **Track Record als Säule des Antrags.** Profilseite mit eigener Forschungslinie über 10 bis 15 Jahre — Reviewer suchen Konsistenz und Aufstieg.
+- **Risiko-Begründung explizit und produktiv.** "Wenn die Hypothese H1 widerlegt wird, gewinnt das Feld eine neue Theorie zur Erklärung von [Phänomen]" ist gut. "Wenn nicht klappt, machen wir Plan B" ist Sachbeihilfe-Sprache.
+- **Drei plausible Gutachter im Kopf** vorab ausgewählt — und deren Schlüsselarbeiten im Stand der Forschung korrekt und positiv zitiert. Wer eine Koselleck-Vision verfolgt, ohne die drei führenden Köpfe im Feld zu erwähnen, wirkt isoliert.
+- **Sichtbare Eigenständigkeit.** Koselleck ist Einzelantrag — keine "ich und meine Co-PIs"-Logik. Mitarbeiter ja, aber die Vision gehört einer Person.
 
-### Gegen städtebaulichen Vertrag § 11 BauGB
-- Vertrag selbst nicht Antragsgegenstand
-- Inhalt im Rahmen Abwägungsprüfung relevant
+**Was Reviewer triggert.**
 
-## Schritt 7 — Antrags-Bezeichnung im Schriftsatz
+- **"Passt eher in Sachbeihilfe"** — der häufigste Ablehnungsgrund. Entsteht, wenn die Vision fehlt und nur ein größerer Standardantrag dasteht.
+- **"Risiko ist Management-Risiko, nicht wissenschaftliches Risiko"** — wenn das Risikokapitel von "Personal könnte abspringen" handelt.
+- **"Profil reicht nicht"** — wenn die Begutachter aus Publikationen, Drittmitteln, Preisen, Berufungen und internationaler Resonanz keinen Grund für den besonderen Vertrauensvorschuss sehen.
+- **"Vision unkonkret"** — wenn die "Paradigmenverschiebung" nach drei Lesungen noch immer schwammig ist.
+- **"Keine Innovation, nur Skalierung"** — wenn das Projekt dasselbe wie die letzten drei Sachbeihilfen ist, nur mit mehr Personal.
+- **"Antragsteller könnte Heisenberg machen"** — wenn die Karriere noch in Habilitations-Übergangsphase ist.
 
-### Präzise Antrags-Fassung
-- "Der Bebauungsplan Nr. X der Stadt Y mit dem Namen Z, bekanntgemacht im Amtsblatt der Stadt Y Nr. A vom B, wird für unwirksam erklärt."
-- Bei Teilangriff: "Der Bebauungsplan Nr. X wird in Bezug auf die textliche Festsetzung Nr. Y für unwirksam erklärt."
-- Teilangriff nur wenn restlicher Plan ohne den angegriffenen Teil sinnvoll bleibt (BVerwG-Linie zur Teilbarkeit)
+**Schreibstil "Koselleck".**
 
-## Schritt 8 — Häufige Statthaftigkeits-Fallen
+- Einleitung sehr ambitioniert — der erste Satz ist die Vision.
+- Stand der Forschung als **Konfliktlandkarte** — wo stehen die Felder, welche Konfliktlinien gibt es, wo ist die Lücke, die der Antrag schließen will?
+- Eigene Vorarbeiten als **Linie**, nicht als Liste — der Antragsteller hat seit Jahren auf das Vorhaben hingearbeitet.
+- Hypothesen können breiter sein als bei Sachbeihilfe — aber prüfbar.
+- Arbeitsprogramm in **groben Phasen**, nicht in Meilensteinen. "Phase 1 (Jahre 1-2): Aufbau Datenbasis" — nicht "M1.1: 12 Interviews in Monat 3".
+- Risikokapitel ausführlich, mit Erkenntnisgewinn-im-Scheitern.
 
-- Mandant will FNP angreifen — Aufklärung erforderlich
-- Plan ist noch nicht in Kraft — Beschluss abwarten oder Eilantrag prüfen
-- Plan ist bereits aufgehoben — Fortsetzungsfeststellungsinteresse prüfen
-- Angegriffen wird städtebaulicher Vertrag oder Durchführungsvertrag — Hinweis Mandant
-- Plan eines anderen Bundeslandes — andere Landesregelung prüfen
+**Antragslänge.** Vordruckhinweise prüfen. Typisch 30 bis 40 Seiten Projektbeschreibung — mehr Raum als Sachbeihilfe.
 
-## Quellen
+## Trade-off-Matrix
 
-- VwGO § 47 Abs. 1, Abs. 2, Abs. 6
-- BauGB §§ 8 10 11 12 13 13a 30 35 246
-- BayAGVwGO Art. 5
-- BayBO Art. 81
-- BVerwG, Urteil vom 26.4.2007 – 4 CN 3.06 (FNP Windenergie Konzentration)
-- BVerwG, Urteil vom 18.11.2010 – 4 CN 3.10 (Präklusion)
-- BVerwG, Beschluss vom 31.1.2017 – 4 BN 28.16 (Antragsbefugnis Nachbar)
+| Trade-off | Pfad A: Koselleck | Pfad B: Große Sachbeihilfe | Empfehlung |
+| --- | --- | --- | --- |
+| Detailgrad | Vision, Phasen | Arbeitsprogramm mit Meilensteinen | Nur Koselleck wenn Vision nicht in Standard passt |
+| Antragsstellerprofil | außergewöhnlich sichtbar, mit starkem Drittmittel-/Publikationsprofil | Promotion + Vorarbeiten | Koselleck nur bei klar etablierter Position |
+| Risiko-Begründung | wissenschaftlich produktiv | methodisches Risiko mit Plan B | Koselleck verlangt Vision-Risiko |
+| Laufzeit | 5 Jahre fix | 1-3 Jahre flexibel | Koselleck nur bei langem Atem nötig |
+| Geld | 500k-1.25m | typisch 200k-500k | Geldhunger allein rechtfertigt kein Koselleck |
+| Begutachtungsdauer | 9-12 Monate | 6-9 Monate | Koselleck nur bei vorhandener Zeit |
+| Erfolgswahrscheinlichkeit | niedriger (selektiver) | höher | Bei knappem Profil lieber Sachbeihilfe |
 
-## Ergänzende Rechtsprechung (Stand 05/2026, verifiziert bverwg.de)
+## Schritt für Schritt
 
-- **BVerwG 14.10.2020, 4 CN 4.19**: Antragsbefugnis im Normenkontrollverfahren — § 47 Abs. 2 VwGO setzt Geltendmachung einer moeglichen Rechtsverletzung voraus; abwaegungsfehlerhafte Plaene begruenden Antragsbefugnis, wenn der Antragsteller einen abwaegungserheblichen Belang geltend macht. Quelle: bverwg.de.
-- **BVerwG 04.05.2022, 4 CN 2.21**: Konzentrationszonen-Bauleitplanung (Wind/Solar) — Anforderungen an Statthaftigkeit und Antragsbefugnis von Nachbarn ausserhalb der Konzentrationszone. Quelle: bverwg.de.
-- **BVerwG 11.04.2024, 4 BN 50.23**: Klimaschutz als Abwaegungs- und ggf. Antragsbefugnis-relevanter Belang. Quelle: bverwg.de.
+1. **Profil-Audit.** GEPRIS-Suche aller eigenen Projekte. Publikationsprofil mit Impactfaktor und internationaler Resonanz. Berufungen, Preise, Editorships sammeln.
+2. **Vorprojekte sammeln** — welche DFG-/EU-/Stiftungsprojekte sind abgeschlossen, und was ist daraus sichtbar entstanden?
+3. **Visions-Test.** Lassen Sie Antragsteller die Vision in einem Satz mündlich erklären. Wenn nach drei Versuchen unklar — kein Koselleck.
+4. **Risiko-Begründung schreiben** als eigenständiges Kapitel — produktives Risiko, nicht Managementrisiko.
+5. **Drei mögliche Gutachter** identifizieren — deren Arbeit kennen und zitieren.
+6. **Vorab Geschäftsstelle anrufen** (Antragsteller selbst). Bei Koselleck ist das fast obligatorisch — die DFG-Fachgebietsleitung sagt offen, ob das Vorhaben Koselleck-tauglich aussieht.
+7. **Abgrenzung zur Sachbeihilfe explizit schreiben** — warum genau passt das Vorhaben nicht in normale Verfahren?
+8. **Phasenmodell statt Meilenstein-Detail** entwerfen.
+9. **Red-Team** durch zwei externe Kollegen aus dem Fach.
+10. **Alternativ-Sachbeihilfe vorbereiten** — falls Koselleck-Risiko zu hoch.
 
-Konkrete Aktenzeichen vor Ausgabe per bverwg.de verifizieren.
+## Mustertexte / Vorlagen
+
+**Visionssatz** (Vorlage):
+
+> "Das Projekt entwirft [neues Paradigma / neue Theorie / neue Methode] zur Erklärung von [Phänomen X], indem es [methodischer Neuansatz] mit [theoretischem Rahmen] verbindet — mit dem Ziel, [Forschungsfeld] auf eine neue Grundlage zu stellen."
+
+**Risiko-Mitigations-Statement Koselleck-Stil** (Vorlage):
+
+> "Das wissenschaftlich produktive Risiko des Vorhabens besteht darin, dass die zentrale Annahme H1 [konkrete Annahme] sich aus theoretischen Gründen aktuell nicht endgültig prüfen lässt. Sollte sie sich im Projekt als unhaltbar erweisen, ergibt sich aus den dann vorliegenden Daten ein neuer Erklärungsrahmen für [Phänomen Y], der für das Feld einen größeren Erkenntnisgewinn darstellt als die bloße Bestätigung von H1. Insofern ist auch das negative Ergebnis publikationsfähig und feldverändernd."
+
+**Abgrenzung zur Sachbeihilfe** (Vorlage):
+
+> "Das Vorhaben passt aus drei Gründen nicht in das Verfahren der Sachbeihilfe: Erstens ist die zentrale Frage [Frage] nicht in einer dreijährigen Förderung beantwortbar, sondern verlangt einen Aufbau über mindestens fünf Jahre. Zweitens ist das methodische Risiko so beschaffen, dass ein detailliertes Arbeitsprogramm dem Charakter des Vorhabens widerspräche — die Methode entwickelt sich im Verlauf. Drittens setzt das Vorhaben eine Forschungslinie fort, die in den Vorprojekten [Projekt X, Y] etabliert wurde und nun in eine paradigmatisch neue Phase tritt."
+
+**Profil-Linie auf einer Seite** (Vorlage):
+
+> "Seit der Promotion [Jahr] arbeitet [Antragsteller] kontinuierlich an [Forschungsfrage]. Die Vorarbeiten [Publikation 1] (Theorie), [Publikation 2] (Methodenentwicklung) und [Publikation 3] (Pilotstudie) belegen den Aufbau hin zur vorliegenden Vision. Im Projekt [DFG-Projekt 1, Az.] wurde [Erkenntnis X] erarbeitet, im Folgeprojekt [DFG-Projekt 2, Az.] [Erkenntnis Y]. Die jetzt vorgeschlagene Vision ist die logische, aber visionär-erweiterte Konsequenz dieser Linie."
+
+## Typische Fehler
+
+- "Wir haben eine super Sachbeihilfe-Idee, lass uns Koselleck draus machen, dann gibt's mehr Geld" — die Begutachter merken das in 10 Minuten.
+- Detailliertes Arbeitsprogramm mit 12 Meilensteinen — entwertet die Vertrauensvorschuss-Logik.
+- Risiko-Kapitel als Liste von Personalrisiken — kein wissenschaftliches Risiko.
+- Mehrere Co-Antragsteller — Koselleck ist Einzelantrag.
+- Fehlender Vertrauensvorschuss wird als formales Muss verkleidet. Besser: offen prüfen, ob Track Record und Vision den besonderen Koselleck-Maßstab tragen.
+- Vorprojekte nicht erwähnt — wirkt, als hätte Antragsteller den eigenen Track Record nicht im Kopf.
+- "Kann auch in 3 Jahren laufen, falls Sie das wollen" — Laufzeit ist fix 5 Jahre.
+- Vision als Modewort: "disruptiv", "transformativ" ohne Substanz.
+
+## Quellen Stand 05/2026
+
+- DFG-Programmseite Reinhart-Koselleck-Projekte: dfg.de
+- DFG-Hinweise Antragstellung: dfg.de
+- GEPRIS (für Profil-Audit und Vergleichsfälle): gepris.dfg.de
+- DFG-Verfahrensordnung — Antragsvoraussetzungen am Einreichtag live prüfen.
+
+Bei Koselleck-Anträgen ist das vorbereitende Telefonat mit der DFG-Fachgebietsleitung besonders wichtig — sie geben offen Auskunft, ob das Vorhaben programmtauglich aussieht.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
