@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [adamayoung/TMDb](https://github.com/adamayoung/TMDb/tree/main/.claude/skills/diagnose-ci-failure/SKILL.md)
+Original source: [adamayoung/TMDb](https://github.com/adamayoung/TMDb/tree/main/.claude/skills/diagnose-integration-failure/SKILL.md)
 
 ---
 
