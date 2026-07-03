@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [soybeanjs/soybean-ui](https://github.com/soybeanjs/soybean-ui/tree/main/skills/skills/soybean-ui/SKILL.md)
+Original source: [soybeanjs/soybean-ui](https://github.com/soybeanjs/soybean-ui/tree/main/skills/skills/soybean-headless/SKILL.md)
 
 ---
 
