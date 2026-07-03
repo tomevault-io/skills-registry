@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [JetBrains/MPS](https://github.com/JetBrains/MPS/tree/main/.claude/skills/mps-bugfix/SKILL.md)
+Original source: [JetBrains/MPS](https://github.com/JetBrains/MPS/tree/main/.agents/skills/code-style/SKILL.md)
 
 ---
 
