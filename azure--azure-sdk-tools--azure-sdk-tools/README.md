@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/azure-sdk-tools](https://github.com/Azure/azure-sdk-tools/tree/main/packages/python-packages/apiview-copilot/.github/skills/report-feedback/SKILL.md)
+Original source: [Azure/azure-sdk-tools](https://github.com/Azure/azure-sdk-tools/tree/main/packages/python-packages/apiview-copilot/.github/skills/report-revisions/SKILL.md)
 
 ---
 
