@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [moss-site/moss-trade-bot-skills](https://github.com/moss-site/moss-trade-bot-skills/tree/main/moss-trade-bot-factory-1.0.23/SKILL.md)
+Original source: [moss-site/moss-trade-bot-skills](https://github.com/moss-site/moss-trade-bot-skills/tree/main/moss-trade-bot-factory-1.0.24/SKILL.md)
 
 ---
 
