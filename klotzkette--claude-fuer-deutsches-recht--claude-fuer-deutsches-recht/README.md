@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/aussenwirtschaft-zoll-sanktionen/skills/aussenwirtschaft-incoterms-exportkontrolle/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/notariat-alltag/skills/notariat-035-aufgebotsverfahren-verlorener-grundschuldbrief/SKILL.md)
 
 ---
 
