@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentfront/frontmcp](https://github.com/agentfront/frontmcp/tree/main/libs/skills/catalog/create-tool/SKILL.md)
+Original source: [agentfront/frontmcp](https://github.com/agentfront/frontmcp/tree/main/libs/skills/catalog/frontmcp-setup/SKILL.md)
 
 ---
 
