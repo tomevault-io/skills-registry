@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tonylofgren/aurora-smart-home](https://github.com/tonylofgren/aurora-smart-home/tree/main/ha-integration-dev/SKILL.md)
+Original source: [tonylofgren/aurora-smart-home](https://github.com/tonylofgren/aurora-smart-home/tree/main/ha-dashboard-design/SKILL.md)
 
 ---
 
