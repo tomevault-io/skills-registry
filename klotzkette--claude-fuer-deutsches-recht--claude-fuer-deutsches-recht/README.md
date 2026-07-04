@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/erbbaurecht-praxis/skills/erbbauzinsrang-finanzierungsbank-erbbaurecht/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/markenrecht-fashion-luxus/skills/erschoepfung-parallelimport-graumarkt/SKILL.md)
 
 ---
 
