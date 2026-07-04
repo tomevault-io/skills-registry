@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [poingstudios/godot-admob-plugin](https://github.com/poingstudios/godot-admob-plugin/tree/main/.agents/skills/parity-checker/SKILL.md)
+Original source: [poingstudios/godot-admob-plugin](https://github.com/poingstudios/godot-admob-plugin/tree/main/.agents/skills/release-manager/SKILL.md)
 
 ---
 
