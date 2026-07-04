@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [KilledByAPixel/LittleJS-AI](https://github.com/KilledByAPixel/LittleJS-AI/tree/main/.claude/skills/atlas-shape-art/SKILL.md)
+Original source: [KilledByAPixel/LittleJS-AI](https://github.com/KilledByAPixel/LittleJS-AI/tree/main/.claude/skills/new-littlejs-game/SKILL.md)
 
 ---
 
