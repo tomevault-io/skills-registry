@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [code-yeongyu/senpi](https://github.com/code-yeongyu/senpi/tree/main/.factory/skills/coding-agent-extension-worker/SKILL.md)
+Original source: [code-yeongyu/senpi](https://github.com/code-yeongyu/senpi/tree/main/packages/coding-agent/examples/extensions/dynamic-resources/SKILL.md)
 
 ---
 
