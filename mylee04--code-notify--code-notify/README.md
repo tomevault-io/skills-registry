@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mylee04/code-notify](https://github.com/mylee04/code-notify/tree/main/.claude/skills/cross-platform/SKILL.md)
+Original source: [mylee04/code-notify](https://github.com/mylee04/code-notify/tree/main/.claude/skills/shell-scripting/SKILL.md)
 
 ---
 
