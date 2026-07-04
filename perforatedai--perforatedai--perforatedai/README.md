@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PerforatedAI/PerforatedAI](https://github.com/PerforatedAI/PerforatedAI/tree/main/.github/skills/perforatedai/SKILL.md)
+Original source: [PerforatedAI/PerforatedAI](https://github.com/PerforatedAI/PerforatedAI/tree/main/.github/skills/perforatedai-analyze/SKILL.md)
 
 ---
 
