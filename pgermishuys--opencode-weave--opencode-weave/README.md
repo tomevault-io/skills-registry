@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pgermishuys/opencode-weave](https://github.com/pgermishuys/opencode-weave/tree/main/examples/config/github-speckit/skills/sdd-specification/SKILL.md)
+Original source: [pgermishuys/opencode-weave](https://github.com/pgermishuys/opencode-weave/tree/main/examples/config/github-speckit/skills/sdd-orchestration/SKILL.md)
 
 ---
 
