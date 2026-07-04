@@ -1,8 +1,8 @@
 ---
 name: teamcity-cli
-version: "0.8.3"
-author: JetBrains
-description: Use when working with TeamCity CI/CD or when user provides a TeamCity build URL. Use `teamcity` CLI for builds, logs, jobs, queues, and agents.
+description: Use when working with TeamCity CI/CD or when a user provides a TeamCity build URL — drives the `teamcity` CLI for builds, logs, jobs, queues, agents, pools, projects, and pipelines.
+metadata:
+  author: JetBrains
 ---
 
 # TeamCity CLI (`teamcity`)
@@ -15,44 +15,54 @@ teamcity run list --status failure      # Find failed builds
 teamcity run log <id> --failed --raw    # Full failure diagnostics
 ```
 
-**Do not guess flags or syntax.** Use the [Command Reference](references/commands.md) or `teamcity <command> --help`. Fall back to `teamcity api '/app/rest/...'` when needed. Builds are **runs** (`teamcity run`), build configurations are **jobs** (`teamcity job`).
-**Never use `--count`.** The TeamCity CLI uses `--limit` (or `-n`) for list-style limits. `--count` is not a valid substitute.
+**Do not guess flags or syntax.** Use the [command reference](references/commands.md) or `teamcity <command> --help`. Builds are **runs** (`teamcity run`); build configurations are **jobs** (`teamcity job`). Never use `--count` — use `--limit` (or `-n`).
 
-## Important
+## Gotchas
 
-- **Build logs:** Always use `teamcity run log <id> --raw` to avoid interactive terminal formatting. Dump the output to a temp file so you can re-read it as needed.
-- **Starting builds:** Always use `teamcity run start <job-id> --watch` to wait until the build finishes before proceeding.
-- **Branch names:** Always verify you are passing the correct branch when using `teamcity run start <job-id> --branch <branch>`. Do not guess branch names.
-- **Local changes and Kotlin DSL:** When using `teamcity run start <job-id> --local-changes`, local changes to Kotlin DSL (`.teamcity/`) are **not** included in the remote run. Always push Kotlin DSL changes before running the build.
+- **Composite builds have empty logs** — drill into child builds for the actual failure.
+- **Build chains fail bottom-up** — deepest failed dependency is the root cause. Use `teamcity run tree <id>`.
+- **`--local-changes` excludes Kotlin DSL** — push `.teamcity/` changes before running.
+- **`TEAMCITY_URL` alone bypasses stored auth** — set both `TEAMCITY_URL` and `TEAMCITY_TOKEN`, or leave unset.
+- **Logs**: use `--raw` and dump to a temp file. **Builds**: use `--watch` when starting them.
+- **VCS triggers aren't always wired up** — after pushing a fix you may need to start builds manually.
+- **`pipeline push` does not validate** — always `teamcity pipeline validate` first.
+- **GitHub VCS roots: use a GitHub App connection.** Never paste a PAT via `--auth password`. See [workflows](references/workflows.md).
 
 ## Core Commands
 
 | Area      | Commands                                                                                          |
 |-----------|---------------------------------------------------------------------------------------------------|
-| Builds    | `run list`, `view`, `start`, `watch`, `log`, `cancel`, `restart`, `tests`, `changes`              |
+| Auth      | `auth login`, `logout`, `status`                                                                  |
+| Builds    | `run list`, `view`, `start`, `watch`, `log`, `cancel`, `restart`, `tests`, `changes`, `tree`      |
 | Artifacts | `run artifacts`, `run download`                                                                   |
 | Metadata  | `run pin/unpin`, `run tag/untag`, `run comment`                                                   |
-| Jobs      | `job list`, `view`, `tree`, `pause/resume`, `param list/get/set/delete`                           |
-| Projects  | `project list`, `view`, `tree`, `param`, `token put/get`, `settings export/status/validate`       |
+| Jobs      | `job list`, `view`, `create`, `tree`, `pause/resume`, `step list/view/add/delete`, `param list/get/set/delete`, `settings list/get/set` |
+| Projects  | `project list`, `view`, `create`, `tree`, `param`, `token put/get`, `settings export/status`      |
+| VCS/Conn  | `project vcs list/view/create/delete`, `project connection list/create/authorize/delete`          |
 | Queue     | `queue list`, `approve`, `remove`, `top`                                                          |
 | Agents    | `agent list`, `view`, `enable/disable`, `authorize/deauthorize`, `exec`, `term`, `reboot`, `move` |
 | Pools     | `pool list`, `view`, `link/unlink`                                                                |
-| API       | `teamcity api <endpoint>` — raw REST API access                                                   |
+| Pipelines | `pipeline list`, `view`, `create`, `validate`, `pull`, `push`, `schema`, `delete`                 |
+| API       | `teamcity api <endpoint>` — raw REST access                                                       |
+| Link      | `teamcity link` — bind repo via `teamcity.toml`                                                   |
 
 ## Quick Workflows
 
-**Investigate failure:** `teamcity run list --status failure` → `teamcity run log <id> --failed --raw` → `teamcity run tests <id> --failed`
-**From a URL:** Extract build ID from `https://host/buildConfiguration/ConfigId/12345` → `teamcity run view 12345`
-**Start build:** `teamcity run start <job-id> --branch <branch> --watch`
-**Find jobs:** `teamcity project list` → `teamcity job list --project <id>`
-**Validate Kotlin DSL:** `teamcity project settings validate` (not `mvn compile` — see [Workflows](references/workflows.md))
+See [Workflows](references/workflows.md) for full details on each.
+
+- **Investigate failure**: `run list --status failure` → `run log <id> --failed --raw` → `run tests <id> --failed`
+- **Debug build chain**: `run tree <id>` → drill to deepest failed child
+- **Fix and verify**: edit → push → `run start --watch` (use `--local-changes` for personal builds)
+- **Pipeline lifecycle**: `pipeline pull <id>` → edit → `pipeline validate` → `pipeline push <id>`, `pipeline schema` to get the actual schema from the server
+- **GitHub VCS**: `connection create github-app` → `connection authorize` → install App on repo → `vcs create --auth token --connection-id <id>`
+- **Docker registry**: `echo $TOKEN | connection create docker -p <id> --name X --url https://ghcr.io --username U --stdin`
 
 ## References
 
-- [Command Reference](references/commands.md) - All commands and flags
-- [Workflows](references/workflows.md) - URL handling, failure investigation, artifacts, agents, and more
-- [Output Formats](references/output.md) - JSON, plain text, scripting
+- [Command reference](references/commands.md) — all commands and flags
+- [Workflows](references/workflows.md) — failure investigation, build chains, connections, pipelines
+- [Output formats](references/output.md) — JSON, plain text, scripting
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/jetbrains) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [JetBrains/teamcity-cli](https://github.com/JetBrains/teamcity-cli) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-04 -->
