@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentculture/culture](https://github.com/agentculture/culture/tree/main/plugins/claude-code/skills/irc/SKILL.md)
+Original source: [agentculture/culture](https://github.com/agentculture/culture/tree/main/.claude/skills/pypi-maintainer/SKILL.md)
 
 ---
 
