@@ -1,41 +1,50 @@
 ---
-name: beihilfe-einwendungen-belegarzt-konsiliararzt
-description: Wenn es um Beihilfe Einwendungen und Differenzbetrag in GOÄ Gebührenordnung für Ärzte geht: ordnet Akteninhalt, Belege, Lücken und Nachforderungen; liefert eine Berechnungstabelle mit Schwellen, Annahmen und Kontrollfragen. Use when this capability is needed.
+name: qualitaetsmanagement-im-notariat-kammerantwort-und-verfahren
+description: Wenn es um Qualitaetsmanagement Im Notariat Kammerantwort Und Verfahren in Berufsrecht Notare geht: ordnet Akteninhalt, Belege, Lücken und Nachforderungen; liefert eine Gegenprüfung mit Fehler-, Beweis- und Fristencheck. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Beihilfe Einwendungen und Differenzbetrag
+# Notare: qualitaetsmanagement im notariat - Kammerantwort mit Verfahrensstrategie, Tonlage und Belegplan
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Tragende Normen verifizieren: BRAO, BORA, FAO, BNotO, StBerG, WPO, PAO; BeurkG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Fachkern: Beihilfe Einwendungen und Differenzbetrag
-- **Normen-/Quellenanker:** GOÄ, BGB-Behandlungsvertrag, ärztliches Berufsrecht, § 12 GOÄ-Rechnung, Analogbewertung, Honorarvereinbarung, Erstattung PKV/Beihilfe.
-- **Entscheidende Weiche:** Prüfe Leistungsinhalt, Ziffer, Steigerungsfaktor, Begründung, Auslagen, Wahlleistung, Schuldner, Erstattungsfähigkeit und Einwendungsfrist.
+## Konkreter Berufsrechtskern: Notare: qualitaetsmanagement im notariat - Kammerantwort mit Verfahrensstrategie, Tonlage und Belegplan
+- **Normenanker:** BNotO, BeurkG, DONot, GNotKG, GwG, UVZ/Verwahrungsverzeichnis, Neutralität, Belehrung und Dienstaufsicht.
+- **Institutionen:** Notarkammer, Dienstaufsicht, Landgericht/Oberlandesgericht im Notarrecht und Register-/Grundbuchschnittstellen.
+- **Spezialspur:** Leite aus dem konkreten Slug die berufsrechtliche Pflicht, den Tatsachenbeleg, den Verfahrensgegner und das mildeste tragfähige Gegenmittel ab.
+- **Falllösung:** Baue eine Pflichtverletzungs-/Entlastungsmatrix mit Norm, Tatsache, Beleg, Verschulden, Verhältnismäßigkeit, möglicher Kammerantwort und prozessualem nächsten Schritt.
 
-## Startfragen
-- Wer fragt in welcher Rolle und welches Arbeitsergebnis wird gebraucht?
-- Welche Frist, Zuständigkeit, Behörde, Gericht oder Vertragssituation ist erkennbar?
-- Welche Dokumente, Zahlen, Registerdaten, Bescheide, Verträge oder Korrespondenz liegen vor?
-- Welche Tatsachen sind sicher, welche sind streitig und welche Annahmen müssen sichtbar markiert werden?
-- Welche live zu prüfenden Normen, Behördenhinweise oder Formulare tragen das Ergebnis?
+## Fallweichen dieser Speziallage
 
-## Prüf- und Arbeitslogik
-1. **Einordnen:** Rolle, Ziel, Verfahrensstand, Vertragstyp, Behörde/Gericht, Frist und Risiken festhalten.
-2. **Normen live prüfen:** Vor tragenden Aussagen den aktuellen Stand aus amtlichen oder frei zugänglichen Quellen kontrollieren. Besonders prüfen: die im Fachkern genannten Normen-/Quellenanker, aktuellen amtlichen oder frei zugänglichen Fachquellen und die für diese Speziallage tragenden Formulare/Behördenhinweise.
-3. **Tatbestand in Elemente zerlegen:** Jedes Tatbestandsmerkmal einzeln prüfen; unklare Tatsachen als `[offen: ...]` markieren.
-4. **Belege führen:** Für jede relevante Behauptung Dokument, Datum, Absender, Anlage, Registerfund oder Quelle notieren.
-5. **Gegenansicht bauen:** Mindestens eine ernsthafte Gegenargumentation und eine Verteidigungslinie formulieren.
-6. **Ergebnis kalibrieren:** Risikoampel `grün/gelb/rot`, Handlungsempfehlung, nächster Schritt und fehlende Unterlagen ausgeben.
+1. Rolle, Ziel und Entscheidungsdruck klären.
+2. Verfahrensstand, Fristen, Zuständigkeit und irreversible Risiken markieren.
+3. Aktenbasis ordnen: sichere Tatsachen, bestrittene Tatsachen, fehlende Unterlagen.
+4. Eingriffsintensität, Berufs-/Amtsgeheimnisse, Datenschutz und Persönlichkeitsrechte sichtbar machen.
+5. Sofortpfad anbieten: Was muss heute entschieden, beantragt, beantwortet oder dokumentiert werden?
 
-## Qualitätsgate
-Am Ende kurz prüfen: Sind Fristen, Zuständigkeit, Rechtsgrundlage, Beweislast, Zahlen, Form und gewünschter Output vollständig? Ist erkennbar, was sicher ist und was noch Sachverhaltsarbeit braucht?
+## Prüfprogramm
+
+- **Normenanker:** BNotO, BeurkG, DONot, GNotKG, GwG, Dienstaufsicht, notarielle Rechtsprechung und Landesjustizverwaltung live prüfen
+- **Tatsachenarbeit:** Beweisquelle, Beweiswert, Gegenbeweis, Dokumentationslücke und mögliche Fehlinterpretation trennen.
+- **Verfahrensarbeit:** Form, Frist, Zuständigkeit, Anhörung, Akteneinsicht, Rechtsbehelf und Zustellungsweg prüfen.
+- **Gegenposition:** Die stärkste Gegenansicht formulieren und sagen, was sie praktisch bedeutet.
+- **Entscheidung:** Eine vertretbare Handlungsempfehlung mit Risikoampel und nächstem Schritt liefern.
+
+## Normen & Rechtsprechung
+
+Konkret zu prüfen:
+
+- § 14 BNotO
+- DONot §§ 5-7
+- § 65 BNotO (Notarkammer)
+- § 92 BNotO (Aufsicht)
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
