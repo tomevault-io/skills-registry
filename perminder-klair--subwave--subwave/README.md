@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [perminder-klair/subwave](https://github.com/perminder-klair/subwave/tree/main/.claude/skills/subwave-control/SKILL.md)
+Original source: [perminder-klair/subwave](https://github.com/perminder-klair/subwave/tree/main/docs/examples/skills/moon-phase/SKILL.md)
 
 ---
 
