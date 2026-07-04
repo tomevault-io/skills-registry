@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zolotukhin/zinc](https://github.com/zolotukhin/zinc/tree/main/.agents/skills/speckit-clarify/SKILL.md)
+Original source: [zolotukhin/zinc](https://github.com/zolotukhin/zinc/tree/main/.agents/skills/speckit-specify/SKILL.md)
 
 ---
 
