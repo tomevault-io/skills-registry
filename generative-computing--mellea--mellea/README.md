@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [generative-computing/mellea](https://github.com/generative-computing/mellea/tree/main/.agents/skills/audit-markers/SKILL.md)
+Original source: [generative-computing/mellea](https://github.com/generative-computing/mellea/tree/main/.agents/skills/mellea-logging/SKILL.md)
 
 ---
 
