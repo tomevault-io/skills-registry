@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [as-pect/as-pect](https://github.com/as-pect/as-pect/tree/main/.pi/skills/diagnose/SKILL.md)
+Original source: [as-pect/as-pect](https://github.com/as-pect/as-pect/tree/main/.pi/skills/zoom-out/SKILL.md)
 
 ---
 
