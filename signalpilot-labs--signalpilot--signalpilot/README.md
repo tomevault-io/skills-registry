@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SignalPilot-Labs/SignalPilot](https://github.com/SignalPilot-Labs/SignalPilot/tree/main/benchmark/skills/dbt-debugging/SKILL.md)
+Original source: [SignalPilot-Labs/SignalPilot](https://github.com/SignalPilot-Labs/SignalPilot/tree/main/benchmark/skills/dbt-date-spines/SKILL.md)
 
 ---
 
