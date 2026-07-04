@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zoonk/zoonk](https://github.com/zoonk/zoonk/tree/main/.agents/skills/vercel-react-best-practices/SKILL.md)
+Original source: [zoonk/zoonk](https://github.com/zoonk/zoonk/tree/main/.agents/skills/vercel-composition-patterns/SKILL.md)
 
 ---
 
