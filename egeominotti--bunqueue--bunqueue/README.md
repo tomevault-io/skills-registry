@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [egeominotti/bunqueue](https://github.com/egeominotti/bunqueue/tree/main/skills/bunqueue/SKILL.md)
+Original source: [egeominotti/bunqueue](https://github.com/egeominotti/bunqueue/tree/main/.claude/skills/bunqueue-dev/SKILL.md)
 
 ---
 
