@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [buzzer-re/Rikugan](https://github.com/buzzer-re/Rikugan/tree/main/rikugan/skills/builtins/vuln-audit/SKILL.md)
+Original source: [buzzer-re/Rikugan](https://github.com/buzzer-re/Rikugan/tree/main/rikugan/skills/builtins/ida-scripting/SKILL.md)
 
 ---
 
