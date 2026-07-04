@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sallyom/claw-installer](https://github.com/sallyom/claw-installer/tree/main/.agents/skills/deploy-user-openshell-openclaw/SKILL.md)
+Original source: [sallyom/claw-installer](https://github.com/sallyom/claw-installer/tree/main/.agents/skills/setup-openshell-cluster-prereqs/SKILL.md)
 
 ---
 
