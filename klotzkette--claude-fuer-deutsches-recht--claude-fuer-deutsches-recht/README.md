@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/arbeitsrecht/skills/zugang-neu-001-kuendigungszugang-beweislast-und-zugangsmoment/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/oeffentliches-wirtschaftsrecht/skills/oew-071-breitband-organisationsform-pruefen/SKILL.md)
 
 ---
 
