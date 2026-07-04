@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fedimint/fedimint](https://github.com/fedimint/fedimint/tree/main/skills/gateway-liquidity/SKILL.md)
+Original source: [fedimint/fedimint](https://github.com/fedimint/fedimint/tree/main/.agents/skills/github-stale-pr-triage/SKILL.md)
 
 ---
 
