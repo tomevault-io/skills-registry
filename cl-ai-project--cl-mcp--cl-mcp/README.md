@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cl-ai-project/cl-mcp](https://github.com/cl-ai-project/cl-mcp/tree/main/.claude/skills/dogfooding-cl-mcp/SKILL.md)
+Original source: [cl-ai-project/cl-mcp](https://github.com/cl-ai-project/cl-mcp/tree/main/.claude/skills/comprehensive-test/SKILL.md)
 
 ---
 
