@@ -1,55 +1,56 @@
 ---
-name: kabinettsentwuerfe-compliance-dokumentation-und-akte
-description: Wenn es um Kabinettsentwuerfe: Compliance-Dokumentation und Aktenvermerk in Legistik-Werkstatt geht: ordnet Akteninhalt, Belege, Lücken und Nachforderungen; liefert ein direkt nutzbares Arbeitsprodukt mit Prüfpunkten, Risiken und nächstem Schritt. Use when this capability is needed.
+name: ki-erfindung-und-erfinderbenennung-kaltstart
+description: Wenn es um Ki Erfindung Und Erfinderbenennung Kaltstart in Berufsrecht Patentanwälte geht: klärt Rolle, Ziel, Frist, Unterlagen und den passenden nächsten Fachskill; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Kabinettsentwuerfe: Compliance-Dokumentation und Aktenvermerk
+# Patentanwälte: ki erfindung und erfinderbenennung - Kaltstart mit Faktenmatrix, Risikoampel und fehlenden Unterlagen
 
-## Normenanker
+## Direktstart: lesen, entscheiden, liefern
 
-Arbeitsfokus: **Kabinettsentwuerfe: Compliance-Dokumentation und Aktenvermerk**. Prüfe diese Anker am Sachverhalt; ergänze nur Normen, die denselben Output, dieselbe Frist oder dieselbe Beweisfrage tragen:
+Beginne nicht mit einem Fragenkatalog. Wenn Material vorliegt, lies es zuerst und starte mit einer verwertbaren Arbeitshypothese:
 
-- `Art. 20 Abs. 3 GG` — Gesetzesbindung.
-- `Art. 76 Abs. 1 GG` — Gesetzesinitiative.
-- `Art. 77 Abs. 1 GG` — Gesetzesbeschluss.
-- `Art. 80 Abs. 1 GG` — Verordnungsermächtigung.
-- `Art. 84 Abs. 1 GG` — Verwaltungsvollzug.
-- `§ 42 Abs. 1 GGO` — Gesetzgebungsvorhaben.
-- `§ 43 Abs. 1 GGO` — Ressortabstimmung.
-- `§ 44 Abs. 1 GGO` — Gesetzesfolgen.
-- `§ 45 GGO` — Beteiligung.
-- `§ 46 GGO` — Rechtsförmlichkeit.
+- Frist oder Sofortrisiko.
+- erkannte Rolle, Zielrichtung und Verfahrensstand.
+- tragende Tatsachen aus dem Material.
+- bester nächster Arbeitsschritt mit direkt nutzbarem Output.
 
-Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
+Frage höchstens zwei Punkte nach, und nur wenn ohne diese Antwort der nächste Schritt falsch oder riskant würde. Fehlt Material vollständig, verlange nicht allgemein alle Unterlagen, sondern nenne die drei wichtigsten Dokumente und arbeite mit sichtbaren Annahmen weiter.
+
+Starte mit einem Arbeitsprodukt, nicht mit einer Inventarliste: Kurzvermerk, Fristenblatt, Prüfmatrix, Entwurf, Fragenliste oder Entscheidungsvorschlag. Routing ist nur Mittel zum Zweck. Wenn ein Fachskill eindeutig passt, arbeite unmittelbar in dessen Richtung weiter.
+
+Arbeitsmodus: Liefere zuerst einen nutzbaren Zwischenstand in höchstens sieben Sätzen und dann den nächsten konkreten Schritt. Frage nur nach, wenn Frist, Zuständigkeit, Beweis, Betrag oder Rechtsfolge sonst nicht belastbar bestimmbar sind. Tabellen nur für Fristen, Belege, Beträge, Varianten oder Streitstoff.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: GGO Ressortbeteiligung i.d.R. 4 Wochen, NKR-Stellungnahme 4 Wochen, Bundesrat 1. Durchgang 6 Wochen / 9 Wochen, Vermittlungsausschuss nach Bedarf.
-- Tragende Normen verifizieren: GGO §§ 40-49 (Rechtsetzungsverfahren), Handbuch der Rechtsförmlichkeit (BMJ), NKR-Gesetz, BGleiG, IT-Konsolidierungs-Konzept, eNorm-Standard, GG Art. 76, 77, 78 — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Ressort (BMJ und Fachressort), Bundeskanzleramt, Bundesrat, NKR, Bundestagsausschüsse, Bundesregierung, Wissenschaftliche Dienste, Lobbyregister.
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Referentenentwurf, BT-Drucksache, Gesetzesfolgenabschätzung, NKR-Stellungnahme, Verbändeanhörungs-Stellungnahme, Synopse, Erfüllungsaufwandsberechnung — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
+- Tragende Normen verifizieren: BRAO, BORA, FAO, BNotO, StBerG, WPO, PAO; BRAO §§ 113 ff., BNotO §§ 95 ff., StBerG §§ 89 ff., WPO §§ 67 ff., AnwGH, BGH (Anwaltssenat) — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Spezialwissen: Kabinettsentwuerfe: Compliance-Dokumentation und Aktenvermerk
-- **Normen-/Quellenanker:** XML.
+## Konkreter Berufsrechtskern: Patentanwälte: ki erfindung und erfinderbenennung - Kaltstart mit Faktenmatrix, Risikoampel und fehlenden Unterlagen
+- **Normenanker:** PAO, BOPA, PatG, MarkenG/DesignG-Schnittstellen, EPÜ, UPC-Verfahrensbezug, Fristen- und Geheimnisschutz.
+- **Institutionen:** Patentanwaltskammer, DPMA, EPA, UPC-Schnittstellen und berufsgerichtliche Zuständigkeiten.
+- **Spezialspur:** Mandatsgeheimnis, Priorität, Offenbarung, Vertretungsbefugnis vor DPMA/EPA/UPC und Fristkette prüfen.
+- **Falllösung:** Baue eine Pflichtverletzungs-/Entlastungsmatrix mit Norm, Tatsache, Beleg, Verschulden, Verhältnismäßigkeit, möglicher Kammerantwort und prozessualem nächsten Schritt.
 
-## Fallweichen
-Wenn Unterlagen vorhanden sind, arbeite zuerst aus den Unterlagen. Stelle nur Rückfragen, die die nächste Weiche verändern:
+## Fallweichen dieser Speziallage
 
-1. Welche Rolle hat die fragende Person und wer ist Gegenüber?
-2. Welches konkrete Ziel soll erreicht oder verhindert werden?
-3. Welche Frist, Zustellung, Schwelle, Zahlung, Sanktion oder Verfahrensstufe ist kritisch?
-4. Welche Dokumente, Registerauszüge, Bescheide, Verträge, Tabellen, Screenshots oder Nachrichten belegen den Punkt?
-5. Welcher Output wird gebraucht: Memo, Checkliste, Tabelle, Entwurf, Schriftsatzbaustein, Mandantenbrief oder Entscheidungsvorlage?
+1. Rolle, Ziel und Entscheidungsdruck klären.
+2. Verfahrensstand, Fristen, Zuständigkeit und irreversible Risiken markieren.
+3. Aktenbasis ordnen: sichere Tatsachen, bestrittene Tatsachen, fehlende Unterlagen.
+4. Eingriffsintensität, Berufs-/Amtsgeheimnisse, Datenschutz und Persönlichkeitsrechte sichtbar machen.
+5. Sofortpfad anbieten: Was muss heute entschieden, beantragt, beantwortet oder dokumentiert werden?
 
-## Arbeitsworkflow
-1. **Fallbild bilden:** Sachverhalt, Rollen, Zeitachse und Dokumente in eine kurze Matrix bringen.
-2. **Rechtsrahmen setzen:** Normen, Zuständigkeiten, Fristen, Formfragen und Verfahrensstand zum Themenfeld **Kabinettsentwuerfe** prüfen.
-3. **Prüfpunkte abarbeiten:** Tatbestandsmerkmale, Beweisfragen, typische Fehler, Gegenargumente und Ermessens- oder Wertungsfragen trennen.
-4. **Risiko bewerten:** Grün/Gelb/Rot mit Begründung, Annahmen, fehlenden Belegen und möglichen Alternativwegen ausgeben.
-5. **Anschluss bauen:** Passende weitere Skills desselben Plugins vorschlagen, wenn eine Vertiefung, ein Schreiben, eine Tabelle, ein Fristenblatt oder eine Verhandlungsstrategie sinnvoll ist.
+## Prüfprogramm
+
+- **Normenanker:** PAO, Patentanwaltsordnung, Berufsordnung, RDG, ZPO/PatG/MarkenG-Schnittstellen, Kammerpraxis und Berufsgerichtsbarkeit live prüfen
+- **Tatsachenarbeit:** Beweisquelle, Beweiswert, Gegenbeweis, Dokumentationslücke und mögliche Fehlinterpretation trennen.
+- **Verfahrensarbeit:** Form, Frist, Zuständigkeit, Anhörung, Akteneinsicht, Rechtsbehelf und Zustellungsweg prüfen.
+- **Gegenposition:** Die stärkste Gegenansicht formulieren und sagen, was sie praktisch bedeutet.
+- **Entscheidung:** Eine vertretbare Handlungsempfehlung mit Risikoampel und nächstem Schritt liefern.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
