@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [heygen-com/heygen-cli](https://github.com/heygen-com/heygen-cli/tree/main/.claude/skills/e2e-cli-test/SKILL.md)
+Original source: [heygen-com/heygen-cli](https://github.com/heygen-com/heygen-cli/tree/main/.claude/skills/changelog-cli/SKILL.md)
 
 ---
 
