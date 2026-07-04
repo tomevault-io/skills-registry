@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mattgierhart/PRD-driven-context-engineering](https://github.com/mattgierhart/PRD-driven-context-engineering/tree/main/.claude/skills/prd-v08-marketing-ops-handoff/SKILL.md)
+Original source: [mattgierhart/PRD-driven-context-engineering](https://github.com/mattgierhart/PRD-driven-context-engineering/tree/main/.claude/skills/prd-v10-testimonial-collector/SKILL.md)
 
 ---
 
