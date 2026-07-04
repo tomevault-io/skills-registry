@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mlc-ai/Pith-Train](https://github.com/mlc-ai/Pith-Train/tree/main/.agents/skills/estimate-memory/SKILL.md)
+Original source: [mlc-ai/Pith-Train](https://github.com/mlc-ai/Pith-Train/tree/main/.agents/skills/add-memory-prints/SKILL.md)
 
 ---
 
