@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [energypantry/agent-browser-runtime](https://github.com/energypantry/agent-browser-runtime/tree/main/skills/openclaw/agent-browser-runtime/skill.md)
+Original source: [energypantry/agent-browser-runtime](https://github.com/energypantry/agent-browser-runtime/tree/main/skills/codex/agent-browser-runtime-deploy/SKILL.md)
 
 ---
 
