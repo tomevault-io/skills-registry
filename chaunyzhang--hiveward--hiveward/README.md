@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Chaunyzhang/HiveWard](https://github.com/Chaunyzhang/HiveWard/tree/main/fixtures/skill-packages/partial-skill-md-only/SKILL.md)
+Original source: [Chaunyzhang/HiveWard](https://github.com/Chaunyzhang/HiveWard/tree/main/apps/api/harness-skills/hiveward-skill-decomposer/SKILL.md)
 
 ---
 
