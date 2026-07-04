@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OpenHands/software-agent-sdk](https://github.com/OpenHands/software-agent-sdk/tree/main/examples/05_skills_and_plugins/01_loading_agentskills/example_skills/code-style-guide/SKILL.md)
+Original source: [OpenHands/software-agent-sdk](https://github.com/OpenHands/software-agent-sdk/tree/main/examples/05_skills_and_plugins/01_loading_agentskills/example_skills/rot13-encryption/SKILL.md)
 
 ---
 
