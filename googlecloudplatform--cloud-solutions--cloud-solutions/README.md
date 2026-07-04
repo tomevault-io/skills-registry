@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GoogleCloudPlatform/cloud-solutions](https://github.com/GoogleCloudPlatform/cloud-solutions/tree/main/projects/ai/gen-media/ads-agent/release2/marketing_agent/marketing_agent/skills/trend-analysis/SKILL.md)
+Original source: [GoogleCloudPlatform/cloud-solutions](https://github.com/GoogleCloudPlatform/cloud-solutions/tree/main/projects/ai/gen-media/ads-agent/release1/marketing_agent/marketing_agent/skills/ad-copywriting/SKILL.md)
 
 ---
 
