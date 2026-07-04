@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bigcommerce/catalyst](https://github.com/bigcommerce/catalyst/tree/main/.claude/skills/release-catalyst/SKILL.md)
+Original source: [bigcommerce/catalyst](https://github.com/bigcommerce/catalyst/tree/main/.claude/skills/release-catalyst-patch/SKILL.md)
 
 ---
 
