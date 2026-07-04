@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [acornprover/acornlib](https://github.com/acornprover/acornlib/tree/main/.claude/skills/acorn-installation/SKILL.md)
+Original source: [acornprover/acornlib](https://github.com/acornprover/acornlib/tree/main/.agents/skills/formalizing-hard-theorems/SKILL.md)
 
 ---
 
