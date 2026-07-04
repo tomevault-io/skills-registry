@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jszmajda/lid](https://github.com/jszmajda/lid/tree/main/plugins/arrow-maintenance/skills/arrow-maintenance/SKILL.md)
+Original source: [jszmajda/lid](https://github.com/jszmajda/lid/tree/main/plugins/lid-experimental/skills/bidirectional-differential/SKILL.md)
 
 ---
 
