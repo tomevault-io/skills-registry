@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [novitalabs/pegaflow](https://github.com/novitalabs/pegaflow/tree/main/.claude/skills/server-ops/SKILL.md)
+Original source: [novitalabs/pegaflow](https://github.com/novitalabs/pegaflow/tree/main/.claude/skills/version-bump/SKILL.md)
 
 ---
 
