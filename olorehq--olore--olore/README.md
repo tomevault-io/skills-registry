@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [olorehq/olore](https://github.com/olorehq/olore/tree/main/vault/packages/react-native-skia/2.6.4/SKILL.md)
+Original source: [olorehq/olore](https://github.com/olorehq/olore/tree/main/vault/packages/tanstack-router/1.166.7/SKILL.md)
 
 ---
 
