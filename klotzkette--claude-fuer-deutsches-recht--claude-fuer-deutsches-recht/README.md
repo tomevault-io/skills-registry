@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/aktenaufbereiter-strafrecht/skills/vermoegensabschoepfung-dritt-einziehung/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/barrierefreiheit-web-checker/skills/pdf-formulare-automatisierter-audit-bf/SKILL.md)
 
 ---
 
