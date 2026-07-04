@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [olorehq/olore](https://github.com/olorehq/olore/tree/main/vault/packages/ms-agent-framework/latest/contents/dotnet/samples/04-hosting/FoundryHostedAgents/responses/Hosted-AgentSkills/skills/escalation-policy/SKILL.md)
+Original source: [olorehq/olore](https://github.com/olorehq/olore/tree/main/vault/packages/ms-agent-framework/latest/contents/python/samples/04-hosting/foundry-hosted-agents/responses/09_foundry_skills/skills/escalation-policy/SKILL.md)
 
 ---
 
