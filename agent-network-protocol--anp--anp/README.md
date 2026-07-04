@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agent-network-protocol/anp](https://github.com/agent-network-protocol/anp/tree/main/skills/anp-agent/SKILL.md)
+Original source: [agent-network-protocol/anp](https://github.com/agent-network-protocol/anp/tree/main/skills/anp-multilang-release/SKILL.md)
 
 ---
 
