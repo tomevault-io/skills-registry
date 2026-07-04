@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [flipbook-labs/flipbook](https://github.com/flipbook-labs/flipbook/tree/main/.agents/skills/setup-flipbook-dev-env/SKILL.md)
+Original source: [flipbook-labs/flipbook](https://github.com/flipbook-labs/flipbook/tree/main/.agents/skills/test-dependencies-in-flipbook/SKILL.md)
 
 ---
 
