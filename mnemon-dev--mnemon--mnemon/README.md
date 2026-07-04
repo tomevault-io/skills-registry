@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mnemon-dev/mnemon](https://github.com/mnemon-dev/mnemon/tree/main/internal/setup/assets/claude/SKILL.md)
+Original source: [mnemon-dev/mnemon](https://github.com/mnemon-dev/mnemon/tree/main/internal/setup/assets/hermes/SKILL.md)
 
 ---
 
