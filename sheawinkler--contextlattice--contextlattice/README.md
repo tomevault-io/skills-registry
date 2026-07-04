@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sheawinkler/ContextLattice](https://github.com/sheawinkler/ContextLattice/tree/main/scripts/agent/fixtures/skill-policy/caveman/SKILL.md)
+Original source: [sheawinkler/ContextLattice](https://github.com/sheawinkler/ContextLattice/tree/main/scripts/agent/fixtures/skill-policy/missing-description/SKILL.md)
 
 ---
 
