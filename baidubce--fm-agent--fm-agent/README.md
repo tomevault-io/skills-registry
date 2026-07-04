@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [baidubce/FM-Agent](https://github.com/baidubce/FM-Agent/tree/main/Famou_for_Science/.claude/skills/famou-experiment-manager/SKILL.md)
+Original source: [baidubce/FM-Agent](https://github.com/baidubce/FM-Agent/tree/main/Famou_for_Science/.claude/skills/famou-artifact-generator/SKILL.md)
 
 ---
 
