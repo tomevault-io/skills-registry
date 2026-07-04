@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [antonio-orionus/Arroxy](https://github.com/antonio-orionus/Arroxy/tree/main/.agents/skills/remember/SKILL.md)
+Original source: [antonio-orionus/Arroxy](https://github.com/antonio-orionus/Arroxy/tree/main/.agents/skills/find-test-gaps/SKILL.md)
 
 ---
 
