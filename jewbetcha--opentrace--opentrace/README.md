@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jewbetcha/opentrace](https://github.com/jewbetcha/opentrace/tree/main/.agents/skills/frontend-patterns/SKILL.md)
+Original source: [jewbetcha/opentrace](https://github.com/jewbetcha/opentrace/tree/main/.agents/skills/changelog-generator/SKILL.md)
 
 ---
 
