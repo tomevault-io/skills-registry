@@ -1,48 +1,107 @@
 ---
-name: notfrist-compliance-dokumentation-und-akte
-description: Wenn es um Notfrist: Compliance-Dokumentation und Aktenvermerk in Fachanwalt Migrationsrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: 017-erbbaurecht-bestellung-aenderung-heimfall-und-rang
+description: Wenn es um Notariat im Alltag: Erbbaurecht – Bestellung, Änderung, Heimfall, Rang in Notariat im Alltag geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Notfrist: Compliance-Dokumentation und Aktenvermerk
-
+# Notariat im Alltag: Erbbaurecht – Bestellung, Änderung, Heimfall, Rang
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: AufenthG §§ 4, 5, 7, 8, 9, 16a-16g, 18a-18g, 19c, 25, 27-36, 50, 53-55, 58, 60, 60a-60d, 81, 84, 95; AsylG §§ 13, 24-30, 34-38, 71, 74, 77; FreizügG/EU §§ 2-5; StAG §§ 4, 5, 8-10, 12a, 25, 30; AsylbLG §§ 1, 3, 6; VwGO §§ 74, 80, 123; Dublin-III-VO Art. 3, 17, 21-29; einschlägige EU-Richtlinien/GEAS-Normstand live prüfen; keine BeckRS-/juris-Blindzitate.
+- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-**Fokus:** Notfrist: Compliance-Dokumentation und Aktenvermerk.
+## Zweck und Anwendungsbereich
 
-## Spezialwissen: Notfrist: Compliance-Dokumentation und Aktenvermerk
-- **Normen-/Quellenanker:** AufenthG, AsylG, GFK, VO, RL, StAG, EU.
+Das Erbbaurecht ist ein grundstücksgleiches Recht, das dem Erbbauberechtigten ermöglicht, auf einem fremden Grundstück ein Bauwerk zu haben. Es ist ein wichtiges Instrument für kommunale und kirchliche Grundstückseigentümer sowie für Wohnprojekte. Führe durch Bestellung, Inhalt, Finanzierbarkeit und Heimfall.
 
-## Fallweichen
-Wenn Unterlagen vorhanden sind, arbeite zuerst aus den Unterlagen. Stelle nur Rückfragen, die die nächste Weiche verändern:
+Rechtsgrundlagen: ErbbauRG (Erbbaurechtsgesetz), §§ 1–39 ErbbauRG, §§ 873, 877 BGB (Entstehung dinglicher Rechte), GBO §§ 14–30 (Grundbuchverfahren), § 9 ErbbauRG (Erbbauzins), § 2 ErbbauRG (Inhalt), §§ 23–26 ErbbauRG (Heimfall), GNotKG.
 
-1. Welche Rolle hat die fragende Person und wer ist Gegenüber?
-2. Welches konkrete Ziel soll erreicht oder verhindert werden?
-3. Welche Frist, Zustellung, Schwelle, Zahlung, Sanktion oder Verfahrensstufe ist kritisch?
-4. Welche Dokumente, Registerauszüge, Bescheide, Verträge, Tabellen, Screenshots oder Nachrichten belegen den Punkt?
-5. Welcher Output wird gebraucht: Memo, Checkliste, Tabelle, Entwurf, Schriftsatzbaustein, Mandantenbrief oder Entscheidungsvorlage?
+## Grundstruktur des Erbbaurechts
 
-## Arbeitsworkflow
-1. **Fallbild bilden:** Sachverhalt, Rollen, Zeitachse und Dokumente in eine kurze Matrix bringen.
-2. **Rechtsrahmen setzen:** Normen, Zuständigkeiten, Fristen, Formfragen und Verfahrensstand zum Themenfeld **Notfrist** prüfen.
-3. **Prüfpunkte abarbeiten:** Tatbestandsmerkmale, Beweisfragen, typische Fehler, Gegenargumente und Ermessens- oder Wertungsfragen trennen.
-4. **Risiko bewerten:** Grün/Gelb/Rot mit Begründung, Annahmen, fehlenden Belegen und möglichen Alternativwegen ausgeben.
-5. **Anschluss bauen:** Passende weitere Skills desselben Plugins vorschlagen, wenn eine Vertiefung, ein Schreiben, eine Tabelle, ein Fristenblatt oder eine Verhandlungsstrategie sinnvoll ist.
+Das Erbbaurecht ist ein selbständiges, veräußerliches und vererbliches Recht (§ 1 Abs. 1 ErbbauRG). Es wird im Erbbaugrundbuch (separates Grundbuchblatt) und im Grundstücksgrundbuch eingetragen. Das Bauwerk ist wesentlicher Bestandteil des Erbbaurechts, nicht des Grundstücks (§ 12 Abs. 1 ErbbauRG).
 
-## Qualitätsanker: Identität, Schutzstatus und aktuelle Lageprüfung
+## Pflichtinhalt des Erbbaurechtsvertrags (§ 2 ErbbauRG)
 
-- **Verifizierte Rechtsprechungsanker:** BVerwG, Urteil vom 13.12.2023 - 1 C 34.22 und BVerwG, Urteil vom 18.12.2025 - 1 C 27.24 zur Identitätsklärung/Stufenmodell im Einbürgerungsrecht; BVerwG, Urteil vom 16.04.2025 - 1 C 18.24 zur Tatsachenrevision und Art. 4 GRCh/Art. 3 EMRK bei anerkannten Schutzberechtigten in Griechenland.
-- **Prüfdisziplin:** Aufenthaltsrecht, Asylrecht, Staatsangehörigkeitsrecht, Freizügigkeit/EU, Dublin/GEAS, Abschiebungsschutz, Familiennachzug und Arbeit/Beschäftigung strikt trennen. Keine Auskunft „nach Gefühl“ über Länderpraxis oder Behördenlaufzeiten.
-- **Aktualitätsfilter:** Herkunftsland, Schutzstatus, Dokumentenlage, Identität, Passbeschaffung, Zumutbarkeit, Vulnerabilität und aktuelle Lageberichte/live verfügbare Gerichtsquellen sind tragend; bei Lagefragen immer Datum und Erkenntnisbasis nennen.
-- **Output-Pflicht:** Entscheidungsbaum mit Sofortfrist, zuständiger Behörde/Gericht, benötigten Unterlagen, Beweisnot-/Zumutbarkeitsargumenten und nächstem rechtssicheren Schritt.
+Inhalt kraft Gesetzes (buchungsfähige Bestimmungen):
+- Erbbauzins: Höhe, Anpassung (§ 9 ErbbauRG)
+- Heimfall: Voraussetzungen, Entschädigung (§§ 23–26 ErbbauRG)
+- Nutzung: Art und Umfang der Bebauung
+- Erneuerung bei Verfall (§ 27 ErbbauRG)
+- Entschädigung bei Zeitablauf (§§ 27–28 ErbbauRG)
+- Vorkaufsrecht des Grundstückseigentümers (§ 1094 BGB analog)
+
+## Bestellung
+
+1. Notarielle Beurkundung des Erbbaurechtsvertrags (§ 311b BGB analog i.V.m. ErbbauRG)
+2. Eintragungsbewilligung des Grundstückseigentümers
+3. Antrag auf Eintragung in Grundbuch (§ 873 BGB)
+4. Anlage des Erbbaugrundbuchs
+5. Vermerkung im Grundstücksgrundbuch (Abt. II: Erbbaurecht)
+
+## Erbbauzins und Anpassung (§ 9 ErbbauRG)
+
+Der Erbbauzins ist regelmäßige Gegenleistung. Anpassungsklausel empfohlen (Lebenshaltungsindex, Bodenwertsteigerung). Wertsicherungsklausel muss den Anforderungen der BdB/BBankG genügen. Erbbauzins ist grundstücksgleich belastbar (Reallast nach § 9 Abs. 2 ErbbauRG → Eintragung im Grundstücksgrundbuch als Reallast).
+
+## Heimfall (§§ 23–26 ErbbauRG)
+
+Bei schwerwiegenden Vertragsverstößen durch den Erbbauberechtigten kann der Grundstückseigentümer den Heimfall verlangen (Übertragung des Erbbaurechts gegen Entschädigung). Heimfallvoraussetzungen müssen im Vertrag bestimmt sein (§ 2 Nr. 4 ErbbauRG).
+
+Entschädigung: Zeitwert des Bauwerks (§ 27 Abs. 1 ErbbauRG), abzüglich offener Verbindlichkeiten gegenüber Grundpfandgläubigern.
+
+## Finanzierbarkeit des Erbbaurechts
+
+Erbbaurechte sind beleihbar (Grundschuldbestellung auf Erbbaurecht, § 11 ErbbauRG). Banken verlangen i.d.R.:
+- Mindest-Restlaufzeit (üblicherweise 30–40 Jahre über Kreditlaufzeit)
+- Zustimmung des Grundstückseigentümers zu Belastungen (§ 5 ErbbauRG)
+- Heimfallabsicherung: Mitteilung an Grundpfandgläubiger (§ 25 ErbbauRG)
+
+## Prüfprogramm
+
+- Ist die Restlaufzeit für Finanzierung ausreichend?
+- Heimfallklauseln eindeutig? Entschädigungsregelung vollständig?
+- Anpassungsklausel Erbbauzins zulässig (keine unzulässige Wertsicherungsklausel)?
+- Nutzungsart klar definiert? Bebauungspflicht aufgenommen?
+- Zustimmungserfordernisse (§§ 5–6 ErbbauRG) im Vertrag berücksichtigt?
+- Vorkaufsrecht des Grundstückseigentümers geregelt?
+
+## Typische Fallen
+
+- Fehlende Heimfallentschädigungsklausel → Rechtsstreit bei Heimfall.
+- Erbbauzins ohne Anpassungsklausel → Werterosion bei Inflation.
+- Grundpfandgläubiger nicht über Heimfall informiert → Bank verliert Sicherheit.
+- Erbbaurecht ohne Eintragung im Erbbaugrundbuch → entsteht nicht.
+- Nutzungsänderung ohne Zustimmung des Grundstückseigentümers → Heimfalltatbestand.
+
+## Rechtsquellen
+
+- ErbbauRG: https://www.gesetze-im-internet.de/erbbaurvo/
+- § 9 ErbbauRG (Erbbauzins): https://dejure.org/gesetze/ErbbauRG/9.html
+- §§ 23–26 ErbbauRG (Heimfall): https://dejure.org/gesetze/ErbbauRG/23.html
+- BGH zu Erbbaurecht: https://www.bgh.de
+- BNotK Erbbaurecht: https://www.bnotk.de
+
+## Output-Formate
+
+- **Erbbaurechtsvertrag-Gliederung** (mit allen Pflichtinhalten)
+- **Erbbauzins-Anpassungsklausel** (Muster, wertsicherungskonform)
+- **Heimfall-Klauselkatalog**
+- **Vollzugscockpit** (Grundbuchanlegung, Rangeintragung)
+- **Finanzierbarkeitscheck** (Restlaufzeit, Bankauflagen)
+
+Quellen für Live-Check: https://dejure.org | https://openjur.de | https://www.gesetze-im-internet.de | https://www.bnotk.de | https://www.bgh.de | https://www.bverfg.de
+
+<!-- BEGIN ausformulierungspflicht (autogen) -->
+> **Ausformulierungspflicht und Formatstandard.** Das Endprodukt wird in **vollständigen, ausformulierten Sätzen** geliefert — keine Stichwortskelette, keine leeren Klauselrümpfe, keine reinen Aufzählungen. Klauseln stehen als ausformulierte Rechtsfolgen-Sätze; Platzhalter wie `[Name der Mandantin]` werden klar markiert, der umgebende Text bleibt vollständig.
+>
+> **Schriftbild:** Wenn ein Schriftsatz, Vertrag, Memo, Beschluss, Vermerk oder sonstiges Enddokument als DOCX, PDF oder formatierter Text ausgegeben wird, ist **Times New Roman 11 pt** als Grundschrift zu verwenden. Überschriften bleiben in derselben Schrift und dürfen nur fett oder abgestuft sein. Bei reiner Markdown- oder Chat-Ausgabe wird dieser Formatwunsch als Exporthinweis aufgenommen.
+>
+> **Nummerierung:** Gliederung ausschließlich dezimal (`1`, `1.1`, `1.1.1` und so weiter). Keine römischen Ziffern, keine Buchstaben- oder Mischgliederung.
+<!-- END ausformulierungspflicht (autogen) -->
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
