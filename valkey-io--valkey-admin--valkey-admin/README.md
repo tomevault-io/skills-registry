@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [valkey-io/valkey-admin](https://github.com/valkey-io/valkey-admin/tree/main/.agents/skills/ramda/SKILL.md)
+Original source: [valkey-io/valkey-admin](https://github.com/valkey-io/valkey-admin/tree/main/.agents/skills/react/SKILL.md)
 
 ---
 
