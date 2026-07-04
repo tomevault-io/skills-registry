@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ITISFoundation/osparc-simcore](https://github.com/ITISFoundation/osparc-simcore/tree/main/.github/skills/review-my-changes/SKILL.md)
+Original source: [ITISFoundation/osparc-simcore](https://github.com/ITISFoundation/osparc-simcore/tree/main/.github/skills/postgres-migration/SKILL.md)
 
 ---
 
