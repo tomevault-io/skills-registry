@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [signalfx/splunk-otel-js-web](https://github.com/signalfx/splunk-otel-js-web/tree/main/.claude/skills/update-cdn/SKILL.md)
+Original source: [signalfx/splunk-otel-js-web](https://github.com/signalfx/splunk-otel-js-web/tree/main/.claude/skills/prepare-release/SKILL.md)
 
 ---
 
