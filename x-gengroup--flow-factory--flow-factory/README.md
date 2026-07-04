@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [X-GenGroup/Flow-Factory](https://github.com/X-GenGroup/Flow-Factory/tree/main/.agents/skills/ff-review/SKILL.md)
+Original source: [X-GenGroup/Flow-Factory](https://github.com/X-GenGroup/Flow-Factory/tree/main/.agents/skills/ff-develop/SKILL.md)
 
 ---
 
