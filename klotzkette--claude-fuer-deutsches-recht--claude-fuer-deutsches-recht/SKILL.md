@@ -1,47 +1,45 @@
 ---
-name: anwaelte-vermoegensverfall-und-zulassungswiderruf-organisations
-description: Wenn es um Anwaelte Vermoegensverfall Und Zulassungswiderruf Organisations in Berufsrecht Anwälte geht: zerlegt Ergebnis, Frist, Zuständigkeit, Beweislast und Gegenposition; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: untermiete-paragraf-553-bgb-bgh-viii-zr-249-15
+description: Wenn es um Untermiete Paragraf 553 BGB BGH Viii Zr 249 15 in Fachanwalt Miet- und Wohnungseigentumsrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Anwälte: vermoegensverfall und zulassungswiderruf - Organisationspflichten, Prävention, Team-Anweisung und Fristenkontrolle
+# Untermiete Paragraf 553 BGB BGH Viii Zr 249 15
 
-## Einsatz
+## Einsatzlage
 
-Nutze diesen Skill im Plugin **Berufsrecht Anwälte**, wenn genau diese Speziallage angesprochen ist. Fuehre die Nutzerin oder den Nutzer knapp, praktisch und beweisorientiert: erst Lage klaeren, dann Normen live pruefen, dann ein Arbeitsprodukt erzeugen.
+Mieter will Untermieter aufnehmen; Vermieter verweigert.
 
-**Fokus:** vermoegensverfall und zulassungswiderruf; organisationspflichten, prävention, team-anweisung und fristenkontrolle im Berufsrecht der Anwälte
+## Normenanker
 
-## Kaltstart
+- § 553 BGB
+- §§ 535 ff. BGB
+- § 556 BGB
+- § 558 BGB
+- § 573 BGB
+- §§ 18 ff. WEG
 
-1. Rolle, Ziel und Entscheidungsdruck klaeren.
-2. Verfahrensstand, Fristen, Zuständigkeit und irreversible Risiken markieren.
-3. Aktenbasis ordnen: sichere Tatsachen, bestrittene Tatsachen, fehlende Unterlagen.
-4. Eingriffsintensität, Berufs-/Amtsgeheimnisse, Datenschutz und Persönlichkeitsrechte sichtbar machen.
-5. Sofortpfad anbieten: Was muss heute entschieden, beantragt, beantwortet oder dokumentiert werden?
+## Rechtsprechungsanker und Quellenhygiene
+
+- BGH 11.06.2014 VIII ZR 349/13 — nur verwenden, wenn die Fundstelle über ein amtliches oder frei zugängliches Portal gegengeprüft ist.
 
 ## Prüfprogramm
 
-- **Normenanker:** BRAO, BORA, FAO, RVG, RDG, GwG, ZPO/StPO-Schnittstellen, Kammerhinweise und Anwaltsgerichtsbarkeit live prüfen
-- **Tatsachenarbeit:** Beweisquelle, Beweiswert, Gegenbeweis, Dokumentationslücke und mögliche Fehlinterpretation trennen.
-- **Verfahrensarbeit:** Form, Frist, Zuständigkeit, Anhörung, Akteneinsicht, Rechtsbehelf und Zustellungsweg prüfen.
-- **Gegenposition:** Die stärkste Gegenansicht formulieren und sagen, was sie praktisch bedeutet.
-- **Entscheidung:** Eine vertretbare Handlungsempfehlung mit Risikoampel und nächstem Schritt liefern.
+1. Sachverhalt auf die tatbestandlichen Kernelemente des Skilltitels reduzieren: Beteiligte, Zeitpunkt, Frist, Zuständigkeit, Antrag oder Anspruch, Beweislast.
+2. Normenanker live gegen Gesetzestext prüfen und abweichende Spezialnormen der Akte ergänzen.
+3. Rechtsprechungsanker nur verwerten, wenn Gericht, Entscheidungsform, Datum, Aktenzeichen und frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate.
+4. Gegenargumente der anderen Seite mitdenken: Zulässigkeit, Frist, Zuständigkeit, Darlegungslast, Beweisverwertbarkeit, Ermessens- oder Verhältnismäßigkeitsfehler.
+5. Ergebnis als Ampel, To-do-Liste und Textbaustein ausgeben.
 
-## Spezielle Leitplanken
+## Arbeitsergebnis
 
-- Rechtsprechung ist tragend nur mit Gericht, Datum, Aktenzeichen und frei prüfbarer Quelle.
-- Berufsrechtliche Risiken sind oft reputations- und existenzrelevant; Verhältnismäßigkeit sichtbar prüfen.
-- Mandats-, Steuer-, Prüfungs- oder Amtsgeheimnisse vor Nutzung anonymisieren.
+Anspruch bei berechtigtem Interesse; nur wichtiger Grund Verweigerung.
 
-## Output
+## Belege und Aktenlücken
 
-Erzeuge Berufsrechtsmemo, Kammerantwort, Konfliktcheck, Organisationsanweisung, Vertragsklausel, Fristenblatt oder Verteidigungslinie.
-
-## Quellenhygiene
-
-Keine erfundenen Fundstellen. Rechtsprechung nur mit Gericht, Entscheidungsdatum, Aktenzeichen und frei oder amtlich prüfbarer Quelle. Bei unsicherer oder neuer Rechtslage ausdrücklich sagen, was live nachzusehen ist und welche Quelle dafür zuerst aufgerufen werden soll.
+- Antrag
+- Belege berechtigtes Interesse
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
