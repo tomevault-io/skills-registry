@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [imbue-ai/sculptor](https://github.com/imbue-ai/sculptor/tree/main/sculptor/sculptor-workflow/skills/mock/SKILL.md)
+Original source: [imbue-ai/sculptor](https://github.com/imbue-ai/sculptor/tree/main/sculptor/sculptor-workflow/skills/build/SKILL.md)
 
 ---
 
