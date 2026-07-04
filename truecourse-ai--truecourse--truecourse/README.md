@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [truecourse-ai/truecourse](https://github.com/truecourse-ai/truecourse/tree/main/tools/cli/skills/truecourse/truecourse-fix/SKILL.md)
+Original source: [truecourse-ai/truecourse](https://github.com/truecourse-ai/truecourse/tree/main/tools/cli/skills/truecourse/truecourse-list/SKILL.md)
 
 ---
 
