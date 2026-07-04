@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [olorehq/olore](https://github.com/olorehq/olore/tree/main/vault/packages/tanstack-store/0.11.0/SKILL.md)
+Original source: [olorehq/olore](https://github.com/olorehq/olore/tree/main/vault/packages/tanstack-table/8.21.3/SKILL.md)
 
 ---
 
