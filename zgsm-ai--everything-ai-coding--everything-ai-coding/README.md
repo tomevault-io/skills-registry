@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zgsm-ai/everything-ai-coding](https://github.com/zgsm-ai/everything-ai-coding/tree/main/platforms/costrict/skills/eac/SKILL.md)
+Original source: [zgsm-ai/everything-ai-coding](https://github.com/zgsm-ai/everything-ai-coding/tree/main/platforms/claude-code/skills/eac/SKILL.md)
 
 ---
 
