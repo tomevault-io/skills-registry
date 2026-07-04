@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mozilla-ai/clawbolt](https://github.com/mozilla-ai/clawbolt/tree/main/backend/app/integrations/calendar/SKILL.md)
+Original source: [mozilla-ai/clawbolt](https://github.com/mozilla-ai/clawbolt/tree/main/backend/app/integrations/quickbooks/SKILL.md)
 
 ---
 
