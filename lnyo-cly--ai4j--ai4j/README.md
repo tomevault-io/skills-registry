@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LnYo-Cly/ai4j](https://github.com/LnYo-Cly/ai4j/tree/main/skills/ai4j-app-builder/SKILL.md)
+Original source: [LnYo-Cly/ai4j](https://github.com/LnYo-Cly/ai4j/tree/main/ai4j-cli/src/test/resources/skills/cli/SKILL.md)
 
 ---
 
