@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA/SkillSpector](https://github.com/NVIDIA/SkillSpector/tree/main/tests/fixtures/sqp/sqp1_clean/SKILL.md)
+Original source: [NVIDIA/SkillSpector](https://github.com/NVIDIA/SkillSpector/tree/main/tests/fixtures/malicious_skill/SKILL.md)
 
 ---
 
