@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/Dataverse-skills](https://github.com/microsoft/Dataverse-skills/tree/main/.github/plugins/dataverse/skills/dv-data/SKILL.md)
+Original source: [microsoft/Dataverse-skills](https://github.com/microsoft/Dataverse-skills/tree/main/.github/plugins/dataverse/skills/dv-query/SKILL.md)
 
 ---
 
