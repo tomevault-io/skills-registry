@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [desplega-ai/agent-swarm](https://github.com/desplega-ai/agent-swarm/tree/main/plugin/skills/composio-google-docs/SKILL.md)
+Original source: [desplega-ai/agent-swarm](https://github.com/desplega-ai/agent-swarm/tree/main/plugin/pi-skills/review-offered-task/SKILL.md)
 
 ---
 
