@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [K3vinb5/unyo-app](https://github.com/K3vinb5/unyo-app/tree/main/.agents/skills/unyo-ui-presentation/SKILL.md)
+Original source: [K3vinb5/unyo-app](https://github.com/K3vinb5/unyo-app/tree/main/.agents/skills/unyo-domain-data-layer/SKILL.md)
 
 ---
 
