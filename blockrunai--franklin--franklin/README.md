@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [BlockRunAI/Franklin](https://github.com/BlockRunAI/Franklin/tree/main/src/skills-bundled/surf-social/SKILL.md)
+Original source: [BlockRunAI/Franklin](https://github.com/BlockRunAI/Franklin/tree/main/src/skills-bundled/trade-signal/SKILL.md)
 
 ---
 
