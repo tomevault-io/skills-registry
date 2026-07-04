@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/grundbuchamt-praxis/skills/grundbuchamt-insolvenz-auslaendischer-trustee/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/aufsichtsrat-ag-se-praxis/skills/sitzungsplanung-sonderpruefung-forensic/SKILL.md)
 
 ---
 
