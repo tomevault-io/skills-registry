@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [buzzer-re/Rikugan](https://github.com/buzzer-re/Rikugan/tree/main/rikugan/skills/builtins/smart-patch-ida/SKILL.md)
+Original source: [buzzer-re/Rikugan](https://github.com/buzzer-re/Rikugan/tree/main/rikugan/skills/builtins/driver-analysis/SKILL.md)
 
 ---
 
