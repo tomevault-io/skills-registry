@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SpectrAI-Initiative/InnoClaw](https://github.com/SpectrAI-Initiative/InnoClaw/tree/main/.claude/skills/measurement-error-analysis/SKILL.md)
+Original source: [SpectrAI-Initiative/InnoClaw](https://github.com/SpectrAI-Initiative/InnoClaw/tree/main/.claude/skills/molecular-format-conversion/SKILL.md)
 
 ---
 
