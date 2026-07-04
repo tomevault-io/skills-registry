@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MorrisLu-Taipei/TigerAI-n8n-Skill-Pack](https://github.com/MorrisLu-Taipei/TigerAI-n8n-Skill-Pack/tree/main/skills/tigerai/tigerai-qa-mode/SKILL.md)
+Original source: [MorrisLu-Taipei/TigerAI-n8n-Skill-Pack](https://github.com/MorrisLu-Taipei/TigerAI-n8n-Skill-Pack/tree/main/skills/tigerai/code-to-workflow/SKILL.md)
 
 ---
 
