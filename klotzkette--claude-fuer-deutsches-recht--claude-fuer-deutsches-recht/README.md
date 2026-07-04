@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/preussisches-allgemeines-landrecht-pralr/skills/sklavenrecht-alr-ii-5-196-197/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-insolvenz-sanierungsrecht/skills/fa-insolvenz-schuldschein-und-lma/SKILL.md)
 
 ---
 
