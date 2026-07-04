@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentic-community/mcp-gateway-registry](https://github.com/agentic-community/mcp-gateway-registry/tree/main/.claude/skills/new-feature-design/SKILL.md)
+Original source: [agentic-community/mcp-gateway-registry](https://github.com/agentic-community/mcp-gateway-registry/tree/main/.claude/skills/agentcore-register/SKILL.md)
 
 ---
 
