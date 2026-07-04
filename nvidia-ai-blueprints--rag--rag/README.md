@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA-AI-Blueprints/rag](https://github.com/NVIDIA-AI-Blueprints/rag/tree/main/skills/rag-perf/SKILL.md)
+Original source: [NVIDIA-AI-Blueprints/rag](https://github.com/NVIDIA-AI-Blueprints/rag/tree/main/skills/rag-blueprint/SKILL.md)
 
 ---
 
