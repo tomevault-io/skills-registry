@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rodrigohighermind/highermind-code-skills](https://github.com/rodrigohighermind/highermind-code-skills/tree/main/SKILL.md)
+Original source: [rodrigohighermind/highermind-code-skills](https://github.com/rodrigohighermind/highermind-code-skills/tree/main/hm-cli/SKILL.md)
 
 ---
 
