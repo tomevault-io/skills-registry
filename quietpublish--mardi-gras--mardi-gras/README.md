@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [quietpublish/mardi-gras](https://github.com/quietpublish/mardi-gras/tree/main/.claude/skills/code-audit/SKILL.md)
+Original source: [quietpublish/mardi-gras](https://github.com/quietpublish/mardi-gras/tree/main/.claude/skills/upstream-scout/SKILL.md)
 
 ---
 
