@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chainloop-dev/chainloop](https://github.com/chainloop-dev/chainloop/tree/main/.claude/skills/upgrading-golang/SKILL.md)
+Original source: [chainloop-dev/chainloop](https://github.com/chainloop-dev/chainloop/tree/main/.claude/skills/dependabot-pr-automation/SKILL.md)
 
 ---
 
