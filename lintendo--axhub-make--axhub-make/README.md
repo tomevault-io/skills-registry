@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lintendo/Axhub-Make](https://github.com/lintendo/Axhub-Make/tree/main/client/.agents/skills/requirements-exploration/SKILL.md)
+Original source: [lintendo/Axhub-Make](https://github.com/lintendo/Axhub-Make/tree/main/client/.claude/skills/requirements-exploration/SKILL.md)
 
 ---
 
