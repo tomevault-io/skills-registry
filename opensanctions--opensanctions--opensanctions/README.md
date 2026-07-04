@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [opensanctions/opensanctions](https://github.com/opensanctions/opensanctions/tree/main/.claude/skills/crawler-sanctions/SKILL.md)
+Original source: [opensanctions/opensanctions](https://github.com/opensanctions/opensanctions/tree/main/.claude/skills/name-framework-migration-first-step/SKILL.md)
 
 ---
 
