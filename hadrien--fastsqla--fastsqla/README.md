@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hadrien/FastSQLA](https://github.com/hadrien/FastSQLA/tree/main/skills/fastsqla-session/SKILL.md)
+Original source: [hadrien/FastSQLA](https://github.com/hadrien/FastSQLA/tree/main/skills/fastsqla-pagination/SKILL.md)
 
 ---
 
