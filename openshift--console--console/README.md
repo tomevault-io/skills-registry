@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openshift/console](https://github.com/openshift/console/tree/main/.claude/skills/skill-audit/SKILL.md)
+Original source: [openshift/console](https://github.com/openshift/console/tree/main/.claude/skills/gen-rtl-test/SKILL.md)
 
 ---
 
