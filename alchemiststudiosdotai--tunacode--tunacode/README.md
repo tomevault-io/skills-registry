@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alchemiststudiosDOTai/tunacode](https://github.com/alchemiststudiosDOTai/tunacode/tree/main/skills/pypi-release/SKILL.md)
+Original source: [alchemiststudiosDOTai/tunacode](https://github.com/alchemiststudiosDOTai/tunacode/tree/main/docs/skills/audit-harness/SKILL.md)
 
 ---
 
