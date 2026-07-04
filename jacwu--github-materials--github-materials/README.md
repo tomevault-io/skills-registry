@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jacwu/github-materials](https://github.com/jacwu/github-materials/tree/main/.github/skills/call_foundry_agent/SKILL.md)
+Original source: [jacwu/github-materials](https://github.com/jacwu/github-materials/tree/main/.github/skills/teams_notification/SKILL.md)
 
 ---
 
