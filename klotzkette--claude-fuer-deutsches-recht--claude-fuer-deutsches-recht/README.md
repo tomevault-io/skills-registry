@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/factoring-recht/skills/kwg-erlaubnispflicht-factoring-1-abs-1a-satz-2-nr-9-kwg/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-verwaltungsrecht/skills/klagefrist-paragraf-58-vwgo-bverwg-4-c-1-19/SKILL.md)
 
 ---
 
