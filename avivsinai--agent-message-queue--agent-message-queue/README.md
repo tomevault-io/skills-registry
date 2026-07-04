@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [avivsinai/agent-message-queue](https://github.com/avivsinai/agent-message-queue/tree/main/skills/amq-cli/SKILL.md)
+Original source: [avivsinai/agent-message-queue](https://github.com/avivsinai/agent-message-queue/tree/main/skills/amq-spec/SKILL.md)
 
 ---
 
