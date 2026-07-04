@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vchelaru/Gum](https://github.com/vchelaru/Gum/tree/main/.claude/skills/gum-tool-dialogs/SKILL.md)
+Original source: [vchelaru/Gum](https://github.com/vchelaru/Gum/tree/main/.claude/skills/gum-layout-engine/SKILL.md)
 
 ---
 
