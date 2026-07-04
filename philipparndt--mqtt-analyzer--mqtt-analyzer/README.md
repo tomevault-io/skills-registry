@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [philipparndt/mqtt-analyzer](https://github.com/philipparndt/mqtt-analyzer/tree/main/.claude/skills/openspec-explore/SKILL.md)
+Original source: [philipparndt/mqtt-analyzer](https://github.com/philipparndt/mqtt-analyzer/tree/main/.claude/skills/openspec-propose/SKILL.md)
 
 ---
 
