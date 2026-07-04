@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openshift/lightspeed-service](https://github.com/openshift/lightspeed-service/tree/main/skills/namespace-troubleshooting/skill.md)
+Original source: [openshift/lightspeed-service](https://github.com/openshift/lightspeed-service/tree/main/tests/test_skills/test-migration/skill.md)
 
 ---
 
