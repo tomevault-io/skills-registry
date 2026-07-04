@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-sozialrecht/skills/schwerbehinderung-merkzeichen-bsg-b-9-sb-66-19-r/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-bau-architektenrecht/skills/vob-b-bgb-vermischung-bgh-vii-zr-235-15/SKILL.md)
 
 ---
 
