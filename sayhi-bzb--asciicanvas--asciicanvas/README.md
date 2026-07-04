@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Sayhi-bzb/AsciiCanvas](https://github.com/Sayhi-bzb/AsciiCanvas/tree/main/.claude/skills/gitnexus/gitnexus-debugging/SKILL.md)
+Original source: [Sayhi-bzb/AsciiCanvas](https://github.com/Sayhi-bzb/AsciiCanvas/tree/main/.claude/skills/gitnexus/gitnexus-refactoring/SKILL.md)
 
 ---
 
