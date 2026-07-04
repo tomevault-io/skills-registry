@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shep-ai/shep](https://github.com/shep-ai/shep/tree/main/.claude/skills/shep-kit-research/SKILL.md)
+Original source: [shep-ai/shep](https://github.com/shep-ai/shep/tree/main/.claude/skills/shep-kit-implement/SKILL.md)
 
 ---
 
