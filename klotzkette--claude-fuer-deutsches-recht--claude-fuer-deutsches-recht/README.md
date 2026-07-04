@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/influencer-recht/skills/infl-001-kaltstart-creator-kooperation-plattform-steuer/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/influencer-recht/skills/infl-005-umsatzsteuer-bei-barter-deal-und-auslandsbrand/SKILL.md)
 
 ---
 
