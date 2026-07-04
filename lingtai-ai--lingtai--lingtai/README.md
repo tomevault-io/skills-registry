@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Lingtai-AI/lingtai](https://github.com/Lingtai-AI/lingtai/tree/main/tui/internal/preset/skills/swiss-knife/reference/headless-bot/SKILL.md)
+Original source: [Lingtai-AI/lingtai](https://github.com/Lingtai-AI/lingtai/tree/main/tui/internal/preset/skills/lingtai-dev-guide/reference/gotchas/SKILL.md)
 
 ---
 
