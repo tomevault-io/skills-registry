@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/aufsichtsrat-ag-se-praxis/skills/vorstandsabberufung-wichtiger-grund/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/aktienrecht-hauptversammlung-ag-se/skills/nichtigkeitsklage-241-aktg/SKILL.md)
 
 ---
 
