@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/aufsichtsrat-ag-se-praxis/skills/aufsichtsrat-ki-einsatz-und-governance/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/aufsichtsrat-ag-se-praxis/skills/einsichts-und-pruefungsrechte-111-aktg/SKILL.md)
 
 ---
 
