@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mattgierhart/PRD-driven-context-engineering](https://github.com/mattgierhart/PRD-driven-context-engineering/tree/main/.claude/skills/prd-v06-architecture-design/SKILL.md)
+Original source: [mattgierhart/PRD-driven-context-engineering](https://github.com/mattgierhart/PRD-driven-context-engineering/tree/main/.claude/skills/prd-v09-launch-channels-orb/SKILL.md)
 
 ---
 
