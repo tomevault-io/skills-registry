@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [intel/torch-xpu-ops](https://github.com/intel/torch-xpu-ops/tree/main/.claude/skills/at-dispatch-v2/SKILL.md)
+Original source: [intel/torch-xpu-ops](https://github.com/intel/torch-xpu-ops/tree/main/.claude/skills/release-branching/SKILL.md)
 
 ---
 
