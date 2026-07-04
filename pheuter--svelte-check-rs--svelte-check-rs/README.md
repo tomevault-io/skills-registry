@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pheuter/svelte-check-rs](https://github.com/pheuter/svelte-check-rs/tree/main/.claude/skills/commit/SKILL.md)
+Original source: [pheuter/svelte-check-rs](https://github.com/pheuter/svelte-check-rs/tree/main/.claude/skills/review-pr-comments/SKILL.md)
 
 ---
 
