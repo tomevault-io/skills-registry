@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oneclickvirt/oneclickvirt.github.io](https://github.com/oneclickvirt/oneclickvirt.github.io/tree/main/docs/public/.well-known/agent-skills/developer-docs/SKILL.md)
+Original source: [oneclickvirt/oneclickvirt.github.io](https://github.com/oneclickvirt/oneclickvirt.github.io/tree/main/docs/public/.well-known/agent-skills/practical-cases/SKILL.md)
 
 ---
 
