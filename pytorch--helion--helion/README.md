@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pytorch/helion](https://github.com/pytorch/helion/tree/main/.claude/skills/tpu/SKILL.md)
+Original source: [pytorch/helion](https://github.com/pytorch/helion/tree/main/.claude/skills/fix-pr/SKILL.md)
 
 ---
 
