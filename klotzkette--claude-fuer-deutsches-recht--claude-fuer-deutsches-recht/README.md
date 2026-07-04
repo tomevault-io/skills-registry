@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/roemisches-recht/skills/005-zwoelftafelrecht-schuldhaft-nexum-und-soziale-ordnun/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/roemisches-recht/skills/002-zwoelftafelgesetz-textzeugen-rekonstruktion-und-vors/SKILL.md)
 
 ---
 
