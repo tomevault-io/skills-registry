@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [opentensor/subtensor](https://github.com/opentensor/subtensor/tree/main/.claude/skills/skeptic/SKILL.md)
+Original source: [opentensor/subtensor](https://github.com/opentensor/subtensor/tree/main/.agents/skills/auditor/SKILL.md)
 
 ---
 
