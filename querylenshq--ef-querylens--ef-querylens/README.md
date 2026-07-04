@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [querylenshq/ef-querylens](https://github.com/querylenshq/ef-querylens/tree/main/.github/skills/release/SKILL.md)
+Original source: [querylenshq/ef-querylens](https://github.com/querylenshq/ef-querylens/tree/main/.github/skills/tsp-csharp/SKILL.md)
 
 ---
 
