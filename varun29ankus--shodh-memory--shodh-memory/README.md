@@ -1,13 +1,13 @@
 # shodh-memory
 
-> Skill by [varun29ankus](https://github.com/varun29ankus/shodh-memory) — distributed by [TomeVault](https://tomevault.io/claim/varun29ankus)
+> Skill by [varun29ankuS](https://github.com/varun29ankuS/shodh-memory) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [varun29ankus/shodh-memory](https://github.com/varun29ankus/shodh-memory/tree/main/skills/shodh-memory)
+Original source: [varun29ankuS/shodh-memory](https://github.com/varun29ankuS/shodh-memory/tree/main/skills/orchestrate/SKILL.md)
 
 ---
 
 Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
-Is this your repo? [Claim it](https://tomevault.io/claim/varun29ankus) to manage distribution.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
