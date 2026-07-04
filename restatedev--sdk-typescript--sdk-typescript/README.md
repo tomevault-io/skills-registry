@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [restatedev/sdk-typescript](https://github.com/restatedev/sdk-typescript/tree/main/.claude/skills/add-config-option/SKILL.md)
+Original source: [restatedev/sdk-typescript](https://github.com/restatedev/sdk-typescript/tree/main/.claude/skills/update-sdk-test-contracts/SKILL.md)
 
 ---
 
