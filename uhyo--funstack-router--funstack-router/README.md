@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [uhyo/funstack-router](https://github.com/uhyo/funstack-router/tree/main/.claude/skills/docs-consistency/SKILL.md)
+Original source: [uhyo/funstack-router](https://github.com/uhyo/funstack-router/tree/main/.claude/skills/release-funstack/SKILL.md)
 
 ---
 
