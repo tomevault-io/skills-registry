@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agustinusnathaniel/nextarter-chakra](https://github.com/agustinusnathaniel/nextarter-chakra/tree/main/.agents/skills/chakra-ui-refactor/SKILL.md)
+Original source: [agustinusnathaniel/nextarter-chakra](https://github.com/agustinusnathaniel/nextarter-chakra/tree/main/.agents/skills/next-best-practices/SKILL.md)
 
 ---
 
