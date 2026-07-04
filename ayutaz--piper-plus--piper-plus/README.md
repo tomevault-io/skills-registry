@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ayutaz/piper-plus](https://github.com/ayutaz/piper-plus/tree/main/.claude/skills/check-cross-runtime/SKILL.md)
+Original source: [ayutaz/piper-plus](https://github.com/ayutaz/piper-plus/tree/main/.claude/skills/check-review-backlog/SKILL.md)
 
 ---
 
