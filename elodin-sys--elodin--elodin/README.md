@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [elodin-sys/elodin](https://github.com/elodin-sys/elodin/tree/main/.cursor/skills/elodin-db/SKILL.md)
+Original source: [elodin-sys/elodin](https://github.com/elodin-sys/elodin/tree/main/.cursor/skills/nox-py-dev/SKILL.md)
 
 ---
 
