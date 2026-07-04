@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rcarmo/piclaw](https://github.com/rcarmo/piclaw/tree/main/runtime/extensions/experimental/m365/skills/m365-graph-query/SKILL.md)
+Original source: [rcarmo/piclaw](https://github.com/rcarmo/piclaw/tree/main/runtime/extensions/experimental/m365/skills/m365-teams-chats/SKILL.md)
 
 ---
 
