@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [lobu-ai/lobu](https://github.com/lobu-ai/lobu/tree/main/examples/sales/skills/account-brief/SKILL.md)
+Original source: [lobu-ai/lobu](https://github.com/lobu-ai/lobu/tree/main/examples/office-bot/skills/deliveroo-order/SKILL.md)
 
 ---
 
