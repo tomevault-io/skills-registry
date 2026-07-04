@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kriegcloud/beep-effect](https://github.com/kriegcloud/beep-effect/tree/main/.claude/skills/reflect/SKILL.md)
+Original source: [kriegcloud/beep-effect](https://github.com/kriegcloud/beep-effect/tree/main/.claude/skills/explore/SKILL.md)
 
 ---
 
