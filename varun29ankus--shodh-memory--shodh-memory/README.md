@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [varun29ankuS/shodh-memory](https://github.com/varun29ankuS/shodh-memory/tree/main/skills/orchestrate/SKILL.md)
+Original source: [varun29ankuS/shodh-memory](https://github.com/varun29ankuS/shodh-memory/tree/main/skills/shodh-memory/SKILL.md)
 
 ---
 
