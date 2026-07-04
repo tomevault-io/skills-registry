@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx/tree/main/.claude/skills/best-practices/SKILL.md)
+Original source: [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx/tree/main/.claude/skills/build-page-layout/SKILL.md)
 
 ---
 
