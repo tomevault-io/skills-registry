@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sepivip/SeekerClaw](https://github.com/sepivip/SeekerClaw/tree/main/app/src/main/assets/default-skills/summarize/SKILL.md)
+Original source: [sepivip/SeekerClaw](https://github.com/sepivip/SeekerClaw/tree/main/app/src/main/assets/default-skills/translate/SKILL.md)
 
 ---
 
