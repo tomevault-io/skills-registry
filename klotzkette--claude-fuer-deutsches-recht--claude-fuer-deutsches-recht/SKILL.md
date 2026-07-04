@@ -1,66 +1,216 @@
 ---
-name: werbung-und-amtsbezeichnung-rechtsprechungscheck
-description: Wenn es um Werbung Und Amtsbezeichnung Rechtsprechungscheck in Berufsrecht Notare geht: zerlegt Ergebnis, Frist, Zuständigkeit, Beweislast und Gegenposition; liefert eine Gegenprüfung mit Fehler-, Beweis- und Fristencheck. Use when this capability is needed.
+name: schriftsatzkern-substantiierung
+description: Wenn es um Schriftsatzkern Substantiierung in Fachanwalt Transport Speditionsrecht geht: erstellt den passenden Entwurf aus Sachverhalt, Norm, Beweis und Antrag; liefert einen verwertbaren Entwurf mit Anträgen, Begründung und Anlagenlogik. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Notare: werbung und amtsbezeichnung - Rechtsprechungscheck, stärkste Gegenansicht und Red-Team-Korrektur
+# Schriftsatzkern im Transport- und Speditionsrecht substantiieren: Tatsachenvortrag, Normzitate
 
-## Normenanker
-
-Vor einer rechtlichen Schlussfolgerung diese Anker am aktuellen Normtext prüfen; Spezial- und Landesrecht nur hinzunehmen, wenn es den konkreten Auftrag traegt:
-
-- `§ 14 Abs. 1 BNotO` — notarielle Amtspflichten.
-- `§ 17 Abs. 1 BeurkG` — Belehrung und Erforschung des Willens.
-- `§ 13 BeurkG` — Vorlesen, Genehmigen, Unterschreiben.
-- `§ 40 BeurkG` — Beglaubigung einer Unterschrift.
-- `§ 53 BeurkG` — Vollzugspflichten.
-- `§ 54a BeurkG` — Verwahrung und Auszahlung.
-- `§ 130a ZPO` — elektronische Dokumente als Schnittstelle.
-- `§ 29 Abs. 1 GBO` — grundbuchtaugliche Form.
-- `§ 12 HGB` — Registereinreichung.
-- `§ 40 GmbHG` — Gesellschafterliste.
-
-Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: BRAO, BORA, FAO, BNotO, StBerG, WPO, PAO; BeurkG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Tragende Normen verifizieren: §§ 407 ff. Frachtvertrag — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Konkreter Berufsrechtskern: Notare: werbung und amtsbezeichnung - Rechtsprechungscheck, stärkste Gegenansicht und Red-Team-Korrektur
-- **Normenanker:** BNotO, BeurkG, DONot, GNotKG, GwG, UVZ/Verwahrungsverzeichnis, Neutralität, Belehrung und Dienstaufsicht.
-- **Institutionen:** Notarkammer, Dienstaufsicht, Landgericht/Oberlandesgericht im Notarrecht und Register-/Grundbuchschnittstellen.
-- **Spezialspur:** Werbung an Sachlichkeitsgebot, Irreführungsverbot, Mandatsakquise und berufsrechtlicher Außendarstellung messen.
-- **Falllösung:** Baue eine Pflichtverletzungs-/Entlastungsmatrix mit Norm, Tatsache, Beleg, Verschulden, Verhältnismäßigkeit, möglicher Kammerantwort und prozessualem nächsten Schritt.
+**Fokus:** Schriftsatzkern im Transport- und Speditionsrecht substantiieren: Tatsachenvortrag, Normzitate. Normen: §§ 253 138 ZPO, §§ 407 ff. HGB, CMR. Prüfraster: schluessige Tatsachendarstellung, Beweisangebot, Normzitate. Output: Schriftsatzkern Transport-Speditionsrecht. Abgrenzung: nicht vollständiger Schriftsatz.
 
-## Fallweichen dieser Speziallage
+### Schriftsatzkern und Substantiierung im Transport-, Speditions- und Logistikrecht
 
-1. Rolle, Ziel und Entscheidungsdruck klären.
-2. Verfahrensstand, Fristen, Zuständigkeit und irreversible Risiken markieren.
-3. Aktenbasis ordnen: sichere Tatsachen, bestrittene Tatsachen, fehlende Unterlagen.
-4. Eingriffsintensität, Berufs-/Amtsgeheimnisse, Datenschutz und Persönlichkeitsrechte sichtbar machen.
-5. Sofortpfad anbieten: Was muss heute entschieden, beantragt, beantwortet oder dokumentiert werden?
+## Wann dieser Arbeitsgang greift
 
-## Prüfprogramm
+- Es soll ein vollwertiger Schriftsatz im Bereich Transport-, Speditions- und Logistikrecht erstellt werden, typischerweise: Frachtklage, Klage CMR-Schaden, Klage HGB-Spediteur-Haftung.
+- Die Mandatsannahme und ggf. Vergleichsverhandlung sind abgeschlossen oder gescheitert.
+- Klage-, Widerspruchs-, Einspruchs-, Rechtsmittel-Frist ist bekannt und im Kalender eingetragen.
 
-- **Normenanker:** BNotO, BeurkG, DONot, GNotKG, GwG, Dienstaufsicht, notarielle Rechtsprechung und Landesjustizverwaltung live prüfen
-- **Tatsachenarbeit:** Beweisquelle, Beweiswert, Gegenbeweis, Dokumentationslücke und mögliche Fehlinterpretation trennen.
-- **Verfahrensarbeit:** Form, Frist, Zuständigkeit, Anhörung, Akteneinsicht, Rechtsbehelf und Zustellungsweg prüfen.
-- **Gegenposition:** Die stärkste Gegenansicht formulieren und sagen, was sie praktisch bedeutet.
-- **Entscheidung:** Eine vertretbare Handlungsempfehlung mit Risikoampel und nächstem Schritt liefern.
+## Aufbauschema
 
-## Normen & Rechtsprechung
+### A. Rubrum
 
-Konkret zu prüfen:
+- Parteien (Bezeichnung wie im Vorprozess oder Bescheid, exakte Schreibweise!).
+- Zustellungsanschrift Bevollmaechtigte.
+- Gericht/Behörde (Zuständigkeit prüfen und im Schriftsatz darstellen, wenn streitig).
+- Aktenzeichen (Bezugs-Az., neues Az. nach Eingang).
+- Streitwert/Gegenstandswert.
 
-- § 29 BNotO
-- § 6 BeurkG
-- § 1 BNotO
+### B. Antraege
+
+Klassischer Antrag-Block; je nach Verfahrenstyp:
+
+- Leistungsantrag (zu zahlen, zu unterlassen, zu beseitigen, herauszugeben).
+- Feststellungsantrag (Feststellungsinteresse darlegen).
+- Gestaltungsantrag (Aufhebung, Anfechtung, Scheidung).
+- Hilfsantraege staffeln (von eng nach weit oder von hoch nach niedrig).
+
+### C. Tatsachenvortrag
+
+Der Substantiierungs-Kern; pro Anspruchsgrundlage in §§ 407 ff. HGB, CMR, MC, ADSp, RVS-Konvention eine eigene Tatsachen-Sequenz:
+
+1. **Sachverhalts-Chronologie** mit konkreten Daten (Tag, Uhrzeit, Ort, Personen).
+2. **Mandantenseitige Tatsachenbehauptungen** mit Beweisangeboten.
+3. **Gegnerisches Verhalten** mit Belegen (Schreiben, Aussage, Verhalten).
+4. **Schaden/Folgen** bezifferbar (Hauptforderung, Nebenforderung, Zinsen, Folgekosten).
+
+### D. Rechtliche Wuerdigung
+
+Anspruchsaufbau klassisch:
+
+1. **Anspruchsgrundlage** nennen (z.B. § X iVm § Y).
+2. **Tatbestandsmerkmale** durchgehen; jedes Merkmal wird gegen den Tatsachenvortrag gespiegelt.
+3. **Einwendungen** der Gegenseite vorwegnehmen und entkraeften.
+4. **Rechtsprechungs-Verweise:** BAG/BGH/BVerfG/EuGH/BFH je nach Fachgebiet; bei Transport-, Speditions- und Logistikrecht typischerweise die letzte hoechstrichterliche Linie zitieren.
+5. **Subsumtion-Ergebnis** klar formulieren.
+
+### E. Beweisangebote
+
+Pflichtbestandteil, ohne den Substantiierung nicht ausreicht:
+
+- Urkundenbeweis: konkrete Anlage Kxx benennen, Inhalt nicht nur "Vertrag" sondern "Vertrag vom TT.MM.JJJJ, dort § X Abs. Y, Anlage K1".
+- Zeugenbeweis: Name, ladungsfaehige Anschrift, Beweisthema in einem Satz.
+- Sachverstaendigenbeweis: ggf. Privatgutachten mit anfuegen, gerichtliches Gutachten beantragen.
+- Parteivernehmung als letzte Stufe, mit Antrag § 448 ZPO und Indiziengeruest.
+- Inaugenscheinnahme: bei Sache vor Ort (Mietraum, Baustelle, Fahrzeug, Hardware).
+
+### F. Anlagenverzeichnis
+
+- K1, K2 ... durchnummeriert (Antragstellerin/Klägerin).
+- Bei Beklagten B1, B2 ...
+- Jede Anlage mit Datum, Absender, Empfaenger, Inhaltsbeschreibung in einem Satz.
+- Pflicht-Erwaehnung im Tatsachenvortrag.
+
+## Substantiierungs-Fallen im Transport-, Speditions- und Logistikrecht
+
+- **Pauschaltatsachen** ohne konkrete Daten ("seit Jahren", "regelmaessig", "in mehreren Faellen") werden vom Gericht uebergangen.
+- **Beweisangebot zur falschen Tatsache:** Beweisthema deckt nur Teilaussage ab.
+- **Selbst-widersprueche** zwischen Schriftsatz und Anlage ("Im Vertrag steht doch was anderes").
+- **Verspaeteter Vortrag** § 296 ZPO/§ 87b VwGO: Rueglich-Fristen beachten, Verschulden vermeiden.
+- **Anspruchskonkurrenz** zwischen mehreren Grundlagen: nicht eine wegfallen lassen.
+
+## Prüfkette vor Versand
+
+1. Antragsformulierung tenoriert (urteilstauglich, vollstreckbar)?
+2. Jede Tatbestandsmerkmal-Subsumtion mit eigener Tatsache + Beweis hinterlegt?
+3. Frist eingehalten (Eingangsstempel/elektronische Uebermittlung)?
+4. Zuständigkeit positiv festgestellt?
+5. Streitwert plausibel, ggf. mit Anlage Streitwert-Berechnung?
+6. Anlagenverzeichnis vollstaendig und nummerisch konsistent?
+7. beA-/EGVP-/EBO-Konformitaet (PDF/A, ERVV-Signatur)?
+8. Vier-Augen-Prüfung durch Sozius oder Senior-Anwaeltin?
+
+## Rechtsprechungs-Werkzeugkasten
+
+- BVerfG, BGH, BAG, BFH, BVerwG, EuGH und die jeweils massgeblichen Fachsenate für Transport-, Speditions- und Logistikrecht.
+- §§ 407 ff. HGB, CMR, MC, ADSp, RVS-Konvention sowie Verordnungen/Richtlinien dazu.
+- Aktuelle Reform- und Gesetzgebungslage einbeziehen.
+
+## Pflicht-Output
+
+1. **Schriftsatz** mit Rubrum, Antraegen, Tatsachenvortrag, Rechtsausfuehrung, Beweisangeboten, Anlagenverzeichnis.
+2. **Anlagen-Konvolut** numerisch geordnet, jede Anlage einzeln benannt.
+3. **Frist-Doku** mit Eingangsbestaetigung (beA-Eingangsnachricht, EB).
+4. **Streitwertskizze** (eigenes Memo, falls > 1 Anspruch).
+5. **Mandanten-Erinnerung** mit Naechster-Schritt-Aufgaben (Zeuginnen vorbereiten, Sachverstaendiger?).
+
+## Beispiel-Anspruchsgrundlagen im Transport-, Speditions- und Logistikrecht
+
+Drei haeufig gebrauchte Anspruchsgrundlagen aus §§ 407 ff. HGB, CMR, MC, ADSp, RVS-Konvention und ihre Substantiierungs-Anforderungen:
+
+### Grundlage 1
+
+- Tatbestandsmerkmal 1: konkrete Tatsache + Beweis.
+- Tatbestandsmerkmal 2: konkrete Tatsache + Beweis.
+- Tatbestandsmerkmal 3: konkrete Tatsache + Beweis.
+- Rechtsfolge: konkreter Antrag.
+
+### Grundlage 2
+
+Analog - jede Tatsache braucht ein Beweisangebot.
+
+### Grundlage 3 (Auffanggrundlage / Sekundaeranspruch)
+
+Hilfsweise vortragen, klar als Hilfsantrag/Hilfsvortrag kennzeichnen.
+
+## Antrags-Muster nach Verfahrenstyp
+
+Typische Antraege in Transport-, Speditions- und Logistikrecht (Frachtklage, Klage CMR-Schaden, Klage HGB-Spediteur-Haftung):
+
+- Hauptantrag (Leistung/Feststellung/Gestaltung).
+- Hilfsantrag (z.B. für den Fall, dass Hauptforderung verjaehrt ist).
+- Annex-Antraege (Zinsen, Nebenforderungen, Kosten).
+- Streitwert-Antrag (falls Streitwert streitig).
+
+## Beweisaufnahme - was das Gericht sehen will
+
+### Urkundenbeweis
+
+- Anlage K1: Bezeichnung, Datum, kurze Inhaltsbeschreibung.
+- Im Tatsachenvortrag: "Diese Behauptung beruht auf dem als Anlage K1 vorgelegten Schreiben der Beklagten vom TT.MM.JJJJ, dort Seite Y, Absatz Z."
+
+### Zeugenbeweis
+
+- Form: "Beweis: Aussage der Zeugin Name, ladungsfaehige Anschrift, zum Beweisthema (konkret in einem Satz)."
+- Mehrere Zeuginnen zum gleichen Thema: Indiziengeruest staerken.
+- Keine Beweisermittlung über Zeugnis - das Beweisthema muss konkret sein.
+
+### Sachverstaendigenbeweis
+
+- Bei Transport-, Speditions- und Logistikrecht-typischen Streitfaellen oft notwendig (Bauwerk, IT-System, Anlagebewertung, medizinische Frage).
+- Privatgutachten als Anlage K vorlegen + zugleich gerichtliches Gutachten beantragen.
+- Verfahrensoekonomie: Sachverstaendigen-Kosten frueh mit Mandantin besprechen.
+
+### Parteivernehmung (§ 448 ZPO)
+
+- Letzte Stufe, nur wenn andere Beweismittel ausgeschoepft.
+- Indiziengeruest vortragen, das eine gewisse Wahrscheinlichkeit der Behauptung tragt.
+
+## Replik-/Duplik-Vorausschau
+
+Schon im Klageschriftsatz die wahrscheinlichen Einwaende der Gegenseite vorwegnehmen:
+
+- Verjährung -> Hemmungstatbestand vortragen.
+- Erfuellung/Aufrechnung -> rechtzeitige Tatsachenbasis schaffen.
+- Formmangel -> Heilung/Schutz-Argument bereit halten.
+- Treuwidrigkeit -> Indiziengeruest gegen Treuwidrigkeits-Vorwurf.
+
+## Elektronische Einreichung (beA, EGVP, EBO, ELSTER)
+
+- PDF/A-2 oder PDF/A-3, mit eingebetteten Schriften.
+- Strukturdatensatz nach ERVV pflicht-konform (Sender, Empfaenger, Az., Versanddatum).
+- Qualifizierte elektronische Signatur (qeS) der einreichenden RA-Person oder einfacher elektronischer Versand über beA (sicherer Uebermittlungsweg).
+- Eingangsbestaetigung aufbewahren - Datum der Einreichung ist Fristwahrungs-Beweis.
+- 1.10.2026 / 1.10.2027 - ZVollstrDigitG-Änderungen im Vollstreckungsbereich; in Transport-, Speditions- und Logistikrecht ggf. spezifische ERV-Pflichten beachten.
+
+## Schriftsatz-Stil
+
+- Aktiv, kurze Saetze, klare Subsumtion.
+- Keine Floskeln ("Die Klage ist zulässig und begruendet" als Ueberschrift, aber dann substantiieren).
+- Mandanten- und Beweismittel-Zitate woertlich, in Anfuehrungszeichen, mit Anlage-Verweis.
+- Keine Gefuehlsausbrueche - sachlich auch bei provokanter Gegenseite.
+
+## Vier-Augen-Check
+
+Vor Versand:
+
+- [ ] Antrag tenorierungsfaehig
+- [ ] Frist gewahrt mit Reserve
+- [ ] Jede Tatsache hat Beweis
+- [ ] Anlagen vollstaendig und nummeriert
+- [ ] Rechtsprechungs-Zitat aktuell
+- [ ] Streitwert plausibel
+- [ ] beA/EGVP-konform
+- [ ] Senior-/Sozius-Freigabe
+
+## Cross-Refs
+
+- `erstgespraech-mandatsannahme` (im selben Plugin) für die Tatsachen-Grundlage und Streitwertskizze.
+- `vergleichsverhandlung-strategie` (im selben Plugin) für parallelen Vergleichsversuch (Gueteverhandlung, Mediation).
+
+## Aktuelle Rechtsprechung Schriftsatz Transportrecht
+
+- Rechtsprechung: keine Entscheidung aus Modellwissen zitieren; vor Ausgabe über offizielle oder frei zugängliche Quelle mit Gericht, Entscheidungsform, Datum, Aktenzeichen und tragender Aussage verifizieren.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
