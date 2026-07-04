@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/autorest.java](https://github.com/Azure/autorest.java/tree/main/.github/skills/fix-sync-sdk/SKILL.md)
+Original source: [Azure/autorest.java](https://github.com/Azure/autorest.java/tree/main/.github/skills/validate-dev-build/SKILL.md)
 
 ---
 
