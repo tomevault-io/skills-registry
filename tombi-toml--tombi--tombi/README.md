@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tombi-toml/tombi](https://github.com/tombi-toml/tombi/tree/main/.claude/skills/github-pr-resolve/SKILL.md)
+Original source: [tombi-toml/tombi](https://github.com/tombi-toml/tombi/tree/main/.claude/skills/codex/github-pr-flow/SKILL.md)
 
 ---
 
