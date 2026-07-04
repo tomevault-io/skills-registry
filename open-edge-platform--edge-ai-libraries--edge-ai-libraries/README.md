@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [open-edge-platform/edge-ai-libraries](https://github.com/open-edge-platform/edge-ai-libraries/tree/main/sample-applications/video-search-and-summarization/.github/skills/vss-search/SKILL.md)
+Original source: [open-edge-platform/edge-ai-libraries](https://github.com/open-edge-platform/edge-ai-libraries/tree/main/sample-applications/video-search-and-summarization/.github/skills/vss-summarize/SKILL.md)
 
 ---
 
