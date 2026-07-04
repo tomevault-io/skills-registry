@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [DataDog/dd-trace-java](https://github.com/DataDog/dd-trace-java/tree/main/.claude/skills/migrate-groovy-to-java/SKILL.md)
+Original source: [DataDog/dd-trace-java](https://github.com/DataDog/dd-trace-java/tree/main/.claude/skills/migrate-junit-source-to-tabletest/SKILL.md)
 
 ---
 
