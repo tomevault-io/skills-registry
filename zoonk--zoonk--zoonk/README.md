@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zoonk/zoonk](https://github.com/zoonk/zoonk/tree/main/.agents/skills/ai-sdk/SKILL.md)
+Original source: [zoonk/zoonk](https://github.com/zoonk/zoonk/tree/main/.agents/skills/workflow/SKILL.md)
 
 ---
 
