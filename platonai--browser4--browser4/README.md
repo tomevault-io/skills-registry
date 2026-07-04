@@ -1,0 +1,13 @@
+# Browser4
+
+> Skill by [platonai](https://github.com/platonai/Browser4) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [platonai/Browser4](https://github.com/platonai/Browser4/tree/main/browser4-agentic/src/main/resources/skills/pdf/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
