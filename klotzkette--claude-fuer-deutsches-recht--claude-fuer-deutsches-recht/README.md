@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-gewerblicher-rechtsschutz/skills/fachanwalt-gewrechts-ki-vo-50-genai/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/schriftform-und-textform-bgb/skills/arbeitsrecht-befristung-schriftform-checker/SKILL.md)
 
 ---
 
