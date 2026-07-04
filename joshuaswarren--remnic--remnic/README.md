@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [joshuaswarren/remnic](https://github.com/joshuaswarren/remnic/tree/main/packages/remnic-core/skills/remnic-search/SKILL.md)
+Original source: [joshuaswarren/remnic](https://github.com/joshuaswarren/remnic/tree/main/packages/plugin-codex/skills/remnic-status/SKILL.md)
 
 ---
 
