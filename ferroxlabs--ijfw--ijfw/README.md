@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [FerroxLabs/ijfw](https://github.com/FerroxLabs/ijfw/tree/main/shared/skills/ijfw-status/SKILL.md)
+Original source: [FerroxLabs/ijfw](https://github.com/FerroxLabs/ijfw/tree/main/shared/skills/ijfw-update/SKILL.md)
 
 ---
 
