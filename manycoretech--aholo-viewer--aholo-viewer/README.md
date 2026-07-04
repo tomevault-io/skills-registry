@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [manycoretech/aholo-viewer](https://github.com/manycoretech/aholo-viewer/tree/main/.codex/skills/aholo-examples/SKILL.md)
+Original source: [manycoretech/aholo-viewer](https://github.com/manycoretech/aholo-viewer/tree/main/.codex/skills/aholo-renderer/SKILL.md)
 
 ---
 
