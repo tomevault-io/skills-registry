@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [salesforce/multicloudj](https://github.com/salesforce/multicloudj/tree/main/.claude/skills/docs_guides/SKILL.md)
+Original source: [salesforce/multicloudj](https://github.com/salesforce/multicloudj/tree/main/.claude/skills/multicloudj-feature-dev/SKILL.md)
 
 ---
 
