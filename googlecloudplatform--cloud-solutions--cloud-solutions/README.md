@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GoogleCloudPlatform/cloud-solutions](https://github.com/GoogleCloudPlatform/cloud-solutions/tree/main/projects/gemini-powered-migrations-to-google-cloud/.agents/skills/legacy-app-generator/SKILL.md)
+Original source: [GoogleCloudPlatform/cloud-solutions](https://github.com/GoogleCloudPlatform/cloud-solutions/tree/main/projects/agentic-coding-with-data-agent-kit-demo/support/.gemini/skills/spanner-provisioning/SKILL.md)
 
 ---
 
