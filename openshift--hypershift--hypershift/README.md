@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openshift/hypershift](https://github.com/openshift/hypershift/tree/main/.claude/skills/dev/build-ho-image/SKILL.md)
+Original source: [openshift/hypershift](https://github.com/openshift/hypershift/tree/main/.claude/skills/dev/destroy-hc-aws/SKILL.md)
 
 ---
 
