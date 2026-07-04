@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openkaiden/kaiden](https://github.com/openkaiden/kaiden/tree/main/.agents/skills/ui-components/SKILL.md)
+Original source: [openkaiden/kaiden](https://github.com/openkaiden/kaiden/tree/main/.agents/skills/playwright-testing/SKILL.md)
 
 ---
 
