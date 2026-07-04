@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tile-ai/TileOPs](https://github.com/tile-ai/TileOPs/tree/main/.claude/skills/review-tileops/SKILL.md)
+Original source: [tile-ai/TileOPs](https://github.com/tile-ai/TileOPs/tree/main/.claude/skills/resolve-tileops/SKILL.md)
 
 ---
 
