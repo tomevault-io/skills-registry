@@ -1,74 +1,48 @@
 ---
-name: workflow-mietpreisbremse-start
-description: Wenn es um Mietpreisbremse-Start: Prüfungslinie für Miet- und WEG-Recht in Fachanwalt Miet- und Wohnungseigentumsrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Chronologie mit Belegmatrix und Widerspruchsliste. Use when this capability is needed.
+name: notfrist-compliance-dokumentation-und-akte
+description: Wenn es um Notfrist: Compliance-Dokumentation und Aktenvermerk in Fachanwalt Migrationsrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Mietpreisbremse-Start: Prüfungslinie für Miet- und WEG-Recht
+# Notfrist: Compliance-Dokumentation und Aktenvermerk
 
-
-## Direktstart: lesen, entscheiden, liefern
-
-Beginne nicht mit einem Fragenkatalog. Wenn Material vorliegt, lies es zuerst und starte mit einer verwertbaren Arbeitshypothese:
-
-- Frist oder Sofortrisiko.
-- erkannte Rolle, Zielrichtung und Verfahrensstand.
-- tragende Tatsachen aus dem Material.
-- bester nächster Arbeitsschritt mit direkt nutzbarem Output.
-
-Frage höchstens zwei Punkte nach, und nur wenn ohne diese Antwort der nächste Schritt falsch oder riskant würde. Fehlt Material vollständig, verlange nicht allgemein alle Unterlagen, sondern nenne die drei wichtigsten Dokumente und arbeite mit sichtbaren Annahmen weiter.
-
-Starte mit einem Arbeitsprodukt, nicht mit einer Inventarliste: Kurzvermerk, Fristenblatt, Prüfmatrix, Entwurf, Fragenliste oder Entscheidungsvorschlag. Routing ist nur Mittel zum Zweck. Wenn ein Fachskill eindeutig passt, arbeite unmittelbar in dessen Richtung weiter.
-
-Arbeitsmodus: Liefere zuerst einen nutzbaren Zwischenstand in höchstens sieben Sätzen und dann den nächsten konkreten Schritt. Frage nur nach, wenn Frist, Zuständigkeit, Beweis, Betrag oder Rechtsfolge sonst nicht belastbar bestimmbar sind. Tabellen nur für Fristen, Belege, Beträge, Varianten oder Streitstoff.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: BGB §§ 535-577a, BetrKV, WEG §§ 24, 25, 27, BGB §§ 558, 558a, 558b, 573, 573c; WEG §§ 9a, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 44, 45, 46, 47, BGB §§ 535 ff., HOAI, BetrKV — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Tragende Normen verifizieren: AufenthG §§ 4, 5, 7, 8, 9, 16a-16g, 18a-18g, 19c, 25, 27-36, 50, 53-55, 58, 60, 60a-60d, 81, 84, 95; AsylG §§ 13, 24-30, 34-38, 71, 74, 77; FreizügG/EU §§ 2-5; StAG §§ 4, 5, 8-10, 12a, 25, 30; AsylbLG §§ 1, 3, 6; VwGO §§ 74, 80, 123; Dublin-III-VO Art. 3, 17, 21-29; einschlägige EU-Richtlinien/GEAS-Normstand live prüfen; keine BeckRS-/juris-Blindzitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-**Fokus:** Mietpreisbremse-Start: Prüfungslinie für Miet- und WEG-Recht; klärt Gebiet, Vormiete, Neubau/Modernisierung, Rüge und Rückforderung; mit Kaltstart, Fristencheck, Belegmatrix, Anschluss-Skills und nutzbarem Output.
+**Fokus:** Notfrist: Compliance-Dokumentation und Aktenvermerk.
 
-### Mietpreisbremse-Start
+## Spezialwissen: Notfrist: Compliance-Dokumentation und Aktenvermerk
+- **Normen-/Quellenanker:** AufenthG, AsylG, GFK, VO, RL, StAG, EU.
 
-## Fachlicher Kern — Miet- und WEG-Recht
-- **Problemfokus dieses Skills:** Bleibe beim konkreten Titel `Mietpreisbremse-Start` und löse die dort angelegte Fachfrage; arbeite mit konkreten Tatbestandsmerkmalen, Beweisfragen und dem unmittelbar benötigten Arbeitsprodukt. Routingfragen bleiben Hilfsmittel, wenn Frist, Zuständigkeit oder Verfahrensart offen sind.
-- **Normenradar:** BGB §§ 535 ff., 536, 543, 546a, 548, 556, 556a, 558 ff., 573 ff.; BetrKV; HeizkostenV; WEG §§ 18, 19, 20, 23, 24, 28, 44, 45; GEG; CO2KostAufG.
-- **Verifizierte Anker:** BGH, Urteil vom 20.01.2016 - VIII ZR 93/15 (formelle Betriebskostenabrechnung); BGH, Urteil vom 15.12.2021 - VIII ZR 66/20 (Belegeinsicht Originale/Kopien); BGH, Urteil vom 14.02.2025 - V ZR 128/23 (§ 16 Abs. 2 Satz 2 WEG, Rücklagen/Kostenverteilung); BGH, Urteil vom 14.02.2025 - V ZR 86/24 (§ 20 WEG, bauliche Veränderung, Vorbefassung/Beschlussersetzung).
-- **Arbeitsmodus:** Immer erst Verhältnis Miete/WEG/Gewerbe/Verwaltung trennen, dann Frist, Beschlusskompetenz, Umlagefähigkeit, Belege, Gebrauchsnachteil und Kostenfolge prüfen.
-- **Outputpflicht:** Abrechnungsprüftabelle, Beschlussvorschlag, Anfechtungs-/Beschlussersetzungsskizze, Mietermail, Vermieterschreiben oder Verwalter-To-do-Liste.
-- **Fehlerbremse:** Tragende Normen/Entscheidungen live oder aus der Akte verifizieren; Rechtsprechung nur mit Gericht, Entscheidungsform, Datum, Aktenzeichen und frei prüfbarer Quelle. Keine BeckRS-, juris-, Kommentar- oder Aufsatz-Blindzitate aus Modellwissen.
+## Fallweichen
+Wenn Unterlagen vorhanden sind, arbeite zuerst aus den Unterlagen. Stelle nur Rückfragen, die die nächste Weiche verändern:
 
-## Einstieg
-Arbeite zuerst mit vorhandenen Unterlagen. Frage nur, was die nächste Entscheidung verändert:
-1. Rolle und Ziel der fragenden Person.
-2. Objekt und Rechtsverhältnis: Wohnraum, Gewerberaum, WEG, Hausverwaltung oder Mischfall.
-3. Frist, Zugang, Termin oder Eilrisiko.
-4. Vorhandene Belege und fehlende Schlüsselunterlagen.
-5. Gewünschter Output: Erklärung, Tabelle, Brief, Beschluss, Schriftsatz oder Verhandlungsplan.
+1. Welche Rolle hat die fragende Person und wer ist Gegenüber?
+2. Welches konkrete Ziel soll erreicht oder verhindert werden?
+3. Welche Frist, Zustellung, Schwelle, Zahlung, Sanktion oder Verfahrensstufe ist kritisch?
+4. Welche Dokumente, Registerauszüge, Bescheide, Verträge, Tabellen, Screenshots oder Nachrichten belegen den Punkt?
+5. Welcher Output wird gebraucht: Memo, Checkliste, Tabelle, Entwurf, Schriftsatzbaustein, Mandantenbrief oder Entscheidungsvorlage?
 
 ## Arbeitsworkflow
-1. **Kurzlage:** Falltyp, Frist, Risiko, Unterlagen und Ziel in fünf Zeilen.
-2. **Weichen:** Zwei bis fünf entscheidende Fragen isolieren; keine Vollprüfung ohne Anlass.
-3. **Belege:** Dokumente, Fotos, Nachrichten, Rechnungen und Protokolle verwerten; Lückenliste erzeugen.
-4. **Recht:** Normen aus BGB, WEG, BetrKV, HeizkostenV, GEG/CO2KostAufG nur in aktueller Fassung verwenden.
-5. **Anschluss:** Passende Fachmodule aus diesem Plugin vorschlagen und begründen.
-6. **Output:** Handlungsfähiges Ergebnis mit nächstem Schritt, Frist und Verantwortlichem.
+1. **Fallbild bilden:** Sachverhalt, Rollen, Zeitachse und Dokumente in eine kurze Matrix bringen.
+2. **Rechtsrahmen setzen:** Normen, Zuständigkeiten, Fristen, Formfragen und Verfahrensstand zum Themenfeld **Notfrist** prüfen.
+3. **Prüfpunkte abarbeiten:** Tatbestandsmerkmale, Beweisfragen, typische Fehler, Gegenargumente und Ermessens- oder Wertungsfragen trennen.
+4. **Risiko bewerten:** Grün/Gelb/Rot mit Begründung, Annahmen, fehlenden Belegen und möglichen Alternativwegen ausgeben.
+5. **Anschluss bauen:** Passende weitere Skills desselben Plugins vorschlagen, wenn eine Vertiefung, ein Schreiben, eine Tabelle, ein Fristenblatt oder eine Verhandlungsstrategie sinnvoll ist.
 
-## Qualitätsmaßstab
-- Für Laien klar erklären, welche Gefahr besteht und was heute zu tun ist.
-- Für Berufsanfänger sichtbar machen, welche Anspruchsgrundlage, Beweislast und Frist den Fall trägt.
-- Für erfahrene Nutzer knapp bleiben und auf den entscheidenden Streitpunkt zielen.
+## Qualitätsanker: Identität, Schutzstatus und aktuelle Lageprüfung
 
-## Quellen- und Sicherheitsregel
-- Vor tragenden Aussagen den aktuellen Normtext und die aktuelle Behörden-/Gerichtspraxis prüfen; keine Scheingenauigkeit aus Modellwissen.
-- Rechtsprechung nur mit Gericht, Entscheidungsform, Datum, Aktenzeichen und frei prüfbarer Quelle ausgeben.
-- Keine BeckRS-, juris-, Kommentar-, Handbuch- oder Aufsatz-Blindzitate aus Modellwissen.
-- Annahmen, fehlende Unterlagen, Beweisrisiken und Fristen ausdrücklich markieren.
+- **Verifizierte Rechtsprechungsanker:** BVerwG, Urteil vom 13.12.2023 - 1 C 34.22 und BVerwG, Urteil vom 18.12.2025 - 1 C 27.24 zur Identitätsklärung/Stufenmodell im Einbürgerungsrecht; BVerwG, Urteil vom 16.04.2025 - 1 C 18.24 zur Tatsachenrevision und Art. 4 GRCh/Art. 3 EMRK bei anerkannten Schutzberechtigten in Griechenland.
+- **Prüfdisziplin:** Aufenthaltsrecht, Asylrecht, Staatsangehörigkeitsrecht, Freizügigkeit/EU, Dublin/GEAS, Abschiebungsschutz, Familiennachzug und Arbeit/Beschäftigung strikt trennen. Keine Auskunft „nach Gefühl“ über Länderpraxis oder Behördenlaufzeiten.
+- **Aktualitätsfilter:** Herkunftsland, Schutzstatus, Dokumentenlage, Identität, Passbeschaffung, Zumutbarkeit, Vulnerabilität und aktuelle Lageberichte/live verfügbare Gerichtsquellen sind tragend; bei Lagefragen immer Datum und Erkenntnisbasis nennen.
+- **Output-Pflicht:** Entscheidungsbaum mit Sofortfrist, zuständiger Behörde/Gericht, benötigten Unterlagen, Beweisnot-/Zumutbarkeitsargumenten und nächstem rechtssicheren Schritt.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
