@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [platonai/Browser4](https://github.com/platonai/Browser4/tree/main/browser4-agentic/src/main/resources/skills/weather/SKILL.md)
+Original source: [platonai/Browser4](https://github.com/platonai/Browser4/tree/main/browser4-agentic/src/main/resources/skills/mcp-builder/SKILL.md)
 
 ---
 
