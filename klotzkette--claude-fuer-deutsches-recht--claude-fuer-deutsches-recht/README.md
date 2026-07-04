@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/kommunalrecht-laender/skills/kom-108-kommunalaufsicht-zustaendigkeit-pruefe/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/kommunalrecht-laender/skills/kom-128-strassenreinigung-zustaendigkeit-pruef/SKILL.md)
 
 ---
 
