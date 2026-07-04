@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SpectrAI-Initiative/InnoClaw](https://github.com/SpectrAI-Initiative/InnoClaw/tree/main/.claude/skills/smiles-to-cas-conversion/SKILL.md)
+Original source: [SpectrAI-Initiative/InnoClaw](https://github.com/SpectrAI-Initiative/InnoClaw/tree/main/.claude/skills/researcher-context-audit/SKILL.md)
 
 ---
 
