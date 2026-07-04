@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [carverauto/serviceradar](https://github.com/carverauto/serviceradar/tree/main/.agents/skills/fieldsurvey-local-web-ng/SKILL.md)
+Original source: [carverauto/serviceradar](https://github.com/carverauto/serviceradar/tree/main/.agents/skills/release-cut-and-demo-roll/SKILL.md)
 
 ---
 
