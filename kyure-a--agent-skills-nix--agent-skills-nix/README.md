@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Kyure-A/agent-skills-nix](https://github.com/Kyure-A/agent-skills-nix/tree/main/test/fixtures/multi-skill-shared-root/skill-b/SKILL.md)
+Original source: [Kyure-A/agent-skills-nix](https://github.com/Kyure-A/agent-skills-nix/tree/main/test/fixtures/multi-skill-shared-root/skill-a/SKILL.md)
 
 ---
 
