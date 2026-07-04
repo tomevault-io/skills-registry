@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openshift/console](https://github.com/openshift/console/tree/main/.claude/skills/pre-push-review/SKILL.md)
+Original source: [openshift/console](https://github.com/openshift/console/tree/main/.claude/skills/migrate-cypress/SKILL.md)
 
 ---
 
