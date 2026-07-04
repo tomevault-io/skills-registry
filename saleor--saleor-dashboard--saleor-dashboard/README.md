@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [saleor/saleor-dashboard](https://github.com/saleor/saleor-dashboard/tree/main/.claude/skills/saleor-dashboard-styles/SKILL.md)
+Original source: [saleor/saleor-dashboard](https://github.com/saleor/saleor-dashboard/tree/main/.claude/skills/saleor-dashboard-changesets/SKILL.md)
 
 ---
 
