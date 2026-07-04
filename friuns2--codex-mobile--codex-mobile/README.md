@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [friuns2/codex-mobile](https://github.com/friuns2/codex-mobile/tree/main/.agents/skills/codex-app-parity/SKILL.md)
+Original source: [friuns2/codex-mobile](https://github.com/friuns2/codex-mobile/tree/main/.agents/skills/github-pr-acceptance/SKILL.md)
 
 ---
 
