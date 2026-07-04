@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/haushaltsrecht-bho-bund-laender/skills/bho-39-gewaehrleistungen-praktisch-anw/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/haushaltsrecht-bho-bund-laender/skills/bho-63-vermoegenserwerb-praktisch-anwe/SKILL.md)
 
 ---
 
