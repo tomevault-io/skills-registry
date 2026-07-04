@@ -2,7 +2,7 @@
 name: shodh-memory
 description: Persistent memory system for AI agents. Use this skill to remember context across conversations, recall relevant information, and build long-term knowledge. Activate when you need to store decisions, learnings, errors, or context that should persist beyond the current session. Use when this capability is needed.
 metadata:
-  author: varun29ankus
+  author: varun29ankuS
 ---
 
 # Shodh Memory - Persistent Context for AI Agents
@@ -208,5 +208,5 @@ You:
 *Shodh Memory: Because context shouldn't reset with every conversation.*
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/varun29ankus) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [varun29ankuS/shodh-memory](https://github.com/varun29ankuS/shodh-memory) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-04 -->
