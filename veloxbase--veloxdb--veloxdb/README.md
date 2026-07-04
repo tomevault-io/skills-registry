@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [veloxbase/veloxdb](https://github.com/veloxbase/veloxdb/tree/main/.cursor/skills/reactflow-workflow/SKILL.md)
+Original source: [veloxbase/veloxdb](https://github.com/veloxbase/veloxdb/tree/main/.cursor/skills/rust-heavy-performance/SKILL.md)
 
 ---
 
