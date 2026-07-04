@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wimpysworld/nix-config](https://github.com/wimpysworld/nix-config/tree/main/home-manager/_mixins/agentic/assistants/skills/love/references/api/love-audio/SKILL.md)
+Original source: [wimpysworld/nix-config](https://github.com/wimpysworld/nix-config/tree/main/home-manager/_mixins/agentic/assistants/skills/love/references/api/love-mouse/SKILL.md)
 
 ---
 
