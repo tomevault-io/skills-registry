@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [commercetools/merchant-center-application-kit](https://github.com/commercetools/merchant-center-application-kit/tree/main/.agents/skills/pr-review-navigator/SKILL.md)
+Original source: [commercetools/merchant-center-application-kit](https://github.com/commercetools/merchant-center-application-kit/tree/main/.agents/skills/repo-maintenance-node/SKILL.md)
 
 ---
 
