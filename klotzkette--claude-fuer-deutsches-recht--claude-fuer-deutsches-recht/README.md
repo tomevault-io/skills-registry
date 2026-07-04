@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/einigungsvertrag-vermoegensrecht/skills/ein-002-art-21-und-art-22-vermoegen-trennen/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/informationsfreiheit-presseauskunft/skills/ifg-050-ifggebv-gebuehren-kosten-deckeln/SKILL.md)
 
 ---
 
