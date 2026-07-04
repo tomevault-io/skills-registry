@@ -1,50 +1,155 @@
 ---
-name: besold-neu-001-bundesbesoldung-grundgehalt-familienzuschlag
-description: Wenn es um Beamtenrecht: Bundesbesoldung Grundgehalt Familienzuschlag Zulagen in Beamtenrecht geht: zerlegt Ergebnis, Frist, Zuständigkeit, Beweislast und Gegenposition; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: pflichtenkollision-shift-restructuring-lounge
+description: Wenn es um Pflichtenkollision und Shift of Fiduciary Duties in der Krise in Krisenfrüherkennung und StaRUG-Management geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Beamtenrecht: Bundesbesoldung Grundgehalt Familienzuschlag Zulagen
+# Pflichtenkollision und Shift of Fiduciary Duties in der Krise
 
-## Aufgabe
+## Arbeitsweg
 
-Dieser Skill bearbeitet **Bundesbesoldung Grundgehalt Familienzuschlag Zulagen** im Bereich **Beamtenrecht**. Er soll nicht schematisch antworten, sondern zuerst die praktische Lage sortieren: Wer handelt, welche Unterlagen liegen vor, welche Frist läuft, welche Behörde oder Gegenpartei entscheidet und welches Ergebnis gebraucht wird.
+- Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
+- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
+- Tragende Normen verifizieren: StaRUG; § 1 StaRUG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Kaltstart in 6 Fragen
+## Spezialwissen
 
-1. Welche Rolle hat die Nutzerin: Mandant, Unternehmen, Behörde, Kanzlei, Gericht, Verlag, Betreiber, Investor oder Betroffene?
-2. Geht es um Prüfung, Entwurf, Verteidigung, Anmeldung, Register, Frist, Verhandlung, Compliance, Streit oder Dokumentation?
-3. Welche Dokumente liegen vor und welche fehlen: Vertrag, Bescheid, Registerauszug, Screenshot, E-Mail, Rechnung, Gutachten, Normtext, Protokoll?
-4. Welche Rechtsordnung, Branche, Epoche, Sprache oder technische Umgebung ist betroffen?
-5. Welche Entscheidung muss heute fallen und welche Punkte dürfen erst nach Live-Check beantwortet werden?
-6. Soll das Ergebnis als Ampel, Memo, Klausel, Antrag, Fristenplan, Behördenschreiben, Red-Team oder Dashboard kommen?
+Im Normalzustand schuldet der Geschäftsführer seine Loyalität den Gesellschaftern — er ist ihr Agent, ihr verlängerter Arm. In der Krise dreht sich das Koordinatensystem. Je tiefer das Unternehmen in die Insolvenzgefährdung gleitet, desto stärker verschiebt sich die Pflichtbindung vom Eigentümerinteresse zum Gläubigerinteresse. Dieser "Shift of Fiduciary Duties" ist keine anglistische Theorie, sondern gelebtes deutsches Recht — mit direkten Haftungsfolgen.
 
-## Prüfprogramm
+---
 
-- Sachverhalt in Tatsachen, Annahmen, Wertungen und offene Beweisfragen zerlegen.
-- Normtext und aktuelle Rechtsprechung live prüfen
-- Form, Frist, Zuständigkeit und Beweis getrennt behandeln
-- Keine BeckRS- oder Literatur-Blindzitate
-- Ergebnis immer in Handlungsschritt übersetzen
-- Zuständigkeit, Form, Frist, Beweislast, Vollzug und Rechtsbehelf immer getrennt ausgeben.
-- Bei historischen, internationalen oder technischen Begriffen erst übersetzen, dann rechtlich einordnen.
-- Keine Scheingenauigkeit: Wenn Quelle, Normstand oder Rechtsprechung fehlen, einen Live-Check als nächsten Schritt formulieren.
+## Rechtsgrundlagen
 
-## Typische Fallen
+- § 1 StaRUG (Krisenfrüherkennungspflicht)
+- § 15a InsO (Insolvenzantragspflicht)
+- § 15b InsO (Zahlungsverbote nach Insolvenzreife)
+- § 43 GmbHG (Sorgfaltspflicht GF)
+- § 93 AktG (Sorgfaltspflicht Vorstand)
+- § 19 Abs. 2 InsO (Fortführungsprognose bei Überschuldung)
+- Rechtsprechung: keine Entscheidung aus Modellwissen zitieren; vor Ausgabe über offizielle oder frei zugängliche Quelle mit Gericht, Entscheidungsform, Datum, Aktenzeichen und tragender Aussage verifizieren.
+- EuInsVO Art. 3 Abs. 1 (COMI — Centre of Main Interests)
 
-- Ein Begriff klingt vertraut, hat aber in der konkreten Rechtsordnung oder Praxis eine andere Funktion.
-- Zuständigkeit, Form oder Zustellung wird übersehen, obwohl der materielle Punkt gut aussieht.
-- Eine Behauptung wird aus Modellwissen mit einer Fundstelle versehen. Das ist verboten; erst prüfen, dann zitieren.
-- Der Output ist juristisch richtig, hilft aber der Nutzerin operativ nicht. Deshalb immer nächste Handlung und Dokumentationsspur liefern.
+---
 
-## Output
+## Pflichten
 
-- Memo
-- Checkliste
-- Mustertext
-- Fristenplan
-- Red-Team
+### 1. Das normale Pflichtenbild — Eigentümerinteresse
+
+Im Normalzustand ist der Geschäftsführer dem Gesellschafterinteresse verpflichtet:
+
+- Gewinnmaximierung, Wachstum, Erhaltung des Unternehmenswertes
+- Weisungsrecht der Gesellschafterversammlung (GmbH) beachten
+- Unternehmerische Entscheidungen nach Business Judgment Rule treffen
+
+Gläubiger sind in dieser Phase nur mittelbar geschützt — durch das Kapitalerhaltungsgebot (§§ 30, 31 GmbHG) und die allgemeinen Insolvenztatbestände.
+
+### 2. Der Shift — Wann dreht sich das Koordinatensystem?
+
+Der Pflichtenwandel vollzieht sich graduell, nicht schlagartig:
+
+| Phase | Pflichtenschwerpunkt | Gläubigerschutz |
+|---|---|---|
+| Normalbetrieb | Eigentümerinteresse | Mittelbar |
+| Strategiekrise | Eigentümer + Überwachung | Mittelbar, § 1 StaRUG |
+| Ertragskrise | Eigentümer + Gläubiger gleichwertig | Aktiv: § 1 StaRUG |
+| Liquiditätskrise | Gläubigerinteresse dominant | Direkter Schutz |
+| Insolvenzreife | Ausschließlich Gläubigerinteresse | § 15a, § 15b InsO |
+
+Der "tipping point" liegt regelmäßig beim Eintritt der drohenden Zahlungsunfähigkeit nach § 18 InsO: Ab diesem Moment sind Maßnahmen, die ausschließlich dem Gesellschafterinteresse dienen (Gewinnausschüttung, riskante Investitionen), haftungsrechtlich gefährlich.
+
+Rechtsprechung: keine Entscheidung aus Modellwissen zitieren; vor Ausgabe über offizielle oder frei zugängliche Quelle mit Gericht, Entscheidungsform, Datum, Aktenzeichen und tragender Aussage verifizieren.
+
+Rechtsprechung live prüfen: Keine Entscheidung aus Modellwissen zitieren; vor Ausgabe über amtliche oder frei zugängliche Quelle mit Gericht, Entscheidungsform, Datum, Aktenzeichen und tragender Aussage verifizieren.
+
+1. Das Recht des Niederlassungsstaates regelt die Haftung des Geschäftsführers nach Insolvenzreife.
+2. Eine Flucht in ausländische Gesellschaftsformen (Limited, S.à r.l.) schützt nicht vor dem deutschen Haftungsregime, wenn das operative Zentrum in Deutschland liegt.
+3. Der COMI (Centre of Main Interests) bestimmt das anwendbare Insolvenzrecht — und damit die Haftungsgrundlage.
+
+### 4. COMI-Verlagerung — Verbote und Grenzen
+
+Eine Verlagerung des COMI (z.B. von Deutschland nach Österreich oder Niederlande) zur Erschleichung eines anderen Insolvenzrechts ist nicht schlechthin verboten, aber an enge Voraussetzungen geknüpft:
+
+- Die Verlagerung muss **tatsächlich** und **nachhaltig** sein (nicht nur formale Sitzverlegung)
+- **§ 3 Abs. 1 EuInsVO** verlangt, dass der COMI für Dritte erkennbar und nachprüfbar am neuen Ort liegt
+- **Timing**: Eine COMI-Verlagerung kurz vor Insolvenzantrag wird von Gerichten als Missbrauch gewertet und rückgängig gemacht
+- Deutsche Gerichte können bei Rechtsmissbrauch weiterhin zuständig bleiben
+
+**Praxiswarnung:** Mandanten, die eine schnelle COMI-Verlagerung als Ausweg aus dem deutschen Insolvenzregime erwägen, laufen in ein offenes Messer — die Rechtsprechung ist hier eindeutig restriktiv.
+
+### 5. Pflichtenkollision — Gesellschafterweisung vs. Gläubigerschutz
+
+In der Krise entsteht häufig eine direkte Pflichtenkollision:
+
+- **Gesellschafter wollen:** Dividende, Finanzierungsmaßnahmen zugunsten anderer Gruppengesellschaften, Liquidation ohne Insolvenz
+- **Gläubigerschutz verlangt:** Erhalt der Masse, keine masseschmälernden Zahlungen, § 15b InsO
+
+**Lösung der Pflichtenkollision:**
+
+1. **Vorrang des Gläubigerinteresses** bei Insolvenzreife — Gesellschafterweisung ist in diesem Fall unbeachtlich (§ 15a InsO ist zwingendes Recht)
+2. **Business Judgment Rule** gilt nur noch eingeschränkt
+3. **Transparenzpflicht** gegenüber allen Stakeholdern — kein selektives Informationsmanagement
+4. **Externe Beratung** als Haftungspuffer: Wer nachweislich auf Basis eines validierten IDW S 11-Gutachtens gehandelt hat, ist besser gestellt
+
+---
+
+## Templates
+
+### Muster: Pflichtenstatus-Memo für Geschäftsführer-Akte
+
+```
+Internes Memo
+Datum: [TT.MM.JJJJ]
+Von: [Name GF]
+Betreff: Pflichtenstatus-Analyse gem. § 1 StaRUG / Shift of Fiduciary Duties
+
+1. AKTUELLES KRISENSTADIUM
+ Einschätzung: [Strategiekrise / Ertragskrise / Liquiditätskrise / drohende ZU]
+ Grundlage: [eigene Analyse / Beratereinschätzung / Gutachten]
+
+2. PFLICHTENBINDUNG
+ Primäre Pflichtenbindung aktuell: [Gesellschafter / Gläubiger / beides]
+ Begründung:
+
+3. GESELLSCHAFTERWEISUNGEN
+ Laufende Weisungen: [Beschreibung]
+ Befolgbarkeit: [ja / eingeschränkt / nein — Begründung]
+
+4. INTERCOMPANY-MASSNAHMEN
+ Laufende Intercompany-Zahlungen: [ja / nein]
+ Überprüfung der Marktüblichkeit: [ja / nein / in Bearbeitung]
+
+5. NÄCHSTE SCHRITTE
+ [Maßnahmenplan]
+
+Erstellt von: ___________________
+```
+
+---
+
+## Fallstricke
+
+1. **Der Shift kommt früher als gedacht** — viele GF gehen davon aus, erst bei Zahlungsunfähigkeit dem Gläubigerinteresse verpflichtet zu sein. Die Rechtsprechung zieht die Grenze früher: bereits bei drohender Zahlungsunfähigkeit sind masseschmälernde Maßnahmen haftungsträchtig.
+
+2. **Gruppengesellschaften sind keine sichere Bank** — Zahlungen an verbundene Unternehmen, die nach Maßstab des Drittvergleichs nicht marktüblich sind, können nach Insolvenzanfechtungsrecht (§§ 129 ff. InsO) rückgefordert werden.
+
+3. **COMI-Verlagerung als Haftungsflucht** ist regelmäßig gescheitert — Gerichte sind sensibilisiert und setzen hohe Anforderungen an echte operative Verlagerungen.
+
+4. **Gesellschafterweisung entbindet nicht von § 15a InsO** — selbst wenn alle Gesellschafter Fortführung wollen und beauftragen: Die Insolvenzantragspflicht ist nicht disponibel.
+
+5. **"Management by Delegation" in der Krise** ist kein Enthaftungsinstrument — Gesamtverantwortung aller GF-Mitglieder bleibt bestehen, auch bei formal getrennten Ressorts.
+
+---
+
+## Triage — Erste Einordnung
+
+Bevor losgelegt wird, klaere:
+1. **Krisenstadium?** Ertragskrise (EBIT negativ), Liquiditaetskrise (Cashflow negativ) oder akute Insolvenznaehe (ZU/Ueberschuldung)?
+2. **Insolvenzgrund?** § 17 InsO (ZU), § 18 InsO (drohende ZU), § 19 InsO (Ueberschuldung)?
+3. **Fristen?** Antragspflicht § 15a InsO: 3 Wochen (ZU), 6 Wochen (Ueberschuldung).
+4. **Sanierungs-Pfad?** StaRUG (drohende ZU), Schutzschirm, Eigenverwaltung oder Regelverfahren?
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
