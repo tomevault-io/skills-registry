@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [renjfk/OpenNeato](https://github.com/renjfk/OpenNeato/tree/main/.opencode/skills/release-process/SKILL.md)
+Original source: [renjfk/OpenNeato](https://github.com/renjfk/OpenNeato/tree/main/.opencode/skills/cleanup-stale-prereleases/SKILL.md)
 
 ---
 
