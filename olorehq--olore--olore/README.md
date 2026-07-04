@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [olorehq/olore](https://github.com/olorehq/olore/tree/main/vault/packages/better-auth/1.6.18/SKILL.md)
+Original source: [olorehq/olore](https://github.com/olorehq/olore/tree/main/vault/packages/docs-packager/1.0.0/SKILL.md)
 
 ---
 
