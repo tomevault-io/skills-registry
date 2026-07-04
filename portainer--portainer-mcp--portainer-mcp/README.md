@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [portainer/portainer-mcp](https://github.com/portainer/portainer-mcp/tree/main/skills/portainer-mcp-hygiene/SKILL.md)
+Original source: [portainer/portainer-mcp](https://github.com/portainer/portainer-mcp/tree/main/.claude/skills/portainer-mcp-release/SKILL.md)
 
 ---
 
