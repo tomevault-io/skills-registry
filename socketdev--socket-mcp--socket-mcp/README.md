@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SocketDev/socket-mcp](https://github.com/SocketDev/socket-mcp/tree/main/.agents/skills/fleet-reordering-release-bump/SKILL.md)
+Original source: [SocketDev/socket-mcp](https://github.com/SocketDev/socket-mcp/tree/main/.claude/skills/fleet/tidying-rolldown-bundles/SKILL.md)
 
 ---
 
