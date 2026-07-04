@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cnoe-io/ai-platform-engineering](https://github.com/cnoe-io/ai-platform-engineering/tree/main/ui/src/skills/oncall-handoff/SKILL.md)
+Original source: [cnoe-io/ai-platform-engineering](https://github.com/cnoe-io/ai-platform-engineering/tree/main/.claude/skills/speckit.tasks/SKILL.md)
 
 ---
 
