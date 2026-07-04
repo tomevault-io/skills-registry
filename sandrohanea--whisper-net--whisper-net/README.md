@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sandrohanea/whisper.net](https://github.com/sandrohanea/whisper.net/tree/main/.github/skills/validate-runtime-loading/SKILL.md)
+Original source: [sandrohanea/whisper.net](https://github.com/sandrohanea/whisper.net/tree/main/.github/skills/manage-whisper-test-models/SKILL.md)
 
 ---
 
