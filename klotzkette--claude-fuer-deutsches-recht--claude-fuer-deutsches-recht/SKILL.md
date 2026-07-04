@@ -1,115 +1,74 @@
 ---
-name: datenschutz-mandantenkommunikation-aufsichtsbehoerde
-description: Wenn es um Datenschutz Mandantenkommunikation Aufsichtsbehoerde in Datenschutzrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: workflow-mietpreisbremse-start
+description: Wenn es um Mietpreisbremse-Start: Prüfungslinie für Miet- und WEG-Recht in Fachanwalt Miet- und Wohnungseigentumsrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Chronologie mit Belegmatrix und Widerspruchsliste. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Kommunikation mit Aufsichtsbehoerden BfDI und Landesbehoerden inhaltlich und taktisch fuehren
+# Mietpreisbremse-Start: Prüfungslinie für Miet- und WEG-Recht
 
+
+## Direktstart: lesen, entscheiden, liefern
+
+Beginne nicht mit einem Fragenkatalog. Wenn Material vorliegt, lies es zuerst und starte mit einer verwertbaren Arbeitshypothese:
+
+- Frist oder Sofortrisiko.
+- erkannte Rolle, Zielrichtung und Verfahrensstand.
+- tragende Tatsachen aus dem Material.
+- bester nächster Arbeitsschritt mit direkt nutzbarem Output.
+
+Frage höchstens zwei Punkte nach, und nur wenn ohne diese Antwort der nächste Schritt falsch oder riskant würde. Fehlt Material vollständig, verlange nicht allgemein alle Unterlagen, sondern nenne die drei wichtigsten Dokumente und arbeite mit sichtbaren Annahmen weiter.
+
+Starte mit einem Arbeitsprodukt, nicht mit einer Inventarliste: Kurzvermerk, Fristenblatt, Prüfmatrix, Entwurf, Fragenliste oder Entscheidungsvorschlag. Routing ist nur Mittel zum Zweck. Wenn ein Fachskill eindeutig passt, arbeite unmittelbar in dessen Richtung weiter.
+
+Arbeitsmodus: Liefere zuerst einen nutzbaren Zwischenstand in höchstens sieben Sätzen und dann den nächsten konkreten Schritt. Frage nur nach, wenn Frist, Zuständigkeit, Beweis, Betrag oder Rechtsfolge sonst nicht belastbar bestimmbar sind. Tabellen nur für Fristen, Belege, Beträge, Varianten oder Streitstoff.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: DSGVO; BDSG; TDDDG; Art. 44 ff — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Tragende Normen verifizieren: BGB §§ 535-577a, BetrKV, WEG §§ 24, 25, 27, BGB §§ 558, 558a, 558b, 573, 573c; WEG §§ 9a, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 44, 45, 46, 47, BGB §§ 535 ff., HOAI, BetrKV — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-**Fokus:** Kommunikation mit Aufsichtsbehoerden BfDI und Landesbehoerden inhaltlich und taktisch fuehren. Sieben-Fragen-Diagnose: Welche Aufsicht zuständig BfDI § 13 BDSG oder Land § 40 BDSG welcher Anlass Prüfung Anhörung Mandant antwortbereit. Schritt-für-Schritt: Mandantenfreigabe zwingend NICHT vorschnell schriftliche Stellungnahme abgeben Akteneinsicht beantragen Frist nutzen. Trade-off-Matrix zwischen Kooperation und Vorsicht. Mustertexte für Antwortbriefe Akteneinsichtsantrag und Bevollmaechtigungsanzeige. Abgrenzung: keine Bussgeldverteidigung im engeren Sinn (datenschutz-bussgeldverfahren-art-83-dsgvo-verteidigung).
+**Fokus:** Mietpreisbremse-Start: Prüfungslinie für Miet- und WEG-Recht; klärt Gebiet, Vormiete, Neubau/Modernisierung, Rüge und Rückforderung; mit Kaltstart, Fristencheck, Belegmatrix, Anschluss-Skills und nutzbarem Output.
 
-### Datenschutz Mandantenkommunikation mit Aufsichtsbehoerden
+### Mietpreisbremse-Start
 
-## Wann dieses Modul hilft / Kaltstart-Fragen
+## Fachlicher Kern — Miet- und WEG-Recht
+- **Problemfokus dieses Skills:** Bleibe beim konkreten Titel `Mietpreisbremse-Start` und löse die dort angelegte Fachfrage; arbeite mit konkreten Tatbestandsmerkmalen, Beweisfragen und dem unmittelbar benötigten Arbeitsprodukt. Routingfragen bleiben Hilfsmittel, wenn Frist, Zuständigkeit oder Verfahrensart offen sind.
+- **Normenradar:** BGB §§ 535 ff., 536, 543, 546a, 548, 556, 556a, 558 ff., 573 ff.; BetrKV; HeizkostenV; WEG §§ 18, 19, 20, 23, 24, 28, 44, 45; GEG; CO2KostAufG.
+- **Verifizierte Anker:** BGH, Urteil vom 20.01.2016 - VIII ZR 93/15 (formelle Betriebskostenabrechnung); BGH, Urteil vom 15.12.2021 - VIII ZR 66/20 (Belegeinsicht Originale/Kopien); BGH, Urteil vom 14.02.2025 - V ZR 128/23 (§ 16 Abs. 2 Satz 2 WEG, Rücklagen/Kostenverteilung); BGH, Urteil vom 14.02.2025 - V ZR 86/24 (§ 20 WEG, bauliche Veränderung, Vorbefassung/Beschlussersetzung).
+- **Arbeitsmodus:** Immer erst Verhältnis Miete/WEG/Gewerbe/Verwaltung trennen, dann Frist, Beschlusskompetenz, Umlagefähigkeit, Belege, Gebrauchsnachteil und Kostenfolge prüfen.
+- **Outputpflicht:** Abrechnungsprüftabelle, Beschlussvorschlag, Anfechtungs-/Beschlussersetzungsskizze, Mietermail, Vermieterschreiben oder Verwalter-To-do-Liste.
+- **Fehlerbremse:** Tragende Normen/Entscheidungen live oder aus der Akte verifizieren; Rechtsprechung nur mit Gericht, Entscheidungsform, Datum, Aktenzeichen und frei prüfbarer Quelle. Keine BeckRS-, juris-, Kommentar- oder Aufsatz-Blindzitate aus Modellwissen.
 
-Sie brauchen den Skill, sobald ein Schreiben einer Aufsichtsbehoerde eingegangen ist — egal ob foermlich (Anhörung nach § 28 VwVfG), informell (Auskunftsverlangen nach Art. 58 I a DSGVO), als Prüfungsankuendigung (Art. 58 I b DSGVO Untersuchung) oder als Reaktion auf eine eigene Meldung.
+## Einstieg
+Arbeite zuerst mit vorhandenen Unterlagen. Frage nur, was die nächste Entscheidung verändert:
+1. Rolle und Ziel der fragenden Person.
+2. Objekt und Rechtsverhältnis: Wohnraum, Gewerberaum, WEG, Hausverwaltung oder Mischfall.
+3. Frist, Zugang, Termin oder Eilrisiko.
+4. Vorhandene Belege und fehlende Schlüsselunterlagen.
+5. Gewünschter Output: Erklärung, Tabelle, Brief, Beschluss, Schriftsatz oder Verhandlungsplan.
 
-Sieben-Fragen-Diagnose:
+## Arbeitsworkflow
+1. **Kurzlage:** Falltyp, Frist, Risiko, Unterlagen und Ziel in fünf Zeilen.
+2. **Weichen:** Zwei bis fünf entscheidende Fragen isolieren; keine Vollprüfung ohne Anlass.
+3. **Belege:** Dokumente, Fotos, Nachrichten, Rechnungen und Protokolle verwerten; Lückenliste erzeugen.
+4. **Recht:** Normen aus BGB, WEG, BetrKV, HeizkostenV, GEG/CO2KostAufG nur in aktueller Fassung verwenden.
+5. **Anschluss:** Passende Fachmodule aus diesem Plugin vorschlagen und begründen.
+6. **Output:** Handlungsfähiges Ergebnis mit nächstem Schritt, Frist und Verantwortlichem.
 
-1. **Welche Aufsicht?** BfDI nach § 13 BDSG (Telekommunikation, Post, Bundesbehoerden, Postdienste) oder Landesaufsicht nach § 40 BDSG (privater Bereich plus Landesbehoerden)? Federfuehrend nach Art. 56 DSGVO?
-2. **Welcher Anlass?** Prüfung von Amts wegen, Beschwerde Art. 77, Folge einer Meldung Art. 33, anonymer Hinweis, koordiniertes Aufsichtsverfahren EDSA?
-3. **Welche Verfahrensart?** Anhörung (kein Bussgeldverfahren), Bussgeldverfahren OWiG, Verwaltungsverfahren Art. 58 II DSGVO (Anordnung)?
-4. **Welche Frist?** Genau notieren, Eingangsstempel, Fristenkalender.
-5. **Ist der Mandant antwortbereit?** Sind Daten vorhanden, ist die Geschäftsführung einig, DSB beteiligt?
-6. **Welches Mandatsziel?** Prüfung erledigen mit minimalem Eingriff, Bussgeld vermeiden, oder öffentliche Wahrnehmung steuern?
-7. **Welche Spurensicherung intern?** Verarbeitungsverzeichnis Art. 30 DSGVO, TOM Art. 32, DSFA Art. 35, AVV Art. 28 — liegt alles vor und ist aktuell?
+## Qualitätsmaßstab
+- Für Laien klar erklären, welche Gefahr besteht und was heute zu tun ist.
+- Für Berufsanfänger sichtbar machen, welche Anspruchsgrundlage, Beweislast und Frist den Fall trägt.
+- Für erfahrene Nutzer knapp bleiben und auf den entscheidenden Streitpunkt zielen.
 
-## Rechtlicher Rahmen
-
-- **Art. 57 DSGVO** Aufgaben Aufsichtsbehoerde.
-- **Art. 58 DSGVO** Befugnisse: I Untersuchungen, II Abhilfemassnahmen.
-- **Art. 31 DSGVO** Zusammenarbeitspflicht des Verantwortlichen mit Aufsicht.
-- **Art. 56 DSGVO** federfuehrende Behörde bei grenzueberschreitender Verarbeitung.
-- **Art. 77 DSGVO** Beschwerderecht.
-- **§ 13 BDSG** Bestellung und Befugnisse des BfDI.
-- **§ 40 BDSG** Aufsichtsbehoerden der Länder.
-- **§ 41 BDSG** Anwendung OWiG, BfDI bzw. Landesaufsicht als Verfolgungsbehoerde.
-- **§ 28 VwVfG** Anhörungsrecht im Verwaltungsverfahren.
-- **§ 55 OWiG** Anhörung im Bussgeldverfahren — **kein Verschulden zugeben**, **kein Schweigen mit Schuldeingestaendnis verwechseln**.
-- **§ 46 OWiG** sinngemaesse Anwendung StPO.
-
-## Mandantenfuehrung Schritt-für-Schritt
-
-1. **Mandantenfreigabe zwingend.** Kein Brief geht raus ohne Geschäftsführungsfreigabe. Vier-Augen-Prinzip.
-2. **NICHT vorschnell schriftliche Stellungnahme abgeben.** Erst Akteneinsicht beantragen, Sachverhalt klären, Belegmatrix erstellen.
-3. **Eingangsschreiben sortieren:** Anhörung, Auskunftsverlangen, Anordnung, Bussgeldanhoerung — andere Vorgehen pro Variante.
-4. **Akteneinsicht beantragen.** Bei Bussgeldverfahren § 49 OWiG i.V.m. § 147 StPO. Bei Verwaltungsverfahren § 29 VwVfG.
-5. **Frist nutzen.** Lieber Fristverlaengerung beantragen als unvollstaendig liefern.
-6. **Inhalt der Stellungnahme:** keine pauschalen Selbstvorwuerfe; konkrete Belege zu Art. 30, 32, 35; klare Trennung zwischen Tatsachen und Rechtsauffassung.
-7. **Begleitend:** Geheimhaltung wahren, kein interner Mailverkehr mit Selbstbelastung.
-
-## Trade-off-Matrix
-
-| Variante | Vorteil | Nachteil |
-|---|---|---|
-| Volle Kooperation, alle Unterlagen sofort | Bussgeldmilderung Art. 83 II c, Vertrauen | Risiko Selbstbelastung, Akte waechst |
-| Akteneinsicht zuerst, dann Stellungnahme | Klarheit über Vorwurfsbasis | Zeitverlust, Aufsicht ungeduldig |
-| Fristverlaengerung mit Begruendung | Sauberes Ergebnis | Aufsicht kann Anordnung Art. 58 II beschleunigen |
-| Bevollmaechtigungsanzeige sofort | Klare Kommunikationswege | Aufsicht erkennt Anwaltsmandat als Eskalationssignal |
-
-## Mustertexte
-
-### Bevollmaechtigungsanzeige
-
-> Sehr geehrte Damen und Herren,
->
-> in der oben bezeichneten Sache zeigen wir an, dass uns [Mandantenfirma], gesetzlich vertreten durch [GF], mit der Vertretung beauftragt hat. Eine entsprechende Vollmacht reichen wir nach. Wir bitten um Zustellung saemtlicher kuenftiger Schreiben zu unseren Haenden.
->
-> Wir beantragen Akteneinsicht in den vollstaendigen Vorgang gemäß [§ 29 VwVfG / § 49 OWiG i.V.m. § 147 StPO].
->
-> Zur Sache wird im Anschluss Stellung genommen. Eine Frist zur Stellungnahme vor Akteneinsicht ist nicht angemessen. Wir beantragen Fristverlaengerung um [4-6 Wochen] ab Akteneinsicht.
-
-### Akteneinsichtsantrag (Bussgeldverfahren)
-
-> Wir beantragen Akteneinsicht in den Bussgeldvorgang nach § 49 OWiG in Verbindung mit § 147 StPO. Um Uebersendung der Akten zur Einsichtnahme bzw. Bereitstellung in elektronischer Form wird gebeten.
-
-### Stellungnahme — Strukturvorschlag
-
-> 1. Sachverhalt (knapp, neutrale Sprache, ohne Selbstvorwurf).
-> 2. Rechtlicher Rahmen (DSGVO-Norm konkret).
-> 3. Maßnahmenlage des Mandanten zum Zeitpunkt des Vorfalls (Art. 30, 32, 35 DSGVO — mit Belegen als Anlage).
-> 4. Bewertung (Subsumtion mit Bezug zu Aufsichtspraxis und EDSA-Leitlinien).
-> 5. Ergebnis und Antrag (Einstellung, Verwarnung statt Bussgeld Art. 58 II b, Maßnahmenplan).
-
-## Typische Fehler
-
-- Geschäftsführer telefoniert "kurz" mit Sachbearbeiter — alles geht zur Akte.
-- Pauschale Schuldeingestaendnisse in Mailverkehr.
-- Stellungnahme ohne Akteneinsicht.
-- Frist verpasst und keinen Verlaengerungsantrag gestellt.
-- Beweise im Verarbeitungsverzeichnis Art. 30 nicht aktuell.
-
-**Was triggert die Aufsichtsbehoerde besonders?** Schweigen, Floskeln, fehlendes Verarbeitungsverzeichnis Art. 30, kein DSB benannt obwohl § 38 BDSG Schwelle ueberschritten.
-
-## Quellen Stand 06/2026
-
-- DSGVO Art. 31, 56, 57, 58, 77, 83.
-- BDSG § 13, § 38, § 40, § 41.
-- VwVfG § 28, § 29.
-- OWiG § 46, § 49, § 55.
-- StPO § 147.
-- EDSA, Leitlinien 04/2022 zur Berechnung der Geldbussen nach DSGVO, angenommen 24.05.2023.
-- Keine Aufsatzfundstellen aus Modellwissen.
+## Quellen- und Sicherheitsregel
+- Vor tragenden Aussagen den aktuellen Normtext und die aktuelle Behörden-/Gerichtspraxis prüfen; keine Scheingenauigkeit aus Modellwissen.
+- Rechtsprechung nur mit Gericht, Entscheidungsform, Datum, Aktenzeichen und frei prüfbarer Quelle ausgeben.
+- Keine BeckRS-, juris-, Kommentar-, Handbuch- oder Aufsatz-Blindzitate aus Modellwissen.
+- Annahmen, fehlende Unterlagen, Beweisrisiken und Fristen ausdrücklich markieren.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
