@@ -1,63 +1,52 @@
 ---
-name: beratung-und-abstimmung-orientierung
-description: Wenn es um Beratung und Abstimmung: Orientierung in Schöffen und Handelsrichter Praxis geht: ordnet Sachverhalt, Norm, Beweislast, Gegenargumente und nächsten Schritt; liefert ein direkt nutzbares Arbeitsprodukt mit Prüfpunkten, Risiken und nächstem Schritt. Use when this capability is needed.
+name: firma-firmenbildung-formwechsel-registercheck
+description: Wenn es um Firma und Firmenbeanstandung in Handelsregister Praxis geht: ordnet Sachverhalt, Norm, Beweislast, Gegenargumente und nächsten Schritt; liefert einen Einreichungsplan mit Form-, Portal- und Nachweischeck. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Beratung und Abstimmung: Orientierung
+# Firma und Firmenbeanstandung
+
+## Normenanker
+
+Vor einer rechtlichen Schlussfolgerung diese Anker am aktuellen Normtext prüfen; Spezial- und Landesrecht nur hinzunehmen, wenn es den konkreten Auftrag traegt:
+
+- `§ 8 HGB` — Handelsregister.
+- `§ 12 HGB` — Anmeldungen und Einreichungen.
+- `§ 15 HGB` — Publizitaet des Handelsregisters.
+- `§ 29 HGB` — Anmeldung des Kaufmanns.
+- `§ 106 HGB` — Eintragung der OHG.
+- `§ 107 HGB` — Anmeldepflichten Personengesellschaft.
+- `§ 39 GmbHG` — Änderung der Geschäftsführung.
+- `§ 40 GmbHG` — Gesellschafterliste.
+- `§ 382 FamFG` — Registeranmeldung und Zwischenverfuegung.
+- `§ 395 FamFG` — Loeschungsverfahren.
+
+Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: GVG §§ 28-77, 116, StPO §§ 30 ff., LRiStAG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Fachkern: Beratung und Abstimmung: Orientierung
-- **Normen-/Quellenanker:** GVG, StPO/ZPO, Verfahrensgrundsätze, Beratungsgeheimnis, Ablehnung/Befangenheit, Beweiswürdigung, Handelsrichterrolle in der KfH.
-- **Entscheidende Weiche:** Rolle ehrenamtlicher Richter, zulässige Frage, Aktenkenntnis, Beratung, Neutralität, Laienverständnis und Grenzen eigener Recherche klären.
-- **Arbeitsprodukt:** Erzeuge eine konkrete Prüf- oder Entscheidungsmatrix mit Norm, Tatbestand, Beleg, Einwand, Risikoampel und nächstem Schritt; Anschluss-Skills nur bei echter Vertiefung nennen.
+## Fachlicher Zuschnitt
 
-## Sofortsortierung
+Prüft Firmenkern, Unterscheidbarkeit, Irreführung, Rechtsformzusatz, IHK-Stellungnahme und Abgrenzung zu Marke/Domain.
 
-1. Beteiligte, Rolle und Kommunikationskanal klären: Verbraucher, Behörde, Kammer, Gericht, Plattform, Bank, Kammer oder Verfahrensgegner.
-2. Fristen, Zustellungen, Aktenzeichen, Anhörungen, Mahnungen, Bescheide und Vollstreckungsdrohungen zuerst isolieren.
-3. Zahlungen, Anerkenntnisse, Aussagen gegenüber Polizei/Behörde/Kammer und irreversible Handlungen als rote Zone markieren.
-4. Fehlende Belege konkret nachfordern: Vertrag, Rechnung, AGB, Screenshot, Sendungsnummer, Bescheid, Protokoll, Vollmacht, Zustellnachweis.
-5. Den kleinsten sicheren nächsten Schritt formulieren, bevor ein großer Streit eröffnet wird.
+## Quellenrahmen
 
-## Prüfprogramm
+HGB §§ 8 ff. und § 15, FamFG-Registerverfahrensrecht, GmbHG/HGB/AktG/UmwG je nach Gesellschaftsform, HRV/Registerportal-Praxis.
 
-- **Normen- und Quellenanker:** GVG, DRiG, StPO/ZPO und Beratungsgeheimnis live prüfen
-- **Tatsachenmatrix:** sichere Tatsachen, streitige Tatsachen, fehlende Dokumente und Beweisrisiken getrennt ausgeben.
-- **Kommunikationsstrategie:** sachlich, knapp, fristwahrend; keine unnötigen Zusatzinformationen, keine vorschnellen Schuldanerkenntnisse.
-- **Gegenposition:** die stärkste plausible Gegenseite darstellen und sagen, welche Unterlage oder Norm sie trägt oder entkräftet.
-- **Entscheidungspfad:** sofort handeln, nachfordern, zahlen unter Vorbehalt, widersprechen, Beschwerde, Rechtsbehelf, Vergleich oder professionelle Hilfe.
+## Arbeitsmodus
 
-## Typische Stolperstellen
-
-- Eigene Vorinformationen und private Recherchen nicht unkontrolliert in die Beratung tragen.
-- Beratungsgeheimnis und Unabhängigkeit strikt schützen.
-- Unsicherheit früh in der Sitzung sachlich über den Vorsitz klären.
-
-## Arbeitsprodukte
-
-Erzeuge verständliche Erklärung, Sitzungscheckliste und Fragen, die vor dem Termin geklärt werden sollen; immer mit Befangenheitswarnung, Do/Don’t-Liste, Quellencheck und Nachbereitung.
-
-## Prompts, die dieser Skill stellen soll
-
-- Welches Gericht und welche Rolle?
-- Geht es um Vorbereitung, laufende Sitzung, Beratung oder Nachbereitung?
-
-## Normen & Rechtsprechung
-
-Konkret zu prüfen:
-
-- § 263 StPO (Geheimhaltung)
-- § 43 DRiG (Eid)
-- § 45 DRiG
+1. **Aktenlage sichern:** Liste vorhandene Dokumente, fehlende Nachweise, offene Originale, Register-/Grundbuchauszüge, Aktenzeichen, Datum, Beteiligte und Entscheidungsdruck.
+2. **Form und Zuständigkeit prüfen:** Trenne materielle Rechtslage, formelle Nachweise, elektronische Einreichung, Beglaubigung/Beurkundung, Übersetzung/Apostille und Zuständigkeit.
+3. **Hindernisse benennen:** Formuliere jedes Hindernis konkret: behebbar, streitig, riskant, rein redaktionell oder materiell-rechtlich.
+4. **Nächste Handlung erzeugen:** Liefere bei Bedarf Nachreichungsschreiben, Mandantenupdate, Checkliste, Fristenlog, Beschwerdegerüst oder Vollzugsmatrix.
+5. **Belegdisziplin:** Zitiere Normen nur, wenn sie zum Schritt passen. Rechtsprechung nur mit Gericht, Datum, Aktenzeichen und frei prüfbarem Link; sonst ausdrücklich als zu verifizieren markieren.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
