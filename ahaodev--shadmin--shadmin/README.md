@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ahaodev/shadmin](https://github.com/ahaodev/shadmin/tree/main/cli/skill/shadmin-cli/SKILL.md)
+Original source: [ahaodev/shadmin](https://github.com/ahaodev/shadmin/tree/main/.github/skills/shadmin-dev/SKILL.md)
 
 ---
 
