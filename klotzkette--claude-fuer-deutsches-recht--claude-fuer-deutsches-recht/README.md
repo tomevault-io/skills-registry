@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/ordnungswidrigkeitenrecht/skills/owi-091-aussenwirtschaft-tatbestand-zerlegen/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/ordnungswidrigkeitenrecht/skills/owi-095-aussenwirtschaft-einstellung-anregen/SKILL.md)
 
 ---
 
