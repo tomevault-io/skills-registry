@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [artokun/comfyui-mcp](https://github.com/artokun/comfyui-mcp/tree/main/plugin/skills/prompt-engineering/SKILL.md)
+Original source: [artokun/comfyui-mcp](https://github.com/artokun/comfyui-mcp/tree/main/plugin/skills/model-compatibility/SKILL.md)
 
 ---
 
