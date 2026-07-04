@@ -1,155 +1,91 @@
 ---
-name: pflichtenkollision-shift-restructuring-lounge
-description: Wenn es um Pflichtenkollision und Shift of Fiduciary Duties in der Krise in Krisenfrüherkennung und StaRUG-Management geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: bmz-entwicklungszusammenarbeit-und-bilaterale-abkommen
+description: Wenn es um Entwicklungszusammenarbeit und bilaterale Abkommen (BMZ) in Legistik-Werkstatt geht: ordnet Akteninhalt, Belege, Lücken und Nachforderungen; liefert eine Schnittstellenkarte mit Kollisions-, Zuständigkeits- und Nachweisfragen. Auswahlstichwort: Bmz Entwicklungszusammenarbeit Und Bilaterale Abkommen; Arbeitsfeld: Legistik-Werkstatt. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Pflichtenkollision und Shift of Fiduciary Duties in der Krise
+# Entwicklungszusammenarbeit und bilaterale Abkommen (BMZ)
+
+## Normenanker
+
+Arbeitsfokus: **Entwicklungszusammenarbeit und bilaterale Abkommen (BMZ)**. Prüfe diese Anker am Sachverhalt; ergänze nur Normen, die denselben Output, dieselbe Frist oder dieselbe Beweisfrage tragen:
+
+- `Art. 5 Abs. 1 DSGVO` — Datenschutzgrundsätze.
+- `Art. 6 Abs. 1 DSGVO` — Rechtsgrundlage.
+- `Art. 22 DSGVO` — automatisierte Entscheidungen.
+- `Art. 35 DSGVO` — Datenschutz-Folgenabschätzung.
+- `§ 3 OZG` — Nutzerkonten/Portalverbund live prüfen.
+- `§ 5 EGovG` — elektronische Aktenführung live prüfen.
+- `Art. 3 KI-VO` — Begriffe.
+- `Art. 6 KI-VO` — Hochrisiko-Systeme.
+
+Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: StaRUG; § 1 StaRUG — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+- Fristen und Eilrisiken zuerst markieren: GGO Ressortbeteiligung i.d.R. 4 Wochen, NKR-Stellungnahme 4 Wochen, Bundesrat 1. Durchgang 6 Wochen / 9 Wochen, Vermittlungsausschuss nach Bedarf.
+- Tragende Normen verifizieren: GGO §§ 40-49 (Rechtsetzungsverfahren), Handbuch der Rechtsförmlichkeit (BMJ), NKR-Gesetz, BGleiG, IT-Konsolidierungs-Konzept, eNorm-Standard, GG Art. 76, 77, 78 — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Ressort (BMJ und Fachressort), Bundeskanzleramt, Bundesrat, NKR, Bundestagsausschüsse, Bundesregierung, Wissenschaftliche Dienste, Lobbyregister.
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Referentenentwurf, BT-Drucksache, Gesetzesfolgenabschätzung, NKR-Stellungnahme, Verbändeanhörungs-Stellungnahme, Synopse, Erfüllungsaufwandsberechnung — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
 ## Spezialwissen
 
-Im Normalzustand schuldet der Geschäftsführer seine Loyalität den Gesellschaftern — er ist ihr Agent, ihr verlängerter Arm. In der Krise dreht sich das Koordinatensystem. Je tiefer das Unternehmen in die Insolvenzgefährdung gleitet, desto stärker verschiebt sich die Pflichtbindung vom Eigentümerinteresse zum Gläubigerinteresse. Dieser "Shift of Fiduciary Duties" ist keine anglistische Theorie, sondern gelebtes deutsches Recht — mit direkten Haftungsfolgen.
+> Vierter und tiefster Skill in der Ressort-Kette: Sachfeld-Kompass für das Spezialthema Entwicklungszusammenarbeit und bilaterale Abkommen im Geschäftsbereich BMZ. Liefert dem Normgeber Normbestand, Akteure, EU-Bezug und Prüfpunkte für dieses eine Sachfeld.
 
----
+## Eingaben
 
-## Rechtsgrundlagen
+- Auftragsblatt aus `legistik-auftragsaufnahme`
+- Ressort-Kompass aus `legw-ressort-bmz`
+- Aufgabenmatrix aus `legw-ressortaufgaben-bmz`
+- Konkrete Sachfrage oder konkretes Normvorhaben in diesem Sachbereich
 
-- § 1 StaRUG (Krisenfrüherkennungspflicht)
-- § 15a InsO (Insolvenzantragspflicht)
-- § 15b InsO (Zahlungsverbote nach Insolvenzreife)
-- § 43 GmbHG (Sorgfaltspflicht GF)
-- § 93 AktG (Sorgfaltspflicht Vorstand)
-- § 19 Abs. 2 InsO (Fortführungsprognose bei Überschuldung)
-- Rechtsprechung: keine Entscheidung aus Modellwissen zitieren; vor Ausgabe über offizielle oder frei zugängliche Quelle mit Gericht, Entscheidungsform, Datum, Aktenzeichen und tragender Aussage verifizieren.
-- EuInsVO Art. 3 Abs. 1 (COMI — Centre of Main Interests)
+## Normbestand
 
----
+Kernbestand des Sachfelds: Verwaltungsvereinbarungen; HG; BHO; Vertragsgesetze (BGBl II).
 
-## Pflichten
+Prüfreihenfolge: Verfassungsrang vor Bundesgesetz vor Rechtsverordnung vor Verwaltungsvorschrift. Bei EU-Bezug zuerst Unionsrecht (Vorrang und Anwendungsbefehl), dann nationale Umsetzungs- und Begleitnormen.
 
-### 1. Das normale Pflichtenbild — Eigentümerinteresse
+## Akteure und Aufsicht
 
-Im Normalzustand ist der Geschäftsführer dem Gesellschafterinteresse verpflichtet:
+BMZ; GIZ; KfW; Auslandshandelskammern; AA-Schnittstelle.
 
-- Gewinnmaximierung, Wachstum, Erhaltung des Unternehmenswertes
-- Weisungsrecht der Gesellschafterversammlung (GmbH) beachten
-- Unternehmerische Entscheidungen nach Business Judgment Rule treffen
+Akteurskarte erstellen: federfuehrende Einheit im Haus; mitzeichnende Ressorts; nachgeordnete Behörden im Vollzug; betroffene Länderbehoerden; Verbaende; wissenschaftliche Beiraete; zuständige Gerichtsbarkeit.
 
-Gläubiger sind in dieser Phase nur mittelbar geschützt — durch das Kapitalerhaltungsgebot (§§ 30, 31 GmbHG) und die allgemeinen Insolvenztatbestände.
+## EU- und voelkerrechtlicher Bezug
 
-### 2. Der Shift — Wann dreht sich das Koordinatensystem?
+Team Europe Initiatives; EU-Treuhandfonds; NDICI.
 
-Der Pflichtenwandel vollzieht sich graduell, nicht schlagartig:
+Prüfen: einschlaegige Verordnung oder Richtlinie? Umsetzungsfrist? Notifizierungspflicht? Beihilferechtlicher Vorbehalt? Vorabentscheidungsverfahren absehbar?
 
-| Phase | Pflichtenschwerpunkt | Gläubigerschutz |
-|---|---|---|
-| Normalbetrieb | Eigentümerinteresse | Mittelbar |
-| Strategiekrise | Eigentümer + Überwachung | Mittelbar, § 1 StaRUG |
-| Ertragskrise | Eigentümer + Gläubiger gleichwertig | Aktiv: § 1 StaRUG |
-| Liquiditätskrise | Gläubigerinteresse dominant | Direkter Schutz |
-| Insolvenzreife | Ausschließlich Gläubigerinteresse | § 15a, § 15b InsO |
+## Typische Legistik-Aufgaben
 
-Der "tipping point" liegt regelmäßig beim Eintritt der drohenden Zahlungsunfähigkeit nach § 18 InsO: Ab diesem Moment sind Maßnahmen, die ausschließlich dem Gesellschafterinteresse dienen (Gewinnausschüttung, riskante Investitionen), haftungsrechtlich gefährlich.
+Bilaterale Programme; Schwerpunktlaender; Wirkungslogik; Kreditrahmen.
 
-Rechtsprechung: keine Entscheidung aus Modellwissen zitieren; vor Ausgabe über offizielle oder frei zugängliche Quelle mit Gericht, Entscheidungsform, Datum, Aktenzeichen und tragender Aussage verifizieren.
+Schrittfolge für den Normgeber:
 
-Rechtsprechung live prüfen: Keine Entscheidung aus Modellwissen zitieren; vor Ausgabe über amtliche oder frei zugängliche Quelle mit Gericht, Entscheidungsform, Datum, Aktenzeichen und tragender Aussage verifizieren.
+1. Sachverhalt und Regelungsziel in diesem Sachfeld prüfen
+2. Vorhandene Normen kartieren; Lueckenanalyse
+3. Eingriffsintensitaet und Adressatenkreis bestimmen
+4. Verfassungs- und Europarechtskonformitaet prüfen
+5. Tatbestand und Rechtsfolge sauber fassen; Bestimmtheit prüfen
+6. Vollzugs- und Aufsichtsstruktur kontrollieren
+7. Begleit- und Folgenormen (Verordnungen; Verwaltungsvorschriften) mitplanen
 
-1. Das Recht des Niederlassungsstaates regelt die Haftung des Geschäftsführers nach Insolvenzreife.
-2. Eine Flucht in ausländische Gesellschaftsformen (Limited, S.à r.l.) schützt nicht vor dem deutschen Haftungsregime, wenn das operative Zentrum in Deutschland liegt.
-3. Der COMI (Centre of Main Interests) bestimmt das anwendbare Insolvenzrecht — und damit die Haftungsgrundlage.
+## Stolpersteine und Prüfpunkte
 
-### 4. COMI-Verlagerung — Verbote und Grenzen
+Auslandskorruption; Wirkungskontrolle; Sicherheitslage; Sanktionsumsetzung.
 
-Eine Verlagerung des COMI (z.B. von Deutschland nach Österreich oder Niederlande) zur Erschleichung eines anderen Insolvenzrechts ist nicht schlechthin verboten, aber an enge Voraussetzungen geknüpft:
+Erweiterte Prüfpunkte: Bestimmtheitsgebot; Verhältnismäßigkeit; Rueckwirkungsverbot; Gleichheitssatz; Datenschutz-Grundverordnung bei Datenverarbeitung; Wechselwirkungen zu anderen Ressorts; Befristung und Evaluation.
 
-- Die Verlagerung muss **tatsächlich** und **nachhaltig** sein (nicht nur formale Sitzverlegung)
-- **§ 3 Abs. 1 EuInsVO** verlangt, dass der COMI für Dritte erkennbar und nachprüfbar am neuen Ort liegt
-- **Timing**: Eine COMI-Verlagerung kurz vor Insolvenzantrag wird von Gerichten als Missbrauch gewertet und rückgängig gemacht
-- Deutsche Gerichte können bei Rechtsmissbrauch weiterhin zuständig bleiben
+## Anschluss an die Legistik-Kette
 
-**Praxiswarnung:** Mandanten, die eine schnelle COMI-Verlagerung als Ausweg aus dem deutschen Insolvenzregime erwägen, laufen in ein offenes Messer — die Rechtsprechung ist hier eindeutig restriktiv.
+- `legistik-auftragsaufnahme` -> `legw-ressort-router` -> `legw-ressort-bmz` -> `legw-ressortaufgaben-bmz` -> `legw-bmz-entwicklungszusammenarbeit-und-bilaterale-abkommen` (hier) -> `normhierarchie-routing` und Querprueferei.
 
-### 5. Pflichtenkollision — Gesellschafterweisung vs. Gläubigerschutz
+## Abgrenzung
 
-In der Krise entsteht häufig eine direkte Pflichtenkollision:
-
-- **Gesellschafter wollen:** Dividende, Finanzierungsmaßnahmen zugunsten anderer Gruppengesellschaften, Liquidation ohne Insolvenz
-- **Gläubigerschutz verlangt:** Erhalt der Masse, keine masseschmälernden Zahlungen, § 15b InsO
-
-**Lösung der Pflichtenkollision:**
-
-1. **Vorrang des Gläubigerinteresses** bei Insolvenzreife — Gesellschafterweisung ist in diesem Fall unbeachtlich (§ 15a InsO ist zwingendes Recht)
-2. **Business Judgment Rule** gilt nur noch eingeschränkt
-3. **Transparenzpflicht** gegenüber allen Stakeholdern — kein selektives Informationsmanagement
-4. **Externe Beratung** als Haftungspuffer: Wer nachweislich auf Basis eines validierten IDW S 11-Gutachtens gehandelt hat, ist besser gestellt
-
----
-
-## Templates
-
-### Muster: Pflichtenstatus-Memo für Geschäftsführer-Akte
-
-```
-Internes Memo
-Datum: [TT.MM.JJJJ]
-Von: [Name GF]
-Betreff: Pflichtenstatus-Analyse gem. § 1 StaRUG / Shift of Fiduciary Duties
-
-1. AKTUELLES KRISENSTADIUM
- Einschätzung: [Strategiekrise / Ertragskrise / Liquiditätskrise / drohende ZU]
- Grundlage: [eigene Analyse / Beratereinschätzung / Gutachten]
-
-2. PFLICHTENBINDUNG
- Primäre Pflichtenbindung aktuell: [Gesellschafter / Gläubiger / beides]
- Begründung:
-
-3. GESELLSCHAFTERWEISUNGEN
- Laufende Weisungen: [Beschreibung]
- Befolgbarkeit: [ja / eingeschränkt / nein — Begründung]
-
-4. INTERCOMPANY-MASSNAHMEN
- Laufende Intercompany-Zahlungen: [ja / nein]
- Überprüfung der Marktüblichkeit: [ja / nein / in Bearbeitung]
-
-5. NÄCHSTE SCHRITTE
- [Maßnahmenplan]
-
-Erstellt von: ___________________
-```
-
----
-
-## Fallstricke
-
-1. **Der Shift kommt früher als gedacht** — viele GF gehen davon aus, erst bei Zahlungsunfähigkeit dem Gläubigerinteresse verpflichtet zu sein. Die Rechtsprechung zieht die Grenze früher: bereits bei drohender Zahlungsunfähigkeit sind masseschmälernde Maßnahmen haftungsträchtig.
-
-2. **Gruppengesellschaften sind keine sichere Bank** — Zahlungen an verbundene Unternehmen, die nach Maßstab des Drittvergleichs nicht marktüblich sind, können nach Insolvenzanfechtungsrecht (§§ 129 ff. InsO) rückgefordert werden.
-
-3. **COMI-Verlagerung als Haftungsflucht** ist regelmäßig gescheitert — Gerichte sind sensibilisiert und setzen hohe Anforderungen an echte operative Verlagerungen.
-
-4. **Gesellschafterweisung entbindet nicht von § 15a InsO** — selbst wenn alle Gesellschafter Fortführung wollen und beauftragen: Die Insolvenzantragspflicht ist nicht disponibel.
-
-5. **"Management by Delegation" in der Krise** ist kein Enthaftungsinstrument — Gesamtverantwortung aller GF-Mitglieder bleibt bestehen, auch bei formal getrennten Ressorts.
-
----
-
-## Triage — Erste Einordnung
-
-Bevor losgelegt wird, klaere:
-1. **Krisenstadium?** Ertragskrise (EBIT negativ), Liquiditaetskrise (Cashflow negativ) oder akute Insolvenznaehe (ZU/Ueberschuldung)?
-2. **Insolvenzgrund?** § 17 InsO (ZU), § 18 InsO (drohende ZU), § 19 InsO (Ueberschuldung)?
-3. **Fristen?** Antragspflicht § 15a InsO: 3 Wochen (ZU), 6 Wochen (Ueberschuldung).
-4. **Sanierungs-Pfad?** StaRUG (drohende ZU), Schutzschirm, Eigenverwaltung oder Regelverfahren?
+Abgrenzung zu legistik-auftragsaufnahme (Erstaufnahme), normhierarchie-routing (Normwahl), normenkartierung (Bestand), verfassungsmaessigkeit-quercheck (Verfassungsfragen), europarechtskonformitaet (EU-Bezug), folgenabschaetzung-* (Folgenabschaetzung). Dieser Skill dient als Sachfeld-Kompass; er ersetzt nicht die Normprueferei, sondern liefert das Sachverstaendnis für den Normgeber.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
