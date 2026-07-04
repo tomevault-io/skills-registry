@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kernel/hypeman](https://github.com/kernel/hypeman/tree/main/skills/optimize-initializing-speed/SKILL.md)
+Original source: [kernel/hypeman](https://github.com/kernel/hypeman/tree/main/skills/monitoring-feature-observability/SKILL.md)
 
 ---
 
