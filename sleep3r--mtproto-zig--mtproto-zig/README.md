@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sleep3r/mtproto.zig](https://github.com/sleep3r/mtproto.zig/tree/main/.agent/skills/architecture/SKILL.md)
+Original source: [sleep3r/mtproto.zig](https://github.com/sleep3r/mtproto.zig/tree/main/.agent/skills/discover-zig/SKILL.md)
 
 ---
 
