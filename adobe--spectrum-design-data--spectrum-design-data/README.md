@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [adobe/spectrum-design-data](https://github.com/adobe/spectrum-design-data/tree/main/tools/s2-docs-mcp/skills/s2-docs/SKILL.md)
+Original source: [adobe/spectrum-design-data](https://github.com/adobe/spectrum-design-data/tree/main/tools/design-data-skill/skills/design-data/SKILL.md)
 
 ---
 
