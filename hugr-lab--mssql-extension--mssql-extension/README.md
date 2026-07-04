@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hugr-lab/mssql-extension](https://github.com/hugr-lab/mssql-extension/tree/main/.claude/skills/speckit-plan/SKILL.md)
+Original source: [hugr-lab/mssql-extension](https://github.com/hugr-lab/mssql-extension/tree/main/.claude/skills/speckit-tasks/SKILL.md)
 
 ---
 
