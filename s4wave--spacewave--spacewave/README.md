@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [s4wave/spacewave](https://github.com/s4wave/spacewave/tree/main/.claude/skills/debug-ui-layout/SKILL.md)
+Original source: [s4wave/spacewave](https://github.com/s4wave/spacewave/tree/main/.claude/skills/spacewave-debug/SKILL.md)
 
 ---
 
