@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA/aicr](https://github.com/NVIDIA/aicr/tree/main/.claude/skills/aicr-creating-slide-decks/SKILL.md)
+Original source: [NVIDIA/aicr](https://github.com/NVIDIA/aicr/tree/main/.claude/skills/aicr-creating-guided-demos/SKILL.md)
 
 ---
 
