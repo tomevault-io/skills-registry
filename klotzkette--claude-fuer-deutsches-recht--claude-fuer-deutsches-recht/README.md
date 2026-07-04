@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-erbrecht/skills/pflichtteilsergaenzung-zehnjahresfrist-bgh-iv-zr-249-15/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-agrarrecht/skills/tierhaltung-immissionsabwehr-paragraf-906-bgb-ta-luft/SKILL.md)
 
 ---
 
