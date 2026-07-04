@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [spatie/freek.dev](https://github.com/spatie/freek.dev/tree/main/.claude/skills/pest-testing/SKILL.md)
+Original source: [spatie/freek.dev](https://github.com/spatie/freek.dev/tree/main/.claude/skills/livewire-development/SKILL.md)
 
 ---
 
