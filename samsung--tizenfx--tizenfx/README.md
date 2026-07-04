@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Samsung/TizenFX](https://github.com/Samsung/TizenFX/tree/main/.agents/skills/pr-code-review/SKILL.md)
+Original source: [Samsung/TizenFX](https://github.com/Samsung/TizenFX/tree/main/.agents/skills/pr-review-check/SKILL.md)
 
 ---
 
