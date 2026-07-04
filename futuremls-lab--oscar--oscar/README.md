@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [FutureMLS-Lab/OSCAR](https://github.com/FutureMLS-Lab/OSCAR/tree/main/sglang-research/.claude/skills/write-sglang-test/SKILL.md)
+Original source: [FutureMLS-Lab/OSCAR](https://github.com/FutureMLS-Lab/OSCAR/tree/main/sglang-research/.claude/skills/ci-workflow-guide/SKILL.md)
 
 ---
 
