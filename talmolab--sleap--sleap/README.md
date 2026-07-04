@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [talmolab/sleap](https://github.com/talmolab/sleap/tree/main/.claude/skills/pr/skill.md)
+Original source: [talmolab/sleap](https://github.com/talmolab/sleap/tree/main/.claude/skills/qt-testing/SKILL.md)
 
 ---
 
