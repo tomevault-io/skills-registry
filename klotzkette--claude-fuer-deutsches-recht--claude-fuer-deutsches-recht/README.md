@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/datenschutzrecht/skills/datenschutz-schadensersatz-art-82-dsgvo-gerichtsstreit/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/normenkontrollrat-nkr/skills/nkr-alternativen-pruefung-keine-regelung-soft-law/SKILL.md)
 
 ---
 
