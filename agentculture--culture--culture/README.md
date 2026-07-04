@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentculture/culture](https://github.com/agentculture/culture/tree/main/.claude/skills/spec-to-plan/SKILL.md)
+Original source: [agentculture/culture](https://github.com/agentculture/culture/tree/main/.claude/skills/version-bump/SKILL.md)
 
 ---
 
