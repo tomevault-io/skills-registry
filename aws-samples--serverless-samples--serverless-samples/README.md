@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aws-samples/serverless-samples](https://github.com/aws-samples/serverless-samples/tree/main/claude-hub/examples/teams/api/skills/api-design/SKILL.md)
+Original source: [aws-samples/serverless-samples](https://github.com/aws-samples/serverless-samples/tree/main/claude-hub/examples/fragments/python-lambda/.claude/skills/sam-deploy/SKILL.md)
 
 ---
 
