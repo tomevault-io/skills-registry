@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/festlandchina-wirtschaftsverkehr/skills/chn-088-visas-expats-and-secondment/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/deutsche-rechtsgeschichte/skills/drg-010-preussisches-allgemeines-landrecht/SKILL.md)
 
 ---
 
