@@ -1,140 +1,72 @@
 ---
-name: datenschutz-datenpanne-art-33-34-72h-incident-response
-description: Wenn es um Datenpannen-Incident-Response Art in Datenschutzrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: anlage-red-anlagen-anlagenkonvolut-sonderfall
+description: Wenn es um Anlage: Red-Team und Qualitätskontrolle in Anlagen zu Schriftsätzen geht: zerlegt Ergebnis, Frist, Zuständigkeit, Beweislast und Gegenposition; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Datenpannen-Incident-Response Art
+# Anlage: Red-Team und Qualitätskontrolle
 
+## Normenanker
+
+Arbeitsfokus: **Anlage: Red-Team und Qualitätskontrolle**. Prüfe diese Anker am Sachverhalt; ergänze nur Normen, die denselben Output, dieselbe Frist oder dieselbe Beweisfrage tragen:
+
+- `§ 130 Nr. 6 ZPO` — Schriftsatzanforderungen.
+- `§ 130a Abs. 1 ZPO` — elektronisches Dokument.
+- `§ 131 Abs. 1 ZPO` — Beifügung von Abschriften/Anlagen.
+- `§ 133 Abs. 1 ZPO` — Abschriften für Zustellung.
+- `§ 138 Abs. 1 ZPO` — Tatsachenvortrag.
+- `§ 253 Abs. 2 ZPO` — Klageinhalt.
+- `§ 299 Abs. 1 ZPO` — Akteneinsicht.
+- `§ 371 Abs. 1 ZPO` — Augenschein.
+
+Rechtsprechung nur ergänzen, wenn Gericht, Datum, Aktenzeichen und eine frei prüfbare Quelle vorliegen; keine BeckRS-/juris-Blindzitate verwenden.
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
 - Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: DSGVO; BDSG; TDDDG; Art. 44 ff — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Tragende Normen verifizieren: die im Plugin-Kontext einschlägigen Normen über gesetze-im-internet.de, dejure.org, eur-lex.europa.eu und die amtlichen Bundes-/Landesportale live prüfen — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
 - Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
 - Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-**Fokus:** Datenpannen-Incident-Response Art. 33 und 34 DSGVO. 72-Stunden-Frist ab Kenntnis Art. 33 I DSGVO und Benachrichtigung Betroffener bei hohem Risiko Art. 34 I DSGVO. Sieben-Fragen-Diagnose: Wer hat wann was entdeckt Datenkategorien Anzahl Betroffener Vertraulichkeit Integritaet Verfuegbarkeit Risiko TOM Art. 32 DSGVO Auftragsverarbeiter beteiligt. Schritt-für-Schritt: Sachverhalt klären NICHT vorschnell handeln Risikobewertung dokumentieren Mandantenfreigabe Aufsicht melden Betroffene benachrichtigen Maßnahmen Lessons Learned. Mustertexte für Meldebogen und Betroffenenbenachrichtigung. Abgrenzung: keine Bussgeldverteidigung (datenschutz-bussgeldverfahren-art-83-dsgvo-verteidigung).
+## Spezialwissen: Anlage: Red-Team und Qualitätskontrolle
+- **Konkreter Gegenstand:** Anlage: Red-Team und Qualitätskontrolle.
+- **Normen-/Verfahrensanker:** ZPO/StPO/VwGO/ArbGG/SGG je nach Verfahren, beA-/ERV-Anforderungen, Anlagenlogik, Beweisangebot, Schwärzung und Dateiorganisation.
+- **Entscheidende Weiche:** Anlage nur aufnehmen, wenn sie eine konkrete Behauptung trägt; Nummerierung, Fundstelle, Dateiname, OCR, Schwärzung und Versandfähigkeit müssen zusammenpassen.
+- **Arbeitsprodukt:** Erstelle eine fallbezogene Matrix `Behauptung / Norm / Beleg / Risiko / Gegenargument / nächster Schritt`; keine bloße Wiederholung des allgemeinen Plugin-Workflows.
 
-### Datenschutz Datenpanne — 72 Stunden Incident Response nach Art. 33 und 34 DSGVO
+## Fallweichen
+Wenn Unterlagen vorhanden sind, arbeite zuerst aus den Unterlagen. Stelle nur Rückfragen, die die nächste Weiche verändern:
 
-## Zweck
+1. Welche Rolle hat die fragende Person und wer ist Gegenüber?
+2. Welches konkrete Ziel soll erreicht oder verhindert werden?
+3. Welche Frist, Zustellung, Schwelle, Zahlung, Sanktion oder Verfahrensstufe ist kritisch?
+4. Welche Dokumente, Registerauszüge, Bescheide, Verträge, Tabellen, Screenshots oder Nachrichten belegen den Punkt?
+5. Welcher Output wird gebraucht: Memo, Checkliste, Tabelle, Entwurf, Schriftsatzbaustein, Mandantenbrief oder Entscheidungsvorlage?
 
-Führt durch den Akutfall einer Datenpanne. Ziel ist die fristwahrende und zugleich bussgeldminimierende Meldung an die Aufsichtsbehoerde nach Art. 33 DSGVO und — falls erforderlich — die Benachrichtigung der Betroffenen nach Art. 34 DSGVO, ohne durch vorschnelle Selbstbelastung das Bussgeldrisiko nach Art. 83 DSGVO zu erhoehen.
+## Arbeitsworkflow
+1. **Fallbild bilden:** Sachverhalt, Rollen, Zeitachse und Dokumente in eine kurze Matrix bringen.
+2. **Rechtsrahmen setzen:** Normen, Zuständigkeiten, Fristen, Formfragen und Verfahrensstand zum Themenfeld **Anlage** prüfen.
+3. **Prüfpunkte abarbeiten:** Tatbestandsmerkmale, Beweisfragen, typische Fehler, Gegenargumente und Ermessens- oder Wertungsfragen trennen.
+4. **Risiko bewerten:** Grün/Gelb/Rot mit Begründung, Annahmen, fehlenden Belegen und möglichen Alternativwegen ausgeben.
+5. **Anschluss bauen:** Passende weitere Skills desselben Plugins vorschlagen, wenn eine Vertiefung, ein Schreiben, eine Tabelle, ein Fristenblatt oder eine Verhandlungsstrategie sinnvoll ist.
 
-## Wann dieses Modul hilft / Kaltstart-Fragen
+## Normen und Rechtsprechung
 
-Sie brauchen den Skill ab dem Moment, in dem der Mandant Kenntnis von einem Vorfall erlangt: Ransomware, Phishing-Mail mit Anhangsverlust, falsch versendete Massen-E-Mail, gestohlener Laptop ohne Verschluesselung, fehlerhaft konfiguriertes Cloud-Bucket, unbefugter Mitarbeiterzugriff, Diebstahl USB, Druckdienstleister-Fehlversand.
+### Kuratierte Normen-Bibliothek
 
-Sieben-Fragen-Diagnose mit Antwort-Pattern:
+- § 31 VVG
+- § 16 GeschGehG
+- § 174 GVG
+- Art. 32 DSGVO
+- § 29 VwVfG
+- § 203 StGB
+- § 184 GVG
 
-1. **Wer hat wann was entdeckt?** Konkretes Datum und Uhrzeit, Person, Quelle. **Achtung:** Die 72-Stunden-Frist nach Art. 33 I DSGVO laeuft ab **Kenntnis des Verantwortlichen** — bei Auftragsverarbeitern beginnt die Frist beim Verantwortlichen ab dessen Kenntnis (Art. 33 II DSGVO).
-2. **Welche Datenkategorien sind betroffen?** Allgemein, Art. 9 DSGVO (Gesundheit, Religion, Gewerkschaft, sexuelle Orientierung, biometrisch), Art. 10 DSGVO (Strafrechtsdaten), Art. 8 DSGVO (Minderjaehrige), Bankdaten, Authentifizierungsdaten?
-3. **Anzahl Betroffener?** Geschaetzt — Mindest- und Maximalwert.
-4. **Welche Schutzziele verletzt?** Vertraulichkeit (Offenlegung), Integritaet (Veraenderung), Verfuegbarkeit (Verlust)?
-5. **Welche TOM nach Art. 32 DSGVO** waren wirksam (Verschluesselung, Pseudonymisierung, Backup)? **Wichtig** für Art. 34 III a DSGVO Ausnahme.
-6. **Ist ein Auftragsverarbeiter beteiligt?** Wer ist Verantwortlicher? Wer meldet?
-7. **Risiko für Betroffene?** Identitaetsdiebstahl, finanzieller Schaden, Diskriminierung, Rufschaedigung, Verlust der Kontrolle, unbefugte Aufhebung der Pseudonymisierung?
+### Leitentscheidungen
 
-## Rechtlicher Rahmen
-
-- **Art. 4 Nr. 12 DSGVO** Definition Verletzung des Schutzes personenbezogener Daten: Vernichtung, Verlust, Veraenderung, unbefugte Offenlegung oder Zugang.
-- **Art. 33 I DSGVO** Meldepflicht innerhalb 72 Stunden ab Kenntnis des Verantwortlichen, ausser unwahrscheinliches Risiko für Rechte und Freiheiten.
-- **Art. 33 II DSGVO** Auftragsverarbeiter meldet unverzueglich an Verantwortlichen.
-- **Art. 33 III DSGVO** Pflichtinhalt: Art der Verletzung, Kategorien und Anzahl Betroffener, DSB-Kontakt, wahrscheinliche Folgen, ergriffene oder vorgeschlagene Maßnahmen.
-- **Art. 33 IV DSGVO** Stufenmeldung zulässig.
-- **Art. 33 V DSGVO** Dokumentationspflicht aller Verletzungen unabhaengig von Meldung.
-- **Art. 34 I DSGVO** Benachrichtigung Betroffener bei voraussichtlich hohem Risiko.
-- **Art. 34 III DSGVO** Ausnahmen: (a) wirksame Verschluesselung, (b) Folgemassnahmen verhindern Risiko, (c) Unverhaeltnismaessigkeit / öffentliche Bekanntmachung.
-- **Art. 32 DSGVO** TOM-Pflicht.
-- **§ 65 BDSG** Spezifische Meldepflichten Strafverfolgung.
-- **EDSA Leitlinien 9/2022** zur Meldung von Datenpannen (angenommen 28.03.2023).
-
-## Mandantenfuehrung Schritt-für-Schritt
-
-1. **Sachverhalt klären — NICHT vorschnell handeln.** Erste 4-8 Stunden: Fakten sammeln, Zeitstrahl, Personenkreis. Noch nichts ausserhalb des Mandanten kommunizieren. Vermeiden Sie pauschale Selbstvorwuerfe in Mails (werden im Bussgeldverfahren zur Akte).
-2. **Risikobewertung dokumentieren.** Matrix: Eintrittswahrscheinlichkeit Risiko x Schwere. EDSA-Leitlinien 9/2022 als Maßstab.
-3. **Mandantenfreigabe einholen.** Geschäftsführung, DSB nach Art. 37 DSGVO, ggf. IT-Sicherheitsbeauftragter, ggf. Betriebsrat.
-4. **Aufsicht melden — innerhalb 72 Stunden ab Kenntnis.** Stufenmeldung Art. 33 IV nutzen, wenn Fakten noch unklar. Lieber knapp und ehrlich als spekulativ ueberschwaenglich.
-5. **Betroffene benachrichtigen — nur bei hohem Risiko Art. 34 I.** Bei wirksamer Verschluesselung Ausnahme Art. 34 III a prüfen. Nicht voreilig benachrichtigen, wenn Risiko gering — sonst unnoetige Sorge und Reputationsschaden.
-6. **Maßnahmen einleiten.** Passworter zuruecksetzen, Zugaenge sperren, Backup aktivieren, Vorfall eindaemmen.
-7. **Lessons Learned und Dokumentation Art. 33 V DSGVO.** Internes Pannenregister, Update der TOM, ggf. DSFA aktualisieren.
-
-## Trade-off-Matrix
-
-| Variante | Vorteil | Nachteil |
-|---|---|---|
-| Sofortmeldung unter 24h | Kooperation signalisiert, Bussgeldmilderung Art. 83 II c | Unvollstaendige Fakten erhoehen spaeteren Änderungsbedarf |
-| Stufenmeldung Art. 33 IV | Frist gewahrt, Praezision steigt | Mehr Schreibarbeit, Aufsicht erwartet Update |
-| Verschluesselungs-Ausnahme Art. 34 III a | Spart Massenbenachrichtigung | Wirksamkeit muss dokumentiert sein (Schlüssel sicher, Algorithmus aktuell) |
-| Oeffentliche Bekanntmachung Art. 34 III c | Spart Einzelbenachrichtigung | Reputationsschaden, Anwaltsabmahnung |
-
-## Mustertexte
-
-### Interner Sachverhalts-Zeitstrahl (Vorlage)
-
-```
-Vorfall: [kurz]
-Entdeckung: [Datum, Uhrzeit, Person]
-Vermuteter Eintritt: [Datum]
-Datenkategorien: [Art. 6 / Art. 9 / Art. 10 / Bankdaten]
-Schaetzung Betroffene: min [n] max [n]
-Schutzziel verletzt: [Vertraulichkeit / Integritaet / Verfuegbarkeit]
-Wirksame TOM: [Verschluesselung ja/nein, Algorithmus, Schluesselverwaltung]
-Auftragsverarbeiter beteiligt: [ja/nein, AVV Art. 28]
-Aktuelles Risiko: [niedrig / mittel / hoch]
-```
-
-### Meldebogen Aufsichtsbehoerde (Kerntext)
-
-> Meldung einer Verletzung des Schutzes personenbezogener Daten nach Art. 33 DSGVO
->
-> 1. Verantwortlicher: [Firma, Anschrift, Ansprechpartner].
-> 2. DSB: [Name, Kontakt nach Art. 37 VII DSGVO].
-> 3. Art der Verletzung: [konkret, z. B. unbefugte Offenlegung durch Fehlversand].
-> 4. Kategorien personenbezogener Daten: [konkret].
-> 5. Anzahl Betroffener: [Schaetzung, mit Begruendung].
-> 6. Wahrscheinliche Folgen: [konkret nach EDSA 9/2022].
-> 7. Ergriffene und vorgeschlagene Maßnahmen: [TOM-Bezug Art. 32 DSGVO, Sofortmassnahmen].
-> 8. Bewertung der Meldepflicht und der Benachrichtigung Betroffener Art. 34 DSGVO: [Prüfung mit Ergebnis].
-> 9. Stufenmeldung Art. 33 IV: [ja/nein, Update bis Datum].
-
-### Betroffenenbenachrichtigung (Art. 34 II DSGVO)
-
-> Sehr geehrte/r [Name],
->
-> in einer am [Datum] festgestellten Verletzung des Schutzes personenbezogener Daten sind moeglicherweise auch Ihre Daten betroffen. Wir informieren Sie hiermit gemäß Art. 34 DSGVO.
->
-> Was ist passiert: [klar].
-> Welche Daten sind betroffen: [konkret].
-> Welche moeglichen Folgen können entstehen: [konkret].
-> Was wir getan haben: [Maßnahmen, TOM].
-> Was Sie tun können: [Passwortwechsel, Konto-Monitoring, Hotline].
->
-> Datenschutzbeauftragter: [Kontakt nach Art. 37 VII DSGVO].
-> Sie können sich beschweren bei der zuständigen Aufsichtsbehoerde nach Art. 77 DSGVO: [Adresse].
->
-> Mit freundlichen Gruessen
-
-## Typische Fehler
-
-- Frist 72h aus Art. 33 I DSGVO ab Vorfall statt ab Kenntnis berechnen.
-- Selbstbelastung in interner Mail-Kommunikation ("wir hatten doch gesagt, das Backup macht keiner").
-- Verschluesselungs-Ausnahme Art. 34 III a behaupten, ohne Schlüsselverwaltung und Algorithmus zu belegen.
-- Betroffene per Massen-E-Mail aus dem System informieren, das gerade kompromittiert wurde.
-- Stufenmeldung Art. 33 IV genannt, aber nie Update geliefert.
-
-**Was triggert die Aufsichtsbehoerde besonders?** Fristueberschreitung, leere Floskeln zu TOM, fehlende Risikoabwaegung Art. 34, keine Mandantenbeteiligung dokumentiert, kein DSB beteiligt.
-
-## Quellen Stand 06/2026
-
-- DSGVO Art. 4 Nr. 12, 32, 33, 34, 37, 82, 83.
-- BDSG § 65.
-- EDSA, Leitlinien 9/2022 zur Meldung von Verletzungen des Schutzes personenbezogener Daten, Version 2.0, angenommen 28.03.2023.
-- EDSA, Leitlinien 01/2021 zu Beispielen für Meldungen von Datenpannen.
-- Keine Aufsatzfundstellen aus Modellwissen.
+- BGH X ZR 39/16
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
