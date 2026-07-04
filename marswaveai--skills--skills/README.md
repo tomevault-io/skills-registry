@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [marswaveai/skills](https://github.com/marswaveai/skills/tree/main/asr/SKILL.md)
+Original source: [marswaveai/skills](https://github.com/marswaveai/skills/tree/main/tts/SKILL.md)
 
 ---
 
