@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LedgerHQ/ledger-live](https://github.com/LedgerHQ/ledger-live/tree/main/.agents/skills/device-intent-executor/SKILL.md)
+Original source: [LedgerHQ/ledger-live](https://github.com/LedgerHQ/ledger-live/tree/main/.agents/skills/e2e-desktop-add-or-update/SKILL.md)
 
 ---
 
