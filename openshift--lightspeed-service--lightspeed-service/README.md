@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openshift/lightspeed-service](https://github.com/openshift/lightspeed-service/tree/main/.cursor/skills/find-complexity/SKILL.md)
+Original source: [openshift/lightspeed-service](https://github.com/openshift/lightspeed-service/tree/main/.cursor/skills/validate-and-fix/SKILL.md)
 
 ---
 
