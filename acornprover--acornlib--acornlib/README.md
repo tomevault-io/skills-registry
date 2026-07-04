@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [acornprover/acornlib](https://github.com/acornprover/acornlib/tree/main/.agents/skills/fix-merge-conflict/SKILL.md)
+Original source: [acornprover/acornlib](https://github.com/acornprover/acornlib/tree/main/.agents/skills/acorn-installation/SKILL.md)
 
 ---
 
