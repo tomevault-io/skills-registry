@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ondata/ckan-mcp-server](https://github.com/ondata/ckan-mcp-server/tree/main/skills/ckan-mcp/SKILL.md)
+Original source: [ondata/ckan-mcp-server](https://github.com/ondata/ckan-mcp-server/tree/main/.claude/skills/data-exploration/SKILL.md)
 
 ---
 
