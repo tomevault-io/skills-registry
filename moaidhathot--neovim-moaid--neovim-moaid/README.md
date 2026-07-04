@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MoaidHathot/Neovim-Moaid](https://github.com/MoaidHathot/Neovim-Moaid/tree/main/config/Orchestra/Workspace/orchestrations/PullRequests/skills/persona-liabadi/SKILL.md)
+Original source: [MoaidHathot/Neovim-Moaid](https://github.com/MoaidHathot/Neovim-Moaid/tree/main/config/Orchestra/Workspace/orchestrations/Personal/RaindropWatcher/skills/raindrop-router/SKILL.md)
 
 ---
 
