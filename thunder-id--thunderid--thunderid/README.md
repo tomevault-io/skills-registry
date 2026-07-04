@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [thunder-id/thunderid](https://github.com/thunder-id/thunderid/tree/main/.agent/skills/db/SKILL.md)
+Original source: [thunder-id/thunderid](https://github.com/thunder-id/thunderid/tree/main/.agent/skills/console/SKILL.md)
 
 ---
 
