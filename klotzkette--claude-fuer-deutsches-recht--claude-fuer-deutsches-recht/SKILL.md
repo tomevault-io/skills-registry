@@ -1,56 +1,34 @@
 ---
-name: ki-erfindung-und-erfinderbenennung-kaltstart
-description: Wenn es um Ki Erfindung Und Erfinderbenennung Kaltstart in Berufsrecht Patentanwälte geht: klärt Rolle, Ziel, Frist, Unterlagen und den passenden nächsten Fachskill; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
+name: landwirtschaftliche-flaeche-berechtigt
+description: Wenn es um Landwirtschaftliche Flaeche Berechtigt in Einigungsvertrag und Vermögensrecht geht: prüft Frist, Form, Zuständigkeit, Rechtsweg und Sofortmaßnahmen; liefert eine Fristen- und Risikoampel mit Sofortschritten. Use when this capability is needed.
 metadata:
   author: Klotzkette
 ---
 
-# Patentanwälte: ki erfindung und erfinderbenennung - Kaltstart mit Faktenmatrix, Risikoampel und fehlenden Unterlagen
-
-## Direktstart: lesen, entscheiden, liefern
-
-Beginne nicht mit einem Fragenkatalog. Wenn Material vorliegt, lies es zuerst und starte mit einer verwertbaren Arbeitshypothese:
-
-- Frist oder Sofortrisiko.
-- erkannte Rolle, Zielrichtung und Verfahrensstand.
-- tragende Tatsachen aus dem Material.
-- bester nächster Arbeitsschritt mit direkt nutzbarem Output.
-
-Frage höchstens zwei Punkte nach, und nur wenn ohne diese Antwort der nächste Schritt falsch oder riskant würde. Fehlt Material vollständig, verlange nicht allgemein alle Unterlagen, sondern nenne die drei wichtigsten Dokumente und arbeite mit sichtbaren Annahmen weiter.
-
-Starte mit einem Arbeitsprodukt, nicht mit einer Inventarliste: Kurzvermerk, Fristenblatt, Prüfmatrix, Entwurf, Fragenliste oder Entscheidungsvorschlag. Routing ist nur Mittel zum Zweck. Wenn ein Fachskill eindeutig passt, arbeite unmittelbar in dessen Richtung weiter.
-
-Arbeitsmodus: Liefere zuerst einen nutzbaren Zwischenstand in höchstens sieben Sätzen und dann den nächsten konkreten Schritt. Frage nur nach, wenn Frist, Zuständigkeit, Beweis, Betrag oder Rechtsfolge sonst nicht belastbar bestimmbar sind. Tabellen nur für Fristen, Belege, Beträge, Varianten oder Streitstoff.
+# Landwirtschaftliche Flaeche Berechtigt
 
 ## Arbeitsweg
 
 - Rolle, Ziel und gewünschtes Arbeitsprodukt klären: Wer handelt, welche Entscheidung steht an, welche Frist läuft und welcher Output wird gebraucht?
-- Fristen und Eilrisiken zuerst markieren: nur die Fristen des konkreten Rechtsgebiets und der Akte verwenden; Widerspruch, Klage, Einspruch, Rechtsmittel, Verjährung, Verwirkung, Rüge-, Anzeige-, Anmelde- und Ausschlussfristen strikt trennen und nie aus einem anderen Fachgebiet übernehmen.
-- Tragende Normen verifizieren: BRAO, BORA, FAO, BNotO, StBerG, WPO, PAO; BRAO §§ 113 ff., BNotO §§ 95 ff., StBerG §§ 89 ff., WPO §§ 67 ff., AnwGH, BGH (Anwaltssenat) — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
-- Zuständige Stelle bestimmen und Adressaten richtig wählen: Mandant, Gegner, zuständige Behörde oder Gericht, Sachverständige, ggf. EU-/internationale Stelle (siehe Skill-Detail).
-- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Verwaltungsakte, Vertragsurkunden, Schriftsätze, Bescheide, Protokolle, Sachverständigengutachten und externe Beweismittel des Fachgebiets — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
+- Fristen und Eilrisiken zuerst markieren: VermG § 30 Anmeldefrist 31.12.1992 (Mobilien) bzw. 30.06.1993 (Immobilien) — Ausschlussfrist, § 30a Wiedereinsetzung, VwGO § 74 Klagefrist 1 Monat.
+- Tragende Normen verifizieren: VermG §§ 1, 3, 4, 6, 30, 30a, InVorG, EALG, AusglLeistG, EntschG, SachenRBerG, Einigungsvertrag Anlage I/II, BGB §§ 985, 894 — Fundstellen über gesetze-im-internet.de, dejure.org, openJur, BVerfG-/BGH-/EuGH-Datenbank live prüfen; keine Modellwissen-Zitate.
+- Zuständige Stelle bestimmen und Adressaten richtig wählen: Anmelder/Berechtigter, BARoV (Bundesamt für zentrale Dienste und offene Vermögensfragen), Landesämter zur Regelung offener Vermögensfragen (LARoV), VG, OVG, BVerwG, Verfügungsberechtigter.
+- Dokumente und Beweismittel sammeln und auf Lücken prüfen: Anmeldung nach § 30 VermG, Restitutionsbescheid, Investitionsvorrangbescheid, Grundbuchauszug, Notar-Auflassung, Investitionsbescheinigung, EALG-Bescheid — fehlende Belege durch Akteneinsicht oder Rückfrage beim Mandanten beschaffen, Live-Check für tagesaktuelle Normänderungen und Verwaltungspraxis.
 
-## Konkreter Berufsrechtskern: Patentanwälte: ki erfindung und erfinderbenennung - Kaltstart mit Faktenmatrix, Risikoampel und fehlenden Unterlagen
-- **Normenanker:** PAO, BOPA, PatG, MarkenG/DesignG-Schnittstellen, EPÜ, UPC-Verfahrensbezug, Fristen- und Geheimnisschutz.
-- **Institutionen:** Patentanwaltskammer, DPMA, EPA, UPC-Schnittstellen und berufsgerichtliche Zuständigkeiten.
-- **Spezialspur:** Mandatsgeheimnis, Priorität, Offenbarung, Vertretungsbefugnis vor DPMA/EPA/UPC und Fristkette prüfen.
-- **Falllösung:** Baue eine Pflichtverletzungs-/Entlastungsmatrix mit Norm, Tatsache, Beleg, Verschulden, Verhältnismäßigkeit, möglicher Kammerantwort und prozessualem nächsten Schritt.
+## Norm- und Quellenanker
 
-## Fallweichen dieser Speziallage
+- Einigungsvertrag und fortgeltende/überleitende Normen
+- VermG, MauerG, SachenRBerG, Investitionsvorrang, Treuhand-Kontexte
+- Bodenreform, Parteivermögen, Volkseigentum, Register-/Grundbuchfolgen
+- Rechtshistorische Einordnung mit aktuellem Nachweisbedarf
 
-1. Rolle, Ziel und Entscheidungsdruck klären.
-2. Verfahrensstand, Fristen, Zuständigkeit und irreversible Risiken markieren.
-3. Aktenbasis ordnen: sichere Tatsachen, bestrittene Tatsachen, fehlende Unterlagen.
-4. Eingriffsintensität, Berufs-/Amtsgeheimnisse, Datenschutz und Persönlichkeitsrechte sichtbar machen.
-5. Sofortpfad anbieten: Was muss heute entschieden, beantragt, beantwortet oder dokumentiert werden?
+## Prüfroutine
 
-## Prüfprogramm
-
-- **Normenanker:** PAO, Patentanwaltsordnung, Berufsordnung, RDG, ZPO/PatG/MarkenG-Schnittstellen, Kammerpraxis und Berufsgerichtsbarkeit live prüfen
-- **Tatsachenarbeit:** Beweisquelle, Beweiswert, Gegenbeweis, Dokumentationslücke und mögliche Fehlinterpretation trennen.
-- **Verfahrensarbeit:** Form, Frist, Zuständigkeit, Anhörung, Akteneinsicht, Rechtsbehelf und Zustellungsweg prüfen.
-- **Gegenposition:** Die stärkste Gegenansicht formulieren und sagen, was sie praktisch bedeutet.
-- **Entscheidung:** Eine vertretbare Handlungsempfehlung mit Risikoampel und nächstem Schritt liefern.
+1. **Scope:** Was genau soll entschieden, beantragt, abgewehrt oder dokumentiert werden? Welche Einheit ist betroffen und welches Recht gilt wirklich?
+2. **Zuständigkeit:** Behörde, Gericht, Register, Aufsicht, Verband, Unternehmen oder internationale Stelle sauber benennen; falsche Adressaten als Risiko ausweisen.
+3. **Tatbestand:** Die relevanten Merkmale einzeln mit Belegen füllen. Unklare Tatsachen als Rückfrage oder Beweispunkt markieren, nicht glattbügeln.
+4. **Rechtsfolge:** Anspruch, Ermessen, Verbot, Pflicht, Gebührenfolge, Nebenfolge, Haftung, Vollzug oder Rechtsschutz getrennt ausgeben.
+5. **Taktik:** Schnellster sinnvoller Weg, sauberster Weg und Eskalationsweg nebeneinander stellen; bei Laien zusätzlich eine kurze Erklärung in Alltagssprache.
 
 ---
 > Source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht) — distributed by [TomeVault](https://tomevault.io).
