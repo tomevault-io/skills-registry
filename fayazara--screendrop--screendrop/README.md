@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fayazara/Screendrop](https://github.com/fayazara/Screendrop/tree/main/.agents/skills/build-openshot/SKILL.md)
+Original source: [fayazara/Screendrop](https://github.com/fayazara/Screendrop/tree/main/.agents/skills/release-screendrop/SKILL.md)
 
 ---
 
