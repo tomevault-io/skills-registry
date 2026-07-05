@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Vonage/vivid-3](https://github.com/Vonage/vivid-3/tree/main/.claude/skills/icon-catalog/SKILL.md)
+Original source: [Vonage/vivid-3](https://github.com/Vonage/vivid-3/tree/main/.claude/skills/component-catalog/SKILL.md)
 
 ---
 
