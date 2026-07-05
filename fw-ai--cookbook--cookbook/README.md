@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fw-ai/cookbook](https://github.com/fw-ai/cookbook/tree/main/skills/renderer/SKILL.md)
+Original source: [fw-ai/cookbook](https://github.com/fw-ai/cookbook/tree/main/skills/fireworks-agent/SKILL.md)
 
 ---
 
