@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rubys/showcase](https://github.com/rubys/showcase/tree/main/.claude/skills/render-page/SKILL.md)
+Original source: [rubys/showcase](https://github.com/rubys/showcase/tree/main/.claude/skills/compare-erb-js/skill.md)
 
 ---
 
