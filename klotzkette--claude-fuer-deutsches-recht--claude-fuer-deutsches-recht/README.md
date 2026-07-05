@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/bundesnetzagentur-verfahren/skills/energie-regulierungsakte-redispatch-2-0-unterlagenanforderung/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/bundesnetzagentur-verfahren/skills/zustaendigkeitsradar-energie-telekom-post-eisenbahn-digitales/SKILL.md)
 
 ---
 
