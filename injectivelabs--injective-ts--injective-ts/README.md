@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [InjectiveLabs/injective-ts](https://github.com/InjectiveLabs/injective-ts/tree/main/.agents/skills/align-proto/SKILL.md)
+Original source: [InjectiveLabs/injective-ts](https://github.com/InjectiveLabs/injective-ts/tree/main/.claude/skills/align-proto/SKILL.md)
 
 ---
 
