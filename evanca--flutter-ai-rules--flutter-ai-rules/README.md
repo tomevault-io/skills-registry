@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [evanca/flutter-ai-rules](https://github.com/evanca/flutter-ai-rules/tree/main/skills/firebase-remote-config/SKILL.md)
+Original source: [evanca/flutter-ai-rules](https://github.com/evanca/flutter-ai-rules/tree/main/skills/flutter-change-notifier/SKILL.md)
 
 ---
 
