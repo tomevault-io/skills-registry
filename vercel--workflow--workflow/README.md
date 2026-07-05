@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vercel/workflow](https://github.com/vercel/workflow/tree/main/skills/workflow-init/SKILL.md)
+Original source: [vercel/workflow](https://github.com/vercel/workflow/tree/main/skills/internal-dev-workbench/SKILL.md)
 
 ---
 
