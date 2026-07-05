@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [blockcell-labs/blockcell](https://github.com/blockcell-labs/blockcell/tree/main/skills/tencent-news/SKILL.md)
+Original source: [blockcell-labs/blockcell](https://github.com/blockcell-labs/blockcell/tree/main/skills/deep_analysis/SKILL.md)
 
 ---
 
