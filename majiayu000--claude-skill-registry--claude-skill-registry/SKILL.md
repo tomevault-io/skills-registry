@@ -1,441 +1,626 @@
 ---
-name: llm-serving-patterns
-description: LLM inference infrastructure, serving frameworks (vLLM, TGI, TensorRT-LLM), quantization techniques, batching strategies, and streaming response patterns. Use when designing LLM serving infrastructure, optimizing inference latency, or scaling LLM deployments. Use when this capability is needed.
+name: cva-patterns-context
+description: Context management patterns for multi-source AI agents in Clojure+Vertex AI. Covers 4 context types (static/query/API/previous-result), lifecycle management (load/cache/invalidate), TTL strategies, and LGPD-compliant sensitive data handling. Includes production metrics (58% cost reduction via caching). Use when designing agent contexts, implementing multi-source data integration, optimizing cache strategies, or building LGPD-compliant systems. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# LLM Serving Patterns
+# Context Management
 
-## When to Use This Skill
+> **Pattern Type:** Architectural + Optimization
+> **Complexity:** Medium
+> **Best For:** Agents requiring multiple data sources, production systems with caching needs, LGPD/compliance requirements
 
-Use this skill when:
+## 🎯 Overview
 
-- Designing LLM inference infrastructure
-- Choosing between serving frameworks (vLLM, TGI, TensorRT-LLM)
-- Implementing quantization for production deployment
-- Optimizing batching and throughput
-- Building streaming response systems
-- Scaling LLM deployments cost-effectively
+Context management patterns enable efficient integration of multiple data sources into AI agent prompts. This pattern solves three challenges:
 
-**Keywords:** LLM serving, inference, vLLM, TGI, TensorRT-LLM, quantization, INT8, INT4, FP16, batching, continuous batching, streaming, SSE, WebSocket, KV cache, PagedAttention, speculative decoding
+1. **Multi-Source Integration**: Combining static files, databases, APIs, and previous agent results
+2. **Performance Optimization**: Caching strategies to reduce latency and cost
+3. **Security & Compliance**: LGPD-compliant handling of sensitive data
 
-## LLM Serving Architecture Overview
+**When to Use:**
+- Agent needs data from 2+ sources (files, DB, API)
+- Production system requiring cache optimization
+- Healthcare/financial domain with PII/sensitive data
+- Multi-tenant systems with per-tenant contexts
 
-```text
-┌─────────────────────────────────────────────────────────────────────┐
-│                         LLM Serving Stack                           │
-├─────────────────────────────────────────────────────────────────────┤
-│  Clients (API, Chat UI, Agents)                                     │
-│       │                                                             │
-│       ▼                                                             │
-│  ┌─────────────────────────────────────────────────────────────┐   │
-│  │              Load Balancer / API Gateway                     │   │
-│  │  • Rate limiting  • Authentication  • Request routing        │   │
-│  └─────────────────────────────────────────────────────────────┘   │
-│       │                                                             │
-│       ▼                                                             │
-│  ┌─────────────────────────────────────────────────────────────┐   │
-│  │                   Inference Server                           │   │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │   │
-│  │  │  Request    │  │  Batching   │  │  KV Cache           │  │   │
-│  │  │  Queue      │──▶│  Engine     │──▶│  Management        │  │   │
-│  │  └─────────────┘  └─────────────┘  └─────────────────────┘  │   │
-│  │       │                                      │               │   │
-│  │       ▼                                      ▼               │   │
-│  │  ┌─────────────────────────────────────────────────────┐    │   │
-│  │  │              Model Execution Engine                  │    │   │
-│  │  │  • Tensor operations  • Attention  • Token sampling │    │   │
-│  │  └─────────────────────────────────────────────────────┘    │   │
-│  └─────────────────────────────────────────────────────────────┘   │
-│       │                                                             │
-│       ▼                                                             │
-│  ┌─────────────────────────────────────────────────────────────┐   │
-│  │                    GPU/TPU Cluster                           │   │
-│  │  • Model sharding  • Tensor parallelism  • Pipeline parallel │   │
-│  └─────────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────────┘
+**Trade-offs:**
+- **Complexity**: Adds cache invalidation logic and lifecycle management
+- **Memory**: Static contexts consume ~0.45 MB, query contexts ~2 MB (100 cached)
+- **Performance**: Cache reduces latency by 33% and cost by 58%
+
+**Production ROI:** Healthcare pipeline achieved 58% cost reduction ($0.391 → $0.162) via aggressive caching of API contexts (73% hit rate) and query contexts (85% hit rate).
+
+## 📊 Pattern Explanation
+
+### Core Concept
+
+Contexts are categorized by source and caching strategy:
+
+```
+CONTEXT TYPE TAXONOMY
+
+1. STATIC (Filesystem)
+   - LGPD guidelines, JSON schemas, disclaimers
+   - Loaded once, cached permanently
+   - Latency: 0ms (after startup preload)
+   - Cost: $0
+
+2. QUERY (Database)
+   - Professional profiles, SEO keywords
+   - TTL cache (1h typical)
+   - Latency: 35ms (miss) / <1ms (hit)
+   - Cost: Negligible (DB query)
+
+3. API (External Services)
+   - PubMed articles, grounding data
+   - TTL cache (24h typical)
+   - Latency: 1.8s (miss) / <1ms (hit)
+   - Cost: Variable (API-dependent)
+
+4. PREVIOUS RESULT (Pipeline State)
+   - Output from previous agent
+   - In-memory only (no persistence)
+   - Latency: 0ms
+   - Cost: $0
 ```
 
-## Serving Framework Comparison
+### Implementation Approach
 
-| Framework | Strengths | Best For | Considerations |
-| --------- | --------- | -------- | -------------- |
-| **vLLM** | PagedAttention, high throughput, continuous batching | General LLM serving, high concurrency | Python-native, active community |
-| **TGI (Text Generation Inference)** | Production-ready, Hugging Face integration | Enterprise deployment, HF models | Rust backend, Docker-first |
-| **TensorRT-LLM** | NVIDIA optimization, lowest latency | NVIDIA GPUs, latency-critical | NVIDIA-only, complex setup |
-| **Triton Inference Server** | Multi-model, multi-framework | Heterogeneous model serving | Enterprise complexity |
-| **Ollama** | Simple local deployment | Development, edge deployment | Limited scaling features |
-| **llama.cpp** | CPU inference, quantization | Resource-constrained, edge | C++ integration required |
+**Step 1**: Identify context sources for your agent
+- Static: Unchanging guidelines, schemas, templates
+- Query: Per-tenant/per-user data from database
+- API: Real-time data from external services
+- Previous: Results from earlier agents in pipeline
 
-### Framework Selection Decision Tree
+**Step 2**: Choose TTL strategy per source
+- Static: Permanent (reload only on deploy)
+- Query: 1h (balance freshness vs hit rate)
+- API: 24h (external data changes slowly)
+- Previous: N/A (ephemeral pipeline state)
 
-```text
-Need lowest latency on NVIDIA GPUs?
-├── Yes → TensorRT-LLM
-└── No
-    └── Need high throughput with many concurrent users?
-        ├── Yes → vLLM (PagedAttention)
-        └── No
-            └── Need enterprise features + HF integration?
-                ├── Yes → TGI
-                └── No
-                    └── Simple local/edge deployment?
-                        ├── Yes → Ollama or llama.cpp
-                        └── No → vLLM (general purpose)
+**Step 3**: Implement cache invalidation
+- Static: Explicit reload on content update
+- Query: Invalidate on database write (e.g., profile update)
+- API: Force refresh on user request or timeout
+- Previous: Garbage collected with pipeline execution
+
+**Step 4**: Add security scanning
+- Detect PII/sensitive data (CPF, health records)
+- Redact or mask before LLM processing
+- Audit access for LGPD compliance
+
+## 💻 Clojure Implementation
+
+### Basic Example: Static Context with Lazy Loading
+
+```clojure
+(ns lab.contexts.static
+  "Static context management with permanent cache"
+  (:require [clojure.java.io :as io]
+            [cheshire.core :as json]))
+
+(defrecord StaticContext
+  [id              ; Keyword identifier (:compliance-lgpd, :json-schema-extraction, etc.)
+   type            ; :markdown, :json, :edn
+   content         ; Parsed content (string or map)
+   size-bytes      ; Content size in bytes
+   loaded-at       ; Timestamp (millis since epoch)
+   version])       ; Version string (e.g., "1.0.0")
+
+(defn load-static-context
+  "Load static context from resources/ directory.
+
+  Contexts are typically stored in resources/contexts/ and loaded
+  once at startup. Content is parsed based on type.
+
+  Args:
+    id   - Keyword identifier
+    path - Relative path in resources/ (e.g., 'contexts/lgpd.md')
+    opts - {:type :markdown/:json/:edn, :version string}
+
+  Returns:
+    StaticContext record
+
+  Example:
+    (load-static-context
+      :compliance-lgpd
+      'contexts/diretrizes_protecao_dados.md'
+      {:type :markdown, :version '1.0.0'})"
+  [id path opts]
+  (let [resource (io/resource path)
+        content-str (slurp resource)
+        size (count (.getBytes content-str "UTF-8"))
+
+        ;; Parse based on type
+        parsed-content (case (:type opts)
+                        :json (json/parse-string content-str true)
+                        :edn (clojure.edn/read-string content-str)
+                        :markdown content-str
+                        content-str)]
+
+    (map->StaticContext
+      {:id id
+       :type (:type opts :markdown)
+       :content parsed-content
+       :size-bytes size
+       :loaded-at (System/currentTimeMillis)
+       :version (:version opts "1.0.0")})))
+
+;; Catalog of available static contexts
+(defonce static-contexts-catalog
+  "Registry of all static contexts in the system.
+
+  Each entry defines:
+  - path: Location in resources/
+  - type: Content format
+  - version: Semantic version
+  - description: Human-readable purpose"
+  {:compliance-lgpd
+   {:path "contexts/diretrizes_protecao_dados.md"
+    :type :markdown
+    :version "1.0.0"
+    :description "LGPD data protection guidelines"}
+
+   :json-schema-extraction
+   {:path "contexts/formato_json_extracao.json"
+    :type :json
+    :version "1.0.0"
+    :description "JSON Schema for S.1.1 extraction output validation"}
+
+   :disclaimers-cfm
+   {:path "contexts/disclaimers_cfm_crp.md"
+    :type :markdown
+    :version "1.0.0"
+    :description "Mandatory CFM/CRP medical disclaimers"}})
+
+;; Lazy-loaded cache (load on first access)
+(defonce static-contexts-cache
+  "Permanent in-memory cache for static contexts.
+
+  Contexts are loaded lazily on first access via get-static-context.
+  Cache persists for application lifetime (no TTL eviction)."
+  (atom {}))
+
+(defn get-static-context
+  "Retrieve static context from cache (load if necessary).
+
+  Uses lazy loading pattern: context is loaded on first access,
+  then cached permanently. Subsequent accesses are instant (0ms).
+
+  Args:
+    id - Keyword from static-contexts-catalog
+
+  Returns:
+    StaticContext record or nil if not found
+
+  Example:
+    (def lgpd-ctx (get-static-context :compliance-lgpd))
+    (:content lgpd-ctx)  ;; => '# Diretrizes de Proteção de Dados...'"
+  [id]
+  (or (@static-contexts-cache id)
+      (when-let [catalog-entry (get static-contexts-catalog id)]
+        (let [loaded (load-static-context id (:path catalog-entry) catalog-entry)]
+          (swap! static-contexts-cache assoc id loaded)
+          loaded))))
+
+(defn preload-all-contexts!
+  "Eagerly load all static contexts at startup.
+
+  Recommended for production: eliminates cold start latency
+  on first request. Loads all contexts in catalog concurrently.
+
+  Returns:
+    {:loaded-count int
+     :total-size-mb float
+     :duration-ms int}
+
+  Example:
+    (preload-all-contexts!)
+    ;; => {:loaded-count 12, :total-size-mb 0.45, :duration-ms 127}
+
+    ;; After preload, all get-static-context calls are instant"
+  []
+  (let [start-time (System/currentTimeMillis)]
+    (doseq [[id _] static-contexts-catalog]
+      (get-static-context id))
+
+    (let [end-time (System/currentTimeMillis)
+          total-size (reduce + (map #(:size-bytes %) (vals @static-contexts-cache)))]
+
+      {:loaded-count (count @static-contexts-cache)
+       :total-size-mb (/ total-size 1048576.0)
+       :duration-ms (- end-time start-time)})))
+
+(comment
+  ;; Startup: Eagerly load all contexts (production pattern)
+  (preload-all-contexts!)
+  ;; => {:loaded-count 12, :total-size-mb 0.45, :duration-ms 127}
+
+  ;; Runtime: Instant access after preload
+  (def lgpd-context (get-static-context :compliance-lgpd))
+  (:content lgpd-context)
+  ;; => "# Diretrizes de Proteção de Dados\n\n## Princípios..."
+
+  ;; Production metrics:
+  ;; - Memory usage: 0.45 MB total (12 contexts)
+  ;; - Startup overhead: 127ms (one-time)
+  ;; - Access latency: 0ms (after preload)
+  ;; - Cache hit rate: 100% (permanent cache)
+  )
 ```
 
-## Quantization Techniques
+### Production Example: Multi-Source Context with Caching
 
-### Precision Levels
+```clojure
+(ns lab.contexts.multi-source
+  "Production context management with multi-layer caching"
+  (:require [clojure.core.cache :as cache]
+            [next.jdbc :as jdbc]
+            [next.jdbc.result-set :as rs]
+            [clj-http.client :as http]
+            [cheshire.core :as json]
+            [lab.contexts.static :as static-ctx]))
 
-| Precision | Bits | Memory Reduction | Quality Impact | Use Case |
-| --------- | ---- | ---------------- | -------------- | -------- |
-| FP32 | 32 | Baseline | None | Training, reference |
-| FP16/BF16 | 16 | 2x | Minimal | Standard serving |
-| INT8 | 8 | 4x | Low | Production serving |
-| INT4 | 4 | 8x | Moderate | Resource-constrained |
-| INT2 | 2 | 16x | Significant | Experimental |
+(defrecord QueryContext
+  [id              ; Cache key (vector of [type params])
+   content         ; Formatted content (string for prompt injection)
+   cached-at       ; Timestamp (millis)
+   ttl-ms          ; Time-to-live in milliseconds
+   source])        ; :database or :api
 
-### Quantization Methods
+;; TTL cache for query contexts (1h default)
+(defonce query-contexts-cache
+  (atom (cache/ttl-cache-factory {} :ttl (* 60 60 1000))))
 
-| Method | Description | Quality | Speed |
-| ------ | ----------- | ------- | ----- |
-| **PTQ (Post-Training Quantization)** | Quantize after training, no retraining | Good | Fast to apply |
-| **QAT (Quantization-Aware Training)** | Simulate quantization during training | Better | Requires training |
-| **GPTQ** | One-shot weight quantization | Very good | Moderate |
-| **AWQ (Activation-aware Weight Quantization)** | Preserves salient weights | Excellent | Moderate |
-| **GGUF/GGML** | llama.cpp format, CPU-optimized | Good | Very fast inference |
-| **SmoothQuant** | Migrates difficulty to weights | Excellent | Moderate |
+;; TTL cache for API contexts (24h default)
+(defonce api-contexts-cache
+  (atom (cache/ttl-cache-factory {} :ttl (* 24 60 60 1000))))
 
-### Quantization Selection
+(defn fetch-professional-profile
+  "Query professional profile from database.
 
-```text
-Quality vs. Efficiency Trade-off:
+  Returns:
+    Map with raw database columns"
+  [db-spec prof-id]
+  (jdbc/execute-one!
+    (jdbc/get-datasource db-spec)
+    ["SELECT nome_completo, crm, especialidade,
+             anos_experiencia, tom_voz, cidade_atuacao, bio
+      FROM profissionais
+      WHERE id = ?::uuid AND ativo = true"
+     (str prof-id)]
+    {:builder-fn rs/as-unqualified-lower-maps}))
 
-Quality ────────────────────────────────────────────▶ Efficiency
-   │                                                      │
-   │  FP32    FP16    INT8+AWQ   INT8+GPTQ   INT4   INT2  │
-   │   ○───────○────────○──────────○──────────○──────○    │
-   │   │       │        │          │          │      │    │
-   │  Best   Great    Good      Good       Fair   Poor   │
-   │                                                      │
+(defn format-professional-profile
+  "Format profile for LLM prompt injection (Markdown).
+
+  Args:
+    profile - Raw database map
+
+  Returns:
+    Formatted string"
+  [profile]
+  (format "**Perfil Profissional:**
+- Nome: %s
+- Registro: %s %s
+- Especialidade: %s
+- Experiência: %d anos
+- Tom de voz: %s
+- Cidade: %s
+
+**Bio:**
+%s"
+          (:nome_completo profile)
+          (if (= (:especialidade profile) "Medicina") "CRM" "CRP")
+          (:crm profile)
+          (:especialidade profile)
+          (:anos_experiencia profile)
+          (:tom_voz profile "Profissional e acolhedor")
+          (:cidade_atuacao profile)
+          (:bio profile "")))
+
+(defn fetch-pubmed-articles
+  "Fetch scientific articles from PubMed API.
+
+  Two-step process:
+  1. esearch: Get article IDs for query
+  2. esummary: Fetch article metadata
+
+  Args:
+    query       - Search query string
+    max-results - Number of articles (default 5)
+    timeout-ms  - Request timeout (default 2500ms)
+
+  Returns:
+    {:success? boolean
+     :articles [{:pmid, :title, :authors, :journal, :doi, :link}]
+     :metadata {:latency-ms, :source :pubmed}}"
+  [query max-results & [timeout-ms]]
+  (let [start-time (System/currentTimeMillis)
+        timeout-ms (or timeout-ms 2500)]
+
+    (try
+      ;; Step 1: Search for article IDs
+      (let [search-response
+            (http/get "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
+                      {:query-params {:db "pubmed"
+                                     :term query
+                                     :retmax max-results
+                                     :retmode "json"}
+                       :socket-timeout timeout-ms
+                       :connection-timeout timeout-ms
+                       :as :json})
+
+            pmids (get-in search-response [:body :esearchresult :idlist])]
+
+        (if (empty? pmids)
+          {:success? false
+           :error "No articles found"
+           :metadata {:latency-ms (- (System/currentTimeMillis) start-time)
+                      :source :pubmed}}
+
+          ;; Step 2: Fetch article summaries
+          (let [summary-response
+                (http/get "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi"
+                          {:query-params {:db "pubmed"
+                                         :id (clojure.string/join "," pmids)
+                                         :retmode "json"}
+                           :socket-timeout timeout-ms
+                           :connection-timeout timeout-ms
+                           :as :json})
+
+                result-map (get-in summary-response [:body :result])
+                articles (mapv
+                          (fn [pmid]
+                            (let [article (get result-map pmid)]
+                              {:pmid pmid
+                               :title (:title article)
+                               :authors (take 3 (:authors article))
+                               :journal (:fulljournalname article)
+                               :pubdate (:pubdate article)
+                               :doi (:doi article)
+                               :link (str "https://pubmed.ncbi.nlm.nih.gov/" pmid "/")}))
+                          pmids)]
+
+            {:success? true
+             :articles articles
+             :metadata {:latency-ms (- (System/currentTimeMillis) start-time)
+                        :source :pubmed
+                        :query query
+                        :results-count (count articles)}})))
+
+      (catch java.net.SocketTimeoutException e
+        {:success? false
+         :error "PubMed API timeout"
+         :timeout? true
+         :metadata {:latency-ms timeout-ms
+                    :source :pubmed}})
+
+      (catch Exception e
+        {:success? false
+         :error (.getMessage e)
+         :metadata {:latency-ms (- (System/currentTimeMillis) start-time)
+                    :source :pubmed}}))))
+
+(defn get-api-context
+  "Retrieve API context with aggressive caching and fallback.
+
+  Caching strategy:
+  - Cache successful responses for 24h (scientific data is stable)
+  - Cache miss: Call API with timeout protection
+  - API failure: Use fallback value if provided
+
+  Args:
+    api-type - :pubmed, :google-scholar, :grounding
+    params   - Map {:query string, :max-results int}
+    opts     - {:ttl-ms int, :timeout-ms int, :fallback-value string,
+                :force-refresh? boolean}
+
+  Returns:
+    {:id cache-key
+     :content formatted-string
+     :cached-at timestamp
+     :ttl-ms int
+     :api-source keyword
+     :metadata {:latency-ms, :from-cache?, :fallback-used?}}
+
+  Example:
+    (get-api-context
+      :pubmed
+      {:query 'anxiety treatment CBT', :max-results 5}
+      {:timeout-ms 3000
+       :fallback-value 'References temporarily unavailable'})
+    ;; First call: 1847ms (API call)
+    ;; Second call: <1ms (cache hit)"
+  [api-type params & [opts]]
+  (let [cache-key [api-type params]
+        force-refresh? (:force-refresh? opts false)
+        ttl-ms (:ttl-ms opts (* 24 60 60 1000))  ; 24h default
+        timeout-ms (:timeout-ms opts 2500)]
+
+    (if (and (not force-refresh?)
+             (cache/has? @api-contexts-cache cache-key))
+      ;; Cache hit
+      (let [cached (cache/lookup @api-contexts-cache cache-key)]
+        (update cached :metadata assoc :from-cache? true))
+
+      ;; Cache miss - call API
+      (let [api-result (case api-type
+                        :pubmed
+                        (fetch-pubmed-articles
+                          (:query params)
+                          (:max-results params 5)
+                          timeout-ms)
+
+                        (throw (ex-info "Unknown API type" {:type api-type})))]
+
+        (if (:success? api-result)
+          ;; Success - format and cache
+          (let [formatted-content (format-pubmed-articles (:articles api-result))
+                ctx (map->QueryContext
+                      {:id cache-key
+                       :content formatted-content
+                       :cached-at (System/currentTimeMillis)
+                       :ttl-ms ttl-ms
+                       :source :api
+                       :metadata (assoc (:metadata api-result) :from-cache? false)})]
+
+            (swap! api-contexts-cache cache/miss cache-key ctx)
+            ctx)
+
+          ;; Failure - use fallback if available
+          (if-let [fallback (:fallback-value opts)]
+            (do
+              (println "⚠️ API" api-type "failed - using fallback")
+              (map->QueryContext
+                {:id cache-key
+                 :content fallback
+                 :cached-at (System/currentTimeMillis)
+                 :ttl-ms ttl-ms
+                 :source :api
+                 :metadata (assoc (:metadata api-result)
+                                 :from-cache? false
+                                 :fallback-used? true)}))
+
+            ;; No fallback - propagate error
+            (throw (ex-info "API call failed and no fallback provided"
+                            {:api-type api-type
+                             :error (:error api-result)
+                             :metadata (:metadata api-result)}))))))))
+
+(defn format-pubmed-articles
+  "Format PubMed articles for prompt injection.
+
+  Returns:
+    Markdown-formatted string"
+  [articles]
+  (str "**Referências Científicas (PubMed):**\n\n"
+       (clojure.string/join "\n\n"
+         (map-indexed
+          (fn [idx article]
+            (format "%d. **%s**\n   - Autores: %s\n   - Journal: %s (%s)\n   - PMID: %s | DOI: %s"
+                    (inc idx)
+                    (:title article)
+                    (clojure.string/join ", " (map :name (:authors article)))
+                    (:journal article)
+                    (:pubdate article)
+                    (:pmid article)
+                    (:doi article "N/A")))
+          articles))))
+
+(comment
+  ;; Usage: Fetch PubMed context with caching
+  (def pubmed-ctx
+    (get-api-context
+      :pubmed
+      {:query "anxiety treatment cognitive behavioral therapy"
+       :max-results 5}
+      {:timeout-ms 3000
+       :fallback-value "Scientific references temporarily unavailable."}))
+
+  (get-in pubmed-ctx [:metadata :latency-ms])  ;; => 1847ms (first call)
+  (get-in pubmed-ctx [:metadata :from-cache?]) ;; => false
+
+  ;; Second call (cache hit)
+  (def pubmed-ctx-2 (get-api-context :pubmed {:query "..." :max-results 5}))
+  (get-in pubmed-ctx-2 [:metadata :from-cache?]) ;; => true
+  (get-in pubmed-ctx-2 [:metadata :latency-ms])  ;; => 1847ms (original)
+
+  ;; Production metrics (healthcare pipeline):
+  ;; - Cache hit rate: 73%
+  ;; - Latency (cache miss): 1.8s average
+  ;; - Latency (cache hit): <1ms
+  ;; - Cost savings: 73% × $0.067 = $0.049 per request
+  ;; - Total savings: $0.115 per pipeline (-29% total cost)
+  )
 ```
 
-## Batching Strategies
-
-### Static Batching
-
-```text
-Request 1: [tokens: 100] ─┐
-Request 2: [tokens: 50]  ─┼──▶ [Batch: pad to 100] ──▶ Process ──▶ All complete
-Request 3: [tokens: 80]  ─┘
-
-Problem: Short requests wait for long ones (head-of-line blocking)
-```
-
-### Continuous Batching (Preferred)
-
-```text
-Time ──────────────────────────────────────────────────────────▶
-
-Req 1: [████████████████████████████████] ──▶ Complete
-Req 2: [████████████] ──▶ Complete ──▶ Req 4 starts [████████████████]
-Req 3: [████████████████████] ──▶ Complete ──▶ Req 5 starts [████████]
-
-• New requests join batch as others complete
-• No padding waste
-• Optimal GPU utilization
-```
-
-### Batching Parameters
-
-| Parameter | Description | Trade-off |
-| --------- | ----------- | --------- |
-| `max_batch_size` | Maximum concurrent requests | Memory vs. throughput |
-| `max_waiting_tokens` | Tokens before forcing batch | Latency vs. throughput |
-| `max_num_seqs` | Maximum sequences in batch | Memory vs. concurrency |
-
-## KV Cache Management
-
-### The KV Cache Problem
-
-```text
-Attention: Q × K^T × V
-
-For each token generated:
-• Must recompute attention with ALL previous tokens
-• K and V tensors grow with sequence length
-• Memory: O(batch_size × seq_len × num_layers × hidden_dim)
-
-Example (70B model, 4K context):
-• KV cache per request: ~8GB
-• 10 concurrent requests: ~80GB GPU memory
-```
-
-### PagedAttention (vLLM Innovation)
-
-```text
-Traditional KV Cache:
-┌──────────────────────────────────────────┐
-│ Request 1 KV Cache (contiguous, fixed)   │ ← Wastes memory
-├──────────────────────────────────────────┤
-│ Request 2 KV Cache (contiguous, fixed)   │
-├──────────────────────────────────────────┤
-│ FRAGMENTED/WASTED SPACE                  │
-└──────────────────────────────────────────┘
-
-PagedAttention:
-┌────┬────┬────┬────┬────┬────┬────┬────┐
-│ R1 │ R2 │ R1 │ R3 │ R2 │ R1 │ R3 │ R2 │  ← Pages allocated on demand
-└────┴────┴────┴────┴────┴────┴────┴────┘
-• Non-contiguous memory allocation
-• Near-zero memory waste
-• 2-4x higher throughput
-```
-
-### KV Cache Optimization Strategies
-
-| Strategy | Description | Memory Savings |
-| -------- | ----------- | -------------- |
-| **Paged Attention** | Virtual memory for KV cache | ~50% reduction |
-| **Prefix Caching** | Reuse KV cache for common prefixes | System prompt: 100% |
-| **Quantized KV Cache** | INT8/FP8 for KV values | 50-75% reduction |
-| **Sliding Window** | Limited attention context | Linear memory |
-| **MQA/GQA** | Grouped query attention | Architecture-dependent |
-
-## Streaming Response Patterns
-
-### Server-Sent Events (SSE)
-
-```text
-Client                                Server
-   │                                     │
-   │──── GET /v1/chat/completions ──────▶│
-   │      (stream: true)                 │
-   │                                     │
-   │◀──── HTTP 200 OK ───────────────────│
-   │      Content-Type: text/event-stream│
-   │                                     │
-   │◀──── data: {"token": "Hello"} ──────│
-   │◀──── data: {"token": " world"} ─────│
-   │◀──── data: {"token": "!"} ──────────│
-   │◀──── data: [DONE] ──────────────────│
-   │                                     │
-```
-
-**SSE Benefits:**
-
-- HTTP/1.1 compatible
-- Auto-reconnection support
-- Simple to implement
-- Wide client support
-
-### WebSocket Streaming
-
-```text
-Client                                Server
-   │                                     │
-   │──── WebSocket Upgrade ─────────────▶│
-   │◀──── 101 Switching Protocols ───────│
-   │                                     │
-   │──── {"prompt": "Hello"} ───────────▶│
-   │                                     │
-   │◀──── {"token": "Hi"} ───────────────│
-   │◀──── {"token": " there"} ───────────│
-   │◀──── {"token": "!"} ────────────────│
-   │◀──── {"done": true} ────────────────│
-   │                                     │
-```
-
-**WebSocket Benefits:**
-
-- Bidirectional communication
-- Lower latency
-- Better for chat applications
-- Connection persistence
-
-### Streaming Implementation Considerations
-
-| Aspect | SSE | WebSocket |
-| ------ | --- | --------- |
-| **Reconnection** | Built-in | Manual |
-| **Scalability** | Per-request | Connection pool |
-| **Load Balancing** | Standard HTTP | Sticky sessions |
-| **Firewall/Proxy** | Usually works | May need config |
-| **Best For** | One-way streaming | Interactive chat |
-
-## Speculative Decoding
-
-### Concept
-
-```text
-Standard Decoding:
-Large Model: [T1] → [T2] → [T3] → [T4] → [T5]
-             10ms   10ms   10ms   10ms   10ms = 50ms total
-
-Speculative Decoding:
-Draft Model: [T1, T2, T3, T4, T5] (parallel, 5ms)
-                      │
-                      ▼
-Large Model: [Verify T1-T5 in one pass] (15ms)
-             Accept: T1, T2, T3 ✓  Reject: T4, T5 ✗
-                      │
-                      ▼
-             [Generate T4, T5 correctly]
-
-Total: ~25ms (2x speedup if 60% acceptance)
-```
-
-### Speculative Decoding Trade-offs
-
-| Factor | Impact |
-| ------ | ------ |
-| **Draft model quality** | Higher match rate = more speedup |
-| **Draft model size** | Larger = better quality, slower |
-| **Speculation depth** | More tokens = higher risk/reward |
-| **Verification cost** | Must be < sequential generation |
-
-## Scaling Strategies
-
-### Horizontal Scaling
-
-```text
-┌─────────────────────────────────────────────────────────┐
-│                    Load Balancer                        │
-│         (Round-robin, Least-connections)                │
-└─────────────────────────────────────────────────────────┘
-         │              │              │
-         ▼              ▼              ▼
-    ┌─────────┐    ┌─────────┐    ┌─────────┐
-    │ vLLM    │    │ vLLM    │    │ vLLM    │
-    │ Node 1  │    │ Node 2  │    │ Node 3  │
-    │ (GPU×4) │    │ (GPU×4) │    │ (GPU×4) │
-    └─────────┘    └─────────┘    └─────────┘
-```
-
-### Model Parallelism
-
-| Strategy | Description | Use Case |
-| -------- | ----------- | -------- |
-| **Tensor Parallelism** | Split layers across GPUs | Single large model |
-| **Pipeline Parallelism** | Different layers on different GPUs | Very large models |
-| **Data Parallelism** | Same model, different batches | High throughput |
-
-```text
-Tensor Parallelism (TP=4):
-┌─────────────────────────────────────────┐
-│              Layer N                     │
-│  GPU0   │   GPU1   │   GPU2   │   GPU3  │
-│  25%    │   25%    │   25%    │   25%   │
-└─────────────────────────────────────────┘
-
-Pipeline Parallelism (PP=4):
-GPU0: Layers 0-7
-GPU1: Layers 8-15
-GPU2: Layers 16-23
-GPU3: Layers 24-31
-```
-
-## Latency Optimization Checklist
-
-### Pre-deployment
-
-- [ ] Choose appropriate quantization (INT8 for production)
-- [ ] Enable continuous batching
-- [ ] Configure KV cache size appropriately
-- [ ] Set optimal batch size for hardware
-- [ ] Enable prefix caching for system prompts
-
-### Runtime
-
-- [ ] Monitor GPU memory utilization
-- [ ] Track p50/p95/p99 latencies
-- [ ] Measure time-to-first-token (TTFT)
-- [ ] Monitor tokens-per-second (TPS)
-- [ ] Set appropriate timeouts
-
-### Infrastructure
-
-- [ ] Use fastest available interconnect (NVLink, InfiniBand)
-- [ ] Minimize network hops
-- [ ] Place inference close to users (edge)
-- [ ] Consider dedicated inference hardware
-
-## Cost Optimization
-
-### Cost Drivers
-
-| Factor | Impact | Optimization |
-| ------ | ------ | ------------ |
-| **GPU hours** | Highest | Quantization, batching |
-| **Memory** | High | PagedAttention, KV cache optimization |
-| **Network** | Medium | Response compression, edge deployment |
-| **Storage** | Low | Model deduplication |
-
-### Cost Estimation Formula
-
-```text
-Monthly Cost =
-  (Requests/month) × (Avg tokens/request) × (GPU-seconds/token) × ($/GPU-hour)
-  ─────────────────────────────────────────────────────────────────────────────
-                                    3600
-
-Example:
-• 10M requests/month
-• 500 tokens average
-• 0.001 GPU-seconds/token (optimized)
-• $2/GPU-hour
-
-Cost = (10M × 500 × 0.001 × 2) / 3600 = $2,778/month
-```
-
-## Common Patterns
-
-### Multi-model Routing
-
-```text
-┌─────────────────────────────────────────────────────────┐
-│                     Router                              │
-│  • Classify request complexity                          │
-│  • Route to appropriate model                           │
-└─────────────────────────────────────────────────────────┘
-         │              │              │
-         ▼              ▼              ▼
-    ┌─────────┐    ┌─────────┐    ┌─────────┐
-    │ Small   │    │ Medium  │    │ Large   │
-    │ Model   │    │ Model   │    │ Model   │
-    │ (7B)    │    │ (13B)   │    │ (70B)   │
-    │ Fast    │    │ Balanced│    │ Quality │
-    └─────────┘    └─────────┘    └─────────┘
-```
-
-### Caching Strategies
-
-| Cache Type | What to Cache | TTL |
-| ---------- | ------------- | --- |
-| **Prompt cache** | Common system prompts | Long |
-| **KV cache** | Prefix tokens | Session |
-| **Response cache** | Exact query matches | Varies |
-| **Embedding cache** | Document embeddings | Long |
-
-## Related Skills
-
-- `ml-system-design` - End-to-end ML pipeline design
-- `rag-architecture` - Retrieval-augmented generation patterns
-- `vector-databases` - Vector search for LLM context
-- `ml-inference-optimization` - General inference optimization
-- `estimation-techniques` - Capacity planning for LLM systems
-
-## Version History
-
-- v1.0.0 (2025-12-26): Initial release - LLM serving patterns for systems design interviews
-
----
-
-## Last Updated
-
-**Date:** 2025-12-26
+## 💡 Best Practices
+
+1. **Preload Static Contexts at Startup**
+   - **Rationale**: Eliminates cold start latency. Static contexts are ~0.45 MB total, acceptable memory overhead for instant access.
+   - **Example**: Healthcare pipeline preloads 12 contexts in 127ms. First request avoids 127ms delay.
+
+2. **Use Aggressive TTLs for Stable Data**
+   - **Rationale**: Scientific articles, SEO keywords change slowly. 24h TTL achieves 73% cache hit rate with no quality impact.
+   - **Example**: PubMed cache (24h TTL) saves $0.049 per request, 73% of time. Annual savings: $0.049 × 0.73 × 12000 = $429.
+
+3. **Invalidate Query Contexts on Database Writes**
+   - **Rationale**: Stale cache causes incorrect agent behavior. Invalidate immediately when source data changes.
+   - **Example**: When user updates profile, invalidate `:professional-profile` cache for that user. Next request fetches fresh data.
+
+4. **Always Provide Fallbacks for API Contexts**
+   - **Rationale**: External APIs have 2-3% timeout rate. Fallback prevents pipeline failure.
+   - **Example**: PubMed fallback is "References temporarily unavailable." Agent generates content without references instead of crashing.
+
+5. **Scan for Sensitive Data Before LLM Processing**
+   - **Rationale**: LGPD/GDPR require PII protection. Prevent accidental logging/transmission of CPF, health records.
+   - **Example**: S.1.1 (data extraction) scans for CPF, health diagnoses. Redacts before storing in checkpoint database.
+
+6. **Monitor Cache Hit Rates**
+   - **Rationale**: Low hit rates indicate wrong TTL or cache key strategy. Measure to optimize.
+   - **Example**: Initially used query string as PubMed cache key. Hit rate was 12%. Changed to semantic hash of query intent → 73% hit rate.
+
+## 🔗 Related Skills
+
+- [`cva-concepts-agent-types`](../cva-concepts-agent-types/SKILL.md) - Agent types requiring different context strategies ⭐
+- [`cva-healthcare-pipeline`](../cva-healthcare-pipeline/SKILL.md) - Real 4-type context usage ⭐
+- [`cva-patterns-workflows`](../cva-patterns-workflows/SKILL.md) - Pipeline state management
+- [`cva-patterns-cost`](../cva-patterns-cost/SKILL.md) - Caching for cost optimization
+- [`cva-basics-prompts`](../cva-basics-prompts/SKILL.md) - Injecting contexts into prompts
+- [`cva-security-lgpd`](../cva-security-lgpd/SKILL.md) - LGPD-compliant data handling
+
+## 📘 Additional Resources
+
+### Pattern Variations
+
+**Distributed Cache**: Use Redis instead of in-memory cache for multi-instance deployments. Enables cache sharing across application instances.
+
+**Semantic Caching**: Cache by semantic similarity instead of exact match. Example: "anxiety treatment" and "treating anxiety" map to same cache entry (95% similarity threshold).
+
+**Versioned Contexts**: Store multiple versions of static contexts, switch per deployment. Enables A/B testing of prompt variations without code changes.
+
+### Advanced Topics
+
+**Cache Warming**: Pre-populate cache on startup with most common queries. Healthcare pipeline warms 5 common PubMed queries (68% hit rate in first 2 hours vs 12% cold).
+
+**Multi-Tenant Context Isolation**: Ensure tenant A cannot access tenant B's cached contexts. Use tenant ID in cache key, enforce row-level security in database.
+
+**Context Compression**: Gzip large contexts before caching. Healthcare LGPD guidelines (12KB) compress to 3KB, 4x memory savings for 100+ cached contexts.
+
+### Security Considerations
+
+**PII Detection Patterns** (LGPD-specific):
+- CPF: `\d{3}\.\d{3}\.\d{3}-\d{2}`
+- CNS (health card): `\d{15}`
+- Medical diagnoses: `CID-10`, `F\d{2}\.\d` (ICD codes)
+- Email, phone: Standard regex patterns
+
+**Redaction Strategy**:
+- **Mask**: Replace with asterisks (for display)
+- **Remove**: Delete entirely (for LLM processing)
+- **Anonymize**: Replace with fake data preserving format
+
+**Audit Requirements**:
+- Log all context accesses with user ID, timestamp
+- Track which agents accessed which sensitive data
+- Retention period: 5 years (LGPD requirement)
+
+### Performance Benchmarks
+
+| Context Type | Latency (miss) | Latency (hit) | Hit Rate | Memory | Use Case |
+|--------------|----------------|---------------|----------|--------|----------|
+| Static | 127ms (startup) | 0ms | 100% | 0.45 MB | Guidelines, schemas |
+| Query | 35ms | <1ms | 85% | ~2 MB | User profiles, config |
+| API | 1.8s | <1ms | 73% | Variable | External data |
+| Previous | 0ms | 0ms | N/A | Negligible | Pipeline state |
+
+**Cache Savings** (healthcare pipeline, 1000 executions/month):
+- API contexts: $0.049 × 0.73 × 1000 = $35.77/month
+- Query contexts: $0.066 × 0.85 × 1000 = $56.10/month
+- **Total**: $91.87/month savings from caching alone
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
