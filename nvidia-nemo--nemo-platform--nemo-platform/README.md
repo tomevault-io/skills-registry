@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA-NeMo/nemo-platform](https://github.com/NVIDIA-NeMo/nemo-platform/tree/main/packages/nemo_platform_plugin/src/nemo_platform_plugin/.agents/skills/plugin-platform-services/SKILL.md)
+Original source: [NVIDIA-NeMo/nemo-platform](https://github.com/NVIDIA-NeMo/nemo-platform/tree/main/packages/nemo_platform_plugin/src/nemo_platform_plugin/.agents/skills/plugin-inference-middleware/SKILL.md)
 
 ---
 
