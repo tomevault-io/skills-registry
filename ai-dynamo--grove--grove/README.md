@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ai-dynamo/grove](https://github.com/ai-dynamo/grove/tree/main/.agents/skills/grove-grep/SKILL.md)
+Original source: [ai-dynamo/grove](https://github.com/ai-dynamo/grove/tree/main/.agents/skills/grove-user-guide/SKILL.md)
 
 ---
 
