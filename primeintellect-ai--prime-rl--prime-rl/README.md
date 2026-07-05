@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PrimeIntellect-ai/prime-rl](https://github.com/PrimeIntellect-ai/prime-rl/tree/main/skills/training/start-run/SKILL.md)
+Original source: [PrimeIntellect-ai/prime-rl](https://github.com/PrimeIntellect-ai/prime-rl/tree/main/skills/training/monitor-run/SKILL.md)
 
 ---
 
