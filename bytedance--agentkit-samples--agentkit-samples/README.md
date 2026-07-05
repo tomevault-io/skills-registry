@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bytedance/agentkit-samples](https://github.com/bytedance/agentkit-samples/tree/main/skills/byted-util-arkclaw-kb/SKILL.md)
+Original source: [bytedance/agentkit-samples](https://github.com/bytedance/agentkit-samples/tree/main/skills/byted-volc-cdn-manage/SKILL.md)
 
 ---
 
