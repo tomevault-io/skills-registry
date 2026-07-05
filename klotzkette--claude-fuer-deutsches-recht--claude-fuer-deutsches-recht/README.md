@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-internationales-wirtschaftsrecht/skills/gerichtsstand-und-rechtswahl-pruefen/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-strafrecht/skills/strafrecht-spezial-vorteilsannahme-gewaehrung-331-333-stgb/SKILL.md)
 
 ---
 
