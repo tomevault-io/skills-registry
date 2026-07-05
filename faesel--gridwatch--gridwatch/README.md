@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [faesel/gridwatch](https://github.com/faesel/gridwatch/tree/main/docs/orchestrator-skills/append-y/SKILL.md)
+Original source: [faesel/gridwatch](https://github.com/faesel/gridwatch/tree/main/docs/orchestrator-skills/append-letters/SKILL.md)
 
 ---
 
