@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/juristische-sprache-deutsch-als-zweitsprache/skills/rechtsbehelfsbelehrung-verstehen-respektvolle/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/email-umformulierer-berufsrecht/skills/email-berufsrecht-hoefliche-behoerden-gerichts-registerweg/SKILL.md)
 
 ---
 
