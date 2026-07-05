@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Instawork/llm-proxy](https://github.com/Instawork/llm-proxy/tree/main/.cursor/skills/open-source-audit/SKILL.md)
+Original source: [Instawork/llm-proxy](https://github.com/Instawork/llm-proxy/tree/main/.cursor/skills/llm-proxy-pr-review/SKILL.md)
 
 ---
 
