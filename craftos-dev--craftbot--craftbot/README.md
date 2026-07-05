@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CraftOS-dev/CraftBot](https://github.com/CraftOS-dev/CraftBot/tree/main/skills/apple-notes/SKILL.md)
+Original source: [CraftOS-dev/CraftBot](https://github.com/CraftOS-dev/CraftBot/tree/main/skills/week-planner/SKILL.md)
 
 ---
 
