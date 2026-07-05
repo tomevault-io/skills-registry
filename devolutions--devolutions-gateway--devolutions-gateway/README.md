@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Devolutions/devolutions-gateway](https://github.com/Devolutions/devolutions-gateway/tree/main/.agents/skills/build-gateway-msi/SKILL.md)
+Original source: [Devolutions/devolutions-gateway](https://github.com/Devolutions/devolutions-gateway/tree/main/.agents/skills/toolbox-changelog/SKILL.md)
 
 ---
 
