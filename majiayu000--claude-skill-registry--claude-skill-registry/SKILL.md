@@ -1,433 +1,293 @@
 ---
-name: hono-app-scaffold
-description: Use this skill whenever the user wants to create, restructure, or standardize a Hono + TypeScript backend/API project, including project layout, runtime targeting (Node/Cloudflare/Vercel Edge), routing structure, middleware, env handling, and basic error handling.
+name: xlsx
+description: Comprehensive spreadsheet creation, editing, and analysis with support for formulas, formatting, data analysis, and visualization. When Claude needs to work with spreadsheets (.xlsx, .xlsm, .csv, .tsv, etc) for: (1) Creating new spreadsheets with formulas and formatting, (2) Reading or analyzing data, (3) Modify existing spreadsheets while preserving formulas, (4) Data analysis and visualization in spreadsheets, or (5) Recalculating formulas Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Hono App Scaffold Skill
+# Requirements for Outputs
 
-## Purpose
+## All Excel files
 
-You are a specialized assistant for **bootstrapping and reshaping Hono-based backends/APIs** in
-TypeScript.
+### Zero Formula Errors
+- Every Excel model MUST be delivered with ZERO formula errors (#REF!, #DIV/0!, #VALUE!, #N/A, #NAME?)
 
-Use this skill to:
+### Preserve Existing Templates (when updating templates)
+- Study and EXACTLY match existing format, style, and conventions when modifying files
+- Never impose standardized formatting on files with established patterns
+- Existing template conventions ALWAYS override these guidelines
 
-- Scaffold a **new Hono app** (standalone or part of a monorepo)
-- Restructure an **existing Hono project** into a clean, feature-oriented layout
-- Set up **runtime targeting** (Node, Cloudflare Workers, Vercel Edge, Bun)
-- Wire up:
-  - Basic routing structure (`routes/`)
-  - Middleware: logging, CORS, error handling
-  - Env management for the chosen runtime
-- Prepare the project to later integrate:
-  - Auth
-  - TypeORM or other persistence
-  - Cloudflare Workers / Edge deploy flows
-  - API versioning
+## Financial models
 
-Do **not** use this skill for:
+### Color Coding Standards
+Unless otherwise stated by the user or existing template
 
-- Writing complex business logic → use feature-specific skills
-- Detailed auth flows → use `hono-authentication` (once defined)
-- Database/ORM design → use TypeORM-specific skills (`typeorm-*`)
-- Frontend code or Next.js routing (covered by other skills)
+#### Industry-Standard Color Conventions
+- **Blue text (RGB: 0,0,255)**: Hardcoded inputs, and numbers users will change for scenarios
+- **Black text (RGB: 0,0,0)**: ALL formulas and calculations
+- **Green text (RGB: 0,128,0)**: Links pulling from other worksheets within same workbook
+- **Red text (RGB: 255,0,0)**: External links to other files
+- **Yellow background (RGB: 255,255,0)**: Key assumptions needing attention or cells that need to be updated
 
-If `CLAUDE.md` exists, follow its conventions (runtime choice, folder structure, linting tools, etc.).
+### Number Formatting Standards
 
----
+#### Required Format Rules
+- **Years**: Format as text strings (e.g., "2024" not "2,024")
+- **Currency**: Use $#,##0 format; ALWAYS specify units in headers ("Revenue ($mm)")
+- **Zeros**: Use number formatting to make all zeros "-", including percentages (e.g., "$#,##0;($#,##0);-")
+- **Percentages**: Default to 0.0% format (one decimal)
+- **Multiples**: Format as 0.0x for valuation multiples (EV/EBITDA, P/E)
+- **Negative numbers**: Use parentheses (123) not minus -123
 
-## When To Apply This Skill
+### Formula Construction Rules
 
-Trigger this skill when the user asks for something like:
+#### Assumptions Placement
+- Place ALL assumptions (growth rates, margins, multiples, etc.) in separate assumption cells
+- Use cell references instead of hardcoded values in formulas
+- Example: Use =B5*(1+$B$6) instead of =B5*1.05
 
-- “Create a Hono API project.”
-- “Move this ad-hoc Hono server into a proper structure.”
-- “Set up a Hono app for Cloudflare Workers / Node / Bun.”
-- “Give me a clean Hono + TS scaffold to build APIs on.”
-- “Refactor this Hono file into routes + middlewares.”
+#### Formula Error Prevention
+- Verify all cell references are correct
+- Check for off-by-one errors in ranges
+- Ensure consistent formulas across all projection periods
+- Test with edge cases (zero values, negative numbers)
+- Verify no unintended circular references
 
-Avoid when:
+#### Documentation Requirements for Hardcodes
+- Comment or in cells beside (if end of table). Format: "Source: [System/Document], [Date], [Specific Reference], [URL if applicable]"
+- Examples:
+  - "Source: Company 10-K, FY2024, Page 45, Revenue Note, [SEC EDGAR URL]"
+  - "Source: Company 10-Q, Q2 2025, Exhibit 99.1, [SEC EDGAR URL]"
+  - "Source: Bloomberg Terminal, 8/15/2025, AAPL US Equity"
+  - "Source: FactSet, 8/20/2025, Consensus Estimates Screen"
 
-- The project is clearly NestJS-only or uses a different backend framework.
-- We’re only adding one route to an already well-structured Hono project.
+# XLSX creation, editing, and analysis
 
----
+## Overview
 
-## Project Assumptions
+A user may ask you to create, edit, or analyze the contents of an .xlsx file. You have different tools and workflows available for different tasks.
 
-Unless the project or `CLAUDE.md` says otherwise, assume:
+## Important Requirements
 
-- Language: **TypeScript**
-- Package manager preference:
-  1. `pnpm` if `pnpm-lock.yaml` exists
-  2. `yarn` if `yarn.lock` exists
-  3. otherwise `npm`
-- Runtime: depends on context; default to **Node** when not specified,
-  but be ready to target:
-  - Node (Express-style server, `serve`/`listen`)
-  - Cloudflare Workers / Pages
-  - Vercel Edge / Node runtimes
-  - Bun
+**LibreOffice Required for Formula Recalculation**: You can assume LibreOffice is installed for recalculating formula values using the `recalc.py` script. The script automatically configures LibreOffice on first run
 
-- Testing: may be added later (Vitest/Jest + supertest/undici)
+## Reading and analyzing data
 
-This skill should tailor the scaffold to the **declared runtime** when it’s clear.
+### Data analysis with pandas
+For data analysis, visualization, and basic operations, use **pandas** which provides powerful data manipulation capabilities:
 
----
+```python
+import pandas as pd
 
-## Target Project Structure
+# Read Excel
+df = pd.read_excel('file.xlsx')  # Default: first sheet
+all_sheets = pd.read_excel('file.xlsx', sheet_name=None)  # All sheets as dict
 
-This skill aims to create or converge towards something like:
+# Analyze
+df.head()      # Preview data
+df.info()      # Column info
+df.describe()  # Statistics
 
-```text
-project-root/
-  src/
-    app.ts              # main Hono app builder (routes + middleware)
-    index.ts            # runtime-specific entry (Node, Cloudflare, etc.)
-    routes/
-      index.ts          # main router aggregator
-      health.routes.ts
-      v1/
-        users.routes.ts
-        auth.routes.ts
-    middlewares/
-      logger.ts
-      error-handler.ts
-      cors.ts
-    config/
-      env.ts            # env loading per runtime
-      runtime.ts        # runtime-specific helpers if needed
-    types/
-      env.d.ts          # bindings/env typing for Workers/Cloudflare
-  test/
-    app.spec.ts         # basic smoke/e2e tests (optional stub)
-  .env.example          # for Node/Bun/Vercel environments
-  tsconfig.json
-  package.json
-  README.md
+# Write Excel
+df.to_excel('output.xlsx', index=False)
 ```
 
-For Cloudflare Workers, also expect:
+## Excel File Workflows
 
-```text
-  wrangler.toml
+## CRITICAL: Use Formulas, Not Hardcoded Values
+
+**Always use Excel formulas instead of calculating values in Python and hardcoding them.** This ensures the spreadsheet remains dynamic and updateable.
+
+### ❌ WRONG - Hardcoding Calculated Values
+```python
+# Bad: Calculating in Python and hardcoding result
+total = df['Sales'].sum()
+sheet['B10'] = total  # Hardcodes 5000
+
+# Bad: Computing growth rate in Python
+growth = (df.iloc[-1]['Revenue'] - df.iloc[0]['Revenue']) / df.iloc[0]['Revenue']
+sheet['C5'] = growth  # Hardcodes 0.15
+
+# Bad: Python calculation for average
+avg = sum(values) / len(values)
+sheet['D20'] = avg  # Hardcodes 42.5
 ```
 
-This layout can be adjusted to fit monorepos (e.g. `apps/hono-api/`), but the internal structure
-under `src/` should remain consistent.
+### ✅ CORRECT - Using Excel Formulas
+```python
+# Good: Let Excel calculate the sum
+sheet['B10'] = '=SUM(B2:B9)'
 
----
+# Good: Growth rate as Excel formula
+sheet['C5'] = '=(C4-C2)/C2'
 
-## High-Level Workflow
-
-When this skill is active, follow this process:
-
-### 1. Detect or create a Hono project
-
-- If Hono is not installed / no project exists:
-  - Install `hono` and runtime-specific packages (e.g. `@hono/node-server`, `@cloudflare/workers-types` if needed).
-  - Create `src/` with `app.ts`, `routes/`, `middlewares/`, `config/`.
-- If a Hono project exists as a single file (e.g. `index.ts`):
-  - Refactor into `src/app.ts` + `src/routes/*` + `src/middlewares/*`.
-  - Keep behavior equivalent but structure improved.
-
-### 2. Choose runtime & entrypoint
-
-Depending on context:
-
-#### Node runtime (default):
-
-- Use `@hono/node-server`:
-
-  ```ts
-  // src/index.ts
-  import { serve } from "@hono/node-server";
-  import { app } from "./app";
-
-  const port = Number(process.env.PORT ?? 3000);
-  console.log(`Listening on http://localhost:${port}`);
-
-  serve({
-    fetch: app.fetch,
-    port,
-  });
-  ```
-
-#### Cloudflare Workers:
-
-- Export `app.fetch` as the Worker handler:
-
-  ```ts
-  // src/index.ts
-  import { app } from "./app";
-
-  export default {
-    fetch: app.fetch,
-  };
-  ```
-
-- Configure `wrangler.toml` outside this skill or with minimal defaults if necessary.
-
-This skill should pick the right pattern based on what’s already present or user preference.
-
-### 3. Build the main app (`app.ts`)
-
-Create a central Hono app with basic middleware + routes:
-
-```ts
-// src/app.ts
-import { Hono } from "hono";
-import { loggerMiddleware } from "./middlewares/logger";
-import { errorHandler } from "./middlewares/error-handler";
-import { corsMiddleware } from "./middlewares/cors";
-import { bindRoutes } from "./routes";
-
-export const app = new Hono();
-
-app.use("*", loggerMiddleware);
-app.use("*", corsMiddleware);
-app.use("*", errorHandler);
-
-bindRoutes(app);
+# Good: Average using Excel function
+sheet['D20'] = '=AVERAGE(D2:D19)'
 ```
 
-Or, if project prefers, mount middleware per route group instead of globally.
+This applies to ALL calculations - totals, percentages, ratios, differences, etc. The spreadsheet should be able to recalculate when source data changes.
 
-### 4. Routes Organization
+## Common Workflow
+1. **Choose tool**: pandas for data, openpyxl for formulas/formatting
+2. **Create/Load**: Create new workbook or load existing file
+3. **Modify**: Add/edit data, formulas, and formatting
+4. **Save**: Write to file
+5. **Recalculate formulas (MANDATORY IF USING FORMULAS)**: Use the recalc.py script
+   ```bash
+   python recalc.py output.xlsx
+   ```
+6. **Verify and fix any errors**: 
+   - The script returns JSON with error details
+   - If `status` is `errors_found`, check `error_summary` for specific error types and locations
+   - Fix the identified errors and recalculate again
+   - Common errors to fix:
+     - `#REF!`: Invalid cell references
+     - `#DIV/0!`: Division by zero
+     - `#VALUE!`: Wrong data type in formula
+     - `#NAME?`: Unrecognized formula name
 
-Use `routes/index.ts` as a router aggregator:
+### Creating new Excel files
 
-```ts
-// src/routes/index.ts
-import type { Hono } from "hono";
-import { healthRoutes } from "./health.routes";
-import { createV1Routes } from "./v1";
+```python
+# Using openpyxl for formulas and formatting
+from openpyxl import Workbook
+from openpyxl.styles import Font, PatternFill, Alignment
 
-export function bindRoutes(app: Hono) {
-  app.route("/health", healthRoutes());
+wb = Workbook()
+sheet = wb.active
 
-  app.route("/v1", createV1Routes());
-}
+# Add data
+sheet['A1'] = 'Hello'
+sheet['B1'] = 'World'
+sheet.append(['Row', 'of', 'data'])
+
+# Add formula
+sheet['B2'] = '=SUM(A1:A10)'
+
+# Formatting
+sheet['A1'].font = Font(bold=True, color='FF0000')
+sheet['A1'].fill = PatternFill('solid', start_color='FFFF00')
+sheet['A1'].alignment = Alignment(horizontal='center')
+
+# Column width
+sheet.column_dimensions['A'].width = 20
+
+wb.save('output.xlsx')
 ```
 
-Example `health.routes.ts`:
+### Editing existing Excel files
 
-```ts
-// src/routes/health.routes.ts
-import { Hono } from "hono";
+```python
+# Using openpyxl to preserve formulas and formatting
+from openpyxl import load_workbook
 
-export function healthRoutes() {
-  const app = new Hono();
+# Load existing file
+wb = load_workbook('existing.xlsx')
+sheet = wb.active  # or wb['SheetName'] for specific sheet
 
-  app.get("/", (c) => c.json({ status: "ok" }));
+# Working with multiple sheets
+for sheet_name in wb.sheetnames:
+    sheet = wb[sheet_name]
+    print(f"Sheet: {sheet_name}")
 
-  return app;
-}
+# Modify cells
+sheet['A1'] = 'New Value'
+sheet.insert_rows(2)  # Insert row at position 2
+sheet.delete_cols(3)  # Delete column 3
+
+# Add new sheet
+new_sheet = wb.create_sheet('NewSheet')
+new_sheet['A1'] = 'Data'
+
+wb.save('modified.xlsx')
 ```
 
-Example `/v1` router:
+## Recalculating formulas
 
-```ts
-// src/routes/v1/index.ts
-import { Hono } from "hono";
-import { usersRoutes } from "./users.routes";
+Excel files created or modified by openpyxl contain formulas as strings but not calculated values. Use the provided `recalc.py` script to recalculate formulas:
 
-export function createV1Routes() {
-  const app = new Hono();
-
-  app.route("/users", usersRoutes());
-
-  return app;
-}
+```bash
+python recalc.py <excel_file> [timeout_seconds]
 ```
 
-Example users routes skeleton:
-
-```ts
-// src/routes/v1/users.routes.ts
-import { Hono } from "hono";
-
-export function usersRoutes() {
-  const app = new Hono();
-
-  app.get("/", async (c) => {
-    // list users
-    return c.json([]);
-  });
-
-  app.post("/", async (c) => {
-    // create user
-    const body = await c.req.json();
-    return c.json({ id: "1", ...body }, 201);
-  });
-
-  app.get("/:id", async (c) => {
-    const id = c.req.param("id");
-    return c.json({ id });
-  });
-
-  return app;
-}
+Example:
+```bash
+python recalc.py output.xlsx 30
 ```
 
-This skill should keep routes small and composable.
+The script:
+- Automatically sets up LibreOffice macro on first run
+- Recalculates all formulas in all sheets
+- Scans ALL cells for Excel errors (#REF!, #DIV/0!, etc.)
+- Returns JSON with detailed error locations and counts
+- Works on both Linux and macOS
 
-### 5. Middleware Setup
+## Formula Verification Checklist
 
-#### Logger Middleware
+Quick checks to ensure formulas work correctly:
 
-```ts
-// src/middlewares/logger.ts
-import type { MiddlewareHandler } from "hono";
+### Essential Verification
+- [ ] **Test 2-3 sample references**: Verify they pull correct values before building full model
+- [ ] **Column mapping**: Confirm Excel columns match (e.g., column 64 = BL, not BK)
+- [ ] **Row offset**: Remember Excel rows are 1-indexed (DataFrame row 5 = Excel row 6)
 
-export const loggerMiddleware: MiddlewareHandler = async (c, next) => {
-  const start = Date.now();
-  await next();
-  const ms = Date.now() - start;
-  console.log(`${c.req.method} ${c.req.path} - ${ms}ms`);
-};
-```
+### Common Pitfalls
+- [ ] **NaN handling**: Check for null values with `pd.notna()`
+- [ ] **Far-right columns**: FY data often in columns 50+ 
+- [ ] **Multiple matches**: Search all occurrences, not just first
+- [ ] **Division by zero**: Check denominators before using `/` in formulas (#DIV/0!)
+- [ ] **Wrong references**: Verify all cell references point to intended cells (#REF!)
+- [ ] **Cross-sheet references**: Use correct format (Sheet1!A1) for linking sheets
 
-#### Error Handler
+### Formula Testing Strategy
+- [ ] **Start small**: Test formulas on 2-3 cells before applying broadly
+- [ ] **Verify dependencies**: Check all cells referenced in formulas exist
+- [ ] **Test edge cases**: Include zero, negative, and very large values
 
-```ts
-// src/middlewares/error-handler.ts
-import type { MiddlewareHandler } from "hono";
-
-export const errorHandler: MiddlewareHandler = async (c, next) => {
-  try {
-    await next();
-  } catch (err: any) {
-    console.error("Unhandled error:", err);
-
-    return c.json(
-      {
-        message: "Internal Server Error",
-      },
-      500,
-    );
-  }
-};
-```
-
-#### CORS Middleware
-
-Either a custom or `hono/cors` helper:
-
-```ts
-// src/middlewares/cors.ts
-import type { MiddlewareHandler } from "hono";
-import { cors } from "hono/cors";
-
-// If project is fine with the helper:
-export const corsMiddleware: MiddlewareHandler = cors({
-  origin: "*", // adjust for security
-  allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-});
-```
-
-This skill should:
-
-- Set **secure defaults** where possible (explicit origins in production).
-- Ensure order of middleware is appropriate (e.g., error handler should wrap downstream).
-
-### 6. Env & Config Management
-
-For Node/Vercel/Bun env:
-
-```ts
-// src/config/env.ts
-export type AppEnv = {
-  NODE_ENV: "development" | "test" | "production";
-  PORT?: string;
-  DATABASE_URL?: string;
-};
-
-export function getEnv(): AppEnv {
-  return {
-    NODE_ENV: (process.env.NODE_ENV as AppEnv["NODE_ENV"]) ?? "development",
-    PORT: process.env.PORT,
-    DATABASE_URL: process.env.DATABASE_URL,
-  };
-}
-```
-
-For Cloudflare Workers:
-
-- Provide typed access to `env` via `c.env` and `Env` interface:
-
-```ts
-// src/types/env.d.ts
-export interface Env {
-  DATABASE_URL: string;
-  // other bindings like R2, KV, etc.
-}
-```
-
-```ts
-// usage in route
-app.get("/config", (c) => {
-  const env = c.env as Env;
-  return c.json({ db: env.DATABASE_URL });
-});
-```
-
-This skill should:
-
-- Avoid mixing Node-style `process.env` in Workers-only code.
-- Encourage typed env where possible.
-
-### 7. README & Scripts
-
-Add or update `README.md` with:
-
-- How to run in dev
-- How to build
-- How to deploy (basic notes for Node/Workers/Vercel)
-
-Add `package.json` scripts (example for Node):
-
-```jsonc
+### Interpreting recalc.py Output
+The script returns JSON with error details:
+```json
 {
-  "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc -p tsconfig.json",
-    "start": "node dist/index.js",
-    "lint": "eslint ."
+  "status": "success",           // or "errors_found"
+  "total_errors": 0,              // Total error count
+  "total_formulas": 42,           // Number of formulas in file
+  "error_summary": {              // Only present if errors found
+    "#REF!": {
+      "count": 2,
+      "locations": ["Sheet1!B5", "Sheet1!C10"]
+    }
   }
 }
 ```
 
-For Workers, may add `wrangler dev` and `wrangler publish` scripts.
+## Best Practices
 
----
+### Library Selection
+- **pandas**: Best for data analysis, bulk operations, and simple data export
+- **openpyxl**: Best for complex formatting, formulas, and Excel-specific features
 
-## Integration with Other Skills
+### Working with openpyxl
+- Cell indices are 1-based (row=1, column=1 refers to cell A1)
+- Use `data_only=True` to read calculated values: `load_workbook('file.xlsx', data_only=True)`
+- **Warning**: If opened with `data_only=True` and saved, formulas are replaced with values and permanently lost
+- For large files: Use `read_only=True` for reading or `write_only=True` for writing
+- Formulas are preserved but not evaluated - use recalc.py to update values
 
-This skill prepares the ground for:
+### Working with pandas
+- Specify data types to avoid inference issues: `pd.read_excel('file.xlsx', dtype={'id': str})`
+- For large files, read specific columns: `pd.read_excel('file.xlsx', usecols=['A', 'C', 'E'])`
+- Handle dates properly: `pd.read_excel('file.xlsx', parse_dates=['date_column'])`
 
-- `hono-authentication`:
-  - Mount auth routes & middleware under `/v1/auth`.
-- `hono-typeorm-backend`:
-  - Add DB access to routes; integrate TypeORM or another ORM.
-- `hono-edge-and-workers`:
-  - Production-ready Cloudflare/Vercel Edge deployment config.
-- TypeORM and caching skills:
-  - DB caching logic within routes/services built on this scaffold.
+## Code Style Guidelines
+**IMPORTANT**: When generating Python code for Excel operations:
+- Write minimal, concise Python code without unnecessary comments
+- Avoid verbose variable names and redundant operations
+- Avoid unnecessary print statements
 
----
-
-## Example Prompts That Should Use This Skill
-
-- “Create a new Hono API ready for Node/Cloudflare, with proper structure.”
-- “Refactor this single-file Hono server into a clean modules/routes layout.”
-- “Set up middlewares and basic routes for a Hono TS backend.”
-- “Scaffold Hono app that I can later add auth and DB to.”
-
-For these prompts, rely on this skill to generate or refactor a **clean, extensible Hono app skeleton**
-that other backend skills can build on.
+**For Excel files themselves**:
+- Add comments to cells with complex formulas or important assumptions
+- Document data sources for hardcoded values
+- Include notes for key calculations and model sections
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
