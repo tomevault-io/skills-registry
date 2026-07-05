@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alleneubank/claude-code](https://github.com/alleneubank/claude-code/tree/main/.claude/skills/axe-ios-simulator/SKILL.md)
+Original source: [alleneubank/claude-code](https://github.com/alleneubank/claude-code/tree/main/.claude/skills/go-best-practices/SKILL.md)
 
 ---
 
