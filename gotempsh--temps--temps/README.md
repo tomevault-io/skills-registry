@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gotempsh/temps](https://github.com/gotempsh/temps/tree/main/skills/add-error-tracking/SKILL.md)
+Original source: [gotempsh/temps](https://github.com/gotempsh/temps/tree/main/skills/add-react-analytics/SKILL.md)
 
 ---
 
