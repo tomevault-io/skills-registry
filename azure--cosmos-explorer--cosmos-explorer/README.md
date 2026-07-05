@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Azure/cosmos-explorer](https://github.com/Azure/cosmos-explorer/tree/main/.github/skills/dev-server/SKILL.md)
+Original source: [Azure/cosmos-explorer](https://github.com/Azure/cosmos-explorer/tree/main/.github/skills/run-unit-tests/SKILL.md)
 
 ---
 
