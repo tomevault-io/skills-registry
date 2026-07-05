@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-strafrecht/skills/strafrecht-spezial-falschbeurkundung-348-stgb-und-271-stgb/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/bereicherungs-und-anfechtungsrecht-pruefer/skills/anfg-unentgeltliche-vorsatzanfechtung/SKILL.md)
 
 ---
 
