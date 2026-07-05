@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [anton-abyzov/vskill](https://github.com/anton-abyzov/vskill/tree/main/plugins/marketing/skills/slack-messaging/SKILL.md)
+Original source: [anton-abyzov/vskill](https://github.com/anton-abyzov/vskill/tree/main/plugins/productivity/skills/survey-passing/SKILL.md)
 
 ---
 
