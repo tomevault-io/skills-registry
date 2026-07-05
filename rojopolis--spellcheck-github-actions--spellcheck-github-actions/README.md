@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rojopolis/spellcheck-github-actions](https://github.com/rojopolis/spellcheck-github-actions/tree/main/.claude/skills/docker-test/SKILL.md)
+Original source: [rojopolis/spellcheck-github-actions](https://github.com/rojopolis/spellcheck-github-actions/tree/main/.claude/skills/release-prep/SKILL.md)
 
 ---
 
