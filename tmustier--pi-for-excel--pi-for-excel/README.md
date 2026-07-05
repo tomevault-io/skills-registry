@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tmustier/pi-for-excel](https://github.com/tmustier/pi-for-excel/tree/main/skills/extending-pi/SKILL.md)
+Original source: [tmustier/pi-for-excel](https://github.com/tmustier/pi-for-excel/tree/main/skills/python-bridge/SKILL.md)
 
 ---
 
