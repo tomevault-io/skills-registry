@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PatrickCuba/the_data_must_flow](https://github.com/PatrickCuba/the_data_must_flow/tree/main/dvos-skills/skills/dv-generate/SKILL.md)
+Original source: [PatrickCuba/the_data_must_flow](https://github.com/PatrickCuba/the_data_must_flow/tree/main/dvos-skills/skills/dv-discover/SKILL.md)
 
 ---
 
