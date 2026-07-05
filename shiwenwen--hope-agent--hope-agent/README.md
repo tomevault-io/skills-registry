@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shiwenwen/hope-agent](https://github.com/shiwenwen/hope-agent/tree/main/skills/feishu/SKILL.md)
+Original source: [shiwenwen/hope-agent](https://github.com/shiwenwen/hope-agent/tree/main/skills/ha-logs/SKILL.md)
 
 ---
 
