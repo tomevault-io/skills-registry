@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [raycast/extensions](https://github.com/raycast/extensions/tree/main/extensions/vocabuilder/.agents/skills/raycast-extension-release/SKILL.md)
+Original source: [raycast/extensions](https://github.com/raycast/extensions/tree/main/extensions/codex-manager/tests/fixtures/skill.md)
 
 ---
 
