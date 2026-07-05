@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Roblox/creator-docs](https://github.com/Roblox/creator-docs/tree/main/skills/docs-search/SKILL.md)
+Original source: [Roblox/creator-docs](https://github.com/Roblox/creator-docs/tree/main/skills/virtual-input/SKILL.md)
 
 ---
 
