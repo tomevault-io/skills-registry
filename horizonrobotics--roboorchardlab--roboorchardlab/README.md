@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HorizonRobotics/RoboOrchardLab](https://github.com/HorizonRobotics/RoboOrchardLab/tree/main/.agents/skills/codereview/prmr-codereview/SKILL.md)
+Original source: [HorizonRobotics/RoboOrchardLab](https://github.com/HorizonRobotics/RoboOrchardLab/tree/main/.agents/skills/codereview/architecture-review/SKILL.md)
 
 ---
 
