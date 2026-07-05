@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zzhonglei/GeoCode-Release](https://github.com/zzhonglei/GeoCode-Release/tree/main/contributions/xlsx/skill/SKILL.md)
+Original source: [zzhonglei/GeoCode-Release](https://github.com/zzhonglei/GeoCode-Release/tree/main/contributions/docx-reader/skill/SKILL.md)
 
 ---
 
