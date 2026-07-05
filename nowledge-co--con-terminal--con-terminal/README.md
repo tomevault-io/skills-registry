@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nowledge-co/con-terminal](https://github.com/nowledge-co/con-terminal/tree/main/skills/gpui-cache-aware/SKILL.md)
+Original source: [nowledge-co/con-terminal](https://github.com/nowledge-co/con-terminal/tree/main/skills/changelog-release-notes/SKILL.md)
 
 ---
 
