@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [trendmicro-frontend/tonic-ui](https://github.com/trendmicro-frontend/tonic-ui/tree/main/.claude/skills/tonic-ui-pr/SKILL.md)
+Original source: [trendmicro-frontend/tonic-ui](https://github.com/trendmicro-frontend/tonic-ui/tree/main/.claude/skills/tonic-ui-types/SKILL.md)
 
 ---
 
