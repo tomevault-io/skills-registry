@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zhinjs/zhin](https://github.com/zhinjs/zhin/tree/main/plugins/adapters/onebot11/skills/onebot11/SKILL.md)
+Original source: [zhinjs/zhin](https://github.com/zhinjs/zhin/tree/main/plugins/adapters/onebot12/skills/onebot12/SKILL.md)
 
 ---
 
