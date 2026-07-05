@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [qdrant/skills](https://github.com/qdrant/skills/tree/main/skills/qdrant-performance-optimization/indexing-performance-optimization/SKILL.md)
+Original source: [qdrant/skills](https://github.com/qdrant/skills/tree/main/skills/qdrant-search-quality/search-strategies/hybrid-search/search-types/SKILL.md)
 
 ---
 
