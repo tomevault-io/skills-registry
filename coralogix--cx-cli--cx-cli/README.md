@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [coralogix/cx-cli](https://github.com/coralogix/cx-cli/tree/main/skills/cx-cases/SKILL.md)
+Original source: [coralogix/cx-cli](https://github.com/coralogix/cx-cli/tree/main/skills/cx-alerts/SKILL.md)
 
 ---
 
