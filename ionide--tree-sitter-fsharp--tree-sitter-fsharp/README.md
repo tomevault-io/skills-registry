@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ionide/tree-sitter-fsharp](https://github.com/ionide/tree-sitter-fsharp/tree/main/.opencode/skills/tree-sitter-tdd/SKILL.md)
+Original source: [ionide/tree-sitter-fsharp](https://github.com/ionide/tree-sitter-fsharp/tree/main/.opencode/skills/tree-sitter-parse-testing/SKILL.md)
 
 ---
 
