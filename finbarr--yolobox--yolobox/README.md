@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [finbarr/yolobox](https://github.com/finbarr/yolobox/tree/main/skills/yolobox/SKILL.md)
+Original source: [finbarr/yolobox](https://github.com/finbarr/yolobox/tree/main/skills/yolobox-orchestrator/SKILL.md)
 
 ---
 
