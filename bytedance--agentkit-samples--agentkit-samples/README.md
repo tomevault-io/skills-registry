@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bytedance/agentkit-samples](https://github.com/bytedance/agentkit-samples/tree/main/python/02-use-cases/video_breakdown_agent/.skills/video-breakdown-skill/SKILL.md)
+Original source: [bytedance/agentkit-samples](https://github.com/bytedance/agentkit-samples/tree/main/python/02-use-cases/video_breakdown_agent/.skills/report-generator-skill/SKILL.md)
 
 ---
 
