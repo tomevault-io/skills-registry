@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nerds-odd-e/doughnut](https://github.com/nerds-odd-e/doughnut/tree/main/.cursor/skills/phased-planning/SKILL.md)
+Original source: [nerds-odd-e/doughnut](https://github.com/nerds-odd-e/doughnut/tree/main/.cursor/skills/mutation-testing/SKILL.md)
 
 ---
 
