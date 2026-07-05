@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zhinjs/zhin](https://github.com/zhinjs/zhin/tree/main/plugins/adapters/github/skills/github/SKILL.md)
+Original source: [zhinjs/zhin](https://github.com/zhinjs/zhin/tree/main/plugins/adapters/napcat/skills/napcat/SKILL.md)
 
 ---
 
