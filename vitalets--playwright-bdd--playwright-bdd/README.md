@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vitalets/playwright-bdd](https://github.com/vitalets/playwright-bdd/tree/main/skills/playwright-bdd/SKILL.md)
+Original source: [vitalets/playwright-bdd](https://github.com/vitalets/playwright-bdd/tree/main/.github/skills/debug-cucumber-html-report/SKILL.md)
 
 ---
 
