@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [withastro/rosie](https://github.com/withastro/rosie/tree/main/tests/regression/cases/install-specific-skill/expected/.agents/skills/alpha-skill/SKILL.md)
+Original source: [withastro/rosie](https://github.com/withastro/rosie/tree/main/tests/regression/cases/install-multiple-skills/expected/.agents/skills/alpha-skill/SKILL.md)
 
 ---
 
