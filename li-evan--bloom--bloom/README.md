@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Li-Evan/Bloom](https://github.com/Li-Evan/Bloom/tree/main/skills/learn-graph/SKILL.md)
+Original source: [Li-Evan/Bloom](https://github.com/Li-Evan/Bloom/tree/main/skills/learn-occam/SKILL.md)
 
 ---
 
