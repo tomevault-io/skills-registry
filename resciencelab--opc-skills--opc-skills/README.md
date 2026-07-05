@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ReScienceLab/opc-skills](https://github.com/ReScienceLab/opc-skills/tree/main/skills/nanobanana/SKILL.md)
+Original source: [ReScienceLab/opc-skills](https://github.com/ReScienceLab/opc-skills/tree/main/skills/producthunt/SKILL.md)
 
 ---
 
