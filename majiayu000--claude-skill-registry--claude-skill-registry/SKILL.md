@@ -1,350 +1,534 @@
 ---
-name: impeccable
-description: Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished code that avoids generic AI aesthetics. Use when the user asks to build web components, pages, artifacts, posters, or applications, or when any design skill requires project context. Call with 'craft' for shape-then-build, 'teach' for design context setup, or 'extract' to pull reusable components and tokens into the design system. Use when this capability is needed.
+name: data-visualization-designer
+description: Provides expert design guidance for creating truthful, clear, beautiful data visualizations. Focuses on **DESIGN DECISIONS ONLY**—chart selection, color strategy, visual encoding, and validation. Assumes data is accurate and prepared. Auto-activates when user mentions: data viz, dashboard, chart type, visualization, infographic
 metadata:
   author: majiayu000
 ---
 
-This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
+# Data Visualization Designer
 
-## Context Gathering Protocol
+## MANDATORY PRE-WORK CHECKLIST
 
-Design skills produce generic output without project context. You MUST have confirmed design context before doing any design work.
+**YOU MUST complete this checklist BEFORE applying this skill:**
 
-**Required context** (every design skill needs at minimum):
-- **Target audience**: Who uses this product and in what context?
-- **Use cases**: What jobs are they trying to get done?
-- **Brand personality/tone**: How should the interface feel?
+**[ ] 1. Read Task Decomposition Override Section**
+   - **WHY**: Understand the PROHIBITED sequence (Implementation-First Antipattern)
+   - **WHY**: Understand the MANDATORY sequence (Design-Decision Framework with 4 critical decisions)
+   - **CONSEQUENCE**: Skipping = 30-50% redesign waste + accessibility failures + misleading visualizations
 
-Individual skills may require additional context. Check the skill's preparation section for specifics.
+**[ ] 2. Acknowledge Output Format Requirement**
+   - **FORMAT REQUIRED**:
+     ```
+     Data Viz Design Applied:
+     - Brief: [Purpose + Audience + Success metric]
+     - Chart Type: [Type] because [data structure + task]
+     - Color: [Sequential/Diverging/Categorical] palette, [redundant encoding method]
+     - Encoding: [Primary variable] → position, [Secondary] → [channel]
+     ```
+   - **WHY**: Hook validation requires this exact format
+   - **CONSEQUENCE**: Missing acknowledgment = architecture violation
 
-**CRITICAL**: You cannot infer this context by reading the codebase. Code tells you what was built, not who it's for or what it should feel like. Only the creator can provide this context.
+**[ ] 3. Identify Data Viz-Specific Requirements**
+   - **Chart Type Justification**: Chart MUST match data structure AND task (NOT aesthetics or "what looks cool")
+   - **Color Accessibility**: NO red-green only encoding, MUST use redundant channels (color + shape/pattern/label)
+   - **Truthfulness Validation**: Y-axis starts at zero (bar charts) OR clearly labeled, no truncated axes to exaggerate
+   - **Perceptual Hierarchy**: Position > Length > Angle > Area > Color (Cleveland & McGill research)
+   - **Colorblind Safe**: Blue-Orange or Blue-Yellow palettes, test with simulators
+   - **WHY**: Wrong chart type + color-only encoding + misleading axes = 83.5% viewer misinterpretation
+   - **CONSEQUENCE**: Ignoring = unusable visualization that actively misleads decision-makers
 
-**Gathering order:**
-1. **Check current instructions (instant)**: If your loaded instructions already contain a **Design Context** section, proceed immediately.
-2. **Check .impeccable.md (fast)**: If not in instructions, read `.impeccable.md` from the project root. If it exists and contains the required context, proceed.
-3. **Run impeccable teach (REQUIRED)**: If neither source has context, you MUST run /impeccable teach NOW before doing anything else. Do NOT skip this step. Do NOT attempt to infer context from the codebase instead.
+**[ ] 4. Check for Multi-Skill Compositions (v5.5.0)**
+   - **IF data-visualization-designer + design-excellence + diagram-drawing loaded**:
+     - YOU MUST apply all three skills in conjunction (not isolation)
+     - Composition: visual-design-excellence (3.2x quality improvement)
+     - This skill = data encoding decisions, design-excellence = aesthetics, diagram = Chart.js code
+   - **CONSEQUENCE**: Single-skill usage when composition available = suboptimal quality
 
----
-
-## Design Direction
-
-Commit to a BOLD aesthetic direction:
-- **Purpose**: What problem does this interface solve? Who uses it?
-- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.
-- **Constraints**: Technical requirements (framework, performance, accessibility).
-- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?
-
-**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work. The key is intentionality, not intensity.
-
-Then implement working code that is:
-- Production-grade and functional
-- Visually striking and memorable
-- Cohesive with a clear aesthetic point-of-view
-- Meticulously refined in every detail
-
-## Frontend Aesthetics Guidelines
-
-### Typography
-→ *Consult [typography reference](reference/typography.md) for OpenType features, web font loading, and the deeper material on scales.*
-
-Choose fonts that are beautiful, unique, and interesting. Pair a distinctive display font with a refined body font.
-
-<typography_principles>
-Always apply these — do not consult a reference, just do them:
-
-- Use a modular type scale with fluid sizing (clamp) for headings on marketing/content pages. Use fixed `rem` scales for app UIs and dashboards (no major design system uses fluid type in product UI).
-- Use fewer sizes with more contrast. A 5-step scale with at least a 1.25 ratio between steps creates clearer hierarchy than 8 sizes that are 1.1× apart.
-- Line-height scales inversely with line length. Narrow columns want tighter leading, wide columns want more. For light text on dark backgrounds, ADD 0.05-0.1 to your normal line-height — light type reads as lighter weight and needs more breathing room.
-- Cap line length at ~65-75ch. Body text wider than that is fatiguing.
-</typography_principles>
-
-<font_selection_procedure>
-DO THIS BEFORE TYPING ANY FONT NAME.
-
-The model's natural failure mode is "I was told not to use Inter, so I will pick my next favorite font, which becomes the new monoculture." Avoid this by performing the following procedure on every project, in order:
-
-Step 1. Read the brief once. Write down 3 concrete words for the brand voice (e.g., "warm and mechanical and opinionated", "calm and clinical and careful", "fast and dense and unimpressed", "handmade and a little weird"). NOT "modern" or "elegant" — those are dead categories.
-
-Step 2. List the 3 fonts you would normally reach for given those words. Write them down. They are most likely from this list:
-
-<reflex_fonts_to_reject>
-Fraunces
-Newsreader
-Lora
-Crimson
-Crimson Pro
-Crimson Text
-Playfair Display
-Cormorant
-Cormorant Garamond
-Syne
-IBM Plex Mono
-IBM Plex Sans
-IBM Plex Serif
-Space Mono
-Space Grotesk
-Inter
-DM Sans
-DM Serif Display
-DM Serif Text
-Outfit
-Plus Jakarta Sans
-Instrument Sans
-Instrument Serif
-</reflex_fonts_to_reject>
-
-Reject every font that appears in the reflex_fonts_to_reject list. They are your training-data defaults and they create monoculture across projects.
-
-Step 3. Browse a font catalog with the 3 brand words in mind. Sources: Google Fonts, Pangram Pangram, Future Fonts, Adobe Fonts, ABC Dinamo, Klim Type Foundry, Velvetyne. Look for something that fits the brand as a *physical object* — a museum exhibit caption, a hand-painted shop sign, a 1970s mainframe terminal manual, a fabric label on the inside of a coat, a children's book printed on cheap newsprint. Reject the first thing that "looks designy" — that's the trained reflex too. Keep looking.
-
-Step 4. Cross-check the result. The right font for an "elegant" brief is NOT necessarily a serif. The right font for a "technical" brief is NOT necessarily a sans-serif. The right font for a "warm" brief is NOT Fraunces. If your final pick lines up with your reflex pattern, go back to Step 3.
-</font_selection_procedure>
-
-<typography_rules>
-DO use a modular type scale with fluid sizing (clamp) on headings.
-DO vary font weights and sizes to create clear visual hierarchy.
-DO vary your font choices across projects. If you used a serif display font on the last project, look for a sans, monospace, or display face on this one.
-
-DO NOT use overused fonts like Inter, Roboto, Arial, Open Sans, or system defaults — but also do not simply switch to your second-favorite. Every font in the reflex_fonts_to_reject list above is banned. Look further.
-DO NOT use monospace typography as lazy shorthand for "technical/developer" vibes.
-DO NOT put large icons with rounded corners above every heading. They rarely add value and make sites look templated.
-DO NOT use only one font family for the entire page. Pair a distinctive display font with a refined body font.
-DO NOT use a flat type hierarchy where sizes are too close together. Aim for at least a 1.25 ratio between steps.
-DO NOT set long body passages in uppercase. Reserve all-caps for short labels and headings.
-</typography_rules>
-
-### Color & Theme
-→ *Consult [color reference](reference/color-and-contrast.md) for the deeper material on contrast, accessibility, and palette construction.*
-
-Commit to a cohesive palette. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
-
-<color_principles>
-Always apply these — do not consult a reference, just do them:
-
-- Use OKLCH, not HSL. OKLCH is perceptually uniform: equal steps in lightness *look* equal, which HSL does not deliver. As you move toward white or black, REDUCE chroma — high chroma at extreme lightness looks garish. A light blue at 85% lightness wants ~0.08 chroma, not the 0.15 of your base color.
-- Tint your neutrals toward your brand hue. Even a chroma of 0.005-0.01 is perceptible and creates subconscious cohesion between brand color and UI surfaces. The hue you tint toward should come from THIS brand, not from a "warm = friendly" or "cool = tech" formula. Pick the brand's actual hue first, then tint everything toward it.
-- The 60-30-10 rule is about visual *weight*, not pixel count. 60% neutral / surface, 30% secondary text and borders, 10% accent. Accents work BECAUSE they're rare. Overuse kills their power.
-</color_principles>
-
-<theme_selection>
-Theme (light vs dark) should be DERIVED from audience and viewing context, not picked from a default. Read the brief and ask: when is this product used, by whom, in what physical setting?
-
-- A perp DEX consumed during fast trading sessions → dark
-- A hospital portal consumed by anxious patients on phones late at night → light
-- A children's reading app → light
-- A vintage motorcycle forum where users sit in their garage at 9pm → dark
-- An observability dashboard for SREs in a dark office → dark
-- A wedding planning checklist for couples on a Sunday morning → light
-- A music player app for headphone listening at night → dark
-- A food magazine homepage browsed during a coffee break → light
-
-Do not default everything to light "to play it safe." Do not default everything to dark "to look cool." Both defaults are the lazy reflex. The correct theme is the one the actual user wants in their actual context.
-</theme_selection>
-
-<color_rules>
-DO use modern CSS color functions (oklch, color-mix, light-dark) for perceptually uniform, maintainable palettes.
-DO tint your neutrals toward your brand hue. Even a subtle hint creates subconscious cohesion.
-
-DO NOT use gray text on colored backgrounds; it looks washed out. Use a shade of the background color instead.
-DO NOT use pure black (#000) or pure white (#fff). Always tint; pure black/white never appears in nature.
-DO NOT use the AI color palette: cyan-on-dark, purple-to-blue gradients, neon accents on dark backgrounds.
-DO NOT use gradient text for impact — see <absolute_bans> below for the strict definition. Solid colors only for text.
-DO NOT default to dark mode with glowing accents. It looks "cool" without requiring actual design decisions.
-DO NOT default to light mode "to be safe" either. The point is to choose, not to retreat to a safe option.
-</color_rules>
-
-### Layout & Space
-→ *Consult [spatial reference](reference/spatial-design.md) for the deeper material on grids, container queries, and optical adjustments.*
-
-Create visual rhythm through varied spacing, not the same padding everywhere. Embrace asymmetry and unexpected compositions. Break the grid intentionally for emphasis.
-
-<spatial_principles>
-Always apply these — do not consult a reference, just do them:
-
-- Use a 4pt spacing scale with semantic token names (`--space-sm`, `--space-md`), not pixel-named (`--spacing-8`). Scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. 8pt is too coarse — you'll often want 12px between two values.
-- Use `gap` instead of margins for sibling spacing. It eliminates margin collapse and the cleanup hacks that come with it.
-- Vary spacing for hierarchy. A heading with extra space above it reads as more important — make use of that. Don't apply the same padding everywhere.
-- Self-adjusting grid pattern: `grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))` is the breakpoint-free responsive grid for card-style content.
-- Container queries are for components, viewport queries are for page layout. A card in a sidebar should adapt to the sidebar's width, not the viewport's.
-</spatial_principles>
-
-<spatial_rules>
-DO create visual rhythm through varied spacing: tight groupings, generous separations.
-DO use fluid spacing with clamp() that breathes on larger screens.
-DO use asymmetry and unexpected compositions; break the grid intentionally for emphasis.
-
-DO NOT wrap everything in cards. Not everything needs a container.
-DO NOT nest cards inside cards. Visual noise; flatten the hierarchy.
-DO NOT use identical card grids (same-sized cards with icon + heading + text, repeated endlessly).
-DO NOT use the hero metric layout template (big number, small label, supporting stats, gradient accent).
-DO NOT center everything. Left-aligned text with asymmetric layouts feels more designed.
-DO NOT use the same spacing everywhere. Without rhythm, layouts feel monotonous.
-DO NOT let body text wrap beyond ~80 characters per line. Add a max-width like 65–75ch so the eye can track easily.
-</spatial_rules>
-
-### Visual Details
-
-<absolute_bans>
-These CSS patterns are NEVER acceptable. They are the most recognizable AI design tells. Match-and-refuse: if you find yourself about to write any of these, stop and rewrite the element with a different structure entirely.
-
-BAN 1: Side-stripe borders on cards/list items/callouts/alerts
-  - PATTERN: `border-left:` or `border-right:` with width greater than 1px
-  - INCLUDES: hard-coded colors AND CSS variables
-  - FORBIDDEN: `border-left: 3px solid red`, `border-left: 4px solid #ff0000`, `border-left: 4px solid var(--color-warning)`, `border-left: 5px solid oklch(...)`, etc.
-  - WHY: this is the single most overused "design touch" in admin, dashboard, and medical UIs. It never looks intentional regardless of color, radius, opacity, or whether the variable name is "primary" or "warning" or "accent."
-  - REWRITE: use a different element structure entirely. Do not just swap to box-shadow inset. Reach for full borders, background tints, leading numbers/icons, or no visual indicator at all.
-
-BAN 2: Gradient text
-  - PATTERN: `background-clip: text` (or `-webkit-background-clip: text`) combined with a gradient background
-  - FORBIDDEN: any combination that makes text fill come from a `linear-gradient`, `radial-gradient`, or `conic-gradient`
-  - WHY: gradient text is decorative rather than meaningful and is one of the top three AI design tells
-  - REWRITE: use a single solid color for text. If you want emphasis, use weight or size, not gradient fill.
-</absolute_bans>
-
-DO: Use intentional, purposeful decorative elements that reinforce brand.
-DO NOT: Use border-left or border-right greater than 1px as a colored accent stripe on cards, list items, callouts, or alerts. See <absolute_bans> above for the strict CSS pattern.
-DO NOT: Use glassmorphism everywhere (blur effects, glass cards, glow borders used decoratively rather than purposefully).
-DO NOT: Use sparklines as decoration. Tiny charts that look sophisticated but convey nothing meaningful.
-DO NOT: Use rounded rectangles with generic drop shadows. Safe, forgettable, could be any AI output.
-DO NOT: Use modals unless there's truly no better alternative. Modals are lazy.
-
-### Motion
-→ *Consult [motion reference](reference/motion-design.md) for timing, easing, and reduced motion.*
-
-Focus on high-impact moments: one well-orchestrated page load with staggered reveals creates more delight than scattered micro-interactions.
-
-**DO**: Use motion to convey state changes: entrances, exits, feedback
-**DO**: Use exponential easing (ease-out-quart/quint/expo) for natural deceleration
-**DO**: For height animations, use grid-template-rows transitions instead of animating height directly
-**DON'T**: Animate layout properties (width, height, padding, margin). Use transform and opacity only
-**DON'T**: Use bounce or elastic easing. They feel dated and tacky; real objects decelerate smoothly
-
-### Interaction
-→ *Consult [interaction reference](reference/interaction-design.md) for forms, focus, and loading patterns.*
-
-Make interactions feel fast. Use optimistic UI: update immediately, sync later.
-
-**DO**: Use progressive disclosure. Start simple, reveal sophistication through interaction (basic options first, advanced behind expandable sections; hover states that reveal secondary actions)
-**DO**: Design empty states that teach the interface, not just say "nothing here"
-**DO**: Make every interactive surface feel intentional and responsive
-**DON'T**: Repeat the same information (redundant headers, intros that restate the heading)
-**DON'T**: Make every button primary. Use ghost buttons, text links, secondary styles; hierarchy matters
-
-### Responsive
-→ *Consult [responsive reference](reference/responsive-design.md) for mobile-first, fluid design, and container queries.*
-
-**DO**: Use container queries (@container) for component-level responsiveness
-**DO**: Adapt the interface for different contexts, not just shrink it
-**DON'T**: Hide critical functionality on mobile. Adapt the interface, don't amputate it
-
-### UX Writing
-→ *Consult [ux-writing reference](reference/ux-writing.md) for labels, errors, and empty states.*
-
-**DO**: Make every word earn its place
-**DON'T**: Repeat information users can already see
+**✅ ALL BOXES CHECKED = Ready to proceed to Task Decomposition Override**
+**❌ SKIPPING THIS CHECKLIST = Claiming "Data Viz Design Applied" while creating misleading charts**
 
 ---
 
-## The AI Slop Test
+## Task Decomposition Override (v5.4.0)
 
-**Critical quality check**: If you showed this interface to someone and said "AI made this," would they believe you immediately? If yes, that's the problem.
+When designing data visualizations, DO NOT use your default task decomposition.
 
-A distinctive interface should make someone ask "how was this made?" not "which AI made this?"
+### ❌ PROHIBITED SEQUENCE (Implementation-First Antipattern):
+1. Jump straight to creating charts
+2. Pick chart type based on aesthetics
+3. Apply colors randomly
+4. Add data and hope it works
+5. Discover accessibility issues after completion
 
-Review the DON'T guidelines above. They are the fingerprints of AI-generated work from 2024-2025.
+**Consequence**: Redesign waste (30-50% rework), accessibility failures, misleading visualizations, frustrated stakeholders.
 
----
+### ✅ MANDATORY SEQUENCE (Design-Decision Framework):
 
-## Implementation Principles
+**Phase 1: Design Decision** (Make 4 critical decisions)
 
-Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details.
+1. **Establish Brief**:
+   - Reference: Skill "The Foundation: Four-Element Framework"
+   - Output: Purpose, audience, context, success metric documented
 
-Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices across generations.
+2. **Select Chart Type**:
+   - Reference: Skill "Chart Type Selection" + @data-visualization-designer/resources/perceptual-accuracy-research.md
+   - Output: Chart type with justification (comparison/relationship/distribution/composition)
 
-Remember: the model is capable of extraordinary creative work. Don't hold back. Show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
+3. **Design Color Strategy**:
+   - Reference: Skill "Color Strategy"
+   - Output: Palette type (sequential/diverging/categorical), colorblind-safe verification, redundant encoding plan
 
----
+4. **Plan Visual Encoding**:
+   - Reference: @data-visualization-designer/resources/perceptual-accuracy-research.md
+   - Output: Which visual channels encode which variables (position > length > color)
 
-## Craft Mode
-
-If this skill is invoked with the argument "craft" (e.g., `/impeccable craft [feature description]`), follow the [craft flow](reference/craft.md). Pass any additional arguments as the feature description.
-
----
-
-## Teach Mode
-
-If this skill is invoked with the argument "teach" (e.g., `/impeccable teach`), skip all design work above and instead run the teach flow below. This is a one-time setup that gathers design context for the project.
-
-### Step 1: Explore the Codebase
-
-Before asking questions, thoroughly scan the project to discover what you can:
-
-- **README and docs**: Project purpose, target audience, any stated goals
-- **Package.json / config files**: Tech stack, dependencies, existing design libraries
-- **Existing components**: Current design patterns, spacing, typography in use
-- **Brand assets**: Logos, favicons, color values already defined
-- **Design tokens / CSS variables**: Existing color palettes, font stacks, spacing scales
-- **Any style guides or brand documentation**
-
-Note what you've learned and what remains unclear.
-
-### Step 2: Ask UX-Focused Questions
-
-ask the user directly to clarify what you cannot infer. Focus only on what you couldn't infer from the codebase:
-
-#### Users & Purpose
-- Who uses this? What's their context when using it?
-- What job are they trying to get done?
-- What emotions should the interface evoke? (confidence, delight, calm, urgency, etc.)
-
-#### Brand & Personality
-- How would you describe the brand personality in 3 words?
-- Any reference sites or apps that capture the right feel? What specifically about them?
-- What should this explicitly NOT look like? Any anti-references?
-
-#### Aesthetic Preferences
-- Any strong preferences for visual direction? (minimal, bold, elegant, playful, technical, organic, etc.)
-- Light mode, dark mode, or both?
-- Any colors that must be used or avoided?
-
-#### Accessibility & Inclusion
-- Specific accessibility requirements? (WCAG level, known user needs)
-- Considerations for reduced motion, color blindness, or other accommodations?
-
-Skip questions where the answer is already clear from the codebase exploration.
-
-### Step 3: Write Design Context
-
-Synthesize your findings and the user's answers into a `## Design Context` section:
-
-```markdown
-## Design Context
-
-### Users
-[Who they are, their context, the job to be done]
-
-### Brand Personality
-[Voice, tone, 3-word personality, emotional goals]
-
-### Aesthetic Direction
-[Visual tone, references, anti-references, theme]
-
-### Design Principles
-[3-5 principles derived from the conversation that should guide all design decisions]
+**Output Acknowledgment After Phase 1:**
+```
+Data Viz Design Applied:
+- Brief: [Purpose + Audience + Success metric]
+- Chart Type: [Type] because [data structure + task]
+- Color: [Sequential/Diverging/Categorical] palette, [redundant encoding method]
+- Encoding: [Primary variable] → position, [Secondary] → [channel]
 ```
 
-Write this section to `.impeccable.md` in the project root. If the file already exists, update the Design Context section in place.
+**Phase 2: Implementation** (Apply decisions)
 
-Then ask the user directly to clarify what you cannot infer. whether they'd also like the Design Context appended to .github/copilot-instructions.md. If yes, append or update the section there as well.
+5. Apply typography hierarchy (reference: @data-visualization-designer/resources/crap-principles-for-data.md)
+6. Add strategic annotations (reference: @data-visualization-designer/resources/data-storytelling.md)
+7. Optimize data-ink ratio (reference: @data-visualization-designer/resources/data-ink-optimization.md)
+8. Implement design (hand off to diagram-drawing skill for Chart.js/D3.js code)
 
-Confirm completion and summarize the key design principles that will now guide all future work.
+**Phase 3: Validation** (Verify quality)
+
+9. Run truthfulness audit (reference: Skill "Critical Mistakes" - Fatal category)
+10. Check accessibility (reference: Skill "Accessibility Requirements")
+11. Validate against Quick Audit Checklist (reference: Skill "Quick Audit Before Publishing")
+
+**IF you use ❌ sequence instead of ✅ sequence = ARCHITECTURE VIOLATION**
+
+**Rationale**: Design decisions BEFORE implementation prevents 30-50% redesign waste. Establishes brief, justifies chart selection, ensures accessibility from start, enables validation against documented criteria. Quality guaranteed through checkable Phase 1 outputs.
 
 ---
 
-## Extract Mode
+## Language Standards (v5.4.0)
 
-If this skill is invoked with the argument "extract" (e.g., `/impeccable extract [target]`), follow the [extract flow](reference/extract.md). Pass any additional arguments as the extraction target.
+**YOU MUST use directive language throughout:**
+- ✅ "YOU MUST use", "DO NOT use", "ALWAYS", "NEVER", "MANDATORY", "PROHIBITED"
+- ❌ Never: "should", "consider", "might", "could", "try to"
+
+**Enforcement**: Skills with weak language blocked by pre-tool-use-write.ts hook.
+
+---
+
+## The Foundation: Four-Element Framework
+
+Every effective visualization requires these elements:
+
+**Information** - Accurate, verified data (provided to you)
+
+**Story** - The insight your visualization communicates
+
+**Goal** - Specific purpose: persuade, enable decisions, communicate insights
+
+**Visual Form** - How you encode meaning through visual channels (position, color, size, shape)
+
+**YOU MUST establish all four elements before designing.** If any element is unclear, use AskUserQuestion tool to clarify. Missing elements create incomplete, ineffective visualizations.
+
+### Brief Template
+
+Answer these before starting:
+
+**Purpose**: What specific question does this answer? What decision should it enable?
+
+**Audience**: Who views this? Technical experts or general public? Visual literacy level?
+
+**Context**: When/how will viewers access? Dashboard? Report? Publication? Mobile or desktop?
+
+**Success Metric**: How do you know it succeeded? Comprehension in 5 seconds? Action taken? Decision made?
+
+---
+
+## Chart Type Selection
+
+**YOU MUST match chart type to data structure and task, NOT aesthetics.**
+
+### COMPARISON (How datasets differ)
+
+**Few values (≤3)**: Bar/column chart
+**Many values (4-10)**: Grouped bars or dot plot
+**Many categories (>10)**: Horizontal bar chart (easier label reading)
+**Time-based comparison**: Column chart
+
+**❌ AVOID**: Pie charts (human vision terrible at comparing angles—10-30× less accurate than bars)
+
+### RELATIONSHIP (How variables correspond)
+
+**Two continuous variables**: Scatter plot
+**Three dimensions**: Bubble chart (size = 3rd variable)
+**Many comparisons**: Small multiples
+**Correlation strength**: Scatter plot with regression line
+
+**❌ AVOID**: Lines connecting scatter points (implies false temporal continuity)
+
+### DISTRIBUTION (How data spreads)
+
+**Single variable distribution**: Histogram or box plot
+**Distribution over time**: Line chart
+**Multiple distributions**: Small multiples or violin plots
+**Pattern matrix**: Heatmap
+
+**❌ AVOID**: 3D histograms (distorts perception), rainbow colormaps (creates false boundaries)
+
+### COMPOSITION (Parts of whole)
+
+**Static 2-5 categories**: Stacked bar chart (NOT pie)
+**Changes over time**: Stacked area chart or waterfall
+**Hierarchical data**: Treemap or sunburst
+**Flow between categories**: Sankey diagram
+
+**❌ AVOID**: Pie charts except rare cases (<5 categories, one slice >50%)
+
+### Decision Matrix
+
+| Data Structure | Task | Recommended Chart |
+|----------------|------|-------------------|
+| 1 categorical, 1 quantitative | Compare values | Bar chart |
+| 2 categorical, 1 quantitative | Compare groups | Grouped/stacked bar |
+| Time series, 1 metric | Show trend | Line chart |
+| Time series, multiple metrics | Compare trends | Multiple lines or small multiples |
+| 2 continuous variables | Correlation | Scatter plot |
+| 1 continuous variable | Distribution | Histogram |
+| Hierarchical categories | Part-whole | Treemap |
+| Geographic data | Spatial patterns | Choropleth map |
+
+---
+
+## Color Strategy
+
+**YOU MUST use color to serve a communication goal, NOT decoration.** Reserve saturated colors for emphasis.
+
+### Choose Palette Type
+
+**Sequential (single hue, light to dark)** - Ordered data
+- **Use for**: Heatmaps, distributions, intensity, magnitude
+- **Safe palettes**: Viridis, Blues, Grays, YlGnBu
+- **❌ AVOID**: Rainbow/Jet (creates false boundaries, colorblind-hostile)
+
+**Diverging (two sequences, neutral center)** - Meaningful midpoint
+- **Use for**: Temperature anomalies, profit/loss, deviations from mean, +/- data
+- **Safe palettes**: Blue-White-Orange, Green-White-Purple, RdBu
+- **❌ AVOID**: Red-Green together (~8% of viewers can't distinguish)
+
+**Categorical (distinct groups)** - Unrelated categories
+- **Use for**: 2-7 categories maximum
+- **Safe palette**: Orange, Blue, Green, Red, Purple, Yellow, Gray (in priority order)
+- **❌ AVOID**: Too many colors (>7 overwhelms memory), similar hues (hard to distinguish)
+
+### Accessibility Requirements (MANDATORY)
+
+**YOU MUST implement ALL of these:**
+
+1. **Never rely on color alone** → Add labels, patterns, shapes, or text
+2. **Never red-green together** → ~8% of viewers (1 in 12 men) cannot distinguish
+3. **Always check grayscale** → Visualization must work in black and white
+4. **Always add redundant encoding** → Color + label, or color + pattern, or color + shape
+
+**Colorblind-safe palettes**:
+- Blue-Orange (most universal)
+- Blue-Yellow
+- Purple-Orange
+- Viridis/Plasma (perceptually uniform, colorblind-friendly)
+
+**Test your palette**: Use colorblind simulation tools (Coblis, Color Oracle) to verify.
+
+---
+
+## Typography & Visual Hierarchy
+
+**Font Selection**:
+- **YOU MUST use**: Sans-serif fonts for screen legibility (IBM Plex Sans, Space Grotesk, Source Sans 3, Fira Sans)
+- **❌ DO NOT use**: Inter, Roboto, Arial, Helvetica (signals "AI slop"—generic AI-generated content)
+- **Limit**: 2 fonts maximum (heading + body)
+- **Weight**: Regular weight default (not light, not bold except emphasis)
+
+**Size Hierarchy** (establish clear levels):
+- **Title**: Largest, boldest (18-24pt, dominant message)
+- **Axis labels**: Secondary (12-14pt)
+- **Annotations**: Tertiary (10-12pt)
+- **Minimum**: 12pt on screen, 10pt in print
+
+**Apply CRAP Principles** (reference: @data-visualization-designer/resources/crap-principles-for-data.md):
+- **Contrast**: Different elements very different (size, color, weight)
+- **Repetition**: Same font/color/size for same element types (coherence)
+- **Alignment**: Every element connects visually to another
+- **Proximity**: Related items grouped close; unrelated separated
+
+**Whitespace Strategy**: Strategic blank space directs attention and reduces cognitive load. DO NOT fear empty areas—they create breathing room.
+
+---
+
+## Visual Encoding Hierarchy
+
+**Based on Cleveland & McGill perceptual accuracy research** (reference: @data-visualization-designer/resources/perceptual-accuracy-research.md):
+
+### Perceptual Accuracy Ranking (Most to Least Accurate)
+
+1. **Position along common scale** (X/Y axis) - **MOST ACCURATE**
+2. **Position on non-aligned scales** (small multiples)
+3. **Length** (bar heights)
+4. **Angle** (pie slices) - 2-3× less accurate than position
+5. **Area** (bubble size) - hard to judge, non-linear perception
+6. **Volume** (3D objects) - highly inaccurate, distorted
+7. **Color saturation** - **LEAST ACCURATE** for quantities
+
+### Design Implications
+
+**YOU MUST apply this hierarchy:**
+
+- **Put most important comparisons in position along axis** (highest accuracy)
+- **Use length for secondary comparisons** (bar charts, column charts)
+- **Use color for emphasis or categorization** (NOT for precise quantities)
+- **NEVER use 3D for non-spatial data** (distorts perception, reduces accuracy)
+
+**Example**: Comparing sales across regions over time
+- **Position**: Time on X-axis, sales on Y-axis (primary comparison)
+- **Color**: Different regions (categorical distinction)
+- **❌ NOT area**: Bubble size for sales (hard to judge precisely)
+
+---
+
+## Annotation & Storytelling
+
+**Strategic annotations explain and guide** (reference: @data-visualization-designer/resources/data-storytelling.md).
+
+### What to Annotate
+
+**YOU MUST annotate**:
+- **Outliers and anomalies** - Why is this point unusual?
+- **Historical context** - Benchmarks, previous periods, goals
+- **Key findings** - Insights you want highlighted
+- **Methodology** - Data source, date range, limitations
+
+**Keep concise**: One insight per annotation. Style consistently. Avoid over-annotation (more annotations than data points = clutter).
+
+### Direct Labeling Strategy
+
+**YOU MUST use direct labeling** instead of legends whenever possible:
+- Integrate labels into visualization
+- Eliminates need to match colors back to legend
+- Reduces cognitive load
+- Faster comprehension
+
+**Example**: Label each line directly at endpoint instead of legend box.
+
+### Title Conveys Insight
+
+**❌ Descriptive title**: "Sales Over Time"
+**✅ Insight-driven title**: "Sales Increased 60% in Q4"
+**✅ Question-answering title**: "Which Products Drive Growth? Premium Segment"
+
+**Title should communicate main takeaway** without requiring viewers to read the full chart.
+
+---
+
+## Critical Mistakes to Avoid
+
+### ❌ FATAL (Directly Misleads Viewers)
+
+**Truncated Y-Axes on Bar Charts**
+- **What it is**: Y-axis doesn't start at zero, exaggerates differences
+- **Impact**: 83.5% of viewers misinterpret magnitude (Cleveland & McGill)
+- **Fix**: ALWAYS start bar chart Y-axes at zero, OR use broken axis indicator + clear labeling
+
+**3D Effects (Non-Spatial Data)**
+- **What it is**: Adding depth/perspective to charts representing non-spatial data
+- **Impact**: Distorts through perspective (lie factor 1.5-2.0), rear values appear smaller
+- **Fix**: NEVER use 3D for business/analytical data
+
+**Red-Green Color Encoding**
+- **What it is**: Using red and green as primary color distinction
+- **Impact**: ~8% of viewers (1 in 12 men) see both as same muddy color
+- **Fix**: Use Blue-Orange, Blue-Yellow, or other colorblind-safe palettes + redundant encoding
+
+### ⚠️ SERIOUS (Significantly Reduce Effectiveness)
+
+**Rainbow Colormap (Jet)**
+- **What it is**: Rainbow gradient (red-orange-yellow-green-blue-purple)
+- **Impact**: Creates false boundaries (bright yellow stripe), non-monotonic luminance, colorblind-hostile
+- **Fix**: Replace with Viridis, Plasma, or Blue-White-Red diverging palette
+
+**Color-Only Encoding**
+- **What it is**: Information conveyed ONLY by color, no alternative
+- **Impact**: Fails for colorblind viewers, grayscale printing, accessibility
+- **Fix**: Add direct labels, patterns, shapes, or text (redundant encoding)
+
+**Dual-Axis Charts (Incompatible Scales)**
+- **What it is**: Two Y-axes with different scales on same chart
+- **Impact**: Creates false correlation appearance, easily manipulated
+- **Fix**: Use separate charts instead, OR ensure scales proportional + clearly labeled
+
+**Pie Charts for Comparisons**
+- **What it is**: Using pie charts to compare multiple values
+- **Impact**: Human vision terrible at comparing angles (10-30× less accurate than bars)
+- **Fix**: Use bar charts for comparison; pie only for showing one slice >50%
+
+### 📊 MODERATE (Reduce Clarity)
+
+**Too Many Colors** (>7)
+- **Impact**: Overwhelms viewers, exceeds working memory capacity
+- **Fix**: Reduce to 5-7 max, combine minor categories into "Other"
+
+**Missing Context**
+- **Impact**: No title, axis labels, data source, or date → viewers can't interpret or trust
+- **Fix**: ALWAYS include title (conveys insight), axis labels (with units), source, date
+
+**Chartjunk** (reference: @data-visualization-designer/resources/data-ink-optimization.md)
+- **Impact**: Heavy gridlines, 3D effects, decorative backgrounds, ornamental fonts increase cognitive load
+- **Fix**: Remove all non-data elements; maximize data-ink ratio
+
+**Small Text**
+- **Impact**: Below 12pt struggles for readability, excludes people with low vision
+- **Fix**: Minimum 12pt (14pt+ optimal for accessibility)
+
+---
+
+## Quick Audit Before Publishing
+
+**Run this 9-minute checklist before sharing any visualization:**
+
+### Data Integrity (2 minutes)
+- [ ] Bar chart Y-axis starts at zero OR clearly labeled if not
+- [ ] No 3D effects on non-spatial data
+- [ ] Dual axes proportional or clearly explained
+- [ ] Data truthfully represented (no distortion)
+
+### Design Quality (3 minutes)
+- [ ] Title conveys insight (not just "Chart")
+- [ ] Axis labels include units
+- [ ] Color palette limited (max 5-7 categorical)
+- [ ] No red-green together
+- [ ] No color-only encoding (redundant encoding added)
+- [ ] Grayscale readable
+
+### Context (2 minutes)
+- [ ] Title clear and insight-driven
+- [ ] Legend present OR direct labels used
+- [ ] Data source and date cited
+- [ ] Sufficient context for interpretation
+- [ ] Key findings/outliers explained
+
+### Polish (2 minutes)
+- [ ] Font professional sans-serif (IBM Plex Sans, Space Grotesk, Source Sans 3, NOT Inter/Roboto)
+- [ ] Text minimum 12pt
+- [ ] Alignment consistent (CRAP principles applied)
+- [ ] Whitespace strategic
+- [ ] No chartjunk (reference: data-ink-optimization.md)
+
+**Total: 9 minutes. All checkboxes pass = ready to publish.**
+
+---
+
+## Integration
+
+**Works Well With:**
+
+- **Skill: design-excellence** - General typography anti-patterns, color theory, motion principles, background design (auto-activates together)
+- **Skill: diagram-drawing** - Chart.js/D3.js technical implementation, export to PNG/SVG/PDF (auto-activates together)
+- **Pattern: component_design** - UI component design patterns
+
+**Typical Workflow**:
+1. design-excellence auto-activates → General design principles (typography, color themes)
+2. **data-visualization-designer auto-activates** → Chart selection, color strategy, validation
+3. diagram-drawing auto-activates → Chart.js implementation code
+
+**Separation of Concerns**:
+- design-excellence = General design (not data-specific)
+- **data-visualization-designer = Design decisions** (what chart, why, validation)
+- diagram-drawing = Technical execution (Chart.js config, D3.js patterns)
+
+---
+
+## When to Load Resources
+
+**CRAP principles deep-dive:**
+- `@data-visualization-designer/resources/crap-principles-for-data.md` - Contrast, Repetition, Alignment, Proximity applied to charts/dashboards
+
+**Perceptual accuracy research:**
+- `@data-visualization-designer/resources/perceptual-accuracy-research.md` - Cleveland & McGill hierarchy, encoding decisions, science-backed design
+
+**Data-ink optimization:**
+- `@data-visualization-designer/resources/data-ink-optimization.md` - Tufte principles, chartjunk removal, maximizing data-ink ratio
+
+**Storytelling techniques:**
+- `@data-visualization-designer/resources/data-storytelling.md` - Annotation strategies, narrative arc, progressive disclosure
+
+---
+
+## Anti-Patterns to Avoid
+
+**Chart Selection:**
+- ❌ Pie charts for comparison tasks (use bar charts)
+- ❌ 3D charts for non-spatial data (use 2D)
+- ❌ Dual-axis with incompatible scales (use separate charts)
+- ❌ Lines connecting non-temporal scatter points (remove lines)
+
+**Color:**
+- ❌ Red-green encoding (~8% can't distinguish)
+- ❌ Rainbow/Jet colormap (creates false boundaries)
+- ❌ Color-only encoding (add redundant labels/patterns)
+- ❌ Too many colors (>7 overwhelms memory)
+- ❌ Purple gradients on white (cliché "AI slop" pattern)
+
+**Typography:**
+- ❌ Inter, Roboto, Arial, Helvetica fonts (signals generic AI content)
+- ❌ All text same size/weight (no hierarchy)
+- ❌ Text below 12pt (readability issues)
+- ❌ Ornamental fonts (reduces legibility)
+
+**Truthfulness:**
+- ❌ Truncated Y-axis without clear indication (misleads magnitude)
+- ❌ 3D effects (distorts perception)
+- ❌ Manipulated scales (exaggerates differences)
+- ❌ Cherry-picked data ranges (hides context)
+
+**Layout:**
+- ❌ Missing axis labels/units (viewers can't interpret)
+- ❌ No title or generic title (doesn't convey insight)
+- ❌ No data source or date (can't verify or trust)
+- ❌ Chartjunk (heavy gridlines, decorative backgrounds, borders)
+- ❌ Pure white (#fff) or pure black (#000) backgrounds (use atmospheric gradients)
+
+---
+
+## Design Checklist
+
+**Before implementing any visualization, verify all 8:**
+
+1. ✓ **Brief Established** - Purpose, audience, context, success metric clear
+2. ✓ **Chart Type Selected** - Matched to data structure and task, justified over alternatives
+3. ✓ **Color Strategy Decided** - Palette type chosen (sequential/diverging/categorical), accessibility verified, redundant encoding planned
+4. ✓ **Visual Hierarchy Clear** - Title dominant, axis labels secondary, annotations tertiary, whitespace strategic
+5. ✓ **Encoding Optimized** - Most important variables in highest-accuracy channels (position > length > color)
+6. ✓ **Annotations Complete** - Key insights highlighted, context provided, outliers explained
+7. ✓ **Accessibility Verified** - No color-only encoding, grayscale works, no red-green, text ≥12pt, redundant encoding present
+8. ✓ **Mistakes Avoided** - Passed Fatal/Serious/Moderate audit, 9-minute quick audit completed
+
+**All 8 passing = ready to implement** (hand off to diagram-drawing skill for Chart.js/D3.js code).
+
+---
+
+## Core Principle
+
+**Truthfulness > Beauty > Novelty**
+
+**Always.**
+
+Design emerges from understanding:
+1. The data (structure, patterns, limitations)
+2. The insight you want to communicate
+3. The audience who needs to understand it
+
+**Rush any of these = poor design. 80% effort → understanding. 20% effort → visual execution.**
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
