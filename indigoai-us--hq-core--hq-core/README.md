@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [indigoai-us/hq-core](https://github.com/indigoai-us/hq-core/tree/main/.claude/skills/startwork/SKILL.md)
+Original source: [indigoai-us/hq-core](https://github.com/indigoai-us/hq-core/tree/main/.claude/skills/update-hq/SKILL.md)
 
 ---
 
