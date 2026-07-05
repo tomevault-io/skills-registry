@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [withastro/rosie](https://github.com/withastro/rosie/tree/main/tests/regression/cases/agent-alias-amplify/expected/.agents/skills/my-skill/SKILL.md)
+Original source: [withastro/rosie](https://github.com/withastro/rosie/tree/main/tests/regression/cases/install-from-lockfile/expected/.agents/skills/my-skill/SKILL.md)
 
 ---
 
