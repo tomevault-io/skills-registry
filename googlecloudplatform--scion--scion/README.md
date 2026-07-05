@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GoogleCloudPlatform/scion](https://github.com/GoogleCloudPlatform/scion/tree/main/skills/scion/SKILL.md)
+Original source: [GoogleCloudPlatform/scion](https://github.com/GoogleCloudPlatform/scion/tree/main/skills/team-creation/SKILL.md)
 
 ---
 
