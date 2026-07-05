@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [sirkirby/unifi-mcp](https://github.com/sirkirby/unifi-mcp/tree/main/plugins/cross-product/skills/security-patrol/SKILL.md)
+Original source: [sirkirby/unifi-mcp](https://github.com/sirkirby/unifi-mcp/tree/main/.agents/skills/claude-plugin-config-transport/SKILL.md)
 
 ---
 
