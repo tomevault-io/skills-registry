@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-miet-wohnungseigentumsrecht/skills/spezial-beschlussanfechtung-compliance-dokumentation-und-akte/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-gewerblicher-rechtsschutz/skills/markenrecht-loeschungsantrag-paragraf-49-markeng-bgh-i-zb-91-21/SKILL.md)
 
 ---
 
