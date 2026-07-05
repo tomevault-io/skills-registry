@@ -1,682 +1,296 @@
 ---
-name: form-ux-patterns
-description: UX patterns for complex forms including multi-step wizards, cognitive chunking (5-7 fields max), progressive disclosure, and conditional fields. Use when building checkout flows, onboarding wizards, or forms with many fields. Use when this capability is needed.
+name: xlsx
+description: Use this skill any time a spreadsheet file is the primary input or output. This means any task where the user wants to: open, read, edit, or fix an existing .xlsx, .xlsm, .csv, or .tsv file (e.g., adding columns, computing formulas, formatting, charting, cleaning messy data); create a new spreadsheet from scratch or from other data sources; or convert between tabular file formats. Trigger especially when the user references a spreadsheet file by name or path — even casually (like \"the xlsx in my downloads\") — and wants something done to it or produced from it. Also trigger for cleaning or restructuring messy tabular data files (malformed rows, misplaced headers, junk data) into proper spreadsheets. The deliverable must be a spreadsheet file. Do NOT trigger when the primary deliverable is a Word document, HTML report, standalone Python script, database pipeline, or Google Sheets API integration, even if tabular data is involved.
 metadata:
   author: majiayu000
 ---
 
-# Form UX Patterns
+# Requirements for Outputs
 
-Patterns for complex forms based on cognitive load research and aviation UX principles.
+## All Excel files
 
-## Quick Start
+### Professional Font
+- Use a consistent, professional font (e.g., Arial, Times New Roman) for all deliverables unless otherwise instructed by the user
 
-```tsx
-// Multi-step form with chunking
-import { useMultiStepForm } from './multi-step-form';
+### Zero Formula Errors
+- Every Excel model MUST be delivered with ZERO formula errors (#REF!, #DIV/0!, #VALUE!, #N/A, #NAME?)
 
-function CheckoutWizard() {
-  const { currentStep, steps, goNext, goBack, isLastStep } = useMultiStepForm({
-    steps: [
-      { id: 'contact', title: 'Contact', fields: ['email', 'phone'] },
-      { id: 'shipping', title: 'Shipping', fields: ['name', 'street', 'city', 'state', 'zip'] },
-      { id: 'payment', title: 'Payment', fields: ['cardName', 'cardNumber', 'expiry', 'cvv'] }
-    ]
-  });
+### Preserve Existing Templates (when updating templates)
+- Study and EXACTLY match existing format, style, and conventions when modifying files
+- Never impose standardized formatting on files with established patterns
+- Existing template conventions ALWAYS override these guidelines
 
-  return (
-    <form>
-      <StepIndicator steps={steps} current={currentStep} />
-      <StepContent step={steps[currentStep]} />
-      <StepNavigation onBack={goBack} onNext={goNext} isLast={isLastStep} />
-    </form>
-  );
-}
+## Financial models
+
+### Color Coding Standards
+Unless otherwise stated by the user or existing template
+
+#### Industry-Standard Color Conventions
+- **Blue text (RGB: 0,0,255)**: Hardcoded inputs, and numbers users will change for scenarios
+- **Black text (RGB: 0,0,0)**: ALL formulas and calculations
+- **Green text (RGB: 0,128,0)**: Links pulling from other worksheets within same workbook
+- **Red text (RGB: 255,0,0)**: External links to other files
+- **Yellow background (RGB: 255,255,0)**: Key assumptions needing attention or cells that need to be updated
+
+### Number Formatting Standards
+
+#### Required Format Rules
+- **Years**: Format as text strings (e.g., "2024" not "2,024")
+- **Currency**: Use $#,##0 format; ALWAYS specify units in headers ("Revenue ($mm)")
+- **Zeros**: Use number formatting to make all zeros "-", including percentages (e.g., "$#,##0;($#,##0);-")
+- **Percentages**: Default to 0.0% format (one decimal)
+- **Multiples**: Format as 0.0x for valuation multiples (EV/EBITDA, P/E)
+- **Negative numbers**: Use parentheses (123) not minus -123
+
+### Formula Construction Rules
+
+#### Assumptions Placement
+- Place ALL assumptions (growth rates, margins, multiples, etc.) in separate assumption cells
+- Use cell references instead of hardcoded values in formulas
+- Example: Use =B5*(1+$B$6) instead of =B5*1.05
+
+#### Formula Error Prevention
+- Verify all cell references are correct
+- Check for off-by-one errors in ranges
+- Ensure consistent formulas across all projection periods
+- Test with edge cases (zero values, negative numbers)
+- Verify no unintended circular references
+
+#### Documentation Requirements for Hardcodes
+- Comment or in cells beside (if end of table). Format: "Source: [System/Document], [Date], [Specific Reference], [URL if applicable]"
+- Examples:
+  - "Source: Company 10-K, FY2024, Page 45, Revenue Note, [SEC EDGAR URL]"
+  - "Source: Company 10-Q, Q2 2025, Exhibit 99.1, [SEC EDGAR URL]"
+  - "Source: Bloomberg Terminal, 8/15/2025, AAPL US Equity"
+  - "Source: FactSet, 8/20/2025, Consensus Estimates Screen"
+
+# XLSX creation, editing, and analysis
+
+## Overview
+
+A user may ask you to create, edit, or analyze the contents of an .xlsx file. You have different tools and workflows available for different tasks.
+
+## Important Requirements
+
+**LibreOffice Required for Formula Recalculation**: You can assume LibreOffice is installed for recalculating formula values using the `scripts/recalc.py` script. The script automatically configures LibreOffice on first run, including in sandboxed environments where Unix sockets are restricted (handled by `scripts/office/soffice.py`)
+
+## Reading and analyzing data
+
+### Data analysis with pandas
+For data analysis, visualization, and basic operations, use **pandas** which provides powerful data manipulation capabilities:
+
+```python
+import pandas as pd
+
+# Read Excel
+df = pd.read_excel('file.xlsx')  # Default: first sheet
+all_sheets = pd.read_excel('file.xlsx', sheet_name=None)  # All sheets as dict
+
+# Analyze
+df.head()      # Preview data
+df.info()      # Column info
+df.describe()  # Statistics
+
+# Write Excel
+df.to_excel('output.xlsx', index=False)
 ```
 
-## Core Principles
+## Excel File Workflows
 
-### 1. Cognitive Chunking (Aviation Principle)
+## CRITICAL: Use Formulas, Not Hardcoded Values
 
-> "Humans can hold 5-7 items in working memory" — Miller's Law
+**Always use Excel formulas instead of calculating values in Python and hardcoding them.** This ensures the spreadsheet remains dynamic and updateable.
 
-```tsx
-// ❌ BAD: All fields on one page
-<form>
-  <input name="email" />
-  <input name="phone" />
-  <input name="name" />
-  <input name="street" />
-  <input name="street2" />
-  <input name="city" />
-  <input name="state" />
-  <input name="zip" />
-  <input name="cardName" />
-  <input name="cardNumber" />
-  <input name="expiry" />
-  <input name="cvv" />
-  {/* 12 fields = cognitive overload */}
-</form>
+### ❌ WRONG - Hardcoding Calculated Values
+```python
+# Bad: Calculating in Python and hardcoding result
+total = df['Sales'].sum()
+sheet['B10'] = total  # Hardcodes 5000
 
-// ✅ GOOD: Chunked into logical groups (5-7 max per group)
-<form>
-  <fieldset>
-    <legend>Contact (2 fields)</legend>
-    <input name="email" />
-    <input name="phone" />
-  </fieldset>
-  
-  <fieldset>
-    <legend>Shipping (5 fields)</legend>
-    <input name="name" />
-    <input name="street" />
-    <input name="city" />
-    <input name="state" />
-    <input name="zip" />
-  </fieldset>
-  
-  <fieldset>
-    <legend>Payment (4 fields)</legend>
-    <input name="cardName" />
-    <input name="cardNumber" />
-    <input name="expiry" />
-    <input name="cvv" />
-  </fieldset>
-</form>
+# Bad: Computing growth rate in Python
+growth = (df.iloc[-1]['Revenue'] - df.iloc[0]['Revenue']) / df.iloc[0]['Revenue']
+sheet['C5'] = growth  # Hardcodes 0.15
+
+# Bad: Python calculation for average
+avg = sum(values) / len(values)
+sheet['D20'] = avg  # Hardcodes 42.5
 ```
 
-### 2. Briefing vs. Checklist (Aviation Principle)
+### ✅ CORRECT - Using Excel Formulas
+```python
+# Good: Let Excel calculate the sum
+sheet['B10'] = '=SUM(B2:B9)'
 
-> Instructions should be separate from labels, given before the task.
+# Good: Growth rate as Excel formula
+sheet['C5'] = '=(C4-C2)/C2'
 
-```tsx
-// ❌ BAD: Instructions mixed with labels
-<label>
-  Password (must be 8+ characters with uppercase, lowercase, and number)
-</label>
-<input type="password" />
-
-// ✅ GOOD: Briefing before, label during
-<div className="field-briefing">
-  <p>Create a strong password with:</p>
-  <ul>
-    <li>At least 8 characters</li>
-    <li>Uppercase and lowercase letters</li>
-    <li>At least one number</li>
-  </ul>
-</div>
-
-<label>Password</label>
-<input type="password" />
+# Good: Average using Excel function
+sheet['D20'] = '=AVERAGE(D2:D19)'
 ```
 
-### 3. Progressive Disclosure
+This applies to ALL calculations - totals, percentages, ratios, differences, etc. The spreadsheet should be able to recalculate when source data changes.
 
-> Show only what's needed, when it's needed.
+## Common Workflow
+1. **Choose tool**: pandas for data, openpyxl for formulas/formatting
+2. **Create/Load**: Create new workbook or load existing file
+3. **Modify**: Add/edit data, formulas, and formatting
+4. **Save**: Write to file
+5. **Recalculate formulas (MANDATORY IF USING FORMULAS)**: Use the scripts/recalc.py script
+   ```bash
+   python scripts/recalc.py output.xlsx
+   ```
+6. **Verify and fix any errors**: 
+   - The script returns JSON with error details
+   - If `status` is `errors_found`, check `error_summary` for specific error types and locations
+   - Fix the identified errors and recalculate again
+   - Common errors to fix:
+     - `#REF!`: Invalid cell references
+     - `#DIV/0!`: Division by zero
+     - `#VALUE!`: Wrong data type in formula
+     - `#NAME?`: Unrecognized formula name
 
-```tsx
-// Reveal fields based on selection
-function ShippingForm() {
-  const [method, setMethod] = useState<'standard' | 'express' | 'pickup'>('standard');
+### Creating new Excel files
 
-  return (
-    <form>
-      <RadioGroup
-        label="Delivery method"
-        value={method}
-        onChange={setMethod}
-        options={[
-          { value: 'standard', label: 'Standard (5-7 days)' },
-          { value: 'express', label: 'Express (2-3 days)' },
-          { value: 'pickup', label: 'Store pickup' }
-        ]}
-      />
+```python
+# Using openpyxl for formulas and formatting
+from openpyxl import Workbook
+from openpyxl.styles import Font, PatternFill, Alignment
 
-      {/* Only show address for shipping methods */}
-      {method !== 'pickup' && (
-        <AddressFields />
-      )}
+wb = Workbook()
+sheet = wb.active
 
-      {/* Only show store selector for pickup */}
-      {method === 'pickup' && (
-        <StoreSelector />
-      )}
-    </form>
-  );
-}
+# Add data
+sheet['A1'] = 'Hello'
+sheet['B1'] = 'World'
+sheet.append(['Row', 'of', 'data'])
+
+# Add formula
+sheet['B2'] = '=SUM(A1:A10)'
+
+# Formatting
+sheet['A1'].font = Font(bold=True, color='FF0000')
+sheet['A1'].fill = PatternFill('solid', start_color='FFFF00')
+sheet['A1'].alignment = Alignment(horizontal='center')
+
+# Column width
+sheet.column_dimensions['A'].width = 20
+
+wb.save('output.xlsx')
 ```
 
-## Multi-Step Forms
+### Editing existing Excel files
 
-### Step Configuration
+```python
+# Using openpyxl to preserve formulas and formatting
+from openpyxl import load_workbook
 
-```typescript
-// types/multi-step.ts
-export interface FormStep {
-  /** Unique step identifier */
-  id: string;
-  
-  /** Display title */
-  title: string;
-  
-  /** Optional description (briefing) */
-  description?: string;
-  
-  /** Fields in this step (for validation) */
-  fields: string[];
-  
-  /** Zod schema for this step */
-  schema?: z.ZodType;
-  
-  /** Whether step can be skipped */
-  optional?: boolean;
-  
-  /** Condition for showing this step */
-  condition?: (formData: Record<string, any>) => boolean;
-}
+# Load existing file
+wb = load_workbook('existing.xlsx')
+sheet = wb.active  # or wb['SheetName'] for specific sheet
 
-export interface FormChunk {
-  /** Chunk identifier */
-  id: string;
-  
-  /** Chunk title */
-  title: string;
-  
-  /** Briefing text (shown before fields) */
-  briefing?: string;
-  
-  /** Fields in this chunk (max 5-7) */
-  fields: string[];
-}
+# Working with multiple sheets
+for sheet_name in wb.sheetnames:
+    sheet = wb[sheet_name]
+    print(f"Sheet: {sheet_name}")
+
+# Modify cells
+sheet['A1'] = 'New Value'
+sheet.insert_rows(2)  # Insert row at position 2
+sheet.delete_cols(3)  # Delete column 3
+
+# Add new sheet
+new_sheet = wb.create_sheet('NewSheet')
+new_sheet['A1'] = 'Data'
+
+wb.save('modified.xlsx')
 ```
 
-### Multi-Step Hook
+## Recalculating formulas
 
-```typescript
-// hooks/use-multi-step-form.ts
-import { useState, useCallback, useMemo } from 'react';
-import { UseFormReturn } from 'react-hook-form';
+Excel files created or modified by openpyxl contain formulas as strings but not calculated values. Use the provided `scripts/recalc.py` script to recalculate formulas:
 
-export interface UseMultiStepFormOptions {
-  steps: FormStep[];
-  form: UseFormReturn<any>;
-  onComplete?: (data: any) => void;
-}
+```bash
+python scripts/recalc.py <excel_file> [timeout_seconds]
+```
 
-export interface UseMultiStepFormReturn {
-  /** Current step index */
-  currentStep: number;
-  
-  /** Current step config */
-  step: FormStep;
-  
-  /** All steps (filtered by conditions) */
-  steps: FormStep[];
-  
-  /** Total step count */
-  totalSteps: number;
-  
-  /** Whether on first step */
-  isFirstStep: boolean;
-  
-  /** Whether on last step */
-  isLastStep: boolean;
-  
-  /** Progress percentage (0-100) */
-  progress: number;
-  
-  /** Go to next step (validates current) */
-  goNext: () => Promise<boolean>;
-  
-  /** Go to previous step */
-  goBack: () => void;
-  
-  /** Go to specific step */
-  goTo: (index: number) => void;
-  
-  /** Can navigate to step (all previous valid) */
-  canGoTo: (index: number) => boolean;
-}
+Example:
+```bash
+python scripts/recalc.py output.xlsx 30
+```
 
-export function useMultiStepForm({
-  steps: allSteps,
-  form,
-  onComplete
-}: UseMultiStepFormOptions): UseMultiStepFormReturn {
-  const [currentStep, setCurrentStep] = useState(0);
-  
-  // Filter steps by conditions
-  const steps = useMemo(() => {
-    const data = form.getValues();
-    return allSteps.filter(step => 
-      !step.condition || step.condition(data)
-    );
-  }, [allSteps, form]);
-  
-  const step = steps[currentStep];
-  const totalSteps = steps.length;
-  const isFirstStep = currentStep === 0;
-  const isLastStep = currentStep === totalSteps - 1;
-  const progress = ((currentStep + 1) / totalSteps) * 100;
-  
-  const goNext = useCallback(async () => {
-    // Validate current step fields
-    const isValid = await form.trigger(step.fields as any);
-    
-    if (!isValid) {
-      // Focus first error
-      const firstError = document.querySelector('[aria-invalid="true"]');
-      (firstError as HTMLElement)?.focus();
-      return false;
+The script:
+- Automatically sets up LibreOffice macro on first run
+- Recalculates all formulas in all sheets
+- Scans ALL cells for Excel errors (#REF!, #DIV/0!, etc.)
+- Returns JSON with detailed error locations and counts
+- Works on both Linux and macOS
+
+## Formula Verification Checklist
+
+Quick checks to ensure formulas work correctly:
+
+### Essential Verification
+- [ ] **Test 2-3 sample references**: Verify they pull correct values before building full model
+- [ ] **Column mapping**: Confirm Excel columns match (e.g., column 64 = BL, not BK)
+- [ ] **Row offset**: Remember Excel rows are 1-indexed (DataFrame row 5 = Excel row 6)
+
+### Common Pitfalls
+- [ ] **NaN handling**: Check for null values with `pd.notna()`
+- [ ] **Far-right columns**: FY data often in columns 50+ 
+- [ ] **Multiple matches**: Search all occurrences, not just first
+- [ ] **Division by zero**: Check denominators before using `/` in formulas (#DIV/0!)
+- [ ] **Wrong references**: Verify all cell references point to intended cells (#REF!)
+- [ ] **Cross-sheet references**: Use correct format (Sheet1!A1) for linking sheets
+
+### Formula Testing Strategy
+- [ ] **Start small**: Test formulas on 2-3 cells before applying broadly
+- [ ] **Verify dependencies**: Check all cells referenced in formulas exist
+- [ ] **Test edge cases**: Include zero, negative, and very large values
+
+### Interpreting scripts/recalc.py Output
+The script returns JSON with error details:
+```json
+{
+  "status": "success",           // or "errors_found"
+  "total_errors": 0,              // Total error count
+  "total_formulas": 42,           // Number of formulas in file
+  "error_summary": {              // Only present if errors found
+    "#REF!": {
+      "count": 2,
+      "locations": ["Sheet1!B5", "Sheet1!C10"]
     }
-    
-    if (isLastStep) {
-      // Submit form
-      const data = form.getValues();
-      onComplete?.(data);
-    } else {
-      setCurrentStep(prev => prev + 1);
-      // Focus step heading
-      requestAnimationFrame(() => {
-        document.getElementById('step-heading')?.focus();
-      });
-    }
-    
-    return true;
-  }, [step, isLastStep, form, onComplete]);
-  
-  const goBack = useCallback(() => {
-    if (!isFirstStep) {
-      setCurrentStep(prev => prev - 1);
-      requestAnimationFrame(() => {
-        document.getElementById('step-heading')?.focus();
-      });
-    }
-  }, [isFirstStep]);
-  
-  const goTo = useCallback((index: number) => {
-    if (index >= 0 && index < totalSteps) {
-      setCurrentStep(index);
-    }
-  }, [totalSteps]);
-  
-  const canGoTo = useCallback((index: number) => {
-    // Can always go back
-    if (index < currentStep) return true;
-    
-    // Can only go forward if all previous steps are valid
-    // (would need form state tracking for this)
-    return index <= currentStep;
-  }, [currentStep]);
-  
-  return {
-    currentStep,
-    step,
-    steps,
-    totalSteps,
-    isFirstStep,
-    isLastStep,
-    progress,
-    goNext,
-    goBack,
-    goTo,
-    canGoTo
-  };
-}
-```
-
-### Step Indicator Component
-
-```tsx
-// components/StepIndicator.tsx
-interface StepIndicatorProps {
-  steps: FormStep[];
-  currentStep: number;
-  onStepClick?: (index: number) => void;
-  canNavigate?: (index: number) => boolean;
-}
-
-export function StepIndicator({
-  steps,
-  currentStep,
-  onStepClick,
-  canNavigate
-}: StepIndicatorProps) {
-  return (
-    <nav aria-label="Form progress">
-      <ol className="step-indicator">
-        {steps.map((step, index) => {
-          const status = index < currentStep 
-            ? 'complete' 
-            : index === currentStep 
-              ? 'current' 
-              : 'upcoming';
-          
-          const clickable = canNavigate?.(index) ?? false;
-          
-          return (
-            <li 
-              key={step.id}
-              className={`step-indicator__item step-indicator__item--${status}`}
-            >
-              {clickable ? (
-                <button
-                  type="button"
-                  onClick={() => onStepClick?.(index)}
-                  aria-current={status === 'current' ? 'step' : undefined}
-                >
-                  <span className="step-indicator__number">{index + 1}</span>
-                  <span className="step-indicator__title">{step.title}</span>
-                </button>
-              ) : (
-                <span aria-current={status === 'current' ? 'step' : undefined}>
-                  <span className="step-indicator__number">{index + 1}</span>
-                  <span className="step-indicator__title">{step.title}</span>
-                </span>
-              )}
-            </li>
-          );
-        })}
-      </ol>
-      
-      {/* Progress bar */}
-      <div 
-        className="step-indicator__progress"
-        role="progressbar"
-        aria-valuenow={currentStep + 1}
-        aria-valuemin={1}
-        aria-valuemax={steps.length}
-        aria-label={`Step ${currentStep + 1} of ${steps.length}`}
-      >
-        <div 
-          className="step-indicator__progress-fill"
-          style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-        />
-      </div>
-    </nav>
-  );
-}
-```
-
-### Step Navigation Component
-
-```tsx
-// components/StepNavigation.tsx
-interface StepNavigationProps {
-  onBack: () => void;
-  onNext: () => void;
-  isFirstStep: boolean;
-  isLastStep: boolean;
-  isSubmitting?: boolean;
-  backLabel?: string;
-  nextLabel?: string;
-  submitLabel?: string;
-}
-
-export function StepNavigation({
-  onBack,
-  onNext,
-  isFirstStep,
-  isLastStep,
-  isSubmitting = false,
-  backLabel = 'Back',
-  nextLabel = 'Continue',
-  submitLabel = 'Submit'
-}: StepNavigationProps) {
-  return (
-    <div className="step-navigation">
-      {!isFirstStep && (
-        <button
-          type="button"
-          onClick={onBack}
-          className="step-navigation__back"
-          disabled={isSubmitting}
-        >
-          {backLabel}
-        </button>
-      )}
-      
-      <button
-        type="button"
-        onClick={onNext}
-        className="step-navigation__next"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? (
-          <>
-            <Spinner aria-hidden="true" />
-            <span className="sr-only">Processing...</span>
-            Processing...
-          </>
-        ) : (
-          isLastStep ? submitLabel : nextLabel
-        )}
-      </button>
-    </div>
-  );
-}
-```
-
-## Conditional Fields
-
-### Pattern: Show/Hide Based on Selection
-
-```tsx
-// components/ConditionalField.tsx
-import { useFormContext, useWatch } from 'react-hook-form';
-import { ReactNode } from 'react';
-
-interface ConditionalFieldProps {
-  /** Field to watch */
-  watch: string;
-  
-  /** Condition for showing children */
-  when: (value: any) => boolean;
-  
-  /** Children to render when condition is true */
-  children: ReactNode;
-  
-  /** Whether to keep values when hidden */
-  keepValues?: boolean;
-}
-
-export function ConditionalField({
-  watch: watchField,
-  when,
-  children,
-  keepValues = false
-}: ConditionalFieldProps) {
-  const { control, unregister } = useFormContext();
-  const value = useWatch({ control, name: watchField });
-  
-  const shouldShow = when(value);
-  
-  // Optionally unregister fields when hidden
-  useEffect(() => {
-    if (!shouldShow && !keepValues) {
-      // Get field names from children and unregister
-      // (implementation depends on your field structure)
-    }
-  }, [shouldShow, keepValues]);
-  
-  if (!shouldShow) return null;
-  
-  return <>{children}</>;
-}
-
-// Usage
-<FormField name="hasCompany" label="Are you a business?" type="checkbox" />
-
-<ConditionalField watch="hasCompany" when={(v) => v === true}>
-  <FormField name="companyName" label="Company name" />
-  <FormField name="taxId" label="Tax ID" />
-</ConditionalField>
-```
-
-### Pattern: Dynamic Field Array
-
-```tsx
-// components/RepeatableField.tsx
-import { useFieldArray, useFormContext } from 'react-hook-form';
-
-interface RepeatableFieldProps {
-  name: string;
-  label: string;
-  maxItems?: number;
-  minItems?: number;
-  renderItem: (index: number) => ReactNode;
-}
-
-export function RepeatableField({
-  name,
-  label,
-  maxItems = 10,
-  minItems = 1,
-  renderItem
-}: RepeatableFieldProps) {
-  const { control } = useFormContext();
-  const { fields, append, remove } = useFieldArray({ control, name });
-  
-  const canAdd = fields.length < maxItems;
-  const canRemove = fields.length > minItems;
-  
-  return (
-    <fieldset className="repeatable-field">
-      <legend>{label}</legend>
-      
-      {fields.map((field, index) => (
-        <div key={field.id} className="repeatable-field__item">
-          {renderItem(index)}
-          
-          {canRemove && (
-            <button
-              type="button"
-              onClick={() => remove(index)}
-              aria-label={`Remove item ${index + 1}`}
-            >
-              Remove
-            </button>
-          )}
-        </div>
-      ))}
-      
-      {canAdd && (
-        <button
-          type="button"
-          onClick={() => append({})}
-          className="repeatable-field__add"
-        >
-          Add {label.toLowerCase()}
-        </button>
-      )}
-    </fieldset>
-  );
-}
-
-// Usage
-<RepeatableField
-  name="teammates"
-  label="Team Members"
-  maxItems={5}
-  renderItem={(index) => (
-    <>
-      <FormField name={`teammates.${index}.name`} label="Name" />
-      <FormField name={`teammates.${index}.email`} label="Email" />
-    </>
-  )}
-/>
-```
-
-## Form Layout Patterns
-
-### Single Column (Recommended Default)
-
-```tsx
-// Best for most forms - clear visual flow
-<form className="form-layout--single">
-  <FormField name="email" label="Email" />
-  <FormField name="password" label="Password" />
-  <button type="submit">Sign in</button>
-</form>
-
-// CSS
-.form-layout--single {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 400px;
-}
-```
-
-### Two Column (Use Sparingly)
-
-```tsx
-// Only for related short fields
-<form className="form-layout--two-col">
-  <FormField name="firstName" label="First name" />
-  <FormField name="lastName" label="Last name" />
-  
-  <FormField name="city" label="City" className="col-span-1" />
-  <FormField name="state" label="State" className="col-span-1" />
-</form>
-
-// CSS
-.form-layout--two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-@media (max-width: 640px) {
-  .form-layout--two-col {
-    grid-template-columns: 1fr;
   }
 }
 ```
 
-### Card Sections
+## Best Practices
 
-```tsx
-// For long forms with distinct sections
-<form className="form-layout--cards">
-  <section className="form-card">
-    <h3>Contact Information</h3>
-    <FormField name="email" label="Email" />
-    <FormField name="phone" label="Phone" />
-  </section>
-  
-  <section className="form-card">
-    <h3>Shipping Address</h3>
-    <AddressFields />
-  </section>
-  
-  <section className="form-card">
-    <h3>Payment</h3>
-    <PaymentFields />
-  </section>
-</form>
-```
+### Library Selection
+- **pandas**: Best for data analysis, bulk operations, and simple data export
+- **openpyxl**: Best for complex formatting, formulas, and Excel-specific features
 
-## File Structure
+### Working with openpyxl
+- Cell indices are 1-based (row=1, column=1 refers to cell A1)
+- Use `data_only=True` to read calculated values: `load_workbook('file.xlsx', data_only=True)`
+- **Warning**: If opened with `data_only=True` and saved, formulas are replaced with values and permanently lost
+- For large files: Use `read_only=True` for reading or `write_only=True` for writing
+- Formulas are preserved but not evaluated - use scripts/recalc.py to update values
 
-```
-form-ux-patterns/
-├── SKILL.md
-├── references/
-│   ├── cognitive-load.md       # Research on chunking
-│   └── wizard-patterns.md      # Multi-step best practices
-└── scripts/
-    ├── multi-step-form.tsx     # Multi-step hook + components
-    ├── conditional-field.tsx   # Show/hide patterns
-    ├── repeatable-field.tsx    # Dynamic arrays
-    ├── step-indicator.tsx      # Progress indicator
-    └── step-indicator.css      # Styles
-```
+### Working with pandas
+- Specify data types to avoid inference issues: `pd.read_excel('file.xlsx', dtype={'id': str})`
+- For large files, read specific columns: `pd.read_excel('file.xlsx', usecols=['A', 'C', 'E'])`
+- Handle dates properly: `pd.read_excel('file.xlsx', parse_dates=['date_column'])`
 
-## Reference
+## Code Style Guidelines
+**IMPORTANT**: When generating Python code for Excel operations:
+- Write minimal, concise Python code without unnecessary comments
+- Avoid verbose variable names and redundant operations
+- Avoid unnecessary print statements
 
-- `references/cognitive-load.md` — Research on Miller's Law and chunking
-- `references/wizard-patterns.md` — Multi-step wizard best practices
+**For Excel files themselves**:
+- Add comments to cells with complex formulas or important assumptions
+- Document data sources for hardcoded values
+- Include notes for key calculations and model sections
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
