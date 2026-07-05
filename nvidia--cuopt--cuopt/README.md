@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA/cuopt](https://github.com/NVIDIA/cuopt/tree/main/skills/cuopt-skill-evolution/SKILL.md)
+Original source: [NVIDIA/cuopt](https://github.com/NVIDIA/cuopt/tree/main/skills/cuopt-server-api-python/SKILL.md)
 
 ---
 
