@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [KumihoIO/construct-os](https://github.com/KumihoIO/construct-os/tree/main/.claude/skills/revka/SKILL.md)
+Original source: [KumihoIO/construct-os](https://github.com/KumihoIO/construct-os/tree/main/.claude/skills/github-pr/SKILL.md)
 
 ---
 
