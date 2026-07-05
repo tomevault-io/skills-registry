@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hail-is/hail](https://github.com/hail-is/hail/tree/main/.claude/skills/hail-batch/SKILL.md)
+Original source: [hail-is/hail](https://github.com/hail-is/hail/tree/main/.claude/skills/hail-batch-dev/SKILL.md)
 
 ---
 
