@@ -207,6 +207,20 @@ Pdf::view('pdf.invoice', $data)
     ->save('invoice.pdf');
 ```
 
+### Chrome driver
+
+Requires `chrome-php/chrome` and a local Chrome/Chromium binary.
+
+```bash
+composer require chrome-php/chrome
+```
+
+```env
+LARAVEL_PDF_DRIVER=chrome
+```
+
+The Chrome driver does not support `tagged`, `withBrowsershot()`, `onLambda()`, or PNG output.
+
 ## Queued PDF generation
 
 Dispatch PDF generation to a background queue:
@@ -304,5 +318,5 @@ To render background colors in the PDF, add this CSS:
 ```
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/spatie) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [spatie/laravel-pdf](https://github.com/spatie/laravel-pdf) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-04 -->
