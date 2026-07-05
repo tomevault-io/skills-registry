@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Xiaoher-C/agentbnb](https://github.com/Xiaoher-C/agentbnb/tree/main/genesis-template/templates/skills/genesis-feedback/SKILL.md)
+Original source: [Xiaoher-C/agentbnb](https://github.com/Xiaoher-C/agentbnb/tree/main/packages/genesis-template/skills/genesis-evolution/SKILL.md)
 
 ---
 
