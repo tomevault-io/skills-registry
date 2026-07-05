@@ -80,5 +80,5 @@ Open only what is needed:
 5. Highlight any assumptions (input path, output path, format, bundle behavior).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/thim81) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [thim81/openapi-format](https://github.com/thim81/openapi-format) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-02 -->
