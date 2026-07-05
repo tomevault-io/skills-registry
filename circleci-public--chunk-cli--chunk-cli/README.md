@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CircleCI-Public/chunk-cli](https://github.com/CircleCI-Public/chunk-cli/tree/main/skills/chunk-sidecar/SKILL.md)
+Original source: [CircleCI-Public/chunk-cli](https://github.com/CircleCI-Public/chunk-cli/tree/main/skills/debug-ci-failures/SKILL.md)
 
 ---
 
