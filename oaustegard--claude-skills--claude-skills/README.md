@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oaustegard/claude-skills](https://github.com/oaustegard/claude-skills/tree/main/categorizing-bsky-accounts/SKILL.md)
+Original source: [oaustegard/claude-skills](https://github.com/oaustegard/claude-skills/tree/main/sampling-bluesky-zeitgeist/SKILL.md)
 
 ---
 
