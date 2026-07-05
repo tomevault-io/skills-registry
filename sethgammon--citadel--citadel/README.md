@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SethGammon/Citadel](https://github.com/SethGammon/Citadel/tree/main/skills/schedule/SKILL.md)
+Original source: [SethGammon/Citadel](https://github.com/SethGammon/Citadel/tree/main/skills/test-gen/SKILL.md)
 
 ---
 
