@@ -1,647 +1,759 @@
 ---
-name: client-scripts
-description: Frappe client-side JavaScript patterns for form events, field manipulation, dialogs, and UI customization. Use when writing form scripts, handling field changes, creating dialogs, or customizing the Frappe desk interface. Use when this capability is needed.
+name: zarr-python
+description: Chunked N-D arrays for cloud storage (Zarr-Python 3). Compressed arrays, parallel I/O, S3/GCS via fsspec, NumPy/Dask/Xarray compatible, for large-scale scientific computing pipelines. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Frappe Client Scripts Reference
+# Zarr Python
 
-Complete reference for client-side JavaScript development in Frappe Framework.
+## Overview
 
-## When to Use This Skill
+Zarr is a Python library for storing large N-dimensional arrays with chunking and compression. Apply this skill for efficient parallel I/O, cloud-native workflows, and seamless integration with NumPy, Dask, and Xarray.
 
-- Writing form scripts (refresh, validate, field events)
-- Manipulating form fields (show/hide, require, read-only)
-- Creating dialogs and prompts
-- Making API calls from client
-- Customizing list views
-- Adding custom buttons
-- Handling child table events
+**Current upstream:** zarr **3.2.1** (PyPI, May 2026). Docs: [zarr.readthedocs.io](https://zarr.readthedocs.io/en/stable/). New arrays default to **Zarr format 3**; set `zarr_format=2` for legacy interop. This skill is a **community guide** maintained by K-Dense Inc., not an official zarr-developers package.
 
-## Form Script Location
+## Quick Start
 
-```
-my_app/
-└── my_module/
-    └── doctype/
-        └── my_doctype/
-            └── my_doctype.js    # Client script
+### Installation
+
+```bash
+uv pip install "zarr>=3.2,<4"
 ```
 
-## Form Events
+Requires **Python 3.12+** (per PyPI metadata for zarr 3.2.x). For remote stores (S3, GCS, HTTP):
 
-### Complete Event Reference
-
-```javascript
-frappe.ui.form.on('My DocType', {
-    // === LOAD EVENTS ===
-
-    setup: function(frm) {
-        // Called once when form is created (before data loads)
-        // Use for: setting queries, initializing variables
-        frm.set_query('customer', () => ({ filters: { status: 'Active' } }));
-    },
-
-    onload: function(frm) {
-        // Called when form data is loaded (before refresh)
-        // Use for: setting defaults for new docs
-        if (frm.is_new()) {
-            frm.set_value('posting_date', frappe.datetime.nowdate());
-        }
-    },
-
-    onload_post_render: function(frm) {
-        // Called after form is rendered
-        // Use for: DOM manipulation, focus setting
-        frm.get_field('customer').focus();
-    },
-
-    refresh: function(frm) {
-        // Called every time form refreshes
-        // Use for: custom buttons, field toggles, indicators
-        if (!frm.is_new()) {
-            frm.add_custom_button(__('Action'), () => do_action(frm));
-        }
-        frm.toggle_display('section_name', frm.doc.show_section);
-    },
-
-    // === SAVE EVENTS ===
-
-    validate: function(frm) {
-        // Called before save - return false to prevent
-        if (frm.doc.end_date < frm.doc.start_date) {
-            frappe.msgprint(__('End Date cannot be before Start Date'));
-            return false;
-        }
-    },
-
-    before_save: function(frm) {
-        // Called after validate, before server request
-        frm.doc.last_updated_by = frappe.session.user;
-    },
-
-    after_save: function(frm) {
-        // Called after successful save
-        frappe.show_alert({
-            message: __('Saved successfully'),
-            indicator: 'green'
-        });
-    },
-
-    // === WORKFLOW EVENTS ===
-
-    before_submit: function(frm) {
-        // Called before document submission
-    },
-
-    on_submit: function(frm) {
-        // Called after successful submission
-    },
-
-    before_cancel: function(frm) {
-        // Called before cancellation
-    },
-
-    after_cancel: function(frm) {
-        // Called after cancellation
-    },
-
-    // === FIELD EVENTS ===
-
-    customer: function(frm) {
-        // Called when 'customer' field changes
-        if (frm.doc.customer) {
-            fetch_customer_details(frm);
-        }
-    },
-
-    posting_date: function(frm) {
-        // Called when 'posting_date' field changes
-        calculate_due_date(frm);
-    }
-});
+```bash
+uv pip install "zarr[remote]"
+uv pip install s3fs   # AWS S3
+uv pip install gcsfs  # Google Cloud Storage
 ```
 
-## Field Manipulation
+Pin `zarr>=3,<4` in application dependencies. Use `uv pip install "zarr==2.*"` only when you must stay on Zarr-Python 2 / Python 3.10–3.11.
 
-### Display Properties
+### Basic Array Creation
 
-```javascript
-// Show/hide field
-frm.toggle_display('fieldname', true);  // Show
-frm.toggle_display('fieldname', false); // Hide
-frm.toggle_display(['field1', 'field2'], condition);
+```python
+import zarr
+import numpy as np
 
-// Set read-only
-frm.set_df_property('fieldname', 'read_only', 1);
-frm.toggle_enable('fieldname', false);  // Disable
+# Create a 2D array with chunking and compression
+z = zarr.create_array(
+    store="data/my_array.zarr",
+    shape=(10000, 10000),
+    chunks=(1000, 1000),
+    dtype="f4"
+)
 
-// Set required
-frm.set_df_property('fieldname', 'reqd', 1);
-frm.toggle_reqd('fieldname', true);
-frm.toggle_reqd(['field1', 'field2'], condition);
+# Write data using NumPy-style indexing
+z[:, :] = np.random.random((10000, 10000))
 
-// Set hidden
-frm.set_df_property('fieldname', 'hidden', 1);
-
-// Change label
-frm.set_df_property('fieldname', 'label', 'New Label');
-
-// Change description
-frm.set_df_property('fieldname', 'description', 'Help text');
-
-// Change options (for Select)
-frm.set_df_property('fieldname', 'options', 'Option1\nOption2\nOption3');
-
-// Refresh after changes
-frm.refresh_field('fieldname');
-frm.refresh_fields();
+# Read data
+data = z[0:100, 0:100]  # Returns NumPy array
 ```
 
-### Set Values
+## Core Operations
 
-```javascript
-// Set single value
-frm.set_value('fieldname', value);
+### Creating Arrays
 
-// Set multiple values
-frm.set_value({
-    'field1': 'value1',
-    'field2': 'value2',
-    'field3': 'value3'
-});
+Zarr provides multiple convenience functions for array creation:
 
-// Set with callback
-frm.set_value('fieldname', value).then(() => {
-    // After value is set
-});
+```python
+# Create empty array
+z = zarr.zeros(shape=(10000, 10000), chunks=(1000, 1000), dtype='f4',
+               store='data.zarr')
 
-// Clear field
-frm.set_value('fieldname', null);
-frm.set_value('fieldname', '');
+# Create filled arrays
+z = zarr.ones((5000, 5000), chunks=(500, 500))
+z = zarr.full((1000, 1000), fill_value=42, chunks=(100, 100))
 
-// Set default value
-frm.set_df_property('fieldname', 'default', 'default_value');
+# Create from existing data
+data = np.arange(10000).reshape(100, 100)
+z = zarr.array(data, chunks=(10, 10), store='data.zarr')
+
+# Create like another array
+z2 = zarr.zeros_like(z)  # Matches shape, chunks, dtype of z
 ```
 
-### Link Field Queries
+### Opening Existing Arrays
 
-```javascript
-// Basic filter
-frm.set_query('customer', function() {
-    return {
-        filters: {
-            status: 'Active',
-            customer_type: 'Company'
-        }
-    };
-});
+```python
+# Open array (read/write mode by default)
+z = zarr.open_array('data.zarr', mode='r+')
 
-// Dynamic filter based on form values
-frm.set_query('item_code', function() {
-    return {
-        filters: {
-            item_group: frm.doc.item_group,
-            is_stock_item: 1
-        }
-    };
-});
+# Read-only mode
+z = zarr.open_array('data.zarr', mode='r')
 
-// Filter in child table
-frm.set_query('item_code', 'items', function(doc, cdt, cdn) {
-    let row = locals[cdt][cdn];
-    return {
-        filters: {
-            warehouse: row.warehouse || doc.default_warehouse
-        }
-    };
-});
-
-// Custom query (server method)
-frm.set_query('supplier', function() {
-    return {
-        query: 'my_app.api.get_suppliers',
-        filters: {
-            region: frm.doc.region
-        }
-    };
-});
-
-// Clear query
-frm.set_query('fieldname', null);
+# The open() function auto-detects arrays vs groups
+z = zarr.open('data.zarr')  # Returns Array or Group
 ```
 
-## Custom Buttons
+### Reading and Writing Data
 
-```javascript
-refresh: function(frm) {
-    // Simple button
-    frm.add_custom_button(__('Do Something'), function() {
-        do_something(frm);
-    });
+Zarr arrays support NumPy-like indexing:
 
-    // Button in group/dropdown
-    frm.add_custom_button(__('Action 1'), function() {
-        action_1(frm);
-    }, __('Actions'));
+```python
+# Write entire array
+z[:] = 42
 
-    frm.add_custom_button(__('Action 2'), function() {
-        action_2(frm);
-    }, __('Actions'));
+# Write slices
+z[0, :] = np.arange(100)
+z[10:20, 50:60] = np.random.random((10, 10))
 
-    // Primary button (highlighted)
-    frm.add_custom_button(__('Submit'), function() {
-        submit_doc(frm);
-    }).addClass('btn-primary');
+# Read data (returns NumPy array)
+data = z[0:100, 0:100]
+row = z[5, :]
 
-    // Button with icon
-    let btn = frm.add_custom_button(__('Print'), function() {
-        print_doc(frm);
-    });
-    btn.prepend('<i class="fa fa-print"></i> ');
-
-    // Conditional buttons
-    if (frm.doc.status === 'Draft') {
-        frm.add_custom_button(__('Submit for Review'), function() {
-            submit_for_review(frm);
-        });
-    }
-
-    // Remove button
-    frm.remove_custom_button(__('Do Something'));
-    frm.remove_custom_button(__('Action 1'), __('Actions'));
-
-    // Clear all buttons
-    frm.clear_custom_buttons();
-
-    // Page actions
-    frm.page.set_primary_action(__('Save'), function() {
-        frm.save();
-    });
-
-    frm.page.set_secondary_action(__('Cancel'), function() {
-        frappe.set_route('List', 'My DocType');
-    });
-}
+# Advanced indexing
+z.vindex[[0, 5, 10], [2, 8, 15]]  # Coordinate indexing
+z.oindex[0:10, [5, 10, 15]]       # Orthogonal indexing
+z.blocks[0, 0]                     # Block/chunk indexing
 ```
 
-## Child Table Operations
+### Resizing and Appending
 
-### Events
+```python
+# Resize array (v3: pass shape as a tuple)
+z.resize((15000, 15000))
 
-```javascript
-frappe.ui.form.on('My DocType Item', {
-    // Row added
-    items_add: function(frm, cdt, cdn) {
-        let row = locals[cdt][cdn];
-        row.warehouse = frm.doc.default_warehouse;
-        frm.refresh_field('items');
-    },
-
-    // Before row removed (can prevent)
-    before_items_remove: function(frm, cdt, cdn) {
-        let row = locals[cdt][cdn];
-        if (row.is_mandatory) {
-            frappe.throw(__('Cannot remove mandatory item'));
-        }
-    },
-
-    // Row removed
-    items_remove: function(frm, cdt, cdn) {
-        calculate_total(frm);
-    },
-
-    // Field in row changes
-    qty: function(frm, cdt, cdn) {
-        let row = locals[cdt][cdn];
-        row.amount = flt(row.qty) * flt(row.rate);
-        frm.refresh_field('items');
-        calculate_total(frm);
-    },
-
-    rate: function(frm, cdt, cdn) {
-        let row = locals[cdt][cdn];
-        row.amount = flt(row.qty) * flt(row.rate);
-        frm.refresh_field('items');
-        calculate_total(frm);
-    },
-
-    item_code: function(frm, cdt, cdn) {
-        let row = locals[cdt][cdn];
-        if (row.item_code) {
-            frappe.call({
-                method: 'my_app.api.get_item_details',
-                args: { item_code: row.item_code },
-                callback: function(r) {
-                    if (r.message) {
-                        frappe.model.set_value(cdt, cdn, {
-                            'rate': r.message.rate,
-                            'uom': r.message.uom,
-                            'description': r.message.description
-                        });
-                    }
-                }
-            });
-        }
-    }
-});
-
-function calculate_total(frm) {
-    let total = 0;
-    frm.doc.items.forEach(item => {
-        total += flt(item.amount);
-    });
-    frm.set_value('total', total);
-}
+# Append data along an axis
+z.append(np.random.random((1000, 10000)), axis=0)  # Adds rows
 ```
 
-### Manipulating Rows
+## Chunking Strategies
 
-```javascript
-// Add row
-let row = frm.add_child('items', {
-    item_code: 'ITEM-001',
-    qty: 10,
-    rate: 100
-});
-frm.refresh_field('items');
+Chunking is critical for performance. Choose chunk sizes and shapes based on access patterns.
 
-// Get row by index
-let first_row = frm.doc.items[0];
+### Chunk Size Guidelines
 
-// Get row by name
-let row = locals['My DocType Item'][cdn];
+- **Minimum chunk size**: 1 MB recommended for optimal performance
+- **Balance**: Larger chunks = fewer metadata operations; smaller chunks = better parallel access
+- **Memory consideration**: Entire chunks must fit in memory during compression
 
-// Update row
-frappe.model.set_value(cdt, cdn, 'fieldname', value);
-frappe.model.set_value(cdt, cdn, {
-    'field1': 'value1',
-    'field2': 'value2'
-});
-
-// Remove row
-frm.get_field('items').grid.grid_rows[0].remove();
-frm.refresh_field('items');
-
-// Remove all rows
-frm.clear_table('items');
-frm.refresh_field('items');
-
-// Iterate rows
-frm.doc.items.forEach((item, idx) => {
-    console.log(idx, item.item_code);
-});
+```python
+# Configure chunk size (aim for ~1MB per chunk)
+# For float32 data: 1MB = 262,144 elements = 512×512 array
+z = zarr.zeros(
+    shape=(10000, 10000),
+    chunks=(512, 512),  # ~1MB chunks
+    dtype='f4'
+)
 ```
 
-## Dialogs
+### Aligning Chunks with Access Patterns
 
-### Simple Prompt
+**Critical**: Chunk shape dramatically affects performance based on how data is accessed.
 
-```javascript
-// Single field
-frappe.prompt(
+```python
+# If accessing rows frequently (first dimension)
+z = zarr.zeros((10000, 10000), chunks=(10, 10000))  # Chunk spans columns
+
+# If accessing columns frequently (second dimension)
+z = zarr.zeros((10000, 10000), chunks=(10000, 10))  # Chunk spans rows
+
+# For mixed access patterns (balanced approach)
+z = zarr.zeros((10000, 10000), chunks=(1000, 1000))  # Square chunks
+```
+
+**Performance example**: For a (200, 200, 200) array, reading along the first dimension:
+- Using chunks (1, 200, 200): ~107ms
+- Using chunks (200, 200, 1): ~1.65ms (65× faster!)
+
+### Sharding for Large-Scale Storage
+
+When arrays have millions of small chunks, use sharding to group chunks into larger storage objects:
+
+```python
+from zarr.codecs import BloscCodec, BytesCodec, ShardingCodec
+
+# Create array with sharding
+z = zarr.create_array(
+    store='data.zarr',
+    shape=(100000, 100000),
+    chunks=(100, 100),  # Small chunks for access
+    shards=(1000, 1000),  # Groups 100 chunks per shard
+    dtype='f4'
+)
+```
+
+**Benefits**:
+- Reduces file system overhead from millions of small files
+- Improves cloud storage performance (fewer object requests)
+- Prevents filesystem block size waste
+
+**Important**: Entire shards must fit in memory before writing.
+
+## Compression
+
+Zarr applies compression per chunk to reduce storage while maintaining fast access.
+
+### Configuring Compression
+
+```python
+from zarr.codecs import BloscCodec, GzipCodec, ZstdCodec, BytesCodec
+
+# Default: Blosc with Zstandard
+z = zarr.zeros((1000, 1000), chunks=(100, 100))  # Uses default compression
+
+# Configure Blosc codec
+z = zarr.create_array(
+    store='data.zarr',
+    shape=(1000, 1000),
+    chunks=(100, 100),
+    dtype='f4',
+    codecs=[BloscCodec(cname='zstd', clevel=5, shuffle='shuffle')]
+)
+
+# Available Blosc compressors: 'blosclz', 'lz4', 'lz4hc', 'snappy', 'zlib', 'zstd'
+
+# Use Gzip compression
+z = zarr.create_array(
+    store='data.zarr',
+    shape=(1000, 1000),
+    chunks=(100, 100),
+    dtype='f4',
+    codecs=[GzipCodec(level=6)]
+)
+
+# Disable compression
+z = zarr.create_array(
+    store='data.zarr',
+    shape=(1000, 1000),
+    chunks=(100, 100),
+    dtype='f4',
+    codecs=[BytesCodec()]  # No compression
+)
+```
+
+### Compression Performance Tips
+
+- **Blosc** (default): Fast compression/decompression, good for interactive workloads
+- **Zstandard**: Better compression ratios, slightly slower than LZ4
+- **Gzip**: Maximum compression, slower performance
+- **LZ4**: Fastest compression, lower ratios
+- **Shuffle**: Enable shuffle filter for better compression on numeric data
+
+```python
+# Optimal for numeric scientific data
+codecs=[BloscCodec(cname='zstd', clevel=5, shuffle='shuffle')]
+
+# Optimal for speed
+codecs=[BloscCodec(cname='lz4', clevel=1)]
+
+# Optimal for compression ratio
+codecs=[GzipCodec(level=9)]
+```
+
+## Storage Backends
+
+Zarr supports multiple storage backends through a flexible storage interface.
+
+### Local Filesystem (Default)
+
+```python
+from zarr.storage import LocalStore
+
+# Explicit store creation
+store = LocalStore('data/my_array.zarr')
+z = zarr.open_array(store=store, mode='w', shape=(1000, 1000), chunks=(100, 100))
+
+# Or use string path (creates LocalStore automatically)
+z = zarr.open_array('data/my_array.zarr', mode='w', shape=(1000, 1000),
+                    chunks=(100, 100))
+```
+
+### In-Memory Storage
+
+```python
+from zarr.storage import MemoryStore
+
+# Create in-memory store
+store = MemoryStore()
+z = zarr.open_array(store=store, mode='w', shape=(1000, 1000), chunks=(100, 100))
+
+# Data exists only in memory, not persisted
+```
+
+### ZIP File Storage
+
+```python
+from zarr.storage import ZipStore
+
+# Write to ZIP file
+store = ZipStore('data.zip', mode='w')
+z = zarr.open_array(store=store, mode='w', shape=(1000, 1000), chunks=(100, 100))
+z[:] = np.random.random((1000, 1000))
+store.close()  # IMPORTANT: Must close ZipStore
+
+# Read from ZIP file
+store = ZipStore('data.zip', mode='r')
+z = zarr.open_array(store=store)
+data = z[:]
+store.close()
+```
+
+### Cloud Storage (S3, GCS)
+
+Zarr 3 uses **fsspec** backends via URI strings or `FsspecStore` (preferred over legacy `S3Map`/`GCSMap`).
+
+```python
+import zarr
+
+# S3 — credentials from standard AWS env vars (scope reads to these keys only)
+# AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION
+z = zarr.create_array(
+    store="s3://my-bucket/path/to/array.zarr",
+    shape=(1000, 1000),
+    chunks=(100, 100),
+    dtype="f4",
+    storage_options={"anon": False},
+)
+z[:] = data
+
+# GCS — GOOGLE_APPLICATION_CREDENTIALS or gcloud default credentials
+z = zarr.open_array(
+    "gs://my-bucket/path/to/array.zarr",
+    mode="r",
+    storage_options={"project": "my-project"},
+)
+
+# Explicit store (any fsspec filesystem)
+from zarr.storage import FsspecStore
+store = FsspecStore.from_url("s3://my-bucket/data.zarr", storage_options={"anon": False})
+root = zarr.open_group(store=store, mode="r+")
+```
+
+Cloud backends read credentials from provider environment variables locally via fsspec; they are not sent to third-party endpoints outside your configured bucket/project.
+
+**Cloud Storage Best Practices**:
+- Use consolidated metadata to reduce latency: `zarr.consolidate_metadata(store)`
+- Align chunk sizes with cloud object sizing (typically 5-100 MB optimal)
+- Enable parallel writes using Dask for large-scale data
+- Consider sharding to reduce number of objects
+
+## Groups and Hierarchies
+
+Groups organize multiple arrays hierarchically, similar to directories or HDF5 groups.
+
+### Creating and Using Groups
+
+```python
+# Create root group
+root = zarr.group(store='data/hierarchy.zarr')
+
+# Create sub-groups
+temperature = root.create_group('temperature')
+precipitation = root.create_group('precipitation')
+
+# Create arrays within groups
+temp_array = temperature.create_array(
+    name='t2m',
+    shape=(365, 720, 1440),
+    chunks=(1, 720, 1440),
+    dtype='f4'
+)
+
+precip_array = precipitation.create_array(
+    name='prcp',
+    shape=(365, 720, 1440),
+    chunks=(1, 720, 1440),
+    dtype='f4'
+)
+
+# Access using paths
+array = root['temperature/t2m']
+
+# Visualize hierarchy
+print(root.tree())
+# Output:
+# /
+#  ├── temperature
+#  │   └── t2m (365, 720, 1440) f4
+#  └── precipitation
+#      └── prcp (365, 720, 1440) f4
+```
+
+### Group API (v3)
+
+Use `create_array` / `require_array` (h5py-style `create_dataset` / `require_dataset` were removed in v3):
+
+```python
+root = zarr.group('data.zarr')
+arr = root.create_array('my_data', shape=(1000, 1000), chunks=(100, 100), dtype='f4')
+
+grp = root.require_group('subgroup')
+arr2 = grp.require_array('array', shape=(500, 500), chunks=(50, 50), dtype='i4')
+```
+
+## Attributes and Metadata
+
+Attach custom metadata to arrays and groups using attributes:
+
+```python
+# Add attributes to array
+z = zarr.zeros((1000, 1000), chunks=(100, 100))
+z.attrs['description'] = 'Temperature data in Kelvin'
+z.attrs['units'] = 'K'
+z.attrs['created'] = '2024-01-15'
+z.attrs['processing_version'] = 2.1
+
+# Attributes are stored as JSON
+print(z.attrs['units'])  # Output: K
+
+# Add attributes to groups
+root = zarr.group('data.zarr')
+root.attrs['project'] = 'Climate Analysis'
+root.attrs['institution'] = 'Research Institute'
+
+# Attributes persist with the array/group
+z2 = zarr.open('data.zarr')
+print(z2.attrs['description'])
+```
+
+**Important**: Attributes must be JSON-serializable (strings, numbers, lists, dicts, booleans, null).
+
+## Integration with NumPy, Dask, and Xarray
+
+### NumPy Integration
+
+Zarr arrays implement the NumPy array interface:
+
+```python
+import numpy as np
+import zarr
+
+z = zarr.zeros((1000, 1000), chunks=(100, 100))
+
+# Use NumPy functions directly
+result = np.sum(z, axis=0)  # NumPy operates on Zarr array
+mean = np.mean(z[:100, :100])
+
+# Convert to NumPy array
+numpy_array = z[:]  # Loads entire array into memory
+```
+
+### Dask Integration
+
+Dask provides lazy, parallel computation on Zarr arrays:
+
+```python
+import dask.array as da
+import zarr
+
+# Create large Zarr array
+z = zarr.open('data.zarr', mode='w', shape=(100000, 100000),
+              chunks=(1000, 1000), dtype='f4')
+
+# Load as Dask array (lazy, no data loaded)
+dask_array = da.from_zarr('data.zarr')
+
+# Perform computations (parallel, out-of-core)
+result = dask_array.mean(axis=0).compute()  # Parallel computation
+
+# Write Dask array to Zarr
+large_array = da.random.random((100000, 100000), chunks=(1000, 1000))
+da.to_zarr(large_array, 'output.zarr')
+```
+
+**Benefits**:
+- Process datasets larger than memory
+- Automatic parallel computation across chunks
+- Efficient I/O with chunked storage
+
+### Xarray Integration
+
+Xarray provides labeled, multidimensional arrays with Zarr backend:
+
+```python
+import xarray as xr
+import zarr
+
+# Open Zarr store as Xarray Dataset (lazy loading)
+ds = xr.open_zarr('data.zarr')
+
+# Dataset includes coordinates and metadata
+print(ds)
+
+# Access variables
+temperature = ds['temperature']
+
+# Perform labeled operations
+subset = ds.sel(time='2024-01', lat=slice(30, 60))
+
+# Write Xarray Dataset to Zarr
+ds.to_zarr('output.zarr')
+
+# Create from scratch with coordinates
+ds = xr.Dataset(
     {
-        fieldname: 'reason',
-        fieldtype: 'Small Text',
-        label: 'Reason',
-        reqd: 1
+        'temperature': (['time', 'lat', 'lon'], data),
+        'precipitation': (['time', 'lat', 'lon'], data2)
     },
-    function(values) {
-        console.log(values.reason);
-    },
-    __('Enter Reason'),
-    __('Submit')
-);
-```
-
-### Multi-field Prompt
-
-```javascript
-frappe.prompt([
-    {
-        fieldname: 'customer',
-        fieldtype: 'Link',
-        options: 'Customer',
-        label: 'Customer',
-        reqd: 1
-    },
-    {
-        fieldname: 'date',
-        fieldtype: 'Date',
-        label: 'Date',
-        default: frappe.datetime.nowdate()
-    },
-    {
-        fieldname: 'priority',
-        fieldtype: 'Select',
-        label: 'Priority',
-        options: 'Low\nMedium\nHigh',
-        default: 'Medium'
+    coords={
+        'time': pd.date_range('2024-01-01', periods=365),
+        'lat': np.arange(-90, 91, 1),
+        'lon': np.arange(-180, 180, 1)
     }
-], function(values) {
-    process_data(values);
-}, __('Enter Details'), __('Process'));
+)
+ds.to_zarr('climate_data.zarr')
 ```
 
-### Custom Dialog
+**Benefits**:
+- Named dimensions and coordinates
+- Label-based indexing and selection
+- Integration with pandas for time series
+- NetCDF-like interface familiar to climate/geospatial scientists
 
-```javascript
-let dialog = new frappe.ui.Dialog({
-    title: __('Custom Dialog'),
-    fields: [
-        {
-            fieldname: 'customer',
-            fieldtype: 'Link',
-            options: 'Customer',
-            label: __('Customer'),
-            reqd: 1,
-            get_query: function() {
-                return { filters: { status: 'Active' } };
-            },
-            change: function() {
-                // Field change handler
-                let value = dialog.get_value('customer');
-                if (value) {
-                    dialog.set_value('customer_name', 'Loading...');
-                }
-            }
-        },
-        { fieldtype: 'Column Break' },
-        {
-            fieldname: 'customer_name',
-            fieldtype: 'Data',
-            label: __('Customer Name'),
-            read_only: 1
-        },
-        { fieldtype: 'Section Break', label: 'Items' },
-        {
-            fieldname: 'items',
-            fieldtype: 'Table',
-            label: __('Items'),
-            cannot_add_rows: false,
-            in_place_edit: true,
-            fields: [
-                {
-                    fieldname: 'item',
-                    fieldtype: 'Link',
-                    options: 'Item',
-                    in_list_view: 1,
-                    label: __('Item')
-                },
-                {
-                    fieldname: 'qty',
-                    fieldtype: 'Float',
-                    in_list_view: 1,
-                    label: __('Qty')
-                }
-            ]
-        }
-    ],
-    size: 'large', // small, large, extra-large
-    primary_action_label: __('Submit'),
-    primary_action: function(values) {
-        console.log(values);
-        dialog.hide();
-        process_dialog(values);
-    },
-    secondary_action_label: __('Cancel')
-});
+## Parallel Computing and Thread Safety
 
-dialog.show();
+The `synchronizer` argument (`ThreadSynchronizer`, `ProcessSynchronizer`) is **not ported to Zarr-Python 3** yet. Use these patterns instead:
 
-// Set values
-dialog.set_value('customer', 'CUST-001');
-dialog.set_values({
-    'customer': 'CUST-001',
-    'date': frappe.datetime.nowdate()
-});
+- **Reads:** always safe across threads/processes.
+- **Writes:** safe when each worker writes to **non-overlapping chunks**; most stores support atomic chunk writes.
+- **Overlapping writes:** coordinate externally (file locks, workflow design) until synchronizers return.
 
-// Get values
-let values = dialog.get_values();
-let customer = dialog.get_value('customer');
+For Dask-heavy workloads, tune Zarr async concurrency — see [Optimizing performance](https://zarr.readthedocs.io/en/stable/user-guide/performance/).
 
-// Access fields
-let field = dialog.get_field('customer');
-field.set_description('Select active customer');
+## Consolidated Metadata
+
+For hierarchical stores with many arrays, consolidate metadata into a single file to reduce I/O operations:
+
+```python
+import zarr
+
+# After creating arrays/groups
+root = zarr.group('data.zarr')
+# ... create multiple arrays/groups ...
+
+# Consolidate metadata
+zarr.consolidate_metadata('data.zarr')
+
+# Open with consolidated metadata (faster, especially on cloud storage)
+root = zarr.open_consolidated('data.zarr')
 ```
 
-### Confirmation Dialog
+**Benefits**:
+- Reduces metadata read operations from N (one per array) to 1
+- Critical for cloud storage (reduces latency)
+- Speeds up `tree()` operations and group traversal
 
-```javascript
-frappe.confirm(
-    __('Are you sure you want to delete this?'),
-    function() {
-        // On Yes
-        delete_record();
-    },
-    function() {
-        // On No (optional)
-    }
-);
+**Cautions**:
+- Metadata can become stale if arrays update without re-consolidation
+- Not suitable for frequently-updated datasets
+- Multi-writer scenarios may have inconsistent reads
+
+## Performance Optimization
+
+### Checklist for Optimal Performance
+
+1. **Chunk Size**: Aim for 1-10 MB per chunk
+   ```python
+   # For float32: 1MB = 262,144 elements
+   chunks = (512, 512)  # 512×512×4 bytes = ~1MB
+   ```
+
+2. **Chunk Shape**: Align with access patterns
+   ```python
+   # Row-wise access → chunk spans columns: (small, large)
+   # Column-wise access → chunk spans rows: (large, small)
+   # Random access → balanced: (medium, medium)
+   ```
+
+3. **Compression**: Choose based on workload
+   ```python
+   # Interactive/fast: BloscCodec(cname='lz4')
+   # Balanced: BloscCodec(cname='zstd', clevel=5)
+   # Maximum compression: GzipCodec(level=9)
+   ```
+
+4. **Storage Backend**: Match to environment
+   ```python
+   # Local: LocalStore (default)
+   # Cloud: fsspec URIs or FsspecStore + consolidated metadata
+   # Temporary: MemoryStore
+   ```
+
+5. **Sharding**: Use for large-scale datasets
+   ```python
+   # When you have millions of small chunks
+   shards=(10*chunk_size, 10*chunk_size)
+   ```
+
+6. **Parallel I/O**: Use Dask for large operations
+   ```python
+   import dask.array as da
+   dask_array = da.from_zarr('data.zarr')
+   result = dask_array.compute(scheduler='threads', num_workers=8)
+   ```
+
+### Profiling and Debugging
+
+```python
+# Print detailed array information
+print(z.info)
+
+# Output includes:
+# - Type, shape, chunks, dtype
+# - Compression codec and level
+# - Storage size (compressed vs uncompressed)
+# - Storage location
+
+# Check storage size
+print(f"Compressed size: {z.nbytes_stored / 1e6:.2f} MB")
+print(f"Uncompressed size: {z.nbytes / 1e6:.2f} MB")
+print(f"Compression ratio: {z.nbytes / z.nbytes_stored:.2f}x")
 ```
 
-## API Calls
+## Common Patterns and Best Practices
 
-### frappe.call
+### Pattern: Time Series Data
 
-```javascript
-// Basic call
-frappe.call({
-    method: 'my_app.api.get_data',
-    args: {
-        customer: frm.doc.customer
-    },
-    callback: function(r) {
-        if (r.message) {
-            frm.set_value('data', r.message);
-        }
-    }
-});
+```python
+# Store time series with time as first dimension
+# This allows efficient appending of new time steps
+z = zarr.open('timeseries.zarr', mode='a',
+              shape=(0, 720, 1440),  # Start with 0 time steps
+              chunks=(1, 720, 1440),  # One time step per chunk
+              dtype='f4')
 
-// With loading indicator
-frappe.call({
-    method: 'my_app.api.process',
-    args: { data: frm.doc },
-    freeze: true,
-    freeze_message: __('Processing...'),
-    callback: function(r) {
-        frappe.msgprint(__('Done!'));
-    },
-    error: function(r) {
-        frappe.msgprint(__('Error occurred'));
-    }
-});
-
-// Async/await
-async function getData() {
-    const r = await frappe.call({
-        method: 'my_app.api.get_data',
-        args: { id: 123 }
-    });
-    return r.message;
-}
-
-// Promise chain
-frappe.call({
-    method: 'my_app.api.get_data'
-}).then(r => {
-    return frappe.call({
-        method: 'my_app.api.process',
-        args: { data: r.message }
-    });
-}).then(r => {
-    console.log('Done', r.message);
-});
+# Append new time steps
+new_data = np.random.random((1, 720, 1440))
+z.append(new_data, axis=0)
 ```
 
-## Messages & Alerts
+### Pattern: Large Matrix Operations
 
-```javascript
-// Toast alert
-frappe.show_alert({
-    message: __('Success!'),
-    indicator: 'green'  // green, blue, orange, red
-}, 5);  // seconds
+```python
+import dask.array as da
 
-// Message dialog
-frappe.msgprint({
-    title: __('Information'),
-    message: __('This is important'),
-    indicator: 'blue'
-});
+# Create large matrix in Zarr
+z = zarr.open('matrix.zarr', mode='w',
+              shape=(100000, 100000),
+              chunks=(1000, 1000),
+              dtype='f8')
 
-// Error (stops execution)
-frappe.throw(__('Cannot proceed'));
-
-// Confirmation required
-frappe.validated = false;  // In validate event
+# Use Dask for parallel computation
+dask_z = da.from_zarr('matrix.zarr')
+result = (dask_z @ dask_z.T).compute()  # Parallel matrix multiply
 ```
 
-## Utilities
+### Pattern: Cloud-Native Workflow
 
-```javascript
-// Date/Time
-frappe.datetime.nowdate();           // "2024-01-15"
-frappe.datetime.now_datetime();      // "2024-01-15 10:30:00"
-frappe.datetime.add_days("2024-01-15", 7);
-frappe.datetime.add_months("2024-01-15", 1);
+```python
+import zarr
 
-// Formatting
-frappe.format(1234.56, {fieldtype: 'Currency'});
-format_currency(1234.56, 'USD');
-flt(value);  // Float
-cint(value); // Integer
+path = "s3://my-bucket/data.zarr"
+z = zarr.create_array(
+    store=path,
+    shape=(10000, 10000),
+    chunks=(500, 500),
+    dtype="f4",
+    storage_options={"anon": False},
+)
+z[:] = data
 
-// Navigation
-frappe.set_route('Form', 'Customer', 'CUST-001');
-frappe.set_route('List', 'Customer');
-frappe.new_doc('Customer');
-
-// Translation
-__('Translate this');
-__('Hello {0}', [name]);
+zarr.consolidate_metadata(path)
+z_read = zarr.open_consolidated(path, storage_options={"anon": False})
+subset = z_read[0:100, 0:100]
 ```
+
+### Pattern: Format Conversion
+
+```python
+# HDF5 to Zarr
+import h5py
+import zarr
+
+with h5py.File('data.h5', 'r') as h5:
+    dataset = h5['dataset_name']
+    z = zarr.array(dataset[:],
+                   chunks=(1000, 1000),
+                   store='data.zarr')
+
+# NumPy to Zarr
+import numpy as np
+data = np.load('data.npy')
+z = zarr.array(data, chunks='auto', store='data.zarr')
+
+# Zarr to NetCDF (via Xarray)
+import xarray as xr
+ds = xr.open_zarr('data.zarr')
+ds.to_netcdf('data.nc')
+```
+
+## Common Issues and Solutions
+
+### Issue: Slow Performance
+
+**Diagnosis**: Check chunk size and alignment
+```python
+print(z.chunks)  # Are chunks appropriate size?
+print(z.info)    # Check compression ratio
+```
+
+**Solutions**:
+- Increase chunk size to 1-10 MB
+- Align chunks with access pattern
+- Try different compression codecs
+- Use Dask for parallel operations
+
+### Issue: High Memory Usage
+
+**Cause**: Loading entire array or large chunks into memory
+
+**Solutions**:
+```python
+# Don't load entire array
+# Bad: data = z[:]
+# Good: Process in chunks
+for i in range(0, z.shape[0], 1000):
+    chunk = z[i:i+1000, :]
+    process(chunk)
+
+# Or use Dask for automatic chunking
+import dask.array as da
+dask_z = da.from_zarr('data.zarr')
+result = dask_z.mean().compute()  # Processes in chunks
+```
+
+### Issue: Cloud Storage Latency
+
+**Solutions**:
+```python
+# 1. Consolidate metadata
+zarr.consolidate_metadata(store)
+z = zarr.open_consolidated(store)
+
+# 2. Use appropriate chunk sizes (5-100 MB for cloud)
+chunks = (2000, 2000)  # Larger chunks for cloud
+
+# 3. Enable sharding
+shards = (10000, 10000)  # Groups many chunks
+```
+
+### Issue: Concurrent Write Conflicts
+
+**Solution**: Design workflows so each process/thread writes to separate chunks. Zarr-Python 3 does not yet support `ThreadSynchronizer` / `ProcessSynchronizer`; see `references/v3_migration.md`.
+
+## Additional Resources
+
+### Bundled references
+
+| File | Contents |
+|------|----------|
+| `references/api_reference.md` | Function signatures, stores, codecs, indexing |
+| `references/v3_migration.md` | Zarr-Python 2→3 breaking changes and WIP features |
+
+### Official upstream
+
+- **Documentation**: https://zarr.readthedocs.io/en/stable/
+- **3.0 migration guide**: https://zarr.readthedocs.io/en/stable/user-guide/v3_migration/
+- **Storage backends**: https://zarr.readthedocs.io/en/stable/user-guide/storage/
+- **Zarr specifications**: https://zarr-specs.readthedocs.io/
+- **GitHub**: https://github.com/zarr-developers/zarr-python
+- **Developer chat**: https://ossci.zulipchat.com/#narrow/channel/423692-Zarr-Python
+
+**Related libraries:** [Xarray](https://docs.xarray.dev/), [Dask](https://docs.dask.org/), [NumCodecs](https://numcodecs.readthedocs.io/)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
