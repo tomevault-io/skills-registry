@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/power-platform-skills](https://github.com/microsoft/power-platform-skills/tree/main/plugins/power-pages/skills/deploy-site/SKILL.md)
+Original source: [microsoft/power-platform-skills](https://github.com/microsoft/power-platform-skills/tree/main/plugins/code-apps/skills/add-office365/SKILL.md)
 
 ---
 
