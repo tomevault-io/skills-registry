@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [geodro/lerd](https://github.com/geodro/lerd/tree/main/.claude/skills/lerd-preflight/SKILL.md)
+Original source: [geodro/lerd](https://github.com/geodro/lerd/tree/main/.claude/skills/lerd-add-service/SKILL.md)
 
 ---
 
