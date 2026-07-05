@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [anombyte93/prd-taskmaster](https://github.com/anombyte93/prd-taskmaster/tree/main/skills/execute-task/SKILL.md)
+Original source: [anombyte93/prd-taskmaster](https://github.com/anombyte93/prd-taskmaster/tree/main/skills/execute-fleet/SKILL.md)
 
 ---
 
