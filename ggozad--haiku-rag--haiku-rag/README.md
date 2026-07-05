@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ggozad/haiku.rag](https://github.com/ggozad/haiku.rag/tree/main/haiku_rag_slim/haiku/rag/skills/rag/SKILL.md)
+Original source: [ggozad/haiku.rag](https://github.com/ggozad/haiku.rag/tree/main/haiku_rag_slim/haiku/rag/skills/rag-analysis/SKILL.md)
 
 ---
 
