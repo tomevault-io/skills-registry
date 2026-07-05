@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tddworks/claude-skills](https://github.com/tddworks/claude-skills/tree/main/skills/feature-lifecycle/SKILL.md)
+Original source: [tddworks/claude-skills](https://github.com/tddworks/claude-skills/tree/main/skills/swiftui-atomic-design/SKILL.md)
 
 ---
 
