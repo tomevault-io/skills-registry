@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Adyen/adyen-android](https://github.com/Adyen/adyen-android/tree/main/.agents/skills/android-commit/SKILL.md)
+Original source: [Adyen/adyen-android](https://github.com/Adyen/adyen-android/tree/main/.agents/skills/android-pr-create/SKILL.md)
 
 ---
 
