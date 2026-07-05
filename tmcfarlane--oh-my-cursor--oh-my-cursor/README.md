@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tmcfarlane/oh-my-cursor](https://github.com/tmcfarlane/oh-my-cursor/tree/main/skills/mgrep-code-search/SKILL.md)
+Original source: [tmcfarlane/oh-my-cursor](https://github.com/tmcfarlane/oh-my-cursor/tree/main/skills/exploring-codebases/SKILL.md)
 
 ---
 
