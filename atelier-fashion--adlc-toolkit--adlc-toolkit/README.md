@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [atelier-fashion/adlc-toolkit](https://github.com/atelier-fashion/adlc-toolkit/tree/main/adversary/SKILL.md)
+Original source: [atelier-fashion/adlc-toolkit](https://github.com/atelier-fashion/adlc-toolkit/tree/main/template-drift/SKILL.md)
 
 ---
 
