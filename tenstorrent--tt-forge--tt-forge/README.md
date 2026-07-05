@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tenstorrent/tt-forge](https://github.com/tenstorrent/tt-forge/tree/main/skills/tt-bug-report/SKILL.md)
+Original source: [tenstorrent/tt-forge](https://github.com/tenstorrent/tt-forge/tree/main/skills/tt-enable-tracing/SKILL.md)
 
 ---
 
