@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [adaptyvbio/protein-design-skills](https://github.com/adaptyvbio/protein-design-skills/tree/main/skills/esm/SKILL.md)
+Original source: [adaptyvbio/protein-design-skills](https://github.com/adaptyvbio/protein-design-skills/tree/main/skills/chai/SKILL.md)
 
 ---
 
