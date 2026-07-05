@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wisedev-code/MaIN.NET](https://github.com/wisedev-code/MaIN.NET/tree/main/Examples/Examples/skills/code-review/SKILL.md)
+Original source: [wisedev-code/MaIN.NET](https://github.com/wisedev-code/MaIN.NET/tree/main/Examples/Examples/skills/funfact-writer/SKILL.md)
 
 ---
 
