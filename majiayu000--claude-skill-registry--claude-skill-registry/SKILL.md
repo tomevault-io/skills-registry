@@ -1,199 +1,298 @@
 ---
-name: dna-insert
-description: Guide for designing DNA insertion primers for site-directed mutagenesis (SDM) using Q5 or similar kits. This skill should be used when tasks involve inserting DNA sequences into plasmids, designing mutagenesis primers, or working with PCR-based insertion methods. Provides verification strategies, common pitfalls, and procedural guidance for correct primer design. Use when this capability is needed.
+name: accessibility-wcag
+description: Enforce WCAG 2.2 accessibility standards. Use when creating UI components, reviewing frontend code, or when accessibility issues are detected. Covers semantic HTML, ARIA, keyboard navigation, and color contrast. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# DNA Insert Primer Design
+# Accessibility (WCAG 2.2)
 
-## Overview
+웹 접근성 표준 WCAG 2.2를 준수하도록 강제하는 스킬입니다.
 
-This skill provides procedural guidance for designing primers to insert DNA sequences into existing plasmids using site-directed mutagenesis (SDM) kits like NEB's Q5 SDM kit. The skill emphasizes verification strategies and common pitfalls to avoid incorrect primer designs.
+## 2025 Context
 
-## When to Use This Skill
+> **WCAG 2.2는 2023년 10월 ISO 표준(ISO/IEC 40500)으로 채택되었습니다.**
+> **유럽 접근성법(EAA)은 2025년 6월부터 시행됩니다.**
 
-- Designing primers to insert a DNA sequence at a specific position in a plasmid
-- Q5 Site-Directed Mutagenesis (SDM) primer design for insertions
-- PCR-based insertion of sequences into circular DNA templates
-- Verifying primer designs meet annealing length and Tm requirements
+## Core Principles (POUR)
 
-## Critical Concepts
+| 원칙 | 설명 | 예시 |
+|------|------|------|
+| **P**erceivable | 인지 가능 | 대체 텍스트, 자막, 색상 대비 |
+| **O**perable | 조작 가능 | 키보드 접근, 충분한 시간 |
+| **U**nderstandable | 이해 가능 | 명확한 언어, 예측 가능한 동작 |
+| **R**obust | 견고함 | 보조 기술 호환성 |
 
-### Primer Structure for Insertions
+## Rules
 
-For Q5 SDM insertions, primers have specific structural requirements:
+### 1. Semantic HTML (필수)
 
-1. **Forward Primer Structure**: `[5' upstream annealing] - [INSERTION] - [3' downstream annealing]`
-   - The insertion sequence is typically placed at or near the 5' end
-   - The 3' portion MUST anneal to the template for proper extension
-   - The 3' annealing region is critical for polymerase binding
+```tsx
+// ❌ BAD: div 남용
+<div onClick={handleClick}>버튼</div>
+<div class="header">제목</div>
 
-2. **Reverse Primer Structure**: Anneals adjacent to the insertion site on the opposite strand
-   - Must be back-to-back with the forward primer's annealing region
-   - Typically does not contain insertion sequence
-
-### Annealing Region Requirements
-
-- **Minimum annealing length**: 15 nucleotides (per NEB guidelines)
-- **Maximum annealing length**: 45 nucleotides
-- **Both primers must meet this requirement independently**
-- The annealing region is ONLY the portion that hybridizes to the original template
-
-## Procedural Workflow
-
-### Step 1: Identify the Insertion Site and Sequence
-
-1. Align input sequence with output sequence to find differences
-2. Identify the exact insertion sequence (what is being added)
-3. Identify the exact position in the template where insertion occurs
-4. **Verification**: Confirm that `input_sequence + insertion = output_sequence` at the identified position
-
-### Step 2: Design Initial Primers
-
-For the forward primer:
-1. Include sufficient 3' annealing sequence AFTER the insertion (minimum 15 bp)
-2. Include the complete insertion sequence
-3. Include 5' annealing sequence upstream of the insertion site
-
-For the reverse primer:
-1. Design to anneal immediately adjacent to the insertion site
-2. Use reverse complement orientation
-3. Ensure minimum 15 bp annealing length
-
-### Step 3: Calculate Annealing Regions (Critical Step)
-
-**To correctly calculate annealing regions:**
-
-1. **Strip the insertion sequence from the primer** - identify exactly where the insertion begins and ends within the primer
-2. **Map remaining sequence to template** - the portions before and after the insertion that match the template are the annealing regions
-3. **Sum only template-matching portions** - insertion sequence does NOT count toward annealing length
-
-**Common Mistake**: Counting insertion sequence as part of annealing region. The insertion does NOT anneal to anything - only template-complementary regions anneal.
-
-### Step 4: Verify Tm Values
-
-- Calculate Tm for annealing regions only (not including insertion)
-- Use appropriate Tm calculator (e.g., `oligotm` from primer3, NEB Tm calculator)
-- Target Tm typically 60-72°C depending on kit requirements
-- **Verify independently**: Do not rely on self-written verification scripts
-
-### Step 5: Validate the Design
-
-**Independent verification checklist:**
-
-1. [ ] Extract annealing regions by removing insertion sequence from forward primer
-2. [ ] Confirm each annealing region is 15-45 bp
-3. [ ] Simulate the PCR product:
-   - Concatenate: reverse_complement(reverse_primer) + forward_primer
-   - Find the insertion within this concatenation
-   - Verify flanking sequences match expected template regions
-4. [ ] Confirm the simulated product matches expected output sequence
-5. [ ] Check primers do not form significant secondary structures or dimers
-
-## Verification Strategies
-
-### Strategy 1: Boundary Verification
-
-After identifying insertion boundaries:
-```
-original_template[0:insert_pos] + insertion + original_template[insert_pos:] == expected_output
+// ✅ GOOD: 시맨틱 태그 사용
+<button onClick={handleClick}>버튼</button>
+<h1>제목</h1>
 ```
 
-If this equation fails, the insertion position or sequence is incorrect.
+### 2. 이미지 대체 텍스트 (필수)
 
-### Strategy 2: Primer Decomposition
+```tsx
+// ❌ BAD: alt 누락 또는 의미 없음
+<img src="logo.png" />
+<img src="chart.png" alt="이미지" />
 
-For the forward primer, explicitly identify:
-- Characters 1-N: upstream annealing (must match template)
-- Characters N+1 to M: insertion sequence (must match identified insertion)
-- Characters M+1 to end: downstream annealing (must match template)
+// ✅ GOOD: 의미 있는 alt
+<img src="logo.png" alt="회사명 로고" />
+<img src="chart.png" alt="2024년 매출 증가 추이 그래프" />
 
-Verify each segment independently by alignment to template.
+// ✅ 장식용 이미지는 빈 alt
+<img src="decoration.png" alt="" role="presentation" />
+```
 
-### Strategy 3: PCR Product Simulation
+### 3. 키보드 접근성 (필수)
 
-Simulate what the primers would produce:
-1. Take reverse complement of reverse primer
-2. Concatenate with forward primer (this represents the amplified region)
-3. The result should match the expected output sequence
+```tsx
+// ❌ BAD: 키보드 접근 불가
+<div onClick={handleClick} style={{ cursor: 'pointer' }}>
+  클릭
+</div>
 
-### Strategy 4: Independent Tool Verification
+// ✅ GOOD: 키보드 접근 가능
+<button onClick={handleClick}>클릭</button>
 
-- Use `oligotm` command-line tool to verify Tm calculations
-- Use BLAST or local alignment to verify primer specificity
-- Cross-check with NEB's online Tm calculator
+// 또는 커스텀 요소 사용 시
+<div
+  role="button"
+  tabIndex={0}
+  onClick={handleClick}
+  onKeyDown={(e) => e.key === 'Enter' && handleClick()}
+>
+  클릭
+</div>
+```
 
-## Common Pitfalls
+### 4. 포커스 관리
 
-### Pitfall 1: Insufficient 3' Annealing
+```tsx
+// ❌ BAD: 포커스 스타일 제거
+button:focus {
+  outline: none;
+}
 
-**Problem**: Placing too much sequence upstream of the insertion, leaving insufficient 3' annealing.
+// ✅ GOOD: 명확한 포커스 표시
+button:focus {
+  outline: 2px solid #005fcc;
+  outline-offset: 2px;
+}
 
-**Why it matters**: The 3' end of the primer is where polymerase binds and begins extension. Insufficient 3' annealing leads to poor or no amplification.
+button:focus-visible {
+  outline: 2px solid #005fcc;
+}
+```
 
-**Solution**: Ensure at least 15 bp of template-complementary sequence at the 3' end of the forward primer.
+### 5. 색상 대비 (WCAG AA 기준)
 
-### Pitfall 2: Self-Confirming Verification
+| 텍스트 크기 | 최소 대비율 |
+|------------|------------|
+| 일반 텍스트 | 4.5:1 |
+| 큰 텍스트 (18pt+, 14pt bold+) | 3:1 |
+| UI 컴포넌트/그래픽 | 3:1 |
 
-**Problem**: Writing verification code that uses the same logic as the design code.
+```css
+/* ❌ BAD: 낮은 대비 */
+.text {
+  color: #999;  /* 회색 on 흰색 = 2.85:1 */
+  background: #fff;
+}
 
-**Why it matters**: If the original logic is flawed, the verification will confirm incorrect results.
+/* ✅ GOOD: 충분한 대비 */
+.text {
+  color: #595959;  /* 4.54:1 */
+  background: #fff;
+}
+```
 
-**Solution**: Use completely independent methods for verification. Simulate the actual PCR product and compare to expected output.
+### 6. 폼 레이블 (필수)
 
-### Pitfall 3: Miscounting Insertion Boundaries
+```tsx
+// ❌ BAD: 레이블 없음
+<input type="email" placeholder="이메일" />
 
-**Problem**: Incorrectly identifying where the insertion sequence starts and ends within the designed primer.
+// ✅ GOOD: 명시적 레이블
+<label htmlFor="email">이메일</label>
+<input id="email" type="email" />
 
-**Why it matters**: Leads to incorrect annealing length calculations and potentially non-functional primers.
+// 또는 aria-label 사용
+<input type="email" aria-label="이메일 주소" placeholder="이메일" />
+```
 
-**Solution**: Use string search/alignment to explicitly find the insertion sequence within the primer, then verify the flanking regions independently.
+### 7. ARIA 역할 및 속성
 
-### Pitfall 4: Ignoring Circular Plasmid Considerations
+```tsx
+// 모달 다이얼로그
+<div
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modal-title"
+>
+  <h2 id="modal-title">확인</h2>
+  ...
+</div>
 
-**Problem**: Not accounting for the circular nature of plasmids when the insertion site is near the origin.
+// 알림 메시지
+<div role="alert" aria-live="polite">
+  저장되었습니다.
+</div>
 
-**Why it matters**: Primer placement may need to span the origin, affecting design strategy.
+// 로딩 상태
+<button aria-busy={isLoading} disabled={isLoading}>
+  {isLoading ? '처리 중...' : '제출'}
+</button>
+```
 
-**Solution**: For insertions near the plasmid origin, consider the sequence as circular when identifying flanking regions.
+### 8. 건너뛰기 링크
 
-### Pitfall 5: Asymmetric Annealing Without Justification
+```tsx
+// 페이지 상단에 추가
+<a href="#main-content" className="skip-link">
+  본문으로 건너뛰기
+</a>
 
-**Problem**: Designing primers with highly asymmetric annealing regions (e.g., 33 bp upstream, 4 bp downstream).
+// CSS
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  z-index: 100;
+}
 
-**Why it matters**: May indicate a design error; both flanking regions should typically be balanced.
+.skip-link:focus {
+  top: 0;
+}
+```
 
-**Solution**: If annealing regions are highly asymmetric, re-verify the insertion boundary calculations.
+## WCAG 2.2 신규 기준
 
-## Output Format Guidance
+### 2.4.11 Focus Not Obscured (AA)
 
-When providing primer designs, include:
+```tsx
+// ❌ BAD: 고정 헤더가 포커스 요소를 가림
+.header { position: fixed; top: 0; }
 
-1. **Forward primer sequence** with annotated regions:
-   - Upstream annealing region (with length)
-   - Insertion sequence (with length)
-   - Downstream annealing region (with length)
+// ✅ GOOD: scroll-margin으로 여유 공간 확보
+:target {
+  scroll-margin-top: 80px;
+}
 
-2. **Reverse primer sequence** with annotated annealing region
+*:focus {
+  scroll-margin-top: 80px;
+}
+```
 
-3. **Verification results**:
-   - Total annealing length for each primer
-   - Tm values (calculated independently)
-   - Confirmation that simulated PCR product matches expected output
+### 2.5.7 Dragging Movements (AA)
 
-4. **Explicit boundary positions** in the original template
+```tsx
+// ❌ BAD: 드래그만 지원
+<DraggableList onDrag={handleReorder} />
 
-## Checklist Before Finalizing
+// ✅ GOOD: 드래그 + 버튼 대안 제공
+<DraggableList onDrag={handleReorder}>
+  <button onClick={moveUp}>위로 이동</button>
+  <button onClick={moveDown}>아래로 이동</button>
+</DraggableList>
+```
 
-- [ ] Forward primer 3' annealing region is at least 15 bp
-- [ ] Reverse primer annealing region is at least 15 bp
-- [ ] Neither annealing region exceeds 45 bp
-- [ ] Insertion sequence is correctly positioned within forward primer
-- [ ] Simulated PCR product matches expected output sequence
-- [ ] Tm values are within acceptable range (verified independently)
-- [ ] No significant secondary structures or primer dimers
-- [ ] Primers do not have multiple binding sites in the plasmid
+### 2.5.8 Target Size (AA)
+
+```css
+/* 최소 터치 타겟: 24x24px (AA), 44x44px 권장 */
+button, a, input[type="checkbox"] {
+  min-width: 44px;
+  min-height: 44px;
+}
+```
+
+## 테스트 도구
+
+### 자동화 도구
+
+```bash
+# axe-core (React)
+npm install @axe-core/react
+
+# eslint-plugin-jsx-a11y
+npm install eslint-plugin-jsx-a11y --save-dev
+
+# Lighthouse CI
+npm install -g @lhci/cli
+lhci autorun
+```
+
+### eslint 설정
+
+```json
+{
+  "extends": ["plugin:jsx-a11y/recommended"],
+  "rules": {
+    "jsx-a11y/alt-text": "error",
+    "jsx-a11y/anchor-is-valid": "error",
+    "jsx-a11y/click-events-have-key-events": "error",
+    "jsx-a11y/no-static-element-interactions": "error"
+  }
+}
+```
+
+### 수동 테스트 체크리스트
+
+- [ ] 키보드만으로 모든 기능 사용 가능
+- [ ] Tab 순서가 논리적
+- [ ] 포커스 표시가 명확함
+- [ ] 스크린 리더로 내용 이해 가능
+- [ ] 200% 확대해도 콘텐츠 손실 없음
+- [ ] 색상만으로 정보 전달하지 않음
+
+## Workflow
+
+### 1. 컴포넌트 작성 시
+
+```
+체크포인트:
+1. 시맨틱 HTML 사용했는가?
+2. 키보드 접근 가능한가?
+3. 적절한 ARIA 속성이 있는가?
+4. 포커스 스타일이 있는가?
+```
+
+### 2. 코드 리뷰 시
+
+```
+접근성 체크:
+1. img에 alt 있는가?
+2. form에 label 있는가?
+3. 색상 대비 충분한가?
+4. 터치 타겟 크기 충분한가?
+```
+
+## Checklist
+
+- [ ] 시맨틱 HTML 태그 사용
+- [ ] 모든 이미지에 의미 있는 alt
+- [ ] 폼 요소에 label 연결
+- [ ] 키보드만으로 조작 가능
+- [ ] 포커스 표시 명확
+- [ ] 색상 대비 4.5:1 이상
+- [ ] 터치 타겟 44x44px 이상
+- [ ] 건너뛰기 링크 제공
+- [ ] axe/Lighthouse 테스트 통과
+
+## References
+
+- [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
+- [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/)
+- [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
