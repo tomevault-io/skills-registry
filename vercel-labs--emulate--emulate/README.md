@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vercel-labs/emulate](https://github.com/vercel-labs/emulate/tree/main/skills/stripe/SKILL.md)
+Original source: [vercel-labs/emulate](https://github.com/vercel-labs/emulate/tree/main/skills/resend/SKILL.md)
 
 ---
 
