@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [getsentry/sentry-dart](https://github.com/getsentry/sentry-dart/tree/main/.agents/skills/code-guidelines/SKILL.md)
+Original source: [getsentry/sentry-dart](https://github.com/getsentry/sentry-dart/tree/main/.agents/skills/test-guidelines/SKILL.md)
 
 ---
 
