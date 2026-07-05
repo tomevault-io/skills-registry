@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [HybridAIOne/hybridclaw](https://github.com/HybridAIOne/hybridclaw/tree/main/skills/discord/SKILL.md)
+Original source: [HybridAIOne/hybridclaw](https://github.com/HybridAIOne/hybridclaw/tree/main/skills/llm-wiki/SKILL.md)
 
 ---
 
