@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/fachanwalt-insolvenz-sanierungsrecht/skills/inso-p155-handels-und-steuerrechtliche-rechnungslegung/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/preussisches-allgemeines-landrecht-pralr/skills/016-erster-teil-titel-13-miete-pacht-dienstvertrag/SKILL.md)
 
 ---
 
