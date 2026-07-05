@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [castorini/pyserini](https://github.com/castorini/pyserini/tree/main/.agents/skills/install-pyserini-uv/SKILL.md)
+Original source: [castorini/pyserini](https://github.com/castorini/pyserini/tree/main/.agents/skills/install-pyserini-dev/SKILL.md)
 
 ---
 
