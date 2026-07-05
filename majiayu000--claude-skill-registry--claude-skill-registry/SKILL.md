@@ -1,328 +1,479 @@
 ---
-name: graphql-schema-design
-description: Design production-grade GraphQL schemas with best practices and patterns Use when this capability is needed.
+name: output-dev-prompt-file
+description: Create .prompt files for LLM operations in Output SDK workflows. Use when designing prompts, configuring LLM providers, or using Liquid.js templating. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# GraphQL Schema Design Skill
-
-> Architect scalable, maintainable GraphQL APIs
+# Creating .prompt Files
 
 ## Overview
 
-Learn industry-standard patterns for designing GraphQL schemas that scale. Covers naming conventions, pagination, error handling, and schema evolution.
+This skill documents how to create `.prompt` files for LLM operations in Output SDK workflows. Prompt files use YAML frontmatter for configuration and Liquid.js templating for dynamic content.
 
----
+## When to Use This Skill
 
-## Quick Reference
+- Creating prompts for LLM-powered workflow steps
+- Configuring LLM provider settings (model, temperature, etc.)
+- Using template variables in prompts
+- Troubleshooting prompt formatting issues
 
-| Pattern | When to Use | Example |
-|---------|-------------|---------|
-| Connection | Paginated lists | `users: UserConnection!` |
-| Payload | Mutation results | `CreateUserPayload` |
-| Input | Mutation args | `CreateUserInput` |
-| Interface | Shared fields | `interface Node { id: ID! }` |
-| Union | Multiple types | `SearchResult = User \| Post` |
+## Location Convention
 
----
+Prompt files are stored INSIDE the workflow folder:
 
-## Core Patterns
-
-### 1. Naming Conventions
-
-```graphql
-# Types: PascalCase
-type User { }
-type UserProfile { }
-
-# Fields: camelCase
-type User {
-  firstName: String!
-  lastName: String!
-  createdAt: DateTime!
-  isActive: Boolean!      # Boolean prefix: is, has, can
-}
-
-# Queries: noun (singular/plural)
-type Query {
-  user(id: ID!): User           # Singular
-  users: UserConnection!         # Plural
-}
-
-# Mutations: verb + noun
-type Mutation {
-  createUser(input: CreateUserInput!): CreateUserPayload!
-  updateUser(id: ID!, input: UpdateUserInput!): UpdateUserPayload!
-  deleteUser(id: ID!): DeleteUserPayload!
-
-  # Actions
-  sendEmail(input: SendEmailInput!): SendEmailPayload!
-  publishPost(id: ID!): PublishPostPayload!
-}
-
-# Inputs: [Action][Type]Input
-input CreateUserInput { }
-input UpdateUserInput { }
-input UserFilterInput { }
-
-# Payloads: [Action][Type]Payload
-type CreateUserPayload { }
-type UpdateUserPayload { }
+```
+src/workflows/{workflow-name}/
+├── workflow.ts
+├── steps.ts
+├── types.ts
+└── prompts/
+    ├── analyzeContent@v1.prompt
+    ├── generateSummary@v1.prompt
+    └── extractData@v2.prompt
 ```
 
-### 2. Relay-Style Pagination
+**Important**: Prompts are workflow-specific and live inside the workflow folder, NOT in a shared location.
 
-```graphql
-# Connection pattern
-type Query {
-  users(
-    first: Int
-    after: String
-    last: Int
-    before: String
-    filter: UserFilter
-  ): UserConnection!
-}
+## File Naming Convention
 
-type UserConnection {
-  edges: [UserEdge!]!
-  pageInfo: PageInfo!
-  totalCount: Int!
-}
+```
+{promptName}@v{version}.prompt
+```
 
-type UserEdge {
-  node: User!
-  cursor: String!
-}
+Examples:
+- `generateImageIdeas@v1.prompt`
+- `analyzeContent@v1.prompt`
+- `summarizeText@v2.prompt`
 
-type PageInfo {
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: String
-  endCursor: String
-}
+The version suffix (`@v1`, `@v2`) allows for prompt versioning without breaking existing code.
 
-# Usage
-query GetUsers {
-  users(first: 10, after: "cursor123") {
-    edges {
-      node { id name }
-      cursor
-    }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
+## Basic Structure
+
+```
+---
+provider: anthropic
+model: claude-sonnet-4-20250514
+temperature: 0.7
+maxTokens: 4096
+---
+
+<system>
+System instructions go here.
+</system>
+
+<user>
+User message with {{ variable }} placeholders.
+</user>
+```
+
+## YAML Frontmatter Options
+
+### Required Fields
+
+```yaml
+---
+provider: anthropic    # LLM provider: anthropic, openai, google
+model: claude-sonnet-4-20250514  # Model identifier
+---
+```
+
+### Optional Fields
+
+```yaml
+---
+provider: anthropic
+model: claude-sonnet-4-20250514
+temperature: 0.7       # 0.0 to 1.0, default varies by provider
+maxTokens: 4096        # Maximum output tokens
+providerOptions:       # Provider-specific options
+  thinking:
+    type: enabled
+    budgetTokens: 2000
+---
+```
+
+### Common Provider Configurations
+
+#### Anthropic (Claude)
+
+```yaml
+---
+provider: anthropic
+model: claude-sonnet-4-20250514
+temperature: 0.7
+maxTokens: 8192
+---
+```
+
+#### Anthropic with Extended Thinking
+
+```yaml
+---
+provider: anthropic
+model: claude-sonnet-4-20250514
+temperature: 0.7
+maxTokens: 32000
+providerOptions:
+  thinking:
+    type: enabled
+    budgetTokens: 2000
+---
+```
+
+#### OpenAI
+
+```yaml
+---
+provider: openai
+model: gpt-4o
+temperature: 0.7
+maxTokens: 4096
+---
+```
+
+#### Google (Gemini)
+
+```yaml
+---
+provider: google
+model: gemini-1.5-pro
+temperature: 0.7
+maxTokens: 8192
+---
+```
+
+## Message Blocks
+
+Use XML-style tags to define message roles:
+
+### System Message
+
+```
+<system>
+You are an expert at analyzing technical content.
+Your responses should be clear and structured.
+</system>
+```
+
+### User Message
+
+```
+<user>
+Please analyze the following content:
+
+{{ content }}
+</user>
+```
+
+### Assistant Message (for few-shot examples)
+
+```
+<assistant>
+I'll analyze this content step by step...
+</assistant>
+```
+
+## Liquid.js Templating
+
+### Variable Substitution
+
+```
+<user>
+Analyze this content about {{ topic }}:
+
+{{ content }}
+
+Generate {{ numberOfIdeas }} ideas.
+</user>
+```
+
+### Conditional Content
+
+```
+<system>
+You are an expert content analyzer.
+
+{% if colorPalette %}
+**Color Palette Constraints:** {{ colorPalette }}
+{% endif %}
+
+{% if artDirection %}
+**Art Direction Constraints:** {{ artDirection }}
+{% endif %}
+</system>
+```
+
+### Loops
+
+```
+<user>
+Analyze each of these items:
+
+{% for item in items %}
+- {{ item.name }}: {{ item.description }}
+{% endfor %}
+</user>
+```
+
+### Default Values
+
+```
+<user>
+Generate {{ numberOfIdeas | default: 3 }} ideas for {{ topic }}.
+</user>
+```
+
+## Complete Example
+
+Based on a real prompt file (`generateImageIdeas@v1.prompt`):
+
+```
+---
+provider: anthropic
+model: claude-sonnet-4-20250514
+temperature: 0.7
+maxTokens: 32000
+providerOptions:
+  thinking:
+    type: enabled
+    budgetTokens: 2000
+---
+
+<system>
+You are an expert at creating structured, precise infographic prompts optimized for Gemini's image generation model.
+
+Your task is to generate prompts for informational infographics that illustrate key concepts from the provided content.
+
+CRITICAL RULES you MUST follow:
+- Use Markdown dashed lists to specify constraints
+- Use ALL CAPS for "MUST" requirements to ensure strict adherence
+- Include specific compositional constraints (e.g., rule of thirds, lighting)
+- Always include negative constraints to prevent unwanted elements
+- Keep each infographic focused on ONE clear concept
+
+{% if colorPalette %}
+**Color Palette Constraints:** {{ colorPalette }}
+{% endif %}
+
+{% if artDirection %}
+**Art Direction Constraints:** {{ artDirection }}
+{% endif %}
+</system>
+
+<user>
+Generate {{ numberOfIdeas }} structured infographic prompts based on key topics from this content.
+
+<content>
+{{ content }}
+</content>
+
+Each prompt MUST follow this structure:
+
+Create an infographic about [specific topic]. The infographic MUST follow ALL of these constraints:
+- The infographic MUST use the reference images as a visual style guide
+- The composition MUST follow the rule of thirds for visual balance
+- The infographic MUST use clean, minimal design with simple lines and shapes
+{% if colorPalette %}- The color palette MUST strictly follow: {{ colorPalette }}{% endif %}
+{% if artDirection %}- The art direction MUST strictly follow: {{ artDirection }}{% endif %}
+- NEVER include any watermarks, logos, or decorative overlays
+- NEVER use generic AI art buzzwords like "hyperrealistic"
+
+Focus on the most important concepts that would benefit from visual explanation.
+</user>
+```
+
+## Using Prompts in Steps
+
+### With generateObject
+
+```typescript
+import { generateObject } from '@output.ai/llm';
+import { z } from '@output.ai/core';
+
+const { result } = await generateObject({
+  prompt: 'generateImageIdeas@v1',  // References prompts/generateImageIdeas@v1.prompt
+  variables: {
+    content: 'Solar panel technology explained...',
+    numberOfIdeas: 3,
+    colorPalette: 'blue and green tones',
+    artDirection: 'minimalist style'
+  },
+  schema: z.object({
+    ideas: z.array(z.string())
+  })
+});
+// result contains { ideas: [...] }
+```
+
+### With generateText
+
+```typescript
+import { generateText } from '@output.ai/llm';
+
+const { result } = await generateText({
+  prompt: 'summarize@v1',
+  variables: {
+    content: 'Long article text...',
+    maxLength: 200
   }
-}
+});
+// result contains the generated text string
 ```
 
-### 3. Error Handling
+## Best Practices
 
-```graphql
-# Payload pattern (recommended)
-type CreateUserPayload {
-  user: User
-  errors: [UserError!]!
-}
+### 1. Be Explicit About Requirements
 
-type UserError {
-  field: String
-  message: String!
-  code: UserErrorCode!
-}
-
-enum UserErrorCode {
-  INVALID_EMAIL
-  DUPLICATE_EMAIL
-  WEAK_PASSWORD
-  NOT_FOUND
-  UNAUTHORIZED
-}
-
-# Union pattern (type-safe)
-union CreateUserResult =
-  | CreateUserSuccess
-  | ValidationError
-  | NotAuthorizedError
-
-type CreateUserSuccess {
-  user: User!
-}
-
-type ValidationError {
-  field: String!
-  message: String!
-}
-
-type NotAuthorizedError {
-  message: String!
-}
-
-type Mutation {
-  createUser(input: CreateUserInput!): CreateUserResult!
-}
+```
+<system>
+CRITICAL RULES you MUST follow:
+- Rule 1
+- Rule 2
+- NEVER do X
+- ALWAYS do Y
+</system>
 ```
 
-### 4. Node Interface
+### 2. Use XML Tags for Structure in User Messages
 
-```graphql
-# Global object identification
-interface Node {
-  id: ID!
-}
+```
+<user>
+Analyze the following:
 
-type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]!
-}
+<content>
+{{ content }}
+</content>
 
-type User implements Node {
-  id: ID!
-  name: String!
-}
-
-type Post implements Node {
-  id: ID!
-  title: String!
-}
-
-# Enables refetching any object by ID
-query RefetchUser {
-  node(id: "User:123") {
-    ... on User {
-      name
-      email
-    }
-  }
-}
+<requirements>
+{{ requirements }}
+</requirements>
+</user>
 ```
 
-### 5. Schema Organization
+### 3. Provide Examples (Few-Shot)
 
-```graphql
-# schema.graphql (root)
-type Query {
-  # User domain
-  user(id: ID!): User
-  users(filter: UserFilter): UserConnection!
+```
+<system>
+You analyze sentiment. Return: positive, negative, or neutral.
+</system>
 
-  # Product domain
-  product(id: ID!): Product
-  products(filter: ProductFilter): ProductConnection!
-}
+<user>
+"I love this product!"
+</user>
 
-type Mutation {
-  # User mutations
-  createUser(input: CreateUserInput!): CreateUserPayload!
-  updateUser(id: ID!, input: UpdateUserInput!): UpdateUserPayload!
+<assistant>
+positive
+</assistant>
 
-  # Product mutations
-  createProduct(input: CreateProductInput!): CreateProductPayload!
-}
-
-# types/user.graphql
-type User implements Node {
-  id: ID!
-  email: String!
-  name: String!
-  createdAt: DateTime!
-  orders: OrderConnection!
-}
-
-# types/product.graphql
-type Product implements Node {
-  id: ID!
-  name: String!
-  price: Money!
-  inventory: Int!
-}
+<user>
+"{{ text }}"
+</user>
 ```
 
+### 4. Version Your Prompts
+
+When making significant changes, create a new version:
+- `analyzeContent@v1.prompt` - Original
+- `analyzeContent@v2.prompt` - Improved with better examples
+
+Update the step to use the new version:
+```typescript
+prompt: 'analyzeContent@v2'  // Changed from v1
+```
+
+### 5. Handle Optional Variables
+
+```
+{% if optionalField %}
+Additional context: {{ optionalField }}
+{% endif %}
+```
+
+## Common Patterns
+
+### Classification Prompt
+
+```
+---
+provider: anthropic
+model: claude-sonnet-4-20250514
+temperature: 0.3
 ---
 
-## Design Decisions
+<system>
+You are a content classifier. Categorize content into exactly one category.
+Available categories: {{ categories | join: ", " }}
+</system>
 
-### When to Use What
+<user>
+Classify this content:
 
-```
-Returning a list?
-├── Small fixed size (<20) → [Item!]!
-└── Variable/large size → ItemConnection!
-
-Mutation result?
-├── Can have user errors → Payload pattern
-└── System errors only → Direct return
-
-Multiple possible types?
-├── Completely different → Union
-└── Share common fields → Interface
-
-Nested data?
-├── Always needed together → Embed
-└── Sometimes needed → Separate + ID reference
+{{ content }}
+</user>
 ```
 
-### Nullability Strategy
+### Extraction Prompt
 
-```graphql
-type User {
-  # Always required
-  id: ID!
-  email: String!
-
-  # Optional (user choice)
-  nickname: String
-  bio: String
-
-  # Lists: require list, require items
-  posts: [Post!]!     # Never null, items never null
-
-  # Computed (may fail)
-  avatar: String      # Nullable if generation can fail
-}
 ```
-
+---
+provider: anthropic
+model: claude-sonnet-4-20250514
+temperature: 0.2
 ---
 
-## Troubleshooting
+<system>
+You extract structured data from text. Be precise and only include information explicitly stated.
+</system>
 
-| Issue | Cause | Solution |
-|-------|-------|----------|
-| Breaking change | Removed field | Use @deprecated first |
-| Over-fetching | No pagination | Add Connection pattern |
-| N+1 queries | Direct relations | Use DataLoader |
-| Type explosion | Too many types | Use interfaces/generics |
+<user>
+Extract the following fields from this text:
+{% for field in fields %}
+- {{ field }}
+{% endfor %}
 
-### Schema Health Check
-
-```bash
-# Validate
-npx graphql-inspector validate schema.graphql
-
-# Check breaking changes
-npx graphql-inspector diff old.graphql new.graphql
-
-# Coverage analysis
-npx graphql-inspector coverage schema.graphql queries/*.graphql
+Text:
+{{ text }}
+</user>
 ```
 
+### Generation Prompt
+
+```
+---
+provider: anthropic
+model: claude-sonnet-4-20250514
+temperature: 0.8
 ---
 
-## Usage
+<system>
+You are a creative writer. Generate engaging content based on the given parameters.
+</system>
 
+<user>
+Generate {{ count }} {{ type }} about {{ topic }}.
+
+Requirements:
+{{ requirements }}
+</user>
 ```
-Skill("graphql-schema-design")
-```
+
+## Verification Checklist
+
+- [ ] File located in `prompts/` folder inside workflow directory
+- [ ] File named `{promptName}@v{version}.prompt`
+- [ ] YAML frontmatter includes `provider` and `model`
+- [ ] Message blocks use proper XML tags (`<system>`, `<user>`, `<assistant>`)
+- [ ] Variables use `{{ variableName }}` syntax
+- [ ] Conditionals use `{% if %}...{% endif %}` syntax
+- [ ] All required variables are documented or have defaults
+- [ ] Step code references correct prompt name
 
 ## Related Skills
-- `graphql-fundamentals` - Basic types and syntax
-- `graphql-resolvers` - Implementing the schema
-- `graphql-security` - Auth-aware design
 
-## Related Agent
-- `02-graphql-schema` - For detailed guidance
+- `output-dev-step-function` - Using prompts in step functions
+- `output-dev-folder-structure` - Understanding prompts folder location
+- `output-dev-workflow-function` - Orchestrating LLM-powered steps
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
