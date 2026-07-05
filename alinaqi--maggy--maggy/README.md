@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alinaqi/maggy](https://github.com/alinaqi/maggy/tree/main/skills/autonomous-testing/SKILL.md)
+Original source: [alinaqi/maggy](https://github.com/alinaqi/maggy/tree/main/skills/agentic-development/SKILL.md)
 
 ---
 
