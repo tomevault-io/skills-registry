@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [withastro/rosie](https://github.com/withastro/rosie/tree/main/tests/regression/cases/install-with-agent-flag/expected/.agents/skills/my-skill/SKILL.md)
+Original source: [withastro/rosie](https://github.com/withastro/rosie/tree/main/tests/regression/fixtures/sources/cloudflare/skills/main/skills/cloudflare-pages/SKILL.md)
 
 ---
 
