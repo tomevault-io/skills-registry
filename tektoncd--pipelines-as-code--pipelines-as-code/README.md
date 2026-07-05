@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tektoncd/pipelines-as-code](https://github.com/tektoncd/pipelines-as-code/tree/main/.claude/skills/release-notes/SKILL.md)
+Original source: [tektoncd/pipelines-as-code](https://github.com/tektoncd/pipelines-as-code/tree/main/.claude/skills/commit-message/SKILL.md)
 
 ---
 
