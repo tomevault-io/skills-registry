@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Birdhouse-Labs/birdhouse](https://github.com/Birdhouse-Labs/birdhouse/tree/main/.agents/skills/internal/birdhouse/posthog-usage-report/SKILL.md)
+Original source: [Birdhouse-Labs/birdhouse](https://github.com/Birdhouse-Labs/birdhouse/tree/main/.agents/skills/internal/birdhouse-development/ci-checks/SKILL.md)
 
 ---
 
