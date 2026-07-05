@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [computerlovetech/ralphify](https://github.com/computerlovetech/ralphify/tree/main/skills/ralph-cli/SKILL.md)
+Original source: [computerlovetech/ralphify](https://github.com/computerlovetech/ralphify/tree/main/skills/ralphify-cowork/SKILL.md)
 
 ---
 
