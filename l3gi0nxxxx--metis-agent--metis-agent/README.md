@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [l3gi0nXXXX/Metis-agent](https://github.com/l3gi0nXXXX/Metis-agent/tree/main/skills/weather/SKILL.md)
+Original source: [l3gi0nXXXX/Metis-agent](https://github.com/l3gi0nXXXX/Metis-agent/tree/main/skills/summarize/SKILL.md)
 
 ---
 
