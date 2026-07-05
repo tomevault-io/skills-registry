@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GeneBO98/tradetally](https://github.com/GeneBO98/tradetally/tree/main/.agents/skills/frontend-design/SKILL.md)
+Original source: [GeneBO98/tradetally](https://github.com/GeneBO98/tradetally/tree/main/.agents/skills/web-design-guidelines/SKILL.md)
 
 ---
 
