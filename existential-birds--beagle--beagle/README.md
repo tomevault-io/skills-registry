@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [existential-birds/beagle](https://github.com/existential-birds/beagle/tree/main/plugins/beagle-ios/skills/swiftdata-code-review/SKILL.md)
+Original source: [existential-birds/beagle](https://github.com/existential-birds/beagle/tree/main/plugins/beagle-python/skills/pytest-code-review/SKILL.md)
 
 ---
 
