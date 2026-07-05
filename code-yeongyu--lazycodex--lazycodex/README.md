@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [code-yeongyu/lazycodex](https://github.com/code-yeongyu/lazycodex/tree/main/plugins/omo/components/rules/skills/rules/SKILL.md)
+Original source: [code-yeongyu/lazycodex](https://github.com/code-yeongyu/lazycodex/tree/main/plugins/omo/components/ulw-loop/skills/ulw-loop/SKILL.md)
 
 ---
 
