@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [complytime/complyctl](https://github.com/complytime/complyctl/tree/main/.opencode/skills/forge-global/SKILL.md)
+Original source: [complytime/complyctl](https://github.com/complytime/complyctl/tree/main/.opencode/skills/system-design/SKILL.md)
 
 ---
 
