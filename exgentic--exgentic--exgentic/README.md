@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Exgentic/exgentic](https://github.com/Exgentic/exgentic/tree/main/misc/skills/add-agent/SKILL.md)
+Original source: [Exgentic/exgentic](https://github.com/Exgentic/exgentic/tree/main/misc/skills/add-benchmark/SKILL.md)
 
 ---
 
