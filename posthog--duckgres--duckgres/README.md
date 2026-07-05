@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PostHog/duckgres](https://github.com/PostHog/duckgres/tree/main/.claude/skills/multitenant-up/SKILL.md)
+Original source: [PostHog/duckgres](https://github.com/PostHog/duckgres/tree/main/.claude/skills/multitenant-down/SKILL.md)
 
 ---
 
