@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wilfredinni/django-starter-template](https://github.com/wilfredinni/django-starter-template/tree/main/.agents/skills/django-expert/SKILL.md)
+Original source: [wilfredinni/django-starter-template](https://github.com/wilfredinni/django-starter-template/tree/main/.agents/skills/django-celery-expert/SKILL.md)
 
 ---
 
