@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/berufsgerichtliche-verfahren-freie-berufe/skills/mandatskuendigung-zur-unzeit-praevention/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/bank-rechtsabteilung/skills/rechtsabteilung-npl-verkauf-mit-datenschutz-und-bankgeheimnis/SKILL.md)
 
 ---
 
