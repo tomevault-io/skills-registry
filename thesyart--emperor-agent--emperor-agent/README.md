@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TheSyart/emperor-agent](https://github.com/TheSyart/emperor-agent/tree/main/skills/clawhub/SKILL.md)
+Original source: [TheSyart/emperor-agent](https://github.com/TheSyart/emperor-agent/tree/main/skills/weather/SKILL.md)
 
 ---
 
