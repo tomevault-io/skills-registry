@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dingodb/dingofs](https://github.com/dingodb/dingofs/tree/main/.claude/skills/dev-deploy/SKILL.md)
+Original source: [dingodb/dingofs](https://github.com/dingodb/dingofs/tree/main/.claude/skills/dev-regression-test/SKILL.md)
 
 ---
 
