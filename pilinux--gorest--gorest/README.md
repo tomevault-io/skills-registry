@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pilinux/gorest](https://github.com/pilinux/gorest/tree/main/.agents/skills/ast-introspection/SKILL.md)
+Original source: [pilinux/gorest](https://github.com/pilinux/gorest/tree/main/.agents/skills/logs-repro-harness/SKILL.md)
 
 ---
 
