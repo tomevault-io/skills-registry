@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [brychanrobot/jj-view](https://github.com/brychanrobot/jj-view/tree/main/.agents/skills/run-tests/SKILL.md)
+Original source: [brychanrobot/jj-view](https://github.com/brychanrobot/jj-view/tree/main/.agents/skills/generate-release/SKILL.md)
 
 ---
 
