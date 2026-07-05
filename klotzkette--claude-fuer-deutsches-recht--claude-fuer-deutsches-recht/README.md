@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/krankenkassenrecht-krankenversicherung/skills/kv-036-pkv-auslandsreise-und-ruecktransport/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/franchiserecht-praxis/skills/fran-001-kaltstart-franchisegeber-franchisenehmer-systemakte/SKILL.md)
 
 ---
 
