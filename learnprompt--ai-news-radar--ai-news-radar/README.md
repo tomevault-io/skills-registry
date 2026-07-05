@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LearnPrompt/ai-news-radar](https://github.com/LearnPrompt/ai-news-radar/tree/main/skills/radar/SKILL.md)
+Original source: [LearnPrompt/ai-news-radar](https://github.com/LearnPrompt/ai-news-radar/tree/main/skills/ai-news-radar/SKILL.md)
 
 ---
 
