@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cultureamp/kaizen-design-system](https://github.com/cultureamp/kaizen-design-system/tree/main/.claude/skills/deps-update-playbook/SKILL.md)
+Original source: [cultureamp/kaizen-design-system](https://github.com/cultureamp/kaizen-design-system/tree/main/.claude/skills/dx-insight-usage-guardrail/SKILL.md)
 
 ---
 
