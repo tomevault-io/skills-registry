@@ -1,339 +1,293 @@
 ---
-name: cl-macro-design
-description: マクロ設計のベストプラクティスを適用。マクロ作成・レビュー時に使用 Use when this capability is needed.
+name: xlsx
+description: Create, edit, analyze spreadsheets (.xlsx, .csv, .tsv). Use for Excel formulas, data analysis, visualization, formatting, pivot tables, charts, formula recalculation. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Common Lisp Macro Design
+# Requirements for Outputs
 
-Based on Google Common Lisp Style Guide (@references/google-common-lisp-style-guide.md)
+## All Excel files
 
-## 基本原則
+### Zero Formula Errors
+- Every Excel model MUST be delivered with ZERO formula errors (#REF!, #DIV/0!, #VALUE!, #N/A, #NAME?)
 
-### 1. マクロを使うべき場面
-- 新しい制御構造の定義
-- コンパイル時の計算
-- ボイラープレートの削減
-- DSLの構築
+### Preserve Existing Templates (when updating templates)
+- Study and EXACTLY match existing format, style, and conventions when modifying files
+- Never impose standardized formatting on files with established patterns
+- Existing template conventions ALWAYS override these guidelines
 
-### 2. 関数で十分な場合
-- 単純なデータ変換
-- 実行時の値に依存する処理
-- 高階関数で表現可能な場合
+## Financial models
 
-### 3. パフォーマンス目的ならINLINE宣言を使う
-```lisp
-;; BAD - パフォーマンスのためにマクロ化
-(defmacro fast-add (a b)
-  `(+ ,a ,b))
+### Color Coding Standards
+Unless otherwise stated by the user or existing template
 
-;; GOOD - inline宣言で同等の効果
-(declaim (inline fast-add))
-(defun fast-add (a b)
-  (+ a b))
+#### Industry-Standard Color Conventions
+- **Blue text (RGB: 0,0,255)**: Hardcoded inputs, and numbers users will change for scenarios
+- **Black text (RGB: 0,0,0)**: ALL formulas and calculations
+- **Green text (RGB: 0,128,0)**: Links pulling from other worksheets within same workbook
+- **Red text (RGB: 255,0,0)**: External links to other files
+- **Yellow background (RGB: 255,255,0)**: Key assumptions needing attention or cells that need to be updated
+
+### Number Formatting Standards
+
+#### Required Format Rules
+- **Years**: Format as text strings (e.g., "2024" not "2,024")
+- **Currency**: Use $#,##0 format; ALWAYS specify units in headers ("Revenue ($mm)")
+- **Zeros**: Use number formatting to make all zeros "-", including percentages (e.g., "$#,##0;($#,##0);-")
+- **Percentages**: Default to 0.0% format (one decimal)
+- **Multiples**: Format as 0.0x for valuation multiples (EV/EBITDA, P/E)
+- **Negative numbers**: Use parentheses (123) not minus -123
+
+### Formula Construction Rules
+
+#### Assumptions Placement
+- Place ALL assumptions (growth rates, margins, multiples, etc.) in separate assumption cells
+- Use cell references instead of hardcoded values in formulas
+- Example: Use =B5*(1+$B$6) instead of =B5*1.05
+
+#### Formula Error Prevention
+- Verify all cell references are correct
+- Check for off-by-one errors in ranges
+- Ensure consistent formulas across all projection periods
+- Test with edge cases (zero values, negative numbers)
+- Verify no unintended circular references
+
+#### Documentation Requirements for Hardcodes
+- Comment or in cells beside (if end of table). Format: "Source: [System/Document], [Date], [Specific Reference], [URL if applicable]"
+- Examples:
+  - "Source: Company 10-K, FY2024, Page 45, Revenue Note, [SEC EDGAR URL]"
+  - "Source: Company 10-Q, Q2 2025, Exhibit 99.1, [SEC EDGAR URL]"
+  - "Source: Bloomberg Terminal, 8/15/2025, AAPL US Equity"
+  - "Source: FactSet, 8/20/2025, Consensus Estimates Screen"
+
+# XLSX creation, editing, and analysis
+
+## Overview
+
+A user may ask you to create, edit, or analyze the contents of an .xlsx file. You have different tools and workflows available for different tasks.
+
+## Important Requirements
+
+**LibreOffice Required for Formula Recalculation**: You can assume LibreOffice is installed for recalculating formula values using the `recalc.py` script. The script automatically configures LibreOffice on first run
+
+## Reading and analyzing data
+
+### Data analysis with pandas
+For data analysis, visualization, and basic operations, use **pandas** which provides powerful data manipulation capabilities:
+
+```python
+import pandas as pd
+
+# Read Excel
+df = pd.read_excel('file.xlsx')  # Default: first sheet
+all_sheets = pd.read_excel('file.xlsx', sheet_name=None)  # All sheets as dict
+
+# Analyze
+df.head()      # Preview data
+df.info()      # Column info
+df.describe()  # Statistics
+
+# Write Excel
+df.to_excel('output.xlsx', index=False)
 ```
 
-## 衛生的マクロ (Hygienic Macros)
+## Excel File Workflows
 
-### 変数捕捉の防止
-```lisp
-;; BAD - 変数捕捉の危険
-(defmacro with-timing-bad (&body body)
-  `(let ((start (get-internal-real-time)))
-     ,@body
-     (- (get-internal-real-time) start)))
+## CRITICAL: Use Formulas, Not Hardcoded Values
 
-;; GOOD - gensymで安全
-(defmacro with-timing (&body body)
-  (let ((start (gensym "START")))
-    `(let ((,start (get-internal-real-time)))
-       ,@body
-       (- (get-internal-real-time) ,start))))
+**Always use Excel formulas instead of calculating values in Python and hardcoding them.** This ensures the spreadsheet remains dynamic and updateable.
+
+### ❌ WRONG - Hardcoding Calculated Values
+```python
+# Bad: Calculating in Python and hardcoding result
+total = df['Sales'].sum()
+sheet['B10'] = total  # Hardcodes 5000
+
+# Bad: Computing growth rate in Python
+growth = (df.iloc[-1]['Revenue'] - df.iloc[0]['Revenue']) / df.iloc[0]['Revenue']
+sheet['C5'] = growth  # Hardcodes 0.15
+
+# Bad: Python calculation for average
+avg = sum(values) / len(values)
+sheet['D20'] = avg  # Hardcodes 42.5
 ```
 
-### with-gensyms ユーティリティ
-```lisp
-;; Alexandriaのwith-gensymsを使用
-(defmacro with-retry ((var max-attempts) &body body)
-  (with-gensyms (attempt result success)
-    `(loop for ,attempt from 1 to ,max-attempts
-           do (multiple-value-bind (,result ,success)
-                  (ignore-errors ,@body)
-                (when ,success
-                  (return ,result)))
-           finally (error "Max attempts exceeded"))))
+### ✅ CORRECT - Using Excel Formulas
+```python
+# Good: Let Excel calculate the sum
+sheet['B10'] = '=SUM(B2:B9)'
+
+# Good: Growth rate as Excel formula
+sheet['C5'] = '=(C4-C2)/C2'
+
+# Good: Average using Excel function
+sheet['D20'] = '=AVERAGE(D2:D19)'
 ```
 
-## 複数評価の防止
+This applies to ALL calculations - totals, percentages, ratios, differences, etc. The spreadsheet should be able to recalculate when source data changes.
 
-### 問題のあるコード
-```lisp
-;; BAD - 引数が2回評価される
-(defmacro square-bad (x)
-  `(* ,x ,x))
+## Common Workflow
+1. **Choose tool**: pandas for data, openpyxl for formulas/formatting
+2. **Create/Load**: Create new workbook or load existing file
+3. **Modify**: Add/edit data, formulas, and formatting
+4. **Save**: Write to file
+5. **Recalculate formulas (MANDATORY IF USING FORMULAS)**: Use the recalc.py script
+   ```bash
+   python recalc.py output.xlsx
+   ```
+6. **Verify and fix any errors**: 
+   - The script returns JSON with error details
+   - If `status` is `errors_found`, check `error_summary` for specific error types and locations
+   - Fix the identified errors and recalculate again
+   - Common errors to fix:
+     - `#REF!`: Invalid cell references
+     - `#DIV/0!`: Division by zero
+     - `#VALUE!`: Wrong data type in formula
+     - `#NAME?`: Unrecognized formula name
 
-(square-bad (incf n))  ; nが2回インクリメントされる！
+### Creating new Excel files
+
+```python
+# Using openpyxl for formulas and formatting
+from openpyxl import Workbook
+from openpyxl.styles import Font, PatternFill, Alignment
+
+wb = Workbook()
+sheet = wb.active
+
+# Add data
+sheet['A1'] = 'Hello'
+sheet['B1'] = 'World'
+sheet.append(['Row', 'of', 'data'])
+
+# Add formula
+sheet['B2'] = '=SUM(A1:A10)'
+
+# Formatting
+sheet['A1'].font = Font(bold=True, color='FF0000')
+sheet['A1'].fill = PatternFill('solid', start_color='FFFF00')
+sheet['A1'].alignment = Alignment(horizontal='center')
+
+# Column width
+sheet.column_dimensions['A'].width = 20
+
+wb.save('output.xlsx')
 ```
 
-### 正しい実装
-```lisp
-;; GOOD - 一度だけ評価
-(defmacro square (x)
-  (let ((v (gensym)))
-    `(let ((,v ,x))
-       (* ,v ,v))))
+### Editing existing Excel files
 
-;; once-only ユーティリティを使用 (Alexandria)
-(defmacro square (x)
-  (once-only (x)
-    `(* ,x ,x)))
+```python
+# Using openpyxl to preserve formulas and formatting
+from openpyxl import load_workbook
+
+# Load existing file
+wb = load_workbook('existing.xlsx')
+sheet = wb.active  # or wb['SheetName'] for specific sheet
+
+# Working with multiple sheets
+for sheet_name in wb.sheetnames:
+    sheet = wb[sheet_name]
+    print(f"Sheet: {sheet_name}")
+
+# Modify cells
+sheet['A1'] = 'New Value'
+sheet.insert_rows(2)  # Insert row at position 2
+sheet.delete_cols(3)  # Delete column 3
+
+# Add new sheet
+new_sheet = wb.create_sheet('NewSheet')
+new_sheet['A1'] = 'Data'
+
+wb.save('modified.xlsx')
 ```
 
-## マクロ展開の検証
+## Recalculating formulas
 
-### 展開確認コマンド
-```lisp
-;; 1段階展開
-(macroexpand-1 '(with-timing (heavy-computation)))
+Excel files created or modified by openpyxl contain formulas as strings but not calculated values. Use the provided `recalc.py` script to recalculate formulas:
 
-;; 完全展開
-(macroexpand '(with-timing (heavy-computation)))
-
-;; プリティプリント
-(pprint (macroexpand-1 '(your-macro args)))
+```bash
+python recalc.py <excel_file> [timeout_seconds]
 ```
 
-### SLIMEでの確認
-```
-;; Emacs/SLIME: C-c C-m (slime-expand-1)
-;; カーソル位置のマクロを展開表示
-```
-
-## 構造パターン
-
-### パターン0: CALL-WITH スタイル (Google推奨)
-
-マクロは構文処理のみを担当し、セマンティクスは補助関数に委譲する。
-
-```lisp
-;; マクロは薄いラッパー
-(defmacro with-foo (() &body body)
-  `(call-with-foo (lambda () ,@body)))
-
-;; セマンティクスは関数で実装
-(defun call-with-foo (thunk)
-  (setup-foo)
-  (unwind-protect
-      (funcall thunk)
-    (teardown-foo)))
+Example:
+```bash
+python recalc.py output.xlsx 30
 ```
 
-**利点:**
-- デバッグ時にスタックトレースに関数名が現れる
-- 実行時に関数を更新可能（再コンパイル不要）
-- マクロの複雑さを軽減
+The script:
+- Automatically sets up LibreOffice macro on first run
+- Recalculates all formulas in all sheets
+- Scans ALL cells for Excel errors (#REF!, #DIV/0!, etc.)
+- Returns JSON with detailed error locations and counts
+- Works on both Linux and macOS
 
-### パターン1: with-xxx (リソース管理)
-```lisp
-(defmacro with-open-database ((var connection-string) &body body)
-  (let ((db (gensym "DB")))
-    `(let ((,db (connect-database ,connection-string)))
-       (unwind-protect
-           (let ((,var ,db))
-             ,@body)
-         (disconnect-database ,db)))))
+## Formula Verification Checklist
+
+Quick checks to ensure formulas work correctly:
+
+### Essential Verification
+- [ ] **Test 2-3 sample references**: Verify they pull correct values before building full model
+- [ ] **Column mapping**: Confirm Excel columns match (e.g., column 64 = BL, not BK)
+- [ ] **Row offset**: Remember Excel rows are 1-indexed (DataFrame row 5 = Excel row 6)
+
+### Common Pitfalls
+- [ ] **NaN handling**: Check for null values with `pd.notna()`
+- [ ] **Far-right columns**: FY data often in columns 50+ 
+- [ ] **Multiple matches**: Search all occurrences, not just first
+- [ ] **Division by zero**: Check denominators before using `/` in formulas (#DIV/0!)
+- [ ] **Wrong references**: Verify all cell references point to intended cells (#REF!)
+- [ ] **Cross-sheet references**: Use correct format (Sheet1!A1) for linking sheets
+
+### Formula Testing Strategy
+- [ ] **Start small**: Test formulas on 2-3 cells before applying broadly
+- [ ] **Verify dependencies**: Check all cells referenced in formulas exist
+- [ ] **Test edge cases**: Include zero, negative, and very large values
+
+### Interpreting recalc.py Output
+The script returns JSON with error details:
+```json
+{
+  "status": "success",           // or "errors_found"
+  "total_errors": 0,              // Total error count
+  "total_formulas": 42,           // Number of formulas in file
+  "error_summary": {              // Only present if errors found
+    "#REF!": {
+      "count": 2,
+      "locations": ["Sheet1!B5", "Sheet1!C10"]
+    }
+  }
+}
 ```
 
-### パターン2: do-xxx (イテレーション)
-```lisp
-(defmacro do-lines ((var stream &optional result) &body body)
-  (let ((s (gensym "STREAM")))
-    `(let ((,s ,stream))
-       (loop for ,var = (read-line ,s nil nil)
-             while ,var
-             do (progn ,@body)
-             finally (return ,result)))))
-```
+## Best Practices
 
-### パターン3: define-xxx (定義マクロ)
-```lisp
-(defmacro define-api-endpoint (name (method path) &body body)
-  `(progn
-     (defun ,name (request)
-       ,@body)
-     (register-endpoint ,method ,path #',name)
-     ',name))
+### Library Selection
+- **pandas**: Best for data analysis, bulk operations, and simple data export
+- **openpyxl**: Best for complex formatting, formulas, and Excel-specific features
 
-;; 使用
-(define-api-endpoint get-users (:get "/api/users")
-  (fetch-all-users))
-```
+### Working with openpyxl
+- Cell indices are 1-based (row=1, column=1 refers to cell A1)
+- Use `data_only=True` to read calculated values: `load_workbook('file.xlsx', data_only=True)`
+- **Warning**: If opened with `data_only=True` and saved, formulas are replaced with values and permanently lost
+- For large files: Use `read_only=True` for reading or `write_only=True` for writing
+- Formulas are preserved but not evaluated - use recalc.py to update values
 
-### パターン4: 条件付きコンパイル
-```lisp
-(defmacro debug-log (format-string &rest args)
-  #+debug
-  `(format *debug-io* ,(concatenate 'string "[DEBUG] " format-string "~%")
-           ,@args)
-  #-debug
-  nil)
-```
+### Working with pandas
+- Specify data types to avoid inference issues: `pd.read_excel('file.xlsx', dtype={'id': str})`
+- For large files, read specific columns: `pd.read_excel('file.xlsx', usecols=['A', 'C', 'E'])`
+- Handle dates properly: `pd.read_excel('file.xlsx', parse_dates=['date_column'])`
 
-## チェックリスト
+## Code Style Guidelines
+**IMPORTANT**: When generating Python code for Excel operations:
+- Write minimal, concise Python code without unnecessary comments
+- Avoid verbose variable names and redundant operations
+- Avoid unnecessary print statements
 
-### 作成前
-- [ ] 本当にマクロが必要か？関数で十分ではないか？
-- [ ] 類似の標準マクロはないか？
-
-### 実装時
-- [ ] すべての内部変数にgensymを使用
-- [ ] 引数は一度だけ評価される
-- [ ] 評価順序は直感的
-- [ ] &bodyは適切な位置に配置
-
-### 検証時
-- [ ] macroexpand-1で展開を確認
-- [ ] 副作用のある引数でテスト
-- [ ] ネストした使用でテスト
-- [ ] エッジケースでテスト
-
-### ドキュメント
-- [ ] docstringで目的を説明
-- [ ] 使用例を含める
-- [ ] 展開例を示す
-
-## パラメータ設計 (Google Style Guide)
-
-### パラメータ命名規約
-
-評価される形式には `-form` サフィックスを付ける:
-
-```lisp
-;; 明確: condition-form は評価される式
-(defmacro when-available (condition-form &body body)
-  `(when ,condition-form
-     ,@body))
-
-;; 例外: body, end は慣例的なので -form 不要
-```
-
-### 拡張可能なパラメータスペース
-
-将来の拡張に備えて空のパラメータリストを置く:
-
-```lisp
-;; BAD - 拡張が困難
-(defmacro with-lights-on (&body body)
-  ...)
-
-;; GOOD - 後からオプションを追加可能
-(defmacro with-lights-on (() &body body)
-  ...)
-
-;; 拡張例
-(defmacro with-lights-on ((&key color intensity) &body body)
-  ...)
-```
-
-### alexandria:once-only の活用
-
-引数の複数評価を防止:
-
-```lisp
-(defmacro double (value-form)
-  (alexandria:once-only (value-form)
-    `(+ ,value-form ,value-form)))
-```
-
-## アンチパターン
-
-### 1. 過度なマクロ使用
-```lisp
-;; BAD - 関数で十分
-(defmacro add-one (x)
-  `(+ ,x 1))
-
-;; GOOD
-(defun add-one (x)
-  (+ x 1))
-```
-
-### 2. 巨大なマクロ
-```lisp
-;; BAD - マクロ内に大量のロジック
-(defmacro complex-operation (...)
-  `(progn
-     ;; 100行のコード...
-     ))
-
-;; GOOD - ヘルパー関数に分離
-(defun %complex-operation-impl (...)
-  ;; 実装
-  )
-
-(defmacro complex-operation (...)
-  `(%complex-operation-impl ...))
-```
-
-### 3. 不明瞭な副作用
-```lisp
-;; BAD - 副作用が分かりにくい
-(defmacro with-user (user &body body)
-  `(let ((*current-user* ,user))
-     (log-user-action ,user)  ; 隠れた副作用
-     ,@body))
-
-;; GOOD - 明示的
-(defmacro with-user (user &body body)
-  "Bind *CURRENT-USER* and log the action."
-  `(let ((*current-user* ,user))
-     ,@body))
-
-;; ログは呼び出し側で明示
-(with-user user
-  (log-user-action user)
-  (do-something))
-```
-
-## 禁止事項 (Google Style Guide)
-
-### 1. 新しいリーダーマクロの無許可導入禁止
-
-```lisp
-;; 禁止: プロジェクト外に露出するリーダーマクロ
-(set-macro-character #\[ ...)  ; 危険
-
-;; 許可される場合のみ: named-readtables で制御
-(named-readtables:in-readtable :my-syntax)
-```
-
-### 2. 実行時のEVAL禁止
-
-```lisp
-;; 禁止: セキュリティ脆弱性
-(eval (read-from-string user-input))
-
-;; 許可: 開発ツール、ビルド基盤のみ
-```
-
-### 3. バッククォート内での複雑なロジック禁止
-
-```lisp
-;; BAD - バッククォート内でロジック
-(defmacro complex (&body body)
-  `(progn
-     ,@(if (some-condition body)
-           (transform-body body)
-           body)))
-
-;; GOOD - ロジックを外に出す
-(defmacro complex (&body body)
-  (let ((processed (if (some-condition body)
-                       (transform-body body)
-                       body)))
-    `(progn ,@processed)))
-```
+**For Excel files themselves**:
+- Add comments to cells with complex formulas or important assumptions
+- Document data sources for hardcoded values
+- Include notes for key calculations and model sections
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
