@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [utensils/nxv](https://github.com/utensils/nxv/tree/main/website/guide/skill.md)
+Original source: [utensils/nxv](https://github.com/utensils/nxv/tree/main/.agents/skills/nxv/SKILL.md)
 
 ---
 
