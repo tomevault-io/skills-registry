@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [evanca/flutter-ai-rules](https://github.com/evanca/flutter-ai-rules/tree/main/skills/patrol-e2e-testing/SKILL.md)
+Original source: [evanca/flutter-ai-rules](https://github.com/evanca/flutter-ai-rules/tree/main/skills/firebase-analytics/SKILL.md)
 
 ---
 
