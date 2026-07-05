@@ -1,479 +1,128 @@
 ---
-name: output-dev-prompt-file
-description: Create .prompt files for LLM operations in Output SDK workflows. Use when designing prompts, configuring LLM providers, or using Liquid.js templating. Use when this capability is needed.
+name: agent-structure-design
+description: | Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Creating .prompt Files
-
-## Overview
+# Agent Structure Design
 
-This skill documents how to create `.prompt` files for LLM operations in Output SDK workflows. Prompt files use YAML frontmatter for configuration and Liquid.js templating for dynamic content.
-
-## When to Use This Skill
-
-- Creating prompts for LLM-powered workflow steps
-- Configuring LLM provider settings (model, temperature, etc.)
-- Using template variables in prompts
-- Troubleshooting prompt formatting issues
-
-## Location Convention
-
-Prompt files are stored INSIDE the workflow folder:
-
-```
-src/workflows/{workflow-name}/
-├── workflow.ts
-├── steps.ts
-├── types.ts
-└── prompts/
-    ├── analyzeContent@v1.prompt
-    ├── generateSummary@v1.prompt
-    └── extractData@v2.prompt
-```
-
-**Important**: Prompts are workflow-specific and live inside the workflow folder, NOT in a shared location.
-
-## File Naming Convention
-
-```
-{promptName}@v{version}.prompt
-```
-
-Examples:
-- `generateImageIdeas@v1.prompt`
-- `analyzeContent@v1.prompt`
-- `summarizeText@v2.prompt`
-
-The version suffix (`@v1`, `@v2`) allows for prompt versioning without breaking existing code.
-
-## Basic Structure
-
-```
----
-provider: anthropic
-model: claude-sonnet-4-20250514
-temperature: 0.7
-maxTokens: 4096
----
-
-<system>
-System instructions go here.
-</system>
-
-<user>
-User message with {{ variable }} placeholders.
-</user>
-```
-
-## YAML Frontmatter Options
-
-### Required Fields
-
-```yaml
----
-provider: anthropic    # LLM provider: anthropic, openai, google
-model: claude-sonnet-4-20250514  # Model identifier
----
-```
-
-### Optional Fields
-
-```yaml
----
-provider: anthropic
-model: claude-sonnet-4-20250514
-temperature: 0.7       # 0.0 to 1.0, default varies by provider
-maxTokens: 4096        # Maximum output tokens
-providerOptions:       # Provider-specific options
-  thinking:
-    type: enabled
-    budgetTokens: 2000
----
-```
-
-### Common Provider Configurations
-
-#### Anthropic (Claude)
-
-```yaml
----
-provider: anthropic
-model: claude-sonnet-4-20250514
-temperature: 0.7
-maxTokens: 8192
----
-```
-
-#### Anthropic with Extended Thinking
+## 概要
 
-```yaml
----
-provider: anthropic
-model: claude-sonnet-4-20250514
-temperature: 0.7
-maxTokens: 32000
-providerOptions:
-  thinking:
-    type: enabled
-    budgetTokens: 2000
----
-```
+Claude Codeエージェントの構造設計を専門とするスキル。エージェント定義書のYAML Frontmatter、概要、ワークフロー、Task仕様書、ベストプラクティスなどの構成を統一された仕様に基づいて設計・検証する。
 
-#### OpenAI
-
-```yaml
----
-provider: openai
-model: gpt-4o
-temperature: 0.7
-maxTokens: 4096
----
-```
+## ワークフロー
 
-#### Google (Gemini)
+### Phase 1: 目的と前提の整理
 
-```yaml
----
-provider: google
-model: gemini-1.5-pro
-temperature: 0.7
-maxTokens: 8192
----
-```
-
-## Message Blocks
-
-Use XML-style tags to define message roles:
-
-### System Message
-
-```
-<system>
-You are an expert at analyzing technical content.
-Your responses should be clear and structured.
-</system>
-```
-
-### User Message
-
-```
-<user>
-Please analyze the following content:
-
-{{ content }}
-</user>
-```
-
-### Assistant Message (for few-shot examples)
-
-```
-<assistant>
-I'll analyze this content step by step...
-</assistant>
-```
-
-## Liquid.js Templating
-
-### Variable Substitution
-
-```
-<user>
-Analyze this content about {{ topic }}:
-
-{{ content }}
-
-Generate {{ numberOfIdeas }} ideas.
-</user>
-```
-
-### Conditional Content
-
-```
-<system>
-You are an expert content analyzer.
-
-{% if colorPalette %}
-**Color Palette Constraints:** {{ colorPalette }}
-{% endif %}
-
-{% if artDirection %}
-**Art Direction Constraints:** {{ artDirection }}
-{% endif %}
-</system>
-```
-
-### Loops
-
-```
-<user>
-Analyze each of these items:
-
-{% for item in items %}
-- {{ item.name }}: {{ item.description }}
-{% endfor %}
-</user>
-```
-
-### Default Values
-
-```
-<user>
-Generate {{ numberOfIdeas | default: 3 }} ideas for {{ topic }}.
-</user>
-```
-
-## Complete Example
-
-Based on a real prompt file (`generateImageIdeas@v1.prompt`):
-
-```
----
-provider: anthropic
-model: claude-sonnet-4-20250514
-temperature: 0.7
-maxTokens: 32000
-providerOptions:
-  thinking:
-    type: enabled
-    budgetTokens: 2000
----
-
-<system>
-You are an expert at creating structured, precise infographic prompts optimized for Gemini's image generation model.
-
-Your task is to generate prompts for informational infographics that illustrate key concepts from the provided content.
-
-CRITICAL RULES you MUST follow:
-- Use Markdown dashed lists to specify constraints
-- Use ALL CAPS for "MUST" requirements to ensure strict adherence
-- Include specific compositional constraints (e.g., rule of thirds, lighting)
-- Always include negative constraints to prevent unwanted elements
-- Keep each infographic focused on ONE clear concept
-
-{% if colorPalette %}
-**Color Palette Constraints:** {{ colorPalette }}
-{% endif %}
-
-{% if artDirection %}
-**Art Direction Constraints:** {{ artDirection }}
-{% endif %}
-</system>
-
-<user>
-Generate {{ numberOfIdeas }} structured infographic prompts based on key topics from this content.
-
-<content>
-{{ content }}
-</content>
-
-Each prompt MUST follow this structure:
-
-Create an infographic about [specific topic]. The infographic MUST follow ALL of these constraints:
-- The infographic MUST use the reference images as a visual style guide
-- The composition MUST follow the rule of thirds for visual balance
-- The infographic MUST use clean, minimal design with simple lines and shapes
-{% if colorPalette %}- The color palette MUST strictly follow: {{ colorPalette }}{% endif %}
-{% if artDirection %}- The art direction MUST strictly follow: {{ artDirection }}{% endif %}
-- NEVER include any watermarks, logos, or decorative overlays
-- NEVER use generic AI art buzzwords like "hyperrealistic"
-
-Focus on the most important concepts that would benefit from visual explanation.
-</user>
-```
-
-## Using Prompts in Steps
-
-### With generateObject
-
-```typescript
-import { generateObject } from '@output.ai/llm';
-import { z } from '@output.ai/core';
-
-const { result } = await generateObject({
-  prompt: 'generateImageIdeas@v1',  // References prompts/generateImageIdeas@v1.prompt
-  variables: {
-    content: 'Solar panel technology explained...',
-    numberOfIdeas: 3,
-    colorPalette: 'blue and green tones',
-    artDirection: 'minimalist style'
-  },
-  schema: z.object({
-    ideas: z.array(z.string())
-  })
-});
-// result contains { ideas: [...] }
-```
-
-### With generateText
-
-```typescript
-import { generateText } from '@output.ai/llm';
-
-const { result } = await generateText({
-  prompt: 'summarize@v1',
-  variables: {
-    content: 'Long article text...',
-    maxLength: 200
-  }
-});
-// result contains the generated text string
-```
-
-## Best Practices
-
-### 1. Be Explicit About Requirements
-
-```
-<system>
-CRITICAL RULES you MUST follow:
-- Rule 1
-- Rule 2
-- NEVER do X
-- ALWAYS do Y
-</system>
-```
-
-### 2. Use XML Tags for Structure in User Messages
-
-```
-<user>
-Analyze the following:
-
-<content>
-{{ content }}
-</content>
-
-<requirements>
-{{ requirements }}
-</requirements>
-</user>
-```
-
-### 3. Provide Examples (Few-Shot)
-
-```
-<system>
-You analyze sentiment. Return: positive, negative, or neutral.
-</system>
-
-<user>
-"I love this product!"
-</user>
-
-<assistant>
-positive
-</assistant>
-
-<user>
-"{{ text }}"
-</user>
-```
-
-### 4. Version Your Prompts
-
-When making significant changes, create a new version:
-- `analyzeContent@v1.prompt` - Original
-- `analyzeContent@v2.prompt` - Improved with better examples
-
-Update the step to use the new version:
-```typescript
-prompt: 'analyzeContent@v2'  // Changed from v1
-```
-
-### 5. Handle Optional Variables
-
-```
-{% if optionalField %}
-Additional context: {{ optionalField }}
-{% endif %}
-```
-
-## Common Patterns
-
-### Classification Prompt
-
-```
----
-provider: anthropic
-model: claude-sonnet-4-20250514
-temperature: 0.3
----
-
-<system>
-You are a content classifier. Categorize content into exactly one category.
-Available categories: {{ categories | join: ", " }}
-</system>
-
-<user>
-Classify this content:
-
-{{ content }}
-</user>
-```
-
-### Extraction Prompt
-
-```
----
-provider: anthropic
-model: claude-sonnet-4-20250514
-temperature: 0.2
----
-
-<system>
-You extract structured data from text. Be precise and only include information explicitly stated.
-</system>
-
-<user>
-Extract the following fields from this text:
-{% for field in fields %}
-- {{ field }}
-{% endfor %}
-
-Text:
-{{ text }}
-</user>
-```
-
-### Generation Prompt
-
-```
----
-provider: anthropic
-model: claude-sonnet-4-20250514
-temperature: 0.8
----
-
-<system>
-You are a creative writer. Generate engaging content based on the given parameters.
-</system>
-
-<user>
-Generate {{ count }} {{ type }} about {{ topic }}.
-
-Requirements:
-{{ requirements }}
-</user>
-```
-
-## Verification Checklist
-
-- [ ] File located in `prompts/` folder inside workflow directory
-- [ ] File named `{promptName}@v{version}.prompt`
-- [ ] YAML frontmatter includes `provider` and `model`
-- [ ] Message blocks use proper XML tags (`<system>`, `<user>`, `<assistant>`)
-- [ ] Variables use `{{ variableName }}` syntax
-- [ ] Conditionals use `{% if %}...{% endif %}` syntax
-- [ ] All required variables are documented or have defaults
-- [ ] Step code references correct prompt name
-
-## Related Skills
-
-- `output-dev-step-function` - Using prompts in step functions
-- `output-dev-folder-structure` - Understanding prompts folder location
-- `output-dev-workflow-function` - Orchestrating LLM-powered steps
+**目的**: タスクの目的と前提条件を明確にする
+
+**アクション**:
+
+1. `references/Level1_basics.md` と `references/Level2_intermediate.md` を確認
+2. 必要な references/scripts/templates を特定
+
+**Task**: `agents/analyze-structure-context.md` を参照
+
+### Phase 2: スキル適用
+
+**目的**: スキルの指針に従って具体的な作業を進める
+
+**アクション**:
+
+1. 関連リソースやテンプレートを参照しながら作業を実施
+2. 重要な判断点をメモとして残す
+
+**Task**: `agents/design-structure.md` を参照
+
+### Phase 3: 検証と記録
+
+**目的**: 成果物の検証と実行記録の保存
+
+**アクション**:
+
+1. `scripts/validate-skill.mjs` でスキル構造を確認
+2. 成果物が目的に合致するか確認
+3. `scripts/log_usage.mjs` を実行して記録を残す
+
+**Task**: `agents/validate-structure.md` を参照
+
+## Task仕様ナビ
+
+このスキルで設計・検証するドキュメントと実行フェーズを以下に示します。
+
+| Task                   | 実行フェーズ | 入力                   | 出力                            | 関連リソース                                |
+| ---------------------- | ------------ | ---------------------- | ------------------------------- | ------------------------------------------- |
+| YAML Frontmatter設計   | Phase 1      | エージェント要件・目的 | 仕様準拠のYAML frontmatter      | references/yaml-frontmatter-guide.md        |
+| エージェント概要作成   | Phase 2      | 責務・専門領域         | エージェント概要（1-2文）       | references/Level2_intermediate.md           |
+| ワークフロー設計       | Phase 2      | タスク分解結果         | Phase 1/2/3 構成                | references/workflow-patterns.md             |
+| Task仕様書作成         | Phase 2      | Task詳細・入出力       | agents/\*.md ファイル           | 18-skills.md仕様の3.3節                     |
+| 依存関係設計           | Phase 2      | スキル参照・順序       | dependencies フィールド         | references/dependency-skill-format-guide.md |
+| ベストプラクティス定義 | Phase 2      | 設計原則・注意点       | すべきこと/避けるべきことリスト | references/Level3_advanced.md               |
+| 構造検証               | Phase 3      | 成果物                 | 検証レポート                    | scripts/validate-structure.mjs              |
+
+## ベストプラクティス
+
+### すべきこと
+
+- エージェント設計時は、18-skills.md仕様の3.2節に従いYAML frontmatterを構成する（name、description、allowed-tools、dependencies）
+- description フィールドにはAnchorsとTriggerを日本語で記載し、Markdown禁止規則（箇条書き不可）に従う
+- ワークフローをPhase 1（準備）→ Phase 2（実装）→ Phase 3（検証）の3段階で明確に分割する
+- Task仕様書は agents/\*.md として独立させ、役割・入力・出力・制約・参照を含める
+- 知識本文は references/ に外部化し、SKILL.md本文は500行以内に保つ
+- スクリプトは冪等性を持たせ、エラー出力（stderr）と終了コード規則に従う
+- 検証スクリプト（validate-structure.mjs）で自動検証し、YAML構文と必須フィールドを確認する
+
+### 避けるべきこと
+
+- YAML frontmatterにreferences フィールドを含める（description内のAnchorsに統合済み）
+- Task仕様書に長い知識本文をベタ書きする（references/.へ移動）
+- description内でMarkdown箇条書き（`-` や `*`）を使用する（行区切りで表現）
+- スキルに README.md や補助ドキュメントを含める（不要）
+- スクリプトの引数検証やヘルプ機能を省略する
+- 相対パス参照で `../` を使用する（SKILL.mdから1レベルに保つ）
+
+## リソース参照
+
+### 段階的学習リソース（レベル別）
+
+- **references/Level1_basics.md**: エージェント構造設計の基礎概念
+- **references/Level2_intermediate.md**: YAML frontmatter実装、ワークフロー設計パターン
+- **references/Level3_advanced.md**: 複雑なTask仕様書設計、依存関係管理の応用
+- **references/Level4_expert.md**: パフォーマンス最適化、スキルメタデータの詳細設計
+
+### 仕様・ガイドリソース
+
+- **references/yaml-frontmatter-guide.md**: name、description、allowed-tools、dependencies フィールドの詳細ルール
+- **references/dependency-skill-format-guide.md**: スキル依存関係の表記と検証方法
+- **references/yaml-description-rules.md**: Anchors と Trigger の記述形式とベストプラクティス
+- **references/skill-dependency-format-examples.md**: 実例に基づく依存関係表記の例
+- **references/legacy-skill.md**: 旧仕様との比較と移行ガイド
+- **references/requirements-index.md**: 要求仕様との対応インデックス
+
+### スクリプト・テンプレート
+
+**構造検証スクリプト**:
+
+- `scripts/validate-structure.mjs`: YAML Frontmatter構文、必須フィールド、ファイル構造の4項目を自動検証
+- `scripts/validate-skill.mjs`: スキル全体の一貫性を検証
+- `scripts/validate-structure.sh`: シェルベースの構造検証
+
+**フィードバックログ**:
+
+- `scripts/log_usage.mjs`: スキル使用記録と自動評価（--result success|failure オプション）
+
+**テンプレート**:
+
+- `assets/agent-template.md`: エージェント定義書の基本テンプレート
+
+## 変更履歴
+
+| Version | Date       | Changes                                                                                                                                                                              |
+| ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 2.0.0   | 2025-12-31 | agents/3ファイル追加、Phase別Task参照を追加                                                                                                                                          |
+| 1.2.0   | 2025-12-31 | 18-skills.md仕様に準拠。YAML frontmatterをAnchors/Trigger形式に統一、allowed-toolsフィールド追加、Task仕様ナビを表形式で追加、ベストプラクティスを18-skills.md仕様の詳細ルールに対応 |
+| 1.1.0   | 2025-12-24 | Spec alignment and required artifacts added                                                                                                                                          |
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
