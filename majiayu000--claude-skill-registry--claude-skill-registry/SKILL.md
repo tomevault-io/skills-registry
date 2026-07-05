@@ -1,128 +1,613 @@
 ---
-name: agent-structure-design
-description: | Use when this capability is needed.
+name: livekit-nextjs-frontend
+description: Build and review production-grade web and mobile frontends using LiveKit with Next.js. Covers real-time video/audio/data communication, WebRTC connections, track management, and best practices for LiveKit React components. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Agent Structure Design
+# LiveKit Next.js Frontend Development
 
-## 概要
+This skill guides the development and review of production-grade web and mobile frontends using LiveKit with Next.js. Use this when building real-time communication features including video conferencing, live streaming, audio rooms, or data synchronization.
 
-Claude Codeエージェントの構造設計を専門とするスキル。エージェント定義書のYAML Frontmatter、概要、ワークフロー、Task仕様書、ベストプラクティスなどの構成を統一された仕様に基づいて設計・検証する。
+## Overview
 
-## ワークフロー
+LiveKit is a WebRTC-based platform for building real-time video, audio, and data applications. The official React components library (`@livekit/components-react`) provides battle-tested hooks and components for Next.js applications.
 
-### Phase 1: 目的と前提の整理
+**Latest Versions (as of 2025):**
+- `@livekit/components-react`: v2.9.16+
+- `livekit-client`: Latest
+- `livekit-server-sdk`: v2+ (supports Node.js, Deno, and Bun)
 
-**目的**: タスクの目的と前提条件を明確にする
+### Key Dependencies
 
-**アクション**:
+```json
+{
+  "dependencies": {
+    "livekit-client": "latest",
+    "@livekit/components-react": "latest",
+    "livekit-server-sdk": "latest"
+  },
+  "devDependencies": {
+    "tailwindcss": "latest",
+    "autoprefixer": "latest",
+    "postcss": "latest"
+  }
+}
+```
 
-1. `references/Level1_basics.md` と `references/Level2_intermediate.md` を確認
-2. 必要な references/scripts/templates を特定
+**Optional (for custom UI with icons):**
+```bash
+npm install lucide-react
+```
 
-**Task**: `agents/analyze-structure-context.md` を参照
+The examples use Tailwind CSS for styling and lucide-react for icons. These are optional - you can use your own styling solution and icons/text alternatives.
 
-### Phase 2: スキル適用
+## Architecture Patterns
 
-**目的**: スキルの指針に従って具体的な作業を進める
+### 1. Token-Based Authentication
 
-**アクション**:
+LiveKit uses JWT-based access tokens signed with your API secret. Tokens must be generated server-side to prevent secret exposure.
 
-1. 関連リソースやテンプレートを参照しながら作業を実施
-2. 重要な判断点をメモとして残す
+**Environment Setup (.env.local):**
+```env
+# Client-accessible (for LiveKitRoom component)
+NEXT_PUBLIC_LIVEKIT_URL=wss://your-project.livekit.cloud
 
-**Task**: `agents/design-structure.md` を参照
+# Server-only (never exposed to client)
+LIVEKIT_API_KEY=your-api-key
+LIVEKIT_API_SECRET=your-api-secret
+```
 
-### Phase 3: 検証と記録
+**Note:** For server-side features like recording, you may also need:
+```env
+LIVEKIT_URL=wss://your-project.livekit.cloud
+```
 
-**目的**: 成果物の検証と実行記録の保存
+**Token Generation API Route (app/api/token/route.ts):**
+```typescript
+import { AccessToken } from 'livekit-server-sdk';
+import { NextRequest, NextResponse } from 'next/server';
 
-**アクション**:
+export async function GET(request: NextRequest) {
+  const roomName = request.nextUrl.searchParams.get('room');
+  const participantName = request.nextUrl.searchParams.get('username');
 
-1. `scripts/validate-skill.mjs` でスキル構造を確認
-2. 成果物が目的に合致するか確認
-3. `scripts/log_usage.mjs` を実行して記録を残す
+  if (!roomName || !participantName) {
+    return NextResponse.json(
+      { error: 'Missing room or username' },
+      { status: 400 }
+    );
+  }
 
-**Task**: `agents/validate-structure.md` を参照
+  const at = new AccessToken(
+    process.env.LIVEKIT_API_KEY!,
+    process.env.LIVEKIT_API_SECRET!,
+    {
+      identity: participantName,
+      ttl: '6h', // Token expires after 6 hours
+    }
+  );
 
-## Task仕様ナビ
+  // Set permissions
+  at.addGrant({
+    roomJoin: true,
+    room: roomName,
+    canPublish: true,
+    canSubscribe: true,
+    canPublishData: true,
+  });
 
-このスキルで設計・検証するドキュメントと実行フェーズを以下に示します。
+  const token = await at.toJwt();
 
-| Task                   | 実行フェーズ | 入力                   | 出力                            | 関連リソース                                |
-| ---------------------- | ------------ | ---------------------- | ------------------------------- | ------------------------------------------- |
-| YAML Frontmatter設計   | Phase 1      | エージェント要件・目的 | 仕様準拠のYAML frontmatter      | references/yaml-frontmatter-guide.md        |
-| エージェント概要作成   | Phase 2      | 責務・専門領域         | エージェント概要（1-2文）       | references/Level2_intermediate.md           |
-| ワークフロー設計       | Phase 2      | タスク分解結果         | Phase 1/2/3 構成                | references/workflow-patterns.md             |
-| Task仕様書作成         | Phase 2      | Task詳細・入出力       | agents/\*.md ファイル           | 18-skills.md仕様の3.3節                     |
-| 依存関係設計           | Phase 2      | スキル参照・順序       | dependencies フィールド         | references/dependency-skill-format-guide.md |
-| ベストプラクティス定義 | Phase 2      | 設計原則・注意点       | すべきこと/避けるべきことリスト | references/Level3_advanced.md               |
-| 構造検証               | Phase 3      | 成果物                 | 検証レポート                    | scripts/validate-structure.mjs              |
+  return NextResponse.json({ token });
+}
+```
 
-## ベストプラクティス
+**Security Best Practices:**
+- Never expose API secrets in client-side code
+- Validate user identity before issuing tokens
+- Set appropriate token TTL based on use case
+- Implement rate limiting on token endpoint
+- Use HTTPS in production
 
-### すべきこと
+### 2. Room Connection Pattern
 
-- エージェント設計時は、18-skills.md仕様の3.2節に従いYAML frontmatterを構成する（name、description、allowed-tools、dependencies）
-- description フィールドにはAnchorsとTriggerを日本語で記載し、Markdown禁止規則（箇条書き不可）に従う
-- ワークフローをPhase 1（準備）→ Phase 2（実装）→ Phase 3（検証）の3段階で明確に分割する
-- Task仕様書は agents/\*.md として独立させ、役割・入力・出力・制約・参照を含める
-- 知識本文は references/ に外部化し、SKILL.md本文は500行以内に保つ
-- スクリプトは冪等性を持たせ、エラー出力（stderr）と終了コード規則に従う
-- 検証スクリプト（validate-structure.mjs）で自動検証し、YAML構文と必須フィールドを確認する
+**Basic Room Component:**
+```typescript
+'use client';
 
-### 避けるべきこと
+import { LiveKitRoom, VideoConference } from '@livekit/components-react';
+import '@livekit/components-styles';
+import { useEffect, useState } from 'react';
 
-- YAML frontmatterにreferences フィールドを含める（description内のAnchorsに統合済み）
-- Task仕様書に長い知識本文をベタ書きする（references/.へ移動）
-- description内でMarkdown箇条書き（`-` や `*`）を使用する（行区切りで表現）
-- スキルに README.md や補助ドキュメントを含める（不要）
-- スクリプトの引数検証やヘルプ機能を省略する
-- 相対パス参照で `../` を使用する（SKILL.mdから1レベルに保つ）
+interface RoomPageProps {
+  roomName: string;
+  username: string;
+}
 
-## リソース参照
+export default function RoomPage({ roomName, username }: RoomPageProps) {
+  const [token, setToken] = useState('');
 
-### 段階的学習リソース（レベル別）
+  useEffect(() => {
+    // Fetch token from API route
+    fetch(`/api/token?room=${roomName}&username=${username}`)
+      .then(res => res.json())
+      .then(data => setToken(data.token));
+  }, [roomName, username]);
 
-- **references/Level1_basics.md**: エージェント構造設計の基礎概念
-- **references/Level2_intermediate.md**: YAML frontmatter実装、ワークフロー設計パターン
-- **references/Level3_advanced.md**: 複雑なTask仕様書設計、依存関係管理の応用
-- **references/Level4_expert.md**: パフォーマンス最適化、スキルメタデータの詳細設計
+  if (!token) {
+    return <div>Loading...</div>;
+  }
 
-### 仕様・ガイドリソース
+  return (
+    <LiveKitRoom
+      token={token}
+      serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL!}
+      connect={true}
+      video={true}
+      audio={true}
+      onDisconnected={() => {
+        // Handle disconnection
+      }}
+      onError={(error) => {
+        console.error('Room error:', error);
+      }}
+    >
+      <VideoConference />
+    </LiveKitRoom>
+  );
+}
+```
 
-- **references/yaml-frontmatter-guide.md**: name、description、allowed-tools、dependencies フィールドの詳細ルール
-- **references/dependency-skill-format-guide.md**: スキル依存関係の表記と検証方法
-- **references/yaml-description-rules.md**: Anchors と Trigger の記述形式とベストプラクティス
-- **references/skill-dependency-format-examples.md**: 実例に基づく依存関係表記の例
-- **references/legacy-skill.md**: 旧仕様との比較と移行ガイド
-- **references/requirements-index.md**: 要求仕様との対応インデックス
+### 3. Custom Components with Hooks
 
-### スクリプト・テンプレート
+**CRITICAL BEST PRACTICE:** Always use LiveKit's provided hooks instead of creating custom implementations. These hooks manage React state and are rigorously tested.
 
-**構造検証スクリプト**:
+**Essential Hooks:**
+- `useRoom()` - Access room state and events
+- `useTracks()` - Subscribe to track updates
+- `useParticipants()` - Get participant list
+- `useLocalParticipant()` - Access local participant
+- `useTrackToggle()` - Toggle audio/video
+- `useLiveKitRoom()` - Lower-level room management
 
-- `scripts/validate-structure.mjs`: YAML Frontmatter構文、必須フィールド、ファイル構造の4項目を自動検証
-- `scripts/validate-skill.mjs`: スキル全体の一貫性を検証
-- `scripts/validate-structure.sh`: シェルベースの構造検証
+**Custom Controls Example:**
+```typescript
+'use client';
 
-**フィードバックログ**:
+import { useRoom, useLocalParticipant, useTrackToggle } from '@livekit/components-react';
+import { Track } from 'livekit-client';
 
-- `scripts/log_usage.mjs`: スキル使用記録と自動評価（--result success|failure オプション）
+export function CustomControls() {
+  const room = useRoom();
+  const { localParticipant } = useLocalParticipant();
 
-**テンプレート**:
+  // Use built-in hook for track toggling
+  const { buttonProps: audioProps, enabled: audioEnabled } = useTrackToggle({
+    source: Track.Source.Microphone,
+  });
 
-- `assets/agent-template.md`: エージェント定義書の基本テンプレート
+  const { buttonProps: videoProps, enabled: videoEnabled } = useTrackToggle({
+    source: Track.Source.Camera,
+  });
 
-## 変更履歴
+  return (
+    <div className="controls">
+      <button {...audioProps}>
+        {audioEnabled ? 'Mute' : 'Unmute'}
+      </button>
+      <button {...videoProps}>
+        {videoEnabled ? 'Stop Video' : 'Start Video'}
+      </button>
+      <button onClick={() => room.disconnect()}>
+        Leave Room
+      </button>
+    </div>
+  );
+}
+```
 
-| Version | Date       | Changes                                                                                                                                                                              |
-| ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 2.0.0   | 2025-12-31 | agents/3ファイル追加、Phase別Task参照を追加                                                                                                                                          |
-| 1.2.0   | 2025-12-31 | 18-skills.md仕様に準拠。YAML frontmatterをAnchors/Trigger形式に統一、allowed-toolsフィールド追加、Task仕様ナビを表形式で追加、ベストプラクティスを18-skills.md仕様の詳細ルールに対応 |
-| 1.1.0   | 2025-12-24 | Spec alignment and required artifacts added                                                                                                                                          |
+### 4. Track Management
+
+**Publishing Tracks:**
+```typescript
+import { useLocalParticipant } from '@livekit/components-react';
+import { Track } from 'livekit-client';
+
+function ScreenShareButton() {
+  const { localParticipant } = useLocalParticipant();
+
+  const startScreenShare = async () => {
+    await localParticipant.setScreenShareEnabled(true);
+  };
+
+  const stopScreenShare = async () => {
+    await localParticipant.setScreenShareEnabled(false);
+  };
+
+  return (
+    <button onClick={startScreenShare}>Share Screen</button>
+  );
+}
+```
+
+**Subscribing to Remote Tracks:**
+```typescript
+import { useTracks, VideoTrack } from '@livekit/components-react';
+import { Track } from 'livekit-client';
+
+function RemoteParticipants() {
+  // Subscribe to all camera tracks
+  const tracks = useTracks([
+    { source: Track.Source.Camera, withPlaceholder: true }
+  ]);
+
+  return (
+    <div className="participants-grid">
+      {tracks.map((track) => (
+        <VideoTrack key={track.participant.sid} trackRef={track} />
+      ))}
+    </div>
+  );
+}
+```
+
+### 5. Data Messages
+
+**IMPORTANT:** LiveKit recommends using higher-level APIs like text streams, byte streams, or RPC for most use cases. Use the low-level `publishData` API only when you need advanced control over individual packet behavior.
+
+**Message Size Limits:**
+- **Reliable packets**: 16KiB (16,384 bytes) recommended maximum for compatibility
+- **Lossy packets**: 1,300 bytes maximum to stay within network MTU (1,400 bytes)
+- Larger messages in lossy mode get fragmented; if any fragment is lost, the entire message is lost
+
+**Sending Data:**
+```typescript
+import { useLocalParticipant } from '@livekit/components-react';
+
+function ChatComponent() {
+  const { localParticipant } = useLocalParticipant();
+
+  const sendMessage = (message: string) => {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(JSON.stringify({ message }));
+
+    // Validate size (16KiB limit for reliable messages)
+    if (data.byteLength > 16 * 1024) {
+      console.error('Message too large');
+      return;
+    }
+
+    // Use topic to differentiate message types
+    localParticipant.publishData(data, {
+      reliable: true,      // Reliable delivery with retransmission
+      topic: 'chat',       // Topic helps filter different message types
+    });
+  };
+
+  return (
+    <button onClick={() => sendMessage('Hello!')}>
+      Send Message
+    </button>
+  );
+}
+```
+
+**Receiving Data:**
+```typescript
+import { useRoom } from '@livekit/components-react';
+import { useEffect, useState } from 'react';
+import { RemoteParticipant } from 'livekit-client';
+
+function ChatDisplay() {
+  const room = useRoom();
+  const [messages, setMessages] = useState<string[]>([]);
+
+  useEffect(() => {
+    const handleData = (
+      payload: Uint8Array,
+      participant?: RemoteParticipant,
+      kind?: any,
+      topic?: string
+    ) => {
+      // Filter by topic
+      if (topic !== 'chat') return;
+
+      const decoder = new TextDecoder();
+      const data = JSON.parse(decoder.decode(payload));
+      setMessages(prev => [...prev, data.message]);
+    };
+
+    room.on('dataReceived', handleData);
+
+    return () => {
+      room.off('dataReceived', handleData);
+    };
+  }, [room]);
+
+  return (
+    <div>
+      {messages.map((msg, i) => (
+        <div key={i}>{msg}</div>
+      ))}
+    </div>
+  );
+}
+```
+
+**Delivery Modes:**
+- **Reliable** (`reliable: true`): Packets delivered in order with retransmission. Best for chat, critical updates.
+- **Lossy** (`reliable: false`): Each packet sent once, no ordering guarantee. Best for real-time updates where speed matters more than delivery.
+
+## Code Review Checklist
+
+When reviewing LiveKit Next.js code, verify:
+
+### Architecture & Security
+- [ ] API secrets stored in environment variables, not committed to repo
+- [ ] Token generation happens server-side only
+- [ ] Tokens have appropriate TTL and permissions
+- [ ] User authentication/authorization before token issuance
+- [ ] HTTPS/WSS used in production
+
+### Connection & Room Management
+- [ ] Room connection errors handled gracefully
+- [ ] Disconnection events handled properly
+- [ ] Reconnection logic implemented if needed
+- [ ] Loading states shown during connection
+- [ ] Proper cleanup on component unmount
+
+### Track Management
+- [ ] Using built-in hooks (`useTrackToggle`, `useTracks`) instead of custom implementations
+- [ ] Track permissions requested appropriately
+- [ ] Track publication/unpublication handled correctly
+- [ ] Error handling for camera/microphone access
+- [ ] Screen share functionality tested
+
+### Data Communication
+- [ ] Data encoding/decoding handled correctly
+- [ ] Reliable vs lossy data packets chosen appropriately
+- [ ] Message broadcasting vs targeted sending used correctly
+- [ ] Data payload size validated (16KiB max for reliable, 1.3KB max for lossy)
+- [ ] Topics used to differentiate message types
+- [ ] Message size validation implemented before sending
+- [ ] Consider using higher-level APIs (text streams, RPC) instead of low-level publishData
+
+### Performance
+- [ ] Video resolution and frame rate configured appropriately
+- [ ] Simulcast enabled for better quality adaptation
+- [ ] Track subscriptions limited to visible participants
+- [ ] Component re-renders minimized
+- [ ] Large participant lists handled efficiently
+
+### User Experience
+- [ ] Connection states communicated clearly to users
+- [ ] Network quality indicators shown
+- [ ] Graceful degradation on poor connections
+- [ ] Mobile responsiveness tested
+- [ ] Accessibility considerations (keyboard nav, screen readers, ARIA labels)
+
+### Testing
+- [ ] Multiple participants tested
+- [ ] Network conditions simulated (slow, unstable)
+- [ ] Device permissions handling tested
+- [ ] Cross-browser compatibility verified
+- [ ] Mobile devices tested (iOS Safari, Android Chrome)
+
+## Common Patterns
+
+### 1. Pre-join Screen
+```typescript
+function PreJoinScreen({ onJoin }: { onJoin: (username: string) => void }) {
+  const [username, setUsername] = useState('');
+  const [devices, setDevices] = useState({ audio: true, video: true });
+
+  return (
+    <div>
+      <input
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Enter your name"
+      />
+      <label>
+        <input
+          type="checkbox"
+          checked={devices.audio}
+          onChange={(e) => setDevices({ ...devices, audio: e.target.checked })}
+        />
+        Enable Microphone
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={devices.video}
+          onChange={(e) => setDevices({ ...devices, video: e.target.checked })}
+        />
+        Enable Camera
+      </label>
+      <button onClick={() => onJoin(username)}>
+        Join Room
+      </button>
+    </div>
+  );
+}
+```
+
+### 2. Speaker Detection
+```typescript
+import { useTracks, VideoTrack } from '@livekit/components-react';
+import { Track } from 'livekit-client';
+
+function ActiveSpeakerView() {
+  const tracks = useTracks([
+    { source: Track.Source.Camera, withPlaceholder: true }
+  ]);
+
+  // Sort by speaking status and audio level
+  const sortedTracks = tracks.sort((a, b) => {
+    if (a.participant.isSpeaking && !b.participant.isSpeaking) return -1;
+    if (!a.participant.isSpeaking && b.participant.isSpeaking) return 1;
+    return (b.participant.audioLevel || 0) - (a.participant.audioLevel || 0);
+  });
+
+  return (
+    <div>
+      {/* Show active speaker large */}
+      {sortedTracks[0] && (
+        <VideoTrack
+          trackRef={sortedTracks[0]}
+          className="active-speaker"
+        />
+      )}
+
+      {/* Show others small */}
+      <div className="other-participants">
+        {sortedTracks.slice(1).map(track => (
+          <VideoTrack
+            key={track.participant.sid}
+            trackRef={track}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+### 3. Recording Integration
+```typescript
+// Server-side API route for starting recording
+import { RoomServiceClient } from 'livekit-server-sdk';
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  const { roomName } = await request.json();
+
+  const client = new RoomServiceClient(
+    process.env.LIVEKIT_URL!,
+    process.env.LIVEKIT_API_KEY!,
+    process.env.LIVEKIT_API_SECRET!
+  );
+
+  try {
+    const egressId = await client.startRoomCompositeEgress(roomName, {
+      file: {
+        filepath: `recordings/${roomName}-${Date.now()}.mp4`,
+      },
+    });
+
+    return NextResponse.json({ egressId });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to start recording' }, { status: 500 });
+  }
+}
+```
+
+## Troubleshooting Guide
+
+### Connection Issues
+**Problem:** Room fails to connect
+- Verify `NEXT_PUBLIC_LIVEKIT_URL` uses `wss://` protocol (for client-side connections)
+- Check token is valid and not expired
+- Ensure API key/secret match your LiveKit instance
+- Verify network allows WebRTC connections (firewall/corporate proxy)
+- Check browser console for specific error messages
+
+### Track Issues
+**Problem:** Camera/microphone not working
+- Check browser permissions granted
+- Verify HTTPS (required for getUserMedia)
+- Test with different devices
+- Check track publication succeeded: `localParticipant.videoTrackPublications`
+
+### Performance Issues
+**Problem:** Video quality poor or choppy
+- Enable simulcast: `localParticipant.publishTrack(track, { simulcast: true })`
+- Lower resolution/frame rate for mobile
+- Implement dynacast for automatic quality adjustment
+- Use adaptive bitrate and dynamic subscribe
+
+### Data Message Issues
+**Problem:** Data messages not received
+- Verify `canPublishData` permission in token
+- Check data payload size (max 16KiB for reliable, 1.3KB for lossy)
+- Use reliable delivery for critical messages (chat, important updates)
+- Use lossy delivery for real-time updates where speed matters (cursor position, state updates)
+- Ensure proper encoding/decoding (TextEncoder/TextDecoder)
+- Verify topic matches between sender and receiver
+- Check browser console for errors
+
+## Mobile Considerations
+
+### iOS Safari
+- Audio requires user gesture to start (button click)
+- Screen sharing not supported
+- Picture-in-picture available with proper configuration
+
+### Android Chrome
+- Hardware acceleration recommended
+- Screen sharing requires HTTPS
+- Background audio may require wake lock
+
+### React Native
+- Use `@livekit/react-native` package instead
+- Requires native modules for camera/audio access
+- Different permission handling per platform
+
+## Performance Optimization
+
+1. **Lazy Loading:** Load LiveKit components only when needed
+2. **Simulcast:** Enable for adaptive video quality
+3. **Selective Subscription:** Only subscribe to visible participants
+4. **Dynacast:** Automatic quality optimization based on layout
+5. **Connection Quality:** Monitor and display to users
+6. **Message History:** For chat, implement pagination or virtual scrolling for large message lists
+7. **Track Management:** Stop unused tracks immediately to conserve bandwidth
+
+## Resources
+
+- Official Docs: https://docs.livekit.io
+- React Components: https://github.com/livekit/components-js
+- Example Projects: https://github.com/livekit-examples
+- Community: https://livekit.io/community
+
+## Implementation Workflow
+
+When building a LiveKit feature:
+
+1. **Plan Architecture**
+   - Define room structure and participant roles
+   - Determine required tracks (audio, video, screen share)
+   - Plan data messaging requirements
+
+2. **Set Up Authentication**
+   - Create token generation API route
+   - Configure environment variables
+   - Implement user identity validation
+
+3. **Build Core Components**
+   - Create room connection component
+   - Add track publishing/subscribing
+   - Implement controls (mute, video toggle, etc.)
+
+4. **Add Advanced Features**
+   - Pre-join screen with device selection
+   - Data messaging for chat/metadata
+   - Recording/streaming if needed
+
+5. **Test Thoroughly**
+   - Multiple participants
+   - Various network conditions
+   - Different devices and browsers
+   - Edge cases (disconnection, permissions denied)
+
+6. **Optimize & Polish**
+   - Performance tuning
+   - Error handling
+   - Loading states
+   - Accessibility
+
+Remember: LiveKit handles the complex WebRTC infrastructure. Focus on building excellent user experiences with their battle-tested components and hooks.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
