@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [swimmwatch/telegram-webapp-auth](https://github.com/swimmwatch/telegram-webapp-auth/tree/main/.agents/skills/project-release/SKILL.md)
+Original source: [swimmwatch/telegram-webapp-auth](https://github.com/swimmwatch/telegram-webapp-auth/tree/main/.agents/skills/project-pull-request/SKILL.md)
 
 ---
 
