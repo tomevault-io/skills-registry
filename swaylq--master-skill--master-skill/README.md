@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [swaylq/master-skill](https://github.com/swaylq/master-skill/tree/main/prototypes/software-architecture-master/output/SKILL.md)
+Original source: [swaylq/master-skill](https://github.com/swaylq/master-skill/tree/main/prototypes/twitter-cn-ai-creator-master/output/SKILL.md)
 
 ---
 
