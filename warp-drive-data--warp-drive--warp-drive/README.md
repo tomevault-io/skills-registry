@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [warp-drive-data/warp-drive](https://github.com/warp-drive-data/warp-drive/tree/main/.claude/skills/ast-grep/SKILL.md)
+Original source: [warp-drive-data/warp-drive](https://github.com/warp-drive-data/warp-drive/tree/main/.claude/skills/ast-grep-codemods/SKILL.md)
 
 ---
 
