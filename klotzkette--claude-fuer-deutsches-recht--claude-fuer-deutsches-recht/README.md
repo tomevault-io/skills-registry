@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/goae-gebuehrenordnung-aerzte/skills/goae-6-gebuehren-fuer-andere-leistungen-analogbewertung/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/goae-gebuehrenordnung-aerzte/skills/goae-3-verguetungen-gebuehren-entschaedigungen-auslagen/SKILL.md)
 
 ---
 
