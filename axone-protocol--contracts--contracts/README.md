@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [axone-protocol/contracts](https://github.com/axone-protocol/contracts/tree/main/.agents/skills/conventional-commits/SKILL.md)
+Original source: [axone-protocol/contracts](https://github.com/axone-protocol/contracts/tree/main/.agents/skills/rust-contract-domain-modeling/SKILL.md)
 
 ---
 
