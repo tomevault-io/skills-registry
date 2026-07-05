@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OpenWonderLabs/switchbot-openapi-cli](https://github.com/OpenWonderLabs/switchbot-openapi-cli/tree/main/packages/codex-plugin/skills/switchbot/SKILL.md)
+Original source: [OpenWonderLabs/switchbot-openapi-cli](https://github.com/OpenWonderLabs/switchbot-openapi-cli/tree/main/packages/codex-plugin/plugins/switchbot/skills/switchbot/SKILL.md)
 
 ---
 
