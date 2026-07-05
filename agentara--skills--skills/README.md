@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentara/skills](https://github.com/agentara/skills/tree/main/skills/productivity/feature-dev-loop/SKILL.md)
+Original source: [agentara/skills](https://github.com/agentara/skills/tree/main/skills/productivity/mega-goal-prompt/SKILL.md)
 
 ---
 
