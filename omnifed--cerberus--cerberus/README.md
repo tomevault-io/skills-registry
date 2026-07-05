@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [omnifed/cerberus](https://github.com/omnifed/cerberus/tree/main/.agents/skills/cerberus-realtime-data-grid/SKILL.md)
+Original source: [omnifed/cerberus](https://github.com/omnifed/cerberus/tree/main/.agents/skills/cerberus-form-component-styling/SKILL.md)
 
 ---
 
