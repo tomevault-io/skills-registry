@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AlpacaLabsLLC/skills-for-architects](https://github.com/AlpacaLabsLLC/skills-for-architects/tree/main/plugins/06-materials-research/skills/product-research/SKILL.md)
+Original source: [AlpacaLabsLLC/skills-for-architects](https://github.com/AlpacaLabsLLC/skills-for-architects/tree/main/plugins/02-zoning-analysis/skills/zoning-analysis-nyc/SKILL.md)
 
 ---
 
