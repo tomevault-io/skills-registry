@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/bundeswehrrecht-wehrrecht/skills/bwbes-neu-002-wehrsold-freiwilliger-wehrdienst-unterhalt/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/krankenkassenrecht-krankenversicherung/skills/kv-036-pkv-auslandsreise-und-ruecktransport/SKILL.md)
 
 ---
 
