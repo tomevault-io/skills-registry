@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/bundesnetzagentur-verfahren/skills/energie-fernwaerme-schnittstelle-soweit-bnetza-nicht-zustaendig/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/preussisches-allgemeines-landrecht-pralr/skills/pralr-neu-007-erster-teil-titel-4-willen-vertraege/SKILL.md)
 
 ---
 
