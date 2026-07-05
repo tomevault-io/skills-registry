@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mandel-macaque/memento](https://github.com/mandel-macaque/memento/tree/main/skills/git-memento-workflow/SKILL.md)
+Original source: [mandel-macaque/memento](https://github.com/mandel-macaque/memento/tree/main/skills/session-summary-default/SKILL.md)
 
 ---
 
