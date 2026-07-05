@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [B-M-Capital-Research/honeclaw](https://github.com/B-M-Capital-Research/honeclaw/tree/main/.agents/skills/event-engine-push-review/SKILL.md)
+Original source: [B-M-Capital-Research/honeclaw](https://github.com/B-M-Capital-Research/honeclaw/tree/main/.agents/skills/event-engine-baseline-testing/SKILL.md)
 
 ---
 
