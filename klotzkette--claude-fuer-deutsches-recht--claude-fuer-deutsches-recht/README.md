@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/gewerblicher-rechtsschutz/skills/evvollzug-neu-004-bea-zustellung-einstweiliger-rechtsschutz/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/krankenkassenrecht-krankenversicherung/skills/kv-052-telemedizin-epa-erezept-und-datenschutz/SKILL.md)
 
 ---
 
