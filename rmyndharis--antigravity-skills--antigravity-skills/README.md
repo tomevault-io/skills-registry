@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rmyndharis/antigravity-skills](https://github.com/rmyndharis/antigravity-skills/tree/main/skills/seo-content-planner/SKILL.md)
+Original source: [rmyndharis/antigravity-skills](https://github.com/rmyndharis/antigravity-skills/tree/main/skills/vector-index-tuning/SKILL.md)
 
 ---
 
