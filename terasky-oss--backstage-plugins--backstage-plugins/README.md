@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TeraSky-OSS/backstage-plugins](https://github.com/TeraSky-OSS/backstage-plugins/tree/main/.cursor/skills/backstage-backend-plugin/SKILL.md)
+Original source: [TeraSky-OSS/backstage-plugins](https://github.com/TeraSky-OSS/backstage-plugins/tree/main/.cursor/skills/backstage-frontend-plugin/SKILL.md)
 
 ---
 
