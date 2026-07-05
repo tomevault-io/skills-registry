@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/bundesnetzagentur-verfahren/skills/digital-services-melde-und-abhilfeverfahren-notice-and-action/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/bereicherungs-und-anfechtungsrecht-pruefer/skills/konkurrenz-bereicherung-vertraglich-deliktisch/SKILL.md)
 
 ---
 
