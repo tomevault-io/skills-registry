@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [galacticcouncil/hydration-node](https://github.com/galacticcouncil/hydration-node/tree/main/ai_skills/hydration_cl0wdit/SKILL.md)
+Original source: [galacticcouncil/hydration-node](https://github.com/galacticcouncil/hydration-node/tree/main/ai_skills/circuit-breaker-incident/SKILL.md)
 
 ---
 
