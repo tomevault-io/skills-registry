@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [google/ax](https://github.com/google/ax/tree/main/examples/skills/emoji/SKILL.md)
+Original source: [google/ax](https://github.com/google/ax/tree/main/examples/skills/lowercase/SKILL.md)
 
 ---
 
