@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dream-horizon-org/pulse](https://github.com/dream-horizon-org/pulse/tree/main/.agents/skills/web-sdk-e2e-matrix/SKILL.md)
+Original source: [dream-horizon-org/pulse](https://github.com/dream-horizon-org/pulse/tree/main/.agents/skills/clickhouse-migration/SKILL.md)
 
 ---
 
