@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [CraftOS-dev/CraftBot](https://github.com/CraftOS-dev/CraftBot/tree/main/skills/opencode-controller/SKILL.md)
+Original source: [CraftOS-dev/CraftBot](https://github.com/CraftOS-dev/CraftBot/tree/main/skills/self-improving-agent/SKILL.md)
 
 ---
 
