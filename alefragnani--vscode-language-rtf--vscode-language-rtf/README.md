@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alefragnani/vscode-language-rtf](https://github.com/alefragnani/vscode-language-rtf/tree/main/.github/skills/vscode-ext-commands/SKILL.md)
+Original source: [alefragnani/vscode-language-rtf](https://github.com/alefragnani/vscode-language-rtf/tree/main/.github/skills/vscode-ext-localization/SKILL.md)
 
 ---
 
