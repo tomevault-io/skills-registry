@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [danpacho/tailwindest](https://github.com/danpacho/tailwindest/tree/main/.agents/skills/robust-code/SKILL.md)
+Original source: [danpacho/tailwindest](https://github.com/danpacho/tailwindest/tree/main/.agents/skills/orchestrator-implementer-judge-loop/SKILL.md)
 
 ---
 
