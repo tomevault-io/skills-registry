@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vpsfreecz/vpsadminos](https://github.com/vpsfreecz/vpsadminos/tree/main/skills/add-image-build-script/SKILL.md)
+Original source: [vpsfreecz/vpsadminos](https://github.com/vpsfreecz/vpsadminos/tree/main/skills/update-redhat-family-image-releases/SKILL.md)
 
 ---
 
