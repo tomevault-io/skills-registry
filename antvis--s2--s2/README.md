@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [antvis/S2](https://github.com/antvis/S2/tree/main/.agent/skills/s2-lint/SKILL.md)
+Original source: [antvis/S2](https://github.com/antvis/S2/tree/main/.agent/skills/s2-unit-test/SKILL.md)
 
 ---
 
