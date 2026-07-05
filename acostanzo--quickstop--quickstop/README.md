@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [acostanzo/quickstop](https://github.com/acostanzo/quickstop/tree/main/.claude/skills/hone/SKILL.md)
+Original source: [acostanzo/quickstop](https://github.com/acostanzo/quickstop/tree/main/.claude/skills/smith/SKILL.md)
 
 ---
 
