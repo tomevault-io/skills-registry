@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/notariat-alltag/skills/notariat-054-auslandsbeteiligte-steuerliche-hinweise-und-grenzen/SKILL.md)
+Original source: [Klotzkette/claude-fuer-deutsches-recht](https://github.com/Klotzkette/claude-fuer-deutsches-recht/tree/main/notariat-alltag/skills/notariat-043-kanzleiorganisation-vier-augen-prinzip-fehlerkultur/SKILL.md)
 
 ---
 
