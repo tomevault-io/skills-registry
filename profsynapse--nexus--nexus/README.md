@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ProfSynapse/nexus](https://github.com/ProfSynapse/nexus/tree/main/.codex/skills/nexus-eval-harness/SKILL.md)
+Original source: [ProfSynapse/nexus](https://github.com/ProfSynapse/nexus/tree/main/.cline/skills/nexus-model-updates/SKILL.md)
 
 ---
 
