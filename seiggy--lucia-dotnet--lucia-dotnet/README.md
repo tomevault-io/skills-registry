@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [seiggy/lucia-dotnet](https://github.com/seiggy/lucia-dotnet/tree/main/.github/skills/aspire-service-defaults/SKILL.md)
+Original source: [seiggy/lucia-dotnet](https://github.com/seiggy/lucia-dotnet/tree/main/.github/skills/aspire-integration-testing/SKILL.md)
 
 ---
 
