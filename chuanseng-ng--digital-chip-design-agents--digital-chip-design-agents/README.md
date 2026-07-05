@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [chuanseng-ng/digital-chip-design-agents](https://github.com/chuanseng-ng/digital-chip-design-agents/tree/main/plugins/formal/skills/formal-verification/SKILL.md)
+Original source: [chuanseng-ng/digital-chip-design-agents](https://github.com/chuanseng-ng/digital-chip-design-agents/tree/main/plugins/firmware/skills/embedded-firmware/SKILL.md)
 
 ---
 
