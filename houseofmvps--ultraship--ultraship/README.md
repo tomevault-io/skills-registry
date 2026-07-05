@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Houseofmvps/ultraship](https://github.com/Houseofmvps/ultraship/tree/main/skills/investigate/SKILL.md)
+Original source: [Houseofmvps/ultraship](https://github.com/Houseofmvps/ultraship/tree/main/skills/code-review/SKILL.md)
 
 ---
 
