@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [liangxiegame/QFramework](https://github.com/liangxiegame/QFramework/tree/main/QFramework.Unity2018+/.github/skills/openspec-propose/SKILL.md)
+Original source: [liangxiegame/QFramework](https://github.com/liangxiegame/QFramework/tree/main/QFramework.Unity2018+/.github/skills/openspec-sync-specs/SKILL.md)
 
 ---
 
