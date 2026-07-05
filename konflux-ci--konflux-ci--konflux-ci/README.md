@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [konflux-ci/konflux-ci](https://github.com/konflux-ci/konflux-ci/tree/main/skills/debug-e2e-tests/SKILL.md)
+Original source: [konflux-ci/konflux-ci](https://github.com/konflux-ci/konflux-ci/tree/main/skills/update-upstream-deps/SKILL.md)
 
 ---
 
