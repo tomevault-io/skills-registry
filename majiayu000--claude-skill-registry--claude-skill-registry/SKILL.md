@@ -1,498 +1,437 @@
 ---
-name: checkstyle-rules
-description: Use when applying Checkstyle built-in checks for Java code including naming conventions, code metrics, and suppressions.
+name: design-movements
+description: Historical design movements and their enduring influence. Understand Bauhaus, Swiss International Style, Art Deco, Memphis, and more. Use when choosing an aesthetic direction, understanding cultural context, or predicting trend cycles. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# checkstyle rules
+# Design Movements
 
-Master Checkstyle built-in checks including naming conventions, metrics, and suppressions. This skill provides comprehensive coverage of essential concepts, patterns, and best practices for professional Checkstyle development.
-
-## Overview
-
-Checkstyle is a powerful tool for java development, providing robust capabilities for maintaining code quality and ensuring reliable software delivery. This skill covers the fundamental through advanced aspects of working with Checkstyle.
-
-## Installation and Setup
-
-### Basic Installation
-
-Setting up Checkstyle requires proper installation and configuration in your development environment.
-
-```bash
-# Installation command specific to Checkstyle
-# Follow official documentation for latest version
-```
-
-### Project Configuration
-
-Create appropriate configuration files and setup for your project structure:
-
-- Configuration file setup
-- Project structure organization
-- Team collaboration setup
-- CI/CD integration preparation
-
-## Core Concepts
-
-### Fundamental Principles
-
-Understanding the core principles of Checkstyle is essential for effective usage:
-
-1. **Architecture** - How Checkstyle is structured and operates
-2. **Configuration** - Setting up and customizing behavior
-3. **Integration** - Working with other tools and frameworks
-4. **Best Practices** - Industry-standard approaches
-
-### Key Features
-
-Checkstyle provides several key features that make it valuable:
-
-- Feature 1: Core functionality
-- Feature 2: Advanced capabilities  
-- Feature 3: Integration options
-- Feature 4: Performance optimization
-- Feature 5: Extensibility
-
-### Configuration Strategy
-
-Proper configuration ensures Checkstyle works optimally:
-
-- Environment-specific setup
-- Team standards enforcement
-- Performance tuning
-- Error handling configuration
-
-### Advanced Usage
-
-For complex scenarios, Checkstyle offers advanced capabilities:
-
-- Custom extensions
-- Advanced patterns
-- Performance optimization
-- Scalability considerations
-
-## Code Examples
-
-### Example 1: Basic Setup
-
-```java
-// Basic Checkstyle setup
-// Demonstrates fundamental usage patterns
-// Shows proper initialization and configuration
-
-// Core setup code
-function basicSetup() {
-  // Initialize framework
-  // Configure basic options
-  // Return configured instance
-}
-
-// Usage example
-const instance = basicSetup();
-```
-
-### Example 2: Configuration
-
-```java
-// Configuration example for Checkstyle
-// Shows how to properly configure
-// Includes common options and patterns
-
-// Configuration object
-const config = {
-  option1: 'value1',
-  option2: 'value2',
-  advanced: {
-    setting1: true,
-    setting2: false
-  }
-};
-
-// Apply configuration
-function applyConfig(config) {
-  // Validation logic
-  // Application logic
-  // Return result
-}
-```
-
-### Example 3: Advanced Pattern
-
-```java
-// Advanced usage pattern
-// Demonstrates sophisticated techniques
-// Shows best practices in action
-
-function advancedPattern() {
-  // Setup phase
-  // Execution phase
-  // Cleanup phase
-}
-```
-
-### Example 4: Integration
-
-```java
-// Integration with other tools
-// Shows real-world usage
-// Demonstrates interoperability
-
-function integrationExample() {
-  // Setup integration
-  // Execute workflow
-  // Handle results
-}
-```
-
-### Example 5: Error Handling
-
-```java
-// Proper error handling approach
-// Defensive programming patterns
-// Graceful degradation
-
-function withErrorHandling() {
-  try {
-    // Main logic
-  } catch (error) {
-    // Error recovery
-  } finally {
-    // Cleanup
-  }
-}
-```
-
-### Example 6: Performance Optimization
-
-```java
-// Performance-optimized implementation
-// Shows efficiency techniques
-// Demonstrates best practices
-
-function optimizedApproach() {
-  // Efficient implementation
-  // Resource management
-  // Performance monitoring
-}
-```
-
-### Example 7: Testing
-
-```java
-// Testing approach for Checkstyle
-// Unit test examples
-// Integration test patterns
-
-function testExample() {
-  // Test setup
-  // Execution
-  // Assertions
-  // Teardown
-}
-```
-
-### Example 8: Production Usage
-
-```java
-// Production-ready implementation
-// Includes monitoring and logging
-// Error recovery and resilience
-
-function productionExample() {
-  // Production configuration
-  // Monitoring setup
-  // Error handling
-  // Logging
-}
-```
-
-## Best Practices
-
-1. **Follow conventions** - Adhere to established naming and structural patterns for consistency
-2. **Configure appropriately** - Set up framework configuration that matches project requirements
-3. **Validate inputs** - Always validate and sanitize inputs before processing
-4. **Handle errors gracefully** - Implement comprehensive error handling and recovery
-5. **Document decisions** - Comment configuration choices and non-obvious implementations
-6. **Test thoroughly** - Write comprehensive tests for all functionality
-7. **Optimize performance** - Profile and optimize critical paths
-8. **Maintain security** - Follow security best practices and guidelines
-9. **Keep updated** - Regularly update framework and dependencies
-10. **Monitor production** - Implement logging and monitoring for production systems
-
-## Common Pitfalls
-
-1. **Incorrect configuration** - Misconfiguration leads to unexpected behavior and bugs
-2. **Missing error handling** - Not handling edge cases causes production issues
-3. **Poor performance** - Not optimizing leads to scalability problems
-4. **Inadequate testing** - Insufficient test coverage misses bugs
-5. **Security vulnerabilities** - Not following security best practices exposes risks
-6. **Tight coupling** - Poor architecture makes maintenance difficult
-7. **Ignoring warnings** - Dismissing framework warnings leads to future problems
-8. **Outdated dependencies** - Using old versions exposes security risks
-9. **No monitoring** - Lack of observability makes debugging difficult
-10. **Inconsistent standards** - Team inconsistency reduces code quality
-
-## Advanced Topics
-
-### Customization
-
-Checkstyle allows extensive customization for specific needs:
-
-- Custom plugins and extensions
-- Behavior modification
-- Integration adapters
-- Domain-specific adaptations
-
-### Performance Tuning
-
-Optimize Checkstyle performance for production:
-
-- Profiling and benchmarking
-- Resource optimization
-- Caching strategies
-- Parallel execution
-
-### CI/CD Integration
-
-Integrate Checkstyle into continuous integration pipelines:
-
-- Automated execution
-- Result reporting
-- Quality gates
-- Deployment integration
-
-### Troubleshooting
-
-Common issues and their solutions:
-
-- Configuration errors
-- Integration problems
-- Performance issues
-- Unexpected behavior
+Every movement is a reaction. Understanding the chain of reactions helps you predict what comes next and choose directions intentionally.
 
 ## When to Use This Skill
 
-- Setting up Checkstyle in new projects
-- Configuring Checkstyle for specific requirements
-- Migrating to Checkstyle from alternatives
-- Optimizing Checkstyle performance
-- Implementing advanced patterns
-- Troubleshooting Checkstyle issues
-- Integrating Checkstyle with CI/CD
-- Training team members on Checkstyle
-- Establishing team standards
-- Maintaining existing Checkstyle implementations
+- Choosing an aesthetic direction for a project
+- Understanding why certain styles feel the way they do
+- Connecting visual choices to cultural meaning
+- Predicting trend cycles
+- Avoiding accidental historical misuse
 
-## Additional Resources
+## The Lineage
 
-### Documentation
-
-- Official Checkstyle documentation
-- Community guides and tutorials
-- API reference materials
-- Migration guides
-
-### Tools and Utilities
-
-- Development tools
-- Testing utilities
-- Monitoring solutions
-- Helper libraries
-
-### Community
-
-- Online forums and communities
-- Open source contributions
-- Best practice repositories
-- Example implementations
-
-## Conclusion
-
-Mastering Checkstyle requires understanding both fundamentals and advanced concepts. This skill provides the foundation for professional-grade usage, from initial setup through production deployment. Apply these principles consistently for best results.
-
-## Detailed Configuration Examples
-
-### Configuration Option 1
-
-Comprehensive configuration example demonstrating best practices and common patterns used in production environments.
-
-```bash
-# Detailed configuration setup
-# Includes all necessary options
-# Optimized for production use
+```
+Arts & Crafts (1850s) ─→ Art Nouveau (1890s) ─→ Art Deco (1920s)
+                                                      │
+                                                      ↓
+                        Bauhaus (1919-33) ←────── Modernism
+                              │
+                              ↓
+              Swiss International Style (1950s)
+                              │
+              ┌───────────────┼───────────────┐
+              ↓               ↓               ↓
+        Corporate         Psychedelic     Postmodernism
+        Modernism         (1960s)         (1970s)
+         (1960s)              │               │
+              │               ↓               ↓
+              │          Punk/New Wave   Memphis Group
+              │           (1970s)         (1980s)
+              │               │               │
+              └───────────────┴───────────────┘
+                              │
+                              ↓
+                    Grunge/Deconstructivism (1990s)
+                              │
+              ┌───────────────┼───────────────┐
+              ↓               ↓               ↓
+          Web 2.0        Flat Design    Contemporary
+        Skeuomorphism     (2010s)       Eclecticism
+         (2000s)              │          (2020s)
+              │               │               ↑
+              └───────────────┴───────────────┘
 ```
 
-### Configuration Option 2
+---
 
-Alternative configuration approach for different use cases, showing flexibility and adaptability of the framework.
+## Movements in Depth
 
-```bash
-# Alternative configuration
-# Different optimization strategy
-# Suitable for specific scenarios
+### Arts and Crafts (1850-1910)
+**Origin**: England → Global
+**Reaction To**: Industrial Revolution's dehumanizing mass production
+**Core Belief**: Handcraft has moral value
+
+#### Visual Markers
+- Organic, nature-inspired patterns
+- Medieval and Gothic references
+- Hand-drawn lettering
+- Earth tones and natural dyes
+- Visible evidence of handwork
+- William Morris-style wallpapers
+
+#### Modern Application
+When a brand needs to feel:
+- Artisanal
+- Sustainable
+- Handcrafted
+- Anti-corporate
+
+**Tailwind Approach**:
+```css
+/* Arts & Crafts-inspired */
+colors: earth tones (amber, stone, emerald)
+borders: decorative, visible
+textures: paper, fabric, natural
+typography: serif, slightly ornate
+spacing: generous, organic rhythms
 ```
 
-### Configuration Option 3
+---
 
-Advanced configuration for complex environments with multiple requirements and constraints.
+### Art Nouveau (1890-1910)
+**Origin**: France, Belgium → International
+**Reaction To**: Academic historicism and industrialization
+**Core Belief**: Art should be everywhere; no separation between art and craft
 
-```bash
-# Advanced configuration
-# Handles complex scenarios
-# Production-ready setup
+#### Visual Markers
+- Whiplash curves and flowing lines
+- Botanical and female forms
+- Integrated typography and image
+- Ornate decorative frames
+- Asymmetrical compositions
+- Jewel-tone colors
+
+#### Modern Application
+When a brand needs to feel:
+- Elegant
+- Artistic
+- Feminine
+- Luxurious but organic
+
+**Reference**: Paris Metro entrances, Alphonse Mucha posters, Tiffany lamps
+
+---
+
+### Art Deco (1920-1940)
+**Origin**: Paris → Global
+**Reaction To**: Art Nouveau's organic chaos; post-WWI optimism
+**Core Belief**: Machine-age glamour meets geometric precision
+
+#### Visual Markers
+- Sunbursts and radiating lines
+- Stepped/zigzag forms
+- Bold symmetry
+- Metallic colors (gold, silver, bronze)
+- Geometric sans-serifs
+- Chevron patterns
+- Egyptian and Aztec influences
+
+#### Modern Application
+When a brand needs to feel:
+- Luxurious
+- Celebratory
+- Nostalgic glamour
+- Premium entertainment
+
+**Tailwind Approach**:
+```css
+/* Art Deco-inspired */
+colors: gold-500, black, cream
+borders: decorative lines, stepped forms
+patterns: geometric, repetitive
+typography: geometric sans, high contrast display
+shadows: sharp, dramatic
 ```
 
-## Advanced Usage Patterns
+**Reference**: Chrysler Building, Great Gatsby aesthetic, classic Hollywood
 
-### Pattern 1: Modular Organization
+---
 
-Organize your setup in a modular way to improve maintainability and scalability across large projects.
+### Bauhaus (1919-1933)
+**Origin**: Germany (Weimar, Dessau)
+**Reaction To**: Decorative excess; need for functional post-war reconstruction
+**Core Belief**: Form follows function; art and technology unified
 
-Implementation details:
+#### Visual Markers
+- Primary colors (red, blue, yellow)
+- Geometric primitives (circle, square, triangle)
+- Sans-serif typography
+- Asymmetrical balance
+- Grid-based layouts
+- Minimal ornamentation
+- Clean lines
 
-- Separate concerns appropriately
-- Use composition over inheritance
-- Follow single responsibility principle
-- Maintain clear interfaces
+#### Key Figures
+- Walter Gropius (architecture)
+- László Moholy-Nagy (photography)
+- Josef Albers (color theory)
+- Herbert Bayer (typography)
 
-### Pattern 2: Performance Optimization
+#### Modern Application
+When a brand needs to feel:
+- Modern
+- Functional
+- Intelligent
+- Progressive
 
-Optimize for performance in production environments with proven strategies and techniques.
+**Tailwind Approach**:
+```css
+/* Bauhaus-inspired */
+colors: red-600, blue-600, yellow-500, black, white
+shapes: geometric, primitive
+layout: asymmetric grid
+typography: geometric sans (Futura, Avant Garde)
+borders: minimal, functional
+```
 
-Key considerations:
+**Legacy**: Google Material Design, IKEA, modern corporate identity
 
-- Profile before optimizing
-- Focus on bottlenecks
-- Cache appropriately
-- Monitor in production
+---
 
-### Pattern 3: Error Recovery
+### Swiss International Style (1950s-1970s)
+**Origin**: Switzerland → Global
+**Reaction To**: Post-war need for universal, clear communication
+**Core Belief**: Objective communication through mathematical order
 
-Implement robust error recovery mechanisms to handle failures gracefully.
+#### Visual Markers
+- Helvetica and Univers typefaces
+- Asymmetric grid layouts
+- Generous white space
+- Flush-left, ragged-right text
+- Objective photography
+- Limited color palettes
+- Sans-serif dominance
 
-Recovery strategies:
+#### Key Figures
+- Josef Müller-Brockmann
+- Max Bill
+- Armin Hofmann
+- Emil Ruder
 
-- Graceful degradation
-- Retry with backoff
-- Circuit breaker pattern
-- Comprehensive logging
+#### Grid Principles
+```
++---+---+---+---+---+---+
+| 1 | 2 | 3 | 4 | 5 | 6 |
++---+---+---+---+---+---+
+     ↓       ↓       ↓
+  Column  Gutter   Module
 
-### Pattern 4: Testing Strategy
+- Consistent column widths
+- Mathematical proportions
+- Elements snap to grid
+- Typography aligned to baseline grid
+```
 
-Comprehensive testing approach ensuring code quality and reliability.
+#### Modern Application
+When a brand needs to feel:
+- Professional
+- Trustworthy
+- Clear
+- International
 
-Testing layers:
+**Tailwind Approach**:
+```css
+/* Swiss-inspired */
+typography: 'Inter', 'Helvetica Neue', sans-serif
+colors: black, white, one accent
+layout: 12-column grid, generous gutters
+spacing: consistent, mathematical
+whitespace: abundant
+```
 
-- Unit tests for components
-- Integration tests for workflows
-- End-to-end tests for user scenarios
-- Performance tests for scalability
+**Legacy**: NYC Subway signage, corporate identity systems, most of the web
 
-## Integration Strategies
+---
 
-### Integration with CI/CD
+### Psychedelic Design (1960s-1970s)
+**Origin**: San Francisco → Global counterculture
+**Reaction To**: Swiss Style's sterility; counterculture movement
+**Core Belief**: Design as experience; break every rule
 
-Seamless integration into continuous integration and deployment pipelines.
+#### Visual Markers
+- Vibrating, clashing colors
+- Hand-drawn, flowing lettering
+- Optical illusions
+- Distorted, melting type
+- Maximalist density
+- Art Nouveau revival elements
+- Surreal imagery
 
-Steps:
+#### Modern Application
+When a brand needs to feel:
+- Rebellious
+- Psychedelic
+- Festival/event
+- Counter-cultural
 
-1. Configure pipeline
-2. Set up automation
-3. Define quality gates
-4. Monitor execution
+**Caution**: Accessibility nightmare. Use for specific contexts only.
 
-### Integration with Development Tools
+**Reference**: Grateful Dead posters, Victor Moscoso, Wes Wilson
 
-Connect with popular development tools and IDEs for improved workflow.
+---
 
-Tools:
+### Postmodernism (1970s-1990s)
+**Origin**: Academic architecture → Design
+**Reaction To**: Modernist purity ("less is a bore")
+**Core Belief**: Embrace complexity, contradiction, and historical reference
 
-- IDE plugins and extensions
-- CLI tools and utilities
-- Build system integration
-- Version control hooks
+#### Visual Markers
+- Mixed typefaces and scales
+- Layered, chaotic layouts
+- Historical pastiche
+- Irony and humor
+- Bright, clashing colors
+- Collage aesthetics
+- Deliberate "bad" taste
 
-### Integration with Monitoring
+#### Key Figures
+- Robert Venturi (architecture)
+- Wolfgang Weingart (typography)
+- April Greiman (digital)
 
-Implement monitoring and observability for production systems.
+#### Modern Application
+When a brand needs to feel:
+- Ironic
+- Intellectual
+- Anti-establishment
+- Art-world adjacent
 
-Monitoring aspects:
+---
 
-- Performance metrics
-- Error tracking
-- Usage analytics
-- Health checks
+### Memphis Group (1981-1987)
+**Origin**: Milan, Italy
+**Reaction To**: Good taste and minimalist seriousness
+**Core Belief**: Anti-design; pleasure over function
 
-## Team Practices
+#### Visual Markers
+- Squiggles and arbitrary geometry
+- Clashing patterns and colors
+- Laminate surfaces
+- Asymmetric, unstable forms
+- Playful, childlike elements
+- Terrazzo patterns
+- Bold, jarring combinations
 
-### Establishing Standards
+#### Key Figures
+- Ettore Sottsass
+- Michele De Lucchi
+- Nathalie du Pasquier
 
-Create and maintain consistent standards across the team.
+#### Modern Application
+When a brand needs to feel:
+- Playful
+- Bold
+- Young/Gen Z
+- Anti-serious
 
-Standards to define:
+**Tailwind Approach**:
+```css
+/* Memphis-inspired */
+colors: bright clashing (pink + teal + yellow + black)
+shapes: irregular geometry
+patterns: terrazzo, squiggles
+borders: thick, contrasting
+shadows: offset, colored
+```
 
-- Naming conventions
-- Code organization
-- Documentation requirements
-- Review processes
+**Reference**: 80s music videos, Saved by the Bell, current Gen Z aesthetics
 
-### Onboarding Process
+---
 
-Streamline onboarding for new team members.
+### Grunge/Deconstructivism (1990s)
+**Origin**: Pacific Northwest → Global
+**Reaction To**: Clean corporate design; digital tools enabling mess
+**Core Belief**: Destroy legibility; design as art
 
-Onboarding steps:
+#### Visual Markers
+- Overlapping layers
+- Distressed textures
+- Mixed and distorted type
+- Deliberate "mistakes"
+- Dark, gritty palettes
+- Fractured layouts
+- Photocopied aesthetics
 
-- Initial setup guide
-- Training materials
-- Practice exercises
-- Mentorship program
+#### Key Figures
+- David Carson (Ray Gun)
+- Neville Brody
+- Emigre magazine
 
-### Code Review Guidelines
+#### Modern Application
+When a brand needs to feel:
+- Authentic
+- Raw
+- Underground
+- Anti-corporate
 
-Effective code review practices for quality assurance.
+**Reference**: Ray Gun magazine, early MTV, 90s album covers
 
-Review checklist:
+---
 
-- Correctness
-- Performance
-- Security
-- Maintainability
+### Flat Design (2010s)
+**Origin**: Microsoft Metro → Apple iOS 7 → Web
+**Reaction To**: Skeuomorphic excess; need for responsive design
+**Core Belief**: Digital should look digital
 
-## Troubleshooting Guide
+#### Visual Markers
+- Flat colors (no gradients)
+- Geometric sans-serif type
+- Simple iconography
+- Generous white space
+- Bold, saturated colors
+- No shadows or depth
+- Grid-based layouts
 
-### Common Issue 1
+#### Modern Application
+Now the baseline. Most UI design defaults to flat principles with:
+- Subtle depth (neumorphism)
+- Micro-animations
+- Selective shadows
 
-Detailed troubleshooting steps for frequently encountered problem.
+---
 
-Resolution steps:
+### Contemporary Eclecticism (2020s)
+**Where We Are Now**: All styles available simultaneously
 
-1. Identify symptoms
-2. Check configuration
-3. Verify dependencies
-4. Test solution
+#### Current Trends
+1. **Neumorphism**: Soft shadows, extruded elements
+2. **Glassmorphism**: Frosted glass, translucency
+3. **3D Integration**: 3D elements in 2D interfaces
+4. **Variable Typography**: Responsive, animated type
+5. **Dark Mode**: OLED-friendly, reduced eye strain
+6. **Maximalism**: Memphis revival, anti-minimalism
+7. **Y2K Revival**: Late 90s/early 2000s nostalgia
 
-### Common Issue 2
+#### The Key Insight
+We're in a post-ideological moment. No single style dominates. Success comes from:
+- **Intentional selection**: Choose styles for meaning
+- **Competent execution**: Know the rules before breaking them
+- **Cultural awareness**: Understand what styles communicate
 
-Another common issue with comprehensive resolution approach.
+---
 
-Diagnostic steps:
+## Cyclical Pattern
 
-1. Reproduce issue
-2. Gather logs
-3. Analyze data
-4. Apply fix
+Styles tend to return on ~30-year cycles:
 
-### Common Issue 3
+| Original Era | Revival Era |
+|--------------|-------------|
+| 1960s psychedelic | 1990s rave |
+| 1970s disco | 2000s web gradients |
+| 1980s Memphis | 2010s hipster design |
+| 1990s grunge | 2020s brutalism |
+| Y2K aesthetic | 2025-2030s (predicted) |
 
-Third common scenario with clear resolution path.
+**Prediction**: Expect a 1990s deconstructivist/grunge revival in the late 2020s.
 
-Investigation process:
+---
 
-1. Understand context
-2. Review recent changes
-3. Test hypotheses
-4. Implement solution
+## Resources
+
+- **references/bauhaus.md**: Complete Bauhaus history and application
+- **references/swiss-international.md**: Grid systems and Swiss principles
+- **references/memphis-group.md**: Memphis patterns and colors
+- **references/art-deco.md**: Deco geometry and application
+- **references/minimalism.md**: Less-is-more philosophy
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
