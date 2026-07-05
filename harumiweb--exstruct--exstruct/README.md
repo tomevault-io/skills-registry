@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [harumiWeb/exstruct](https://github.com/harumiWeb/exstruct/tree/main/.agents/skills/exstruct-cli/SKILL.md)
+Original source: [harumiWeb/exstruct](https://github.com/harumiWeb/exstruct/tree/main/.agents/skills/adr-reviewer/SKILL.md)
 
 ---
 
