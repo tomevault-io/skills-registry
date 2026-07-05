@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openaeon/OpenAEON](https://github.com/openaeon/OpenAEON/tree/main/skills/peekaboo/SKILL.md)
+Original source: [openaeon/OpenAEON](https://github.com/openaeon/OpenAEON/tree/main/skills/sonoscli/SKILL.md)
 
 ---
 
