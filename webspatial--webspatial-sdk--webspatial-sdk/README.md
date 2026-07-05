@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [webspatial/webspatial-sdk](https://github.com/webspatial/webspatial-sdk/tree/main/.cursor/skills/openspec-apply-change/SKILL.md)
+Original source: [webspatial/webspatial-sdk](https://github.com/webspatial/webspatial-sdk/tree/main/.codex/skills/openspec-archive-change/SKILL.md)
 
 ---
 
