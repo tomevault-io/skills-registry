@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Kohulan/ChemAudit](https://github.com/Kohulan/ChemAudit/tree/main/skills/chemaudit-batch-validation/SKILL.md)
+Original source: [Kohulan/ChemAudit](https://github.com/Kohulan/ChemAudit/tree/main/skills/chemaudit-structure-filter/SKILL.md)
 
 ---
 
