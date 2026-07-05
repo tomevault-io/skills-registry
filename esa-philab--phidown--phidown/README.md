@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ESA-PhiLab/phidown](https://github.com/ESA-PhiLab/phidown/tree/main/skills/phidown/SKILL.md)
+Original source: [ESA-PhiLab/phidown](https://github.com/ESA-PhiLab/phidown/tree/main/plugins/phidown/skills/phidown/SKILL.md)
 
 ---
 
