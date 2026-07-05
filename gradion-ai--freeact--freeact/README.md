@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [gradion-ai/freeact](https://github.com/gradion-ai/freeact/tree/main/.agents/skills/freeact-interaction/SKILL.md)
+Original source: [gradion-ai/freeact](https://github.com/gradion-ai/freeact/tree/main/freeact/config/templates/skills/task-planning/SKILL.md)
 
 ---
 
