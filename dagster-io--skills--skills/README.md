@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dagster-io/skills](https://github.com/dagster-io/skills/tree/main/skills/dagster-expert/skills/dagster-expert/SKILL.md)
+Original source: [dagster-io/skills](https://github.com/dagster-io/skills/tree/main/skills/dignified-python/skills/dignified-python/SKILL.md)
 
 ---
 
