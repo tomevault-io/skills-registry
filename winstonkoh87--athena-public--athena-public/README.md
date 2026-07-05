@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [winstonkoh87/Athena-Public](https://github.com/winstonkoh87/Athena-Public/tree/main/examples/skills/coding/git-worktree-swarm/SKILL.md)
+Original source: [winstonkoh87/Athena-Public](https://github.com/winstonkoh87/Athena-Public/tree/main/examples/skills/decision/zenith-execution/SKILL.md)
 
 ---
 
