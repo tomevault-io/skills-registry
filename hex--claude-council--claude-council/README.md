@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hex/claude-council](https://github.com/hex/claude-council/tree/main/skills/deep-execution/SKILL.md)
+Original source: [hex/claude-council](https://github.com/hex/claude-council/tree/main/skills/council-execution/SKILL.md)
 
 ---
 
