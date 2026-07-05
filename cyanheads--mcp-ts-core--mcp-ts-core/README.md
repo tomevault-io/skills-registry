@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cyanheads/mcp-ts-core](https://github.com/cyanheads/mcp-ts-core/tree/main/skills/tool-defs-analysis/SKILL.md)
+Original source: [cyanheads/mcp-ts-core](https://github.com/cyanheads/mcp-ts-core/tree/main/skills/report-issue-local/SKILL.md)
 
 ---
 
