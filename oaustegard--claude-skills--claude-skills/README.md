@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [oaustegard/claude-skills](https://github.com/oaustegard/claude-skills/tree/main/extracting-keywords/SKILL.md)
+Original source: [oaustegard/claude-skills](https://github.com/oaustegard/claude-skills/tree/main/orienting-codebases/SKILL.md)
 
 ---
 
