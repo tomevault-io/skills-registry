@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neuron-core/neuron-ai](https://github.com/neuron-core/neuron-ai/tree/main/skills/neuron-agent-builder/SKILL.md)
+Original source: [neuron-core/neuron-ai](https://github.com/neuron-core/neuron-ai/tree/main/skills/neuron-rag-specialist/SKILL.md)
 
 ---
 
