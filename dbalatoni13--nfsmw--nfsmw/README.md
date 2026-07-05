@@ -1,0 +1,13 @@
+# nfsmw
+
+> Skill by [dbalatoni13](https://github.com/dbalatoni13/nfsmw) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [dbalatoni13/nfsmw](https://github.com/dbalatoni13/nfsmw/tree/main/.github/skills/lookup/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
