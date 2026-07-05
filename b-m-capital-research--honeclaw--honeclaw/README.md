@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [B-M-Capital-Research/honeclaw](https://github.com/B-M-Capital-Research/honeclaw/tree/main/skills/position_advice/SKILL.md)
+Original source: [B-M-Capital-Research/honeclaw](https://github.com/B-M-Capital-Research/honeclaw/tree/main/skills/image_generation/SKILL.md)
 
 ---
 
