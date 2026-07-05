@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mthalman/dredge](https://github.com/mthalman/dredge/tree/main/.squad/skills/squad-conventions/SKILL.md)
+Original source: [mthalman/dredge](https://github.com/mthalman/dredge/tree/main/.squad-templates/skills/squad-conventions/SKILL.md)
 
 ---
 
