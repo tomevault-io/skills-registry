@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [swaylq/master-skill](https://github.com/swaylq/master-skill/tree/main/prototypes/cross-border-ecommerce-master/output/sub-skills/steve-chou-mwqhj/SKILL.md)
+Original source: [swaylq/master-skill](https://github.com/swaylq/master-skill/tree/main/prototypes/github-unban-master/output/sub-skills/lawrence-lessig-code-is-law/SKILL.md)
 
 ---
 
