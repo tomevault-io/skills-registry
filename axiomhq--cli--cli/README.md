@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [axiomhq/cli](https://github.com/axiomhq/cli/tree/main/skills/explore-dataset/SKILL.md)
+Original source: [axiomhq/cli](https://github.com/axiomhq/cli/tree/main/skills/detect-anomalies/SKILL.md)
 
 ---
 
