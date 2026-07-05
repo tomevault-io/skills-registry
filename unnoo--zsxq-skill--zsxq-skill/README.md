@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [unnoo/zsxq-skill](https://github.com/unnoo/zsxq-skill/tree/main/skills/zsxq-user/SKILL.md)
+Original source: [unnoo/zsxq-skill](https://github.com/unnoo/zsxq-skill/tree/main/skills/zsxq-note/SKILL.md)
 
 ---
 
