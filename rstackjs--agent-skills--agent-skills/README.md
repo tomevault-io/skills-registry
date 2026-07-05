@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rstackjs/agent-skills](https://github.com/rstackjs/agent-skills/tree/main/skills/rspack-tracing/SKILL.md)
+Original source: [rstackjs/agent-skills](https://github.com/rstackjs/agent-skills/tree/main/skills/rstest-debugging/SKILL.md)
 
 ---
 
