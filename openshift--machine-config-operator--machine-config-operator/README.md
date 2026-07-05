@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [openshift/machine-config-operator](https://github.com/openshift/machine-config-operator/tree/main/pkg/daemon/internalreleaseimage/.claude/skills/iri-mcd/SKILL.md)
+Original source: [openshift/machine-config-operator](https://github.com/openshift/machine-config-operator/tree/main/pkg/controller/internalreleaseimage/.claude/skills/iri-controller/SKILL.md)
 
 ---
 
