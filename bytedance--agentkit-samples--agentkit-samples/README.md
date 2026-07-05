@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [bytedance/agentkit-samples](https://github.com/bytedance/agentkit-samples/tree/main/skills/byted-sol-stability-observability-asset-governance/SKILL.md)
+Original source: [bytedance/agentkit-samples](https://github.com/bytedance/agentkit-samples/tree/main/python/02-use-cases/comic_drama_gen/skill/comic-drama-master/SKILL.md)
 
 ---
 
