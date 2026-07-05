@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [eclipse-ankaios/ankaios](https://github.com/eclipse-ankaios/ankaios/tree/main/.github/skills/examples-checker/SKILL.md)
+Original source: [eclipse-ankaios/ankaios](https://github.com/eclipse-ankaios/ankaios/tree/main/.github/skills/tutorial-checker/SKILL.md)
 
 ---
 
