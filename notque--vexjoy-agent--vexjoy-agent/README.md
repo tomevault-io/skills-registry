@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [notque/vexjoy-agent](https://github.com/notque/vexjoy-agent/tree/main/skills/meta/docs-sync-checker/SKILL.md)
+Original source: [notque/vexjoy-agent](https://github.com/notque/vexjoy-agent/tree/main/skills/code-quality/joy-check/SKILL.md)
 
 ---
 
