@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [naymspace/backpex](https://github.com/naymspace/backpex/tree/main/skills/create-field/SKILL.md)
+Original source: [naymspace/backpex](https://github.com/naymspace/backpex/tree/main/skills/create-filter/SKILL.md)
 
 ---
 
