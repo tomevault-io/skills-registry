@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [defeat-beta/defeatbeta-api](https://github.com/defeat-beta/defeatbeta-api/tree/main/skills/defeatbeta-dcf/SKILL.md)
+Original source: [defeat-beta/defeatbeta-api](https://github.com/defeat-beta/defeatbeta-api/tree/main/skills/defeatbeta-analyst/SKILL.md)
 
 ---
 
