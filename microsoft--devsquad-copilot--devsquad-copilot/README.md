@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [microsoft/devsquad-copilot](https://github.com/microsoft/devsquad-copilot/tree/main/.github/plugins/devsquad/skills/harness-learnings/SKILL.md)
+Original source: [microsoft/devsquad-copilot](https://github.com/microsoft/devsquad-copilot/tree/main/.github/plugins/devsquad/skills/work-item-creation/SKILL.md)
 
 ---
 
