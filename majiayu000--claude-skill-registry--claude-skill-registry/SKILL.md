@@ -1,437 +1,682 @@
 ---
-name: design-movements
-description: Historical design movements and their enduring influence. Understand Bauhaus, Swiss International Style, Art Deco, Memphis, and more. Use when choosing an aesthetic direction, understanding cultural context, or predicting trend cycles. Use when this capability is needed.
+name: form-ux-patterns
+description: UX patterns for complex forms including multi-step wizards, cognitive chunking (5-7 fields max), progressive disclosure, and conditional fields. Use when building checkout flows, onboarding wizards, or forms with many fields. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Design Movements
+# Form UX Patterns
 
-Every movement is a reaction. Understanding the chain of reactions helps you predict what comes next and choose directions intentionally.
+Patterns for complex forms based on cognitive load research and aviation UX principles.
 
-## When to Use This Skill
+## Quick Start
 
-- Choosing an aesthetic direction for a project
-- Understanding why certain styles feel the way they do
-- Connecting visual choices to cultural meaning
-- Predicting trend cycles
-- Avoiding accidental historical misuse
+```tsx
+// Multi-step form with chunking
+import { useMultiStepForm } from './multi-step-form';
 
-## The Lineage
+function CheckoutWizard() {
+  const { currentStep, steps, goNext, goBack, isLastStep } = useMultiStepForm({
+    steps: [
+      { id: 'contact', title: 'Contact', fields: ['email', 'phone'] },
+      { id: 'shipping', title: 'Shipping', fields: ['name', 'street', 'city', 'state', 'zip'] },
+      { id: 'payment', title: 'Payment', fields: ['cardName', 'cardNumber', 'expiry', 'cvv'] }
+    ]
+  });
 
-```
-Arts & Crafts (1850s) ─→ Art Nouveau (1890s) ─→ Art Deco (1920s)
-                                                      │
-                                                      ↓
-                        Bauhaus (1919-33) ←────── Modernism
-                              │
-                              ↓
-              Swiss International Style (1950s)
-                              │
-              ┌───────────────┼───────────────┐
-              ↓               ↓               ↓
-        Corporate         Psychedelic     Postmodernism
-        Modernism         (1960s)         (1970s)
-         (1960s)              │               │
-              │               ↓               ↓
-              │          Punk/New Wave   Memphis Group
-              │           (1970s)         (1980s)
-              │               │               │
-              └───────────────┴───────────────┘
-                              │
-                              ↓
-                    Grunge/Deconstructivism (1990s)
-                              │
-              ┌───────────────┼───────────────┐
-              ↓               ↓               ↓
-          Web 2.0        Flat Design    Contemporary
-        Skeuomorphism     (2010s)       Eclecticism
-         (2000s)              │          (2020s)
-              │               │               ↑
-              └───────────────┴───────────────┘
+  return (
+    <form>
+      <StepIndicator steps={steps} current={currentStep} />
+      <StepContent step={steps[currentStep]} />
+      <StepNavigation onBack={goBack} onNext={goNext} isLast={isLastStep} />
+    </form>
+  );
+}
 ```
 
----
+## Core Principles
 
-## Movements in Depth
+### 1. Cognitive Chunking (Aviation Principle)
 
-### Arts and Crafts (1850-1910)
-**Origin**: England → Global
-**Reaction To**: Industrial Revolution's dehumanizing mass production
-**Core Belief**: Handcraft has moral value
+> "Humans can hold 5-7 items in working memory" — Miller's Law
 
-#### Visual Markers
-- Organic, nature-inspired patterns
-- Medieval and Gothic references
-- Hand-drawn lettering
-- Earth tones and natural dyes
-- Visible evidence of handwork
-- William Morris-style wallpapers
+```tsx
+// ❌ BAD: All fields on one page
+<form>
+  <input name="email" />
+  <input name="phone" />
+  <input name="name" />
+  <input name="street" />
+  <input name="street2" />
+  <input name="city" />
+  <input name="state" />
+  <input name="zip" />
+  <input name="cardName" />
+  <input name="cardNumber" />
+  <input name="expiry" />
+  <input name="cvv" />
+  {/* 12 fields = cognitive overload */}
+</form>
 
-#### Modern Application
-When a brand needs to feel:
-- Artisanal
-- Sustainable
-- Handcrafted
-- Anti-corporate
-
-**Tailwind Approach**:
-```css
-/* Arts & Crafts-inspired */
-colors: earth tones (amber, stone, emerald)
-borders: decorative, visible
-textures: paper, fabric, natural
-typography: serif, slightly ornate
-spacing: generous, organic rhythms
+// ✅ GOOD: Chunked into logical groups (5-7 max per group)
+<form>
+  <fieldset>
+    <legend>Contact (2 fields)</legend>
+    <input name="email" />
+    <input name="phone" />
+  </fieldset>
+  
+  <fieldset>
+    <legend>Shipping (5 fields)</legend>
+    <input name="name" />
+    <input name="street" />
+    <input name="city" />
+    <input name="state" />
+    <input name="zip" />
+  </fieldset>
+  
+  <fieldset>
+    <legend>Payment (4 fields)</legend>
+    <input name="cardName" />
+    <input name="cardNumber" />
+    <input name="expiry" />
+    <input name="cvv" />
+  </fieldset>
+</form>
 ```
 
----
+### 2. Briefing vs. Checklist (Aviation Principle)
 
-### Art Nouveau (1890-1910)
-**Origin**: France, Belgium → International
-**Reaction To**: Academic historicism and industrialization
-**Core Belief**: Art should be everywhere; no separation between art and craft
+> Instructions should be separate from labels, given before the task.
 
-#### Visual Markers
-- Whiplash curves and flowing lines
-- Botanical and female forms
-- Integrated typography and image
-- Ornate decorative frames
-- Asymmetrical compositions
-- Jewel-tone colors
+```tsx
+// ❌ BAD: Instructions mixed with labels
+<label>
+  Password (must be 8+ characters with uppercase, lowercase, and number)
+</label>
+<input type="password" />
 
-#### Modern Application
-When a brand needs to feel:
-- Elegant
-- Artistic
-- Feminine
-- Luxurious but organic
+// ✅ GOOD: Briefing before, label during
+<div className="field-briefing">
+  <p>Create a strong password with:</p>
+  <ul>
+    <li>At least 8 characters</li>
+    <li>Uppercase and lowercase letters</li>
+    <li>At least one number</li>
+  </ul>
+</div>
 
-**Reference**: Paris Metro entrances, Alphonse Mucha posters, Tiffany lamps
-
----
-
-### Art Deco (1920-1940)
-**Origin**: Paris → Global
-**Reaction To**: Art Nouveau's organic chaos; post-WWI optimism
-**Core Belief**: Machine-age glamour meets geometric precision
-
-#### Visual Markers
-- Sunbursts and radiating lines
-- Stepped/zigzag forms
-- Bold symmetry
-- Metallic colors (gold, silver, bronze)
-- Geometric sans-serifs
-- Chevron patterns
-- Egyptian and Aztec influences
-
-#### Modern Application
-When a brand needs to feel:
-- Luxurious
-- Celebratory
-- Nostalgic glamour
-- Premium entertainment
-
-**Tailwind Approach**:
-```css
-/* Art Deco-inspired */
-colors: gold-500, black, cream
-borders: decorative lines, stepped forms
-patterns: geometric, repetitive
-typography: geometric sans, high contrast display
-shadows: sharp, dramatic
+<label>Password</label>
+<input type="password" />
 ```
 
-**Reference**: Chrysler Building, Great Gatsby aesthetic, classic Hollywood
+### 3. Progressive Disclosure
 
----
+> Show only what's needed, when it's needed.
 
-### Bauhaus (1919-1933)
-**Origin**: Germany (Weimar, Dessau)
-**Reaction To**: Decorative excess; need for functional post-war reconstruction
-**Core Belief**: Form follows function; art and technology unified
+```tsx
+// Reveal fields based on selection
+function ShippingForm() {
+  const [method, setMethod] = useState<'standard' | 'express' | 'pickup'>('standard');
 
-#### Visual Markers
-- Primary colors (red, blue, yellow)
-- Geometric primitives (circle, square, triangle)
-- Sans-serif typography
-- Asymmetrical balance
-- Grid-based layouts
-- Minimal ornamentation
-- Clean lines
+  return (
+    <form>
+      <RadioGroup
+        label="Delivery method"
+        value={method}
+        onChange={setMethod}
+        options={[
+          { value: 'standard', label: 'Standard (5-7 days)' },
+          { value: 'express', label: 'Express (2-3 days)' },
+          { value: 'pickup', label: 'Store pickup' }
+        ]}
+      />
 
-#### Key Figures
-- Walter Gropius (architecture)
-- László Moholy-Nagy (photography)
-- Josef Albers (color theory)
-- Herbert Bayer (typography)
+      {/* Only show address for shipping methods */}
+      {method !== 'pickup' && (
+        <AddressFields />
+      )}
 
-#### Modern Application
-When a brand needs to feel:
-- Modern
-- Functional
-- Intelligent
-- Progressive
-
-**Tailwind Approach**:
-```css
-/* Bauhaus-inspired */
-colors: red-600, blue-600, yellow-500, black, white
-shapes: geometric, primitive
-layout: asymmetric grid
-typography: geometric sans (Futura, Avant Garde)
-borders: minimal, functional
+      {/* Only show store selector for pickup */}
+      {method === 'pickup' && (
+        <StoreSelector />
+      )}
+    </form>
+  );
+}
 ```
 
-**Legacy**: Google Material Design, IKEA, modern corporate identity
+## Multi-Step Forms
 
----
+### Step Configuration
 
-### Swiss International Style (1950s-1970s)
-**Origin**: Switzerland → Global
-**Reaction To**: Post-war need for universal, clear communication
-**Core Belief**: Objective communication through mathematical order
+```typescript
+// types/multi-step.ts
+export interface FormStep {
+  /** Unique step identifier */
+  id: string;
+  
+  /** Display title */
+  title: string;
+  
+  /** Optional description (briefing) */
+  description?: string;
+  
+  /** Fields in this step (for validation) */
+  fields: string[];
+  
+  /** Zod schema for this step */
+  schema?: z.ZodType;
+  
+  /** Whether step can be skipped */
+  optional?: boolean;
+  
+  /** Condition for showing this step */
+  condition?: (formData: Record<string, any>) => boolean;
+}
 
-#### Visual Markers
-- Helvetica and Univers typefaces
-- Asymmetric grid layouts
-- Generous white space
-- Flush-left, ragged-right text
-- Objective photography
-- Limited color palettes
-- Sans-serif dominance
-
-#### Key Figures
-- Josef Müller-Brockmann
-- Max Bill
-- Armin Hofmann
-- Emil Ruder
-
-#### Grid Principles
-```
-+---+---+---+---+---+---+
-| 1 | 2 | 3 | 4 | 5 | 6 |
-+---+---+---+---+---+---+
-     ↓       ↓       ↓
-  Column  Gutter   Module
-
-- Consistent column widths
-- Mathematical proportions
-- Elements snap to grid
-- Typography aligned to baseline grid
-```
-
-#### Modern Application
-When a brand needs to feel:
-- Professional
-- Trustworthy
-- Clear
-- International
-
-**Tailwind Approach**:
-```css
-/* Swiss-inspired */
-typography: 'Inter', 'Helvetica Neue', sans-serif
-colors: black, white, one accent
-layout: 12-column grid, generous gutters
-spacing: consistent, mathematical
-whitespace: abundant
+export interface FormChunk {
+  /** Chunk identifier */
+  id: string;
+  
+  /** Chunk title */
+  title: string;
+  
+  /** Briefing text (shown before fields) */
+  briefing?: string;
+  
+  /** Fields in this chunk (max 5-7) */
+  fields: string[];
+}
 ```
 
-**Legacy**: NYC Subway signage, corporate identity systems, most of the web
+### Multi-Step Hook
 
----
+```typescript
+// hooks/use-multi-step-form.ts
+import { useState, useCallback, useMemo } from 'react';
+import { UseFormReturn } from 'react-hook-form';
 
-### Psychedelic Design (1960s-1970s)
-**Origin**: San Francisco → Global counterculture
-**Reaction To**: Swiss Style's sterility; counterculture movement
-**Core Belief**: Design as experience; break every rule
+export interface UseMultiStepFormOptions {
+  steps: FormStep[];
+  form: UseFormReturn<any>;
+  onComplete?: (data: any) => void;
+}
 
-#### Visual Markers
-- Vibrating, clashing colors
-- Hand-drawn, flowing lettering
-- Optical illusions
-- Distorted, melting type
-- Maximalist density
-- Art Nouveau revival elements
-- Surreal imagery
+export interface UseMultiStepFormReturn {
+  /** Current step index */
+  currentStep: number;
+  
+  /** Current step config */
+  step: FormStep;
+  
+  /** All steps (filtered by conditions) */
+  steps: FormStep[];
+  
+  /** Total step count */
+  totalSteps: number;
+  
+  /** Whether on first step */
+  isFirstStep: boolean;
+  
+  /** Whether on last step */
+  isLastStep: boolean;
+  
+  /** Progress percentage (0-100) */
+  progress: number;
+  
+  /** Go to next step (validates current) */
+  goNext: () => Promise<boolean>;
+  
+  /** Go to previous step */
+  goBack: () => void;
+  
+  /** Go to specific step */
+  goTo: (index: number) => void;
+  
+  /** Can navigate to step (all previous valid) */
+  canGoTo: (index: number) => boolean;
+}
 
-#### Modern Application
-When a brand needs to feel:
-- Rebellious
-- Psychedelic
-- Festival/event
-- Counter-cultural
-
-**Caution**: Accessibility nightmare. Use for specific contexts only.
-
-**Reference**: Grateful Dead posters, Victor Moscoso, Wes Wilson
-
----
-
-### Postmodernism (1970s-1990s)
-**Origin**: Academic architecture → Design
-**Reaction To**: Modernist purity ("less is a bore")
-**Core Belief**: Embrace complexity, contradiction, and historical reference
-
-#### Visual Markers
-- Mixed typefaces and scales
-- Layered, chaotic layouts
-- Historical pastiche
-- Irony and humor
-- Bright, clashing colors
-- Collage aesthetics
-- Deliberate "bad" taste
-
-#### Key Figures
-- Robert Venturi (architecture)
-- Wolfgang Weingart (typography)
-- April Greiman (digital)
-
-#### Modern Application
-When a brand needs to feel:
-- Ironic
-- Intellectual
-- Anti-establishment
-- Art-world adjacent
-
----
-
-### Memphis Group (1981-1987)
-**Origin**: Milan, Italy
-**Reaction To**: Good taste and minimalist seriousness
-**Core Belief**: Anti-design; pleasure over function
-
-#### Visual Markers
-- Squiggles and arbitrary geometry
-- Clashing patterns and colors
-- Laminate surfaces
-- Asymmetric, unstable forms
-- Playful, childlike elements
-- Terrazzo patterns
-- Bold, jarring combinations
-
-#### Key Figures
-- Ettore Sottsass
-- Michele De Lucchi
-- Nathalie du Pasquier
-
-#### Modern Application
-When a brand needs to feel:
-- Playful
-- Bold
-- Young/Gen Z
-- Anti-serious
-
-**Tailwind Approach**:
-```css
-/* Memphis-inspired */
-colors: bright clashing (pink + teal + yellow + black)
-shapes: irregular geometry
-patterns: terrazzo, squiggles
-borders: thick, contrasting
-shadows: offset, colored
+export function useMultiStepForm({
+  steps: allSteps,
+  form,
+  onComplete
+}: UseMultiStepFormOptions): UseMultiStepFormReturn {
+  const [currentStep, setCurrentStep] = useState(0);
+  
+  // Filter steps by conditions
+  const steps = useMemo(() => {
+    const data = form.getValues();
+    return allSteps.filter(step => 
+      !step.condition || step.condition(data)
+    );
+  }, [allSteps, form]);
+  
+  const step = steps[currentStep];
+  const totalSteps = steps.length;
+  const isFirstStep = currentStep === 0;
+  const isLastStep = currentStep === totalSteps - 1;
+  const progress = ((currentStep + 1) / totalSteps) * 100;
+  
+  const goNext = useCallback(async () => {
+    // Validate current step fields
+    const isValid = await form.trigger(step.fields as any);
+    
+    if (!isValid) {
+      // Focus first error
+      const firstError = document.querySelector('[aria-invalid="true"]');
+      (firstError as HTMLElement)?.focus();
+      return false;
+    }
+    
+    if (isLastStep) {
+      // Submit form
+      const data = form.getValues();
+      onComplete?.(data);
+    } else {
+      setCurrentStep(prev => prev + 1);
+      // Focus step heading
+      requestAnimationFrame(() => {
+        document.getElementById('step-heading')?.focus();
+      });
+    }
+    
+    return true;
+  }, [step, isLastStep, form, onComplete]);
+  
+  const goBack = useCallback(() => {
+    if (!isFirstStep) {
+      setCurrentStep(prev => prev - 1);
+      requestAnimationFrame(() => {
+        document.getElementById('step-heading')?.focus();
+      });
+    }
+  }, [isFirstStep]);
+  
+  const goTo = useCallback((index: number) => {
+    if (index >= 0 && index < totalSteps) {
+      setCurrentStep(index);
+    }
+  }, [totalSteps]);
+  
+  const canGoTo = useCallback((index: number) => {
+    // Can always go back
+    if (index < currentStep) return true;
+    
+    // Can only go forward if all previous steps are valid
+    // (would need form state tracking for this)
+    return index <= currentStep;
+  }, [currentStep]);
+  
+  return {
+    currentStep,
+    step,
+    steps,
+    totalSteps,
+    isFirstStep,
+    isLastStep,
+    progress,
+    goNext,
+    goBack,
+    goTo,
+    canGoTo
+  };
+}
 ```
 
-**Reference**: 80s music videos, Saved by the Bell, current Gen Z aesthetics
+### Step Indicator Component
 
----
+```tsx
+// components/StepIndicator.tsx
+interface StepIndicatorProps {
+  steps: FormStep[];
+  currentStep: number;
+  onStepClick?: (index: number) => void;
+  canNavigate?: (index: number) => boolean;
+}
 
-### Grunge/Deconstructivism (1990s)
-**Origin**: Pacific Northwest → Global
-**Reaction To**: Clean corporate design; digital tools enabling mess
-**Core Belief**: Destroy legibility; design as art
+export function StepIndicator({
+  steps,
+  currentStep,
+  onStepClick,
+  canNavigate
+}: StepIndicatorProps) {
+  return (
+    <nav aria-label="Form progress">
+      <ol className="step-indicator">
+        {steps.map((step, index) => {
+          const status = index < currentStep 
+            ? 'complete' 
+            : index === currentStep 
+              ? 'current' 
+              : 'upcoming';
+          
+          const clickable = canNavigate?.(index) ?? false;
+          
+          return (
+            <li 
+              key={step.id}
+              className={`step-indicator__item step-indicator__item--${status}`}
+            >
+              {clickable ? (
+                <button
+                  type="button"
+                  onClick={() => onStepClick?.(index)}
+                  aria-current={status === 'current' ? 'step' : undefined}
+                >
+                  <span className="step-indicator__number">{index + 1}</span>
+                  <span className="step-indicator__title">{step.title}</span>
+                </button>
+              ) : (
+                <span aria-current={status === 'current' ? 'step' : undefined}>
+                  <span className="step-indicator__number">{index + 1}</span>
+                  <span className="step-indicator__title">{step.title}</span>
+                </span>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+      
+      {/* Progress bar */}
+      <div 
+        className="step-indicator__progress"
+        role="progressbar"
+        aria-valuenow={currentStep + 1}
+        aria-valuemin={1}
+        aria-valuemax={steps.length}
+        aria-label={`Step ${currentStep + 1} of ${steps.length}`}
+      >
+        <div 
+          className="step-indicator__progress-fill"
+          style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+        />
+      </div>
+    </nav>
+  );
+}
+```
 
-#### Visual Markers
-- Overlapping layers
-- Distressed textures
-- Mixed and distorted type
-- Deliberate "mistakes"
-- Dark, gritty palettes
-- Fractured layouts
-- Photocopied aesthetics
+### Step Navigation Component
 
-#### Key Figures
-- David Carson (Ray Gun)
-- Neville Brody
-- Emigre magazine
+```tsx
+// components/StepNavigation.tsx
+interface StepNavigationProps {
+  onBack: () => void;
+  onNext: () => void;
+  isFirstStep: boolean;
+  isLastStep: boolean;
+  isSubmitting?: boolean;
+  backLabel?: string;
+  nextLabel?: string;
+  submitLabel?: string;
+}
 
-#### Modern Application
-When a brand needs to feel:
-- Authentic
-- Raw
-- Underground
-- Anti-corporate
+export function StepNavigation({
+  onBack,
+  onNext,
+  isFirstStep,
+  isLastStep,
+  isSubmitting = false,
+  backLabel = 'Back',
+  nextLabel = 'Continue',
+  submitLabel = 'Submit'
+}: StepNavigationProps) {
+  return (
+    <div className="step-navigation">
+      {!isFirstStep && (
+        <button
+          type="button"
+          onClick={onBack}
+          className="step-navigation__back"
+          disabled={isSubmitting}
+        >
+          {backLabel}
+        </button>
+      )}
+      
+      <button
+        type="button"
+        onClick={onNext}
+        className="step-navigation__next"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? (
+          <>
+            <Spinner aria-hidden="true" />
+            <span className="sr-only">Processing...</span>
+            Processing...
+          </>
+        ) : (
+          isLastStep ? submitLabel : nextLabel
+        )}
+      </button>
+    </div>
+  );
+}
+```
 
-**Reference**: Ray Gun magazine, early MTV, 90s album covers
+## Conditional Fields
 
----
+### Pattern: Show/Hide Based on Selection
 
-### Flat Design (2010s)
-**Origin**: Microsoft Metro → Apple iOS 7 → Web
-**Reaction To**: Skeuomorphic excess; need for responsive design
-**Core Belief**: Digital should look digital
+```tsx
+// components/ConditionalField.tsx
+import { useFormContext, useWatch } from 'react-hook-form';
+import { ReactNode } from 'react';
 
-#### Visual Markers
-- Flat colors (no gradients)
-- Geometric sans-serif type
-- Simple iconography
-- Generous white space
-- Bold, saturated colors
-- No shadows or depth
-- Grid-based layouts
+interface ConditionalFieldProps {
+  /** Field to watch */
+  watch: string;
+  
+  /** Condition for showing children */
+  when: (value: any) => boolean;
+  
+  /** Children to render when condition is true */
+  children: ReactNode;
+  
+  /** Whether to keep values when hidden */
+  keepValues?: boolean;
+}
 
-#### Modern Application
-Now the baseline. Most UI design defaults to flat principles with:
-- Subtle depth (neumorphism)
-- Micro-animations
-- Selective shadows
+export function ConditionalField({
+  watch: watchField,
+  when,
+  children,
+  keepValues = false
+}: ConditionalFieldProps) {
+  const { control, unregister } = useFormContext();
+  const value = useWatch({ control, name: watchField });
+  
+  const shouldShow = when(value);
+  
+  // Optionally unregister fields when hidden
+  useEffect(() => {
+    if (!shouldShow && !keepValues) {
+      // Get field names from children and unregister
+      // (implementation depends on your field structure)
+    }
+  }, [shouldShow, keepValues]);
+  
+  if (!shouldShow) return null;
+  
+  return <>{children}</>;
+}
 
----
+// Usage
+<FormField name="hasCompany" label="Are you a business?" type="checkbox" />
 
-### Contemporary Eclecticism (2020s)
-**Where We Are Now**: All styles available simultaneously
+<ConditionalField watch="hasCompany" when={(v) => v === true}>
+  <FormField name="companyName" label="Company name" />
+  <FormField name="taxId" label="Tax ID" />
+</ConditionalField>
+```
 
-#### Current Trends
-1. **Neumorphism**: Soft shadows, extruded elements
-2. **Glassmorphism**: Frosted glass, translucency
-3. **3D Integration**: 3D elements in 2D interfaces
-4. **Variable Typography**: Responsive, animated type
-5. **Dark Mode**: OLED-friendly, reduced eye strain
-6. **Maximalism**: Memphis revival, anti-minimalism
-7. **Y2K Revival**: Late 90s/early 2000s nostalgia
+### Pattern: Dynamic Field Array
 
-#### The Key Insight
-We're in a post-ideological moment. No single style dominates. Success comes from:
-- **Intentional selection**: Choose styles for meaning
-- **Competent execution**: Know the rules before breaking them
-- **Cultural awareness**: Understand what styles communicate
+```tsx
+// components/RepeatableField.tsx
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
----
+interface RepeatableFieldProps {
+  name: string;
+  label: string;
+  maxItems?: number;
+  minItems?: number;
+  renderItem: (index: number) => ReactNode;
+}
 
-## Cyclical Pattern
+export function RepeatableField({
+  name,
+  label,
+  maxItems = 10,
+  minItems = 1,
+  renderItem
+}: RepeatableFieldProps) {
+  const { control } = useFormContext();
+  const { fields, append, remove } = useFieldArray({ control, name });
+  
+  const canAdd = fields.length < maxItems;
+  const canRemove = fields.length > minItems;
+  
+  return (
+    <fieldset className="repeatable-field">
+      <legend>{label}</legend>
+      
+      {fields.map((field, index) => (
+        <div key={field.id} className="repeatable-field__item">
+          {renderItem(index)}
+          
+          {canRemove && (
+            <button
+              type="button"
+              onClick={() => remove(index)}
+              aria-label={`Remove item ${index + 1}`}
+            >
+              Remove
+            </button>
+          )}
+        </div>
+      ))}
+      
+      {canAdd && (
+        <button
+          type="button"
+          onClick={() => append({})}
+          className="repeatable-field__add"
+        >
+          Add {label.toLowerCase()}
+        </button>
+      )}
+    </fieldset>
+  );
+}
 
-Styles tend to return on ~30-year cycles:
+// Usage
+<RepeatableField
+  name="teammates"
+  label="Team Members"
+  maxItems={5}
+  renderItem={(index) => (
+    <>
+      <FormField name={`teammates.${index}.name`} label="Name" />
+      <FormField name={`teammates.${index}.email`} label="Email" />
+    </>
+  )}
+/>
+```
 
-| Original Era | Revival Era |
-|--------------|-------------|
-| 1960s psychedelic | 1990s rave |
-| 1970s disco | 2000s web gradients |
-| 1980s Memphis | 2010s hipster design |
-| 1990s grunge | 2020s brutalism |
-| Y2K aesthetic | 2025-2030s (predicted) |
+## Form Layout Patterns
 
-**Prediction**: Expect a 1990s deconstructivist/grunge revival in the late 2020s.
+### Single Column (Recommended Default)
 
----
+```tsx
+// Best for most forms - clear visual flow
+<form className="form-layout--single">
+  <FormField name="email" label="Email" />
+  <FormField name="password" label="Password" />
+  <button type="submit">Sign in</button>
+</form>
 
-## Resources
+// CSS
+.form-layout--single {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+}
+```
 
-- **references/bauhaus.md**: Complete Bauhaus history and application
-- **references/swiss-international.md**: Grid systems and Swiss principles
-- **references/memphis-group.md**: Memphis patterns and colors
-- **references/art-deco.md**: Deco geometry and application
-- **references/minimalism.md**: Less-is-more philosophy
+### Two Column (Use Sparingly)
+
+```tsx
+// Only for related short fields
+<form className="form-layout--two-col">
+  <FormField name="firstName" label="First name" />
+  <FormField name="lastName" label="Last name" />
+  
+  <FormField name="city" label="City" className="col-span-1" />
+  <FormField name="state" label="State" className="col-span-1" />
+</form>
+
+// CSS
+.form-layout--two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .form-layout--two-col {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
+### Card Sections
+
+```tsx
+// For long forms with distinct sections
+<form className="form-layout--cards">
+  <section className="form-card">
+    <h3>Contact Information</h3>
+    <FormField name="email" label="Email" />
+    <FormField name="phone" label="Phone" />
+  </section>
+  
+  <section className="form-card">
+    <h3>Shipping Address</h3>
+    <AddressFields />
+  </section>
+  
+  <section className="form-card">
+    <h3>Payment</h3>
+    <PaymentFields />
+  </section>
+</form>
+```
+
+## File Structure
+
+```
+form-ux-patterns/
+├── SKILL.md
+├── references/
+│   ├── cognitive-load.md       # Research on chunking
+│   └── wizard-patterns.md      # Multi-step best practices
+└── scripts/
+    ├── multi-step-form.tsx     # Multi-step hook + components
+    ├── conditional-field.tsx   # Show/hide patterns
+    ├── repeatable-field.tsx    # Dynamic arrays
+    ├── step-indicator.tsx      # Progress indicator
+    └── step-indicator.css      # Styles
+```
+
+## Reference
+
+- `references/cognitive-load.md` — Research on Miller's Law and chunking
+- `references/wizard-patterns.md` — Multi-step wizard best practices
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
