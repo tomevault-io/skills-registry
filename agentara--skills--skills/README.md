@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agentara/skills](https://github.com/agentara/skills/tree/main/skills/aigc/torn-paper-collage-poster/SKILL.md)
+Original source: [agentara/skills](https://github.com/agentara/skills/tree/main/skills/aigc/soviet-storybook-grotesque/SKILL.md)
 
 ---
 
