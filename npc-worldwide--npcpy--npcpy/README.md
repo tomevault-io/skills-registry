@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NPC-Worldwide/npcpy](https://github.com/NPC-Worldwide/npcpy/tree/main/skills/run_jinx/SKILL.md)
+Original source: [NPC-Worldwide/npcpy](https://github.com/NPC-Worldwide/npcpy/tree/main/skills/create_jinx/SKILL.md)
 
 ---
 
