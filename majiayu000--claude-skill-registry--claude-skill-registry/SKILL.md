@@ -1,498 +1,275 @@
 ---
-name: prow-job-extract-must-gather
-description: Extract and decompress must-gather archives from Prow CI job artifacts, generating an interactive HTML file browser with filters Use when this capability is needed.
+name: rust-sqlite-cli-architecture
+description: |- Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Prow Job Extract Must-Gather
+# Rust SQLite CLI Architecture
 
-This skill extracts and decompresses must-gather archives from Prow CI job artifacts, automatically handling nested tar and gzip archives, and generating an interactive HTML file browser.
+Use this skill when designing or reviewing a Rust command-line application that
+stores durable local state in SQLite. The output is an implementation-ready
+architecture plan, not a pile of generic database advice. It should identify
+where data lives, how schema changes land, which commands own transactions, how
+tests prove safety, and how users recover when something goes wrong.
 
-## When to Use This Skill
+## Critical Constraints
 
-Use this skill when the user wants to:
-- Extract must-gather archives from Prow CI job artifacts
-- Avoid manually downloading and extracting nested archives
-- Browse must-gather contents with an interactive HTML interface
-- Search for specific files or file types in must-gather data
-- Analyze OpenShift cluster state from CI test runs
+- Treat the database as user data, not an internal cache, unless the product
+  explicitly says it can be deleted without loss.
+- Pick one canonical database location and make overrides explicit through a
+  flag, environment variable, or config value.
+- Never run destructive schema changes without a tested backup and rollback
+  path.
+- Every mutating command needs an explicit transaction boundary.
+- Migrations are source-controlled, ordered, repeatable, and tested from older
+  fixtures.
+- User-facing errors must explain the next action without exposing raw SQL as
+  the main message.
+- Recovery commands must exist before the tool is used for important data.
 
-## Prerequisites
+## When SQLite Fits
 
-Before starting, verify these prerequisites:
+SQLite is a strong fit when the CLI needs local durable state, offline operation,
+fast startup, simple deployment, and one-machine ownership. Examples include
+task stores, local indexes, audit logs, sync queues, caches that must survive
+restart, and portable project databases.
 
-1. **gcloud CLI Installation**
-   - Check if installed: `which gcloud`
-   - If not installed, provide instructions for the user's platform
-   - Installation guide: https://cloud.google.com/sdk/docs/install
+Choose another storage design when the product requires heavy multi-writer
+concurrency across machines, central policy enforcement, server-side audit, or
+very large binary payloads. A CLI can still use SQLite as a local queue or cache
+in those systems, but the architecture should name the server of record.
 
-2. **gcloud Authentication (Optional)**
-   - The `test-platform-results` bucket is publicly accessible
-   - No authentication is required for read access
-   - Skip authentication checks
+## Inputs To Collect
 
-## Input Format
+Before designing modules or tables, gather these facts:
 
-The user will provide:
-1. **Prow job URL** - gcsweb URL containing `test-platform-results/`
-   - Example: `https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/test-platform-results/logs/periodic-ci-openshift-release-master-ci-4.20-e2e-aws-ovn-techpreview/1965715986610917376/`
-   - URL may or may not have trailing slash
+- Primary commands and which ones read, mutate, import, export, sync, or delete.
+- Data ownership: per user, per workspace, per repository, or per explicit file.
+- Portability needs: copyable database file, project-relative database, or
+  platform data directory.
+- Durability expectations: cache, rebuildable index, or authoritative user data.
+- Concurrency expectations: one process, shell pipelines, background daemon,
+  scheduled runs, or multiple terminals.
+- Upgrade expectations: how old an installed database might be in the field.
+- Privacy and backup expectations for sensitive or irreplaceable data.
 
-## Implementation Steps
+## Architecture Procedure
 
-### Step 1: Parse and Validate URL
+1. Define the storage contract.
+   State the default path, override mechanism, file permissions, and whether the
+   database is authoritative. Do not hide important data under an ambiguous temp
+   or cache path.
 
-1. **Extract bucket path**
-   - Find `test-platform-results/` in URL
-   - Extract everything after it as the GCS bucket relative path
-   - If not found, error: "URL must contain 'test-platform-results/'"
+2. Draw the command-to-data map.
+   For each command, list the tables it reads and writes, whether it needs a
+   transaction, and what invariant must hold after it exits.
 
-2. **Extract build_id**
-   - Search for pattern `/(\\d{10,})/` in the bucket path
-   - build_id must be at least 10 consecutive decimal digits
-   - Handle URLs with or without trailing slash
-   - If not found, error: "Could not find build ID (10+ digits) in URL"
+3. Choose module boundaries.
+   Keep CLI parsing, domain decisions, database access, migrations, and output
+   rendering separate enough that transaction tests can call the domain layer
+   without scraping terminal text.
 
-3. **Extract prowjob name**
-   - Find the path segment immediately preceding build_id
-   - Example: In `.../periodic-ci-openshift-release-master-ci-4.20-e2e-aws-ovn-techpreview/1965715986610917376/`
-   - Prowjob name: `periodic-ci-openshift-release-master-ci-4.20-e2e-aws-ovn-techpreview`
+4. Design the schema for operations.
+   Model stable entities as tables with primary keys, foreign keys, and indexes
+   that match command queries. Use JSON columns only for opaque payloads or
+   bounded extension fields, not for data that commands must filter or join.
 
-4. **Construct GCS paths**
-   - Bucket: `test-platform-results`
-   - Base GCS path: `gs://test-platform-results/{bucket-path}/`
-   - Ensure path ends with `/`
+5. Define connection setup.
+   Open one connection per command unless the product has a daemon mode. Apply
+   required connection settings consistently, including foreign-key enforcement,
+   busy timeout, and any journal-mode decision.
 
-### Step 2: Create Working Directory
+6. Write the migration policy.
+   Decide whether normal command startup applies pending migrations or whether
+   users run an explicit upgrade command. For authoritative data, prefer a
+   preflight check, backup, migration, integrity check, and clear failure path.
 
-1. **Check for existing extraction first**
-   - Check if `.work/prow-job-extract-must-gather/{build_id}/logs/` directory exists and has content
-   - If it exists with content:
-     - Use AskUserQuestion tool to ask:
-       - Question: "Must-gather already extracted for build {build_id}. Would you like to use the existing extraction or re-extract?"
-       - Options:
-         - "Use existing" - Skip to HTML report generation (Step 6)
-         - "Re-extract" - Continue to clean and re-download
-     - If user chooses "Re-extract":
-       - Remove all existing content: `rm -rf .work/prow-job-extract-must-gather/{build_id}/logs/`
-       - Also remove tmp directory: `rm -rf .work/prow-job-extract-must-gather/{build_id}/tmp/`
-       - This ensures clean state before downloading new content
-     - If user chooses "Use existing":
-       - Skip directly to Step 6 (Generate HTML Report)
+7. Specify transaction boundaries.
+   Every mutating command begins a transaction after validation and commits only
+   after all database invariants are satisfied. Render output after commit so a
+   successful message cannot precede a rolled-back write.
 
-2. **Create directory structure**
-   ```bash
-   mkdir -p .work/prow-job-extract-must-gather/{build_id}/logs
-   mkdir -p .work/prow-job-extract-must-gather/{build_id}/tmp
-   ```
-   - Use `.work/prow-job-extract-must-gather/` as the base directory (already in .gitignore)
-   - Use build_id as subdirectory name
-   - Create `logs/` subdirectory for extraction
-   - Create `tmp/` subdirectory for temporary files
-   - Working directory: `.work/prow-job-extract-must-gather/{build_id}/`
+8. Plan operational commands.
+   Include commands or documented workflows for `doctor`, `backup`, `restore`,
+   `export`, `import`, `schema-version`, and optional compaction.
 
-### Step 3: Download and Validate prowjob.json
+9. Build the test matrix.
+   Cover fresh database creation, migration from prior fixtures, transaction
+   rollback, command integration, concurrent-process behavior, backup/restore,
+   import validation, and corruption diagnosis.
 
-1. **Download prowjob.json**
-   ```bash
-   gcloud storage cp gs://test-platform-results/{bucket-path}/prowjob.json .work/prow-job-extract-must-gather/{build_id}/tmp/prowjob.json --no-user-output-enabled
-   ```
+## Recommended File Shape
 
-2. **Parse and validate**
-   - Read `.work/prow-job-extract-must-gather/{build_id}/tmp/prowjob.json`
-   - Search for pattern: `--target=([a-zA-Z0-9-]+)`
-   - If not found:
-     - Display: "This is not a ci-operator job. The prowjob cannot be analyzed by this skill."
-     - Explain: ci-operator jobs have a --target argument specifying the test target
-     - Exit skill
+Adapt names to the repository, but preserve the separation of responsibilities:
 
-3. **Extract target name**
-   - Capture the target value (e.g., `e2e-aws-ovn-techpreview`)
-   - Store for constructing must-gather path
-
-### Step 4: Download Must-Gather Archive
-
-1. **Construct must-gather path**
-   - GCS path: `gs://test-platform-results/{bucket-path}/artifacts/{target}/gather-must-gather/artifacts/must-gather.tar`
-   - Local path: `.work/prow-job-extract-must-gather/{build_id}/tmp/must-gather.tar`
-
-2. **Download must-gather.tar**
-   ```bash
-   gcloud storage cp gs://test-platform-results/{bucket-path}/artifacts/{target}/gather-must-gather/artifacts/must-gather.tar .work/prow-job-extract-must-gather/{build_id}/tmp/must-gather.tar --no-user-output-enabled
-   ```
-   - Use `--no-user-output-enabled` to suppress progress output
-   - If file not found, error: "No must-gather archive found. Job may not have completed or gather-must-gather may not have run."
-
-### Step 5: Extract and Process Archives
-
-**IMPORTANT: Use the provided Python script `extract_archives.py` from the skill directory.**
-
-**Usage:**
-```bash
-python3 plugins/prow-job/skills/prow-job-extract-must-gather/extract_archives.py \
-  .work/prow-job-extract-must-gather/{build_id}/tmp/must-gather.tar \
-  .work/prow-job-extract-must-gather/{build_id}/logs
+```text
+src/
+  main.rs              # process entry point and error-to-exit mapping
+  cli.rs               # argument parsing and command enum
+  commands/            # command handlers, one file per workflow
+  domain/              # validation and state-transition rules
+  db/
+    mod.rs             # connection factory and common database errors
+    migrations/        # ordered migration files or embedded migration sources
+    schema.rs          # schema-version checks and migration runner
+    repo_*.rs          # small query modules grouped by aggregate or workflow
+tests/
+  cli/                 # black-box command tests
+  fixtures/db-v*.sqlite
 ```
 
-**What the script does:**
+The key rule is direction: commands may call domain and database modules; the
+database layer should not know about terminal formatting, color, progress bars,
+or command-line flags.
 
-1. **Extract must-gather.tar**
-   - Extract to `{build_id}/logs/` directory
-   - Uses Python's tarfile module for reliable extraction
+## Data Location Rules
 
-2. **Rename long subdirectory to "content/"**
-   - Find subdirectory containing "-ci-" in the name
-   - Example: `registry-build09-ci-openshift-org-ci-op-m8t77165-stable-sha256-d1ae126eed86a47fdbc8db0ad176bf078a5edebdbb0df180d73f02e5f03779e0/`
-   - Rename to: `content/`
-   - Preserves all files and subdirectories
+- Per-user tools should default to a platform data directory and print the path
+  in diagnostic commands.
+- Per-project tools should prefer an explicit project metadata directory or a
+  user-selected path checked into the project policy.
+- Support `--database <path>` or an equivalent override for tests, recovery, and
+  advanced operation.
+- Refuse to create parent directories with broad permissions for sensitive
+  state.
+- Document sidecar files if the journal mode creates them, because backup and
+  cleanup procedures must include them or checkpoint first.
 
-3. **Recursively process nested archives**
-   - Walk entire directory tree
-   - Find and process archives:
+## Schema Rules
 
-   **For .tar.gz and .tgz files:**
-   ```python
-   # Extract in place
-   with tarfile.open(archive_path, 'r:gz') as tar:
-       tar.extractall(path=parent_dir)
-   # Remove original archive
-   os.remove(archive_path)
-   ```
+- Enable foreign-key enforcement for every connection.
+- Use stable integer or text primary keys; do not rely on row order.
+- Store timestamps in one format and name the clock source used by commands.
+- Add indexes for the queries on the command map, not for speculative future
+  reports.
+- Keep schema metadata in the database, including current migration version and
+  application identity.
+- Keep destructive changes explicit: copy-table migrations are safer than
+  in-place mutation when data matters.
+- Make uniqueness constraints carry product meaning, then translate violations
+  into user-facing conflict messages.
 
-   **For .gz files (no tar):**
-   ```python
-   # Gunzip in place
-   with gzip.open(gz_path, 'rb') as f_in:
-       with open(output_path, 'wb') as f_out:
-           shutil.copyfileobj(f_in, f_out)
-   # Remove original archive
-   os.remove(gz_path)
-   ```
+## Migration Policy
 
-4. **Progress reporting**
-   - Print status for each extracted archive
-   - Count total files and archives processed
-   - Report final statistics
+A migration plan must answer:
 
-5. **Error handling**
-   - Skip corrupted archives with warning
-   - Continue processing other files
-   - Report all errors at the end
+- How pending migrations are detected.
+- Whether a backup is created before migration.
+- How integrity is checked before and after migration.
+- Which migrations are reversible, and which require restore from backup.
+- How the tool behaves when the executable is older than the database schema.
+- How fixture databases are generated and kept for compatibility tests.
 
-### Step 6: Generate HTML File Browser
+For important user data, the safe default is:
 
-**IMPORTANT: Use the provided Python script `generate_html_report.py` from the skill directory.**
+1. Open the database.
+2. Check application identity and schema version.
+3. Run an integrity check.
+4. Create or require a backup.
+5. Apply pending migrations inside the narrowest safe transaction scope.
+6. Run post-migration integrity and invariant checks.
+7. Report the new schema version and backup location.
 
-**Usage:**
-```bash
-python3 plugins/prow-job/skills/prow-job-extract-must-gather/generate_html_report.py \
-  .work/prow-job-extract-must-gather/{build_id}/logs \
-  "{prowjob_name}" \
-  "{build_id}" \
-  "{target}" \
-  "{gcsweb_url}"
-```
+## Transaction Policy
 
-**Output:** The script generates `.work/prow-job-extract-must-gather/{build_id}/must-gather-browser.html`
+Use one explicit transaction per mutating command. Start it after input
+validation and connection setup. Commit after database invariants pass. Roll
+back on any error. Commands that perform read-modify-write decisions should
+acquire the write intent early enough to avoid stale decisions under concurrent
+processes.
 
-**What the script does:**
+External side effects need special care:
 
-1. **Scan directory tree**
-   - Recursively walk `{build_id}/logs/` directory
-   - Collect all files with metadata:
-     - Relative path from logs/
-     - File size (human-readable: KB, MB, GB)
-     - File extension
-     - Directory depth
-     - Last modified time
+- If the command writes files and the database, define which side is
+  authoritative and how cleanup works after failure.
+- If the command sends network requests, prefer an outbox table or idempotent
+  operation key so retry does not duplicate user-visible effects.
+- If output streams a report, collect database state first, commit if needed,
+  then render.
 
-2. **Classify files**
-   - Detect file types based on extension:
-     - Logs: `.log`, `.txt`
-     - YAML: `.yaml`, `.yml`
-     - JSON: `.json`
-     - XML: `.xml`
-     - Certificates: `.crt`, `.pem`, `.key`
-     - Binaries: `.tar`, `.gz`, `.tgz`, `.tar.gz`
-     - Other
-   - Count files by type for statistics
+## Testing Plan
 
-3. **Generate HTML structure**
+Build tests around behavior, not driver internals:
 
-   **Header Section:**
-   ```html
-   <div class="header">
-     <h1>Must-Gather File Browser</h1>
-     <div class="metadata">
-       <p><strong>Prow Job:</strong> {prowjob-name}</p>
-       <p><strong>Build ID:</strong> {build_id}</p>
-       <p><strong>gcsweb URL:</strong> <a href="{original-url}">{original-url}</a></p>
-       <p><strong>Target:</strong> {target}</p>
-       <p><strong>Total Files:</strong> {count}</p>
-       <p><strong>Total Size:</strong> {human-readable-size}</p>
-     </div>
-   </div>
-   ```
+- Fresh-start test: no database exists, the first read and first write behave as
+  documented.
+- Migration fixture test: every supported older fixture opens, migrates, and
+  preserves expected rows.
+- Transaction rollback test: inject a failure after partial work and verify no
+  partial state remains.
+- Command integration test: run the compiled binary against a temp database and
+  assert output plus database state.
+- Concurrency test: run two processes against the same database for commands
+  that users might execute in parallel.
+- Backup/restore test: create data, back it up, restore it elsewhere, and run
+  `doctor`.
+- Import test: malformed input fails before mutation; valid input is atomic.
+- Destructive command test: dry-run output matches the rows affected by the real
+  command.
 
-   **Filter Controls:**
-   ```html
-   <div class="filters">
-     <div class="filter-group">
-       <label class="filter-label">File Type (multi-select)</label>
-       <div class="filter-buttons">
-         <button class="filter-btn" data-filter="type" data-value="log">Logs ({count})</button>
-         <button class="filter-btn" data-filter="type" data-value="yaml">YAML ({count})</button>
-         <button class="filter-btn" data-filter="type" data-value="json">JSON ({count})</button>
-         <!-- etc -->
-       </div>
-     </div>
-     <div class="filter-group">
-       <label class="filter-label">Filter by Regex Pattern</label>
-       <input type="text" class="search-box" id="pattern" placeholder="Enter regex pattern (e.g., .*etcd.*, .*\\.log$)">
-     </div>
-     <div class="filter-group">
-       <label class="filter-label">Search by Name</label>
-       <input type="text" class="search-box" id="search" placeholder="Search file names...">
-     </div>
-   </div>
-   ```
+Prefer temp directories and per-test database paths. Tests should not touch a
+developer's real data directory.
 
-   **File List:**
-   ```html
-   <div class="file-list">
-     <div class="file-item" data-type="{type}" data-path="{path}">
-       <div class="file-icon">{icon}</div>
-       <div class="file-info">
-         <div class="file-name">
-           <a href="{relative-path}" target="_blank">{filename}</a>
-         </div>
-         <div class="file-meta">
-           <span class="file-path">{directory-path}</span>
-           <span class="file-size">{size}</span>
-           <span class="file-type badge badge-{type}">{type}</span>
-         </div>
-       </div>
-     </div>
-   </div>
-   ```
+## Operational Safety
 
-   **CSS Styling:**
-   - Use same dark theme as analyze-resource skill
-   - Modern, clean design with good contrast
-   - Responsive layout
-   - File type color coding
-   - Monospace fonts for paths
-   - Hover effects on file items
+Add a `doctor` path that checks database path, application identity, schema
+version, integrity, foreign-key consistency, journal leftovers, and writability.
+The command should return a nonzero exit code on unsafe state and include the
+next command a user can run.
 
-   **JavaScript Interactivity:**
-   ```javascript
-   // Multi-select file type filters
-   document.querySelectorAll('.filter-btn').forEach(btn => {
-     btn.addEventListener('click', function() {
-       // Toggle active state
-       // Apply filters
-     });
-   });
+Add backup and export behavior before destructive workflows. A backup preserves
+the native database for restore; an export gives users an inspectable format for
+portability. They solve different problems and should not be treated as
+interchangeable.
 
-   // Regex pattern filter
-   document.getElementById('pattern').addEventListener('input', function() {
-     const pattern = this.value;
-     if (pattern) {
-       const regex = new RegExp(pattern);
-       // Filter files matching regex
-     }
-   });
+For delete, reset, prune, and migration commands:
 
-   // Name search filter
-   document.getElementById('search').addEventListener('input', function() {
-     const query = this.value.toLowerCase();
-     // Filter files by name substring
-   });
+- Provide dry-run output with row counts or item identifiers.
+- Require an explicit confirmation flag for non-interactive use.
+- Create or require a backup when data is not rebuildable.
+- Log enough context for support without leaking secrets.
+- Make interruption behavior clear and tested.
 
-   // Combine all active filters
-   function applyFilters() {
-     // Show/hide files based on all active filters
-   }
-   ```
+## Design Review Checklist
 
-4. **Statistics Section:**
-   ```html
-   <div class="stats">
-     <div class="stat">
-       <div class="stat-value">{total-files}</div>
-       <div class="stat-label">Total Files</div>
-     </div>
-     <div class="stat">
-       <div class="stat-value">{total-size}</div>
-       <div class="stat-label">Total Size</div>
-     </div>
-     <div class="stat">
-       <div class="stat-value">{log-count}</div>
-       <div class="stat-label">Log Files</div>
-     </div>
-     <div class="stat">
-       <div class="stat-value">{yaml-count}</div>
-       <div class="stat-label">YAML Files</div>
-     </div>
-     <!-- etc -->
-   </div>
-   ```
+- The architecture names the database location and override mechanism.
+- Each command has a declared read/write set and transaction policy.
+- Migrations are ordered, source-controlled, and tested from fixtures.
+- The executable handles newer database schemas safely.
+- Backup, restore, export, and doctor paths are present for important data.
+- Tests use isolated database paths and prove rollback behavior.
+- Destructive operations have dry-run and confirmation behavior.
+- Error messages map database failures to user actions.
+- The final design distinguishes rebuildable caches from authoritative data.
 
-5. **Write HTML to file**
-   - Script automatically writes to `.work/prow-job-extract-must-gather/{build_id}/must-gather-browser.html`
-   - Includes proper HTML5 structure
-   - All CSS and JavaScript are inline for portability
+## Output Specification
 
-### Step 7: Present Results to User
+Return a concise architecture packet with these sections:
 
-1. **Display summary**
-   ```
-   Must-Gather Extraction Complete
+1. Storage contract.
+2. Command-to-data map.
+3. Module layout.
+4. Schema and migration policy.
+5. Transaction policy.
+6. Testing plan.
+7. Operational safety plan.
+8. Open risks and decisions.
 
-   Prow Job: {prowjob-name}
-   Build ID: {build_id}
-   Target: {target}
+If implementing code, include only the smallest scaffold needed to prove the
+architecture: connection setup, migration runner, one read command, one mutating
+command, and tests for migration plus rollback.
 
-   Extraction Statistics:
-   - Total files: {file-count}
-   - Total size: {human-readable-size}
-   - Archives extracted: {archive-count}
-   - Log files: {log-count}
-   - YAML files: {yaml-count}
-   - JSON files: {json-count}
+## Quality Rubric
 
-   Extracted to: .work/prow-job-extract-must-gather/{build_id}/logs/
+The design passes when a reviewer can answer:
 
-   File browser generated: .work/prow-job-extract-must-gather/{build_id}/must-gather-browser.html
-
-   Open in browser to browse and search extracted files.
-   ```
-
-2. **Open report in browser**
-   - Detect platform and automatically open the HTML report in the default browser
-   - Linux: `xdg-open .work/prow-job-extract-must-gather/{build_id}/must-gather-browser.html`
-   - macOS: `open .work/prow-job-extract-must-gather/{build_id}/must-gather-browser.html`
-   - Windows: `start .work/prow-job-extract-must-gather/{build_id}/must-gather-browser.html`
-   - On Linux (most common for this environment), use `xdg-open`
-
-3. **Offer next steps**
-   - Ask if user wants to search for specific files
-   - Explain that extracted files are available in `.work/prow-job-extract-must-gather/{build_id}/logs/`
-   - Mention that extraction is cached for faster subsequent browsing
-
-## Error Handling
-
-Handle these error scenarios gracefully:
-
-1. **Invalid URL format**
-   - Error: "URL must contain 'test-platform-results/' substring"
-   - Provide example of valid URL
-
-2. **Build ID not found**
-   - Error: "Could not find build ID (10+ decimal digits) in URL path"
-   - Explain requirement and show URL parsing
-
-3. **gcloud not installed**
-   - Detect with: `which gcloud`
-   - Provide installation instructions for user's platform
-   - Link: https://cloud.google.com/sdk/docs/install
-
-4. **prowjob.json not found**
-   - Suggest verifying URL and checking if job completed
-   - Provide gcsweb URL for manual verification
-
-5. **Not a ci-operator job**
-   - Error: "This is not a ci-operator job. No --target found in prowjob.json."
-   - Explain: Only ci-operator jobs can be analyzed by this skill
-
-6. **must-gather.tar not found**
-   - Warn: "Must-gather archive not found at expected path"
-   - Suggest: Job may not have completed or gather-must-gather may not have run
-   - Provide full GCS path that was checked
-
-7. **Corrupted archive**
-   - Warn: "Could not extract {archive-path}: {error}"
-   - Continue processing other archives
-   - Report all errors in final summary
-
-8. **No "-ci-" subdirectory found**
-   - Warn: "Could not find expected subdirectory to rename to 'content/'"
-   - Continue with extraction anyway
-   - Files will be in original directory structure
-
-## Performance Considerations
-
-1. **Avoid re-extracting**
-   - Check if `.work/prow-job-extract-must-gather/{build_id}/logs/` already has content
-   - Ask user before re-extracting
-
-2. **Efficient downloads**
-   - Use `gcloud storage cp` with `--no-user-output-enabled` to suppress verbose output
-
-3. **Memory efficiency**
-   - Process archives incrementally
-   - Don't load entire files into memory
-   - Use streaming extraction
-
-4. **Progress indicators**
-   - Show "Downloading must-gather archive..." before gcloud command
-   - Show "Extracting must-gather.tar..." before extraction
-   - Show "Processing nested archives..." during recursive extraction
-   - Show "Generating HTML file browser..." before report generation
-
-## Examples
-
-### Example 1: Extract must-gather from periodic job
-```
-User: "Extract must-gather from this Prow job: https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/test-platform-results/logs/periodic-ci-openshift-release-master-ci-4.20-e2e-aws-ovn-techpreview/1965715986610917376"
-
-Output:
-- Downloads must-gather.tar to: .work/prow-job-extract-must-gather/1965715986610917376/tmp/
-- Extracts to: .work/prow-job-extract-must-gather/1965715986610917376/logs/
-- Renames long subdirectory to: content/
-- Processes 247 nested archives (.tar.gz, .tgz, .gz)
-- Creates: .work/prow-job-extract-must-gather/1965715986610917376/must-gather-browser.html
-- Opens browser with interactive file list (3,421 files, 234 MB)
-```
-
-## Tips
-
-- Always verify gcloud prerequisites before starting (gcloud CLI must be installed)
-- Authentication is NOT required - the bucket is publicly accessible
-- Use `.work/prow-job-extract-must-gather/{build_id}/` directory structure for organization
-- All work files are in `.work/` which is already in .gitignore
-- The Python scripts handle all extraction and HTML generation - use them!
-- Cache extracted files in `.work/prow-job-extract-must-gather/{build_id}/` to avoid re-extraction
-- The HTML file browser supports regex patterns for powerful file filtering
-- Extracted files can be opened directly from the HTML browser (links are relative)
-
-## Important Notes
-
-1. **Archive Processing:**
-   - The script automatically handles nested archives
-   - Original compressed files are removed after successful extraction
-   - Corrupted archives are skipped with warnings
-
-2. **Directory Renaming:**
-   - The long subdirectory name (containing "-ci-") is renamed to "content/" for brevity
-   - Files within "content/" are NOT altered
-   - This makes paths more readable in the HTML browser
-
-3. **File Type Detection:**
-   - File types are detected based on extension
-   - Common types are color-coded in the HTML browser
-   - All file types can be filtered
-
-4. **Regex Pattern Filtering:**
-   - Users can enter regex patterns in the filter input
-   - Patterns match against full file paths
-   - Invalid regex patterns are ignored gracefully
-
-5. **Working with Scripts:**
-   - All scripts are in `plugins/prow-job/skills/prow-job-extract-must-gather/`
-   - `extract_archives.py` - Extracts and processes archives
-   - `generate_html_report.py` - Generates interactive HTML file browser
+- Where is user data stored, and how can a test or operator override it?
+- What happens if a command fails halfway through a write?
+- What happens when an old database meets a new executable?
+- What happens when a new database meets an old executable?
+- How does a user back up, inspect, restore, and diagnose the database?
+- Which tests prove those answers instead of assuming them?
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
