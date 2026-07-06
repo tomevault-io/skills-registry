@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cometchat/cometchat-uikit-flutter](https://github.com/cometchat/cometchat-uikit-flutter/tree/main/skills/cometchat-flutter-components/SKILL.md)
+Original source: [cometchat/cometchat-uikit-flutter](https://github.com/cometchat/cometchat-uikit-flutter/tree/main/skills/cometchat-flutter-users-groups/SKILL.md)
 
 ---
 
