@@ -1,560 +1,769 @@
 ---
-name: firebase-auth
-description: Implements Firebase Authentication with email, OAuth, phone auth, and custom tokens. Use when building apps with Firebase, needing flexible auth methods, or integrating with Firebase ecosystem. Use when this capability is needed.
+name: owasp-checker
+description: Verify compliance with OWASP Top 10 2021 security standards. Use when Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Firebase Auth
+# OWASP Top 10 Checker Skill
 
-Firebase Authentication provides backend services and SDKs for user authentication. Supports email/password, OAuth providers, phone, anonymous, and custom token auth.
+## Purpose
 
-## Quick Start
+This skill provides systematic verification of application compliance with the OWASP Top 10 2021 security standards, ensuring comprehensive security coverage across all critical categories.
 
-### Installation
+## When to Use
 
+- Final security validation before deployment
+- Security certification and compliance
+- Security audit preparation
+- Post-remediation verification
+- Quarterly security reviews
+- Pre-release security checklist
+
+## OWASP Top 10 2021 Compliance Workflow
+
+### A01:2021 - Broken Access Control
+
+**Risk**: Users can act outside of their intended permissions
+
+**Compliance Checks:**
+
+**1. Authorization Enforcement:**
 ```bash
-npm install firebase
+# Check for authorization decorators/middleware
+grep -r "@requires_auth\|@login_required\|@permission_required" src/
+grep -r "auth_required\|check_permission" src/
+
+# Find routes without authorization
+grep -r "@app.route\|@router.get\|@router.post" src/ --include="*.py" -A 5
 ```
 
-### Initialize Firebase
+**Checklist:**
+- [ ] Authorization enforced on every endpoint
+- [ ] Default deny access control
+- [ ] Server-side authorization (not client-side only)
+- [ ] Authorization checked on every request
+- [ ] Role-based access control (RBAC) implemented
+- [ ] Ownership verified for object access
 
-```typescript
-// lib/firebase.ts
-import { initializeApp, getApps } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
-}
-
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
-export const auth = getAuth(app)
+**2. Insecure Direct Object References (IDOR):**
+```bash
+# Look for direct ID usage from requests
+grep -r "request.*\['id'\]\|request.*\.id\|params\['id'\]" src/
 ```
 
-## Email/Password Authentication
+**Checklist:**
+- [ ] No direct object references without validation
+- [ ] Ownership verified before access
+- [ ] Indirect references used (e.g., session-based)
+- [ ] UUID instead of sequential IDs where applicable
 
-### Sign Up
-
-```typescript
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
-import { auth } from '@/lib/firebase'
-
-async function signUp(email: string, password: string, displayName: string) {
-  try {
-    const { user } = await createUserWithEmailAndPassword(auth, email, password)
-
-    await updateProfile(user, { displayName })
-
-    return user
-  } catch (error: any) {
-    switch (error.code) {
-      case 'auth/email-already-in-use':
-        throw new Error('Email already registered')
-      case 'auth/weak-password':
-        throw new Error('Password should be at least 6 characters')
-      default:
-        throw new Error('Sign up failed')
-    }
-  }
-}
+**3. CORS Configuration:**
+```bash
+# Check CORS settings
+grep -r "Access-Control-Allow-Origin" src/ config/
+grep -r "CORS.*origin" src/ --include="*.py" --include="*.js"
 ```
 
-### Sign In
+**Checklist:**
+- [ ] No wildcard (*) CORS unless absolutely necessary
+- [ ] Specific origin whitelist configured
+- [ ] Credentials mode properly configured
+- [ ] Preflight requests handled correctly
 
-```typescript
-import { signInWithEmailAndPassword } from 'firebase/auth'
-
-async function signIn(email: string, password: string) {
-  try {
-    const { user } = await signInWithEmailAndPassword(auth, email, password)
-    return user
-  } catch (error: any) {
-    switch (error.code) {
-      case 'auth/invalid-credential':
-        throw new Error('Invalid email or password')
-      case 'auth/user-disabled':
-        throw new Error('Account disabled')
-      default:
-        throw new Error('Sign in failed')
-    }
-  }
-}
+**4. Disable Directory Listing:**
+```bash
+# Check web server config
+grep -r "autoindex\|directory.*listing" config/
 ```
 
-### Sign Out
+**Checklist:**
+- [ ] Directory listing disabled
+- [ ] .git directory not accessible
+- [ ] Backup files not accessible
 
-```typescript
-import { signOut } from 'firebase/auth'
+**Status**: ☐ Pass ☐ Fail
 
-async function logout() {
-  await signOut(auth)
-}
+---
+
+### A02:2021 - Cryptographic Failures
+
+**Risk**: Sensitive data exposed due to weak or missing encryption
+
+**Compliance Checks:**
+
+**1. Data in Transit:**
+```bash
+# Check TLS enforcement
+grep -r "SECURE_SSL_REDIRECT\|HTTPS_ONLY\|ssl.*required" config/ src/
+grep -r "tls.*version\|ssl.*version" config/
+
+# Check for HTTP usage
+grep -r "http://\|ws://" src/ | grep -v "localhost\|127.0.0.1"
 ```
 
-## Auth State Management
+**Checklist:**
+- [ ] TLS 1.2+ enforced
+- [ ] TLS 1.0/1.1 disabled
+- [ ] HTTPS redirect configured
+- [ ] HSTS header set (max-age >= 31536000)
+- [ ] Secure WebSocket (wss://) for real-time
+- [ ] Certificate validation enabled
 
-### Listen to Auth Changes
-
-```typescript
-import { onAuthStateChanged, User } from 'firebase/auth'
-
-// Subscribe to auth state
-const unsubscribe = onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log('Signed in:', user.uid)
-  } else {
-    console.log('Signed out')
-  }
-})
-
-// Cleanup
-unsubscribe()
+**2. Data at Rest:**
+```bash
+# Check for encryption of sensitive data
+grep -r "encrypt\|cipher\|AES" src/
+grep -r "password.*plain\|password.*clear" src/
 ```
 
-### React Context
+**Checklist:**
+- [ ] Passwords hashed (bcrypt/argon2/scrypt)
+- [ ] PII encrypted at rest
+- [ ] Database encryption enabled for sensitive columns
+- [ ] Backups encrypted
+- [ ] Key management system used
 
-```typescript
-// contexts/auth-context.tsx
-'use client'
-import { createContext, useContext, useEffect, useState } from 'react'
-import { onAuthStateChanged, User } from 'firebase/auth'
-import { auth } from '@/lib/firebase'
-
-type AuthContextType = {
-  user: User | null
-  loading: boolean
-}
-
-const AuthContext = createContext<AuthContextType>({
-  user: null,
-  loading: true
-})
-
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user)
-      setLoading(false)
-    })
-
-    return unsubscribe
-  }, [])
-
-  return (
-    <AuthContext.Provider value={{ user, loading }}>
-      {children}
-    </AuthContext.Provider>
-  )
-}
-
-export const useAuth = () => useContext(AuthContext)
+**3. Weak Cryptography:**
+```bash
+# Find weak algorithms
+grep -r "md5\|sha1\|DES\|RC4" src/ --include="*.py" --include="*.js"
+grep -r "ECB.*mode" src/
 ```
 
-### Usage
+**Checklist:**
+- [ ] No MD5/SHA1 for security (only for checksums)
+- [ ] AES-256-GCM or ChaCha20-Poly1305 for encryption
+- [ ] Argon2id or bcrypt for passwords
+- [ ] SHA-256/SHA-3 for hashing
+- [ ] Proper IV/nonce generation
+- [ ] No ECB mode
 
-```typescript
-'use client'
-import { useAuth } from '@/contexts/auth-context'
-
-export default function Profile() {
-  const { user, loading } = useAuth()
-
-  if (loading) return <div>Loading...</div>
-  if (!user) return <div>Please sign in</div>
-
-  return (
-    <div>
-      <p>Email: {user.email}</p>
-      <p>Name: {user.displayName}</p>
-      <img src={user.photoURL || ''} alt="Avatar" />
-    </div>
-  )
-}
+**4. Random Number Generation:**
+```bash
+# Check RNG usage
+grep -r "random\.random\|Math\.random" src/
+grep -r "secrets\|os\.urandom\|crypto\.randomBytes" src/
 ```
 
-## OAuth Providers
+**Checklist:**
+- [ ] Cryptographically secure RNG (secrets, os.urandom)
+- [ ] No Math.random() or random.random() for security
+- [ ] Sufficient entropy for keys/tokens
 
-### Google Sign In
+**Status**: ☐ Pass ☐ Fail
 
-```typescript
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+---
 
-const googleProvider = new GoogleAuthProvider()
-googleProvider.addScope('email')
-googleProvider.addScope('profile')
+### A03:2021 - Injection
 
-async function signInWithGoogle() {
-  try {
-    const result = await signInWithPopup(auth, googleProvider)
-    const credential = GoogleAuthProvider.credentialFromResult(result)
-    const token = credential?.accessToken
+**Risk**: Untrusted data sent to interpreter as command/query
 
-    return result.user
-  } catch (error: any) {
-    if (error.code === 'auth/popup-closed-by-user') {
-      return null
-    }
-    throw error
-  }
-}
+**Compliance Checks:**
+
+**1. SQL Injection Prevention:**
+```bash
+# Find string concatenation in SQL
+grep -r "execute.*%\|execute.*\+\|execute.*format\|execute.*f\"" src/ --include="*.py"
+grep -r "SELECT.*\+\|INSERT.*\+\|UPDATE.*\+\|DELETE.*\+" src/
 ```
 
-### GitHub Sign In
+**Checklist:**
+- [ ] Parameterized queries/prepared statements
+- [ ] ORM used correctly (no raw SQL with user input)
+- [ ] No string concatenation in SQL
+- [ ] Input validation on all parameters
+- [ ] Least privilege database accounts
 
-```typescript
-import { signInWithPopup, GithubAuthProvider } from 'firebase/auth'
-
-const githubProvider = new GithubAuthProvider()
-githubProvider.addScope('read:user')
-
-async function signInWithGithub() {
-  const result = await signInWithPopup(auth, githubProvider)
-  return result.user
-}
+**2. Command Injection Prevention:**
+```bash
+# Find shell command execution
+grep -r "subprocess.*shell=True\|os\.system\|os\.popen" src/ --include="*.py"
+grep -r "exec\|eval\|child_process" src/ --include="*.js"
 ```
 
-### Sign In with Redirect
+**Checklist:**
+- [ ] No shell=True with user input
+- [ ] Command arguments as list, not string
+- [ ] Input validation/sanitization
+- [ ] Whitelist allowed commands
+- [ ] No eval() or exec() with user input
 
-For mobile or when popups are blocked:
-
-```typescript
-import { signInWithRedirect, getRedirectResult, GoogleAuthProvider } from 'firebase/auth'
-
-// Initiate redirect
-async function startGoogleSignIn() {
-  await signInWithRedirect(auth, new GoogleAuthProvider())
-}
-
-// Handle redirect result (call on page load)
-async function handleRedirect() {
-  const result = await getRedirectResult(auth)
-  if (result) {
-    console.log('Signed in:', result.user)
-  }
-}
+**3. LDAP Injection:**
+```bash
+grep -r "ldap.*search\|ldap.*filter" src/
 ```
 
-## Phone Authentication
+**Checklist:**
+- [ ] LDAP queries parameterized
+- [ ] Special characters escaped
+- [ ] Input validation
 
-### Send Verification Code
-
-```typescript
-import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth'
-
-// Setup reCAPTCHA
-const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-  size: 'invisible',
-  callback: () => {
-    // reCAPTCHA solved
-  }
-})
-
-async function sendVerificationCode(phoneNumber: string) {
-  try {
-    const confirmationResult = await signInWithPhoneNumber(
-      auth,
-      phoneNumber,
-      recaptchaVerifier
-    )
-    // Store confirmationResult to use in verification step
-    return confirmationResult
-  } catch (error) {
-    console.error('SMS not sent:', error)
-    throw error
-  }
-}
+**4. NoSQL Injection:**
+```bash
+grep -r "find.*\$where\|\.exec(" src/ --include="*.js"
 ```
 
-### Verify Code
+**Checklist:**
+- [ ] MongoDB operators sanitized
+- [ ] $where clauses avoided or validated
+- [ ] Input type validation
 
-```typescript
-async function verifyCode(confirmationResult: any, code: string) {
-  try {
-    const result = await confirmationResult.confirm(code)
-    return result.user
-  } catch (error) {
-    throw new Error('Invalid verification code')
-  }
-}
+**5. Template Injection:**
+```bash
+grep -r "render_template_string\|Jinja2.*from_string" src/
+grep -r "autoescape.*False" src/
 ```
 
-## Anonymous Authentication
+**Checklist:**
+- [ ] No user input in template compilation
+- [ ] Auto-escaping enabled
+- [ ] Safe template rendering
 
-```typescript
-import { signInAnonymously, linkWithCredential, EmailAuthProvider } from 'firebase/auth'
+**Status**: ☐ Pass ☐ Fail
 
-// Sign in anonymously
-async function signInAnon() {
-  const { user } = await signInAnonymously(auth)
-  return user
-}
+---
 
-// Convert to permanent account
-async function convertToEmailAccount(email: string, password: string) {
-  const user = auth.currentUser
-  if (!user) throw new Error('No user')
+### A04:2021 - Insecure Design
 
-  const credential = EmailAuthProvider.credential(email, password)
-  await linkWithCredential(user, credential)
-}
+**Risk**: Missing or ineffective security controls in design
+
+**Compliance Checks:**
+
+**1. Threat Modeling:**
+
+**Checklist:**
+- [ ] Threat model documented
+- [ ] Attack surface analyzed
+- [ ] Trust boundaries identified
+- [ ] Data flow diagrams created
+- [ ] Security requirements defined
+
+**2. Security Design Patterns:**
+
+**Checklist:**
+- [ ] Defense in depth implemented
+- [ ] Fail securely (errors don't expose data)
+- [ ] Least privilege principle
+- [ ] Separation of duties
+- [ ] Complete mediation (check every access)
+
+**3. Rate Limiting:**
+```bash
+grep -r "rate.*limit\|throttle" src/ config/
 ```
 
-## Password Management
+**Checklist:**
+- [ ] Rate limiting on authentication endpoints
+- [ ] Rate limiting on API endpoints
+- [ ] Account lockout after failed attempts
+- [ ] CAPTCHA for public forms
 
-### Reset Password
+**4. Business Logic:**
 
-```typescript
-import { sendPasswordResetEmail } from 'firebase/auth'
+**Checklist:**
+- [ ] Transaction integrity enforced
+- [ ] Workflow state validated
+- [ ] Resource limits defined
+- [ ] Input bounds checked
+- [ ] Edge cases handled
 
-async function resetPassword(email: string) {
-  await sendPasswordResetEmail(auth, email, {
-    url: 'https://myapp.com/login'
-  })
-}
+**Status**: ☐ Pass ☐ Fail
+
+---
+
+### A05:2021 - Security Misconfiguration
+
+**Risk**: Insecure default configurations, incomplete setups
+
+**Compliance Checks:**
+
+**1. Security Headers:**
+```bash
+# Check for security headers
+grep -r "X-Frame-Options\|X-Content-Type-Options\|Content-Security-Policy" src/ config/
+grep -r "Strict-Transport-Security\|X-XSS-Protection" src/ config/
 ```
 
-### Update Password
+**Checklist:**
+- [ ] X-Frame-Options: DENY or SAMEORIGIN
+- [ ] X-Content-Type-Options: nosniff
+- [ ] Content-Security-Policy configured
+- [ ] Strict-Transport-Security: max-age=31536000
+- [ ] X-XSS-Protection: 1; mode=block
+- [ ] Referrer-Policy: strict-origin-when-cross-origin
 
-```typescript
-import { updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth'
-
-async function changePassword(currentPassword: string, newPassword: string) {
-  const user = auth.currentUser
-  if (!user || !user.email) throw new Error('No user')
-
-  // Re-authenticate first
-  const credential = EmailAuthProvider.credential(user.email, currentPassword)
-  await reauthenticateWithCredential(user, credential)
-
-  // Update password
-  await updatePassword(user, newPassword)
-}
+**2. Error Handling:**
+```bash
+# Check debug mode
+grep -r "DEBUG.*True\|development.*mode" config/ src/
+grep -r "traceback\|stack.*trace" src/
 ```
 
-## Email Verification
+**Checklist:**
+- [ ] Debug mode disabled in production
+- [ ] Generic error messages to users
+- [ ] Detailed errors logged, not displayed
+- [ ] No stack traces exposed
+- [ ] Custom error pages configured
 
-```typescript
-import { sendEmailVerification } from 'firebase/auth'
-
-async function verifyEmail() {
-  const user = auth.currentUser
-  if (!user) throw new Error('No user')
-
-  await sendEmailVerification(user, {
-    url: 'https://myapp.com/verified'
-  })
-}
-
-// Check if verified
-const isVerified = auth.currentUser?.emailVerified
+**3. Default Credentials:**
+```bash
+# Find hardcoded credentials
+grep -r "password.*=.*admin\|password.*=.*password" src/ config/
 ```
 
-## Update Profile
+**Checklist:**
+- [ ] All default credentials changed
+- [ ] No hardcoded passwords
+- [ ] Credentials in environment variables
+- [ ] Secrets management system used
 
-```typescript
-import { updateProfile, updateEmail } from 'firebase/auth'
-
-async function updateUserProfile(displayName: string, photoURL: string) {
-  const user = auth.currentUser
-  if (!user) throw new Error('No user')
-
-  await updateProfile(user, { displayName, photoURL })
-}
-
-async function changeEmail(newEmail: string) {
-  const user = auth.currentUser
-  if (!user) throw new Error('No user')
-
-  await updateEmail(user, newEmail)
-  // Sends verification email automatically
-}
+**4. Unnecessary Features:**
+```bash
+# Check for sample/test code
+find . -name "*sample*" -o -name "*test*" -o -name "*demo*" | grep -v node_modules
 ```
 
-## ID Tokens
+**Checklist:**
+- [ ] Sample code removed
+- [ ] Unused endpoints disabled
+- [ ] Test accounts removed
+- [ ] Development tools disabled in production
+- [ ] Unnecessary services stopped
 
-### Get ID Token
-
-```typescript
-async function getIdToken() {
-  const user = auth.currentUser
-  if (!user) throw new Error('No user')
-
-  const token = await user.getIdToken()
-  return token
-}
-
-// Force refresh
-const token = await user.getIdToken(true)
+**5. Missing Patches:**
+```bash
+# Check dependency status
+pip list --outdated 2>/dev/null || npm outdated 2>/dev/null
 ```
 
-### Verify on Server
+**Checklist:**
+- [ ] Dependencies up to date
+- [ ] Security patches applied
+- [ ] Regular update schedule
+- [ ] Vulnerability monitoring enabled
 
-```typescript
-// Server-side (Firebase Admin SDK)
-import { getAuth } from 'firebase-admin/auth'
+**Status**: ☐ Pass ☐ Fail
 
-async function verifyToken(idToken: string) {
-  try {
-    const decodedToken = await getAuth().verifyIdToken(idToken)
-    return decodedToken
-  } catch (error) {
-    throw new Error('Invalid token')
-  }
-}
+---
+
+### A06:2021 - Vulnerable and Outdated Components
+
+**Risk**: Using components with known vulnerabilities
+
+**Compliance Checks:**
+
+**1. Dependency Inventory:**
+```bash
+# List all dependencies
+pip list --format=json > dependencies.json 2>/dev/null || npm list --json > dependencies.json 2>/dev/null
 ```
 
-## Custom Claims
+**Checklist:**
+- [ ] Complete dependency inventory (SBOM)
+- [ ] Direct and transitive dependencies tracked
+- [ ] License compliance verified
+- [ ] Dependency sources trusted
 
-### Set Claims (Admin SDK)
-
-```typescript
-import { getAuth } from 'firebase-admin/auth'
-
-async function setUserRole(uid: string, role: string) {
-  await getAuth().setCustomUserClaims(uid, { role })
-}
+**2. Vulnerability Scanning:**
+```bash
+# Scan for vulnerabilities
+pip-audit --format json 2>/dev/null || npm audit --json 2>/dev/null
+safety check --json 2>/dev/null
 ```
 
-### Read Claims (Client)
+**Checklist:**
+- [ ] Regular vulnerability scans (weekly minimum)
+- [ ] No critical vulnerabilities
+- [ ] High vulnerabilities remediated
+- [ ] Vulnerability remediation SLA defined
 
-```typescript
-async function getUserRole() {
-  const user = auth.currentUser
-  if (!user) return null
-
-  const tokenResult = await user.getIdTokenResult()
-  return tokenResult.claims.role
-}
+**3. Version Management:**
+```bash
+# Check for version pinning
+cat requirements.txt setup.py package.json 2>/dev/null
 ```
 
-## Protected Routes (Next.js)
+**Checklist:**
+- [ ] Versions pinned in lockfiles
+- [ ] Compatible version ranges defined
+- [ ] Regular updates scheduled
+- [ ] Breaking changes reviewed before update
 
-### Middleware
+**4. Component Retirement:**
 
-```typescript
-// middleware.ts
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+**Checklist:**
+- [ ] No unmaintained dependencies
+- [ ] EOL software replaced
+- [ ] Deprecated features not used
+- [ ] Migration plan for aging components
 
-export function middleware(request: NextRequest) {
-  const session = request.cookies.get('session')
+**Status**: ☐ Pass ☐ Fail
 
-  if (!session && request.nextUrl.pathname.startsWith('/dashboard')) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
+---
 
-  return NextResponse.next()
-}
+### A07:2021 - Identification and Authentication Failures
 
-export const config = {
-  matcher: ['/dashboard/:path*']
-}
+**Risk**: Weak authentication allows impersonation
+
+**Compliance Checks:**
+
+**1. Password Policy:**
+```bash
+# Check password requirements
+grep -r "password.*length\|password.*complexity" src/
+grep -r "MIN_PASSWORD_LENGTH\|PASSWORD_VALIDATORS" config/ src/
 ```
 
-### Session Cookie
+**Checklist:**
+- [ ] Minimum 8 characters (12+ recommended)
+- [ ] Complexity requirements enforced
+- [ ] Common passwords blocked
+- [ ] Password strength meter implemented
+- [ ] Password history (no reuse)
 
-```typescript
-// app/api/session/route.ts
-import { getAuth } from 'firebase-admin/auth'
-import { cookies } from 'next/headers'
-
-export async function POST(request: Request) {
-  const { idToken } = await request.json()
-
-  const expiresIn = 60 * 60 * 24 * 5 * 1000 // 5 days
-
-  try {
-    const sessionCookie = await getAuth().createSessionCookie(idToken, {
-      expiresIn
-    })
-
-    cookies().set('session', sessionCookie, {
-      maxAge: expiresIn / 1000,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      path: '/'
-    })
-
-    return Response.json({ status: 'success' })
-  } catch (error) {
-    return Response.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-}
+**2. Multi-Factor Authentication:**
+```bash
+grep -r "mfa\|2fa\|totp\|two.*factor" src/
 ```
 
-## Link Multiple Providers
+**Checklist:**
+- [ ] MFA available for sensitive operations
+- [ ] MFA enforced for admin accounts
+- [ ] TOTP/hardware token support
+- [ ] Backup codes provided
 
-```typescript
-import { linkWithPopup, GoogleAuthProvider } from 'firebase/auth'
-
-async function linkGoogle() {
-  const user = auth.currentUser
-  if (!user) throw new Error('No user')
-
-  const result = await linkWithPopup(user, new GoogleAuthProvider())
-  return result.user
-}
-
-// Unlink provider
-import { unlink } from 'firebase/auth'
-
-async function unlinkGoogle() {
-  const user = auth.currentUser
-  if (!user) throw new Error('No user')
-
-  await unlink(user, 'google.com')
-}
+**3. Session Management:**
+```bash
+# Check session configuration
+grep -r "SESSION.*TIMEOUT\|session.*expir" config/ src/
+grep -r "SESSION_COOKIE_SECURE\|SESSION_COOKIE_HTTPONLY" config/ src/
 ```
 
-## Error Handling
+**Checklist:**
+- [ ] Session timeout configured (15-30 min idle)
+- [ ] Absolute session timeout (e.g., 8 hours)
+- [ ] Session invalidated on logout
+- [ ] Secure session cookies (Secure, HttpOnly, SameSite)
+- [ ] Session fixation prevented (regenerate on login)
+- [ ] Concurrent session limits
 
-```typescript
-import { AuthError } from 'firebase/auth'
-
-function handleAuthError(error: AuthError) {
-  switch (error.code) {
-    case 'auth/email-already-in-use':
-      return 'Email already registered'
-    case 'auth/invalid-email':
-      return 'Invalid email address'
-    case 'auth/weak-password':
-      return 'Password too weak'
-    case 'auth/user-not-found':
-      return 'User not found'
-    case 'auth/wrong-password':
-      return 'Incorrect password'
-    case 'auth/too-many-requests':
-      return 'Too many attempts. Try again later'
-    case 'auth/network-request-failed':
-      return 'Network error'
-    default:
-      return 'Authentication error'
-  }
-}
+**4. Credential Storage:**
+```bash
+# Check password hashing
+grep -r "bcrypt\|argon2\|scrypt\|pbkdf2" src/
+grep -r "hashlib\.md5.*password\|hashlib\.sha1.*password" src/
 ```
+
+**Checklist:**
+- [ ] Passwords hashed with bcrypt/argon2/scrypt
+- [ ] Salt unique per password
+- [ ] Work factor appropriate (bcrypt: 12+, argon2: per OWASP)
+- [ ] No reversible encryption for passwords
+
+**5. Account Enumeration:**
+```bash
+# Check error messages
+grep -r "user.*not.*found\|invalid.*username" src/
+```
+
+**Checklist:**
+- [ ] Generic authentication errors ("Invalid credentials")
+- [ ] Same response time for valid/invalid users
+- [ ] Password reset doesn't confirm email existence
+- [ ] Registration doesn't confirm email existence
+
+**6. Brute Force Protection:**
+```bash
+grep -r "login.*attempt\|failed.*attempt\|account.*lock" src/
+```
+
+**Checklist:**
+- [ ] Account lockout after N failed attempts (5-10)
+- [ ] Temporary lockout (not permanent)
+- [ ] Rate limiting on login endpoint
+- [ ] CAPTCHA after failed attempts
+- [ ] Login attempt logging
+
+**Status**: ☐ Pass ☐ Fail
+
+---
+
+### A08:2021 - Software and Data Integrity Failures
+
+**Risk**: Code and infrastructure not protected from integrity violations
+
+**Compliance Checks:**
+
+**1. Insecure Deserialization:**
+```bash
+# Check for unsafe deserialization
+grep -r "pickle\.loads\|yaml\.load\(" src/ --include="*.py"
+grep -r "eval\|unserialize" src/
+```
+
+**Checklist:**
+- [ ] No pickle with untrusted data
+- [ ] yaml.safe_load() used (not yaml.load())
+- [ ] JSON preferred over pickle
+- [ ] Deserialization input validated
+- [ ] No eval() with untrusted data
+
+**2. CI/CD Pipeline Security:**
+
+**Checklist:**
+- [ ] Pipeline configuration in version control
+- [ ] Code signing for releases
+- [ ] Secret scanning in CI/CD
+- [ ] Dependency verification
+- [ ] Build reproducibility
+- [ ] Artifact signing
+- [ ] Deployment approval process
+
+**3. Update Mechanism:**
+
+**Checklist:**
+- [ ] Updates delivered over HTTPS
+- [ ] Update signatures verified
+- [ ] Automatic updates signed
+- [ ] Rollback mechanism available
+- [ ] Update integrity checked
+
+**4. Supply Chain Security:**
+
+**Checklist:**
+- [ ] Dependencies from trusted sources
+- [ ] Dependency hash verification
+- [ ] Software Bill of Materials (SBOM)
+- [ ] Third-party code reviewed
+- [ ] Vendor security assessment
+
+**Status**: ☐ Pass ☐ Fail
+
+---
+
+### A09:2021 - Security Logging and Monitoring Failures
+
+**Risk**: Breaches not detected, incidents not responded to
+
+**Compliance Checks:**
+
+**1. Security Event Logging:**
+```bash
+# Check logging implementation
+grep -r "logging\|logger\|log\." src/ --include="*.py" --include="*.js"
+grep -r "audit.*log\|security.*log" src/
+```
+
+**Checklist:**
+- [ ] Authentication events logged (success/failure)
+- [ ] Authorization failures logged
+- [ ] Input validation failures logged
+- [ ] Sensitive operations logged
+- [ ] Administrative actions logged
+- [ ] Access to sensitive data logged
+
+**2. Log Content:**
+
+**Checklist:**
+- [ ] Timestamp (UTC)
+- [ ] User/session identifier
+- [ ] Action performed
+- [ ] Resource accessed
+- [ ] Source IP address
+- [ ] Outcome (success/failure)
+- [ ] No sensitive data in logs (passwords, tokens, PII)
+
+**3. Log Protection:**
+```bash
+# Check log file permissions
+find . -name "*.log" -ls 2>/dev/null
+```
+
+**Checklist:**
+- [ ] Log files write-only for application
+- [ ] Logs protected from tampering
+- [ ] Logs rotated regularly
+- [ ] Log retention policy defined
+- [ ] Logs backed up
+- [ ] Centralized logging implemented
+
+**4. Monitoring and Alerting:**
+
+**Checklist:**
+- [ ] Real-time security monitoring
+- [ ] Automated alerting configured
+- [ ] Failed login threshold alerts
+- [ ] Unusual activity detection
+- [ ] Anomaly detection
+- [ ] Security dashboard available
+
+**5. Incident Response:**
+
+**Checklist:**
+- [ ] Incident response plan documented
+- [ ] Response team identified
+- [ ] Alert escalation procedures
+- [ ] Incident logging and tracking
+- [ ] Post-incident review process
+
+**Status**: ☐ Pass ☐ Fail
+
+---
+
+### A10:2021 - Server-Side Request Forgery (SSRF)
+
+**Risk**: Application fetches remote resources without validating user-supplied URL
+
+**Compliance Checks:**
+
+**1. URL Validation:**
+```bash
+# Find URL fetching code
+grep -r "requests\.get\|urllib\.request\|fetch\|axios\.get" src/
+grep -r "url.*request\|user.*url" src/
+```
+
+**Checklist:**
+- [ ] User-supplied URLs validated
+- [ ] URL whitelist implemented
+- [ ] Protocol whitelist (HTTP/HTTPS only)
+- [ ] Private IP ranges blocked
+- [ ] DNS rebinding protection
+- [ ] URL redirection limited
+
+**2. Network Segmentation:**
+
+**Checklist:**
+- [ ] Application in DMZ
+- [ ] Internal services not accessible from app
+- [ ] Firewall rules deny by default
+- [ ] Outbound traffic restricted
+- [ ] Service mesh/network policies configured
+
+**3. Input Validation:**
+```bash
+# Check for URL sanitization
+grep -r "validate.*url\|sanitize.*url\|parse.*url" src/
+```
+
+**Checklist:**
+- [ ] URL parsing and validation
+- [ ] Hostname validation
+- [ ] Port restrictions
+- [ ] Path normalization
+- [ ] No file:// protocol
+- [ ] No access to metadata services (169.254.169.254)
+
+**Status**: ☐ Pass ☐ Fail
+
+---
+
+## Overall Compliance Report Format
+
+```markdown
+# OWASP Top 10 2021 Compliance Report
+
+**Date**: [YYYY-MM-DD]
+**Application**: [name]
+**Assessed By**: OWASP Checker
+
+## Compliance Summary
+
+| Category | Status | Critical Issues | Notes |
+|----------|--------|-----------------|-------|
+| A01 - Broken Access Control | ✅/⚠️/❌ | [count] | [summary] |
+| A02 - Cryptographic Failures | ✅/⚠️/❌ | [count] | [summary] |
+| A03 - Injection | ✅/⚠️/❌ | [count] | [summary] |
+| A04 - Insecure Design | ✅/⚠️/❌ | [count] | [summary] |
+| A05 - Security Misconfiguration | ✅/⚠️/❌ | [count] | [summary] |
+| A06 - Vulnerable Components | ✅/⚠️/❌ | [count] | [summary] |
+| A07 - Auth Failures | ✅/⚠️/❌ | [count] | [summary] |
+| A08 - Integrity Failures | ✅/⚠️/❌ | [count] | [summary] |
+| A09 - Logging Failures | ✅/⚠️/❌ | [count] | [summary] |
+| A10 - SSRF | ✅/⚠️/❌ | [count] | [summary] |
+
+**Legend**:
+- ✅ Pass: Fully compliant
+- ⚠️ Partial: Some issues, not critical
+- ❌ Fail: Critical issues found
+
+**Overall Compliance**: [XX]% ([X]/10 categories passed)
+
+## Critical Findings
+
+[List all critical non-compliance items that must be fixed]
+
+## Recommendations
+
+### Immediate (Critical)
+1. [Item]
+
+### Short-term (High)
+1. [Item]
+
+### Long-term (Medium)
+1. [Item]
+
+## Certification
+
+This application [IS / IS NOT] compliant with OWASP Top 10 2021 standards.
+
+**Assessor**: [name]
+**Date**: [YYYY-MM-DD]
+**Next Assessment**: [YYYY-MM-DD]
+```
+
+---
 
 ## Best Practices
 
-1. **Use context for auth state** - Single source of truth
-2. **Handle all error codes** - User-friendly messages
-3. **Verify tokens server-side** - Never trust client
-4. **Use session cookies** - For server-side apps
-5. **Enable email verification** - For sensitive apps
-6. **Implement re-auth** - Before sensitive operations
+**Assessment Process:**
+- Complete all categories
+- Document evidence for each check
+- Retest after remediation
+- Keep assessment current (quarterly)
 
-## References
+**Compliance Tracking:**
+- Track compliance over time
+- Maintain compliance dashboard
+- Regular reassessment (quarterly)
+- Update after major changes
 
-- [Admin SDK Setup](references/admin-sdk.md)
-- [Security Rules](references/security-rules.md)
+**Remediation:**
+- Fix critical items immediately
+- Schedule high/medium items
+- Document compensating controls
+- Verify fixes effectiveness
+
+**Documentation:**
+- Keep detailed compliance records
+- Document exceptions with justification
+- Track remediation progress
+- Maintain audit trail
+
+---
+
+## Integration with Security Workflow
+
+**Input**: Implemented and tested application
+**Process**: Systematic OWASP Top 10 compliance verification
+**Output**: Compliance report with certification status
+**Next Step**: Security certification or deployment approval
+
+---
+
+## Remember
+
+- **Compliance is not security**: OWASP Top 10 is baseline, not complete security
+- **Context matters**: Adapt checks to your application type
+- **Defense in depth**: Multiple layers of controls
+- **Continuous compliance**: Not a one-time check
+- **Document everything**: Maintain audit trail
+- **Stay current**: OWASP Top 10 updates periodically
+
+Your goal is to ensure applications meet OWASP Top 10 security standards and maintain compliance over time.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
