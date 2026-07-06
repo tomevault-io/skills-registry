@@ -1,32 +1,26 @@
 ---
-name: regenerate-merged-rule-lists
-description: Regenerate aggregated *Merged.list files from their source headers in this repo. Use when refreshing upstream sources or rebuilding merged rule lists. Use when this capability is needed.
+name: react-native-project-creater
+description: Provides one-command project creation for React Native including project initialization, configuration, and template generation. Use when the user asks about creating React Native projects, needs to initialize a new React Native project, or generate React Native project structure.
 metadata:
   author: majiayu000
 ---
 
-# Regenerate Merged Rule Lists
+## When to use this skill
 
-## Overview
+Use this skill whenever the user wants to:
+- [待完善：根据具体工具添加使用场景]
 
-Regenerate `*Merged.list` files from the sources listed in their headers and keep the metadata intact.
+## How to use this skill
 
-## Workflow
+[待完善：根据具体工具添加使用指南]
 
-- Open the target `*Merged.list` and read the header to identify source URLs and expected format.
-- Fetch each source and merge the rules into a single list, preserving the expected order.
-- Keep the header format consistent; update timestamps, counts, and source lines to match the new output.
-- Ensure all rule lines use Clash classical format and keep one rule per line.
+## Best Practices
 
-## Guardrails
+[待完善：根据具体工具添加最佳实践]
 
-- Avoid manual edits to merged lists unless you are regenerating from sources.
-- Do not remove or rewrite the source header format; keep it consistent across updates.
+## Keywords
 
-## Quick checks
-
-- Verify the first lines are the header with sources and update time.
-- Spot-check a few entries to confirm correct formatting and no obvious truncation.
+[待完善：根据具体工具添加关键词]
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
