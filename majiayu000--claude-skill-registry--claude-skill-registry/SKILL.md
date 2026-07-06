@@ -1,115 +1,259 @@
 ---
-name: github-actions-security
-description: | Use when this capability is needed.
+name: brand-archetype-selection
+description: Provides Jungian brand archetype frameworks, the 12 archetypes with profiles, the 70/30 primary/secondary rule, archetype combinations, and selection templates. Auto-activates during brand archetype selection, emotional positioning, and brand personality work. Use when discussing brand archetypes, Jungian archetypes, 12 archetypes, Hero, Outlaw, Magician, Creator, Lover, Jester, Everyman, Caregiver, Ruler, Sage, Explorer, Innocent, 70/30 rule, Mark-Pearson, or archetype combinations.
 metadata:
   author: majiayu000
 ---
 
-# GitHub Actions Security
+# Brand Archetype Selection Framework
 
-## 概要
+Quick reference for selecting brand archetypes using the Mark-Pearson methodology and Jungian psychology.
 
-GitHub Actionsワークフローのセキュリティを包括的に強化するスキル。Environment SecretsとRepository Secretsの安全な管理、機密情報のログマスキング、CI/CDパイプラインへの品質ゲート統合、脅威モデリングに基づくセキュリティ設計を行う。
+> "Archetypes are the heartbeat of a brand because they convey a meaning that makes customers relate to a product as if it actually were alive in some way." — Margaret Mark & Carol Pearson
 
-## ワークフロー
+---
 
-### Phase 1: セキュリティ診断
+## Psychological Foundations
 
-**目的**: ワークフローのセキュリティリスクを評価
+### Why Archetypes Work
 
-**アクション**:
+Carl Jung proposed that beyond our personal unconscious lies a **collective unconscious**—a shared psychological inheritance containing archetypes: universal symbols, themes, and characters that appear across all human societies.
 
-1. 対象ワークフローを特定し、シークレット利用箇所を洗い出す
-2. OWASP CI/CD Top 10に基づくリスク評価を実施
-3. 既存のセキュリティ対策の有効性を確認
+**Key Insights:**
+1. **Subconscious Pattern Recognition**: Our brains respond to archetypal stories as deeply familiar
+2. **The 95% Rule**: According to Harvard Professor Gerald Zaltman, 95% of purchasing decisions are made subconsciously
+3. **Mirror Neuron Response**: When encountering clear archetypal expression, our mirror neurons fire as if we were embodying that archetype ourselves
+4. **Archetypes bypass the intellectual mind** and produce feelings that lead to brand loyalty
 
-**Task**: `agents/diagnose-security.md` を参照
+### The Business Case
 
-### Phase 2: セキュリティ実装
+A six-year Young & Rubicam study found that **brands most clearly aligned with a single archetype were the most profitable**.
 
-**目的**: 具体的なセキュリティ対策を実装
+---
 
-**アクション**:
+## The 70/30 Rule (Core Methodology)
 
-1. Environment/Repository Secretsを適切に設定
-2. ログマスキング（add-mask）を実装
-3. 品質ゲート（脆弱性スキャン、SAST/DAST）を統合
-4. 権限を最小権限の原則に基づいて設定
+**Primary Archetype (70%)**: Your core personality that represents the majority of your brand. Any less and your personality will be confusing—you'll struggle to connect through familiarity.
 
-**Task**: `agents/implement-security.md` を参照
+**Secondary "Influencer" Archetype (30%)**: Left to spend on differentiation. This is where you stand out from competitors who share your primary archetype.
 
-### Phase 3: 検証と監査
+### Strategic Choice
+- **Align with industry expectation** (safety, meets customer expectations)
+- **Go against the grain** (differentiation opportunity, but riskier)
 
-**目的**: セキュリティ実装の有効性を検証
+---
 
-**アクション**:
+## The Four Motivation Quadrants
 
-1. `scripts/validate-workflow-security.mjs` で自動検証
-2. 脅威モデリングレポートを作成
-3. 残存リスクと対応計画を記録
+The 12 archetypes are organized into four fundamental human motivations:
 
-**Task**: `agents/validate-security.md` を参照
+| Quadrant | Motivation | Archetypes |
+|----------|------------|------------|
+| **Stability & Control** | Providing structure to the world | Innocent, Everyman, Ruler, Caregiver |
+| **Independence & Fulfillment** | The yearning for paradise | Hero, Outlaw, Explorer, Sage |
+| **Mastery & Risk** | Leaving a thumbprint on the world | Magician, Creator |
+| **Belonging & Enjoyment** | No one is an island | Lover, Jester |
 
-## Task仕様ナビ
+---
 
-| Task               | 起動タイミング | 入力                   | 出力                         |
-| ------------------ | -------------- | ---------------------- | ---------------------------- |
-| diagnose-security  | Phase 1開始時  | ワークフローYAML       | リスク評価レポート           |
-| implement-security | Phase 2開始時  | リスク評価レポート     | セキュア化されたワークフロー |
-| validate-security  | Phase 3開始時  | セキュア化ワークフロー | 検証レポート、脅威モデル     |
+## The 12 Archetypes Quick Reference
 
-**詳細仕様**: 各Taskの詳細は `agents/` ディレクトリの対応ファイルを参照
+| Archetype | Motto | Core Desire | Greatest Fear | Gift |
+|-----------|-------|-------------|---------------|------|
+| **Innocent** | "Free to be you and me" | Happiness, paradise | Punishment for wrongdoing | Faith, optimism |
+| **Everyman** | "All are created equal" | Belonging, connection | Being rejected, left out | Realism, empathy |
+| **Hero** | "Where there's a will, there's a way" | Prove worth through courage | Weakness, vulnerability | Competence, courage |
+| **Outlaw** | "Rules are made to be broken" | Revolution, freedom | Powerlessness, being ordinary | Radical freedom |
+| **Explorer** | "Don't fence me in" | Freedom to discover oneself | Getting trapped, conformity | Autonomy, ambition |
+| **Creator** | "If you can imagine it, it can be created" | Create enduring value | Mediocre vision/execution | Creativity, imagination |
+| **Ruler** | "Power isn't everything. It's the only thing." | Control | Chaos, being overthrown | Responsibility, leadership |
+| **Magician** | "I make things happen" | Transform reality | Unintended consequences | Finding win-win solutions |
+| **Lover** | "You're the only one" | Intimacy, experience | Being alone, unwanted | Passion, commitment |
+| **Caregiver** | "Love your neighbor as yourself" | Protect and care for others | Selfishness, ingratitude | Compassion, generosity |
+| **Sage** | "The truth will set you free" | Discover the truth | Being duped, ignorance | Wisdom |
+| **Jester** | "You only live once" | Live in the moment | Being bored or boring | Joy |
 
-## ベストプラクティス
+---
 
-### すべきこと
+## R-O-A-D Map Framework (Kaye Putnam)
 
-- すべてのシークレットをEnvironment/Repository Secretsで管理する
-- `add-mask` を使用してログ出力時に機密情報をマスキングする
-- ワークフローの実行権限を最小権限の原則に基づいて設定する
-- 外部アクションは信頼できるもののみ使用し、バージョンを固定する
-- CI/CDパイプラインに脆弱性スキャン、依存関係チェックを統合する
-- 本番環境デプロイには手動承認フローを設定する
+**R - Review** your brand values, audience, and competitive landscape
+**O - Observe** how each archetype feels when applied to your brand
+**A - Align** with your business goals and ideal client
+**D - Decide** on primary (dominant) and secondary (influencer) archetypes
 
-### 避けるべきこと
+---
 
-- ワークフロー内に平文でシークレットを記述しない
-- 信頼できないリポジトリからのアクションを使用しない
-- `secrets.GITHUB_TOKEN` を不必要な権限で使用しない
-- ログマスキングなしでシークレット値を出力しない
-- 品質ゲートなしで本番デプロイを実行しない
+## Industry Default Archetypes
 
-## リソース参照
+| Industry | Default Archetype | Notes |
+|----------|-------------------|-------|
+| Healthcare | Caregiver | Expected; breaking from this is risky but differentiating |
+| Finance | Sage or Ruler | Trust and expertise expected |
+| Technology | Creator or Magician | Innovation and transformation |
+| Luxury | Ruler or Lover | Status and desire |
+| Outdoor/Adventure | Explorer | Freedom and discovery |
+| Sports/Fitness | Hero | Achievement and overcoming |
+| Entertainment | Jester or Magician | Fun and transformation |
+| Food (comfort) | Caregiver or Everyman | Nourishment and belonging |
 
-### references/（詳細知識）
+---
 
-| リソース       | パス                                                               | 内容             |
-| -------------- | ------------------------------------------------------------------ | ---------------- |
-| 基礎知識       | See [references/basics.md](references/basics.md)                   | セキュリティ概念 |
-| 実装パターン   | See [references/patterns.md](references/patterns.md)               | 具体的な実装例   |
-| 脅威モデリング | See [references/threat-modeling.md](references/threat-modeling.md) | STRIDE分析手法   |
+## Archetype Combinations
 
-### scripts/（決定論的処理）
+### Complementary (These Work Well)
 
-| スクリプト                       | 用途               | 使用例                                                           |
-| -------------------------------- | ------------------ | ---------------------------------------------------------------- |
-| `validate-workflow-security.mjs` | ワークフロー検証   | `node scripts/validate-workflow-security.mjs .github/workflows/` |
-| `log_usage.mjs`                  | フィードバック記録 | `node scripts/log_usage.mjs --result success --phase "Phase 3"`  |
+| Primary | Secondary | Effect | Example |
+|---------|-----------|--------|---------|
+| Ruler | Creator | Authority with innovation | Chanel |
+| Outlaw | Explorer | Rebellion with adventure | Roxy |
+| Everyman | Lover | Welcoming with emotional depth | Airbnb |
+| Sage | Magician | Wisdom with transformation | TED |
+| Hero | Caregiver | Strength with compassion | Healthcare brands |
+| Creator | Sage | Innovation with expertise | Adobe |
+| Explorer | Outlaw | Adventure with counter-culture | Patagonia |
 
-### assets/（テンプレート）
+### Problematic (Use with Caution)
 
-| テンプレート                 | 用途                           |
-| ---------------------------- | ------------------------------ |
-| `secure-deploy-template.yml` | セキュアなデプロイワークフロー |
+| Combination | Conflict |
+|-------------|----------|
+| Jester + Ruler | Playfulness vs. authority |
+| Innocent + Outlaw | Purity vs. rebellion |
+| Sage + Jester | Wisdom vs. playfulness |
+| Ruler + Everyman | Exclusivity vs. accessibility |
+| Caregiver + Outlaw | Nurturing vs. disruption |
 
-## 変更履歴
+---
 
-| Version | Date       | Changes                                                    |
-| ------- | ---------- | ---------------------------------------------------------- |
-| 3.1.0   | 2026-01-05 | CI/CDカバレッジ統合で使用、Secrets管理・権限設計の実績追加 |
-| 3.0.0   | 2026-01-02 | 18-skills.md仕様完全準拠、構造再編成                       |
-| 2.0.0   | 2025-12-31 | Anchors/Trigger統合、Task仕様ナビ追加                      |
-| 1.0.0   | 2025-12-24 | 初版                                                       |
+## Customer Journey Archetype Strategy
+
+Different archetypes can be relevant at different stages:
+
+| Stage | Archetype Purpose | Example |
+|-------|-------------------|---------|
+| **Awareness** | Differentiating archetype | Rebel energy to stand out |
+| **Sales** | Expertise archetype | Sage energy to build trust |
+| **Support** | Comfort archetype | Caregiver energy to nurture |
+
+**Apple Example**: Creator in product development, Outlaw in awareness marketing, Sage when teaching customers, Caregiver when providing support.
+
+---
+
+## Common Mistakes & Anti-Patterns
+
+| # | Mistake | The Fix |
+|---|---------|---------|
+| 1 | **Trying to Be Everything** (too many archetypes) | Commit to one primary; use secondary sparingly |
+| 2 | **Inconsistent Application** | Every touchpoint must reflect archetype |
+| 3 | **Ignoring Your Audience** | Must align with customer expectations and desires |
+| 4 | **Overused Without Differentiation** | Add secondary archetype for uniqueness |
+| 5 | **Ignoring Shadow Sides** | Understand and mitigate archetype weaknesses |
+| 6 | **Making It Too Rigid** | Allow room for growth and adaptation |
+| 7 | **Cultural Blindness** | Vet archetypes for target cultural context |
+
+---
+
+## Shadow Sides (Weaknesses to Avoid)
+
+| Archetype | Shadow Side | What to Avoid |
+|-----------|-------------|---------------|
+| Innocent | Naive, in denial | Seeming out of touch with reality |
+| Everyman | Bland, forgettable | No distinctive point of view |
+| Hero | Arrogant, aggressive | Putting others down, being preachy |
+| Outlaw | Destructive, alienating | Rebellion without purpose |
+| Explorer | Aimless, flaky | Unable to commit or be relied upon |
+| Creator | Perfectionist, impractical | Dismissive of execution details |
+| Ruler | Tyrannical, elitist | Appearing arrogant or inaccessible |
+| Magician | Manipulative, over-promising | Smoke and mirrors, undeliverable claims |
+| Lover | Obsessive, shallow | Desperate for approval, purely superficial |
+| Caregiver | Martyring, smothering | Making customers feel incompetent |
+| Sage | Condescending, disconnected | Talking down, ivory-tower thinking |
+| Jester | Irresponsible, offensive | Humor that punches down, inability to be serious |
+
+---
+
+## Selection Validation Tests
+
+Apply these tests before finalizing archetype selection:
+
+| Test | Question | Pass Criteria |
+|------|----------|---------------|
+| **Authenticity Test** | Does this feel true to the founder/brand? | Resonates deeply, not forced |
+| **Audience Test** | Does this archetype resonate with our customers? | Matches their emotional needs |
+| **Differentiation Test** | Does this stand out from competitors? | Not the same as direct competitors |
+| **Consistency Test** | Can we express this across all touchpoints? | Translates to voice, visuals, experience |
+| **Longevity Test** | Will this still fit in 5-10 years? | Not tied to trends, core to identity |
+| **Shadow Test** | Can we avoid the archetype's dark side? | Have plan to mitigate weaknesses |
+
+---
+
+## Differentiating Within an Archetype
+
+When competitors share your archetype:
+
+1. **Add a secondary archetype** for unique flavor
+2. **Go deeper into sub-archetypes** — find unique angle within archetype
+3. **Own specific territories** — causes, aesthetics, customer segments
+4. **Develop unique voice** within archetype — Nike vs. FedEx are both Hero
+
+---
+
+## Key Principles
+
+### From Mark & Pearson
+- "Archetypes are the heartbeat of a brand"
+- Discover the "soul" of your brand through archetypal analysis
+- Express that soul in ways that tap into universal stories
+- Achieve iconic brand identity that withstands time
+
+### From Neumeier
+- "A brand is not what you say it is. It's what they say it is."
+- Focus on differentiation and "onliness"
+- Archetypes are one tool in the toolkit, not the entire strategy
+
+### Core Truths
+1. **Archetypes are shortcuts to meaning** — they accelerate emotional connection
+2. **Consistency compounds** — consistent expression builds trust (up to 23% revenue increase)
+3. **Primary archetype clarity beats complexity** — one clear archetype outperforms blends
+4. **Archetypes must be authentic** — forcing misalignment creates dissonance
+5. **Differentiation happens at the edges** — same archetype, different expression
+
+---
+
+## Templates
+
+See [reference/templates.md](reference/templates.md) for:
+- Archetype Selection Worksheet
+- Archetype Profile Template
+- Competitive Archetype Mapping Template
+- Archetype Combination Validation Template
+- Archetype Expression Guide Template
+- Quick Reference Card Template
+- Full Archetype Documentation Template
+
+---
+
+## When to Apply This Knowledge
+
+### During Competitive Analysis
+- Map competitors to archetypes
+- Identify archetype gaps in market
+- Find differentiation opportunities
+
+### During Archetype Selection
+- Review all 12 archetypes against brand values
+- Apply the 70/30 rule for primary/secondary
+- Validate combinations are complementary
+
+### During Archetype Validation
+- Run all 6 validation tests
+- Check against common mistakes
+- Assess shadow side mitigation
+
+### During Final Documentation
+- Include complete archetype profiles
+- Document expression guidelines
+- Provide quick reference card
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
