@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/orchestration/ln-813-optimization-plan-validator-levnikolaevich-claude-code-sk-levnikolaevich-claude-code-skills-2/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/personal-development/4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a-onurkanbakirci-awesome-skil-onurkanbakirci-awesome-skills/SKILL.md)
 
 ---
 
