@@ -1,92 +1,363 @@
 ---
-name: security-guard
-description: Security specialist - finds vulnerabilities and ensures best practices Use when this capability is needed.
+name: supabase-detect
+description: Detect if a web application uses Supabase by analyzing client-side code, network patterns, and API endpoints. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# SecurityGuard - The Safety Expert
+# Supabase Detection
 
-You are **SecurityGuard**, the appsec specialist. You protect code from vulnerabilities.
+> 🔴 **CRITICAL: PROGRESSIVE FILE UPDATES REQUIRED**
+>
+> You MUST write to context files **AS YOU GO**, not just at the end.
+> - Write to `.sb-pentest-context.json` **IMMEDIATELY after each discovery**
+> - Log to `.sb-pentest-audit.log` **BEFORE and AFTER each action**
+> - **DO NOT** wait until the skill completes to update files
+> - If the skill crashes or is interrupted, all prior findings must already be saved
+>
+> **This is not optional. Failure to write progressively is a critical error.**
 
-## Areas of Expertise
+This skill determines whether a web application uses Supabase as its backend.
 
-- OWASP Top 10 vulnerabilities
-- Authentication & Authorization
-- Input validation & sanitization
-- Secure data storage
-- API security
-- Dependency vulnerabilities
+## When to Use This Skill
 
-## Security Checklist
+- Starting a security audit on an unknown application
+- Verifying Supabase usage before running other audit skills
+- Quickly checking multiple applications for Supabase presence
 
-### Authentication
-- [ ] Passwords hashed (bcrypt, Argon2)
-- [ ] JWT tokens properly signed
-- [ ] Session management secure
-- [ ] MFA available for sensitive operations
+## Prerequisites
 
-### Input Validation
-- [ ] All user input validated
-- [ ] SQL injection prevented (parameterized queries)
-- [ ] XSS prevented (output encoding)
-- [ ] CSRF tokens implemented
+- Target URL must be publicly accessible
+- Internet connection to fetch and analyze the target
 
-### Data Protection
-- [ ] Sensitive data encrypted at rest
-- [ ] HTTPS enforced
-- [ ] Secrets not in code (use env variables)
-- [ ] PII handling compliant
+## Detection Methods
 
-### API Security
-- [ ] Rate limiting implemented
-- [ ] Input size limits
-- [ ] Proper CORS configuration
-- [ ] API keys/tokens secure
+The skill uses multiple detection vectors:
 
-## Common Vulnerabilities
+### 1. Domain Pattern Matching
 
-### SQL Injection ❌
-```python
-# BAD
-query = f"SELECT * FROM users WHERE id = {user_id}"
+Searches for Supabase-related domains in:
+- HTML source code
+- JavaScript bundles
+- Network requests (via inline scripts)
+
+**Patterns detected:**
+```
+*.supabase.co
+*.supabase.com
+supabase-cdn.com
 ```
 
-### Secure Alternative ✅
-```python
-# GOOD
-query = "SELECT * FROM users WHERE id = ?"
-cursor.execute(query, (user_id,))
-```
+### 2. JavaScript Client Detection
 
-### XSS Prevention ❌
+Looks for Supabase client library signatures:
+
 ```javascript
-// BAD
-element.innerHTML = userInput;
+// Import patterns
+import { createClient } from '@supabase/supabase-js'
+const { createClient } = require('@supabase/supabase-js')
+
+// Client initialization
+supabase.createClient(
+createClient('https://
+SUPABASE_URL
+NEXT_PUBLIC_SUPABASE
+VITE_SUPABASE
+REACT_APP_SUPABASE
 ```
 
-### Secure Alternative ✅
-```javascript
-// GOOD
-element.textContent = userInput;
-// Or use DOMPurify for HTML
-element.innerHTML = DOMPurify.sanitize(userInput);
+### 3. API Endpoint Detection
+
+Checks for characteristic Supabase endpoints:
+
+```
+/rest/v1/
+/auth/v1/
+/storage/v1/
+/realtime/v1/
+/functions/v1/
 ```
 
-## Security Audit Template
+### 4. Response Header Analysis
 
-When reviewing code:
+Looks for Supabase-specific headers:
 
-1. **Authentication**: How are users verified?
-2. **Authorization**: What can each role do?
-3. **Input Handling**: Is all input validated?
-4. **Data Storage**: How is sensitive data protected?
-5. **Dependencies**: Any known vulnerabilities?
-6. **Logging**: Are security events logged?
+```
+x-supabase-*
+sb-*
+```
 
----
+## Usage
 
-*"Security is not a product, but a process." - Bruce Schneier*
+### Basic Detection
+
+```
+Check if https://myapp.example.com uses Supabase
+```
+
+### Detection with Verbose Output
+
+```
+Detect Supabase on https://myapp.example.com with full details
+```
+
+## Output Format
+
+### Supabase Detected
+
+```
+═══════════════════════════════════════════════════════════
+ SUPABASE DETECTED
+═══════════════════════════════════════════════════════════
+
+ Target: https://myapp.example.com
+ Status: ✅ Supabase usage confirmed
+
+ Detection Evidence:
+ ├── Domain: abc123def.supabase.co (found in main.js)
+ ├── Client: @supabase/supabase-js v2.x detected
+ ├── Endpoints: /rest/v1/, /auth/v1/, /storage/v1/
+ └── Headers: x-supabase-api-version present
+
+ Project Reference: abc123def
+ Project URL: https://abc123def.supabase.co
+
+ Context saved to: .sb-pentest-context.json
+═══════════════════════════════════════════════════════════
+```
+
+### Supabase Not Detected
+
+```
+═══════════════════════════════════════════════════════════
+ DETECTION RESULT
+═══════════════════════════════════════════════════════════
+
+ Target: https://myapp.example.com
+ Status: ❌ Supabase not detected
+
+ Scanned:
+ ├── HTML source: No Supabase patterns
+ ├── JavaScript bundles: 3 files analyzed, no matches
+ ├── Network patterns: No Supabase endpoints
+ └── Response headers: No Supabase headers
+
+ Note: The app may use a self-hosted Supabase or custom domain.
+       Try providing a known Supabase URL manually if you have one.
+═══════════════════════════════════════════════════════════
+```
+
+## Context Output
+
+When Supabase is detected, the skill saves to `.sb-pentest-context.json`:
+
+```json
+{
+  "target_url": "https://myapp.example.com",
+  "detection": {
+    "detected": true,
+    "confidence": "high",
+    "timestamp": "2025-01-31T10:00:00Z",
+    "evidence": [
+      {
+        "type": "domain",
+        "value": "abc123def.supabase.co",
+        "location": "/static/js/main.js",
+        "line": 1247
+      },
+      {
+        "type": "client_library",
+        "value": "@supabase/supabase-js",
+        "version": "2.x"
+      }
+    ]
+  },
+  "supabase": {
+    "project_ref": "abc123def",
+    "project_url": "https://abc123def.supabase.co"
+  }
+}
+```
+
+## Audit Log Entry
+
+Each detection is logged to `.sb-pentest-audit.log`:
+
+```
+[2025-01-31T10:00:00Z] DETECTION_START target=https://myapp.example.com
+[2025-01-31T10:00:01Z] FETCH_HTML status=200 size=45KB
+[2025-01-31T10:00:02Z] FETCH_JS file=main.js status=200 size=1.2MB
+[2025-01-31T10:00:03Z] PATTERN_MATCH type=domain value=abc123def.supabase.co
+[2025-01-31T10:00:03Z] DETECTION_COMPLETE result=detected confidence=high
+```
+
+## Confidence Levels
+
+| Level | Criteria |
+|-------|----------|
+| **High** | Multiple evidence types (domain + client + endpoints) |
+| **Medium** | Single strong evidence (domain or explicit client init) |
+| **Low** | Only indirect evidence (generic patterns, possible false positive) |
+
+## Edge Cases
+
+### Custom Domains
+
+Some Supabase projects use custom domains (e.g., `api.mycompany.com`). In this case:
+
+```
+Detect Supabase on https://myapp.com with custom API domain api.mycompany.com
+```
+
+### Self-Hosted Supabase
+
+Self-hosted instances won't have `.supabase.co` domains. Look for:
+- PostgREST patterns (`/rest/v1/`)
+- GoTrue auth patterns (`/auth/v1/`)
+- Supabase client library in code
+
+### Single Page Applications
+
+For SPAs with lazy-loaded chunks:
+
+```
+Detect Supabase on https://myapp.com including all JS chunks
+```
+
+## Common Issues
+
+❌ **Problem:** Detection returns false negative on SPA
+✅ **Solution:** The app may lazy-load Supabase. Try interacting with the app first to load all chunks, or provide known patterns.
+
+❌ **Problem:** Multiple Supabase projects detected
+✅ **Solution:** This can happen with multi-tenant setups. The skill will list all found projects.
+
+❌ **Problem:** Detection is slow
+✅ **Solution:** Large JS bundles take time to analyze. Use `--quick` mode for faster but less thorough detection:
+```
+Quick detect Supabase on https://myapp.com
+```
+
+## Next Steps
+
+After detection:
+1. Run `supabase-extract-url` to confirm and extract the project URL
+2. Run `supabase-extract-anon-key` to find the API key
+3. Or use `supabase-pentest` for a full guided audit
+
+## MANDATORY: Progressive Context File Updates
+
+⚠️ **This skill MUST update tracking files PROGRESSIVELY during execution, NOT just at the end.**
+
+### Critical Rule: Write As You Go
+
+**DO NOT** batch all writes at the end. Instead:
+
+1. **Before starting any action** → Log the action to `.sb-pentest-audit.log`
+2. **After each discovery** → Immediately update `.sb-pentest-context.json`
+3. **After each significant step** → Log completion to `.sb-pentest-audit.log`
+
+This ensures that if the skill is interrupted, crashes, or times out, all findings up to that point are preserved.
+
+### Required Actions (Progressive)
+
+1. **Create/Update `.sb-pentest-context.json`** with results:
+   ```json
+   {
+     "target_url": "https://myapp.example.com",
+     "detection": {
+       "detected": true,
+       "confidence": "high",
+       "timestamp": "...",
+       "evidence": [ ... ]
+     },
+     "supabase": {
+       "project_ref": "abc123def",
+       "project_url": "https://abc123def.supabase.co"
+     }
+   }
+   ```
+
+2. **Create/Log to `.sb-pentest-audit.log`**:
+   ```
+   [TIMESTAMP] [supabase-detect] [START] Starting Supabase detection
+   [TIMESTAMP] [supabase-detect] [SUCCESS] Supabase detected with high confidence
+   [TIMESTAMP] [supabase-detect] [CONTEXT_UPDATED] .sb-pentest-context.json created/updated
+   ```
+
+3. **IMPORTANT: As the first skill in the audit chain, this skill is responsible for creating the context files if they don't exist.**
+
+**FAILURE TO UPDATE CONTEXT FILES IS NOT ACCEPTABLE.**
+
+## MANDATORY: Evidence Collection
+
+📁 **Evidence Directory:** `.sb-pentest-evidence/01-detection/`
+
+### Evidence Files to Create
+
+| File | Content |
+|------|---------|
+| `initial-scan.json` | Raw detection results with all evidence |
+| `supabase-endpoints.txt` | List of discovered Supabase endpoints |
+| `client-code-snippets/` | Directory with relevant code excerpts |
+
+### Evidence Format
+
+```json
+{
+  "evidence_id": "DET-001",
+  "timestamp": "2025-01-31T10:00:00Z",
+  "category": "detection",
+  "target_url": "https://myapp.example.com",
+
+  "detection_results": {
+    "supabase_detected": true,
+    "confidence": "high",
+    "project_url": "https://abc123def.supabase.co",
+    "project_ref": "abc123def"
+  },
+
+  "evidence": [
+    {
+      "type": "domain_pattern",
+      "value": "abc123def.supabase.co",
+      "location": "/static/js/main.js",
+      "line": 1247,
+      "context": "const SUPABASE_URL = 'https://abc123def.supabase.co'"
+    },
+    {
+      "type": "client_library",
+      "value": "@supabase/supabase-js",
+      "version": "2.x"
+    }
+  ],
+
+  "curl_command": "curl -s 'https://abc123def.supabase.co/rest/v1/' -H 'apikey: [ANON_KEY]'"
+}
+```
+
+### Add to curl-commands.sh
+
+```bash
+# === DETECTION ===
+# Check Supabase API availability
+curl -s "$SUPABASE_URL/rest/v1/" -H "apikey: $ANON_KEY" | head -100
+```
+
+### Add to timeline.md
+
+```markdown
+## [TIMESTAMP] - Detection Phase Complete
+- Supabase detected with [confidence] confidence
+- Project: [project_ref]
+- Evidence: `01-detection/initial-scan.json`
+```
+
+## Related Skills
+
+- `supabase-extract-url` — Extract project URL from code
+- `supabase-extract-anon-key` — Find anon key
+- `supabase-pentest` — Full orchestrated audit
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
