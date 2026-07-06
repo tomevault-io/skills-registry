@@ -1,281 +1,245 @@
 ---
-name: skill-analyzer
-description: Analyzes project requirements in CLAUDE.md and identifies relevant skills from SkillOS library. Populates the "Available Skills" section with indexed skills and usage guidance, and the "Missing Skills" section with project-specific skills that should be created. Use this after project-context-generator creates the initial CLAUDE.md, or when project requirements change and skill selection needs updating.
+name: claude-skill-registry
+description: >- Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Skill Analyzer
+# Fuel Network Security Scanner
 
-## Overview
+Security scanner for Fuel Network smart contracts written in Sway. Fuel uses a UTXO-based model with the FuelVM, fundamentally different from EVM account-based chains.
 
-This skill analyzes a project's CLAUDE.md file to understand requirements, then intelligently selects relevant skills from the SkillOS library and identifies project-specific skills that need to be created. It updates CLAUDE.md with a complete skills index that guides development work.
+---
 
-## When to Use This Skill
+## Language & Runtime
 
-Use this skill when:
-- Initial CLAUDE.md has been created and needs skill mapping
-- Project requirements have evolved and skill selection needs updating
-- Starting work on a cloned SkillOS repository for a new project
-- Auditing which skills are actually relevant to the current project
+| Attribute | Value |
+|-----------|-------|
+| Chain | Fuel (modular execution layer) |
+| Language | Sway (Rust-inspired, purpose-built for FuelVM) |
+| VM | FuelVM (register-based, not stack-based like EVM) |
+| Transaction Model | UTXO-based (like Bitcoin, unlike Ethereum's account model) |
+| Token Model | Native multi-asset (assets are first-class, not contract-based) |
+| Program Types | Contract, Script, Predicate, Library |
+| Toolchain | `forc` (Fuel Orchestrator), `fuel-core` |
+| Testing | `fuels-rs` (Rust SDK) |
 
-**Important:** This skill requires an existing CLAUDE.md file with project context (sections 1-4). Run `project-context-generator` first if CLAUDE.md doesn't exist.
+---
 
-## Workflow
+## FuelVM vs EVM: Key Differences
 
-### Step 1: Locate and Read CLAUDE.md
+| Feature | EVM (Ethereum) | FuelVM (Fuel) |
+|---------|----------------|---------------|
+| Transaction model | Account-based | UTXO-based |
+| Assets | ERC20 contracts | Native multi-asset |
+| Parallelism | Sequential | Parallel (UTXO enables it) |
+| State access | Any contract can read global state | State access declared upfront |
+| Reentrancy | Possible (external calls) | Different model (no direct reentrancy) |
+| Stack | Stack-based (256-bit words) | Register-based (64-bit words) |
+| Programs | Smart contracts only | Contracts, Scripts, Predicates |
 
-Ask the user for the CLAUDE.md file location (if not provided):
-- "Where is your project's CLAUDE.md file?"
-- Default assumption: `./CLAUDE.md` in the current working directory
+---
 
-Read and parse the CLAUDE.md file, focusing on:
-- Project Overview (section 1): Goals, use cases, target users
-- Technical Architecture (section 2): Tech stack, structure, key decisions
-- Project Constraints (section 3): Performance, security, resources
-- Development Conventions (section 4): Naming, testing, code style
+## Detection Capabilities
 
-### Step 2: Identify SkillOS Location
+| Category | Detection | Severity |
+|----------|-----------|----------|
+| **UTXO** | Same UTXO consumed in multiple paths | Critical |
+| **UTXO** | Coin output not created for change | High |
+| **Predicates** | Predicate logic bypass via crafted input | Critical |
+| **Predicates** | Predicate gas limit exceeded (always fails) | High |
+| **Assets** | Wrong `AssetId` used in transfer or balance check | Critical |
+| **Assets** | Missing `AssetId` validation on received funds | High |
+| **Access Control** | Missing `msg_sender()` validation on privileged functions | Critical |
+| **Access Control** | Identity type confusion (`Address` vs `ContractId`) | High |
+| **Storage** | Storage key collision in manual key assignment | High |
+| **Storage** | Storage slot manipulation via `asm` blocks | Medium |
+| **Math** | Integer overflow (Sway u64 wraps in some contexts) | High |
+| **Math** | Division by zero (panic) | Medium |
+| **Scripts** | Incorrect script-to-contract call sequencing | Medium |
+| **Scripts** | Script return value not validated by caller | Medium |
 
-Determine where the SkillOS library is located:
-- Check if the current directory contains a `meta-skills/` folder
-- If yes, assume SkillOS skills are in the current directory structure
-- If no, ask: "Where is your SkillOS library located?"
+---
 
-Expected SkillOS structure:
-```
-SkillOS/
-├── meta-skills/           # Meta-skills that operate on other skills
-│   ├── project-context-generator/
-│   ├── skill-analyzer/
-│   └── ...
-└── skills/                # General-purpose skills (optional, depends on user's organization)
-    ├── frontend-design/
-    ├── api-design/
-    └── ...
-```
+## Program Types and Security Implications
 
-### Step 3: Scan Available Skills
+### Contract
 
-Traverse the SkillOS directory to build a catalog of available skills:
+Persistent state, deployed on-chain, callable by transactions and scripts:
 
-**For each skill found:**
-1. Read the `SKILL.md` frontmatter (name + description)
-2. Extract skill metadata:
-   - Name
-   - Description (what it does + when to use)
-   - Skill type (meta-skill vs. general skill)
-3. Store in a temporary catalog for analysis
+```sway
+contract;
 
-**Output example:**
-```
-Found 15 skills in SkillOS:
-  Meta-skills (3):
-    - project-context-generator
-    - skill-analyzer
-    - skill-creator
-  General skills (12):
-    - frontend-design
-    - api-design
-    - database-schema
-    - ...
-```
+storage {
+    owner: Identity = Identity::Address(Address::zero()),
+    balance: u64 = 0,
+}
 
-### Step 4: Match Skills to Project Requirements
+abi MyContract {
+    #[storage(read, write)]
+    fn deposit();
+    
+    #[storage(read, write)]
+    fn withdraw(amount: u64);
+}
 
-Analyze the project context against each skill's description to determine relevance.
-
-**Matching criteria:**
-- **Tech stack alignment**: Does the skill's domain match the project's technologies?
-  - Example: `frontend-design` skill for a React project
-- **Domain relevance**: Does the skill address problems in this project's domain?
-  - Example: `pdf-processing` skill if project generates reports
-- **Workflow needs**: Does the project workflow benefit from this skill?
-  - Example: `docx` skill if documentation is a key deliverable
-- **Explicit mentions**: Are there specific references in CLAUDE.md?
-  - Example: "need to generate visualizations" → `data-visualization` skill
-
-**Scoring approach (simple heuristic):**
-- High relevance: Core to the project (e.g., frontend skill for a web app)
-- Medium relevance: Potentially useful but not central
-- Low relevance: Marginal or speculative utility
-
-Select skills with High or Medium relevance.
-
-**Example output:**
-```
-Selected 6 relevant skills:
-  - frontend-design (High)
-  - api-design (High)
-  - database-schema (High)
-  - docx (Medium - for documentation)
-  - skill-creator (Medium - for creating project-specific skills)
-  - testing-patterns (Medium)
+impl MyContract for Contract {
+    #[storage(read, write)]
+    fn deposit() {
+        // msg_amount() = forwarded base asset amount
+        // msg_asset_id() = forwarded asset ID
+        storage.balance.write(storage.balance.read() + msg_amount());
+    }
+    
+    #[storage(read, write)]
+    fn withdraw(amount: u64) {
+        // MUST validate caller
+        require(
+            msg_sender().unwrap() == storage.owner.read(),
+            "unauthorized"
+        );
+        storage.balance.write(storage.balance.read() - amount);
+        transfer(msg_sender().unwrap(), AssetId::base(), amount);
+    }
+}
 ```
 
-### Step 5: Identify Missing Project-Specific Skills
+### Predicate
 
-Based on the project context, identify domain-specific skills that don't exist in the SkillOS library but should be created for this project.
+Stateless UTXO spending conditions — returns `true` or `false`:
 
-**Look for:**
-- **Domain models**: Unique business logic or data models
-  - Example: "User membership tiers with points system" → `membership-management` skill
-- **Integrations**: Third-party APIs or services
-  - Example: "Stripe payment processing" → `payment-integration` skill
-- **Specialized workflows**: Project-specific processes
-  - Example: "ETL pipeline for customer data" → `customer-data-pipeline` skill
-- **Business rules**: Complex or frequently-referenced logic
-  - Example: "Pricing calculation with volume discounts" → `pricing-engine` skill
+```sway
+predicate;
 
-**For each missing skill, define:**
-- **Name**: Descriptive name for the skill
-- **Rationale**: Why this skill is needed for the project
-- **Suggested content**: What should be included (references, scripts, workflows)
-- **Priority**: High (core to project), Medium (helpful but not critical), Low (nice-to-have)
-
-**Example output:**
-```
-Identified 3 missing skills:
-
-1. ecommerce-product-catalog (High priority)
-   - Rationale: Product management is core to this e-commerce platform
-   - Suggested content:
-     - Product schema and category hierarchy
-     - SKU generation and validation rules
-     - Inventory sync workflows
-     - references/product_schema.md
-     - scripts/validate_sku.py
-
-2. payment-integration (High priority)
-   - Rationale: Stripe integration with custom retry logic and webhook handling
-   - Suggested content:
-     - Stripe API integration patterns
-     - Webhook signature verification
-     - Refund and chargeback workflows
-     - references/stripe_api.md
-     - scripts/webhook_handler.py
-
-3. user-membership (Medium priority)
-   - Rationale: Membership tiers affect pricing and features
-   - Suggested content:
-     - Membership tier definitions
-     - Points calculation logic
-     - Tier upgrade/downgrade rules
-     - references/membership_rules.md
+// Predicate that allows spending only if multiple conditions met
+fn main(expected_recipient: Address, min_amount: u64) -> bool {
+    // Predicates have NO state and NO side effects
+    // They validate whether a UTXO can be spent
+    let tx_outputs = tx_outputs_count();
+    
+    // Check: output sends to expected recipient
+    // Check: amount >= min_amount
+    // Returns true only if conditions are met
+    true // or false
+}
 ```
 
-### Step 6: Update CLAUDE.md
+**Predicate Security:** Predicates are pure functions evaluated at validation time. If the predicate returns `true`, the UTXO can be spent. Any logic error = funds at risk.
 
-Update the CLAUDE.md file with two sections:
+### Script
 
-#### Section 5: Available Skills
+Transaction-level orchestration (not deployed, executed once):
 
-For each selected skill, add:
-- **Skill name** (linked to the skill if possible)
-- **Relevance to this project**: Brief explanation of why/when to use in this context
-- **Key use cases**: Specific scenarios in this project where the skill applies
-- **Related skills**: Other skills that work well in combination
+```sway
+script;
 
-**Example:**
-```markdown
-## 5. Available Skills
+use my_contract_abi::MyContract;
 
-### frontend-design
-**Relevance:** Core skill for building the e-commerce UI with React and Tailwind.
-**Key use cases:**
-- Creating product listing pages
-- Building shopping cart interface
-- Implementing checkout flow
-**Related skills:** Works with `api-design` for data fetching, `testing-patterns` for component tests.
-
-### api-design
-**Relevance:** Guides RESTful API design for product, cart, and order endpoints.
-**Key use cases:**
-- Designing product catalog API
-- Implementing cart management endpoints
-- Creating order processing API
-**Related skills:** Works with `database-schema` for data modeling.
+fn main(contract_id: ContractId, amount: u64) {
+    let contract = abi(MyContract, contract_id.into());
+    contract.deposit {  // Call parameters
+        gas: 10_000,
+        coins: amount,
+        asset_id: AssetId::base(),
+    }();
+}
 ```
 
-#### Section 6: Missing Skills (Project-Specific)
+---
 
-For each identified missing skill, add:
-- **Skill name**
-- **Rationale**: Why it's needed
-- **Suggested content**: What should be included
-- **Priority**: High/Medium/Low
-- **Next steps**: Guidance on creating the skill (e.g., "Use skill-creator to generate this skill")
+## Native Multi-Asset Model
 
-**Example:**
-```markdown
-## 6. Missing Skills (Project-Specific)
+Unlike EVM where tokens are contract-based (ERC20), Fuel has native multi-asset support:
 
-### ecommerce-product-catalog
-**Rationale:** Product management is core to this e-commerce platform. Centralizing product schema, SKU rules, and inventory workflows will ensure consistency.
+```sway
+// Every contract can mint its own sub-assets
+let sub_id = SubId::zero();
+let asset_id = AssetId::new(ContractId::this(), sub_id);
 
-**Suggested content:**
-- `references/product_schema.md` - Product and category data models
-- `references/sku_rules.md` - SKU generation and validation logic
-- `scripts/validate_sku.py` - SKU validation utility
+// Mint native assets
+mint(sub_id, amount);
 
-**Priority:** High
+// Transfer native assets  
+transfer(recipient, asset_id, amount);
 
-**Next steps:** Use `skill-creator` to initialize this skill, then populate with project-specific product logic.
+// Check forwarded asset
+let received_asset = msg_asset_id();
+require(received_asset == expected_asset, "wrong asset");
 ```
 
-Save the updated CLAUDE.md file.
+**Critical Check:** Always validate `msg_asset_id()` matches the expected asset. Failing to do so allows an attacker to send a worthless asset and receive legitimate assets in return.
 
-### Step 7: Report Results
-
-Present a summary to the user:
-
-```
-✅ Skill analysis complete!
-
-📊 Results:
-- Scanned 15 skills in SkillOS
-- Selected 6 relevant skills (added to section 5)
-- Identified 3 missing project-specific skills (added to section 6)
-
-📝 Updated CLAUDE.md at [path]
-
-🎯 Next steps:
-1. Review the "Available Skills" section - adjust if any are irrelevant
-2. Review the "Missing Skills" section - prioritize which to create first
-3. Use `skill-creator` to build the missing skills as needed
-```
-
-## Important Notes
-
-### Skills Stay Independent
-
-This skill **does not modify** any skills in the SkillOS library. It only reads their metadata and creates an index in CLAUDE.md.
-
-Project-specific context lives in CLAUDE.md, not in the skills themselves.
-
-### Re-run When Requirements Change
-
-As the project evolves, requirements may shift. Re-run this skill to:
-- Add newly relevant skills
-- Remove skills that are no longer applicable
-- Update missing skills list based on new needs
-
-### Skill Selection is Heuristic-Based
-
-The skill matching process is not perfect. Users should review and adjust:
-- Remove skills that aren't actually needed
-- Add skills that were missed
-- Adjust priorities for missing skills
-
-**Encourage user review**: "Please review the selected skills and let me know if any should be added or removed."
+---
 
 ## Resources
+- [Fuel Patterns](resources/fuel-patterns.md)
 
-This skill doesn't require external references or scripts. It operates by:
-1. Reading SKILL.md frontmatter from skills in SkillOS
-2. Analyzing project context in CLAUDE.md
-3. Applying matching heuristics
-4. Updating CLAUDE.md with results
+## Workflows
+- [Fuel Audit](workflows/fuel-audit.md)
+
+## Overview
+Fuel is a modular execution layer with:
+- Sway language (Rust-inspired)
+- UTXO-based model (not account-based)
+- FuelVM (not EVM)
+- Native multi-asset support
+- Predicates (stateless UTXO conditions)
+- Parallel transaction processing via strict state access declarations
+
+## Error Code Reference
+
+Common Sway/FuelVM errors encountered during audits. Fuel uses `revert()` with numeric codes and `require()` with custom enums.
+
+### FuelVM Runtime Errors
+
+| Error Code | Name | Meaning |
+|-----------|------|----------|
+| `0x00` | `Success` | Normal execution |
+| `0x01` | `Revert` | Explicit `revert()` or failed `require()` |
+| `0x02` | `OutOfGas` | Transaction exceeded gas limit |
+| `0x03` | `TransactionValidity` | Transaction failed validation rules |
+| `0x04` | `MemoryOverflow` | Memory allocation exceeded limits |
+| `0x05` | `ArithmeticOverflow` | Arithmetic operation overflow |
+| `0x06` | `ContractNotFound` | Called contract ID does not exist |
+| `0x07` | `MemoryOwnership` | Attempted write to read-only memory |
+| `0x08` | `NotEnoughBalance` | Insufficient asset balance for transfer |
+| `0x09` | `ExpectedInternalContext` | External call in internal-only context |
+| `0x0A` | `AssetIdNotFound` | Asset ID does not exist in transaction |
+| `0x0B` | `InputNotFound` | Transaction input not found |
+| `0x0C` | `OutputNotFound` | Transaction output not found |
+| `0x0D` | `WitnessNotFound` | Witness data not found at index |
+
+### Sway Standard Library Errors
+
+| Error Type | Meaning | Audit Significance |
+|-----------|---------|--------------------|
+| `AuthError::SenderNotOwner` | Caller is not the contract owner | Access control — check ownership model |
+| `AuthError::SenderNotAdmin` | Caller lacks admin role | Role-based access — check admin assignment |
+| `AssetError::InsufficientBalance` | Insufficient asset balance | Financial operation — check for manipulation |
+| `AssetError::InvalidAssetId` | Asset ID not recognized | Multi-asset — check asset ID validation |
+| `PredicateError::InvalidSignature` | Predicate signature check failed | Auth bypass — check predicate logic |
+| `InputError::InvalidInput` | Generic input validation failure | Check input bounds and type validation |
+| `IdentityError::InvalidAddress` | Address validation failed | Check for zero/invalid address handling |
+
+### UTXO-Related Audit Errors
+
+| Issue | Error Pattern | Audit Significance |
+|-------|--------------|--------------------|
+| Coin UTXO double-spend | `TransactionValidity` | FuelVM prevents at protocol level — but check application logic for logical double-spend |
+| Predicate evaluation failure | `Revert` in predicate context | Predicates are stateless — verify all validation happens within single evaluation |
+| Message proof invalid | `MessageProofError` | L1→L2 bridge message not verified correctly |
+| Variable output missing | `OutputNotFound` | Transaction didn't include required output for asset transfer |
+
+## Troubleshooting
+
+| Issue | Likely Cause | Solution |
+|-------|-------------|----------|
+| UTXO model vulnerabilities missed | Scanner uses account-model mental model | Analyze UTXO inputs/outputs explicitly; check coin selection and change handling |
+| Predicate bypass not detected | Scanner doesn't analyze predicate scripts | Audit predicate logic separately — ensure all paths lead to `true/false` without side effects |
+| Multi-asset handling errors missed | Scanner assumes single native asset | Flag all `AssetId` parameters; verify correct asset checking in every transfer |
+| Storage slot collision not caught | Scanner doesn't map storage access in Sway | Map all `storage` block declarations; check for manual slot computation conflicts |
+| Cross-contract call issues missed | Scanner treats inter-contract calls as trusted | Trace all `abi(ContractId, ...)` calls; verify called contract ID validation |
+| Message-based bridge risks ignored | Scanner doesn't model Fuel L1→L2 bridge | Audit all `input_message` handlers and message proof verification logic |
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
