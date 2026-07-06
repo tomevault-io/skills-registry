@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Owl-Listener/ai-design-skills](https://github.com/Owl-Listener/ai-design-skills/tree/main/skills/ai-alignment-reasoning/transparency-patterns/SKILL.md)
+Original source: [Owl-Listener/ai-design-skills](https://github.com/Owl-Listener/ai-design-skills/tree/main/skills/ai-alignment-reasoning/bias-detection-design/SKILL.md)
 
 ---
 
