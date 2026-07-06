@@ -1,275 +1,292 @@
 ---
-name: rust-sqlite-cli-architecture
-description: |- Use when this capability is needed.
+name: mcp-pydantic-tool-definition
+description: > Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Rust SQLite CLI Architecture
+# MCP Pydantic Tool Definition Skill
 
-Use this skill when designing or reviewing a Rust command-line application that
-stores durable local state in SQLite. The output is an implementation-ready
-architecture plan, not a pile of generic database advice. It should identify
-where data lives, how schema changes land, which commands own transactions, how
-tests prove safety, and how users recover when something goes wrong.
+## Metadata (Tier 1)
 
-## Critical Constraints
+**Keywords**: pydantic, strict mode, input schema, tool schema, validation
 
-- Treat the database as user data, not an internal cache, unless the product
-  explicitly says it can be deleted without loss.
-- Pick one canonical database location and make overrides explicit through a
-  flag, environment variable, or config value.
-- Never run destructive schema changes without a tested backup and rollback
-  path.
-- Every mutating command needs an explicit transaction boundary.
-- Migrations are source-controlled, ordered, repeatable, and tested from older
-  fixtures.
-- User-facing errors must explain the next action without exposing raw SQL as
-  the main message.
-- Recovery commands must exist before the tool is used for important data.
+**File Patterns**: **/schemas.py, **/tools/*.py
 
-## When SQLite Fits
+**Modes**: backend_python
 
-SQLite is a strong fit when the CLI needs local durable state, offline operation,
-fast startup, simple deployment, and one-machine ownership. Examples include
-task stores, local indexes, audit logs, sync queues, caches that must survive
-restart, and portable project databases.
+---
 
-Choose another storage design when the product requires heavy multi-writer
-concurrency across machines, central policy enforcement, server-side audit, or
-very large binary payloads. A CLI can still use SQLite as a local queue or cache
-in those systems, but the architecture should name the server of record.
+## Instructions (Tier 2)
 
-## Inputs To Collect
+### Schema-First Development Pattern
 
-Before designing modules or tables, gather these facts:
+**CRITICAL**: Pydantic V2 models are the **single source of truth** for MCP tool schemas.
 
-- Primary commands and which ones read, mutate, import, export, sync, or delete.
-- Data ownership: per user, per workspace, per repository, or per explicit file.
-- Portability needs: copyable database file, project-relative database, or
-  platform data directory.
-- Durability expectations: cache, rebuildable index, or authoritative user data.
-- Concurrency expectations: one process, shell pipelines, background daemon,
-  scheduled runs, or multiple terminals.
-- Upgrade expectations: how old an installed database might be in the field.
-- Privacy and backup expectations for sensitive or irreplaceable data.
+```python
+from pydantic import BaseModel, Field, ConfigDict
+from typing import Literal
 
-## Architecture Procedure
+class ToolInput(BaseModel):
+    """Input schema for tool - becomes inputSchema automatically."""
+    model_config = ConfigDict(strict=True)
 
-1. Define the storage contract.
-   State the default path, override mechanism, file permissions, and whether the
-   database is authoritative. Do not hide important data under an ambiguous temp
-   or cache path.
+    query: str = Field(..., description="Search query string")
+    limit: int = Field(10, ge=1, le=100, description="Max results")
+    filter: Literal["all", "code", "docs"] = "all"
 
-2. Draw the command-to-data map.
-   For each command, list the tables it reads and writes, whether it needs a
-   transaction, and what invariant must hold after it exits.
-
-3. Choose module boundaries.
-   Keep CLI parsing, domain decisions, database access, migrations, and output
-   rendering separate enough that transaction tests can call the domain layer
-   without scraping terminal text.
-
-4. Design the schema for operations.
-   Model stable entities as tables with primary keys, foreign keys, and indexes
-   that match command queries. Use JSON columns only for opaque payloads or
-   bounded extension fields, not for data that commands must filter or join.
-
-5. Define connection setup.
-   Open one connection per command unless the product has a daemon mode. Apply
-   required connection settings consistently, including foreign-key enforcement,
-   busy timeout, and any journal-mode decision.
-
-6. Write the migration policy.
-   Decide whether normal command startup applies pending migrations or whether
-   users run an explicit upgrade command. For authoritative data, prefer a
-   preflight check, backup, migration, integrity check, and clear failure path.
-
-7. Specify transaction boundaries.
-   Every mutating command begins a transaction after validation and commits only
-   after all database invariants are satisfied. Render output after commit so a
-   successful message cannot precede a rolled-back write.
-
-8. Plan operational commands.
-   Include commands or documented workflows for `doctor`, `backup`, `restore`,
-   `export`, `import`, `schema-version`, and optional compaction.
-
-9. Build the test matrix.
-   Cover fresh database creation, migration from prior fixtures, transaction
-   rollback, command integration, concurrent-process behavior, backup/restore,
-   import validation, and corruption diagnosis.
-
-## Recommended File Shape
-
-Adapt names to the repository, but preserve the separation of responsibilities:
-
-```text
-src/
-  main.rs              # process entry point and error-to-exit mapping
-  cli.rs               # argument parsing and command enum
-  commands/            # command handlers, one file per workflow
-  domain/              # validation and state-transition rules
-  db/
-    mod.rs             # connection factory and common database errors
-    migrations/        # ordered migration files or embedded migration sources
-    schema.rs          # schema-version checks and migration runner
-    repo_*.rs          # small query modules grouped by aggregate or workflow
-tests/
-  cli/                 # black-box command tests
-  fixtures/db-v*.sqlite
+# JSON Schema generated automatically
+schema = ToolInput.model_json_schema()
+# {
+#   "type": "object",
+#   "properties": {
+#     "query": {"type": "string", "description": "Search query string"},
+#     "limit": {"type": "integer", "minimum": 1, "maximum": 100, ...},
+#     "filter": {"type": "string", "enum": ["all", "code", "docs"]}
+#   },
+#   "required": ["query"]
+# }
 ```
 
-The key rule is direction: commands may call domain and database modules; the
-database layer should not know about terminal formatting, color, progress bars,
-or command-line flags.
+### Strict Mode (MANDATORY)
 
-## Data Location Rules
+**ConfigDict(strict=True)** prevents silent type coercion.
 
-- Per-user tools should default to a platform data directory and print the path
-  in diagnostic commands.
-- Per-project tools should prefer an explicit project metadata directory or a
-  user-selected path checked into the project policy.
-- Support `--database <path>` or an equivalent override for tests, recovery, and
-  advanced operation.
-- Refuse to create parent directories with broad permissions for sensitive
-  state.
-- Document sidecar files if the journal mode creates them, because backup and
-  cleanup procedures must include them or checkpoint first.
+```python
+# ❌ WITHOUT STRICT MODE
+class Input(BaseModel):
+    count: int
 
-## Schema Rules
+# Silent coercion: "10" → 10
+input = Input(count="10")  # Works, but dangerous!
 
-- Enable foreign-key enforcement for every connection.
-- Use stable integer or text primary keys; do not rely on row order.
-- Store timestamps in one format and name the clock source used by commands.
-- Add indexes for the queries on the command map, not for speculative future
-  reports.
-- Keep schema metadata in the database, including current migration version and
-  application identity.
-- Keep destructive changes explicit: copy-table migrations are safer than
-  in-place mutation when data matters.
-- Make uniqueness constraints carry product meaning, then translate violations
-  into user-facing conflict messages.
+# ✅ WITH STRICT MODE
+class Input(BaseModel):
+    model_config = ConfigDict(strict=True)
+    count: int
 
-## Migration Policy
+# Validation error: no coercion
+input = Input(count="10")  # ❌ ValidationError!
+input = Input(count=10)    # ✅ OK
+```
 
-A migration plan must answer:
+### Field Validation
 
-- How pending migrations are detected.
-- Whether a backup is created before migration.
-- How integrity is checked before and after migration.
-- Which migrations are reversible, and which require restore from backup.
-- How the tool behaves when the executable is older than the database schema.
-- How fixture databases are generated and kept for compatibility tests.
+```python
+from pydantic import Field, field_validator, model_validator
 
-For important user data, the safe default is:
+class SearchInput(BaseModel):
+    model_config = ConfigDict(strict=True)
 
-1. Open the database.
-2. Check application identity and schema version.
-3. Run an integrity check.
-4. Create or require a backup.
-5. Apply pending migrations inside the narrowest safe transaction scope.
-6. Run post-migration integrity and invariant checks.
-7. Report the new schema version and backup location.
+    query: str = Field(..., min_length=1, max_length=500)
+    limit: int = Field(10, ge=1, le=100)
+    offset: int = Field(0, ge=0)
 
-## Transaction Policy
+    @field_validator("query")
+    @classmethod
+    def validate_query(cls, v: str) -> str:
+        """Custom query validation."""
+        if len(v.split()) > 50:
+            raise ValueError("Query too complex (max 50 terms)")
+        return v.strip()
 
-Use one explicit transaction per mutating command. Start it after input
-validation and connection setup. Commit after database invariants pass. Roll
-back on any error. Commands that perform read-modify-write decisions should
-acquire the write intent early enough to avoid stale decisions under concurrent
-processes.
+    @model_validator(mode="after")
+    def validate_pagination(self) -> "SearchInput":
+        """Cross-field validation."""
+        if self.offset + self.limit > 10000:
+            raise ValueError("Pagination limit exceeded")
+        return self
+```
 
-External side effects need special care:
+### Complex Types
 
-- If the command writes files and the database, define which side is
-  authoritative and how cleanup works after failure.
-- If the command sends network requests, prefer an outbox table or idempotent
-  operation key so retry does not duplicate user-visible effects.
-- If output streams a report, collect database state first, commit if needed,
-  then render.
+```python
+from typing import Annotated, Literal
+from pydantic import BaseModel, ConfigDict, Field
 
-## Testing Plan
+class FileFilter(BaseModel):
+    model_config = ConfigDict(strict=True)
 
-Build tests around behavior, not driver internals:
+    pattern: str = Field(..., description="Glob pattern")
+    exclude_dirs: list[str] = Field(default_factory=list)
+    max_size_mb: int | None = Field(None, ge=1, le=1000)
 
-- Fresh-start test: no database exists, the first read and first write behave as
-  documented.
-- Migration fixture test: every supported older fixture opens, migrates, and
-  preserves expected rows.
-- Transaction rollback test: inject a failure after partial work and verify no
-  partial state remains.
-- Command integration test: run the compiled binary against a temp database and
-  assert output plus database state.
-- Concurrency test: run two processes against the same database for commands
-  that users might execute in parallel.
-- Backup/restore test: create data, back it up, restore it elsewhere, and run
-  `doctor`.
-- Import test: malformed input fails before mutation; valid input is atomic.
-- Destructive command test: dry-run output matches the rows affected by the real
-  command.
+class AdvancedSearchInput(BaseModel):
+    model_config = ConfigDict(strict=True)
 
-Prefer temp directories and per-test database paths. Tests should not touch a
-developer's real data directory.
+    # Union types
+    target: str | FileFilter
 
-## Operational Safety
+    # Literal enums
+    mode: Literal["exact", "fuzzy", "regex"]
 
-Add a `doctor` path that checks database path, application identity, schema
-version, integrity, foreign-key consistency, journal leftovers, and writability.
-The command should return a nonzero exit code on unsafe state and include the
-next command a user can run.
+    # Bounded integers
+    confidence: Annotated[float, Field(ge=0.0, le=1.0)]
 
-Add backup and export behavior before destructive workflows. A backup preserves
-the native database for restore; an export gives users an inspectable format for
-portability. They solve different problems and should not be treated as
-interchangeable.
+    # Optional with default
+    case_sensitive: bool = True
 
-For delete, reset, prune, and migration commands:
+    # Nested models
+    filters: list[FileFilter] = Field(default_factory=list)
+```
 
-- Provide dry-run output with row counts or item identifiers.
-- Require an explicit confirmation flag for non-interactive use.
-- Create or require a backup when data is not rebuildable.
-- Log enough context for support without leaking secrets.
-- Make interruption behavior clear and tested.
+### Output Schemas
 
-## Design Review Checklist
+```python
+class SearchResult(BaseModel):
+    """Output schema for search tool."""
+    model_config = ConfigDict(strict=True)
 
-- The architecture names the database location and override mechanism.
-- Each command has a declared read/write set and transaction policy.
-- Migrations are ordered, source-controlled, and tested from fixtures.
-- The executable handles newer database schemas safely.
-- Backup, restore, export, and doctor paths are present for important data.
-- Tests use isolated database paths and prove rollback behavior.
-- Destructive operations have dry-run and confirmation behavior.
-- Error messages map database failures to user actions.
-- The final design distinguishes rebuildable caches from authoritative data.
+    file_path: str
+    line_number: int
+    match_text: str
+    confidence: float = Field(ge=0.0, le=1.0)
 
-## Output Specification
+class SearchOutput(BaseModel):
+    """Top-level output schema."""
+    model_config = ConfigDict(strict=True)
 
-Return a concise architecture packet with these sections:
+    results: list[SearchResult]
+    total_count: int
+    execution_time_ms: int
 
-1. Storage contract.
-2. Command-to-data map.
-3. Module layout.
-4. Schema and migration policy.
-5. Transaction policy.
-6. Testing plan.
-7. Operational safety plan.
-8. Open risks and decisions.
+# Usage in tool handler
+async def execute_search(input: SearchInput) -> SearchOutput:
+    results = await perform_search(input)
 
-If implementing code, include only the smallest scaffold needed to prove the
-architecture: connection setup, migration runner, one read command, one mutating
-command, and tests for migration plus rollback.
+    return SearchOutput(
+        results=results,
+        total_count=len(results),
+        execution_time_ms=42
+    )
+```
 
-## Quality Rubric
+### Tool Registration Pattern
 
-The design passes when a reviewer can answer:
+```python
+from tools.schemas import SearchInput, SearchOutput
 
-- Where is user data stored, and how can a test or operator override it?
-- What happens if a command fails halfway through a write?
-- What happens when an old database meets a new executable?
-- What happens when a new database meets an old executable?
-- How does a user back up, inspect, restore, and diagnose the database?
-- Which tests prove those answers instead of assuming them?
+@server.list_tools()
+async def list_tools():
+    """Register tools with auto-generated schemas."""
+    return [
+        {
+            "name": "search_code",
+            "description": "Search codebase with advanced filters",
+            "inputSchema": SearchInput.model_json_schema()
+        }
+    ]
+
+@server.call_tool()
+async def call_tool(name: str, arguments: dict):
+    """Execute tool with Pydantic validation."""
+    if name == "search_code":
+        # Automatic validation via Pydantic
+        input_data = SearchInput(**arguments)
+
+        # Type-safe execution
+        output = await execute_search(input_data)
+
+        # Serialize output to JSON
+        return output.model_dump()
+
+    raise ValueError(f"Unknown tool: {name}")
+```
+
+### JSON Schema Customization
+
+```python
+from pydantic import BaseModel, ConfigDict, Field
+
+class CustomSchemaInput(BaseModel):
+    model_config = ConfigDict(
+        strict=True,
+        # Custom JSON Schema metadata
+        json_schema_extra={
+            "examples": [
+                {"query": "async def", "limit": 10}
+            ]
+        }
+    )
+
+    query: str = Field(
+        ...,
+        description="Search query",
+        json_schema_extra={
+            "examples": ["async def", "class MyClass"]
+        }
+    )
+```
+
+### Validation Error Handling
+
+```python
+from pydantic import ValidationError
+
+@server.call_tool()
+async def call_tool(name: str, arguments: dict):
+    try:
+        input_data = SearchInput(**arguments)
+        return await execute_search(input_data)
+
+    except ValidationError as e:
+        # Convert Pydantic errors to MCP errors
+        error_details = []
+        for error in e.errors():
+            error_details.append({
+                "field": ".".join(str(loc) for loc in error["loc"]),
+                "message": error["msg"],
+                "type": error["type"]
+            })
+
+        raise McpError(
+            code=-32602,  # Invalid params
+            message=f"Validation failed: {error_details}"
+        )
+```
+
+### Anti-Patterns
+
+❌ **Manual JSON Schema Writing**
+```python
+# WRONG
+schema = {
+    "type": "object",
+    "properties": {"query": {"type": "string"}}
+}
+```
+
+❌ **Missing Strict Mode**
+```python
+# WRONG - allows type coercion
+class Input(BaseModel):
+    count: int  # No ConfigDict(strict=True)
+```
+
+❌ **Ignoring Validation Errors**
+```python
+# WRONG
+try:
+    input_data = Input(**arguments)
+except ValidationError:
+    pass  # Silent failure!
+```
+
+❌ **Using BaseModel Without ConfigDict**
+```python
+# WRONG
+class Input(BaseModel):
+    value: str  # Missing model_config
+```
+
+---
+
+## Resources (Tier 3)
+
+**Pydantic V2 Docs**: https://docs.pydantic.dev/latest/
+**Strict Mode Guide**: https://docs.pydantic.dev/latest/concepts/strict_mode/
+**Field Validators**: https://docs.pydantic.dev/latest/concepts/validators/
+**JSON Schema**: https://docs.pydantic.dev/latest/concepts/json_schema/
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
