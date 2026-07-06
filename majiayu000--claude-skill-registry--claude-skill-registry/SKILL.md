@@ -1,285 +1,156 @@
 ---
-name: nano-banana-video-generation
-description: Generate videos using Google Veo models via the nano-banana CLI. Use this skill when the user asks to create, generate, animate, or produce videos with AI. Supports text-to-video, image-to-video animation, dialogue with lip-sync, and scene extensions. Trigger on requests like "create a video", "animate this image", "make a video clip", "generate footage", "produce a short film", "add motion to this". Use when this capability is needed.
+name: regression-analysis-modeling
+description: Perform comprehensive regression analysis and predictive modeling using linear regression, decision trees, and random forests. Use when you need to predict continuous values like housing prices, sales forecasts, demand predictions, or any numerical target variables. Includes automated feature engineering, model comparison, and visualization with Chinese language support. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Nano Banana Video Generation
+# Regression Analysis & Predictive Modeling
 
-Generate videos using Google Veo 3.1 models via the `nano-banana` CLI.
+A comprehensive regression analysis skill that automates the complete machine learning workflow from data preparation to model evaluation and interpretation, supporting multiple algorithms and business use cases.
 
-## Prerequisites
+## Instructions
 
-- `GEMINI_API_KEY` environment variable must be set
-- The CLI is installed via `npx @the-focus-ai/nano-banana`
+### 1. Data Preparation and Exploration
+When users provide datasets for regression analysis:
+- Load and validate the data structure and quality
+- Handle missing values, outliers, and data type conversions
+- Perform exploratory data analysis (EDA) with visualizations
+- Identify potential predictors and target variables
+- Support both English and Chinese column names and data
 
-## Quick Reference
+### 2. Feature Engineering
+- **Date Features**: Extract time-based features from datetime columns
+- **Categorical Encoding**: Convert categorical variables to numerical representations
+- **Feature Creation**: Generate interaction terms, ratios, and derived features
+- **Feature Selection**: Identify most predictive features using statistical methods
+- **Data Scaling**: Standardize or normalize features as needed for different algorithms
 
-```bash
-# Generate a video from text
-nano-banana --video "A sunset over mountains, slow dolly-in, cinematic lighting"
+### 3. Model Training and Selection
+- **Linear Regression**: Baseline model with coefficient interpretation
+- **Decision Tree Regression**: Non-linear relationships with feature importance
+- **Random Forest**: Ensemble method for improved accuracy and robustness
+- **Cross-Validation**: K-fold CV to ensure model stability
+- **Hyperparameter Tuning**: Automatic optimization of model parameters
+- **Model Comparison**: Rank models by performance metrics
 
-# Animate an existing image
-nano-banana --video "The character slowly turns and smiles" --file portrait.png
+### 4. Model Evaluation and Diagnostics
+- **Performance Metrics**: R², MAE, RMSE, MAPE for comprehensive evaluation
+- **Residual Analysis**: Diagnostic plots to check model assumptions
+- **Learning Curves**: Analyze model performance with different data sizes
+- **Feature Importance**: Identify key predictors for business insights
+- **Prediction Intervals**: Quantify uncertainty in predictions
 
-# Cost-optimized development mode
-nano-banana --video "Quick test scene" --video-fast --no-audio --resolution 720p
+### 5. Visualization and Reporting
+- **Prediction vs Actual**: Scatter plots showing prediction accuracy
+- **Residual Plots**: Diagnostic visualizations for model assumptions
+- **Feature Importance Charts**: Visual ranking of predictive factors
+- **Learning Curve Analysis**: Model performance visualization
+- **Comprehensive Reports**: Automated analysis summary with business insights
 
-# Specify output path
-nano-banana --video "A cat playing" --output cat-video.mp4
+## Usage Examples
 
-# Full control over settings
-nano-banana --video "Dramatic reveal scene" \
-  --duration 8 --aspect 16:9 --resolution 1080p --seed 42
+### Housing Price Prediction
+```
+Build a model to predict house prices:
+[CSV with square_footage, rooms, location, age, amenities data]
 ```
 
-## Understanding Video Requests
-
-Before generating, clarify these video-specific aspects:
-
-1. **Core Scene**: What's the main action or subject?
-2. **Camera Movement**: Static, dolly, pan, tracking, crane?
-3. **Style**: Cinematic, documentary, commercial, casual?
-4. **Audio**: Dialogue? Sound effects? Ambient sounds? Music?
-5. **Duration**: 4, 6, or 8 seconds?
-6. **Orientation**: Landscape (16:9) or portrait (9:16)?
-
-## The Five-Part Video Prompt Formula
-
-Structure prompts with these elements:
-
+### Sales Forecasting
 ```
-[Camera Movement] + [Subject] + [Action] + [Environment] + [Audio/Style]
+Create a sales prediction model:
+[CSV with date, product_id, marketing_spend, seasonality data]
 ```
 
-**Example - Weak prompt:**
+### Risk Assessment
 ```
-"a person walking"
-```
-
-**Example - Strong prompt:**
-```
-"Slow dolly-in shot. A woman in her 30s, shoulder-length wavy black hair,
-green jacket, walks confidently through a sunlit park. Golden hour lighting,
-warm color grading. Ambient sounds: birds chirping, distant traffic.
-Cinematic, aspirational mood. No subtitles, no text overlay."
+Predict risk scores based on customer attributes:
+[CSV with demographic, behavioral, historical data]
 ```
 
-## Workflow
+## Key Features
 
-### Step 1: Craft the Prompt
+### Automated ML Pipeline
+- **End-to-End Processing**: From raw data to final predictions
+- **Multiple Algorithm Support**: Linear, Tree-based, and Ensemble methods
+- **Smart Feature Engineering**: Automatic creation of relevant features
+- **Model Selection**: Data-driven algorithm recommendation
+- **Chinese Language Support**: Full support for Chinese data and outputs
 
-Use the [prompting-guide.md](prompting-guide.md) for comprehensive guidance.
+### Business-Focused Outputs
+- **Actionable Insights**: Feature importance translated to business context
+- **Model Interpretability**: Clear explanations of prediction logic
+- **Performance Benchmarks**: Industry-standard evaluation metrics
+- **Risk Assessment**: Prediction confidence intervals
+- **ROI Analysis**: Business impact quantification
 
-**Key principles:**
-1. Start with camera movement (dolly, pan, static, tracking)
-2. Describe subject in detail (appearance, wardrobe, expression)
-3. Specify action with timing cues
-4. Include lighting and environment
-5. Add audio design (dialogue, SFX, ambient)
-6. **Always end with**: "No subtitles, no text overlay, no captions"
+### Advanced Analytics
+- **Time Series Features**: Automatic handling of temporal data
+- **Cross-Validation**: Robust model performance estimation
+- **Ensemble Methods**: Combining multiple models for better accuracy
+- **Hyperparameter Optimization**: Automated model tuning
 
-### Step 2: Consider Cost
+## File Requirements
 
-Video generation is significantly more expensive than images:
+### For General Regression:
+- **target_variable**: Variable to predict (e.g., price, sales, risk score)
+- **predictor_variables**: Features used for prediction
+- **Sufficient sample size**: Minimum 100 rows for reliable modeling
 
-| Model | Cost per Second | 8-Second Video |
-|-------|-----------------|----------------|
-| `veo-3.1-generate-preview` | $0.50-0.75 | $4-6 |
-| `veo-3.1-fast-generate-preview` | $0.10-0.15 | $0.80-1.20 |
+## Output Files Generated
 
-**Development workflow:**
-1. Iterate with `--video-fast --no-audio` (cheapest)
-2. Test with `--video-fast` (add audio when needed)
-3. Final render with default model (premium quality)
+- **model_results.csv**: Complete predictions with confidence intervals
+- **feature_importance.csv**: Ranked feature importance with scores
+- **model_comparison.csv**: Performance metrics for all tested models
+- **prediction_plots.png**: Comprehensive visualization dashboard
+- **regression_analysis_report.md**: Detailed analysis and business insights
+- **model_coefficients.csv**: Linear regression model coefficients
 
-### Step 3: Generate
+## Dependencies
 
-```bash
-nano-banana --video "your detailed prompt here"
-```
-
-Generation takes **2-4 minutes**. Progress is shown in the terminal.
-
-### Step 4: Iterate
-
-If the result isn't right:
-1. **Refine camera movement** - Be more explicit (e.g., "slow dolly-in over 8 seconds")
-2. **Add negative guidance** - Describe what to avoid
-3. **Simplify** - Focus on one main action per clip
-4. **Try different duration** - 4s or 6s may work better for quick actions
-
-## Commands
-
-### Text-to-Video
-
-```bash
-nano-banana --video "<prompt>"
-```
-
-### Image-to-Video (Animation)
-
-```bash
-nano-banana --video "<motion description>" --file <input-image>
-```
-
-The motion description should describe how the image should animate:
-- "The character slowly turns their head and smiles"
-- "The scene comes alive with subtle wind movement"
-- "Zoom out to reveal the full landscape"
-
-### Options
-
-| Option | Description | Default |
-|--------|-------------|---------|
-| `--video` | Enable video mode | (required) |
-| `--video-model <name>` | Veo model to use | veo-3.1-generate-preview |
-| `--video-fast` | Use fast/cheap model | (premium model) |
-| `--duration <sec>` | 4, 6, or 8 seconds | 8 |
-| `--aspect <ratio>` | 16:9 or 9:16 | 16:9 |
-| `--resolution <res>` | 720p or 1080p | 1080p |
-| `--audio` | Generate audio | (enabled) |
-| `--no-audio` | Disable audio | - |
-| `--seed <number>` | Reproducibility seed | (random) |
-| `--output <file>` | Output path | output/video-<timestamp>.mp4 |
-| `--file <image>` | Input image to animate | - |
-
-## Camera Movement Reference
-
-Use these terms for precise camera control:
-
-| Movement | Description | Example Prompt |
-|----------|-------------|----------------|
-| **Static** | No movement | "Static shot on tripod. A coffee cup steaming..." |
-| **Pan** | Horizontal rotation | "Slow pan left across the city skyline..." |
-| **Tilt** | Vertical rotation | "Tilt down from face to hands..." |
-| **Dolly In** | Camera moves closer | "Slow dolly-in from medium to close-up..." |
-| **Dolly Out** | Camera moves away | "Dolly-out revealing the vast landscape..." |
-| **Tracking** | Parallel to subject | "Tracking shot following character walking..." |
-| **Crane** | Sweeping vertical | "Crane shot ascending from ground level..." |
-| **Handheld** | Realistic shake | "Handheld camera, documentary style..." |
-
-**Important**: Use ONE primary movement per shot. Don't combine multiple movements.
-
-## Dialogue Formatting
-
-For spoken dialogue, use the colon format:
-
-```
-Character description says: "Exact dialogue here."
-```
-
-**Example:**
-```
-"A friendly young woman, excited and cheerful, says: 'Welcome to our store!'
-Standing in bright retail environment. Natural lip-sync. No subtitles."
-```
-
-**Guidelines:**
-- Keep dialogue to **6-12 words** for 8 seconds
-- Describe the speaker's tone and emotion
-- Always add "No subtitles, no text overlay"
-
-## Audio Design
-
-Structure audio in layers:
-
-1. **Dialogue** (highest priority) - Always clear
-2. **Sound Effects** - Specific, timed actions
-3. **Ambient** - 3-5 background elements max
-4. **Music** - Lowest priority, "ducks under dialogue"
-
-**Example:**
-```
-"Sound effects: Door closing at 2-second mark, footsteps on wood.
-Ambient sounds: Quiet office hum, distant typing.
-Background music: Soft jazz, low volume, ducks under dialogue."
-```
+- **Core ML**: scikit-learn, pandas, numpy
+- **Visualization**: matplotlib, seaborn (with Chinese font support)
+- **Statistical Analysis**: scipy for statistical tests
+- **Data Processing**: Standard Python libraries for file operations
 
 ## Best Practices
 
-### For Better Results
+### Data Preparation
+- Ensure consistent data formatting and encoding
+- Handle missing values appropriately (imputation vs removal)
+- Remove or transform outliers based on domain knowledge
+- Validate data types and ranges before modeling
 
-1. **Front-load important info** - Camera, subject, action first
-2. **Use cinematic terms** - "35mm lens", "shallow depth of field", "golden hour"
-3. **Be specific about lighting** - "Soft window light from left", not just "good lighting"
-4. **Describe the mood** - "Intimate", "epic", "suspenseful", "uplifting"
-5. **Include negative guidance** - What to avoid
+### Model Development
+- Always split data into training and testing sets
+- Use cross-validation for robust performance estimation
+- Compare multiple algorithms before final selection
+- Consider business constraints and interpretability requirements
 
-### For Image-to-Video
+### Interpretation and Deployment
+- Focus on business-relevant metrics over purely statistical ones
+- Validate model predictions against domain expertise
+- Document model limitations and appropriate use cases
+- Establish monitoring procedures for deployed models
 
-1. **Match the image** - Describe motion that fits what's in the image
-2. **Start subtle** - Small movements work better than dramatic changes
-3. **Keep lighting consistent** - Don't describe lighting changes that differ from the image
+## Advanced Features
 
-### For Consistency Across Shots
+### Automated Feature Engineering
+- **Temporal Features**: Time-based pattern extraction
+- **Interaction Terms**: Automatic feature combination
+- **Polynomial Features**: Non-linear relationship capture
 
-When creating multiple related videos:
-1. Create a character description and reuse it exactly
-2. Keep lighting style consistent
-3. Use the same camera movement style family
-4. Use `--seed` for more reproducible results
+### Model Diagnostics
+- **Residual Analysis**: Check model assumptions
+- **Leverage Points**: Identify influential observations
+- **Multicollinearity**: Detect correlated predictors
+- **Heteroscedasticity**: Test for constant variance
 
-## Troubleshooting
-
-### "Video generation timeout"
-- Generation can take 2-4 minutes
-- If persistent, try simpler prompts
-- Use `--video-fast` for faster generation
-
-### Poor quality or wrong content
-- Add more specific descriptions
-- Include negative guidance
-- Try the premium model instead of fast
-
-### Subtitles appearing in video
-- Always include "No subtitles, no text overlay, no captions" in prompt
-- Veo was trained on videos with subtitles and tends to add them
-
-### Audio doesn't match video
-- Be more specific about when sounds occur
-- Use "Sound effect: X at Y-second mark"
-- Simplify audio layers (fewer elements)
-
-### Safety filter rejection
-- Avoid violence, weapons, explicit content
-- Rephrase ambiguous terms
-- Try more generic descriptions
-
-## Cost Optimization
-
-```bash
-# Development (cheapest): ~$0.80 per video
-nano-banana --video "test prompt" --video-fast --no-audio --resolution 720p
-
-# Testing with audio: ~$1.20 per video
-nano-banana --video "test prompt" --video-fast
-
-# Production quality: ~$6 per video
-nano-banana --video "final prompt" --resolution 1080p
-```
-
-## Example Prompts
-
-See the [examples/](examples/) directory for complete prompt examples:
-- [cinematic-shots.md](examples/cinematic-shots.md) - Camera movements
-- [dialogue-and-audio.md](examples/dialogue-and-audio.md) - Speech and sound
-- [image-to-video.md](examples/image-to-video.md) - Animating images
-
-## Environment Setup
-
-Ensure `GEMINI_API_KEY` is set:
-
-```bash
-export GEMINI_API_KEY="your-api-key-here"
-```
-
-Or create a `.env` file in your project:
-
-```
-GEMINI_API_KEY=your-api-key-here
-```
+### Business Integration
+- **ROI Calculation**: Business impact quantification
+- **Scenario Analysis**: What-if predictions
+- **Threshold Optimization**: Business-specific cutoff tuning
+- **A/B Testing Support**: Model validation framework
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
