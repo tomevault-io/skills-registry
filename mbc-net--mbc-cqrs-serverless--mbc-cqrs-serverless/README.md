@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mbc-net/mbc-cqrs-serverless](https://github.com/mbc-net/mbc-cqrs-serverless/tree/main/packages/mcp-server/skills/mbc-migrate/SKILL.md)
+Original source: [mbc-net/mbc-cqrs-serverless](https://github.com/mbc-net/mbc-cqrs-serverless/tree/main/packages/mcp-server/skills/mbc-generate/SKILL.md)
 
 ---
 
