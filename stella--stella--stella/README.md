@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stella/stella](https://github.com/stella/stella/tree/main/packages/skills/blueprints/intake-to-draft/SKILL.md)
+Original source: [stella/stella](https://github.com/stella/stella/tree/main/packages/skills/skills/legal-interpretation/SKILL.md)
 
 ---
 
