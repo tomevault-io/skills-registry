@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/orchestration/vibe-coding-orchestrator-monicajeon28-gmcruise-6a1cbad4/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/orchestration/multi-agent-orchestration-versoxbt-claude-initial-setup/SKILL.md)
 
 ---
 
