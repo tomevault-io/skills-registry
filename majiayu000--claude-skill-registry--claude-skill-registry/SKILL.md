@@ -1,869 +1,285 @@
 ---
-name: playwright-page-object-model
-description: Use when creating page objects or refactoring Playwright tests for better maintainability with Page Object Model patterns.
+name: nano-banana-video-generation
+description: Generate videos using Google Veo models via the nano-banana CLI. Use this skill when the user asks to create, generate, animate, or produce videos with AI. Supports text-to-video, image-to-video animation, dialogue with lip-sync, and scene extensions. Trigger on requests like "create a video", "animate this image", "make a video clip", "generate footage", "produce a short film", "add motion to this". Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Playwright Page Object Model
+# Nano Banana Video Generation
 
-Master the Page Object Model (POM) pattern to create maintainable, reusable,
-and scalable test automation code. This skill covers modern Playwright
-patterns including component-based architecture, locator strategies, and
-app actions.
+Generate videos using Google Veo 3.1 models via the `nano-banana` CLI.
 
-## Core POM Principles
+## Prerequisites
 
-### Single Responsibility
+- `GEMINI_API_KEY` environment variable must be set
+- The CLI is installed via `npx @the-focus-ai/nano-banana`
 
-Each page object should represent one page or component with a single,
-well-defined responsibility.
+## Quick Reference
 
-### Encapsulation
+```bash
+# Generate a video from text
+nano-banana --video "A sunset over mountains, slow dolly-in, cinematic lighting"
 
-Hide implementation details and expose only meaningful actions and
-assertions.
+# Animate an existing image
+nano-banana --video "The character slowly turns and smiles" --file portrait.png
 
-### Reusability
+# Cost-optimized development mode
+nano-banana --video "Quick test scene" --video-fast --no-audio --resolution 720p
 
-Create reusable components that can be composed into larger page objects.
+# Specify output path
+nano-banana --video "A cat playing" --output cat-video.mp4
 
-### Maintainability
-
-When UI changes, update page objects in one place rather than across
-multiple tests.
-
-## Basic Page Object Pattern
-
-### Simple Page Object
-
-```typescript
-// pages/login-page.ts
-import { Page, Locator } from '@playwright/test';
-
-export class LoginPage {
-  readonly page: Page;
-  readonly emailInput: Locator;
-  readonly passwordInput: Locator;
-  readonly loginButton: Locator;
-  readonly errorMessage: Locator;
-
-  constructor(page: Page) {
-    this.page = page;
-    this.emailInput = page.getByLabel('Email');
-    this.passwordInput = page.getByLabel('Password');
-    this.loginButton = page.getByRole('button', { name: 'Login' });
-    this.errorMessage = page.getByRole('alert');
-  }
-
-  async goto() {
-    await this.page.goto('/login');
-  }
-
-  async login(email: string, password: string) {
-    await this.emailInput.fill(email);
-    await this.passwordInput.fill(password);
-    await this.loginButton.click();
-  }
-
-  async getErrorMessage() {
-    return await this.errorMessage.textContent();
-  }
-}
+# Full control over settings
+nano-banana --video "Dramatic reveal scene" \
+  --duration 8 --aspect 16:9 --resolution 1080p --seed 42
 ```
 
-### Using Page Object in Tests
+## Understanding Video Requests
 
-```typescript
-// tests/login.spec.ts
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/login-page';
+Before generating, clarify these video-specific aspects:
 
-test.describe('Login', () => {
-  test('should login successfully', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.goto();
-    await loginPage.login('user@example.com', 'password123');
+1. **Core Scene**: What's the main action or subject?
+2. **Camera Movement**: Static, dolly, pan, tracking, crane?
+3. **Style**: Cinematic, documentary, commercial, casual?
+4. **Audio**: Dialogue? Sound effects? Ambient sounds? Music?
+5. **Duration**: 4, 6, or 8 seconds?
+6. **Orientation**: Landscape (16:9) or portrait (9:16)?
 
-    await expect(page).toHaveURL('/dashboard');
-  });
+## The Five-Part Video Prompt Formula
 
-  test('should show error on invalid credentials', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.goto();
-    await loginPage.login('user@example.com', 'wrongpassword');
+Structure prompts with these elements:
 
-    const error = await loginPage.getErrorMessage();
-    expect(error).toContain('Invalid credentials');
-  });
-});
+```
+[Camera Movement] + [Subject] + [Action] + [Environment] + [Audio/Style]
 ```
 
-## Locator Strategies
-
-### Recommended Locator Priority
-
-1. User-visible locators (getByRole, getByText, getByLabel)
-2. Test IDs (getByTestId)
-3. CSS/XPath (only as last resort)
-
-### User-Visible Locators
-
-```typescript
-export class HomePage {
-  readonly page: Page;
-
-  constructor(page: Page) {
-    this.page = page;
-  }
-
-  // By role (ARIA role)
-  get searchButton() {
-    return this.page.getByRole('button', { name: 'Search' });
-  }
-
-  // By label (form inputs)
-  get searchInput() {
-    return this.page.getByLabel('Search products');
-  }
-
-  // By text
-  get welcomeMessage() {
-    return this.page.getByText('Welcome back');
-  }
-
-  // By placeholder
-  get emailInput() {
-    return this.page.getByPlaceholder('Enter your email');
-  }
-
-  // By alt text (images)
-  get logo() {
-    return this.page.getByAltText('Company Logo');
-  }
-
-  // By title
-  get helpIcon() {
-    return this.page.getByTitle('Help');
-  }
-}
+**Example - Weak prompt:**
+```
+"a person walking"
 ```
 
-### Test ID Locators
-
-```typescript
-// Component with test IDs
-// <button data-testid="submit-button">Submit</button>
-
-export class FormPage {
-  readonly page: Page;
-
-  constructor(page: Page) {
-    this.page = page;
-  }
-
-  get submitButton() {
-    return this.page.getByTestId('submit-button');
-  }
-
-  get formContainer() {
-    return this.page.getByTestId('form-container');
-  }
-}
+**Example - Strong prompt:**
+```
+"Slow dolly-in shot. A woman in her 30s, shoulder-length wavy black hair,
+green jacket, walks confidently through a sunlit park. Golden hour lighting,
+warm color grading. Ambient sounds: birds chirping, distant traffic.
+Cinematic, aspirational mood. No subtitles, no text overlay."
 ```
 
-### Locator Chaining
+## Workflow
 
-```typescript
-export class ProductPage {
-  readonly page: Page;
+### Step 1: Craft the Prompt
 
-  constructor(page: Page) {
-    this.page = page;
-  }
+Use the [prompting-guide.md](prompting-guide.md) for comprehensive guidance.
 
-  // Chain locators for specificity
-  get priceInCart() {
-    return this.page
-      .getByTestId('shopping-cart')
-      .getByRole('cell', { name: 'Price' });
-  }
+**Key principles:**
+1. Start with camera movement (dolly, pan, static, tracking)
+2. Describe subject in detail (appearance, wardrobe, expression)
+3. Specify action with timing cues
+4. Include lighting and environment
+5. Add audio design (dialogue, SFX, ambient)
+6. **Always end with**: "No subtitles, no text overlay, no captions"
 
-  // Filter locators
-  getProductByName(name: string) {
-    return this.page
-      .getByRole('listitem')
-      .filter({ hasText: name });
-  }
+### Step 2: Consider Cost
 
-  // Nth element
-  get firstProduct() {
-    return this.page.getByRole('article').nth(0);
-  }
-}
+Video generation is significantly more expensive than images:
+
+| Model | Cost per Second | 8-Second Video |
+|-------|-----------------|----------------|
+| `veo-3.1-generate-preview` | $0.50-0.75 | $4-6 |
+| `veo-3.1-fast-generate-preview` | $0.10-0.15 | $0.80-1.20 |
+
+**Development workflow:**
+1. Iterate with `--video-fast --no-audio` (cheapest)
+2. Test with `--video-fast` (add audio when needed)
+3. Final render with default model (premium quality)
+
+### Step 3: Generate
+
+```bash
+nano-banana --video "your detailed prompt here"
 ```
 
-## Component-Based Architecture
+Generation takes **2-4 minutes**. Progress is shown in the terminal.
 
-### Reusable Component Objects
+### Step 4: Iterate
 
-```typescript
-// components/navigation.ts
-export class Navigation {
-  readonly page: Page;
-  readonly homeLink: Locator;
-  readonly productsLink: Locator;
-  readonly cartLink: Locator;
-  readonly profileMenu: Locator;
+If the result isn't right:
+1. **Refine camera movement** - Be more explicit (e.g., "slow dolly-in over 8 seconds")
+2. **Add negative guidance** - Describe what to avoid
+3. **Simplify** - Focus on one main action per clip
+4. **Try different duration** - 4s or 6s may work better for quick actions
 
-  constructor(page: Page) {
-    this.page = page;
-    this.homeLink = page.getByRole('link', { name: 'Home' });
-    this.productsLink = page.getByRole('link', { name: 'Products' });
-    this.cartLink = page.getByRole('link', { name: 'Cart' });
-    this.profileMenu = page.getByRole('button', { name: 'Profile' });
-  }
+## Commands
 
-  async navigateToHome() {
-    await this.homeLink.click();
-  }
+### Text-to-Video
 
-  async navigateToProducts() {
-    await this.productsLink.click();
-  }
-
-  async navigateToCart() {
-    await this.cartLink.click();
-  }
-
-  async openProfileMenu() {
-    await this.profileMenu.click();
-  }
-}
+```bash
+nano-banana --video "<prompt>"
 ```
 
-### Composing Page Objects with Components
+### Image-to-Video (Animation)
 
-```typescript
-// pages/base-page.ts
-import { Page } from '@playwright/test';
-import { Navigation } from '../components/navigation';
-import { Footer } from '../components/footer';
-
-export class BasePage {
-  readonly page: Page;
-  readonly navigation: Navigation;
-  readonly footer: Footer;
-
-  constructor(page: Page) {
-    this.page = page;
-    this.navigation = new Navigation(page);
-    this.footer = new Footer(page);
-  }
-}
+```bash
+nano-banana --video "<motion description>" --file <input-image>
 ```
 
-```typescript
-// pages/product-page.ts
-import { BasePage } from './base-page';
-import { Page } from '@playwright/test';
+The motion description should describe how the image should animate:
+- "The character slowly turns their head and smiles"
+- "The scene comes alive with subtle wind movement"
+- "Zoom out to reveal the full landscape"
 
-export class ProductPage extends BasePage {
-  readonly addToCartButton: Locator;
-  readonly productTitle: Locator;
-  readonly productPrice: Locator;
+### Options
 
-  constructor(page: Page) {
-    super(page);
-    this.addToCartButton = page.getByRole('button', { name: 'Add to Cart' });
-    this.productTitle = page.getByRole('heading', { level: 1 });
-    this.productPrice = page.getByTestId('product-price');
-  }
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--video` | Enable video mode | (required) |
+| `--video-model <name>` | Veo model to use | veo-3.1-generate-preview |
+| `--video-fast` | Use fast/cheap model | (premium model) |
+| `--duration <sec>` | 4, 6, or 8 seconds | 8 |
+| `--aspect <ratio>` | 16:9 or 9:16 | 16:9 |
+| `--resolution <res>` | 720p or 1080p | 1080p |
+| `--audio` | Generate audio | (enabled) |
+| `--no-audio` | Disable audio | - |
+| `--seed <number>` | Reproducibility seed | (random) |
+| `--output <file>` | Output path | output/video-<timestamp>.mp4 |
+| `--file <image>` | Input image to animate | - |
 
-  async goto(productId: string) {
-    await this.page.goto(`/products/${productId}`);
-  }
+## Camera Movement Reference
 
-  async addToCart() {
-    await this.addToCartButton.click();
-    // Wait for cart update
-    await this.page.waitForResponse(
-      (response) => response.url().includes('/api/cart')
-    );
-  }
+Use these terms for precise camera control:
 
-  async getProductTitle() {
-    return await this.productTitle.textContent();
-  }
+| Movement | Description | Example Prompt |
+|----------|-------------|----------------|
+| **Static** | No movement | "Static shot on tripod. A coffee cup steaming..." |
+| **Pan** | Horizontal rotation | "Slow pan left across the city skyline..." |
+| **Tilt** | Vertical rotation | "Tilt down from face to hands..." |
+| **Dolly In** | Camera moves closer | "Slow dolly-in from medium to close-up..." |
+| **Dolly Out** | Camera moves away | "Dolly-out revealing the vast landscape..." |
+| **Tracking** | Parallel to subject | "Tracking shot following character walking..." |
+| **Crane** | Sweeping vertical | "Crane shot ascending from ground level..." |
+| **Handheld** | Realistic shake | "Handheld camera, documentary style..." |
 
-  async getProductPrice() {
-    const text = await this.productPrice.textContent();
-    return parseFloat(text?.replace('$', '') || '0');
-  }
-}
+**Important**: Use ONE primary movement per shot. Don't combine multiple movements.
+
+## Dialogue Formatting
+
+For spoken dialogue, use the colon format:
+
+```
+Character description says: "Exact dialogue here."
 ```
 
-### Modal and Dialog Components
-
-```typescript
-// components/modal.ts
-export class Modal {
-  readonly page: Page;
-  readonly container: Locator;
-  readonly closeButton: Locator;
-  readonly title: Locator;
-
-  constructor(page: Page) {
-    this.page = page;
-    this.container = page.getByRole('dialog');
-    this.closeButton = this.container.getByRole('button', { name: 'Close' });
-    this.title = this.container.getByRole('heading');
-  }
-
-  async isVisible() {
-    return await this.container.isVisible();
-  }
-
-  async getTitle() {
-    return await this.title.textContent();
-  }
-
-  async close() {
-    await this.closeButton.click();
-    await this.container.waitFor({ state: 'hidden' });
-  }
-}
+**Example:**
+```
+"A friendly young woman, excited and cheerful, says: 'Welcome to our store!'
+Standing in bright retail environment. Natural lip-sync. No subtitles."
 ```
 
-```typescript
-// components/confirmation-modal.ts
-import { Modal } from './modal';
-import { Page } from '@playwright/test';
+**Guidelines:**
+- Keep dialogue to **6-12 words** for 8 seconds
+- Describe the speaker's tone and emotion
+- Always add "No subtitles, no text overlay"
 
-export class ConfirmationModal extends Modal {
-  readonly confirmButton: Locator;
-  readonly cancelButton: Locator;
-  readonly message: Locator;
+## Audio Design
 
-  constructor(page: Page) {
-    super(page);
-    this.confirmButton = this.container.getByRole('button', {
-      name: 'Confirm',
-    });
-    this.cancelButton = this.container.getByRole('button', {
-      name: 'Cancel',
-    });
-    this.message = this.container.getByTestId('modal-message');
-  }
+Structure audio in layers:
 
-  async confirm() {
-    await this.confirmButton.click();
-    await this.container.waitFor({ state: 'hidden' });
-  }
+1. **Dialogue** (highest priority) - Always clear
+2. **Sound Effects** - Specific, timed actions
+3. **Ambient** - 3-5 background elements max
+4. **Music** - Lowest priority, "ducks under dialogue"
 
-  async cancel() {
-    await this.cancelButton.click();
-    await this.container.waitFor({ state: 'hidden' });
-  }
-
-  async getMessage() {
-    return await this.message.textContent();
-  }
-}
+**Example:**
+```
+"Sound effects: Door closing at 2-second mark, footsteps on wood.
+Ambient sounds: Quiet office hum, distant typing.
+Background music: Soft jazz, low volume, ducks under dialogue."
 ```
 
-## App Actions Pattern
+## Best Practices
 
-### High-Level Actions
+### For Better Results
 
-```typescript
-// pages/app-actions.ts
-import { Page } from '@playwright/test';
-import { LoginPage } from './login-page';
-import { ProductPage } from './product-page';
+1. **Front-load important info** - Camera, subject, action first
+2. **Use cinematic terms** - "35mm lens", "shallow depth of field", "golden hour"
+3. **Be specific about lighting** - "Soft window light from left", not just "good lighting"
+4. **Describe the mood** - "Intimate", "epic", "suspenseful", "uplifting"
+5. **Include negative guidance** - What to avoid
 
-export class AppActions {
-  readonly page: Page;
+### For Image-to-Video
 
-  constructor(page: Page) {
-    this.page = page;
-  }
+1. **Match the image** - Describe motion that fits what's in the image
+2. **Start subtle** - Small movements work better than dramatic changes
+3. **Keep lighting consistent** - Don't describe lighting changes that differ from the image
 
-  async login(email: string, password: string) {
-    const loginPage = new LoginPage(this.page);
-    await loginPage.goto();
-    await loginPage.login(email, password);
-    await this.page.waitForURL('/dashboard');
-  }
+### For Consistency Across Shots
 
-  async addProductToCart(productId: string) {
-    const productPage = new ProductPage(this.page);
-    await productPage.goto(productId);
-    await productPage.addToCart();
-  }
+When creating multiple related videos:
+1. Create a character description and reuse it exactly
+2. Keep lighting style consistent
+3. Use the same camera movement style family
+4. Use `--seed` for more reproducible results
 
-  async completeCheckout(paymentDetails: PaymentDetails) {
-    await this.page.goto('/checkout');
-    await this.fillShippingInfo(paymentDetails.shipping);
-    await this.fillPaymentInfo(paymentDetails.payment);
-    await this.page.getByRole('button', { name: 'Place Order' }).click();
-    await this.page.waitForURL('/order-confirmation');
-  }
+## Troubleshooting
 
-  private async fillShippingInfo(shipping: ShippingInfo) {
-    await this.page.getByLabel('Full Name').fill(shipping.name);
-    await this.page.getByLabel('Address').fill(shipping.address);
-    await this.page.getByLabel('City').fill(shipping.city);
-    await this.page.getByLabel('Postal Code').fill(shipping.postalCode);
-  }
+### "Video generation timeout"
+- Generation can take 2-4 minutes
+- If persistent, try simpler prompts
+- Use `--video-fast` for faster generation
 
-  private async fillPaymentInfo(payment: PaymentInfo) {
-    await this.page.getByLabel('Card Number').fill(payment.cardNumber);
-    await this.page.getByLabel('Expiry Date').fill(payment.expiry);
-    await this.page.getByLabel('CVV').fill(payment.cvv);
-  }
-}
+### Poor quality or wrong content
+- Add more specific descriptions
+- Include negative guidance
+- Try the premium model instead of fast
 
-interface PaymentDetails {
-  shipping: ShippingInfo;
-  payment: PaymentInfo;
-}
+### Subtitles appearing in video
+- Always include "No subtitles, no text overlay, no captions" in prompt
+- Veo was trained on videos with subtitles and tends to add them
 
-interface ShippingInfo {
-  name: string;
-  address: string;
-  city: string;
-  postalCode: string;
-}
+### Audio doesn't match video
+- Be more specific about when sounds occur
+- Use "Sound effect: X at Y-second mark"
+- Simplify audio layers (fewer elements)
 
-interface PaymentInfo {
-  cardNumber: string;
-  expiry: string;
-  cvv: string;
-}
+### Safety filter rejection
+- Avoid violence, weapons, explicit content
+- Rephrase ambiguous terms
+- Try more generic descriptions
+
+## Cost Optimization
+
+```bash
+# Development (cheapest): ~$0.80 per video
+nano-banana --video "test prompt" --video-fast --no-audio --resolution 720p
+
+# Testing with audio: ~$1.20 per video
+nano-banana --video "test prompt" --video-fast
+
+# Production quality: ~$6 per video
+nano-banana --video "final prompt" --resolution 1080p
 ```
 
-### Using App Actions in Tests
+## Example Prompts
 
-```typescript
-// tests/checkout.spec.ts
-import { test, expect } from '@playwright/test';
-import { AppActions } from '../pages/app-actions';
+See the [examples/](examples/) directory for complete prompt examples:
+- [cinematic-shots.md](examples/cinematic-shots.md) - Camera movements
+- [dialogue-and-audio.md](examples/dialogue-and-audio.md) - Speech and sound
+- [image-to-video.md](examples/image-to-video.md) - Animating images
 
-test('should complete checkout flow', async ({ page }) => {
-  const app = new AppActions(page);
+## Environment Setup
 
-  await app.login('user@example.com', 'password123');
-  await app.addProductToCart('product-123');
-  await app.completeCheckout({
-    shipping: {
-      name: 'John Doe',
-      address: '123 Main St',
-      city: 'New York',
-      postalCode: '10001',
-    },
-    payment: {
-      cardNumber: '4111111111111111',
-      expiry: '12/25',
-      cvv: '123',
-    },
-  });
+Ensure `GEMINI_API_KEY` is set:
 
-  await expect(page.getByText('Order confirmed')).toBeVisible();
-});
+```bash
+export GEMINI_API_KEY="your-api-key-here"
 ```
 
-## Advanced Patterns
+Or create a `.env` file in your project:
 
-### Generic Table Component
-
-```typescript
-// components/table.ts
-export class Table {
-  readonly page: Page;
-  readonly container: Locator;
-
-  constructor(page: Page, testId?: string) {
-    this.page = page;
-    this.container = testId
-      ? page.getByTestId(testId)
-      : page.getByRole('table');
-  }
-
-  async getHeaders() {
-    const headers = await this.container
-      .getByRole('columnheader')
-      .allTextContents();
-    return headers;
-  }
-
-  async getRowCount() {
-    return await this.container.getByRole('row').count() - 1; // Exclude header
-  }
-
-  async getRow(index: number) {
-    return this.container.getByRole('row').nth(index + 1); // Skip header
-  }
-
-  async getCellValue(row: number, column: number) {
-    const rowLocator = await this.getRow(row);
-    const cell = rowLocator.getByRole('cell').nth(column);
-    return await cell.textContent();
-  }
-
-  async getCellByColumnName(row: number, columnName: string) {
-    const headers = await this.getHeaders();
-    const columnIndex = headers.indexOf(columnName);
-    if (columnIndex === -1) {
-      throw new Error(`Column "${columnName}" not found`);
-    }
-    return await this.getCellValue(row, columnIndex);
-  }
-
-  async findRowByValue(columnName: string, value: string) {
-    const headers = await this.getHeaders();
-    const columnIndex = headers.indexOf(columnName);
-    const rowCount = await this.getRowCount();
-
-    for (let i = 0; i < rowCount; i++) {
-      const cellValue = await this.getCellValue(i, columnIndex);
-      if (cellValue === value) {
-        return await this.getRow(i);
-      }
-    }
-
-    return null;
-  }
-}
 ```
-
-### Form Component with Validation
-
-```typescript
-// components/form.ts
-export class Form {
-  readonly page: Page;
-  readonly container: Locator;
-  readonly submitButton: Locator;
-
-  constructor(page: Page, formTestId: string) {
-    this.page = page;
-    this.container = page.getByTestId(formTestId);
-    this.submitButton = this.container.getByRole('button', {
-      name: /submit|save|create/i,
-    });
-  }
-
-  async fillField(label: string, value: string) {
-    await this.container.getByLabel(label).fill(value);
-  }
-
-  async selectOption(label: string, value: string) {
-    await this.container.getByLabel(label).selectOption(value);
-  }
-
-  async checkCheckbox(label: string) {
-    await this.container.getByLabel(label).check();
-  }
-
-  async uncheckCheckbox(label: string) {
-    await this.container.getByLabel(label).uncheck();
-  }
-
-  async submit() {
-    await this.submitButton.click();
-  }
-
-  async getFieldError(label: string) {
-    const field = this.container.getByLabel(label);
-    const fieldId = await field.getAttribute('id');
-    const error = this.container.locator(`[aria-describedby="${fieldId}"]`);
-    return await error.textContent();
-  }
-
-  async hasError(label: string) {
-    const error = await this.getFieldError(label);
-    return error !== null && error.trim() !== '';
-  }
-
-  async getFormErrors() {
-    const errors = await this.container
-      .locator('[role="alert"]')
-      .allTextContents();
-    return errors.filter((e) => e.trim() !== '');
-  }
-}
+GEMINI_API_KEY=your-api-key-here
 ```
-
-### Waiting Strategies in Page Objects
-
-```typescript
-export class DashboardPage {
-  readonly page: Page;
-  readonly loadingSpinner: Locator;
-  readonly dataTable: Locator;
-
-  constructor(page: Page) {
-    this.page = page;
-    this.loadingSpinner = page.getByTestId('loading-spinner');
-    this.dataTable = page.getByRole('table');
-  }
-
-  async goto() {
-    await this.page.goto('/dashboard');
-    await this.waitForPageLoad();
-  }
-
-  async waitForPageLoad() {
-    // Wait for loading spinner to disappear
-    await this.loadingSpinner.waitFor({ state: 'hidden' });
-
-    // Wait for data to load
-    await this.dataTable.waitFor({ state: 'visible' });
-
-    // Wait for network idle
-    await this.page.waitForLoadState('networkidle');
-  }
-
-  async refreshData() {
-    const refreshButton = this.page.getByRole('button', { name: 'Refresh' });
-    await refreshButton.click();
-
-    // Wait for API response
-    await this.page.waitForResponse(
-      (response) =>
-        response.url().includes('/api/dashboard') && response.status() === 200
-    );
-
-    await this.waitForPageLoad();
-  }
-}
-```
-
-## Handling Dynamic Content
-
-### Lists and Collections
-
-```typescript
-export class ProductListPage {
-  readonly page: Page;
-  readonly productCards: Locator;
-
-  constructor(page: Page) {
-    this.page = page;
-    this.productCards = page.getByTestId('product-card');
-  }
-
-  async goto() {
-    await this.page.goto('/products');
-  }
-
-  async getProductCount() {
-    return await this.productCards.count();
-  }
-
-  async getProductCard(index: number) {
-    return this.productCards.nth(index);
-  }
-
-  async getProductCardByName(name: string) {
-    return this.productCards.filter({ hasText: name }).first();
-  }
-
-  async getAllProductNames() {
-    const names = await this.productCards
-      .locator('h3')
-      .allTextContents();
-    return names;
-  }
-
-  async clickProduct(name: string) {
-    const card = await this.getProductCardByName(name);
-    await card.click();
-  }
-
-  async addToCartByName(name: string) {
-    const card = await this.getProductCardByName(name);
-    await card.getByRole('button', { name: 'Add to Cart' }).click();
-  }
-}
-```
-
-### Search and Filter
-
-```typescript
-export class SearchPage {
-  readonly page: Page;
-  readonly searchInput: Locator;
-  readonly searchButton: Locator;
-  readonly results: Locator;
-  readonly filters: Locator;
-
-  constructor(page: Page) {
-    this.page = page;
-    this.searchInput = page.getByRole('searchbox');
-    this.searchButton = page.getByRole('button', { name: 'Search' });
-    this.results = page.getByTestId('search-results');
-    this.filters = page.getByTestId('filters');
-  }
-
-  async search(query: string) {
-    await this.searchInput.fill(query);
-    await this.searchButton.click();
-    await this.waitForResults();
-  }
-
-  async applyFilter(filterName: string, value: string) {
-    await this.filters
-      .getByRole('button', { name: filterName })
-      .click();
-    await this.page
-      .getByRole('checkbox', { name: value })
-      .check();
-    await this.waitForResults();
-  }
-
-  async getResultCount() {
-    const countText = await this.results
-      .getByTestId('result-count')
-      .textContent();
-    return parseInt(countText?.match(/\d+/)?.[0] || '0');
-  }
-
-  private async waitForResults() {
-    await this.page.waitForResponse(
-      (response) => response.url().includes('/api/search')
-    );
-    await this.results.getByTestId('result-item').first().waitFor();
-  }
-}
-```
-
-## Type-Safe Page Objects
-
-### Using TypeScript Interfaces
-
-```typescript
-// types/user.ts
-export interface User {
-  email: string;
-  password: string;
-  firstName?: string;
-  lastName?: string;
-}
-
-export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  description?: string;
-}
-```
-
-```typescript
-// pages/registration-page.ts
-import { User } from '../types/user';
-
-export class RegistrationPage {
-  readonly page: Page;
-
-  constructor(page: Page) {
-    this.page = page;
-  }
-
-  async goto() {
-    await this.page.goto('/register');
-  }
-
-  async register(user: User) {
-    await this.page.getByLabel('Email').fill(user.email);
-    await this.page.getByLabel('Password').fill(user.password);
-
-    if (user.firstName) {
-      await this.page.getByLabel('First Name').fill(user.firstName);
-    }
-
-    if (user.lastName) {
-      await this.page.getByLabel('Last Name').fill(user.lastName);
-    }
-
-    await this.page.getByRole('button', { name: 'Register' }).click();
-  }
-}
-```
-
-### Builder Pattern for Test Data
-
-```typescript
-// builders/user-builder.ts
-import { User } from '../types/user';
-
-export class UserBuilder {
-  private user: Partial<User> = {};
-
-  withEmail(email: string): this {
-    this.user.email = email;
-    return this;
-  }
-
-  withPassword(password: string): this {
-    this.user.password = password;
-    return this;
-  }
-
-  withName(firstName: string, lastName: string): this {
-    this.user.firstName = firstName;
-    this.user.lastName = lastName;
-    return this;
-  }
-
-  build(): User {
-    if (!this.user.email || !this.user.password) {
-      throw new Error('Email and password are required');
-    }
-    return this.user as User;
-  }
-}
-```
-
-```typescript
-// tests/registration.spec.ts
-import { UserBuilder } from '../builders/user-builder';
-import { RegistrationPage } from '../pages/registration-page';
-
-test('should register new user', async ({ page }) => {
-  const user = new UserBuilder()
-    .withEmail('newuser@example.com')
-    .withPassword('SecurePass123!')
-    .withName('John', 'Doe')
-    .build();
-
-  const registrationPage = new RegistrationPage(page);
-  await registrationPage.goto();
-  await registrationPage.register(user);
-
-  await expect(page).toHaveURL('/welcome');
-});
-```
-
-## When to Use This Skill
-
-- Creating new page objects for test automation
-- Refactoring existing tests to use Page Object Model
-- Building reusable component libraries for tests
-- Implementing app actions for complex user flows
-- Standardizing locator strategies across a test suite
-- Creating type-safe page objects with TypeScript
-- Designing maintainable test architecture
-- Handling dynamic content and complex UI interactions
-- Building form and table abstractions
-- Establishing page object patterns for a team
-
-## Resources
-
-- Playwright Locators: <https://playwright.dev/docs/locators>
-- Playwright Page Object Models: <https://playwright.dev/docs/pom>
-- Playwright Best Practices: <https://playwright.dev/docs/best-practices>
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
