@@ -1,451 +1,227 @@
 ---
-name: reasoningbank-with-agentdb
-description: Implement ReasoningBank adaptive learning with AgentDB's 150x faster vector database. Includes trajectory tracking, verdict judgment, memory distillation, and pattern recognition. Use when building self-learning agents, optimizing decision-making, or implementing experience replay systems. Use when this capability is needed.
+name: reading-logseq-data
+description: > Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# ReasoningBank with AgentDB
+# Reading Logseq Data
 
-## What This Skill Does
+## When to Use This Skill
 
-Provides ReasoningBank adaptive learning patterns using AgentDB's high-performance backend (150x-12,500x faster). Enables agents to learn from experiences, judge outcomes, distill memories, and improve decision-making over time with 100% backward compatibility.
+This skill auto-invokes when:
+- User wants to read pages or blocks from their Logseq graph
+- Fetching properties or metadata from Logseq entities
+- Executing Datalog queries against the graph
+- Searching for content in Logseq
+- Finding backlinks or references
+- User mentions "get from logseq", "fetch page", "query logseq"
 
-**Performance**: 150x faster pattern retrieval, 500x faster batch operations, <1ms memory access.
+**Client Library**: See `{baseDir}/scripts/logseq-client.py` for the unified API.
 
-## Prerequisites
+## Available Operations
 
-- Node.js 18+
-- AgentDB v1.0.7+ (via agentic-flow)
-- Understanding of reinforcement learning concepts (optional)
+| Operation | Description |
+|-----------|-------------|
+| `get_page(title)` | Get page content and properties |
+| `get_block(uuid)` | Get block with children |
+| `search(query)` | Full-text search across graph |
+| `datalog_query(query)` | Execute Datalog query |
+| `list_pages()` | List all pages |
+| `get_backlinks(title)` | Find pages linking to this one |
+| `get_graph_info()` | Get current graph metadata |
 
----
+## Quick Examples
 
-## Quick Start with CLI
+### Get a Page
 
-### Initialize ReasoningBank Database
+```python
+from logseq_client import LogseqClient
 
-```bash
-# Initialize AgentDB for ReasoningBank
-npx agentdb@latest init ./.agentdb/reasoningbank.db --dimension 1536
-
-# Start MCP server for Claude Code integration
-npx agentdb@latest mcp
-claude mcp add agentdb npx agentdb@latest mcp
+client = LogseqClient()
+page = client.get_page("My Page")
+print(f"Title: {page['title']}")
+print(f"Properties: {page['properties']}")
 ```
 
-### Migrate from Legacy ReasoningBank
+### Execute Datalog Query
 
-```bash
-# Automatic migration with validation
-npx agentdb@latest migrate --source .swarm/memory.db
+```python
+# Find all books with rating >= 4
+results = client.datalog_query('''
+    [:find (pull ?b [:block/title :user.property/rating])
+     :where
+     [?b :block/tags ?t]
+     [?t :block/title "Book"]
+     [?b :user.property/rating ?r]
+     [(>= ?r 4)]]
+''')
 
-# Verify migration
-npx agentdb@latest stats ./.agentdb/reasoningbank.db
+for book in results:
+    print(f"{book['block/title']}: {book['user.property/rating']} stars")
 ```
 
----
+### Search Content
 
-## Quick Start with API
-
-```typescript
-import { createAgentDBAdapter, computeEmbedding } from 'agentic-flow/reasoningbank';
-
-// Initialize ReasoningBank with AgentDB
-const rb = await createAgentDBAdapter({
-  dbPath: '.agentdb/reasoningbank.db',
-  enableLearning: true,      // Enable learning plugins
-  enableReasoning: true,      // Enable reasoning agents
-  cacheSize: 1000,            // 1000 pattern cache
-});
-
-// Store successful experience
-const query = "How to optimize database queries?";
-const embedding = await computeEmbedding(query);
-
-await rb.insertPattern({
-  id: '',
-  type: 'experience',
-  domain: 'database-optimization',
-  pattern_data: JSON.stringify({
-    embedding,
-    pattern: {
-      query,
-      approach: 'indexing + query optimization',
-      outcome: 'success',
-      metrics: { latency_reduction: 0.85 }
-    }
-  }),
-  confidence: 0.95,
-  usage_count: 1,
-  success_count: 1,
-  created_at: Date.now(),
-  last_used: Date.now(),
-});
-
-// Retrieve similar experiences with reasoning
-const result = await rb.retrieveWithReasoning(embedding, {
-  domain: 'database-optimization',
-  k: 5,
-  useMMR: true,              // Diverse results
-  synthesizeContext: true,    // Rich context synthesis
-});
-
-console.log('Memories:', result.memories);
-console.log('Context:', result.context);
-console.log('Patterns:', result.patterns);
+```python
+# Search for mentions of "project"
+results = client.search("project")
+for block in results:
+    print(f"Found in: {block['page']}")
+    print(f"Content: {block['content'][:100]}...")
 ```
 
----
+## Datalog Query Patterns
 
-## Core ReasoningBank Concepts
+### Find All Pages
 
-### 1. Trajectory Tracking
-
-Track agent execution paths and outcomes:
-
-```typescript
-// Record trajectory (sequence of actions)
-const trajectory = {
-  task: 'optimize-api-endpoint',
-  steps: [
-    { action: 'analyze-bottleneck', result: 'found N+1 query' },
-    { action: 'add-eager-loading', result: 'reduced queries' },
-    { action: 'add-caching', result: 'improved latency' }
-  ],
-  outcome: 'success',
-  metrics: { latency_before: 2500, latency_after: 150 }
-};
-
-const embedding = await computeEmbedding(JSON.stringify(trajectory));
-
-await rb.insertPattern({
-  id: '',
-  type: 'trajectory',
-  domain: 'api-optimization',
-  pattern_data: JSON.stringify({ embedding, pattern: trajectory }),
-  confidence: 0.9,
-  usage_count: 1,
-  success_count: 1,
-  created_at: Date.now(),
-  last_used: Date.now(),
-});
+```clojure
+[:find (pull ?p [:block/title])
+ :where
+ [?p :block/tags ?t]
+ [?t :db/ident :logseq.class/Page]]
 ```
 
-### 2. Verdict Judgment
+### Find Blocks with Tag
 
-Judge whether a trajectory was successful:
-
-```typescript
-// Retrieve similar past trajectories
-const similar = await rb.retrieveWithReasoning(queryEmbedding, {
-  domain: 'api-optimization',
-  k: 10,
-});
-
-// Judge based on similarity to successful patterns
-const verdict = similar.memories.filter(m =>
-  m.pattern.outcome === 'success' &&
-  m.similarity > 0.8
-).length > 5 ? 'likely_success' : 'needs_review';
-
-console.log('Verdict:', verdict);
-console.log('Confidence:', similar.memories[0]?.similarity || 0);
+```clojure
+[:find (pull ?b [*])
+ :where
+ [?b :block/tags ?t]
+ [?t :block/title "Book"]]
 ```
 
-### 3. Memory Distillation
+### Find by Property
 
-Consolidate similar experiences into patterns:
-
-```typescript
-// Get all experiences in domain
-const experiences = await rb.retrieveWithReasoning(embedding, {
-  domain: 'api-optimization',
-  k: 100,
-  optimizeMemory: true,  // Automatic consolidation
-});
-
-// Distill into high-level pattern
-const distilledPattern = {
-  domain: 'api-optimization',
-  pattern: 'For N+1 queries: add eager loading, then cache',
-  success_rate: 0.92,
-  sample_size: experiences.memories.length,
-  confidence: 0.95
-};
-
-await rb.insertPattern({
-  id: '',
-  type: 'distilled-pattern',
-  domain: 'api-optimization',
-  pattern_data: JSON.stringify({
-    embedding: await computeEmbedding(JSON.stringify(distilledPattern)),
-    pattern: distilledPattern
-  }),
-  confidence: 0.95,
-  usage_count: 0,
-  success_count: 0,
-  created_at: Date.now(),
-  last_used: Date.now(),
-});
+```clojure
+[:find ?title ?author
+ :where
+ [?b :block/title ?title]
+ [?b :user.property/author ?author]
+ [?b :block/tags ?t]
+ [?t :block/title "Book"]]
 ```
 
----
+### Find Tasks by Status
 
-## Integration with Reasoning Agents
-
-AgentDB provides 4 reasoning modules that enhance ReasoningBank:
-
-### 1. PatternMatcher
-
-Find similar successful patterns:
-
-```typescript
-const result = await rb.retrieveWithReasoning(queryEmbedding, {
-  domain: 'problem-solving',
-  k: 10,
-  useMMR: true,  // Maximal Marginal Relevance for diversity
-});
-
-// PatternMatcher returns diverse, relevant memories
-result.memories.forEach(mem => {
-  console.log(`Pattern: ${mem.pattern.approach}`);
-  console.log(`Similarity: ${mem.similarity}`);
-  console.log(`Success Rate: ${mem.success_count / mem.usage_count}`);
-});
+```clojure
+[:find (pull ?t [:block/title :logseq.property/status])
+ :where
+ [?t :block/tags ?tag]
+ [?tag :db/ident :logseq.class/Task]
+ [?t :logseq.property/status ?s]
+ [?s :block/title "In Progress"]]
 ```
 
-### 2. ContextSynthesizer
+### Find Backlinks
 
-Generate rich context from multiple memories:
-
-```typescript
-const result = await rb.retrieveWithReasoning(queryEmbedding, {
-  domain: 'code-optimization',
-  synthesizeContext: true,  // Enable context synthesis
-  k: 5,
-});
-
-// ContextSynthesizer creates coherent narrative
-console.log('Synthesized Context:', result.context);
-// "Based on 5 similar optimizations, the most effective approach
-//  involves profiling, identifying bottlenecks, and applying targeted
-//  improvements. Success rate: 87%"
+```clojure
+[:find (pull ?b [:block/title {:block/page [:block/title]}])
+ :in $ ?page-title
+ :where
+ [?p :block/title ?page-title]
+ [?b :block/refs ?p]]
 ```
 
-### 3. MemoryOptimizer
+### Aggregations
 
-Automatically consolidate and prune:
-
-```typescript
-const result = await rb.retrieveWithReasoning(queryEmbedding, {
-  domain: 'testing',
-  optimizeMemory: true,  // Enable automatic optimization
-});
-
-// MemoryOptimizer consolidates similar patterns and prunes low-quality
-console.log('Optimizations:', result.optimizations);
-// { consolidated: 15, pruned: 3, improved_quality: 0.12 }
+```clojure
+;; Count books per author
+[:find ?author (count ?b)
+ :where
+ [?b :block/tags ?t]
+ [?t :block/title "Book"]
+ [?b :user.property/author ?author]]
 ```
 
-### 4. ExperienceCurator
+## Using the Client Library
 
-Filter by quality and relevance:
+### Initialization
 
-```typescript
-const result = await rb.retrieveWithReasoning(queryEmbedding, {
-  domain: 'debugging',
-  k: 20,
-  minConfidence: 0.8,  // Only high-confidence experiences
-});
+```python
+from logseq_client import LogseqClient
 
-// ExperienceCurator returns only quality experiences
-result.memories.forEach(mem => {
-  console.log(`Confidence: ${mem.confidence}`);
-  console.log(`Success Rate: ${mem.success_count / mem.usage_count}`);
-});
+# Auto-detect backend
+client = LogseqClient()
+
+# Force specific backend
+client = LogseqClient(backend="http")
+
+# Custom URL/token
+client = LogseqClient(
+    url="http://localhost:12315",
+    token="your-token"
+)
 ```
 
----
+### Error Handling
 
-## Legacy API Compatibility
-
-AgentDB maintains 100% backward compatibility with legacy ReasoningBank:
-
-```typescript
-import {
-  retrieveMemories,
-  judgeTrajectory,
-  distillMemories
-} from 'agentic-flow/reasoningbank';
-
-// Legacy API works unchanged (uses AgentDB backend automatically)
-const memories = await retrieveMemories(query, {
-  domain: 'code-generation',
-  agent: 'coder'
-});
-
-const verdict = await judgeTrajectory(trajectory, query);
-
-const newMemories = await distillMemories(
-  trajectory,
-  verdict,
-  query,
-  { domain: 'code-generation' }
-);
+```python
+try:
+    page = client.get_page("Nonexistent Page")
+except client.NotFoundError:
+    print("Page doesn't exist")
+except client.ConnectionError:
+    print("Cannot connect to Logseq")
+except client.AuthError:
+    print("Invalid token")
 ```
 
----
+### Batch Operations
 
-## Performance Characteristics
+```python
+# Get multiple pages efficiently
+pages = ["Page1", "Page2", "Page3"]
+results = [client.get_page(p) for p in pages]
 
-- **Pattern Search**: 150x faster (100µs vs 15ms)
-- **Memory Retrieval**: <1ms (with cache)
-- **Batch Insert**: 500x faster (2ms vs 1s for 100 patterns)
-- **Trajectory Judgment**: <5ms (including retrieval + analysis)
-- **Memory Distillation**: <50ms (consolidate 100 patterns)
-
----
-
-## Advanced Patterns
-
-### Hierarchical Memory
-
-Organize memories by abstraction level:
-
-```typescript
-// Low-level: Specific implementation
-await rb.insertPattern({
-  type: 'concrete',
-  domain: 'debugging/null-pointer',
-  pattern_data: JSON.stringify({
-    embedding,
-    pattern: { bug: 'NPE in UserService.getUser()', fix: 'Add null check' }
-  }),
-  confidence: 0.9,
-  // ...
-});
-
-// Mid-level: Pattern across similar cases
-await rb.insertPattern({
-  type: 'pattern',
-  domain: 'debugging',
-  pattern_data: JSON.stringify({
-    embedding,
-    pattern: { category: 'null-pointer', approach: 'defensive-checks' }
-  }),
-  confidence: 0.85,
-  // ...
-});
-
-// High-level: General principle
-await rb.insertPattern({
-  type: 'principle',
-  domain: 'software-engineering',
-  pattern_data: JSON.stringify({
-    embedding,
-    pattern: { principle: 'fail-fast with clear errors' }
-  }),
-  confidence: 0.95,
-  // ...
-});
+# Or use a single query
+query = '''
+    [:find (pull ?p [*])
+     :in $ [?titles ...]
+     :where
+     [?p :block/title ?titles]]
+'''
+results = client.datalog_query(query, [pages])
 ```
 
-### Multi-Domain Learning
+## Performance Tips
 
-Transfer learning across domains:
+1. **Use specific queries** - Don't fetch more than needed
+2. **Prefer pull syntax** - `(pull ?e [:needed :fields])` vs `[*]`
+3. **Put selective clauses first** - Filter early in query
+4. **Use parameters** - Pass values via `:in` clause
+5. **Batch when possible** - Multiple items in one query
 
-```typescript
-// Learn from backend optimization
-const backendExperience = await rb.retrieveWithReasoning(embedding, {
-  domain: 'backend-optimization',
-  k: 10,
-});
+## CLI Fallback
 
-// Apply to frontend optimization
-const transferredKnowledge = backendExperience.memories.map(mem => ({
-  ...mem,
-  domain: 'frontend-optimization',
-  adapted: true,
-}));
+If HTTP API unavailable, the client falls back to CLI:
+
+```python
+# CLI mode (automatic if HTTP fails)
+client = LogseqClient(backend="cli", graph_path="/path/to/graph")
+
+# Query still works the same way
+results = client.datalog_query("[:find ?title :where [?p :block/title ?title]]")
 ```
 
----
+## Output Formats
 
-## CLI Operations
+### Raw (default)
 
-### Database Management
+Returns Python dicts/lists directly from API.
 
-```bash
-# Export trajectories and patterns
-npx agentdb@latest export ./.agentdb/reasoningbank.db ./backup.json
+### Normalized
 
-# Import experiences
-npx agentdb@latest import ./experiences.json
-
-# Get statistics
-npx agentdb@latest stats ./.agentdb/reasoningbank.db
-# Shows: total patterns, domains, confidence distribution
+```python
+# Get normalized output
+page = client.get_page("My Page", normalize=True)
+# Returns: {"title": "...", "uuid": "...", "properties": {...}, "blocks": [...]}
 ```
 
-### Migration
+## Reference Materials
 
-```bash
-# Migrate from legacy ReasoningBank
-npx agentdb@latest migrate --source .swarm/memory.db --target .agentdb/reasoningbank.db
-
-# Validate migration
-npx agentdb@latest stats .agentdb/reasoningbank.db
-```
-
----
-
-## Troubleshooting
-
-### Issue: Migration fails
-```bash
-# Check source database exists
-ls -la .swarm/memory.db
-
-# Run with verbose logging
-DEBUG=agentdb:* npx agentdb@latest migrate --source .swarm/memory.db
-```
-
-### Issue: Low confidence scores
-```typescript
-// Enable context synthesis for better quality
-const result = await rb.retrieveWithReasoning(embedding, {
-  synthesizeContext: true,
-  useMMR: true,
-  k: 10,
-});
-```
-
-### Issue: Memory growing too large
-```typescript
-// Enable automatic optimization
-const result = await rb.retrieveWithReasoning(embedding, {
-  optimizeMemory: true,  // Consolidates similar patterns
-});
-
-// Or manually optimize
-await rb.optimize();
-```
-
----
-
-## Learn More
-
-- **AgentDB Integration**: node_modules/agentic-flow/docs/AGENTDB_INTEGRATION.md
-- **GitHub**: https://github.com/ruvnet/agentic-flow/tree/main/packages/agentdb
-- **MCP Integration**: `npx agentdb@latest mcp`
-- **Website**: https://agentdb.ruv.io
-
----
-
-**Category**: Machine Learning / Reinforcement Learning
-**Difficulty**: Intermediate
-**Estimated Time**: 20-30 minutes
+- See `{baseDir}/references/read-operations.md` for all operations
+- See `{baseDir}/templates/query-template.edn` for query patterns
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
