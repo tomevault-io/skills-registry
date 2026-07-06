@@ -1,59 +1,25 @@
 ---
-name: nushell-config-sync
-description: Sync Nushell configuration files between the repo (os-config/nushell) and the system config path ($nu.config-path). Use when the user wants to push, pull, or diff nushell config files. Use when this capability is needed.
+name: nostrstack-embed-ui
+description: Nostrstack embed UI and design system guidance for @nostrstack/embed, @nostrstack/blog-kit, and apps/gallery. Use when editing widgets, tokens, CSS classes, or gallery UI behavior. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Nushell Config Sync
+# Embed UI + Design System
 
-Synchronizes Nushell configuration files between this repository and the system.
+Use this skill for UI work in `packages/embed`, `packages/blog-kit`, and `apps/gallery`.
 
-## Paths
+## Workflow
 
-- **Repo path**: `os-config/nushell/` in this repository
-- **System path**: The directory containing `$nu.config-path` (typically `~/.config/nushell/` on Linux/macOS or `%APPDATA%\nushell\` on Windows)
+- Read `references/design-system.md` for tokens, CSS variables, and component classes.
+- Use `references/ui-specs.md` for specific UI specs (event landing, zap UI, QR, etc.).
+- Verify UI changes with Chrome DevTools MCP (or QA fallback per dev workflow).
 
-## Commands
+## Guardrails
 
-### Push (repo -> system)
-
-Copies config files FROM `os-config/nushell/` TO the system Nushell config directory.
-
-```bash
-python .claude/skills/nushell-config-sync/sync.py push
-```
-
-### Pull (system -> repo)
-
-Copies config files FROM the system Nushell config directory TO `os-config/nushell/`.
-
-```bash
-python .claude/skills/nushell-config-sync/sync.py pull
-```
-
-### Diff (compare repo vs system)
-
-Shows unified diff between repo and system config files.
-
-```bash
-python .claude/skills/nushell-config-sync/sync.py diff
-python .claude/skills/nushell-config-sync/sync.py diff -f config.nu  # specific file
-```
-
-## Files Synced
-
-- `config.nu` - Main Nushell configuration
-- `env.nu` - Environment configuration
-
-## Usage
-
-When user says:
-- "push nushell config" or "sync config to system" -> run push command
-- "pull nushell config" or "sync config from system" -> run pull command
-- "diff nushell config" or "compare nushell config" -> run diff command
-
-Always run diff before push/pull to show the user what will change.
+- Prefer design tokens and `.nostrstack-*` primitives over hard-coded colors.
+- Keep motion within defined durations/easings and respect reduced motion.
+- Gallery should act as the canary for embed UI regressions.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
