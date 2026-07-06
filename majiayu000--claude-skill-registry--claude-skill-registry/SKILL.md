@@ -1,111 +1,87 @@
 ---
-name: press-release-creator
-description: Amazon の Working Backwards 手法に基づいたプレスリリース＋FAQ を作成するスキル。新サービスや新機能の企画段階で、顧客視点から価値を明文化し、開発の方向性を定めるために使用します。「プレスリリースを作成」「PR/FAQ を書いて」「Working Backwards で企画」「顧客中心でサービスを設計」などのリクエストでトリガーします。ITサービス、製品、新機能の企画・要件定義に活用できます。 Use when this capability is needed.
+name: medium-paywall-bypass
+description: Use when user shares a Medium article URL behind a paywall and wants to read the full content. Also use for articles on Medium-hosted publications like towardsdatascience.com, betterprogramming.pub, levelup.gitconnected.com, etc.
 metadata:
   author: majiayu000
 ---
 
-# プレスリリースクリエイター (Working Backwards)
+# Medium Paywall Bypass
 
-Amazon の Working Backwards 手法に基づき、**仮想プレスリリース (PR) + FAQ** を作成するスキルです。
+## Overview
+Fetch paywalled Medium articles using free mirror services. Try services in order until one works.
 
-## Working Backwards について
+## Service Priority
 
-Working Backwards は、**「顧客から出発して考える」** ことを具現化したプロセスです。製品が完成した未来を想定し、プレスリリースを先に書くことで、チーム全員が目指すべき「北極星」を共有します。
+| Service | URL Pattern | WebFetch | curl | Notes |
+|---------|-------------|----------|------|-------|
+| **Freedium** | `https://freedium.cfd/{encoded_url}` | Yes | Yes | Best option, returns content directly |
+| **Archive.today** | `https://archive.today/latest/{raw_url}` | No | Maybe | Often requires captcha |
+| **RemovePaywalls** | `https://removepaywalls.com/{raw_url}` | No | No | Redirect page only, needs browser |
+| **ReadMedium** | `https://readmedium.com/en/{encoded_url}` | No | No | Returns 403 programmatically |
 
-### 目的
+- `{encoded_url}` = URL-encoded (slashes become %2F, @ becomes %40, etc.)
+- `{raw_url}` = Original URL as-is
 
-- **顧客中心文化の徹底**: 開発チーム全員を最初から顧客視点に立たせる
-- **時間とコストの節約**: 企画段階で徹底的に議論し、後戻りやムダな開発を減らす
-- **製品の成功率向上**: 「本当に顧客が求める価値か？」を早期に検証する
+**For Claude Code: Use Freedium via WebFetch.** Other services require browser interaction.
 
-## 使用方法
+## Workflow
 
-### 基本的なワークフロー
+```
+1. User provides Medium URL
+2. Try Freedium first via WebFetch
+3. If blocked/empty, try next service
+4. Extract and present article content
+```
 
-1. **情報収集**: ユーザーから以下の情報を収集します：
-   - ターゲット顧客（誰のためのサービス/製品か）
-   - 解決したい課題（顧客が抱える痛み）
-   - 提供する価値（どんなベネフィットがあるか）
-2. **プレスリリースの作成**: テンプレートに従って作成
-3. **FAQ の作成**: 顧客向け・内部向け両方の想定質問を作成
-4. **保存先**: `docs/press-release.md` に保存
+## Example Usage
 
-### プレスリリース作成の 5 つの黄金律
+Given: `https://medium.com/@user/some-article-abc123`
 
-1. **顧客の視点から書く**: 「私たちが何を作ったか」ではなく「顧客が何を得られるか」に集中
-2. **「未来」を「現在形」で書く**: すでに発売され、顧客が喜んでいる状況をリアルに描写
-3. **専門用語を排除する**: 親や友人が読んでも理解できる平易な言葉を選ぶ
-4. **1 ページに収める**: 本質的な価値に絞り、簡潔さを保つ
-5. **「課題（Pain）」を強調する**: 解決策を語る前に、顧客がいかに困っているかを描写
+**WebFetch (recommended):**
+```
+URL: https://freedium.cfd/https%3A%2F%2Fmedium.com%2F%40user%2Fsome-article-abc123
+Prompt: Extract the full article content
+```
 
-### プレスリリースの構成
+**curl fallback:**
+```bash
+curl -sL "https://freedium.cfd/https%3A%2F%2Fmedium.com%2F%40user%2Fsome-article-abc123"
+```
 
-詳細なテンプレートは [references/pr_template.md](references/pr_template.md) を参照してください。
+## Medium-Hosted Domains
 
-主要な構成要素：
+These domains use Medium's paywall system:
+- `medium.com`, `*.medium.com`
+- `towardsdatascience.com`
+- `betterprogramming.pub`
+- `levelup.gitconnected.com`
+- `javascript.plainenglish.io`
+- `uxdesign.cc`
+- `hackernoon.com`
+- `codeburst.io`
+- `itnext.io`
+- `proandroiddev.com`
+- `infosecwriteups.com`
 
-1. **ヘッドライン**: 製品・サービスをひと言で表すキャッチフレーズ
-2. **サブヘッド**: メイン顧客と主なベネフィットを 1 文で要約
-3. **リード文**: 概要のサマリー（これだけで要点がわかる）
-4. **顧客課題**: 抱えている問題や機会の描写
-5. **ソリューション**: 提供する解決策と画期的なポイント
-6. **リーダーコメント**: エグゼクティブからの引用
-7. **利用方法**: 導入の容易さ、開始方法
-8. **顧客の声**: 想定顧客からの称賛コメント（最重要）
-9. **クロージング**: 行動喚起と問い合わせ先
+## Common Issues
 
-### FAQ の作成
+| Problem | Solution |
+|---------|----------|
+| Freedium down | Try alternative mirror: `freedium-mirror.cfd` |
+| Article not found | Article may be too new to be cached |
+| Garbled HTML | Use WebFetch with prompt: "Extract the article text and format as markdown" |
+| 403/blocked | Try curl with `dangerouslyDisableSandbox: true` |
 
-FAQ は 2 種類の視点から作成します。詳細は [references/faq_template.md](references/faq_template.md) を参照してください。
+## Quick Reference
 
-#### 顧客向け FAQ（外部）
+```python
+# URL encoding in Python
+from urllib.parse import quote
+encoded = quote(url, safe='')
 
-- このサービスで何ができるのか？
-- 費用はいくらか？
-- 既存システムとの互換性は？
-- セキュリティ・プライバシーは？
-- サポート体制は？
-
-#### 内部向け FAQ（ステークホルダー）
-
-- 市場規模・顧客数の見込みは？
-- 競合との差別化ポイントは？
-- 必要な技術・リソースは？
-- 収益モデル・ROI は？
-- リスクと対策は？
-
-### IT サービス特有の観点
-
-- **技術の価値をビジネス言語に翻訳**: 「AI 搭載」ではなく「手作業を 90% 削減」
-- **信頼性・セキュリティへの配慮**: エンタープライズ顧客が重視する要素を明記
-- **ROI・コスト効果の明示**: 投資対効果を定量的に示す
-- **導入ハードルの低減**: 移行の容易さ、サポート体制を強調
-
-### 作成後のチェックリスト
-
-- [ ] 顧客は明確か？ターゲット層が具体的に想定できるか
-- [ ] 解決する問題が明示されているか？
-- [ ] 唯一無二の利点が伝わるか？競合との差別化
-- [ ] 顧客証言で価値が裏付けられているか？
-- [ ] 一息で読める長さか？1 ページ程度
-- [ ] 読み手が次に何をすべきか示されているか？
-
-### インタラクティブな作成プロセス
-
-情報が不足している場合は、以下の質問で必要な情報を収集します：
-
-1. 「このサービスのターゲット顧客は誰ですか？」
-2. 「顧客が現在抱えている最大の課題は何ですか？」
-3. 「このサービスでその課題がどう解決されますか？」
-4. 「競合や既存の代替手段と比べて何が優れていますか？」
-5. 「顧客にとって一番大きなベネフィットは何ですか？」
-
-一度に多くの質問をせず、最も重要な質問から段階的に収集してください。
-
-### 日本語での作成
-
-プレスリリースは日本語で作成します。ビジネス文書として適切な表現を使用しつつ、専門用語を避けて平易な言葉を選んでください。
+# For WebFetch tool
+freedium_url = f"https://freedium.cfd/{quote(medium_url, safe='')}"
+```
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
