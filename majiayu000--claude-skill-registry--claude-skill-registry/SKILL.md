@@ -1,137 +1,186 @@
 ---
-name: task-completion-verify
-description: Evidence-based completion claims. Use before claiming work is complete, fixed, or passing - requires running verification commands and confirming output before any success claims. Use when this capability is needed.
+name: entra-app-registration
+description: | Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Verification Before Completion
+## Overview
 
-Claiming work is complete without verification is dishonesty, not efficiency.
+Microsoft Entra ID (formerly Azure Active Directory) is Microsoft's cloud-based identity and access management service. App registrations allow applications to authenticate users and access Azure resources securely.
 
-**Core principle:** Evidence before claims, always.
+### Key Concepts
 
----
+| Concept | Description |
+|---------|-------------|
+| **App Registration** | Configuration that allows an app to use Microsoft identity platform |
+| **Application (Client) ID** | Unique identifier for your application |
+| **Tenant ID** | Unique identifier for your Azure AD tenant/directory |
+| **Client Secret** | Password for the application (confidential clients only) |
+| **Redirect URI** | URL where authentication responses are sent |
+| **API Permissions** | Access scopes your app requests |
+| **Service Principal** | Identity created in your tenant when you register an app |
 
-## The Iron Law
+### Application Types
 
-```
-NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
-```
+| Type | Use Case |
+|------|----------|
+| **Web Application** | Server-side apps, APIs |
+| **Single Page App (SPA)** | JavaScript/React/Angular apps |
+| **Mobile/Native App** | Desktop, mobile apps |
+| **Daemon/Service** | Background services, APIs |
 
-If you haven't run the verification command in this message, you cannot claim it passes.
+## Core Workflow
 
----
+### Step 1: Register the Application
 
-## The Gate Function
+Create an app registration in the Azure portal or using Azure CLI.
 
-```
-BEFORE claiming any status:
+**Portal Method:**
+1. Navigate to Azure Portal → Microsoft Entra ID → App registrations
+2. Click "New registration"
+3. Provide name, supported account types, and redirect URI
+4. Click "Register"
 
-1. IDENTIFY: What command proves this claim?
-2. RUN: Execute the FULL command (fresh, complete)
-3. READ: Full output, check exit code, count failures
-4. VERIFY: Does output confirm the claim?
-   - If NO: State actual status with evidence
-   - If YES: State claim WITH evidence
-5. ONLY THEN: Make the claim
+**CLI Method:** See [references/CLI-COMMANDS.md](references/CLI-COMMANDS.md)
+**IaC Method:** See [references/BICEP-EXAMPLE.bicep](references/BICEP-EXAMPLE.bicep)
 
-Skip any step = lying, not verifying
-```
+It's highly recommended to use the IaC to manage Entra app registration if you already use IaC in your project, need a scalable solution for managing lots of app registrations or need fine-grained audit history of the configuration changes. 
 
----
+### Step 2: Configure Authentication
 
-## Common Verification Requirements
+Set up authentication settings based on your application type.
 
-| Claim | Requires | Not Sufficient |
-|-------|----------|----------------|
-| Tests pass | Test output: 0 failures | Previous run, "should pass" |
-| Linter clean | Linter output: 0 errors | Partial check |
-| Build succeeds | Build command: exit 0 | Linter passing |
-| Bug fixed | Test symptom: passes | Code changed |
-| Regression test | Red-green verified | Test passes once |
-| Agent completed | VCS diff shows changes | Agent reports "success" |
-| Requirements met | Line-by-line checklist | Tests passing |
+- **Web Apps**: Add redirect URIs, enable ID tokens if needed
+- **SPAs**: Add redirect URIs, enable implicit grant flow if necessary
+- **Mobile/Desktop**: Use `http://localhost` or custom URI scheme
+- **Services**: No redirect URI needed for client credentials flow
 
----
+### Step 3: Configure API Permissions
 
-## Red Flags - STOP
+Grant your application permission to access Microsoft APIs or your own APIs.
 
-- Using "should", "probably", "seems to"
-- Expressing satisfaction before verification
-- About to commit/push/PR without verification
-- Trusting agent success reports
-- Relying on partial verification
-- Thinking "just this once"
-- ANY wording implying success without running verification
+**Common Microsoft Graph Permissions:**
+- `User.Read` - Read user profile
+- `User.ReadWrite.All` - Read and write all users
+- `Directory.Read.All` - Read directory data
+- `Mail.Send` - Send mail as a user
 
----
+**Details:** See [references/API-PERMISSIONS.md](references/API-PERMISSIONS.md)
 
-## Key Patterns
+### Step 4: Create Client Credentials (if needed)
 
-**Tests:**
-```
-DO:   [Run test] [See: 34/34 pass] "All tests pass"
-DON'T: "Should pass now" / "Looks correct"
-```
+For confidential client applications (web apps, services), create a client secret, certificate or federated identity credential.
 
-**Regression tests (TDD Red-Green):**
-```
-DO:   Write -> Run (pass) -> Revert fix -> Run (MUST FAIL) -> Restore -> Run (pass)
-DON'T: "I've written a regression test" (without red-green)
-```
+**Client Secret:**
+- Navigate to "Certificates & secrets"
+- Create new client secret
+- Copy the value immediately (only shown once)
+- Store securely (Key Vault recommended)
 
-**Build:**
-```
-DO:   [Run build] [See: exit 0] "Build passes"
-DON'T: "Linter passed" (linter != compiler)
-```
+**Certificate:** For production environments, use certificates instead of secrets for enhanced security. Upload certificate via "Certificates & secrets" section.
 
-**Requirements:**
-```
-DO:   Re-read plan -> Create checklist -> Verify each -> Report
-DON'T: "Tests pass, phase complete"
-```
+**Federated Identity Credential:** For dynamically authenticating the confidential client to Entra platform.
 
-**Agent delegation:**
-```
-DO:   Agent reports -> Check VCS diff -> Verify changes -> Report
-DON'T: Trust agent report
-```
+### Step 5: Implement OAuth Flow
 
----
+Integrate the OAuth flow into your application code.
 
-## Rationalization Prevention
+**See:**
+- [references/OAUTH-FLOWS.md](references/OAUTH-FLOWS.md) - OAuth 2.0 flow details
+- [references/CONSOLE-APP-EXAMPLE.md](references/CONSOLE-APP-EXAMPLE.md) - Console app implementation
 
-| Excuse | Reality |
-|--------|---------|
-| "Should work now" | RUN the verification |
-| "I'm confident" | Confidence != evidence |
-| "Just this once" | No exceptions |
-| "Linter passed" | Linter != compiler |
-| "Agent said success" | Verify independently |
-| "Partial check is enough" | Partial proves nothing |
+## Common Patterns
 
----
+### Pattern 1: First-Time App Registration
 
-## When to Apply
+Walk user through their first app registration step-by-step.
 
-**ALWAYS before:**
-- ANY success/completion claims
-- ANY expression of satisfaction
-- Committing, PR creation, task completion
-- Moving to next task
-- Delegating to agents
+**Required Information:**
+- Application name
+- Application type (web, SPA, mobile, service)
+- Redirect URIs (if applicable)
+- Required permissions
 
----
+**Script:** See [references/FIRST-APP-REGISTRATION.md](references/FIRST-APP-REGISTRATION.md)
 
-## Integration
+### Pattern 2: Console Application with User Authentication
 
-**Use with:**
-- `code-test` - Run tests before claiming they pass
-- `code-debug` - Verify fix before claiming bug resolved
-- `task-dispatch` - Verify each task before marking complete
-- `git-worktree-use` - Verify baseline before and after
+Create a .NET/Python/Node.js console app that authenticates users.
+
+**Required Information:**
+- Programming language (C#, Python, JavaScript, etc.)
+- Authentication library (MSAL recommended)
+- Required permissions
+
+**Example:** See [references/CONSOLE-APP-EXAMPLE.md](references/CONSOLE-APP-EXAMPLE.md)
+
+### Pattern 3: Service-to-Service Authentication
+
+Set up daemon/service authentication without user interaction.
+
+**Required Information:**
+- Service/app name
+- Target API/resource
+- Whether to use secret or certificate
+
+**Implementation:** Use Client Credentials flow (see [references/OAUTH-FLOWS.md#client-credentials-flow](references/OAUTH-FLOWS.md#client-credentials-flow))
+
+## MCP Tools and CLI
+
+### Azure CLI Commands
+
+| Command | Purpose |
+|---------|---------|
+| `az ad app create` | Create new app registration |
+| `az ad app list` | List app registrations |
+| `az ad app show` | Show app details |
+| `az ad app permission add` | Add API permission |
+| `az ad app credential reset` | Generate new client secret |
+| `az ad sp create` | Create service principal |
+
+**Complete reference:** See [references/CLI-COMMANDS.md](references/CLI-COMMANDS.md)
+
+### Microsoft Authentication Library (MSAL)
+
+MSAL is the recommended library for integrating Microsoft identity platform.
+
+**Supported Languages:**
+- .NET/C# - `Microsoft.Identity.Client`
+- JavaScript/TypeScript - `@azure/msal-browser`, `@azure/msal-node`
+- Python - `msal`
+
+**Examples:** See [references/CONSOLE-APP-EXAMPLE.md](references/CONSOLE-APP-EXAMPLE.md)
+
+## Security Best Practices
+
+| Practice | Recommendation |
+|----------|---------------|
+| **Never hardcode secrets** | Use environment variables, Azure Key Vault, or managed identity |
+| **Rotate secrets regularly** | Set expiration, automate rotation |
+| **Use certificates over secrets** | More secure for production |
+| **Least privilege permissions** | Request only required API permissions |
+| **Enable MFA** | Require multi-factor authentication for users |
+| **Use managed identity** | For Azure-hosted apps, avoid secrets entirely |
+| **Validate tokens** | Always validate issuer, audience, expiration |
+| **Use HTTPS only** | All redirect URIs must use HTTPS (except localhost) |
+| **Monitor sign-ins** | Use Entra ID sign-in logs for anomaly detection |
+
+## References
+
+- [OAuth Flows](references/OAUTH-FLOWS.md) - Detailed OAuth 2.0 flow explanations
+- [CLI Commands](references/CLI-COMMANDS.md) - Azure CLI reference for app registrations
+- [Console App Example](references/CONSOLE-APP-EXAMPLE.md) - Complete working examples
+- [First App Registration](references/FIRST-APP-REGISTRATION.md) - Step-by-step guide for beginners
+- [API Permissions](references/API-PERMISSIONS.md) - Understanding and configuring permissions
+- [Troubleshooting](references/TROUBLESHOOTING.md) - Common issues and solutions
+
+## External Resources
+
+- [Microsoft Identity Platform Documentation](https://learn.microsoft.com/entra/identity-platform/)
+- [OAuth 2.0 and OpenID Connect protocols](https://learn.microsoft.com/entra/identity-platform/v2-protocols)
+- [MSAL Documentation](https://learn.microsoft.com/entra/msal/)
+- [Microsoft Graph API](https://learn.microsoft.com/graph/)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
