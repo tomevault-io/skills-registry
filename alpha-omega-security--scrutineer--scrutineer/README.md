@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [alpha-omega-security/scrutineer](https://github.com/alpha-omega-security/scrutineer/tree/main/skills/release-watch/SKILL.md)
+Original source: [alpha-omega-security/scrutineer](https://github.com/alpha-omega-security/scrutineer/tree/main/skills/repo-overview/SKILL.md)
 
 ---
 
