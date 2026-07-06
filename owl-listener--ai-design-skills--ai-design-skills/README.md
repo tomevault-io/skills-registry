@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Owl-Listener/ai-design-skills](https://github.com/Owl-Listener/ai-design-skills/tree/main/gemini-extension/evaluation/skills/task-success-metrics/SKILL.md)
+Original source: [Owl-Listener/ai-design-skills](https://github.com/Owl-Listener/ai-design-skills/tree/main/claude-plugin/evaluation/skills/heuristic-evaluation-ai/SKILL.md)
 
 ---
 
