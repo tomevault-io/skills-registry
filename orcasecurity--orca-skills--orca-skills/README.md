@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [orcasecurity/orca-skills](https://github.com/orcasecurity/orca-skills/tree/main/skills/orca-config-origin/SKILL.md)
+Original source: [orcasecurity/orca-skills](https://github.com/orcasecurity/orca-skills/tree/main/skills/orca-compliance-gap/SKILL.md)
 
 ---
 
