@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [madebyaris/advance-minimax-m2-cursor-rules](https://github.com/madebyaris/advance-minimax-m2-cursor-rules/tree/main/.cursor/skills/minimax-multimodal-toolkit/SKILL.md)
+Original source: [madebyaris/advance-minimax-m2-cursor-rules](https://github.com/madebyaris/advance-minimax-m2-cursor-rules/tree/main/.cursor/skills/minimax-m3-multimodal-input/SKILL.md)
 
 ---
 
