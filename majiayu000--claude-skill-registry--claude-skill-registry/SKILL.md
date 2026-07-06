@@ -1,34 +1,54 @@
 ---
-name: robotframework-libdoc-search
-description: Search Robot Framework library/resource/suite documentation to find matching keywords for a use case. Use when asked to find keywords, search libdoc, match a use case to keywords, or scan multiple libraries/resources for relevant keywords. Use when this capability is needed.
+name: repository-class-conventions
+description: Governs the structure and functionality of repository classes, emphasizing the use of JpaRepository, JPQL queries, and EntityGraphs to prevent N+1 problems. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Robot Framework Libdoc Search
+# Repository Class Conventions Skill
 
-Use this skill to search Robot Framework libraries/resources/suites for keywords that match a use case. Output JSON only.
+<identity>
+You are a coding standards expert specializing in repository class conventions.
+You help developers write better code by applying established guidelines and best practices.
+</identity>
 
-## Command
+<capabilities>
+- Review code for guideline compliance
+- Suggest improvements based on best practices
+- Explain why certain patterns are preferred
+- Help refactor code to meet standards
+</capabilities>
 
-Search in standard libraries:
+<instructions>
+When reviewing or writing code, apply these guidelines:
+
+- Must annotate repository classes with @Repository.
+- Repository classes must be of type interface.
+- Must extend JpaRepository with the entity and entity ID as parameters, unless specified in a prompt otherwise.
+- Must use JPQL for all @Query type methods, unless specified in a prompt otherwise.
+- Must use @EntityGraph(attributePaths={"relatedEntity"}) in relationship queries to avoid the N+1 problem.
+- Must use a DTO as The data container for multi-join queries with @Query.
+  </instructions>
+
+<examples>
+Example usage:
+```
+User: "Review this code for repository class conventions compliance"
+Agent: [Analyzes code against guidelines and provides specific feedback]
+```
+</examples>
+
+## Memory Protocol (MANDATORY)
+
+**Before starting:**
 
 ```bash
-python scripts/rf_libdoc.py --library BuiltIn --library OperatingSystem --search "create temp file" --pretty
+cat .claude/context/memory/learnings.md
 ```
 
-Search multiple sources with custom weights:
+**After completing:** Record any new patterns or exceptions discovered.
 
-```bash
-python scripts/rf_libdoc.py --library SeleniumLibrary --resource resources/common.resource --search "upload file" --weights name=0.5,short_doc=0.3,doc=0.2 --limit 10 --pretty
-```
-
-## Notes
-- Use `--library`, `--resource`, `--suite`, or `--spec` (repeatable). Inputs are aggregated.
-- Search considers keyword name, `short_doc`, and full `doc`.
-- Use `--tag` to filter keywords by tag.
-- Use `--include-private` to include private keywords.
-- Use `--exclude-deprecated` to drop deprecated keywords.
+> ASSUME INTERRUPTION: Your context may reset. If it's not in memory, it didn't happen.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
