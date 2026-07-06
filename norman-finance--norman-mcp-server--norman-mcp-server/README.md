@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [norman-finance/norman-mcp-server](https://github.com/norman-finance/norman-mcp-server/tree/main/skills/overdue-reminders/SKILL.md)
+Original source: [norman-finance/norman-mcp-server](https://github.com/norman-finance/norman-mcp-server/tree/main/skills/financial-overview/SKILL.md)
 
 ---
 
