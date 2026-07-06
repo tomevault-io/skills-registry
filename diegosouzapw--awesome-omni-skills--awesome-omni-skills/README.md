@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [diegosouzapw/awesome-omni-skills](https://github.com/diegosouzapw/awesome-omni-skills/tree/main/skills/technical-change-tracker-v2/SKILL.md)
+Original source: [diegosouzapw/awesome-omni-skills](https://github.com/diegosouzapw/awesome-omni-skills/tree/main/skills_omni/context7-auto-research/SKILL.md)
 
 ---
 
