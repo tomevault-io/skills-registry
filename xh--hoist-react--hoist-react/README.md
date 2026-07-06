@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xh/hoist-react](https://github.com/xh/hoist-react/tree/main/.claude/skills/xh-upgrade-notes/SKILL.md)
+Original source: [xh/hoist-react](https://github.com/xh/hoist-react/tree/main/.claude/skills/xh-update-doc-links/SKILL.md)
 
 ---
 
