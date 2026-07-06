@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/other/name-mismatch-yurakawa-mskills-d52d2da1/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/other/edd-alfredolopez80-multi-agent-ralph-lo/SKILL.md)
 
 ---
 
