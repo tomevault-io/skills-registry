@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [harbor-framework/terminal-bench-science](https://github.com/harbor-framework/terminal-bench-science/tree/main/.claude/skills/review-task/SKILL.md)
+Original source: [harbor-framework/terminal-bench-science](https://github.com/harbor-framework/terminal-bench-science/tree/main/.claude/skills/update-rubric/SKILL.md)
 
 ---
 
