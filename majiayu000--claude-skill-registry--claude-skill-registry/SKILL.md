@@ -1,300 +1,440 @@
 ---
-name: policyengine-user-guide
-description: Using PolicyEngine web apps to analyze tax and benefit policy impacts - for users of policyengine.org Use when this capability is needed.
+name: running-windows-commands-majo
+description: | Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# PolicyEngine User Guide
+# Windows Development Standards (Mark)
 
-This skill helps you use PolicyEngine to analyze how tax and benefit policies affect households and populations.
+**Goal**: Write cross-platform compatible code that recognizes Windows-specific paths and avoids Unix-isms when working on Windows systems.
 
-## For Users: Getting Started
+## When to Use This Skill
 
-### What is PolicyEngine?
+- **Working on Windows (win32) systems**
+- **Path starts with drive letter** (e.g., `B:\`, `C:\`)
+- **Using backslashes in paths** (`\` not `/`)
+- **Commands fail with "not recognized" errors**
+- **Need to avoid Unix-specific tools** (tail, head, mkdir -p, etc.)
+- **Writing cross-platform scripts** that must work on Windows
+- **Using PowerShell or cmd.exe**
 
-PolicyEngine computes the impact of public policy on households and society. You can:
-- Calculate how policies affect your household
-- Analyze population-wide impacts of reforms
-- Create and share custom policy proposals
-- Compare different policy options
+## When NOT to Use This Skill
 
-### Web App: policyengine.org
+- **Working on macOS or Linux exclusively**
+- **Using WSL (Windows Subsystem for Linux)** - Unix commands work there
+- **Using Git Bash** - Provides Unix tools on Windows
+- **Writing Unix-only scripts** for deployment to Linux servers
 
-**Main features:**
-1. **Your household** - Calculate your taxes and benefits
-2. **Policy** - Design custom reforms and see impacts
-3. **Research** - Read policy analysis and blog posts
+## Process
 
-### Available Countries
+1. **Check platform first** - Verify if running on Windows (`win32`)
+2. **Identify Windows paths** - Look for drive letters (`B:`, `C:`) and backslashes
+3. **Map Unix commands to Windows equivalents**:
+   - `mkdir -p` → `New-Item -ItemType Directory -Path "path" -Force`
+   - `tail` → `Get-Content file -Tail N`
+   - `head` → `Get-Content file -TotalCount N`
+   - `cat` → `Get-Content` or `type`
+   - `grep` → `Select-String`
+   - `find` → `Get-ChildItem -Recurse`
+   - `ls` → `Get-ChildItem` or `dir`
+   - `rm -rf` → `Remove-Item -Recurse -Force`
+   - `cp/mv` → `Copy-Item/Move-Item`
+   - `touch` → `New-Item -ItemType File`
+   - `which` → `Get-Command` or `where`
+   - `pwd` → `Get-Location`
+4. **Quote paths with spaces** - Use `"path with spaces"`
+5. **Use backslashes** - Even though forward slashes often work
+6. **Prefer cross-platform tools** - Python, Node.js when possible
+7. **Update AGENTS.md** - Document Windows-specific requirements
 
-- **United States** - policyengine.org/us
-- **United Kingdom** - policyengine.org/uk
-- **Canada** - policyengine.org/ca (beta)
+## Constraints
 
-## Using the Household Calculator
+- **ALWAYS check platform** before using Unix commands
+- **ALWAYS use backslashes** for Windows paths (even though forward slashes often work)
+- **ALWAYS quote paths with spaces** to avoid errors
+- **NEVER use Unix-isms on Windows**: `tail`, `head`, `mkdir -p`, `grep`, `find` (Unix style)
+- **NEVER use `cd` with forward slashes** on Windows cmd (PowerShell is more flexible)
+- **Prefer PowerShell** for modern Windows development
+- **Prefer Python** for cross-platform scripts over shell
 
-### Step 1: Navigate to Household Page
+Guidelines for working on Windows systems and avoiding Unix-isms.
 
-**US:** https://policyengine.org/us/household
-**UK:** https://policyengine.org/uk/household
+## Recognizing Windows Paths
 
-### Step 2: Enter Your Information
-
-**Income:**
-- Employment income (W-2 wages)
-- Self-employment income
-- Capital gains and dividends
-- Social Security, pensions, etc.
-
-**Household composition:**
-- Adults and dependents
-- Ages
-- Marital status
-
-**Location:**
-- State (US) or region (UK)
-- NYC checkbox for New York City residents
-
-**Deductions (US):**
-- Charitable donations
-- Mortgage interest
-- State and local taxes (SALT)
-- Medical expenses
-
-### Step 3: View Results
-
-**Net income** - Your income after taxes and benefits
-
-**Breakdown:**
-- Total taxes (federal + state + local)
-- Total benefits (EITC, CTC, SNAP, etc.)
-- Effective tax rate
-- Marginal tax rate
-
-**Charts:**
-- Net income by earnings
-- Marginal tax rate by earnings
-
-## Creating a Policy Reform
-
-### Step 1: Navigate to Policy Page
-
-**US:** https://policyengine.org/us/policy
-**UK:** https://policyengine.org/uk/policy
-
-### Step 2: Select Parameters to Change
-
-**Browse parameters by:**
-- Government department (IRS, SSA, etc.)
-- Program (EITC, CTC, SNAP)
-- Type (tax rates, benefit amounts, thresholds)
-
-**Example: Increase Child Tax Credit**
-1. Navigate to gov.irs.credits.ctc.amount.base_amount
-2. Change from $2,000 to $5,000
-3. Click "Calculate economic impact"
-
-### Step 3: View Population Impacts
-
-**Budgetary impact:**
-- Total cost or revenue raised
-- Breakdown by program
-
-**Poverty impact:**
-- Change in poverty rates
-- By age group (children, adults, seniors)
-- Deep poverty (income < 50% of threshold)
-
-**Distributional impact:**
-- Average impact by income decile
-- Winners and losers by decile
-- Relative vs absolute changes
-
-**Inequality impact:**
-- Gini index change
-- Top 10% and top 1% income share
-
-### Step 4: Share Your Reform
-
-**Share URL:**
-Every reform has a unique URL you can share:
+**Windows paths look like:**
 ```
-policyengine.org/us/policy?reform=12345&region=enhanced_us&timePeriod=2025
+B:\understanding-skills\majo-skills
+C:\Users\Mark\Documents
+D:\Projects\my-app
 ```
 
-**Parameters in URL:**
-- `reform=12345` - Your custom reform ID
-- `region=enhanced_us` - Geography (US, state, or congressional district)
-- `timePeriod=2025` - Year of analysis
+**Key indicators:**
+- Drive letter followed by colon (`B:`, `C:`, `D:`)
+- Backslashes as separators (`\`)
+- No leading `/` (that's Unix)
 
-## Understanding Results
+## Common Unix-isms to Avoid
 
-### Metrics Explained
+### 1. `mkdir -p`
 
-**Supplemental Poverty Measure (SPM):**
-- Accounts for taxes, benefits, and living costs
-- US Census Bureau's official alternative poverty measure
-- More comprehensive than Official Poverty Measure
+**❌ WRONG on Windows:**
+```bash
+mkdir -p B:\path\to\directory
+```
 
-**Gini coefficient:**
-- Measures income inequality (0 = perfect equality, 1 = perfect inequality)
-- US Gini is typically around 0.48
-- Lower values = more equal income distribution
+**✅ CORRECT on Windows:**
+```powershell
+# PowerShell
+New-Item -ItemType Directory -Path "B:\path\to\directory" -Force
 
-**Income deciles:**
-- Population divided into 10 equal groups by income
-- Decile 1 = bottom 10% of earners
-- Decile 10 = top 10% of earners
+# Or cmd
+mkdir "B:\path\to\directory"
+```
 
-**Winners and losers:**
-- Winners: Net income increases by 5% or more
-- Losers: Net income decreases by 5% or more
-- Neutral: Net income change less than 5%
+**Note**: Windows `mkdir` doesn't have `-p` flag. Use `-Force` in PowerShell or just `mkdir` (it creates parent directories by default in PowerShell).
 
-### Reading Charts
+### 2. `tail` and `head`
 
-**Household impact charts:**
-- X-axis: Usually income or earnings
-- Y-axis: Net income, taxes, or benefits
-- Hover to see exact values
+**❌ WRONG on Windows:**
+```bash
+tail -n 20 file.txt
+head -n 10 file.txt
+```
 
-**Population impact charts:**
-- Bar charts: Compare across groups (deciles, states)
-- Line charts: Show relationships (income vs impact)
-- Waterfall charts: Show components of budgetary impact
+**✅ CORRECT on Windows:**
 
-## Common Use Cases
+**PowerShell:**
+```powershell
+# tail -n 20
+Get-Content file.txt -Tail 20
 
-### Use Case 1: How Does Policy X Affect My Household?
+# head -n 10
+Get-Content file.txt -TotalCount 10
 
-1. Go to household calculator
-2. Enter your information
-3. Select "Reform" and choose the policy
-4. Compare baseline vs reform results
+# Alternative: Select-Object
+Get-Content file.txt | Select-Object -Last 20
+Get-Content file.txt | Select-Object -First 10
+```
 
-### Use Case 2: How Much Would Policy X Cost?
+**Or use Python:**
+```python
+# tail -n 20
+with open('file.txt') as f:
+    lines = f.readlines()
+    print(''.join(lines[-20:]))
 
-1. Go to policy page
-2. Create or select the reform
-3. View "Budgetary impact" section
-4. See total cost and breakdown
+# head -n 10
+with open('file.txt') as f:
+    for i, line in enumerate(f):
+        if i >= 10:
+            break
+        print(line, end='')
+```
 
-### Use Case 3: Would Policy X Reduce Poverty?
+### 3. `cat`
 
-1. Go to policy page
-2. Create or select the reform
-3. View "Poverty impact" section
-4. See change in poverty rate by age group
+**❌ WRONG on Windows:**
+```bash
+cat file.txt
+```
 
-### Use Case 4: Who Benefits from Policy X?
+**✅ CORRECT on Windows:**
+```powershell
+Get-Content file.txt
+# or
+type file.txt  # cmd
+```
 
-1. Go to policy page
-2. Create or select the reform
-3. View "Distributional impact" section
-4. See winners and losers by income decile
+### 4. `grep`
 
-### Use Case 5: Compare Two Policy Proposals
+**❌ WRONG on Windows:**
+```bash
+grep "pattern" file.txt
+```
 
-1. Create Reform A (e.g., expand EITC)
-2. Note the URL or reform ID
-3. Create Reform B (e.g., expand CTC)
-4. Compare budgetary, poverty, and distributional impacts
+**✅ CORRECT on Windows:**
+```powershell
+Select-String -Pattern "pattern" -Path file.txt
+# or
+Get-Content file.txt | Select-String "pattern"
+```
 
-## For Analysts: Moving Beyond the Web App
+### 5. `find`
 
-Once you understand the web app, you can:
+**❌ WRONG on Windows:**
+```bash
+find . -name "*.txt"
+```
 
-**Use the Python client:**
-- See `policyengine-python-client-skill` for programmatic access
-- See `policyengine-us-skill` for detailed simulation patterns
+**✅ CORRECT on Windows:**
+```powershell
+Get-ChildItem -Recurse -Filter "*.txt"
+# or
+Get-ChildItem -Path . -Recurse -Include "*.txt"
+```
 
-**Create custom analyses:**
-- See `policyengine-analysis-skill` for analysis patterns
-- See `microdf-skill` for data analysis utilities
+### 6. `ls`
 
-**Access the API directly:**
-- See `policyengine-api-skill` for API documentation
-- REST endpoints for integration
+**❌ WRONG on Windows:**
+```bash
+ls -la
+```
 
-## For Contributors: Building PolicyEngine
+**✅ CORRECT on Windows:**
+```powershell
+Get-ChildItem
+# or
+Get-ChildItem -Force  # includes hidden files
+# or
+dir  # cmd
+```
 
-To contribute to PolicyEngine development:
+### 7. `rm -rf`
 
-**Understanding the stack:**
-- See `policyengine-core-skill` for engine architecture
-- See `policyengine-us-skill` for country model patterns
-- See `policyengine-api-skill` for API development
-- See `policyengine-app-skill` for app development
+**❌ WRONG on Windows:**
+```bash
+rm -rf directory
+```
 
-**Development standards:**
-- See `policyengine-standards-skill` for code quality requirements
-- See `policyengine-writing-skill` for documentation style
+**✅ CORRECT on Windows:**
+```powershell
+Remove-Item -Recurse -Force directory
+# or
+rd /s /q directory  # cmd
+```
 
-## Frequently Asked Questions
+### 8. `cp` and `mv`
 
-### How accurate is PolicyEngine?
+**❌ WRONG on Windows:**
+```bash
+cp file.txt backup.txt
+mv old.txt new.txt
+```
 
-PolicyEngine uses official tax and benefit rules from legislation and regulations. Calculations match official calculators (IRS, SSA, etc.) for individual households.
+**✅ CORRECT on Windows:**
+```powershell
+Copy-Item file.txt backup.txt
+Move-Item old.txt new.txt
+```
 
-Population-level estimates use microsimulation with survey data (Current Population Survey for US, Family Resources Survey for UK).
+### 9. `touch`
 
-### Can I use PolicyEngine for my taxes?
+**❌ WRONG on Windows:**
+```bash
+touch newfile.txt
+```
 
-PolicyEngine is for policy analysis, not tax filing. Results are estimates based on the information you provide. For filing taxes, use IRS.gov or professional tax software.
+**✅ CORRECT on Windows:**
+```powershell
+New-Item newfile.txt -ItemType File
+# or
+"" | Out-File newfile.txt
+```
 
-### How is PolicyEngine funded?
+### 10. `chmod`
 
-PolicyEngine is a nonprofit funded by grants and donations. The platform is free to use.
+**❌ WRONG on Windows:**
+```bash
+chmod +x script.sh
+```
 
-### Can I export results?
+**✅ CORRECT on Windows:**
+Windows uses ACLs (Access Control Lists) instead of Unix permissions:
+```powershell
+# View permissions
+Get-Acl file.txt
 
-Yes! Charts can be downloaded as PNG or HTML. You can also share reform URLs with others.
+# Set permissions (complex - usually not needed for dev work)
+# Use icacls for command-line ACL management
+```
 
-### What programs does PolicyEngine model?
+**Note**: For scripts, use file extensions (.ps1, .bat, .cmd) instead of chmod.
 
-**US (federal):**
-- Income tax, payroll tax, capital gains tax
-- EITC, CTC, ACTC
-- SNAP, WIC, ACA premium tax credits
-- Social Security, SSI, TANF
-- State income taxes (varies by state)
+### 11. `which`
 
-**UK:**
-- Income tax, National Insurance
-- Universal Credit, Child Benefit
-- State Pension, Pension Credit
-- Council Tax, Council Tax Support
+**❌ WRONG on Windows:**
+```bash
+which python
+```
 
-For complete lists, see:
-- US: https://policyengine.org/us/parameters
-- UK: https://policyengine.org/uk/parameters
+**✅ CORRECT on Windows:**
+```powershell
+Get-Command python
+# or
+where python  # cmd
+```
 
-### How do I report a bug?
+### 12. `pwd`
 
-**If you find incorrect calculations:**
-1. Go to the household calculator
-2. Note your inputs and the incorrect result
-3. File an issue: https://github.com/PolicyEngine/policyengine-us/issues (or appropriate country repo)
-4. Include the household URL
+**❌ WRONG on Windows:**
+```bash
+pwd
+```
 
-**If you find app bugs:**
-1. Note what you were doing
-2. File an issue: https://github.com/PolicyEngine/policyengine-app/issues
+**✅ CORRECT on Windows:**
+```powershell
+Get-Location
+# or
+$PWD  # automatic variable
+```
 
-## Resources
+### 13. `cd` with forward slashes
 
-- **Website:** https://policyengine.org
-- **Documentation:** https://policyengine.org/us/docs
-- **Blog:** https://policyengine.org/us/research
-- **GitHub:** https://github.com/PolicyEngine
-- **Contact:** hello@policyengine.org
+**❌ WRONG on Windows:**
+```bash
+cd B:/path/to/directory
+```
 
-## Related Skills
+**✅ CORRECT on Windows:**
+```powershell
+cd B:\path\to\directory
+# or
+cd "B:\path\to\directory"
+```
 
-- **policyengine-python-client-skill** - Using PolicyEngine programmatically
-- **policyengine-us-skill** - Understanding US tax/benefit calculations
-- **policyengine-analysis-skill** - Creating custom policy analyses
+Windows accepts forward slashes in `cd`, but backslashes are preferred for consistency.
+
+### 14. `&&` and `||`
+
+**❌ WRONG on Windows (cmd):**
+```cmd
+command1 && command2
+```
+
+**✅ CORRECT on Windows:**
+
+**PowerShell:**
+```powershell
+command1; if ($?) { command2 }
+# or use -and/-or operators
+```
+
+**cmd:**
+```cmd
+command1 && command2  # actually works in cmd
+```
+
+**Note**: `&&` works in cmd but not in PowerShell. Use semicolons or proper PowerShell syntax.
+
+## Path Handling
+
+### Path Separators
+
+**Always use backslashes for Windows paths:**
+```powershell
+# ✅ CORRECT
+"B:\understanding-skills\majo-skills"
+
+# ❌ WRONG (Unix style)
+"B:/understanding-skills/majo-skills"
+```
+
+### Quoting Paths
+
+**Quote paths with spaces:**
+```powershell
+# ✅ CORRECT
+cd "C:\Program Files\My App"
+Copy-Item "file with spaces.txt" destination
+
+# ❌ WRONG (will fail)
+cd C:\Program Files\My App
+```
+
+### Environment Variables
+
+**Windows uses `%VAR%` in cmd, `$env:VAR` in PowerShell:**
+```powershell
+# PowerShell
+$env:USERPROFILE
+$env:PATH
+
+# cmd
+%USERPROFILE%
+%PATH%
+```
+
+## Cross-Platform Alternatives
+
+When possible, use tools that work on both platforms:
+
+### Python
+
+```python
+# Works on Windows, macOS, Linux
+import os
+import shutil
+
+# mkdir -p equivalent
+os.makedirs("path/to/dir", exist_ok=True)
+
+# File operations
+shutil.copy("source.txt", "dest.txt")
+shutil.move("old.txt", "new.txt")
+
+# Read file
+with open("file.txt") as f:
+    content = f.read()
+
+# Write file
+with open("file.txt", "w") as f:
+    f.write("content")
+```
+
+### Git Bash
+
+If available, Git Bash provides Unix tools on Windows. However, prefer native PowerShell/cmd when working with Windows paths.
+
+## Quick Reference Table
+
+| Unix Command | Windows PowerShell | Windows cmd |
+|--------------|-------------------|-------------|
+| `mkdir -p dir` | `New-Item -ItemType Directory dir -Force` | `mkdir dir` |
+| `tail -n 20 file` | `Get-Content file -Tail 20` | N/A |
+| `head -n 10 file` | `Get-Content file -TotalCount 10` | N/A |
+| `cat file` | `Get-Content file` | `type file` |
+| `grep pattern file` | `Select-String pattern file` | `findstr pattern file` |
+| `find . -name "*.txt"` | `Get-ChildItem -Recurse -Filter "*.txt"` | `dir /s *.txt` |
+| `ls -la` | `Get-ChildItem -Force` | `dir /a` |
+| `rm -rf dir` | `Remove-Item -Recurse -Force dir` | `rd /s /q dir` |
+| `cp src dst` | `Copy-Item src dst` | `copy src dst` |
+| `mv src dst` | `Move-Item src dst` | `move src dst` |
+| `touch file` | `New-Item file -ItemType File` | `type nul > file` |
+| `which cmd` | `Get-Command cmd` | `where cmd` |
+| `pwd` | `Get-Location` | `cd` |
+
+## Testing Skills
+
+- **Platform check**: Verify commands work on Windows (`win32`)
+- **Path format test**: Use backslashes (`\`) not forward slashes (`/`)
+- **Command mapping**: Test Unix → Windows command equivalency
+- **Quote handling**: Test paths with spaces are properly quoted
+- **Cross-platform**: Verify Python scripts work on both Windows and Unix
+- **PowerShell vs cmd**: Know which syntax works in which shell
+- **WSL detection**: Don't use Windows workarounds when in WSL (Unix works there)
+
+## Integration
+
+This skill extends `dev-standards-majo`. Always ensure `dev-standards-majo` is loaded for:
+- AGENTS.md maintenance
+- Universal code principles
+- Documentation policies
+
+Works alongside:
+- `python-majo` — For Python development on Windows
+- `js-bun-majo` — For JavaScript/Bun development on Windows
+- `shell-majo` — For shell scripting on Windows (Git Bash/WSL)
+- `git-majo` — For git operations on Windows
+- `writing-docs-majo` — For writing documentation on Windows
+
+## Important Notes
+
+1. **Always check the platform** before using Unix commands
+2. **Use PowerShell** for modern Windows development
+3. **Use Python** for cross-platform scripts
+4. **Quote paths with spaces** to avoid errors
+5. **Use backslashes** for Windows paths (even though forward slashes often work)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
