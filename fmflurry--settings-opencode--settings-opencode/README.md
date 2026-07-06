@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fmflurry/settings-opencode](https://github.com/fmflurry/settings-opencode/tree/main/skills/angular-accessibility/SKILL.md)
+Original source: [fmflurry/settings-opencode](https://github.com/fmflurry/settings-opencode/tree/main/skills/dotnet-clean-architecture/SKILL.md)
 
 ---
 
