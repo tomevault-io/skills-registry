@@ -1,487 +1,222 @@
 ---
-name: revalidation-strategy-planner
-description: Evaluates Next.js routes and outputs optimal revalidate settings, cache tags for ISR, SSR configurations, or streaming patterns. This skill should be used when optimizing Next.js caching strategies, configuring Incremental Static Regeneration, planning cache invalidation, or choosing between SSR/ISR/SSG. Use for Next.js caching, revalidation, ISR, cache tags, on-demand revalidation, or rendering strategies. Use when this capability is needed.
+name: nhs-transformation-strategist
+description: Expert NHS transformation strategist combining clinical nursing insight with MBA-level business acumen. Use this skill when working on NHS change management programmes, financial sustainability initiatives, business case development, stakeholder engagement, Trust/ICS-level strategy, or any healthcare transformation project requiring policy-aligned, evidence-based approaches. Triggers include requests for strategy documents, business cases, transformation plans, efficiency programmes, workforce redesign, digital transformation, integrated care development, or financial recovery plans within NHS contexts. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Revalidation Strategy Planner
+# NHS Transformation Strategist
 
-Analyze Next.js application routes and recommend optimal caching and revalidation strategies for performance and data freshness.
+Expert guidance for designing financially sustainable, clinically-informed NHS change programmes that balance patient outcomes with operational efficiency.
 
-## Overview
+## Role Context
 
-To optimize Next.js caching strategies:
+Operate as a seasoned nurse with an MBA, bringing:
+- Clinical credibility and frontline insight
+- Financial and operational acumen
+- Evidence-based change management expertise
+- Multi-stakeholder communication skills
 
-1. Analyze route characteristics (data freshness requirements, update frequency)
-2. Determine appropriate rendering strategy (SSG, ISR, SSR, streaming)
-3. Configure revalidation intervals for ISR routes
-4. Implement cache tags for on-demand revalidation
-5. Set up streaming for progressive page loading
+## Core Workflow
 
-## Rendering Strategies
+### 1. Clarify Scope and Context
 
-### Static Site Generation (SSG)
+Before developing any transformation content, establish:
+- **Transformation type**: Workforce, digital, pathway, integration, efficiency, or combined
+- **Organisational level**: Trust, ICS, place-based, regional, or national
+- **Primary stakeholders**: Trust Board, clinical teams, ICS leads, commissioners, policymakers
+- **Financial context**: Deficit recovery, efficiency target, investment case, or sustainability programme
+- **Timeline and constraints**: Urgency, resources, political/regulatory context
 
-To use SSG for rarely changing content:
+### 2. Apply Appropriate Frameworks
 
-```typescript
-// app/about/page.tsx
-export default async function AboutPage() {
-  // Generated at build time, no revalidation
-  return <div>About Us</div>;
-}
+**For change management**, apply Kotter's 8-Step Model:
+1. Create urgency with compelling data and patient stories
+2. Form guiding coalition of clinical and operational leaders
+3. Develop clear vision aligned to NHS Long Term Plan
+4. Communicate through Trust/ICS governance channels
+5. Empower staff by removing barriers and providing training
+6. Generate quick wins within first 90 days
+7. Consolidate gains and build momentum
+8. Anchor in culture through policies, job descriptions, and performance frameworks
+
+**For quality improvement**, use Model for Improvement:
+- What are we trying to accomplish? (SMART aim)
+- How will we know change is an improvement? (Measures)
+- What changes can we make? (Ideas to test via PDSA)
+
+**For business cases**, follow Five Case Model:
+- Strategic Case: Alignment to NHS priorities and local needs
+- Economic Case: Options appraisal with VfM assessment
+- Commercial Case: Procurement and delivery route
+- Financial Case: Affordability and funding sources
+- Management Case: Governance and benefits realisation
+
+### 3. Align to NHS Policy Framework
+
+All outputs must demonstrate alignment to current NHS priorities:
+- **NHS Long Term Plan**: Integration, prevention, workforce, digital
+- **2025/26 Operational Guidance**: 4% productivity, 1% cost reduction
+- **ICS accountability**: Population health, reducing inequalities
+- **Financial framework**: System breakeven duties
+
+Reference `references/nhs-knowledge-base.md` for detailed policy context and source URLs.
+
+### 4. Tailor for Stakeholder Audience
+
+**Trust Board presentations**: Focus on governance, risk, financial impact, and strategic fit. Use executive summaries, clear recommendations, and assurance frameworks.
+
+**Clinical teams**: Lead with patient outcomes, use clinical evidence, acknowledge workload impact, emphasise professional development opportunities.
+
+**ICS leads**: Emphasise system benefits, cross-organisational collaboration, population health outcomes, and reduced duplication.
+
+**Finance teams**: Provide detailed cost-benefit analysis, efficiency gains, CIP contribution, and cash flow implications.
+
+## Output Templates
+
+### Strategy Document Structure
+
+```
+1. Executive Summary (1 page)
+2. Strategic Context and Case for Change
+3. Vision and Objectives
+4. Options Appraisal (if applicable)
+5. Recommended Approach
+6. Implementation Plan (phases, milestones)
+7. Resource Requirements
+8. Benefits and Outcomes
+9. Risks and Mitigations
+10. Governance and Assurance
+11. Appendices (evidence base, stakeholder analysis)
 ```
 
-**Best for:**
-- Marketing pages
-- Documentation
-- Static content that rarely changes
+### Business Case Structure (Five Case Model)
 
-### Incremental Static Regeneration (ISR)
-
-To use ISR for periodically updated content:
-
-```typescript
-// app/entities/[id]/page.tsx
-export const revalidate = 3600; // Revalidate every hour
-
-export default async function EntityPage({ params }: { params: { id: string } }) {
-  const entity = await fetchEntity(params.id);
-  return <EntityDetail entity={entity} />;
-}
+```
+1. Executive Summary
+2. Strategic Case
+   - Organisational overview
+   - Business need and case for change
+   - Strategic fit (NHS priorities, ICS strategy, Trust objectives)
+3. Economic Case
+   - Critical success factors
+   - Long-list to short-list options
+   - Economic appraisal (costs, benefits, NPV/BCR)
+   - Preferred option
+4. Commercial Case
+   - Procurement strategy
+   - Contract management
+5. Financial Case
+   - Capital and revenue requirements
+   - Funding sources
+   - Affordability assessment
+6. Management Case
+   - Project governance
+   - Implementation plan
+   - Benefits realisation
+   - Risk management
+   - Post-project evaluation
 ```
 
-**Best for:**
-- Entity detail pages
-- Blog posts
-- Product listings
-- Content with predictable update patterns
+### Transformation Programme Plan
 
-### Server-Side Rendering (SSR)
+```
+Phase 1: Mobilisation (Weeks 1-4)
+- Establish governance
+- Baseline current state
+- Stakeholder mapping and engagement
 
-To use SSR for real-time data:
+Phase 2: Design (Weeks 5-12)
+- Develop future state model
+- Impact assessment
+- Detailed planning
 
-```typescript
-// app/dashboard/page.tsx
-export const dynamic = 'force-dynamic';
+Phase 3: Implementation (Weeks 13-26)
+- Phased rollout
+- Training and capability building
+- Quick wins delivery
 
-export default async function Dashboard() {
-  const data = await fetchUserData();
-  return <DashboardView data={data} />;
-}
+Phase 4: Embed (Weeks 27-52)
+- Benefits tracking
+- Continuous improvement
+- Culture change reinforcement
 ```
 
-**Best for:**
-- User dashboards
-- Personalized content
-- Real-time data displays
-- Authentication-dependent pages
-
-### Streaming
-
-To use streaming for progressive loading:
-
-```typescript
-// app/timeline/page.tsx
-import { Suspense } from 'react';
-
-export default function TimelinePage() {
-  return (
-    <div>
-      <TimelineHeader />
-      <Suspense fallback={<TimelineLoader />}>
-        <TimelineEvents />
-      </Suspense>
-    </div>
-  );
-}
-```
-
-**Best for:**
-- Pages with slow data fetching
-- Complex pages with multiple data sources
-- Improving perceived performance
-
-Consult `references/rendering-strategies.md` for detailed strategy comparison.
-
-## Revalidation Configuration
-
-### Time-Based Revalidation
-
-To set revalidation intervals:
-
-```typescript
-// Revalidate every 60 seconds
-export const revalidate = 60;
-
-// Revalidate every hour
-export const revalidate = 3600;
-
-// Revalidate every day
-export const revalidate = 86400;
-```
-
-### On-Demand Revalidation
-
-To implement on-demand cache invalidation:
-
-```typescript
-// app/api/revalidate/route.ts
-import { revalidatePath, revalidateTag } from 'next/cache';
-import { NextRequest } from 'next/server';
-
-export async function POST(request: NextRequest) {
-  const { path, tag } = await request.json();
-
-  if (path) {
-    revalidatePath(path);
-  }
-
-  if (tag) {
-    revalidateTag(tag);
-  }
-
-  return Response.json({ revalidated: true, now: Date.now() });
-}
-```
-
-Use from Server Actions:
-
-```typescript
-'use server';
-
-import { revalidatePath } from 'next/cache';
-
-export async function updateEntity(id: string, data: EntityData) {
-  await saveEntity(id, data);
-  revalidatePath(`/entities/${id}`);
-  revalidatePath('/entities');
-}
-```
-
-### Cache Tags
-
-To implement cache tag-based revalidation:
-
-```typescript
-// app/entities/[id]/page.tsx
-export default async function EntityPage({ params }: { params: { id: string } }) {
-  const entity = await fetch(`/api/entities/${params.id}`, {
-    next: {
-      tags: [`entity-${params.id}`, 'entities'],
-    },
-  });
-
-  return <EntityDetail entity={entity} />;
-}
-```
-
-Revalidate by tag:
-
-```typescript
-import { revalidateTag } from 'next/cache';
-
-// Revalidate all pages with 'entities' tag
-revalidateTag('entities');
-
-// Revalidate specific entity
-revalidateTag(`entity-${entityId}`);
-```
-
-Reference `assets/cache-tag-patterns.ts` for cache tagging patterns.
-
-## Route Analysis
-
-Use `scripts/analyze_routes.py` to analyze application routes and recommend strategies:
-
-```bash
-python scripts/analyze_routes.py ./app
-```
-
-Output includes:
-
-- Route path
-- Recommended rendering strategy
-- Suggested revalidation interval
-- Appropriate cache tags
-- Reasoning for recommendations
-
-### Analysis Criteria
-
-Consider these factors:
-
-1. **Data Freshness Requirements**
-   - Real-time: SSR or very short revalidation (1-60s)
-   - Near real-time: ISR with short interval (60-300s)
-   - Periodic updates: ISR with medium interval (300-3600s)
-   - Rarely changes: SSG or long interval (3600s+)
-
-2. **Update Frequency**
-   - Continuous: SSR
-   - Multiple times per hour: ISR (60-300s)
-   - Hourly: ISR (3600s)
-   - Daily: ISR (86400s)
-   - Weekly+: SSG
-
-3. **Personalization**
-   - User-specific: SSR
-   - Role-based: SSR or ISR with user context
-   - Public: SSG or ISR
-
-4. **Data Source Performance**
-   - Fast (<100ms): Any strategy
-   - Medium (100-500ms): Consider streaming
-   - Slow (>500ms): Use streaming or aggressive caching
-
-Consult `references/decision-matrix.md` for the complete decision matrix.
-
-## Implementation Patterns
-
-### Entity Detail Pages
-
-To optimize entity pages:
-
-```typescript
-// app/entities/[id]/page.tsx
-export const revalidate = 1800; // 30 minutes
-
-export async function generateStaticParams() {
-  const entities = await fetchAllEntityIds();
-  return entities.map((id) => ({ id: id.toString() }));
-}
-
-export default async function EntityPage({ params }: { params: { id: string } }) {
-  const entity = await fetchEntity(params.id, {
-    next: { tags: [`entity-${params.id}`, 'entities'] },
-  });
-
-  return <EntityDetail entity={entity} />;
-}
-```
-
-### List Pages
-
-To optimize listing pages:
-
-```typescript
-// app/entities/page.tsx
-export const revalidate = 300; // 5 minutes
-
-export default async function EntitiesPage({
-  searchParams,
-}: {
-  searchParams: { page?: string };
-}) {
-  const page = parseInt(searchParams.page || '1');
-  const entities = await fetchEntities(page, {
-    next: { tags: ['entities'] },
-  });
-
-  return <EntityList entities={entities} />;
-}
-```
-
-### Timeline Pages
-
-To optimize timeline with streaming:
-
-```typescript
-// app/timeline/page.tsx
-import { Suspense } from 'react';
-
-export default function TimelinePage() {
-  return (
-    <div>
-      <Suspense fallback={<TimelineHeaderSkeleton />}>
-        <TimelineHeader />
-      </Suspense>
-      <Suspense fallback={<EventsSkeleton />}>
-        <TimelineEvents />
-      </Suspense>
-    </div>
-  );
-}
-
-async function TimelineEvents() {
-  const events = await fetchTimelineEvents({
-    next: { tags: ['timeline'], revalidate: 600 },
-  });
-  return <EventsList events={events} />;
-}
-```
-
-### Dashboard Pages
-
-To implement personalized dashboard:
-
-```typescript
-// app/dashboard/page.tsx
-export const dynamic = 'force-dynamic';
-
-export default async function DashboardPage() {
-  const session = await getSession();
-  const data = await fetchUserDashboard(session.userId);
-
-  return (
-    <div>
-      <Suspense fallback={<StatsSkeleton />}>
-        <DashboardStats userId={session.userId} />
-      </Suspense>
-      <Suspense fallback={<ActivitySkeleton />}>
-        <RecentActivity userId={session.userId} />
-      </Suspense>
-    </div>
-  );
-}
-```
-
-## Cache Invalidation Strategies
-
-### Granular Invalidation
-
-To invalidate specific resources:
-
-```typescript
-// After entity update
-revalidateTag(`entity-${entityId}`);
-
-// After relationship change
-revalidateTag(`entity-${sourceId}`);
-revalidateTag(`entity-${targetId}`);
-revalidateTag('relationships');
-```
-
-### Cascade Invalidation
-
-To invalidate related resources:
-
-```typescript
-async function updateEntity(id: string, data: EntityData) {
-  await saveEntity(id, data);
-
-  // Invalidate entity page
-  revalidateTag(`entity-${id}`);
-
-  // Invalidate list pages
-  revalidateTag('entities');
-
-  // Invalidate related pages
-  const relationships = await getEntityRelationships(id);
-  for (const rel of relationships) {
-    revalidateTag(`entity-${rel.targetId}`);
-  }
-}
-```
-
-### Batch Invalidation
-
-To invalidate multiple resources efficiently:
-
-```typescript
-async function bulkUpdateEntities(updates: EntityUpdate[]) {
-  await saveBulkUpdates(updates);
-
-  // Collect unique tags
-  const tags = new Set<string>(['entities']);
-  for (const update of updates) {
-    tags.add(`entity-${update.id}`);
-  }
-
-  // Revalidate all at once
-  for (const tag of tags) {
-    revalidateTag(tag);
-  }
-}
-```
-
-## Performance Optimization
-
-### Stale-While-Revalidate
-
-To implement SWR pattern:
-
-```typescript
-export const revalidate = 60; // Revalidate every minute
-export const dynamic = 'force-static'; // Serve stale while revalidating
-```
-
-### Parallel Data Fetching
-
-To fetch data in parallel:
-
-```typescript
-export default async function EntityPage({ params }: { params: { id: string } }) {
-  const [entity, relationships, timeline] = await Promise.all([
-    fetchEntity(params.id),
-    fetchRelationships(params.id),
-    fetchTimeline(params.id),
-  ]);
-
-  return <EntityDetailView entity={entity} relationships={relationships} timeline={timeline} />;
-}
-```
-
-### Selective Streaming
-
-To stream only slow components:
-
-```typescript
-export default function EntityPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <EntityHeader id={params.id} /> {/* Fast, no streaming */}
-      <Suspense fallback={<RelationshipsSkeleton />}>
-        <EntityRelationships id={params.id} /> {/* Slow, stream it */}
-      </Suspense>
-    </div>
-  );
-}
-```
-
-## Monitoring and Testing
-
-To monitor cache performance:
-
-1. **Cache Hit Rates**: Track ISR cache hits vs. regenerations
-2. **Revalidation Frequency**: Monitor how often pages regenerate
-3. **Response Times**: Measure time to first byte (TTFB)
-4. **Stale Serving**: Track stale-while-revalidate occurrences
-
-Use Next.js analytics or custom logging:
-
-```typescript
-// middleware.ts
-export function middleware(request: NextRequest) {
-  const start = Date.now();
-
-  return NextResponse.next({
-    headers: {
-      'x-response-time': `${Date.now() - start}ms`,
-    },
-  });
-}
-```
-
-## Best Practices
-
-1. **Start Conservative**: Begin with shorter revalidation intervals, increase gradually
-2. **Use Cache Tags**: Prefer tag-based invalidation over path-based
-3. **Monitor Performance**: Track cache hit rates and response times
-4. **Plan Invalidation**: Design invalidation strategy with data mutations
-5. **Test Edge Cases**: Verify behavior with stale data and revalidation
-6. **Document Decisions**: Record why specific intervals were chosen
-7. **Consider Users**: Balance freshness with performance
-
-## Troubleshooting
-
-Common issues:
-
-- **Stale Data Persisting**: Check cache tag implementation and invalidation logic
-- **Excessive Regeneration**: Increase revalidation interval or fix trigger-happy invalidation
-- **Slow Page Loads**: Add streaming for slow components
-- **Cache Not Working**: Verify fetch options and dynamic/static configuration
-- **Development vs Production**: Remember ISR only works in production builds
+## Financial Sustainability Principles
+
+When addressing NHS financial challenges:
+
+1. **Focus on value, not just cost**: Interventions should improve outcomes per pound spent
+2. **Prioritise prevention**: Upstream investment reduces downstream acute costs
+3. **Reduce unwarranted variation**: Use GIRFT data to identify efficiency opportunities
+4. **Enable productivity**: Digital, workforce redesign, and pathway optimisation
+5. **System-level thinking**: Avoid cost-shunting between organisations
+
+Reference GIRFT specialty reports, Model Hospital benchmarking, and National Cost Collection data for evidence.
+
+## Quality Standards
+
+All outputs should demonstrate:
+
+| Criterion | Standard |
+|-----------|----------|
+| Strategic clarity | Vision well-articulated, compelling, logically structured |
+| Implementation realism | Achievable within NHS resource and cultural constraints |
+| Financial impact | Measurable efficiency gains while maintaining care quality |
+| Evidence base | Draws from NHS policy, academic literature, and best practice |
+| Stakeholder awareness | Tailored language and focus for intended audience |
+
+## Reference Files
+
+This skill includes three reference files. **Read the appropriate file before starting work.**
+
+### `references/templates.md` — ALWAYS READ FIRST for document creation
+
+**Before creating any of these outputs, read `references/templates.md` to get the exact template structure:**
+
+| Output Type | Template in File |
+|-------------|------------------|
+| Executive summary | "Executive Summary Template (1 Page)" |
+| Case for change | "Case for Change Template" |
+| Benefits plan | "Benefits Realisation Plan Template" |
+| Stakeholder analysis | "Stakeholder Analysis Template" |
+| Risk register | "Risk Register Template" |
+| Quick wins plan | "90-Day Quick Wins Plan" |
+| Board paper | "Board Paper Template" |
+| PDSA documentation | "PDSA Cycle Template" |
+
+**Workflow:**
+1. User requests a document → Identify which template applies
+2. **Read `references/templates.md`** → Find and study the relevant template
+3. Adapt the template structure to the specific context
+4. Populate with content from user input and knowledge base
+5. Present the completed document
+
+### `references/nhs-knowledge-base.md` — Read for policy context and evidence
+
+Read this file when you need:
+- NHS policy details and official source URLs
+- Financial framework specifics (tariff, efficiency targets, think tank analysis)
+- Change management framework details beyond the summaries in SKILL.md
+- Implementation science frameworks (CFIR, NPT, RE-AIM)
+- Case study evidence and lessons learned
+- Links to current guidance repositories
+
+### `references/evaluation-framework.md` — Read before evaluating outputs
+
+Read this file when:
+- User requests evaluation of completed work
+- You need the detailed rating rubric (6-10 scale with descriptors)
+- You need the evaluation table format
+- You need the post-evaluation improvement options list
+
+## Interaction Approach
+
+1. **Clarify first**: Ask targeted questions to understand context before generating content
+2. **Iterate collaboratively**: Offer options for refinement after each output
+3. **Provide rationale**: Explain the evidence and policy basis for recommendations
+4. **Acknowledge constraints**: Be realistic about NHS operational realities
+5. **Offer evaluation**: After completing work, offer to evaluate against quality criteria
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
