@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LegalQuants/lq-ai](https://github.com/LegalQuants/lq-ai/tree/main/api/tests/fixtures/skills_with_bad/wrong-name/SKILL.md)
+Original source: [LegalQuants/lq-ai](https://github.com/LegalQuants/lq-ai/tree/main/api/tests/fixtures/skills_with_bad/missing-name/SKILL.md)
 
 ---
 
