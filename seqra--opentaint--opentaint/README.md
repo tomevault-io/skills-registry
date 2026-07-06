@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [seqra/opentaint](https://github.com/seqra/opentaint/tree/main/skills/triage-dependencies/SKILL.md)
+Original source: [seqra/opentaint](https://github.com/seqra/opentaint/tree/main/skills/create-test-project/SKILL.md)
 
 ---
 
