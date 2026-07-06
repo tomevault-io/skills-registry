@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Owl-Listener/ai-design-skills](https://github.com/Owl-Listener/ai-design-skills/tree/main/gemini-extension/model-interaction-design/skills/mixed-initiative-flow/SKILL.md)
+Original source: [Owl-Listener/ai-design-skills](https://github.com/Owl-Listener/ai-design-skills/tree/main/gemini-extension/system-behavior-shaping/skills/behavioral-consistency/SKILL.md)
 
 ---
 
