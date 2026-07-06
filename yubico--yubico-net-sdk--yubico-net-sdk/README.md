@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [Yubico/Yubico.NET.SDK](https://github.com/Yubico/Yubico.NET.SDK/tree/main/.claude/skills/Release/SKILL.md)
+Original source: [Yubico/Yubico.NET.SDK](https://github.com/Yubico/Yubico.NET.SDK/tree/main/.claude/skills/DocsAudit/SKILL.md)
 
 ---
 
