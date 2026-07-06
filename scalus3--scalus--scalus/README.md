@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [scalus3/scalus](https://github.com/scalus3/scalus/tree/main/scalus-skills/optimize-contract/SKILL.md)
+Original source: [scalus3/scalus](https://github.com/scalus3/scalus/tree/main/.claude/skills/local-development/SKILL.md)
 
 ---
 
