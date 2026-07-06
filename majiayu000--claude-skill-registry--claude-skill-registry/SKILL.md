@@ -1,376 +1,357 @@
 ---
-name: milestone-management
-description: Use for time-based grouping of issues into delivery phases. Creates, updates, and tracks milestones, associates issues and epics, monitors progress toward milestone completion. Use when this capability is needed.
+name: quick-analyzer-agent
+description: Fast ticker analysis for /analysis page. Provides quick BUY/SELL/HOLD recommendations based on technical indicators, recent news, and basic fundamentals within seconds. Optimized for speed over depth. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Milestone Management
+# Quick Analyzer Agent - 빠른 티커 분석
 
-## Overview
+## Role
+`/analysis` 페이지에서 사용자가 티커를 입력하면 **5초 이내**에 BUY/SELL/HOLD 추천을 제공합니다. 속도를 위해 핵심 지표만 분석합니다.
 
-**Milestones** group issues by delivery phase or time period. They answer "what will be done by when?"
+## Core Capabilities
 
-**Core principle:** Milestones are delivery commitments. Track them closely.
+### 1. Fast Technical Analysis
 
-**Announce at start:** "I'm using milestone-management to organize work into delivery phases."
+#### Price Action
+- **Moving Averages**: MA20, MA50 교차 확인
+- **Trend**: 상승/하락/횡보 판단
+- **Support/Resistance**: 주요 가격대
 
-## What is a Milestone?
+#### Momentum Indicators
+- **RSI (14일)**: 과매수(>70), 과매도(<30) 
+- **MACD**: 골든크로스/데드크로스
+- **Volume**: 거래량 증가/감소 패턴
 
-A milestone is:
-- A GitHub milestone with a title, description, and optional due date
-- A collection of issues and epics targeting that delivery phase
-- A progress tracker showing completion percentage
+### 2. Recent News Scan (Last 7 Days)
 
-## Milestone vs Epic
+```python
+# News sentiment aggregation
+news_articles = get_recent_news(ticker, days=7)
 
-| Aspect | Milestone | Epic |
-|--------|-----------|------|
-| **Grouping by** | Time/delivery phase | Feature/capability |
-| **Scope** | Cross-cutting | Focused |
-| **Can contain** | Multiple epics | Related issues |
-| **Progress** | % of issues closed | % of issues closed |
-| **Due date** | Usually has one | Usually doesn't |
+avg_sentiment = sum(a.sentiment_score for a in news_articles) / len(news_articles)
 
-An epic can be assigned to a milestone. Multiple epics can share a milestone.
-
-## Creating a Milestone
-
-### Via GitHub CLI
-
-```bash
-# Create milestone with due date
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones \
-  -X POST \
-  -f title="[NAME]" \
-  -f description="[DESCRIPTION]" \
-  -f due_on="YYYY-MM-DDTHH:MM:SSZ"
-
-# Create milestone without due date
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones \
-  -X POST \
-  -f title="[NAME]" \
-  -f description="[DESCRIPTION]"
+positive_ratio = len([a for a in news_articles if a.sentiment_score > 0.3]) / len(news_articles)
 ```
 
-### Milestone Naming Conventions
+#### News Signals
+- **Very Positive** (avg > 0.6): 강한 호재
+- **Positive** (avg > 0.3): 긍정적
+- **Neutral** (avg -0.3 to 0.3): 중립
+- **Negative** (avg < -0.3): 부정적
+- **Very Negative** (avg < -0.6): 강한 악재
 
-| Pattern | Example | Use Case |
-|---------|---------|----------|
-| Version | `v1.0.0` | Release milestones |
-| Quarter | `Q1 2026` | Quarterly planning |
-| Phase | `Phase 1: Foundation` | Initiative phases |
-| Sprint | `Sprint 23` | Agile sprints |
-| Date | `2026-01 January` | Monthly releases |
+### 3. Basic Fundamental Check
 
-### Milestone Description Template
+#### Valuation
+- **P/E Ratio**: 현재 vs 업종 평균
+- **P/B Ratio**: 자산 가치 대비
+- **Quick Check**: 과대/적정/저평가
 
-```markdown
-## [MILESTONE NAME]
+#### Recent Earnings
+- **Beat/Miss**: 최근 분기 실적
+- **Surprise %**: 컨센서스 대비
 
-### Goals
-- [Primary goal 1]
-- [Primary goal 2]
-
-### Epics Included
-- #[EPIC_1] - [Epic Title]
-- #[EPIC_2] - [Epic Title]
-
-### Key Deliverables
-1. [Deliverable 1]
-2. [Deliverable 2]
-3. [Deliverable 3]
-
-### Success Criteria
-- [ ] [Criterion 1]
-- [ ] [Criterion 2]
-
-### Dependencies
-- Requires: [Previous milestone or external dependency]
-- Enables: [What this milestone unblocks]
-
----
-**Target Date:** [DATE]
-**Owner:** [Team/Person]
-```
-
-## Assigning Issues to Milestones
-
-### Assign During Creation
-
-```bash
-gh issue create \
-  --title "[Title]" \
-  --milestone "[MILESTONE_NAME]" \
-  --body "[Body]"
-```
-
-### Assign Existing Issue
-
-```bash
-gh issue edit [ISSUE_NUMBER] --milestone "[MILESTONE_NAME]"
-```
-
-### Assign Epic to Milestone
-
-```bash
-# Assign the epic tracking issue
-gh issue edit [EPIC_NUMBER] --milestone "[MILESTONE_NAME]"
-
-# Assign all issues in the epic
-gh issue list --label "epic-[NAME]" --json number --jq '.[].number' | \
-  while read num; do
-    gh issue edit "$num" --milestone "[MILESTONE_NAME]"
-  done
-```
-
-## Tracking Milestone Progress
-
-### View Milestone Status
-
-```bash
-# List milestones with progress
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones \
-  --jq '.[] | "\(.title): \(.open_issues) open, \(.closed_issues) closed"'
-
-# Get specific milestone details
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones/[NUMBER] \
-  --jq '{title, open_issues, closed_issues, due_on, description}'
-```
-
-### List Issues in Milestone
-
-```bash
-# All issues in milestone
-gh issue list --milestone "[MILESTONE_NAME]"
-
-# Open issues in milestone
-gh issue list --milestone "[MILESTONE_NAME]" --state open
-
-# Closed issues in milestone
-gh issue list --milestone "[MILESTONE_NAME]" --state closed
-```
-
-### Progress Report
-
-Generate a progress report:
-
-```bash
-# Get milestone data
-MILESTONE_DATA=$(gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones/[NUMBER])
-
-TITLE=$(echo "$MILESTONE_DATA" | jq -r '.title')
-OPEN=$(echo "$MILESTONE_DATA" | jq -r '.open_issues')
-CLOSED=$(echo "$MILESTONE_DATA" | jq -r '.closed_issues')
-TOTAL=$((OPEN + CLOSED))
-PERCENT=$((CLOSED * 100 / TOTAL))
-DUE=$(echo "$MILESTONE_DATA" | jq -r '.due_on')
-
-echo "## Milestone: $TITLE"
-echo "**Progress:** $CLOSED / $TOTAL ($PERCENT%)"
-echo "**Open:** $OPEN issues"
-echo "**Due:** $DUE"
-```
-
-## Milestone Lifecycle
+## Decision Framework
 
 ```
-┌────────────┐     ┌────────────┐     ┌────────────┐     ┌────────────┐
-│  Planning  │────▶│   Active   │────▶│  Closing   │────▶│   Closed   │
-└────────────┘     └────────────┘     └────────────┘     └────────────┘
-     │                   │                   │                  │
-     ▼                   ▼                   ▼                  ▼
-  Adding              Work in            Finishing         All issues
-  issues              progress           last items        resolved
+Step 1: Technical Analysis
+  score_technical = 0
+  
+  IF MA20 > MA50:
+    score_technical += 2
+  
+  IF RSI in [30, 70]:
+    score_technical += 1
+  ELIF RSI < 30:
+    score_technical += 3  # Oversold
+  ELIF RSI > 70:
+    score_technical -= 3  # Overbought
+  
+  IF Volume > avg_volume * 1.5:
+    score_technical += 1
+
+Step 2: News Analysis
+  score_news = 0
+  
+  IF avg_sentiment > 0.6:
+    score_news += 3
+  ELIF avg_sentiment > 0.3:
+    score_news += 2
+  ELIF avg_sentiment < -0.3:
+    score_news -= 2
+  ELIF avg_sentiment < -0.6:
+    score_news -= 3
+
+Step 3: Fundamental Check
+  score_fundamental = 0
+  
+  IF P/E < industry_avg * 0.8:
+    score_fundamental += 2  # Undervalued
+  ELIF P/E > industry_avg * 1.2:
+    score_fundamental -= 2  # Overvalued
+  
+  IF recent_earnings == 'BEAT':
+    score_fundamental += 2
+
+Step 4: Final Decision
+  total_score = score_technical + score_news + score_fundamental
+  
+  IF total_score >= 5:
+    action = "BUY"
+    confidence = min(0.9, 0.6 + total_score * 0.05)
+  
+  ELIF total_score <= -5:
+    action = "SELL"
+    confidence = min(0.9, 0.6 + abs(total_score) * 0.05)
+  
+  ELSE:
+    action = "HOLD"
+    confidence = 0.5 + abs(total_score) * 0.03
 ```
 
-### Milestone States
+## Output Format
 
-| State | Indicators |
-|-------|------------|
-| Planning | Issues being added, 0% complete |
-| Active | Work in progress, 1-80% complete |
-| Closing | Final stretch, 80-99% complete |
-| Closed | 100% complete, milestone closed |
-
-## Updating Milestones
-
-### Update Description/Due Date
-
-```bash
-# Update due date
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones/[NUMBER] \
-  -X PATCH \
-  -f due_on="YYYY-MM-DDTHH:MM:SSZ"
-
-# Update description
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones/[NUMBER] \
-  -X PATCH \
-  -f description="[NEW_DESCRIPTION]"
+```json
+{
+  "ticker": "AAPL",
+  "action": "BUY",
+  "confidence": 0.75,
+  "reasoning": "기술적 골든크로스 (MA20 > MA50), 최근 뉴스 긍정적 (sentiment +0.6), 업종 대비 저평가 (P/E 25 vs 28)",
+  "analysis_time_ms": 3200,
+  "price_info": {
+    "current": 197.50,
+    "change_1d_pct": 0.024,
+    "change_1w_pct": 0.058,
+    "ma20": 195.00,
+    "ma50": 192.00,
+    "ma200": 185.00,
+    "support_level": 190.00,
+    "resistance_level": 205.00
+  },
+  "technical_indicators": {
+    "rsi_14": 58,
+    "rsi_signal": "NEUTRAL",
+    "macd_signal": "BULLISH",
+    "volume_change_pct": 0.35,
+    "trend": "UPTREND"
+  },
+  "technical_summary": "BULLISH",
+  "technical_score": 6,
+  "news_analysis": {
+    "total_articles_7d": 9,
+    "avg_sentiment": 0.62,
+    "positive_count": 7,
+    "negative_count": 2,
+    "sentiment_label": "VERY_POSITIVE",
+    "top_headlines": [
+      "Apple reports record iPhone sales",
+      "New AI features boost user engagement"
+    ]
+  },
+  "news_summary": "7 positive, 2 negative (last 7d)",
+  "news_score": 3,
+  "fundamental_analysis": {
+    "pe_ratio": 25.3,
+    "industry_avg_pe": 28.0,
+    "pe_relative": 0.904,
+    "valuation": "UNDERVALUED",
+    "pb_ratio": 42.5,
+    "recent_earnings": "BEAT",
+    "earnings_surprise_pct": 0.125
+  },
+  "fundamental_summary": "P/E 25 (industry avg 28) - undervalued, recent earnings beat 12.5%",
+  "fundamental_score": 4,
+  "total_score": 13,
+  "risk_factors": [
+    "Potential profit-taking at resistance $205",
+    "Tech sector rotation risk"
+  ],
+  "next_review_date": "2025-12-28"
+}
 ```
 
-### Close a Milestone
+## Examples
 
-```bash
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones/[NUMBER] \
-  -X PATCH \
-  -f state="closed"
+**Example 1**: Strong BUY Signal
+```
+Input:
+- Ticker: NVDA
+- Price: $520
+- MA20: $510, MA50: $490 (골든크로스)
+- RSI: 55
+- News: 8 positive, 1 negative (avg +0.7)
+- P/E: 45 (industry 52) - 저평가
+- Recent Earnings: Beat 15%
+
+Calculation:
+- Technical Score: +6 (MA골든+2, RSI중립+1, Volume+1, Trend+2)
+- News Score: +3 (매우 긍정)
+- Fundamental Score: +4 (저평가+2, Beat+2)
+- Total: 13
+
+Output:
+- Action: BUY
+- Confidence: 0.85
+- Reasoning: "강한 기술적 신호 + 긍정적 뉴스 + 저평가"
 ```
 
-## Milestone Planning Patterns
+**Example 2**: SELL Signal
+```
+Input:
+- Ticker: XYZ
+- MA20 < MA50 (데드크로스)
+- RSI: 78 (과매수)
+- News: 2 positive, 7 negative (avg -0.5)
+- P/E: 85 (industry 40) - 고평가
 
-### Initiative Phases
+Calculation:
+- Technical Score: -4 (데드크로스-2, 과매수-3, 정상볼륨+1)
+- News Score: -2 (부정)
+- Fundamental Score: -2 (고평가)
+- Total: -8
 
-For large initiatives, create phase milestones:
-
-```bash
-# Phase 1: Foundation
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones -X POST \
-  -f title="[Initiative] Phase 1: Foundation" \
-  -f description="Infrastructure and setup for [Initiative Name]"
-
-# Phase 2: Core Features
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones -X POST \
-  -f title="[Initiative] Phase 2: Core Features" \
-  -f description="Primary feature implementation"
-
-# Phase 3: Polish & Launch
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones -X POST \
-  -f title="[Initiative] Phase 3: Polish & Launch" \
-  -f description="Final testing, polish, and release"
+Output:
+- Action: SELL
+- Confidence: 0.80
+- Reasoning: "기술적 약세 + 부정 뉴스 + 고평가"
 ```
 
-### Release Milestones
+**Example 3**: HOLD Signal
+```
+Input:
+- Ticker: MSFT
+- MA20 ≈ MA50 (횡보)
+- RSI: 52
+- News: 4 positive, 3 negative (avg +0.1)
+- P/E: 30 (industry 30) - 적정
 
-For version-based releases:
+Calculation:
+- Technical Score: +1
+- News Score: 0
+- Fundamental Score: 0
+- Total: 1
 
-```bash
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones -X POST \
-  -f title="v2.0.0" \
-  -f description="Major release with [features]" \
-  -f due_on="2026-03-01T00:00:00Z"
+Output:
+- Action: HOLD
+- Confidence: 0.55
+- Reasoning: "명확한 방향성 부재, 관망 추천"
 ```
 
-### Quarterly Milestones
+## Guidelines
 
-For quarterly planning:
+### Do's ✅
+- **Speed First**: 5초 이내 응답 (복잡한 분석 지양)
+- **핵심 지표만**: RSI, MA, P/E, News Sentiment
+- **명확한 신호**: 강한 BUY/SELL만, 애매하면 HOLD
+- **Risk Factors 포함**: 주요 리스크 1-2개 언급
 
-```bash
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones -X POST \
-  -f title="Q1 2026" \
-  -f description="Q1 2026 deliverables" \
-  -f due_on="2026-03-31T23:59:59Z"
+### Don'ts ❌
+- 과도한 분석 금지 (Deep Reasoning Agent 역할 아님)
+- 복잡한 모델 사용 금지 (속도 저하)
+- 모호한 표현 금지 ("maybe", "possibly")
+- 100% 확신 금지 (confidence 최대 0.90)
+
+## Integration
+
+### API Endpoint
+
+```python
+from fastapi import APIRouter, HTTPException
+from backend.ai.skills.base_agent import AnalysisSkillAgent
+
+router = APIRouter()
+
+@router.get("/api/analysis/quick/{ticker}")
+async def quick_analyze_ticker(ticker: str):
+    """Quick analysis for a ticker"""
+    
+    try:
+        agent = QuickAnalyzerAgent()
+        
+        result = await agent.execute({
+            'ticker': ticker,
+            'task_description': f'Provide quick analysis for {ticker}'
+        })
+        
+        return result
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 ```
 
-## Handling Slippage
+### Data Sources
 
-When issues won't make a milestone:
+```python
+from backend.data.yahoo_client import YahooClient
+from backend.database.models import NewsArticle
+from sqlalchemy.orm import Session
 
-### Option 1: Move to Next Milestone
-
-```bash
-gh issue edit [ISSUE_NUMBER] --milestone "[NEXT_MILESTONE]"
+async def gather_quick_data(ticker: str, db: Session) -> Dict:
+    """Gather data for quick analysis"""
+    
+    yahoo = YahooClient()
+    
+    # Price data
+    price_data = yahoo.get_current_price(ticker)
+    
+    # Technical indicators
+    tech_data = yahoo.get_technical_indicators(ticker)
+    
+    # News (last 7 days)
+    news = db.query(NewsArticle).filter(
+        NewsArticle.ticker == ticker,
+        NewsArticle.created_at >= datetime.now() - timedelta(days=7)
+    ).all()
+    
+    # Basic fundamentals
+    fundamentals = yahoo.get_key_stats(ticker)
+    
+    return {
+        'price': price_data,
+        'technical': tech_data,
+        'news': news,
+        'fundamentals': fundamentals
+    }
 ```
 
-### Option 2: Extend Milestone
+## Performance Metrics
 
-```bash
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones/[NUMBER] \
-  -X PATCH \
-  -f due_on="[NEW_DATE]"
+- **Response Time**: 목표 < 5초 (평균 3초)
+- **Accuracy**: > 60% (빠른 분석이므로 Deep Reasoning보다 낮음)
+- **User Satisfaction**: > 4/5 (속도 중요)
+- **Cache Hit Rate**: > 70% (동일 ticker 5분 내 재조회 시)
+
+## Caching Strategy
+
+```python
+from functools import lru_cache
+from time import time
+
+# 5분 TTL cache
+@lru_cache(maxsize=100)
+def cached_quick_analysis(ticker: str, timestamp: int) -> Dict:
+    """Cache analysis for 5 minutes"""
+    # timestamp rounded to 5 minutes
+    return perform_quick_analysis(ticker)
+
+# Usage
+current_5min_slot = int(time() // 300)
+result = cached_quick_analysis(ticker, current_5min_slot)
 ```
 
-### Option 3: Reduce Scope
+## Comparison with Other Agents
 
-Move non-critical issues out:
+| Agent | Speed | Depth | Use Case |
+|-------|-------|-------|----------|
+| Quick Analyzer | ⭐⭐⭐ 5s | ⭐ Basic | 빠른 확인 |
+| Deep Reasoning | ⭐ 30s | ⭐⭐⭐ Deep | 중요한 결정 |
+| War Room | ⭐⭐ 15s | ⭐⭐ Medium | 합의 기반 |
 
-```bash
-# Remove from milestone (set to no milestone)
-gh issue edit [ISSUE_NUMBER] --milestone ""
-```
+## Version History
 
-### Document Slippage
-
-```bash
-gh issue comment [EPIC_OR_INITIATIVE] --body "## Milestone Update
-
-**Milestone:** [NAME]
-**Original Due:** [DATE]
-**Status:** At risk
-
-**Issues slipping:**
-- #[N] - [Reason]
-- #[N] - [Reason]
-
-**Action taken:**
-- [Moved X issues to next milestone]
-- [Extended deadline by Y days]
-- [Descoped Z items]"
-```
-
-## Milestone Reports
-
-### Weekly Status Report
-
-```markdown
-## Milestone Status Report - [DATE]
-
-### [MILESTONE 1]
-- **Progress:** 12/20 (60%)
-- **Due:** [DATE]
-- **Status:** 🟢 On Track
-- **Blockers:** None
-
-### [MILESTONE 2]
-- **Progress:** 3/15 (20%)
-- **Due:** [DATE]
-- **Status:** 🟡 At Risk
-- **Blockers:** Waiting on #123
-
-### [MILESTONE 3]
-- **Progress:** 0/10 (0%)
-- **Due:** [DATE]
-- **Status:** ⚪ Not Started
-- **Blockers:** Depends on Milestone 2
-```
-
-### Generate Report Script
-
-```bash
-echo "# Milestone Status Report - $(date +%Y-%m-%d)"
-echo ""
-
-gh api repos/$GITHUB_OWNER/$GITHUB_REPO/milestones --jq '.[] |
-  "## \(.title)\n- **Progress:** \(.closed_issues)/\(.open_issues + .closed_issues)\n- **Due:** \(.due_on // "No due date")\n"'
-```
-
-## Memory Integration
-
-```bash
-mcp__memory__create_entities([{
-  "name": "Milestone-[NAME]",
-  "entityType": "Milestone",
-  "observations": [
-    "Created: [DATE]",
-    "Due: [DATE]",
-    "Repository: $GITHUB_REPO",
-    "Epics: [LIST]",
-    "Issues: [COUNT]",
-    "Status: [Planning/Active/Closed]"
-  ]
-}])
-```
-
-## Checklist
-
-- [ ] Created milestone with clear name
-- [ ] Added description with goals
-- [ ] Set due date (if applicable)
-- [ ] Assigned epics to milestone
-- [ ] Assigned issues to milestone
-- [ ] Documented in initiative (if applicable)
-- [ ] Set up progress tracking
-- [ ] Stored in knowledge graph
+- **v1.0** (2025-12-21): Initial release with 5-second target response time
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
