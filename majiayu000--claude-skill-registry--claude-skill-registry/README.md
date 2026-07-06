@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/workflow/levn-ln-710-dependency-upgrader-boisenoise-skills-collections-2/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/writing/3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f-onurkanbakirci-awesome-skil/SKILL.md)
 
 ---
 
