@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [blackwell-systems/agent-lsp](https://github.com/blackwell-systems/agent-lsp/tree/main/skills/lsp-extract-function/SKILL.md)
+Original source: [blackwell-systems/agent-lsp](https://github.com/blackwell-systems/agent-lsp/tree/main/skills/lsp-test-correlation/SKILL.md)
 
 ---
 
