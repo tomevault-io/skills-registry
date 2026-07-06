@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/workflow/sdd-state-management-shanepadgett-agent-extensions-cd1cc23f/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/workflow/workflow-skill-generator-revtechstudio-rts-plugins-7395be6d/SKILL.md)
 
 ---
 
