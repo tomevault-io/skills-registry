@@ -1,330 +1,306 @@
 ---
-name: medallion-architecture
-description: Bronze/Silver/Gold layer design patterns and templates for building scalable data lakehouse architectures. Includes incremental processing, data quality checks, and optimization strategies. Use when this capability is needed.
+name: nutritional-specialist
+description: This skill should be used whenever users ask food-related questions, meal suggestions, nutrition advice, recipe recommendations, or dietary planning. On first use, the skill collects comprehensive user preferences (allergies, dietary restrictions, goals, likes/dislikes) and stores them in a persistent database. All subsequent food-related responses are personalized based on these stored preferences. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Medallion Architecture Skill
+# Nutritional Specialist
 
 ## Overview
 
-The medallion architecture (also called multi-hop architecture) is a design pattern for organizing data in a lakehouse using three progressive layers:
-
-- **Bronze (Raw)**: Ingested data in its original format
-- **Silver (Refined)**: Cleansed and conformed data
-- **Gold (Curated)**: Business-level aggregates and features
+This skill transforms Claude into a personalized nutritional advisor by maintaining a persistent database of user food preferences, allergies, goals, and dietary restrictions. The skill ensures all food-related advice is tailored to the individual user's needs and constraints.
 
 ## When to Use This Skill
 
-Use this skill when you need to:
-- Design a new data pipeline with proper layering
-- Migrate from traditional ETL to lakehouse architecture
-- Implement incremental processing patterns
-- Build a scalable data platform
-- Ensure data quality at each layer
+Invoke this skill for any food-related query, including:
+- Meal planning and suggestions
+- Recipe recommendations
+- Nutritional advice and information
+- Dietary planning for specific goals (weight loss, muscle gain, etc.)
+- Food substitution ideas
+- Restaurant recommendations
+- Grocery shopping lists
+- Cooking tips and techniques
 
-## Architecture Principles
+## Workflow
 
-### 1. Bronze Layer (Raw)
-**Purpose**: Store raw data exactly as received from source systems
+### Step 1: Check for Existing Preferences
 
-**Characteristics:**
-- Immutable historical record
-- Schema-on-read approach
-- Metadata enrichment (_ingested_at, _source_file)
-- Minimal transformations
-- Full audit trail
+Before providing any food-related advice, always check if user preferences exist:
 
-**Use Cases:**
-- Data recovery
-- Reprocessing requirements
-- Audit compliance
-- Debugging data issues
-
-### 2. Silver Layer (Refined)
-**Purpose**: Cleansed, validated, and standardized data
-
-**Characteristics:**
-- Schema enforcement
-- Data quality checks
-- Deduplication
-- Standardization
-- Type conversions
-- Business rules applied
-
-**Use Cases:**
-- Downstream analytics
-- Feature engineering
-- Data science modeling
-- Operational reporting
-
-### 3. Gold Layer (Curated)
-**Purpose**: Business-level aggregates optimized for consumption
-
-**Characteristics:**
-- Highly aggregated
-- Optimized for queries
-- Business KPIs
-- Feature tables
-- Production-ready datasets
-
-**Use Cases:**
-- Dashboards and BI
-- ML model serving
-- Real-time applications
-- Executive reporting
-
-## Implementation Patterns
-
-### Pattern 1: Batch Processing
-
-**Bronze Layer:**
-```python
-def ingest_to_bronze(source_path: str, target_table: str):
-    """Ingest raw data to Bronze layer."""
-    df = (spark.read
-        .format("cloudFiles")
-        .option("cloudFiles.format", "parquet")
-        .load(source_path)
-        .withColumn("_ingested_at", current_timestamp())
-        .withColumn("_source_file", input_file_name())
-    )
-    
-    (df.write
-        .format("delta")
-        .mode("append")
-        .option("mergeSchema", "true")
-        .saveAsTable(target_table)
-    )
+```bash
+python3 scripts/preferences_manager.py has
 ```
 
-**Silver Layer:**
-```python
-def process_to_silver(bronze_table: str, silver_table: str):
-    """Transform Bronze to Silver with quality checks."""
-    bronze_df = spark.read.table(bronze_table)
-    
-    silver_df = (bronze_df
-        .dropDuplicates(["id"])
-        .filter(col("id").isNotNull())
-        .withColumn("email", lower(trim(col("email"))))
-        .withColumn("created_date", to_date(col("created_at")))
-        .withColumn("quality_score", 
-            when(col("email").rlike(r"^[\w\.-]+@[\w\.-]+\.\w+$"), 1.0)
-            .otherwise(0.5)
-        )
-    )
-    
-    (silver_df.write
-        .format("delta")
-        .mode("overwrite")
-        .saveAsTable(silver_table)
-    )
+If the output is "false", proceed to Step 2 (Initial Setup). If "true", proceed to Step 3 (Load Preferences).
+
+### Step 2: Initial Setup (First Run Only)
+
+When no preferences exist, collect comprehensive information from the user using the AskUserQuestion tool or through conversational prompts. Gather the following information:
+
+**Essential Information:**
+1. **Dietary Goals**: What are the primary nutritional or health goals? (e.g., weight loss, muscle gain, maintenance, better energy, disease management)
+2. **Allergies**: Any food allergies that must be strictly avoided?
+3. **Dietary Restrictions**: Any dietary restrictions or philosophies? (vegetarian, vegan, halal, kosher, low-carb, keto, paleo, etc.)
+4. **Dislikes**: Foods or ingredients strongly disliked
+5. **Preferences**: Favorite foods, cuisines, or ingredients
+
+**Optional Information:**
+6. **Health Conditions**: Any health conditions affecting diet? (diabetes, hypertension, IBS, celiac, etc.)
+7. **Cuisine Preferences**: Preferred or avoided cuisines
+8. **Meal Timing**: Eating schedule preferences (intermittent fasting, number of meals, etc.)
+9. **Cooking Skill Level**: Beginner, intermediate, or advanced
+10. **Budget Considerations**: Any budget constraints
+11. **Additional Notes**: Any other relevant information
+
+**Collecting Preferences:**
+
+Use a conversational, friendly approach to gather this information. Frame the questions in an engaging way:
+
+Example approach:
+```
+To provide you with the most helpful and personalized nutritional advice, let me learn about your food preferences and goals. This will help me tailor all my recommendations specifically to you.
+
+Let's start with the essentials:
+1. What are your main dietary or health goals?
+2. Do you have any food allergies I should be aware of?
+3. Do you follow any dietary restrictions or philosophies?
+4. Are there any foods you really dislike?
+5. What are some of your favorite foods or cuisines?
 ```
 
-**Gold Layer:**
-```python
-def aggregate_to_gold(silver_table: str, gold_table: str):
-    """Aggregate Silver to Gold business metrics."""
-    silver_df = spark.read.table(silver_table)
-    
-    gold_df = (silver_df
-        .groupBy("customer_segment", "region")
-        .agg(
-            count("*").alias("customer_count"),
-            sum("lifetime_value").alias("total_ltv"),
-            avg("quality_score").alias("avg_quality")
-        )
-        .withColumn("updated_at", current_timestamp())
-    )
-    
-    (gold_df.write
-        .format("delta")
-        .mode("overwrite")
-        .saveAsTable(gold_table)
-    )
-```
+After collecting the information, save it using the preferences manager script:
 
-### Pattern 2: Incremental Processing
-
-**Bronze (Streaming):**
 ```python
-(spark.readStream
-    .format("cloudFiles")
-    .option("cloudFiles.format", "json")
-    .load(source_path)
-    .withColumn("_ingested_at", current_timestamp())
-    .writeStream
-    .format("delta")
-    .option("checkpointLocation", checkpoint_path)
-    .trigger(availableNow=True)
-    .toTable(bronze_table)
+import json
+import subprocess
+
+preferences = {
+    "goals": ["list", "of", "goals"],
+    "allergies": ["list", "of", "allergies"],
+    "dietary_restrictions": ["vegetarian", "gluten-free"],
+    "dislikes": ["list", "of", "dislikes"],
+    "food_preferences": ["favorite", "foods"],
+    "health_conditions": ["if", "any"],
+    "cuisine_preferences": ["preferred", "cuisines"],
+    "meal_timing": "description of meal timing preferences",
+    "cooking_skill": "beginner/intermediate/advanced",
+    "budget": "budget constraints if any",
+    "notes": "any additional notes"
+}
+
+# Save using Python's subprocess
+import subprocess
+result = subprocess.run(
+    ["python3", "scripts/preferences_manager.py", "set"],
+    input=json.dumps(preferences),
+    capture_output=True,
+    text=True,
+    cwd="[SKILL_DIR]"
 )
 ```
 
-**Silver (Incremental Merge):**
-```python
-from delta.tables import DeltaTable
-
-def incremental_silver_merge(bronze_table: str, silver_table: str, watermark: str):
-    """Incrementally merge new Bronze data into Silver."""
-    
-    # Get new records since last watermark
-    new_records = (spark.read.table(bronze_table)
-        .filter(col("_ingested_at") > watermark)
-    )
-    
-    # Transform
-    transformed = transform_to_silver(new_records)
-    
-    # Merge into Silver
-    silver = DeltaTable.forName(spark, silver_table)
-    
-    (silver.alias("target")
-        .merge(
-            transformed.alias("source"),
-            "target.id = source.id"
-        )
-        .whenMatchedUpdateAll()
-        .whenNotMatchedInsertAll()
-        .execute()
-    )
-```
-
-## Data Quality Patterns
-
-### Quality Checks at Each Layer
-
-**Bronze:**
-- File completeness check
-- Row count validation
-- Schema drift detection
-
-**Silver:**
-- Null value checks
-- Data type validation
-- Business rule validation
-- Referential integrity
-- Duplicate detection
-
-**Gold:**
-- Aggregate accuracy
-- KPI threshold checks
-- Trend anomaly detection
-- Completeness validation
-
-### Quality Check Implementation
+Or by creating a temporary Python script that imports and uses the module:
 
 ```python
-def validate_silver_quality(table_name: str) -> Dict[str, bool]:
-    """Run quality checks on Silver table."""
-    df = spark.read.table(table_name)
-    
-    checks = {
-        "no_null_ids": df.filter(col("id").isNull()).count() == 0,
-        "valid_emails": df.filter(
-            ~col("email").rlike(r"^[\w\.-]+@[\w\.-]+\.\w+$")
-        ).count() == 0,
-        "no_duplicates": df.count() == df.select("id").distinct().count(),
-        "within_date_range": df.filter(
-            (col("created_date") < "2020-01-01") |
-            (col("created_date") > current_date())
-        ).count() == 0
-    }
-    
-    return checks
+import sys
+sys.path.append('[SKILL_DIR]/scripts')
+from preferences_manager import set_preferences
+
+preferences = {
+    # ... preference data as shown above
+}
+
+set_preferences(preferences)
 ```
 
-## Optimization Strategies
+Replace `[SKILL_DIR]` with the actual path to the skill directory.
 
-### Bronze Layer Optimization
-```sql
--- Partition by ingestion date
-CREATE TABLE bronze.raw_events
-USING delta
-PARTITIONED BY (ingestion_date)
-AS SELECT *, current_date() as ingestion_date FROM source;
-
--- Enable auto-optimize
-ALTER TABLE bronze.raw_events
-SET TBLPROPERTIES (
-    'delta.autoOptimize.optimizeWrite' = 'true',
-    'delta.autoOptimize.autoCompact' = 'true'
-);
+After saving, confirm with the user:
+```
+Great! I've saved your preferences. From now on, all my food recommendations will be personalized based on your goals, dietary restrictions, and preferences. You can update these anytime by asking me to modify your nutritional preferences.
 ```
 
-### Silver Layer Optimization
-```sql
--- Z-ORDER for common filters
-OPTIMIZE silver.customers
-ZORDER BY (customer_segment, region, created_date);
+### Step 3: Load and Use Preferences
 
--- Enable Change Data Feed
-ALTER TABLE silver.customers
-SET TBLPROPERTIES (delta.enableChangeDataFeed = true);
+For all food-related queries after initial setup, load the user's preferences:
+
+```bash
+python3 scripts/preferences_manager.py get
 ```
 
-### Gold Layer Optimization
-```sql
--- Liquid clustering for query performance
-CREATE TABLE gold.customer_metrics
-USING delta
-CLUSTER BY (customer_segment, date)
-AS SELECT * FROM aggregated_metrics;
+Or display in a readable format:
 
--- Optimize and vacuum
-OPTIMIZE gold.customer_metrics;
-VACUUM gold.customer_metrics RETAIN 168 HOURS;
+```bash
+python3 scripts/preferences_manager.py display
 ```
 
-## Complete Example
+**Apply Preferences to Responses:**
 
-See `/templates/bronze-silver-gold/` for a complete implementation including:
-- Project structure
-- Bronze ingestion scripts
-- Silver transformation logic
-- Gold aggregation queries
-- Data quality tests
-- Deployment configuration
+Every food-related response must:
+1. **Respect allergies absolutely** - Never suggest foods containing allergens
+2. **Align with dietary restrictions** - Only suggest appropriate foods
+3. **Consider goals** - Tailor advice to support the user's objectives
+4. **Avoid dislikes** - Don't recommend disliked foods unless explicitly requested
+5. **Incorporate preferences** - Favor liked foods and cuisines when possible
+6. **Reference health conditions** - Adjust recommendations accordingly
+
+**Example Application:**
+
+User query: "What should I have for lunch?"
+
+Without preferences: Generic lunch suggestions
+
+With preferences (e.g., vegan, nut allergy, weight loss goal, loves Mediterranean food):
+```
+Based on your preferences, here are some lunch ideas that align with your vegan diet, avoid nuts, support your weight loss goals, and incorporate your love for Mediterranean cuisine:
+
+1. Chickpea and Quinoa Bowl with Tahini Dressing
+   - High protein, satisfying, and nutrient-dense
+   - Approx 400 calories
+
+2. Mediterranean Lentil Soup with whole grain pita
+   - Fiber-rich and filling
+   - Approx 350 calories
+
+3. Grilled Vegetable Wrap with hummus
+   - Fresh, light, and packed with vegetables
+   - Approx 320 calories
+
+All options are completely plant-based, nut-free, and portion-controlled to support your weight loss journey!
+```
+
+### Step 4: Updating Preferences
+
+When users want to update their preferences, use the same script:
+
+```bash
+python3 scripts/preferences_manager.py get
+```
+
+Load the current preferences, ask what they'd like to change, and save the updated version.
+
+For complete reset:
+
+```bash
+python3 scripts/preferences_manager.py reset
+```
+
+Then proceed with the initial setup again.
 
 ## Best Practices
 
-1. **Idempotency**: Ensure pipelines can be re-run safely
-2. **Incrementality**: Process only new/changed data
-3. **Quality Gates**: Block bad data from progressing
-4. **Schema Evolution**: Handle schema changes gracefully
-5. **Monitoring**: Track pipeline health and data quality
-6. **Documentation**: Document data lineage and transformations
-7. **Testing**: Unit test transformations, integration test pipelines
+1. **Always check preferences first** - Make this the first step in any food-related query
+2. **Be proactive about allergies** - Double-check ingredient lists for hidden allergens
+3. **Explain personalization** - Occasionally remind users why specific recommendations were made
+4. **Offer alternatives** - Provide multiple options when possible
+5. **Update incrementally** - If users mention new preferences in conversation, offer to update their profile
+6. **Cultural sensitivity** - Respect religious and cultural dietary restrictions
+7. **Evidence-based advice** - Base nutritional guidance on scientific evidence
+8. **Practical suggestions** - Consider cooking skill level and time constraints
 
-## Common Pitfalls to Avoid
+## Example Interactions
 
-❌ **Don't:**
-- Mix transformation logic across layers
-- Skip Bronze layer to "save storage"
-- Over-aggregate too early
-- Ignore data quality in Silver
-- Hard-code business logic in Bronze
+**Example 1: First-time user**
+```
+User: "Can you suggest a healthy dinner recipe?"
 
-✅ **Do:**
-- Keep Bronze immutable
-- Enforce quality in Silver
-- Optimize Gold for consumption
-- Use incremental processing
-- Implement proper monitoring
+Claude: [Checks preferences - finds none]
 
-## Related Skills
+To provide you with the most helpful and personalized nutritional advice, let me learn about your food preferences and goals first. This will help me tailor all my recommendations specifically to you.
 
-- `delta-live-tables`: Declarative pipeline orchestration
-- `data-quality`: Great Expectations integration
-- `testing-patterns`: Pipeline testing strategies
-- `cicd-workflows`: Deployment automation
+Let's start with the essentials:
+1. What are your main dietary or health goals?
+2. Do you have any food allergies I should be aware of?
+3. Do you follow any dietary restrictions or philosophies?
+4. Are there any foods you really dislike?
+5. What are some of your favorite foods or cuisines?
 
-## References
+[User provides answers, Claude saves preferences]
 
-- [Databricks Medallion Architecture](https://docs.databricks.com/lakehouse/medallion.html)
-- [Delta Lake Best Practices](https://docs.delta.io/latest/best-practices.html)
+Great! I've saved your preferences. Now let me suggest some dinner recipes perfect for you...
+```
+
+**Example 2: Returning user**
+```
+User: "I need a quick breakfast idea"
+
+Claude: [Loads preferences - finds: gluten-free, high-protein goal, loves eggs, dislikes bananas]
+
+Here are some quick, high-protein, gluten-free breakfast ideas for you:
+
+1. Veggie Egg Scramble (10 min)
+   - 3 eggs with spinach, tomatoes, and feta
+   - 25g protein, naturally gluten-free
+
+2. Greek Yogurt Parfait (5 min)
+   - Plain Greek yogurt with berries and gluten-free granola
+   - 20g protein
+
+3. Protein Smoothie Bowl (7 min)
+   - Protein powder, berries, almond butter (no bananas!)
+   - 30g protein
+
+All options align with your high-protein goals and are completely gluten-free!
+```
+
+**Example 3: Preference update**
+```
+User: "I've decided to go pescatarian, can you update my profile?"
+
+Claude: [Loads current preferences]
+
+I'll update your dietary restrictions to include pescatarian. This means you'll eat fish and seafood but no other meat, correct?
+
+[User confirms]
+
+Perfect! I've updated your preferences. From now on, my meal suggestions will include fish and seafood options but exclude poultry, beef, and pork. Your other preferences remain the same.
+```
+
+## Technical Notes
+
+**Preference Storage Location:**
+- Preferences are stored at `~/.claude/nutritional_preferences.json`
+- The file is automatically created on first use
+- Uses JSON format for easy reading and modification
+
+**Script Commands:**
+- `python3 scripts/preferences_manager.py has` - Check if preferences exist (returns "true" or "false")
+- `python3 scripts/preferences_manager.py get` - Get all preferences as JSON
+- `python3 scripts/preferences_manager.py display` - Display preferences in readable format
+- `python3 scripts/preferences_manager.py reset` - Clear all preferences
+
+**Data Structure:**
+```json
+{
+  "initialized": true,
+  "goals": ["weight loss", "better energy"],
+  "allergies": ["peanuts", "shellfish"],
+  "dietary_restrictions": ["vegetarian", "gluten-free"],
+  "dislikes": ["cilantro", "olives"],
+  "food_preferences": ["Italian cuisine", "Mexican food", "pasta"],
+  "health_conditions": ["type 2 diabetes"],
+  "cuisine_preferences": ["Italian", "Mexican", "Thai"],
+  "meal_timing": "intermittent fasting 16:8",
+  "cooking_skill": "intermediate",
+  "budget": "moderate",
+  "notes": "Prefers quick weeknight meals"
+}
+```
+
+## Resources
+
+### scripts/preferences_manager.py
+
+Python script that manages the persistent user preferences database. Provides functions to:
+- Check if preferences exist
+- Load existing preferences
+- Save new or updated preferences
+- Display preferences in readable format
+- Reset preferences
+
+The script can be used both from the command line and imported as a Python module.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
