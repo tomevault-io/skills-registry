@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/orchestration/a7b8c9d0-e1f2-4a5b-9c8d-7e8f9a0b1c2d-onurkanbakirci-awesome-skil/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/orchestration/subagent-driven-development-claudiodearaujo-sistema-de-narra-o-d/SKILL.md)
 
 ---
 
