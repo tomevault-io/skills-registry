@@ -1,245 +1,560 @@
 ---
-name: claude-skill-registry
-description: >- Use when this capability is needed.
+name: firebase-auth
+description: Implements Firebase Authentication with email, OAuth, phone auth, and custom tokens. Use when building apps with Firebase, needing flexible auth methods, or integrating with Firebase ecosystem. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Fuel Network Security Scanner
+# Firebase Auth
 
-Security scanner for Fuel Network smart contracts written in Sway. Fuel uses a UTXO-based model with the FuelVM, fundamentally different from EVM account-based chains.
+Firebase Authentication provides backend services and SDKs for user authentication. Supports email/password, OAuth providers, phone, anonymous, and custom token auth.
 
----
+## Quick Start
 
-## Language & Runtime
+### Installation
 
-| Attribute | Value |
-|-----------|-------|
-| Chain | Fuel (modular execution layer) |
-| Language | Sway (Rust-inspired, purpose-built for FuelVM) |
-| VM | FuelVM (register-based, not stack-based like EVM) |
-| Transaction Model | UTXO-based (like Bitcoin, unlike Ethereum's account model) |
-| Token Model | Native multi-asset (assets are first-class, not contract-based) |
-| Program Types | Contract, Script, Predicate, Library |
-| Toolchain | `forc` (Fuel Orchestrator), `fuel-core` |
-| Testing | `fuels-rs` (Rust SDK) |
+```bash
+npm install firebase
+```
 
----
+### Initialize Firebase
 
-## FuelVM vs EVM: Key Differences
+```typescript
+// lib/firebase.ts
+import { initializeApp, getApps } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
 
-| Feature | EVM (Ethereum) | FuelVM (Fuel) |
-|---------|----------------|---------------|
-| Transaction model | Account-based | UTXO-based |
-| Assets | ERC20 contracts | Native multi-asset |
-| Parallelism | Sequential | Parallel (UTXO enables it) |
-| State access | Any contract can read global state | State access declared upfront |
-| Reentrancy | Possible (external calls) | Different model (no direct reentrancy) |
-| Stack | Stack-based (256-bit words) | Register-based (64-bit words) |
-| Programs | Smart contracts only | Contracts, Scripts, Predicates |
-
----
-
-## Detection Capabilities
-
-| Category | Detection | Severity |
-|----------|-----------|----------|
-| **UTXO** | Same UTXO consumed in multiple paths | Critical |
-| **UTXO** | Coin output not created for change | High |
-| **Predicates** | Predicate logic bypass via crafted input | Critical |
-| **Predicates** | Predicate gas limit exceeded (always fails) | High |
-| **Assets** | Wrong `AssetId` used in transfer or balance check | Critical |
-| **Assets** | Missing `AssetId` validation on received funds | High |
-| **Access Control** | Missing `msg_sender()` validation on privileged functions | Critical |
-| **Access Control** | Identity type confusion (`Address` vs `ContractId`) | High |
-| **Storage** | Storage key collision in manual key assignment | High |
-| **Storage** | Storage slot manipulation via `asm` blocks | Medium |
-| **Math** | Integer overflow (Sway u64 wraps in some contexts) | High |
-| **Math** | Division by zero (panic) | Medium |
-| **Scripts** | Incorrect script-to-contract call sequencing | Medium |
-| **Scripts** | Script return value not validated by caller | Medium |
-
----
-
-## Program Types and Security Implications
-
-### Contract
-
-Persistent state, deployed on-chain, callable by transactions and scripts:
-
-```sway
-contract;
-
-storage {
-    owner: Identity = Identity::Address(Address::zero()),
-    balance: u64 = 0,
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 }
 
-abi MyContract {
-    #[storage(read, write)]
-    fn deposit();
-    
-    #[storage(read, write)]
-    fn withdraw(amount: u64);
-}
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
+export const auth = getAuth(app)
+```
 
-impl MyContract for Contract {
-    #[storage(read, write)]
-    fn deposit() {
-        // msg_amount() = forwarded base asset amount
-        // msg_asset_id() = forwarded asset ID
-        storage.balance.write(storage.balance.read() + msg_amount());
+## Email/Password Authentication
+
+### Sign Up
+
+```typescript
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { auth } from '@/lib/firebase'
+
+async function signUp(email: string, password: string, displayName: string) {
+  try {
+    const { user } = await createUserWithEmailAndPassword(auth, email, password)
+
+    await updateProfile(user, { displayName })
+
+    return user
+  } catch (error: any) {
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        throw new Error('Email already registered')
+      case 'auth/weak-password':
+        throw new Error('Password should be at least 6 characters')
+      default:
+        throw new Error('Sign up failed')
     }
-    
-    #[storage(read, write)]
-    fn withdraw(amount: u64) {
-        // MUST validate caller
-        require(
-            msg_sender().unwrap() == storage.owner.read(),
-            "unauthorized"
-        );
-        storage.balance.write(storage.balance.read() - amount);
-        transfer(msg_sender().unwrap(), AssetId::base(), amount);
+  }
+}
+```
+
+### Sign In
+
+```typescript
+import { signInWithEmailAndPassword } from 'firebase/auth'
+
+async function signIn(email: string, password: string) {
+  try {
+    const { user } = await signInWithEmailAndPassword(auth, email, password)
+    return user
+  } catch (error: any) {
+    switch (error.code) {
+      case 'auth/invalid-credential':
+        throw new Error('Invalid email or password')
+      case 'auth/user-disabled':
+        throw new Error('Account disabled')
+      default:
+        throw new Error('Sign in failed')
     }
+  }
 }
 ```
 
-### Predicate
+### Sign Out
 
-Stateless UTXO spending conditions — returns `true` or `false`:
+```typescript
+import { signOut } from 'firebase/auth'
 
-```sway
-predicate;
-
-// Predicate that allows spending only if multiple conditions met
-fn main(expected_recipient: Address, min_amount: u64) -> bool {
-    // Predicates have NO state and NO side effects
-    // They validate whether a UTXO can be spent
-    let tx_outputs = tx_outputs_count();
-    
-    // Check: output sends to expected recipient
-    // Check: amount >= min_amount
-    // Returns true only if conditions are met
-    true // or false
+async function logout() {
+  await signOut(auth)
 }
 ```
 
-**Predicate Security:** Predicates are pure functions evaluated at validation time. If the predicate returns `true`, the UTXO can be spent. Any logic error = funds at risk.
+## Auth State Management
 
-### Script
+### Listen to Auth Changes
 
-Transaction-level orchestration (not deployed, executed once):
+```typescript
+import { onAuthStateChanged, User } from 'firebase/auth'
 
-```sway
-script;
+// Subscribe to auth state
+const unsubscribe = onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log('Signed in:', user.uid)
+  } else {
+    console.log('Signed out')
+  }
+})
 
-use my_contract_abi::MyContract;
+// Cleanup
+unsubscribe()
+```
 
-fn main(contract_id: ContractId, amount: u64) {
-    let contract = abi(MyContract, contract_id.into());
-    contract.deposit {  // Call parameters
-        gas: 10_000,
-        coins: amount,
-        asset_id: AssetId::base(),
-    }();
+### React Context
+
+```typescript
+// contexts/auth-context.tsx
+'use client'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { onAuthStateChanged, User } from 'firebase/auth'
+import { auth } from '@/lib/firebase'
+
+type AuthContextType = {
+  user: User | null
+  loading: boolean
+}
+
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  loading: true
+})
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user)
+      setLoading(false)
+    })
+
+    return unsubscribe
+  }, [])
+
+  return (
+    <AuthContext.Provider value={{ user, loading }}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
+
+export const useAuth = () => useContext(AuthContext)
+```
+
+### Usage
+
+```typescript
+'use client'
+import { useAuth } from '@/contexts/auth-context'
+
+export default function Profile() {
+  const { user, loading } = useAuth()
+
+  if (loading) return <div>Loading...</div>
+  if (!user) return <div>Please sign in</div>
+
+  return (
+    <div>
+      <p>Email: {user.email}</p>
+      <p>Name: {user.displayName}</p>
+      <img src={user.photoURL || ''} alt="Avatar" />
+    </div>
+  )
 }
 ```
 
----
+## OAuth Providers
 
-## Native Multi-Asset Model
+### Google Sign In
 
-Unlike EVM where tokens are contract-based (ERC20), Fuel has native multi-asset support:
+```typescript
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
-```sway
-// Every contract can mint its own sub-assets
-let sub_id = SubId::zero();
-let asset_id = AssetId::new(ContractId::this(), sub_id);
+const googleProvider = new GoogleAuthProvider()
+googleProvider.addScope('email')
+googleProvider.addScope('profile')
 
-// Mint native assets
-mint(sub_id, amount);
+async function signInWithGoogle() {
+  try {
+    const result = await signInWithPopup(auth, googleProvider)
+    const credential = GoogleAuthProvider.credentialFromResult(result)
+    const token = credential?.accessToken
 
-// Transfer native assets  
-transfer(recipient, asset_id, amount);
-
-// Check forwarded asset
-let received_asset = msg_asset_id();
-require(received_asset == expected_asset, "wrong asset");
+    return result.user
+  } catch (error: any) {
+    if (error.code === 'auth/popup-closed-by-user') {
+      return null
+    }
+    throw error
+  }
+}
 ```
 
-**Critical Check:** Always validate `msg_asset_id()` matches the expected asset. Failing to do so allows an attacker to send a worthless asset and receive legitimate assets in return.
+### GitHub Sign In
 
----
+```typescript
+import { signInWithPopup, GithubAuthProvider } from 'firebase/auth'
 
-## Resources
-- [Fuel Patterns](resources/fuel-patterns.md)
+const githubProvider = new GithubAuthProvider()
+githubProvider.addScope('read:user')
 
-## Workflows
-- [Fuel Audit](workflows/fuel-audit.md)
+async function signInWithGithub() {
+  const result = await signInWithPopup(auth, githubProvider)
+  return result.user
+}
+```
 
-## Overview
-Fuel is a modular execution layer with:
-- Sway language (Rust-inspired)
-- UTXO-based model (not account-based)
-- FuelVM (not EVM)
-- Native multi-asset support
-- Predicates (stateless UTXO conditions)
-- Parallel transaction processing via strict state access declarations
+### Sign In with Redirect
 
-## Error Code Reference
+For mobile or when popups are blocked:
 
-Common Sway/FuelVM errors encountered during audits. Fuel uses `revert()` with numeric codes and `require()` with custom enums.
+```typescript
+import { signInWithRedirect, getRedirectResult, GoogleAuthProvider } from 'firebase/auth'
 
-### FuelVM Runtime Errors
+// Initiate redirect
+async function startGoogleSignIn() {
+  await signInWithRedirect(auth, new GoogleAuthProvider())
+}
 
-| Error Code | Name | Meaning |
-|-----------|------|----------|
-| `0x00` | `Success` | Normal execution |
-| `0x01` | `Revert` | Explicit `revert()` or failed `require()` |
-| `0x02` | `OutOfGas` | Transaction exceeded gas limit |
-| `0x03` | `TransactionValidity` | Transaction failed validation rules |
-| `0x04` | `MemoryOverflow` | Memory allocation exceeded limits |
-| `0x05` | `ArithmeticOverflow` | Arithmetic operation overflow |
-| `0x06` | `ContractNotFound` | Called contract ID does not exist |
-| `0x07` | `MemoryOwnership` | Attempted write to read-only memory |
-| `0x08` | `NotEnoughBalance` | Insufficient asset balance for transfer |
-| `0x09` | `ExpectedInternalContext` | External call in internal-only context |
-| `0x0A` | `AssetIdNotFound` | Asset ID does not exist in transaction |
-| `0x0B` | `InputNotFound` | Transaction input not found |
-| `0x0C` | `OutputNotFound` | Transaction output not found |
-| `0x0D` | `WitnessNotFound` | Witness data not found at index |
+// Handle redirect result (call on page load)
+async function handleRedirect() {
+  const result = await getRedirectResult(auth)
+  if (result) {
+    console.log('Signed in:', result.user)
+  }
+}
+```
 
-### Sway Standard Library Errors
+## Phone Authentication
 
-| Error Type | Meaning | Audit Significance |
-|-----------|---------|--------------------|
-| `AuthError::SenderNotOwner` | Caller is not the contract owner | Access control — check ownership model |
-| `AuthError::SenderNotAdmin` | Caller lacks admin role | Role-based access — check admin assignment |
-| `AssetError::InsufficientBalance` | Insufficient asset balance | Financial operation — check for manipulation |
-| `AssetError::InvalidAssetId` | Asset ID not recognized | Multi-asset — check asset ID validation |
-| `PredicateError::InvalidSignature` | Predicate signature check failed | Auth bypass — check predicate logic |
-| `InputError::InvalidInput` | Generic input validation failure | Check input bounds and type validation |
-| `IdentityError::InvalidAddress` | Address validation failed | Check for zero/invalid address handling |
+### Send Verification Code
 
-### UTXO-Related Audit Errors
+```typescript
+import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth'
 
-| Issue | Error Pattern | Audit Significance |
-|-------|--------------|--------------------|
-| Coin UTXO double-spend | `TransactionValidity` | FuelVM prevents at protocol level — but check application logic for logical double-spend |
-| Predicate evaluation failure | `Revert` in predicate context | Predicates are stateless — verify all validation happens within single evaluation |
-| Message proof invalid | `MessageProofError` | L1→L2 bridge message not verified correctly |
-| Variable output missing | `OutputNotFound` | Transaction didn't include required output for asset transfer |
+// Setup reCAPTCHA
+const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+  size: 'invisible',
+  callback: () => {
+    // reCAPTCHA solved
+  }
+})
 
-## Troubleshooting
+async function sendVerificationCode(phoneNumber: string) {
+  try {
+    const confirmationResult = await signInWithPhoneNumber(
+      auth,
+      phoneNumber,
+      recaptchaVerifier
+    )
+    // Store confirmationResult to use in verification step
+    return confirmationResult
+  } catch (error) {
+    console.error('SMS not sent:', error)
+    throw error
+  }
+}
+```
 
-| Issue | Likely Cause | Solution |
-|-------|-------------|----------|
-| UTXO model vulnerabilities missed | Scanner uses account-model mental model | Analyze UTXO inputs/outputs explicitly; check coin selection and change handling |
-| Predicate bypass not detected | Scanner doesn't analyze predicate scripts | Audit predicate logic separately — ensure all paths lead to `true/false` without side effects |
-| Multi-asset handling errors missed | Scanner assumes single native asset | Flag all `AssetId` parameters; verify correct asset checking in every transfer |
-| Storage slot collision not caught | Scanner doesn't map storage access in Sway | Map all `storage` block declarations; check for manual slot computation conflicts |
-| Cross-contract call issues missed | Scanner treats inter-contract calls as trusted | Trace all `abi(ContractId, ...)` calls; verify called contract ID validation |
-| Message-based bridge risks ignored | Scanner doesn't model Fuel L1→L2 bridge | Audit all `input_message` handlers and message proof verification logic |
+### Verify Code
+
+```typescript
+async function verifyCode(confirmationResult: any, code: string) {
+  try {
+    const result = await confirmationResult.confirm(code)
+    return result.user
+  } catch (error) {
+    throw new Error('Invalid verification code')
+  }
+}
+```
+
+## Anonymous Authentication
+
+```typescript
+import { signInAnonymously, linkWithCredential, EmailAuthProvider } from 'firebase/auth'
+
+// Sign in anonymously
+async function signInAnon() {
+  const { user } = await signInAnonymously(auth)
+  return user
+}
+
+// Convert to permanent account
+async function convertToEmailAccount(email: string, password: string) {
+  const user = auth.currentUser
+  if (!user) throw new Error('No user')
+
+  const credential = EmailAuthProvider.credential(email, password)
+  await linkWithCredential(user, credential)
+}
+```
+
+## Password Management
+
+### Reset Password
+
+```typescript
+import { sendPasswordResetEmail } from 'firebase/auth'
+
+async function resetPassword(email: string) {
+  await sendPasswordResetEmail(auth, email, {
+    url: 'https://myapp.com/login'
+  })
+}
+```
+
+### Update Password
+
+```typescript
+import { updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth'
+
+async function changePassword(currentPassword: string, newPassword: string) {
+  const user = auth.currentUser
+  if (!user || !user.email) throw new Error('No user')
+
+  // Re-authenticate first
+  const credential = EmailAuthProvider.credential(user.email, currentPassword)
+  await reauthenticateWithCredential(user, credential)
+
+  // Update password
+  await updatePassword(user, newPassword)
+}
+```
+
+## Email Verification
+
+```typescript
+import { sendEmailVerification } from 'firebase/auth'
+
+async function verifyEmail() {
+  const user = auth.currentUser
+  if (!user) throw new Error('No user')
+
+  await sendEmailVerification(user, {
+    url: 'https://myapp.com/verified'
+  })
+}
+
+// Check if verified
+const isVerified = auth.currentUser?.emailVerified
+```
+
+## Update Profile
+
+```typescript
+import { updateProfile, updateEmail } from 'firebase/auth'
+
+async function updateUserProfile(displayName: string, photoURL: string) {
+  const user = auth.currentUser
+  if (!user) throw new Error('No user')
+
+  await updateProfile(user, { displayName, photoURL })
+}
+
+async function changeEmail(newEmail: string) {
+  const user = auth.currentUser
+  if (!user) throw new Error('No user')
+
+  await updateEmail(user, newEmail)
+  // Sends verification email automatically
+}
+```
+
+## ID Tokens
+
+### Get ID Token
+
+```typescript
+async function getIdToken() {
+  const user = auth.currentUser
+  if (!user) throw new Error('No user')
+
+  const token = await user.getIdToken()
+  return token
+}
+
+// Force refresh
+const token = await user.getIdToken(true)
+```
+
+### Verify on Server
+
+```typescript
+// Server-side (Firebase Admin SDK)
+import { getAuth } from 'firebase-admin/auth'
+
+async function verifyToken(idToken: string) {
+  try {
+    const decodedToken = await getAuth().verifyIdToken(idToken)
+    return decodedToken
+  } catch (error) {
+    throw new Error('Invalid token')
+  }
+}
+```
+
+## Custom Claims
+
+### Set Claims (Admin SDK)
+
+```typescript
+import { getAuth } from 'firebase-admin/auth'
+
+async function setUserRole(uid: string, role: string) {
+  await getAuth().setCustomUserClaims(uid, { role })
+}
+```
+
+### Read Claims (Client)
+
+```typescript
+async function getUserRole() {
+  const user = auth.currentUser
+  if (!user) return null
+
+  const tokenResult = await user.getIdTokenResult()
+  return tokenResult.claims.role
+}
+```
+
+## Protected Routes (Next.js)
+
+### Middleware
+
+```typescript
+// middleware.ts
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+  const session = request.cookies.get('session')
+
+  if (!session && request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ['/dashboard/:path*']
+}
+```
+
+### Session Cookie
+
+```typescript
+// app/api/session/route.ts
+import { getAuth } from 'firebase-admin/auth'
+import { cookies } from 'next/headers'
+
+export async function POST(request: Request) {
+  const { idToken } = await request.json()
+
+  const expiresIn = 60 * 60 * 24 * 5 * 1000 // 5 days
+
+  try {
+    const sessionCookie = await getAuth().createSessionCookie(idToken, {
+      expiresIn
+    })
+
+    cookies().set('session', sessionCookie, {
+      maxAge: expiresIn / 1000,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      path: '/'
+    })
+
+    return Response.json({ status: 'success' })
+  } catch (error) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+}
+```
+
+## Link Multiple Providers
+
+```typescript
+import { linkWithPopup, GoogleAuthProvider } from 'firebase/auth'
+
+async function linkGoogle() {
+  const user = auth.currentUser
+  if (!user) throw new Error('No user')
+
+  const result = await linkWithPopup(user, new GoogleAuthProvider())
+  return result.user
+}
+
+// Unlink provider
+import { unlink } from 'firebase/auth'
+
+async function unlinkGoogle() {
+  const user = auth.currentUser
+  if (!user) throw new Error('No user')
+
+  await unlink(user, 'google.com')
+}
+```
+
+## Error Handling
+
+```typescript
+import { AuthError } from 'firebase/auth'
+
+function handleAuthError(error: AuthError) {
+  switch (error.code) {
+    case 'auth/email-already-in-use':
+      return 'Email already registered'
+    case 'auth/invalid-email':
+      return 'Invalid email address'
+    case 'auth/weak-password':
+      return 'Password too weak'
+    case 'auth/user-not-found':
+      return 'User not found'
+    case 'auth/wrong-password':
+      return 'Incorrect password'
+    case 'auth/too-many-requests':
+      return 'Too many attempts. Try again later'
+    case 'auth/network-request-failed':
+      return 'Network error'
+    default:
+      return 'Authentication error'
+  }
+}
+```
+
+## Best Practices
+
+1. **Use context for auth state** - Single source of truth
+2. **Handle all error codes** - User-friendly messages
+3. **Verify tokens server-side** - Never trust client
+4. **Use session cookies** - For server-side apps
+5. **Enable email verification** - For sensitive apps
+6. **Implement re-auth** - Before sensitive operations
+
+## References
+
+- [Admin SDK Setup](references/admin-sdk.md)
+- [Security Rules](references/security-rules.md)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
