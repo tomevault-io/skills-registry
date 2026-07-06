@@ -1,236 +1,266 @@
 ---
-name: claude-skill-registry
-description: description: Geometric deep learning-based polygenic risk score prediction using PRS-Net for modeling gene interactions, enhanced disease prediction, and cross-ancestry portability. Use when this capability is needed.
+name: prd-v06-architecture-design
+description: Define how system components connect, establishing boundaries, patterns, and integration approaches during PRD v0.6 Architecture. Triggers on requests to design architecture, create system design, define component relationships, or when user asks "design architecture", "system design", "how do components connect?", "architecture decisions", "technical architecture", "system overview". Consumes TECH- (stack selections), RISK- (constraints), FEA- (features). Outputs ARC- entries documenting architecture decisions with rationale. Feeds v0.6 Technical Specification. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
----name: prs-net-deep-learning-agent
-description: Geometric deep learning-based polygenic risk score prediction using PRS-Net for modeling gene interactions, enhanced disease prediction, and cross-ancestry portability.
-license: MIT
-metadata:
-  author: AI Group
-  version: "1.0.0"
-  created: "2026-01-20"
-compatibility:
-  - system: Python 3.10+
-allowed-tools:
-  - run_shell_command
-  - read_file
-  - write_file
 
-keywords:
-  - prs-net-deep-learning-agent
-  - automation
-  - biomedical
-measurable_outcome: execute task with >95% success rate.
----"
+# Architecture Design
 
-# PRS-Net Deep Learning Agent
+Position in workflow: v0.5 Technical Stack Selection → **v0.6 Architecture Design** → v0.6 Technical Specification
 
-The **PRS-Net Deep Learning Agent** implements interpretable geometric deep learning for polygenic risk score prediction. PRS-Net models non-linear gene-gene interactions and biological network relationships to enhance disease prediction accuracy and improve cross-ancestry portability compared to traditional linear PRS methods.
+Architecture defines how your system components connect. This skill transforms stack selections into a coherent system design with explicit boundaries and integration patterns.
 
-## When to Use This Skill
+## Architecture Decision Categories
 
-* When linear PRS methods show limited performance.
-* For modeling complex gene-gene interactions.
-* To improve PRS portability across ancestries.
-* When biological interpretability of PRS is needed.
-* For integrating pathway and network information.
+| Category | What It Covers | Example Decisions |
+|----------|----------------|-------------------|
+| **Structure** | Component organization, boundaries | Monolith vs microservices, module structure |
+| **Integration** | External service connections | API gateway pattern, webhook handlers |
+| **Security** | Auth, authorization, data protection | JWT strategy, role-based access |
+| **Performance** | Scaling, caching, optimization | CDN strategy, database indexing |
+| **Data** | Storage, flow, consistency | Event sourcing, CQRS, replication |
+| **DevOps** | Deployment, monitoring, CI/CD | Container orchestration, observability |
 
-## Core Capabilities
+## Design Process
 
-1. **Non-Linear PRS**: Capture gene-gene interactions via deep learning.
+1. **Pull TECH- decisions** — What technologies are we building with?
+2. **Pull RISK- constraints** — What must the architecture account for?
+3. **Pull FEA- features** — What must the system do?
+4. **Define system boundaries** — What's in/out of scope?
+5. **Map component relationships** — How do parts connect?
+6. **Document integration patterns** — How do Buy/Integrate items connect?
+7. **Create ARC- entries** — Record decisions with rationale
 
-2. **Network Integration**: Incorporate protein-protein interaction networks.
+## System Boundary Definition
 
-3. **Interpretability**: Identify important pathways and gene modules.
+Before designing components, define what's inside and outside your system:
 
-4. **Cross-Ancestry Transfer**: Improved portability via learned biology.
+**Inside (Build)**:
+- Core business logic
+- Differentiating features
+- Custom workflows
 
-5. **Multi-Task Learning**: Joint modeling of related traits.
+**Outside (Buy/Integrate)**:
+- Authentication provider
+- Payment processor
+- Email service
+- Analytics
 
-6. **Uncertainty Quantification**: Provide prediction confidence.
+**Boundary Questions**:
+- Where does data enter the system?
+- Where does data leave the system?
+- What trust boundaries exist?
+- What must be fast vs. can be eventual?
 
-## PRS-Net Architecture
+## Component Relationship Patterns
 
-| Component | Function | Innovation |
-|-----------|----------|------------|
-| Input Layer | Gene-level summaries | Aggregated variant effects |
-| Network Encoder | PPI graph convolution | Biological structure |
-| Attention Layer | Gene importance | Interpretability |
-| Predictor | Disease/trait prediction | Non-linear mapping |
-| Explanation | Pathway enrichment | Biological insights |
+### For Build Components
 
-## Comparison to Traditional PRS
+| Pattern | When to Use | Example |
+|---------|-------------|---------|
+| **Monolith** | MVP, small team, unclear boundaries | Single Next.js app |
+| **Modular Monolith** | Growing codebase, clear domains | Modules with defined interfaces |
+| **Microservices** | Clear boundaries, scaling needs | Separate auth, billing, core services |
 
-| Aspect | Linear PRS | PRS-Net |
-|--------|------------|---------|
-| Gene Interactions | Not modeled | GNN captures |
-| Network Biology | Ignored | Integrated |
-| Interpretability | Limited (SNP weights) | Pathway-level |
-| Cross-Ancestry | Often poor | Improved |
-| Computational Cost | Low | Moderate |
-| Training Data Needed | Low | Moderate |
+**Rule for MVP**: Start monolith, extract services when you have evidence of need.
 
-## Workflow
+### For Buy/Integrate Components
 
-1. **Input**: Individual genotypes, PPI network, training phenotypes.
+| Pattern | When to Use | Example |
+|---------|-------------|---------|
+| **Direct Integration** | Simple, trusted service | Call Stripe API directly |
+| **Adapter Layer** | Want to swap providers later | Abstract over auth provider |
+| **Event Bridge** | Async, decoupled | Webhooks → event queue → handlers |
 
-2. **Gene Summarization**: Aggregate SNPs to gene-level scores.
+## Integration Architecture Patterns
 
-3. **Network Encoding**: Learn representations on PPI graph.
+### Pattern: Vendor Abstraction
 
-4. **Prediction**: Non-linear disease risk prediction.
+When you Buy a service but want flexibility to switch:
 
-5. **Interpretation**: Extract important genes and pathways.
-
-6. **Cross-Ancestry**: Apply to diverse populations.
-
-7. **Output**: Risk scores, uncertainty, biological explanations.
-
-## Example Usage
-
-**User**: "Calculate PRS-Net scores for Type 2 Diabetes with pathway-level interpretation."
-
-**Agent Action**:
-```bash
-python3 Skills/Precision_Medicine/PRS_Net_Deep_Learning_Agent/prs_net_predict.py \
-    --genotypes cohort_genotypes.vcf.gz \
-    --ppi_network string_ppi.graphml \
-    --trait type2_diabetes \
-    --model_weights prs_net_t2d_v1.pt \
-    --interpret_pathways true \
-    --ancestry_calibration multi \
-    --output prs_net_results/
+```
+┌─────────────────────────────────────┐
+│           Your Application          │
+├─────────────────────────────────────┤
+│       Payment Abstraction Layer     │
+│   interface PaymentProvider {       │
+│     charge(amount, token): Result   │
+│   }                                 │
+├─────────────────────────────────────┤
+│  StripeAdapter  │  PaddleAdapter    │
+└─────────────────┴───────────────────┘
 ```
 
-## Input Requirements
+**When to use**: High switching cost, multiple viable providers, strategic flexibility needed.
 
-| Input | Format | Purpose |
-|-------|--------|---------|
-| Genotypes | VCF/PLINK | SNP data |
-| PPI Network | GraphML, edge list | Gene relationships |
-| Gene Mapping | BED | SNP-to-gene |
-| Training Labels | Phenotype file | Model training |
-| GWAS Summary | Optional | Initialization |
+### Pattern: Webhook Handler
 
-## Output Components
+When integrating with external events:
 
-| Output | Description | Format |
-|--------|-------------|--------|
-| PRS-Net Score | Non-linear polygenic score | .csv |
-| Risk Percentile | Population ranking | .csv |
-| Gene Importance | Attention weights | .csv |
-| Pathway Enrichment | Top pathways | .csv |
-| Module Visualization | Network subgraphs | .png |
-| Uncertainty | Prediction confidence | .json |
+```
+External Service → Webhook Endpoint → Event Queue → Handler
+                        ↓
+                   Signature Verify
+                        ↓
+                   Idempotency Check
+                        ↓
+                   Enqueue for processing
+```
 
-## Network Biology Integration
+**When to use**: External services push events (Stripe, GitHub, etc.).
 
-| Network | Source | Genes | Edges |
-|---------|--------|-------|-------|
-| STRING PPI | String-db | 19,000 | 5.5M |
-| BioGRID | BioGRID | 18,000 | 1.2M |
-| Reactome | Reactome | 10,000 | 250K |
-| GO Biological Process | Gene Ontology | 18,000 | Hierarchical |
+## ARC- Output Template
 
-## Performance Benchmarks
+```
+ARC-XXX: [Decision Title]
+Category: [Structure | Integration | Security | Performance | Data | DevOps]
+Context: [What prompted this decision]
+Decision: [What we decided]
+Rationale: [Why this choice]
 
-| Disease | Linear PRS AUC | PRS-Net AUC | Improvement |
-|---------|----------------|-------------|-------------|
-| Type 2 Diabetes | 0.65 | 0.72 | +7% |
-| Coronary Artery Disease | 0.70 | 0.76 | +6% |
-| Schizophrenia | 0.62 | 0.68 | +6% |
-| Alzheimer's Disease | 0.68 | 0.74 | +6% |
+Alternatives Rejected:
+  - [Option A]: [Why not]
+  - [Option B]: [Why not]
 
-## Cross-Ancestry Portability
+Consequences:
+  - Enables: [What this makes possible]
+  - Constrains: [What this limits]
 
-| Ancestry | Linear PRS Drop | PRS-Net Drop |
-|----------|-----------------|--------------|
-| EUR → EAS | -15% | -8% |
-| EUR → AFR | -30% | -18% |
-| EUR → SAS | -20% | -12% |
-| EUR → AMR | -18% | -10% |
+Related IDs: [TECH-XXX, RISK-XXX, FEA-XXX]
+Status: [Proposed | Accepted | Superseded]
+```
 
-## AI/ML Components
+**Example ARC- entry:**
+```
+ARC-001: Monolith with Module Boundaries
+Category: Structure
+Context: Need to choose application structure for MVP launch
+Decision: Single Next.js application with domain-based module folders
 
-**Graph Neural Networks**:
-- Graph convolutional networks (GCN)
-- Graph attention networks (GAT)
-- Message passing neural networks
+Rationale:
+  - Team of 2 developers, single deployment simplifies ops
+  - Unclear domain boundaries at this stage
+  - Can extract services later when patterns emerge
 
-**Interpretability**:
-- Attention visualization
-- Integrated gradients
-- Pathway enrichment analysis
+Alternatives Rejected:
+  - Microservices: Premature; adds ops complexity without proven need
+  - Serverless functions: Harder to share code, cold start concerns
 
-**Transfer Learning**:
-- Pre-training on EUR
-- Fine-tuning on diverse
-- Domain adaptation
+Consequences:
+  - Enables: Fast iteration, simple deployment, shared state
+  - Constrains: Single scaling unit, must be disciplined about module boundaries
 
-## Prerequisites
+Related IDs: TECH-001 (Next.js), RISK-005 (scaling concerns)
+Status: Accepted
+```
 
-* Python 3.10+
-* PyTorch, PyTorch Geometric
-* NetworkX, igraph
-* Scanpy (optional for visualization)
-* GPU recommended
+**Example ARC- entry (Security):**
+```
+ARC-005: JWT with HTTP-Only Cookies
+Category: Security
+Context: Need session management strategy for authenticated users
+Decision: JWTs stored in HTTP-only cookies, 1-hour expiry, refresh via /refresh endpoint
 
-## Related Skills
+Rationale:
+  - HTTP-only prevents XSS access to tokens
+  - Short expiry limits damage from stolen tokens
+  - Refresh flow handles long sessions gracefully
 
-* Multi_Ancestry_PRS_Agent - Traditional multi-ancestry PRS
-* PopEVE_Variant_Predictor_Agent - Variant interpretation
-* Pharmacogenomics_Agent - Drug-gene interactions
-* Pathway_Analysis - Pathway enrichment
+Alternatives Rejected:
+  - localStorage: Vulnerable to XSS
+  - Long-lived tokens: Security risk if compromised
+  - Server-side sessions: Scaling complexity, Redis dependency
 
-## Biological Interpretation
+Consequences:
+  - Enables: Stateless auth, horizontal scaling
+  - Constrains: Must handle refresh flow in frontend, logout requires invalidation strategy
 
-| Interpretation Level | Output | Clinical Use |
-|---------------------|--------|--------------|
-| Gene | Top contributing genes | Target identification |
-| Pathway | Enriched pathways | Mechanism understanding |
-| Module | Network subgraphs | Biological insight |
-| Hub Genes | Central genes | Druggable targets |
+Related IDs: TECH-001 (Clerk handles this), RISK-008 (security compliance)
+Status: Accepted
+```
 
-## Training Considerations
+## System Diagram Elements
 
-| Factor | Recommendation | Rationale |
-|--------|----------------|-----------|
-| Sample Size | >10,000 | Deep learning needs data |
-| Class Balance | Oversample or weight | Avoid bias |
-| Validation | Cross-validation | Avoid overfitting |
-| Regularization | Dropout, L2 | Generalization |
+When creating architecture diagrams, include:
 
-## Special Considerations
+| Element | Symbol | Purpose |
+|---------|--------|---------|
+| **Service/Component** | Box | Internal services, modules |
+| **External System** | Cloud/cylinder | Third-party services, DBs |
+| **Trust Boundary** | Dashed line | Security perimeters |
+| **Data Flow** | Arrow | How data moves |
+| **Integration Point** | Diamond | Where systems connect |
 
-1. **Interpretability Trade-offs**: More complex = less interpretable
-2. **Computational Requirements**: GPU accelerates training
-3. **Network Quality**: PPI accuracy affects results
-4. **Gene Mapping**: SNP-to-gene assignment matters
-5. **Overfitting**: Regularization essential
+### Example Diagram Structure
 
-## Clinical Applications
+```
+┌─────────────────────────────────────────────────────────┐
+│                    TRUST BOUNDARY                        │
+│  ┌─────────────┐     ┌─────────────┐    ┌────────────┐  │
+│  │   Frontend  │────▶│   API       │───▶│  Database  │  │
+│  │   (Next.js) │     │  (tRPC)     │    │  (Supabase)│  │
+│  └─────────────┘     └──────┬──────┘    └────────────┘  │
+│                             │                            │
+└─────────────────────────────┼────────────────────────────┘
+                              │
+              ┌───────────────┼───────────────┐
+              ▼               ▼               ▼
+        ┌──────────┐   ┌──────────┐   ┌──────────┐
+        │  Stripe  │   │  Clerk   │   │  Resend  │
+        │ (payments)│  │  (auth)  │   │ (email)  │
+        └──────────┘   └──────────┘   └──────────┘
+                    EXTERNAL SERVICES
+```
 
-| Application | PRS-Net Advantage | Benefit |
-|-------------|-------------------|---------|
-| Risk Stratification | Higher accuracy | Better prediction |
-| Biological Insight | Pathway interpretation | Mechanism |
-| Drug Targets | Hub gene identification | Therapeutic targets |
-| Ancestry Equity | Better portability | Fairer prediction |
+## RISK- to Architecture Mapping
 
-## Limitations
+Every high-priority risk should have an architectural response:
 
-| Limitation | Impact | Future Direction |
-|------------|--------|------------------|
-| Training Data | EUR-dominated | Diverse cohorts |
-| Network Completeness | Missing edges | Multi-network integration |
-| Rare Variants | Not well captured | WGS + rare variant methods |
-| Clinical Validation | Limited trials | Prospective studies |
+| Risk | Architecture Response |
+|------|----------------------|
+| RISK-001: API dependency outage | ARC-010: Add retry + circuit breaker |
+| RISK-003: Data breach | ARC-005: Encryption at rest + transit |
+| RISK-007: Scaling bottleneck | ARC-012: Cache layer, read replicas |
 
-## Author
+## Anti-Patterns to Avoid
 
-AI Group - Biomedical AI Platform
+| Anti-Pattern | Signal | Fix |
+|--------------|--------|-----|
+| **Architecture astronaut** | Over-engineering for 1000x scale | Design for 10x current needs |
+| **Missing boundaries** | Everything can call everything | Define clear interfaces |
+| **Ignoring RISK-** | Architecture doesn't address risks | Map each High RISK- to ARC- |
+| **Vendor lock-in** | No abstraction over critical services | Add adapter layer for switching |
+| **Diagram without decisions** | Pretty pictures, no ARC- records | Every box needs documented rationale |
+| **Premature microservices** | 5 services for MVP | Start monolith, extract later |
+
+## Quality Gates
+
+Before proceeding to Technical Specification:
+
+- [ ] All TECH- Build items have component placement
+- [ ] All TECH- Buy/Integrate items have integration pattern
+- [ ] High-priority RISK- entries have architectural mitigation
+- [ ] Trust boundaries clearly defined
+- [ ] Data flow documented
+- [ ] ARC- entries created for major decisions
+
+## Downstream Connections
+
+ARC- entries feed into:
+
+| Consumer | What It Uses | Example |
+|----------|--------------|---------|
+| **Technical Specification** | ARC- informs API design | ARC-001 (monolith) → unified API surface |
+| **v0.7 Build Execution** | ARC- defines EPIC scope | ARC-003 (auth module) → EPIC-02 |
+| **Infrastructure Setup** | ARC- drives deployment | ARC-010 (edge caching) → CDN config |
+| **Security Review** | Security ARC- entries | ARC-005 → pen test scope |
+
+## Detailed References
+
+- **Architecture pattern examples**: See `references/examples.md`
+- **ARC- entry template**: See `assets/arc.md`
+- **Diagram templates**: See `references/diagrams.md`
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
