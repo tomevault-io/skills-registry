@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [motion-team/creative-strategy-skills](https://github.com/motion-team/creative-strategy-skills/tree/main/hook-writing/SKILL.md)
+Original source: [motion-team/creative-strategy-skills](https://github.com/motion-team/creative-strategy-skills/tree/main/brand-intake/SKILL.md)
 
 ---
 
