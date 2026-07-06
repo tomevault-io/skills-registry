@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [datenoio/iterabledata](https://github.com/datenoio/iterabledata/tree/main/.cursor/skills/iterabledata-development/SKILL.md)
+Original source: [datenoio/iterabledata](https://github.com/datenoio/iterabledata/tree/main/.cursor/skills/database-engine-implementation/SKILL.md)
 
 ---
 
