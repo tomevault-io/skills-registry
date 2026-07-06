@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [diegosouzapw/awesome-omni-skills](https://github.com/diegosouzapw/awesome-omni-skills/tree/main/skills/redesign-existing-projects-v2/SKILL.md)
+Original source: [diegosouzapw/awesome-omni-skills](https://github.com/diegosouzapw/awesome-omni-skills/tree/main/skills/brand-guidelines-anthropic-v2/SKILL.md)
 
 ---
 
