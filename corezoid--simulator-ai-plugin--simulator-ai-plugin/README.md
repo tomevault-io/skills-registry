@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [corezoid/simulator-ai-plugin](https://github.com/corezoid/simulator-ai-plugin/tree/main/plugins/simulator/skills/simulator-init/SKILL.md)
+Original source: [corezoid/simulator-ai-plugin](https://github.com/corezoid/simulator-ai-plugin/tree/main/plugins/simulator/skills/simulator-graph/SKILL.md)
 
 ---
 
