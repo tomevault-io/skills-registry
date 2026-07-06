@@ -1,136 +1,111 @@
 ---
-name: obsidian-install-auth
-description: | Use when this capability is needed.
+name: press-release-creator
+description: Amazon の Working Backwards 手法に基づいたプレスリリース＋FAQ を作成するスキル。新サービスや新機能の企画段階で、顧客視点から価値を明文化し、開発の方向性を定めるために使用します。「プレスリリースを作成」「PR/FAQ を書いて」「Working Backwards で企画」「顧客中心でサービスを設計」などのリクエストでトリガーします。ITサービス、製品、新機能の企画・要件定義に活用できます。 Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Obsidian Install & Auth
+# プレスリリースクリエイター (Working Backwards)
 
-## Overview
-Set up a complete Obsidian plugin development environment with TypeScript, esbuild, and hot-reload capabilities.
+Amazon の Working Backwards 手法に基づき、**仮想プレスリリース (PR) + FAQ** を作成するスキルです。
 
-## Prerequisites
-- Node.js 18+ (LTS recommended)
-- npm or pnpm package manager
-- Obsidian desktop app installed
-- Git for version control
-- Code editor with TypeScript support (VSCode recommended)
+## Working Backwards について
 
-## Instructions
+Working Backwards は、**「顧客から出発して考える」** ことを具現化したプロセスです。製品が完成した未来を想定し、プレスリリースを先に書くことで、チーム全員が目指すべき「北極星」を共有します。
 
-### Step 1: Clone the Sample Plugin Template
-```bash
-# Clone official sample plugin
-git clone https://github.com/obsidianmd/obsidian-sample-plugin.git my-obsidian-plugin
-cd my-obsidian-plugin
+### 目的
 
-# Remove existing git history for fresh start
-rm -rf .git
-git init
-```
+- **顧客中心文化の徹底**: 開発チーム全員を最初から顧客視点に立たせる
+- **時間とコストの節約**: 企画段階で徹底的に議論し、後戻りやムダな開発を減らす
+- **製品の成功率向上**: 「本当に顧客が求める価値か？」を早期に検証する
 
-### Step 2: Install Dependencies
-```bash
-# Install all dependencies
-npm install
+## 使用方法
 
-# Key dependencies included:
-# - @types/node
-# - typescript
-# - esbuild
-# - obsidian (types only - provided by Obsidian app)
-```
+### 基本的なワークフロー
 
-### Step 3: Configure Development Vault
-```bash
-# Create a dedicated development vault
-mkdir -p ~/ObsidianDev/.obsidian/plugins/my-obsidian-plugin
+1. **情報収集**: ユーザーから以下の情報を収集します：
+   - ターゲット顧客（誰のためのサービス/製品か）
+   - 解決したい課題（顧客が抱える痛み）
+   - 提供する価値（どんなベネフィットがあるか）
+2. **プレスリリースの作成**: テンプレートに従って作成
+3. **FAQ の作成**: 顧客向け・内部向け両方の想定質問を作成
+4. **保存先**: `docs/press-release.md` に保存
 
-# Link your plugin for development
-# On macOS/Linux:
-ln -s "$(pwd)" ~/ObsidianDev/.obsidian/plugins/my-obsidian-plugin
+### プレスリリース作成の 5 つの黄金律
 
-# On Windows (run as admin):
-# mklink /D "%USERPROFILE%\ObsidianDev\.obsidian\plugins\my-obsidian-plugin" "%CD%"
-```
+1. **顧客の視点から書く**: 「私たちが何を作ったか」ではなく「顧客が何を得られるか」に集中
+2. **「未来」を「現在形」で書く**: すでに発売され、顧客が喜んでいる状況をリアルに描写
+3. **専門用語を排除する**: 親や友人が読んでも理解できる平易な言葉を選ぶ
+4. **1 ページに収める**: 本質的な価値に絞り、簡潔さを保つ
+5. **「課題（Pain）」を強調する**: 解決策を語る前に、顧客がいかに困っているかを描写
 
-### Step 4: Update manifest.json
-```json
-{
-  "id": "my-obsidian-plugin",
-  "name": "My Obsidian Plugin",
-  "version": "1.0.0",
-  "minAppVersion": "1.0.0",
-  "description": "Description of your plugin",
-  "author": "Your Name",
-  "authorUrl": "https://your-website.com",
-  "isDesktopOnly": false
-}
-```
+### プレスリリースの構成
 
-### Step 5: Verify Setup
-```bash
-# Build the plugin
-npm run build
+詳細なテンプレートは [references/pr_template.md](references/pr_template.md) を参照してください。
 
-# Start development mode with hot-reload
-npm run dev
-```
+主要な構成要素：
 
-## Output
-- Cloned and configured plugin project
-- Development vault with symlinked plugin
-- Working build pipeline with esbuild
-- Hot-reload enabled for rapid development
+1. **ヘッドライン**: 製品・サービスをひと言で表すキャッチフレーズ
+2. **サブヘッド**: メイン顧客と主なベネフィットを 1 文で要約
+3. **リード文**: 概要のサマリー（これだけで要点がわかる）
+4. **顧客課題**: 抱えている問題や機会の描写
+5. **ソリューション**: 提供する解決策と画期的なポイント
+6. **リーダーコメント**: エグゼクティブからの引用
+7. **利用方法**: 導入の容易さ、開始方法
+8. **顧客の声**: 想定顧客からの称賛コメント（最重要）
+9. **クロージング**: 行動喚起と問い合わせ先
 
-## Error Handling
-| Error | Cause | Solution |
-|-------|-------|----------|
-| Cannot find module 'obsidian' | Types not installed | Run `npm install` again |
-| Plugin not showing in Obsidian | Symlink broken | Verify symlink path, restart Obsidian |
-| Build failed | TypeScript errors | Check `tsconfig.json` configuration |
-| Hot-reload not working | Missing BRAT or wrong path | Install BRAT plugin or verify symlink |
-| Permission denied | Symlink requires admin | Run terminal as administrator |
+### FAQ の作成
 
-## Examples
+FAQ は 2 種類の視点から作成します。詳細は [references/faq_template.md](references/faq_template.md) を参照してください。
 
-### Project Structure
-```
-my-obsidian-plugin/
-├── src/
-│   └── main.ts           # Plugin entry point
-├── styles.css            # Optional: Plugin styles
-├── manifest.json         # Plugin metadata
-├── package.json          # Node dependencies
-├── tsconfig.json         # TypeScript config
-├── esbuild.config.mjs    # Build configuration
-└── versions.json         # Version compatibility
-```
+#### 顧客向け FAQ（外部）
 
-### Minimal main.ts
-```typescript
-import { Plugin } from 'obsidian';
+- このサービスで何ができるのか？
+- 費用はいくらか？
+- 既存システムとの互換性は？
+- セキュリティ・プライバシーは？
+- サポート体制は？
 
-export default class MyPlugin extends Plugin {
-  async onload() {
-    console.log('Loading My Plugin');
-  }
+#### 内部向け FAQ（ステークホルダー）
 
-  onunload() {
-    console.log('Unloading My Plugin');
-  }
-}
-```
+- 市場規模・顧客数の見込みは？
+- 競合との差別化ポイントは？
+- 必要な技術・リソースは？
+- 収益モデル・ROI は？
+- リスクと対策は？
 
-## Resources
-- [Obsidian Plugin Developer Docs](https://docs.obsidian.md/Plugins/Getting+started/Build+a+plugin)
-- [Obsidian Sample Plugin](https://github.com/obsidianmd/obsidian-sample-plugin)
-- [Obsidian API Reference](https://docs.obsidian.md/Reference/TypeScript+API)
-- [BRAT Plugin for Development](https://github.com/TfTHacker/obsidian42-brat)
+### IT サービス特有の観点
 
-## Next Steps
-After successful setup, proceed to `obsidian-hello-world` for your first plugin feature.
+- **技術の価値をビジネス言語に翻訳**: 「AI 搭載」ではなく「手作業を 90% 削減」
+- **信頼性・セキュリティへの配慮**: エンタープライズ顧客が重視する要素を明記
+- **ROI・コスト効果の明示**: 投資対効果を定量的に示す
+- **導入ハードルの低減**: 移行の容易さ、サポート体制を強調
+
+### 作成後のチェックリスト
+
+- [ ] 顧客は明確か？ターゲット層が具体的に想定できるか
+- [ ] 解決する問題が明示されているか？
+- [ ] 唯一無二の利点が伝わるか？競合との差別化
+- [ ] 顧客証言で価値が裏付けられているか？
+- [ ] 一息で読める長さか？1 ページ程度
+- [ ] 読み手が次に何をすべきか示されているか？
+
+### インタラクティブな作成プロセス
+
+情報が不足している場合は、以下の質問で必要な情報を収集します：
+
+1. 「このサービスのターゲット顧客は誰ですか？」
+2. 「顧客が現在抱えている最大の課題は何ですか？」
+3. 「このサービスでその課題がどう解決されますか？」
+4. 「競合や既存の代替手段と比べて何が優れていますか？」
+5. 「顧客にとって一番大きなベネフィットは何ですか？」
+
+一度に多くの質問をせず、最も重要な質問から段階的に収集してください。
+
+### 日本語での作成
+
+プレスリリースは日本語で作成します。ビジネス文書として適切な表現を使用しつつ、専門用語を避けて平易な言葉を選んでください。
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
