@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rediumvex/ai-video-generator-claude](https://github.com/rediumvex/ai-video-generator-claude/tree/main/skills/10-podcast-visual/SKILL.md)
+Original source: [rediumvex/ai-video-generator-claude](https://github.com/rediumvex/ai-video-generator-claude/tree/main/skills/03-personal-brand/SKILL.md)
 
 ---
 
