@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [SFKislev/Flue](https://github.com/SFKislev/Flue/tree/main/skills/autodesk/SKILL.md)
+Original source: [SFKislev/Flue](https://github.com/SFKislev/Flue/tree/main/skills/photoshop/SKILL.md)
 
 ---
 
