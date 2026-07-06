@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [makoMakoGo/fish-claude](https://github.com/makoMakoGo/fish-claude/tree/main/skills/gpt-isms-stamp-out/SKILL.md)
+Original source: [makoMakoGo/fish-claude](https://github.com/makoMakoGo/fish-claude/tree/main/skills/gemini-deep-reasoning/SKILL.md)
 
 ---
 
