@@ -1,0 +1,13 @@
+# agent-lsp
+
+> Skill by [blackwell-systems](https://github.com/blackwell-systems/agent-lsp) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [blackwell-systems/agent-lsp](https://github.com/blackwell-systems/agent-lsp/tree/main/skills/lsp-docs/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
