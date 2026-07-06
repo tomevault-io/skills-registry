@@ -1,483 +1,869 @@
 ---
-name: policyengine-period-patterns
-description: PolicyEngine period handling - converting between YEAR, MONTH definition periods and testing patterns Use when this capability is needed.
+name: playwright-page-object-model
+description: Use when creating page objects or refactoring Playwright tests for better maintainability with Page Object Model patterns.
 metadata:
   author: majiayu000
 ---
 
-# PolicyEngine Period Patterns
+# Playwright Page Object Model
 
-Essential patterns for handling different definition periods (YEAR, MONTH) in PolicyEngine.
+Master the Page Object Model (POM) pattern to create maintainable, reusable,
+and scalable test automation code. This skill covers modern Playwright
+patterns including component-based architecture, locator strategies, and
+app actions.
 
-## Quick Reference
+## Core POM Principles
 
-| From | To | Method | Example |
-|------|-----|--------|---------|
-| MONTH formula | YEAR variable | `period.this_year` | `age = person("age", period.this_year)` |
-| YEAR formula | MONTH variable | `period.first_month` | `person("monthly_rent", period.first_month)` |
-| Any | Year integer | `period.start.year` | `year = period.start.year` |
-| Any | Month integer | `period.start.month` | `month = period.start.month` |
-| Annual → Monthly | Divide by 12 | `/ MONTHS_IN_YEAR` | `monthly = annual / 12` |
-| Monthly → Annual | Multiply by 12 | `* MONTHS_IN_YEAR` | `annual = monthly * 12` |
+### Single Responsibility
 
----
+Each page object should represent one page or component with a single,
+well-defined responsibility.
 
-## 1. Definition Periods in PolicyEngine US
+### Encapsulation
 
-### Available Periods
-- **YEAR**: Annual values (most common - 2,883 variables)
-- **MONTH**: Monthly values (395 variables)
-- **ETERNITY**: Never changes (1 variable - structural relationships)
+Hide implementation details and expose only meaningful actions and
+assertions.
 
-**Note:** QUARTER is NOT used in PolicyEngine US
+### Reusability
 
-### Examples
-```python
-from policyengine_us.model_api import *
+Create reusable components that can be composed into larger page objects.
 
-class annual_income(Variable):
-    definition_period = YEAR  # Annual amount
+### Maintainability
 
-class monthly_benefit(Variable):
-    definition_period = MONTH  # Monthly amount
+When UI changes, update page objects in one place rather than across
+multiple tests.
 
-class is_head(Variable):
-    definition_period = ETERNITY  # Never changes
+## Basic Page Object Pattern
+
+### Simple Page Object
+
+```typescript
+// pages/login-page.ts
+import { Page, Locator } from '@playwright/test';
+
+export class LoginPage {
+  readonly page: Page;
+  readonly emailInput: Locator;
+  readonly passwordInput: Locator;
+  readonly loginButton: Locator;
+  readonly errorMessage: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.emailInput = page.getByLabel('Email');
+    this.passwordInput = page.getByLabel('Password');
+    this.loginButton = page.getByRole('button', { name: 'Login' });
+    this.errorMessage = page.getByRole('alert');
+  }
+
+  async goto() {
+    await this.page.goto('/login');
+  }
+
+  async login(email: string, password: string) {
+    await this.emailInput.fill(email);
+    await this.passwordInput.fill(password);
+    await this.loginButton.click();
+  }
+
+  async getErrorMessage() {
+    return await this.errorMessage.textContent();
+  }
+}
 ```
 
----
+### Using Page Object in Tests
 
-## 2. The Golden Rule
+```typescript
+// tests/login.spec.ts
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/login-page';
 
-**When accessing a variable with a different definition period than your formula, you must specify the target period explicitly.**
+test.describe('Login', () => {
+  test('should login successfully', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.login('user@example.com', 'password123');
 
-```python
-# ✅ CORRECT - MONTH formula accessing YEAR variable
-def formula(person, period, parameters):
-    age = person("age", period.this_year)  # Gets actual age
+    await expect(page).toHaveURL('/dashboard');
+  });
 
-# ❌ WRONG - Would get age/12
-def formula(person, period, parameters):
-    age = person("age", period)  # BAD: gives age divided by 12!
+  test('should show error on invalid credentials', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.login('user@example.com', 'wrongpassword');
+
+    const error = await loginPage.getErrorMessage();
+    expect(error).toContain('Invalid credentials');
+  });
+});
 ```
 
----
+## Locator Strategies
 
-## 3. Common Patterns
+### Recommended Locator Priority
 
-### Pattern 1: MONTH Formula Accessing YEAR Variable
+1. User-visible locators (getByRole, getByText, getByLabel)
+2. Test IDs (getByTestId)
+3. CSS/XPath (only as last resort)
 
-**Use Case**: Monthly benefits need annual demographic data
+### User-Visible Locators
 
-```python
-class monthly_benefit_eligible(Variable):
-    value_type = bool
-    entity = Person
-    definition_period = MONTH  # Monthly eligibility
+```typescript
+export class HomePage {
+  readonly page: Page;
 
-    def formula(person, period, parameters):
-        # Age is YEAR-defined, use period.this_year
-        age = person("age", period.this_year)  # ✅ Gets full age
+  constructor(page: Page) {
+    this.page = page;
+  }
 
-        # is_pregnant is MONTH-defined, just use period
-        is_pregnant = person("is_pregnant", period)  # ✅ Same period
+  // By role (ARIA role)
+  get searchButton() {
+    return this.page.getByRole('button', { name: 'Search' });
+  }
 
-        return (age < 18) | is_pregnant
+  // By label (form inputs)
+  get searchInput() {
+    return this.page.getByLabel('Search products');
+  }
+
+  // By text
+  get welcomeMessage() {
+    return this.page.getByText('Welcome back');
+  }
+
+  // By placeholder
+  get emailInput() {
+    return this.page.getByPlaceholder('Enter your email');
+  }
+
+  // By alt text (images)
+  get logo() {
+    return this.page.getByAltText('Company Logo');
+  }
+
+  // By title
+  get helpIcon() {
+    return this.page.getByTitle('Help');
+  }
+}
 ```
 
-### Pattern 2: Accessing Stock Variables (Assets)
+### Test ID Locators
 
-**Stock variables** (point-in-time values like assets) are typically YEAR-defined
+```typescript
+// Component with test IDs
+// <button data-testid="submit-button">Submit</button>
 
-```python
-class tanf_countable_resources(Variable):
-    value_type = float
-    entity = SPMUnit
-    definition_period = MONTH  # Monthly check
+export class FormPage {
+  readonly page: Page;
 
-    def formula(spm_unit, period, parameters):
-        # Assets are stocks (YEAR-defined)
-        cash = spm_unit("cash_assets", period.this_year)  # ✅
-        vehicles = spm_unit("vehicles_value", period.this_year)  # ✅
+  constructor(page: Page) {
+    this.page = page;
+  }
 
-        p = parameters(period).gov.tanf.resources
-        return cash + max_(0, vehicles - p.vehicle_exemption)
+  get submitButton() {
+    return this.page.getByTestId('submit-button');
+  }
+
+  get formContainer() {
+    return this.page.getByTestId('form-container');
+  }
+}
 ```
 
----
+### Locator Chaining
 
-## 4. Understanding Auto-Conversion: When to Use `period` vs `period.this_year`
+```typescript
+export class ProductPage {
+  readonly page: Page;
 
-### The Key Question
+  constructor(page: Page) {
+    this.page = page;
+  }
 
-**When accessing a YEAR variable from a MONTH formula, should the value be divided by 12?**
+  // Chain locators for specificity
+  get priceInCart() {
+    return this.page
+      .getByTestId('shopping-cart')
+      .getByRole('cell', { name: 'Price' });
+  }
 
-- **If YES** → Use `period` (let auto-conversion happen)
-- **If NO** → Use `period.this_year` (prevent auto-conversion)
+  // Filter locators
+  getProductByName(name: string) {
+    return this.page
+      .getByRole('listitem')
+      .filter({ hasText: name });
+  }
 
-### When Auto-Conversion Makes Sense (Use `period`)
-
-**Flow variables** where you want the monthly portion:
-
-```python
-class monthly_benefit(Variable):
-    definition_period = MONTH
-
-    def formula(person, period, parameters):
-        # ✅ Use period - want $2,000/month from $24,000/year
-        monthly_income = person("employment_income", period)
-
-        # Compare to monthly threshold
-        p = parameters(period).gov.program
-        return monthly_income < p.monthly_threshold
+  // Nth element
+  get firstProduct() {
+    return this.page.getByRole('article').nth(0);
+  }
+}
 ```
 
-Why: If annual income is $24,000, you want $2,000/month for monthly eligibility checks.
+## Component-Based Architecture
 
-### When Auto-Conversion Breaks Things (Use `period.this_year`)
+### Reusable Component Objects
 
-**Stock variables and counts** where division by 12 is nonsensical:
+```typescript
+// components/navigation.ts
+export class Navigation {
+  readonly page: Page;
+  readonly homeLink: Locator;
+  readonly productsLink: Locator;
+  readonly cartLink: Locator;
+  readonly profileMenu: Locator;
 
-**1. Age**
-```python
-# ❌ WRONG - gives age/12
-age = person("age", period)  # 30 years → 2.5 "monthly age" ???
+  constructor(page: Page) {
+    this.page = page;
+    this.homeLink = page.getByRole('link', { name: 'Home' });
+    this.productsLink = page.getByRole('link', { name: 'Products' });
+    this.cartLink = page.getByRole('link', { name: 'Cart' });
+    this.profileMenu = page.getByRole('button', { name: 'Profile' });
+  }
 
-# ✅ CORRECT - gives actual age
-age = person("age", period.this_year)  # 30 years
+  async navigateToHome() {
+    await this.homeLink.click();
+  }
+
+  async navigateToProducts() {
+    await this.productsLink.click();
+  }
+
+  async navigateToCart() {
+    await this.cartLink.click();
+  }
+
+  async openProfileMenu() {
+    await this.profileMenu.click();
+  }
+}
 ```
 
-**2. Assets/Resources (Stocks)**
-```python
-# ❌ WRONG - gives assets/12
-assets = spm_unit("spm_unit_assets", period)  # $12,000 → $1,000 ???
+### Composing Page Objects with Components
 
-# ✅ CORRECT - gives point-in-time value
-assets = spm_unit("spm_unit_assets", period.this_year)  # $12,000
+```typescript
+// pages/base-page.ts
+import { Page } from '@playwright/test';
+import { Navigation } from '../components/navigation';
+import { Footer } from '../components/footer';
+
+export class BasePage {
+  readonly page: Page;
+  readonly navigation: Navigation;
+  readonly footer: Footer;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.navigation = new Navigation(page);
+    this.footer = new Footer(page);
+  }
+}
 ```
 
-**3. Counts (Household Size, Number of Children)**
-```python
-# ❌ WRONG - gives count/12
-size = spm_unit("household_size", period)  # 4 people → 0.33 people ???
+```typescript
+// pages/product-page.ts
+import { BasePage } from './base-page';
+import { Page } from '@playwright/test';
 
-# ✅ CORRECT - gives actual count
-size = spm_unit("household_size", period.this_year)  # 4 people
+export class ProductPage extends BasePage {
+  readonly addToCartButton: Locator;
+  readonly productTitle: Locator;
+  readonly productPrice: Locator;
+
+  constructor(page: Page) {
+    super(page);
+    this.addToCartButton = page.getByRole('button', { name: 'Add to Cart' });
+    this.productTitle = page.getByRole('heading', { level: 1 });
+    this.productPrice = page.getByTestId('product-price');
+  }
+
+  async goto(productId: string) {
+    await this.page.goto(`/products/${productId}`);
+  }
+
+  async addToCart() {
+    await this.addToCartButton.click();
+    // Wait for cart update
+    await this.page.waitForResponse(
+      (response) => response.url().includes('/api/cart')
+    );
+  }
+
+  async getProductTitle() {
+    return await this.productTitle.textContent();
+  }
+
+  async getProductPrice() {
+    const text = await this.productPrice.textContent();
+    return parseFloat(text?.replace('$', '') || '0');
+  }
+}
 ```
 
-**4. Boolean/Enum Variables**
-```python
-# ❌ WRONG - weird fractional conversion
-status = person("is_disabled", period)
+### Modal and Dialog Components
 
-# ✅ CORRECT - actual status
-status = person("is_disabled", period.this_year)
+```typescript
+// components/modal.ts
+export class Modal {
+  readonly page: Page;
+  readonly container: Locator;
+  readonly closeButton: Locator;
+  readonly title: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.container = page.getByRole('dialog');
+    this.closeButton = this.container.getByRole('button', { name: 'Close' });
+    this.title = this.container.getByRole('heading');
+  }
+
+  async isVisible() {
+    return await this.container.isVisible();
+  }
+
+  async getTitle() {
+    return await this.title.textContent();
+  }
+
+  async close() {
+    await this.closeButton.click();
+    await this.container.waitFor({ state: 'hidden' });
+  }
+}
 ```
 
-### Decision Tree
+```typescript
+// components/confirmation-modal.ts
+import { Modal } from './modal';
+import { Page } from '@playwright/test';
 
-```
-Accessing YEAR variable from MONTH formula?
-│
-├─ Is it an INCOME or FLOW variable?
-│  └─ YES → Use period (auto-convert to monthly) ✅
-│           Example: employment_income, self_employment_income
-│
-└─ Is it AGE, ASSET, COUNT, or BOOLEAN?
-   └─ YES → Use period.this_year (prevent conversion) ✅
-            Examples: age, assets, household_size, is_disabled
-```
+export class ConfirmationModal extends Modal {
+  readonly confirmButton: Locator;
+  readonly cancelButton: Locator;
+  readonly message: Locator;
 
-### Complete Example
+  constructor(page: Page) {
+    super(page);
+    this.confirmButton = this.container.getByRole('button', {
+      name: 'Confirm',
+    });
+    this.cancelButton = this.container.getByRole('button', {
+      name: 'Cancel',
+    });
+    this.message = this.container.getByTestId('modal-message');
+  }
 
-```python
-class monthly_tanf_eligible(Variable):
-    value_type = bool
-    entity = Person
-    definition_period = MONTH
+  async confirm() {
+    await this.confirmButton.click();
+    await this.container.waitFor({ state: 'hidden' });
+  }
 
-    def formula(person, period, parameters):
-        # Age: Use period.this_year (don't want age/12)
-        age = person("age", period.this_year)  # ✅
+  async cancel() {
+    await this.cancelButton.click();
+    await this.container.waitFor({ state: 'hidden' });
+  }
 
-        # Assets: Use period.this_year (don't want assets/12)
-        assets = person("assets", period.this_year)  # ✅
-
-        # Income: Use period (DO want monthly income from annual)
-        monthly_income = person("employment_income", period)  # ✅
-
-        p = parameters(period).gov.tanf.eligibility
-
-        age_eligible = (age >= 18) & (age <= 64)
-        asset_eligible = assets <= p.asset_limit
-        income_eligible = monthly_income <= p.monthly_income_limit
-
-        return age_eligible & asset_eligible & income_eligible
+  async getMessage() {
+    return await this.message.textContent();
+  }
+}
 ```
 
-### Quick Reference for Auto-Conversion
+## App Actions Pattern
 
-| Variable Type | Use `period` | Use `period.this_year` | Why |
-|--------------|-------------|----------------------|-----|
-| Income (flow) | ✅ | ❌ | Want monthly portion |
-| Age | ❌ | ✅ | Age/12 is meaningless |
-| Assets/Resources (stock) | ❌ | ✅ | Point-in-time value |
-| Household size/counts | ❌ | ✅ | Can't divide people |
-| Boolean/status flags | ❌ | ✅ | True/12 is nonsense |
-| Demographic attributes | ❌ | ✅ | Properties don't divide |
+### High-Level Actions
 
-**Rule of thumb:** If dividing by 12 makes the value meaningless → use `period.this_year`
+```typescript
+// pages/app-actions.ts
+import { Page } from '@playwright/test';
+import { LoginPage } from './login-page';
+import { ProductPage } from './product-page';
 
-### Pattern 3: Converting Annual to Monthly
+export class AppActions {
+  readonly page: Page;
 
-```python
-class monthly_income_limit(Variable):
-    definition_period = MONTH
+  constructor(page: Page) {
+    this.page = page;
+  }
 
-    def formula(household, period, parameters):
-        # Get annual parameter
-        annual_limit = parameters(period).gov.program.annual_limit
+  async login(email: string, password: string) {
+    const loginPage = new LoginPage(this.page);
+    await loginPage.goto();
+    await loginPage.login(email, password);
+    await this.page.waitForURL('/dashboard');
+  }
 
-        # Convert to monthly
-        monthly_limit = annual_limit / MONTHS_IN_YEAR  # ✅
+  async addProductToCart(productId: string) {
+    const productPage = new ProductPage(this.page);
+    await productPage.goto(productId);
+    await productPage.addToCart();
+  }
 
-        return monthly_limit
+  async completeCheckout(paymentDetails: PaymentDetails) {
+    await this.page.goto('/checkout');
+    await this.fillShippingInfo(paymentDetails.shipping);
+    await this.fillPaymentInfo(paymentDetails.payment);
+    await this.page.getByRole('button', { name: 'Place Order' }).click();
+    await this.page.waitForURL('/order-confirmation');
+  }
+
+  private async fillShippingInfo(shipping: ShippingInfo) {
+    await this.page.getByLabel('Full Name').fill(shipping.name);
+    await this.page.getByLabel('Address').fill(shipping.address);
+    await this.page.getByLabel('City').fill(shipping.city);
+    await this.page.getByLabel('Postal Code').fill(shipping.postalCode);
+  }
+
+  private async fillPaymentInfo(payment: PaymentInfo) {
+    await this.page.getByLabel('Card Number').fill(payment.cardNumber);
+    await this.page.getByLabel('Expiry Date').fill(payment.expiry);
+    await this.page.getByLabel('CVV').fill(payment.cvv);
+  }
+}
+
+interface PaymentDetails {
+  shipping: ShippingInfo;
+  payment: PaymentInfo;
+}
+
+interface ShippingInfo {
+  name: string;
+  address: string;
+  city: string;
+  postalCode: string;
+}
+
+interface PaymentInfo {
+  cardNumber: string;
+  expiry: string;
+  cvv: string;
+}
 ```
 
-### Pattern 4: Getting Period Components
+### Using App Actions in Tests
 
-```python
-class federal_poverty_guideline(Variable):
-    definition_period = MONTH
+```typescript
+// tests/checkout.spec.ts
+import { test, expect } from '@playwright/test';
+import { AppActions } from '../pages/app-actions';
 
-    def formula(entity, period, parameters):
-        # Get year and month as integers
-        year = period.start.year  # e.g., 2024
-        month = period.start.month  # e.g., 1-12
+test('should complete checkout flow', async ({ page }) => {
+  const app = new AppActions(page);
 
-        # FPG updates October 1st
-        if month >= 10:
-            instant_str = f"{year}-10-01"
-        else:
-            instant_str = f"{year - 1}-10-01"
+  await app.login('user@example.com', 'password123');
+  await app.addProductToCart('product-123');
+  await app.completeCheckout({
+    shipping: {
+      name: 'John Doe',
+      address: '123 Main St',
+      city: 'New York',
+      postalCode: '10001',
+    },
+    payment: {
+      cardNumber: '4111111111111111',
+      expiry: '12/25',
+      cvv: '123',
+    },
+  });
 
-        # Access parameters at specific date
-        p_fpg = parameters(instant_str).gov.hhs.fpg
-        return p_fpg.first_person / MONTHS_IN_YEAR
+  await expect(page.getByText('Order confirmed')).toBeVisible();
+});
 ```
 
----
+## Advanced Patterns
 
-## 5. Parameter Access
+### Generic Table Component
 
-### Standard Access
-```python
-def formula(entity, period, parameters):
-    # Parameters use current period
-    p = parameters(period).gov.program.benefit
-    return p.amount
+```typescript
+// components/table.ts
+export class Table {
+  readonly page: Page;
+  readonly container: Locator;
+
+  constructor(page: Page, testId?: string) {
+    this.page = page;
+    this.container = testId
+      ? page.getByTestId(testId)
+      : page.getByRole('table');
+  }
+
+  async getHeaders() {
+    const headers = await this.container
+      .getByRole('columnheader')
+      .allTextContents();
+    return headers;
+  }
+
+  async getRowCount() {
+    return await this.container.getByRole('row').count() - 1; // Exclude header
+  }
+
+  async getRow(index: number) {
+    return this.container.getByRole('row').nth(index + 1); // Skip header
+  }
+
+  async getCellValue(row: number, column: number) {
+    const rowLocator = await this.getRow(row);
+    const cell = rowLocator.getByRole('cell').nth(column);
+    return await cell.textContent();
+  }
+
+  async getCellByColumnName(row: number, columnName: string) {
+    const headers = await this.getHeaders();
+    const columnIndex = headers.indexOf(columnName);
+    if (columnIndex === -1) {
+      throw new Error(`Column "${columnName}" not found`);
+    }
+    return await this.getCellValue(row, columnIndex);
+  }
+
+  async findRowByValue(columnName: string, value: string) {
+    const headers = await this.getHeaders();
+    const columnIndex = headers.indexOf(columnName);
+    const rowCount = await this.getRowCount();
+
+    for (let i = 0; i < rowCount; i++) {
+      const cellValue = await this.getCellValue(i, columnIndex);
+      if (cellValue === value) {
+        return await this.getRow(i);
+      }
+    }
+
+    return null;
+  }
+}
 ```
 
-### Specific Date Access
-```python
-def formula(entity, period, parameters):
-    # Access parameters at specific instant
-    p = parameters("2024-10-01").gov.hhs.fpg
-    return p.amount
+### Form Component with Validation
+
+```typescript
+// components/form.ts
+export class Form {
+  readonly page: Page;
+  readonly container: Locator;
+  readonly submitButton: Locator;
+
+  constructor(page: Page, formTestId: string) {
+    this.page = page;
+    this.container = page.getByTestId(formTestId);
+    this.submitButton = this.container.getByRole('button', {
+      name: /submit|save|create/i,
+    });
+  }
+
+  async fillField(label: string, value: string) {
+    await this.container.getByLabel(label).fill(value);
+  }
+
+  async selectOption(label: string, value: string) {
+    await this.container.getByLabel(label).selectOption(value);
+  }
+
+  async checkCheckbox(label: string) {
+    await this.container.getByLabel(label).check();
+  }
+
+  async uncheckCheckbox(label: string) {
+    await this.container.getByLabel(label).uncheck();
+  }
+
+  async submit() {
+    await this.submitButton.click();
+  }
+
+  async getFieldError(label: string) {
+    const field = this.container.getByLabel(label);
+    const fieldId = await field.getAttribute('id');
+    const error = this.container.locator(`[aria-describedby="${fieldId}"]`);
+    return await error.textContent();
+  }
+
+  async hasError(label: string) {
+    const error = await this.getFieldError(label);
+    return error !== null && error.trim() !== '';
+  }
+
+  async getFormErrors() {
+    const errors = await this.container
+      .locator('[role="alert"]')
+      .allTextContents();
+    return errors.filter((e) => e.trim() !== '');
+  }
+}
 ```
 
-**Important**: Never use `parameters(period.this_year)` - parameters always use the formula's period
+### Waiting Strategies in Page Objects
 
----
+```typescript
+export class DashboardPage {
+  readonly page: Page;
+  readonly loadingSpinner: Locator;
+  readonly dataTable: Locator;
 
-## 6. Testing with Different Periods
+  constructor(page: Page) {
+    this.page = page;
+    this.loadingSpinner = page.getByTestId('loading-spinner');
+    this.dataTable = page.getByRole('table');
+  }
 
-### Critical Testing Rules
+  async goto() {
+    await this.page.goto('/dashboard');
+    await this.waitForPageLoad();
+  }
 
-**For MONTH period tests** (`period: 2025-01`):
-- **Input** YEAR variables as **annual amounts**
-- **Output** YEAR variables show **monthly values** (÷12)
+  async waitForPageLoad() {
+    // Wait for loading spinner to disappear
+    await this.loadingSpinner.waitFor({ state: 'hidden' });
 
-### Test Examples
+    // Wait for data to load
+    await this.dataTable.waitFor({ state: 'visible' });
 
-**Example 1: Basic MONTH Test**
-```yaml
-- name: Monthly income test
-  period: 2025-01  # MONTH period
-  input:
-    people:
-      person1:
-        employment_income: 12_000  # Input: Annual
-  output:
-    employment_income: 1_000  # Output: Monthly (12_000/12)
+    // Wait for network idle
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  async refreshData() {
+    const refreshButton = this.page.getByRole('button', { name: 'Refresh' });
+    await refreshButton.click();
+
+    // Wait for API response
+    await this.page.waitForResponse(
+      (response) =>
+        response.url().includes('/api/dashboard') && response.status() === 200
+    );
+
+    await this.waitForPageLoad();
+  }
+}
 ```
 
-**Example 2: Mixed Variables**
-```yaml
-- name: Eligibility with age and income
-  period: 2024-01  # MONTH period
-  input:
-    age: 30  # Age doesn't convert
-    employment_income: 24_000  # Annual input
-  output:
-    age: 30  # Age stays same
-    employment_income: 2_000  # Monthly output
-    monthly_eligible: true
+## Handling Dynamic Content
+
+### Lists and Collections
+
+```typescript
+export class ProductListPage {
+  readonly page: Page;
+  readonly productCards: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.productCards = page.getByTestId('product-card');
+  }
+
+  async goto() {
+    await this.page.goto('/products');
+  }
+
+  async getProductCount() {
+    return await this.productCards.count();
+  }
+
+  async getProductCard(index: number) {
+    return this.productCards.nth(index);
+  }
+
+  async getProductCardByName(name: string) {
+    return this.productCards.filter({ hasText: name }).first();
+  }
+
+  async getAllProductNames() {
+    const names = await this.productCards
+      .locator('h3')
+      .allTextContents();
+    return names;
+  }
+
+  async clickProduct(name: string) {
+    const card = await this.getProductCardByName(name);
+    await card.click();
+  }
+
+  async addToCartByName(name: string) {
+    const card = await this.getProductCardByName(name);
+    await card.getByRole('button', { name: 'Add to Cart' }).click();
+  }
+}
 ```
 
-**Example 3: YEAR Period Test**
-```yaml
-- name: Annual calculation
-  period: 2024  # YEAR period
-  input:
-    employment_income: 18_000  # Annual
-  output:
-    employment_income: 18_000  # Annual output
-    annual_tax: 2_000
+### Search and Filter
+
+```typescript
+export class SearchPage {
+  readonly page: Page;
+  readonly searchInput: Locator;
+  readonly searchButton: Locator;
+  readonly results: Locator;
+  readonly filters: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.searchInput = page.getByRole('searchbox');
+    this.searchButton = page.getByRole('button', { name: 'Search' });
+    this.results = page.getByTestId('search-results');
+    this.filters = page.getByTestId('filters');
+  }
+
+  async search(query: string) {
+    await this.searchInput.fill(query);
+    await this.searchButton.click();
+    await this.waitForResults();
+  }
+
+  async applyFilter(filterName: string, value: string) {
+    await this.filters
+      .getByRole('button', { name: filterName })
+      .click();
+    await this.page
+      .getByRole('checkbox', { name: value })
+      .check();
+    await this.waitForResults();
+  }
+
+  async getResultCount() {
+    const countText = await this.results
+      .getByTestId('result-count')
+      .textContent();
+    return parseInt(countText?.match(/\d+/)?.[0] || '0');
+  }
+
+  private async waitForResults() {
+    await this.page.waitForResponse(
+      (response) => response.url().includes('/api/search')
+    );
+    await this.results.getByTestId('result-item').first().waitFor();
+  }
+}
 ```
 
-### Testing Best Practices
+## Type-Safe Page Objects
 
-1. **Always specify period explicitly**
-2. **Input YEAR variables as annual amounts**
-3. **Expect monthly output for YEAR variables in MONTH tests**
-4. **Use underscore separators**: `12_000` not `12000`
-5. **Add calculation comments** in integration tests
+### Using TypeScript Interfaces
 
----
+```typescript
+// types/user.ts
+export interface User {
+  email: string;
+  password: string;
+  firstName?: string;
+  lastName?: string;
+}
 
-## 7. Common Mistakes and Solutions
-
-### ❌ Mistake 1: Not Using period.this_year
-```python
-# WRONG - From MONTH formula
-def formula(person, period, parameters):
-    age = person("age", period)  # Gets age/12!
-
-# CORRECT
-def formula(person, period, parameters):
-    age = person("age", period.this_year)  # Gets actual age
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description?: string;
+}
 ```
 
-### ❌ Mistake 2: Mixing Annual and Monthly
-```python
-# WRONG - Comparing different units
-monthly_income = person("monthly_income", period)
-annual_limit = parameters(period).gov.limit
-if monthly_income < annual_limit:  # BAD comparison
+```typescript
+// pages/registration-page.ts
+import { User } from '../types/user';
 
-# CORRECT - Convert to same units
-monthly_income = person("monthly_income", period)
-annual_limit = parameters(period).gov.limit
-monthly_limit = annual_limit / MONTHS_IN_YEAR
-if monthly_income < monthly_limit:  # Good comparison
+export class RegistrationPage {
+  readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
+
+  async goto() {
+    await this.page.goto('/register');
+  }
+
+  async register(user: User) {
+    await this.page.getByLabel('Email').fill(user.email);
+    await this.page.getByLabel('Password').fill(user.password);
+
+    if (user.firstName) {
+      await this.page.getByLabel('First Name').fill(user.firstName);
+    }
+
+    if (user.lastName) {
+      await this.page.getByLabel('Last Name').fill(user.lastName);
+    }
+
+    await this.page.getByRole('button', { name: 'Register' }).click();
+  }
+}
 ```
 
-### ❌ Mistake 3: Wrong Test Expectations
-```yaml
-# WRONG - Expecting annual in MONTH test
-period: 2024-01
-input:
-  employment_income: 12_000
-output:
-  employment_income: 12_000  # Wrong!
+### Builder Pattern for Test Data
 
-# CORRECT
-period: 2024-01
-input:
-  employment_income: 12_000  # Annual input
-output:
-  employment_income: 1_000  # Monthly output
+```typescript
+// builders/user-builder.ts
+import { User } from '../types/user';
+
+export class UserBuilder {
+  private user: Partial<User> = {};
+
+  withEmail(email: string): this {
+    this.user.email = email;
+    return this;
+  }
+
+  withPassword(password: string): this {
+    this.user.password = password;
+    return this;
+  }
+
+  withName(firstName: string, lastName: string): this {
+    this.user.firstName = firstName;
+    this.user.lastName = lastName;
+    return this;
+  }
+
+  build(): User {
+    if (!this.user.email || !this.user.password) {
+      throw new Error('Email and password are required');
+    }
+    return this.user as User;
+  }
+}
 ```
 
----
+```typescript
+// tests/registration.spec.ts
+import { UserBuilder } from '../builders/user-builder';
+import { RegistrationPage } from '../pages/registration-page';
 
-## 8. Quick Patterns Cheat Sheet
+test('should register new user', async ({ page }) => {
+  const user = new UserBuilder()
+    .withEmail('newuser@example.com')
+    .withPassword('SecurePass123!')
+    .withName('John', 'Doe')
+    .build();
 
-### Accessing Variables
-| Your Formula | Target Variable | Use |
-|--------------|-----------------|-----|
-| MONTH | YEAR | `period.this_year` |
-| YEAR | MONTH | `period.first_month` |
-| Any | ETERNITY | `period` |
+  const registrationPage = new RegistrationPage(page);
+  await registrationPage.goto();
+  await registrationPage.register(user);
 
-### Common Variables That Need period.this_year
-- `age`
-- `household_size`, `spm_unit_size`
-- `cash_assets`, `vehicles_value`
-- `state_name`, `state_code`
-- Any demographic variable
-
-### Period Conversion
-```python
-# Annual to monthly
-monthly = annual / MONTHS_IN_YEAR
-
-# Monthly to annual
-annual = monthly * MONTHS_IN_YEAR
-
-# Get year/month numbers
-year = period.start.year  # 2024
-month = period.start.month  # 1-12
+  await expect(page).toHaveURL('/welcome');
+});
 ```
 
----
+## When to Use This Skill
 
-## 9. Real-World Example
+- Creating new page objects for test automation
+- Refactoring existing tests to use Page Object Model
+- Building reusable component libraries for tests
+- Implementing app actions for complex user flows
+- Standardizing locator strategies across a test suite
+- Creating type-safe page objects with TypeScript
+- Designing maintainable test architecture
+- Handling dynamic content and complex UI interactions
+- Building form and table abstractions
+- Establishing page object patterns for a team
 
-```python
-class tanf_income_eligible(Variable):
-    value_type = bool
-    entity = SPMUnit
-    definition_period = MONTH  # Monthly eligibility
+## Resources
 
-    def formula(spm_unit, period, parameters):
-        # YEAR variables need period.this_year
-        household_size = spm_unit("spm_unit_size", period.this_year)
-        state = spm_unit.household("state_code", period.this_year)
-
-        # MONTH variables use period
-        gross_income = spm_unit("tanf_gross_income", period)
-
-        # Parameters use period
-        p = parameters(period).gov.states[state].tanf
-
-        # Convert annual limit to monthly
-        annual_limit = p.income_limit[household_size]
-        monthly_limit = annual_limit / MONTHS_IN_YEAR
-
-        return gross_income <= monthly_limit
-```
-
----
-
-## 10. Checklist for Period Handling
-
-When writing a formula:
-
-- [ ] Identify your formula's `definition_period`
-- [ ] Check `definition_period` of accessed variables
-- [ ] Use `period.this_year` for YEAR variables from MONTH formulas
-- [ ] Use `period` for parameters (not `period.this_year`)
-- [ ] Convert units when comparing (annual ↔ monthly)
-- [ ] Test with appropriate period values
-
----
-
-## Related Skills
-
-- **policyengine-aggregation-skill**: For summing across entities with period handling
-- **policyengine-core-skill**: For understanding variable and parameter systems
-
----
-
-## For Agents
-
-1. **Always check definition_period** before accessing variables
-2. **Default to period.this_year** for demographic/stock variables from MONTH formulas
-3. **Test thoroughly** - period mismatches cause subtle bugs
-4. **Document period conversions** in comments
-5. **Follow existing patterns** in similar variables
+- Playwright Locators: <https://playwright.dev/docs/locators>
+- Playwright Page Object Models: <https://playwright.dev/docs/pom>
+- Playwright Best Practices: <https://playwright.dev/docs/best-practices>
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
