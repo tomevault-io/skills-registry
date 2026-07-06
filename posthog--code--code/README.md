@@ -1,0 +1,13 @@
+# code
+
+> Skill by [PostHog](https://github.com/PostHog/code) — distributed by [TomeVault](https://tomevault.io)
+
+## About
+
+This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
+Original source: [PostHog/code](https://github.com/PostHog/code/tree/main/.claude/skills/test-electron-app/SKILL.md)
+
+---
+
+Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
