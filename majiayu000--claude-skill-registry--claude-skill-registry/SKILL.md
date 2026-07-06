@@ -1,416 +1,222 @@
 ---
-name: optical-refinement
-description: Reviews designs for optical balance issues that mathematical precision misses. Covers typography kerning, visual alignment, spacing rhythm, color weight, and the human touch that distinguishes professional design from AI-generated output. Use when this capability is needed.
+name: mechinterp-decoder
+description: Analyze SAE decoder weights - output influence, feature importance, and decoder similarity Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Optical Refinement Skill
+# MechInterp Decoder
 
-You are operating with optical refinement capabilities. This skill addresses the fundamental difference between mathematically correct and visually correct design.
+Analyze SAE features through their decoder weights. This skill answers: **"What does this feature RECOMMEND?"** rather than "What activates this feature?"
 
-## Core Philosophy
+## Purpose
 
-> "The way humans see and process images isn't always going in pair with what the numbers say. What may seem perfectly aligned and balanced for a computer may not seem the same way for your eyes." — Rafal Tomal
+Decoder analysis provides a complementary perspective to activation analysis:
 
-Professional designers trust their eyes over rulers. AI uses mathematical precision — which often looks wrong to human eyes. This skill teaches how to identify and correct optical issues.
+| Analysis Type | Question Answered |
+|---------------|-------------------|
+| **Activation** (overview, sweeps) | "What inputs activate this feature?" |
+| **Decoder** (this skill) | "What outputs does this feature promote?" |
 
-## Why This Matters
+For **diffuse or heterogeneous features** where activation analysis shows multiple modes, decoder analysis often reveals the unifying concept.
 
-**Mathematical precision fails because:**
-- Human vision is not a camera
-- We perceive some shapes as "heavier" than others
-- Optical illusions affect all viewers consistently
-- Context changes how we perceive elements
+## When to Use
 
-**Examples:**
-- A mathematically centered circle in a square looks too low
-- Letters A and V need tighter kerning than H and I
-- A 10px gap after text looks smaller than a 10px gap after an icon
-- Warm colors appear to advance; cool colors recede
+Use this skill when:
 
-## Category 1: Typography Optical Issues
+1. **Activation analysis is inconclusive** - Multiple modes or no clear pattern
+2. **Feature appears heterogeneous** - Different builds activate it for different reasons
+3. **Looking for "what does it recommend"** - Shift from inputs to outputs
+4. **Checking AP level preferences** - Does feature prefer low-AP (_3, _6) vs high-AP (_57)?
+5. **Finding similar features** - Cluster features by decoder similarity
 
-### Kerning and Letter Spacing
+## Commands
 
-<typography_kerning>
-**Common Problems:**
-- "AV", "AT", "LT", "Ty" combinations need tighter spacing
-- Round letters (O, C, G) need visual compensation
-- The eye judges spacing by AREA, not distance
+### Output Influence
 
-**How to Check:**
-1. Flip the text upside down (removes semantic reading)
-2. Squint to blur the letterforms
-3. Look for "rivers" of white space
-4. Check if any letter pairs feel disconnected
+Show what tokens a feature promotes (positive contribution) or suppresses (negative contribution):
 
-**Correction Approach:**
-- Space by optical area, not mathematical distance
-- Tighten pairs with diagonal/round edges
-- Loosen pairs with vertical stems
+```bash
+cd /root/dev/SplatNLP
 
-```xml
-<kerning_issue>
-  <location>Element containing the text</location>
-  <problem_pair>AV, LT, etc.</problem_pair>
-  <current_spacing>Mathematical spacing</current_spacing>
-  <recommended_action>Tighten by X units or percentage</recommended_action>
-</kerning_issue>
+# Basic output influence
+poetry run python -m splatnlp.mechinterp.cli.decoder_cli output-influence \
+    --feature-id 13934 \
+    --model ultra
+
+# JSON output
+poetry run python -m splatnlp.mechinterp.cli.decoder_cli output-influence \
+    --feature-id 13934 \
+    --model ultra \
+    --format json
+
+# More tokens
+poetry run python -m splatnlp.mechinterp.cli.decoder_cli output-influence \
+    --feature-id 13934 \
+    --model ultra \
+    --top-k 25
 ```
-</typography_kerning>
 
-### Vertical Rhythm and Line Height
+**Sample Output:**
+```markdown
+## Feature 13934 Output Influence (ultra)
 
-<typography_rhythm>
-**Common Problems:**
-- Line height that works for body text is wrong for headings
-- All-caps text needs tighter line height than mixed case
-- Descenders (g, j, p, q, y) affect perceived line spacing
+### Tokens This Feature PROMOTES
 
-**How to Check:**
-1. Measure paragraph "color" — should be even gray when squinted
-2. Check for "stacking" — lines that feel too tight
-3. Check for "floating" — lines that feel disconnected
-4. Compare line spacing to paragraph spacing ratios
+| Token | Contribution | Family | AP Level |
+|-------|--------------|--------|----------|
+| respawn_punisher | +0.232 | respawn_punisher | binary |
+| comeback | +0.159 | comeback | binary |
+| quick_super_jump_6 | +0.155 | quick_super_jump | 6 |
+| intensify_action_3 | +0.140 | intensify_action | 3 |
+| ink_saver_main_6 | +0.128 | ink_saver_main | 6 |
 
-**Correction Approach:**
-- Body text: 1.4-1.6x font size
-- Headings: 1.1-1.3x font size
-- All-caps: 1.0-1.2x font size
-- Maintain proportional paragraph spacing (usually 1.5-2x line height)
+### Tokens This Feature SUPPRESSES
 
-```xml
-<rhythm_issue>
-  <location>Text block or section</location>
-  <current_line_height>Current value</current_line_height>
-  <problem>Lines feel too tight/loose because...</problem>
-  <recommended_line_height>Adjusted value</recommended_line_height>
-</rhythm_issue>
+| Token | Contribution | Family | AP Level |
+|-------|--------------|--------|----------|
+| run_speed_up_57 | -0.301 | run_speed_up | 57 |
+| quick_respawn_57 | -0.247 | quick_respawn | 57 |
+| swim_speed_up_57 | -0.209 | swim_speed_up | 57 |
+
+### Interpretation
+- **Top promoted**: respawn_punisher (+0.232)
+- **Top suppressed**: run_speed_up_57 (-0.301)
+- **Pattern**: Promotes low-AP tokens, suppresses high-AP stacking
 ```
-</typography_rhythm>
 
-### Type Size Relationships
+### Weight Percentile
 
-<typography_scale>
-**Common Problems:**
-- Too many type sizes (more than 5-6 creates chaos)
-- Size jumps too small (hard to establish hierarchy)
-- Size jumps inconsistent (no mathematical relationship)
+Check how important a feature is by its decoder weight magnitude:
 
-**How to Check:**
-1. List all font sizes used — are they intentional?
-2. Do size jumps create clear hierarchy?
-3. Can you identify the importance of text by size alone?
-
-**Correction Approach:**
-- Use a type scale (1.25, 1.333, 1.5, or 1.618 ratio)
-- Larger jumps for clearer hierarchy (don't be timid)
-- Fewer sizes, more consistent use
-
-```xml
-<scale_issue>
-  <sizes_in_use>12, 14, 16, 18, 20, 24, 32, 48</sizes_in_use>
-  <problem>Too many sizes / No clear ratio / Hierarchy unclear</problem>
-  <recommended_scale>base: 16, ratio: 1.25 = 16, 20, 25, 31, 39</recommended_scale>
-</scale_issue>
+```bash
+poetry run python -m splatnlp.mechinterp.cli.decoder_cli weight-percentile \
+    --feature-id 13934 \
+    --model ultra
 ```
-</typography_scale>
 
-## Category 2: Spatial Optical Issues
+**Sample Output:**
+```markdown
+## Feature 13934 Decoder Weight (ultra)
 
-### Visual Centering
-
-<spatial_centering>
-**The Problem:**
-Mathematical center looks wrong because:
-- Shapes with points (triangles, play icons) have visual weight offset from geometric center
-- Text has a visual center different from its bounding box center
-- Elements with descenders or ascenders shift perceived center
-
-**How to Check:**
-1. Cover half the container — does the element look centered?
-2. Squint — where does your eye land?
-3. Compare to similar elements — is centering consistent?
-
-**Common Fixes:**
-- Play icons: shift right ~5-10% of their width
-- Triangles pointing up: shift down slightly
-- Text: align to cap-height or x-height, not bounding box
-- Icons in circles: adjust per icon shape
-
-```xml
-<centering_issue>
-  <element>Play button icon</element>
-  <container>Circular button</container>
-  <mathematical_center>50%, 50%</mathematical_center>
-  <visual_adjustment>Shift right 2px, no vertical change</visual_adjustment>
-  <reason>Triangle visual weight is left of geometric center</reason>
-</centering_issue>
+- **Magnitude**: 2.3456
+- **Percentile**: 78.5%
+- **Total features**: 24576
 ```
-</spatial_centering>
 
-### Spacing Consistency
+**Interpretation:**
+- High percentile (>90%): Feature has strong output influence
+- Low percentile (<10%): Feature has weak output influence
+- Note: Low-magnitude features may still be important for specific tokens
 
-<spatial_spacing>
-**The Problem:**
-Same pixel value feels different depending on:
-- What's being separated (text vs icon vs image)
-- The "weight" of adjacent elements
-- Background color/contrast
+### Similar Features (by Decoder)
 
-**How to Check:**
-1. Do all similar elements feel equally spaced?
-2. Does spacing create clear groupings?
-3. Are there any "awkward gaps" or "crowded areas"?
+Find features with similar decoder patterns (what they recommend):
 
-**Correction Approach:**
-- Space by visual separation, not pixels
-- Heavier elements need more space
-- Group related items with tighter spacing
-- Separate unrelated items with more space
-
-```xml
-<spacing_issue>
-  <location>Card header area</location>
-  <elements>Icon, title, subtitle</elements>
-  <current_spacing>All 8px gaps</current_spacing>
-  <problem>Icon-to-title gap feels larger than title-to-subtitle</problem>
-  <recommended_adjustment>Icon-title: 6px, Title-subtitle: 10px</recommended_adjustment>
-  <reason>Icon has inherent padding; text lines relate more closely</reason>
-</spacing_issue>
+```bash
+poetry run python -m splatnlp.mechinterp.cli.decoder_cli similar \
+    --feature-id 13934 \
+    --model ultra \
+    --top-k 10
 ```
-</spatial_spacing>
 
-### Edge Alignment
+**Sample Output:**
+```markdown
+## Features Similar to 13934 (ultra)
 
-<spatial_alignment>
-**The Problem:**
-Visually aligned edges may not be pixel-aligned because:
-- Text has optical margins built into fonts
-- Icons have visual weight offset from bounding box
-- Rounded corners start their curve before the mathematical edge
-
-**How to Check:**
-1. Turn on alignment guides — do "aligned" elements actually align?
-2. Does the page feel structured or chaotic?
-3. Are there hidden alignment lines creating order?
-
-**Correction Approach:**
-- Align to optical edge, not bounding box
-- Text should "hang" slightly into margins (optical margin alignment)
-- Icons may need individual offsets
-- Create consistent alignment zones, then optically adjust
-
-```xml
-<alignment_issue>
-  <elements>Paragraph text and bullet icon</elements>
-  <current_state>Mathematically left-aligned</current_state>
-  <problem>Bullet feels indented compared to text</problem>
-  <recommended_adjustment>Shift bullet left 2px to align visually</recommended_adjustment>
-</alignment_issue>
+| Feature ID | Cosine Similarity |
+|------------|-------------------|
+| 13892 | 0.9234 |
+| 14501 | 0.8876 |
+| 12044 | 0.8521 |
 ```
-</spatial_alignment>
 
-## Category 3: Color Optical Issues
+## Experiment Runner
 
-### Perceived Weight
+For programmatic use or integration with runner_cli:
 
-<color_weight>
-**The Problem:**
-Different colors have different visual "weight":
-- Saturated colors feel heavier than desaturated
-- Dark colors feel heavier than light
-- Warm colors advance; cool colors recede
-- Some hues (red, yellow) grab attention more than others (blue, green)
+```bash
+# Create spec file
+cat > decoder_spec.json << 'EOF'
+{
+  "type": "decoder_output_analysis",
+  "feature_id": 13934,
+  "model_type": "ultra",
+  "variables": {
+    "top_k_promoted": 15,
+    "top_k_suppressed": 15,
+    "group_by_family": true,
+    "include_ap_level": true
+  }
+}
+EOF
 
-**How to Check:**
-1. Does the visual hierarchy match the importance hierarchy?
-2. Are accent colors being used for the right elements?
-3. Do any colors "jump out" inappropriately?
-
-**Correction Approach:**
-- Reduce saturation for background elements
-- Increase saturation for focal points
-- Balance warm/cool to create depth
-- Use color weight to reinforce hierarchy
-
-```xml
-<color_weight_issue>
-  <element>Secondary action button</element>
-  <current_color>#FF5733 (saturated orange)</current_color>
-  <problem>Competes with primary action despite lower importance</problem>
-  <recommended_adjustment>Desaturate to #D4A57B or switch to neutral</recommended_adjustment>
-</color_weight_issue>
+# Run via runner CLI
+poetry run python -m splatnlp.mechinterp.cli.runner_cli \
+    --spec-path decoder_spec.json
 ```
-</color_weight>
 
-### Contrast Perception
+## Interpretation Guide
 
-<color_contrast>
-**The Problem:**
-WCAG contrast ratios measure mathematical contrast, but perceived contrast varies:
-- Small text needs more contrast than large text
-- Thin fonts need more contrast than bold fonts
-- Colored backgrounds shift perceived text color
-- Adjacent colors influence each other (simultaneous contrast)
+### AP Level Patterns
 
-**How to Check:**
-1. Pass WCAG is minimum — does it FEEL readable?
-2. Check on multiple devices/lighting conditions
-3. Look for "vibrating" color combinations
+| Pattern | Meaning |
+|---------|---------|
+| Promotes _3, _6; Suppresses _51, _57 | "Use balanced spread, not stacking" |
+| Promotes _57; Suppresses low AP | "Heavy stacking is the goal" |
+| Promotes binary (RP, CB, OG) | "These specific abilities are key" |
+| Mixed AP levels promoted | "Ability presence matters, not amount" |
 
-**Correction Approach:**
-- Exceed WCAG minimums for body text
-- Test with actual content, not placeholder
-- Avoid pure black on pure white (too harsh)
-- Adjust for adjacent color influence
+### Common Feature Types
 
-```xml
-<contrast_issue>
-  <element>Body text on colored card</element>
-  <wcag_ratio>4.8:1 (passes AA)</wcag_ratio>
-  <problem>Thin font weight makes text feel hard to read</problem>
-  <recommended_adjustment>Increase font weight OR darken text to 7:1</recommended_adjustment>
-</contrast_issue>
+| Output Pattern | Feature Type |
+|----------------|--------------|
+| Single family promoted | Family detector (e.g., SCU detector) |
+| Low-AP promoted, high-AP suppressed | "Balanced utility recommendation" |
+| Binary abilities promoted | "Build style marker" (aggressive, defensive) |
+| Death perks promoted (QR, SS, CB) | "Death-tolerant" archetype |
+| Death perks suppressed | "Death-averse" archetype |
+
+## Integration with Investigation Workflow
+
+Decoder analysis fits into the investigation workflow as follows:
+
 ```
-</color_contrast>
-
-## Category 4: Component Optical Issues
-
-### Icon Consistency
-
-<icon_optical>
-**The Problem:**
-Icons from different sources/styles have inconsistent visual weight even at same pixel size:
-- Stroke-based vs filled icons
-- Different stroke weights
-- Different levels of detail
-- Different optical sizes within bounding box
-
-**How to Check:**
-1. Line up icons — do they feel the same size?
-2. Do some icons feel "bolder" than others?
-3. Is there consistent visual density?
-
-**Correction Approach:**
-- Standardize on one icon set/style
-- Adjust individual icons to match visual weight
-- Simpler icons may need slight size increase
-- Complex icons may need slight size decrease
-
-```xml
-<icon_issue>
-  <icons>Menu (3 lines), Search (magnifier), User (person)</icons>
-  <problem>Search icon feels smaller than others</problem>
-  <current_size>All 24px</current_size>
-  <recommended_adjustment>Search icon: 26px to match visual weight</recommended_adjustment>
-</icon_issue>
+1. Overview (mechinterp-overview)
+   ↓
+2. Hypothesis formation
+   ↓
+3. 1D Sweeps (mechinterp-runner)
+   ↓
+4. Core Coverage Check ← NEW: Catch tail markers
+   ↓
+5. If diffuse/heterogeneous:
+   → Decoder Output Analysis ← THIS SKILL
+   ↓
+6. Label formulation
 ```
-</icon_optical>
 
-### Button and Touch Targets
+## Example: Feature 13934 (from investigation log)
 
-<button_optical>
-**The Problem:**
-Buttons with same padding can look different depending on:
-- Label length (short labels feel cramped)
-- Icon presence (icons add visual weight)
-- Border/shadow presence
+**Problem**: Activation analysis showed two opposite modes (RP anchor vs Zombie builds).
 
-**How to Check:**
-1. Do all buttons feel equally "clickable"?
-2. Do icon buttons feel balanced?
-3. Is there enough touch target area? (44px minimum)
+**Solution**: Decoder analysis revealed unifying pattern:
 
-**Correction Approach:**
-- Minimum width for short labels
-- Optical padding adjustment for icons
-- Consider visual padding vs actual padding
-
-```xml
-<button_issue>
-  <buttons>"OK" button vs "Cancel Changes" button</buttons>
-  <current_padding>12px 24px for both</current_padding>
-  <problem>"OK" feels too narrow despite same padding</problem>
-  <recommended_adjustment>Add min-width: 80px for short labels</recommended_adjustment>
-</button_issue>
 ```
-</button_optical>
+PROMOTES: low-AP utility (_3, _6 tokens)
+SUPPRESSES: heavy stacking (_51, _57 tokens)
 
-## Refinement Process
-
-<refinement_workflow>
-1. **First Pass — Squint Test**
-   - View design at 50% zoom
-   - Squint to blur details
-   - Note areas that feel "off"
-
-2. **Second Pass — Component Audit**
-   - Check each component category
-   - Apply category-specific checks
-   - Document issues found
-
-3. **Third Pass — Context Check**
-   - View in realistic context
-   - Check responsive breakpoints
-   - Test on actual devices if possible
-
-4. **Fourth Pass — Fresh Eyes**
-   - Step away, return later
-   - View as a user would
-   - Note any remaining friction
-</refinement_workflow>
-
-## Output Format
-
-<refinement_output>
-```xml
-<optical_refinement_report>
-  <summary>
-    <issues_found count="N"/>
-    <critical_issues count="N">Issues that significantly harm perception</critical_issues>
-    <minor_issues count="N">Polish items</minor_issues>
-  </summary>
-
-  <typography_issues>
-    <!-- Issues from Category 1 -->
-  </typography_issues>
-
-  <spatial_issues>
-    <!-- Issues from Category 2 -->
-  </spatial_issues>
-
-  <color_issues>
-    <!-- Issues from Category 3 -->
-  </color_issues>
-
-  <component_issues>
-    <!-- Issues from Category 4 -->
-  </component_issues>
-
-  <before_after_recommendations>
-    <recommendation priority="1">
-      <element>What to change</element>
-      <before>Current state</before>
-      <after>Recommended state</after>
-      <impact>Why this matters</impact>
-    </recommendation>
-  </before_after_recommendations>
-
-  <overall_assessment>
-    <craft_level>novice/developing/professional/exceptional</craft_level>
-    <most_impactful_change>The single change that would help most</most_impactful_change>
-  </overall_assessment>
-</optical_refinement_report>
+→ Feature recommends "balanced utility spread" regardless of death strategy
 ```
-</refinement_output>
 
-## Key Principle
+**Key Insight**: Different builds (RP vs Zombie) activate the feature because they share a NEED (balanced utility), not a BUILD pattern.
 
-> "Font design is all about minute adjustments to create optically pleasing letterforms."
+## See Also
 
-The same applies to all design. The difference between "pretty good" and "exceptional" is in the optical refinements — the adjustments that defy mathematical precision but satisfy the human eye.
+- **mechinterp-overview**: Initial feature assessment
+- **mechinterp-runner**: Run experiments (including core_coverage_analysis, decoder_output_analysis)
+- **mechinterp-investigator**: Full investigation workflow
+- **mechinterp-labeler**: Save labels after investigation
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
