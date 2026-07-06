@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xmtp/libxmtp](https://github.com/xmtp/libxmtp/tree/main/.claude/skills/working-with-nix/SKILL.md)
+Original source: [xmtp/libxmtp](https://github.com/xmtp/libxmtp/tree/main/.claude/skills/writing-rust-tests/SKILL.md)
 
 ---
 
