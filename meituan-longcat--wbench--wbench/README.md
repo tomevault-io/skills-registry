@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [meituan-longcat/WBench](https://github.com/meituan-longcat/WBench/tree/main/.claude/skills/wbench-submit/SKILL.md)
+Original source: [meituan-longcat/WBench](https://github.com/meituan-longcat/WBench/tree/main/.claude/skills/wbench-evaluate/SKILL.md)
 
 ---
 
