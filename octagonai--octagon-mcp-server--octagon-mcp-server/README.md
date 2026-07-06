@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [OctagonAI/octagon-mcp-server](https://github.com/OctagonAI/octagon-mcp-server/tree/main/skills/analyst-estimates/SKILL.md)
+Original source: [OctagonAI/octagon-mcp-server](https://github.com/OctagonAI/octagon-mcp-server/tree/main/skills/octagon-analyst-master/SKILL.md)
 
 ---
 
