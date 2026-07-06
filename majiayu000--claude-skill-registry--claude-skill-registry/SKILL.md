@@ -1,222 +1,172 @@
 ---
-name: mechinterp-decoder
-description: Analyze SAE decoder weights - output influence, feature importance, and decoder similarity Use when this capability is needed.
+name: recollect-worktree
+description: Manages Git worktrees for Recollect development. Creates worktrees in .worktrees/, copies .env.local, and runs pnpm install. Use when reviewing PRs in isolation or working on features in parallel.
 metadata:
   author: majiayu000
 ---
 
-# MechInterp Decoder
+<objective>
+Manage Git worktrees for isolated parallel development in the Recollect repository.
 
-Analyze SAE features through their decoder weights. This skill answers: **"What does this feature RECOMMEND?"** rather than "What activates this feature?"
+**What it does:**
 
-## Purpose
+- Creates worktrees from main branch with clear branch names
+- Copies `.env.local` automatically (Supabase/Cloudflare keys)
+- Runs `pnpm install` to make worktrees dev-ready
+- Lists, switches between, and cleans up worktrees
 
-Decoder analysis provides a complementary perspective to activation analysis:
+**When to use:**
 
-| Analysis Type | Question Answered |
-|---------------|-------------------|
-| **Activation** (overview, sweeps) | "What inputs activate this feature?" |
-| **Decoder** (this skill) | "What outputs does this feature promote?" |
+- Code review (`/review`): Isolated environment for reviewing PRs
+- Feature work (`/work`): Parallel work on multiple features
+- Testing: Test a feature branch without switching
+  </objective>
 
-For **diffuse or heterogeneous features** where activation analysis shows multiple modes, decoder analysis often reveals the unifying concept.
-
-## When to Use
-
-Use this skill when:
-
-1. **Activation analysis is inconclusive** - Multiple modes or no clear pattern
-2. **Feature appears heterogeneous** - Different builds activate it for different reasons
-3. **Looking for "what does it recommend"** - Shift from inputs to outputs
-4. **Checking AP level preferences** - Does feature prefer low-AP (_3, _6) vs high-AP (_57)?
-5. **Finding similar features** - Cluster features by decoder similarity
-
-## Commands
-
-### Output Influence
-
-Show what tokens a feature promotes (positive contribution) or suppresses (negative contribution):
+<quick_start>
 
 ```bash
-cd /root/dev/SplatNLP
+# Create a new worktree (copies .env.local, runs pnpm install)
+bash .claude/skills/recollect-worktree/scripts/worktree-manager.sh create feature-name
 
-# Basic output influence
-poetry run python -m splatnlp.mechinterp.cli.decoder_cli output-influence \
-    --feature-id 13934 \
-    --model ultra
+# List all worktrees
+bash .claude/skills/recollect-worktree/scripts/worktree-manager.sh list
 
-# JSON output
-poetry run python -m splatnlp.mechinterp.cli.decoder_cli output-influence \
-    --feature-id 13934 \
-    --model ultra \
-    --format json
+# Switch to a worktree
+bash .claude/skills/recollect-worktree/scripts/worktree-manager.sh switch feature-name
 
-# More tokens
-poetry run python -m splatnlp.mechinterp.cli.decoder_cli output-influence \
-    --feature-id 13934 \
-    --model ultra \
-    --top-k 25
+# Clean up inactive worktrees
+bash .claude/skills/recollect-worktree/scripts/worktree-manager.sh cleanup
 ```
 
-**Sample Output:**
-```markdown
-## Feature 13934 Output Influence (ultra)
+</quick_start>
 
-### Tokens This Feature PROMOTES
+<commands>
+**`create <branch-name> [from-branch]`**
 
-| Token | Contribution | Family | AP Level |
-|-------|--------------|--------|----------|
-| respawn_punisher | +0.232 | respawn_punisher | binary |
-| comeback | +0.159 | comeback | binary |
-| quick_super_jump_6 | +0.155 | quick_super_jump | 6 |
-| intensify_action_3 | +0.140 | intensify_action | 3 |
-| ink_saver_main_6 | +0.128 | ink_saver_main | 6 |
-
-### Tokens This Feature SUPPRESSES
-
-| Token | Contribution | Family | AP Level |
-|-------|--------------|--------|----------|
-| run_speed_up_57 | -0.301 | run_speed_up | 57 |
-| quick_respawn_57 | -0.247 | quick_respawn | 57 |
-| swim_speed_up_57 | -0.209 | swim_speed_up | 57 |
-
-### Interpretation
-- **Top promoted**: respawn_punisher (+0.232)
-- **Top suppressed**: run_speed_up_57 (-0.301)
-- **Pattern**: Promotes low-AP tokens, suppresses high-AP stacking
-```
-
-### Weight Percentile
-
-Check how important a feature is by its decoder weight magnitude:
+Creates new worktree with dependencies installed.
 
 ```bash
-poetry run python -m splatnlp.mechinterp.cli.decoder_cli weight-percentile \
-    --feature-id 13934 \
-    --model ultra
+bash .claude/skills/recollect-worktree/scripts/worktree-manager.sh create feature-login
 ```
 
-**Sample Output:**
-```markdown
-## Feature 13934 Decoder Weight (ultra)
+What happens:
 
-- **Magnitude**: 2.3456
-- **Percentile**: 78.5%
-- **Total features**: 24576
-```
+1. Checks if worktree already exists
+2. Updates base branch from remote
+3. Creates new worktree and branch
+4. Copies `.env.local`
+5. Runs `pnpm install`
+6. Shows path for cd-ing to worktree
 
-**Interpretation:**
-- High percentile (>90%): Feature has strong output influence
-- Low percentile (<10%): Feature has weak output influence
-- Note: Low-magnitude features may still be important for specific tokens
+**`list` or `ls`**
 
-### Similar Features (by Decoder)
+Lists all worktrees with their branches and status.
 
-Find features with similar decoder patterns (what they recommend):
+**`switch <name>` or `go <name>`**
+
+Switches to an existing worktree.
+
+**`cleanup` or `clean`**
+
+Removes inactive worktrees with confirmation.
+</commands>
+
+<workflow_examples>
+**PR Review:**
 
 ```bash
-poetry run python -m splatnlp.mechinterp.cli.decoder_cli similar \
-    --feature-id 13934 \
-    --model ultra \
-    --top-k 10
+# Create worktree for PR review
+bash .claude/skills/recollect-worktree/scripts/worktree-manager.sh create pr-664-lightbox
+
+# Move to worktree and start dev
+cd .worktrees/pr-664-lightbox
+pnpm run dev
+
+# After review, return and cleanup
+cd ../..
+bash .claude/skills/recollect-worktree/scripts/worktree-manager.sh cleanup
 ```
 
-**Sample Output:**
-```markdown
-## Features Similar to 13934 (ultra)
-
-| Feature ID | Cosine Similarity |
-|------------|-------------------|
-| 13892 | 0.9234 |
-| 14501 | 0.8876 |
-| 12044 | 0.8521 |
-```
-
-## Experiment Runner
-
-For programmatic use or integration with runner_cli:
+**Parallel Development:**
 
 ```bash
-# Create spec file
-cat > decoder_spec.json << 'EOF'
-{
-  "type": "decoder_output_analysis",
-  "feature_id": 13934,
-  "model_type": "ultra",
-  "variables": {
-    "top_k_promoted": 15,
-    "top_k_suppressed": 15,
-    "group_by_family": true,
-    "include_ap_level": true
-  }
-}
-EOF
+# Start first feature
+bash .claude/skills/recollect-worktree/scripts/worktree-manager.sh create feature-a
 
-# Run via runner CLI
-poetry run python -m splatnlp.mechinterp.cli.runner_cli \
-    --spec-path decoder_spec.json
+# Start second feature
+bash .claude/skills/recollect-worktree/scripts/worktree-manager.sh create feature-b
+
+# Switch between them
+bash .claude/skills/recollect-worktree/scripts/worktree-manager.sh switch feature-a
 ```
 
-## Interpretation Guide
+</workflow_examples>
 
-### AP Level Patterns
+<integration>
+**`/review` command:**
+1. Check current branch
+2. If already on PR branch → stay there
+3. If different branch → offer worktree:
+   "Use worktree for isolated review? (y/n)"
+   - yes → call recollect-worktree skill
+   - no → proceed with PR diff on current branch
 
-| Pattern | Meaning |
-|---------|---------|
-| Promotes _3, _6; Suppresses _51, _57 | "Use balanced spread, not stacking" |
-| Promotes _57; Suppresses low AP | "Heavy stacking is the goal" |
-| Promotes binary (RP, CB, OG) | "These specific abilities are key" |
-| Mixed AP levels promoted | "Ability presence matters, not amount" |
+**`/work` command:**
 
-### Common Feature Types
+1. Ask: "How do you want to work?"
+   - New branch on current worktree (live work)
+   - Worktree (parallel work)
+2. If worktree → call recollect-worktree skill
+   </integration>
 
-| Output Pattern | Feature Type |
-|----------------|--------------|
-| Single family promoted | Family detector (e.g., SCU detector) |
-| Low-AP promoted, high-AP suppressed | "Balanced utility recommendation" |
-| Binary abilities promoted | "Build style marker" (aggressive, defensive) |
-| Death perks promoted (QR, SS, CB) | "Death-tolerant" archetype |
-| Death perks suppressed | "Death-averse" archetype |
+<design_principles>
+**KISS:** One manager script, simple commands, sensible defaults
 
-## Integration with Investigation Workflow
+**Opinionated Defaults:**
 
-Decoder analysis fits into the investigation workflow as follows:
+- Worktrees from `main` (unless specified)
+- Stored in `.worktrees/` directory
+- Branch name becomes worktree name
+- `.env.local` copied automatically
+- `pnpm install` runs automatically
 
-```
-1. Overview (mechinterp-overview)
-   ↓
-2. Hypothesis formation
-   ↓
-3. 1D Sweeps (mechinterp-runner)
-   ↓
-4. Core Coverage Check ← NEW: Catch tail markers
-   ↓
-5. If diffuse/heterogeneous:
-   → Decoder Output Analysis ← THIS SKILL
-   ↓
-6. Label formulation
-```
+**Safety First:**
 
-## Example: Feature 13934 (from investigation log)
+- Confirms before creating/removing
+- Won't remove current worktree
+- Clear error messages
+  </design_principles>
 
-**Problem**: Activation analysis showed two opposite modes (RP anchor vs Zombie builds).
-
-**Solution**: Decoder analysis revealed unifying pattern:
+<technical_details>
+**Directory structure:**
 
 ```
-PROMOTES: low-AP utility (_3, _6 tokens)
-SUPPRESSES: heavy stacking (_51, _57 tokens)
-
-→ Feature recommends "balanced utility spread" regardless of death strategy
+.worktrees/
+├── feature-login/
+│   ├── .git
+│   ├── .env.local      # Copied from main
+│   ├── node_modules/   # Installed via pnpm
+│   └── ...
+└── pr-664-lightbox/
+    └── ...
 ```
 
-**Key Insight**: Different builds (RP vs Zombie) activate the feature because they share a NEED (balanced utility), not a BUILD pattern.
+**How it works:**
 
-## See Also
+- Uses `git worktree add` for isolated environments
+- Each worktree has its own branch
+- Share git history with main repo
+- Lightweight (filesystem links, no duplication)
+  </technical_details>
 
-- **mechinterp-overview**: Initial feature assessment
-- **mechinterp-runner**: Run experiments (including core_coverage_analysis, decoder_output_analysis)
-- **mechinterp-investigator**: Full investigation workflow
-- **mechinterp-labeler**: Save labels after investigation
+<success_criteria>
+Worktree is ready when:
+
+- [ ] `.worktrees/<name>/` directory exists
+- [ ] `.env.local` is present in worktree
+- [ ] `node_modules/` exists (pnpm install completed)
+- [ ] `pnpm run dev` starts successfully
+      </success_criteria>
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
