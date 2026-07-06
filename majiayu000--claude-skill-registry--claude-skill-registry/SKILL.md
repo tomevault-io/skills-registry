@@ -1,1163 +1,1290 @@
 ---
-name: meeting-notes-to-action-items
-description: Convert meeting notes, demo sessions, and discussions into actionable tasks with clear owners, priorities, and deadlines. Use when processing any meeting notes, demo feedback, product reviews, or discussions that need to become TODO lists, JIRA tickets, or Trello cards. Use when this capability is needed.
+name: odoo-connector-module-creator
+description: Creates and enhances Odoo 16.0 connector modules that integrate with external systems (e-commerce, logistics, accounting, CRM) using the `generic_connector` framework
 metadata:
   author: majiayu000
 ---
 
-# Meeting Notes to Action Items Converter
+# Odoo Connector Module Creator and Enhancer
+
+## Description
+
+Creates and enhances Odoo 16.0 connector modules that integrate with external systems (e-commerce, logistics, accounting, CRM) using the `generic_connector` framework. This skill handles:
+
+- **New Connector Creation**: Build complete integration modules for Shopify, WooCommerce, Amazon, or any external API
+- **Connector Enhancement**: Add features like inventory sync, webhook support, or new entity types to existing connectors
+- **Troubleshooting**: Debug sync issues, API errors, authentication problems, and queue job failures
+- **Architecture Implementation**: Properly implement binding models, adapters, mappers, and importers/exporters
+
+The skill leverages production-tested patterns from reference connectors (zid_connector_v2, beatroute_connector) and provides automated scripts for generating boilerplate code.
 
 ## Overview
 
-Automatically transform demo meeting notes, feedback sessions, and product reviews into structured, actionable tasks. Extracts action items from unstructured notes and formats them as TODO lists, JIRA tickets, or Trello cards with proper priorities, assignees, and deadlines.
+Create production-ready Odoo 16.0 connector modules that integrate with external systems using the `generic_connector` framework. Handle creation of new connectors, enhancement of existing connectors, troubleshooting sync issues, and debugging integration problems.
 
-## Quick Start
+## When to Use This Skill
 
-Provide meeting notes from a demo session and specify the output format:
+Use this skill when the user requests:
+- **Creating new connectors**: "Create a Shopify connector", "Build WooCommerce integration", "Connect to Amazon API"
+- **Enhancing connectors**: "Add inventory sync to zid_connector", "Implement webhooks for orders", "Add product export"
+- **Adding entities**: "Add customer sync to the connector", "Import invoices from the external system"
+- **Troubleshooting**: "Orders aren't importing", "Webhook signature verification failing", "Fix sync errors"
+- **Debugging**: "Why is the API returning 401?", "Products are duplicating", "Queue jobs not running"
 
-```
-"Convert these demo notes to action items"
-"Create JIRA tickets from this feedback session"
-"Extract tasks from this meeting transcript and format as TODO list"
-```
+## Key Concepts
 
-The skill will:
-1. Analyze the notes to identify action items
-2. Extract key information (who, what, when, priority)
-3. Format as requested (TODO, JIRA, Trello)
-4. Optionally generate API calls or scripts for automatic creation
+### Generic Connector Framework
 
-## Detailed Instructions
+All connector modules extend `generic_connector`, which provides:
 
-### Step 1: Parse Demo Notes
+1. **Backend Model** - Configuration and orchestration
+2. **Binding Models** - Link Odoo records to external entities
+3. **Adapter Component** - HTTP client for API communication
+4. **Mapper Components** - Data transformation (import/export)
+5. **Importer/Exporter Components** - Sync logic
+6. **Webhook System** - Real-time event processing
+7. **Queue Job Integration** - Async operations
 
-Accept notes in various formats:
-- **Meeting transcripts** - Raw text from recordings or live notes
-- **Bullet point notes** - Structured notes with key points
-- **Email summaries** - Demo feedback sent via email
-- **Slack/Teams messages** - Chat discussions about the demo
-- **Voice-to-text transcripts** - Automated transcriptions
+### Reference Code
 
-**Identify Action Items:**
+Three production connectors serve as references:
+- `/Users/jamshid/PycharmProjects/Siafa/odoo16e_simc/addons-connector/generic_connector` - Base framework
+- `/Users/jamshid/PycharmProjects/Siafa/odoo16e_simc/addons-connector/zid_connector_v2` - E-commerce example
+- `/Users/jamshid/PycharmProjects/Siafa/odoo16e_simc/addons-connector/beatroute_connector` - Logistics example
 
-Look for patterns indicating tasks:
-- "We need to..."
-- "Should fix..."
-- "TODO:", "Action item:"
-- "[Name] will..."
-- "By [date]..."
-- "High priority:", "Critical:"
-- Questions that require follow-up
-- Bug reports or issues mentioned
-- Feature requests
-- Documentation updates needed
+## Workflow
 
-**Extract Context:**
-- **What** needs to be done (task description)
-- **Who** is responsible (assignee)
-- **When** it's due (deadline/sprint)
-- **Why** it matters (context from demo)
-- **Priority** level (based on language and context)
-- **Category** (bug, feature, improvement, documentation)
+### Creating a New Connector
 
-### Step 2: Structure Action Items
+When the user requests a new connector:
 
-Transform raw notes into structured tasks with:
+**Step 1: Gather Requirements**
+- External system name (e.g., "Shopify", "WooCommerce")
+- Connector type: ecommerce, logistics, accounting, crm
+- Entities to sync: products, orders, customers, inventory
+- Sync direction: import, export, or bidirectional
+- Authentication method: API key, OAuth, basic auth
+- API documentation URL (if available)
 
-**Clear Task Titles:**
-- Action-oriented (verb first)
-- Specific and concise
-- Include relevant context
+**Step 2: Initialize Module**
+```bash
+# Use the init_connector.py script
+python3 scripts/init_connector.py <connector_name> --path <output_path> --type <connector_type>
 
-Examples:
-- ❌ "The button thing"
-- ✅ "Fix checkout button not responding on mobile"
-
-**Detailed Descriptions:**
-- Context from the demo
-- Steps to reproduce (for bugs)
-- Acceptance criteria
-- Additional notes or references
-
-**Proper Categorization:**
-- **Bug**: Issues that don't work as expected
-- **Feature**: New functionality requests
-- **Improvement**: Enhancements to existing features
-- **Documentation**: Docs, guides, or help text
-- **Design**: UI/UX changes
-- **Investigation**: Research or spike tasks
-
-**Priority Assignment:**
-
-Based on impact and urgency:
-- **Critical/P0**: Blocking issues, security problems
-- **High/P1**: Important features, major bugs
-- **Medium/P2**: Standard tasks, minor bugs
-- **Low/P3**: Nice-to-haves, minor improvements
-
-Indicators:
-- "Critical", "urgent", "ASAP" → High priority
-- "When you get a chance", "nice to have" → Low priority
-- Blocking other work → High priority
-- Cosmetic issues → Low priority
-
-**Assignee Identification:**
-
-- Explicit mentions: "John will handle this"
-- Role-based: "Frontend team should fix"
-- Inferred from context: Bug in login → Backend team
-- Default to "Unassigned" if unclear
-
-**Deadline Extraction:**
-
-- Explicit dates: "By Friday", "End of sprint"
-- Relative dates: "This week", "Next sprint"
-- Inferred urgency: Critical bugs → Immediate
-- Default: "To be determined" if not specified
-
-### Step 3: Format Output
-
-#### TODO List Format
-
-**Structure:**
-```markdown
-# Demo Action Items - [Demo Name/Date]
-
-## High Priority
-
-- [ ] **[Task Title]**
-  - **Assignee**: [Name or Team]
-  - **Deadline**: [Date or "TBD"]
-  - **Category**: [Bug/Feature/etc]
-  - **Description**: [Detailed description]
-  - **Context**: [Relevant notes from demo]
-
-## Medium Priority
-
-- [ ] **[Task Title]**
-  - **Assignee**: [Name]
-  - **Deadline**: [Date]
-  - **Category**: [Category]
-  - **Description**: [Details]
-
-## Low Priority
-
-- [ ] **[Task Title]**
-  - **Assignee**: [Name]
-  - **Deadline**: [Date]
-  - **Category**: [Category]
-  - **Description**: [Details]
-
-## Follow-up Questions
-
-- [ ] **[Question to clarify]**
-  - **Who to ask**: [Person]
-  - **Context**: [Background]
-
-## Notes
-
-- [Additional context or observations from demo]
-- [Decisions made during demo]
+# Example:
+python3 scripts/init_connector.py shopify --path ~/odoo/addons --type ecommerce
 ```
 
-**Best Practices for TODO:**
-- Use checkboxes `- [ ]` for easy tracking
-- Bold task titles for visibility
-- Group by priority
-- Include all metadata inline
-- Add context so tasks make sense later
+**Step 3: Review Generated Structure**
 
-#### JIRA Ticket Format
-
-**Structure:**
-```markdown
-# JIRA Tickets for [Demo Name]
-
-## Ticket 1: [Task Title]
-
-**Project**: [PROJECT-KEY]
-**Issue Type**: Bug / Story / Task
-**Summary**: [Clear, concise title]
-**Priority**: Critical / High / Medium / Low
-**Assignee**: [username or "Unassigned"]
-**Labels**: demo-feedback, [sprint-name], [component]
-**Sprint**: [Sprint number or name]
-**Due Date**: [YYYY-MM-DD or empty]
-
-**Description**:
+The script creates:
 ```
-[Detailed description with context from demo]
-
-**Steps to Reproduce** (for bugs):
-1. [Step 1]
-2. [Step 2]
-3. [Step 3]
-
-**Expected Behavior**:
-[What should happen]
-
-**Actual Behavior**:
-[What actually happens]
-
-**Acceptance Criteria**:
-- [ ] [Criteria 1]
-- [ ] [Criteria 2]
-
-**Demo Context**:
-[Relevant notes from the demo session]
+shopify_connector/
+├── __manifest__.py              # Module metadata
+├── __init__.py                  # Python imports
+├── models/
+│   ├── backend.py              # Backend configuration
+│   ├── adapter.py              # API client
+│   ├── product_binding.py      # Product sync
+│   └── __init__.py
+├── views/
+│   ├── backend_views.xml       # Backend UI
+│   ├── binding_views.xml       # Binding UI
+│   └── menu_views.xml          # Menu structure
+├── security/
+│   ├── security.xml            # Access groups
+│   └── ir.model.access.csv     # Access rules
+├── wizards/
+│   ├── sync_wizard.py          # Manual sync wizard
+│   └── __init__.py
+├── data/
+│   ├── ir_cron_data.xml        # Scheduled jobs
+│   └── queue_job_function_data.xml
+└── README.md
 ```
 
-**Components**: [Component names]
-**Affects Version**: [Version shown in demo]
-**Fix Version**: [Target version]
+**Step 4: Customize Backend Model**
 
----
+Edit `models/backend.py`:
 
-## Ticket 2: [Next Task]
-[Repeat structure]
-```
+1. **Update API configuration fields** to match the external system:
+   ```python
+   # Example for Shopify
+   shop_url = fields.Char(string='Shop URL', required=True)
+   api_version = fields.Selection([
+       ('2024-01', '2024-01'),
+       ('2024-04', '2024-04'),
+   ], default='2024-04')
+   ```
 
-**JIRA-Specific Guidelines:**
-- Use proper JIRA fields (Summary, Description, etc.)
-- Include issue type (Bug, Story, Task, Epic)
-- Add appropriate labels for filtering
-- Link related tickets if applicable
-- Estimate story points if possible
-- Include acceptance criteria
+2. **Implement template methods**:
+   ```python
+   def _test_connection_implementation(self):
+       """Test API connection."""
+       adapter = self.get_adapter('shopify.adapter')
+       return adapter.test_connection()
 
-**Issue Type Selection:**
-- **Bug**: Something is broken or not working
-- **Story**: New feature or user-facing functionality
-- **Task**: Internal work (refactoring, research)
-- **Epic**: Large initiative requiring multiple stories
-- **Sub-task**: Part of a larger story or bug
+   def _sync_orders_implementation(self):
+       """Import orders."""
+       with self.work_on('shopify.sale.order') as work:
+           importer = work.component(usage='batch.importer')
+           return importer.run()
+   ```
 
-#### Trello Card Format
+**Step 5: Implement Adapter**
 
-**Structure:**
-```markdown
-# Trello Cards for [Demo Name]
+Edit `models/adapter.py`:
 
-## Board: [Board Name]
-## List: [List Name - e.g., "To Do", "Backlog"]
+1. **Configure authentication** (see `references/authentication.md` for patterns):
+   ```python
+   def get_api_headers(self):
+       headers = super().get_api_headers()
+       headers.update({
+           'X-Shopify-Access-Token': self.backend_record.api_key,
+           'Content-Type': 'application/json',
+       })
+       return headers
+   ```
 
----
+2. **Add CRUD methods** for each entity type:
+   ```python
+   def get_products(self, filters=None):
+       """Fetch products from Shopify."""
+       return self.get('/admin/api/2024-01/products.json', params=filters)
 
-### Card 1: [Task Title]
+   def create_order(self, data):
+       """Create order in Shopify."""
+       return self.post('/admin/api/2024-01/orders.json', data={'order': data})
+   ```
 
-**List**: [Which list to add to]
-**Labels**: [Label1], [Label2], [Label3]
-**Members**: [@username]
-**Due Date**: [YYYY-MM-DD or "None"]
-**Position**: top / bottom
+3. **Handle pagination** (see `references/api_integration.md`):
+   ```python
+   def get_all_products(self):
+       """Fetch all products with pagination."""
+       # Implement based on API pagination style
+   ```
 
-**Description**:
-```
-## Context from Demo
-[Background and demo feedback]
+**Step 6: Create Mapper Components**
 
-## What Needs to Be Done
-[Specific actions required]
-
-## Acceptance Criteria
-- [ ] [Criteria 1]
-- [ ] [Criteria 2]
-- [ ] [Criteria 3]
-
-## Additional Notes
-[Any other relevant information]
-```
-
-**Checklist Items**:
-- [ ] [Checklist item 1]
-- [ ] [Checklist item 2]
-- [ ] [Checklist item 3]
-
-**Attachments**: [URLs or file references]
-
-**Custom Fields** (if applicable):
-- Priority: High / Medium / Low
-- Estimated Hours: [number]
-- Story Points: [number]
-
----
-
-### Card 2: [Next Task]
-[Repeat structure]
-```
-
-**Trello-Specific Guidelines:**
-- Use color-coded labels for categories
-- Add checklists for multi-step tasks
-- Include due dates for time-sensitive items
-- @mention relevant team members
-- Link to related cards
-- Attach screenshots or mockups if available
-
-**Label Suggestions:**
-- 🔴 Red: Urgent/Critical
-- 🟠 Orange: Bug
-- 🟡 Yellow: Feature
-- 🟢 Green: Improvement
-- 🔵 Blue: Documentation
-- 🟣 Purple: Design
-
-### Step 4: Generate API Scripts (Optional)
-
-For automated task creation, generate scripts that use the APIs:
-
-#### JIRA API Script (Python)
+Create `components/mapper.py`:
 
 ```python
-#!/usr/bin/env python3
-"""
-Create JIRA tickets from demo action items
-Requires: pip install jira
-"""
+from odoo.addons.generic_connector.components.mapper import GenericImportMapper
 
-from jira import JIRA
-import os
+class ProductImportMapper(GenericImportMapper):
+    _name = 'shopify.product.import.mapper'
+    _inherit = 'generic.import.mapper'
+    _apply_on = 'shopify.product.template'
 
-# Configuration
-JIRA_URL = "https://your-domain.atlassian.net"
-JIRA_EMAIL = os.getenv("JIRA_EMAIL")
-JIRA_API_TOKEN = os.getenv("JIRA_API_TOKEN")
-PROJECT_KEY = "PROJ"
+    direct = [
+        ('title', 'name'),
+        ('vendor', 'manufacturer'),
+    ]
 
-# Connect to JIRA
-jira = JIRA(server=JIRA_URL, basic_auth=(JIRA_EMAIL, JIRA_API_TOKEN))
+    @mapping
+    def backend_id(self, record):
+        return {'backend_id': self.backend_record.id}
 
-# Tickets to create
-tickets = [
-    {
-        "project": PROJECT_KEY,
-        "summary": "[Task title]",
-        "description": "[Detailed description]",
-        "issuetype": {"name": "Bug"},
-        "priority": {"name": "High"},
-        "labels": ["demo-feedback"],
-        "assignee": {"name": "username"},
-        "duedate": "2024-12-31"  # YYYY-MM-DD
-    },
-    # Add more tickets...
-]
-
-# Create tickets
-for ticket_data in tickets:
-    new_issue = jira.create_issue(fields=ticket_data)
-    print(f"Created: {new_issue.key} - {ticket_data['summary']}")
+    @mapping
+    def price(self, record):
+        variants = record.get('variants', [])
+        if variants:
+            return {'list_price': float(variants[0].get('price', 0))}
+        return {}
 ```
 
-#### Trello API Script (Python)
+**Step 7: Implement Importer Components**
+
+Create `components/importer.py`:
 
 ```python
-#!/usr/bin/env python3
-"""
-Create Trello cards from demo action items
-Requires: pip install py-trello
-"""
+from odoo.addons.generic_connector.components.importer import GenericImporter
 
-from trello import TrelloClient
-import os
+class ProductImporter(GenericImporter):
+    _name = 'shopify.product.importer'
+    _inherit = 'generic.importer'
+    _apply_on = 'shopify.product.template'
 
-# Configuration
-API_KEY = os.getenv("TRELLO_API_KEY")
-API_SECRET = os.getenv("TRELLO_API_SECRET")
-TOKEN = os.getenv("TRELLO_TOKEN")
+    def _import_record(self, external_id, force=False):
+        # Fetch from external system
+        adapter = self.component(usage='backend.adapter')
+        external_data = adapter.get_product(external_id)
 
-BOARD_ID = "your_board_id"
-LIST_NAME = "To Do"
+        # Transform data
+        mapper = self.component(usage='import.mapper')
+        mapped_data = mapper.map_record(external_data).values()
 
-# Connect to Trello
-client = TrelloClient(api_key=API_KEY, api_secret=API_SECRET, token=TOKEN)
+        # Create or update binding
+        binding = self._get_binding()
+        if binding:
+            binding.write(mapped_data)
+        else:
+            binding = self.model.create(mapped_data)
 
-# Get board and list
-board = client.get_board(BOARD_ID)
-todo_list = None
-for list_obj in board.list_lists():
-    if list_obj.name == LIST_NAME:
-        todo_list = list_obj
-        break
-
-# Cards to create
-cards = [
-    {
-        "name": "[Task title]",
-        "desc": "[Detailed description with context]",
-        "labels": ["bug", "high-priority"],
-        "due": "2024-12-31",  # YYYY-MM-DD
-        "position": "top"
-    },
-    # Add more cards...
-]
-
-# Create cards
-for card_data in cards:
-    card = todo_list.add_card(
-        name=card_data["name"],
-        desc=card_data["desc"],
-        position=card_data.get("position", "bottom")
-    )
-
-    # Add labels
-    for label_name in card_data.get("labels", []):
-        # Find or create label
-        label = next((l for l in board.get_labels() if l.name == label_name), None)
-        if label:
-            card.add_label(label)
-
-    # Set due date
-    if "due" in card_data:
-        card.set_due(card_data["due"])
-
-    print(f"Created: {card.name}")
+        return binding
 ```
 
-#### Bash Script for Simple TODO File
+**Step 8: Register Components**
+
+Create `components/__init__.py`:
+```python
+from . import adapter
+from . import mapper
+from . import importer
+from . import exporter
+```
+
+Update main `__init__.py`:
+```python
+from . import models
+from . import wizards
+from . import components
+```
+
+**Step 9: Test the Connector**
 
 ```bash
-#!/bin/bash
-# Create TODO.md file from action items
+# Install module
+odoo-bin -c odoo.conf -d test_db -i shopify_connector
 
-cat > DEMO_ACTION_ITEMS.md << 'EOF'
-# Demo Action Items - [Date]
-
-## High Priority
-- [ ] [Task 1]
-- [ ] [Task 2]
-
-## Medium Priority
-- [ ] [Task 3]
-
-## Low Priority
-- [ ] [Task 4]
-
-EOF
-
-echo "Created DEMO_ACTION_ITEMS.md"
+# Test in Odoo UI
+# 1. Go to Connector > Shopify > Backends
+# 2. Create a new backend
+# 3. Configure API credentials
+# 4. Click "Test Connection"
+# 5. Click "Sync All"
 ```
 
-## Examples
+### Enhancing an Existing Connector
 
-### Example 1: Simple Demo Notes to TODO
+When the user wants to add functionality to an existing connector:
 
-**Input (Demo Notes):**
-```
-Product Demo - New Dashboard Feature - Dec 15, 2024
+**Step 1: Identify Enhancement Type**
 
-Attendees: Sarah (PM), Mike (Dev), Lisa (Design), John (QA)
+- Adding a new entity (orders, customers, invoices)
+- Adding a new feature (webhooks, batch export)
+- Fixing bugs or improving performance
+- Adding authentication method
 
-Demo went well overall! Few issues:
+**Step 2: Add New Entity Binding**
 
-- The loading spinner on dashboard isn't showing up properly. Mike said
-  he'll look into it this week.
+Use the `add_binding.py` script:
 
-- Sarah mentioned we should add a refresh button. Users were confused
-  about how to update the data. High priority for next sprint.
+```bash
+python3 scripts/add_binding.py <connector_path> <entity_name> --odoo-model <model>
 
-- Lisa noticed the chart colors don't match our design system. She'll
-  update the mockups and we can implement after the refresh button.
-
-- John found a bug where clicking the export button twice crashes the
-  page. Needs to be fixed before release!
-
-- We should add a user guide for this feature. Lisa volunteered to write it.
-
-Questions:
-- Should we show real-time data or cache it? Need to ask backend team.
+# Example:
+python3 scripts/add_binding.py ~/odoo/addons/shopify_connector customer --odoo-model res.partner
 ```
 
-**Output (TODO Format):**
-```markdown
-# Demo Action Items - Product Demo (Dec 15, 2024)
+This generates:
+- `models/customer_binding.py` - Binding model
+- `views/customer_views.xml` - UI views
+- Updates to `__manifest__.py` and security files
+- Adapter methods to implement manually
 
-## High Priority
+**Step 3: Implement Components**
 
-- [ ] **Fix export button crash when clicked twice**
-  - **Assignee**: Mike (Dev)
-  - **Deadline**: Before release
-  - **Category**: Bug
-  - **Description**: Export button crashes the page when clicked multiple times in quick succession
-  - **Context**: Found by John during QA testing in demo. Blocking release.
+Follow steps 6-7 from "Creating a New Connector" to implement mapper and importer/exporter for the new entity.
 
-- [ ] **Add refresh button to dashboard**
-  - **Assignee**: Mike (Dev)
-  - **Deadline**: Next sprint
-  - **Category**: Feature
-  - **Description**: Users need a clear way to refresh/update dashboard data
-  - **Context**: Sarah noted users were confused about how to update the data during demo
-  - **Acceptance Criteria**:
-    - [ ] Button clearly visible in header
-    - [ ] Shows loading state when refreshing
-    - [ ] Updates all dashboard widgets
+**Step 4: Add to Backend Orchestration**
 
-## Medium Priority
+Update `models/backend.py`:
 
-- [ ] **Fix loading spinner not displaying**
-  - **Assignee**: Mike (Dev)
-  - **Deadline**: This week
-  - **Category**: Bug
-  - **Description**: Dashboard loading spinner doesn't show up properly
-  - **Context**: Noticed during demo, affects user experience
+```python
+def _sync_customers_implementation(self):
+    """Import customers."""
+    with self.work_on('shopify.res.partner') as work:
+        importer = work.component(usage='batch.importer')
+        return importer.run()
 
-- [ ] **Update chart colors to match design system**
-  - **Assignee**: Lisa (Design) → then Dev team
-  - **Deadline**: After refresh button is complete
-  - **Category**: Design
-  - **Description**: Current chart colors don't align with design system
-  - **Context**: Lisa will update mockups first, then dev team implements
-
-- [ ] **Create user guide for new dashboard feature**
-  - **Assignee**: Lisa (Design)
-  - **Deadline**: TBD
-  - **Category**: Documentation
-  - **Description**: Write user-facing documentation explaining the dashboard feature
-  - **Context**: Lisa volunteered during demo
-
-## Follow-up Questions
-
-- [ ] **Determine data refresh strategy: real-time vs cached**
-  - **Who to ask**: Backend team
-  - **Context**: Need architectural decision before implementing refresh functionality
-  - **Impact**: Affects refresh button implementation
-
-## Demo Summary
-
-**What went well**:
-- Overall positive reception
-- Feature functionality working as expected
-
-**Issues identified**: 5 action items created
-**Next steps**: Prioritize export bug fix for release
+def action_sync_all(self):
+    """Override to include customers."""
+    super().action_sync_all()
+    self.with_delay().sync_customers()
 ```
 
-### Example 2: Detailed Feedback to JIRA Tickets
+### Implementing Webhooks
 
-**Input (Demo Feedback):**
-```
-Mobile App Demo Feedback - Sprint 23
+When the user requests webhook support:
 
-Client demo with Acme Corp - they loved it but found some issues:
+**Step 1: Create Webhook Controller**
 
-1. Login screen - password field not clearing after failed attempt.
-   Security concern. Jane from their team reported it.
+Create `controllers/webhook_controller.py`:
 
-2. They want dark mode ASAP. CEO specifically asked for it.
-   Would be a great selling point.
+```python
+from odoo import http
+from odoo.http import request
+import json
+import logging
 
-3. Profile picture upload is slow - took 30 seconds for a 2MB image.
-   Unacceptable for production.
+_logger = logging.getLogger(__name__)
 
-4. Minor: spacing on settings page looks off on tablets.
-   Not critical but noticed by their UX lead.
+class ShopifyWebhookController(http.Controller):
+    @http.route('/shopify/webhook', type='json', auth='none', csrf=False)
+    def webhook(self):
+        """Handle Shopify webhooks."""
+        try:
+            payload = request.httprequest.get_data(as_text=True)
+            topic = request.httprequest.headers.get('X-Shopify-Topic')
+            hmac_header = request.httprequest.headers.get('X-Shopify-Hmac-SHA256')
 
-5. Push notifications not working on Android 13. Critical bug.
-```
+            # Find backend
+            shop_domain = request.httprequest.headers.get('X-Shopify-Shop-Domain')
+            backend = request.env['shopify.backend'].sudo().search([
+                ('shop_url', 'ilike', shop_domain)
+            ], limit=1)
 
-**Output (JIRA Format):**
-```markdown
-# JIRA Tickets - Mobile App Demo (Sprint 23)
+            if not backend:
+                return {'error': 'Backend not found'}, 404
 
-## Ticket 1: Password field not clearing after failed login attempt
+            # Verify signature
+            if not self._verify_webhook(payload, hmac_header, backend.webhook_secret):
+                return {'error': 'Invalid signature'}, 401
 
-**Project**: MOBILE
-**Issue Type**: Bug
-**Summary**: Password field retains value after failed login attempt
-**Priority**: High
-**Assignee**: Unassigned
-**Labels**: demo-feedback, security, sprint-24, login
-**Sprint**: Sprint 24
-**Due Date**: 2024-12-20
+            # Create webhook record
+            webhook = request.env['generic.webhook'].sudo().create({
+                'backend_id': backend.id,
+                'event_type': topic,
+                'payload': payload,
+                'signature': hmac_header,
+                'processing_status': 'pending',
+            })
 
-**Description**:
-During client demo with Acme Corp, Jane reported that the password
-field is not clearing after a failed login attempt. This is a security
-concern as it could expose passwords if the device is shared or observed.
+            # Process asynchronously
+            webhook.with_delay().process_webhook()
 
-**Steps to Reproduce**:
-1. Open mobile app
-2. Enter incorrect username/password
-3. Submit login form
-4. Observe password field after error message
+            return {'status': 'accepted', 'webhook_id': webhook.id}
 
-**Expected Behavior**:
-Password field should clear after failed login attempt for security
+        except Exception as e:
+            _logger.exception("Webhook processing failed")
+            return {'error': str(e)}, 500
 
-**Actual Behavior**:
-Password field retains the entered value
+    def _verify_webhook(self, payload, hmac_header, secret):
+        """Verify HMAC-SHA256 signature."""
+        import hmac
+        import hashlib
+        import base64
 
-**Acceptance Criteria**:
-- [ ] Password field clears immediately after failed login
-- [ ] Applies to both iOS and Android
-- [ ] Username field behavior remains unchanged
-- [ ] Error message still displays properly
+        computed = hmac.new(
+            secret.encode('utf-8'),
+            payload.encode('utf-8'),
+            hashlib.sha256
+        ).digest()
 
-**Demo Context**:
-Reported by Jane from Acme Corp during Sprint 23 demo. Flagged as
-security concern.
+        computed_base64 = base64.b64encode(computed).decode()
 
-**Components**: Authentication, Mobile-UI
-**Affects Version**: 2.3.0
-**Fix Version**: 2.3.1
-
----
-
-## Ticket 2: Implement Dark Mode
-
-**Project**: MOBILE
-**Issue Type**: Story
-**Summary**: Add dark mode theme to mobile app
-**Priority**: High
-**Assignee**: Unassigned
-**Labels**: demo-feedback, feature-request, sprint-24, ui
-**Sprint**: Sprint 24
-**Story Points**: 8
-**Due Date**: End of Sprint 24
-
-**Description**:
-Acme Corp CEO specifically requested dark mode functionality during
-the demo. This was highlighted as an important selling point for their
-organization.
-
-**User Story**:
-As a mobile app user, I want to enable dark mode so that I can use the
-app comfortably in low-light conditions and reduce eye strain.
-
-**Acceptance Criteria**:
-- [ ] Dark theme available in settings
-- [ ] Applies to all app screens
-- [ ] Respects system dark mode preference
-- [ ] Manual toggle available in settings
-- [ ] Theme persists across app restarts
-- [ ] All UI elements readable in dark mode
-- [ ] Images/icons adapted for dark background
-
-**Demo Context**:
-CEO of Acme Corp specifically asked for this feature. Marked as "ASAP"
-priority and noted as a selling point for the product.
-
-**Design Notes**:
-Need to review design system for dark mode color palette
-
-**Components**: Mobile-UI, Settings
-**Fix Version**: 2.4.0
-
----
-
-## Ticket 3: Profile picture upload extremely slow
-
-**Project**: MOBILE
-**Issue Type**: Bug
-**Summary**: Profile picture upload takes 30+ seconds for 2MB image
-**Priority**: Critical
-**Assignee**: Unassigned
-**Labels**: demo-feedback, performance, sprint-24, profile
-**Sprint**: Sprint 24
-**Due Date**: 2024-12-18
-
-**Description**:
-During Acme Corp demo, profile picture upload took 30 seconds for a
-2MB image. This performance is unacceptable for production use.
-
-**Steps to Reproduce**:
-1. Navigate to profile settings
-2. Tap on profile picture
-3. Select 2MB image from gallery
-4. Upload image
-5. Observe upload time (30+ seconds)
-
-**Expected Behavior**:
-Image upload should complete in under 5 seconds for typical photos
-
-**Actual Behavior**:
-Upload takes 30+ seconds for a 2MB image
-
-**Acceptance Criteria**:
-- [ ] 2MB image uploads in <5 seconds on typical network
-- [ ] Progress indicator shows upload status
-- [ ] Large images compressed before upload
-- [ ] Error handling for failed uploads
-- [ ] Works on both iOS and Android
-
-**Technical Notes**:
-Investigate image compression, upload optimization, and API performance
-
-**Demo Context**:
-Demonstrated during Acme Corp meeting. Flagged as unacceptable for
-production deployment.
-
-**Components**: Profile, Upload, API
-**Affects Version**: 2.3.0
-**Fix Version**: 2.3.1
-
----
-
-## Ticket 4: Settings page spacing incorrect on tablets
-
-**Project**: MOBILE
-**Issue Type**: Bug
-**Summary**: Settings page layout spacing issues on tablet devices
-**Priority**: Low
-**Assignee**: Unassigned
-**Labels**: demo-feedback, ui, tablet, sprint-25
-**Sprint**: Sprint 25
-**Due Date**: TBD
-
-**Description**:
-Acme Corp UX lead noticed spacing on settings page looks incorrect
-when viewed on tablet devices. Marked as minor/cosmetic issue.
-
-**Steps to Reproduce**:
-1. Open app on tablet device (iPad, Android tablet)
-2. Navigate to Settings
-3. Observe spacing and layout
-
-**Expected Behavior**:
-Settings page should have consistent, appropriate spacing on tablets
-
-**Actual Behavior**:
-Spacing appears off/inconsistent
-
-**Acceptance Criteria**:
-- [ ] Settings page reviewed on multiple tablet sizes
-- [ ] Spacing consistent with design system
-- [ ] Responsive layout works correctly
-- [ ] No overlapping elements
-
-**Demo Context**:
-Noticed by UX lead from Acme Corp. Not critical but affects polish.
-
-**Components**: Mobile-UI, Settings
-**Affects Version**: 2.3.0
-**Fix Version**: 2.4.0
-
----
-
-## Ticket 5: Push notifications not working on Android 13
-
-**Project**: MOBILE
-**Issue Type**: Bug
-**Summary**: Push notifications failing on Android 13 devices
-**Priority**: Critical
-**Assignee**: Unassigned
-**Labels**: demo-feedback, android, notifications, critical, sprint-24
-**Sprint**: Sprint 24
-**Due Date**: 2024-12-17
-
-**Description**:
-Push notifications are not working on Android 13 devices. This is a
-critical bug affecting core functionality.
-
-**Steps to Reproduce**:
-1. Install app on Android 13 device
-2. Enable notifications in app settings
-3. Trigger a push notification
-4. Notification does not appear
-
-**Expected Behavior**:
-Push notifications should appear on Android 13 devices
-
-**Actual Behavior**:
-Notifications fail silently on Android 13
-
-**Acceptance Criteria**:
-- [ ] Push notifications work on Android 13
-- [ ] Notification permissions requested correctly
-- [ ] All notification types functional
-- [ ] Backwards compatible with older Android versions
-- [ ] Tested on multiple Android 13 devices
-
-**Technical Notes**:
-Android 13 introduced new notification permission requirements.
-Investigate runtime permission handling.
-
-**Demo Context**:
-Critical bug discovered during Acme Corp demo. Blocking production release.
-
-**Components**: Notifications, Android
-**Affects Version**: 2.3.0
-**Fix Version**: 2.3.1
+        return hmac.compare_digest(computed_base64, hmac_header)
 ```
 
-### Example 3: Meeting Transcript to Trello Cards
+**Step 2: Add Webhook Processing to Backend**
 
-**Input (Meeting Transcript):**
-```
-[10:00] Sarah: Thanks everyone for joining the demo! Let me share my screen.
+Update `models/backend.py`:
 
-[10:05] Sarah: As you can see, the new search feature is working...
+```python
+def process_webhook(self, webhook):
+    """Process webhook by topic."""
+    handlers = {
+        'orders/create': self._handle_order_created,
+        'orders/updated': self._handle_order_updated,
+        'products/update': self._handle_product_updated,
+    }
 
-[10:12] Tom: Hey, I noticed the search is case-sensitive. Should it be?
+    handler = handlers.get(webhook.event_type)
+    if handler:
+        try:
+            handler(webhook)
+            webhook.mark_as_processed()
+        except Exception as e:
+            _logger.exception("Webhook handler failed")
+            webhook.mark_as_failed(str(e))
+    else:
+        webhook.mark_as_ignored(f"No handler for {webhook.event_type}")
 
-[10:13] Sarah: Good catch! That's probably a bug. We should fix that.
+def _handle_order_created(self, webhook):
+    """Handle orders/create webhook."""
+    payload = json.loads(webhook.payload)
+    order_id = payload['id']
 
-[10:15] Mike: Yeah, I'll add that to the backlog.
-
-[10:18] Lisa: The results look great, but could we add pagination?
-         Loading 1000 results at once might be slow.
-
-[10:20] Sarah: Agreed. That should be high priority for next sprint.
-
-[10:25] John: What about saving search history? Users might want that.
-
-[10:26] Sarah: Nice idea but let's table that for now. Not critical.
-
-[10:30] Tom: Before we wrap up - the export to CSV button isn't working for me.
-
-[10:31] Mike: Oh that's bad. I'll check it today.
-```
-
-**Output (Trello Format):**
-```markdown
-# Trello Cards - Search Feature Demo
-
-## Board: Product Development
-## List: To Do
-
----
-
-### Card 1: Fix search to be case-insensitive
-
-**List**: To Do
-**Labels**: bug, search, high-priority
-**Members**: @Mike
-**Due Date**: 2024-12-18
-**Position**: top
-
-**Description**:
-```
-## Context from Demo
-During the demo on [date], Tom noticed that the search feature is
-currently case-sensitive, which is not the expected behavior for a
-user-friendly search function.
-
-## What Needs to Be Done
-Make the search functionality case-insensitive so that searching for
-"apple", "Apple", or "APPLE" returns the same results.
-
-## Acceptance Criteria
-- [ ] Search works regardless of case (upper/lower/mixed)
-- [ ] Applies to all searchable fields
-- [ ] Performance not significantly impacted
-- [ ] Works with special characters
-
-## Additional Notes
-Bug identified by Tom at 10:12 during demo. Mike confirmed this should
-be fixed.
+    # Import the order
+    self.env['shopify.sale.order'].import_record(
+        backend=self,
+        external_id=str(order_id)
+    )
 ```
 
-**Checklist Items**:
-- [ ] Implement case-insensitive search logic
-- [ ] Test with various case combinations
-- [ ] Update any relevant documentation
+### Implementing Export Using Shared Wizard
 
----
+The `connector_base_backend` module provides a **shared export wizard** (`connector.export.wizard`) that works across all connectors without requiring custom UI for each one.
 
-### Card 2: Add pagination to search results
+#### Architecture Overview
 
-**List**: To Do
-**Labels**: feature, search, high-priority, performance
-**Members**: @Mike
-**Due Date**: End of next sprint
-**Position**: top
+The export system uses delegation inheritance to route export requests:
 
-**Description**:
 ```
-## Context from Demo
-Lisa raised a performance concern about loading 1000+ search results
-at once. This could cause slow loading times and poor user experience.
-
-## What Needs to Be Done
-Implement pagination for search results to improve performance and
-user experience when dealing with large result sets.
-
-## Acceptance Criteria
-- [ ] Results paginated (suggest 20-50 per page)
-- [ ] Page navigation controls (prev/next, page numbers)
-- [ ] Display total count of results
-- [ ] URL reflects current page (for bookmarking)
-- [ ] Loading state while fetching next page
-- [ ] Performance improved for large result sets
-
-## Additional Notes
-Sarah agreed this should be high priority for next sprint. Performance
-is important for production.
-
-## Design Considerations
-- Decide on results per page (20, 50, or 100?)
-- Infinite scroll vs traditional pagination?
+User clicks "Export to Connectors" on product.product
+    ↓
+connector.export.wizard opens (shared UI)
+    ↓
+User selects backend (e.g., ZID, Shopify)
+    ↓
+wizard.action_export() calls backend.export_records(model_name, record_ids)
+    ↓
+connector.base.backend routes to concrete implementation
+    ↓ (via _inherits delegation chain)
+generic.backend (intermediate)
+    ↓
+zid.backend.export_product_product(record_ids)
+    ↓
+Creates bindings + queues async exports
 ```
 
-**Checklist Items**:
-- [ ] Design pagination UI
-- [ ] Implement backend pagination logic
-- [ ] Add frontend pagination controls
-- [ ] Test with large datasets
-- [ ] Measure performance improvement
-
----
-
-### Card 3: Fix CSV export button not working
-
-**List**: To Do
-**Labels**: bug, critical, export
-**Members**: @Mike
-**Due Date**: 2024-12-16
-**Position**: top
-
-**Description**:
-```
-## Context from Demo
-At 10:30 during the demo, Tom reported that the CSV export button is
-not functioning. Mike committed to checking it today.
-
-## What Needs to Be Done
-Debug and fix the CSV export functionality so users can successfully
-export search results to CSV format.
-
-## Acceptance Criteria
-- [ ] Export button triggers CSV download
-- [ ] CSV includes all relevant data fields
-- [ ] Filename is meaningful (includes date/timestamp)
-- [ ] Works across all browsers
-- [ ] Large datasets export without timeout
-
-## Additional Notes
-This is critical as export functionality is a key feature. Mike to
-investigate and fix ASAP.
-
-## Debugging Steps
-- Check console for JavaScript errors
-- Verify API endpoint is working
-- Test with different result set sizes
+**Inheritance Chain**:
+```python
+connector.base.backend (has export_records() router)
+    ↓ _inherits via base_backend_id
+generic.backend (intermediate layer)
+    ↓ _inherits via generic_backend_id
+your_connector.backend (concrete implementation)
 ```
 
-**Checklist Items**:
-- [ ] Reproduce the issue
-- [ ] Identify root cause
-- [ ] Implement fix
-- [ ] Test across browsers
-- [ ] Verify with large datasets
+#### Step-by-Step Implementation
 
----
+**Step 1: Understand the Routing Mechanism**
 
-### Card 4: Add search history feature
+The `connector.base.backend.export_records()` method automatically routes to your backend:
 
-**List**: Backlog
-**Labels**: feature, enhancement, low-priority
-**Members**: Unassigned
-**Due Date**: None
-**Position**: bottom
+```python
+# In connector_base_backend/models/connector_base_backend.py
+def export_records(self, model_name, record_ids):
+    """Generic export method that routes to specific connector implementations"""
+    method_name = f'export_{model_name.replace(".", "_")}'
 
-**Description**:
-```
-## Context from Demo
-John suggested adding a search history feature so users can quickly
-re-run previous searches. Sarah agreed it's a good idea but not
-critical for now.
+    # Find concrete backend via _inherits chain
+    concrete_backend = self
+    for model in self._inherits_children:
+        child = self.env[model].search([('base_backend_id', '=', self.id)], limit=1)
+        if child:
+            concrete_backend = child
+            break
 
-## What Needs to Be Done
-Implement a search history feature that stores and displays recent
-searches for easy re-use.
-
-## Acceptance Criteria
-- [ ] Store recent searches (suggest last 10-20)
-- [ ] Display search history in dropdown
-- [ ] Click to re-run previous search
-- [ ] Clear history option
-- [ ] Privacy consideration (don't store sensitive searches?)
-- [ ] Persists across sessions
-
-## Additional Notes
-Tabled for now as not critical. Revisit after core search features
-are stable and performant.
-
-## Future Considerations
-- Should history be per-user or per-device?
-- How long to keep history?
-- Privacy/security implications?
+    # Call export_product_product(), export_sale_order(), etc.
+    if hasattr(concrete_backend, method_name):
+        return getattr(concrete_backend, method_name)(record_ids)
+    else:
+        raise UserError(_(
+            "Export not implemented for model %s in connector %s"
+        ) % (model_name, concrete_backend.name))
 ```
 
-**Checklist Items**:
-- [ ] Design UX for history feature
-- [ ] Determine storage mechanism (localStorage, database)
-- [ ] Implement history tracking
-- [ ] Add UI for viewing/using history
-- [ ] Add clear history functionality
+**Step 2: Implement Export Methods in Your Backend**
+
+For each Odoo model you want to export, implement `export_<model_name>()` in your backend model:
+
+**Example: Export Products**
+
+Add to `models/backend.py`:
+
+```python
+def export_product_product(self, record_ids):
+    """
+    Export product.product records to external system.
+
+    Called by connector.export.wizard when exporting products.
+
+    Args:
+        record_ids: List of product.product IDs to export
+
+    Returns:
+        dict: Notification action
+    """
+    self.ensure_one()
+
+    if not record_ids:
+        return self._build_notification(
+            _('Export Products'),
+            _('No products selected for export'),
+            'warning'
+        )
+
+    products = self.env['product.product'].browse(record_ids)
+    exported_count = 0
+    created_bindings = 0
+    skipped_count = 0
+    errors = []
+
+    for product in products:
+        try:
+            # Find or create binding
+            binding = self.env['shopify.product.product'].search([
+                ('backend_id', '=', self.id),
+                ('odoo_id', '=', product.id)
+            ], limit=1)
+
+            if not binding:
+                # Create new binding
+                binding_vals = {
+                    'backend_id': self.id,
+                    'odoo_id': product.id,
+                    'external_sku': product.default_code or '',
+                    'external_name': product.name,
+                    'external_price': product.list_price,
+                    'external_status': 'active' if product.active else 'inactive',
+                }
+                binding = self.env['shopify.product.product'].create(binding_vals)
+                created_bindings += 1
+
+            # Skip if marked as no_export
+            if binding.no_export:
+                skipped_count += 1
+                continue
+
+            # Queue async export
+            binding.with_delay()._export_to_external()
+            exported_count += 1
+
+        except Exception as e:
+            errors.append(f'Product {product.name}: {str(e)}')
+            _logger.error(f'Export failed for {product.name}: {e}', exc_info=True)
+
+    # Build response message
+    message_parts = []
+    if exported_count > 0:
+        message_parts.append(
+            _('%d product(s) scheduled for export') % exported_count
+        )
+    if created_bindings > 0:
+        message_parts.append(_('%d new binding(s) created') % created_bindings)
+    if skipped_count > 0:
+        message_parts.append(_('%d skipped (no_export)') % skipped_count)
+    if errors:
+        message_parts.append(_('Errors: %d') % len(errors))
+
+    message = '. '.join(message_parts)
+    notif_type = 'success' if exported_count > 0 and not errors else 'warning'
+
+    # Update statistics
+    if exported_count > 0:
+        self.last_export_date = datetime.now()
+
+    return self._build_notification(_('Export Products'), message, notif_type)
 ```
+
+**Example: Export Partners**
+
+```python
+def export_res_partner(self, record_ids):
+    """Export res.partner records to external system."""
+    self.ensure_one()
+
+    partners = self.env['res.partner'].browse(record_ids)
+    exported_count = 0
+
+    for partner in partners:
+        # Find or create partner binding
+        binding = self.env['shopify.res.partner'].search([
+            ('backend_id', '=', self.id),
+            ('odoo_id', '=', partner.id)
+        ], limit=1)
+
+        if not binding:
+            binding = self.env['shopify.res.partner'].create({
+                'backend_id': self.id,
+                'odoo_id': partner.id,
+            })
+
+        # Queue export
+        binding.with_delay()._export_to_external()
+        exported_count += 1
+
+    return self._build_notification(
+        _('Export Customers'),
+        _('%d customer(s) scheduled for export') % exported_count,
+        'success'
+    )
+```
+
+**Example: Export Sale Orders**
+
+```python
+def export_sale_order(self, record_ids):
+    """Export sale.order records to external system."""
+    self.ensure_one()
+
+    orders = self.env['sale.order'].browse(record_ids)
+    exported_count = 0
+
+    for order in orders:
+        # Validate order state
+        if order.state not in ['sale', 'done']:
+            _logger.warning(f'Skipping order {order.name}: not confirmed')
+            continue
+
+        # Find or create order binding
+        binding = self.env['shopify.sale.order'].search([
+            ('backend_id', '=', self.id),
+            ('odoo_id', '=', order.id)
+        ], limit=1)
+
+        if not binding:
+            binding = self.env['shopify.sale.order'].create({
+                'backend_id': self.id,
+                'odoo_id': order.id,
+            })
+
+        # Export dependencies first (customer, products)
+        self._export_order_dependencies(order)
+
+        # Queue order export
+        binding.with_delay()._export_to_external()
+        exported_count += 1
+
+    return self._build_notification(
+        _('Export Orders'),
+        _('%d order(s) scheduled for export') % exported_count,
+        'success'
+    )
+
+def _export_order_dependencies(self, order):
+    """Export customer and products before exporting order."""
+    # Export customer
+    if order.partner_id:
+        self.export_res_partner([order.partner_id.id])
+
+    # Export products
+    product_ids = order.order_line.mapped('product_id').ids
+    if product_ids:
+        self.export_product_product(product_ids)
+```
+
+**Step 3: The Shared Wizard is Already Configured**
+
+The `connector_base_backend` module already includes action bindings:
+
+```xml
+<!-- In connector_base_backend/wizards/connector_export_wizard_view.xml -->
+
+<!-- Export action for products -->
+<record id="action_connector_export_wizard_product" model="ir.actions.act_window">
+    <field name="name">Export to Connectors</field>
+    <field name="res_model">connector.export.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="binding_model_id" ref="product.model_product_product"/>
+    <field name="binding_view_types">list,form</field>
+</record>
+
+<!-- Export action for partners -->
+<record id="action_connector_export_wizard" model="ir.actions.act_window">
+    <field name="name">Export to Connectors</field>
+    <field name="res_model">connector.export.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="binding_model_id" ref="base.model_res_partner"/>
+    <field name="binding_view_types">list,form</field>
+</record>
+```
+
+**To add export for other models**, create similar actions in your connector or in `connector_base_backend`:
+
+```xml
+<!-- Export action for sale orders -->
+<record id="action_connector_export_wizard_sale_order" model="ir.actions.act_window">
+    <field name="name">Export to Connectors</field>
+    <field name="res_model">connector.export.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="binding_model_id" ref="sale.model_sale_order"/>
+    <field name="binding_view_types">list,form</field>
+</record>
+```
+
+**Step 4: Testing the Export**
+
+```bash
+# 1. Update your connector module
+odoo-bin -c odoo.conf -d your_db -u your_connector
+
+# 2. Test from UI
+# Navigate to: Inventory → Products → Products
+# Select one or more products
+# Click: Action → Export to Connectors
+# Select your backend
+# Click: Export
+
+# 3. Verify in logs
+tail -f /var/log/odoo/odoo.log | grep "export\|binding"
+
+# 4. Check queue jobs
+# Navigate to: Queue Jobs → Jobs
+# Look for: your_connector.product.product._export_to_external
+
+# 5. Check bindings created
+# Navigate to: Connector → Your Connector → Products
+# Verify bindings were created with correct external_id
+```
+
+**Step 5: Advanced Export Patterns**
+
+**Pattern 1: Conditional Export**
+
+```python
+def export_product_product(self, record_ids):
+    """Export only published products."""
+    products = self.env['product.product'].browse(record_ids)
+
+    # Filter products
+    exportable_products = products.filtered(
+        lambda p: p.active and getattr(p, 'website_published', True)
+    )
+
+    if len(exportable_products) < len(products):
+        skipped = len(products) - len(exportable_products)
+        _logger.info(f'Skipped {skipped} unpublished products')
+
+    # Export only exportable products
+    for product in exportable_products:
+        # ... create binding and export
+```
+
+**Pattern 2: Batch Export with Progress**
+
+```python
+def export_product_product(self, record_ids):
+    """Export products in batches."""
+    products = self.env['product.product'].browse(record_ids)
+    batch_size = 50
+
+    for i in range(0, len(products), batch_size):
+        batch = products[i:i + batch_size]
+        # Process batch with delay
+        self.with_delay()._export_product_batch(batch.ids)
+
+    return self._build_notification(
+        _('Export Products'),
+        _('Queued %d products in %d batches') % (
+            len(products),
+            (len(products) + batch_size - 1) // batch_size
+        ),
+        'success'
+    )
+
+def _export_product_batch(self, product_ids):
+    """Process a batch of products."""
+    for product_id in product_ids:
+        # Create binding and export
+        pass
+```
+
+**Pattern 3: Export with Validation**
+
+```python
+def export_sale_order(self, record_ids):
+    """Export orders with validation."""
+    orders = self.env['sale.order'].browse(record_ids)
+    validation_errors = []
+
+    for order in orders:
+        # Validate before export
+        if not order.partner_id:
+            validation_errors.append(f'{order.name}: Missing customer')
+            continue
+
+        if not order.order_line:
+            validation_errors.append(f'{order.name}: No order lines')
+            continue
+
+        if order.state not in ['sale', 'done']:
+            validation_errors.append(f'{order.name}: Not confirmed')
+            continue
+
+        # Export if valid
+        # ... create binding and export
+
+    if validation_errors:
+        message = '\n'.join(validation_errors[:10])
+        return self._build_notification(
+            _('Export Validation Errors'),
+            message,
+            'warning'
+        )
+```
+
+#### Method Naming Convention
+
+The export method name **must** follow this pattern:
+
+```python
+export_{model_name_with_underscores}
+
+# Examples:
+export_product_product      # for product.product
+export_product_template     # for product.template
+export_sale_order           # for sale.order
+export_res_partner          # for res.partner
+export_stock_picking        # for stock.picking
+export_account_move         # for account.move
+```
+
+The wizard automatically converts model names:
+- Replaces dots (`.`) with underscores (`_`)
+- `product.product` → calls `export_product_product()`
+- `sale.order` → calls `export_sale_order()`
+
+#### Benefits of Shared Export Wizard
+
+1. **Single UI**: One wizard works for all models across all connectors
+2. **Consistent UX**: Users learn once, use everywhere
+3. **No Custom Code**: No need to create custom wizards or actions
+4. **Multi-Backend**: Users can export to multiple backends
+5. **Extensible**: Add new models just by implementing one method
+6. **Backend Filtering**: Wizard shows only relevant backends via domain
+
+#### Complete Implementation Checklist
+
+When implementing export for a new model:
+
+- [ ] Implement `export_<model_name>()` method in backend model
+- [ ] Handle binding creation (find or create)
+- [ ] Queue export using `with_delay()._export_to_external()`
+- [ ] Handle errors gracefully with try/except
+- [ ] Return notification with detailed status
+- [ ] Update backend statistics (last_export_date)
+- [ ] Add export action binding (if not exists for this model)
+- [ ] Test from UI (Action → Export to Connectors)
+- [ ] Verify queue jobs are created
+- [ ] Check bindings are created correctly
+- [ ] Review logs for errors
+
+#### Troubleshooting Export Issues
+
+**Issue**: "Export not implemented" error
+
+```python
+# Solution: Check method name matches pattern
+# Model: product.product → Method: export_product_product()
+# Model: sale.order → Method: export_sale_order()
+```
+
+**Issue**: Backend not showing in wizard
+
+```python
+# Solution: Check inheritance chain
+# Ensure your backend inherits from generic.backend
+# which inherits from connector.base.backend
+
+class YourBackend(models.Model):
+    _name = 'your.backend'
+    _inherits = {'generic.backend': 'generic_backend_id'}
+```
+
+**Issue**: Export creates duplicates
+
+```python
+# Solution: Ensure unique constraint on binding
+# In binding model:
+_sql_constraints = [
+    ('backend_odoo_uniq',
+     'unique(backend_id, odoo_id)',
+     'A binding already exists for this record on this backend.')
+]
+```
+
+**Issue**: Export completes but nothing happens
+
+```python
+# Solution: Check queue_job is running
+# 1. Verify queue_job channel exists
+# 2. Start queue job worker:
+odoo-bin gevent -c odoo.conf --workers=2
+
+# 3. Or run job manually:
+>>> job = env['queue.job'].search([...])
+>>> job.requeue()
+```
+
+### Troubleshooting
+
+When the user reports sync issues or errors:
+
+**Step 1: Identify the Problem**
+
+Common issues:
+- Connection/authentication failures → Check `references/authentication.md`
+- Import not working → Check component registration
+- Duplicates being created → Check SQL constraints
+- Queue jobs not running → Check queue_job configuration
+- Webhooks not received → Check controller route
+
+**Step 2: Use Diagnostic Tools**
+
+```python
+# Test in Odoo shell
+odoo-bin shell -c odoo.conf -d your_db
+
+# Find backend
+>>> backend = env['shopify.backend'].browse(1)
+
+# Test connection
+>>> backend.action_test_connection()
+
+# Test adapter
+>>> with backend.work_on('shopify.product.template') as work:
+...     adapter = work.component(usage='backend.adapter')
+...     products = adapter.get_products()
+...     print(f"Fetched {len(products)} products")
+
+# Test mapper
+...     mapper = work.component(usage='import.mapper')
+...     if products:
+...         mapped = mapper.map_record(products[0])
+...         print(mapped.values())
+```
+
+**Step 3: Enable Debug Logging**
+
+Add to backend or adapter:
+```python
+import logging
+_logger = logging.getLogger(__name__)
+_logger.setLevel(logging.DEBUG)
+
+def make_request(self, method, endpoint, **kwargs):
+    _logger.debug("API Request: %s %s", method, self.build_url(endpoint))
+    _logger.debug("Params: %s", kwargs.get('params'))
+    _logger.debug("Data: %s", kwargs.get('data'))
+
+    response = super().make_request(method, endpoint, **kwargs)
+
+    _logger.debug("Response: %s", str(response)[:500])
+    return response
+```
+
+**Step 4: Check Reference Documentation**
+
+Refer the user to:
+- `references/troubleshooting.md` - Common issues and solutions
+- `references/architecture.md` - Component structure
+- `references/patterns.md` - Design patterns
+- `references/api_integration.md` - API communication patterns
+- `references/authentication.md` - Authentication methods
+
+## Available Scripts
+
+### init_connector.py
+
+Generate a complete new connector module.
+
+**Usage**:
+```bash
+python3 scripts/init_connector.py <connector_name> --path <output_path> --type <connector_type>
+```
+
+**Arguments**:
+- `connector_name`: Name (e.g., 'shopify', 'woocommerce')
+- `--path`: Output directory (default: current directory)
+- `--type`: Connector type - 'ecommerce', 'logistics', 'accounting', 'crm'
+
+**Output**: Complete module with backend, adapter, binding, views, security
+
+### add_binding.py
+
+Add a new entity binding to existing connector.
+
+**Usage**:
+```bash
+python3 scripts/add_binding.py <connector_path> <entity_name> --odoo-model <model>
+```
+
+**Arguments**:
+- `connector_path`: Path to existing connector module
+- `entity_name`: Entity name (e.g., 'order', 'customer')
+- `--odoo-model`: Odoo model to bind (e.g., 'sale.order', 'res.partner')
+
+**Output**: Binding model, views, security rules, adapter methods template
+
+### validate_connector.py
+
+Validate connector module structure.
+
+**Usage**:
+```bash
+python3 scripts/validate_connector.py <connector_path>
+```
+
+**Checks**:
+- Required files and directories
+- Manifest dependencies
+- Backend model structure
+- Component registration
+- Security configuration
+
+## Reference Documentation
+
+Load references as needed using the Read tool:
+
+### references/architecture.md
+Comprehensive guide to generic_connector architecture:
+- Backend model patterns
+- Binding model structure
+- Adapter, mapper, importer, exporter components
+- Queue job integration
+- Security model
+- View patterns
+
+**When to read**: Creating new connectors, understanding component relationships
+
+### references/patterns.md
+Design patterns used in connectors:
+- Template Method, Adapter, Strategy, Factory patterns
+- Observer pattern for webhooks
+- Retry and circuit breaker patterns
+- Rate limiting patterns
+- Anti-patterns to avoid
+
+**When to read**: Implementing complex sync logic, handling failures
+
+### references/api_integration.md
+API integration techniques:
+- REST, GraphQL, SOAP integrations
+- Pagination handling (offset, cursor, link header)
+- Response envelope handling
+- Webhook integration
+- Rate limiting implementation
+- Error handling and retries
+
+**When to read**: Implementing adapters, handling API specifics
+
+### references/authentication.md
+Authentication patterns:
+- API key authentication
+- OAuth 2.0 (authorization code flow)
+- Bearer token
+- Basic auth
+- HMAC signatures
+- JWT tokens
+- Webhook signature verification
+
+**When to read**: Configuring authentication, debugging 401 errors
+
+### references/troubleshooting.md
+Common issues and solutions:
+- Connection issues
+- Authentication failures
+- Import/export problems
+- Queue job issues
+- Webhook problems
+- Data mapping errors
+- Performance optimization
+- Debugging tips
+
+**When to read**: Debugging sync issues, performance problems
 
 ## Best Practices
 
-### Writing Clear Action Items
+1. **Always extend generic_connector** - Never build from scratch
+2. **Use bindings** - Never directly modify Odoo records from external data
+3. **Queue long operations** - Use `with_delay()` for anything >2 seconds
+4. **Implement retry logic** - Use binding's retry_count and max_retries
+5. **Log extensively** - Debug logging helps troubleshoot production issues
+6. **Handle API errors** - Wrap adapter calls in try/except
+7. **Validate data** - Check required fields before creating records
+8. **Test connection** - Always implement `_test_connection_implementation()`
+9. **Use transactions** - Leverage Odoo's automatic transaction management
+10. **Document the API** - Add docstrings to all adapter methods
 
-1. **Use Action Verbs**: Start with "Fix", "Add", "Update", "Investigate", "Create"
-2. **Be Specific**: Include enough detail to understand the task without the meeting notes
-3. **Include Context**: Why is this important? What demo feedback led to this?
-4. **Set Clear Criteria**: What does "done" look like?
-5. **Assign Ownership**: Who is responsible? (even if it's "Unassigned")
+## Component Registration Checklist
 
-### Prioritization Guidelines
+When creating components, ensure:
 
-**Critical/High Priority:**
-- Blocking bugs preventing release
-- Security issues
-- Features explicitly requested as "urgent" or "ASAP"
-- Major usability issues affecting core functionality
+```python
+class MyComponent(BaseComponent):
+    _name = 'unique.component.name'      # ✓ Unique identifier
+    _inherit = 'parent.component'        # ✓ Parent component
+    _apply_on = 'model.name'             # ✓ Model this applies to
+    _usage = 'component.usage'           # ✓ Usage context
+```
 
-**Medium Priority:**
-- Important features for next sprint
-- Bugs that don't block release
-- Performance improvements
-- UX enhancements
+Common usages:
+- `backend.adapter` - API communication
+- `record.importer` - Single record import
+- `batch.importer` - Batch import
+- `record.exporter` - Single record export
+- `batch.exporter` - Batch export
+- `import.mapper` - Import data transformation
+- `export.mapper` - Export data transformation
 
-**Low Priority:**
-- Nice-to-have features
-- Cosmetic issues
-- Future enhancements
-- Questions for later discussion
+## Testing Checklist
 
-### Extracting Information from Messy Notes
+Before delivering a connector:
 
-**Common Patterns:**
+**Backend Configuration**:
+- [ ] Backend configuration form loads
+- [ ] "Test Connection" button works
+- [ ] Backend inherits from generic.backend correctly
+- [ ] Backend statistics update (last_sync_date, counters)
 
-| Note Pattern | Extract As |
-|--------------|------------|
-| "X will do Y" | Assignee: X, Task: Y |
-| "Should/need to..." | Action item |
-| "By Friday/end of week" | Deadline |
-| "Critical/urgent/ASAP" | High priority |
-| "Nice to have/eventually" | Low priority |
-| "Bug:", "Issue:", "Problem:" | Bug category |
-| "Feature request:", "Could we..." | Feature category |
-| "?" at end | Follow-up question |
+**Import Functionality**:
+- [ ] Manual sync imports data
+- [ ] No duplicate records created on import
+- [ ] External IDs are set correctly
+- [ ] Bindings link Odoo records to external records
+- [ ] Import handles API pagination correctly
+- [ ] Import handles API errors gracefully
 
-**Handling Ambiguity:**
+**Export Functionality**:
+- [ ] "Export to Connectors" action appears on models (Action menu)
+- [ ] Export wizard shows only relevant backends
+- [ ] `export_<model_name>()` methods implemented in backend
+- [ ] Export creates bindings if they don't exist
+- [ ] Export queues async jobs via `with_delay()`
+- [ ] Export notifications show correct counts (exported, created, skipped, errors)
+- [ ] Export respects `no_export` flag on bindings
+- [ ] Export updates backend statistics (last_export_date)
 
-- **No assignee mentioned**: Mark as "Unassigned" or assign to relevant team
-- **No deadline**: Use "TBD" or infer from context (critical bugs = immediate)
-- **Unclear priority**: Default to Medium, note in description
-- **Vague description**: Add note that clarification is needed
+**Queue Jobs**:
+- [ ] Queue jobs are registered and visible
+- [ ] Jobs execute successfully in queue_job worker
+- [ ] Failed jobs can be retried
+- [ ] Job logs provide useful debugging info
 
-### Platform-Specific Tips
+**Scheduled Jobs**:
+- [ ] Scheduled cron jobs exist (disabled by default)
+- [ ] Cron jobs can be enabled and run on schedule
 
-**TODO Lists:**
-- Group by priority for easy scanning
-- Use checkboxes for progress tracking
-- Keep all metadata with each task
-- Add a "Follow-up Questions" section
+**Security & Access**:
+- [ ] Security access rules allow users to view data
+- [ ] Users can access backend, bindings, and wizards
+- [ ] Proper groups assigned (connector_manager, connector_user)
 
-**JIRA:**
-- Use proper issue types (Bug, Story, Task)
-- Add labels for easy filtering
-- Include story points if you can estimate
-- Link related tickets
-- Use components and fix versions
-- Add detailed acceptance criteria
+**Integration**:
+- [ ] Webhooks received and processed (if applicable)
+- [ ] Webhook signature verification works
+- [ ] Components registered correctly (adapters, mappers, importers, exporters)
 
-**Trello:**
-- Use color-coded labels consistently
-- Add checklists for multi-step tasks
-- Set due dates for time-sensitive items
-- Use descriptions for full context
-- Position critical items at top
-- @mention relevant people
+**Error Handling**:
+- [ ] Error handling works (test with invalid credentials)
+- [ ] API errors don't crash Odoo
+- [ ] User-friendly error messages displayed
+- [ ] Detailed errors logged for debugging
 
-## Common Patterns to Recognize
+**Logging & Debugging**:
+- [ ] Logging provides useful debug information
+- [ ] Log levels appropriate (INFO for success, ERROR for failures)
+- [ ] Sensitive data (tokens, passwords) not logged
 
-### Bug Reports in Demo Notes
+## Module Update Process
 
-**Indicators:**
-- "Not working"
-- "Broken"
-- "Error"
-- "Crashed"
-- "Failed"
-- "Issue with..."
+When updating an existing connector:
 
-**Extract:**
-- What's broken
-- Steps to reproduce
-- Expected vs actual behavior
-- Browser/device if mentioned
+```bash
+# 1. Update module files
+# 2. Upgrade module
+odoo-bin -c odoo.conf -d your_db -u connector_module_name
 
-### Feature Requests
+# 3. Test thoroughly
+# 4. Check logs for errors
+tail -f /var/log/odoo/odoo.log
+```
 
-**Indicators:**
-- "Should have..."
-- "Could we add..."
-- "Would be nice..."
-- "Users want..."
-- "Missing..."
+## Common Workflows
 
-**Extract:**
-- What feature
-- Why it's needed
-- Who requested it
-- Priority level
+### Workflow: Add Product Sync
 
-### Questions/Clarifications
+1. Generate binding: `python3 scripts/add_binding.py <path> product --odoo-model product.template`
+2. Implement adapter methods in `models/adapter.py`
+3. Create mapper in `components/mapper.py`
+4. Create importer in `components/importer.py`
+5. Update backend `_sync_products_implementation()`
+6. Update module: `odoo-bin -u connector_name`
+7. Test sync
 
-**Indicators:**
-- "?"
-- "Need to ask..."
-- "Should we..."
-- "Not sure if..."
-- "To be determined"
+### Workflow: Add Order Import
 
-**Extract:**
-- The question
-- Who can answer
-- Why it matters
-- Blocking or non-blocking
+1. Generate binding: `python3 scripts/add_binding.py <path> order --odoo-model sale.order`
+2. Implement adapter methods
+3. Create import mapper (transform external order to Odoo format)
+4. Create importer (handle order lines, customer lookup)
+5. Update backend `_sync_orders_implementation()`
+6. Configure webhook for real-time import (optional)
+7. Test import
 
-## Additional Resources
+### Workflow: Debug Sync Failure
 
-See the templates directory for:
-- [TODO Template](templates/TODO_TEMPLATE.md) - Structured TODO list format
-- [JIRA Template](templates/JIRA_TEMPLATE.md) - JIRA ticket structure
-- [Trello Template](templates/TRELLO_TEMPLATE.md) - Trello card format
+1. Check logs: `tail -f /var/log/odoo/odoo.log`
+2. Enable debug logging in adapter
+3. Test in Odoo shell
+4. Check component registration
+5. Verify API credentials
+6. Test adapter methods directly
+7. Check mapper output
+8. Review binding constraints
+9. Refer to `references/troubleshooting.md`
 
-See the examples directory for:
-- [Product Demo Example](examples/product-demo.md) - Full example from product demo
-- [Bug Bash Example](examples/bug-bash.md) - Example from bug bash session
-- [Client Feedback Example](examples/client-feedback.md) - Client meeting notes
+## Output Format
 
-See the scripts directory for:
-- [jira_create.py](scripts/jira_create.py) - Script to create JIRA tickets via API
-- [trello_create.py](scripts/trello_create.py) - Script to create Trello cards via API
-- [parse_notes.py](scripts/parse_notes.py) - Helper to parse meeting notes
+When creating or enhancing connectors:
 
-## Tips for Better Results
+1. **Use scripts** whenever possible (init_connector.py, add_binding.py)
+2. **Provide code** for custom components (mappers, importers, exporters)
+3. **Show configuration** (backend fields, view changes)
+4. **Include testing steps** (how to verify it works)
+5. **Reference docs** when needed (point to specific reference sections)
+6. **Explain patterns** used (why this approach was chosen)
 
-1. **Provide Complete Context**: Include who attended, what was demoed, date
-2. **Preserve Original Notes**: Don't pre-process too much, let the skill extract
-3. **Specify Output Format**: Be clear about TODO vs JIRA vs Trello
-4. **Mention Project Context**: JIRA project key, Trello board name, etc.
-5. **Include Urgency Signals**: Mention if anything is critical or blocking
-6. **Identify Attendees**: Helps with assignee identification
-7. **Note Decisions Made**: Include any decisions or agreements from the demo
+## Error Prevention
 
-## Troubleshooting
+Common mistakes to avoid:
 
-**Too Many Tasks Created:**
-- The skill might be too aggressive in identifying action items
-- Review and merge related tasks
-- Mark some as "Questions" instead of "Tasks"
+- ❌ Missing `_apply_on` in components
+- ❌ Wrong model name in `_apply_on`
+- ❌ Forgetting to register components in `__init__.py`
+- ❌ Not setting `external_id` in mapper
+- ❌ Missing SQL constraint on bindings
+- ❌ Using synchronous operations for long tasks
+- ❌ Not handling API pagination
+- ❌ Hardcoding configuration instead of using backend fields
+- ❌ Not implementing retry logic
+- ❌ Insufficient error handling
 
-**Missing Context:**
-- Original notes might be too vague
-- Add more detail when providing input
-- Include speaker names and timestamps
+## Success Criteria
 
-**Wrong Priorities:**
-- Double-check priority assignments
-- Adjust based on your team's criteria
-- Add notes about why priority was chosen
+A successfully created/enhanced connector should:
 
-**Unclear Assignees:**
-- Provide team structure context
-- Explicitly mention who should handle what
-- Use "Unassigned" and assign during triage
+1. ✅ Install without errors
+2. ✅ Test connection successfully
+3. ✅ Import/export data correctly
+4. ✅ Handle API errors gracefully
+5. ✅ Log useful information for debugging
+6. ✅ Use queue jobs for async operations
+7. ✅ Not create duplicate records
+8. ✅ Follow generic_connector patterns
+9. ✅ Have proper security configuration
+10. ✅ Be maintainable and extensible
+
+## When to Use Each Reference
+
+| Situation | Reference |
+|-----------|-----------|
+| Creating new connector | architecture.md |
+| Implementing OAuth | authentication.md |
+| Adding webhooks | api_integration.md |
+| Sync not working | troubleshooting.md |
+| Implementing retry logic | patterns.md |
+| Understanding components | architecture.md |
+| API pagination | api_integration.md |
+| 401 errors | authentication.md, troubleshooting.md |
+| Performance issues | troubleshooting.md, patterns.md |
+| Best practices | patterns.md (anti-patterns section) |
+
+## Final Notes
+
+- Always test in a development database first
+- Use the reference connectors (zid, beatroute) as examples
+- Leverage the scripts to generate boilerplate code
+- Refer to documentation for specific patterns
+- Focus on extensibility and maintainability
+- Follow Odoo and generic_connector conventions
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
