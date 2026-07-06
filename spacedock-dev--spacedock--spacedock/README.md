@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [spacedock-dev/spacedock](https://github.com/spacedock-dev/spacedock/tree/main/skills/commission/SKILL.md)
+Original source: [spacedock-dev/spacedock](https://github.com/spacedock-dev/spacedock/tree/main/skills/present-gate/SKILL.md)
 
 ---
 
