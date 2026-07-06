@@ -1,357 +1,494 @@
 ---
-name: quick-analyzer-agent
-description: Fast ticker analysis for /analysis page. Provides quick BUY/SELL/HOLD recommendations based on technical indicators, recent news, and basic fundamentals within seconds. Optimized for speed over depth. Use when this capability is needed.
+name: moai-domain-security
+description: Enterprise-grade security expertise with production-ready patterns for Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Quick Analyzer Agent - 빠른 티커 분석
 
-## Role
-`/analysis` 페이지에서 사용자가 티커를 입력하면 **5초 이내**에 BUY/SELL/HOLD 추천을 제공합니다. 속도를 위해 핵심 지표만 분석합니다.
+# moai-domain-security — Enterprise Security Architecture
 
-## Core Capabilities
+**Enterprise Security Expertise & Implementation**
 
-### 1. Fast Technical Analysis
+> **Primary Agent**: security-expert
+> **Secondary Agents**: qa-validator, alfred, doc-syncer
+> **Version**: 4.0.0
 
-#### Price Action
-- **Moving Averages**: MA20, MA50 교차 확인
-- **Trend**: 상승/하락/횡보 판단
-- **Support/Resistance**: 주요 가격대
+---
 
-#### Momentum Indicators
-- **RSI (14일)**: 과매수(>70), 과매도(<30) 
-- **MACD**: 골든크로스/데드크로스
-- **Volume**: 거래량 증가/감소 패턴
+## 📖 Progressive Disclosure
 
-### 2. Recent News Scan (Last 7 Days)
+### Level 1: Quick Reference
 
-```python
-# News sentiment aggregation
-news_articles = get_recent_news(ticker, days=7)
+Enterprise security expertise with **OWASP Top 10 2021** compliance and **zero-trust architecture**.
 
-avg_sentiment = sum(a.sentiment_score for a in news_articles) / len(news_articles)
+**Core Capabilities**:
+- **Threat Modeling**: STRIDE, PASTA methodologies
+- **Secure SDLC**: Security-by-design in development lifecycle
+- **DevSecOps**: Security automation and CI/CD integration
+- **Cloud Security**: AWS, Azure, GCP security patterns
+- **Cryptography**: Encryption, hashing, digital signatures
+- **Identity & Access Management**: OAuth, JWT, RBAC implementation
 
-positive_ratio = len([a for a in news_articles if a.sentiment_score > 0.3]) / len(news_articles)
-```
+**When to Use**:
+- ✅ Application security assessments and penetration testing
+- ✅ Secure architecture design and threat modeling
+- ✅ DevSecOps pipeline implementation
+- ✅ Compliance frameworks (SOC 2, ISO 27001, GDPR)
+- ✅ Cloud security hardening and monitoring
 
-#### News Signals
-- **Very Positive** (avg > 0.6): 강한 호재
-- **Positive** (avg > 0.3): 긍정적
-- **Neutral** (avg -0.3 to 0.3): 중립
-- **Negative** (avg < -0.3): 부정적
-- **Very Negative** (avg < -0.6): 강한 악재
+---
 
-### 3. Basic Fundamental Check
+### Level 2: Practical Implementation
 
-#### Valuation
-- **P/E Ratio**: 현재 vs 업종 평균
-- **P/B Ratio**: 자산 가치 대비
-- **Quick Check**: 과대/적정/저평가
+#### Pattern 1: OWASP Top 10 2021 Protection
 
-#### Recent Earnings
-- **Beat/Miss**: 최근 분기 실적
-- **Surprise %**: 컨센서스 대비
-
-## Decision Framework
-
-```
-Step 1: Technical Analysis
-  score_technical = 0
-  
-  IF MA20 > MA50:
-    score_technical += 2
-  
-  IF RSI in [30, 70]:
-    score_technical += 1
-  ELIF RSI < 30:
-    score_technical += 3  # Oversold
-  ELIF RSI > 70:
-    score_technical -= 3  # Overbought
-  
-  IF Volume > avg_volume * 1.5:
-    score_technical += 1
-
-Step 2: News Analysis
-  score_news = 0
-  
-  IF avg_sentiment > 0.6:
-    score_news += 3
-  ELIF avg_sentiment > 0.3:
-    score_news += 2
-  ELIF avg_sentiment < -0.3:
-    score_news -= 2
-  ELIF avg_sentiment < -0.6:
-    score_news -= 3
-
-Step 3: Fundamental Check
-  score_fundamental = 0
-  
-  IF P/E < industry_avg * 0.8:
-    score_fundamental += 2  # Undervalued
-  ELIF P/E > industry_avg * 1.2:
-    score_fundamental -= 2  # Overvalued
-  
-  IF recent_earnings == 'BEAT':
-    score_fundamental += 2
-
-Step 4: Final Decision
-  total_score = score_technical + score_news + score_fundamental
-  
-  IF total_score >= 5:
-    action = "BUY"
-    confidence = min(0.9, 0.6 + total_score * 0.05)
-  
-  ELIF total_score <= -5:
-    action = "SELL"
-    confidence = min(0.9, 0.6 + abs(total_score) * 0.05)
-  
-  ELSE:
-    action = "HOLD"
-    confidence = 0.5 + abs(total_score) * 0.03
-```
-
-## Output Format
-
-```json
-{
-  "ticker": "AAPL",
-  "action": "BUY",
-  "confidence": 0.75,
-  "reasoning": "기술적 골든크로스 (MA20 > MA50), 최근 뉴스 긍정적 (sentiment +0.6), 업종 대비 저평가 (P/E 25 vs 28)",
-  "analysis_time_ms": 3200,
-  "price_info": {
-    "current": 197.50,
-    "change_1d_pct": 0.024,
-    "change_1w_pct": 0.058,
-    "ma20": 195.00,
-    "ma50": 192.00,
-    "ma200": 185.00,
-    "support_level": 190.00,
-    "resistance_level": 205.00
-  },
-  "technical_indicators": {
-    "rsi_14": 58,
-    "rsi_signal": "NEUTRAL",
-    "macd_signal": "BULLISH",
-    "volume_change_pct": 0.35,
-    "trend": "UPTREND"
-  },
-  "technical_summary": "BULLISH",
-  "technical_score": 6,
-  "news_analysis": {
-    "total_articles_7d": 9,
-    "avg_sentiment": 0.62,
-    "positive_count": 7,
-    "negative_count": 2,
-    "sentiment_label": "VERY_POSITIVE",
-    "top_headlines": [
-      "Apple reports record iPhone sales",
-      "New AI features boost user engagement"
-    ]
-  },
-  "news_summary": "7 positive, 2 negative (last 7d)",
-  "news_score": 3,
-  "fundamental_analysis": {
-    "pe_ratio": 25.3,
-    "industry_avg_pe": 28.0,
-    "pe_relative": 0.904,
-    "valuation": "UNDERVALUED",
-    "pb_ratio": 42.5,
-    "recent_earnings": "BEAT",
-    "earnings_surprise_pct": 0.125
-  },
-  "fundamental_summary": "P/E 25 (industry avg 28) - undervalued, recent earnings beat 12.5%",
-  "fundamental_score": 4,
-  "total_score": 13,
-  "risk_factors": [
-    "Potential profit-taking at resistance $205",
-    "Tech sector rotation risk"
-  ],
-  "next_review_date": "2025-12-28"
-}
-```
-
-## Examples
-
-**Example 1**: Strong BUY Signal
-```
-Input:
-- Ticker: NVDA
-- Price: $520
-- MA20: $510, MA50: $490 (골든크로스)
-- RSI: 55
-- News: 8 positive, 1 negative (avg +0.7)
-- P/E: 45 (industry 52) - 저평가
-- Recent Earnings: Beat 15%
-
-Calculation:
-- Technical Score: +6 (MA골든+2, RSI중립+1, Volume+1, Trend+2)
-- News Score: +3 (매우 긍정)
-- Fundamental Score: +4 (저평가+2, Beat+2)
-- Total: 13
-
-Output:
-- Action: BUY
-- Confidence: 0.85
-- Reasoning: "강한 기술적 신호 + 긍정적 뉴스 + 저평가"
-```
-
-**Example 2**: SELL Signal
-```
-Input:
-- Ticker: XYZ
-- MA20 < MA50 (데드크로스)
-- RSI: 78 (과매수)
-- News: 2 positive, 7 negative (avg -0.5)
-- P/E: 85 (industry 40) - 고평가
-
-Calculation:
-- Technical Score: -4 (데드크로스-2, 과매수-3, 정상볼륨+1)
-- News Score: -2 (부정)
-- Fundamental Score: -2 (고평가)
-- Total: -8
-
-Output:
-- Action: SELL
-- Confidence: 0.80
-- Reasoning: "기술적 약세 + 부정 뉴스 + 고평가"
-```
-
-**Example 3**: HOLD Signal
-```
-Input:
-- Ticker: MSFT
-- MA20 ≈ MA50 (횡보)
-- RSI: 52
-- News: 4 positive, 3 negative (avg +0.1)
-- P/E: 30 (industry 30) - 적정
-
-Calculation:
-- Technical Score: +1
-- News Score: 0
-- Fundamental Score: 0
-- Total: 1
-
-Output:
-- Action: HOLD
-- Confidence: 0.55
-- Reasoning: "명확한 방향성 부재, 관망 추천"
-```
-
-## Guidelines
-
-### Do's ✅
-- **Speed First**: 5초 이내 응답 (복잡한 분석 지양)
-- **핵심 지표만**: RSI, MA, P/E, News Sentiment
-- **명확한 신호**: 강한 BUY/SELL만, 애매하면 HOLD
-- **Risk Factors 포함**: 주요 리스크 1-2개 언급
-
-### Don'ts ❌
-- 과도한 분석 금지 (Deep Reasoning Agent 역할 아님)
-- 복잡한 모델 사용 금지 (속도 저하)
-- 모호한 표현 금지 ("maybe", "possibly")
-- 100% 확신 금지 (confidence 최대 0.90)
-
-## Integration
-
-### API Endpoint
+**Objective**: Protect against the OWASP Top 10 2021 vulnerabilities.
 
 ```python
-from fastapi import APIRouter, HTTPException
-from backend.ai.skills.base_agent import AnalysisSkillAgent
+# Security middleware for Flask/Django applications
+import re
+from functools import wraps
 
-router = APIRouter()
-
-@router.get("/api/analysis/quick/{ticker}")
-async def quick_analyze_ticker(ticker: str):
-    """Quick analysis for a ticker"""
+class SecurityMiddleware:
+    """OWASP Top 10 protection middleware."""
     
-    try:
-        agent = QuickAnalyzerAgent()
+    def __init__(self, app=None):
+        self.app = app
+        if app:
+            self.init_app(app)
+    
+    def init_app(self, app):
+        app.before_request(self.before_request_handler)
+        app.after_request(self.after_request_handler)
+    
+    def before_request_handler(self, request):
+        # A01: Broken Access Control
+        self._verify_access_control(request)
+        # A03: Injection prevention
+        self._prevent_injection_attacks(request)
+        return None
+    
+    def after_request_handler(self, response):
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'DENY'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000'
+        return response
+    
+    def _prevent_injection_attacks(self, request):
+        if hasattr(request, 'form'):
+            for key, value in request.form.items():
+                if self._detect_sql_injection(value):
+                    raise SecurityError("SQL injection attempt detected")
+    
+    def _detect_sql_injection(self, input_str: str) -> bool:
+        patterns = [
+            r"(\b(union|select|insert|update|delete|drop)\b)",
+            r"([';]|--|/\*|\*/|xp_|sp_)",
+            r"(or\s+1\s*=\s*1|and\s+1\s*=\s*1)",
+        ]
+        return any(re.search(pattern, input_str, re.IGNORECASE) for pattern in patterns)
+
+# Example usage
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+security = SecurityMiddleware(app)
+
+@app.route('/api/users/<int:user_id>')
+def get_user(user_id):
+    # Parameterized query prevents SQL injection
+    query = "SELECT id, username, email FROM users WHERE id = %s"
+    user = db.execute(query, (user_id,)).fetchone()
+    
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    
+    return jsonify({
+        'id': user['id'],
+        'username': user['username'],
+        'email': user['email']
+    })
+```
+
+---
+
+#### Pattern 2: Zero-Trust Architecture
+
+**Objective**: Implement zero-trust security principles.
+
+```python
+# Zero-Trust authentication and authorization
+import jwt
+import secrets
+from datetime import datetime, timedelta
+
+class ZeroTrustAuth:
+    """Zero-trust authentication and authorization system."""
+    
+    def __init__(self, secret_key: str, token_expiry: int = 3600):
+        self.secret_key = secret_key
+        self.token_expiry = token_expiry
+        self.active_sessions = {}
+    
+    def authenticate_user(self, credentials: dict, context: dict) -> dict:
+        user = self._verify_credentials(credentials)
+        if not user:
+            raise AuthenticationError("Invalid credentials")
         
-        result = await agent.execute({
-            'ticker': ticker,
-            'task_description': f'Provide quick analysis for {ticker}'
-        })
+        risk_score = self._calculate_risk_score(user, context)
+        trust_level = self._determine_trust_level(risk_score)
         
-        return result
+        token_claims = {
+            'user_id': user['id'],
+            'username': user['username'],
+            'roles': user['roles'],
+            'trust_level': trust_level,
+            'session_id': secrets.token_urlsafe(32),
+            'device_fingerprint': context.get('device_fingerprint'),
+            'ip_address': context.get('ip_address'),
+            'risk_score': risk_score,
+            'exp': datetime.utcnow() + timedelta(seconds=self.token_expiry)
+        }
+        
+        token = jwt.encode(token_claims, self.secret_key, algorithm='HS256')
+        
+        self.active_sessions[token_claims['session_id']] = {
+            'user_id': user['id'],
+            'created_at': datetime.utcnow(),
+            'context': context,
+            'risk_score': risk_score
+        }
+        
+        return {
+            'token': token,
+            'session_id': token_claims['session_id'],
+            'trust_level': trust_level,
+            'expires_in': self.token_expiry
+        }
     
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    def _calculate_risk_score(self, user: dict, context: dict) -> int:
+        risk_score = 0
+        
+        if self._is_unusual_location(user['id'], context.get('ip_address')):
+            risk_score += 20
+        
+        if self._is_new_device(user['id'], context.get('device_fingerprint')):
+            risk_score += 15
+        
+        if self._is_unusual_time(user['id']):
+            risk_score += 10
+        
+        if self._is_unusual_behavior(user['id'], context):
+            risk_score += 25
+        
+        return min(risk_score, 100)
+    
+    def _determine_trust_level(self, risk_score: int) -> str:
+        if risk_score < 20:
+            return 'high'
+        elif risk_score < 50:
+            return 'medium'
+        else:
+            return 'low'
+
+# Decorator for zero-trust verification
+def zero_trust_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({'error': 'Authorization required'}), 401
+        
+        try:
+            auth_result = zero_trust.verify_request(
+                token=token,
+                request_context={
+                    'ip_address': request.remote_addr,
+                    'device_fingerprint': request.headers.get('User-Agent'),
+                    'endpoint': request.endpoint,
+                    'method': request.method
+                }
+            )
+            
+            request.auth_result = auth_result
+            return f(*args, **kwargs)
+            
+        except AuthorizationError as e:
+            return jsonify({'error': str(e)}), 401
+    
+    return decorated_function
+
+@app.route('/api/sensitive-data')
+@zero_trust_required
+def get_sensitive_data():
+    if 'read_sensitive_data' not in request.auth_result['permissions']:
+        return jsonify({'error': 'Insufficient permissions'}), 403
+    
+    sensitive_data = get_data_for_user(request.auth_result['user_id'])
+    
+    audit_log.info(
+        "Sensitive data accessed",
+        user_id=request.auth_result['user_id'],
+        trust_level=request.auth_result['trust_level'],
+        risk_score=request.auth_result['risk_score']
+    )
+    
+    return jsonify(sensitive_data)
 ```
 
-### Data Sources
+---
+
+#### Pattern 3: Threat Modeling (STRIDE)
+
+**Objective**: Implement STRIDE threat modeling for system security.
 
 ```python
-from backend.data.yahoo_client import YahooClient
-from backend.database.models import NewsArticle
-from sqlalchemy.orm import Session
+# STRIDE Threat Modeling Framework
+from enum import Enum
+from dataclasses import dataclass
+from typing import List, Dict
 
-async def gather_quick_data(ticker: str, db: Session) -> Dict:
-    """Gather data for quick analysis"""
+class ThreatCategory(Enum):
+    SPOOFING = "Spoofing"
+    TAMPERING = "Tampering"
+    REPUDIATION = "Repudiation"
+    INFORMATION_DISCLOSURE = "Information Disclosure"
+    DENIAL_OF_SERVICE = "Denial of Service"
+    ELEVATION_OF_PRIVILEGE = "Elevation of Privilege"
+
+@dataclass
+class Threat:
+    category: ThreatCategory
+    description: str
+    impact: str
+    likelihood: str
+    mitigation: List[str]
+    affected_components: List[str]
+
+class ThreatModelAnalyzer:
+    """STRIDE threat modeling analyzer."""
     
-    yahoo = YahooClient()
+    def analyze_system(self, system_architecture: Dict) -> List[Threat]:
+        threats = []
+        
+        for component_name, component_config in system_architecture.items():
+            component_threats = self._analyze_component(component_name, component_config)
+            threats.extend(component_threats)
+        
+        return threats
     
-    # Price data
-    price_data = yahoo.get_current_price(ticker)
+    def _analyze_component(self, component_name: str, component_config: Dict) -> List[Threat]:
+        threats = []
+        component_type = component_config.get('type', '')
+        
+        if component_type == 'web_application':
+            threats.extend([
+                Threat(
+                    category=ThreatCategory.SPOOFING,
+                    description="Attacker impersonates legitimate user",
+                    impact="High",
+                    likelihood="Medium",
+                    mitigation=[
+                        "Implement strong authentication (MFA)",
+                        "Use CSRF tokens",
+                        "Implement proper session management"
+                    ],
+                    affected_components=[component_name]
+                ),
+                Threat(
+                    category=ThreatCategory.INFORMATION_DISCLOSURE,
+                    description="Sensitive data exposed through vulnerabilities",
+                    impact="High",
+                    likelihood="High",
+                    mitigation=[
+                        "Encrypt data at rest and in transit",
+                        "Implement proper access controls",
+                        "Use secure coding practices"
+                    ],
+                    affected_components=[component_name]
+                )
+            ])
+        
+        return threats
     
-    # Technical indicators
-    tech_data = yahoo.get_technical_indicators(ticker)
+    def generate_threat_report(self, threats: List[Threat]) -> Dict:
+        threats_by_category = {}
+        for threat in threats:
+            category = threat.category.value
+            if category not in threats_by_category:
+                threats_by_category[category] = []
+            threats_by_category[category].append(threat)
+        
+        high_risk_threats = [
+            threat for threat in threats
+            if threat.impact == "High" and threat.likelihood in ["High", "Medium"]
+        ]
+        
+        return {
+            'total_threats': len(threats),
+            'threats_by_category': threats_by_category,
+            'high_risk_threats': len(high_risk_threats),
+            'recommendations': self._generate_recommendations(threats)
+        }
     
-    # News (last 7 days)
-    news = db.query(NewsArticle).filter(
-        NewsArticle.ticker == ticker,
-        NewsArticle.created_at >= datetime.now() - timedelta(days=7)
-    ).all()
-    
-    # Basic fundamentals
-    fundamentals = yahoo.get_key_stats(ticker)
-    
-    return {
-        'price': price_data,
-        'technical': tech_data,
-        'news': news,
-        'fundamentals': fundamentals
+    def _generate_recommendations(self, threats: List[Threat]) -> List[str]:
+        recommendations = []
+        
+        mitigations = set()
+        for threat in threats:
+            mitigations.update(threat.mitigation)
+        
+        priority_mitigations = [
+            "Implement strong authentication (MFA)",
+            "Encrypt data at rest and in transit",
+            "Use parameterized queries",
+            "Implement proper access controls",
+            "Use secure coding practices"
+        ]
+        
+        for mitigation in priority_mitigations:
+            if mitigation in mitigations:
+                recommendations.append(mitigation)
+                mitigations.remove(mitigation)
+        
+        recommendations.extend(sorted(mitigations))
+        return recommendations
+
+# Example usage
+system_architecture = {
+    'web_application': {
+        'type': 'web_application',
+        'technologies': ['React', 'Node.js', 'Express'],
+        'exposed': True
+    },
+    'api': {
+        'type': 'api',
+        'technologies': ['FastAPI', 'Python'],
+        'exposed': True
+    },
+    'database': {
+        'type': 'database',
+        'technologies': ['PostgreSQL'],
+        'exposed': False
     }
+}
+
+analyzer = ThreatModelAnalyzer()
+threats = analyzer.analyze_system(system_architecture)
+report = analyzer.generate_threat_report(threats)
+
+print(f"Threat Analysis Report")
+print(f"Total threats: {report['total_threats']}")
+print(f"High-risk threats: {report['high_risk_threats']}")
+print(f"Top recommendations: {report['recommendations'][:3]}")
 ```
 
-## Performance Metrics
+---
 
-- **Response Time**: 목표 < 5초 (평균 3초)
-- **Accuracy**: > 60% (빠른 분석이므로 Deep Reasoning보다 낮음)
-- **User Satisfaction**: > 4/5 (속도 중요)
-- **Cache Hit Rate**: > 70% (동일 ticker 5분 내 재조회 시)
+### Level 3: Advanced Integration
 
-## Caching Strategy
+#### DevSecOps Pipeline Integration
 
-```python
-from functools import lru_cache
-from time import time
+**Security automation in CI/CD pipeline**:
 
-# 5분 TTL cache
-@lru_cache(maxsize=100)
-def cached_quick_analysis(ticker: str, timestamp: int) -> Dict:
-    """Cache analysis for 5 minutes"""
-    # timestamp rounded to 5 minutes
-    return perform_quick_analysis(ticker)
+```yaml
+# .github/workflows/security.yml
+name: Security Pipeline
 
-# Usage
-current_5min_slot = int(time() // 300)
-result = cached_quick_analysis(ticker, current_5min_slot)
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Run security scan
+      run: |
+        # OWASP ZAP Baseline Scan
+        docker run -t owasp/zap2docker-stable zap-baseline.py -t http://app-url
+        
+        # Dependency vulnerability scan
+        pip install safety
+        safety check --json --output safety-report.json
+        
+        # Static application security testing
+        pip install bandit
+        bandit -r src/ -f json -o bandit-report.json
+    
+    - name: Threat modeling
+      run: |
+        python threat_modeling.py --architecture architecture.json --output threat-model.json
+    
+    - name: Compliance check
+      run: |
+        python compliance_check.py --framework soc2
+        python compliance_check.py --framework gdpr
 ```
 
-## Comparison with Other Agents
+---
 
-| Agent | Speed | Depth | Use Case |
-|-------|-------|-------|----------|
-| Quick Analyzer | ⭐⭐⭐ 5s | ⭐ Basic | 빠른 확인 |
-| Deep Reasoning | ⭐ 30s | ⭐⭐⭐ Deep | 중요한 결정 |
-| War Room | ⭐⭐ 15s | ⭐⭐ Medium | 합의 기반 |
+## 🔗 Integration with Alfred Workflow
 
-## Version History
+### Command Integration
 
-- **v1.0** (2025-12-21): Initial release with 5-second target response time
+**Security Assessment**:
+- Use: Security expert agent for threat modeling
+- Tools: STRIDE analysis, vulnerability scanning
+
+**Compliance Validation**:
+- Use: QA validation agent for compliance checks
+- Tools: SOC 2, ISO 27001, GDPR validation
+
+### Skill Dependencies
+
+- `moai-domain-cloud`: Cloud security patterns
+- `moai-core-dev-guide`: Secure development practices
+- `moai-core-best-practices`: Security best practices
+
+---
+
+## 📚 Key Benefits
+
+### For Development Teams
+
+1. **Proactive Security**: Build security in from the start
+2. **Compliance Ready**: Meet regulatory requirements automatically
+3. **Threat Prevention**: Identify and mitigate threats early
+4. **Continuous Monitoring**: Real-time security posture assessment
+
+### For Organizations
+
+1. **Risk Management**: Quantified risk assessment and mitigation
+2. **Audit Trail**: Comprehensive security logging and monitoring
+3. **Zero Trust**: Never trust, always verify security model
+4. **Scalable Security**: Security that grows with your organization
+
+---
+
+## 📚 Research Attribution
+
+**Security Research**: Based on OWASP Top 10 2021, NIST Cybersecurity Framework, and zero-trust architecture principles
+
+**Compliance Frameworks**: SOC 2, ISO 27001, GDPR, CCPA implementation patterns
+
+**Last Updated**: 2025-11-18
+
+---
+
+## 🔗 Related Resources
+
+**Complete Security Patterns**: See `examples.md`
+**Compliance Checklists**: See `reference.md`
+**Threat Modeling Templates**: See examples.md
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
