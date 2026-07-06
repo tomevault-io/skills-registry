@@ -1,186 +1,335 @@
 ---
-name: entra-app-registration
+name: clerk-incident-runbook
 description: | Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
+# Clerk Incident Runbook
+
 ## Overview
+Procedures for responding to Clerk-related incidents in production.
 
-Microsoft Entra ID (formerly Azure Active Directory) is Microsoft's cloud-based identity and access management service. App registrations allow applications to authenticate users and access Azure resources securely.
+## Prerequisites
+- Access to Clerk dashboard
+- Access to application logs
+- Emergency contact list
+- Rollback procedures documented
 
-### Key Concepts
+## Incident Categories
 
-| Concept | Description |
-|---------|-------------|
-| **App Registration** | Configuration that allows an app to use Microsoft identity platform |
-| **Application (Client) ID** | Unique identifier for your application |
-| **Tenant ID** | Unique identifier for your Azure AD tenant/directory |
-| **Client Secret** | Password for the application (confidential clients only) |
-| **Redirect URI** | URL where authentication responses are sent |
-| **API Permissions** | Access scopes your app requests |
-| **Service Principal** | Identity created in your tenant when you register an app |
+### Category 1: Complete Auth Outage
+**Symptoms:** All users unable to sign in, middleware returning errors
 
-### Application Types
+**Immediate Actions:**
+```bash
+# 1. Check Clerk status
+curl -s https://status.clerk.com/api/v1/status | jq
 
-| Type | Use Case |
-|------|----------|
-| **Web Application** | Server-side apps, APIs |
-| **Single Page App (SPA)** | JavaScript/React/Angular apps |
-| **Mobile/Native App** | Desktop, mobile apps |
-| **Daemon/Service** | Background services, APIs |
+# 2. Check your endpoint
+curl -I https://yourapp.com/api/health/clerk
 
-## Core Workflow
+# 3. Check environment variables
+vercel env ls | grep CLERK
+```
 
-### Step 1: Register the Application
+**Mitigation Steps:**
+```typescript
+// Emergency bypass mode (use with caution)
+// middleware.ts
+import { clerkMiddleware } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
 
-Create an app registration in the Azure portal or using Azure CLI.
+const EMERGENCY_BYPASS = process.env.CLERK_EMERGENCY_BYPASS === 'true'
 
-**Portal Method:**
-1. Navigate to Azure Portal → Microsoft Entra ID → App registrations
-2. Click "New registration"
-3. Provide name, supported account types, and redirect URI
-4. Click "Register"
+export default clerkMiddleware(async (auth, request) => {
+  if (EMERGENCY_BYPASS) {
+    // Log for audit
+    console.warn('[EMERGENCY] Auth bypass active', {
+      path: request.nextUrl.pathname,
+      timestamp: new Date().toISOString()
+    })
+    return NextResponse.next()
+  }
 
-**CLI Method:** See [references/CLI-COMMANDS.md](references/CLI-COMMANDS.md)
-**IaC Method:** See [references/BICEP-EXAMPLE.bicep](references/BICEP-EXAMPLE.bicep)
+  // Normal auth flow
+  await auth.protect()
+})
+```
 
-It's highly recommended to use the IaC to manage Entra app registration if you already use IaC in your project, need a scalable solution for managing lots of app registrations or need fine-grained audit history of the configuration changes. 
+### Category 2: Webhook Processing Failure
+**Symptoms:** User data out of sync, missing user records
 
-### Step 2: Configure Authentication
+**Diagnosis:**
+```bash
+# Check webhook endpoint
+curl -X POST https://yourapp.com/api/webhooks/clerk \
+  -H "Content-Type: application/json" \
+  -d '{"type":"ping"}' \
+  -w "\n%{http_code}"
 
-Set up authentication settings based on your application type.
+# Check Clerk dashboard for failed webhooks
+# Dashboard > Webhooks > Failed Deliveries
+```
 
-- **Web Apps**: Add redirect URIs, enable ID tokens if needed
-- **SPAs**: Add redirect URIs, enable implicit grant flow if necessary
-- **Mobile/Desktop**: Use `http://localhost` or custom URI scheme
-- **Services**: No redirect URI needed for client credentials flow
+**Recovery:**
+```typescript
+// scripts/resync-users.ts
+import { clerkClient } from '@clerk/nextjs/server'
+import { db } from '../lib/db'
 
-### Step 3: Configure API Permissions
+async function resyncAllUsers() {
+  const client = await clerkClient()
+  let offset = 0
+  const limit = 100
 
-Grant your application permission to access Microsoft APIs or your own APIs.
+  while (true) {
+    const { data: users, totalCount } = await client.users.getUserList({
+      limit,
+      offset
+    })
 
-**Common Microsoft Graph Permissions:**
-- `User.Read` - Read user profile
-- `User.ReadWrite.All` - Read and write all users
-- `Directory.Read.All` - Read directory data
-- `Mail.Send` - Send mail as a user
+    for (const user of users) {
+      await db.user.upsert({
+        where: { clerkId: user.id },
+        update: {
+          email: user.emailAddresses[0]?.emailAddress,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          updatedAt: new Date()
+        },
+        create: {
+          clerkId: user.id,
+          email: user.emailAddresses[0]?.emailAddress,
+          firstName: user.firstName,
+          lastName: user.lastName
+        }
+      })
+    }
 
-**Details:** See [references/API-PERMISSIONS.md](references/API-PERMISSIONS.md)
+    console.log(`Synced ${offset + users.length} of ${totalCount} users`)
+    offset += limit
 
-### Step 4: Create Client Credentials (if needed)
+    if (offset >= totalCount) break
+  }
 
-For confidential client applications (web apps, services), create a client secret, certificate or federated identity credential.
+  console.log('Resync complete')
+}
 
-**Client Secret:**
-- Navigate to "Certificates & secrets"
-- Create new client secret
-- Copy the value immediately (only shown once)
-- Store securely (Key Vault recommended)
+resyncAllUsers()
+```
 
-**Certificate:** For production environments, use certificates instead of secrets for enhanced security. Upload certificate via "Certificates & secrets" section.
+### Category 3: Security Incident
+**Symptoms:** Unauthorized access detected, suspicious sessions
 
-**Federated Identity Credential:** For dynamically authenticating the confidential client to Entra platform.
+**Immediate Actions:**
+```typescript
+// scripts/emergency-session-revoke.ts
+import { clerkClient } from '@clerk/nextjs/server'
 
-### Step 5: Implement OAuth Flow
+async function revokeUserSessions(userId: string) {
+  const client = await clerkClient()
 
-Integrate the OAuth flow into your application code.
+  // Get all active sessions
+  const sessions = await client.sessions.getSessionList({
+    userId,
+    status: 'active'
+  })
 
-**See:**
-- [references/OAUTH-FLOWS.md](references/OAUTH-FLOWS.md) - OAuth 2.0 flow details
-- [references/CONSOLE-APP-EXAMPLE.md](references/CONSOLE-APP-EXAMPLE.md) - Console app implementation
+  // Revoke all sessions
+  for (const session of sessions.data) {
+    await client.sessions.revokeSession(session.id)
+    console.log(`Revoked session: ${session.id}`)
+  }
 
-## Common Patterns
+  console.log(`Revoked ${sessions.data.length} sessions for user ${userId}`)
+}
 
-### Pattern 1: First-Time App Registration
+// Revoke all sessions for compromised user
+revokeUserSessions('user_xxx')
+```
 
-Walk user through their first app registration step-by-step.
+```typescript
+// scripts/emergency-lockout.ts
+import { clerkClient } from '@clerk/nextjs/server'
 
-**Required Information:**
-- Application name
-- Application type (web, SPA, mobile, service)
-- Redirect URIs (if applicable)
-- Required permissions
+async function lockoutUser(userId: string) {
+  const client = await clerkClient()
 
-**Script:** See [references/FIRST-APP-REGISTRATION.md](references/FIRST-APP-REGISTRATION.md)
+  // Ban user (prevents new sign-ins)
+  await client.users.banUser(userId)
 
-### Pattern 2: Console Application with User Authentication
+  // Revoke all sessions
+  const sessions = await client.sessions.getSessionList({
+    userId,
+    status: 'active'
+  })
 
-Create a .NET/Python/Node.js console app that authenticates users.
+  for (const session of sessions.data) {
+    await client.sessions.revokeSession(session.id)
+  }
 
-**Required Information:**
-- Programming language (C#, Python, JavaScript, etc.)
-- Authentication library (MSAL recommended)
-- Required permissions
+  console.log(`User ${userId} locked out and all sessions revoked`)
+}
+```
 
-**Example:** See [references/CONSOLE-APP-EXAMPLE.md](references/CONSOLE-APP-EXAMPLE.md)
+### Category 4: Performance Degradation
+**Symptoms:** Slow sign-in, high latency, timeouts
 
-### Pattern 3: Service-to-Service Authentication
+**Diagnosis:**
+```typescript
+// scripts/diagnose-performance.ts
+async function diagnosePerformance() {
+  const results = {
+    authCheck: 0,
+    getUserList: 0,
+    currentUser: 0
+  }
 
-Set up daemon/service authentication without user interaction.
+  // Measure auth check
+  const authStart = performance.now()
+  await auth()
+  results.authCheck = performance.now() - authStart
 
-**Required Information:**
-- Service/app name
-- Target API/resource
-- Whether to use secret or certificate
+  // Measure API call
+  const apiStart = performance.now()
+  const client = await clerkClient()
+  await client.users.getUserList({ limit: 1 })
+  results.getUserList = performance.now() - apiStart
 
-**Implementation:** Use Client Credentials flow (see [references/OAUTH-FLOWS.md#client-credentials-flow](references/OAUTH-FLOWS.md#client-credentials-flow))
+  // Measure currentUser
+  const userStart = performance.now()
+  await currentUser()
+  results.currentUser = performance.now() - userStart
 
-## MCP Tools and CLI
+  console.log('Performance Diagnosis:', results)
 
-### Azure CLI Commands
+  // Check for issues
+  if (results.authCheck > 100) {
+    console.warn('Auth check slow - check middleware configuration')
+  }
+  if (results.getUserList > 500) {
+    console.warn('API slow - check Clerk status or network')
+  }
 
-| Command | Purpose |
-|---------|---------|
-| `az ad app create` | Create new app registration |
-| `az ad app list` | List app registrations |
-| `az ad app show` | Show app details |
-| `az ad app permission add` | Add API permission |
-| `az ad app credential reset` | Generate new client secret |
-| `az ad sp create` | Create service principal |
+  return results
+}
+```
 
-**Complete reference:** See [references/CLI-COMMANDS.md](references/CLI-COMMANDS.md)
+## Runbook Procedures
 
-### Microsoft Authentication Library (MSAL)
+### Procedure 1: Auth Outage Response
+```
+1. [ ] Confirm outage (check status.clerk.com)
+2. [ ] Check application logs for errors
+3. [ ] Verify environment variables
+4. [ ] If Clerk outage:
+   a. [ ] Enable emergency bypass (if safe)
+   b. [ ] Notify users via status page
+   c. [ ] Monitor Clerk status
+5. [ ] If application issue:
+   a. [ ] Check recent deployments
+   b. [ ] Rollback if necessary
+   c. [ ] Check middleware configuration
+6. [ ] Document timeline and actions
+7. [ ] Conduct post-mortem
+```
 
-MSAL is the recommended library for integrating Microsoft identity platform.
+### Procedure 2: Security Breach Response
+```
+1. [ ] Identify affected accounts
+2. [ ] Revoke all sessions for affected users
+3. [ ] Lock compromised accounts
+4. [ ] Reset API keys if exposed
+5. [ ] Enable additional verification
+6. [ ] Notify affected users
+7. [ ] Review access logs
+8. [ ] Document and report
+```
 
-**Supported Languages:**
-- .NET/C# - `Microsoft.Identity.Client`
-- JavaScript/TypeScript - `@azure/msal-browser`, `@azure/msal-node`
-- Python - `msal`
+### Procedure 3: Data Sync Recovery
+```
+1. [ ] Identify sync gap (check webhook logs)
+2. [ ] Pause webhook processing
+3. [ ] Export current database state
+4. [ ] Run resync script
+5. [ ] Verify data integrity
+6. [ ] Resume webhook processing
+7. [ ] Monitor for new issues
+```
 
-**Examples:** See [references/CONSOLE-APP-EXAMPLE.md](references/CONSOLE-APP-EXAMPLE.md)
+## Emergency Contacts
 
-## Security Best Practices
+```yaml
+# .github/INCIDENT_CONTACTS.yml
+contacts:
+  on_call:
+    - name: On-Call Engineer
+      phone: "+1-xxx-xxx-xxxx"
+      slack: "@oncall"
 
-| Practice | Recommendation |
-|----------|---------------|
-| **Never hardcode secrets** | Use environment variables, Azure Key Vault, or managed identity |
-| **Rotate secrets regularly** | Set expiration, automate rotation |
-| **Use certificates over secrets** | More secure for production |
-| **Least privilege permissions** | Request only required API permissions |
-| **Enable MFA** | Require multi-factor authentication for users |
-| **Use managed identity** | For Azure-hosted apps, avoid secrets entirely |
-| **Validate tokens** | Always validate issuer, audience, expiration |
-| **Use HTTPS only** | All redirect URIs must use HTTPS (except localhost) |
-| **Monitor sign-ins** | Use Entra ID sign-in logs for anomaly detection |
+  clerk_support:
+    - url: "https://clerk.com/support"
+    - email: "support@clerk.com"
+    - priority: "For enterprise: contact account manager"
 
-## References
+  escalation:
+    - level: 1
+      contact: "On-call engineer"
+      time: "0-15 min"
+    - level: 2
+      contact: "Engineering lead"
+      time: "15-30 min"
+    - level: 3
+      contact: "CTO"
+      time: "30+ min"
+```
 
-- [OAuth Flows](references/OAUTH-FLOWS.md) - Detailed OAuth 2.0 flow explanations
-- [CLI Commands](references/CLI-COMMANDS.md) - Azure CLI reference for app registrations
-- [Console App Example](references/CONSOLE-APP-EXAMPLE.md) - Complete working examples
-- [First App Registration](references/FIRST-APP-REGISTRATION.md) - Step-by-step guide for beginners
-- [API Permissions](references/API-PERMISSIONS.md) - Understanding and configuring permissions
-- [Troubleshooting](references/TROUBLESHOOTING.md) - Common issues and solutions
+## Post-Incident
 
-## External Resources
+### Template
+```markdown
+# Incident Report: [Title]
 
-- [Microsoft Identity Platform Documentation](https://learn.microsoft.com/entra/identity-platform/)
-- [OAuth 2.0 and OpenID Connect protocols](https://learn.microsoft.com/entra/identity-platform/v2-protocols)
-- [MSAL Documentation](https://learn.microsoft.com/entra/msal/)
-- [Microsoft Graph API](https://learn.microsoft.com/graph/)
+## Summary
+- **Date:** YYYY-MM-DD
+- **Duration:** X hours Y minutes
+- **Severity:** P1/P2/P3
+- **Impact:** [Number of affected users]
+
+## Timeline
+- HH:MM - Incident detected
+- HH:MM - Initial response
+- HH:MM - Mitigation applied
+- HH:MM - Resolution confirmed
+
+## Root Cause
+[Description of root cause]
+
+## Resolution
+[Steps taken to resolve]
+
+## Prevention
+- [ ] Action item 1
+- [ ] Action item 2
+
+## Lessons Learned
+[Key takeaways]
+```
+
+## Output
+- Incident response procedures
+- Recovery scripts
+- Emergency bypass capability
+- Post-incident templates
+
+## Resources
+- [Clerk Status](https://status.clerk.com)
+- [Clerk Support](https://clerk.com/support)
+- [Clerk Discord](https://clerk.com/discord)
+
+## Next Steps
+Proceed to `clerk-data-handling` for user data management.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
