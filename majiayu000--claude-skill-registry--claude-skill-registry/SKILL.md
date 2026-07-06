@@ -1,244 +1,77 @@
 ---
-name: reviewing-nextjs-16-patterns
-description: Review code for Next.js 16 compliance - security patterns, caching, breaking changes. Use when reviewing Next.js code, preparing for migration, or auditing for violations. Use when this capability is needed.
+name: claude-skill-registry
+description: <!-- PM-Skills | https://github.com/product-on-purpose/pm-skills | Apache 2.0 --> Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
+<!-- PM-Skills | https://github.com/product-on-purpose/pm-skills | Apache 2.0 -->
+---
+name: measure-instrumentation-spec
+description: Specifies event tracking and analytics instrumentation requirements for a feature. Use when defining what data to collect, ensuring consistent tracking implementation, or documenting analytics requirements for engineering.
+phase: measure
+version: "2.0.0"
+updated: 2026-01-26
+license: Apache-2.0
+metadata:
+  category: validation
+  frameworks: [triple-diamond, lean-startup, design-thinking]
+  author: product-on-purpose
+---
+# Instrumentation Spec
 
-# Next.js 16 Patterns Review
+An instrumentation spec defines what analytics events to track, when to fire them, and what properties to include. It serves as a contract between product and engineering, ensuring consistent data collection that enables accurate measurement. Good instrumentation specs prevent the "we can't answer that question because we didn't track it" problem.
 
-Comprehensive review for Next.js 16 compliance covering security vulnerabilities, caching patterns, breaking changes, and migration readiness.
+## When to Use
 
-## Review Process
+- Before engineering implements a new feature
+- When defining analytics requirements for experiments
+- When auditing existing tracking for gaps or inconsistencies
+- When onboarding a new analytics tool
+- Before launch to ensure measurement is in place
 
-For comprehensive security review patterns, use the reviewing-security skill from the review plugin. For dependency auditing, use the reviewing-dependencies skill from the review plugin.
+## Instructions
 
-### 1. Security Audit
+When asked to create an instrumentation spec, follow these steps:
 
-**CVE-2025-29927 - Server Action Authentication**
+1. **Define Analytics Goals**
+   Start with the questions you need to answer. What will you measure? What decisions will this data inform? This prevents over-instrumentation while ensuring nothing important is missed.
 
-Check all Server Actions for proper authentication:
+2. **Identify Events to Track**
+   List each user action or system event that should be tracked. Follow consistent naming conventions (typically `noun_verb` or `verb_noun` in snake_case). Each event should represent a distinct, meaningful action.
 
-```bash
-# Find all Server Actions
-grep -r "use server" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx"
-```
+3. **Specify Event Triggers**
+   For each event, describe exactly when it fires. Be precise: "When user clicks Submit button" vs. "When form is submitted successfully." These are different events with different meanings.
 
-For each Server Action verify:
+4. **Define Event Properties**
+   List the properties (attributes) attached to each event. Include property name, data type, description, and example values. Properties provide context that makes events useful.
 
-- [ ] Authentication check at function start
-- [ ] Authorization validation before data access
-- [ ] No reliance on client-side validation only
-- [ ] Proper error handling without leaking sensitive data
+5. **Document User Properties**
+   Identify persistent user-level attributes that should be associated with all events (e.g., subscription tier, account creation date). These enable segmentation in analysis.
 
-**Middleware Security**
+6. **Address PII and Privacy**
+   Flag any properties that contain personally identifiable information. Document how PII should be handled — hashing, encryption, or exclusion.
 
-```bash
-# Find middleware files
-find . -name "middleware.ts" -o -name "middleware.js"
-```
+7. **Create Testing Checklist**
+   Define how QA should verify that tracking is implemented correctly. Include steps to validate events fire at the right times with correct properties.
 
-Verify:
+## Output Format
 
-- [ ] Authentication logic present in middleware
-- [ ] Protected routes defined in config.matcher
-- [ ] No authentication logic removed in Next.js 16 migration
-- [ ] Proper redirect handling for unauthorized access
+Use the template in `references/TEMPLATE.md` to structure the output.
 
-**Server Component Data Access**
+## Quality Checklist
 
-```bash
-# Find async Server Components
-grep -r "export default async function" app/
-```
+Before finalizing, verify:
 
-Check each Server Component:
+- [ ] Event names follow consistent naming convention
+- [ ] Each event has a clear, unambiguous trigger
+- [ ] Properties include data types and example values
+- [ ] PII is identified and handling is documented
+- [ ] Events map to the analytics questions you need to answer
+- [ ] Testing checklist enables QA verification
 
-- [ ] Session validation before data queries
-- [ ] User context verified before personalized data
-- [ ] No direct database queries without auth checks
-- [ ] Proper error boundaries for auth failures
+## Examples
 
-### 2. Caching Patterns
-
-**use cache Adoption**
-
-```bash
-# Find fetch calls that should use cache
-grep -r "fetch(" --include="*.ts" --include="*.tsx"
-# Find functions that should be cached
-grep -r "export async function" --include="*.ts"
-```
-
-Verify:
-
-- [ ] `use cache` directive for cacheable functions
-- [ ] Proper cache tags with `cacheTag()` for revalidation
-- [ ] Cache lifecycle control with `cacheLife()`
-- [ ] No unstable_cache in new code
-- [ ] fetch() caching replaced with use cache
-
-**Cache Lifecycle Configuration**
-
-Check for proper cache profiles:
-
-- [ ] `cacheLife('seconds')` for rapidly changing data
-- [ ] `cacheLife('minutes')` for moderate update frequency
-- [ ] `cacheLife('hours')` for stable content
-- [ ] `cacheLife('days')` for rarely changing data
-- [ ] `cacheLife('weeks')` for static content
-- [ ] Custom profiles defined in next.config.js if needed
-
-**Revalidation Strategy**
-
-```bash
-# Find revalidation calls
-grep -r "revalidateTag\|revalidatePath" --include="*.ts" --include="*.tsx"
-```
-
-Verify:
-
-- [ ] revalidateTag() matches cacheTag() definitions
-- [ ] revalidatePath() used for page-level invalidation
-- [ ] No orphaned cache tags
-- [ ] Proper error handling in revalidation
-
-### 3. Breaking Changes
-
-**Async Request APIs**
-
-```bash
-# Find synchronous API usage
-grep -r "cookies()\|headers()\|params\|searchParams" --include="*.ts" --include="*.tsx"
-```
-
-Check for required async usage:
-
-- [ ] `await cookies()` in Server Components/Actions
-- [ ] `await headers()` in Server Components/Actions
-- [ ] `await params` in page/layout/route components
-- [ ] `await searchParams` in page components
-- [ ] React.use() wrapper in Client Components if needed
-
-**Middleware to Proxy Migration**
-
-```bash
-# Check for removed middleware patterns
-grep -r "NextResponse.rewrite\|NextResponse.redirect" middleware.ts
-```
-
-Verify migration:
-
-- [ ] Simple rewrites moved to next.config.js redirects/rewrites
-- [ ] Complex logic converted to Middleware Proxies
-- [ ] Authentication logic preserved
-- [ ] Header manipulation handled correctly
-
-**Route Handler Changes**
-
-```bash
-# Find route handlers
-find app -name "route.ts" -o -name "route.js"
-```
-
-Check each route handler:
-
-- [ ] Dynamic functions require dynamic = 'force-dynamic'
-- [ ] No synchronous cookies()/headers() calls
-- [ ] Proper TypeScript types for request/params
-- [ ] Error handling updated for new patterns
-
-**generateStaticParams Changes**
-
-```bash
-# Find static param generation
-grep -r "generateStaticParams" --include="*.ts" --include="*.tsx"
-```
-
-Verify:
-
-- [ ] Returns array of param objects (not nested)
-- [ ] Works with new async params
-- [ ] Proper TypeScript types
-- [ ] No deprecated patterns
-
-### 4. Migration Verification
-
-**Dependency Updates**
-
-Check package.json:
-
-- [ ] next: ^16.0.0 or higher
-- [ ] react: ^19.0.0 or higher
-- [ ] react-dom: ^19.0.0 or higher
-- [ ] @types/react: ^19.0.0 (if using TypeScript)
-- [ ] @types/react-dom: ^19.0.0 (if using TypeScript)
-
-**Configuration Updates**
-
-Check next.config.js:
-
-- [ ] experimental.dynamicIO enabled if using dynamic APIs
-- [ ] staleTimes configured if controlling client-side cache
-- [ ] Custom cacheLife profiles defined if needed
-- [ ] TypeScript config updated for async params
-
-**Build Validation**
-
-Run and verify:
-
-```bash
-npm run build
-```
-
-- [ ] No deprecation warnings
-- [ ] No type errors
-- [ ] No runtime errors in build
-- [ ] Static generation works correctly
-- [ ] Dynamic routes render properly
-
-**Runtime Testing**
-
-- [ ] Authentication flows work correctly
-- [ ] Protected routes require login
-- [ ] Server Actions validate permissions
-- [ ] Cache invalidation triggers updates
-- [ ] Dynamic content updates appropriately
-- [ ] Static content serves from cache
-
-## Violation Severity
-
-**Critical**
-
-- Missing authentication in Server Actions (CVE-2025-29927)
-- Synchronous cookies()/headers() calls
-- Security middleware removed or broken
-
-**High**
-
-- Missing cache directives on expensive operations
-- Incorrect async params usage
-- Broken revalidation strategy
-
-**Medium**
-
-- Using deprecated unstable_cache
-- Middleware patterns that should be proxies
-- Missing cache lifecycle configuration
-
-**Nitpick**
-
-- Suboptimal cache profiles
-- Missing cache tags for fine-grained invalidation
-- Legacy fetch caching patterns
-
-## Best Practices
-
-1. **Run security audit first** - Critical vulnerabilities take priority
-2. **Group related violations** - Fix all async API issues together
-3. **Test incrementally** - Verify each category before moving on
-4. **Document decisions** - Record why certain patterns were chosen
-5. **Update documentation** - Keep project docs current with Next.js 16 patterns
+See `references/EXAMPLE.md` for a completed example.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
