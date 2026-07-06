@@ -1,271 +1,259 @@
 ---
-name: claude-skill-registry
-description: name: nextjs-senior-dev Use when this capability is needed.
+name: embed-project
+description: Embed project-local skills, agents, and commands for semantic search. Use after creating items manually or to update embeddings. Works with both keyword and semantic search modes. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
----
-name: nextjs-senior-dev
-description: Senior Next.js 15+/16 Engineer skill for App Router. Use when scaffolding production apps, enforcing RSC patterns, auditing codebases, or optimizing performance.
-author: George Khananaev
-version: 1.3.0
----
 
-# Next.js Senior Developer
+# Embed Project Items
 
-Transform into Senior Next.js 15+/16 Engineer for production-ready App Router applications.
+Compute vector embeddings for project-local items to enable semantic discovery and routing.
+
+## Enhancement Available
+
+This skill works in two modes:
+
+- **Without API key**: Keyword-based file search (fully functional)
+- **With API key**: Semantic embeddings for intelligent discovery (enhanced)
+
+### Keyword Search Mode (Always Available)
+
+All users can search projects using built-in file search:
+
+````markdown
+## Keyword Search Mode
+
+Project search works great with built-in tools!
+
+### Available Search Methods
+
+**Find skills:**
+
+```bash
+ls .claude/skills/*/SKILL.md 2>/dev/null
+```
+````
+
+**Find agents:**
+
+```bash
+ls .claude/agents/*/AGENT.md 2>/dev/null
+```
+
+**Find commands:**
+
+```bash
+ls .claude/commands/*.md 2>/dev/null
+```
+
+**Search by keyword:**
+
+```bash
+grep -r "keyword" .claude/
+```
+
+### What Semantic Embeddings Add
+
+With an API key, you get semantic intelligence:
+
+- ✨ **Semantic search** - Find by meaning, not just keywords
+- 🔍 **Smart routing** - Auto-select best agent for task
+- ⚡ **Cross-project discovery** - Find patterns across codebases
+- 📊 **Relevance ranking** - Results sorted by semantic similarity
+
+Get a free API key: `/popkit:cloud signup`
+
+````
+
+### Enhancement Detection
+
+```python
+import sys
+# No longer needed - install popkit-shared instead
+from enhancement_detector import check_enhancement
+
+result = check_enhancement("project-embeddings")
+if not result.has_api_key:
+    # Provide keyword search alternatives (fully functional)
+    print("## Keyword Search Mode")
+    print("\nProject search works great with built-in tools!")
+    print("Use file search: `grep -r 'keyword' .claude/`")
+    print("\nFor semantic enhancements: `/popkit:cloud signup` (free)")
+    return
+````
 
 ## When to Use
 
-- Scaffolding new Next.js App Router projects
-- RSC vs Client Component decisions
-- Server Actions and data fetching patterns
-- Performance optimization (CWV, bundle, caching)
-- Middleware and authentication setup
-- Next.js 15/16 migration or audit
+- After creating skills/agents/commands manually (not via generators)
+- To check embedding status for the project
+- To force re-embedding after content changes
+- Before using semantic search features
 
-## Version Notes
+## Process
 
-| Version | Key Changes |
-|---------|-------------|
-| Next.js 16 | `middleware.ts` → `proxy.ts`, Node.js runtime only, Cache Components |
-| Next.js 15 | fetch uncached by default, React 19, Turbopack stable |
+### Step 1: Parse Arguments
 
-## Triggers
+Check for flags in the user's command:
 
-| Command | Purpose |
-|---------|---------|
-| `/next-init` | Scaffold new App Router project |
-| `/next-route` | Generate route folder (page, layout, loading, error) |
-| `/next-audit` | Audit codebase for patterns, security, performance |
-| `/next-opt` | Optimize bundle, images, fonts, caching |
+- `--status`: Show status only, don't embed
+- `--force` or `-f`: Re-embed all items even if unchanged
+- `--type <type>`: Filter to specific type (skill, agent, command)
 
-## Reference Files (20 Total)
+### Step 2: Execute Based on Mode
 
-Load based on task context:
+**If --status flag:**
 
-### Core References
+```python
+# Use the embedding_project module
+import sys
+# No longer needed - install popkit-shared instead
+from embedding_project import get_project_embedding_status
 
-| Category | Reference | When |
-|----------|-----------|------|
-| Routing | `references/app_router.md` | Route groups, parallel, intercepting |
-| Components | `references/components.md` | RSC vs Client decision, patterns |
-| Data | `references/data_fetching.md` | fetch, cache, revalidation, streaming |
-| Security | `references/security.md` | Server Actions, auth, OWASP |
-| Performance | `references/performance.md` | CWV, images, fonts, bundle, memory |
-| Middleware | `references/middleware.md` | Auth, redirects, Edge vs Node |
+status = get_project_embedding_status()
 
-### Architecture & Quality
+# Display results
+print(f"Project: {status['project_path']}")
+print(f"API Available: {status['api_available']}")
+print()
+print(f"Items Found:    {status['items_found']}")
+print(f"Items Embedded: {status['items_embedded']}")
+print(f"Items Stale:    {status['items_stale']}")
+print(f"Items Missing:  {status['items_missing']}")
 
-| Category | Reference | When |
-|----------|-----------|------|
-| Architecture | `references/architecture.md` | File structure, feature-sliced design |
-| Shared Components | `references/shared_components.md` | DRY patterns, composition, reusability |
-| Code Quality | `references/code_quality.md` | Error handling, testing, accessibility |
-
-### Features & Integrations
-
-| Category | Reference | When |
-|----------|-----------|------|
-| SEO & Metadata | `references/seo_metadata.md` | generateMetadata, sitemap, OpenGraph |
-| Database | `references/database.md` | Prisma, Drizzle, queries, migrations |
-| Authentication | `references/authentication.md` | Auth.js, sessions, RBAC |
-| Forms | `references/forms.md` | React Hook Form, Zod, file uploads |
-| i18n | `references/i18n.md` | next-intl, routing, RTL support |
-| Real-Time | `references/realtime.md` | SSE, WebSockets, polling, Pusher |
-| API Design | `references/api_design.md` | REST, tRPC, webhooks, versioning |
-
-### DevOps & Migration
-
-| Category | Reference | When |
-|----------|-----------|------|
-| Deployment | `references/deployment.md` | Vercel, Docker, CI/CD, env management |
-| Monorepo | `references/monorepo.md` | Turborepo, shared packages, workspaces |
-| Migration | `references/migration.md` | Pages→App Router, version upgrades |
-| Debugging | `references/debugging.md` | DevTools, profiling, error tracking |
-
-## Core Tenets
-
-### 1. Server-First
-
-Default to Server Components. Use Client only when required.
-
-```
-RSC when: data fetching, secrets, heavy deps, no interactivity
-Client when: useState, useEffect, onClick, browser APIs
+if status['by_type']:
+    print("\nBy Type:")
+    for stype, counts in status['by_type'].items():
+        print(f"  {stype}: {counts['embedded']}/{counts['found']}")
 ```
 
-### 2. Component Archetypes
+**If embedding (default):**
 
-| Pattern | Runtime | Must Have |
-|---------|---------|-----------|
-| `page.tsx` | Server | async, data fetching |
-| `*.action.ts` | Server | "use server", Zod, 7-step security |
-| `*.interactive.tsx` | Client | "use client", event handlers |
-| `*.ui.tsx` | Either | Pure presentation, stateless |
+```python
+import sys
+# No longer needed - install popkit-shared instead
+from embedding_project import embed_project_items, scan_project_items
 
-### 3. 7-Step Server Action Security
-
-```typescript
-"use server"
-// 1. Rate limit (IP/user)
-// 2. Auth verification
-// 3. Zod validation (sanitize errors!)
-// 4. Authorization check (IDOR prevention)
-// 5. Mutation
-// 6. Granular revalidateTag() (NOT revalidatePath)
-// 7. Audit log (async)
-```
-
-### 4. Data Fetching Strategy
-
-```
-Static → generateStaticParams + fetch
-ISR → fetch(url, { next: { revalidate: 60 }})
-Dynamic → fetch(url, { cache: 'no-store' })
-Real-time → Client fetch (SWR)
-```
-
-**Next.js 15 Change**: fetch is UNCACHED by default (opposite of 14).
-
-### 5. Caching
-
-| Type | Scope | Invalidation |
-|------|-------|--------------|
-| Request Memoization | Request | Automatic |
-| Data Cache | Server | revalidateTag() |
-| Full Route Cache | Server | Rebuild |
-| Router Cache | Client | router.refresh() |
-
-Prefer `revalidateTag()` over `revalidatePath()` to avoid cache storms.
-
-### 6. Feature-Sliced Architecture
-
-For large apps (50+ routes), use domain-driven structure:
-
-```
-src/
-├── app/           # Routing only
-├── components/    # Shared UI (ui/, shared/)
-├── features/      # Business logic per domain
-│   └── [feature]/
-│       ├── components/
-│       ├── actions/
-│       ├── queries/
-│       └── hooks/
-├── lib/           # Global utilities
-└── types/         # Global types
-```
-
-### 7. Component Sharing Rules
-
-| Used 3+ places? | Contains business logic? | Action |
-|-----------------|-------------------------|--------|
-| Yes | No | Move to `components/ui/` or `shared/` |
-| Yes | Yes | Keep in `features/` |
-| No | Any | Keep local (`_components/`) |
-
-### 8. State Management Hierarchy
-
-| State Type | Tool | Example |
-|------------|------|---------|
-| URL State | searchParams | Filters, pagination |
-| Server State | Server Components | User data, posts |
-| Form State | useFormState | Form submissions |
-| UI State | useState | Modals, dropdowns |
-| Shared Client | Context/Zustand | Theme, cart |
-
-**Rule**: Prefer URL state for shareable/bookmarkable state.
-
-### 9. DRY with createSafeAction
-
-```typescript
-// lib/safe-action.ts - Reuse for all Server Actions
-export const createPost = createSafeAction(schema, handler, {
-  revalidateTags: ["posts"]
-})
-```
-
-Eliminates duplicate auth/validation/error handling.
-
-## Anti-Patterns
-
-| Don't | Do |
-|-------|-----|
-| "use client" at tree root | Push boundary down to leaves |
-| API routes for server data | Direct DB in Server Components |
-| useEffect for fetching | Server Component async fetch |
-| revalidatePath('/') | Granular revalidateTag() |
-| Trust middleware alone | Validate at data layer too |
-| Prop drill 5+ levels | Context or composition |
-| `any` types | Proper types or `unknown` |
-| Barrel exports in features | Direct imports |
-| localStorage for auth | httpOnly cookies |
-| Global caches (memory leak) | LRU cache or React cache() |
-
-## Middleware: Deny by Default
-
-```typescript
-// middleware.ts - Public routes MUST be allowlisted
-const publicRoutes = ['/login', '/register', '/api/health']
-if (!publicRoutes.some(r => pathname.startsWith(r))) {
-  // Require auth
+# Map --type flag to source types
+type_map = {
+    "skill": ["project-skill", "generated-skill"],
+    "agent": ["project-agent", "generated-agent"],
+    "command": ["project-command"],
 }
+
+source_types = None
+if args.type:
+    source_types = type_map.get(args.type, [f"project-{args.type}"])
+
+# First scan to show what we found
+items = scan_project_items()
+print(f"Found {len(items)} items")
+
+# Embed items
+result = embed_project_items(
+    force=args.force,
+    source_types=source_types,
+    verbose=True
+)
+
+# Report results
+if result["status"] == "success":
+    print(f"\nEmbedding complete!")
+    print(f"  Embedded: {result['embedded']}")
+    print(f"  Skipped: {result['skipped']}")
+    if result['errors']:
+        print(f"  Errors: {result['errors']}")
+elif result["status"] == "no_items":
+    print("No embeddable items found in project.")
+elif result["status"] == "error":
+    print(f"Error: {result.get('error', 'Unknown error')}")
 ```
 
-**CRITICAL**: Upgrade to Next.js 15.2.3+ (CVE-2025-29927 fix).
+### Step 3: Handle Rate Limiting
 
-## Scripts
+The embedding module automatically handles rate limiting:
 
-| Script | Purpose |
-|--------|---------|
-| `scripts/scaffold_route.py` | Generate route folder w/ all files |
+- Batches up to 50 items per API call
+- Waits 21 seconds between batches (Voyage 3 RPM limit)
+- Displays progress during wait
 
-## Templates
+## Project Locations Scanned
 
-| File | Purpose |
-|------|---------|
-| `templates/page.tsx` | Standard async page |
-| `templates/layout.tsx` | Layout w/ metadata |
-| `templates/action.ts` | 7-step secure Server Action |
-| `templates/loading.tsx` | Loading UI skeleton |
-| `templates/error.tsx` | Error boundary |
+| Location                       | Source Type     |
+| ------------------------------ | --------------- |
+| `.claude/skills/*/SKILL.md`    | project-skill   |
+| `.claude/agents/*/AGENT.md`    | project-agent   |
+| `.claude/commands/*.md`        | project-command |
+| `.generated/skills/*/SKILL.md` | generated-skill |
+| `.generated/agents/*/AGENT.md` | generated-agent |
 
-## Assets
+## Requirements
 
-| File | Purpose |
-|------|---------|
-| `assets/next.config.ts` | Production config w/ security headers |
-| `assets/middleware.ts` | Deny-by-default auth (Next.js 15) |
-| `assets/proxy.ts` | Deny-by-default auth (Next.js 16+) |
+- `VOYAGE_API_KEY` environment variable set
+- Items must have `description` in YAML frontmatter
 
-## Quick Reference: Senior Code Review
+## Example Usage
 
-Before merging any PR, verify:
+```
+# Check current status
+/popkit:project embed --status
 
-**Performance**
-- [ ] No unnecessary "use client"
-- [ ] Images use next/image with dimensions
-- [ ] Heavy components dynamic imported
-- [ ] Parallel fetching (Promise.all)
+# Embed all items (skips unchanged)
+/popkit:project embed
 
-**Security**
-- [ ] Server Actions validate with Zod
-- [ ] Auth in actions (not just middleware)
-- [ ] IDOR prevention (user owns resource)
-- [ ] No secrets in client bundles
+# Force re-embed everything
+/popkit:project embed --force
 
-**Architecture**
-- [ ] Components in correct layer
-- [ ] No cross-feature imports
-- [ ] DRY patterns used (createSafeAction)
-- [ ] URL state for shareable state
+# Embed only skills
+/popkit:project embed --type skill
+```
 
-**Quality**
-- [ ] No `any` types
-- [ ] Error boundaries present
-- [ ] Loading states for async
-- [ ] Accessibility (semantic HTML, alt text)
+## Output Format
+
+### Embedding Progress
+
+```
+Scanning project: /path/to/project
+Found 8 items
+
+Embedding 5 new/changed items...
+Waiting 21s for rate limit...
+
+Embedding complete!
+  Embedded: 5
+  Skipped: 3 (unchanged)
+  Errors: 0
+```
+
+### Status Report
+
+```
+Project: /path/to/project
+API Available: Yes
+
+Items Found:    8
+Items Embedded: 8
+Items Stale:    0
+Items Missing:  0
+
+By Type:
+  project-skill: 3/3
+  project-agent: 2/2
+  project-command: 3/3
+```
+
+## Integration
+
+This skill integrates with:
+
+- `hooks/utils/embedding_project.py` - Core embedding logic
+- `hooks/utils/embedding_store.py` - Database storage
+- `hooks/utils/voyage_client.py` - Voyage API client
+- `hooks/utils/semantic_router.py` - Routing using embeddings
+
+## Related
+
+- `/popkit:project skills generate` - Creates skills then auto-embeds
+- `/popkit:project mcp` - Creates MCP server with semantic search
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
