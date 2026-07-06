@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/performance/ln-651-query-efficiency-auditor-levnikolaevich-claude-code-skill-levnikolaevich-claude-code-skills/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/performance/ln-650-persistence-performance-auditor-levnikolaevich-claude-cod-levnikolaevich-claude-code-skills/SKILL.md)
 
 ---
 
