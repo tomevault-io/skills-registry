@@ -1,292 +1,65 @@
 ---
-name: mcp-pydantic-tool-definition
-description: > Use when this capability is needed.
+name: optimizing-for-user-feelings
+description: Use when working with a product development framework that prioritizes emotional outcomes over quantitative metrics to build high-loyalty consumer products. Use this when defining a new feature's UX, when data-driven optimization has reached a local maximum, or when building products in a commoditized market where brand and delight are the primary differentiators.
 metadata:
   author: majiayu000
 ---
 
-# MCP Pydantic Tool Definition Skill
+# Optimizing for User Feelings
 
-## Metadata (Tier 1)
+Traditional product development often obsesses over "graphs and metrics" (e.g., clicks, conversion, time in app), which can lead to sterile, uninspired products. This framework shifts the focus to the human on the other side of the screen, identifying the specific emotional state you want to evoke—such as joy, speed, focus, or airiness—and using that as the North Star for design and engineering.
 
-**Keywords**: pydantic, strict mode, input schema, tool schema, validation
+## Core Principles
 
-**File Patterns**: **/schemas.py, **/tools/*.py
+### 1. Identify the Target Emotion
+Before writing a PRD or a line of code, define exactly how the user should feel during and after the interaction. Common target emotions include:
+*   **Lightness/Airiness:** For tasks that should feel effortless and non-burdening.
+*   **Surprise/Joy:** For features intended to drive organic word-of-mouth.
+*   **Smartness/Focus:** For productivity tools that should make the user feel like a "power user."
+*   **Security/Ease:** For enterprise or sensitive data interactions.
 
-**Modes**: backend_python
+### 2. Connect Feelings to Growth
+View "Feelings" as a precursor to "Metrics." If a user feels "Surprise" or "Joy," the quantitative result is often viral growth (screenshots shared in Slack, tweets, recommendations). If they feel "Agile," the result is high retention (D5/D7—using the app 5 out of 7 days).
 
----
+### 3. Use Metrics as "Honesty Checks"
+Metrics should not be the source of inspiration at the moment of creation, but they are essential tools to keep you honest.
+*   **The D5/D7 Metric:** Measure how many people use the product at least 5 days a week. This captures retention, engagement, and growth in a single, un-gameable number.
+*   **Cohort Improvement:** Don't obsess over absolute numbers; focus on whether the "feeling" you designed for is resulting in better retention curves for newer cohorts.
 
-## Instructions (Tier 2)
+## Application Guide
 
-### Schema-First Development Pattern
+### The "What Could Be" Prompt
+Instead of asking "What is the MVP?" or "How do we fix the bug?", ask: **"What could be?"**
+This pushes the team to imagine the most ambitious, "soulful" version of a solution that transcends basic utility.
 
-**CRITICAL**: Pydantic V2 models are the **single source of truth** for MCP tool schemas.
+### Resetting Names to Remove Baggage
+When building a feature, give it a "made-up" or non-traditional name to shed preconceived notions. 
+*   **Bad:** "Browser History" (People have a fixed idea of what this looks like).
+*   **Good:** "The Archive" or "The Library" (Forces the team to think from first principles about the feeling of looking back).
 
-```python
-from pydantic import BaseModel, Field, ConfigDict
-from typing import Literal
+### Swarming for Heartfelt Intensity
+Once the target feeling and "what could be" vision are set, "swarm" the project. Hire or assign people with "heartfelt intensity"—those who have something to prove regarding that specific craft (e.g., a performance engineer who wants to achieve double the speed with 25% of the headcount).
 
-class ToolInput(BaseModel):
-    """Input schema for tool - becomes inputSchema automatically."""
-    model_config = ConfigDict(strict=True)
+## Examples
 
-    query: str = Field(..., description="Search query string")
-    limit: int = Field(10, ge=1, le=100, description="Max results")
-    filter: Literal["all", "code", "docs"] = "all"
+**Example 1: The "Peek" Feature (Arc Browser)**
+*   **Context:** Users on sites like Hacker News want to check 5-10 links quickly without losing their place.
+*   **Target Feeling:** "Lightness" and "Airiness."
+*   **Application:** Instead of opening a new tab (which feels heavy/permanent), create a temporary overlay that "whoops" up and back down effortlessly.
+*   **Output:** The user feels they are "peeking" rather than "browsing," reducing the cognitive load of tab management.
 
-# JSON Schema generated automatically
-schema = ToolInput.model_json_schema()
-# {
-#   "type": "object",
-#   "properties": {
-#     "query": {"type": "string", "description": "Search query string"},
-#     "limit": {"type": "integer", "minimum": 1, "maximum": 100, ...},
-#     "filter": {"type": "string", "enum": ["all", "code", "docs"]}
-#   },
-#   "required": ["query"]
-# }
-```
+**Example 2: Enterprise Software Implementation**
+*   **Context:** An IT admin setting up a security suite.
+*   **Target Feeling:** "Smart" and "Ahead of the curve."
+*   **Application:** Design the setup flow to provide immediate, sophisticated insights about their network that they didn't have before, rather than just showing a "Success" checkbox.
+*   **Output:** The admin feels empowered and competent, increasing the likelihood they will champion the product internally.
 
-### Strict Mode (MANDATORY)
+## Common Pitfalls
 
-**ConfigDict(strict=True)** prevents silent type coercion.
-
-```python
-# ❌ WITHOUT STRICT MODE
-class Input(BaseModel):
-    count: int
-
-# Silent coercion: "10" → 10
-input = Input(count="10")  # Works, but dangerous!
-
-# ✅ WITH STRICT MODE
-class Input(BaseModel):
-    model_config = ConfigDict(strict=True)
-    count: int
-
-# Validation error: no coercion
-input = Input(count="10")  # ❌ ValidationError!
-input = Input(count=10)    # ✅ OK
-```
-
-### Field Validation
-
-```python
-from pydantic import Field, field_validator, model_validator
-
-class SearchInput(BaseModel):
-    model_config = ConfigDict(strict=True)
-
-    query: str = Field(..., min_length=1, max_length=500)
-    limit: int = Field(10, ge=1, le=100)
-    offset: int = Field(0, ge=0)
-
-    @field_validator("query")
-    @classmethod
-    def validate_query(cls, v: str) -> str:
-        """Custom query validation."""
-        if len(v.split()) > 50:
-            raise ValueError("Query too complex (max 50 terms)")
-        return v.strip()
-
-    @model_validator(mode="after")
-    def validate_pagination(self) -> "SearchInput":
-        """Cross-field validation."""
-        if self.offset + self.limit > 10000:
-            raise ValueError("Pagination limit exceeded")
-        return self
-```
-
-### Complex Types
-
-```python
-from typing import Annotated, Literal
-from pydantic import BaseModel, ConfigDict, Field
-
-class FileFilter(BaseModel):
-    model_config = ConfigDict(strict=True)
-
-    pattern: str = Field(..., description="Glob pattern")
-    exclude_dirs: list[str] = Field(default_factory=list)
-    max_size_mb: int | None = Field(None, ge=1, le=1000)
-
-class AdvancedSearchInput(BaseModel):
-    model_config = ConfigDict(strict=True)
-
-    # Union types
-    target: str | FileFilter
-
-    # Literal enums
-    mode: Literal["exact", "fuzzy", "regex"]
-
-    # Bounded integers
-    confidence: Annotated[float, Field(ge=0.0, le=1.0)]
-
-    # Optional with default
-    case_sensitive: bool = True
-
-    # Nested models
-    filters: list[FileFilter] = Field(default_factory=list)
-```
-
-### Output Schemas
-
-```python
-class SearchResult(BaseModel):
-    """Output schema for search tool."""
-    model_config = ConfigDict(strict=True)
-
-    file_path: str
-    line_number: int
-    match_text: str
-    confidence: float = Field(ge=0.0, le=1.0)
-
-class SearchOutput(BaseModel):
-    """Top-level output schema."""
-    model_config = ConfigDict(strict=True)
-
-    results: list[SearchResult]
-    total_count: int
-    execution_time_ms: int
-
-# Usage in tool handler
-async def execute_search(input: SearchInput) -> SearchOutput:
-    results = await perform_search(input)
-
-    return SearchOutput(
-        results=results,
-        total_count=len(results),
-        execution_time_ms=42
-    )
-```
-
-### Tool Registration Pattern
-
-```python
-from tools.schemas import SearchInput, SearchOutput
-
-@server.list_tools()
-async def list_tools():
-    """Register tools with auto-generated schemas."""
-    return [
-        {
-            "name": "search_code",
-            "description": "Search codebase with advanced filters",
-            "inputSchema": SearchInput.model_json_schema()
-        }
-    ]
-
-@server.call_tool()
-async def call_tool(name: str, arguments: dict):
-    """Execute tool with Pydantic validation."""
-    if name == "search_code":
-        # Automatic validation via Pydantic
-        input_data = SearchInput(**arguments)
-
-        # Type-safe execution
-        output = await execute_search(input_data)
-
-        # Serialize output to JSON
-        return output.model_dump()
-
-    raise ValueError(f"Unknown tool: {name}")
-```
-
-### JSON Schema Customization
-
-```python
-from pydantic import BaseModel, ConfigDict, Field
-
-class CustomSchemaInput(BaseModel):
-    model_config = ConfigDict(
-        strict=True,
-        # Custom JSON Schema metadata
-        json_schema_extra={
-            "examples": [
-                {"query": "async def", "limit": 10}
-            ]
-        }
-    )
-
-    query: str = Field(
-        ...,
-        description="Search query",
-        json_schema_extra={
-            "examples": ["async def", "class MyClass"]
-        }
-    )
-```
-
-### Validation Error Handling
-
-```python
-from pydantic import ValidationError
-
-@server.call_tool()
-async def call_tool(name: str, arguments: dict):
-    try:
-        input_data = SearchInput(**arguments)
-        return await execute_search(input_data)
-
-    except ValidationError as e:
-        # Convert Pydantic errors to MCP errors
-        error_details = []
-        for error in e.errors():
-            error_details.append({
-                "field": ".".join(str(loc) for loc in error["loc"]),
-                "message": error["msg"],
-                "type": error["type"]
-            })
-
-        raise McpError(
-            code=-32602,  # Invalid params
-            message=f"Validation failed: {error_details}"
-        )
-```
-
-### Anti-Patterns
-
-❌ **Manual JSON Schema Writing**
-```python
-# WRONG
-schema = {
-    "type": "object",
-    "properties": {"query": {"type": "string"}}
-}
-```
-
-❌ **Missing Strict Mode**
-```python
-# WRONG - allows type coercion
-class Input(BaseModel):
-    count: int  # No ConfigDict(strict=True)
-```
-
-❌ **Ignoring Validation Errors**
-```python
-# WRONG
-try:
-    input_data = Input(**arguments)
-except ValidationError:
-    pass  # Silent failure!
-```
-
-❌ **Using BaseModel Without ConfigDict**
-```python
-# WRONG
-class Input(BaseModel):
-    value: str  # Missing model_config
-```
-
----
-
-## Resources (Tier 3)
-
-**Pydantic V2 Docs**: https://docs.pydantic.dev/latest/
-**Strict Mode Guide**: https://docs.pydantic.dev/latest/concepts/strict_mode/
-**Field Validators**: https://docs.pydantic.dev/latest/concepts/validators/
-**JSON Schema**: https://docs.pydantic.dev/latest/concepts/json_schema/
+*   **Romanticizing without Accountability:** Optimizing for feelings does not mean ignoring the business. Use a single "hard" metric (like D5/D7) to ensure the feelings are actually translating into usage.
+*   **Choosing Too Many Feelings:** Trying to make a feature feel "Fast," "Secure," "Social," and "Fun" all at once leads to a muddled UX. Pick one primary feeling.
+*   **Hiring Only "Specialists":** If you only hire people who have done the same role for 10 years, they bring baggage. Hire "mutts"—multidisciplinary people who prioritize "making the thing feel right" over following a standard PM/Designer process.
+*   **CEO-Hero Worship:** Don't let the "vision" accrue only to the leader. Publicly celebrate the specific individuals (engineers, designers) who crafted the "feeling" to maintain team intensity.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
