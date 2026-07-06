@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [anam-org/metaxy](https://github.com/anam-org/metaxy/tree/main/.claude/skills/narwhals/SKILL.md)
+Original source: [anam-org/metaxy](https://github.com/anam-org/metaxy/tree/main/.claude/skills/hypothesis/SKILL.md)
 
 ---
 
