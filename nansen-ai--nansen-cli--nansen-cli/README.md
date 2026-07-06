@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nansen-ai/nansen-cli](https://github.com/nansen-ai/nansen-cli/tree/main/skills/nansen-fund-tracker/SKILL.md)
+Original source: [nansen-ai/nansen-cli](https://github.com/nansen-ai/nansen-cli/tree/main/skills/nansen-exit-signals/SKILL.md)
 
 ---
 
