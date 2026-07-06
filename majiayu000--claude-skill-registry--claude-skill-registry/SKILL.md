@@ -1,285 +1,243 @@
 ---
-name: opencode-server-launcher
-description: Launch and manage OpenCode servers with simple commands, from single instances to multi-server swarms Use when this capability is needed.
+name: qe-learning-optimization
+description: Transfer learning, metrics optimization, and continuous improvement for AI-powered QE agents. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# OpenCode Server Launcher
+# QE Learning Optimization
 
-Simple commands and scripts to launch and manage OpenCode servers, from single instances to multi-server swarms.
+## Purpose
 
-**UNIVERSAL CAPABILITY**: This skill launches servers for ANY agent type, not just the examples shown. The agent folder names (code-analyzer, documentation-writer, etc.) used in examples are for illustration ONLY. Real swarms will have completely different agent types and purposes. This skill works universally with any folder structure and any agent specialization.
+Guide the use of v3's learning optimization capabilities including transfer learning between agents, hyperparameter tuning, A/B testing, and continuous performance improvement.
+
+## Activation
+
+- When optimizing agent performance
+- When transferring knowledge between agents
+- When tuning learning parameters
+- When running A/B tests
+- When analyzing learning metrics
 
 ## Quick Start
 
-**IMPORTANT: Create custom agents in `.opencode/agent/` BEFORE launching the server. Agents are only loaded when the server starts.**
-
-### Basic Server Launch
 ```bash
-# Start server on random available port
-opencode serve
+# Transfer knowledge between agents
+aqe learn transfer --from jest-generator --to vitest-generator
 
-# Start server on specific port
-opencode serve --port 3000
+# Tune hyperparameters
+aqe learn tune --agent defect-predictor --metric accuracy
 
-# Start server on all interfaces
-opencode serve --port 3000 --hostname 0.0.0.0
+# Run A/B test
+aqe learn ab-test --hypothesis "new-algorithm" --duration 7d
+
+# View learning metrics
+aqe learn metrics --agent test-generator --period 30d
 ```
 
-### Verify Server is Running
-```bash
-# Check server status
-curl http://localhost:3000/config
+## Agent Workflow
 
-# View available agents
-curl http://localhost:3000/agent | jq .
+```typescript
+// Transfer learning
+Task("Transfer test patterns", `
+  Transfer learned patterns from Jest test generator to Vitest:
+  - Map framework-specific syntax
+  - Adapt assertion styles
+  - Preserve test structure patterns
+  - Validate transfer accuracy
+`, "qe-transfer-specialist")
 
-# Check API documentation
-curl http://localhost:3000/doc
+// Metrics optimization
+Task("Optimize prediction accuracy", `
+  Tune defect-predictor agent:
+  - Analyze current performance metrics
+  - Run Bayesian hyperparameter search
+  - Validate improvements on holdout set
+  - Deploy if accuracy improves >5%
+`, "qe-metrics-optimizer")
 ```
 
-## Multi-Server Setup
+## Learning Operations
 
-### Launch Multiple Servers
-```bash
-# Server 1 - General purpose
-opencode serve --port 3001 &
-SERVER1_PID=$!
+### 1. Transfer Learning
 
-# Server 2 - Build focused
-opencode serve --port 3002 &
-SERVER2_PID=$!
-
-# Server 3 - Documentation focused
-opencode serve --port 3003 &
-SERVER3_PID=$!
-
-echo "Started servers: $SERVER1_PID, $SERVER2_PID, $SERVER3_PID"
+```typescript
+await transferSpecialist.transfer({
+  source: {
+    agent: 'qe-jest-generator',
+    knowledge: ['patterns', 'heuristics', 'optimizations']
+  },
+  target: {
+    agent: 'qe-vitest-generator',
+    adaptations: ['framework-syntax', 'api-differences']
+  },
+  strategy: 'fine-tuning',
+  validation: {
+    testSet: 'validation-samples',
+    minAccuracy: 0.9
+  }
+});
 ```
 
-### Folder-Specific Server Launch (Swarm-Ready)
+### 2. Hyperparameter Tuning
 
-For swarm deployment, launch servers in specific folders:
-
-**⚠️ EXAMPLE PATTERN ONLY - The folder names below are EXAMPLES. Use ANY folder names for your actual swarm:**
-
-```bash
-# EXAMPLE: Launch server in [ANY_AGENT_FOLDER] folder
-cd [agent_folder_name]
-opencode serve --port 3001 &
-SERVER1_PID=$!
-cd ..
-
-# EXAMPLE: Launch server in [DIFFERENT_AGENT_FOLDER] folder
-cd [another_agent_folder]
-opencode serve --port 3002 &
-SERVER2_PID=$!
-cd ..
-
-# EXAMPLE: Launch server in [THIRD_AGENT_FOLDER] folder
-cd [third_agent_folder]
-opencode serve --port 3003 &
-SERVER3_PID=$!
-cd ..
+```typescript
+await metricsOptimizer.tune({
+  agent: 'defect-predictor',
+  parameters: {
+    learningRate: { min: 0.001, max: 0.1, type: 'log' },
+    batchSize: { values: [16, 32, 64, 128] },
+    patternThreshold: { min: 0.5, max: 0.95 }
+  },
+  optimization: {
+    method: 'bayesian',
+    objective: 'accuracy',
+    trials: 50,
+    parallelism: 4
+  }
+});
 ```
 
-**UNIVERSAL TRUTH**: The pattern works for ANY folder names:
-- `marketing-specialist/` → `cd marketing-specialist`
-- `legal-advisor/` → `cd legal-advisor`
-- `game-developer/` → `cd game-developer`
-- `research-scientist/` → `cd research-scientist`
-- `music-composer/` → `cd music-composer`
-- `personal-trainer/` → `cd personal-trainer`
+### 3. A/B Testing
 
-**REAL SWARMS WILL HAVE VASTLY DIFFERENT FOLDER NAMES** - These examples only show the launching pattern.
-
-**Process Management:**
-- Store PIDs for later management: `echo "3001:[folder_name]:$SERVER1_PID" >> .opencode/server-pids.txt`
-- Stop servers: `kill $SERVER1_PID`
-- Check if running: `kill -0 $SERVER1_PID`
-
-**NOTE**: Replace `[folder_name]` with your actual folder names. The pattern `port:folder:pid` works for ANY folder names.
-
-## Server Configuration
-
-### Environment Variables
-```bash
-# Set log level
-export OPENCODE_LOG_LEVEL=debug
-
-# Set custom config directory
-export OPENCODE_CONFIG_DIR=/path/to/config
-
-# Set API keys for providers
-export ANTHROPIC_API_KEY=your-key
-export ZHIPU_API_KEY=your-key
+```typescript
+await metricsOptimizer.abTest({
+  hypothesis: 'ML pattern matching improves test quality',
+  variants: {
+    control: { algorithm: 'rule-based' },
+    treatment: { algorithm: 'ml-enhanced' }
+  },
+  metrics: ['test-quality-score', 'generation-time'],
+  traffic: {
+    split: 50,
+    minSampleSize: 1000
+  },
+  duration: '7d',
+  significance: 0.05
+});
 ```
 
-### Configuration Files
-OpenCode automatically loads configuration from:
-- Global: `~/.config/opencode/`
-- Project: `.opencode/` (in project root)
+### 4. Feedback Loop
 
-### Agent Configuration
-Custom agents go in `.opencode/agent/`:
-
-```markdown
----
-description: Specialized agent for documentation
-mode: subagent
-tools:
-  read: true
-  grep: true
-permissions:
-  edit: allow
-  bash:
-    "git*": allow
-    "*": ask
----
-
-You are an expert technical documentation writer...
+```typescript
+await metricsOptimizer.feedbackLoop({
+  agent: 'test-generator',
+  feedback: {
+    sources: ['user-corrections', 'test-results', 'code-reviews'],
+    aggregation: 'weighted',
+    frequency: 'real-time'
+  },
+  learning: {
+    strategy: 'incremental',
+    validationSplit: 0.2,
+    earlyStoppingPatience: 5
+  }
+});
 ```
 
-## Basic API Usage
+## Learning Metrics Dashboard
 
-### Create Session
-```bash
-curl -X POST http://localhost:3000/session \
-  -H "Content-Type: application/json" \
-  -d '{"title": "My Development Session"}'
+```typescript
+interface LearningDashboard {
+  agent: string;
+  period: DateRange;
+  performance: {
+    current: MetricValues;
+    trend: 'improving' | 'stable' | 'declining';
+    percentile: number;
+  };
+  learning: {
+    samplesProcessed: number;
+    patternsLearned: number;
+    improvementRate: number;
+  };
+  experiments: {
+    active: Experiment[];
+    completed: ExperimentResult[];
+  };
+  recommendations: {
+    action: string;
+    expectedImpact: number;
+    confidence: number;
+  }[];
+}
 ```
 
-### Send Message
-```bash
-curl -X POST http://localhost:3000/session/{session_id}/message \
-  -H "Content-Type: application/json" \
-  -d '{
-    "agent": "general",
-    "model": {"providerID": "zai-coding-plan", "modelID": "glm-4.6"},
-    "parts": [{"type": "text", "text": "Help me understand this codebase"}]
-  }'
-```
+## Cross-Framework Transfer
 
-### List Sessions
-```bash
-curl http://localhost:3000/session | jq '.'
-```
-
-### Read Files
-```bash
-curl "http://localhost:3000/file/content?path=README.md"
-```
-
-## Swarm Health Monitoring
-
-### Health Check
-```bash
-# Check multiple servers
-for port in 3001 3002 3003; do
-    if curl -s "http://localhost:$port/config" > /dev/null; then
-        echo "✅ Server on port $port - HEALTHY"
-    else
-        echo "❌ Server on port $port - DOWN"
-    fi
-done
-```
-
-### Monitor Active Sessions
-```bash
-for port in 3001 3002 3003; do
-    if curl -s "http://localhost:$port/config" > /dev/null; then
-        sessions=$(curl -s "http://localhost:$port/session" | jq '. | length')
-        echo "Port $port: $sessions active sessions"
-    fi
-done
-```
-
-## Production Deployment
-
-### Docker Setup
-```dockerfile
-# Dockerfile
-FROM node:18-alpine
-
-RUN npm install -g opencode-ai
-
-EXPOSE 3000
-
-CMD ["opencode", "serve", "--port", "3000", "--hostname", "0.0.0.0"]
-```
-
-### Docker Compose
 ```yaml
-# docker-compose.yml
-version: '3.8'
-services:
-  opencode-1:
-    build: .
-    ports:
-      - "3001:3000"
-    environment:
-      - OPENCODE_LOG_LEVEL=info
-    volumes:
-      - ./config:/app/.opencode
+transfer_mappings:
+  jest_to_vitest:
+    syntax:
+      "describe": "describe"
+      "it": "it"
+      "expect": "expect"
+      "jest.mock": "vi.mock"
+      "jest.fn": "vi.fn"
+    patterns:
+      - mock-module
+      - async-testing
+      - snapshot-testing
 
-  opencode-2:
-    build: .
-    ports:
-      - "3002:3000"
-    environment:
-      - OPENCODE_LOG_LEVEL=info
-    volumes:
-      - ./config:/app/.opencode
+  mocha_to_jest:
+    syntax:
+      "describe": "describe"
+      "it": "it"
+      "chai.expect": "expect"
+      "sinon.stub": "jest.fn"
+    adaptations:
+      - assertion-style
+      - hook-naming
 ```
 
-## Best Practices
+## Continuous Improvement
 
-### Security
-```bash
-# Use API keys
-export OPENCODE_API_KEY=your-secure-key
-
-# Restrict access to localhost
-opencode serve --hostname 127.0.0.1
-
-# Use reverse proxy for SSL
-# Configure nginx/cloudflare for HTTPS
+```typescript
+await learningOptimizer.continuousImprovement({
+  agents: ['test-generator', 'coverage-analyzer', 'defect-predictor'],
+  schedule: {
+    metricCollection: 'hourly',
+    tuning: 'weekly',
+    majorUpdates: 'monthly'
+  },
+  thresholds: {
+    degradationAlert: 5,  // percent
+    improvementTarget: 2,  // percent per week
+  },
+  automation: {
+    autoTune: true,
+    autoRollback: true,
+    requireApproval: ['major-changes']
+  }
+});
 ```
 
-### Performance
-```bash
-# Set appropriate log levels
-export OPENCODE_LOG_LEVEL=warn
+## Pattern Learning
 
-# Monitor server resources
-curl http://localhost:3000/config | jq '.providers'
+```typescript
+await patternLearner.learn({
+  sources: {
+    codeExamples: 'examples/**/*.ts',
+    testExamples: 'tests/**/*.test.ts',
+    userFeedback: 'feedback/*.json'
+  },
+  extraction: {
+    syntacticPatterns: true,
+    semanticPatterns: true,
+    contextualPatterns: true
+  },
+  storage: {
+    vectorDB: 'agentdb',
+    versioning: true
+  }
+});
 ```
 
-### Port Management
-```bash
-# Find available port
-python -c "import socket; s=socket.socket(); s.bind(('', 0)); print(s.getsockname()[1]); s.close()"
+## Coordination
 
-# Kill process using port
-lsof -ti:3000 | xargs kill -9
-```
-
-## Troubleshooting
-
-### Common Issues
-```bash
-# Check if port is available
-netstat -tulpn | grep :3000
-
-# Kill existing server
-pkill -f "opencode serve"
-
-# Test server response
-curl -v http://localhost:3000/config
-```
-
-This skill provides everything needed to launch, configure, and manage OpenCode servers from basic single instances to multi-server swarms, all using simple commands and tools that are already available.
+**Primary Agents**: qe-transfer-specialist, qe-metrics-optimizer, qe-pattern-learner
+**Coordinator**: qe-learning-coordinator
+**Related Skills**: qe-test-generation, qe-defect-intelligence
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
