@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [justeattakeaway/pie](https://github.com/justeattakeaway/pie/tree/main/.agents/skills/skill-reviewer/SKILL.md)
+Original source: [justeattakeaway/pie](https://github.com/justeattakeaway/pie/tree/main/.agents/skills/pie-design-system/SKILL.md)
 
 ---
 
