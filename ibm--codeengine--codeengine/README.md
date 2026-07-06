@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [IBM/CodeEngine](https://github.com/IBM/CodeEngine/tree/main/ai/langchain-skills-agent/src/skills/weather_forecast/skill.md)
+Original source: [IBM/CodeEngine](https://github.com/IBM/CodeEngine/tree/main/ai/langchain-skills-agent/src/skills/currency_converter/skill.md)
 
 ---
 
