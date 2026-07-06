@@ -1,331 +1,271 @@
 ---
-name: python-flynt-f-string-converter
-description: Use flynt to convert old Python string formatting to f-strings. Activate when: (1) Converting %-formatting to f-strings, (2) Converting .format() calls to f-strings, (3) Modernizing string concatenation to f-strings, (4) Improving code readability through f-string adoption, or (5) Batch-converting legacy Python codebases. Use when this capability is needed.
+name: claude-skill-registry
+description: name: nextjs-senior-dev Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
+---
+name: nextjs-senior-dev
+description: Senior Next.js 15+/16 Engineer skill for App Router. Use when scaffolding production apps, enforcing RSC patterns, auditing codebases, or optimizing performance.
+author: George Khananaev
+version: 1.3.0
+---
 
-# Python Flynt F-String Converter
+# Next.js Senior Developer
 
-## Overview
+Transform into Senior Next.js 15+/16 Engineer for production-ready App Router applications.
 
-Flynt is an automated tool that transforms Python string formatting from older styles (%-formatting and `.format()`) into modern f-strings, available since Python 3.6.
+## When to Use
 
-**Why f-strings?**
-- More readable and concise
-- Less prone to errors
-- Faster execution than older methods
-- Easier to maintain
+- Scaffolding new Next.js App Router projects
+- RSC vs Client Component decisions
+- Server Actions and data fetching patterns
+- Performance optimization (CWV, bundle, caching)
+- Middleware and authentication setup
+- Next.js 15/16 migration or audit
 
-## Key Capabilities
+## Version Notes
 
-- **Automatic conversion**: Transforms both %-formatting and .format() to f-strings
-- **Directory recursion**: Processes entire projects at once
-- **Safe transformations**: Skips complex cases that might change behavior
-- **String concatenation**: Can convert `+` operations to f-strings (Python 3.9+)
-- **Static joins**: Can convert `.join()` on static lists (Python 3.9+)
+| Version | Key Changes |
+|---------|-------------|
+| Next.js 16 | `middleware.ts` → `proxy.ts`, Node.js runtime only, Cache Components |
+| Next.js 15 | fetch uncached by default, React 19, Turbopack stable |
 
-## Quick Reference
+## Triggers
 
-### Basic Commands
+| Command | Purpose |
+|---------|---------|
+| `/next-init` | Scaffold new App Router project |
+| `/next-route` | Generate route folder (page, layout, loading, error) |
+| `/next-audit` | Audit codebase for patterns, security, performance |
+| `/next-opt` | Optimize bundle, images, fonts, caching |
 
-```bash
-# Convert a single file
-flynt file.py
+## Reference Files (20 Total)
 
-# Convert entire directory (recursive)
-flynt src/
+Load based on task context:
 
-# Dry run - see what would change
-flynt --dry-run src/
+### Core References
 
-# Print result to stdout instead of modifying
-flynt --stdout file.py
+| Category | Reference | When |
+|----------|-----------|------|
+| Routing | `references/app_router.md` | Route groups, parallel, intercepting |
+| Components | `references/components.md` | RSC vs Client decision, patterns |
+| Data | `references/data_fetching.md` | fetch, cache, revalidation, streaming |
+| Security | `references/security.md` | Server Actions, auth, OWASP |
+| Performance | `references/performance.md` | CWV, images, fonts, bundle, memory |
+| Middleware | `references/middleware.md` | Auth, redirects, Edge vs Node |
 
-# Convert a string snippet
-flynt -s '"Hello, %s" % name'
+### Architecture & Quality
 
-# Verbose output
-flynt -v src/
+| Category | Reference | When |
+|----------|-----------|------|
+| Architecture | `references/architecture.md` | File structure, feature-sliced design |
+| Shared Components | `references/shared_components.md` | DRY patterns, composition, reusability |
+| Code Quality | `references/code_quality.md` | Error handling, testing, accessibility |
 
-# Quiet mode (no statistics)
-flynt -q src/
+### Features & Integrations
+
+| Category | Reference | When |
+|----------|-----------|------|
+| SEO & Metadata | `references/seo_metadata.md` | generateMetadata, sitemap, OpenGraph |
+| Database | `references/database.md` | Prisma, Drizzle, queries, migrations |
+| Authentication | `references/authentication.md` | Auth.js, sessions, RBAC |
+| Forms | `references/forms.md` | React Hook Form, Zod, file uploads |
+| i18n | `references/i18n.md` | next-intl, routing, RTL support |
+| Real-Time | `references/realtime.md` | SSE, WebSockets, polling, Pusher |
+| API Design | `references/api_design.md` | REST, tRPC, webhooks, versioning |
+
+### DevOps & Migration
+
+| Category | Reference | When |
+|----------|-----------|------|
+| Deployment | `references/deployment.md` | Vercel, Docker, CI/CD, env management |
+| Monorepo | `references/monorepo.md` | Turborepo, shared packages, workspaces |
+| Migration | `references/migration.md` | Pages→App Router, version upgrades |
+| Debugging | `references/debugging.md` | DevTools, profiling, error tracking |
+
+## Core Tenets
+
+### 1. Server-First
+
+Default to Server Components. Use Client only when required.
+
+```
+RSC when: data fetching, secrets, heavy deps, no interactivity
+Client when: useState, useEffect, onClick, browser APIs
 ```
 
-### Conversion Control
+### 2. Component Archetypes
 
-```bash
-# Skip %-formatting, only convert .format()
-flynt --no-tp src/
+| Pattern | Runtime | Must Have |
+|---------|---------|-----------|
+| `page.tsx` | Server | async, data fetching |
+| `*.action.ts` | Server | "use server", Zod, 7-step security |
+| `*.interactive.tsx` | Client | "use client", event handlers |
+| `*.ui.tsx` | Either | Pure presentation, stateless |
 
-# Skip .format(), only convert %-formatting
-flynt --no-tf src/
+### 3. 7-Step Server Action Security
 
-# Convert string concatenations (Python 3.9+)
-flynt --transform-concats src/
-
-# Convert static joins (Python 3.9+)
-flynt --transform-joins src/
-
-# Limit line length for multiline conversions
-flynt --line-length 100 src/
-
-# Only convert single-line expressions
-flynt --no-multiline src/
-
-# Aggressive mode (may alter some edge case behavior)
-flynt --aggressive src/
+```typescript
+"use server"
+// 1. Rate limit (IP/user)
+// 2. Auth verification
+// 3. Zod validation (sanitize errors!)
+// 4. Authorization check (IDOR prevention)
+// 5. Mutation
+// 6. Granular revalidateTag() (NOT revalidatePath)
+// 7. Audit log (async)
 ```
 
-### CI/CD Integration
+### 4. Data Fetching Strategy
 
-```bash
-# Fail if any changes would be made (for CI)
-flynt --fail-on-change src/
-
-# Dry run with diff output
-flynt --dry-run src/
+```
+Static → generateStaticParams + fetch
+ISR → fetch(url, { next: { revalidate: 60 }})
+Dynamic → fetch(url, { cache: 'no-store' })
+Real-time → Client fetch (SWR)
 ```
 
-## Transformations
+**Next.js 15 Change**: fetch is UNCACHED by default (opposite of 14).
 
-### Printf-style (%-formatting)
+### 5. Caching
 
-```python
-# Before
-"Hello, %s" % name
-"Hello, %s %s" % (first, last)
-"Value: %d, Price: %.2f" % (count, price)
-"%(name)s is %(age)d years old" % {"name": name, "age": age}
+| Type | Scope | Invalidation |
+|------|-------|--------------|
+| Request Memoization | Request | Automatic |
+| Data Cache | Server | revalidateTag() |
+| Full Route Cache | Server | Rebuild |
+| Router Cache | Client | router.refresh() |
 
-# After
-f"Hello, {name}"
-f"Hello, {first} {last}"
-f"Value: {count}, Price: {price:.2f}"
-f"{name} is {age} years old"
+Prefer `revalidateTag()` over `revalidatePath()` to avoid cache storms.
+
+### 6. Feature-Sliced Architecture
+
+For large apps (50+ routes), use domain-driven structure:
+
+```
+src/
+├── app/           # Routing only
+├── components/    # Shared UI (ui/, shared/)
+├── features/      # Business logic per domain
+│   └── [feature]/
+│       ├── components/
+│       ├── actions/
+│       ├── queries/
+│       └── hooks/
+├── lib/           # Global utilities
+└── types/         # Global types
 ```
 
-### .format() Style
+### 7. Component Sharing Rules
 
-```python
-# Before
-"Hello, {}".format(name)
-"Hello, {0} {1}".format(first, last)
-"Hello, {name}".format(name=name)
-"{} + {} = {}".format(a, b, a + b)
-"{:.2f}".format(value)
+| Used 3+ places? | Contains business logic? | Action |
+|-----------------|-------------------------|--------|
+| Yes | No | Move to `components/ui/` or `shared/` |
+| Yes | Yes | Keep in `features/` |
+| No | Any | Keep local (`_components/`) |
 
-# After
-f"Hello, {name}"
-f"Hello, {first} {last}"
-f"Hello, {name}"
-f"{a} + {b} = {a + b}"
-f"{value:.2f}"
+### 8. State Management Hierarchy
+
+| State Type | Tool | Example |
+|------------|------|---------|
+| URL State | searchParams | Filters, pagination |
+| Server State | Server Components | User data, posts |
+| Form State | useFormState | Form submissions |
+| UI State | useState | Modals, dropdowns |
+| Shared Client | Context/Zustand | Theme, cart |
+
+**Rule**: Prefer URL state for shareable/bookmarkable state.
+
+### 9. DRY with createSafeAction
+
+```typescript
+// lib/safe-action.ts - Reuse for all Server Actions
+export const createPost = createSafeAction(schema, handler, {
+  revalidateTags: ["posts"]
+})
 ```
 
-### String Concatenation (--transform-concats)
+Eliminates duplicate auth/validation/error handling.
 
-```python
-# Before
-"Hello, " + name + "!"
-"Value: " + str(count)
-first + " " + last
+## Anti-Patterns
 
-# After
-f"Hello, {name}!"
-f"Value: {count}"
-f"{first} {last}"
+| Don't | Do |
+|-------|-----|
+| "use client" at tree root | Push boundary down to leaves |
+| API routes for server data | Direct DB in Server Components |
+| useEffect for fetching | Server Component async fetch |
+| revalidatePath('/') | Granular revalidateTag() |
+| Trust middleware alone | Validate at data layer too |
+| Prop drill 5+ levels | Context or composition |
+| `any` types | Proper types or `unknown` |
+| Barrel exports in features | Direct imports |
+| localStorage for auth | httpOnly cookies |
+| Global caches (memory leak) | LRU cache or React cache() |
+
+## Middleware: Deny by Default
+
+```typescript
+// middleware.ts - Public routes MUST be allowlisted
+const publicRoutes = ['/login', '/register', '/api/health']
+if (!publicRoutes.some(r => pathname.startsWith(r))) {
+  // Require auth
+}
 ```
 
-### Static Joins (--transform-joins)
+**CRITICAL**: Upgrade to Next.js 15.2.3+ (CVE-2025-29927 fix).
 
-```python
-# Before
-", ".join(["a", "b", "c"])
-" ".join([first, middle, last])
+## Scripts
 
-# After
-"a, b, c"
-f"{first} {middle} {last}"
-```
+| Script | Purpose |
+|--------|---------|
+| `scripts/scaffold_route.py` | Generate route folder w/ all files |
 
-## Configuration
+## Templates
 
-### pyproject.toml
+| File | Purpose |
+|------|---------|
+| `templates/page.tsx` | Standard async page |
+| `templates/layout.tsx` | Layout w/ metadata |
+| `templates/action.ts` | 7-step secure Server Action |
+| `templates/loading.tsx` | Loading UI skeleton |
+| `templates/error.tsx` | Error boundary |
 
-```toml
-[tool.flynt]
-line-length = 88
-transform-concats = true
-transform-joins = false
-aggressive = false
-no-multiline = false
-```
+## Assets
 
-### Global Config (Unix)
+| File | Purpose |
+|------|---------|
+| `assets/next.config.ts` | Production config w/ security headers |
+| `assets/middleware.ts` | Deny-by-default auth (Next.js 15) |
+| `assets/proxy.ts` | Deny-by-default auth (Next.js 16+) |
 
-Create `~/.config/flynt.toml`:
+## Quick Reference: Senior Code Review
 
-```toml
-line-length = 100
-verbose = true
-```
+Before merging any PR, verify:
 
-### Global Config (Windows)
+**Performance**
+- [ ] No unnecessary "use client"
+- [ ] Images use next/image with dimensions
+- [ ] Heavy components dynamic imported
+- [ ] Parallel fetching (Promise.all)
 
-Create `~/.flynt.toml`:
+**Security**
+- [ ] Server Actions validate with Zod
+- [ ] Auth in actions (not just middleware)
+- [ ] IDOR prevention (user owns resource)
+- [ ] No secrets in client bundles
 
-```toml
-line-length = 100
-verbose = true
-```
+**Architecture**
+- [ ] Components in correct layer
+- [ ] No cross-feature imports
+- [ ] DRY patterns used (createSafeAction)
+- [ ] URL state for shareable state
 
-## Pre-commit Integration
-
-```yaml
-# .pre-commit-config.yaml
-repos:
-  - repo: https://github.com/ikamensh/flynt
-    rev: '1.0.0'
-    hooks:
-      - id: flynt
-```
-
-### Skip Specific Lines
-
-```python
-# Skip a single line
-message = "Hello, %s" % name  # noqa: flynt
-
-# Alternative syntax
-message = "Hello, %s" % name  # flynt: skip
-```
-
-## Common Workflows
-
-### Convert Entire Project
-
-```bash
-# Backup first (or use git)
-git add -A && git commit -m "Before flynt conversion"
-
-# Run flynt on source directory
-flynt src/
-
-# Review changes
-git diff
-
-# Run tests to verify
-pytest
-```
-
-### Gradual Adoption
-
-```bash
-# Start with dry run
-flynt --dry-run src/
-
-# Convert file by file
-flynt src/module1.py
-pytest tests/test_module1.py
-
-flynt src/module2.py
-pytest tests/test_module2.py
-```
-
-### CI Pipeline Check
-
-```bash
-# In CI, fail if unconverted strings exist
-flynt --fail-on-change --quiet src/
-```
-
-### Preview Mode
-
-```bash
-# See exact changes without modifying
-flynt --dry-run src/ 2>&1 | less
-
-# Or output to file
-flynt --dry-run src/ > flynt-changes.txt 2>&1
-```
-
-## Best Practices
-
-1. **Use version control**: Always commit before running flynt
-2. **Run tests after**: F-strings can expose subtle bugs in edge cases
-3. **Review aggressive mode**: `--aggressive` may change behavior in edge cases
-4. **Start conservative**: Run without `--aggressive` first
-5. **Combine with other tools**: Run Black/Ruff format after flynt
-
-## Caveats and Edge Cases
-
-### Behavior Differences
-
-F-string conversion may alter behavior in edge cases:
-
-```python
-# Before: prints "1"
-'%s' % (1,)
-
-# After: prints "(1,)"
-f'{(1,)}'
-```
-
-### Complex Expressions
-
-Flynt skips conversions that would make code less readable:
-
-```python
-# Flynt may skip this (too complex)
-"result: {}".format(
-    very_long_function_call_with_many_arguments(
-        arg1, arg2, arg3
-    )
-)
-```
-
-### Type Requirements
-
-F-strings are stricter about types:
-
-```python
-# Before: works with implicit conversion
-"count: %s" % some_object
-
-# After: may need explicit str()
-f"count: {some_object}"  # Works if __str__ defined
-```
-
-## Comparison with Alternatives
-
-| Tool | F-string Conversion | Other Features |
-|------|---------------------|----------------|
-| **Flynt** | Specialized, thorough | Concat/join conversion |
-| **Ruff UP032** | Basic conversion | Full linter suite |
-| **Pyupgrade** | Conservative conversion | Full syntax upgrades |
-
-### When to Use Flynt
-
-- Primary focus on f-string conversion
-- Need concat/join transformations
-- Want specialized f-string tool
-
-### When to Use Ruff/Pyupgrade
-
-- Already using these tools
-- Want all-in-one solution
-- Simpler conversions are sufficient
-
-## Detailed Reference
-
-For comprehensive pattern examples, see [references/fstring-patterns.md](references/fstring-patterns.md).
-
-## External Links
-
-- [GitHub Repository](https://github.com/ikamensh/flynt)
-- [PyPI Package](https://pypi.org/project/flynt/)
-- [PEP 498 - Literal String Interpolation](https://peps.python.org/pep-0498/)
+**Quality**
+- [ ] No `any` types
+- [ ] Error boundaries present
+- [ ] Loading states for async
+- [ ] Accessibility (semantic HTML, alt text)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
