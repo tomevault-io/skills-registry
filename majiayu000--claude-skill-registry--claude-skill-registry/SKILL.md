@@ -1,125 +1,275 @@
 ---
-name: ai-assets
-description: Create, modify, validate, and analyze Windsurf AI assets such as AGENTS.md files, Windsurf skills, templates, and supporting scripts. Use when building or maintaining the repository's Windsurf-specific AI component package. Use when this capability is needed.
+name: validate-tenant-isolation
+description: Verifies tenant isolation is enforced at all layers (gateway, service, database) following .cursorrules Security Requirements and ModuleImplementationGuide.md Section 11. Checks X-Tenant-ID header validation in routes, verifies tenantId in all database queries, validates tenant enforcement middleware, checks service-to-service tenant propagation, verifies audit logging includes tenantId, and ensures tenantId is in partition key for all Cosmos DB queries. Use when performing security audits, pre-deployment checks, or ensuring multi-tenancy compliance. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# AI Assets
+# Validate Tenant Isolation
 
-Build and maintain Windsurf-native AI assets for this repository. Treat every asset as prompt surface for Cascade.
+Verifies tenant isolation is enforced at all layers (gateway, service, database).
 
-## 1. Determine Scope
+## Multi-Layer Validation
 
-Identify:
+Reference: .cursorrules (Security Requirements), ModuleImplementationGuide.md Section 11
 
-- Operation: `create` | `modify` | `validate` | `analyze`
-- Asset type: `agents-md` | `skill` | `template` | `checklist` | `script`
-- Target path or asset name
+### Layer 1: Gateway/API Layer
 
-If the request is ambiguous, resolve it from repository context before asking the user.
+**Check X-Tenant-ID header validation:**
 
-## 2. Gather Context
+```typescript
+// ✅ Correct: Use authenticateRequest and tenantEnforcementMiddleware
+import { authenticateRequest, tenantEnforcementMiddleware } from '@coder/shared';
 
-Read only the assets needed for the task:
+fastify.get<{ Params: { id: string } }>(
+  '/api/v1/resource/:id',
+  {
+    preHandler: [authenticateRequest(), tenantEnforcementMiddleware()],
+  },
+  async (request, reply) => {
+    // ✅ tenantId automatically validated and attached by tenantEnforcementMiddleware
+    const tenantId = request.user!.tenantId;
+    
+  const resource = await service.getResource(tenantId, request.params.id);
+    return reply.send({ data: resource });
+  }
+);
+```
 
-1. The target asset, if it exists
-2. Root `AGENTS.md`
-3. Relevant scoped `AGENTS.md` files
-4. Relevant `.windsurf/skills/*/SKILL.md` files
-5. Relevant files under `.windsurf/`
-6. `context-engineering` skill when the asset affects prompt layering, memory, RAG, or orchestration
+**Validation Checklist:**
+- [ ] Routes use `authenticateRequest()` and `tenantEnforcementMiddleware()` in preHandler
+- [ ] Routes validate tenantId exists
+- [ ] Routes reject requests without X-Tenant-ID header
+- [ ] Tenant enforcement middleware registered
 
-## 3. Build a Dependency Map
+### Layer 2: Service Layer
 
-Map outgoing and incoming references.
+**Check service methods require tenantId:**
 
-Check for:
+```typescript
+// ✅ Correct: tenantId is first parameter
+class ResourceService {
+  async getResource(tenantId: string, id: string): Promise<Resource> {
+    // tenantId is required
+  }
+  
+  async listResources(tenantId: string, filters: Filters): Promise<Resource[]> {
+    // tenantId is required
+  }
+}
 
-- References to `AGENTS.md`
-- References to `.windsurf/skills/<name>/`
-- References to shared templates, checklists, or support resources under `.windsurf/skills/ai-assets/`
-- References to explicit support scripts such as `.windsurf/hooks/scripts/*`
-- Missing files
-- Orphaned assets
-- Circular references that add confusion
+// ❌ Wrong: Missing tenantId
+class ResourceService {
+  async getResource(id: string): Promise<Resource> {
+    // Missing tenantId
+  }
+}
+```
 
-For `analyze`, stop after presenting the dependency map.
+**Validation Checklist:**
+- [ ] All service methods have tenantId as first parameter
+- [ ] tenantId is validated (not empty, valid format)
+- [ ] Service methods never query without tenantId
 
-## 4. Choose the Right Windsurf Primitive
+### Layer 3: Database Layer
 
-Use the smallest asset that matches the job:
+**Check all queries include tenantId in partition key:**
 
-- Repository or directory policy -> `AGENTS.md`
-- Reusable task workflow or knowledge -> `.windsurf/skills/<name>/SKILL.md`
-- Reusable authoring scaffold -> supporting resources under `.windsurf/skills/<skill>/templates/`
-- Validation procedure -> supporting resources under `.windsurf/skills/<skill>/checklists/` or companion markdown files
-- Repeatable local automation -> explicit support scripts owned by the target package
+```typescript
+// ✅ Correct: tenantId in WHERE clause
+const query = `SELECT * FROM c WHERE c.tenantId = @tenantId AND c.id = @id`;
+const parameters = [
+  { name: '@tenantId', value: tenantId },
+  { name: '@id', value: id }
+];
 
-Do not recreate Claude-specific primitives such as agent files, Claude settings, or Claude hook configs.
+// ❌ Wrong: No tenantId
+const query = `SELECT * FROM c WHERE c.id = @id`;
+```
 
-## 5. Authoring Rules
+**Validation Checklist:**
+- [ ] All queries include `c.tenantId = @tenantId` in WHERE clause
+- [ ] tenantId is in partition key (first condition in WHERE)
+- [ ] All CREATE operations include tenantId in document
+- [ ] All UPDATE operations filter by tenantId first
+- [ ] All DELETE operations filter by tenantId first
 
-### `AGENTS.md`
+### Layer 4: Service-to-Service Communication
 
-- Put hard constraints first
-- Keep project facts concrete and current
-- Keep global policy in the root file and local conventions in scoped files
-- Avoid repeating parent guidance verbatim
+**Check tenant propagation:**
 
-### `SKILL.md`
+```typescript
+// ✅ Correct: Include X-Tenant-ID in service calls
+const client = new ServiceClient({
+  baseURL: config.services.auth.url,
+});
 
-- Include `name` and a specific `description`
-- Optimize `description` for correct progressive disclosure
-- Keep the workflow executable with minimal ambiguity
-- Move bulky references and checklists into companion markdown files
+const response = await client.get('/api/v1/users/123', {
+  headers: {
+    'X-Tenant-ID': tenantId, // ✅ Propagate tenantId
+    'Authorization': `Bearer ${serviceToken}`,
+  },
+});
+```
 
-### Templates and Checklists
+**Validation Checklist:**
+- [ ] Service calls include X-Tenant-ID header
+- [ ] tenantId is extracted from request and propagated
+- [ ] No service calls without tenant context
 
-- Prefer short, reusable structures
-- Separate policy from examples
-- Make completion criteria explicit
+### Layer 5: Audit Logging
 
-### Scripts
+**Check logs include tenantId:**
 
-- Keep scripts visible and optional
-- Never hide critical behavior behind implicit automation
-- Prefer PowerShell for this repository's local automation
+```typescript
+// ✅ Correct: Include tenantId in logs
+log.info('Resource created', {
+  resourceId: resource.id,
+  tenantId: tenantId, // ✅ Always include
+  userId: userId,
+  correlationId: requestId,
+});
 
-## 6. Prompt Engineering Review
+// ❌ Wrong: Missing tenantId
+log.info('Resource created', {
+  resourceId: resource.id,
+  userId: userId,
+});
+```
 
-Review the asset as live Windsurf context:
+**Validation Checklist:**
+- [ ] All log entries include tenantId
+- [ ] Error logs include tenantId
+- [ ] Audit logs include tenantId
+- [ ] Event logs include tenantId (organizationId field)
 
-1. What part of Windsurf behavior does it shape?
-2. What failure mode does it prevent or enable?
-3. Is the instruction hierarchy clear?
-4. Is critical information front-loaded?
-5. Is the token cost justified?
+## Validation Scripts
 
-Use `review-checklist.md` for the full validation pass.
+### Check Database Queries
 
-## 7. Validate
+```bash
+# Find queries without tenantId
+grep -r "SELECT.*FROM.*WHERE" src/ --exclude-dir=node_modules | grep -v "tenantId"
 
-Run these checks on every create or modify operation:
+# Find service methods without tenantId parameter
+grep -r "async.*\(.*\)" src/services/ --exclude-dir=node_modules | grep -v "tenantId"
+```
 
-- Asset uses Windsurf-native concepts only
-- References resolve
-- No machine-specific paths unless intentionally local documentation
-- No secrets or credentials
-- English only
-- `SKILL.md` remains concise enough for progressive disclosure
-- `AGENTS.md` guidance is specific, not generic
+### Check Routes
 
-If the asset changes the Windsurf package structure, update the package README or mapping docs.
+```bash
+# Find routes not using tenantEnforcementMiddleware
+grep -r "fastify\.(get|post|put|delete)" src/routes/ --exclude-dir=node_modules | grep -v "tenantEnforcementMiddleware"
+```
 
-## 8. Finalize
+### Check Service Calls
 
-Report:
+```bash
+# Find service calls without X-Tenant-ID
+grep -r "ServiceClient\|client\.(get|post|put|delete)" src/ --exclude-dir=node_modules | grep -v "X-Tenant-ID"
+```
 
-- What changed
-- Dependency status
-- Validation result
-- Remaining follow-up items
+## Comprehensive Checklist
+
+### Gateway/API Layer
+- [ ] All protected routes use `authenticateRequest()` and `tenantEnforcementMiddleware()` in preHandler
+- [ ] Routes access tenantId via `request.user!.tenantId`
+- [ ] Routes return 401 if X-Tenant-ID header missing (handled by middleware)
+- [ ] Tenant enforcement middleware used in all protected routes
+
+### Service Layer
+- [ ] All service methods have tenantId as first parameter
+- [ ] tenantId is validated (not empty, valid UUID format)
+- [ ] No service methods query without tenantId
+
+### Database Layer
+- [ ] All SELECT queries include `c.tenantId = @tenantId`
+- [ ] tenantId is first condition in WHERE clause (partition key)
+- [ ] All CREATE operations include tenantId in document
+- [ ] All UPDATE operations filter by tenantId before update
+- [ ] All DELETE operations filter by tenantId before delete
+- [ ] Container names use prefixed format: `{module-name}_data`
+
+### Service Communication
+- [ ] All service calls include X-Tenant-ID header
+- [ ] tenantId is extracted and propagated to downstream services
+- [ ] No service calls made without tenant context
+
+### Logging
+- [ ] All log entries include tenantId
+- [ ] Error logs include tenantId
+- [ ] Audit logs include tenantId
+- [ ] Events include organizationId (tenantId) field
+
+### Events
+- [ ] All published events include organizationId (tenantId)
+- [ ] Event consumers validate tenantId before processing
+
+## Testing Tenant Isolation
+
+### Unit Tests
+
+```typescript
+describe('tenant isolation', () => {
+  it('should not return resources from other tenants', async () => {
+    const tenantId = 'tenant-123';
+    const otherTenantId = 'tenant-456';
+    
+    const result = await service.listResources(tenantId);
+    
+    expect(result.every(r => r.tenantId === tenantId)).toBe(true);
+    expect(result.some(r => r.tenantId === otherTenantId)).toBe(false);
+  });
+  
+  it('should throw error if tenantId is missing', async () => {
+    await expect(service.getResource('', 'resource-123')).rejects.toThrow();
+  });
+});
+```
+
+### Integration Tests
+
+```typescript
+it('should return 400 without X-Tenant-ID header', async () => {
+  const response = await app.inject({
+    method: 'GET',
+    url: '/api/v1/resource/resource-123',
+    headers: {
+      'Authorization': 'Bearer valid-token',
+      // Missing X-Tenant-ID
+    },
+  });
+  
+  expect(response.statusCode).toBe(400);
+});
+```
+
+## Common Violations
+
+1. **Missing tenantId in queries**
+   - Always include `c.tenantId = @tenantId` in WHERE clause
+
+2. **Missing tenantId in service methods**
+   - tenantId should be first parameter
+
+3. **Missing X-Tenant-ID in service calls**
+   - Always include in headers
+
+4. **Missing tenantId in logs**
+   - Always include tenantId for traceability
+
+5. **Missing tenantId in events**
+   - Always include organizationId field
+
+## Quick Validation
+
+Run these checks before deployment:
+
+1. **No queries without tenantId**: All database queries include tenantId
+2. **No routes without tenantId**: All routes extract and validate tenantId
+3. **No service calls without tenantId**: All service calls include X-Tenant-ID
+4. **No logs without tenantId**: All logs include tenantId
+5. **No events without tenantId**: All events include organizationId
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
