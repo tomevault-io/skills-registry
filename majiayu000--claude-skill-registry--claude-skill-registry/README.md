@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/orchestration/when-deploying-cloud-swarm-use-flow-nexus-swarm-dnyoussef-ai-chr/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/orchestration/dispatching-parallel-agents-datasciencemonkey-claude-code-cli-br/SKILL.md)
 
 ---
 
