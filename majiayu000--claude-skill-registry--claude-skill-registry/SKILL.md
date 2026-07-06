@@ -1,26 +1,34 @@
 ---
-name: react-native-project-creater
-description: Provides one-command project creation for React Native including project initialization, configuration, and template generation. Use when the user asks about creating React Native projects, needs to initialize a new React Native project, or generate React Native project structure.
+name: robotframework-libdoc-search
+description: Search Robot Framework library/resource/suite documentation to find matching keywords for a use case. Use when asked to find keywords, search libdoc, match a use case to keywords, or scan multiple libraries/resources for relevant keywords. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-## When to use this skill
+# Robot Framework Libdoc Search
 
-Use this skill whenever the user wants to:
-- [待完善：根据具体工具添加使用场景]
+Use this skill to search Robot Framework libraries/resources/suites for keywords that match a use case. Output JSON only.
 
-## How to use this skill
+## Command
 
-[待完善：根据具体工具添加使用指南]
+Search in standard libraries:
 
-## Best Practices
+```bash
+python scripts/rf_libdoc.py --library BuiltIn --library OperatingSystem --search "create temp file" --pretty
+```
 
-[待完善：根据具体工具添加最佳实践]
+Search multiple sources with custom weights:
 
-## Keywords
+```bash
+python scripts/rf_libdoc.py --library SeleniumLibrary --resource resources/common.resource --search "upload file" --weights name=0.5,short_doc=0.3,doc=0.2 --limit 10 --pretty
+```
 
-[待完善：根据具体工具添加关键词]
+## Notes
+- Use `--library`, `--resource`, `--suite`, or `--spec` (repeatable). Inputs are aggregated.
+- Search considers keyword name, `short_doc`, and full `doc`.
+- Use `--tag` to filter keywords by tag.
+- Use `--include-private` to include private keywords.
+- Use `--exclude-deprecated` to drop deprecated keywords.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
