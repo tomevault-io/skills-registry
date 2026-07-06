@@ -1,596 +1,536 @@
 ---
-name: phoenix-views-templates
-description: Render views and templates in Phoenix using HEEx templates, function components, slots, and assigns Use when this capability is needed.
+name: rug-detection-checklist
+description: Comprehensive rug detection for Solana tokens - red flags, contract analysis, LP verification, insider patterns, and escape routes. Use before buying any token to protect against scams. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Phoenix Views and Templates
+# Rug Detection Checklist
 
-Phoenix uses HEEx (HTML+EEx) templates for rendering dynamic HTML content. HEEx provides compile-time validation, security through automatic escaping, and a component-based architecture. Views in Phoenix are modules that organize template rendering logic and house reusable function components.
+Role framing: You are a crypto security analyst who identifies scams and protects buyers. Your goal is to systematically evaluate tokens for rug pull indicators and provide clear risk assessments.
 
-## View Module Structure
+## Initial Assessment
 
-Phoenix view modules use the `embed_templates` macro to load HEEx templates from a directory:
+- What token are you evaluating (mint address)?
+- How did you discover this token (shill, organic, trending)?
+- What's the current market cap and age?
+- Has money already been invested, or is this pre-purchase evaluation?
+- What's your risk tolerance for this investment?
+- Do you have access to on-chain analysis tools?
 
-```elixir
-defmodule HelloWeb.HelloHTML do
-  use HelloWeb, :html
+## Core Principles
 
-  embed_templates "hello_html/*"
-end
+- **If it seems too good, it is**: Guaranteed returns, "safe", celebrity endorsements = scam signals.
+- **Verify, don't trust**: Every claim must be checkable on-chain.
+- **Scammers iterate**: Yesterday's rug pattern is today's "improved" version.
+- **Social proof is manufactured**: Followers, Telegram members, and "community" can all be bought.
+- **Time is a factor**: The faster the shill, the faster the rug.
+- **Your gut is right**: If something feels off, it probably is.
+
+## Workflow
+
+### 1. Instant Red Flags (Auto-Reject)
+
+Check these first - any one is grounds for rejection:
+
+```
+INSTANT REJECT IF:
+□ Mint authority active (can print infinite tokens)
+□ Freeze authority active (can lock your wallet)
+□ LP unlocked and significant % held by creator
+□ Creator has previous rugged tokens
+□ Copied name/symbol of established token (impersonation)
+□ Website asks for private key or seed phrase
+□ "Too good to be true" promises (guaranteed 100x, no risk)
+□ Aggressive time pressure ("buy now or miss out forever")
 ```
 
-This automatically creates functions for each `.html.heex` file in the `hello_html/` directory.
+### 2. Authority Analysis
 
-## HEEx Templates
+```typescript
+// CRITICAL: Check mint and freeze authorities
+const mintInfo = await connection.getParsedAccountInfo(mintAddress);
+const data = mintInfo.value?.data?.parsed?.info;
 
-### Basic Template Structure
+const mintAuthority = data.mintAuthority;
+const freezeAuthority = data.freezeAuthority;
 
-HEEx templates combine HTML with embedded Elixir expressions:
-
-```heex
-<section>
-  <h2>Hello World, from Phoenix!</h2>
-</section>
+// Scoring:
+// Mint authority null = SAFE (+10 points)
+// Mint authority set = CRITICAL RED FLAG (-50 points)
+// Freeze authority null = SAFE (+5 points)
+// Freeze authority set = RED FLAG (-20 points)
 ```
 
-### Interpolating Dynamic Content
+| Authority State | Risk | What Can Happen |
+|----------------|------|-----------------|
+| Both null | LOW | Cannot print or freeze - safest |
+| Mint null, Freeze set | MEDIUM | Can't print, but can lock wallets |
+| Mint set, Freeze null | HIGH | Can print unlimited tokens |
+| Both set | CRITICAL | Full control - AVOID |
 
-Use `<%= ... %>` to interpolate Elixir expressions into HTML:
+Verification:
+- Solscan: Check "Mint Authority" and "Freeze Authority" fields
+- CLI: `spl-token display <MINT_ADDRESS>`
 
-```heex
-<section>
-  <h2>Hello World, from <%= @messenger %>!</h2>
-</section>
+### 3. Liquidity Pool Analysis
+
+```
+LP CHECKS:
+□ LP exists on major DEX (Raydium, Orca, Jupiter-listed)
+□ LP tokens burned OR locked in verified contract
+□ Sufficient liquidity (>$10k for any real position)
+□ LP not held by single wallet (creator)
+□ Lock duration reasonable (>6 months minimum)
 ```
 
-The `@` symbol accesses assigns passed from the controller.
+LP Risk Matrix:
 
-### Multi-line Expressions
+| LP Status | Risk Level | Notes |
+|-----------|------------|-------|
+| Burned (sent to 111...111) | SAFE | Cannot be removed |
+| Locked (verified locker) | MEDIUM-SAFE | Check unlock date |
+| Locked (unknown contract) | MEDIUM | Verify contract |
+| Unlocked, distributed | MEDIUM | Watch concentration |
+| Unlocked, single wallet | CRITICAL | Can pull anytime |
 
-For expressions without output, omit the `=`:
-
-```heex
-<% # This is a comment %>
-<% user_name = String.upcase(@user.name) %>
-<p>Welcome, <%= user_name %>!</p>
+Verify LP burn:
+```bash
+# Check if LP tokens were sent to burn address
+# Burn addresses: 1nc1nerator11111111111111111111111111111111
+# Or dead wallets: 1111111111111111111111111111111111111111111
 ```
 
-## Working with Assigns
+### 4. Holder Distribution Analysis
 
-Assigns are key-value pairs passed from controllers to templates:
-
-```elixir
-# Controller
-def show(conn, %{"messenger" => messenger}) do
-  render(conn, :show, messenger: messenger, receiver: "Dweezil")
-end
+```
+HOLDER CHECKS:
+□ Top 10 holders < 40% (excluding LP/burn)
+□ No single wallet > 10% (excluding LP/burn)
+□ Creator wallet < 5%
+□ No suspicious wallet clustering
+□ Organic holder growth pattern
 ```
 
-```heex
-<!-- Template -->
-<section>
-  <h2>Hello <%= @receiver %>, from <%= @messenger %>!</h2>
-</section>
+Calculate true distribution:
+```typescript
+// Get top holders
+const topHolders = await getTopHolders(mintAddress, 20);
+
+// Exclude known addresses
+const excludeAddresses = [
+  lpAddress,           // LP pool
+  burnAddresses,       // Burn wallets
+  dexAddresses,        // DEX pools
+  knownCexAddresses,   // Exchange wallets
+];
+
+// Calculate concentration
+const trueHolders = topHolders.filter(h => !excludeAddresses.includes(h.address));
+const top10Percent = trueHolders.slice(0, 10).reduce((a, h) => a + h.percent, 0);
 ```
 
-All assigns are accessed with the `@` prefix in templates.
+Red flags in holder data:
+- Multiple wallets with identical balances
+- Wallets funded from same source
+- Fresh wallets (< 24h) with large holdings
+- Wallets that only hold this one token
 
-## Conditional Rendering
+### 5. Creator/Dev Wallet Analysis
 
-### Using if/else
-
-HEEx supports conditional rendering with `if/else` blocks:
-
-```heex
-<%= if some_condition? do %>
-  <p>Some condition is true for user: <%= @username %></p>
-<% else %>
-  <p>Some condition is false for user: <%= @username %></p>
-<% end %>
+```
+CREATOR CHECKS:
+□ Wallet age > 30 days
+□ Funding source traceable (not mixer)
+□ No previous rug pulls
+□ Reasonable holding (< 5%)
+□ No large sells after launch
+□ Active but not suspicious activity
 ```
 
-### Using unless
+Creator risk indicators:
 
-For negative conditions:
+| Pattern | Risk | Indicator |
+|---------|------|-----------|
+| Wallet age < 7 days | HIGH | Created for this token |
+| Funded from Tornado/mixer | CRITICAL | Hiding identity |
+| Previous rugged tokens | CRITICAL | Serial scammer |
+| Holding > 10% | HIGH | Ready to dump |
+| Sold > 50% of holdings | MEDIUM | Taking profit or exit |
+| Inactive after launch | MEDIUM | Abandoned project |
 
-```heex
-<%= unless @user.premium do %>
-  <div class="upgrade-banner">
-    Upgrade to premium for more features!
-  </div>
-<% end %>
+Finding creator wallet:
+1. Check first mint transaction
+2. Trace funding source
+3. Check for patterns across multiple tokens
+
+### 6. Contract/Code Analysis (if applicable)
+
+For tokens with on-chain programs:
+
+```
+CODE CHECKS:
+□ Source code verified (if program exists)
+□ No hidden mint functions
+□ No hidden fee mechanisms
+□ No backdoor admin functions
+□ Audit by reputable firm (if claimed)
+□ Known safe template used
 ```
 
-### Pattern Matching with case
+Common malicious patterns:
+- Hidden `mint_to` callable by admin
+- `transfer` function with hidden fee
+- `pause` or `blacklist` functions
+- Upgradeable without timelock
+- CPI to unknown programs
 
-For multiple conditions:
+### 7. Social/External Verification
 
-```heex
-<%= case @status do %>
-  <% :pending -> %>
-    <span class="badge badge-warning">Pending</span>
-  <% :approved -> %>
-    <span class="badge badge-success">Approved</span>
-  <% :rejected -> %>
-    <span class="badge badge-danger">Rejected</span>
-<% end %>
+```
+SOCIAL CHECKS:
+□ Team identifiable (real or at least consistent personas)
+□ Social accounts > 30 days old
+□ Organic engagement (not bot comments)
+□ No fake partnerships claimed
+□ Website not just a template
+□ Community is real discussion, not just shills
 ```
 
-## Looping and Iteration
+Fake social indicators:
+- Account created days before launch
+- Bought followers (check engagement ratio)
+- Comments all saying same thing
+- "Partnership" announcements not confirmed by partner
+- Copied roadmap/whitepaper from other projects
 
-### For Comprehensions
+### 8. Pattern Recognition
 
-Generate dynamic lists using `for`:
+Known rug patterns:
 
-```heex
-<table>
-  <tr>
-    <th>Number</th>
-    <th>Power</th>
-  </tr>
-  <%= for number <- 1..10 do %>
-    <tr>
-      <td><%= number %></td>
-      <td><%= number * number %></td>
-    </tr>
-  <% end %>
-</table>
+**The Classic Pump & Dump**
+1. Launch with hype, shills everywhere
+2. Early buyers (insiders) pump price
+3. FOMO buyers enter
+4. Insiders dump, price crashes
+5. LP pulled or tokens minted
+
+**The Slow Rug**
+1. Legitimate-looking launch
+2. Build community for weeks
+3. Multiple small dev wallet sells
+4. Final large dump when attention fades
+5. "Project failed" excuse
+
+**The Honeypot**
+1. Token launches, buys work
+2. Sells blocked (contract trap)
+3. Only creator can sell
+4. Victims stuck with worthless tokens
+
+**The Impersonation**
+1. Copy popular token name/symbol
+2. Different mint address
+3. Victims think they're buying real token
+4. No actual connection to original
+
+## Templates / Playbooks
+
+### Quick Rug Check (2 minutes)
+
+```markdown
+## $TOKEN Quick Check
+
+Mint: [ADDRESS]
+
+### INSTANT REJECTS
+- [ ] Mint authority: [REVOKED/ACTIVE]
+- [ ] Freeze authority: [REVOKED/ACTIVE]
+- [ ] LP status: [BURNED/LOCKED/UNLOCKED]
+- [ ] Creator previous rugs: [Y/N]
+
+### QUICK METRICS
+- MC: $[X]
+- Age: [X hours/days]
+- Holders: [X]
+- Top 10 %: [X]%
+
+### VERDICT
+[PROCEED WITH CAUTION / HIGH RISK / AVOID]
 ```
 
-### Iterating Over Collections
+### Full Rug Analysis Template
 
-Loop through lists or maps:
+```markdown
+## Rug Detection Report: [TOKEN]
 
-```heex
-<ul>
-  <%= for post <- @posts do %>
-    <li>
-      <h3><%= post.title %></h3>
-      <p><%= post.excerpt %></p>
-    </li>
-  <% end %>
-</ul>
+### Executive Summary
+**Risk Level: [LOW / MEDIUM / HIGH / CRITICAL]**
+[One sentence summary of key findings]
+
+### Authority Status (Weight: 40%)
+| Authority | Status | Risk | Score |
+|-----------|--------|------|-------|
+| Mint | [State] | [Risk] | [+/- X] |
+| Freeze | [State] | [Risk] | [+/- X] |
+
+### Liquidity (Weight: 25%)
+| Metric | Value | Risk |
+|--------|-------|------|
+| Total LP | $[X] | |
+| LP Status | [Burned/Locked/Unlocked] | |
+| Lock Expiry | [Date or N/A] | |
+
+### Holder Analysis (Weight: 20%)
+| Metric | Value | Benchmark | Assessment |
+|--------|-------|-----------|------------|
+| Top 10 % | [X]% | <40% | [Pass/Fail] |
+| Largest | [X]% | <10% | [Pass/Fail] |
+| Creator % | [X]% | <5% | [Pass/Fail] |
+| Clustering | [Y/N] | No | [Pass/Fail] |
+
+### Creator Analysis (Weight: 10%)
+| Check | Finding |
+|-------|---------|
+| Wallet age | [X days] |
+| Funding source | [Source] |
+| Previous tokens | [X] (rugs: [Y]) |
+| Current holding | [X]% |
+
+### Social/External (Weight: 5%)
+| Platform | Assessment |
+|----------|------------|
+| Twitter | [Real/Fake] |
+| Telegram | [Real/Fake] |
+| Website | [Quality/Template] |
+
+### Red Flags Identified
+1. [Flag 1]
+2. [Flag 2]
+...
+
+### Green Flags Identified
+1. [Flag 1]
+2. [Flag 2]
+...
+
+### Final Risk Score
+[X]/100 - [RISK LEVEL]
+
+### Recommendation
+[Detailed recommendation based on findings]
 ```
 
-### Shorthand :for Attribute
+## Common Failure Modes + Debugging
 
-HEEx provides cleaner syntax for simple iterations:
+### "Missed a rug despite checking"
+- Cause: New rug vector not in checklist
+- Detection: Post-mortem analysis
+- Fix: Update checklist with new pattern; share learnings
 
-```heex
-<ul>
-  <li :for={item <- @items}><%= item.name %></li>
-</ul>
+### "False positive - good token flagged"
+- Cause: Legitimate reason for flags (PDA authority, etc.)
+- Detection: Token performs well despite flags
+- Fix: Add context to flags; not all "set" authorities are bad
+
+### "Couldn't verify LP lock"
+- Cause: Lock on unknown contract
+- Detection: Can't find verification
+- Fix: Treat unknown locks as unlocked; only trust verified lockers
+
+### "Social looked real but was fake"
+- Cause: Sophisticated fake engagement
+- Detection: Post-rug analysis of comments/followers
+- Fix: Check engagement ratios; verify accounts existed before project
+
+## Quality Bar / Validation
+
+Analysis is complete when:
+- [ ] All instant reject criteria checked
+- [ ] Authority status verified on-chain
+- [ ] LP status confirmed with transaction proof
+- [ ] Top 20 holders analyzed with clustering check
+- [ ] Creator wallet history reviewed
+- [ ] Social accounts age-verified
+- [ ] Risk score calculated with reasoning
+- [ ] Clear recommendation provided
+
+## Output Format
+
+Provide:
+1. **Risk level**: LOW/MEDIUM/HIGH/CRITICAL with color
+2. **Instant rejects**: Any automatic disqualifiers
+3. **Key findings**: Top 3 concerns or positives
+4. **Detailed breakdown**: Each category with scores
+5. **Red flags list**: Everything concerning
+6. **Recommendation**: Clear action advice
+
+## Examples
+
+### Simple Example: Quick Check of New Pump.fun Token
+
+**Input**: "Quick rug check on this pump.fun graduate"
+
+**Output**:
+```
+## $MEMECOIN Quick Rug Check
+
+Mint: Abc123...xyz
+Age: 6 hours
+MC: $124,000
+
+### INSTANT REJECTS
+✅ Mint authority: REVOKED
+✅ Freeze authority: REVOKED
+✅ LP: BURNED (tx: def456...)
+✅ Creator: No previous rugs found
+
+### QUICK METRICS
+- Holders: 1,847
+- Top 10: 28% (acceptable)
+- Creator holding: 0.6%
+- Volume (6h): $890k
+
+### RISK LEVEL: MEDIUM
+
+No instant rejects, but standard memecoin risks apply:
+- High holder concentration in top 10
+- Still very new (6 hours)
+- No utility, pure speculation
+
+Recommendation: If entering, size appropriately for
+high-risk memecoin. Set stop loss. Not a rug, but
+could still go to zero on lack of interest.
 ```
 
-### Accessing Index
+### Complex Example: Deep Analysis of Suspicious Token
 
-Get the iteration index with `Enum.with_index/2`:
+**Input**: "Full rug analysis - this is being shilled hard and I'm suspicious"
 
-```heex
-<%= for {item, index} <- Enum.with_index(@items) do %>
-  <div class="item-<%= index %>">
-    <%= item.name %>
-  </div>
-<% end %>
+**Output**:
 ```
+## RUG DETECTION REPORT: $SAFEMOON2
 
-## Function Components
+### EXECUTIVE SUMMARY
+**RISK LEVEL: CRITICAL - DO NOT BUY**
 
-Function components are reusable UI elements defined as Elixir functions that return HEEx templates.
+Multiple critical red flags including active mint authority,
+creator with 3 previous rugs, and manufactured social presence.
 
-### Defining Function Components
+---
 
-Use the `attr` macro to declare attributes and the `~H` sigil for the template:
+### AUTHORITY STATUS ⚠️ CRITICAL
 
-```elixir
-defmodule HelloWeb.HelloHTML do
-  use HelloWeb, :html
+| Authority | Status | Address | Risk |
+|-----------|--------|---------|------|
+| Mint | **ACTIVE** | 7xK...abc | CRITICAL |
+| Freeze | **ACTIVE** | 7xK...abc | HIGH |
 
-  embed_templates "hello_html/*"
+⛔ CRITICAL: Creator can print unlimited tokens and freeze wallets.
 
-  attr :messenger, :string, required: true
+---
 
-  def greet(assigns) do
-    ~H"""
-    <h2>Hello World, from <%= @messenger %>!</h2>
-    """
-  end
-end
+### LIQUIDITY ANALYSIS ⚠️ HIGH RISK
+
+| Metric | Value | Assessment |
+|--------|-------|------------|
+| Pool | Raydium | OK |
+| Liquidity | $89,000 | Acceptable |
+| LP Status | **UNLOCKED** | HIGH RISK |
+| LP Holder | Creator wallet (7xK...) | CRITICAL |
+
+⛔ Creator holds 100% of LP tokens. Can pull liquidity anytime.
+
+---
+
+### HOLDER DISTRIBUTION ⚠️ HIGH RISK
+
+| Metric | Value | Benchmark | Status |
+|--------|-------|-----------|--------|
+| Top 10 | 52% | <40% | FAIL |
+| Largest | 12% | <10% | FAIL |
+| Creator | 8% | <5% | FAIL |
+
+Wallet clustering detected:
+- Wallets #2, #4, #6, #9 all funded by creator
+- Likely same entity controlling 31% of supply
+
+---
+
+### CREATOR WALLET ANALYSIS ⚠️ CRITICAL
+
+Address: 7xK...abc
+Created: 12 days ago
+
+**Previous tokens created:**
+1. $MOONDOG - RUGGED ($450k pulled) - 3 months ago
+2. $ELONCAT - RUGGED ($280k pulled) - 2 months ago
+3. $SAFEAPE - RUGGED ($190k pulled) - 1 month ago
+
+⛔ CRITICAL: Serial rugger with $920k+ in confirmed rugs.
+
+---
+
+### SOCIAL VERIFICATION ⚠️ FAKE
+
+**Twitter: @safemoon2sol**
+- Created: 8 days ago
+- Followers: 12,400
+- Avg likes per post: 4
+- Assessment: FAKE (bought followers)
+
+**Telegram:**
+- Members: 5,200
+- Real discussion: None, all "when moon" spam
+- Assessment: FAKE (bot inflated)
+
+**Website: safemoon2.io**
+- Domain age: 6 days
+- Content: Template site, copied whitepaper
+- Assessment: FAKE
+
+---
+
+### RED FLAGS SUMMARY
+
+1. ⛔ CRITICAL: Mint authority active
+2. ⛔ CRITICAL: Creator has 3 previous rugs
+3. ⛔ HIGH: Freeze authority active
+4. ⛔ HIGH: LP unlocked, 100% held by creator
+5. ⛔ HIGH: 31%+ supply in sybil cluster
+6. ⚠️ MEDIUM: Fake social presence
+7. ⚠️ MEDIUM: Template website
+8. ⚠️ MEDIUM: Wallet created for this project
+
+---
+
+### GREEN FLAGS
+
+None identified.
+
+---
+
+### FINAL RISK SCORE
+
+**5/100 - CRITICAL RISK**
+
+---
+
+### RECOMMENDATION
+
+**⛔ DO NOT BUY UNDER ANY CIRCUMSTANCES**
+
+This token displays every indicator of a planned rug pull:
+- The creator has rugged 3 previous tokens totaling $920k
+- They retain full control (mint, freeze, LP)
+- The "community" is entirely manufactured
+- The holder distribution is faked via sybil wallets
+
+If you see this token being shilled, report it.
+If you already hold, sell immediately and accept the loss.
+
+This is not investment advice - this is scam detection.
 ```
-
-### Using Function Components
-
-Invoke components with the `<.component_name />` syntax:
-
-```heex
-<section>
-  <.greet messenger={@messenger} />
-</section>
-```
-
-### Optional Attributes with Defaults
-
-Define optional attributes with default values:
-
-```elixir
-attr :messenger, :string, default: nil
-attr :class, :string, default: "greeting"
-
-def greet(assigns) do
-  ~H"""
-  <h2 class={@class}>
-    Hello World<%= if @messenger, do: ", from #{@messenger}" %>!
-  </h2>
-  """
-end
-```
-
-### Multiple Attribute Types
-
-Components can accept various attribute types:
-
-```elixir
-attr :title, :string, required: true
-attr :count, :integer, default: 0
-attr :active, :boolean, default: false
-attr :user, :map, required: true
-attr :items, :list, default: []
-
-def card(assigns) do
-  ~H"""
-  <div class={"card" <> if @active, do: " active", else: ""}>
-    <h3><%= @title %></h3>
-    <p>Count: <%= @count %></p>
-    <p>User: <%= @user.name %></p>
-    <ul>
-      <li :for={item <- @items}><%= item %></li>
-    </ul>
-  </div>
-  """
-end
-```
-
-### Components with Computed Values
-
-Use `assign/2` to compute values within components:
-
-```elixir
-attr :x, :integer, required: true
-attr :y, :integer, required: true
-attr :title, :string, required: true
-
-def sum_component(assigns) do
-  assigns = assign(assigns, sum: assigns.x + assigns.y)
-
-  ~H"""
-  <h1><%= @title %></h1>
-  <p>Sum: <%= @sum %></p>
-  """
-end
-```
-
-## Slots
-
-Slots allow components to accept blocks of content, enabling powerful composition patterns.
-
-### Defining and Using Slots
-
-Define a slot and render it:
-
-```elixir
-slot :inner_block, required: true
-
-def card(assigns) do
-  ~H"""
-  <div class="card">
-    <%= render_slot(@inner_block) %>
-  </div>
-  """
-end
-```
-
-Use the component with content:
-
-```heex
-<.card>
-  <h2>Card Title</h2>
-  <p>Card content goes here</p>
-</.card>
-```
-
-### Named Slots
-
-Components can have multiple named slots:
-
-```elixir
-slot :header, required: true
-slot :body, required: true
-slot :footer
-
-def panel(assigns) do
-  ~H"""
-  <div class="panel">
-    <div class="panel-header">
-      <%= render_slot(@header) %>
-    </div>
-    <div class="panel-body">
-      <%= render_slot(@body) %>
-    </div>
-    <%= if @footer != [] do %>
-      <div class="panel-footer">
-        <%= render_slot(@footer) %>
-      </div>
-    <% end %>
-  </div>
-  """
-end
-```
-
-Usage:
-
-```heex
-<.panel>
-  <:header>
-    <h2>Panel Title</h2>
-  </:header>
-  <:body>
-    <p>Panel content</p>
-  </:body>
-  <:footer>
-    <button>Close</button>
-  </:footer>
-</.panel>
-```
-
-### Slots with Attributes
-
-Slots can accept attributes for more dynamic rendering:
-
-```elixir
-slot :item, required: true do
-  attr :title, :string, required: true
-  attr :highlighted, :boolean, default: false
-end
-
-def list(assigns) do
-  ~H"""
-  <ul>
-    <%= for item <- @item do %>
-      <li class={if item.highlighted, do: "highlight"}>
-        <%= item.title %>: <%= render_slot(item) %>
-      </li>
-    <% end %>
-  </ul>
-  """
-end
-```
-
-## Rendering Child Templates
-
-### Rendering Other Templates
-
-Include child templates within a parent:
-
-```heex
-<%= render("child_template.html", assigns) %>
-```
-
-### Rendering Components from Other Modules
-
-Call components from different modules:
-
-```heex
-<MyApp.Components.button text="Click me" />
-```
-
-Or with aliasing:
-
-```elixir
-alias MyApp.Components
-
-# In template:
-<Components.button text="Click me" />
-```
-
-## Layout Templates
-
-### Using Layouts
-
-Layouts wrap rendered templates. Configure the layout in the controller:
-
-```elixir
-def controller do
-  quote do
-    use Phoenix.Controller,
-      formats: [:html, :json],
-      layouts: [html: HelloWeb.Layouts]
-    ...
-  end
-end
-```
-
-### Root Layout
-
-The root layout includes the `@inner_content` placeholder:
-
-```heex
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <title>My App</title>
-  </head>
-  <body>
-    <%= @inner_content %>
-  </body>
-</html>
-```
-
-### App Layout Component
-
-Nest layouts using components:
-
-```heex
-<Layouts.app flash={@flash}>
-  <section>
-    <h2>Hello World, from <%= @messenger %>!</h2>
-  </section>
-</Layouts.app>
-```
-
-### Disabling Layouts
-
-Render without a layout:
-
-```elixir
-def home(conn, _params) do
-  render(conn, :home, layout: false)
-end
-```
-
-## LiveView Integration
-
-### Delegating to Phoenix Views
-
-LiveView can delegate rendering to existing view modules:
-
-```elixir
-defmodule AppWeb.ThermostatLive do
-  use Phoenix.LiveView
-
-  def render(assigns) do
-    Phoenix.View.render(AppWeb.PageView, "page.html", assigns)
-  end
-end
-```
-
-### Embedding LiveView in Templates
-
-Render LiveView components within static templates:
-
-```heex
-<h1>Temperature Control</h1>
-<%= live_render(@conn, AppWeb.ThermostatLive) %>
-```
-
-### Function Components in LiveView
-
-Define and use function components in LiveView:
-
-```elixir
-def weather_greeting(assigns) do
-  ~H"""
-  <div title="My div" class={@class}>
-    <p>Hello <%= @name %></p>
-    <MyApp.Weather.city name="Kraków"/>
-  </div>
-  """
-end
-```
-
-## Testing Views
-
-### Testing View Rendering
-
-Test views directly using `render_to_string/4`:
-
-```elixir
-defmodule HelloWeb.ErrorHTMLTest do
-  use HelloWeb.ConnCase, async: true
-
-  import Phoenix.Template
-
-  test "renders 404.html" do
-    assert render_to_string(HelloWeb.ErrorHTML, "404", "html", []) == "Not Found"
-  end
-
-  test "renders 500.html" do
-    assert render_to_string(HelloWeb.ErrorHTML, "500", "html", []) == "Internal Server Error"
-  end
-end
-```
-
-### Testing Function Components
-
-Test components in isolation:
-
-```elixir
-import Phoenix.LiveViewTest
-
-test "renders greet component" do
-  assigns = %{messenger: "Phoenix"}
-  html = rendered_to_string(~H"""
-  <HelloWeb.HelloHTML.greet messenger={@messenger} />
-  """)
-  assert html =~ "Hello World, from Phoenix!"
-end
-```
-
-## When to Use This Skill
-
-Use this skill when you need to:
-
-1. Create dynamic HTML templates for Phoenix applications
-2. Build reusable function components for consistent UI elements
-3. Implement conditional rendering based on application state
-4. Render lists and tables with dynamic data
-5. Create complex layouts with nested components and slots
-6. Integrate LiveView components with static templates
-7. Test view rendering logic and component behavior
-8. Build accessible and semantic HTML structures
-9. Implement responsive designs with dynamic classes
-10. Create forms with validation feedback
-11. Display flash messages and user notifications
-12. Render navigation menus and breadcrumbs
-13. Build card-based layouts and dashboards
-14. Implement pagination controls
-
-## Best Practices
-
-1. **Use function components** - Encapsulate reusable UI patterns in components
-2. **Declare attributes explicitly** - Use `attr` macro for all component attributes
-3. **Provide default values** - Make components flexible with sensible defaults
-4. **Use semantic HTML** - Choose appropriate HTML elements for accessibility
-5. **Leverage slots** - Use slots for flexible component composition
-6. **Keep templates simple** - Move complex logic to controller or context
-7. **Use :for shorthand** - Prefer `:for` attribute for simple iterations
-8. **Avoid inline styles** - Use CSS classes for styling
-9. **Test components** - Write tests for complex component logic
-10. **Document components** - Add docstrings to explain component usage
-11. **Use verified routes** - Always use `~p` sigil in templates
-12. **Escape user content** - Let HEEx handle escaping automatically
-13. **Optimize renders** - Minimize computation in template code
-14. **Use descriptive names** - Name components and attributes clearly
-15. **Follow conventions** - Stick to Phoenix naming patterns
-
-## Common Pitfalls
-
-1. **Putting logic in templates** - Complex business logic belongs in contexts, not views
-2. **Not escaping HTML** - Using `raw/1` without sanitizing user input
-3. **Deeply nested templates** - Creating hard-to-maintain template hierarchies
-4. **Missing attribute declarations** - Not using `attr` macro for component attributes
-5. **Overusing inline conditionals** - Making templates hard to read
-6. **Not using components** - Repeating markup instead of extracting components
-7. **Forgetting slot checks** - Not checking if optional slots are provided
-8. **Mixing concerns** - Combining data fetching with presentation logic
-9. **Large template files** - Creating monolithic templates instead of components
-10. **Inconsistent formatting** - Not following HEEx formatting conventions
-11. **Using EEx instead of HEEx** - Missing compile-time validation benefits
-12. **Ignoring accessibility** - Not adding ARIA labels and semantic markup
-13. **Hardcoding values** - Not using assigns for configurable content
-14. **Not testing edge cases** - Missing nil checks and empty state handling
-15. **Excessive nesting** - Creating deeply nested component trees
-
-## Resources
-
-- [Phoenix Components Guide](https://hexdocs.pm/phoenix/components.html)
-- [Phoenix.Component Documentation](https://hexdocs.pm/phoenix_live_view/Phoenix.Component.html)
-- [HEEx Template Engine](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.HTMLEngine.html)
-- [Phoenix Templates Guide](https://hexdocs.pm/phoenix/templates.html)
-- [Phoenix Views Documentation](https://hexdocs.pm/phoenix/views.html)
-- [Phoenix LiveView Documentation](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
