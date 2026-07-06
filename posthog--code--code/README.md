@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [PostHog/code](https://github.com/PostHog/code/tree/main/.claude/skills/test-electron-app/SKILL.md)
+Original source: [PostHog/code](https://github.com/PostHog/code/tree/main/packages/agent/src/adapters/claude/SKILL.md)
 
 ---
 
