@@ -1,465 +1,285 @@
 ---
-name: website-ux-audit
-description: This skill should be used when the user asks to "audit this website", "UX review", "analyze user experience", "website modernization report", "evaluate website design", "improve website UX", or provides a URL for comprehensive UX/UI analysis. Produces actionable modernization reports structured for design and implementation handoff. Use when this capability is needed.
+name: buildmodule
+description: Design, build, and validate forge modules. USE WHEN create module, new module, scaffold module, validate module, check module, audit module, module structure, module conventions, module architecture. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Website UX Audit Skill
+# BuildModule
 
-## Overview
+Guide for creating robust forge modules. Focuses on the three-layer concern architecture and ensures modules are portable across AI coding tools.
 
-Conduct systematic analysis of a website's user experience and interface design, producing structured reports that feed directly into design and implementation workflows.
+## Module Structure
 
-The output consists of:
-1. A **main report** with overall findings, cross-cutting issues, and prioritized recommendations
-2. **Section-specific reports** for each major area of the site, with detailed analysis and implementation guidance
-
-**Key principle:** All recommendations are categorized by implementation readiness to enable immediate action on what's possible without waiting for additional inputs.
-
----
-
-## Required Inputs
-
-| Input | Source | Purpose |
-|-------|--------|---------|
-| Homepage URL | User provides | Entry point for exploration |
-| Screenshots | User provides OR captured via browser tools | Visual analysis of actual rendering |
-| Site purpose/context | User provides (optional) | Understanding business goals |
-
----
-
-## Recommendation Tiers
-
-All recommendations MUST be categorized into one of three tiers:
-
-### Tier 1: Implement Now
-Recommendations that can be actioned immediately using:
-- Existing site content (text, images, data)
-- Publicly observable structure and functionality
-- Standard UX patterns and best practices
-
-**No additional information required from site owner.**
-
-Examples:
-- Reorganizing existing navigation items
-- Simplifying category labels using existing terminology
-- Creating wireframes based on current content
-- Fixing broken images/links that are observable
-- Adding search functionality to existing content
-- Improving layout and visual hierarchy
-- Mobile optimization of existing pages
-
-### Tier 2: Requires Information
-Recommendations that need input from the site owner before implementation:
-- Business rules or logic not apparent from the site
-- Access to backend systems or data
-- Brand guidelines or design assets
-- Content that doesn't exist on the current site
-- Metrics, statistics, or claims to be displayed
-- Pricing or product information
-- Legal/compliance requirements
-
-**Document specifically what information is needed.**
-
-Examples:
-- Adding audience metrics (need actual numbers)
-- Testimonials (need permission and content)
-- Integration with external systems (need access)
-- New content sections (need subject matter)
-- Pricing display (need current rates)
-
-### Tier 3: Future Enhancements
-Strategic improvements that require:
-- Significant new functionality development
-- Content creation beyond reorganization
-- Third-party integrations
-- Ongoing operational commitments
-- Major architectural changes
-
-**These inform the product roadmap but aren't immediate implementation candidates.**
-
-Examples:
-- User review/rating systems
-- Personalization engines
-- Advanced search with ML
-- Community features
-- New content programs
-
----
-
-## Process
-
-### Phase 1: Discovery & Data Gathering
-
-#### 1.1 Explore Site Structure
-
-Start by fetching the homepage:
+Every forge module follows this standard layout:
 
 ```
-web_fetch(url=homepage_url)
+module-name/
+    module.yaml         Metadata and event registration
+    defaults.yaml       Default configuration (committed)
+    config.yaml         User overrides (gitignored)
+    agents/             Agent markdown files
+    skills/             SKILL.md files for AI capabilities
+    hooks/              Bash scripts triggered by events
+    bin/                Entry points or build scripts
+    src/                Source code (typically Rust)
+    lib/                forge-lib submodule (shared tooling)
+    .claude-plugin/     Claude Code plugin manifest
+    Makefile            Multi-provider install/verify/test
+    CLAUDE.md           Project instructions for Claude Code (generated)
+    AGENTS.md           Project overview for Codex/OpenCode (generated)
+    GEMINI.md           Project context for Gemini CLI (generated)
+    README.md           Human-facing documentation
+    INSTALL.md          Installation guide
+    VERIFY.md           Post-installation checklist
 ```
 
-Then systematically explore:
-- Main navigation sections
-- Footer links
-- Key landing pages
-- Representative subpages (1-2 per section)
+Not all directories are required. A skills-only module (no hooks, no Rust) only needs: `skills/`, `module.yaml`, `defaults.yaml`, `.claude-plugin/plugin.json`, `Makefile`.
 
-Document the site map as discovered.
+## Core Mandates
 
-#### 1.2 Capture Screenshots
+1. **Config Convention**: Ship `defaults.yaml` (committed) with reasonable defaults + `config.yaml` (gitignored override). Users create `config.yaml` only when they need overrides. Loader falls back: `config.yaml` > `defaults.yaml` > compiled `Default` impl. Never commit user-specific paths.
 
-Use browser automation tools to capture:
-- Homepage (desktop and mobile)
-- Mobile navigation (open state)
-- Each major section landing page
-- Key interactive elements (forms, search, filters)
-- Any areas of specific user concern
+2. **Separation of Concerns**: Keep parsing logic "pure" (no I/O) in library modules. Let binaries handle the environment and file reads.
 
-#### 1.3 Run Performance Analysis
+3. **Lazy Compilation**: Use `bin/_build.sh` to compile binaries on first hook invocation, ensuring low overhead.
 
-Execute PageSpeed Insights checks:
-```
-https://pagespeed.web.dev/analysis?url={homepage_url}
-```
+4. **Validation Driven**: Always provide a `VERIFY.md` that allows an AI agent to confirm the module is functional without manual intervention.
 
-Record:
-- Core Web Vitals scores
-- Performance opportunities
-- Diagnostic findings
-- Mobile vs desktop differences
+## Three-Layer Architecture
 
-### Phase 2: Analysis
+Every module addresses one or more of these concerns:
 
-Analyze across these dimensions:
+| Layer | Question | Examples |
+|-------|----------|----------|
+| **Identity** | Does it store user-specific knowledge? | forge-avatar (goals, preferences, beliefs) |
+| **Behaviour** | Does it change how the AI responds? | forge-steering (rules), forge-tlp (access control) |
+| **Knowledge** | Does it provide new tools or skills? | forge-council (specialists), forge-core (build skills) |
 
-#### 2.1 Visual Design
-- Typography (fonts, hierarchy, readability)
-- Color palette (cohesion, contrast, accessibility)
-- Layout (whitespace, density, grid usage)
-- Imagery (quality, loading, relevance)
-- Consistency across pages
+Don't mix layers. Rules go in behaviour modules. Skills go in knowledge modules. User data goes in identity modules.
 
-#### 2.2 Information Architecture
-- Navigation systems (primary, secondary, footer)
-- Content hierarchy and organization
-- Labeling clarity
-- Search and findability
-- Duplicate or conflicting paths
+## module.yaml
 
-#### 2.3 Content Quality
-- Messaging clarity and tone
-- Value proposition communication
-- Call-to-action effectiveness
-- Content freshness and relevance
-- Grammar, spelling, consistency
-
-#### 2.4 Interaction Design
-- Form design and usability
-- Interactive element clarity
-- Feedback mechanisms
-- Error handling
-- Loading states
-
-#### 2.5 Mobile Experience
-- Responsive design quality
-- Touch target sizing
-- Mobile navigation patterns
-- Content prioritization
-- Performance on mobile
-
-#### 2.6 Accessibility
-- Semantic HTML usage
-- Keyboard navigation
-- Screen reader compatibility
-- Color contrast ratios
-- Alternative text for images
-
-#### 2.7 Performance
-- Page load times
-- Resource optimization
-- Render-blocking resources
-- Image optimization
-- Code efficiency
-
-### Phase 3: Report Generation
-
-#### 3.1 Main Report Structure
-
-Create comprehensive main report with:
-
-**Executive Summary**
-- Overall site assessment (2-3 paragraphs)
-- Most critical issues (top 3-5)
-- Quick wins available
-- Estimated impact of improvements
-
-**Cross-Cutting Issues**
-Issues affecting multiple sections:
-- Pattern-level problems
-- Systemic usability issues
-- Technical debt
-- Brand inconsistencies
-
-**Prioritized Recommendations**
-Group by tier:
-1. **Tier 1 (Implement Now)** - Action immediately
-2. **Tier 2 (Requires Information)** - Note what's needed
-3. **Tier 3 (Future Enhancements)** - Strategic roadmap
-
-For each recommendation:
-- **Issue:** What's wrong
-- **Impact:** User/business consequence
-- **Solution:** Specific fix
-- **Tier:** Implementation category
-- **Effort:** Rough estimate (S/M/L)
-
-**Performance Summary**
-- Core Web Vitals breakdown
-- Top performance issues
-- Quick optimization opportunities
-
-**Next Steps**
-Clear action items:
-- Immediate implementations (Tier 1)
-- Information to gather (Tier 2)
-- Strategic planning items (Tier 3)
-
-#### 3.2 Section-Specific Reports
-
-For each major site section, create focused report:
-
-**Section Overview**
-- Purpose and goals
-- Current state assessment
-- User journey analysis
-
-**Visual Design Assessment**
-- Section-specific visual issues
-- Consistency with site standards
-- Recommendations
-
-**Content & IA Assessment**
-- Content effectiveness
-- Navigation and structure
-- Findability issues
-- Recommendations
-
-**Interaction Design Assessment**
-- Key interactions review
-- Usability issues
-- Recommendations
-
-**Implementation Guidance**
-Tier 1 recommendations only:
-- Specific changes to make
-- Wireframes or mockups (if helpful)
-- Content reorganization specifics
-- Priority order
-
----
-
-## Quality Standards
-
-### Recommendations Must Be:
-- **Specific**: Clear, actionable instructions
-- **Justified**: Explain impact and reasoning
-- **Tiered**: Correctly categorized for implementation
-- **Prioritized**: Relative importance clear
-- **Measurable**: Success criteria defined where possible
-
-### Reports Must Include:
-- Evidence from actual site (screenshots, URLs)
-- Comparative examples (good vs current)
-- Performance data (when relevant)
-- Accessibility issues (WCAG violations)
-- Mobile-specific concerns
-
-### Avoid:
-- Generic advice applicable to any site
-- Recommendations without justification
-- Mixing tiers (keep clear separation)
-- Assumptions about unavailable information
-- Subjective opinions without UX principles
-
----
-
-## Output Format
-
-### File Structure
-
-Create organized deliverables:
-
-```
-ux-audit-{site-name}/
-├── 00-main-report.md
-├── 01-homepage.md
-├── 02-section-name.md
-├── 03-section-name.md
-├── screenshots/
-│   ├── homepage-desktop.png
-│   ├── homepage-mobile.png
-│   └── ...
-└── performance/
-    ├── pagespeed-mobile.png
-    └── pagespeed-desktop.png
+```yaml
+name: forge-example
+version: 0.1.0
+description: One-line description of what this module does.
+events: []
 ```
 
-### Report Formatting
-
-Use consistent markdown structure:
-- H1 for report title
-- H2 for major sections
-- H3 for subsections
-- Tables for structured data
-- Code blocks for specific implementations
-- Bullet lists for recommendations
-- Numbered lists for step-by-step processes
-
----
-
-## Browser Automation Integration
-
-When browser tools are available, leverage them for:
-
-### Screenshot Capture
-```
-computer(action="screenshot", tabId=tab_id)
+`events: []` means no hooks. For hook-using modules, list the events:
+```yaml
+events: [SessionStart, PreToolUse, Stop]
 ```
 
-### Mobile Viewport Testing
+## defaults.yaml
+
+```yaml
+# Module-specific configuration.
+# Override: create config.yaml (gitignored) with only the fields you want to change.
+
+skills:
+    claude:
+        SkillName:
+    gemini:
+        SkillName:
+    codex:
+        SkillName:
+    opencode:
+        SkillName:
+
+agents:
+    AgentName:
+        model: fast
+        tools: Read, Grep, Glob
+
+providers:
+    claude:
+        fast: claude-sonnet-4-6
+        strong: claude-opus-4-6
+    gemini:
+        fast: gemini-2.0-flash
+        strong: gemini-2.5-pro
+    codex:
+        fast: o4-mini
+        strong: o4-mini
+    opencode:
+        fast: claude-sonnet-4-6
+        strong: claude-opus-4-6
 ```
-resize_window(width=375, height=667)  # iPhone SE
-resize_window(width=414, height=896)  # iPhone 11 Pro Max
+
+The `skills:` section uses provider-keyed allowlists. `install-skills` reads this to decide which skills deploy to which provider. Skills omitted from a provider's list are skipped. This allows Claude-only skills (e.g., those using agent teams) to be excluded from Gemini/Codex without per-skill configuration.
+
+**Critical**: The `providers:` section drives agent deployment. `install-agents` reads provider keys from this section to determine target directories. A provider missing from `providers:` means agents will NOT deploy there, even if the `agents:` section is correct.
+
+## plugin.json
+
+```json
+{
+    "name": "forge-example",
+    "version": "0.1.0",
+    "description": "Module description.",
+    "author": {"name": "Author Name"},
+    "skills": ["./skills"]
+}
 ```
 
-### Interactive Element Testing
+Add `"hooks": "./hooks/hooks.json"` only if the module has hooks.
+
+## Makefile Pattern
+
+Modules use forge-lib's mk/ include fragments for shared targets. Declare roster variables, include fragments, and wire top-level targets:
+
+```makefile
+AGENTS   = AgentName
+SKILLS   = SkillOne SkillTwo SkillThree
+AGENT_SRC = agents
+SKILL_SRC = skills
+LIB_DIR  = $(or $(FORGE_LIB),lib)
+
+# Fallbacks when common.mk is not yet available (uninitialized submodule)
+INSTALL_AGENTS  ?= $(LIB_DIR)/bin/install-agents
+INSTALL_SKILLS  ?= $(LIB_DIR)/bin/install-skills
+VALIDATE_MODULE ?= $(LIB_DIR)/bin/validate-module
+
+.PHONY: help install clean verify test lint check init
+
+init:
+	@if [ ! -f $(LIB_DIR)/Cargo.toml ]; then \
+	  echo "Initializing forge-lib submodule..."; \
+	  git submodule update --init $(LIB_DIR); \
+	fi
+
+ifneq ($(wildcard $(LIB_DIR)/mk/common.mk),)
+  include $(LIB_DIR)/mk/common.mk
+  include $(LIB_DIR)/mk/skills/install.mk
+  include $(LIB_DIR)/mk/skills/verify.mk
+  include $(LIB_DIR)/mk/agents/install.mk
+  include $(LIB_DIR)/mk/agents/verify.mk
+  include $(LIB_DIR)/mk/lint.mk
+endif
+
+install: install-agents install-skills
+clean: clean-agents clean-skills
+verify: verify-skills verify-agents
+test: $(VALIDATE_MODULE)
+	@$(VALIDATE_MODULE) $(CURDIR)
+lint: lint-schema lint-shell
 ```
-navigate(url=page_url)
-find(query="search button")
-computer(action="left_click", coordinate=[x, y])
+
+**SKILLS variable**: Lists skills for verification and cleanup only. `install-skills` reads `defaults.yaml` directly to decide what deploys where. Provider-specific skills (e.g., Claude-only) should be excluded from the global SKILLS list since `verify` checks all providers. The skill will still install correctly via defaults.yaml.
+
+For skills-only modules (no agents), omit `AGENTS`, `AGENT_SRC`, and the agent mk includes.
+
+## Platform Documentation
+
+Every module ships platform-specific instruction files at its root:
+
+| File | Platform | Generate | Reference |
+|------|----------|----------|-----------|
+| `CLAUDE.md` | Claude Code | `claude` (manual or `/Init`) | -- |
+| `AGENTS.md` | Codex, OpenCode | `codex init` / `opencode init` | @Codex.md, @OpenCode.md |
+| `GEMINI.md` | Gemini CLI | `gemini init` | @Gemini.md |
+
+Generate these files by running each platform's CLI init command inside the module directory. The CLI analyzes the codebase and produces platform-appropriate instructions. To update an existing file, rename it to `.bak`, re-run init, and diff.
+
+These files are the primary way AI agents understand the module when working inside it. Generate them after the module structure is complete and before first commit.
+
+## Validation Flow
+
+1. **Unit Tests**: `cargo test` (or equivalent) for Rust modules
+2. **Module Conventions**: `validate-module .` checks structure
+3. **Skill Verification**: `make verify` confirms deployment
+4. **Binary Availability**: Check binaries respond to `--help` or `--version`
+
+## Validate
+
+Run this checklist against any module to audit compliance. Report pass/fail per section.
+
+### 1. Structure
+
+| Check | Pass criteria |
+|-------|---------------|
+| `module.yaml` exists | Has `name`, `version`, `description` |
+| `.claude-plugin/plugin.json` exists | Has `name`, `version`, `description`, `skills` |
+| Version match | `module.yaml` version == `plugin.json` version |
+| `Makefile` exists | Has `install`, `verify`, `test`, `lint`, `check`, `clean` targets |
+| `lib/` submodule | Points to forge-lib, not pinned to ancient commit |
+| `defaults.yaml` | Exists if module has configurable behaviour |
+
+### 2. Documentation
+
+| Check | Pass criteria |
+|-------|---------------|
+| `README.md` | Exists, not empty |
+| `INSTALL.md` | Exists, starts with `> **For AI agents**: This guide covers installation of [module].` |
+| `VERIFY.md` | Exists, starts with `> **For AI agents**: Complete this checklist after installation.` |
+| `CLAUDE.md` | Exists (Claude Code project instructions) |
+| `AGENTS.md` | Exists (Codex/OpenCode project overview) |
+| `GEMINI.md` | Exists (Gemini CLI project context) |
+| `.github/copilot-instructions.md` | Exists (Copilot project context) |
+
+### 3. Skills
+
+For each directory in `skills/`:
+
+| Check | Pass criteria |
+|-------|---------------|
+| `SKILL.md` exists | Has YAML frontmatter with `name`, `version`, `description` |
+| `SKILL.yaml` exists | Has `sources:` field (no `name:` or `description:` -- those live in SKILL.md) |
+| Name match | `SKILL.md` frontmatter `name` matches directory name |
+| USE WHEN | `description` contains "USE WHEN" trigger phrases |
+
+### 4. Shell Scripts
+
+For each `.sh` file (excluding `target/` and `lib/`):
+
+| Check | Pass criteria |
+|-------|---------------|
+| Strict mode | `set -euo pipefail` present |
+| Alias safety | Uses `command` prefix for `cd`, `cp`, `mv`, `rm` -- never bare |
+| No `builtin` keyword | `command` works for everything, `builtin` causes problems |
+
+### 5. Versions
+
+| Check | Pass criteria |
+|-------|---------------|
+| module.yaml == plugin.json | Version strings match exactly |
+| Cargo.toml (if Rust) | Note version -- may differ from module version |
+
+### 6. Configuration
+
+| Check | Pass criteria |
+|-------|---------------|
+| `config.yaml` in `.gitignore` | User overrides never committed |
+| Provider dirs in `.gitignore` | Pattern: `.claude/agents/*`, `.claude/skills/*`, etc. for all 4 providers |
+| .gitkeep exclusions | Each provider dir has `.gitkeep` excluded from ignore (`!.claude/agents/.gitkeep`) |
+| `.codex/config.toml` ignored | Generated by `install-agents` for Codex provider |
+| No committed provider dirs | `.claude/`, `.gemini/`, `.codex/`, `.opencode/` are generated by `make install` -- only .gitkeep files tracked |
+
+### 7. Report
+
+Output a summary table:
+
+```
+Section          Status
+─────────────────────────
+Structure        PASS / FAIL (N issues)
+Documentation    PASS / FAIL (N issues)
+Skills           PASS / FAIL (N issues)
+Shell            PASS / FAIL (N issues)
+Versions         PASS / FAIL (N issues)
+Configuration    PASS / FAIL (N issues)
 ```
 
-### Console Error Checking
-```
-read_console_messages(pattern="error|warning")
-```
+List specific failures with file paths and remediation hints.
 
-### Network Performance Analysis
-```
-read_network_requests()
-```
+## Constraints
 
----
-
-## Additional Resources
-
-### Reference Files
-
-For detailed workflows and standards:
-- **`references/CHECKLIST.md`** - Comprehensive audit checklist for thorough coverage
-
-### Example Files
-
-Working examples in `examples/`:
-- **`EXAMPLES.md`** - Sample audit reports and recommendation formats
-
----
-
-## Best Practices
-
-### During Discovery
-- Capture evidence systematically
-- Document navigation paths taken
-- Note observable user friction
-- Screenshot liberally
-- Record performance metrics
-
-### During Analysis
-- Apply recognized UX principles
-- Reference WCAG standards
-- Compare against modern patterns
-- Prioritize user impact
-- Consider implementation feasibility
-
-### During Reporting
-- Lead with high-impact items
-- Provide clear visual examples
-- Separate what's possible now vs later
-- Make recommendations actionable
-- Include success metrics
-
-### Communication
-- Write for multiple audiences (designers, developers, stakeholders)
-- Balance technical detail with accessibility
-- Use visual aids effectively
-- Organize for easy navigation
-- Enable quick reference
-
----
-
-## Common Patterns
-
-### Navigation Issues
-- Over-complex menu structures
-- Unclear labeling
-- Inconsistent navigation across sections
-- Missing breadcrumbs
-- Poor mobile navigation
-
-**Solution Pattern:** Simplify, clarify labels, add consistent navigation cues
-
-### Content Issues
-- Unclear value propositions
-- Weak calls-to-action
-- Outdated information
-- Inconsistent tone
-- Poor content hierarchy
-
-**Solution Pattern:** Refine messaging, strengthen CTAs, reorganize hierarchy
-
-### Visual Issues
-- Inconsistent styling
-- Poor typography hierarchy
-- Low contrast
-- Cluttered layouts
-- Inconsistent spacing
-
-**Solution Pattern:** Create consistent design system, improve visual hierarchy
-
-### Mobile Issues
-- Non-responsive elements
-- Small touch targets
-- Horizontal scrolling
-- Poor mobile navigation
-- Slow mobile performance
-
-**Solution Pattern:** Implement responsive patterns, optimize mobile experience
-
-### Performance Issues
-- Large unoptimized images
-- Render-blocking resources
-- Excessive JavaScript
-- Slow server response
-- No caching strategy
-
-**Solution Pattern:** Optimize assets, defer non-critical resources, implement caching
-
----
-
-## Success Criteria
-
-Effective audit delivers:
-- ✅ Clear, prioritized action items
-- ✅ Tier 1 recommendations ready for immediate implementation
-- ✅ Evidence-based findings with screenshots
-- ✅ Specific solutions, not just problems
-- ✅ Section-specific implementation guidance
-- ✅ Performance improvement opportunities
-- ✅ Accessibility issue identification
-- ✅ Mobile experience evaluation
-- ✅ Strategic roadmap (Tier 2 & 3)
+- ALL CAPS filenames = system-provided (SYSTEM.md, CONVENTIONS.md). Title Case = user-authored.
+- `config.yaml` is always gitignored at every level
+- forge-lib is consumed as a git submodule in `lib/`
+- Modules must work standalone -- no dependency on a parent monorepo
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
