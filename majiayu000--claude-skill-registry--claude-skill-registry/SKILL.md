@@ -1,105 +1,573 @@
 ---
-name: autoregmonkey
-description: 智能计量经济学分析代理。当用户输入以"autoregmonkey："开头时，LLM会解析经济学计量任务，参考RAG数据库知识，动态调用Python和Stata技能执行任务，最后生成中文报告。 Use when this capability is needed.
+name: theme-creation
+description: Create new themes for PropertyWebBuilder. Use when creating custom themes, styling websites, or modifying theme templates. Handles theme registration, view templates, CSS, and asset configuration. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# AutoRegMonkey Skill - 智能计量经济学分析代理
+# Theme Creation for PropertyWebBuilder
 
-基于LLM的智能计量经济学分析系统，能够理解用户任务、查询RAG知识库、动态调用Python和Stata工具，并生成专业的中文分析报告。
+## Theme System Overview
 
-## 核心特性
+PropertyWebBuilder uses a multi-tenant theme system where each website can have its own theme. The system supports:
+- **Theme inheritance** - Child themes extend parent themes
+- **Color palettes** - Multiple pre-defined color schemes per theme
+- **Page Part Library** - 20+ pre-built, customizable sections
+- **CSS custom properties** - Native CSS variables for easy customization
+- **Per-tenant customization** - Each website can override theme defaults
+- **WCAG AA accessibility** - Built-in contrast checking utilities
+- **Dark mode support** - Automatic or explicit dark mode colors
 
-1. **智能任务解析**: LLM理解自然语言描述的计量经济学任务
-2. **动态知识检索**: 实时查询Bruce Hansen计量经济学教材RAG数据库
-3. **工具链集成**: 根据需要调用Python和Stata技能
-4. **自适应工作流**: 根据任务复杂度和数据情况动态调整分析流程
-5. **专业报告生成**: 结合计量理论、统计结果和经济解释生成中文报告
+### Current Themes (January 2025)
 
-## 工作模式
+| Theme | Parent | Status | Palettes | Description |
+|-------|--------|--------|----------|-------------|
+| `default` | None | Active | 6 | Base Tailwind/Flowbite theme |
+| `brisbane` | default | Active | 6 | Luxury real estate (gold/navy) |
+| `bologna` | default | Active | 4 | Traditional European style |
+| `barcelona` | default | Disabled | 4 | Incomplete - needs work |
+| `biarritz` | default | Disabled | 4 | Needs accessibility fixes |
 
-本skill不是固定的脚本，而是一个智能代理框架：
-- **LLM作为协调者**: Claude（我）解析任务、制定计划、协调工具调用
-- **动态工具调用**: 根据任务需要调用Python数据处理和Stata回归分析
-- **实时知识参考**: 每次分析都查询最新的RAG知识库
-- **交互式调整**: 可以在分析过程中与用户交互确认模型选择等关键决策
+### Key Components
 
-## 处理流程
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| Theme Registry | `app/themes/config.json` | Theme definitions |
+| Theme Model | `app/models/pwb/theme.rb` | ActiveJSON model with inheritance |
+| Palette Loader | `app/services/pwb/palette_loader.rb` | Load palettes from JSON |
+| Palette Validator | `app/services/pwb/palette_validator.rb` | Validate against schema |
+| Color Utils | `app/services/pwb/color_utils.rb` | WCAG contrast, shade generation |
+| Palette Compiler | `app/services/pwb/palette_compiler.rb` | Compile CSS for production |
+| Website Styleable | `app/models/concerns/pwb/website_styleable.rb` | Per-website styles |
+| CSS Templates | `app/views/pwb/custom_css/_*.css.erb` | Dynamic CSS generation |
 
-当用户输入以"autoregmonkey："开头时，Claude会执行以下流程：
+### Theme Resolution Flow
 
-### 阶段1: 任务理解与规划
-1. **提取任务描述**: 识别"autoregmonkey："后的计量经济学问题
-2. **初步解析**: 识别关键变量、数据类型、分析方法、潜在问题
-3. **查询RAG知识库**: 检索相关计量经济学理论和方法
-4. **制定分析计划**: 基于RAG知识和任务特点设计分析方案
+1. Request comes in with subdomain (tenant identification)
+2. `ApplicationController#set_theme_path` determines theme from:
+   - URL parameter `?theme=name` (if whitelisted)
+   - Website's `theme_name` field
+   - Fallback to "default"
+3. Theme view paths are prepended (child first, then parent)
+4. Views render from theme directory, falling back through inheritance chain
 
-### 阶段2: 数据准备
-1. **检查数据文件**: 查看`data/`目录下的可用数据
-2. **数据处理决策**:
-   - 如果有合适数据：调用Python技能进行清洗和预处理
-   - 如果数据不足：调用Python技能生成符合经济学逻辑的模拟数据
-3. **变量调整**: 根据任务需求创建或转换变量
+## Creating a New Theme
 
-### 阶段3: 模型设定与估计
-1. **模型选择**: 基于RAG知识和任务特点选择合适模型
-2. **Stata分析**: 调用Stata技能执行回归分析
-3. **模型诊断**: 进行异方差、多重共线性等检验
-4. **模型调整**: 根据诊断结果优化模型设定
+### Step 1: Register the Theme in config.json
 
-### 阶段4: 结果解释与报告
-1. **结果解析**: 解读Stata输出的统计结果
-2. **经济解释**: 结合计量经济学理论解释实证结果
-3. **报告生成**: 生成结构化的中文分析报告
-4. **结果保存**: 将报告和关键结果保存到`result/`目录
+Add to `app/themes/config.json`:
 
-## 文件组织
-
-- **原始数据**: `data/`目录
-- **临时工作文件**: `workspace/`目录（Python脚本、Stata do文件等）
-- **最终结果**: `result/`目录（分析报告、回归结果、图表等）
-
-## 使用示例
-
-**用户输入**:
+```json
+{
+  "name": "mytheme",
+  "friendly_name": "My Custom Theme",
+  "id": "mytheme",
+  "version": "1.0.0",
+  "enabled": true,
+  "parent_theme": "default",
+  "description": "A custom theme for my agency",
+  "author": "Your Name",
+  "tags": ["modern", "clean"],
+  "supports": {
+    "page_parts": [
+      "heroes/hero_centered",
+      "heroes/hero_split",
+      "features/feature_grid_3col",
+      "testimonials/testimonial_carousel",
+      "cta/cta_banner"
+    ],
+    "layouts": ["default", "landing", "full_width"],
+    "color_schemes": ["light", "dark"],
+    "features": {
+      "sticky_header": true,
+      "back_to_top": true,
+      "animations": true
+    }
+  },
+  "style_variables": {
+    "colors": {
+      "primary_color": {
+        "type": "color",
+        "default": "#your-brand-color",
+        "label": "Primary Color"
+      },
+      "secondary_color": {
+        "type": "color",
+        "default": "#your-secondary-color",
+        "label": "Secondary Color"
+      }
+    },
+    "typography": {
+      "font_primary": {
+        "type": "font_select",
+        "default": "Open Sans",
+        "label": "Primary Font",
+        "options": ["Open Sans", "Roboto", "Montserrat"]
+      }
+    }
+  }
+}
 ```
-autoregmonkey：分析教育对工资的影响，考虑内生性问题和异方差
+
+### Step 2: Create Directory Structure
+
+```bash
+mkdir -p app/themes/mytheme/views/layouts/pwb
+mkdir -p app/themes/mytheme/views/pwb/welcome
+mkdir -p app/themes/mytheme/views/pwb/components
+mkdir -p app/themes/mytheme/views/pwb/sections
+mkdir -p app/themes/mytheme/views/pwb/pages
+mkdir -p app/themes/mytheme/views/pwb/props
+mkdir -p app/themes/mytheme/views/pwb/search
+mkdir -p app/themes/mytheme/views/pwb/shared
+mkdir -p app/themes/mytheme/palettes  # For color palette JSON files
+mkdir -p app/themes/mytheme/page_parts  # For custom page part templates
 ```
 
-**Claude响应流程**:
-1. 识别任务：教育对工资的影响分析
-2. 查询RAG：获取工具变量法、异方差稳健标准误等知识
-3. 调用Python：检查`data/`目录，处理或生成数据
-4. 调用Stata：执行2SLS回归，使用稳健标准误
-5. 生成报告：包含模型设定、估计结果、内生性检验、经济解释
+### Step 3: Create Default Palette
 
-**用户输入**:
+Create `app/themes/mytheme/palettes/default.json`:
+
+```json
+{
+  "id": "default",
+  "name": "Default",
+  "description": "Default color scheme for mytheme",
+  "is_default": true,
+  "preview_colors": ["#3498db", "#2c3e50", "#e74c3c"],
+  "colors": {
+    "primary_color": "#3498db",
+    "secondary_color": "#2c3e50",
+    "accent_color": "#e74c3c",
+    "background_color": "#ffffff",
+    "text_color": "#333333",
+    "header_background_color": "#ffffff",
+    "header_text_color": "#333333",
+    "footer_background_color": "#2c3e50",
+    "footer_text_color": "#ffffff",
+    "light_color": "#f8f9fa",
+    "link_color": "#3498db",
+    "action_color": "#3498db"
+  }
+}
 ```
-autoregmonkey：研究GDP增长与环境污染的库兹涅茨曲线关系
+
+### Step 4: Copy and Customize Layout
+
+Copy from parent theme:
+```bash
+cp app/themes/default/views/layouts/pwb/application.html.erb app/themes/mytheme/views/layouts/pwb/
 ```
 
-**Claude响应流程**:
-1. 识别任务：环境库兹涅茨曲线检验
-2. 查询RAG：获取多项式回归、面板门槛模型等知识
-3. 调用Python：处理环境经济数据或生成模拟数据
-4. 调用Stata：执行二次项回归或门槛回归
-5. 生成报告：包含倒U型检验、拐点估计、政策建议
+Edit `app/themes/mytheme/views/layouts/pwb/application.html.erb`:
 
-## 关键优势
+```erb
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= yield(:page_title) || @current_website&.site_name %></title>
+    <%= yield(:page_head) %>
 
-1. **灵活性**: 不是固定脚本，能够适应各种计量任务
-2. **智能性**: LLM理解任务语义，选择合适的分析方法
-3. **知识驱动**: 基于权威计量经济学教材的知识库
-4. **工具集成**: 无缝集成Python数据处理和Stata计量分析
-5. **专业输出**: 生成符合学术规范的中文报告
+    <%# Tailwind CSS for this theme %>
+    <%= stylesheet_link_tag "tailwind-mytheme", "data-turbo-track": "reload" %>
 
-## 注意事项
+    <%# Flowbite components %>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
-1. **数据优先**: 优先使用`data/`目录下的真实数据，仅当缺少数据时生成模拟数据
-2. **模型透明**: 解释选择的计量模型及其假设条件
-3. **结果审慎**: 结合统计显著性和经济意义解释结果
-4. **中文友好**: 所有输出和报告均使用中文
+    <%# Material Symbols for icons %>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+
+    <%# Dynamic CSS variables %>
+    <style>
+      <%= custom_styles("mytheme") %>
+    </style>
+
+    <%= javascript_include_tag "pwb/application", async: false %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <%= csrf_meta_tags %>
+  </head>
+  <body class="tnt-body mytheme-theme <%= @current_website&.body_style %> bg-gray-50 text-gray-900">
+    <div class="flex flex-col min-h-screen">
+      <%= render partial: '/pwb/header', locals: { not_devise: true } %>
+      <main class="flex-grow">
+        <%= render 'devise/shared/messages' %>
+        <%= yield %>
+      </main>
+      <%= render partial: '/pwb/footer', locals: {} %>
+    </div>
+    <%= yield(:page_script) %>
+  </body>
+</html>
+```
+
+### Step 5: Create Theme CSS Partial
+
+Create `app/views/pwb/custom_css/_mytheme.css.erb`:
+
+```erb
+/* Theme: mytheme */
+<%
+  # Get palette colors merged with website overrides
+  styles = @current_website&.style_variables || {}
+
+  primary_color = styles["primary_color"] || "#3498db"
+  secondary_color = styles["secondary_color"] || "#2c3e50"
+  accent_color = styles["accent_color"] || "#e74c3c"
+  background_color = styles["background_color"] || "#ffffff"
+  text_color = styles["text_color"] || "#333333"
+  header_bg = styles["header_background_color"] || "#ffffff"
+  header_text = styles["header_text_color"] || "#333333"
+  footer_bg = styles["footer_background_color"] || "#2c3e50"
+  footer_text = styles["footer_text_color"] || "#ffffff"
+  font_primary = styles["font_primary"] || "Open Sans"
+  border_radius = styles["border_radius"] || "0.5rem"
+%>
+
+<%= render partial: 'pwb/custom_css/base_variables',
+           locals: {
+             primary_color: primary_color,
+             secondary_color: secondary_color,
+             accent_color: accent_color,
+             background_color: background_color,
+             text_color: text_color,
+             font_primary: font_primary,
+             border_radius: border_radius
+           } %>
+
+:root {
+  --header-bg: <%= header_bg %>;
+  --header-text: <%= header_text %>;
+  --footer-bg: <%= footer_bg %>;
+  --footer-text: <%= footer_text %>;
+}
+
+/* Theme-specific overrides */
+.mytheme-theme header {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+}
+
+.mytheme-theme footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+}
+
+/* Custom raw CSS from admin */
+<%= @current_website&.raw_css %>
+```
+
+### Step 6: Create Tailwind Input File
+
+Create `app/assets/stylesheets/tailwind-mytheme.css`:
+
+```css
+@import "tailwindcss";
+
+/* Font imports */
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 400;
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/open-sans@5.2.5/files/open-sans-latin-400-normal.woff2');
+}
+
+/* Theme configuration */
+@theme {
+  --color-primary: var(--primary-color, #3498db);
+  --color-secondary: var(--secondary-color, #2c3e50);
+  --color-accent: var(--accent-color, #e74c3c);
+  --font-family-sans: 'Open Sans', var(--font-primary, system-ui, sans-serif);
+  --radius: var(--border-radius, 0.375rem);
+}
+
+/* PWB utility classes */
+@layer utilities {
+  .bg-pwb-primary { background-color: var(--pwb-primary); }
+  .bg-pwb-secondary { background-color: var(--pwb-secondary); }
+  .text-pwb-primary { color: var(--pwb-primary); }
+  .text-pwb-secondary { color: var(--pwb-secondary); }
+  .border-pwb-primary { border-color: var(--pwb-primary); }
+}
+```
+
+### Step 7: Add Build Scripts
+
+Add to `package.json`:
+
+```json
+{
+  "scripts": {
+    "tailwind:mytheme": "npx @tailwindcss/cli -i ./app/assets/stylesheets/tailwind-mytheme.css -o ./app/assets/builds/tailwind-mytheme.css --watch",
+    "tailwind:mytheme:prod": "npx @tailwindcss/cli -i ./app/assets/stylesheets/tailwind-mytheme.css -o ./app/assets/builds/tailwind-mytheme.css --minify"
+  }
+}
+```
+
+### Step 8: Test the Theme
+
+```ruby
+# Via Rails console
+theme = Pwb::Theme.find_by(name: 'mytheme')
+theme.view_paths           # Verify path resolution
+theme.palettes             # Check palettes loaded
+theme.default_palette_id   # Verify default palette
+
+# Update a website to use the theme
+website = Pwb::Website.first
+website.update(theme_name: 'mytheme')
+```
+
+```bash
+# Build Tailwind CSS
+npm run tailwind:mytheme:prod
+
+# Via URL parameter (if enabled)
+http://localhost:3000/?theme=mytheme
+```
+
+## Creating Color Palettes
+
+### Palette File Structure
+
+Palettes are stored in `app/themes/[theme]/palettes/*.json`:
+
+```json
+{
+  "id": "my_palette",
+  "name": "My Palette",
+  "description": "A beautiful color palette",
+  "is_default": false,
+  "preview_colors": ["#primary", "#secondary", "#accent"],
+  "colors": {
+    "primary_color": "#e91b23",
+    "secondary_color": "#2c3e50",
+    "accent_color": "#3498db",
+    "background_color": "#ffffff",
+    "text_color": "#333333",
+    "header_background_color": "#ffffff",
+    "header_text_color": "#333333",
+    "footer_background_color": "#2c3e50",
+    "footer_text_color": "#ffffff",
+    "light_color": "#f8f9fa",
+    "link_color": "#e91b23",
+    "action_color": "#e91b23"
+  }
+}
+```
+
+### Required Colors (9 mandatory)
+
+| Key | Purpose |
+|-----|---------|
+| `primary_color` | Main brand color for CTAs and links |
+| `secondary_color` | Supporting color for secondary elements |
+| `accent_color` | Highlight color for special elements |
+| `background_color` | Main page background |
+| `text_color` | Primary text color |
+| `header_background_color` | Header/nav background |
+| `header_text_color` | Header/nav text |
+| `footer_background_color` | Footer background |
+| `footer_text_color` | Footer text |
+
+### Dark Mode Support
+
+For explicit dark mode colors, use the `modes` structure:
+
+```json
+{
+  "id": "modern_dark",
+  "name": "Modern with Dark Mode",
+  "modes": {
+    "light": {
+      "primary_color": "#3498db",
+      "background_color": "#ffffff",
+      "text_color": "#333333"
+    },
+    "dark": {
+      "primary_color": "#5dade2",
+      "background_color": "#121212",
+      "text_color": "#e8e8e8"
+    }
+  }
+}
+```
+
+If you only provide `colors`, dark mode is auto-generated using `ColorUtils.generate_dark_mode_colors()`.
+
+### Validation & Tools
+
+```bash
+# Validate all palettes
+rake palettes:validate
+
+# List available palettes for a theme
+rake palettes:list[mytheme]
+
+# Check WCAG contrast compliance
+rake palettes:contrast[mytheme,my_palette]
+
+# Generate shade scale for a color
+rake palettes:shades[#3498db]
+```
+
+```ruby
+# In Rails console
+loader = Pwb::PaletteLoader.new
+palettes = loader.load_theme_palettes("mytheme")
+light = loader.get_light_colors("mytheme", "my_palette")
+dark = loader.get_dark_colors("mytheme", "my_palette")
+
+# Validate a palette
+validator = Pwb::PaletteValidator.new
+result = validator.validate(palette_hash)
+result.valid?   # => true/false
+result.errors   # => ["Missing required color: primary_color"]
+```
+
+## Search Page Layout Requirements
+
+**IMPORTANT: Search pages MUST follow responsive layout requirements.**
+
+### Desktop Layout (>=1024px)
+
+Filters MUST be displayed BESIDE results (side-by-side), NOT above them:
+
+```
++--------------------------------------------------+
+|  +------------+  +----------------------------+  |
+|  | Filters    |  | Search Results             |  |
+|  | (1/4)      |  | (3/4 width)                |  |
+|  +------------+  +----------------------------+  |
++--------------------------------------------------+
+```
+
+### Required HTML Structure
+
+```erb
+<div class="flex flex-wrap -mx-4">
+  <!-- Sidebar Filters (1/4 on desktop, full on mobile) -->
+  <div class="w-full lg:w-1/4 px-4 mb-6 lg:mb-0">
+    <button class="lg:hidden w-full ..."
+            data-controller="search-form"
+            data-action="click->search-form#toggleFilters">
+      Filter Properties
+    </button>
+    <div id="sidebar-filters" class="hidden lg:block">
+      <%= render 'pwb/searches/search_form_for_sale' %>
+    </div>
+  </div>
+
+  <!-- Search Results (3/4 on desktop, full on mobile) -->
+  <div class="w-full lg:w-3/4 px-4">
+    <div id="inmo-search-results">
+      <%= render 'search_results' %>
+    </div>
+  </div>
+</div>
+```
+
+## PWB CSS Class Naming
+
+Use semantic PWB classes for consistency:
+
+```css
+/* Colors */
+.bg-pwb-primary { background-color: var(--pwb-primary); }
+.bg-pwb-secondary { background-color: var(--pwb-secondary); }
+.text-pwb-primary { color: var(--pwb-primary); }
+
+/* Buttons */
+.pwb-btn--primary { background-color: var(--pwb-primary); }
+.pwb-btn--secondary { background-color: var(--pwb-secondary); }
+.pwb-btn--outline { border: 2px solid var(--pwb-primary); }
+
+/* Cards */
+.pwb-card { border-radius: var(--pwb-border-radius); }
+
+/* Grid */
+.pwb-grid--2col { grid-template-columns: repeat(2, 1fr); }
+.pwb-grid--3col { grid-template-columns: repeat(3, 1fr); }
+.pwb-grid--4col { grid-template-columns: repeat(4, 1fr); }
+```
+
+## WCAG Accessibility Requirements
+
+### Contrast Ratios (WCAG 2.1 AA)
+
+| Text Type | Minimum Ratio |
+|-----------|---------------|
+| Normal text (<18px) | 4.5:1 |
+| Large text (>=18px bold or >=24px) | 3:1 |
+| UI components & graphics | 3:1 |
+
+### Check Contrast in Ruby
+
+```ruby
+# Check if colors meet WCAG AA
+Pwb::ColorUtils.wcag_aa_compliant?('#ffffff', '#333333')
+# => true (14.0:1 ratio)
+
+# Get exact contrast ratio
+Pwb::ColorUtils.contrast_ratio('#ffffff', '#9ca3af')
+# => 2.9 (fails AA - needs 4.5:1)
+
+# Get suggested text color for a background
+Pwb::ColorUtils.suggest_text_color('#1a2744')
+# => '#ffffff' (white for dark backgrounds)
+```
+
+## Theme Inheritance
+
+### How It Works
+
+Child themes inherit from parent themes:
+
+```ruby
+theme = Pwb::Theme.find_by(name: 'brisbane')
+theme.parent_theme        # => "default"
+theme.parent              # => <Pwb::Theme name="default">
+theme.inheritance_chain   # => [brisbane, default]
+theme.view_paths          # => [brisbane/views, default/views, app/views]
+```
+
+### View Resolution Order
+
+1. Check child theme: `app/themes/brisbane/views/`
+2. Check parent theme: `app/themes/default/views/`
+3. Check application: `app/views/`
+
+## Troubleshooting
+
+### Theme Not Loading
+
+1. Check entry exists in `app/themes/config.json`
+2. Verify `"enabled": true` is set
+3. Verify JSON syntax is valid
+4. Restart Rails server after config changes
+5. Check: `Pwb::Theme.find_by(name: 'mytheme')`
+
+### Styles Not Applying
+
+1. Verify CSS partial exists: `app/views/pwb/custom_css/_mytheme.css.erb`
+2. Verify Tailwind CSS is built: `app/assets/builds/tailwind-mytheme.css`
+3. Check body class matches theme name (`.mytheme-theme`)
+4. Clear Rails cache: `Rails.cache.clear`
+
+### Palette Not Found
+
+1. Check file exists: `app/themes/mytheme/palettes/default.json`
+2. Validate JSON syntax
+3. Run: `rake palettes:validate`
+4. Check: `Pwb::PaletteLoader.new.load_theme_palettes('mytheme')`
+
+## Documentation Reference
+
+- `docs/theming/README.md` - Documentation index
+- `docs/theming/THEME_AND_COLOR_SYSTEM.md` - Complete architecture
+- `docs/theming/color-palettes/COLOR_PALETTES_ARCHITECTURE.md` - Palette system
+- `docs/theming/THEME_CREATION_CHECKLIST.md` - Step-by-step checklist
+- `app/themes/shared/color_schema.json` - Palette JSON schema
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
