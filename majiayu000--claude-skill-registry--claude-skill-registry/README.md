@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/graphic-design-fundamentals-sandraschi-advanced-memory-mcp-381010ac/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/biology-comprehensive-guide-sandraschi-advanced-memory-mcp-f9d6fd0f/SKILL.md)
 
 ---
 
