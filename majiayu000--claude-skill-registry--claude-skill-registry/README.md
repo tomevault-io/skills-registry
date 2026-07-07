@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/css-flexbox-grid-pluginagentmarketpla-custom-plugin-css-713bb0df/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/corder-code-templates-takemi-ohama-ai-agent-marketplace-2a1f6deb/SKILL.md)
 
 ---
 
