@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ScrapingBee/scrapingbee-cli](https://github.com/ScrapingBee/scrapingbee-cli/tree/main/.kiro/skills/scrapingbee-cli/SKILL.md)
+Original source: [ScrapingBee/scrapingbee-cli](https://github.com/ScrapingBee/scrapingbee-cli/tree/main/.agents/skills/scrapingbee-cli/SKILL.md)
 
 ---
 
