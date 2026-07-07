@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [fabio-rovai/open-ontologies](https://github.com/fabio-rovai/open-ontologies/tree/main/SKILL.md)
+Original source: [fabio-rovai/open-ontologies](https://github.com/fabio-rovai/open-ontologies/tree/main/skills/ontology-engineering/SKILL.md)
 
 ---
 
