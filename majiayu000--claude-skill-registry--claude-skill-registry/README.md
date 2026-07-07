@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/expo-react-query-setup-amandeepmittal-custom-codex-skills-26aa030d/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/linux-commands-guide-jeremylongshore-claude-code-plugins--ec6a6ae9/SKILL.md)
 
 ---
 
