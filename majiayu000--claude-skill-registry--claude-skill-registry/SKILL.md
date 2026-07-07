@@ -1,217 +1,414 @@
 ---
-name: ai-elements-workflow
-description: This skill provides guidance for building workflow visualizations using Vercel AI Elements and React Flow. It should be used when implementing interactive node-based interfaces, workflow diagrams, or process flow visualizations in Next.js applications. Covers Canvas, Node, Edge, Connection, Controls, Panel, and Toolbar components. Use when this capability is needed.
+name: react-frontend-development
+description: Build React components with TypeScript, Tailwind CSS, and React Query for the Medellin Spark platform. Use when implementing UI features, creating components, managing state, or optimizing frontend performance. Specializes in React hooks, shadcn/ui components, and Supabase integration. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# AI Elements Workflow
+# React Frontend Development
 
-This skill provides comprehensive guidance for building workflow visualizations using Vercel AI Elements with React Flow.
+## Stack Overview
 
-## When to Use
+- **Framework**: React 18 + TypeScript + Vite
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **State**: React Query (@tanstack/react-query)
+- **Backend**: Supabase (auth, database, edge functions)
+- **Icons**: Lucide React
+- **Forms**: React Hook Form (when needed)
 
-- Building interactive node-based workflow interfaces
-- Creating process flow visualizations
-- Implementing diagram editors with custom nodes and edges
-- Adding workflow visualization to AI applications
+## Component Patterns
 
-## Setup
+### Standard Component Structure
 
-### 1. Create Next.js Project
-
-```bash
-npx create-next-app@latest ai-workflow && cd ai-workflow
-```
-
-Choose to use Tailwind in the project setup.
-
-### 2. Install AI Elements
-
-```bash
-npx ai-elements@latest
-```
-
-This also sets up shadcn/ui if not configured.
-
-### 3. Install React Flow
-
-```bash
-npm i @xyflow/react
-```
-
-### 4. Add Components
-
-Install the workflow components as needed:
-
-```bash
-npx ai-elements@latest add canvas
-npx ai-elements@latest add node
-npx ai-elements@latest add edge
-npx ai-elements@latest add connection
-npx ai-elements@latest add controls
-npx ai-elements@latest add panel
-npx ai-elements@latest add toolbar
-```
-
-## Building a Workflow
-
-### Import Components
-
-```tsx
-'use client';
-import { Canvas } from '@/components/ai-elements/canvas';
-import { Connection } from '@/components/ai-elements/connection';
-import { Controls } from '@/components/ai-elements/controls';
-import { Edge } from '@/components/ai-elements/edge';
-import {
-  Node,
-  NodeContent,
-  NodeDescription,
-  NodeFooter,
-  NodeHeader,
-  NodeTitle,
-} from '@/components/ai-elements/node';
-import { Panel } from '@/components/ai-elements/panel';
-import { Toolbar } from '@/components/ai-elements/toolbar';
+```typescript
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-```
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
-### Define Node IDs
+export default function MyComponent() {
+  const [state, setState] = useState('');
+  const { toast } = useToast();
 
-```tsx
-const nodeIds = {
-  start: 'start',
-  process1: 'process1',
-  decision: 'decision',
-  output1: 'output1',
-  output2: 'output2',
-  complete: 'complete',
-};
-```
+  const { data, isLoading } = useQuery({
+    queryKey: ['my-data'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('table_name')
+        .select('*');
 
-### Create Nodes
-
-```tsx
-const nodes = [
-  {
-    id: nodeIds.start,
-    type: 'workflow',
-    position: { x: 0, y: 0 },
-    data: {
-      label: 'Start',
-      description: 'Initialize workflow',
-      handles: { target: false, source: true },
-      content: 'Triggered by user action',
-      footer: 'Status: Ready',
+      if (error) throw error;
+      return data;
     },
-  },
-  // Add more nodes...
-];
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+
+  return (
+    <div className="container max-w-4xl mx-auto py-8">
+      <Card>
+        <CardHeader>
+          <CardTitle>Title</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {/* Content here */}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
 ```
 
-### Create Edges
+## React Query Hooks
 
-Use `animated` for active paths and `temporary` for conditional/error paths:
+### Data Fetching Pattern
+
+```typescript
+// src/hooks/useMyData.ts
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+
+export function useMyData() {
+  return useQuery({
+    queryKey: ['my-data'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return [];
+
+      const { data, error } = await supabase
+        .from('table_name')
+        .select('*')
+        .eq('profile_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data;
+    },
+  });
+}
+
+export function useCreateData() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: any) => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const { data, error } = await supabase
+        .from('table_name')
+        .insert({ ...payload, profile_id: user.id })
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['my-data'] });
+    },
+  });
+}
+```
+
+## Supabase Integration
+
+### Authentication Check
+
+```typescript
+const { data: { user } } = await supabase.auth.getUser();
+if (!user) throw new Error('Not authenticated');
+```
+
+### Database Queries
+
+```typescript
+// Select with filters
+const { data, error } = await supabase
+  .from('table_name')
+  .select('*')
+  .eq('status', 'active')
+  .order('created_at', { ascending: false });
+
+// Insert
+const { data, error } = await supabase
+  .from('table_name')
+  .insert({ field: 'value' })
+  .select()
+  .single();
+
+// Update
+const { error } = await supabase
+  .from('table_name')
+  .update({ field: 'new_value' })
+  .eq('id', itemId);
+
+// Delete
+const { error } = await supabase
+  .from('table_name')
+  .delete()
+  .eq('id', itemId);
+```
+
+## Tailwind CSS Patterns
+
+### Common Layouts
 
 ```tsx
-const edges = [
-  {
-    id: 'edge1',
-    source: nodeIds.start,
-    target: nodeIds.process1,
-    type: 'animated',
-  },
-  {
-    id: 'edge2',
-    source: nodeIds.decision,
-    target: nodeIds.output2,
-    type: 'temporary', // For error/conditional paths
-  },
-];
+{/* Container with max width */}
+<div className="container max-w-6xl mx-auto py-8">
+
+{/* Grid responsive */}
+<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+
+{/* Flex spacing */}
+<div className="flex items-center justify-between gap-4">
+
+{/* Card grid */}
+<div className="space-y-4">
+  <Card>...</Card>
+  <Card>...</Card>
+</div>
 ```
 
-### Define Node Types
+## shadcn/ui Components
+
+### Button Variants
 
 ```tsx
-const nodeTypes = {
-  workflow: ({
-    data,
-  }: {
-    data: {
-      label: string;
-      description: string;
-      handles: { target: boolean; source: boolean };
-      content: string;
-      footer: string;
-    };
-  }) => (
-    <Node handles={data.handles}>
-      <NodeHeader>
-        <NodeTitle>{data.label}</NodeTitle>
-        <NodeDescription>{data.description}</NodeDescription>
-      </NodeHeader>
-      <NodeContent>
-        <p className="text-sm">{data.content}</p>
-      </NodeContent>
-      <NodeFooter>
-        <p className="text-muted-foreground text-xs">{data.footer}</p>
-      </NodeFooter>
-      <Toolbar>
-        <Button size="sm" variant="ghost">Edit</Button>
-        <Button size="sm" variant="ghost">Delete</Button>
-      </Toolbar>
-    </Node>
-  ),
-};
+<Button>Primary</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="destructive">Delete</Button>
+<Button size="sm">Small</Button>
+<Button size="lg">Large</Button>
 ```
 
-### Define Edge Types
+### Form Components
 
 ```tsx
-const edgeTypes = {
-  animated: Edge.Animated,
-  temporary: Edge.Temporary,
-};
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+<div className="space-y-4">
+  <div>
+    <Label>Name</Label>
+    <Input placeholder="Enter name" value={name} onChange={(e) => setName(e.target.value)} />
+  </div>
+
+  <div>
+    <Label>Description</Label>
+    <Textarea placeholder="Enter description" />
+  </div>
+
+  <div>
+    <Label>Category</Label>
+    <Select value={category} onValueChange={setCategory}>
+      <SelectTrigger>
+        <SelectValue placeholder="Select category" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="option1">Option 1</SelectItem>
+        <SelectItem value="option2">Option 2</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
+</div>
 ```
 
-### Render the Canvas
+## Toast Notifications
+
+```typescript
+import { useToast } from '@/hooks/use-toast';
+
+const { toast } = useToast();
+
+// Success
+toast({
+  title: 'Success!',
+  description: 'Item created successfully',
+});
+
+// Error
+toast({
+  title: 'Error',
+  description: 'Failed to create item',
+  variant: 'destructive',
+});
+```
+
+## Performance Optimization
+
+### Lazy Loading
+
+```typescript
+import { lazy, Suspense } from 'react';
+
+const HeavyComponent = lazy(() => import('./HeavyComponent'));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HeavyComponent />
+    </Suspense>
+  );
+}
+```
+
+### Memoization
+
+```typescript
+import { useMemo, useCallback } from 'react';
+
+// Expensive computation
+const expensiveValue = useMemo(() => {
+  return items.filter(item => item.active).map(item => item.value);
+}, [items]);
+
+// Callback for child components
+const handleClick = useCallback(() => {
+  doSomething(id);
+}, [id]);
+```
+
+## TypeScript Best Practices
+
+### Type Interfaces
+
+```typescript
+interface User {
+  id: string;
+  email: string;
+  full_name: string | null;
+  created_at: string;
+}
+
+interface Job {
+  id: string;
+  title: string;
+  company_name: string;
+  skills: string[];
+  is_active: boolean;
+}
+```
+
+### Component Props
+
+```typescript
+interface MyComponentProps {
+  title: string;
+  items: Job[];
+  onSelect?: (id: string) => void;
+  className?: string;
+}
+
+export function MyComponent({ title, items, onSelect, className }: MyComponentProps) {
+  // Component implementation
+}
+```
+
+## Common Patterns
+
+### Loading States
 
 ```tsx
-const App = () => (
-  <Canvas
-    edges={edges}
-    edgeTypes={edgeTypes}
-    fitView
-    nodes={nodes}
-    nodeTypes={nodeTypes}
-    connectionLineComponent={Connection}
-  >
-    <Controls />
-    <Panel position="top-left">
-      <Button size="sm" variant="secondary">Export</Button>
-    </Panel>
-  </Canvas>
-);
+if (isLoading) {
+  return <div className="flex items-center justify-center py-8">Loading...</div>;
+}
 
-export default App;
+if (error) {
+  return <div className="text-destructive">Error: {error.message}</div>;
+}
 ```
 
-## Key Features
+### Empty States
 
-| Feature | Description |
-|---------|-------------|
-| Custom Node Components | Use NodeHeader, NodeTitle, NodeDescription, NodeContent, NodeFooter for structured layouts |
-| Node Toolbars | Attach contextual actions to nodes via Toolbar component |
-| Handle Configuration | Control connections with `handles: { target: boolean, source: boolean }` |
-| Edge Types | `Edge.Animated` for active flow, `Edge.Temporary` for conditional paths |
-| Connection Lines | Styled bezier curves when dragging new connections |
-| Controls | Zoom in/out and fit view buttons |
-| Panels | Position custom UI anywhere on the canvas |
+```tsx
+{items.length === 0 ? (
+  <div className="text-center py-12 text-muted-foreground">
+    <p>No items found</p>
+  </div>
+) : (
+  <div className="grid gap-4">
+    {items.map(item => <ItemCard key={item.id} item={item} />)}
+  </div>
+)}
+```
 
-## Component Reference
+### Responsive Design
 
-For detailed props and API documentation for each component, see `references/components.md`.
+```tsx
+{/* Mobile-first responsive */}
+<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  {/* Cards */}
+</div>
+
+{/* Hide on mobile */}
+<div className="hidden md:block">Desktop only content</div>
+
+{/* Show on mobile only */}
+<div className="md:hidden">Mobile only content</div>
+```
+
+## Icons with Lucide
+
+```tsx
+import { Star, Heart, Trash2, Edit, Plus } from 'lucide-react';
+
+<Button>
+  <Plus className="h-4 w-4 mr-2" />
+  Add Item
+</Button>
+
+<Star className="h-5 w-5 text-yellow-500" />
+```
+
+## File Structure
+
+```
+src/
+├── components/       # Reusable UI components
+│   ├── ui/          # shadcn/ui components (auto-generated)
+│   └── *.tsx        # Custom components
+├── pages/           # Route components
+├── hooks/           # Custom React hooks (useMyData, etc.)
+├── lib/             # Utilities, helpers
+├── types/           # TypeScript types/interfaces
+└── integrations/    # Supabase client
+```
+
+## Quick Checklist
+
+Before creating a component:
+- [ ] Use existing shadcn/ui components
+- [ ] Create custom hook for data fetching
+- [ ] Add loading and error states
+- [ ] Use TypeScript interfaces
+- [ ] Apply Tailwind responsive classes
+- [ ] Add toast notifications for actions
+- [ ] Test on mobile viewport
+- [ ] Verify authentication checks
+
+## Common Mistakes to Avoid
+
+1. **Don't use user_id** - Always use `profile_id` for foreign keys
+2. **Don't skip error handling** - Always check `error` from Supabase
+3. **Don't forget auth checks** - Verify user is authenticated
+4. **Don't hardcode values** - Use env variables for URLs/keys
+5. **Don't skip TypeScript** - Define proper interfaces
+6. **Don't ignore RLS** - Ensure Row Level Security is enabled
+
+## Reference
+
+- shadcn/ui: https://ui.shadcn.com/
+- Tailwind CSS: https://tailwindcss.com/docs
+- React Query: https://tanstack.com/query/latest
+- Lucide Icons: https://lucide.dev/
+- Supabase: https://supabase.com/docs
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
