@@ -1,553 +1,365 @@
 ---
-name: security-assessor
-description: Auto-activates during requirements analysis to assess security risks Use when this capability is needed.
+name: rust-ms-libraries
+description: Microsoft Pragmatic Rust Library Guidelines. Use when designing library crates, public APIs, managing dependencies, or creating reusable components. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-## Purpose
+# Microsoft Pragmatic Rust - Library Guidelines
 
-The **security-assessor** skill provides comprehensive security risk assessment capabilities for feature implementations. It evaluates potential security vulnerabilities using the OWASP Top 10 framework, identifies security requirements, and recommends appropriate mitigation strategies to ensure secure-by-design implementations.
+Guidelines for building high-quality, reusable Rust libraries.
 
-## When to Use
+## Crate Structure
 
-This skill auto-activates when you:
-- Assess security risks for new features
-- Evaluate OWASP Top 10 compliance
-- Identify security requirements
-- Review authentication/authorization needs
-- Analyze data security implications
-- Evaluate input validation requirements
-- Check for common security vulnerabilities
-- Plan security testing strategies
+### Flat vs Nested Modules
+```rust
+// GOOD - flat structure for small libraries
+// src/lib.rs
+mod error;
+mod types;
+mod client;
 
-## Provided Capabilities
+pub use error::Error;
+pub use types::{Config, Options};
+pub use client::Client;
 
-### 1. OWASP Top 10 Risk Assessment
-Evaluate each of the 10 critical security risks:
-1. Broken Access Control
-2. Cryptographic Failures
-3. Injection
-4. Insecure Design
-5. Security Misconfiguration
-6. Vulnerable and Outdated Components
-7. Identification and Authentication Failures
-8. Software and Data Integrity Failures
-9. Security Logging and Monitoring Failures
-10. Server-Side Request Forgery (SSRF)
+// GOOD - nested for large libraries
+// src/lib.rs
+pub mod http;
+pub mod storage;
+pub mod auth;
 
-### 2. Security Requirements Identification
-- Authentication requirements
-- Authorization and access control
-- Data encryption (at rest and in transit)
-- Input validation and sanitization
-- Output encoding
-- Session management
-- Password policies
-- API security
-- Secrets management
-
-### 3. Threat Modeling
-- Identify assets to protect
-- Identify threat actors
-- Map attack vectors
-- Assess impact and likelihood
-- Prioritize risks
-
-### 4. Security Testing Strategy
-- Security test cases
-- Penetration testing scope
-- Vulnerability scanning approach
-- Security code review focus areas
-
-## Usage Guide
-
-### Step 1: Understand Feature Context
-
-Read the requirements to understand:
-- What data is being processed?
-- Who will access this feature?
-- What external systems are involved?
-- What sensitive operations are performed?
-- What user input is accepted?
-
-### Step 2: OWASP Top 10 Assessment
-
-Use `security-checklist.md` to systematically evaluate each risk:
-
-#### 1. Broken Access Control
-**Check for**:
-- Are there different user roles?
-- Is there privileged functionality?
-- Can users access resources they shouldn't?
-- Are file paths/URLs user-controllable?
-
-**Assessment Questions**:
-- [ ] Does feature involve authorization checks?
-- [ ] Are there admin-only operations?
-- [ ] Can users modify URLs to access others' data?
-- [ ] Are API endpoints properly protected?
-
-**Risk Level**: [None | Low | Medium | High | Critical]
-
-**Mitigation**:
-- Implement role-based access control (RBAC)
-- Use permission checks on every request
-- Implement resource-level authorization
-- Use indirect references (avoid exposing IDs)
-
-#### 2. Cryptographic Failures
-**Check for**:
-- Is sensitive data transmitted?
-- Is sensitive data stored?
-- Are passwords handled?
-- Are API keys/tokens used?
-
-**Assessment Questions**:
-- [ ] Is data encrypted in transit (TLS 1.3+)?
-- [ ] Is sensitive data encrypted at rest?
-- [ ] Are passwords hashed with strong algorithms (bcrypt, Argon2)?
-- [ ] Are API keys/secrets properly secured?
-
-**Risk Level**: [None | Low | Medium | High | Critical]
-
-**Mitigation**:
-- Enforce TLS 1.3+ for all connections
-- Use AES-256 for data at rest
-- Use bcrypt (cost ≥12) or Argon2 for passwords
-- Store secrets in environment variables or vaults
-- Never log sensitive data
-
-#### 3. Injection
-**Check for**:
-- Does feature accept user input?
-- Is input used in SQL queries?
-- Is input used in shell commands?
-- Is input used in dynamic code evaluation?
-
-**Assessment Questions**:
-- [ ] Is user input validated and sanitized?
-- [ ] Are parameterized queries used for SQL?
-- [ ] Are shell commands avoided or properly escaped?
-- [ ] Is eval() or similar avoided?
-
-**Risk Level**: [None | Low | Medium | High | Critical]
-
-**Mitigation**:
-- Use parameterized queries (never string concatenation)
-- Validate all input (whitelist approach)
-- Use ORM/query builders with parameter binding
-- Avoid shell commands; use library functions instead
-- Never use eval() or exec() with user input
-
-#### 4. Insecure Design
-**Check for**:
-- Is security considered in design phase?
-- Are threat models created?
-- Are security patterns used?
-- Is defense-in-depth applied?
-
-**Assessment Questions**:
-- [ ] Has threat modeling been performed?
-- [ ] Are security requirements documented?
-- [ ] Are security patterns applied (least privilege, fail-safe defaults)?
-- [ ] Is input validation at every layer?
-
-**Risk Level**: [None | Low | Medium | High | Critical]
-
-**Mitigation**:
-- Conduct threat modeling early
-- Apply secure design principles
-- Use established security patterns
-- Implement defense-in-depth
-- Plan for failure scenarios
-
-#### 5. Security Misconfiguration
-**Check for**:
-- Are default configurations used?
-- Are unnecessary features enabled?
-- Are error messages verbose?
-- Are security headers configured?
-
-**Assessment Questions**:
-- [ ] Are default passwords changed?
-- [ ] Are unnecessary services disabled?
-- [ ] Are security headers configured (CSP, HSTS, etc.)?
-- [ ] Are error messages generic (not revealing internals)?
-
-**Risk Level**: [None | Low | Medium | High | Critical]
-
-**Mitigation**:
-- Use principle of least functionality
-- Implement security headers
-- Configure error handling (no stack traces in production)
-- Regular security configuration reviews
-- Use security scanning tools
-
-#### 6. Vulnerable and Outdated Components
-**Check for**:
-- What dependencies are used?
-- Are dependency versions specified?
-- Is there a process for updates?
-
-**Assessment Questions**:
-- [ ] Are dependencies up-to-date?
-- [ ] Are known vulnerabilities checked?
-- [ ] Is dependency scanning automated?
-- [ ] Are unmaintained packages avoided?
-
-**Risk Level**: [None | Low | Medium | High | Critical]
-
-**Mitigation**:
-- Use dependency scanning tools (Dependabot, Snyk)
-- Keep dependencies updated
-- Monitor security advisories
-- Remove unused dependencies
-- Pin dependency versions
-
-#### 7. Identification and Authentication Failures
-**Check for**:
-- How are users authenticated?
-- Are sessions managed securely?
-- Is multi-factor authentication supported?
-- Are weak passwords prevented?
-
-**Assessment Questions**:
-- [ ] Is password strength enforced?
-- [ ] Are sessions properly managed (timeout, invalidation)?
-- [ ] Is brute-force protection implemented?
-- [ ] Is MFA available for sensitive operations?
-
-**Risk Level**: [None | Low | Medium | High | Critical]
-
-**Mitigation**:
-- Implement strong password policies
-- Use secure session management
-- Implement rate limiting for login attempts
-- Support MFA where appropriate
-- Use secure password reset flows
-
-#### 8. Software and Data Integrity Failures
-**Check for**:
-- Is code from untrusted sources executed?
-- Are auto-updates verified?
-- Is CI/CD pipeline secured?
-- Are deserialization attacks possible?
-
-**Assessment Questions**:
-- [ ] Are third-party libraries verified?
-- [ ] Is code signing implemented?
-- [ ] Are CI/CD pipelines secured?
-- [ ] Is deserialization of untrusted data avoided?
-
-**Risk Level**: [None | Low | Medium | High | Critical]
-
-**Mitigation**:
-- Verify integrity of dependencies (checksums, signatures)
-- Secure CI/CD pipeline
-- Avoid deserializing untrusted data
-- Use safe serialization formats (JSON over pickle)
-- Implement code signing
-
-#### 9. Security Logging and Monitoring Failures
-**Check for**:
-- Are security events logged?
-- Are logs monitored?
-- Are alerts configured?
-- Are logs protected?
-
-**Assessment Questions**:
-- [ ] Are authentication events logged?
-- [ ] Are authorization failures logged?
-- [ ] Are anomalies detected and alerted?
-- [ ] Are logs tamper-proof?
-
-**Risk Level**: [None | Low | Medium | High | Critical]
-
-**Mitigation**:
-- Log all security-relevant events
-- Implement centralized logging
-- Set up alerts for suspicious activity
-- Protect logs from tampering
-- Regular log review
-
-#### 10. Server-Side Request Forgery (SSRF)
-**Check for**:
-- Does feature make HTTP requests based on user input?
-- Can users specify URLs?
-- Are webhooks supported?
-- Is URL validation implemented?
-
-**Assessment Questions**:
-- [ ] Is user-provided URL input validated?
-- [ ] Are internal network requests blocked?
-- [ ] Is URL allowlisting implemented?
-- [ ] Are redirects limited?
-
-**Risk Level**: [None | Low | Medium | High | Critical]
-
-**Mitigation**:
-- Validate and sanitize all URLs
-- Use allowlist of permitted domains
-- Block requests to private IP ranges
-- Disable or limit redirects
-- Use network segmentation
-
-### Step 3: Identify Security Requirements
-
-Based on OWASP assessment, document specific security requirements:
-
-```markdown
-## Security Requirements
-
-### Authentication
-- **SR-AUTH-001**: Implement secure password storage (bcrypt, cost ≥12)
-- **SR-AUTH-002**: Enforce password complexity (min 12 chars, mixed case, numbers, symbols)
-- **SR-AUTH-003**: Implement account lockout after 5 failed attempts
-- **SR-AUTH-004**: Session timeout after 30 minutes of inactivity
-
-### Authorization
-- **SR-AUTHZ-001**: Implement role-based access control (RBAC)
-- **SR-AUTHZ-002**: Check permissions on every protected resource access
-- **SR-AUTHZ-003**: Use indirect references to prevent ID enumeration
-
-### Input Validation
-- **SR-INPUT-001**: Validate all user input (whitelist approach)
-- **SR-INPUT-002**: Sanitize input before database operations
-- **SR-INPUT-003**: Limit input length to prevent DoS
-- **SR-INPUT-004**: Validate file uploads (type, size, content)
-
-### Data Protection
-- **SR-DATA-001**: Encrypt sensitive data at rest (AES-256)
-- **SR-DATA-002**: Use TLS 1.3+ for all data in transit
-- **SR-DATA-003**: Never log sensitive data (passwords, tokens, PII)
-- **SR-DATA-004**: Implement secure data deletion
-
-### API Security
-- **SR-API-001**: Implement rate limiting (100 requests/minute per user)
-- **SR-API-002**: Use API keys with proper rotation
-- **SR-API-003**: Validate content-type headers
-- **SR-API-004**: Implement CORS properly
-
-### Logging and Monitoring
-- **SR-LOG-001**: Log all authentication attempts (success and failure)
-- **SR-LOG-002**: Log all authorization failures
-- **SR-LOG-003**: Implement anomaly detection
-- **SR-LOG-004**: Alert on suspicious patterns
+// Re-export common items at root
+pub use http::Client;
+pub use storage::Store;
 ```
 
-### Step 4: Threat Modeling
+### Prelude Pattern
+```rust
+// For libraries with many types
+// src/prelude.rs
+pub use crate::error::{Error, Result};
+pub use crate::types::{Config, Options, Status};
+pub use crate::traits::{Execute, Validate};
 
-Use `threat-modeling-guide.md` to systematically identify threats:
-
-#### Assets
-- User credentials
-- Personal data (PII)
-- Financial information
-- API keys/tokens
-- Business logic
-- Infrastructure
-
-#### Threat Actors
-- External attackers
-- Malicious users
-- Insider threats
-- Automated bots
-
-#### Attack Vectors
-- Web application
-- API endpoints
-- Database
-- File system
-- Network
-
-#### STRIDE Analysis
-- **Spoofing**: Can attacker impersonate users?
-- **Tampering**: Can attacker modify data?
-- **Repudiation**: Can actions be denied?
-- **Information Disclosure**: Can sensitive data leak?
-- **Denial of Service**: Can system be made unavailable?
-- **Elevation of Privilege**: Can attacker gain higher privileges?
-
-### Step 5: Security Testing Strategy
-
-Define testing approach:
-
-```markdown
-## Security Testing Strategy
-
-### Static Analysis
-- Run security linters (Bandit for Python, ESLint security plugins)
-- Check for hardcoded secrets
-- Analyze dependency vulnerabilities
-
-### Dynamic Analysis
-- Penetration testing for authentication/authorization
-- Input fuzzing for injection vulnerabilities
-- Session management testing
-- API security testing
-
-### Code Review Focus
-- Input validation implementation
-- Authentication/authorization logic
-- Cryptographic operations
-- Error handling
-- Logging implementation
-
-### Automated Scanning
-- Dependency vulnerability scanning (daily)
-- SAST tools in CI/CD
-- Container image scanning
+// Users can import everything
+use my_library::prelude::*;
 ```
 
-## Best Practices
+## API Design
 
-### 1. Security-by-Design
-- Consider security from the start
-- Apply least privilege principle
-- Use defense-in-depth
-- Fail securely (fail closed, not open)
+### Accept Generics, Return Concrete
+```rust
+// GOOD - flexible input, concrete output
+pub fn process(input: impl AsRef<str>) -> String {
+    let s = input.as_ref();
+    s.to_uppercase()
+}
 
-### 2. Input Validation
-- Validate all input (never trust user data)
-- Use whitelist approach
-- Validate length, format, type, range
-- Sanitize before use
-
-### 3. Output Encoding
-- Encode output for context (HTML, URL, JavaScript)
-- Use framework-provided encoding functions
-- Prevent XSS with Content Security Policy
-
-### 4. Authentication Best Practices
-- Use strong password hashing (bcrypt, Argon2)
-- Implement MFA for sensitive operations
-- Use secure session management
-- Implement rate limiting
-
-### 5. Authorization Best Practices
-- Check permissions on every request
-- Use RBAC or ABAC
-- Implement resource-level authorization
-- Use indirect references
-
-### 6. Cryptography Best Practices
-- Use established libraries (don't roll your own crypto)
-- Use strong algorithms (AES-256, RSA-2048+)
-- Use secure random number generators
-- Implement proper key management
-
-### 7. API Security
-- Implement authentication for all endpoints
-- Use rate limiting
-- Validate content-type
-- Implement CORS correctly
-- Version APIs
-
-### 8. Error Handling
-- Use generic error messages externally
-- Log detailed errors internally
-- Never expose stack traces
-- Handle errors gracefully
-
-### 9. Logging
-- Log security events (auth, authz, errors)
-- Don't log sensitive data
-- Use structured logging
-- Implement log monitoring
-
-### 10. Dependencies
-- Keep dependencies updated
-- Monitor for vulnerabilities
-- Remove unused dependencies
-- Use dependency scanning tools
-
-## Resources
-
-### security-checklist.md
-Comprehensive OWASP Top 10 checklist with:
-- Detailed assessment questions for each risk
-- Python-specific security considerations
-- Common vulnerability patterns
-- Mitigation strategies
-
-### threat-modeling-guide.md
-Guide for conducting threat modeling:
-- STRIDE methodology
-- Asset identification
-- Threat actor profiling
-- Attack vector mapping
-- Risk prioritization
-
-## Example Usage
-
-### Input (Feature Description)
-```
-Feature: User login with email and password
-- Users enter email and password
-- System authenticates and creates session
-- Users can reset forgotten passwords
+// Can be called with &str, String, Cow<str>, etc.
+process("hello");
+process(String::from("hello"));
 ```
 
-### Output (Security Assessment)
-```markdown
-## Security Assessment
+### Use Into for Ownership Transfer
+```rust
+impl Client {
+    // Accept anything convertible to String
+    pub fn set_name(&mut self, name: impl Into<String>) {
+        self.name = name.into();
+    }
+}
 
-### OWASP Top 10 Risks
-
-1. **Broken Access Control**: LOW
-   - Feature implements authentication (positive control)
-   - Need to ensure session validation on all protected endpoints
-
-2. **Cryptographic Failures**: MEDIUM
-   - Passwords must be hashed with bcrypt (cost ≥12)
-   - TLS required for credential transmission
-   - Session tokens must be cryptographically secure
-
-3. **Injection**: LOW
-   - Email input must be validated
-   - Use parameterized queries for database operations
-
-7. **Identification and Authentication Failures**: HIGH
-   - Primary authentication feature - critical risk
-   - Requires strong password policy
-   - Needs brute-force protection
-   - Must implement secure password reset
-
-9. **Security Logging and Monitoring Failures**: MEDIUM
-   - Must log all authentication attempts
-   - Alert on suspicious patterns (multiple failures)
-
-### Security Requirements
-- **SR-AUTH-001**: Hash passwords with bcrypt (cost ≥12)
-- **SR-AUTH-002**: Enforce strong passwords (min 12 chars)
-- **SR-AUTH-003**: Implement rate limiting (5 attempts per 15min)
-- **SR-AUTH-004**: Session timeout after 30min inactivity
-- **SR-INPUT-001**: Validate email format
-- **SR-DATA-001**: Use TLS 1.3+ for credential transmission
-- **SR-LOG-001**: Log all authentication attempts
-- **SR-LOG-002**: Alert on 10+ failures from same IP
-
-### Recommendations
-1. Implement MFA as optional enhancement
-2. Consider passwordless authentication for future
-3. Implement CAPTCHA after 3 failed attempts
-4. Use secure password reset tokens (expiring, one-time use)
+// Both work
+client.set_name("name");
+client.set_name(string_var);
 ```
 
-## Integration
+### Builder Pattern for Complex Construction
+```rust
+#[derive(Default)]
+pub struct ClientBuilder {
+    host: Option<String>,
+    port: Option<u16>,
+    timeout: Option<Duration>,
+}
 
-This skill is used by:
-- **analysis-specialist** agent during Phase 1: Requirements Analysis
-- Activates automatically when agent assesses security risks
-- Provides security assessment for analysis document generation
+impl ClientBuilder {
+    pub fn new() -> Self {
+        Self::default()
+    }
+    
+    pub fn host(mut self, host: impl Into<String>) -> Self {
+        self.host = Some(host.into());
+        self
+    }
+    
+    pub fn port(mut self, port: u16) -> Self {
+        self.port = Some(port);
+        self
+    }
+    
+    pub fn timeout(mut self, timeout: Duration) -> Self {
+        self.timeout = Some(timeout);
+        self
+    }
+    
+    pub fn build(self) -> Result<Client, BuildError> {
+        Ok(Client {
+            host: self.host.ok_or(BuildError::MissingHost)?,
+            port: self.port.unwrap_or(8080),
+            timeout: self.timeout.unwrap_or(Duration::from_secs(30)),
+        })
+    }
+}
+```
 
----
+### Sealed Traits for Extension Prevention
+```rust
+mod private {
+    pub trait Sealed {}
+}
 
-**Version**: 2.0.0
-**Auto-Activation**: Yes (when assessing security)
-**Phase**: 1 (Requirements Analysis)
-**Created**: 2025-10-29
+/// A trait that cannot be implemented outside this crate.
+pub trait MyTrait: private::Sealed {
+    fn method(&self);
+}
+
+// Implement Sealed for allowed types
+impl private::Sealed for MyType {}
+impl MyTrait for MyType {
+    fn method(&self) { ... }
+}
+```
+
+## Error Design
+
+### Library-Specific Error Types
+```rust
+use thiserror::Error;
+
+/// Errors that can occur in this library.
+#[derive(Debug, Error)]
+#[non_exhaustive]  // Allow adding variants
+pub enum Error {
+    #[error("connection failed: {0}")]
+    Connection(String),
+    
+    #[error("invalid configuration: {0}")]
+    Config(String),
+    
+    #[error("operation timed out after {duration:?}")]
+    Timeout { duration: Duration },
+    
+    #[error(transparent)]
+    Io(#[from] std::io::Error),
+}
+
+/// Result type alias for convenience
+pub type Result<T> = std::result::Result<T, Error>;
+```
+
+### Don't Expose Internal Errors
+```rust
+// BAD - leaks internal dependency
+#[derive(Error)]
+pub enum Error {
+    #[error(transparent)]
+    Database(#[from] sqlx::Error),  // Exposes sqlx
+}
+
+// GOOD - wrap internal errors
+#[derive(Error)]
+pub enum Error {
+    #[error("database error: {0}")]
+    Database(String),
+}
+
+impl From<sqlx::Error> for Error {
+    fn from(e: sqlx::Error) -> Self {
+        Error::Database(e.to_string())
+    }
+}
+```
+
+## Dependency Management
+
+### Minimal Dependencies
+```toml
+# Only depend on what you need
+[dependencies]
+serde = { version = "1.0", optional = true }
+
+[features]
+default = []
+serde = ["dep:serde"]
+```
+
+### Re-export Dependencies Users Need
+```rust
+// If users need types from your dependencies, re-export them
+pub use bytes::Bytes;
+pub use http::StatusCode;
+```
+
+### Version Policy
+```toml
+# Use caret requirements for flexibility
+serde = "1.0"        # ^1.0 - allows 1.x updates
+tokio = "1"          # ^1 - allows 1.x updates
+
+# Pin exact versions only when necessary
+some-crate = "=1.2.3"
+```
+
+## Resilience
+
+### Avoid Global State
+```rust
+// BAD - global mutable state
+static COUNTER: AtomicU64 = AtomicU64::new(0);
+
+// GOOD - instance state
+pub struct Counter {
+    value: AtomicU64,
+}
+
+impl Counter {
+    pub fn new() -> Self {
+        Self { value: AtomicU64::new(0) }
+    }
+    
+    pub fn increment(&self) -> u64 {
+        self.value.fetch_add(1, Ordering::SeqCst)
+    }
+}
+```
+
+### Avoid Thread-Local Storage
+```rust
+// BAD - hidden state
+thread_local! {
+    static CACHE: RefCell<HashMap<String, Value>> = RefCell::new(HashMap::new());
+}
+
+// GOOD - explicit state
+pub struct Cache {
+    data: RwLock<HashMap<String, Value>>,
+}
+```
+
+### Make Types Send + Sync When Possible
+```rust
+// Ensure thread safety
+pub struct Client {
+    inner: Arc<ClientInner>,  // Arc for shared ownership
+}
+
+// Verify at compile time
+static_assertions::assert_impl_all!(Client: Send, Sync);
+```
+
+## Documentation
+
+### Crate-Level Docs
+```rust
+//! # My Library
+//!
+//! A brief description of what this library does.
+//!
+//! ## Quick Start
+//!
+//! ```rust
+//! use my_library::Client;
+//!
+//! let client = Client::builder()
+//!     .host("localhost")
+//!     .build()?;
+//!
+//! client.connect().await?;
+//! ```
+//!
+//! ## Features
+//!
+//! - Feature 1
+//! - Feature 2
+//!
+//! ## Feature Flags
+//!
+//! - `serde`: Enable serialization support
+```
+
+### Document All Public Items
+Every public item needs:
+- Brief description
+- Examples (that compile and run)
+- Error conditions for fallible functions
+- Panic conditions if applicable
+
+## Versioning
+
+### Semantic Versioning
+- MAJOR: Breaking API changes
+- MINOR: New features, backward compatible
+- PATCH: Bug fixes, backward compatible
+
+### Breaking Changes
+```rust
+// Use #[deprecated] before removing
+#[deprecated(since = "0.5.0", note = "use new_function instead")]
+pub fn old_function() { ... }
+
+// Use #[doc(hidden)] for internal items
+#[doc(hidden)]
+pub fn internal_detail() { ... }
+```
+
+## Testing
+
+### Test Public API
+```rust
+// tests/integration.rs
+use my_library::{Client, Config};
+
+#[test]
+fn client_connects_successfully() {
+    let client = Client::new(Config::default());
+    assert!(client.is_valid());
+}
+```
+
+### Doc Tests Run by Default
+```rust
+/// Creates a new instance.
+///
+/// # Examples
+///
+/// ```
+/// let instance = my_library::Instance::new();
+/// assert!(instance.is_valid());
+/// ```
+pub fn new() -> Self { ... }
+```
+
+## Cargo.toml Best Practices
+
+```toml
+[package]
+name = "my-library"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"  # MSRV - Rust 2024 edition requires 1.85+
+description = "A brief description"
+documentation = "https://docs.rs/my-library"
+repository = "https://github.com/org/my-library"
+license = "MIT OR Apache-2.0"
+keywords = ["keyword1", "keyword2"]
+categories = ["category"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+```
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
