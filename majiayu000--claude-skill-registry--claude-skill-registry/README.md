@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/mcp-schema-designer-ryno-crypto-mining-s-braiins-pool-mcp-ser-829dd6d8/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/evaluate-against-architecture-principles-wesleymfrederick-cc-workflows/SKILL.md)
 
 ---
 
