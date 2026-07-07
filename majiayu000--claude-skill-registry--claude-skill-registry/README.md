@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/cva-patterns-cost-joaopelegrino-hello-word-closure-9b1e3bcc/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/infrastructure-expert-ljchg12-hue-windows-dotfiles-faf1afb4/SKILL.md)
 
 ---
 
