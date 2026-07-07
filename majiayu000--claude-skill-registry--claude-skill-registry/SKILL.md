@@ -1,339 +1,406 @@
 ---
-name: worldbuilding
-description: Diagnose world-level story problems. Use when settings feel thin, institutions feel designed rather than evolved, economies don't make sense, or non-human species feel like humans in costume. Applies systemic worldbuilding principles to identify specific gaps and recommend interventions. Use when this capability is needed.
+name: characterization-testing
+description: Create tests that describe what legacy code actually does (not what it should do) as safety net before refactoring Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Worldbuilding: Diagnostic Skill
+# Characterization Testing
 
-You diagnose world-level problems in fictional settings. Your role is to identify what's missing or unconvincing and recommend specific interventions.
+## Overview
 
-## Core Principle
+Characterization tests capture current behavior of legacy code, warts and all. They're a safety net before refactoring, not a specification of correctness.
 
-**Worlds fail when they feel designed rather than evolved.**
+**Core principle:** Document what IS, not what SHOULD BE. Fix behavior later, after safety net exists.
 
-Good worldbuilding creates the perception that the setting has history, internal logic, and processes that operate independently of the plot. Bad worldbuilding feels like a backdrop—convenient for the story but not convincing as a place where people actually live.
+**This is NOT unit testing.** Unit tests specify desired behavior. Characterization tests document actual behavior.
 
-## The World States
+## When to Use
 
-When diagnosing, identify which state applies:
+Use characterization testing when:
+- Legacy code has no automated tests
+- Unclear what code is supposed to do
+- Before refactoring risky/critical areas
+- Documentation doesn't match reality
+- Need safety net without understanding all edge cases
 
-### State W1: Backdrop World
-**Symptoms:** Setting exists but feels like a painted backdrop; world serves plot but has no independent logic.
-**Key Questions:** What happens in this world when the protagonist isn't looking? What historical processes created current conditions?
-**Interventions:** Systemic Worldbuilding (trace consequences from initial divergence)
+**Don't use when:**
+- Code already has comprehensive tests
+- You're implementing new features (use TDD instead)
+- Code is so simple testing is unnecessary
 
-### State W2: World Without Consequences
-**Symptoms:** Technology/magic exists but hasn't transformed society; "why don't they just..." questions arise constantly.
-**Key Questions:** What are the 2nd and 3rd order effects of your speculative element? Who gains power? What becomes obsolete?
-**Interventions:** Consequence Cascade Analysis
-
-### State W3: Institutions Without History
-**Symptoms:** Organizations feel like they were designed last week; naming conventions are anachronistic; no sense of evolution.
-**Key Questions:** When was this institution founded? How has it changed? What crises has it survived?
-**Interventions:** Organic Institutional Design
-
-### State W4: Economy Doesn't Make Sense
-**Symptoms:** Characters have money or don't but there's no economic system; trade exists without supply chains; prices are arbitrary.
-**Key Questions:** Where does value come from? What's scarce? Who controls distribution?
-**Interventions:** Economic Systems Framework
-
-### State W5: Belief Systems Are Shallow
-**Symptoms:** Religion exists as flavor but has no theological depth; nobody actually believes anything; no competing worldviews.
-**Key Questions:** What do people believe about existence? How do beliefs affect daily decisions? What's contested?
-**Interventions:** Belief System Framework
-
-### State W6: Culture Without Depth
-**Symptoms:** Cultural elements feel random; no sense of how traditions developed; everything is surface-level aesthetic.
-**Key Questions:** What processes created this culture? What gets preserved vs. forgotten? Who commodifies whom?
-**Interventions:** Memetic Depth Framework
-
-### State W7: Flat Non-Humans
-**Symptoms:** Aliens/fantasy species are humans in costume; biology doesn't drive culture; language assumes human cognition.
-**Key Questions:** How does different biology create different society? What sensory experience differs? How does cognition differ?
-**Interventions:** Alien Sensory Framework, Species Development, Conlang Skill (for biology-driven language)
-
-### State W7.5: Language Feels Generic
-**Symptoms:** Names all sound like English; no linguistic texture; everyone speaks the same; cultures lack phonological identity.
-**Key Questions:** What sounds define this culture? How does language reflect their cognition or environment? What concepts have no translation?
-**Interventions:** Conlang Skill (quick generation), Evolutionary Language Framework (deep theory)
-
-## Diagnostic Process
-
-When a writer presents a world or world problem:
-
-1. **Listen for symptoms** - What specifically feels unconvincing?
-2. **Identify the scope** - Is this a local problem (one institution) or systemic (entire world)?
-3. **Trace to root cause** - Surface symptoms often point to deeper structural issues
-4. **Name the state** - Match symptoms to the list above
-5. **Recommend intervention** - Point to specific framework and aspect
-6. **Suggest first step** - What's the minimal viable fix?
-
-## Key Diagnostic Questions
-
-### For Technology/Magic Settings
-- What's your initial divergence from our world?
-- What first-order effects would this create?
-- Who gains immediate advantage?
-- What existing systems become obsolete?
-- How would the powerful try to control this?
-- How would the powerless try to exploit this?
-
-### For Institutions
-- When was this organization founded?
-- What was happening in the world at that time?
-- What crises has it survived?
-- How has its name evolved?
-- What are its internal contradictions?
-- Who are its natural enemies and allies?
-
-### For Economics
-- What's the fundamental scarcity in this world?
-- How is value determined?
-- What's the exchange medium and why?
-- Who controls production?
-- How is surplus distributed?
-- What's the underground economy?
-
-### For Belief Systems
-- What explains existence in this worldview?
-- What ethical framework does this provide?
-- How does belief connect to power structures?
-- What's the relationship between clergy and laity?
-- What are the schisms and debates?
-- How do beliefs adapt to new conditions?
-
-### For Culture
-- What processes created these traditions?
-- What gets preserved through commodification?
-- What gets forgotten or suppressed?
-- How do high-power and low-power cultures interact?
-- What's the 40/40/20 ratio (recognizable/inferrable/inscrutable)?
-- Where is authenticity and where is kitsch?
-
-### For Non-Human Species
-- What's fundamentally different about their biology?
-- How does different sensory experience shape worldview?
-- How does different lifespan affect planning horizons?
-- How does reproduction method affect social structure?
-- What concepts would be literally untranslatable?
-- What do they find alien about humans?
-
-## The Consequence Cascade
-
-When a world feels thin, apply this cascade to any major element:
+## The Iron Law
 
 ```
-Initial Element
-├── 1st Order: Direct practical effects
-│   ├── Who gains immediate advantage?
-│   ├── What becomes obsolete?
-│   └── What are the technical limitations?
-├── 2nd Order: Systemic adaptations
-│   ├── How do economic structures adapt?
-│   ├── How do power structures respond?
-│   ├── What new social behaviors emerge?
-│   └── What resistance movements arise?
-├── 3rd Order: Cultural evolution
-│   ├── What new language emerges?
-│   ├── What ethical questions arise?
-│   ├── How do belief systems adapt?
-│   └── What becomes normalized?
-└── Intersection Analysis
-    ├── Different classes affected differently?
-    ├── Geographic variations?
-    ├── Generational differences?
-    └── Marginalized community effects?
+NO REFACTORING WITHOUT CHARACTERIZATION TESTS FIRST
 ```
 
-## Common World-Building Anti-Patterns
+Refactoring without tests = gambling with production. Always create safety net first.
 
-### The Monoculture
-**Problem:** Entire planets or species have one unified culture.
-**Fix:** Add regional variation, class differences, historical schisms.
+## The Process
 
-### The Convenient Technology
-**Problem:** Technology exists when plot needs it, doesn't transform society.
-**Fix:** Trace consequence cascade; show adaptation and resistance.
+### Step 1: Identify Target
 
-### The Static History
-**Problem:** World has been the same for centuries; no change before story starts.
-**Fix:** Add recent disruptions, generational shifts, reforms in progress.
+Choose smallest meaningful unit to characterize:
+- Single function/method (best starting point)
+- Single class (if functions are tightly coupled)
+- Module (if class boundaries unclear)
 
-### The Evil Empire
-**Problem:** Antagonist nation/organization is uniformly evil.
-**Fix:** Add internal debates, moderates who disagree, ordinary people just living.
+**Start small.** You can always expand coverage later.
 
-### The Designed Institution
-**Problem:** Organization is too efficient, too unified, too logical.
-**Fix:** Add bureaucratic friction, internal politics, accumulated cruft.
+### Step 2: Write Failing Test
 
-### The Economy of Convenience
-**Problem:** Characters have exactly the resources plot requires.
-**Fix:** Establish economic baseline early; let constraints create problems.
+Write test with unknown expectation:
 
-### The Shallow Religion
-**Problem:** Religion is aesthetic markers (robes, temples) without belief content.
-**Fix:** Add theological positions, ethical implications, daily practice effects.
+```typescript
+test('processes user data', () => {
+  const result = processUserData({ name: 'John', age: 30 });
+  expect(result).toEqual(/* ??? what does it return? */);
+});
+```
 
-### The Rubber Forehead Alien
-**Problem:** Non-human species is humans with minor cosmetic differences.
-**Fix:** Start with biology, trace to cognition, trace to culture.
+**Don't guess.** Leave expectation blank or use placeholder.
 
-## Available Tools
+### Step 3: Run and Capture
 
-### cascade.ts
-Traces consequences from an initial change across multiple domains and orders.
+Run the test. It will fail. **Copy the actual output exactly:**
 
 ```bash
-# Analyze a speculative element
-deno run --allow-read scripts/cascade.ts "teleportation exists"
-
-# Focus on specific domains
-deno run --allow-read scripts/cascade.ts "immortality drug" --domains economy,power,religion
-
-# Specify time horizons
-deno run --allow-read scripts/cascade.ts "faster-than-light travel" --horizon generations
+$ npm test
+FAIL: expected ???, received { fullName: 'John', isAdult: true, category: 'standard' }
 ```
 
-**Output:** Structured consequence cascade across domains, identifying story-rich conflict points.
+This is the characterization: what the code actually does right now.
 
-### institution.ts
-Generates institutional evolution history for organizations.
+### Step 4: Lock In Behavior
 
-```bash
-# Generate institution with era and sector
-deno run --allow-read scripts/institution.ts --era 1920s --sector banking
+Update test with actual output:
 
-# Trace evolution for existing institution
-deno run --allow-read scripts/institution.ts "Umbrella Corporation" --crises 3
-
-# Generate competitor ecosystem
-deno run --allow-read scripts/institution.ts --sector pharmaceutical --ecosystem
+```typescript
+test('processes user data', () => {
+  const result = processUserData({ name: 'John', age: 30 });
+  expect(result).toEqual({
+    fullName: 'John',
+    isAdult: true,
+    category: 'standard'
+  });
+});
 ```
 
-**Output:** Founding context, naming evolution, crisis history, current state.
+**Run test again → should pass.** You've characterized the behavior.
 
-### belief.ts
-Generates belief system parameters and internal tensions.
+### Step 5: Add Edge Cases
 
-```bash
-# Random belief system
-deno run --allow-read scripts/belief.ts
+Find weird inputs and capture outputs:
 
-# Specify type and tech level
-deno run --allow-read scripts/belief.ts --type polytheistic --tech bronze-age
+```typescript
+test('handles missing age', () => {
+  const result = processUserData({ name: 'John' });
+  // Run test, see what happens, lock it in
+  expect(result).toEqual({
+    fullName: 'John',
+    isAdult: false,
+    category: 'unknown'
+  });
+});
 
-# Generate schism
-deno run --allow-read scripts/belief.ts "Church of the Eternal Light" --schism
+test('handles negative age (current behavior - BUG)', () => {
+  const result = processUserData({ name: 'John', age: -5 });
+  // This is wrong but it's what code does now
+  expect(result).toEqual({
+    fullName: 'John',
+    isAdult: true,  // BUG: negative age treated as adult!
+    category: 'standard'
+  });
+});
+
+test('handles empty name', () => {
+  const result = processUserData({ name: '', age: 30 });
+  expect(result).toEqual({
+    fullName: '',
+    isAdult: true,
+    category: 'standard'
+  });
+});
+
+test('handles null input', () => {
+  // Might throw error, might return null - capture what happens
+  expect(() => processUserData(null)).toThrow('Cannot read property');
+});
 ```
 
-**Output:** Cosmology, ethics, institutional structure, internal conflicts.
+**Key insight:** You're documenting bugs, not fixing them. Tests show what code does, including incorrect behavior.
 
-## Example Diagnostic Interaction
+### Step 6: Document Known Issues
 
-**Writer:** "My sci-fi world has faster-than-light travel but it still feels like today with spaceships."
+Mark tests for known bugs:
 
-**Your approach:**
-1. Identify State W2 (World Without Consequences)
-2. Ask: "What's your FTL mechanism? Who controls access?"
-3. Run cascade: How does FTL change economics? (Trade routes, resource distribution, arbitrage)
-4. Run cascade: How does FTL change power? (Who can project force? Who can escape?)
-5. Run cascade: How does FTL change culture? (Diaspora patterns, cultural fragmentation/synthesis)
-6. Identify the most story-relevant consequence chain
-7. Suggest: "Your FTL creates [specific effect]. How does your protagonist's world reflect that?"
+```typescript
+test.skip('FIXME: should reject negative age', () => {
+  // This is what SHOULD happen (not what happens now)
+  expect(() => processUserData({ name: 'John', age: -5 }))
+    .toThrow('Invalid age: must be non-negative');
+});
 
-**Writer:** "My fantasy world has a Thieves' Guild but it feels cliché."
+test('handles negative age (CURRENT BEHAVIOR - BUG)', () => {
+  // This is what ACTUALLY happens now
+  const result = processUserData({ name: 'John', age: -5 });
+  expect(result.isAdult).toBe(true); // Wrong! But it's current behavior
+});
+```
 
-**Your approach:**
-1. Identify State W3 (Institutions Without History)
-2. Ask: "When was it founded? What crisis created the need?"
-3. Trace: What was society like before organized crime? What power vacuum did the guild fill?
-4. Trace: How has it evolved? What internal factions exist?
-5. Trace: What's its relationship to official power? Tolerated? Secretly controlled? Actually running things?
-6. Suggest: "Your guild would be more convincing if [specific historical development]. What if [complicating factor]?"
+**Why both tests?**
+- `.skip` test shows desired behavior (for future)
+- Active test locks in current behavior (prevents regressions during refactoring)
 
-## Output Persistence
+### Step 7: Verify Coverage
 
-This skill writes primary output to files so work persists across sessions.
+Ensure main execution paths covered:
 
-### Output Discovery
+- Happy path (valid inputs)
+- Edge cases (empty, null, undefined, zero, negative)
+- Boundary values (max/min for your domain)
+- Error cases (invalid inputs, external failures)
 
-**Before doing any other work:**
+**Not 100% code coverage.** Focus on behavior coverage: scenarios that matter.
 
-1. Check for `context/output-config.md` in the project
-2. If found, look for this skill's entry
-3. If not found or no entry for this skill, **ask the user first**:
-   - "Where should I save output from this worldbuilding session?"
-   - Suggest: `explorations/worldbuilding/` or a sensible location for this project
-4. Store the user's preference:
-   - In `context/output-config.md` if context network exists
-   - In `.worldbuilding-output.md` at project root otherwise
+## Checklist
 
-### Primary Output
+- [ ] Identified smallest testable unit
+- [ ] Wrote test with unknown expectation (???)
+- [ ] Ran test and captured actual output
+- [ ] Locked in current behavior (test passes)
+- [ ] Added edge cases (empty, null, invalid, boundary values)
+- [ ] Documented known bugs with comments
+- [ ] Created .skip tests for desired behavior (future fixes)
+- [ ] All tests pass (green for current behavior)
+- [ ] Tests cover main execution paths
 
-For this skill, persist:
-- **Diagnosed state** - which world state(s) apply, with evidence
-- **Intervention recommendations** - specific frameworks to apply
-- **World development notes** - institutions, consequences, systems traced
-- **Depth decisions** - what to develop deeply vs. leave shallow
+## Example: Full Workflow
 
-### Conversation vs. File
+**Legacy code we need to refactor:**
 
-| Goes to File | Stays in Conversation |
-|--------------|----------------------|
-| World state diagnosis | Clarifying questions |
-| Traced consequences and history | Discussion of options |
-| Institutional/economic/belief frameworks | Writer's brainstorming |
-| Depth/breadth decisions | Real-time feedback |
+```typescript
+function calculateDiscount(user, cart) {
+  let total = 0;
+  for (let i = 0; i < cart.items.length; i++) {
+    total += cart.items[i].price * cart.items[i].quantity;
+  }
 
-### File Naming
+  if (user.isPremium) {
+    total = total * 0.9;
+  }
 
-Pattern: `{world-name}-{date}.md`
-Example: `fantasy-kingdom-2025-01-15.md`
+  if (cart.items.length > 5) {
+    total = total * 0.95;
+  }
 
-## What You Do NOT Do
+  return Math.round(total * 100) / 100;
+}
+```
 
-- You do not write the worldbuilding for them
-- You do not prescribe a single "right" answer
-- You do not demand complete consistency (some mystery is good)
-- You diagnose, recommend, and explain—the writer decides
+**Characterization tests:**
 
-## Integration with Story-Sense
+```typescript
+describe('calculateDiscount - characterization', () => {
+  test('standard user, small cart', () => {
+    const user = { isPremium: false };
+    const cart = {
+      items: [
+        { price: 10, quantity: 2 },
+        { price: 5, quantity: 1 }
+      ]
+    };
 
-Worldbuilding problems often underlie story problems:
+    const result = calculateDiscount(user, cart);
+    expect(result).toBe(25); // 10*2 + 5*1 = 25
+  });
 
-| Story-Sense State | May Actually Be |
-|------------------|-----------------|
-| State 2: World Without Life | W1-W6 (any world state) |
-| State 3: Flat Non-Humans | W7 (species biology) |
-| State 4: Characters Without Dimension | W5 (belief systems shape character) |
-| State 5: Plot Without Purpose | W2 (consequences create meaning) |
+  test('premium user gets 10% discount', () => {
+    const user = { isPremium: true };
+    const cart = { items: [{ price: 100, quantity: 1 }] };
 
-When story-sense diagnosis leads to world problems, hand off to worldbuilding diagnostic.
+    const result = calculateDiscount(user, cart);
+    expect(result).toBe(90); // 100 * 0.9 = 90
+  });
 
-## Depth vs. Breadth Trade-offs
+  test('more than 5 items gets additional 5% discount', () => {
+    const user = { isPremium: false };
+    const cart = {
+      items: Array(6).fill({ price: 10, quantity: 1 })
+    };
 
-Not everything needs deep worldbuilding. Use these heuristics:
+    const result = calculateDiscount(user, cart);
+    expect(result).toBe(57); // 60 * 0.95 = 57
+  });
 
-**Go Deep When:**
-- Element is central to plot
-- Element will be examined closely by POV character
-- Element creates ongoing tension or conflict
-- Element is unusual enough readers will notice gaps
+  test('premium + bulk discounts stack (CURRENT BEHAVIOR)', () => {
+    const user = { isPremium: true };
+    const cart = {
+      items: Array(6).fill({ price: 10, quantity: 1 })
+    };
 
-**Stay Shallow When:**
-- Element is background detail
-- POV character wouldn't know or care about depth
-- Adding depth would slow the story
-- Mystery is more interesting than explanation
+    const result = calculateDiscount(user, cart);
+    expect(result).toBe(51.3); // 60 * 0.9 * 0.95 = 51.3
+  });
 
-**Signal Depth Without Creating It:**
-- Mention that history exists without explaining it
-- Show consequences without tracing causes
-- Use specific details that imply larger patterns
-- Let characters reference things they know but don't explain
+  test('empty cart returns 0', () => {
+    const user = { isPremium: false };
+    const cart = { items: [] };
+
+    const result = calculateDiscount(user, cart);
+    expect(result).toBe(0);
+  });
+
+  test('missing isPremium field (CURRENT BEHAVIOR - BUG?)', () => {
+    const user = {}; // no isPremium field
+    const cart = { items: [{ price: 100, quantity: 1 }] };
+
+    const result = calculateDiscount(user, cart);
+    expect(result).toBe(100); // Falsy check treats missing as non-premium
+  });
+
+  test('null user throws error', () => {
+    const cart = { items: [{ price: 100, quantity: 1 }] };
+
+    expect(() => calculateDiscount(null, cart))
+      .toThrow("Cannot read property 'isPremium' of null");
+  });
+});
+```
+
+**Now safe to refactor!** If refactoring breaks these tests, you've changed behavior (maybe accidentally).
+
+## Anti-Patterns
+
+### ❌ Fixing Bugs While Characterizing
+
+**Bad:**
+```typescript
+test('negative price should be rejected', () => {
+  expect(() => calculateDiscount(user, { items: [{ price: -10, quantity: 1 }] }))
+    .toThrow('Invalid price');
+});
+```
+
+This is what SHOULD happen, not what DOES happen. You're writing specification, not characterization.
+
+**Good:**
+```typescript
+test('negative price (CURRENT BEHAVIOR - BUG)', () => {
+  const user = { isPremium: false };
+  const cart = { items: [{ price: -10, quantity: 1 }] };
+
+  const result = calculateDiscount(user, cart);
+  expect(result).toBe(-10); // Bug: negative total! But this is current behavior
+});
+
+test.skip('FIXME: negative price should be rejected', () => {
+  // This is desired future behavior
+  expect(() => calculateDiscount(user, { items: [{ price: -10, quantity: 1 }] }))
+    .toThrow('Invalid price');
+});
+```
+
+### ❌ Refactoring Before Tests
+
+**Bad:**
+```
+1. Look at legacy code
+2. "This is messy, let me clean it up"
+3. Refactor
+4. Add tests
+```
+
+**Good:**
+```
+1. Look at legacy code
+2. Add characterization tests
+3. Verify tests pass
+4. Refactor with confidence
+5. Tests still pass → safe refactoring
+```
+
+### ❌ Mocking Everything
+
+**Bad:**
+```typescript
+test('calls database with correct params', () => {
+  const mockDB = jest.fn();
+  processUserData(mockDB, user);
+  expect(mockDB).toHaveBeenCalledWith('users', { id: 123 });
+});
+```
+
+This tests interactions, not behavior. You don't know what the function returns.
+
+**Good:**
+```typescript
+test('processes user data from database', () => {
+  // Use real database or test database
+  const result = processUserData({ id: 123 });
+  expect(result).toEqual({ name: 'John', email: 'john@example.com' });
+});
+```
+
+Characterization tests should test real behavior with real dependencies when possible.
+
+### ❌ Skipping "Embarrassing" Bugs
+
+**Bad:**
+```typescript
+// I found this bug but I'm not going to test it because it's embarrassing
+```
+
+**Good:**
+```typescript
+test('allows XSS in user input (CURRENT BEHAVIOR - SECURITY BUG)', () => {
+  const result = renderUserProfile({ name: '<script>alert("xss")</script>' });
+  expect(result).toContain('<script>alert("xss")</script>');
+  // Bug exists! But test documents it so we can fix it later
+});
+```
+
+Document all bugs, especially security issues. Better to know than to be surprised.
+
+## Common Rationalizations
+
+| Excuse | Reality |
+|--------|---------|
+| "Code is too complex to test" | Characterization tests don't need full understanding. Capture behavior empirically. |
+| "I'll refactor, then add tests" | Refactoring without tests = hoping you didn't break anything. Tests first. |
+| "Tests will take too long" | Hours of characterization vs days of debugging production. Tests are faster. |
+| "I know what the code should do" | Great! But what does it actually do? They might differ. |
+| "I'll just be careful" | You will miss edge cases. Tests catch what you forget. |
+| "Bugs are embarrassing to test" | Documented bugs can be fixed. Hidden bugs cause incidents. |
+
+## After Characterization
+
+Now you have safety net. Next steps:
+
+1. **Refactor with confidence** - Tests catch if you break something
+2. **Fix bugs one at a time** - Update characterization test to desired behavior
+3. **Add unit tests** - For new features, use TDD going forward
+4. **Remove characterization tests** - Once you have proper unit tests covering behavior
+
+**Characterization tests are temporary.** They're scaffolding for refactoring, not permanent test suite.
+
+## Integration with Other Skills
+
+- **skills/analysis/code-archaeology** - Understand code before characterizing
+- **skills/refactoring/strangler-fig-pattern** - Replace characterized code safely
+- **skills/testing/test-driven-development** - Add new features with TDD after characterization
+- **skills/refactoring/seam-finding** - Find boundaries for characterization
+- **skills/safety/approval-testing** - Alternative for complex outputs
+
+## Remember
+
+- Characterization tests document what IS, not what SHOULD BE
+- Run test → capture output → lock it in
+- Document bugs, don't fix them (yet)
+- Tests are safety net for refactoring
+- NO REFACTORING without characterization tests first
+- Characterization tests are temporary scaffolding
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
