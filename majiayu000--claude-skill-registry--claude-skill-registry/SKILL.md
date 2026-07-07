@@ -1,237 +1,178 @@
 ---
-name: subagent-teams
-description: | Use when this capability is needed.
+name: upgrade-stripe
+description: Guide for upgrading Stripe API versions and SDKs Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Subagent Teams
+# Upgrading Stripe Versions
 
-Maintain optimum Claude performance by delegating heavy work to subagent teams, minimizing auto-compact of the main context window.
+This skill covers upgrading Stripe API versions, server-side SDKs, Stripe.js, and mobile SDKs.
 
-## What This Skill Does
+## Understanding Stripe API Versioning
 
-- Decomposes complex tasks into independent subtasks for parallel execution
-- Delegates exploration, research, testing, and implementation to specialized subagents
-- Keeps main orchestrator context lean (decision-making and synthesis only)
-- Prevents auto-compact by isolating heavy work in separate context windows
-- Selects optimal model per subtask (Opus for complex, Sonnet for moderate, Haiku for simple)
+Stripe uses date-based API versions (e.g., `2025-12-15.clover`, `2025-08-27.basil`, `2024-12-18.acacia`). Your account's API version determines request/response behavior.
 
-## What This Skill Does NOT Do
+### Types of Changes
 
-- Handle tasks with strict sequential dependencies (use normal flow)
-- Replace the main orchestrator's decision-making role
-- Work for single-step trivial tasks (no delegation needed)
-- Manage persistent state across subagent sessions
+**Backward-Compatible Changes** (do not require code updates):
+- New API resources
+- New optional request parameters
+- New properties in existing responses
+- Changes to opaque string lengths (e.g., object IDs)
+- New webhook event types
 
----
+**Breaking Changes** (require code updates):
+- Field renames or removals
+- Behavioral modifications
+- Removed endpoints or parameters
 
-## Before Implementation
+Review the [API Changelog](https://docs.stripe.com/changelog.md) for all changes between versions.
 
-Gather context to ensure successful delegation:
+## Server-Side SDK Versioning
 
-| Source | Gather |
-|--------|--------|
-| **User Request** | Full scope of the task, constraints, preferences |
-| **Codebase** | Project structure, key files, existing patterns |
-| **Skill References** | Delegation patterns from `references/` |
-| **Task Complexity** | Number of independent subtasks, dependencies between them |
+See [SDK Version Management](https://docs.stripe.com/sdks/set-version.md) for details.
 
-Only ask user for THEIR specific requirements (delegation strategy is in this skill).
+### Dynamically-Typed Languages (Ruby, Python, PHP, Node.js)
 
----
+These SDKs offer flexible version control:
 
-## Core Principle: Context Isolation
-
-```
-WITHOUT subagent-teams:
-  Main Context: [Explore + Search + Read + Analyze + Plan + Implement + Test]
-  Result: Context fills → Auto-compact triggers → Quality degrades
-
-WITH subagent-teams:
-  Main Context: [Decompose → Delegate → Synthesize → Decide]
-  Subagent 1: [Explore codebase] → returns summary
-  Subagent 2: [Run tests] → returns pass/fail
-  Subagent 3: [Implement feature] → returns code
-  Result: Main context stays lean → No auto-compact → Consistent quality
+**Global Configuration:**
+```python
+import stripe
+stripe.api_version = '2025-12-15.clover'
 ```
 
----
-
-## Workflow
-
-### Phase 1: Task Decomposition
-
-Analyze the user's request and break it into independent subtasks:
-
-1. **Identify the full scope** of what needs to be done
-2. **Map dependencies** — which tasks depend on others?
-3. **Group independent tasks** — these can run in parallel
-4. **Identify sequential gates** — tasks that must complete before others start
-
-```
-User Request
-     │
-     ▼
-┌─────────────────────────┐
-│ Dependency Analysis      │
-│ - Independent tasks → parallel batch
-│ - Dependent tasks → sequential order
-│ - Gates → sync points  │
-└─────────────────────────┘
-     │
-     ▼
-[Parallel Batch 1] → [Gate] → [Parallel Batch 2] → [Gate] → [Final Synthesis]
+```ruby
+Stripe.api_version = '2025-12-15.clover'
 ```
 
-### Phase 2: Team Assignment
-
-For each subtask, select the optimal subagent configuration:
-
-| Subtask Type | subagent_type | Model | Tools |
-|--------------|---------------|-------|-------|
-| Codebase exploration | `Explore` | haiku | Read, Grep, Glob |
-| Architecture design | `Plan` | sonnet | All read tools |
-| Multi-step implementation | `general-purpose` | sonnet/opus | All tools |
-| Simple file search | `Explore` | haiku | Glob, Grep |
-| Code review | `Explore` | sonnet | Read, Grep |
-| Test execution | `general-purpose` | haiku | Bash, Read |
-
-### Phase 3: Parallel Dispatch
-
-Launch independent subagents in a **single message with multiple Task tool calls**:
-
-```
-# CORRECT: Single message, multiple tool calls (parallel)
-Message contains:
-  - Task tool call 1: Explore agent for codebase research
-  - Task tool call 2: Explore agent for pattern analysis
-  - Task tool call 3: General-purpose agent for test execution
-
-# WRONG: Sequential messages (wastes time)
-Message 1: Task tool call 1
-[wait for result]
-Message 2: Task tool call 2
-[wait for result]
+```javascript
+const stripe = require('stripe')('sk_test_xxx', {
+  apiVersion: '2025-12-15.clover'
+});
 ```
 
-### Phase 4: Result Synthesis
-
-After subagents return:
-
-1. **Collect** all subagent outputs (compact summaries only enter main context)
-2. **Analyze** findings for conflicts or gaps
-3. **Synthesize** into unified action plan
-4. **Execute** final decisions in main context (or delegate next batch)
-
-### Phase 5: Sequential Gates (if needed)
-
-When later tasks depend on earlier results:
-
-1. Wait for Batch 1 subagents to complete
-2. Synthesize Batch 1 results
-3. Use synthesized results to inform Batch 2 prompts
-4. Launch Batch 2 subagents in parallel
-5. Repeat until task is complete
-
----
-
-## Delegation Decision Matrix
-
-| Condition | Action |
-|-----------|--------|
-| Task has 3+ independent subtasks | Use subagent-teams |
-| Context window already large | Delegate ALL exploration |
-| Task involves multiple file reads | Delegate to Explore agents |
-| Task requires testing + implementation | Separate into different agents |
-| Task is single-step and simple | Do NOT delegate (overhead not worth it) |
-| Tasks have strict sequential dependency | Use sequential gates, not parallel |
-| User explicitly requests subagent-teams | Always apply this skill |
-
----
-
-## Subagent Prompt Engineering
-
-Write clear, focused prompts for each subagent:
-
-### Must Include
-- **Specific goal**: What exactly to find/do/produce
-- **Scope boundary**: What files/areas to focus on
-- **Output format**: How to structure the response
-- **Context**: Relevant information from earlier steps
-
-### Must NOT Include
-- Unnecessary background (wastes subagent context)
-- Multiple unrelated tasks in one agent (breaks specialization)
-- Vague instructions ("look around the codebase")
-
-### Template
-```
-"[Action verb] [specific target] in [scope].
-Focus on [key aspects].
-Return: [structured output format].
-Context: [relevant prior findings if any]."
+**Per-Request Override:**
+```python
+stripe.Customer.create(
+  email="customer@example.com",
+  stripe_version='2025-12-15.clover'
+)
 ```
 
----
+### Strongly-Typed Languages (Java, Go, .NET)
 
-## Anti-Patterns
+These use a fixed API version matching the SDK release date. Do not set a different API version for strongly-typed languages because response objects might not match the strong types in the SDK. Instead, update the SDK to target a new API version.
 
-| Anti-Pattern | Why It's Bad | Correct Approach |
-|--------------|-------------|------------------|
-| Reading 10+ files in main context | Fills context → auto-compact | Delegate to Explore agent |
-| Long grep/search chains in main | Each result adds to context | Single Explore agent does all searching |
-| Explore AND implement in same session | Double context usage | Explore agents first, then implement |
-| One mega-agent for everything | No specialization, bloated context | Multiple focused agents |
-| Not using `run_in_background` | Blocks main session | Use background for long tasks |
-| Asking subagent for info you already have | Wastes subagent context | Pass known context in prompt |
+### Best Practice
 
----
+Always specify the API version you're integrating against in your code instead of relying on your account's default API version:
 
-## Model Selection Strategy
+```javascript
+// Good: Explicit version
+const stripe = require('stripe')('sk_test_xxx', {
+  apiVersion: '2025-12-15.clover'
+});
 
-| Task Complexity | Model | Cost | Use When |
-|-----------------|-------|------|----------|
-| Simple search/grep | `haiku` | Low | Finding files, simple patterns |
-| Moderate analysis | `sonnet` | Medium | Code review, architecture design |
-| Complex reasoning | `opus` | High | Multi-step implementation, critical decisions |
-| Default (unspecified) | inherits | - | When unsure, let it inherit |
+// Avoid: Relying on account default
+const stripe = require('stripe')('sk_test_xxx');
+```
 
----
+## Stripe.js Versioning
 
-## Error Handling
+See [Stripe.js Versioning](https://docs.stripe.com/sdks/stripejs-versioning.md) for details.
 
-| Scenario | Recovery |
-|----------|----------|
-| Subagent returns incomplete results | Re-launch with more specific prompt |
-| Subagent times out | Check with `AgentOutputTool`, adjust scope |
-| Conflicting results from agents | Synthesize manually, prioritize authoritative source |
-| Too many parallel agents | Limit to 3-5 concurrent, batch the rest |
-| Background agent still running | Use `AgentOutputTool` with `block=false` to check status |
+Stripe.js uses an evergreen model with major releases (Acacia, Basil, Clover) on a biannual basis.
 
----
+### Loading Versioned Stripe.js
 
-## Output Checklist
+**Via Script Tag:**
+```html
+<script src="https://js.stripe.com/clover/stripe.js"></script>
+```
 
-Before completing a subagent-teams workflow, verify:
+**Via npm:**
+```bash
+npm install @stripe/stripe-js
+```
 
-- [ ] All subtasks identified and categorized (independent vs dependent)
-- [ ] Subagent types correctly matched to task types
-- [ ] Independent tasks launched in parallel (single message)
-- [ ] Sequential gates properly handled
-- [ ] Results synthesized into coherent output
-- [ ] Main context remains lean (no unnecessary file reads)
-- [ ] Model selection optimized for cost/performance
+Major npm versions correspond to specific Stripe.js versions.
 
----
+### API Version Pairing
 
-## Reference Files
+Each Stripe.js version automatically pairs with its corresponding API version. For instance:
+- Clover Stripe.js uses `2025-12-15.clover` API
+- Acacia Stripe.js uses `2024-12-18.acacia` API
 
-| File | When to Read |
-|------|--------------|
-| `references/delegation-patterns.md` | Complex task decomposition examples |
-| `references/prompt-templates.md` | Subagent prompt engineering patterns |
-| `references/context-management.md` | Context window optimization strategies |
+You cannot override this association.
+
+### Migrating from v3
+
+1. Identify your current API version in code
+2. Review the changelog for relevant changes
+3. Consider gradually updating your API version before switching Stripe.js versions
+4. Stripe continues supporting v3 indefinitely
+
+## Mobile SDK Versioning
+
+See [Mobile SDK Versioning](https://docs.stripe.com/sdks/mobile-sdk-versioning.md) for details.
+
+### iOS and Android SDKs
+
+Both platforms follow **semantic versioning** (MAJOR.MINOR.PATCH):
+- **MAJOR**: Breaking API changes
+- **MINOR**: New functionality (backward-compatible)
+- **PATCH**: Bug fixes (backward-compatible)
+
+New features and fixes release only on the latest major version. Upgrade regularly to access improvements.
+
+### React Native SDK
+
+Uses a different model (0.x.y schema):
+- **Minor version changes** (x): Breaking changes AND new features
+- **Patch updates** (y): Critical bug fixes only
+
+### Backend Compatibility
+
+All mobile SDKs work with any Stripe API version you use on your backend unless documentation specifies otherwise.
+
+## Upgrade Checklist
+
+1. Review the [API Changelog](https://docs.stripe.com/changelog.md) for changes between your current and target versions
+2. Check [Upgrades Guide](https://docs.stripe.com/upgrades.md) for migration guidance
+3. Update server-side SDK package version (e.g., `npm update stripe`, `pip install --upgrade stripe`)
+4. Update the `apiVersion` parameter in your Stripe client initialization
+5. Test your integration against the new API version using the `Stripe-Version` header
+6. Update webhook handlers to handle new event structures
+7. Update Stripe.js script tag or npm package version if needed
+8. Update mobile SDK versions in your package manager if needed
+9. Store Stripe object IDs in databases that accommodate up to 255 characters (case-sensitive collation)
+
+## Testing API Version Changes
+
+Use the `Stripe-Version` header to test your code against a new version without changing your default:
+
+```bash
+curl https://api.stripe.com/v1/customers \
+  -u sk_test_xxx: \
+  -H "Stripe-Version: 2025-12-15.clover"
+```
+
+Or in code:
+
+```javascript
+const stripe = require('stripe')('sk_test_xxx', {
+  apiVersion: '2025-12-15.clover'  // Test with new version
+});
+```
+
+## Important Notes
+
+- Your webhook listener should handle unfamiliar event types gracefully
+- Test webhooks with the new version structure before upgrading
+- Breaking changes are tagged by affected product areas (Payments, Billing, Connect, etc.)
+- Multiple API versions coexist simultaneously, enabling staged adoption
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
