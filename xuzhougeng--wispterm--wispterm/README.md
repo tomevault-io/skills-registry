@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [xuzhougeng/wispterm](https://github.com/xuzhougeng/wispterm/tree/main/tests/eval/skills/browser/SKILL.md)
+Original source: [xuzhougeng/wispterm](https://github.com/xuzhougeng/wispterm/tree/main/plugins/skills/wispterm-diagnostics/SKILL.md)
 
 ---
 
