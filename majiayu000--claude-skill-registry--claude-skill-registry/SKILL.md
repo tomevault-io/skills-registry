@@ -1,68 +1,148 @@
 ---
-name: add-unit-tests
-description: Write failing unit tests for feature requirements (TDD style) Use when this capability is needed.
+name: add-perspective
+description: 振り返り観点を追加するガイド。ユーザー指摘から学習し、類似問題を将来検出できるようにする。観点、perspective、チェック追加時に使用。 Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-**Current Time:** !`date`
-**Go Version:** !`go version`
+# 振り返り観点追加ガイド
 
-You are the SDET sub-agent for this repo. Your task is to read feature requirements and WRITE ONLY the appropriate failing UNIT TESTS (TDD style) that encode those requirements. You must NOT change implementation code.
+ユーザーからの指摘や問題発見時に、類似問題を将来の振り返りで検出できるよう観点を追加する手順。
 
-This slash command may be invoked in one of these ways:
+## 使用タイミング
 
-- With an argument that points to a requirements source (e.g., a Markdown spec, ticket text, or design doc file path).
-- With no argument, in which case you should treat the currently open file or selection as the requirements source.
+- `[ACTION_REQUIRED: /add-perspective]` が表示されたとき
+- ユーザーから「動いてる？」「正常？」等の指摘を受けたとき
+- 振り返りで新しいチェック観点が必要と判断したとき
 
-Use the following workflow:
+## 手順
 
-1. Locate and understand the feature requirements
-   - If an argument is provided, open and read that file or location as the feature spec.
-   - If no argument is provided, assume the currently open file or selected content contains the feature requirements.
-   - Extract:
-     - The behaviors the feature must provide.
-     - Inputs, outputs, and side effects.
-     - Edge cases, error conditions, and constraints.
-   - If the requirements reference existing modules, identify which packages / files the feature belongs to.
+### 1. 問題の分析
 
-2. Derive a unit test plan (brief, in your own reasoning)
-   - Identify the main units (functions, methods, classes) that should enforce these behaviors.
-   - For each behavior, define one or more unit-level scenarios:
-     - Happy paths.
-     - Key edge cases.
-     - Error and boundary conditions.
-   - Choose the right test locations:
-     - Existing test files if the module already has tests.
-     - New test files if none exist, following this repo's naming and layout conventions.
+まず、指摘された問題の根本原因を特定する。
 
-3. Write failing unit tests only
-   - Implement tests that SPECIFY the intended behavior from the requirements.
-   - Do NOT modify production code.
-   - Do NOT work around missing behavior by mocking too deeply or asserting on implementation details.
-   - Follow existing testing patterns:
-     - Use the same testing framework and helpers already used in this repo.
-     - Match naming, structure, and fixtures style.
-   - Tests should:
-     - Clearly describe the behavior in names and assertions.
-     - Fail against the current implementation if the feature is not yet implemented or incomplete.
+```markdown
+| 項目 | 内容 |
+|------|------|
+| 問題の概要 | 何が起きたか |
+| 根本原因 | なぜ発生したか |
+| 検出方法 | どうすれば事前に気づけたか |
+```
 
-4. Run the unit tests you added or modified
-   - Use the appropriate test command(s) for the affected packages / files.
-   - Confirm that tests fail for the correct reasons (unimplemented or incorrect behavior).
-   - Do not fix implementation code; your goal is to establish the failing test baseline.
+### 2. 既存観点の確認
 
-5. Summarize the test additions
-   - Briefly report:
-     - Which files you added or modified.
-     - Which behaviors from the requirements each test covers.
-     - Exact commands to run the tests you created or updated.
+新しい観点が本当に必要か確認する。
 
-Constraints:
+```bash
+# 既存の観点を確認（PERSPECTIVES配列全体を表示）
+grep -A 100 "PERSPECTIVES = \[" .claude/hooks/reflection-self-check.py | head -150
+```
 
-- Do NOT change production / implementation code.
-- Do NOT add integration or E2E tests here; focus strictly on unit-level tests that directly encode the feature requirements.
-- Keep tests deterministic, readable, and focused on behavior, not internal implementation details.
+既存観点で検出可能な場合は追加不要。キーワードの拡充で対応できる場合はキーワード追加のみ。
+
+### 3. 観点の定義
+
+新しい観点が必要な場合、以下を定義する。
+
+| フィールド | 説明 | 例 |
+|-----------|------|-----|
+| `id` | 一意の識別子（snake_case） | `ci_failure_analysis` |
+| `name` | 日本語の表示名 | `CI失敗分析` |
+| `description` | 確認すべき内容 | `CI失敗時に根本原因を分析したか` |
+| `keywords` | 検出用キーワード（正規表現） | `[r"CI.*失敗", r"根本原因"]` |
+
+### 4. reflection-self-check.py への追加
+
+`.claude/hooks/reflection-self-check.py` の `PERSPECTIVES` 配列に追加:
+
+```python
+# Issue #XXXX: [問題の説明]
+{
+    "id": "new_perspective_id",
+    "name": "観点の表示名",
+    "description": "確認すべき内容の説明",
+    "keywords": [
+        r"キーワード1",
+        r"キーワード2",
+        r"複合.*パターン",
+    ],
+},
+```
+
+### 5. execute.md への追加
+
+`reflection-self-check.py`のPERSPECTIVESに追加した新観点を、`.claude/prompts/reflection/execute.md`のセクション8「観点チェック（自己確認）」（L449以降）のテーブルにも反映する:
+
+```markdown
+| N | 新観点の名前 | 確認すべき内容 | #XXXX |
+```
+
+### 6. テストの追加
+
+`.claude/hooks/tests/test_reflection_self_check.py` にテストを追加:
+
+```python
+def test_detects_new_perspective(self):
+    """新観点が正しく検出される."""
+    transcript = "キーワード1を含むテキスト"
+    missing = get_missing_perspectives(transcript)
+    perspective_ids = [p["id"] for p in missing]
+    assert "new_perspective_id" not in perspective_ids
+```
+
+### 7. Issueの作成（任意）
+
+大きな変更の場合はIssueを作成してからworktreeで作業する。
+
+## キーワード設計のベストプラクティス
+
+| 項目 | 推奨 |
+|------|------|
+| **複合パターン** | 単一キーワードより `r"CI.*失敗"` のような複合が誤検知を減らす |
+| **正規表現** | `r"(Pre|Post|Stop)"` でOR条件も可能 |
+| **網羅性** | 同じ意味の異なる表現を含める（例: 失敗、エラー、問題） |
+| **テスト** | 実際のtranscriptでキーワードが検出されることを確認 |
+
+## 追加しない方が良いケース
+
+| ケース | 理由 |
+|--------|------|
+| 一回限りの特殊な問題 | 再発可能性が低い |
+| 既存観点のキーワード拡充で対応可能 | 観点の重複を避ける |
+| 主観的な評価基準 | キーワードで検出困難 |
+
+## 実例
+
+### Issue #2289: 「対応済み」判断の検証
+
+**問題**: 「既に対応済み」と判断したが、実際には仕組みが有効に機能していなかった。
+
+**追加した観点**:
+
+```python
+{
+    "id": "already_handled_check",
+    "name": "「対応済み」判断の検証",
+    "description": "「対応済み」と判断した場合、その仕組みの実行タイミング（Pre/Post/Stop）を確認し、実際に有効か検証したか",
+    "keywords": [
+        r"対応済み.*検証",
+        r"実行タイミング",
+        r"(Pre|Post|Stop)",
+        r"フック.*確認",
+        r"仕組み.*有効",
+        r"対応済み.*なし",
+    ],
+},
+```
+
+## チェックリスト
+
+- [ ] 既存観点で対応できないか確認した
+- [ ] `id`, `name`, `description`, `keywords` を定義した
+- [ ] `reflection-self-check.py` の PERSPECTIVES に追加した
+- [ ] `execute.md` のセクション8に追加した
+- [ ] テストを追加した
+- [ ] Pythonの構文エラーがないことを確認した
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
