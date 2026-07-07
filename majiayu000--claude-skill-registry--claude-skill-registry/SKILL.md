@@ -1,362 +1,572 @@
 ---
-name: using-ux-designer
-description: Route to the right UX skill based on your task and platform context Use when this capability is needed.
+name: vanilla-extract
+description: Implements zero-runtime CSS using vanilla-extract with type-safe styles, themes, recipes, and sprinkles. Use when wanting type-safe CSS, static extraction at build time, or building design system utilities. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Using UX Designer
+# vanilla-extract
 
-## Overview
+Zero-runtime CSS-in-TypeScript with static extraction at build time.
 
-This meta-skill routes you to the right UX design skills based on your situation. Load this skill when you need UX expertise but aren't sure which specific skill to use.
+## Quick Start
 
-**Core Principle**: Different UX tasks require different skills. Match your situation to the appropriate skill, load only what you need.
-
-## When to Use
-
-Load this skill when:
-- Starting any UX/UI design task
-- User mentions: "design", "UX", "UI", "interface", "user experience", "layout", "navigation"
-- You need to critique or review a design
-- You need to create a new interface or feature
-- User asks about UX principles or concepts
-
-**Don't use for**: Backend logic, database design, pure technical implementation without UX implications
-
----
-
-## How to Access Reference Sheets
-
-**IMPORTANT**: All reference sheets are located in the SAME DIRECTORY as this SKILL.md file.
-
-When this skill is loaded from:
-  `skills/using-ux-designer/SKILL.md`
-
-Reference sheets like `ux-fundamentals.md` are at:
-  `skills/using-ux-designer/ux-fundamentals.md`
-
-NOT at:
-  `skills/ux-fundamentals.md` ← WRONG PATH
-
-When you see a link like `[ux-fundamentals.md](ux-fundamentals.md)`, read the file from the same directory as this SKILL.md.
-
----
-
-## Routing by Situation
-
-### Learning & Explanation
-
-**Symptoms**: "What is...", "Explain...", "Teach me about...", "How does X work in UX?"
-
-**Route to**: [ux-fundamentals.md](ux-fundamentals.md)
-
-**Examples**:
-- "What is information architecture?" → [ux-fundamentals.md](ux-fundamentals.md)
-- "Explain visual hierarchy" → [ux-fundamentals.md](ux-fundamentals.md)
-- "How do I think about accessibility?" → [ux-fundamentals.md](ux-fundamentals.md)
-
----
-
-### Design Critique & Review
-
-**Symptoms**: "Review this design", "Critique this interface", "Is this usable?", "Does this follow best practices?"
-
-**Route to**: Relevant competency skills based on critique focus
-
-**General Review** (no specific focus):
-- [visual-design-foundations.md](visual-design-foundations.md) (visual hierarchy, color, typography)
-- [information-architecture.md](information-architecture.md) (content organization, navigation)
-- [accessibility-and-inclusive-design.md](accessibility-and-inclusive-design.md) (WCAG, inclusive design)
-
-**Specific Focus**:
-- Visual issues (color, contrast, hierarchy) → [visual-design-foundations.md](visual-design-foundations.md)
-- Navigation/findability issues → [information-architecture.md](information-architecture.md)
-- Interaction feedback, touch targets → [interaction-design-patterns.md](interaction-design-patterns.md)
-- Accessibility concerns → [accessibility-and-inclusive-design.md](accessibility-and-inclusive-design.md)
-
-**Add platform extension** if design is platform-specific:
-- Mobile app → Add [mobile-design-patterns.md](mobile-design-patterns.md)
-- Web dashboard → Add [web-application-design.md](web-application-design.md)
-- Desktop software → Add [desktop-software-design.md](desktop-software-design.md)
-- Game interface → Add [game-ui-design.md](game-ui-design.md)
-
----
-
-### New Interface Design
-
-**Symptoms**: "Design a...", "Create interface for...", "Build a [feature] screen"
-
-**Route to**: Competency skills + platform extension
-
-**Standard Web/Mobile Feature**:
-1. [visual-design-foundations.md](visual-design-foundations.md) (layout, hierarchy, color)
-2. [interaction-design-patterns.md](interaction-design-patterns.md) (buttons, feedback, states)
-3. Platform-specific:
-   - Mobile → [mobile-design-patterns.md](mobile-design-patterns.md)
-   - Web app → [web-application-design.md](web-application-design.md)
-
-**Complex Navigation/IA**:
-1. [information-architecture.md](information-architecture.md) (content structure, nav systems)
-2. [visual-design-foundations.md](visual-design-foundations.md) (visual hierarchy)
-3. Platform extension as needed
-
-**Research Phase** (early discovery):
-1. [user-research-and-validation.md](user-research-and-validation.md) (understand users first)
-2. Then return to design skills once research complete
-
----
-
-### Specific UX Domains
-
-#### Visual Design Issues
-
-**Symptoms**: "Colors don't work", "Typography feels off", "Hierarchy unclear", "Layout cramped"
-
-**Route to**: [visual-design-foundations.md](visual-design-foundations.md)
-
-**Add**: [accessibility-and-inclusive-design.md](accessibility-and-inclusive-design.md) if contrast/readability concerns
-
----
-
-#### Navigation & Findability
-
-**Symptoms**: "Users can't find features", "Navigation confusing", "Menu structure", "Content organization"
-
-**Route to**: [information-architecture.md](information-architecture.md)
-
-**Add**: Platform extension for platform-specific nav patterns
-
----
-
-#### Interaction & Feedback
-
-**Symptoms**: "Button states unclear", "No loading feedback", "Micro-interactions", "Touch targets too small"
-
-**Route to**: [interaction-design-patterns.md](interaction-design-patterns.md)
-
-**Add**: Platform extension for platform-specific interaction conventions
-
----
-
-#### Accessibility & Inclusion
-
-**Symptoms**: "WCAG compliance", "Accessibility audit", "Colorblind-safe", "Keyboard navigation", "Screen reader"
-
-**Route to**: [accessibility-and-inclusive-design.md](accessibility-and-inclusive-design.md)
-
-**Note**: This skill should be referenced by all other design decisions (accessibility is universal)
-
----
-
-#### User Research & Validation
-
-**Symptoms**: "Understand users", "User interviews", "Usability testing", "Mental models", "Journey mapping"
-
-**Route to**: [user-research-and-validation.md](user-research-and-validation.md)
-
-**Add**: Other skills once research informs design direction
-
----
-
-## Platform-Specific Routing
-
-### Mobile (iOS/Android)
-
-**Symptoms**: "Mobile app", "iOS", "Android", "Touch interface", "Phone", "Tablet"
-
-**Route to**:
-- Core competency skills (visual, IA, interaction) as needed
-- **Always add**: [mobile-design-patterns.md](mobile-design-patterns.md)
-
-**Mobile-Specific Concerns**:
-- Touch targets (44x44pt iOS, 48x48dp Android)
-- Gestures (swipe, pinch, long-press)
-- Platform conventions (iOS HIG vs Material Design)
-- One-handed use, thumb zones
-
----
-
-### Web Applications
-
-**Symptoms**: "Web app", "Dashboard", "SaaS", "Data visualization", "Admin panel", "Responsive design"
-
-**Route to**:
-- Core competency skills as needed
-- **Always add**: [web-application-design.md](web-application-design.md)
-
-**Web-Specific Concerns**:
-- Responsive breakpoints
-- Complex data display (tables, charts)
-- Keyboard shortcuts, power-user workflows
-- Multi-tasking (tabs, split views)
-
----
-
-### Desktop Software
-
-**Symptoms**: "Desktop app", "Electron", "Native application", "Multi-window", "Keyboard shortcuts"
-
-**Route to**:
-- Core competency skills as needed
-- **Always add**: [desktop-software-design.md](desktop-software-design.md)
-
-**Desktop-Specific Concerns**:
-- Window management (multi-window, panels)
-- Keyboard-first workflows
-- Workspace customization
-- Power-user features (preferences, scripting)
-
----
-
-### Game UI
-
-**Symptoms**: "Game", "HUD", "Menu system", "Game interface", "In-game UI", "Player experience"
-
-**Route to**:
-- Core competency skills as needed
-- **Always add**: [game-ui-design.md](game-ui-design.md)
-
-**Game-Specific Concerns**:
-- Visibility vs immersion (diegetic UI)
-- Controller/gamepad navigation
-- Readability during action
-- Performance impact (frame rate)
-
----
-
-## Multi-Skill Scenarios
-
-### Complete Feature Design (Mobile Login)
-
-**Load in order**:
-1. [visual-design-foundations.md](visual-design-foundations.md) (layout, button hierarchy)
-2. [interaction-design-patterns.md](interaction-design-patterns.md) (form feedback, button states)
-3. [accessibility-and-inclusive-design.md](accessibility-and-inclusive-design.md) (form labels, contrast)
-4. [mobile-design-patterns.md](mobile-design-patterns.md) (touch targets, platform conventions)
-
----
-
-### Dashboard Redesign (Web)
-
-**Load in order**:
-1. [information-architecture.md](information-architecture.md) (organize data, navigation)
-2. [visual-design-foundations.md](visual-design-foundations.md) (hierarchy, chart design)
-3. [web-application-design.md](web-application-design.md) (responsive, data display patterns)
-4. [accessibility-and-inclusive-design.md](accessibility-and-inclusive-design.md) (data table accessibility)
-
----
-
-### Game HUD Evaluation
-
-**Load in order**:
-1. [visual-design-foundations.md](visual-design-foundations.md) (readability, contrast)
-2. [game-ui-design.md](game-ui-design.md) (immersion, performance, input method)
-3. [accessibility-and-inclusive-design.md](accessibility-and-inclusive-design.md) (colorblind-safe indicators)
-
----
-
-## Cross-Faction Integration
-
-### Lyra + Muna (Technical Writer)
-
-**When designing documentation UX**:
-- `lyra/ux-designer/information-architecture` (organize docs)
-- `muna/technical-writer/documentation-structure` (content structure)
-- `muna/technical-writer/clarity-and-style` (microcopy, UI text)
-
-**Example**: "Design documentation site navigation" → Load IA + documentation-structure
-
----
-
-### Lyra + Ordis (Security Architect)
-
-**When designing secure interfaces**:
-- `lyra/ux-designer/visual-design-foundations` (secure feedback, error states)
-- `ordis/security-architect/threat-modeling` (authentication UX threats)
-
-**Example**: "Design login with MFA" → Load interaction-patterns + threat-modeling
-
----
-
-## Decision Tree
-
-```
-User Request
-    |
-    ├─ "What is...?" / "Explain..." → ux-fundamentals
-    |
-    ├─ "Review this design"
-    |   ├─ General → visual-design + IA + accessibility
-    |   └─ Specific concern → Relevant competency skill
-    |       └─ Add platform extension if platform-specific
-    |
-    ├─ "Design a [feature]"
-    |   ├─ Research phase? → user-research-and-validation first
-    |   └─ Design phase
-    |       ├─ Identify competencies needed (visual, IA, interaction)
-    |       ├─ Detect platform (mobile, web, desktop, game)
-    |       └─ Load competency + platform extension
-    |
-    └─ Specific domain
-        ├─ Visual → visual-design-foundations
-        ├─ Navigation → information-architecture
-        ├─ Interaction → interaction-design-patterns
-        ├─ Accessibility → accessibility-and-inclusive-design
-        └─ Research → user-research-and-validation
+**Install:**
+```bash
+npm install @vanilla-extract/css
+# Framework integrations
+npm install @vanilla-extract/vite-plugin    # Vite
+npm install @vanilla-extract/next-plugin    # Next.js
 ```
 
----
+**Configure (Vite):**
+```typescript
+// vite.config.ts
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+import { defineConfig } from 'vite';
 
-## Common Patterns
+export default defineConfig({
+  plugins: [vanillaExtractPlugin()],
+});
+```
 
-### Pattern 1: "I need general UX advice"
-**Load**: [ux-fundamentals.md](ux-fundamentals.md) (teaches principles)
+**Create styles:**
+```typescript
+// button.css.ts
+import { style } from '@vanilla-extract/css';
 
-### Pattern 2: "Critique my [platform] design"
-**Load**: visual-design + IA + accessibility + [platform-extension]
+export const button = style({
+  padding: '12px 24px',
+  border: 'none',
+  borderRadius: 8,
+  fontSize: 16,
+  cursor: 'pointer',
+  backgroundColor: '#3b82f6',
+  color: 'white',
+  ':hover': {
+    backgroundColor: '#2563eb',
+  },
+});
+```
 
-### Pattern 3: "Design [feature] for [platform]"
-**Load**: Relevant competencies + [platform-extension]
+**Use in component:**
+```tsx
+// Button.tsx
+import { button } from './button.css';
 
-### Pattern 4: "Is this accessible?"
-**Load**: [accessibility-and-inclusive-design.md](accessibility-and-inclusive-design.md) (primary)
-**Reference**: visual-design (contrast), interaction-design (keyboard nav)
+export function Button({ children }: { children: React.ReactNode }) {
+  return <button className={button}>{children}</button>;
+}
+```
 
-### Pattern 5: "How do users navigate this?"
-**Load**: [information-architecture.md](information-architecture.md) (primary)
-**Add**: user-research-and-validation (if testing/validation needed)
+## Style API
 
----
+### Basic Styles
 
-## Benefits of Routing
+```typescript
+import { style } from '@vanilla-extract/css';
 
-**Focused expertise**: Load only what's needed for the task
-**Clear boundaries**: Each skill has distinct responsibility
-**Composable**: Combine skills for complex scenarios
-**Efficient**: Avoid loading all 11 skills at once
-**Explicit**: User sees which skills are active
+export const container = style({
+  maxWidth: 1200,
+  margin: '0 auto',
+  padding: 16,
+});
 
----
+// Numbers become pixels (except unitless properties)
+export const box = style({
+  padding: 16,        // 16px
+  margin: 8,          // 8px
+  opacity: 0.5,       // unitless
+  flexGrow: 1,        // unitless
+  lineHeight: 1.5,    // unitless
+});
+```
 
-## UX Designer Specialist Skills Catalog
+### Pseudo-Selectors
 
-After routing, load the appropriate specialist skill for detailed guidance:
+```typescript
+export const link = style({
+  color: '#3b82f6',
+  textDecoration: 'none',
 
-1. [ux-fundamentals.md](ux-fundamentals.md) - Core UX principles, teaching foundational concepts, design thinking
-2. [visual-design-foundations.md](visual-design-foundations.md) - Color theory, typography, visual hierarchy, layout, contrast
-3. [information-architecture.md](information-architecture.md) - Navigation systems, content organization, findability, menu structure
-4. [interaction-design-patterns.md](interaction-design-patterns.md) - Button states, feedback patterns, micro-interactions, touch targets
-5. [accessibility-and-inclusive-design.md](accessibility-and-inclusive-design.md) - WCAG compliance, inclusive design, colorblind-safe, screen readers, keyboard navigation
-6. [user-research-and-validation.md](user-research-and-validation.md) - User interviews, usability testing, mental models, journey mapping, research methods
-7. [mobile-design-patterns.md](mobile-design-patterns.md) - iOS/Android patterns, touch gestures, platform conventions, thumb zones
-8. [web-application-design.md](web-application-design.md) - Responsive design, dashboards, data visualization, SaaS patterns, keyboard shortcuts
-9. [desktop-software-design.md](desktop-software-design.md) - Multi-window management, keyboard-first workflows, power-user features, workspace customization
-10. [game-ui-design.md](game-ui-design.md) - HUD design, diegetic UI, controller navigation, immersion vs visibility
+  ':hover': {
+    textDecoration: 'underline',
+  },
 
-**Cross-faction**:
-- `muna/technical-writer/*` - Documentation UX and microcopy
-- `ordis/security-architect/*` - Security-aware interface design
+  ':focus-visible': {
+    outline: '2px solid #3b82f6',
+    outlineOffset: 2,
+  },
+
+  '::before': {
+    content: '">"',
+    marginRight: 4,
+  },
+});
+```
+
+### Complex Selectors
+
+```typescript
+export const card = style({
+  padding: 16,
+
+  selectors: {
+    // Target self with conditions
+    '&:first-child': {
+      marginTop: 0,
+    },
+
+    // Adjacent sibling
+    '& + &': {
+      marginTop: 16,
+    },
+
+    // Parent hover (& must appear in selector)
+    '.dark-mode &': {
+      backgroundColor: '#1f2937',
+    },
+
+    // Direct child - use globalStyle instead
+    // '& > div': { } // Invalid!
+  },
+});
+```
+
+### Media Queries
+
+```typescript
+export const responsiveBox = style({
+  padding: 16,
+
+  '@media': {
+    '(min-width: 768px)': {
+      padding: 24,
+    },
+    '(min-width: 1024px)': {
+      padding: 32,
+    },
+    '(prefers-color-scheme: dark)': {
+      backgroundColor: '#1f2937',
+    },
+  },
+});
+```
+
+### Container Queries
+
+```typescript
+export const containerParent = style({
+  containerType: 'inline-size',
+});
+
+export const responsiveChild = style({
+  padding: 16,
+
+  '@container': {
+    '(min-width: 400px)': {
+      padding: 24,
+    },
+  },
+});
+```
+
+## CSS Variables
+
+### createVar
+
+```typescript
+import { style, createVar } from '@vanilla-extract/css';
+
+const accentColor = createVar();
+const spacing = createVar();
+
+export const container = style({
+  vars: {
+    [accentColor]: '#3b82f6',
+    [spacing]: '16px',
+  },
+  padding: spacing,
+  borderColor: accentColor,
+});
+
+export const altContainer = style({
+  vars: {
+    [accentColor]: '#10b981', // Override
+  },
+});
+```
+
+### Fallback Values
+
+```typescript
+import { fallbackVar } from '@vanilla-extract/css';
+
+export const box = style({
+  color: fallbackVar(accentColor, 'blue'),
+});
+```
+
+## Style Variants
+
+```typescript
+import { styleVariants } from '@vanilla-extract/css';
+
+// Simple variants
+export const color = styleVariants({
+  primary: { backgroundColor: '#3b82f6', color: 'white' },
+  secondary: { backgroundColor: '#e5e7eb', color: '#1f2937' },
+  danger: { backgroundColor: '#ef4444', color: 'white' },
+});
+
+// With composition
+const base = style({
+  padding: '12px 24px',
+  borderRadius: 8,
+  border: 'none',
+});
+
+export const button = styleVariants({
+  primary: [base, { backgroundColor: '#3b82f6', color: 'white' }],
+  secondary: [base, { backgroundColor: '#e5e7eb', color: '#1f2937' }],
+});
+
+// Usage
+<button className={button.primary}>Primary</button>
+<button className={color['secondary']}>Secondary</button>
+```
+
+## Global Styles
+
+```typescript
+import { globalStyle, style } from '@vanilla-extract/css';
+
+// Global reset
+globalStyle('*, *::before, *::after', {
+  boxSizing: 'border-box',
+});
+
+globalStyle('body', {
+  margin: 0,
+  fontFamily: 'system-ui, sans-serif',
+});
+
+// Reference scoped classes
+const card = style({ padding: 16 });
+
+globalStyle(`${card} > h2`, {
+  margin: 0,
+  fontSize: 24,
+});
+
+globalStyle(`${card} p`, {
+  color: '#6b7280',
+});
+```
+
+## Theming
+
+### Create Theme
+
+```typescript
+// theme.css.ts
+import { createTheme } from '@vanilla-extract/css';
+
+export const [themeClass, vars] = createTheme({
+  colors: {
+    primary: '#3b82f6',
+    secondary: '#6b7280',
+    background: '#ffffff',
+    text: '#1f2937',
+  },
+  spacing: {
+    sm: '8px',
+    md: '16px',
+    lg: '24px',
+  },
+  borderRadius: {
+    sm: '4px',
+    md: '8px',
+    lg: '16px',
+  },
+});
+```
+
+### Use Theme Variables
+
+```typescript
+// button.css.ts
+import { style } from '@vanilla-extract/css';
+import { vars } from './theme.css';
+
+export const button = style({
+  padding: vars.spacing.md,
+  borderRadius: vars.borderRadius.md,
+  backgroundColor: vars.colors.primary,
+  color: '#fff',
+});
+```
+
+### Multiple Themes
+
+```typescript
+import { createTheme, createThemeContract } from '@vanilla-extract/css';
+
+// Define contract (structure only)
+const themeContract = createThemeContract({
+  colors: {
+    background: null,
+    text: null,
+    primary: null,
+  },
+});
+
+// Light theme
+export const lightTheme = createTheme(themeContract, {
+  colors: {
+    background: '#ffffff',
+    text: '#1f2937',
+    primary: '#3b82f6',
+  },
+});
+
+// Dark theme
+export const darkTheme = createTheme(themeContract, {
+  colors: {
+    background: '#1f2937',
+    text: '#f9fafb',
+    primary: '#60a5fa',
+  },
+});
+
+export { themeContract as vars };
+```
+
+**Apply theme:**
+```tsx
+function App() {
+  const [isDark, setIsDark] = useState(false);
+
+  return (
+    <div className={isDark ? darkTheme : lightTheme}>
+      <button onClick={() => setIsDark(!isDark)}>Toggle</button>
+    </div>
+  );
+}
+```
+
+## Recipes
+
+Multi-variant component styles.
+
+**Install:**
+```bash
+npm install @vanilla-extract/recipes
+```
+
+```typescript
+// button.css.ts
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
+
+export const button = recipe({
+  base: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: 'none',
+    borderRadius: 8,
+    cursor: 'pointer',
+    fontWeight: 600,
+  },
+
+  variants: {
+    color: {
+      primary: {
+        backgroundColor: '#3b82f6',
+        color: 'white',
+      },
+      secondary: {
+        backgroundColor: '#e5e7eb',
+        color: '#1f2937',
+      },
+      danger: {
+        backgroundColor: '#ef4444',
+        color: 'white',
+      },
+    },
+    size: {
+      sm: { padding: '8px 16px', fontSize: 14 },
+      md: { padding: '12px 24px', fontSize: 16 },
+      lg: { padding: '16px 32px', fontSize: 18 },
+    },
+  },
+
+  compoundVariants: [
+    {
+      variants: { color: 'primary', size: 'lg' },
+      style: {
+        boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)',
+      },
+    },
+  ],
+
+  defaultVariants: {
+    color: 'primary',
+    size: 'md',
+  },
+});
+
+// Type extraction
+export type ButtonVariants = RecipeVariants<typeof button>;
+```
+
+**Usage:**
+```tsx
+import { button, ButtonVariants } from './button.css';
+
+interface ButtonProps extends ButtonVariants {
+  children: React.ReactNode;
+}
+
+export function Button({ color, size, children }: ButtonProps) {
+  return (
+    <button className={button({ color, size })}>
+      {children}
+    </button>
+  );
+}
+
+// Usage
+<Button color="primary" size="lg">Click me</Button>
+<Button color="danger">Delete</Button>
+```
+
+## Sprinkles
+
+Build atomic CSS utilities.
+
+**Install:**
+```bash
+npm install @vanilla-extract/sprinkles
+```
+
+```typescript
+// sprinkles.css.ts
+import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles';
+
+const space = {
+  none: '0',
+  sm: '4px',
+  md: '8px',
+  lg: '16px',
+  xl: '24px',
+};
+
+const colors = {
+  primary: '#3b82f6',
+  secondary: '#6b7280',
+  white: '#ffffff',
+  black: '#000000',
+};
+
+const responsiveProperties = defineProperties({
+  conditions: {
+    mobile: {},
+    tablet: { '@media': '(min-width: 768px)' },
+    desktop: { '@media': '(min-width: 1024px)' },
+  },
+  defaultCondition: 'mobile',
+  properties: {
+    display: ['none', 'flex', 'block', 'grid'],
+    flexDirection: ['row', 'column'],
+    alignItems: ['stretch', 'center', 'flex-start', 'flex-end'],
+    justifyContent: ['stretch', 'center', 'flex-start', 'flex-end', 'space-between'],
+    gap: space,
+    padding: space,
+    paddingTop: space,
+    paddingBottom: space,
+    paddingLeft: space,
+    paddingRight: space,
+    margin: space,
+  },
+  shorthands: {
+    p: ['padding'],
+    px: ['paddingLeft', 'paddingRight'],
+    py: ['paddingTop', 'paddingBottom'],
+    m: ['margin'],
+  },
+});
+
+const colorProperties = defineProperties({
+  properties: {
+    color: colors,
+    backgroundColor: colors,
+  },
+});
+
+export const sprinkles = createSprinkles(
+  responsiveProperties,
+  colorProperties
+);
+
+export type Sprinkles = Parameters<typeof sprinkles>[0];
+```
+
+**Usage:**
+```tsx
+import { sprinkles } from './sprinkles.css';
+
+function Box() {
+  return (
+    <div className={sprinkles({
+      display: 'flex',
+      gap: 'lg',
+      p: { mobile: 'md', desktop: 'xl' },
+      backgroundColor: 'white',
+    })}>
+      Content
+    </div>
+  );
+}
+```
+
+## Framework Setup
+
+### Next.js
+
+```javascript
+// next.config.js
+const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
+const withVanillaExtract = createVanillaExtractPlugin();
+
+module.exports = withVanillaExtract({
+  // Next.js config
+});
+```
+
+### Vite
+
+```typescript
+// vite.config.ts
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+
+export default defineConfig({
+  plugins: [vanillaExtractPlugin()],
+});
+```
+
+## Best Practices
+
+1. **Use `.css.ts` extension** - Required for processing
+2. **Colocate styles** - Keep near components
+3. **Export vars** - Share theme variables
+4. **Use recipes for variants** - Type-safe component APIs
+5. **Sprinkles for utilities** - Build design system primitives
+
+## Reference Files
+
+- [references/recipes.md](references/recipes.md) - Recipe patterns
+- [references/sprinkles.md](references/sprinkles.md) - Atomic CSS utilities
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
