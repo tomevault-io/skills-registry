@@ -1,311 +1,152 @@
 ---
-name: moai-session-info
-description: Display comprehensive project and session information including Git status, Use when this capability is needed.
+name: make-skill-template
+description: Create new Agent Skills for GitHub Copilot from prompts or by duplicating this template. Use when asked to "create a skill", "make a new skill", "scaffold a skill", or when building specialized AI capabilities with bundled resources. Generates SKILL.md files with proper frontmatter, directory structure, and optional scripts/references/assets folders. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
+# Make Skill Template
 
-# Session Information Provider
+A meta-skill for creating new Agent Skills. Use this skill when you need to scaffold a new skill folder, generate a SKILL.md file, or help users understand the Agent Skills specification.
 
-## Skill Metadata
+## When to Use This Skill
 
-| Field | Value |
-| ----- | ----- |
-| Version | 1.0.0 |
-| Tier | Alfred (Session Management) |
-| Auto-load | On session start or when status requested |
-| Purpose | Provide comprehensive project and session overview |
+- User asks to "create a skill", "make a new skill", or "scaffold a skill"
+- User wants to add a specialized capability to their GitHub Copilot setup
+- User needs help structuring a skill with bundled resources
+- User wants to duplicate this template as a starting point
 
+## Prerequisites
+
+- Understanding of what the skill should accomplish
+- A clear, keyword-rich description of capabilities and triggers
+- Knowledge of any bundled resources needed (scripts, references, assets, templates)
+
+## Creating a New Skill
+
+### Step 1: Create the Skill Directory
+
+Create a new folder with a lowercase, hyphenated name:
+
+```
+skills/<skill-name>/
+└── SKILL.md          # Required
+```
+
+### Step 2: Generate SKILL.md with Frontmatter
+
+Every skill requires YAML frontmatter with `name` and `description`:
+
+```yaml
 ---
-
-## What It Does
-
-Comprehensive session and project information provider that gives users complete context about their current MoAI-ADK project state, including Git status, SPEC progress, version information, and system resources.
-
-**Core capabilities**:
-- ✅ Project metadata and configuration display
-- ✅ Git repository status and commit history
-- ✅ SPEC progress tracking and completion metrics
-- ✅ Version information and update availability
-- ✅ System resource monitoring
-- ✅ Checkpoint status and restoration options
-- ✅ Session metrics and handoff information
-
+name: <skill-name>
+description: '<What it does>. Use when <specific triggers, scenarios, keywords users might say>.'
 ---
-
-## When to Use
-
-- ✅ When starting a new Claude Code session
-- ✅ When checking project status and progress
-- ✅ Before making significant changes or commits
-- ✅ When users ask "what's the status", "show project info", "where are we"
-- ✅ When reviewing project context and history
-- ✅ Before running /alfred commands
-
----
-
-## Core Information Categories
-
-### 1. Project Overview
-```bash
-🗿 Project: MoAI-ADK
-📁 Location: /Users/goos/MoAI/MoAI-ADK
-🌍 Language: 한국어 (Korean)
-🔧 Mode: Team (GitFlow)
-⚡ Toolchain: Python optimized
 ```
 
-### 2. Version Information
-```bash
-📦 Current: v0.15.2
-🆓 Update Available: v0.16.0
-⬆️  Upgrade Command: pip install --upgrade moai-adk
-📝 Release Notes: https://github.com/moai-adk/moai-adk/releases/tag/v0.16.0
+#### Frontmatter Field Requirements
+
+| Field | Required | Constraints |
+|-------|----------|-------------|
+| `name` | **Yes** | 1-64 chars, lowercase letters/numbers/hyphens only, must match folder name |
+| `description` | **Yes** | 1-1024 chars, must describe WHAT it does AND WHEN to use it |
+| `license` | No | License name or reference to bundled LICENSE.txt |
+| `compatibility` | No | 1-500 chars, environment requirements if needed |
+| `metadata` | No | Key-value pairs for additional properties |
+| `allowed-tools` | No | Space-delimited list of pre-approved tools (experimental) |
+
+#### Description Best Practices
+
+**CRITICAL**: The `description` is the PRIMARY mechanism for automatic skill discovery. Include:
+
+1. **WHAT** the skill does (capabilities)
+2. **WHEN** to use it (triggers, scenarios, file types)
+3. **Keywords** users might mention in prompts
+
+**Good example:**
+
+```yaml
+description: 'Toolkit for testing local web applications using Playwright. Use when asked to verify frontend functionality, debug UI behavior, capture browser screenshots, or view browser console logs. Supports Chrome, Firefox, and WebKit.'
 ```
 
-### 3. Git Repository Status
-```bash
-🌿 Branch: develop (3 commits ahead of main)
-📝 Changes: 5 modified, 2 added
-🔨 Last Commit: feat: Complete skill consolidation (2 hours ago)
-📊 Commit Hash: a1b2c3d
+**Poor example:**
+
+```yaml
+description: 'Web testing helpers'
 ```
 
-### 4. SPEC Progress
-```bash
-📋 Total SPECs: 15
-✅ Completed: 12 (80%)
-⏳ In Progress: 2
-📝 Pending: 1
-📊 Completion Rate: 80%
-```
+### Step 3: Write the Skill Body
 
-### 5. System Resources
-```bash
-🧠 Memory Usage: 2.4GB / 16GB (15%)
-💾 Disk Space: 45GB free
-🔄 CPU Usage: 12%
-⚡ Session Duration: 45 minutes
-```
+After the frontmatter, add markdown instructions. Recommended sections:
 
-### 6. Available Checkpoints
-```bash
-🗂️  Checkpoints: 3 available
-   📌 auth-system-implementation (30 min ago)
-   📌 skill-consolidation (2 hours ago)
-   📌 feature-branch-workflow (yesterday)
-↩️  Restore: /alfred:0-project restore
-```
+| Section | Purpose |
+|---------|---------|
+| `# Title` | Brief overview |
+| `## When to Use This Skill` | Reinforces description triggers |
+| `## Prerequisites` | Required tools, dependencies |
+| `## Step-by-Step Workflows` | Numbered steps for tasks |
+| `## Troubleshooting` | Common issues and solutions |
+| `## References` | Links to bundled docs |
 
----
+### Step 4: Add Optional Directories (If Needed)
 
-## Quick Start Commands
+| Folder | Purpose | When to Use |
+|--------|---------|-------------|
+| `scripts/` | Executable code (Python, Bash, JS) | Automation that performs operations |
+| `references/` | Documentation agent reads | API references, schemas, guides |
+| `assets/` | Static files used AS-IS | Images, fonts, templates |
+| `templates/` | Starter code agent modifies | Scaffolds to extend |
 
-### Basic Status Check
-```python
-# Simple project overview
-Skill("moai-session-info")
-```
-
-### Detailed Status with Metrics
-```python
-# Comprehensive status with all details
-Skill("moai-session-info")
-# Response includes all categories above
-```
-
-### Before Major Operations
-```python
-# Always check status before:
-# - /alfred:1-plan (planning new features)
-# - /alfred:2-run (implementing changes)
-# - git operations (commits, merges)
-
-Skill("moai-session-info")
-# Review status, then proceed with operation
-```
-
----
-
-## Information Sources
-
-The skill gathers information from multiple sources:
-
-### Project Configuration
-- `.moai/config.json` - Project settings and language
-- `pyproject.toml` - Package version and dependencies
-- `.git/` - Repository status and history
-
-### SPEC Tracking
-- `.moai/specs/` - SPEC documents and completion status
-- SPEC metadata - Progress tracking and milestones
-
-### System Resources
-- `psutil` - Memory and CPU usage
-- File system - Disk space and project size
-- Session metrics - Current session duration
-
-### Version Information
-- Package registries - Latest available versions
-- GitHub releases - Release notes and changelogs
-
----
-
-## Status Message Format
-
-The skill generates structured status messages with consistent formatting:
+## Example: Complete Skill Structure
 
 ```
-🚀 MoAI-ADK Project Status
-
-📋 Project Overview
-   🗿 Project: {project_name}
-   📁 Location: {project_path}
-   🌍 Language: {language}
-   🔧 Mode: {git_mode}
-
-📦 Version Information
-   📦 Current: {current_version}
-   {update_information}
-   📝 Release Notes: {release_url}
-
-🌿 Git Repository
-   🌿 Branch: {branch} ({commit_hash})
-   📝 Changes: {file_changes}
-   🔨 Last: {last_commit_message}
-
-📊 SPEC Progress
-   📋 Total: {total_specs}
-   ✅ Completed: {completed_specs} ({percentage}%)
-   ⏳ In Progress: {in_progress_specs}
-
-🧠 System Resources
-   🧠 Memory: {memory_usage}
-   💾 Disk: {disk_space}
-   ⚡ Session: {session_duration}
-
-🗂️  Checkpoints
-   {checkpoint_list}
-   ↩️  Restore: /alfred:0-project restore
+my-awesome-skill/
+├── SKILL.md                    # Required instructions
+├── LICENSE.txt                 # Optional license file
+├── scripts/
+│   └── helper.py               # Executable automation
+├── references/
+│   ├── api-reference.md        # Detailed docs
+│   └── examples.md             # Usage examples
+├── assets/
+│   └── diagram.png             # Static resources
+└── templates/
+    └── starter.ts              # Code scaffold
 ```
 
----
+## Quick Start: Duplicate This Template
 
-## Integration with Alfred Commands
+1. Copy the `make-skill-template/` folder
+2. Rename to your skill name (lowercase, hyphens)
+3. Update `SKILL.md`:
+   - Change `name:` to match folder name
+   - Write a keyword-rich `description:`
+   - Replace body content with your instructions
+4. Add bundled resources as needed
+5. Validate with `npm run skill:validate`
 
-This skill is automatically invoked by:
+## Validation Checklist
 
-### SessionStart Hook Integration
-```python
-# In session_start__show_project_info.py
-# Automatically called when session starts
-Skill("moai-session-info")
-```
+- [ ] Folder name is lowercase with hyphens
+- [ ] `name` field matches folder name exactly
+- [ ] `description` is 10-1024 characters
+- [ ] `description` explains WHAT and WHEN
+- [ ] `description` is wrapped in single quotes
+- [ ] Body content is under 500 lines
+- [ ] Bundled assets are under 5MB each
 
-### Command Integration
-```python
-# Before /alfred:1-plan
-if context == "planning":
-    Skill("moai-session-info")  # Show current status
+## Troubleshooting
 
-# Before /alfred:2-run
-if context == "implementation":
-    Skill("moai-session-info")  # Confirm project state
+| Issue | Solution |
+|-------|----------|
+| Skill not discovered | Improve description with more keywords and triggers |
+| Validation fails on name | Ensure lowercase, no consecutive hyphens, matches folder |
+| Description too short | Add capabilities, triggers, and keywords |
+| Assets not found | Use relative paths from skill root |
 
-# Before git operations
-if "git" in command:
-    Skill("moai-session-info")  # Show repository status
-```
+## References
 
----
-
-## Error Handling and Fallbacks
-
-### Graceful Degradation
-The skill provides useful information even when some sources fail:
-
-```python
-# If Git commands fail:
-# Still show project info, version, and system resources
-
-# If SPEC counting fails:
-# Still show Git status and version information
-
-# If network access fails:
-# Still show local information (Git, SPECs, system)
-```
-
-### Common Error Scenarios
-- **Git repository not found**: Shows project info without Git details
-- **No .moai/config.json**: Uses default settings and basic project detection
-- **Network unavailable**: Shows local information only
-- **Permission denied**: Provides read-only information where possible
-
----
-
-## Performance Considerations
-
-### Optimization Strategies
-- **Caching**: Cache expensive operations (Git history, version checks)
-- **Timeouts**: 5-second timeout for network operations
-- **Lazy Loading**: Load detailed information only when requested
-- **Incremental Updates**: Update only changed information
-
-### Resource Usage
-- **Memory**: Minimal footprint (< 10MB)
-- **Network**: Only for version checks (cached locally)
-- **Disk**: Reads existing files, no modifications
-- **CPU**: Lightweight operations, quick response times
-
----
-
-## Usage Examples
-
-### Example 1: Session Start
-```python
-# User starts new Claude Code session
-Skill("moai-session-info")
-
-# Output:
-🚀 MoAI-ADK Session Started
-
-📋 Project Overview
-   🗿 Project: MoAI-ADK
-   📁 Location: /Users/goos/MoAI/MoAI-ADK
-   🌍 Language: 한국어
-   🔧 Mode: Team
-
-📦 Version: v0.15.2 → v0.16.0 available
-📝 Release Notes: https://github.com/...
-
-🌿 Branch: develop (3 ahead)
-📝 Changes: 5 modified, 2 added
-📋 SPEC Progress: 12/15 (80%)
-```
-
-### Example 2: Pre-Implementation Check
-```python
-# User wants to implement new feature
-"/alfred:2-run SPEC-AUTH-001"
-
-# Alfred automatically calls:
-Skill("moai-session-info")
-
-# User sees status before implementation begins
-```
-
-### Example 3: Status Query
-```python
-# User asks: "what's our current status?"
-Skill("moai-session-info")
-
-# Complete project status displayed
-```
-
----
-
-**End of Skill** | Optimized for quick status checks and session context
+- Agent Skills official spec: <https://agentskills.io/specification>
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
