@@ -1,342 +1,287 @@
 ---
-name: python-modern-cli
-description: Build professional Python CLIs with modern UX patterns using pyfiglet (ASCII banners), typer (commands), questionary (interactions), and rich (formatting). Use when creating command-line tools, automation scripts with user interaction, data processing pipelines with CLI interfaces, or upgrading existing Python scripts to professional CLIs. Ideal for ETL workflows, GIS tools, data analysis utilities, and civic tech projects requiring reproducible, scriptable interfaces. Use when this capability is needed.
+name: visual-style-guide
+description: This skill should be used when the user asks about "colors", "hex codes", "path colors", "tile background", "rendering order", "sorting order", "token design", "SVG styling", "stroke width", "line cap", "grid lines", "glow effect", "visual style", or discusses Zero-Day Attack visual design and styling. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Python Modern CLI
+# Visual Style Guide
 
-Build professional command-line interfaces in Python combining visual appeal, interactive UX, and clear output formatting.
+Expert knowledge of Zero-Day Attack visual design, color palette, rendering specifications, and SVG styling conventions.
 
-## Quick Start
+## Color Palette
 
-Copy the base template from `assets/cli_template.py` as starting point. Install dependencies:
+### Background Elements
 
-```bash
-pip install typer[all] rich questionary pyfiglet --break-system-packages
+| Element          | Hex       | RGB          | Description                    |
+| ---------------- | --------- | ------------ | ------------------------------ |
+| Tile Background  | `#151820` | (21, 24, 32) | Very dark blue-gray            |
+| Grid Lines       | `#222630` | (34, 38, 48) | Slightly lighter (50% opacity) |
+| Board Background | `#0D0F14` | (13, 15, 20) | Darkest blue-gray              |
+
+### Path Colors
+
+| Color  | Hex       | RGB             | Purpose           |
+| ------ | --------- | --------------- | ----------------- |
+| Red    | `#FF2244` | (255, 34, 68)   | Red player paths  |
+| Blue   | `#44BBFF` | (68, 187, 255)  | Blue player paths |
+| Purple | `#BB88FF` | (187, 136, 255) | Shared paths      |
+
+### Color Accessibility
+
+Colors tested for color vision deficiencies:
+
+- High contrast between paths and background
+- Red appears brownish but distinct in colorblind view
+- Blue remains clearly visible
+- Purple maintains unique identity
+
+## Path Specifications
+
+### SVG Path Attributes
+
+```svg
+<path d="M [start] C [control1], [control2], [end]"
+      fill="none"
+      stroke="#FF2244"
+      stroke-width="8"
+      stroke-linecap="butt"/>
 ```
 
-Basic structure:
+| Attribute      | Value       | Purpose                       |
+| -------------- | ----------- | ----------------------------- |
+| fill           | none        | Paths are stroked, not filled |
+| stroke         | (color hex) | Path color                    |
+| stroke-width   | **8**       | Path thickness in SVG units   |
+| stroke-linecap | **butt**    | Square end caps               |
 
-```python
-import typer
-from rich.console import Console
-from pyfiglet import figlet_format
-import questionary
+### Path Connections
 
-app = typer.Typer()
-console = Console()
+- Paths connect at edge midpoints (100 units from corners on 200×200 tile)
+- Curved paths use bezier curves with consistent radius
+- Paths do NOT connect where they visually cross (gap indicates underpass)
 
-def show_banner(title: str):
-    console.print(figlet_format(title, font="slant"), style="bold cyan")
+## Grid Line Styling
 
-@app.command()
-def process(
-    input_file: str = typer.Argument(..., help="Input file path"),
-    output: str = typer.Option("output.csv", "--output", "-o"),
-    verbose: bool = typer.Option(False, "--verbose", "-v")
-):
-    """Process data with clear feedback"""
-    if verbose:
-        show_banner("My Tool")
-    
-    console.print(f"[green]Processing {input_file}...[/green]")
-    # ... processing logic ...
-    console.print("[bold green]✓ Done![/bold green]")
+### Cyberpunk Glow Effect
 
-if __name__ == "__main__":
-    app()
+Two-layer rendering:
+
+```csharp
+// Glow layer (sorting order 1)
+Color glowColor = new Color(0.73f, 0.53f, 1f, 0.3f);  // #BB88FF @ 30%
+float glowWidth = 0.2f;
+
+// Core layer (sorting order 2)
+Color coreColor = new Color(0.73f, 0.53f, 1f, 0.9f);  // #BB88FF @ 90%
+float coreWidth = 0.08f;
 ```
 
-## Core Components
+### Grid Structure
 
-### 1. Pyfiglet - Visual Identity
+- 5×5 grid with 40-unit spacing in SVG terms
+- Lines rendered at 50% opacity
+- Reserve zone boundaries: Blue on left, Red on right
 
-Create memorable ASCII art banners. Use sparingly for main commands or when `--verbose`.
+## Token Design
 
-```python
-from pyfiglet import figlet_format
-from rich.console import Console
+### Attack Token
 
-console = Console()
-
-# Simple banner
-banner = figlet_format("Tool Name", font="slant")
-console.print(banner, style="bold cyan")
-
-# Common fonts: slant, banner, digital, standard
+```text
+Design: Filled target
+- Three concentric circles (solid fill)
+- Cross pattern overlay
+- Player color fill
 ```
 
-### 2. Typer - Command Structure
+### Exploit Token
 
-Define commands, arguments, options with type hints and validation.
-
-```python
-import typer
-from pathlib import Path
-from typing import Optional
-
-app = typer.Typer()
-
-@app.command()
-def convert(
-    input_file: Path = typer.Argument(..., exists=True, help="Input CSV"),
-    format: str = typer.Option("geojson", "--format", "-f", 
-                               help="Output format"),
-    dry_run: bool = typer.Option(False, "--dry-run")
-):
-    """Convert data to specified format"""
-    pass
-
-# Multiple commands
-data_app = typer.Typer()
-app.add_typer(data_app, name="data")
-
-@data_app.command("import")
-def import_data(source: str):
-    """Import from source"""
-    pass
+```text
+Design: Hollow rings
+- Two concentric circles (outline only)
+- Faint crosshair overlay
+- Player color stroke
 ```
 
-### 3. Questionary - User Interaction
+### Ghost Token
 
-Interactive prompts when flags/args are insufficient or for confirmations.
-
-```python
-import questionary
-
-# Text input with validation
-def validate_url(text):
-    return text.startswith("http") or "URL must start with http"
-
-url = questionary.text(
-    "API endpoint:",
-    validate=validate_url
-).ask()
-
-# Selection
-operation = questionary.select(
-    "Choose operation:",
-    choices=["Extract", "Transform", "Load"]
-).ask()
-
-# Autocomplete for known values
-dataset = questionary.autocomplete(
-    "Select dataset:",
-    choices=["istat_pop", "anac_contracts", "geo_comuni"]
-).ask()
-
-# Confirmation before destructive operations
-if questionary.confirm("Delete all data?").ask():
-    # proceed
-
-# Multiple selection
-features = questionary.checkbox(
-    'Enable features:',
-    choices=['Cache', 'Logging', 'Validation']
-).ask()
+```text
+Design: Gradient opacity
+- Four concentric circles
+- Graduated opacity: 30%, 50%, 70%, 100%
+- Player color with transparency
 ```
 
-### 4. Rich - Output Formatting
+### Token Dimensions
 
-Tables, progress bars, colored messages, panels for structured output.
+| Attribute    | Value                   |
+| ------------ | ----------------------- |
+| SVG viewBox  | 80×80 units             |
+| World Size   | 0.4 units (20% of tile) |
+| Texture Size | 40 pixels (at 100 PPU)  |
 
-```python
-from rich.console import Console
-from rich.table import Table
-from rich.progress import Progress
-from rich.panel import Panel
+## Tile Dimensions
 
-console = Console()
+| Attribute    | Value            |
+| ------------ | ---------------- |
+| SVG viewBox  | 200×200 units    |
+| World Size   | 2.0×2.0 units    |
+| Texture Size | 200 (at 100 PPU) |
 
-# Tables for data display
-table = Table(title="Processing Results")
-table.add_column("File", style="cyan")
-table.add_column("Records", justify="right", style="green")
-table.add_column("Status", justify="center")
+### SVG Import Settings (CRITICAL)
 
-for file in results:
-    table.add_row(file.name, str(file.count), "✓")
-console.print(table)
+**Always use PPU = 100. Adjust Texture Size for world size.**
 
-# Progress for long operations
-with Progress() as progress:
-    task = progress.add_task("[cyan]Processing files...", total=len(files))
-    for file in files:
-        process_file(file)
-        progress.update(task, advance=1)
-
-# Panels for important messages
-console.print(Panel(
-    "[bold]Configuration saved[/bold]\nLocation: ~/.myapp/config.json",
-    title="Success",
-    border_style="green"
-))
-
-# Errors
-console.print(Panel(
-    f"[bold red]Error:[/bold red] Invalid file format",
-    border_style="red"
-))
+```text
+World Size = Texture Size ÷ 100
 ```
 
-## Design Patterns
+| Asset  | Texture Size | PPU | World Size |
+| ------ | ------------ | --- | ---------- |
+| Tiles  | 200          | 100 | 2.0        |
+| Tokens | 40           | 100 | 0.4        |
 
-### ETL Pipeline CLI
+## Rendering Order (Sorting Layers)
 
-```python
-@app.command()
-def pipeline(
-    source: str = typer.Argument(..., help="Data source URL"),
-    output_dir: Path = typer.Option("./output", "--output", "-o"),
-    validate: bool = typer.Option(True, "--validate/--no-validate")
-):
-    """Run complete ETL pipeline"""
-    show_banner("ETL Pipeline")
-    
-    steps = ["Extract", "Transform", "Validate", "Load"]
-    with Progress() as progress:
-        task = progress.add_task("[cyan]Pipeline", total=len(steps))
-        
-        # Extract
-        data = extract_data(source)
-        progress.update(task, advance=1, description="[cyan]Extracting...")
-        
-        # Transform
-        transformed = transform(data)
-        progress.update(task, advance=1, description="[cyan]Transforming...")
-        
-        if validate:
-            errors = validate_data(transformed)
-            progress.update(task, advance=1)
-            if errors:
-                console.print(f"[yellow]⚠ {len(errors)} validation errors[/yellow]")
-        
-        # Load
-        save_data(transformed, output_dir)
-        progress.update(task, advance=1)
-    
-    console.print("[bold green]✓ Pipeline completed[/bold green]")
+Higher sorting order = renders in front.
+
+| Layer         | Order  | Content               | Component           |
+| ------------- | ------ | --------------------- | ------------------- |
+| Background    | -10    | Board color           | BackgroundRenderer  |
+| Tiles         | 0      | Tile sprites          | TileView            |
+| Grid Glow     | 1      | Wide purple lines     | GridOverlayRenderer |
+| Grid Core     | 2      | Thin purple lines     | GridOverlayRenderer |
+| Reserve Lines | 1      | Zone boundaries       | GridOverlayRenderer |
+| Edge Nodes    | 3      | Connection indicators | (future)            |
+| UI            | Canvas | Text, scores          | Unity UI            |
+
+### Critical: Grid Above Tiles
+
+Grid sorting order MUST be higher than tiles:
+
+- Tiles: 0
+- Grid Glow: 1
+- Grid Core: 2
+
+If grid order is lower, tiles cover the grid lines.
+
+## Board Layout
+
+### Display Specifications
+
+Target: 1920×1080 pixels = 19.2×10.8 world units (100 PPU)
+
+### Horizontal Layout Visual
+
+```text
+┌─────────┬──────────┬────────────────────────────┬──────────┬─────────┐
+│ Blue UI │ Blue Res │       5×5 PLAYABLE GRID    │ Red Res  │ Red UI  │
+│   2.1   │   2.0    │           10.0             │   2.0    │  2.1    │
+│`#44BBFF`│ `#44BBFF`│    `#BB88FF` (firewall)    │ `#FF2244`│`#FF2244`│
+└─────────┴──────────┴────────────────────────────┴──────────┴─────────┘
+← Blue player sits here                           Red player sits here →
 ```
 
-### Interactive Configuration
+### Player Orientation
 
-```python
-@app.command()
-def configure():
-    """Interactive configuration setup"""
-    show_banner("Configuration")
-    
-    config = {
-        "api_url": questionary.text(
-            "API endpoint:",
-            default="https://api.example.com"
-        ).ask(),
-        
-        "format": questionary.select(
-            "Default output format:",
-            choices=["csv", "geojson", "parquet"]
-        ).ask(),
-        
-        "cache": questionary.confirm(
-            "Enable caching?",
-            default=True
-        ).ask()
-    }
-    
-    # Display configuration
-    table = Table(title="Configuration")
-    table.add_column("Setting", style="cyan")
-    table.add_column("Value", style="green")
-    
-    for key, value in config.items():
-        table.add_row(key, str(value))
-    
-    console.print(table)
-    
-    if questionary.confirm("Save configuration?").ask():
-        save_config(config)
-        console.print("[green]✓ Configuration saved[/green]")
+- **Blue player**: Views from LEFT side (x < 0)
+- **Red player**: Views from RIGHT side (x > 0)
+- UI text rotated appropriately for each player's viewing angle
+
+## SVG Technical Specifications
+
+### Tile Template
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#151820"/>
+
+  <!-- Grid (40-unit spacing, 50% opacity) -->
+  <path d="M 0 40 L 200 40 M 0 80 L 200 80 M 0 120 L 200 120 M 0 160 L 200 160"
+        stroke="#222630" stroke-width="1" opacity="0.5"/>
+  <path d="M 40 0 L 40 200 M 80 0 L 80 200 M 120 0 L 120 200 M 160 0 L 160 200"
+        stroke="#222630" stroke-width="1" opacity="0.5"/>
+
+  <!-- Paths -->
+  <path d="M 100 0 C 100 50, 150 100, 200 100"
+        fill="none" stroke="#FF2244" stroke-width="8" stroke-linecap="butt"/>
+</svg>
 ```
 
-### Batch Processing with Feedback
+### Edge Node Positions (200×200 viewBox)
 
-```python
-@app.command()
-def batch(
-    pattern: str = typer.Argument(..., help="File pattern (e.g., '*.csv')"),
-    operation: str = typer.Option("validate", help="Operation to perform")
-):
-    """Process multiple files with detailed feedback"""
-    files = list(Path(".").glob(pattern))
-    
-    if not files:
-        console.print(f"[yellow]No files matching '{pattern}'[/yellow]")
-        raise typer.Exit(1)
-    
-    console.print(f"Found {len(files)} files")
-    
-    results = []
-    with Progress() as progress:
-        task = progress.add_task("[cyan]Processing", total=len(files))
-        
-        for file in files:
-            try:
-                result = process_file(file, operation)
-                results.append(("✓", file.name, result))
-            except Exception as e:
-                results.append(("✗", file.name, str(e)))
-            progress.update(task, advance=1)
-    
-    # Summary table
-    table = Table(title="Results")
-    table.add_column("Status", justify="center")
-    table.add_column("File", style="cyan")
-    table.add_column("Result")
-    
-    for status, name, result in results:
-        style = "green" if status == "✓" else "red"
-        table.add_row(f"[{style}]{status}[/{style}]", name, result)
-    
-    console.print(table)
+| Node   | Position   |
+| ------ | ---------- |
+| Top    | (100, 0)   |
+| Right  | (200, 100) |
+| Bottom | (100, 200) |
+| Left   | (0, 100)   |
+
+### Path Types
+
+**Quarter-curve (adjacent nodes)**:
+
+```svg
+<!-- Left to Top -->
+<path d="M 0 100 C 50 100, 100 50, 100 0" .../>
 ```
 
-## Key Principles
+**Straight line (opposite nodes)**:
 
-1. **Progressive verbosity**: Use banners/formatting only when useful. Support `--verbose`/`--quiet` flags.
-2. **Clear feedback**: Always show progress for operations >2 seconds. Use colors consistently.
-3. **Fail gracefully**: Validate inputs early. Show actionable error messages with suggestions.
-4. **Scriptable**: Support non-interactive mode with all flags. Output machine-readable formats on request.
-5. **Reproducible**: Log commands with full parameters. Support config files for repeated workflows.
-
-## Advanced Patterns
-
-For complex scenarios (multi-command apps, context state, custom styling, testing), see `references/advanced_patterns.md`.
-
-Common advanced needs:
-- Subcommands and command groups
-- Shared state across commands
-- Custom questionary styling
-- Configuration file management
-- Progress for streaming data
-- CLI testing with CliRunner
-
-## Template Usage
-
-The `assets/cli_template.py` provides a working example demonstrating all four components. Copy and adapt:
-
-```bash
-cp assets/cli_template.py my_tool.py
-chmod +x my_tool.py
-./my_tool.py --help
+```svg
+<!-- Left to Right -->
+<path d="M 0 100 L 200 100" .../>
 ```
 
-Modify the commands, add your logic, keep the UX patterns.
+## Unity Color Usage
 
-## Source
+### In C# Code
 
-Based on the approach shared by Gaël PENESSOT: [LinkedIn post](https://www.linkedin.com/posts/gael-penessot_la-prochaine-fois-que-tu-lances-ton-script-activity-7410212824226058240-WMDh/)
+```csharp
+// Background
+Color boardBackground = new Color(0.05f, 0.06f, 0.08f);  // #0D0F14
+Color tileBackground = new Color(0.08f, 0.09f, 0.13f);   // #151820
+
+// Paths
+Color redPath = new Color(1f, 0.13f, 0.27f);             // #FF2244
+Color bluePath = new Color(0.27f, 0.73f, 1f);            // #44BBFF
+Color purplePath = new Color(0.73f, 0.53f, 1f);          // #BB88FF
+
+// Grid
+Color gridLine = new Color(0.13f, 0.15f, 0.19f, 0.5f);   // #222630 @ 50%
+```
+
+### In Inspector
+
+Enter hex values directly: `#FF2244`, `#44BBFF`, etc.
+
+## Consistency Rules
+
+1. **Path width**: Always 8 SVG units
+2. **Line cap**: Always "butt"
+3. **Grid opacity**: Always 50%
+4. **Grid spacing**: Always 40 SVG units
+5. **Token size**: Always 20% of tile size
+
+## Additional Resources
+
+### Reference Files
+
+This skill's `references/` folder contains:
+
+| File                    | Contains                           | Read When                           |
+| ----------------------- | ---------------------------------- | ----------------------------------- |
+| `color-system.md`       | Full palette, hex codes, RGB       | Need exact color values             |
+| `rendering-order.md`    | 7 layers, sorting order details    | Fixing z-order/visibility issues    |
+| `svg-specifications.md` | viewBox, stroke widths, path types | Creating or modifying SVG assets    |
+| `token-designs.md`      | Attack/Exploit/Ghost visual specs  | Designing or updating token visuals |
+| `tile-styling.md`       | Tile background, path rendering    | Styling tile graphics               |
+
+### Project Files
+
+- **Assets/Tiles/** - Reference existing tile SVGs
+- **Assets/Tokens/** - Reference existing token SVGs
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
