@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [paiml/aprender](https://github.com/paiml/aprender/tree/main/.claude/skills/pre-release/SKILL.md)
+Original source: [paiml/aprender](https://github.com/paiml/aprender/tree/main/crates/aprender-contracts-staging/.claude/skills/find-contracts/SKILL.md)
 
 ---
 
