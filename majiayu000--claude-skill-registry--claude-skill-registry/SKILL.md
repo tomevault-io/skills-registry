@@ -1,547 +1,309 @@
 ---
-name: 12-factor-apps
-description: Perform 12-Factor App compliance analysis on any codebase. Use when evaluating application architecture, auditing SaaS applications, or reviewing cloud-native applications against the original 12-Factor methodology. Use when this capability is needed.
+name: work-with-justfiles
+description: Guidance for structuring and organizing justfiles. Use when creating, editing, or discussing justfile organization, command grouping, or repo CLI conventions. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# 12-Factor App Compliance Analysis
+<objective>
+Justfiles capture the common commands of a repository in one place. This skill provides principles for organizing justfiles effectively - preventing scope creep, documenting workflows, and creating clear command aliases that work consistently.
 
-> Reference: [The Twelve-Factor App](https://12factor.net)
+The goal is a single source of truth for "how do I do X in this repo" that anyone can read and understand.
+</objective>
 
-## Overview
+<quick_start>
+<core_rule>
+**Justfiles always run from the repo root.** Never `cd` in recipes. Use absolute paths or paths relative to the justfile location.
+</core_rule>
 
-The 12-Factor App methodology is a set of best practices for building Software-as-a-Service applications that are:
-- Portable across execution environments
-- Scalable without architectural changes
-- Suitable for continuous deployment
-- Maintainable with minimal friction
+<basic_structure>
+```just
+# Group: Development
+dev:
+    npm run dev
 
-## Input Parameters
+# Group: Testing
+test:
+    npm test
 
-| Parameter | Description | Required |
-|-----------|-------------|----------|
-| `codebase_path` | Root path of the codebase to analyze | Required |
+test-watch:
+    npm test -- --watch
+```
+</basic_structure>
+</quick_start>
 
-## Analysis Framework
+<essential_principles>
+<principle name="root_execution">
+**Always run from root, never cd**
 
-### Factor I: Codebase
+Justfiles execute from the repository root. This is a feature, not a limitation:
+- Predictable behavior regardless of where you invoke `just`
+- Paths in recipes are always relative to repo root
+- No confusion about "where am I running this from"
 
-**Principle:** One codebase tracked in revision control, many deploys.
+```just
+# Good - explicit path from root
+build:
+    cd packages/app && npm run build
 
-**Search Patterns:**
-```bash
-# Check for version control
-ls -la .git 2>/dev/null || ls -la .hg 2>/dev/null
-
-# Check for multiple apps sharing codebase
-find . -name "package.json" -o -name "pyproject.toml" -o -name "setup.py" | head -20
-
-# Check for environment-specific code branches
-grep -r "if.*production\|if.*development\|if.*staging" --include="*.py" --include="*.js" --include="*.ts"
+# Bad - assumes current directory
+build:
+    npm run build
 ```
 
-**File Patterns:** `.git/`, `package.json`, `pyproject.toml`, deployment configs
+If a command needs to run in a subdirectory, use `cd dir &&` prefix explicitly.
+</principle>
 
-**Compliance Criteria:**
+<principle name="command_aliasing">
+**Capture every common command as an alias**
 
-| Level | Criteria |
-|-------|----------|
-| **Strong** | Single Git repo, same codebase for all environments, no env-specific code branches |
-| **Partial** | Single repo but some environment-specific code paths |
-| **Weak** | Multiple repos for same app or significant code duplication across environments |
+The justfile should be the single source of truth for repo commands. If someone asks "how do I run tests?" or "how do I deploy?", the answer is in the justfile.
 
-**Anti-patterns:**
-- Multiple Git repositories for the same application
-- Environment-specific code branches (`if production: ...`)
-- Different source files for dev vs prod
-- Shared code not extracted to libraries
+```just
+# Instead of remembering: npm run test:unit -- --coverage --reporter=html
+test-coverage:
+    npm run test:unit -- --coverage --reporter=html
 
----
-
-### Factor II: Dependencies
-
-**Principle:** Explicitly declare and isolate dependencies.
-
-**Search Patterns:**
-```bash
-# Python dependency files
-find . -name "requirements.txt" -o -name "pyproject.toml" -o -name "setup.py" -o -name "Pipfile" -o -name "uv.lock"
-
-# JavaScript/TypeScript dependency files
-find . -name "package.json" -o -name "package-lock.json" -o -name "yarn.lock" -o -name "pnpm-lock.yaml"
-
-# Check for system tool assumptions
-grep -r "subprocess.*curl\|subprocess.*wget\|os.system.*ffmpeg\|shutil.which" --include="*.py"
-grep -r "exec.*curl\|child_process.*curl" --include="*.js" --include="*.ts"
-
-# Docker/container isolation
-find . -name "Dockerfile" -o -name "docker-compose*.yml"
+# Instead of remembering: docker compose -f docker-compose.dev.yml up -d
+dev-services:
+    docker compose -f docker-compose.dev.yml up -d
 ```
 
-**File Patterns:** `**/requirements*.txt`, `**/package.json`, `**/*.lock`, `**/Dockerfile`
+**Benefits:**
+- No tribal knowledge ("oh you need to pass --reporter=html")
+- Commands are documented by their existence
+- Easy to discover: `just --list`
+</principle>
 
-**Compliance Criteria:**
+<principle name="group_by_purpose">
+**Organize commands into logical groups**
 
-| Level | Criteria |
-|-------|----------|
-| **Strong** | Lock files present, dependency isolation (venv/Docker), no implicit system tools |
-| **Partial** | Dependencies declared but no lock files or isolation |
-| **Weak** | Dependencies in documentation only, relies on system-installed packages |
+Use comments to create visual groupings. Let the groups emerge from your actual commands:
 
-**Anti-patterns:**
-- Missing lock files (non-deterministic builds)
-- Assuming system tools (curl, ImageMagick, ffmpeg) are available
-- Different dependency managers in dev vs production
-- No virtual environment or container isolation
+```just
+# ─────────────────────────────────────────────────────────────
+# Development
+# ─────────────────────────────────────────────────────────────
 
----
+dev:
+    npm run dev
 
-### Factor III: Config
+# ─────────────────────────────────────────────────────────────
+# Testing
+# ─────────────────────────────────────────────────────────────
 
-**Principle:** Store config in the environment.
+test:
+    npm test
 
-**Search Patterns:**
-```bash
-# Environment variable usage
-grep -r "os.environ\|os.getenv\|process.env\|ENV\[" --include="*.py" --include="*.js" --include="*.ts" --include="*.rb"
-
-# Hardcoded credentials (anti-pattern)
-grep -r "password.*=.*['\"]" --include="*.py" --include="*.js" --include="*.ts" | grep -v "test\|spec\|example"
-grep -r "api_key.*=.*['\"]" --include="*.py" --include="*.js" --include="*.ts" | grep -v "test\|spec\|example"
-grep -r "secret.*=.*['\"]" --include="*.py" --include="*.js" --include="*.ts" | grep -v "test\|spec\|example"
-
-# Environment-specific config files (anti-pattern)
-find . -name "config.dev.*" -o -name "config.prod.*" -o -name "settings.development.*" -o -name "settings.production.*"
-
-# Database URLs in code
-grep -r "postgresql://\|mysql://\|mongodb://\|redis://" --include="*.py" --include="*.js" --include="*.ts" | grep -v ".env\|test\|example"
+test-watch:
+    npm test -- --watch
 ```
 
-**File Patterns:** `**/.env*`, `**/config/*.py`, `**/settings.py`, environment files
+**Common groupings** (adapt to your project):
+- Setup / Installation
+- Development
+- Testing
+- Building
+- Deployment
+- Database / Migrations
+- Utilities / Helpers
+</principle>
 
-**Compliance Criteria:**
+<principle name="prevent_scope_creep">
+**One place for CLI commands, not everything**
 
-| Level | Criteria |
-|-------|----------|
-| **Strong** | All config via environment variables, no hardcoded secrets, could open-source without leaks |
-| **Partial** | Most config externalized but some hardcoded defaults |
-| **Weak** | Hardcoded credentials, environment-specific config files |
+Justfiles replace scattered shell commands and npm scripts for common operations. They don't replace:
+- Build tool configuration (webpack, vite, etc.)
+- CI/CD pipeline definitions
+- Complex scripting (use actual scripts in `scripts/`)
 
-**Anti-patterns:**
-- Hardcoded database URLs, API keys, passwords in source
-- Config files like `config/production.yml` vs `config/development.yml`
-- Environment grouping (`if ENV == 'production': ...`)
-- Secrets committed to version control
+**Rule of thumb:** If a recipe is longer than 5-10 lines, extract it to a script file and call that from the justfile:
 
----
+```just
+# Good - justfile calls the script
+deploy:
+    ./scripts/deploy.sh
 
-### Factor IV: Backing Services
+# Avoid - complex logic inline
+deploy:
+    if [ "$ENV" = "prod" ]; then
+        # ... 20 lines of logic
+    fi
+```
+</principle>
 
-**Principle:** Treat backing services as attached resources.
+<principle name="document_workflows">
+**Make common workflows discoverable**
 
-**Search Patterns:**
-```bash
-# Database connection via config
-grep -r "DATABASE_URL\|DB_HOST\|REDIS_URL\|CACHE_URL" --include="*.py" --include="*.js" --include="*.ts"
+Use recipe names that describe the workflow, not the tool:
 
-# Service initialization
-grep -r "create_engine\|MongoClient\|Redis\|Celery\|boto3" --include="*.py"
-grep -r "createPool\|createClient\|new Redis\|S3Client" --include="*.js" --include="*.ts"
+```just
+# Good - describes what you're doing
+setup:
+    npm install
+    cp .env.example .env
+    just db-migrate
 
-# Hardcoded service locations (anti-pattern)
-grep -r "localhost:5432\|localhost:6379\|localhost:27017\|127.0.0.1" --include="*.py" --include="*.js" --include="*.ts" | grep -v "test\|spec\|example\|default"
+# Less good - just wraps the tool
+npm-install:
+    npm install
 ```
 
-**File Patterns:** `**/database/*.py`, `**/services/*.py`, `**/db.py`, connection configurations
+Chain related commands with dependencies:
 
-**Compliance Criteria:**
-
-| Level | Criteria |
-|-------|----------|
-| **Strong** | All services via URL/connection string in config, swappable without code changes |
-| **Partial** | Most services configurable but some hardcoded defaults |
-| **Weak** | Hardcoded service locations, different code paths per environment |
-
-**Anti-patterns:**
-- Hardcoded `localhost` for services in production code
-- Conditional logic for local vs cloud services (`if USE_S3: ... else: local_storage`)
-- Service-specific code paths based on environment
-- Different drivers for dev vs prod
-
----
-
-### Factor V: Build, Release, Run
-
-**Principle:** Strictly separate build and run stages.
-
-**Search Patterns:**
-```bash
-# Build/deploy configuration
-find . -name "Dockerfile" -o -name "Makefile" -o -name "build.sh" -o -name "deploy.sh"
-find . -name ".github/workflows/*.yml" -o -name ".gitlab-ci.yml" -o -name "Jenkinsfile"
-
-# Build scripts in package.json
-grep -A5 '"scripts"' package.json 2>/dev/null | grep -E "build|start|deploy"
-
-# Check for runtime compilation (anti-pattern)
-grep -r "compile\|transpile\|webpack" --include="*.py" | grep -v "test\|build"
+```just
+# Running `just deploy` runs lint, test, build first
+deploy: lint test build
+    ./scripts/deploy.sh
 ```
+</principle>
+</essential_principles>
 
-**File Patterns:** `**/Dockerfile`, `**/Makefile`, `**/.github/workflows/**`, CI/CD configs
+<patterns>
+<pattern name="default_recipe">
+**Set a sensible default**
 
-**Compliance Criteria:**
+The first recipe (or one named `default`) runs when you type just `just`:
 
-| Level | Criteria |
-|-------|----------|
-| **Strong** | Immutable releases, clear build/release/run stages, unique release IDs |
-| **Partial** | Build and run separated but release not immutable |
-| **Weak** | Runtime code modifications, asset compilation at startup |
+```just
+# Show available commands by default
+default:
+    @just --list
 
-**Anti-patterns:**
-- Runtime code modifications
-- Asset compilation during application startup
-- Configuration baked into build artifacts
-- No release versioning
-
----
-
-### Factor VI: Processes
-
-**Principle:** Execute the app as one or more stateless processes.
-
-**Search Patterns:**
-```bash
-# Session storage patterns
-grep -r "session\|Session" --include="*.py" --include="*.js" --include="*.ts" | head -20
-
-# In-process state (anti-pattern)
-grep -r "global.*cache\|process_local\|instance_cache" --include="*.py"
-grep -r "global\..*=\|module\.exports\.cache" --include="*.js" --include="*.ts"
-
-# External session stores (good pattern)
-grep -r "redis.*session\|memcached.*session\|session.*redis" --include="*.py" --include="*.js" --include="*.ts"
-
-# Sticky session configuration (anti-pattern)
-grep -r "sticky.*session\|session.*affinity" --include="*.yml" --include="*.yaml" --include="*.json"
+# Or start development by default
+default:
+    just dev
 ```
+</pattern>
 
-**File Patterns:** `**/middleware/*.py`, `**/session/*.py`, server configurations
+<pattern name="arguments">
+**Accept arguments for flexibility**
 
-**Compliance Criteria:**
+```just
+# Positional argument
+test file:
+    npm test {{file}}
 
-| Level | Criteria |
-|-------|----------|
-| **Strong** | Stateless processes, all state in external datastores (Redis, DB) |
-| **Partial** | Mostly stateless but some in-process caching |
-| **Weak** | Sticky sessions, in-process session storage, shared memory state |
+# With default value
+build env="dev":
+    npm run build -- --env={{env}}
 
-**Anti-patterns:**
-- In-process session storage (`user_sessions = {}`)
-- Sticky sessions or session affinity
-- File-based caching between requests
-- Global mutable state shared across requests
-
----
-
-### Factor VII: Port Binding
-
-**Principle:** Export services via port binding.
-
-**Search Patterns:**
-```bash
-# Self-contained port binding
-grep -r "app.run\|server.listen\|serve\|uvicorn" --include="*.py"
-grep -r "app.listen\|server.listen\|createServer" --include="*.js" --include="*.ts"
-
-# PORT environment variable
-grep -r "PORT\|port" --include="*.py" --include="*.js" --include="*.ts" | grep -i "environ\|process.env"
-
-# Webserver as dependency
-grep -r "uvicorn\|gunicorn\|flask\|fastapi\|express\|koa\|hapi" package.json pyproject.toml requirements.txt 2>/dev/null
+# Variadic arguments
+run *args:
+    npm run {{args}}
 ```
+</pattern>
 
-**File Patterns:** `**/main.py`, `**/server.py`, `**/app.py`, `**/index.js`
+<pattern name="environment_variables">
+**Use environment variables**
 
-**Compliance Criteria:**
+```just
+# From .env file
+set dotenv-load
 
-| Level | Criteria |
-|-------|----------|
-| **Strong** | Self-contained app binds to PORT, webserver is a dependency |
-| **Partial** | Port binding but not configurable via environment |
-| **Weak** | Relies on external webserver container (Apache, Nginx) to provide HTTP |
+# Inline variable
+db_name := "myapp_dev"
 
-**Anti-patterns:**
-- Relying on Apache/Nginx/Tomcat to inject webserver functionality
-- Hardcoded port numbers
-- No PORT environment variable support
-- CGI scripts or server modules
-
----
-
-### Factor VIII: Concurrency
-
-**Principle:** Scale out via the process model.
-
-**Search Patterns:**
-```bash
-# Process definitions
-find . -name "Procfile" -o -name "process.yml" -o -name ".foreman"
-
-# Multiple entry points
-find . -name "worker.py" -o -name "scheduler.py" -o -name "web.py"
-
-# Background job systems
-grep -r "celery\|rq\|sidekiq\|bull\|agenda" --include="*.py" --include="*.js" --include="*.ts"
-grep -r "Celery\|Worker\|BackgroundJob" --include="*.py" --include="*.js" --include="*.ts"
+# Recipe-local export
+migrate:
+    export DATABASE_URL=$DATABASE_URL && npm run migrate
 ```
+</pattern>
 
-**File Patterns:** `**/Procfile`, `**/worker.py`, `**/scheduler.py`, queue configurations
+<pattern name="confirmation">
+**Require confirmation for dangerous operations**
 
-**Compliance Criteria:**
-
-| Level | Criteria |
-|-------|----------|
-| **Strong** | Explicit process types (web, worker, scheduler), horizontal scaling |
-| **Partial** | Multiple process types but not easily scalable |
-| **Weak** | Single monolithic process, no separation of concerns |
-
-**Anti-patterns:**
-- Single process handling all workloads
-- Hard-coded worker counts in code
-- No separation between web and background processes
-- Vertical scaling only (bigger server, not more processes)
-
----
-
-### Factor IX: Disposability
-
-**Principle:** Maximize robustness with fast startup and graceful shutdown.
-
-**Search Patterns:**
-```bash
-# Signal handlers
-grep -r "signal.signal\|SIGTERM\|SIGINT\|atexit" --include="*.py"
-grep -r "process.on.*SIGTERM\|process.on.*SIGINT" --include="*.js" --include="*.ts"
-
-# Graceful shutdown
-grep -r "graceful.*shutdown\|shutdown_handler\|cleanup" --include="*.py" --include="*.js" --include="*.ts"
-
-# Startup time
-grep -r "startup\|initialize\|bootstrap" --include="*.py" --include="*.js" --include="*.ts" | head -20
+```just
+[confirm("Are you sure you want to reset the database?")]
+db-reset:
+    dropdb myapp && createdb myapp && just db-migrate
 ```
+</pattern>
 
-**File Patterns:** `**/main.py`, `**/server.py`, lifecycle management code
+<pattern name="private_recipes">
+**Hide helper recipes**
 
-**Compliance Criteria:**
+Prefix with `_` to hide from `just --list`:
 
-| Level | Criteria |
-|-------|----------|
-| **Strong** | Fast startup (<10s), SIGTERM handling, graceful shutdown, jobs returnable to queue |
-| **Partial** | Graceful shutdown but slow startup |
-| **Weak** | No signal handling, jobs lost on process death, slow startup |
+```just
+# Public - shows in list
+build: _check-deps
+    npm run build
 
-**Anti-patterns:**
-- No SIGTERM/SIGINT handlers
-- Slow startup (>30 seconds)
-- Jobs lost if process crashes
-- No cleanup on shutdown
-
----
-
-### Factor X: Dev/Prod Parity
-
-**Principle:** Keep development, staging, and production as similar as possible.
-
-**Search Patterns:**
-```bash
-# Different services per environment (anti-pattern)
-grep -r "if.*development.*sqlite\|if.*production.*postgres" --include="*.py" --include="*.js" --include="*.ts"
-grep -r "development.*SQLite\|production.*PostgreSQL" --include="*.py" --include="*.js" --include="*.ts"
-
-# Docker for parity
-find . -name "docker-compose*.yml" -o -name "Dockerfile"
-
-# Environment-specific backends
-grep -r "USE_LOCAL_\|LOCAL_STORAGE\|MOCK_" --include="*.py" --include="*.js" --include="*.ts"
+# Private - hidden helper
+_check-deps:
+    @command -v node >/dev/null || (echo "Node required" && exit 1)
 ```
+</pattern>
 
-**File Patterns:** `**/docker-compose*.yml`, environment configurations
+<pattern name="documentation">
+**Add descriptions for complex recipes**
 
-**Compliance Criteria:**
-
-| Level | Criteria |
-|-------|----------|
-| **Strong** | Same services everywhere (PostgreSQL in dev and prod), containerized |
-| **Partial** | Mostly same but some lightweight dev alternatives |
-| **Weak** | SQLite in dev, PostgreSQL in prod; different backing services |
-
-**Anti-patterns:**
-- SQLite for development, PostgreSQL for production
-- In-memory cache in dev, Redis in prod
-- Different service versions across environments
-- "It works on my machine" issues
-
----
-
-### Factor XI: Logs
-
-**Principle:** Treat logs as event streams.
-
-**Search Patterns:**
-```bash
-# Stdout logging
-grep -r "print(\|logging.info\|logger.info\|console.log" --include="*.py" --include="*.js" --include="*.ts" | head -20
-
-# File-based logging (anti-pattern)
-grep -r "FileHandler\|open.*\.log\|writeFile.*log\|fs.appendFile.*log" --include="*.py" --include="*.js" --include="*.ts"
-grep -r "/var/log\|/tmp/.*\.log\|logs/" --include="*.py" --include="*.js" --include="*.ts" | grep -v "test\|example"
-
-# Structured logging
-grep -r "structlog\|json_logger\|pino\|winston" --include="*.py" --include="*.js" --include="*.ts"
+```just
+# Deploy to production (requires VPN connection)
+[doc("Deploy the application to production environment")]
+deploy-prod:
+    ./scripts/deploy.sh prod
 ```
+</pattern>
+</patterns>
 
-**File Patterns:** `**/logging.py`, `**/logger.py`, logging configurations
+<anti_patterns>
+<pitfall name="cd_in_recipes">
+**Avoid changing directory implicitly**
 
-**Compliance Criteria:**
+```just
+# Bad - unclear where this runs
+build:
+    cd src
+    npm run build
 
-| Level | Criteria |
-|-------|----------|
-| **Strong** | Unbuffered stdout only, structured logging (JSON), no file management |
-| **Partial** | Stdout logging but with some file handlers |
-| **Weak** | Application writes to log files, manages rotation |
-
-**Anti-patterns:**
-- Writing logs to files (`FileHandler`, `open('/var/log/app.log')`)
-- Log rotation logic in application code
-- Log archival managed by application
-- Buffered logging
-
----
-
-### Factor XII: Admin Processes
-
-**Principle:** Run admin/management tasks as one-off processes.
-
-**Search Patterns:**
-```bash
-# Management commands
-find . -name "manage.py" -o -name "Rakefile" -o -name "artisan"
-grep -r "@cli.command\|@click.command\|typer.command" --include="*.py"
-
-# Migration scripts
-find . -name "migrations" -type d
-find . -name "*migration*.py" -o -name "*migrate*.py"
-
-# Admin scripts with proper isolation
-grep -r "bundle exec\|source.*venv\|uv run" --include="*.sh" --include="Makefile"
+# Good - explicit and stays in root
+build:
+    cd src && npm run build
 ```
+</pitfall>
 
-**File Patterns:** `**/manage.py`, `**/cli.py`, `**/migrations/**`, admin scripts
+<pitfall name="duplicating_npm_scripts">
+**Don't just wrap every npm script**
 
-**Compliance Criteria:**
+If `npm run dev` is obvious and memorable, you don't need `just dev` unless it adds value (like running setup first).
 
-| Level | Criteria |
-|-------|----------|
-| **Strong** | Admin tasks use same dependencies/config, proper isolation, idempotent |
-| **Partial** | Admin tasks exist but different setup from app |
-| **Weak** | Manual database manipulation, scripts without isolation |
+Add justfile recipes when:
+- The command has flags that are hard to remember
+- Multiple commands need to run together
+- The command needs environment setup
+</pitfall>
 
-**Anti-patterns:**
-- Admin scripts not using app's dependency manager
-- Direct SQL manipulation outside of migrations
-- Admin scripts with hardcoded credentials
-- Non-idempotent migrations
+<pitfall name="tool_sprawl">
+**Consolidate CLI tools**
 
----
+Before: Developers need to know npm, docker-compose, aws, terraform, kubectl...
 
-## Output Format
+After: `just --list` shows everything, actual tools are implementation details.
 
-### Executive Summary Table
+```just
+# These hide complexity behind simple names
+deploy:
+    terraform apply -auto-approve
 
-```markdown
-| Factor | Status | Notes |
-|--------|--------|-------|
-| I. Codebase | **Strong/Partial/Weak** | [Key finding] |
-| II. Dependencies | **Strong/Partial/Weak** | [Key finding] |
-| III. Config | **Strong/Partial/Weak** | [Key finding] |
-| IV. Backing Services | **Strong/Partial/Weak** | [Key finding] |
-| V. Build/Release/Run | **Strong/Partial/Weak** | [Key finding] |
-| VI. Processes | **Strong/Partial/Weak** | [Key finding] |
-| VII. Port Binding | **Strong/Partial/Weak** | [Key finding] |
-| VIII. Concurrency | **Strong/Partial/Weak** | [Key finding] |
-| IX. Disposability | **Strong/Partial/Weak** | [Key finding] |
-| X. Dev/Prod Parity | **Strong/Partial/Weak** | [Key finding] |
-| XI. Logs | **Strong/Partial/Weak** | [Key finding] |
-| XII. Admin Processes | **Strong/Partial/Weak** | [Key finding] |
-
-**Overall**: X Strong, Y Partial, Z Weak
+db-shell:
+    kubectl exec -it postgres-0 -- psql
 ```
+</pitfall>
+</anti_patterns>
 
-### Per-Factor Analysis
+<success_criteria>
+A well-organized justfile:
 
-For each factor, provide:
-
-1. **Current Implementation**
-   - Evidence with file:line references
-   - Code snippets showing patterns
-
-2. **Compliance Level**
-   - Strong/Partial/Weak with justification
-
-3. **Gaps**
-   - What's missing vs. 12-Factor ideal
-
-4. **Recommendations**
-   - Actionable improvements with code examples
-
----
-
-## Analysis Workflow
-
-1. **Initial Scan**
-   - Run search patterns for all factors
-   - Identify key files for each factor
-   - Note any existing compliance documentation
-
-2. **Deep Dive** (per factor)
-   - Read identified files
-   - Evaluate against compliance criteria
-   - Document evidence with file paths
-
-3. **Gap Analysis**
-   - Compare current vs. 12-Factor ideal
-   - Identify anti-patterns present
-   - Prioritize by impact
-
-4. **Recommendations**
-   - Provide actionable improvements
-   - Include before/after code examples
-   - Reference best practices
-
-5. **Summary**
-   - Compile executive summary table
-   - Highlight strengths and critical gaps
-   - Suggest priority order for improvements
-
----
-
-## Quick Reference: Compliance Scoring
-
-| Score | Meaning | Action |
-|-------|---------|--------|
-| **Strong** | Fully implements principle | Maintain, minor optimizations |
-| **Partial** | Some implementation, significant gaps | Planned improvements |
-| **Weak** | Minimal or no implementation | High priority for roadmap |
-
-## When to Use This Skill
-
-- Evaluating new SaaS applications
-- Reviewing cloud-native architecture decisions
-- Auditing production applications for scalability
-- Planning migration to cloud platforms
-- Comparing application architectures
-- Preparing for containerization/Kubernetes deployment
+- Runs all commands from repo root (no implicit cd)
+- Has logical groupings with clear visual separation
+- Captures common commands as aliases (single source of truth)
+- Uses descriptive recipe names (workflow-focused, not tool-focused)
+- Keeps recipes short (complex logic in scripts/)
+- Has a sensible default recipe
+- Is discoverable via `just --list`
+</success_criteria>
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
