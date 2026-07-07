@@ -1,98 +1,311 @@
 ---
-name: writing-skills
-description: Use when creating new skills, editing existing skills, or verifying skills work before deployment
+name: moai-session-info
+description: Display comprehensive project and session information including Git status, Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Writing Skills
 
-## Overview
+# Session Information Provider
 
-**Writing skills IS Test-Driven Development applied to process documentation.**
+## Skill Metadata
 
-**Personal skills live in agent-specific directories (`~/.claude/skills` for Claude Code, `~/.codex/skills` for Codex)**
+| Field | Value |
+| ----- | ----- |
+| Version | 1.0.0 |
+| Tier | Alfred (Session Management) |
+| Auto-load | On session start or when status requested |
+| Purpose | Provide comprehensive project and session overview |
 
-You write test cases (pressure scenarios with subagents), watch them fail (baseline behavior), write the skill (documentation), watch tests pass (agents comply), and refactor (close loopholes).
+---
 
-**Core principle:** If you didn't watch an agent fail without the skill, you don't know if the skill teaches the right thing.
+## What It Does
 
-**REQUIRED BACKGROUND:** You MUST understand superpowers:test-driven-development before using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This skill adapts TDD to documentation.
+Comprehensive session and project information provider that gives users complete context about their current MoAI-ADK project state, including Git status, SPEC progress, version information, and system resources.
 
-**Official guidance:** For Anthropic's official skill authoring best practices, see anthropic-best-practices.md. This document provides additional patterns and guidelines that complement the TDD-focused approach in this skill.
+**Core capabilities**:
+- ✅ Project metadata and configuration display
+- ✅ Git repository status and commit history
+- ✅ SPEC progress tracking and completion metrics
+- ✅ Version information and update availability
+- ✅ System resource monitoring
+- ✅ Checkpoint status and restoration options
+- ✅ Session metrics and handoff information
 
-## What is a Skill?
+---
 
-A **skill** is a reference guide for proven techniques, patterns, or tools. Skills help future Claude instances find and apply effective approaches.
+## When to Use
 
-**Skills are:** Reusable techniques, patterns, tools, reference guides
+- ✅ When starting a new Claude Code session
+- ✅ When checking project status and progress
+- ✅ Before making significant changes or commits
+- ✅ When users ask "what's the status", "show project info", "where are we"
+- ✅ When reviewing project context and history
+- ✅ Before running /alfred commands
 
-**Skills are NOT:** Narratives about how you solved a problem once
+---
 
-## TDD Mapping for Skills
+## Core Information Categories
 
-| TDD Concept             | Skill Creation                                   |
-| ----------------------- | ------------------------------------------------ |
-| **Test case**           | Pressure scenario with subagent                  |
-| **Production code**     | Skill document (SKILL.md)                        |
-| **Test fails (RED)**    | Agent violates rule without skill (baseline)     |
-| **Test passes (GREEN)** | Agent complies with skill present                |
-| **Refactor**            | Close loopholes while maintaining compliance     |
-| **Write test first**    | Run baseline scenario BEFORE writing skill       |
-| **Watch it fail**       | Document exact rationalizations agent uses       |
-| **Minimal code**        | Write skill addressing those specific violations |
-| **Watch it pass**       | Verify agent now complies                        |
-| **Refactor cycle**      | Find new rationalizations → plug → re-verify     |
+### 1. Project Overview
+```bash
+🗿 Project: MoAI-ADK
+📁 Location: /Users/goos/MoAI/MoAI-ADK
+🌍 Language: 한국어 (Korean)
+🔧 Mode: Team (GitFlow)
+⚡ Toolchain: Python optimized
+```
 
-The entire skill creation process follows RED-GREEN-REFACTOR.
+### 2. Version Information
+```bash
+📦 Current: v0.15.2
+🆓 Update Available: v0.16.0
+⬆️  Upgrade Command: pip install --upgrade moai-adk
+📝 Release Notes: https://github.com/moai-adk/moai-adk/releases/tag/v0.16.0
+```
 
-## When to Create a Skill
+### 3. Git Repository Status
+```bash
+🌿 Branch: develop (3 commits ahead of main)
+📝 Changes: 5 modified, 2 added
+🔨 Last Commit: feat: Complete skill consolidation (2 hours ago)
+📊 Commit Hash: a1b2c3d
+```
 
-**Create when:**
+### 4. SPEC Progress
+```bash
+📋 Total SPECs: 15
+✅ Completed: 12 (80%)
+⏳ In Progress: 2
+📝 Pending: 1
+📊 Completion Rate: 80%
+```
 
-- Technique wasn't intuitively obvious to you
-- You'd reference this again across projects
-- Pattern applies broadly (not project-specific)
-- Others would benefit
+### 5. System Resources
+```bash
+🧠 Memory Usage: 2.4GB / 16GB (15%)
+💾 Disk Space: 45GB free
+🔄 CPU Usage: 12%
+⚡ Session Duration: 45 minutes
+```
 
-**Don't create for:**
+### 6. Available Checkpoints
+```bash
+🗂️  Checkpoints: 3 available
+   📌 auth-system-implementation (30 min ago)
+   📌 skill-consolidation (2 hours ago)
+   📌 feature-branch-workflow (yesterday)
+↩️  Restore: /alfred:0-project restore
+```
 
-- One-off solutions
-- Standard practices well-documented elsewhere
-- Project-specific conventions (put in CLAUDE.md)
-- Mechanical constraints (if it's enforceable with regex/validation, automate it—save documentation for judgment calls)
+---
 
-## Skill Types
+## Quick Start Commands
 
-## 🧠 Knowledge Modules (Fractal Skills)
+### Basic Status Check
+```python
+# Simple project overview
+Skill("moai-session-info")
+```
 
-### 1. [Technique](./sub-skills/technique.md)
-### 2. [Pattern](./sub-skills/pattern.md)
-### 3. [Reference](./sub-skills/reference.md)
-### 4. [1. Rich Description Field](./sub-skills/1-rich-description-field.md)
-### 5. [2. Keyword Coverage](./sub-skills/2-keyword-coverage.md)
-### 6. [3. Descriptive Naming](./sub-skills/3-descriptive-naming.md)
-### 7. [4. Token Efficiency (Critical)](./sub-skills/4-token-efficiency-critical.md)
-### 8. [4. Cross-Referencing Other Skills](./sub-skills/4-cross-referencing-other-skills.md)
-### 9. [Self-Contained Skill](./sub-skills/self-contained-skill.md)
-### 10. [Skill with Reusable Tool](./sub-skills/skill-with-reusable-tool.md)
-### 11. [Skill with Heavy Reference](./sub-skills/skill-with-heavy-reference.md)
-### 12. [Discipline-Enforcing Skills (rules/requirements)](./sub-skills/discipline-enforcing-skills-rulesrequirements.md)
-### 13. [Technique Skills (how-to guides)](./sub-skills/technique-skills-how-to-guides.md)
-### 14. [Pattern Skills (mental models)](./sub-skills/pattern-skills-mental-models.md)
-### 15. [Reference Skills (documentation/APIs)](./sub-skills/reference-skills-documentationapis.md)
-### 16. [Close Every Loophole Explicitly](./sub-skills/close-every-loophole-explicitly.md)
-### 17. [Address "Spirit vs Letter" Arguments](./sub-skills/address-spirit-vs-letter-arguments.md)
-### 18. [Build Rationalization Table](./sub-skills/build-rationalization-table.md)
-### 19. [Create Red Flags List](./sub-skills/create-red-flags-list.md)
-### 20. [Update CSO for Violation Symptoms](./sub-skills/update-cso-for-violation-symptoms.md)
-### 21. [RED: Write Failing Test (Baseline)](./sub-skills/red-write-failing-test-baseline.md)
-### 22. [GREEN: Write Minimal Skill](./sub-skills/green-write-minimal-skill.md)
-### 23. [REFACTOR: Close Loopholes](./sub-skills/refactor-close-loopholes.md)
-### 24. [❌ Narrative Example](./sub-skills/narrative-example.md)
-### 25. [❌ Multi-Language Dilution](./sub-skills/multi-language-dilution.md)
-### 26. [❌ Code in Flowcharts](./sub-skills/code-in-flowcharts.md)
-### 27. [❌ Generic Labels](./sub-skills/generic-labels.md)
+### Detailed Status with Metrics
+```python
+# Comprehensive status with all details
+Skill("moai-session-info")
+# Response includes all categories above
+```
+
+### Before Major Operations
+```python
+# Always check status before:
+# - /alfred:1-plan (planning new features)
+# - /alfred:2-run (implementing changes)
+# - git operations (commits, merges)
+
+Skill("moai-session-info")
+# Review status, then proceed with operation
+```
+
+---
+
+## Information Sources
+
+The skill gathers information from multiple sources:
+
+### Project Configuration
+- `.moai/config.json` - Project settings and language
+- `pyproject.toml` - Package version and dependencies
+- `.git/` - Repository status and history
+
+### SPEC Tracking
+- `.moai/specs/` - SPEC documents and completion status
+- SPEC metadata - Progress tracking and milestones
+
+### System Resources
+- `psutil` - Memory and CPU usage
+- File system - Disk space and project size
+- Session metrics - Current session duration
+
+### Version Information
+- Package registries - Latest available versions
+- GitHub releases - Release notes and changelogs
+
+---
+
+## Status Message Format
+
+The skill generates structured status messages with consistent formatting:
+
+```
+🚀 MoAI-ADK Project Status
+
+📋 Project Overview
+   🗿 Project: {project_name}
+   📁 Location: {project_path}
+   🌍 Language: {language}
+   🔧 Mode: {git_mode}
+
+📦 Version Information
+   📦 Current: {current_version}
+   {update_information}
+   📝 Release Notes: {release_url}
+
+🌿 Git Repository
+   🌿 Branch: {branch} ({commit_hash})
+   📝 Changes: {file_changes}
+   🔨 Last: {last_commit_message}
+
+📊 SPEC Progress
+   📋 Total: {total_specs}
+   ✅ Completed: {completed_specs} ({percentage}%)
+   ⏳ In Progress: {in_progress_specs}
+
+🧠 System Resources
+   🧠 Memory: {memory_usage}
+   💾 Disk: {disk_space}
+   ⚡ Session: {session_duration}
+
+🗂️  Checkpoints
+   {checkpoint_list}
+   ↩️  Restore: /alfred:0-project restore
+```
+
+---
+
+## Integration with Alfred Commands
+
+This skill is automatically invoked by:
+
+### SessionStart Hook Integration
+```python
+# In session_start__show_project_info.py
+# Automatically called when session starts
+Skill("moai-session-info")
+```
+
+### Command Integration
+```python
+# Before /alfred:1-plan
+if context == "planning":
+    Skill("moai-session-info")  # Show current status
+
+# Before /alfred:2-run
+if context == "implementation":
+    Skill("moai-session-info")  # Confirm project state
+
+# Before git operations
+if "git" in command:
+    Skill("moai-session-info")  # Show repository status
+```
+
+---
+
+## Error Handling and Fallbacks
+
+### Graceful Degradation
+The skill provides useful information even when some sources fail:
+
+```python
+# If Git commands fail:
+# Still show project info, version, and system resources
+
+# If SPEC counting fails:
+# Still show Git status and version information
+
+# If network access fails:
+# Still show local information (Git, SPECs, system)
+```
+
+### Common Error Scenarios
+- **Git repository not found**: Shows project info without Git details
+- **No .moai/config.json**: Uses default settings and basic project detection
+- **Network unavailable**: Shows local information only
+- **Permission denied**: Provides read-only information where possible
+
+---
+
+## Performance Considerations
+
+### Optimization Strategies
+- **Caching**: Cache expensive operations (Git history, version checks)
+- **Timeouts**: 5-second timeout for network operations
+- **Lazy Loading**: Load detailed information only when requested
+- **Incremental Updates**: Update only changed information
+
+### Resource Usage
+- **Memory**: Minimal footprint (< 10MB)
+- **Network**: Only for version checks (cached locally)
+- **Disk**: Reads existing files, no modifications
+- **CPU**: Lightweight operations, quick response times
+
+---
+
+## Usage Examples
+
+### Example 1: Session Start
+```python
+# User starts new Claude Code session
+Skill("moai-session-info")
+
+# Output:
+🚀 MoAI-ADK Session Started
+
+📋 Project Overview
+   🗿 Project: MoAI-ADK
+   📁 Location: /Users/goos/MoAI/MoAI-ADK
+   🌍 Language: 한국어
+   🔧 Mode: Team
+
+📦 Version: v0.15.2 → v0.16.0 available
+📝 Release Notes: https://github.com/...
+
+🌿 Branch: develop (3 ahead)
+📝 Changes: 5 modified, 2 added
+📋 SPEC Progress: 12/15 (80%)
+```
+
+### Example 2: Pre-Implementation Check
+```python
+# User wants to implement new feature
+"/alfred:2-run SPEC-AUTH-001"
+
+# Alfred automatically calls:
+Skill("moai-session-info")
+
+# User sees status before implementation begins
+```
+
+### Example 3: Status Query
+```python
+# User asks: "what's our current status?"
+Skill("moai-session-info")
+
+# Complete project status displayed
+```
+
+---
+
+**End of Skill** | Optimized for quick status checks and session context
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
