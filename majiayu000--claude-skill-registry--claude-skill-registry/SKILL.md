@@ -1,402 +1,213 @@
 ---
-name: cloudflare-security-hardening
-description: Use this skill whenever the user wants to harden security for Cloudflare Workers/Pages APIs (e.g. Hono + TypeScript), including WAF-style protections, rate limiting, IP restrictions, secrets handling, and secure headers.
+name: security-audit-checklist
+description: Auto-activates when user mentions security audit, security review, vulnerabilities, or OWASP. Comprehensive security checklist based on OWASP Top 10. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Cloudflare Security Hardening Skill
+# Security Audit Checklist
 
-## Purpose
+OWASP Top 10 based security audit with actionable fixes.
 
-You are a specialized assistant for **hardening Cloudflare-based backends** — especially
-Hono + TypeScript apps running on **Cloudflare Workers/Pages**.
+## When This Activates
 
-Use this skill to:
+- User says: "security audit", "check for vulnerabilities", "security review"
+- Before production deployment
+- Periodic security reviews
 
-- Design or refine **security posture** for APIs on Cloudflare
-- Configure or suggest:
-  - Rate limiting / flood protection (app-level + Cloudflare edge)
-  - IP allow/deny lists (where appropriate)
-  - WAF-style protections (bot protection, OWASP filters, etc.)
-  - Secure handling of secrets and env variables
-  - CORS & cookie security options
-  - Secure response headers (where relevant)
-- Ensure the Hono/Worker code is **defensive by default**
+## OWASP Top 10 (2025) Checklist
 
-Do **not** use this skill for:
+### 1. Injection Attacks
+**Check for:**
+- [ ] SQL injection (use parameterized queries)
+- [ ] NoSQL injection (validate/sanitize input)
+- [ ] Command injection (avoid shell execution with user input)
+- [ ] LDAP injection (escape LDAP queries)
 
-- Business auth logic (login, JWT creation, roles) → use `hono-authentication` / auth skills
-- Observability & logging → `cloudflare-observability-logging-monitoring`
-- D1/R2 structural design → `hono-d1-integration`, `hono-r2-integration`
+**Scan code for:**
+```javascript
+// ❌ VULNERABLE
+db.query(`SELECT * FROM users WHERE id = '${userId}'`);
+exec(`rm ${filename}`);
 
-If `CLAUDE.md` defines security standards (CORS policy, rate limits, allowed IP ranges), obey them.
-
----
-
-## When To Apply This Skill
-
-Trigger this skill when the user asks for things like:
-
-- “Harden security for my Cloudflare Worker API.”
-- “Add rate limiting / abuse protection.”
-- “Restrict access to specific IPs / regions.”
-- “Secure CORS, cookies, and headers.”
-- “Make sure secrets are handled safely with Workers.”
-
-Avoid when:
-
-- The question is purely business logic with no security angle.
-- Security is enforced entirely by external infra (e.g. dedicated API gateway), and this Worker is a private backend behind that.
-
----
-
-## Threat Model & Principles
-
-This skill assumes:
-
-- Your Hono + Workers API is **internet-exposed**.
-- You want to protect against:
-  - Brute-force / credential stuffing
-  - Basic DDoS/flooding at the application level
-  - Abuse of public endpoints (scrapers, bots, etc.)
-  - CSRF / CORS misconfigurations for browser clients
-  - Leaking secrets via logs or error responses
-
-Guiding principles:
-
-1. **Least privilege** – only expose necessary endpoints and data.
-2. **Defense in depth** – combine Cloudflare edge protections + app-level checks.
-3. **Secure defaults** – default to deny, then explicitly allow as needed.
-4. **No secrets in code** – always use env/bindings for secrets.
-
----
-
-## Edge-Level Protections (Cloudflare Dashboard)
-
-Even though this skill cannot click the dashboard, it should **guide configuration**:
-
-- **WAF / Security Center**:
-  - Enable OWASP ModSecurity core rules (if available).
-  - Turn on basic bot protection for public APIs.
-- **Rate Limiting Rules**:
-  - Example: limit `/auth/login` to N requests per minute per IP.
-- **IP Access Rules**:
-  - Allowlist internal tools (admin panels, /internal endpoints).
-  - Block known bad IP ranges or countries where appropriate.
-
-Example conceptual rule:
-
-- Limit `POST /v1/auth/login` to **5 requests per minute per IP**.
-- Block IPs that exceed that limit repeatedly.
-
-This skill will describe how to **combine** these with app-level limits.
-
----
-
-## App-Level Rate Limiting
-
-Inside Hono/Workers, implement **additional rate protection** for critical routes:
-
-- **Option A**: Use Cloudflare KV for simple counters.
-- **Option B**: Use D1 or Durable Objects for more advanced needs.
-
-Example KV-based simple limiter:
-
-```ts
-// src/middlewares/rate-limit.ts
-import type { MiddlewareHandler } from "hono";
-
-export function createRateLimitMiddleware(options: {
-  kvBindingName: keyof Env;
-  limit: number;
-  windowSeconds: number;
-  keyBuilder?: (c: any) => string;
-}): MiddlewareHandler {
-  return async (c, next) => {
-    const kv = (c.env as any)[options.kvBindingName] as KVNamespace;
-    const ip = c.req.header("CF-Connecting-IP") ?? "unknown";
-    const keyBase = options.keyBuilder ? options.keyBuilder(c) : c.req.path;
-    const key = `rate:${keyBase}:${ip}`;
-
-    const currentRaw = await kv.get(key);
-    const current = currentRaw ? parseInt(currentRaw, 10) : 0;
-
-    if (current >= options.limit) {
-      return c.json({ message: "Too Many Requests" }, 429);
-    }
-
-    if (!currentRaw) {
-      await kv.put(key, "1", { expirationTtl: options.windowSeconds });
-    } else {
-      await kv.put(key, String(current + 1), { expirationTtl: options.windowSeconds });
-    }
-
-    await next();
-  };
-}
+// ✅ SAFE
+db.query('SELECT * FROM users WHERE id = $1', [userId]);
 ```
 
-Attach to sensitive routes (login, signup, password reset):
+### 2. Broken Authentication
+**Check for:**
+- [ ] Password requirements enforced (min 8 chars, complexity)
+- [ ] Passwords hashed with bcrypt/Argon2 (not MD5/SHA1)
+- [ ] JWT tokens properly validated
+- [ ] Session timeout implemented
+- [ ] No credentials in logs/errors
+- [ ] MFA available for sensitive operations
 
-```ts
-app.post("/v1/auth/login", createRateLimitMiddleware({
-  kvBindingName: "RATE_LIMIT_KV",
-  limit: 5,
-  windowSeconds: 60,
-}), loginHandler);
+### 3. Sensitive Data Exposure
+**Check for:**
+- [ ] HTTPS enforced (no HTTP endpoints)
+- [ ] Secrets in environment variables (not hardcoded)
+- [ ] No API keys/tokens in client-side code
+- [ ] Sensitive data encrypted at rest
+- [ ] No sensitive data in URLs/query params
+- [ ] Proper error messages (no stack traces in production)
+
+**Scan for secrets:**
+```bash
+git grep -i "api[_-]key\\|password\\|secret\\|token" | grep -v ".env"
 ```
 
-This skill will:
+### 4. XML/XXE Attacks
+**Check for:**
+- [ ] XML parsing disabled external entities
+- [ ] File uploads validated (type, size, content)
+- [ ] No XML deserialization of untrusted data
 
-- Emphasize that KV-based rate limiting is **best-effort** (not perfect under heavy concurrency).
-- Suggest Cloudflare’s native rate limiting at edge as an additional layer.
+### 5. Broken Access Control
+**Check for:**
+- [ ] Authorization checked on every endpoint
+- [ ] User can't access other users' data
+- [ ] Admin endpoints require admin role
+- [ ] Object-level access control (can't guess IDs)
+- [ ] Rate limiting on sensitive endpoints
 
----
-
-## IP-based Restrictions (App Layer)
-
-For admin or internal routes, add IP allowlisting:
-
-```ts
-// src/middlewares/ip-allowlist.ts
-import type { MiddlewareHandler } from "hono";
-
-export function ipAllowlist(allowedIps: string[]): MiddlewareHandler {
-  return async (c, next) => {
-    const ip = c.req.header("CF-Connecting-IP");
-    if (!ip || !allowedIps.includes(ip)) {
-      return c.json({ message: "Forbidden" }, 403);
-    }
-    await next();
-  };
-}
+**Test:**
+```bash
+# Try accessing other user's data
+curl -H "Authorization: Bearer user1_token" /api/users/user2/profile
+# Should return 403 Forbidden
 ```
 
-Usage:
+### 6. Security Misconfiguration
+**Check for:**
+- [ ] No default credentials
+- [ ] Unnecessary features disabled
+- [ ] Security headers set (CSP, X-Frame-Options, etc.)
+- [ ] Error messages don't leak info
+- [ ] Dependencies updated (no known vulnerabilities)
 
-```ts
-app.route("/admin", (admin) => {
-  admin.use("*", ipAllowlist(["1.2.3.4", "5.6.7.8"]));
-  admin.get("/stats", statsHandler);
-});
+**Required Headers:**
+```javascript
+res.setHeader('X-Frame-Options', 'DENY');
+res.setHeader('X-Content-Type-Options', 'nosniff');
+res.setHeader('Strict-Transport-Security', 'max-age=31536000');
+res.setHeader('Content-Security-Policy', "default-src 'self'");
 ```
 
-This skill should:
+### 7. XSS (Cross-Site Scripting)
+**Check for:**
+- [ ] User input sanitized before display
+- [ ] HTML entities escaped
+- [ ] Content-Security-Policy header set
+- [ ] React/Vue auto-escaping not bypassed (no dangerouslySetInnerHTML)
 
-- Warn that IP allowlists break for users behind VPNs / mobile networks unless you control the infra.
-- Suggest using **zero-trust** or identity-aware proxies for high-security use cases.
+**Scan for:**
+```javascript
+// ❌ VULNERABLE
+element.innerHTML = userInput;
+dangerouslySetInnerHTML={{ __html: userComment }}
 
----
-
-## CORS & Browser Security
-
-For browser clients, configure CORS carefully:
-
-- Default to **deny-all** unless explicitly needed.
-- For allowed origins, specify exact domains (no `*` unless truly public APIs).
-
-Example Hono CORS setup:
-
-```ts
-// src/middlewares/cors.ts
-import { cors } from "hono/cors";
-
-export const corsMiddleware = cors({
-  origin: (origin) => {
-    const allowed = [
-      "https://app.example.com",
-      "https://staging-app.example.com",
-    ];
-    if (!origin) return ""; // no origin (e.g., curl)
-    return allowed.includes(origin) ? origin : "";
-  },
-  allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-});
+// ✅ SAFE
+element.textContent = userInput;
+DOMPurify.sanitize(userComment)
 ```
 
-This skill will:
+### 8. Insecure Deserialization
+**Check for:**
+- [ ] No deserialization of untrusted data
+- [ ] Type validation on API inputs
+- [ ] Use JSON, not pickle/marshal/eval
 
-- Ensure you don’t accidentally allow cross-site credential sharing with `origin: "*"`, `credentials: true`.
-- Advise per-env origin lists (dev vs prod).
+### 9. Using Components with Known Vulnerabilities
+**Check for:**
+- [ ] Run `npm audit` or `yarn audit`
+- [ ] All dependencies up to date
+- [ ] No critical vulnerabilities
+- [ ] Automated dependency updates (Dependabot, Renovate)
 
----
-
-## Cookie & Session Security
-
-When using cookies (e.g. for auth tokens), enforce:
-
-- `HttpOnly` – prevent JS access.
-- `Secure` – only over HTTPS.
-- `SameSite` – `Lax` or `Strict` unless you require cross-site flows.
-
-Example cookie header for Workers:
-
-```ts
-const token = "jwt-token-here";
-c.header("Set-Cookie",
-  `access_token=${token}; HttpOnly; Secure; Path=/; SameSite=Lax; Max-Age=900`,
-);
+**Run:**
+```bash
+npm audit --production
+# Fix high/critical: npm audit fix
 ```
 
-This skill should:
+### 10. Insufficient Logging & Monitoring
+**Check for:**
+- [ ] Authentication failures logged
+- [ ] Access control failures logged
+- [ ] Input validation failures logged
+- [ ] Logs don't contain sensitive data
+- [ ] Monitoring/alerting for suspicious activity
 
-- Discourage storing sensitive tokens in localStorage.
-- Encourage short-lived access tokens + robust refresh strategy when needed (handled in auth skill).
-
----
-
-## Secrets Management
-
-This skill must enforce:
-
-- All secrets are stored in Cloudflare **Worker secrets**, NOT in source code.
-
-Use Wrangler:
+## Security Scan Commands
 
 ```bash
-wrangler secret put JWT_SECRET
-wrangler secret put SENTRY_DSN
+# 1. Dependency vulnerabilities
+npm audit
+
+# 2. Secret scanning
+git secrets --scan
+
+# 3. Static analysis
+npm run lint:security  # ESLint security rules
+
+# 4. Container scanning (if using Docker)
+trivy image your-image:latest
+
+# 5. SAST (Static Application Security Testing)
+semgrep --config auto .
 ```
 
-Then access via `c.env.JWT_SECRET`, `c.env.SENTRY_DSN` with proper typing in the `Env` interface.
+## Findings Report
 
-It should:
+```markdown
+## 🔒 Security Audit Report
 
-- Warn against logging secrets or including them in error messages.
-- Keep secrets **env-specific** if necessary (different keys per env).
+**Date:** 2025-11-20
+**Scope:** Full application
 
----
+### 🚨 Critical (MUST FIX)
+1. **SQL Injection** (src/api/users.ts:45)
+   - Risk: Database compromise
+   - Fix: Use parameterized query
 
-## Secure Response Headers
+2. **Hardcoded API Key** (src/lib/stripe.ts:12)
+   - Risk: Key exposure in git history
+   - Fix: Move to environment variable
 
-Even though Workers don’t control all headers like a full web server, this skill can help add:
+### ⚠️ High
+3. **Missing Authentication** (src/api/admin.ts:23)
+   - Risk: Unauthorized admin access
+   - Fix: Add auth middleware
 
-- `X-Content-Type-Options: nosniff`
-- `X-Frame-Options: DENY` (if no framing required)
-- `Referrer-Policy: no-referrer` or similar
-- `Strict-Transport-Security` *(only when behind HTTPS and with care)*
+### ℹ️ Medium
+4. **Outdated Dependencies** (package.json)
+   - Risk: Known vulnerabilities
+   - Fix: Run `npm audit fix`
 
-Example Hono middleware:
+### ✅ Passed
+- Input validation
+- Password hashing (bcrypt)
+- HTTPS enforced
+- Security headers present
+- Logging implemented
 
-```ts
-// src/middlewares/security-headers.ts
-import type { MiddlewareHandler } from "hono";
+### 📊 Score: 7/10 (Good)
 
-export const securityHeaders: MiddlewareHandler = async (c, next) => {
-  await next();
-  c.header("X-Content-Type-Options", "nosniff");
-  c.header("X-Frame-Options", "DENY");
-  c.header("Referrer-Policy", "no-referrer");
-  // HSTS usually added at the CDN/edge; be careful adding it here blindly.
-};
+**Priority:** Fix critical and high issues before production.
 ```
 
-Attach globally or per route group, depending on needs.
+## Quick Fixes
 
----
+| Vulnerability | Quick Fix |
+|---------------|-----------|
+| SQL Injection | `db.query('SELECT * FROM users WHERE id = $1', [id])` |
+| XSS | `DOMPurify.sanitize(input)` or use `textContent` |
+| Secrets | Move to `.env`, add to `.gitignore` |
+| Missing Auth | Add middleware: `app.use('/api', authMiddleware)` |
+| No HTTPS | Force HTTPS: `if (!req.secure) return res.redirect('https://...')` |
 
-## Input Validation & Sanitization
-
-This skill will **coordinate with validation skills** (Nest/Hono validation, DTOs, pipes) but also:
-
-- Ensure inbound JSON is parsed safely.
-- Encourage validation of all external input (query, path, body).
-- Make sure DB queries are parameterized (D1) and object keys normalized in R2.
-
-Example pattern (high-level):
-
-- Validate `id` path params (UUID, numeric, etc.).
-- Validate file types and size limits for uploads before hitting R2.
-
----
-
-## Upload & Download Security for R2
-
-When working with R2 (via `hono-r2-integration` + `cloudflare-r2-bucket-management-and-access`), this skill should:
-
-- Enforce **allowed MIME types** for uploads.
-- Enforce **max file size** (either at app level or via Cloudflare limits).
-- Prevent directory traversal via keys — treat keys as opaque and sanitized.
-
-Example in upload handler:
-
-```ts
-const allowedTypes = ["image/jpeg", "image/png"];
-if (!allowedTypes.includes(file.type)) {
-  return c.json({ message: "Unsupported file type" }, 415);
-}
-
-if (file.size > 5 * 1024 * 1024) {
-  return c.json({ message: "File too large" }, 413);
-}
-```
-
----
-
-## Admin & Debug Endpoint Lockdown
-
-This skill will recommend:
-
-- Protecting any admin/debug endpoints (`/admin`, `/metrics`, `/debug`) with:
-  - Strong authentication (JWT/roles).
-  - Optional IP allowlists.
-- Never exposing:
-  - Raw logs.
-  - Environment variables.
-  - Internal debug dumps to the public.
-
-Example:
-
-```ts
-app.get("/admin/health", authMiddleware, requireRole(["admin"]), healthHandler);
-```
-
----
-
-## Security Review Checklist
-
-When this skill is active, it can apply a checklist over the project:
-
-1. **Secrets**: stored only in `c.env.*`, not in code/logs.
-2. **Auth**: all protected routes use auth middleware.
-3. **Admin**: admin-only endpoints have auth + optional IP lock.
-4. **Rate limit**: login & other sensitive routes protected.
-5. **CORS**: strict origins, correct credentials settings.
-6. **Uploads**: type/size validation, safe key naming.
-7. **Headers**: security headers present for browser-facing responses.
-8. **Error messages**: no leakage of internals or stack traces to clients in prod.
-9. **WAF / Edge rules**: Cloudflare edge configured where possible.
-
----
-
-## Interaction With Other Skills
-
-- `cloudflare-worker-deployment`:
-  - This skill depends on its wrangler/env setup to choose policies per environment.
-- `hono-authentication`:
-  - Works together to ensure route-level auth + role enforcement.
-- `hono-d1-integration` & `cloudflare-d1-migrations-and-production-seeding`:
-  - Enforces parameterized queries and safe schema changes.
-- `hono-r2-integration` & `cloudflare-r2-bucket-management-and-access`:
-  - Secures upload/download logic and bucket-level access patterns.
-- `cloudflare-observability-logging-monitoring`:
-  - Observability for security logs (rate limit hits, blocked IPs, etc.).
-
----
-
-## Example Prompts That Should Use This Skill
-
-- “Harden security on my Hono API running on Cloudflare Workers.”
-- “Add rate limiting and IP allowlists to sensitive routes.”
-- “Lock down CORS and cookie security for my app.”
-- “Secure R2 uploads and prevent abuse.”
-- “Give me a security checklist for my Cloudflare Worker before going to prod.”
-
-For such tasks, rely on this skill to push your Cloudflare Workers/Pages APIs towards a
-**robust, production-ready security posture**, coordinated with auth, storage, and deployment skills.
+**Use TodoWrite to track fixing each vulnerability. Present report when complete.**
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
