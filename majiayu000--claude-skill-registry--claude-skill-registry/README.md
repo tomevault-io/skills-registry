@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/configuring-auto-scaling-policies-jeremylongshore-claude-code-plugins--4a4007df/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/openrouter-reference-architecture-jeremylongshore-claude-code-plugins--5ee7c7ce/SKILL.md)
 
 ---
 
