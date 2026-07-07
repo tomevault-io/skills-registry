@@ -1,644 +1,641 @@
 ---
-name: auth-implementation-patterns
-description: Master authentication and authorization patterns including JWT, OAuth2, session management, and RBAC to build secure, scalable access control systems. Use when implementing auth systems, securing APIs, or debugging security issues. Use when this capability is needed.
+name: skill-development
+description: This skill should be used when the user wants to "create a skill", "add a skill to plugin", "write a new skill", "improve skill description", "organize skill content", or needs guidance on skill structure, progressive disclosure, or skill development best practices for Claude Code plugins. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Authentication & Authorization Implementation Patterns
+# Skill Development for Claude Code Plugins
 
-Build secure, scalable authentication and authorization systems using industry-standard patterns and modern best practices.
+This skill provides guidance for creating effective skills for Claude Code plugins.
 
-## When to Use This Skill
+## About Skills
 
-- Implementing user authentication systems
-- Securing REST or GraphQL APIs
-- Adding OAuth2/social login
-- Implementing role-based access control (RBAC)
-- Designing session management
-- Migrating authentication systems
-- Debugging auth issues
-- Implementing SSO or multi-tenancy
+Skills are modular, self-contained packages that extend Claude's capabilities by providing
+specialized knowledge, workflows, and tools. Think of them as "onboarding guides" for specific
+domains or tasks—they transform Claude from a general-purpose agent into a specialized agent
+equipped with procedural knowledge that no model can fully possess.
 
-## Core Concepts
+### What Skills Provide
 
-### 1. Authentication vs Authorization
+1. Specialized workflows - Multi-step procedures for specific domains
+2. Tool integrations - Instructions for working with specific file formats or APIs
+3. Domain expertise - Company-specific knowledge, schemas, business logic
+4. Bundled resources - Scripts, references, and assets for complex and repetitive tasks
 
-**Authentication (AuthN)**: Who are you?
+### Anatomy of a Skill
 
-- Verifying identity (username/password, OAuth, biometrics)
-- Issuing credentials (sessions, tokens)
-- Managing login/logout
+Every skill consists of a required SKILL.md file and optional bundled resources:
 
-**Authorization (AuthZ)**: What can you do?
-
-- Permission checking
-- Role-based access control (RBAC)
-- Resource ownership validation
-- Policy enforcement
-
-### 2. Authentication Strategies
-
-**Session-Based:**
-
-- Server stores session state
-- Session ID in cookie
-- Traditional, simple, stateful
-
-**Token-Based (JWT):**
-
-- Stateless, self-contained
-- Scales horizontally
-- Can store claims
-
-**OAuth2/OpenID Connect:**
-
-- Delegate authentication
-- Social login (Google, GitHub)
-- Enterprise SSO
-
-## JWT Authentication
-
-### Pattern 1: JWT Implementation
-
-```typescript
-// JWT structure: header.payload.signature
-import jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
-
-interface JWTPayload {
-    userId: string;
-    email: string;
-    role: string;
-    iat: number;
-    exp: number;
-}
-
-// Generate JWT
-function generateTokens(userId: string, email: string, role: string) {
-    const accessToken = jwt.sign(
-        { userId, email, role },
-        process.env.JWT_SECRET!,
-        { expiresIn: '15m' }  // Short-lived
-    );
-
-    const refreshToken = jwt.sign(
-        { userId },
-        process.env.JWT_REFRESH_SECRET!,
-        { expiresIn: '7d' }  // Long-lived
-    );
-
-    return { accessToken, refreshToken };
-}
-
-// Verify JWT
-function verifyToken(token: string): JWTPayload {
-    try {
-        return jwt.verify(token, process.env.JWT_SECRET!) as JWTPayload;
-    } catch (error) {
-        if (error instanceof jwt.TokenExpiredError) {
-            throw new Error('Token expired');
-        }
-        if (error instanceof jwt.JsonWebTokenError) {
-            throw new Error('Invalid token');
-        }
-        throw error;
-    }
-}
-
-// Middleware
-function authenticate(req: Request, res: Response, next: NextFunction) {
-    const authHeader = req.headers.authorization;
-    if (!authHeader?.startsWith('Bearer ')) {
-        return res.status(401).json({ error: 'No token provided' });
-    }
-
-    const token = authHeader.substring(7);
-    try {
-        const payload = verifyToken(token);
-        req.user = payload;  // Attach user to request
-        next();
-    } catch (error) {
-        return res.status(401).json({ error: 'Invalid token' });
-    }
-}
-
-// Usage
-app.get('/api/profile', authenticate, (req, res) => {
-    res.json({ user: req.user });
-});
+```
+skill-name/
+├── SKILL.md (required)
+│   ├── YAML frontmatter metadata (required)
+│   │   ├── name: (required)
+│   │   └── description: (required)
+│   └── Markdown instructions (required)
+└── Bundled Resources (optional)
+    ├── scripts/          - Executable code (Python/Bash/etc.)
+    ├── references/       - Documentation intended to be loaded into context as needed
+    └── assets/           - Files used in output (templates, icons, fonts, etc.)
 ```
 
-### Pattern 2: Refresh Token Flow
+#### SKILL.md (required)
 
-```typescript
-interface StoredRefreshToken {
-    token: string;
-    userId: string;
-    expiresAt: Date;
-    createdAt: Date;
-}
+**Metadata Quality:** The `name` and `description` in YAML frontmatter determine when Claude will use the skill. Be specific about what the skill does and when to use it. Use the third-person (e.g. "This skill should be used when..." instead of "Use this skill when...").
 
-class RefreshTokenService {
-    // Store refresh token in database
-    async storeRefreshToken(userId: string, refreshToken: string) {
-        const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-        await db.refreshTokens.create({
-            token: await hash(refreshToken),  // Hash before storing
-            userId,
-            expiresAt,
-        });
-    }
+#### Bundled Resources (optional)
 
-    // Refresh access token
-    async refreshAccessToken(refreshToken: string) {
-        // Verify refresh token
-        let payload;
-        try {
-            payload = jwt.verify(
-                refreshToken,
-                process.env.JWT_REFRESH_SECRET!
-            ) as { userId: string };
-        } catch {
-            throw new Error('Invalid refresh token');
-        }
+##### Scripts (`scripts/`)
 
-        // Check if token exists in database
-        const storedToken = await db.refreshTokens.findOne({
-            where: {
-                token: await hash(refreshToken),
-                userId: payload.userId,
-                expiresAt: { $gt: new Date() },
-            },
-        });
+Executable code (Python/Bash/etc.) for tasks that require deterministic reliability or are repeatedly rewritten.
 
-        if (!storedToken) {
-            throw new Error('Refresh token not found or expired');
-        }
+- **When to include**: When the same code is being rewritten repeatedly or deterministic reliability is needed
+- **Example**: `scripts/rotate_pdf.py` for PDF rotation tasks
+- **Benefits**: Token efficient, deterministic, may be executed without loading into context
+- **Note**: Scripts may still need to be read by Claude for patching or environment-specific adjustments
 
-        // Get user
-        const user = await db.users.findById(payload.userId);
-        if (!user) {
-            throw new Error('User not found');
-        }
+##### References (`references/`)
 
-        // Generate new access token
-        const accessToken = jwt.sign(
-            { userId: user.id, email: user.email, role: user.role },
-            process.env.JWT_SECRET!,
-            { expiresIn: '15m' }
-        );
+Documentation and reference material intended to be loaded as needed into context to inform Claude's process and thinking.
 
-        return { accessToken };
-    }
+- **When to include**: For documentation that Claude should reference while working
+- **Examples**: `references/finance.md` for financial schemas, `references/mnda.md` for company NDA template, `references/policies.md` for company policies, `references/api_docs.md` for API specifications
+- **Use cases**: Database schemas, API documentation, domain knowledge, company policies, detailed workflow guides
+- **Benefits**: Keeps SKILL.md lean, loaded only when Claude determines it's needed
+- **Best practice**: If files are large (>10k words), include grep search patterns in SKILL.md
+- **Avoid duplication**: Information should live in either SKILL.md or references files, not both. Prefer references files for detailed information unless it's truly core to the skill—this keeps SKILL.md lean while making information discoverable without hogging the context window. Keep only essential procedural instructions and workflow guidance in SKILL.md; move detailed reference material, schemas, and examples to references files.
 
-    // Revoke refresh token (logout)
-    async revokeRefreshToken(refreshToken: string) {
-        await db.refreshTokens.deleteOne({
-            token: await hash(refreshToken),
-        });
-    }
+##### Assets (`assets/`)
 
-    // Revoke all user tokens (logout all devices)
-    async revokeAllUserTokens(userId: string) {
-        await db.refreshTokens.deleteMany({ userId });
-    }
-}
+Files not intended to be loaded into context, but rather used within the output Claude produces.
 
-// API endpoints
-app.post('/api/auth/refresh', async (req, res) => {
-    const { refreshToken } = req.body;
-    try {
-        const { accessToken } = await refreshTokenService
-            .refreshAccessToken(refreshToken);
-        res.json({ accessToken });
-    } catch (error) {
-        res.status(401).json({ error: 'Invalid refresh token' });
-    }
-});
+- **When to include**: When the skill needs files that will be used in the final output
+- **Examples**: `assets/logo.png` for brand assets, `assets/slides.pptx` for PowerPoint templates, `assets/frontend-template/` for HTML/React boilerplate, `assets/font.ttf` for typography
+- **Use cases**: Templates, images, icons, boilerplate code, fonts, sample documents that get copied or modified
+- **Benefits**: Separates output resources from documentation, enables Claude to use files without loading them into context
 
-app.post('/api/auth/logout', authenticate, async (req, res) => {
-    const { refreshToken } = req.body;
-    await refreshTokenService.revokeRefreshToken(refreshToken);
-    res.json({ message: 'Logged out successfully' });
-});
+### Progressive Disclosure Design Principle
+
+Skills use a three-level loading system to manage context efficiently:
+
+1. **Metadata (name + description)** - Always in context (~100 words)
+2. **SKILL.md body** - When skill triggers (<5k words)
+3. **Bundled resources** - As needed by Claude (Unlimited*)
+
+*Unlimited because scripts can be executed without reading into context window.
+
+## Skill Creation Process
+
+To create a skill, follow the "Skill Creation Process" in order, skipping steps only if there is a clear reason why they are not applicable.
+
+### Step 1: Understanding the Skill with Concrete Examples
+
+Skip this step only when the skill's usage patterns are already clearly understood. It remains valuable even when working with an existing skill.
+
+To create an effective skill, clearly understand concrete examples of how the skill will be used. This understanding can come from either direct user examples or generated examples that are validated with user feedback.
+
+For example, when building an image-editor skill, relevant questions include:
+
+- "What functionality should the image-editor skill support? Editing, rotating, anything else?"
+- "Can you give some examples of how this skill would be used?"
+- "I can imagine users asking for things like 'Remove the red-eye from this image' or 'Rotate this image'. Are there other ways you imagine this skill being used?"
+- "What would a user say that should trigger this skill?"
+
+To avoid overwhelming users, avoid asking too many questions in a single message. Start with the most important questions and follow up as needed for better effectiveness.
+
+Conclude this step when there is a clear sense of the functionality the skill should support.
+
+### Step 2: Planning the Reusable Skill Contents
+
+To turn concrete examples into an effective skill, analyze each example by:
+
+1. Considering how to execute on the example from scratch
+2. Identifying what scripts, references, and assets would be helpful when executing these workflows repeatedly
+
+Example: When building a `pdf-editor` skill to handle queries like "Help me rotate this PDF," the analysis shows:
+
+1. Rotating a PDF requires re-writing the same code each time
+2. A `scripts/rotate_pdf.py` script would be helpful to store in the skill
+
+Example: When designing a `frontend-webapp-builder` skill for queries like "Build me a todo app" or "Build me a dashboard to track my steps," the analysis shows:
+
+1. Writing a frontend webapp requires the same boilerplate HTML/React each time
+2. An `assets/hello-world/` template containing the boilerplate HTML/React project files would be helpful to store in the skill
+
+Example: When building a `big-query` skill to handle queries like "How many users have logged in today?" the analysis shows:
+
+1. Querying BigQuery requires re-discovering the table schemas and relationships each time
+2. A `references/schema.md` file documenting the table schemas would be helpful to store in the skill
+
+**For Claude Code plugins:** When building a hooks skill, the analysis shows:
+1. Developers repeatedly need to validate hooks.json and test hook scripts
+2. `scripts/validate-hook-schema.sh` and `scripts/test-hook.sh` utilities would be helpful
+3. `references/patterns.md` for detailed hook patterns to avoid bloating SKILL.md
+
+To establish the skill's contents, analyze each concrete example to create a list of the reusable resources to include: scripts, references, and assets.
+
+### Step 3: Create Skill Structure
+
+For Claude Code plugins, create the skill directory structure:
+
+```bash
+mkdir -p plugin-name/skills/skill-name/{references,examples,scripts}
+touch plugin-name/skills/skill-name/SKILL.md
 ```
 
-## Session-Based Authentication
+**Note:** Unlike the generic skill-creator which uses `init_skill.py`, plugin skills are created directly in the plugin's `skills/` directory with a simpler manual structure.
 
-### Pattern 1: Express Session
+### Step 4: Edit the Skill
 
-```typescript
-import session from 'express-session';
-import RedisStore from 'connect-redis';
-import { createClient } from 'redis';
+When editing the (newly-created or existing) skill, remember that the skill is being created for another instance of Claude to use. Focus on including information that would be beneficial and non-obvious to Claude. Consider what procedural knowledge, domain-specific details, or reusable assets would help another Claude instance execute these tasks more effectively.
 
-// Setup Redis for session storage
-const redisClient = createClient({
-    url: process.env.REDIS_URL,
-});
-await redisClient.connect();
+#### Start with Reusable Skill Contents
 
-app.use(
-    session({
-        store: new RedisStore({ client: redisClient }),
-        secret: process.env.SESSION_SECRET!,
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            secure: process.env.NODE_ENV === 'production',  // HTTPS only
-            httpOnly: true,  // No JavaScript access
-            maxAge: 24 * 60 * 60 * 1000,  // 24 hours
-            sameSite: 'strict',  // CSRF protection
-        },
-    })
-);
+To begin implementation, start with the reusable resources identified above: `scripts/`, `references/`, and `assets/` files. Note that this step may require user input. For example, when implementing a `brand-guidelines` skill, the user may need to provide brand assets or templates to store in `assets/`, or documentation to store in `references/`.
 
-// Login
-app.post('/api/auth/login', async (req, res) => {
-    const { email, password } = req.body;
+Also, delete any example files and directories not needed for the skill. Create only the directories you actually need (references/, examples/, scripts/).
 
-    const user = await db.users.findOne({ email });
-    if (!user || !(await verifyPassword(password, user.passwordHash))) {
-        return res.status(401).json({ error: 'Invalid credentials' });
-    }
+#### Update SKILL.md
 
-    // Store user in session
-    req.session.userId = user.id;
-    req.session.role = user.role;
+**Writing Style:** Write the entire skill using **imperative/infinitive form** (verb-first instructions), not second person. Use objective, instructional language (e.g., "To accomplish X, do Y" rather than "You should do X" or "If you need to do X"). This maintains consistency and clarity for AI consumption.
 
-    res.json({ user: { id: user.id, email: user.email, role: user.role } });
-});
+**Description (Frontmatter):** Use third-person format with specific trigger phrases:
 
-// Session middleware
-function requireAuth(req: Request, res: Response, next: NextFunction) {
-    if (!req.session.userId) {
-        return res.status(401).json({ error: 'Not authenticated' });
-    }
-    next();
-}
-
-// Protected route
-app.get('/api/profile', requireAuth, async (req, res) => {
-    const user = await db.users.findById(req.session.userId);
-    res.json({ user });
-});
-
-// Logout
-app.post('/api/auth/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).json({ error: 'Logout failed' });
-        }
-        res.clearCookie('connect.sid');
-        res.json({ message: 'Logged out successfully' });
-    });
-});
+```yaml
+---
+name: Skill Name
+description: This skill should be used when the user asks to "specific phrase 1", "specific phrase 2", "specific phrase 3". Include exact phrases users would say that should trigger this skill. Be concrete and specific.
+version: 0.1.0
+---
 ```
 
-## OAuth2 / Social Login
-
-### Pattern 1: OAuth2 with Passport.js
-
-```typescript
-import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { Strategy as GitHubStrategy } from 'passport-github2';
-
-// Google OAuth
-passport.use(
-    new GoogleStrategy(
-        {
-            clientID: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-            callbackURL: '/api/auth/google/callback',
-        },
-        async (accessToken, refreshToken, profile, done) => {
-            try {
-                // Find or create user
-                let user = await db.users.findOne({
-                    googleId: profile.id,
-                });
-
-                if (!user) {
-                    user = await db.users.create({
-                        googleId: profile.id,
-                        email: profile.emails?.[0]?.value,
-                        name: profile.displayName,
-                        avatar: profile.photos?.[0]?.value,
-                    });
-                }
-
-                return done(null, user);
-            } catch (error) {
-                return done(error, undefined);
-            }
-        }
-    )
-);
-
-// Routes
-app.get('/api/auth/google', passport.authenticate('google', {
-    scope: ['profile', 'email'],
-}));
-
-app.get(
-    '/api/auth/google/callback',
-    passport.authenticate('google', { session: false }),
-    (req, res) => {
-        // Generate JWT
-        const tokens = generateTokens(req.user.id, req.user.email, req.user.role);
-        // Redirect to frontend with token
-        res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${tokens.accessToken}`);
-    }
-);
+**Good description examples:**
+```yaml
+description: This skill should be used when the user asks to "create a hook", "add a PreToolUse hook", "validate tool use", "implement prompt-based hooks", or mentions hook events (PreToolUse, PostToolUse, Stop).
 ```
 
-## Authorization Patterns
-
-### Pattern 1: Role-Based Access Control (RBAC)
-
-```typescript
-enum Role {
-    USER = 'user',
-    MODERATOR = 'moderator',
-    ADMIN = 'admin',
-}
-
-const roleHierarchy: Record<Role, Role[]> = {
-    [Role.ADMIN]: [Role.ADMIN, Role.MODERATOR, Role.USER],
-    [Role.MODERATOR]: [Role.MODERATOR, Role.USER],
-    [Role.USER]: [Role.USER],
-};
-
-function hasRole(userRole: Role, requiredRole: Role): boolean {
-    return roleHierarchy[userRole].includes(requiredRole);
-}
-
-// Middleware
-function requireRole(...roles: Role[]) {
-    return (req: Request, res: Response, next: NextFunction) => {
-        if (!req.user) {
-            return res.status(401).json({ error: 'Not authenticated' });
-        }
-
-        if (!roles.some(role => hasRole(req.user.role, role))) {
-            return res.status(403).json({ error: 'Insufficient permissions' });
-        }
-
-        next();
-    };
-}
-
-// Usage
-app.delete('/api/users/:id',
-    authenticate,
-    requireRole(Role.ADMIN),
-    async (req, res) => {
-        // Only admins can delete users
-        await db.users.delete(req.params.id);
-        res.json({ message: 'User deleted' });
-    }
-);
+**Bad description examples:**
+```yaml
+description: Use this skill when working with hooks.  # Wrong person, vague
+description: Load when user needs hook help.  # Not third person
+description: Provides hook guidance.  # No trigger phrases
 ```
 
-### Pattern 2: Permission-Based Access Control
+To complete SKILL.md body, answer the following questions:
 
-```typescript
-enum Permission {
-    READ_USERS = 'read:users',
-    WRITE_USERS = 'write:users',
-    DELETE_USERS = 'delete:users',
-    READ_POSTS = 'read:posts',
-    WRITE_POSTS = 'write:posts',
-}
+1. What is the purpose of the skill, in a few sentences?
+2. When should the skill be used? (Include this in frontmatter description with specific triggers)
+3. In practice, how should Claude use the skill? All reusable skill contents developed above should be referenced so that Claude knows how to use them.
 
-const rolePermissions: Record<Role, Permission[]> = {
-    [Role.USER]: [Permission.READ_POSTS, Permission.WRITE_POSTS],
-    [Role.MODERATOR]: [
-        Permission.READ_POSTS,
-        Permission.WRITE_POSTS,
-        Permission.READ_USERS,
-    ],
-    [Role.ADMIN]: Object.values(Permission),
-};
+**Keep SKILL.md lean:** Target 1,500-2,000 words for the body. Move detailed content to references/:
+- Detailed patterns → `references/patterns.md`
+- Advanced techniques → `references/advanced.md`
+- Migration guides → `references/migration.md`
+- API references → `references/api-reference.md`
 
-function hasPermission(userRole: Role, permission: Permission): boolean {
-    return rolePermissions[userRole]?.includes(permission) ?? false;
-}
+**Reference resources in SKILL.md:**
+```markdown
+## Additional Resources
 
-function requirePermission(...permissions: Permission[]) {
-    return (req: Request, res: Response, next: NextFunction) => {
-        if (!req.user) {
-            return res.status(401).json({ error: 'Not authenticated' });
-        }
+### Reference Files
 
-        const hasAllPermissions = permissions.every(permission =>
-            hasPermission(req.user.role, permission)
-        );
+For detailed patterns and techniques, consult:
+- **`references/patterns.md`** - Common patterns
+- **`references/advanced.md`** - Advanced use cases
 
-        if (!hasAllPermissions) {
-            return res.status(403).json({ error: 'Insufficient permissions' });
-        }
+### Example Files
 
-        next();
-    };
-}
-
-// Usage
-app.get('/api/users',
-    authenticate,
-    requirePermission(Permission.READ_USERS),
-    async (req, res) => {
-        const users = await db.users.findAll();
-        res.json({ users });
-    }
-);
+Working examples in `examples/`:
+- **`example-script.sh`** - Working example
 ```
 
-### Pattern 3: Resource Ownership
+### Step 5: Validate and Test
 
-```typescript
-// Check if user owns resource
-async function requireOwnership(
-    resourceType: 'post' | 'comment',
-    resourceIdParam: string = 'id'
-) {
-    return async (req: Request, res: Response, next: NextFunction) => {
-        if (!req.user) {
-            return res.status(401).json({ error: 'Not authenticated' });
-        }
+**For plugin skills, validation is different from generic skills:**
 
-        const resourceId = req.params[resourceIdParam];
+1. **Check structure**: Skill directory in `plugin-name/skills/skill-name/`
+2. **Validate SKILL.md**: Has frontmatter with name and description
+3. **Check trigger phrases**: Description includes specific user queries
+4. **Verify writing style**: Body uses imperative/infinitive form, not second person
+5. **Test progressive disclosure**: SKILL.md is lean (~1,500-2,000 words), detailed content in references/
+6. **Check references**: All referenced files exist
+7. **Validate examples**: Examples are complete and correct
+8. **Test scripts**: Scripts are executable and work correctly
 
-        // Admins can access anything
-        if (req.user.role === Role.ADMIN) {
-            return next();
-        }
-
-        // Check ownership
-        let resource;
-        if (resourceType === 'post') {
-            resource = await db.posts.findById(resourceId);
-        } else if (resourceType === 'comment') {
-            resource = await db.comments.findById(resourceId);
-        }
-
-        if (!resource) {
-            return res.status(404).json({ error: 'Resource not found' });
-        }
-
-        if (resource.userId !== req.user.userId) {
-            return res.status(403).json({ error: 'Not authorized' });
-        }
-
-        next();
-    };
-}
-
-// Usage
-app.put('/api/posts/:id',
-    authenticate,
-    requireOwnership('post'),
-    async (req, res) => {
-        // User can only update their own posts
-        const post = await db.posts.update(req.params.id, req.body);
-        res.json({ post });
-    }
-);
+**Use the skill-reviewer agent:**
+```
+Ask: "Review my skill and check if it follows best practices"
 ```
 
-## Security Best Practices
+The skill-reviewer agent will check description quality, content organization, and progressive disclosure.
 
-### Pattern 1: Password Security
+### Step 6: Iterate
 
-```typescript
-import bcrypt from 'bcrypt';
-import { z } from 'zod';
+After testing the skill, users may request improvements. Often this happens right after using the skill, with fresh context of how the skill performed.
 
-// Password validation schema
-const passwordSchema = z.string()
-    .min(12, 'Password must be at least 12 characters')
-    .regex(/[A-Z]/, 'Password must contain uppercase letter')
-    .regex(/[a-z]/, 'Password must contain lowercase letter')
-    .regex(/[0-9]/, 'Password must contain number')
-    .regex(/[^A-Za-z0-9]/, 'Password must contain special character');
+**Iteration workflow:**
+1. Use the skill on real tasks
+2. Notice struggles or inefficiencies
+3. Identify how SKILL.md or bundled resources should be updated
+4. Implement changes and test again
 
-// Hash password
-async function hashPassword(password: string): Promise<string> {
-    const saltRounds = 12;  // 2^12 iterations
-    return bcrypt.hash(password, saltRounds);
-}
+**Common improvements:**
+- Strengthen trigger phrases in description
+- Move long sections from SKILL.md to references/
+- Add missing examples or scripts
+- Clarify ambiguous instructions
+- Add edge case handling
 
-// Verify password
-async function verifyPassword(
-    password: string,
-    hash: string
-): Promise<boolean> {
-    return bcrypt.compare(password, hash);
-}
+## Plugin-Specific Considerations
 
-// Registration with password validation
-app.post('/api/auth/register', async (req, res) => {
-    try {
-        const { email, password } = req.body;
+### Skill Location in Plugins
 
-        // Validate password
-        passwordSchema.parse(password);
+Plugin skills live in the plugin's `skills/` directory:
 
-        // Check if user exists
-        const existingUser = await db.users.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ error: 'Email already registered' });
-        }
-
-        // Hash password
-        const passwordHash = await hashPassword(password);
-
-        // Create user
-        const user = await db.users.create({
-            email,
-            passwordHash,
-        });
-
-        // Generate tokens
-        const tokens = generateTokens(user.id, user.email, user.role);
-
-        res.status(201).json({
-            user: { id: user.id, email: user.email },
-            ...tokens,
-        });
-    } catch (error) {
-        if (error instanceof z.ZodError) {
-            return res.status(400).json({ error: error.errors[0].message });
-        }
-        res.status(500).json({ error: 'Registration failed' });
-    }
-});
+```
+my-plugin/
+├── .claude-plugin/
+│   └── plugin.json
+├── commands/
+├── agents/
+└── skills/
+    └── my-skill/
+        ├── SKILL.md
+        ├── references/
+        ├── examples/
+        └── scripts/
 ```
 
-### Pattern 2: Rate Limiting
+### Auto-Discovery
 
-```typescript
-import rateLimit from 'express-rate-limit';
-import RedisStore from 'rate-limit-redis';
+Claude Code automatically discovers skills:
+- Scans `skills/` directory
+- Finds subdirectories containing `SKILL.md`
+- Loads skill metadata (name + description) always
+- Loads SKILL.md body when skill triggers
+- Loads references/examples when needed
 
-// Login rate limiter
-const loginLimiter = rateLimit({
-    store: new RedisStore({ client: redisClient }),
-    windowMs: 15 * 60 * 1000,  // 15 minutes
-    max: 5,  // 5 attempts
-    message: 'Too many login attempts, please try again later',
-    standardHeaders: true,
-    legacyHeaders: false,
-});
+### No Packaging Needed
 
-// API rate limiter
-const apiLimiter = rateLimit({
-    windowMs: 60 * 1000,  // 1 minute
-    max: 100,  // 100 requests per minute
-    standardHeaders: true,
-});
+Plugin skills are distributed as part of the plugin, not as separate ZIP files. Users get skills when they install the plugin.
 
-// Apply to routes
-app.post('/api/auth/login', loginLimiter, async (req, res) => {
-    // Login logic
-});
+### Testing in Plugins
 
-app.use('/api/', apiLimiter);
+Test skills by installing plugin locally:
+
+```bash
+# Test with --plugin-dir
+cc --plugin-dir /path/to/plugin
+
+# Ask questions that should trigger the skill
+# Verify skill loads correctly
 ```
 
-## Best Practices
+## Examples from Plugin-Dev
 
-1. **Never Store Plain Passwords**: Always hash with bcrypt/argon2
-2. **Use HTTPS**: Encrypt data in transit
-3. **Short-Lived Access Tokens**: 15-30 minutes max
-4. **Secure Cookies**: httpOnly, secure, sameSite flags
-5. **Validate All Input**: Email format, password strength
-6. **Rate Limit Auth Endpoints**: Prevent brute force attacks
-7. **Implement CSRF Protection**: For session-based auth
-8. **Rotate Secrets Regularly**: JWT secrets, session secrets
-9. **Log Security Events**: Login attempts, failed auth
-10. **Use MFA When Possible**: Extra security layer
+Study the skills in this plugin as examples of best practices:
 
-## Common Pitfalls
+**hook-development skill:**
+- Excellent trigger phrases: "create a hook", "add a PreToolUse hook", etc.
+- Lean SKILL.md (1,651 words)
+- 3 references/ files for detailed content
+- 3 examples/ of working hooks
+- 3 scripts/ utilities
 
-- **Weak Passwords**: Enforce strong password policies
-- **JWT in localStorage**: Vulnerable to XSS, use httpOnly cookies
-- **No Token Expiration**: Tokens should expire
-- **Client-Side Auth Checks Only**: Always validate server-side
-- **Insecure Password Reset**: Use secure tokens with expiration
-- **No Rate Limiting**: Vulnerable to brute force
-- **Trusting Client Data**: Always validate on server
+**agent-development skill:**
+- Strong triggers: "create an agent", "agent frontmatter", etc.
+- Focused SKILL.md (1,438 words)
+- References include the AI generation prompt from Claude Code
+- Complete agent examples
 
-## Resources
+**plugin-settings skill:**
+- Specific triggers: "plugin settings", ".local.md files", "YAML frontmatter"
+- References show real implementations (multi-agent-swarm, ralph-wiggum)
+- Working parsing scripts
 
-- **references/jwt-best-practices.md**: JWT implementation guide
-- **references/oauth2-flows.md**: OAuth2 flow diagrams and examples
-- **references/session-security.md**: Secure session management
-- **assets/auth-security-checklist.md**: Security review checklist
-- **assets/password-policy-template.md**: Password requirements template
-- **scripts/token-validator.ts**: JWT validation utility
+Each demonstrates progressive disclosure and strong triggering.
+
+## Progressive Disclosure in Practice
+
+### What Goes in SKILL.md
+
+**Include (always loaded when skill triggers):**
+- Core concepts and overview
+- Essential procedures and workflows
+- Quick reference tables
+- Pointers to references/examples/scripts
+- Most common use cases
+
+**Keep under 3,000 words, ideally 1,500-2,000 words**
+
+### What Goes in references/
+
+**Move to references/ (loaded as needed):**
+- Detailed patterns and advanced techniques
+- Comprehensive API documentation
+- Migration guides
+- Edge cases and troubleshooting
+- Extensive examples and walkthroughs
+
+**Each reference file can be large (2,000-5,000+ words)**
+
+### What Goes in examples/
+
+**Working code examples:**
+- Complete, runnable scripts
+- Configuration files
+- Template files
+- Real-world usage examples
+
+**Users can copy and adapt these directly**
+
+### What Goes in scripts/
+
+**Utility scripts:**
+- Validation tools
+- Testing helpers
+- Parsing utilities
+- Automation scripts
+
+**Should be executable and documented**
+
+## Writing Style Requirements
+
+### Imperative/Infinitive Form
+
+Write using verb-first instructions, not second person:
+
+**Correct (imperative):**
+```
+To create a hook, define the event type.
+Configure the MCP server with authentication.
+Validate settings before use.
+```
+
+**Incorrect (second person):**
+```
+You should create a hook by defining the event type.
+You need to configure the MCP server.
+You must validate settings before use.
+```
+
+### Third-Person in Description
+
+The frontmatter description must use third person:
+
+**Correct:**
+```yaml
+description: This skill should be used when the user asks to "create X", "configure Y"...
+```
+
+**Incorrect:**
+```yaml
+description: Use this skill when you want to create X...
+description: Load this skill when user asks...
+```
+
+### Objective, Instructional Language
+
+Focus on what to do, not who should do it:
+
+**Correct:**
+```
+Parse the frontmatter using sed.
+Extract fields with grep.
+Validate values before use.
+```
+
+**Incorrect:**
+```
+You can parse the frontmatter...
+Claude should extract fields...
+The user might validate values...
+```
+
+## Validation Checklist
+
+Before finalizing a skill:
+
+**Structure:**
+- [ ] SKILL.md file exists with valid YAML frontmatter
+- [ ] Frontmatter has `name` and `description` fields
+- [ ] Markdown body is present and substantial
+- [ ] Referenced files actually exist
+
+**Description Quality:**
+- [ ] Uses third person ("This skill should be used when...")
+- [ ] Includes specific trigger phrases users would say
+- [ ] Lists concrete scenarios ("create X", "configure Y")
+- [ ] Not vague or generic
+
+**Content Quality:**
+- [ ] SKILL.md body uses imperative/infinitive form
+- [ ] Body is focused and lean (1,500-2,000 words ideal, <5k max)
+- [ ] Detailed content moved to references/
+- [ ] Examples are complete and working
+- [ ] Scripts are executable and documented
+
+**Progressive Disclosure:**
+- [ ] Core concepts in SKILL.md
+- [ ] Detailed docs in references/
+- [ ] Working code in examples/
+- [ ] Utilities in scripts/
+- [ ] SKILL.md references these resources
+
+**Testing:**
+- [ ] Skill triggers on expected user queries
+- [ ] Content is helpful for intended tasks
+- [ ] No duplicated information across files
+- [ ] References load when needed
+
+## Common Mistakes to Avoid
+
+### Mistake 1: Weak Trigger Description
+
+❌ **Bad:**
+```yaml
+description: Provides guidance for working with hooks.
+```
+
+**Why bad:** Vague, no specific trigger phrases, not third person
+
+✅ **Good:**
+```yaml
+description: This skill should be used when the user asks to "create a hook", "add a PreToolUse hook", "validate tool use", or mentions hook events. Provides comprehensive hooks API guidance.
+```
+
+**Why good:** Third person, specific phrases, concrete scenarios
+
+### Mistake 2: Too Much in SKILL.md
+
+❌ **Bad:**
+```
+skill-name/
+└── SKILL.md  (8,000 words - everything in one file)
+```
+
+**Why bad:** Bloats context when skill loads, detailed content always loaded
+
+✅ **Good:**
+```
+skill-name/
+├── SKILL.md  (1,800 words - core essentials)
+└── references/
+    ├── patterns.md (2,500 words)
+    └── advanced.md (3,700 words)
+```
+
+**Why good:** Progressive disclosure, detailed content loaded only when needed
+
+### Mistake 3: Second Person Writing
+
+❌ **Bad:**
+```markdown
+You should start by reading the configuration file.
+You need to validate the input.
+You can use the grep tool to search.
+```
+
+**Why bad:** Second person, not imperative form
+
+✅ **Good:**
+```markdown
+Start by reading the configuration file.
+Validate the input before processing.
+Use the grep tool to search for patterns.
+```
+
+**Why good:** Imperative form, direct instructions
+
+### Mistake 4: Missing Resource References
+
+❌ **Bad:**
+```markdown
+# SKILL.md
+
+[Core content]
+
+[No mention of references/ or examples/]
+```
+
+**Why bad:** Claude doesn't know references exist
+
+✅ **Good:**
+```markdown
+# SKILL.md
+
+[Core content]
+
+## Additional Resources
+
+### Reference Files
+- **`references/patterns.md`** - Detailed patterns
+- **`references/advanced.md`** - Advanced techniques
+
+### Examples
+- **`examples/script.sh`** - Working example
+```
+
+**Why good:** Claude knows where to find additional information
+
+## Quick Reference
+
+### Minimal Skill
+
+```
+skill-name/
+└── SKILL.md
+```
+
+Good for: Simple knowledge, no complex resources needed
+
+### Standard Skill (Recommended)
+
+```
+skill-name/
+├── SKILL.md
+├── references/
+│   └── detailed-guide.md
+└── examples/
+    └── working-example.sh
+```
+
+Good for: Most plugin skills with detailed documentation
+
+### Complete Skill
+
+```
+skill-name/
+├── SKILL.md
+├── references/
+│   ├── patterns.md
+│   └── advanced.md
+├── examples/
+│   ├── example1.sh
+│   └── example2.json
+└── scripts/
+    └── validate.sh
+```
+
+Good for: Complex domains with validation utilities
+
+## Best Practices Summary
+
+✅ **DO:**
+- Use third-person in description ("This skill should be used when...")
+- Include specific trigger phrases ("create X", "configure Y")
+- Keep SKILL.md lean (1,500-2,000 words)
+- Use progressive disclosure (move details to references/)
+- Write in imperative/infinitive form
+- Reference supporting files clearly
+- Provide working examples
+- Create utility scripts for common operations
+- Study plugin-dev's skills as templates
+
+❌ **DON'T:**
+- Use second person anywhere
+- Have vague trigger conditions
+- Put everything in SKILL.md (>3,000 words without references/)
+- Write in second person ("You should...")
+- Leave resources unreferenced
+- Include broken or incomplete examples
+- Skip validation
+
+## Additional Resources
+
+### Study These Skills
+
+Plugin-dev's skills demonstrate best practices:
+- `../hook-development/` - Progressive disclosure, utilities
+- `../agent-development/` - AI-assisted creation, references
+- `../mcp-integration/` - Comprehensive references
+- `../plugin-settings/` - Real-world examples
+- `../command-development/` - Clear critical concepts
+- `../plugin-structure/` - Good organization
+
+### Reference Files
+
+For complete skill-creator methodology:
+- **`references/skill-creator-original.md`** - Full original skill-creator content
+
+## Implementation Workflow
+
+To create a skill for your plugin:
+
+1. **Understand use cases**: Identify concrete examples of skill usage
+2. **Plan resources**: Determine what scripts/references/examples needed
+3. **Create structure**: `mkdir -p skills/skill-name/{references,examples,scripts}`
+4. **Write SKILL.md**:
+   - Frontmatter with third-person description and trigger phrases
+   - Lean body (1,500-2,000 words) in imperative form
+   - Reference supporting files
+5. **Add resources**: Create references/, examples/, scripts/ as needed
+6. **Validate**: Check description, writing style, organization
+7. **Test**: Verify skill loads on expected triggers
+8. **Iterate**: Improve based on usage
+
+Focus on strong trigger descriptions, progressive disclosure, and imperative writing style for effective skills that load when needed and provide targeted guidance.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
