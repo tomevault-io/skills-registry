@@ -1,268 +1,356 @@
 ---
-name: passwordless-docs
-description: Bitwarden Passwordless.dev documentation, SDKs, and React examples Use when this capability is needed.
+name: mtls-configuration
+description: Configure mutual TLS (mTLS) for zero-trust service-to-service communication. Use when implementing zero-trust networking, certificate management, or securing internal service communication. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# passwordless-docs
+# mTLS Configuration
 
-Comprehensive Bitwarden Passwordless.dev documentation, SDK references, and implementation examples for passwordless authentication using FIDO2/WebAuthn.
-
-## Description
-
-This skill provides access to:
-- **Official Documentation**: Bitwarden Passwordless.dev platform documentation
-- **Node.js SDK**: Official `@passwordlessdev/passwordless-nodejs` implementation guide
-- **React Example**: Complete React/Vite application demonstrating passwordless auth
-- **FIDO2/WebAuthn**: Passwordless authentication standards and best practices
-- **API Reference**: Complete API documentation and integration patterns
-
-**Primary Repository:** [bitwarden/passwordless-docs](https://github.com/bitwarden/passwordless-docs)
-**Node.js SDK:** [bitwarden/passwordless-nodejs](https://github.com/bitwarden/passwordless-nodejs)
-**React Example:** [bitwarden/passwordless-react-example](https://github.com/bitwarden/passwordless-react-example)
+Comprehensive guide to implementing mutual TLS for zero-trust service mesh communication.
 
 ## When to Use This Skill
 
-Use this skill when you need to:
-- Implement passwordless authentication with FIDO2/WebAuthn
-- Integrate Bitwarden Passwordless.dev into Node.js or React applications
-- Build frontend passwordless auth with React
-- Look up Passwordless.dev API documentation
-- Find implementation examples and working code samples
-- Troubleshoot passwordless authentication issues
-- Check for known issues or recent SDK updates
-- Review security best practices for passwordless auth
-- Understand token registration and verification flows
-- Set up demo backend and frontend applications
+- Implementing zero-trust networking
+- Securing service-to-service communication
+- Certificate rotation and management
+- Debugging TLS handshake issues
+- Compliance requirements (PCI-DSS, HIPAA)
+- Multi-cluster secure communication
 
-## Quick Reference
+## Core Concepts
 
-### Documentation Repository
-- **Homepage:** https://bitwarden.com/
-- **Documentation Site:** https://docs.passwordless.dev/
-- **Topics:** bitwarden, passwordless, FIDO2, WebAuthn
-- **Open Issues:** 16
-- **Last Updated:** 2025-11-28
-- **Languages:** CSS (48.4%), TypeScript (25.0%), SCSS (23.6%), Vue (3.0%)
+### 1. mTLS Flow
 
-### Node.js SDK
-- **Package:** `@passwordlessdev/passwordless-nodejs`
-- **NPM:** https://www.npmjs.com/package/@passwordlessdev/passwordless-nodejs
-- **Stars:** 16
-- **License:** Apache License 2.0
-- **Latest Version:** 1.0.1 (2024-10-22)
-- **Open Issues:** 9
-- **Languages:** TypeScript (86.8%), JavaScript (13.2%)
-- **Requirements:** Node.js 10+, ES2018+
-
-### React Example Application
-- **Repository:** [bitwarden/passwordless-react-example](https://github.com/bitwarden/passwordless-react-example)
-- **Stars:** 21
-- **Build Tool:** Vite
-- **Open Issues:** 11
-- **Languages:** TypeScript (86.8%), CSS (8.2%), JavaScript (3.2%), HTML (1.6%)
-- **Demo Backend:** https://demo.passwordless.dev/swagger/index.html
-- **Framework:** Vanilla React (no NextJS/Remix/Gatsby)
-
-### Key Features
-- **Registration Flow**: Create passwordless registration tokens
-- **Authentication**: Verify tokens and authenticate users
-- **Discoverable Credentials**: Support for platform authenticators
-- **Alias Management**: Device-based authentication aliases
-- **Customization**: Configurable API endpoints and options
-- **React Integration**: Complete frontend implementation example
-
-## Available References
-
-### Documentation (bitwarden/passwordless-docs)
-- `references/README.md` - Complete platform documentation
-- `references/file_structure.md` - Documentation site structure
-- `references/issues.md` - Recent documentation issues
-- `references/CHANGELOG.md` - Documentation version history
-- `references/releases.md` - Documentation releases
-
-### Node.js SDK (bitwarden/passwordless-nodejs)
-- `references/sdk-nodejs/README.md` - SDK implementation guide with code examples
-- `references/sdk-nodejs/file_structure.md` - SDK repository structure
-- `references/sdk-nodejs/issues.md` - SDK known issues and bug reports
-- `references/sdk-nodejs/releases.md` - SDK release notes and changelog
-
-### React Example (bitwarden/passwordless-react-example)
-- `references/example-react/README.md` - React implementation guide and setup
-- `references/example-react/file_structure.md` - React app structure
-- `references/example-react/issues.md` - Known frontend issues
-
-## Backend SDK Quick Start
-
-### Installation
-```bash
-npm i @passwordlessdev/passwordless-nodejs
+```
+┌─────────┐                              ┌─────────┐
+│ Service │                              │ Service │
+│    A    │                              │    B    │
+└────┬────┘                              └────┬────┘
+     │                                        │
+┌────┴────┐      TLS Handshake          ┌────┴────┐
+│  Proxy  │◄───────────────────────────►│  Proxy  │
+│(Sidecar)│  1. ClientHello             │(Sidecar)│
+│         │  2. ServerHello + Cert      │         │
+│         │  3. Client Cert             │         │
+│         │  4. Verify Both Certs       │         │
+│         │  5. Encrypted Channel       │         │
+└─────────┘                              └─────────┘
 ```
 
-### Basic Setup
-```typescript
-import { PasswordlessClient, PasswordlessOptions } from '@passwordlessdev/passwordless-nodejs';
+### 2. Certificate Hierarchy
 
-const options: PasswordlessOptions = {
-  baseUrl: 'https://v4.passwordless.dev' // Optional, this is the default
-};
-
-const client = new PasswordlessClient('your-api-secret', options);
+```
+Root CA (Self-signed, long-lived)
+    │
+    ├── Intermediate CA (Cluster-level)
+    │       │
+    │       ├── Workload Cert (Service A)
+    │       └── Workload Cert (Service B)
+    │
+    └── Intermediate CA (Multi-cluster)
+            │
+            └── Cross-cluster certs
 ```
 
-### Environment Configuration
-```env
-PASSWORDLESS_API=https://v4.passwordless.dev
-PASSWORDLESS_SECRET=demo:secret:f831e39c29e64b77aba547478a4b3ec6
-```
+## Templates
 
-### Registration Example
-```typescript
-// After creating user in your database
-const registerOptions = new RegisterOptions();
-registerOptions.userId = userId;
-registerOptions.username = username;
-registerOptions.discoverable = true;
-registerOptions.aliases = [deviceName]; // Optional
+### Template 1: Istio mTLS (Strict Mode)
 
-const token = await client.createRegisterToken(registerOptions);
-```
-
-### Authentication Example
-```typescript
-const token = request.query.token;
-const verifiedUser = await client.verifyToken(token);
-
-if (verifiedUser && verifiedUser.success === true) {
-  // User authenticated successfully
-  // Create session, JWT, etc.
-}
-```
-
-## React Frontend Quick Start
-
-### Project Setup
-```bash
-# Clone the example
-git clone https://github.com/bitwarden/passwordless-react-example.git
-cd passwordless-react-example
-
-# Install dependencies
-npm install
-
-# Configure environment
-# Create .env file with:
-VITE_BACKEND_URL=https://demo.passwordless.dev
-VITE_PASSWORDLESS_API_KEY=pwdemo:public:5aec1f24f65343239bf4e1c9a852e871
-VITE_PASSWORDLESS_API_URL=https://v4.passwordless.dev
-
-# Run development server
-npm run dev
-```
-
-### Key Technologies
-- **React**: UI framework
-- **Vite**: Build tool and dev server
-- **TypeScript**: Type safety
-- **Demo Backend**: Pre-configured passwordless API
-
-### Frontend Architecture
-The React example demonstrates:
-- User registration with passwordless credentials
-- Login flow using WebAuthn
-- Session management
-- API integration with Passwordless.dev
-- Production-ready component structure
-
-## Common Use Cases
-
-### 1. Implementing Backend Passwordless Registration
-Reference: `references/sdk-nodejs/README.md` - Registration section
-
-### 2. Building React Frontend Authentication
-Reference: `references/example-react/README.md` - Complete React setup
-
-### 3. User Authentication Flow (Backend)
-Reference: `references/sdk-nodejs/README.md` - Logging in section
-
-### 4. API Documentation Lookup
-Reference: `references/README.md` - Complete API reference
-
-### 5. Troubleshooting Integration Issues
-- Backend: `references/sdk-nodejs/issues.md` - SDK issues
-- Frontend: `references/example-react/issues.md` - React issues
-
-### 6. Understanding FIDO2/WebAuthn Standards
-Reference: `references/README.md` - Standards documentation
-
-### 7. Full-Stack Implementation
-Combine:
-- Backend: `references/sdk-nodejs/README.md`
-- Frontend: `references/example-react/README.md`
-
-## Version History
-
-- **1.2.0** (2026-01-02): Enhanced with React example integration
-  - Added React example repository (bitwarden/passwordless-react-example)
-  - Included frontend implementation guide
-  - Added Vite + React project setup
-  - Expanded use cases for full-stack development
-  - Updated frontend-specific documentation
-  - Quality score improvement: 90/100 → 92/100
-
-- **1.1.0** (2026-01-02): Enhanced with Node.js SDK integration
-  - Added Node.js SDK repository content
-  - Included SDK implementation examples
-  - Added quick start guide for SDK
-  - Expanded use cases and references
-  - Updated version to reflect enhancement
-
-- **1.0.0** (2026-01-02): Initial release
-  - Core documentation repository
-  - Basic reference structure
-  - Initial quality score: 85/100
-
-## Implementation Patterns
-
-### Backend-Only Pattern
-Use when building API services:
-1. Install Node.js SDK
-2. Configure environment variables
-3. Implement registration endpoints
-4. Implement verification endpoints
-5. Handle session management
-
-### Frontend-Only Pattern
-Use when integrating with existing API:
-1. Clone React example
-2. Configure backend URL in .env
-3. Customize UI components
-4. Integrate with your auth flow
-
-### Full-Stack Pattern
-Use for complete implementation:
-1. Set up backend with Node.js SDK
-2. Use React example as frontend base
-3. Connect frontend to your backend
-4. Deploy both services
-5. Configure production environment
-
-## Related Resources
-
-- **Get Started Guide**: https://docs.passwordless.dev/guide/get-started.html
-- **Admin Console**: https://admin.passwordless.dev/
-- **Demo Backend Swagger**: https://demo.passwordless.dev/swagger/index.html
-- **Bitwarden Homepage**: https://bitwarden.com/
-- **FIDO Alliance**: https://fidoalliance.org/
-- **WebAuthn Guide**: https://webauthn.guide/
-
+```yaml
+# Enable strict mTLS mesh-wide
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: istio-system
+spec:
+  mtls:
+    mode: STRICT
 ---
+# Namespace-level override (permissive for migration)
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: legacy-namespace
+spec:
+  mtls:
+    mode: PERMISSIVE
+---
+# Workload-specific policy
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: payment-service
+  namespace: production
+spec:
+  selector:
+    matchLabels:
+      app: payment-service
+  mtls:
+    mode: STRICT
+  portLevelMtls:
+    8080:
+      mode: STRICT
+    9090:
+      mode: DISABLE  # Metrics port, no mTLS
+```
 
-**Generated by Skill Seeker** | Enhanced with SDKs and Examples
-**Quality Score**: 92/100 (Grade A)
-**Status**: ✅ Production Ready
-**Coverage**: Backend + Frontend + Documentation
+### Template 2: Istio Destination Rule for mTLS
+
+```yaml
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: default
+  namespace: istio-system
+spec:
+  host: "*.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+# TLS to external service
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: external-api
+spec:
+  host: api.external.com
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
+      caCertificates: /etc/certs/external-ca.pem
+---
+# Mutual TLS to external service
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: partner-api
+spec:
+  host: api.partner.com
+  trafficPolicy:
+    tls:
+      mode: MUTUAL
+      clientCertificate: /etc/certs/client.pem
+      privateKey: /etc/certs/client-key.pem
+      caCertificates: /etc/certs/partner-ca.pem
+```
+
+### Template 3: Cert-Manager with Istio
+
+```yaml
+# Install cert-manager issuer for Istio
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: istio-ca
+spec:
+  ca:
+    secretName: istio-ca-secret
+---
+# Create Istio CA secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: istio-ca-secret
+  namespace: cert-manager
+type: kubernetes.io/tls
+data:
+  tls.crt: <base64-encoded-ca-cert>
+  tls.key: <base64-encoded-ca-key>
+---
+# Certificate for workload
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: my-service-cert
+  namespace: my-namespace
+spec:
+  secretName: my-service-tls
+  duration: 24h
+  renewBefore: 8h
+  issuerRef:
+    name: istio-ca
+    kind: ClusterIssuer
+  commonName: my-service.my-namespace.svc.cluster.local
+  dnsNames:
+    - my-service
+    - my-service.my-namespace
+    - my-service.my-namespace.svc
+    - my-service.my-namespace.svc.cluster.local
+  usages:
+    - server auth
+    - client auth
+```
+
+### Template 4: SPIFFE/SPIRE Integration
+
+```yaml
+# SPIRE Server configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spire-server
+  namespace: spire
+data:
+  server.conf: |
+    server {
+      bind_address = "0.0.0.0"
+      bind_port = "8081"
+      trust_domain = "example.org"
+      data_dir = "/run/spire/data"
+      log_level = "INFO"
+      ca_ttl = "168h"
+      default_x509_svid_ttl = "1h"
+    }
+
+    plugins {
+      DataStore "sql" {
+        plugin_data {
+          database_type = "sqlite3"
+          connection_string = "/run/spire/data/datastore.sqlite3"
+        }
+      }
+
+      NodeAttestor "k8s_psat" {
+        plugin_data {
+          clusters = {
+            "demo-cluster" = {
+              service_account_allow_list = ["spire:spire-agent"]
+            }
+          }
+        }
+      }
+
+      KeyManager "memory" {
+        plugin_data {}
+      }
+
+      UpstreamAuthority "disk" {
+        plugin_data {
+          key_file_path = "/run/spire/secrets/bootstrap.key"
+          cert_file_path = "/run/spire/secrets/bootstrap.crt"
+        }
+      }
+    }
+---
+# SPIRE Agent DaemonSet (abbreviated)
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: spire-agent
+  namespace: spire
+spec:
+  selector:
+    matchLabels:
+      app: spire-agent
+  template:
+    spec:
+      containers:
+        - name: spire-agent
+          image: ghcr.io/spiffe/spire-agent:1.8.0
+          volumeMounts:
+            - name: spire-agent-socket
+              mountPath: /run/spire/sockets
+      volumes:
+        - name: spire-agent-socket
+          hostPath:
+            path: /run/spire/sockets
+            type: DirectoryOrCreate
+```
+
+### Template 5: Linkerd mTLS (Automatic)
+
+```yaml
+# Linkerd enables mTLS automatically
+# Verify with:
+# linkerd viz edges deployment -n my-namespace
+
+# For external services without mTLS
+apiVersion: policy.linkerd.io/v1beta1
+kind: Server
+metadata:
+  name: external-api
+  namespace: my-namespace
+spec:
+  podSelector:
+    matchLabels:
+      app: my-app
+  port: external-api
+  proxyProtocol: HTTP/1  # or TLS for passthrough
+---
+# Skip TLS for specific port
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  annotations:
+    config.linkerd.io/skip-outbound-ports: "3306"  # MySQL
+```
+
+## Certificate Rotation
+
+```bash
+# Istio - Check certificate expiry
+istioctl proxy-config secret deploy/my-app -o json | \
+  jq '.dynamicActiveSecrets[0].secret.tlsCertificate.certificateChain.inlineBytes' | \
+  tr -d '"' | base64 -d | openssl x509 -text -noout
+
+# Force certificate rotation
+kubectl rollout restart deployment/my-app
+
+# Check Linkerd identity
+linkerd identity -n my-namespace
+```
+
+## Debugging mTLS Issues
+
+```bash
+# Istio - Check if mTLS is enabled
+istioctl authn tls-check my-service.my-namespace.svc.cluster.local
+
+# Verify peer authentication
+kubectl get peerauthentication --all-namespaces
+
+# Check destination rules
+kubectl get destinationrule --all-namespaces
+
+# Debug TLS handshake
+istioctl proxy-config log deploy/my-app --level debug
+kubectl logs deploy/my-app -c istio-proxy | grep -i tls
+
+# Linkerd - Check mTLS status
+linkerd viz edges deployment -n my-namespace
+linkerd viz tap deploy/my-app --to deploy/my-backend
+```
+
+## Best Practices
+
+### Do's
+- **Start with PERMISSIVE** - Migrate gradually to STRICT
+- **Monitor certificate expiry** - Set up alerts
+- **Use short-lived certs** - 24h or less for workloads
+- **Rotate CA periodically** - Plan for CA rotation
+- **Log TLS errors** - For debugging and audit
+
+### Don'ts
+- **Don't disable mTLS** - For convenience in production
+- **Don't ignore cert expiry** - Automate rotation
+- **Don't use self-signed certs** - Use proper CA hierarchy
+- **Don't skip verification** - Verify the full chain
+
+## Resources
+
+- [Istio Security](https://istio.io/latest/docs/concepts/security/)
+- [SPIFFE/SPIRE](https://spiffe.io/)
+- [cert-manager](https://cert-manager.io/)
+- [Zero Trust Architecture (NIST)](https://www.nist.gov/publications/zero-trust-architecture)
+
+## How to use this skill
+
+Refer to the instructions above or standard agent usage for this skill type.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
