@@ -1,185 +1,388 @@
 ---
-name: spec-reviewer
-description: > Use when this capability is needed.
+name: skill-review
+description: | Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Spec Reviewer Skill
+# Skill Review Skill
 
-You are a spec reviewer. You have one job: find every gap, ambiguity,
-under-specification, over-engineering, and missing test case in the spec
-document. Be adversarial. The user does not want validation — they want
-problems found now, before code is written.
+## Overview
 
-For interactive, section-by-section review where each issue is resolved with
-user confirmation before moving on, use `/spec-workflow` Stage 2 instead.
+The skill-review skill provides a comprehensive, systematic process for auditing skills in the claude-skills repository. It combines automated technical validation with AI-powered verification to ensure skills remain accurate, current, and high-quality.
 
----
+**Use this skill when**:
+- Investigating suspected issues in a skill
+- Major package version updates released (e.g., better-auth 1.x → 2.x)
+- Skill last verified >90 days ago
+- Before submitting skill to marketplace
+- User reports errors following skill instructions
+- Examples seem outdated or contradictory
 
-## Input Requirement
-
-If no spec document is provided in the message or a recent message, ask the
-user to paste the spec or provide the file path. Do not proceed without the
-full spec text.
-
-Read the spec once in full before generating any output. Do not start
-reporting issues mid-read.
+**Production evidence**: Successfully audited better-auth skill (2025-11-08), found 6 critical/high issues including non-existent API imports, removed 665 lines of incorrect code, implemented v2.0.0 with correct patterns.
 
 ---
 
-## Five Review Lenses (apply all five, in order)
+## Quick Start
 
-### Lens 1 — DRY (highest priority)
-
-Find every place two functions describe the same behavior. The goal is to
-flag shared helpers that should be extracted before the code is written,
-not after.
-
-Check for:
-- Two or more functions that perform the same validation
-- The same error condition described separately in two function contracts
-- Test setup that will clearly need to be duplicated across test blocks
-- Spec sections that restate behavior already defined elsewhere without
-  referencing the original definition
-
-### Lens 2 — Test Completeness
-
-For every exported function in the spec, check whether a test plan exists
-for each of these categories:
-
-1. **Happy path** — standard inputs, expected output
-2. **Numerical oracle** (if the function returns numeric estimates) — are
-   tolerances stated explicitly? (`1e-10` for point, `1e-8` for SE)
-3. **Grouped analysis** — if `group_by()` is supported, is it tested?
-4. **Domain estimation** — if `filter()`-based domains are supported, tested?
-5. **`variance` argument** — if multiple variance methods exist, each covered?
-6. **`label_values` behavior** — if the function uses value labels, specified?
-7. **`label_vars` behavior** — if the function uses variable labels, specified?
-8. **`meta()` contract** — are metadata columns in output fully specified?
-9. **`name_style = "broom"`** — if applicable, is output format specified?
-10. **Error paths** — is every row in the error table covered by a test?
-11. **Edge cases** — all-NA input, zero-weight rows, single-level group,
-    empty domain after filter, `n = 1` group
-12. **Multi-variable** — if the function accepts multiple variables at once,
-    is that tested?
-
-Also check the mechanic rules:
-- Is `test_invariants()` specified as the first assertion in every
-  constructor test block?
-- Is the dual pattern (class= + snapshot) specified for all Layer 3 errors?
-- Is `class=` required on every error class in the spec?
-
-### Lens 3 — Contract Completeness
-
-For every function in the spec:
-
-- All arguments documented with: type, default value, one-sentence description?
-- Argument order follows the convention?
-  `x`/`design` → required NSE → required scalar → optional NSE → optional scalar → `...`
-- All output columns named AND typed?
-- S3 class hierarchy fully specified (if the function returns a classed object)?
-- Error table complete with class names in `surveycore_error_{condition}` format?
-- All new error classes present in (or flagged as additions to)
-  `plans/error-messages.md`?
-- Are any edge case behaviors left implicit ("reasonable behavior") rather
-  than explicitly defined?
-
-### Lens 4 — Edge Cases
-
-Do these scenarios appear explicitly somewhere in the spec?
-
-- All-NA input column
-- Zero-weight rows (or rows with weight = 0)
-- Single-level grouping variable (one group)
-- Empty domain after a `filter()` call
-- Domain estimation and `group_by()` used simultaneously
-- `n = 1` group (single-observation group)
-- `NA` in the grouping variable
-- Input data with zero rows
-
-If any of these are missing, flag them. "The implementation should handle
-edge cases gracefully" is not a spec — it is a deferral.
-
-### Lens 5 — Engineering Level
-
-Apply `engineering-preferences.md` to flag both failure modes:
-
-**Under-engineered**: missing edge case handling, contracts that don't specify
-behavior at boundaries, "behavior is undefined for X" without stating what actually
-happens, error classes named in the spec but absent from the error table.
-
-**Over-engineered**: abstraction layers that don't yet have two real call sites in
-the spec, generalization for hypothetical future phases not in the current roadmap,
-performance optimization specified before correctness is established.
-
----
-
-## Issue Format
-
-Use this format for every issue (same structure as `spec-workflow` Stage 2
-for consistency):
+### Invoke via Slash Command
 
 ```
-**Issue [N]: [Short title]**
-Severity: BLOCKING | REQUIRED | SUGGESTION
-[Rule or principle violated, e.g. "Violates engineering-preferences.md §4 (edge cases)"]
-
-[Concrete description of the problem. Quote the spec text that is
-problematic, or name the thing that is absent.]
-
-Options:
-- **[A]** [Description] — Effort: [low/medium/high], Risk: [low/medium/high], Impact: [what]
-- **[B]** [Alternative description]
-- **[C] Do nothing** — [what breaks or stays ambiguous]
-
-**Recommendation: [A/B/C]** — [One sentence rationale]
+/review-skill <skill-name>
 ```
 
-**Severity tiers:**
-- **BLOCKING** — The spec cannot be implemented correctly without resolving this.
-  Ambiguity that would require the implementer to make an architectural guess.
-- **REQUIRED** — Will cause test failures, R CMD check issues, or runtime bugs
-  if not addressed. Missing `class=`, missing output column type, missing edge
-  case that real data will hit.
-- **SUGGESTION** — Quality improvement worth considering before implementation.
-  DRY violations, premature abstraction, spec sections that could be clearer.
+**Example**:
+```
+/review-skill better-auth
+```
+
+### Invoke via Skill (Proactive)
+
+When Claude notices potential issues, it can suggest:
+```
+User: "I'm having trouble with better-auth and D1"
+
+Claude: "I notice the better-auth skill was last verified 6 months ago.
+Would you like me to review it? Better-auth recently released v1.3
+with D1 changes."
+```
 
 ---
 
-## Output Structure
+## What This Skill Does
 
-Organize all issues by spec section. If a section has no issues, say "No issues found."
+### 9-Phase Systematic Audit
 
-See `refs/review-output-template.md` for the full output template and severity tier definitions.
+1. **Pre-Review Setup** (5-10 min)
+   - Install skill locally: `./scripts/install-skill.sh <skill-name>`
+   - Check current version and last verified date
+   - Test skill discovery
+
+2. **Standards Compliance** (10-15 min)
+   - Validate YAML frontmatter (name, description, license)
+   - Check keyword comprehensiveness
+   - Verify third-person description style
+   - Ensure directory structure matches spec
+
+3. **Official Documentation Verification** (15-30 min)
+   - Use Context7 MCP or WebFetch to verify API patterns
+   - Check GitHub for recent updates and issues
+   - Verify package versions against npm registry
+   - Compare with production repositories
+
+4. **Code Examples & Templates Audit** (20-40 min)
+   - Verify import statements exist in current packages
+   - Check API method signatures match official docs
+   - Ensure schema consistency across files
+   - Test templates build and run
+
+5. **Cross-File Consistency** (15-25 min)
+   - Compare SKILL.md vs README.md examples
+   - Verify "Bundled Resources" section matches actual files
+   - Ensure configuration examples consistent
+
+6. **Dependencies & Versions** (10-15 min)
+   - Run `./scripts/check-versions.sh <skill-name>`
+   - Check for breaking changes in package updates
+   - Verify "Last Verified" date is recent
+
+7. **Issue Categorization** (10-20 min)
+   - Classify by severity: 🔴 Critical / 🟡 High / 🟠 Medium / 🟢 Low
+   - Document with evidence (GitHub URL, docs link, npm changelog)
+
+8. **Fix Implementation** (30 min - 4 hours)
+   - Auto-fix unambiguous issues
+   - Ask user only for architectural decisions
+   - Update all affected files consistently
+   - Bump version if breaking changes
+
+9. **Post-Fix Verification** (10-15 min)
+   - Test skill discovery
+   - Verify templates work
+   - Check no contradictions remain
+   - Commit with detailed changelog
+
+### Automated Checks (via script)
+
+The skill runs `./scripts/review-skill.sh <skill-name>` which checks:
+- ✅ YAML frontmatter syntax and required fields
+- ✅ Package version currency (npm)
+- ✅ Broken links (HTTP status)
+- ✅ TODO markers in code
+- ✅ File organization (expected directories exist)
+- ✅ "Last Verified" date staleness
+
+### Manual Verification (AI-powered)
+
+Claude performs:
+- 🔍 API method verification against official docs
+- 🔍 GitHub activity and issue checks
+- 🔍 Production repository comparisons
+- 🔍 Code example correctness
+- 🔍 Schema consistency validation
 
 ---
 
-## Before Outputting
+## Process Workflow
 
-Ask yourself:
-- Have I applied all five lenses, not just the ones that found issues?
-- For every function contract: did I check argument order, output types,
-  and the error table?
-- Have I flagged actual problems, or am I manufacturing issues?
-- Is the "overall assessment" honest — does it match the issue count and severity?
+### Step 1: Run Automated Checks
 
-If a spec is genuinely complete and well-specified, say so. Adversarial means
-honest, not performatively negative.
+```bash
+./scripts/review-skill.sh <skill-name>
+```
+
+Interpret output to identify technical issues.
+
+### Step 2: Execute Manual Verification
+
+For **Phase 3: Official Documentation Verification**:
+
+1. Use Context7 MCP (if available):
+   ```
+   Use Context7 to fetch: /websites/<package-docs>
+   Search for: [API method from skill]
+   ```
+
+2. Or use WebFetch:
+   ```
+   Fetch: https://<official-docs-url>
+   Verify: [specific patterns]
+   ```
+
+3. Check GitHub:
+   ```
+   Visit: https://github.com/<org>/<repo>/commits/main
+   Check: Last commit, recent changes
+   Search issues: [keywords from skill]
+   ```
+
+4. Find production examples:
+   ```
+   WebSearch: "<package> cloudflare production github"
+   Compare: Do real projects match our patterns?
+   ```
+
+For **Phase 4: Code Examples Audit**:
+
+- Verify all imports exist (check official docs)
+- Check API method signatures match
+- Ensure schema consistency across files
+- Test templates actually work
+
+### Step 3: Categorize Issues
+
+**🔴 CRITICAL** - Breaks functionality:
+- Non-existent API methods/imports
+- Invalid configuration
+- Missing required dependencies
+
+**🟡 HIGH** - Causes confusion:
+- Contradictory examples across files
+- Inconsistent patterns
+- Outdated major versions
+
+**🟠 MEDIUM** - Reduces quality:
+- Stale minor versions (>90 days)
+- Missing documentation sections
+- Incomplete error lists
+
+**🟢 LOW** - Polish issues:
+- Typos, formatting inconsistencies
+- Missing optional metadata
+
+### Step 4: Fix Issues
+
+**Auto-fix** when:
+- ✅ Fix is unambiguous (correct import from docs)
+- ✅ Evidence is clear
+- ✅ No architectural impact
+
+**Ask user** when:
+- ❓ Multiple valid approaches
+- ❓ Breaking change decision
+- ❓ Architectural choice
+
+**Format for questions**:
+```
+I found [issue]. There are [N] approaches:
+
+1. [Approach A] - [Pros/Cons]
+2. [Approach B] - [Pros/Cons]
+
+Recommendation: [Default based on evidence]
+
+Which would you prefer?
+```
+
+### Step 5: Version Bump Assessment
+
+If breaking changes:
+- Major: v1.0.0 → v2.0.0 (API patterns change)
+- Minor: v1.0.0 → v1.1.0 (new features, backward compatible)
+- Patch: v1.0.0 → v1.0.1 (bug fixes only)
+
+### Step 6: Generate Audit Report
+
+```markdown
+## Skill Review Report: <skill-name>
+
+**Date**: YYYY-MM-DD
+**Trigger**: [Why review performed]
+**Time Spent**: [Duration]
+
+### Findings
+
+🔴 CRITICAL (N): [List with evidence]
+🟡 HIGH (N): [List with evidence]
+🟠 MEDIUM (N): [List with evidence]
+🟢 LOW (N): [List with evidence]
+
+### Remediation
+
+**Files Modified**: [List]
+**Version Update**: [old] → [new]
+**Breaking Changes**: Yes/No
+
+### Verification
+
+✅ Discovery test passed
+✅ Templates work
+✅ Committed: [hash]
+
+### Recommendation
+
+[Final assessment]
+```
 
 ---
 
-## After Completing the Review
+## Example: better-auth Audit
 
-1. Ask the user for the phase number if it isn't obvious from the spec filename
-   (e.g., "Phase 1").
-2. Save the full review output to `plans/spec-review-phase-{X}.md`.
-3. End the session with:
+### Findings
 
-   > "{N} issues found ({X} blocking, {Y} required, {Z} suggestions).
-   > Start a new session with `/spec-workflow` to resolve these issues
-   > interactively. The issue list has been saved to
-   > `plans/spec-review-phase-{X}.md`."
+**Issue #1: Non-existent d1Adapter** 🔴 CRITICAL
+
+*Location*: `references/cloudflare-worker-example.ts:17`
+
+*Problem*: Imports `d1Adapter` from `'better-auth/adapters/d1'` which doesn't exist
+
+*Evidence*:
+- Official docs: https://better-auth.com/docs/integrations/drizzle
+- GitHub: No `d1Adapter` export in codebase
+- Production: 4 repos use Drizzle/Kysely
+
+*Fix*: Replace with `drizzleAdapter` from `'better-auth/adapters/drizzle'`
+
+### Result
+
+- **Files deleted**: 3 (obsolete patterns)
+- **Files created**: 3 (correct patterns)
+- **Lines changed**: +1,266 net
+- **Version**: v1.0.0 → v2.0.0
+- **Time**: 3.5 hours
+
+---
+
+## Bundled Resources
+
+This skill references:
+
+1. **`planning/SKILL_REVIEW_PROCESS.md`** - Complete 9-phase manual guide
+2. **`scripts/review-skill.sh`** - Automated validation script
+3. **`.claude/commands/review-skill.md`** - Slash command definition
+
+---
+
+## When Claude Should Invoke This Skill
+
+**Proactive triggers**:
+- User mentions skill seems outdated
+- Package major version mentioned
+- User reports errors following skill
+- Checking metadata shows >90 days since verification
+
+**Explicit triggers**:
+- "review the X skill"
+- "audit better-auth skill"
+- "is cloudflare-worker-base up to date?"
+- "check if tailwind-v4-shadcn needs updating"
+
+---
+
+## Token Efficiency
+
+**Without this skill**: ~25,000 tokens
+- Trial-and-error verification
+- Repeated doc lookups
+- Inconsistent fixes across files
+- Missing evidence citations
+
+**With this skill**: ~5,000 tokens
+- Systematic process
+- Clear decision trees
+- Evidence-based fixes
+- Comprehensive audit trail
+
+**Savings**: ~80% (20,000 tokens)
+
+---
+
+## Common Issues Prevented
+
+1. **Fake API adapters** - Non-existent imports
+2. **Stale API methods** - Changed signatures
+3. **Schema inconsistency** - Different table names
+4. **Outdated scripts** - Deprecated approaches
+5. **Version drift** - Packages >90 days old
+6. **Contradictory examples** - Multiple conflicting patterns
+7. **Broken links** - 404 documentation URLs
+8. **YAML errors** - Invalid frontmatter syntax
+9. **Missing keywords** - Poor discoverability
+10. **Incomplete bundled resources** - Listed files don't exist
+
+---
+
+## Best Practices
+
+1. **Always cite sources** - GitHub URL, docs link, npm changelog
+2. **No assumptions** - Verify against current official docs
+3. **Be systematic** - Follow all 9 phases
+4. **Fix consistency** - Update all files, not just one
+5. **Document thoroughly** - Detailed commit messages
+6. **Test after fixes** - Verify skill still works
+
+---
+
+## Known Limitations
+
+- Link checking requires network access
+- Package version checks need npm installed
+- Context7 MCP availability varies by package
+- Production repo search may need GitHub API
+- Manual phases require human judgment
+
+---
+
+## Version History
+
+**v1.0.0** (2025-11-08)
+- Initial release
+- 9-phase systematic audit process
+- Automated script + manual guide
+- Slash command + skill wrapper
+- Production-tested on better-auth v2.0.0 audit
+
+---
+
+## Additional Resources
+
+- **Full Process Guide**: `planning/SKILL_REVIEW_PROCESS.md`
+- **Repository**: https://github.com/jezweb/claude-skills
+- **Example Audit**: See process guide Appendix B (better-auth v2.0.0)
+
+---
+
+**Last verified**: 2025-11-08 | **Version**: 1.0.0
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
