@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MarceloClaro/OpenCode_Ecosystem](https://github.com/MarceloClaro/OpenCode_Ecosystem/tree/main/skills/juridico/pecas-juridicas-html/SKILL.md)
+Original source: [MarceloClaro/OpenCode_Ecosystem](https://github.com/MarceloClaro/OpenCode_Ecosystem/tree/main/skills/science/science_skills_common/SKILL.md)
 
 ---
 
