@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [kiali/kiali-operator](https://github.com/kiali/kiali-operator/tree/main/.cursor/code-reviewer/skills/triage/SKILL.md)
+Original source: [kiali/kiali-operator](https://github.com/kiali/kiali-operator/tree/main/.cursor/code-reviewer/skills/doc-update/SKILL.md)
 
 ---
 
