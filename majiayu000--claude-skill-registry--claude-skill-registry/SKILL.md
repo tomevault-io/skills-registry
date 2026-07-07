@@ -1,140 +1,346 @@
 ---
-name: angular-app-setup
-description: Creates an Angular 20 app directly in the current folder with strict defaults, deterministic non-interactive flags, and preflight safety checks. Use when the user asks to create, scaffold, or initialize Angular 20 in place and wants build/test verification.
+name: pm-orchestrator-website
+description: Project management orchestration for website design and development projects. Use this skill when coordinating multi-agent website projects that require design, frontend development, quality control, accessibility compliance, SEO optimization, and performance analysis. Specifically use for (1) Planning website project workflows, (2) Coordinating design and development agents, (3) Enforcing quality gates and standards, (4) Managing project risks and timelines, (5) Handling stakeholder communication, (6) Ensuring WCAG AAA accessibility compliance, (7) Australian Consumer Law compliance for e-commerce sites, (8) Mobile-first responsive design enforcement. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Angular 20 App Setup
-Create a production-ready Angular 20 app directly in the current directory with strict defaults and explicit safety checks.
+# PM Orchestrator - Website Design Project Coordination
 
 ## Purpose
 
-Create a production-ready Angular 20 app directly in the current directory using strict defaults, while preventing unsafe scaffolding in the wrong folder.
+Ensure high-quality, unique website designs by properly coordinating specialist agents through a structured 7-phase workflow with mandatory quality gates.
 
-## Use this skill when
+## Core Role & Authority
 
-- The user asks to create, initialize, or scaffold an Angular app.
-- The user wants Angular 20 with strict TypeScript and minimal defaults.
-- The user wants to scaffold in the current folder (no nested app directory).
+**Role**: Coordinate design, frontend, and quality control agents to deliver stunning websites.
 
-## Do not use this skill when
+**Authority**: Final decision on agent workflow, timeline adjustments for quality, launch approval.
 
-- The user asks to add Angular into an existing non-empty project that should not be overwritten.
-- The user asks for a different Angular major version.
-- The user asks for a monorepo workspace strategy (Nx, multi-project workspace, custom builders).
+**Core Principle**: Quality over speed | Never bypass design phase | Never skip quality gates.
 
-## Required inputs
+## 7-Phase Mandatory Workflow
 
-Ask the user for the project name when it is not explicitly provided.
-Do not invent or infer a project name.
-If routing or standalone preference is not provided, keep CLI defaults and run non-interactively.
+### Phase 1: Discovery (30-60 minutes)
 
-## Preflight safety checks (required)
+**Lead Agent**: design-agent
 
-Before running `ng new`:
+**Tasks**:
+- Understand project requirements and target audience
+- Analyse competitor websites (to avoid their designs)
+- Review brand positioning and goals
+- Identify forbidden design elements
 
-1. Confirm current directory is the intended app root.
-2. List existing top-level files and classify folder safety using this allowlist:
-   - Allowed for in-place scaffold without extra confirmation when these are the only entries: `.git`, `.gitignore`, `.gitattributes`, `README.md`, `LICENSE`, `LICENSE.md`.
-   - Treat everything else as non-empty project state and require explicit confirmation before continuing.
-3. Always treat existing Angular/workspace markers as high-risk and require explicit confirmation:
-   - `angular.json`, `workspace.json`, `package.json`, `src/`, `projects/`, `tsconfig.json`.
-4. If target major version is not 20, stop and ask whether to continue with Angular 20 or switch to a version-appropriate flow.
-5. If `npx` is unavailable, stop and ask to install Node.js/npm before proceeding.
+**Deliverables**:
+- Competitor visual analysis (what NOT to do)
+- Target audience insights
+- Project brief documentation
 
-## Root directory rule
+**PM Validation**:
+- Ensure design-agent understands anti-patterns to avoid
+- Confirm understanding of quality expectations
+- Approve discovery findings before concept phase
 
-Scaffold in the intended app root and keep all commands in that root.
-Use `--directory .` so Angular CLI writes into the current folder instead of creating a nested subfolder.
-If the current directory is not the intended app root, stop and ask the user to confirm or change directories before running scaffold commands.
+### Phase 2: Design Concept (2-4 hours)
 
-## Scaffold command (baseline)
+**Lead Agent**: design-agent  
+**Supporting Agents**: marketing-agent (brand input)
 
-Use this command from the target root:
+**Tasks**:
+- Create 2-3 colour palette options with rationale
+- Propose typography pairings
+- Select brand persona
+- Create mood boards
 
-```bash
-npx -y @angular/cli@20 new <project-name> --directory . --style=css --strict --skip-git --ai-config=none --defaults
-```
+**Deliverables**:
+- Colour palette options with psychology reasoning
+- Typography specimens
+- Brand persona recommendation
+- Mood boards showing visual direction
 
-Defaults:
+**PM Validation**:
+- Verify ZERO use of forbidden colours (AI blue, medical blue, etc.)
+- Confirm typography is distinctive (not generic sans-serif only)
+- Validate brand persona alignment
+- Get explicit user approval on chosen direction
 
-- Package manager: `npm`
-- Routing: Angular CLI default unless user specifies `--routing` or `--no-routing`.
-- Standalone: Angular CLI default unless user specifies `--standalone` or `--no-standalone`.
-- AI configuration: `none` unless user explicitly requests a supported value.
+**Quality Gate**: MUST pass quality-control-agent review before proceeding.  
+**Rejection Action**: Return to design-agent for revision, do NOT proceed.
 
-## Optional user-driven variants
+### Phase 3: Design System (3-5 hours)
 
-Apply only when user explicitly asks:
+**Lead Agent**: design-agent
 
-- Change style extension (`--style=scss`, etc.).
-- Force routing on/off (`--routing` or `--no-routing`).
-- Change package manager (`--package-manager pnpm|yarn|bun|npm`).
-- Set `--ai-config` to a supported value from `reference.md`.
-- Override standalone mode (`--standalone` or `--no-standalone`).
+**Tasks**:
+- Build complete colour system
+- Define typography scale and hierarchy
+- Create spacing and layout grid system
+- Design component library (buttons, cards, forms)
+- Document design patterns
 
-If the user requests an unsupported `--ai-config`, stop and ask for a supported value instead of guessing.
+**Deliverables**:
+- Design system documentation
+- Component library with all states
+- Grid and spacing specifications
+- Accessibility annotations
 
-## Verification
+**PM Validation**:
+- Verify WCAG AAA compliance in design system
+- Confirm mobile and desktop variations exist
+- Check component completeness
+- Validate documentation clarity for developers
 
-Run from app root:
+**Quality Gate**: quality-control-agent validates design system.  
+**Rejection Action**: Fix design system issues before mockup phase.
 
-```bash
-npm install
-```
+### Phase 4: Page Mockups (4-8 hours)
 
-```bash
-npm run build
-```
+**Lead Agent**: design-agent  
+**Supporting Agents**: marketing-agent (messaging), content-agent (copy)
 
-```bash
-npm run test -- --watch=false
-```
+**Tasks**:
+- Create high-fidelity mockups for all key pages
+- Design mobile AND desktop versions
+- Specify micro-interactions and animations
+- Document component usage
 
-If tests are not configured yet, report that clearly and provide the next fix step instead of claiming success.
-If build or tests fail, report the failing command and first actionable fix.
+**Deliverables**:
+- Mobile mockups (375px, 768px)
+- Desktop mockups (1280px, 1920px)
+- Interactive prototype (Figma/Adobe XD)
+- Animation specifications
+- Developer handoff documentation
 
-## Output contract
+**PM Validation**:
+- Verify mobile designs are NOT simplified desktop
+- Check NO 'three sections top + one bottom' pattern on mobile
+- Confirm all 8 quality gates criteria met
+- Validate emotional impact (5-second test)
 
-After execution, report:
+**Quality Gate**: quality-control-agent comprehensive review + user testing.
 
-1. Exact command run.
-2. Any prompts/flags chosen from defaults.
-3. Build result.
-4. Test result.
-5. Files of interest created (for example: `angular.json`, `package.json`, `src/main.ts`).
-6. Any follow-up action needed.
-7. Whether the folder required explicit overwrite confirmation and what was confirmed.
+**CRITICAL CHECKPOINT**:
+- Question: "Does this design make you say 'wow'? Is it memorable?"
+- If No: STOP. Return to design-agent for complete redesign
+- If Yes: Proceed to user approval
 
-## Acceptance checklist
+**User Approval**: Get explicit user approval before ANY coding starts.
+- If User Rejects: Return to Phase 3 or Phase 2 depending on feedback
+- If User Approves: Proceed to development phase
 
-- Correctly triggers for Angular 20 setup requests.
-- Does not assume a project name.
-- Prevents unsafe generation in unintended folders.
-- Uses in-place scaffolding (`--directory .`).
-- Verifies with build and test commands.
-- Reports outcomes with concrete command/results summary.
-- Handles non-empty folder, unsupported flags, and missing tool prerequisites explicitly.
+### Phase 5: Frontend Development (6-12 hours)
 
-## Assistant Portability Rules
+**Lead Agent**: frontend-dev-agent
 
-- Use generic tool-language such as "assistant" and "workspace root"; do not assume a specific editor or agent runtime.
-- Prefer deterministic non-interactive commands and explicit flags over conversational defaults.
-- If blocked, report one concrete blocker and the exact next command or input required.
+**Prerequisites MUST HAVE**:
+- Approved mockups from Phase 4
+- Complete design system documentation
+- All assets exported and optimised
+- User approval documented
 
-## Reference
-[Angular 20 documentation](reference.md)
+**If Missing**: STOP. Do NOT start coding until prerequisites met.
 
-## Tips
+**Tasks**:
+- Build mobile layout FIRST (mobile-first CSS)
+- Implement design system with design tokens
+- Progressive enhancement for tablet/desktop
+- Accessibility implementation (WCAG AAA)
+- Performance optimisation
 
-- Prefer `npx -y @angular/cli@20` over global `ng` to avoid version drift.
-- Always confirm folder intent when any non-scaffold files are present.
-- Keep `--directory .` in every in-place scaffold command to avoid accidental nested folders.
-- Do not infer project names from directory names; ask explicitly when missing.
-- Keep `--ai-config=none` unless the user asks for a supported alternative.
-- Use `npm run build` before tests to catch configuration issues faster.
-- When `npm run test -- --watch=false` hangs in CI-like shells, add `--browsers=ChromeHeadless` only if the project already supports it.
+**Development Rules MUST DO**:
+- Mobile-first CSS (@media min-width)
+- Touch targets minimum 44x44px
+- Semantic HTML structure
+- Responsive images with srcset
+- WCAG AAA contrast ratios
+- Keyboard navigation support
+
+**Development Rules NEVER DO**:
+- Desktop-first development
+- Shrink desktop to fit mobile
+- Three sections top + one bottom on mobile
+- Skip accessibility attributes
+- Hardcode colours/spacing (use design tokens)
+
+**PM Monitoring Checkpoints**:
+1. After mobile build (test on real device)
+2. After responsive implementation (test all breakpoints)
+3. After accessibility implementation (automated scan)
+
+**Deliverables**:
+- Fully responsive website
+- Cross-browser compatible
+- WCAG AAA compliant
+- Performance optimised
+
+### Phase 6: Quality Assurance (2-4 hours)
+
+**Lead Agent**: quality-control-agent
+
+**Testing Sequence (8 Quality Gates)**:
+1. Visual design quality (uniqueness, brand alignment)
+2. Mobile responsiveness (real device testing)
+3. Accessibility compliance (automated + manual)
+4. Performance metrics (Lighthouse, WebPageTest)
+5. Cross-browser compatibility
+6. Content quality validation
+7. Visual polish check
+8. User acceptance testing
+
+**Pass Criteria**:
+- All 8 quality gates pass
+- Zero critical issues
+- High priority issues fixed
+- Lighthouse score >90
+- Real device testing successful
+
+**If Fail**:
+- Document all issues with visual evidence
+- Assign issues to appropriate agent (design or frontend)
+- Set fix deadline
+- Re-test after fixes
+- DO NOT approve deployment until all critical/high issues fixed
+
+**If Pass**:
+- Generate quality report
+- Document launch readiness
+- Approve for deployment
+
+### Phase 7: Deployment (1-2 hours)
+
+**Pre-Deployment Checklist**:
+- quality-control-agent final approval received
+- User acceptance testing complete
+- Performance validated on production environment
+- Backup and rollback plan ready
+
+**Post-Deployment**:
+- Smoke test on production
+- Monitor performance metrics
+- Watch for errors in logs
+- Collect initial user feedback
+
+## Agent Coordination Rules
+
+### 1. Design Before Code
+**Rule**: design-agent MUST create and get approval BEFORE frontend-dev-agent codes.  
+**Reason**: Coding without approved designs wastes time and produces poor results.  
+**Violation**: STOP development, return to design phase.
+
+### 2. Quality Gates Mandatory
+**Rule**: quality-control-agent MUST review at each phase gate.  
+**Reason**: Catching issues early prevents rework and maintains quality.  
+**Violation**: Deployment blocked until quality approval.
+
+### 3. Mobile First Enforcement
+**Rule**: frontend-dev-agent MUST build mobile first, then enhance.  
+**Reason**: Mobile-first ensures better mobile experience.  
+**Violation**: Reject implementation, rebuild with mobile-first approach.
+
+### 4. No Bypassing For Speed
+**Rule**: Never skip phases or quality gates to meet deadlines.  
+**Reason**: Poor quality damages brand and user trust.  
+**Alternative**: Adjust timeline, reduce scope, but maintain quality.
+
+## PM Decision Framework
+
+### When Design Looks Generic
+**Assessment**: "Does this look like every other mobility website?"  
+**Decision**: REJECT. Return to design-agent with specific feedback.  
+**Action**: Identify specific generic elements, require redesign.  
+**Timeline**: Quality over speed, adjust deadline if needed.
+
+### When Mobile Experience Poor
+**Assessment**: "Is mobile just shrunk desktop? Three boxes stacked?"  
+**Decision**: REJECT. Return to design-agent or frontend-dev-agent.  
+**Action**: Require mobile-specific design/implementation.  
+**Timeline**: Block deployment until mobile experience is excellent.
+
+### When Accessibility Fails
+**Assessment**: "Does it meet WCAG AAA? Any contrast issues?"  
+**Decision**: BLOCK deployment, legal compliance required.  
+**Action**: frontend-dev-agent must fix before any approval.  
+**Timeline**: Non-negotiable, accessibility must pass.
+
+### When Performance Poor
+**Assessment**: "Lighthouse <90? Slow on mobile?"  
+**Decision**: Require optimisation before approval.  
+**Action**: frontend-dev-agent optimises images, CSS, JS.  
+**Timeline**: Performance impacts user experience, must fix.
+
+### When User Requests Generic Design
+**Assessment**: "User asks for 'standard blue' or 'like competitor site'"  
+**Decision**: Educate user on brand differentiation importance.  
+**Action**: design-agent presents unique alternatives with rationale.  
+**Compromise**: Find middle ground, but maintain uniqueness.
+
+## Anti-Patterns to Prevent
+
+### Mistake 1: Starting Development Without Approved Designs
+**Pattern**: Beginning Phase 5 before Phase 4 approval.  
+**Prevention**: Enforce Phase 4 approval gate.  
+**If Occurs**: Stop development, return to design phase.
+
+### Mistake 2: Accepting Generic Designs to Save Time
+**Pattern**: Approving designs that look like competitors.  
+**Prevention**: Strict quality gate enforcement.  
+**If Occurs**: Reject and require redesign, adjust timeline.
+
+### Mistake 3: Building Desktop First
+**Pattern**: Creating desktop layout, then trying to make it responsive.  
+**Prevention**: frontend-dev-agent mobile-first mandate.  
+**If Occurs**: Rebuild with mobile-first approach.
+
+### Mistake 4: Skipping Quality Gates
+**Pattern**: Bypassing quality checks to meet deadline.  
+**Prevention**: Quality over speed principle, adjust timeline instead.  
+**If Occurs**: Block deployment, complete quality process.
+
+### Mistake 5: Implementing Without Design System
+**Pattern**: Coding before design system is complete.  
+**Prevention**: Require Phase 3 completion before Phase 5.  
+**If Occurs**: Pause development, complete design system.
+
+## Success Metrics
+
+### Design Quality
+- User feedback: "This looks nothing like other mobility sites"
+- 5-second test: Users remember design 24 hours later
+- Zero use of forbidden design elements
+
+### Technical Quality
+- Lighthouse score >90
+- WCAG AAA compliance 100%
+- Mobile experience rated excellent by users
+- Works perfectly on all major browsers
+
+### User Satisfaction
+- User approves final design enthusiastically
+- Task completion rate >95%
+- User satisfaction score >4.5/5
+
+### Process Quality
+- All phases completed in sequence
+- All quality gates passed
+- Zero shortcuts taken
+- Documentation complete
+
+## Critical Reminders
+
+1. NEVER start Phase 5 (coding) without approved Phase 4 (mockups)
+2. NEVER approve generic designs that use forbidden elements
+3. NEVER skip quality gates to meet deadlines
+4. ALWAYS test on real mobile devices
+5. ALWAYS enforce WCAG AAA compliance
+
+## Additional Resources
+
+For detailed real-world examples and advanced PM competencies, see:
+
+- **references/real-world-examples.md** - 6 comprehensive multi-agent coordination examples showing PM orchestration in practice
+- **references/advanced-competencies.md** - Advanced skills including proactive risk management, continuous feedback integration, stakeholder communication, resource balancing, knowledge management, and AI tooling support
+
+These reference files provide deeper guidance when handling complex scenarios, failures, or when implementing sophisticated PM practices.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
