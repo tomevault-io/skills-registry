@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/css-generator-editor-enhancer-osamabinadnan-quarter04-plus-learn-e9adf099/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/analyzing-query-performance-jeremylongshore-claude-code-plugins--984cfd48/SKILL.md)
 
 ---
 
