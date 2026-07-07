@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hidai25/eval-view](https://github.com/hidai25/eval-view/tree/main/skills/run-eval/SKILL.md)
+Original source: [hidai25/eval-view](https://github.com/hidai25/eval-view/tree/main/examples/agent-test/SKILL.md)
 
 ---
 
