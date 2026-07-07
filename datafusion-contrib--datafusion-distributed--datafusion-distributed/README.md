@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [datafusion-contrib/datafusion-distributed](https://github.com/datafusion-contrib/datafusion-distributed/tree/main/.claude/skills/remote-benchmark/SKILL.md)
+Original source: [datafusion-contrib/datafusion-distributed](https://github.com/datafusion-contrib/datafusion-distributed/tree/main/.claude/skills/ec2-cluster-provision/SKILL.md)
 
 ---
 
