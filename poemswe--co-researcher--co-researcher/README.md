@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [poemswe/co-researcher](https://github.com/poemswe/co-researcher/tree/main/skills/lateral-thinking/SKILL.md)
+Original source: [poemswe/co-researcher](https://github.com/poemswe/co-researcher/tree/main/skills/research-manager/SKILL.md)
 
 ---
 
