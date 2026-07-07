@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nebius/token-factory-cookbook](https://github.com/nebius/token-factory-cookbook/tree/main/workshops/deep-research-writing-agents-nebius-okahu/.agents/skills/research/SKILL.md)
+Original source: [nebius/token-factory-cookbook](https://github.com/nebius/token-factory-cookbook/tree/main/workshops/deep-research-writing-agents-nebius-okahu/.agents/skills/write-post/SKILL.md)
 
 ---
 
