@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zapier/gtm-cheat-codes](https://github.com/zapier/gtm-cheat-codes/tree/main/skills/customer-advocacy/find-customer-social-proof/SKILL.md)
+Original source: [zapier/gtm-cheat-codes](https://github.com/zapier/gtm-cheat-codes/tree/main/skills/gtm-ops/no-lead-left-behind-lead-treatment-audit/SKILL.md)
 
 ---
 
