@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [theam/limina](https://github.com/theam/limina/tree/main/skills/exploratory-sota-research/SKILL.md)
+Original source: [theam/limina](https://github.com/theam/limina/tree/main/skills/build-maintainable-software/SKILL.md)
 
 ---
 
