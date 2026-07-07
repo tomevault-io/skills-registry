@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/ai-organizer-ui-consolidation-thebearwithabite-ai-file-organizer-8bd91f60/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/css-generator-editor-enhancer-osamabinadnan-quarter04-plus-learn-e9adf099/SKILL.md)
 
 ---
 
