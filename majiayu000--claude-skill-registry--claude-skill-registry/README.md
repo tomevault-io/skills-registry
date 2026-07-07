@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/nano-banana-imagegen-othreecodes-claude-code-nano-ban-c5f7990c/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/hubspot-update-deal-abdullahbeam-nexus-design-abdulla-1f4bc9c5/SKILL.md)
 
 ---
 
