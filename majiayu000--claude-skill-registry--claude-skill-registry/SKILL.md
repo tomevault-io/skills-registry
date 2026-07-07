@@ -1,244 +1,369 @@
 ---
-name: session-management
-description: セッション管理（Session Management）機能の開発・修正を行う際に使用。OPSession, ClientSession, SSO, RP-Initiated Logout, Back-Channel Logout実装時に役立つ。 Use when this capability is needed.
+name: secrets-management
+description: Implement secure secrets management for CI/CD pipelines using Vault, AWS Secrets Manager, or native platform solutions. Use when handling sensitive credentials, rotating secrets, or securing CI/CD environments. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# セッション管理（Session Management）開発ガイド
+# Secrets Management
 
-## ドキュメント
+Secure secrets management practices for CI/CD pipelines using Vault, AWS Secrets Manager, and other tools.
 
-- `documentation/docs/content_06_developer-guide/04-implementation-guides/oauth-oidc/session-management.md` - セッション管理実装ガイド
-- `documentation/docs/content_03_concepts/03-authentication-authorization/concept-03-session-management.md` - セッション管理概念
-- `documentation/docs/content_03_concepts/03-authentication-authorization/concept-03-session-management-security.md` - セッションセキュリティ
+## Purpose
 
-## 機能概要
+Implement secure secrets management in CI/CD pipelines without hardcoding sensitive information.
 
-セッション管理は、ユーザーの認証状態を維持・管理する層。
-- **2層セッション**: OPSession（SSO用）+ ClientSession（アプリ別）
-- **セッション再利用**: SSO実現のためのセッション共有
-- **セッション切替ポリシー**: STRICT, SWITCH_ALLOWED, MULTI_SESSION
-- **ACRダウングレード防止**: セッションACR検証
-- **ログアウト**: RP-Initiated, Back-Channel, Front-Channel
+## Use this skill when
 
-## モジュール構成
+- Store API keys and credentials
+- Manage database passwords
+- Handle TLS certificates
+- Rotate secrets automatically
+- Implement least-privilege access
 
-```
-libs/
-├── idp-server-core/                         # セッションコア
-│   └── .../openid/session/
-│       ├── OIDCSessionHandler.java         # セッション処理Handler
-│       ├── OIDCSessionService.java         # セッション管理Service
-│       ├── OPSession.java                  # OPセッション（SSO）
-│       ├── ClientSession.java              # クライアントセッション
-│       ├── SessionCookieDelegate.java      # Cookie管理
-│       ├── SessionSwitchPolicy.java        # セッション切替ポリシー
-│       └── repository/
-│           ├── OPSessionRepository.java
-│           └── ClientSessionRepository.java
-│
-└── idp-server-control-plane/               # 管理API
-    └── .../management/session/
-        └── SessionManagementApi.java
-```
+## Do not use this skill when
 
-## セッション構造
+- You plan to hardcode secrets in source control
+- You cannot secure access to the secrets backend
+- You only need local development values without sharing
 
-### OPSession（SSO用）
+## Instructions
 
-`idp-server-core/openid/session/OPSession.java` 内の実際の構造:
+1. Identify secret types, owners, and rotation requirements.
+2. Choose a secrets backend and access model.
+3. Integrate CI/CD or runtime retrieval with least privilege.
+4. Validate rotation and audit logging.
 
-```java
-public class OPSession {
-    private OPSessionIdentifier id;
-    private TenantIdentifier tenantId;
-    private User user;
-    private Instant authTime;
-    private String acr;
-    private List<String> amr;
-    private Map<String, Map<String, Object>> interactionResults;
-    private BrowserState browserState;
-    private Instant createdAt;
-    private Instant expiresAt;
-    private Instant lastAccessedAt;
-    private SessionStatus status;
-    private String ipAddress;    // 認証時のIPアドレス
-    private String userAgent;    // 認証時のUser-Agent
+## Safety
 
-    // セッション再利用可否判定（概念的）
-    public boolean canReuseFor(Acr requiredAcr) {
-        // ACRダウングレード防止
-        return this.acr.isHigherOrEqualTo(requiredAcr);
-    }
-}
-```
+- Never commit secrets to source control.
+- Limit access and log secret usage for auditing.
 
-**注意**: ClientSessionは別エンティティとして独立管理されます。
+## Secrets Management Tools
 
-### ClientSession（アプリ別）
+### HashiCorp Vault
+- Centralized secrets management
+- Dynamic secrets generation
+- Secret rotation
+- Audit logging
+- Fine-grained access control
 
-```java
-public class ClientSession {
-    ClientSessionId clientSessionId;
-    SessionId opSessionId;  // OPSessionへの参照
-    ClientId clientId;
-    Scope grantedScope;
-    Instant createdAt;
-    Instant lastAccessedAt;
-}
-```
+### AWS Secrets Manager
+- AWS-native solution
+- Automatic rotation
+- Integration with RDS
+- CloudFormation support
 
-## セッション処理
+### Azure Key Vault
+- Azure-native solution
+- HSM-backed keys
+- Certificate management
+- RBAC integration
 
-`idp-server-core/openid/session/OIDCSessionHandler.java` 内:
+### Google Secret Manager
+- GCP-native solution
+- Versioning
+- IAM integration
 
-```java
-public class OIDCSessionHandler {
-    /**
-     * 認証成功時のセッション作成または再利用
-     *
-     * セッション切替ポリシー:
-     * - 同一ユーザー: 既存セッション再利用
-     * - 異なるユーザー + STRICT: 例外スロー
-     * - 異なるユーザー + SWITCH_ALLOWED: 既存終了、新規作成
-     * - 異なるユーザー + MULTI_SESSION: 新規作成（既存維持）
-     */
-    public OPSession onAuthenticationSuccess(
-        Tenant tenant,
-        User user,
-        Authentication authentication,
-        Map<String, Map<String, Object>> interactionResults,
-        OPSession existingSession,
-        RequestAttributes requestAttributes
-    ) {
-        // セッション再利用または新規作成ロジック
-        // RequestAttributesからIPアドレス・User-Agentを抽出してOPSessionに保存
-    }
-}
-```
+## HashiCorp Vault Integration
 
-## セッション切替ポリシー
-
-```java
-public enum SessionSwitchPolicy {
-    STRICT,           // セッション切替禁止
-    SWITCH_ALLOWED,   // 切替許可（既存セッション無効化）
-    MULTI_SESSION;    // 複数セッション許可
-}
-```
-
-OIDCSessionService内で、ポリシーに応じた処理を実行します。
-
-## E2Eテスト
-
-```
-e2e/src/tests/
-├── spec/
-│   └── (OIDCセッション関連仕様テスト)
-│
-├── scenario/application/
-│   ├── scenario-02-sso-oidc.test.js         # SSOシナリオ
-│   └── scenario-13-sso-session-management.test.js
-│
-├── usecase/standard/
-│   └── standard-04-session-switch-policy.test.js
-│
-└── security/
-    └── session_fixation_password_auth.test.js  # セッション固定攻撃対策
-```
-
-## コマンド
+### Setup Vault
 
 ```bash
-# ビルド
-./gradlew :libs:idp-server-core:compileJava
+# Start Vault dev server
+vault server -dev
 
-# テスト
-cd e2e && npm test -- scenario/application/scenario-02-sso-oidc.test.js
-cd e2e && npm test -- security/session_fixation_password_auth.test.js
+# Set environment
+export VAULT_ADDR='http://127.0.0.1:8200'
+export VAULT_TOKEN='root'
+
+# Enable secrets engine
+vault secrets enable -path=secret kv-v2
+
+# Store secret
+vault kv put secret/database/config username=admin password=secret
 ```
 
-## トラブルシューティング
+### GitHub Actions with Vault
 
-### SSOが動作しない
-- OPSessionのACRを確認
-- Cookie設定（domain, path, SameSite）を確認
-- `SessionCookieDelegate` の設定を確認
+```yaml
+name: Deploy with Vault Secrets
 
-### セッション切替エラー
-- `SessionSwitchPolicy`設定を確認
-- `STRICT`の場合は既存セッションを無効化してから再認証
+on: [push]
 
-### セッションが期限切れ
-- OPSessionの有効期限設定を確認
-- Redisなどのセッションストレージが正常か確認
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
 
-## Cookie Path設定（API Gateway対応）
+    - name: Import Secrets from Vault
+      uses: hashicorp/vault-action@v2
+      with:
+        url: https://vault.example.com:8200
+        token: ${{ secrets.VAULT_TOKEN }}
+        secrets: |
+          secret/data/database username | DB_USERNAME ;
+          secret/data/database password | DB_PASSWORD ;
+          secret/data/api key | API_KEY
 
-### 背景
-
-API Gateway経由でidp-serverをデプロイする場合、コンテキストパス（例: `/idp-admin`）が追加されることがあります。この場合、Cookieのパスを適切に設定しないと、ブラウザがCookieを送信せず `auth_session_mismatch` エラーが発生します。
-
-### 問題の例
-
-```
-# API Gateway構成
-https://api.example.com/idp-admin/* → idp-server (/)
-
-# デフォルトのCookieパス
-Path=/{tenant_id}/
-
-# ブラウザがアクセスするパス
-/idp-admin/{tenant_id}/v1/authorizations
-
-# → パスが一致しないためCookieが送信されない
+    - name: Use secrets
+      run: |
+        echo "Connecting to database as $DB_USERNAME"
+        # Use $DB_PASSWORD, $API_KEY
 ```
 
-### 解決方法
+### GitLab CI with Vault
 
-テナントの `session_config.cookie_path` を設定します:
+```yaml
+deploy:
+  image: vault:latest
+  before_script:
+    - export VAULT_ADDR=https://vault.example.com:8200
+    - export VAULT_TOKEN=$VAULT_TOKEN
+    - apk add curl jq
+  script:
+    - |
+      DB_PASSWORD=$(vault kv get -field=password secret/database/config)
+      API_KEY=$(vault kv get -field=key secret/api/credentials)
+      echo "Deploying with secrets..."
+      # Use $DB_PASSWORD, $API_KEY
+```
 
-```json
-{
-  "tenant": {
-    "session_config": {
-      "cookie_name": "CONTEXT_PATH_SESSION",
-      "cookie_path": "/idp-admin",
-      "cookie_same_site": "None",
-      "use_secure_cookie": true,
-      "timeout_seconds": 3600
-    }
-  }
+**Reference:** See `references/vault-setup.md`
+
+## AWS Secrets Manager
+
+### Store Secret
+
+```bash
+aws secretsmanager create-secret \
+  --name production/database/password \
+  --secret-string "super-secret-password"
+```
+
+### Retrieve in GitHub Actions
+
+```yaml
+- name: Configure AWS credentials
+  uses: aws-actions/configure-aws-credentials@v4
+  with:
+    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    aws-region: us-west-2
+
+- name: Get secret from AWS
+  run: |
+    SECRET=$(aws secretsmanager get-secret-value \
+      --secret-id production/database/password \
+      --query SecretString \
+      --output text)
+    echo "::add-mask::$SECRET"
+    echo "DB_PASSWORD=$SECRET" >> $GITHUB_ENV
+
+- name: Use secret
+  run: |
+    # Use $DB_PASSWORD
+    ./deploy.sh
+```
+
+### Terraform with AWS Secrets Manager
+
+```hcl
+data "aws_secretsmanager_secret_version" "db_password" {
+  secret_id = "production/database/password"
+}
+
+resource "aws_db_instance" "main" {
+  allocated_storage    = 100
+  engine              = "postgres"
+  instance_class      = "db.t3.large"
+  username            = "admin"
+  password            = jsondecode(data.aws_secretsmanager_secret_version.db_password.secret_string)["password"]
 }
 ```
 
-これにより、Cookieパスは `/idp-admin/{tenant_id}/` となり、API Gateway経由のリクエストでもCookieが正しく送信されます。
+## GitHub Secrets
 
-### 設定例
+### Organization/Repository Secrets
 
-`config/examples/oidcc-cross-site-context-path/` にAPI Gateway + コンテキストパスの設定例があります:
+```yaml
+- name: Use GitHub secret
+  run: |
+    echo "API Key: ${{ secrets.API_KEY }}"
+    echo "Database URL: ${{ secrets.DATABASE_URL }}"
+```
 
-- `onboarding-request.json` - テナント設定（cookie_path含む）
-- `oidc-test/*.json` - OIDC Conformance Suite用設定
+### Environment Secrets
 
-### 関連ファイル
+```yaml
+deploy:
+  runs-on: ubuntu-latest
+  environment: production
+  steps:
+  - name: Deploy
+    run: |
+      echo "Deploying with ${{ secrets.PROD_API_KEY }}"
+```
 
-- `AuthSessionCookieService.java` - AUTH_SESSION Cookie設定
-- `SessionCookieService.java` - IDP_IDENTITY/IDP_SESSION Cookie設定
-- `SessionConfiguration.java` - session_config値オブジェクト
+**Reference:** See `references/github-secrets.md`
 
-### ローカルテスト環境
+## GitLab CI/CD Variables
 
-docker-compose.yamlの `app-view-context-path` サービスと nginx.conf の `/idp-admin/` ルーティングを使用してAPI Gateway動作をシミュレートできます。
+### Project Variables
+
+```yaml
+deploy:
+  script:
+    - echo "Deploying with $API_KEY"
+    - echo "Database: $DATABASE_URL"
+```
+
+### Protected and Masked Variables
+- Protected: Only available in protected branches
+- Masked: Hidden in job logs
+- File type: Stored as file
+
+## Best Practices
+
+1. **Never commit secrets** to Git
+2. **Use different secrets** per environment
+3. **Rotate secrets regularly**
+4. **Implement least-privilege access**
+5. **Enable audit logging**
+6. **Use secret scanning** (GitGuardian, TruffleHog)
+7. **Mask secrets in logs**
+8. **Encrypt secrets at rest**
+9. **Use short-lived tokens** when possible
+10. **Document secret requirements**
+
+## Secret Rotation
+
+### Automated Rotation with AWS
+
+```python
+import boto3
+import json
+
+def lambda_handler(event, context):
+    client = boto3.client('secretsmanager')
+
+    # Get current secret
+    response = client.get_secret_value(SecretId='my-secret')
+    current_secret = json.loads(response['SecretString'])
+
+    # Generate new password
+    new_password = generate_strong_password()
+
+    # Update database password
+    update_database_password(new_password)
+
+    # Update secret
+    client.put_secret_value(
+        SecretId='my-secret',
+        SecretString=json.dumps({
+            'username': current_secret['username'],
+            'password': new_password
+        })
+    )
+
+    return {'statusCode': 200}
+```
+
+### Manual Rotation Process
+
+1. Generate new secret
+2. Update secret in secret store
+3. Update applications to use new secret
+4. Verify functionality
+5. Revoke old secret
+
+## External Secrets Operator
+
+### Kubernetes Integration
+
+```yaml
+apiVersion: external-secrets.io/v1beta1
+kind: SecretStore
+metadata:
+  name: vault-backend
+  namespace: production
+spec:
+  provider:
+    vault:
+      server: "https://vault.example.com:8200"
+      path: "secret"
+      version: "v2"
+      auth:
+        kubernetes:
+          mountPath: "kubernetes"
+          role: "production"
+
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: database-credentials
+  namespace: production
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: vault-backend
+    kind: SecretStore
+  target:
+    name: database-credentials
+    creationPolicy: Owner
+  data:
+  - secretKey: username
+    remoteRef:
+      key: database/config
+      property: username
+  - secretKey: password
+    remoteRef:
+      key: database/config
+      property: password
+```
+
+## Secret Scanning
+
+### Pre-commit Hook
 
 ```bash
-# コンテキストパス対応のapp-viewを起動
-docker compose up -d --build app-view-context-path nginx
+#!/bin/bash
+# .git/hooks/pre-commit
 
-# テナント設定を更新
-bash config/examples/oidcc-cross-site-context-path/update.sh
+# Check for secrets with TruffleHog
+docker run --rm -v "$(pwd):/repo" \
+  trufflesecurity/trufflehog:latest \
+  filesystem --directory=/repo
+
+if [ $? -ne 0 ]; then
+  echo "❌ Secret detected! Commit blocked."
+  exit 1
+fi
 ```
+
+### CI/CD Secret Scanning
+
+```yaml
+secret-scan:
+  stage: security
+  image: trufflesecurity/trufflehog:latest
+  script:
+    - trufflehog filesystem .
+  allow_failure: false
+```
+
+## Reference Files
+
+- `references/vault-setup.md` - HashiCorp Vault configuration
+- `references/github-secrets.md` - GitHub Secrets best practices
+
+## Related Skills
+
+- `github-actions-templates` - For GitHub Actions integration
+- `gitlab-ci-patterns` - For GitLab CI integration
+- `deployment-pipeline-design` - For pipeline architecture
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
