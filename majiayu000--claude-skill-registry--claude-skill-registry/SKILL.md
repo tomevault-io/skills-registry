@@ -1,265 +1,379 @@
 ---
-name: env-secrets-manager
-description: Env & Secrets Manager Use when this capability is needed.
+name: google-connect
+description: Connect to Google Workspace services (Gmail, Docs, Sheets, Calendar, Drive, Tasks, Slides). Load when user mentions 'connect google', 'setup google', 'configure google', 'google integration', or needs to set up Google OAuth credentials. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Env & Secrets Manager
+# Google Connect
 
-**Tier:** POWERFUL
-**Category:** Engineering
-**Domain:** Security / DevOps / Configuration Management
+**Setup wizard for Google Workspace integration.**
 
----
+## Purpose
 
-## Overview
-
-Manage environment-variable hygiene and secrets safety across local development and production workflows. This skill focuses on practical auditing, drift awareness, and rotation readiness.
-
-## Core Capabilities
-
-- `.env` and `.env.example` lifecycle guidance
-- Secret leak detection for repository working trees
-- Severity-based findings for likely credentials
-- Operational pointers for rotation and containment
-- Integration-ready outputs for CI checks
+Guide users through connecting their Google account to Nexus. One OAuth setup grants access to all 7 Google services: Gmail, Docs, Sheets, Calendar, Drive, Tasks, and Slides.
 
 ---
 
-## When to Use
+## Shared Resources
 
-- Before pushing commits that touched env/config files
-- During security audits and incident triage
-- When onboarding contributors who need safe env conventions
-- When validating that no obvious secrets are hardcoded
+This skill uses `google-master` shared library:
+
+| Resource | When to Load |
+|----------|--------------|
+| `google-master/scripts/check_google_config.py` | Always first (pre-flight) |
+| `google-master/scripts/google_auth.py` | For authentication |
+| `google-master/references/setup-guide.md` | Detailed setup instructions |
+| `google-master/references/error-handling.md` | On any errors |
 
 ---
 
-## Quick Start
+## Workflow 0: Config Check (ALWAYS FIRST)
+
+Every interaction MUST start with config validation:
 
 ```bash
-# Scan a repository for likely secret leaks
-python3 scripts/env_auditor.py /path/to/repo
-
-# JSON output for CI pipelines
-python3 scripts/env_auditor.py /path/to/repo --json
+python 00-system/skills/google/google-master/scripts/check_google_config.py --json
 ```
 
----
+**Exit code meanings:**
+- **Exit 0**: Fully configured and authenticated - ready to use
+- **Exit 1**: Credentials exist but need to login (run OAuth flow)
+- **Exit 2**: Missing credentials - need full setup
 
-## Recommended Workflow
-
-1. Run `scripts/env_auditor.py` on the repository root.
-2. Prioritize `critical` and `high` findings first.
-3. Rotate real credentials and remove exposed values.
-4. Update `.env.example` and `.gitignore` as needed.
-5. Add or tighten pre-commit/CI secret scanning gates.
-
----
-
-## Reference Docs
-
-- `references/validation-detection-rotation.md`
-- `references/secret-patterns.md`
+**Route based on exit code:**
+- Exit 0 → Workflow 4 (Already Connected)
+- Exit 1 → Workflow 3 (Authenticate)
+- Exit 2 → Workflow 1 (Full Setup)
 
 ---
 
-## Common Pitfalls
+## Workflow 1: Full Setup (First-Time Users)
 
-- Committing real values in `.env.example`
-- Rotating one system but missing downstream consumers
-- Logging secrets during debugging or incident response
-- Treating suspected leaks as low urgency without validation
+**Triggers**: "connect google", "setup google", config check returns exit 2
 
-## Best Practices
+**Purpose**: Guide user through complete Google Cloud setup.
 
-1. Use a secret manager as the production source of truth.
-2. Keep dev env files local and gitignored.
-3. Enforce detection in CI before merge.
-4. Re-test application paths immediately after credential rotation.
+### Step 1: Introduction
 
----
+Display:
+```
+━━━ GOOGLE WORKSPACE SETUP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-## Cloud Secret Store Integration
+This will connect Nexus to your Google account, enabling:
 
-Production applications should never read secrets from `.env` files or environment variables baked into container images. Use a dedicated secret store instead.
+  📧 Gmail      - Read, send, manage emails
+  📄 Docs       - Create and edit documents
+  📊 Sheets     - Work with spreadsheets
+  📅 Calendar   - Manage events and schedules
+  📁 Drive      - Upload, download, organize files
+  ✅ Tasks      - Create and manage task lists
+  📽️ Slides     - Create and edit presentations
 
-### Provider Comparison
+Time: ~10 minutes (one-time setup)
+You'll need: A Google account and browser access
 
-| Provider | Best For | Key Feature |
-|----------|----------|-------------|
-| **HashiCorp Vault** | Multi-cloud / hybrid | Dynamic secrets, policy engine, pluggable backends |
-| **AWS Secrets Manager** | AWS-native workloads | Native Lambda/ECS/EKS integration, automatic RDS rotation |
-| **Azure Key Vault** | Azure-native workloads | Managed HSM, Azure AD RBAC, certificate management |
-| **GCP Secret Manager** | GCP-native workloads | IAM-based access, automatic replication, versioning |
-
-### Selection Guidance
-
-- **Single cloud provider** — use the cloud-native secret manager. It integrates tightly with IAM, reduces operational overhead, and costs less than self-hosting.
-- **Multi-cloud or hybrid** — use HashiCorp Vault. It provides a uniform API across environments and supports dynamic secret generation (database credentials, cloud IAM keys) that expire automatically.
-- **Kubernetes-heavy** — combine External Secrets Operator with any backend above to sync secrets into K8s `Secret` objects without hardcoding.
-
-### Application Access Patterns
-
-1. **SDK/API pull** — application fetches secret at startup or on-demand via provider SDK.
-2. **Sidecar injection** — a sidecar container (e.g., Vault Agent) writes secrets to a shared volume or injects them as environment variables.
-3. **Init container** — a Kubernetes init container fetches secrets before the main container starts.
-4. **CSI driver** — secrets mount as a filesystem volume via the Secrets Store CSI Driver.
-
-> **Cross-reference:** See `engineering/secrets-vault-manager` for production vault infrastructure patterns, HA deployment, and disaster recovery procedures.
-
----
-
-## Secret Rotation Workflow
-
-Stale secrets are a liability. Rotation ensures that even if a credential leaks, its useful lifetime is bounded.
-
-### Phase 1: Detection
-
-- Track secret creation and expiry dates in your secret store metadata.
-- Set alerts at 30, 14, and 7 days before expiry.
-- Use `scripts/env_auditor.py` to flag secrets with no recorded rotation date.
-
-### Phase 2: Rotation
-
-1. **Generate** a new credential (API key, database password, certificate).
-2. **Deploy** the new credential to all consumers (apps, services, pipelines) in parallel.
-3. **Verify** each consumer can authenticate using the new credential.
-4. **Revoke** the old credential only after all consumers are confirmed healthy.
-5. **Update** metadata with the new rotation timestamp and next rotation date.
-
-### Phase 3: Automation
-
-- **AWS Secrets Manager** — use built-in Lambda-based rotation for RDS, Redshift, and DocumentDB.
-- **HashiCorp Vault** — configure dynamic secrets with TTLs; credentials are generated on-demand and auto-expire.
-- **Azure Key Vault** — use Event Grid notifications to trigger rotation functions.
-- **GCP Secret Manager** — use Pub/Sub notifications tied to Cloud Functions for rotation logic.
-
-### Emergency Rotation Checklist
-
-When a secret is confirmed leaked:
-
-1. **Immediately revoke** the compromised credential at the provider level.
-2. Generate and deploy a replacement credential to all consumers.
-3. Audit access logs for unauthorized usage during the exposure window.
-4. Scan git history, CI logs, and artifact registries for the leaked value.
-5. File an incident report documenting scope, timeline, and remediation steps.
-6. Review and tighten detection controls to prevent recurrence.
-
----
-
-## CI/CD Secret Injection
-
-Secrets in CI/CD pipelines require careful handling to avoid exposure in logs, artifacts, or pull request contexts.
-
-### GitHub Actions
-
-- Use **repository secrets** or **environment secrets** via `${{ secrets.SECRET_NAME }}`.
-- Prefer **OIDC federation** (`aws-actions/configure-aws-credentials` with `role-to-assume`) over long-lived access keys.
-- Environment secrets with required reviewers add approval gates for production deployments.
-- GitHub automatically masks secrets in logs, but avoid `echo` or `toJSON()` on secret values.
-
-### GitLab CI
-
-- Store secrets as **CI/CD variables** with the `masked` and `protected` flags enabled.
-- Use **HashiCorp Vault integration** (`secrets:vault`) for dynamic secret injection without storing values in GitLab.
-- Scope variables to specific environments (`production`, `staging`) to enforce least privilege.
-
-### Universal Patterns
-
-- **Never echo or print** secret values in pipeline output, even for debugging.
-- **Use short-lived tokens** (OIDC, STS AssumeRole) instead of static credentials wherever possible.
-- **Restrict PR access** — do not expose secrets to pipelines triggered by forks or untrusted branches.
-- **Rotate CI secrets** on the same schedule as application secrets; pipeline credentials are attack vectors too.
-- **Audit pipeline logs** periodically for accidental secret exposure that masking may have missed.
-
----
-
-## Pre-Commit Secret Detection
-
-Catching secrets before they reach version control is the most cost-effective defense. Two leading tools cover this space.
-
-### gitleaks
-
-```toml
-# .gitleaks.toml — minimal configuration
-[extend]
-useDefault = true
-
-[[rules]]
-id = "custom-internal-token"
-description = "Internal service token pattern"
-regex = '''INTERNAL_TOKEN_[A-Za-z0-9]{32}'''
-secretGroup = 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-- Install: `brew install gitleaks` or download from GitHub releases.
-- Pre-commit hook: `gitleaks git --pre-commit --staged`
-- Baseline scanning: `gitleaks detect --source . --report-path gitleaks-report.json`
-- Manage false positives in `.gitleaksignore` (one fingerprint per line).
+**Ask**: "Ready to set up Google integration?"
 
-### detect-secrets
+### Step 2: Create Google Cloud Project
+
+Display:
+```
+━━━ STEP 1: CREATE GOOGLE CLOUD PROJECT ━━━━━━━━━━━━━━━━━━━
+
+1. Go to: https://console.cloud.google.com/
+
+2. Click the project dropdown (top-left) → "New Project"
+
+3. Enter project name: "Nexus Integration" (or any name)
+
+4. Click "Create"
+
+5. Wait for project to be created, then select it
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Ask**: "Done creating the project? (yes/no)"
+
+### Step 3: Enable APIs
+
+Display:
+```
+━━━ STEP 2: ENABLE GOOGLE APIS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Go to: APIs & Services → Library
+
+Search for and ENABLE each of these APIs:
+
+  ☐ Gmail API
+  ☐ Google Docs API
+  ☐ Google Sheets API
+  ☐ Google Calendar API
+  ☐ Google Drive API
+  ☐ Google Tasks API
+  ☐ Google Slides API
+
+Click each one → Click "Enable"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Ask**: "All 7 APIs enabled? (yes/no)"
+
+### Step 4: Configure OAuth Consent Screen
+
+Display:
+```
+━━━ STEP 3: CONFIGURE OAUTH CONSENT ━━━━━━━━━━━━━━━━━━━━━━━
+
+Go to: APIs & Services → OAuth consent screen
+
+1. Select "External" user type → Create
+
+2. Fill in required fields:
+   • App name: "Nexus"
+   • User support email: (your email)
+   • Developer contact: (your email)
+
+3. Click "Save and Continue"
+
+4. On "Scopes" page → Click "Save and Continue" (skip for now)
+
+5. On "Test users" page:
+   • Click "Add Users"
+   • Add YOUR email address
+   • Click "Save and Continue"
+
+6. Review and go back to dashboard
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Ask**: "OAuth consent screen configured? (yes/no)"
+
+### Step 5: Create OAuth Credentials
+
+Display:
+```
+━━━ STEP 4: CREATE OAUTH CREDENTIALS ━━━━━━━━━━━━━━━━━━━━━━
+
+Go to: APIs & Services → Credentials
+
+1. Click "Create Credentials" → "OAuth client ID"
+
+2. Application type: "Desktop app"
+
+3. Name: "Nexus Desktop" (or any name)
+
+4. Click "Create"
+
+5. A popup shows your credentials. Copy these values:
+   • Client ID (ends in .apps.googleusercontent.com)
+   • Client Secret
+
+Also note your Project ID from the project dropdown.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Ask**: "Please paste your Client ID:"
+
+### Step 6: Save Credentials
+
+After user provides Client ID, Client Secret, and Project ID:
+
+1. Check if `.env` file exists at Nexus root
+2. Add or update these lines:
+   ```
+   GOOGLE_CLIENT_ID=<user-provided-client-id>
+   GOOGLE_CLIENT_SECRET=<user-provided-client-secret>
+   GOOGLE_PROJECT_ID=<user-provided-project-id>
+   ```
+
+Display:
+```
+✅ Credentials saved to .env file
+
+Your Google Cloud credentials are now stored securely.
+Next: We'll authenticate with your Google account.
+```
+
+**Proceed to**: Workflow 3 (Authenticate)
+
+---
+
+## Workflow 2: Install Dependencies
+
+**Run before authentication if needed:**
 
 ```bash
-# Generate baseline
-detect-secrets scan --all-files > .secrets.baseline
-
-# Pre-commit hook (via pre-commit framework)
-# .pre-commit-config.yaml
-repos:
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.5.0
-    hooks:
-      - id: detect-secrets
-        args: ['--baseline', '.secrets.baseline']
+pip install google-auth google-auth-oauthlib google-api-python-client
 ```
 
-- Supports **custom plugins** for organization-specific patterns.
-- Audit workflow: `detect-secrets audit .secrets.baseline` interactively marks true/false positives.
-
-### False Positive Management
-
-- Maintain `.gitleaksignore` or `.secrets.baseline` in version control so the whole team shares exclusions.
-- Review false positive lists during security audits — patterns may mask real leaks over time.
-- Prefer tightening regex patterns over broadly ignoring files.
+Display:
+```
+Installing Google API libraries...
+```
 
 ---
 
-## Audit Logging
+## Workflow 3: Authenticate
 
-Knowing who accessed which secret and when is critical for incident investigation and compliance.
+**Triggers**: Config check returns exit 1, or after Workflow 1 completes
 
-### Cloud-Native Audit Trails
+**Purpose**: Run OAuth flow to get access token.
 
-| Provider | Service | What It Captures |
-|----------|---------|-----------------|
-| **AWS** | CloudTrail | Every `GetSecretValue`, `DescribeSecret`, `RotateSecret` API call |
-| **Azure** | Activity Log + Diagnostic Logs | Key Vault access events, including caller identity and IP |
-| **GCP** | Cloud Audit Logs | Data access logs for Secret Manager with principal and timestamp |
-| **Vault** | Audit Backend | Full request/response logging (file, syslog, or socket backend) |
+### Step 1: Start OAuth Flow
 
-### Alerting Strategy
+Display:
+```
+━━━ AUTHENTICATION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-- Alert on **access from unknown IP ranges** or service accounts outside the expected set.
-- Alert on **bulk secret reads** (more than N secrets accessed within a time window).
-- Alert on **access outside deployment windows** when no CI/CD pipeline is running.
-- Feed audit logs into your SIEM (Splunk, Datadog, Elastic) for correlation with other security events.
-- Review audit logs quarterly as part of access recertification.
+A browser window will open for Google sign-in.
+
+1. Select your Google account
+2. Click "Continue" (you may see "unverified app" warning)
+3. Grant access to all requested permissions
+4. Close the browser when done
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### Step 2: Run Login
+
+```bash
+python 00-system/skills/google/google-master/scripts/google_auth.py --login
+```
+
+### Step 3: Verify Success
+
+If successful:
+```
+✅ Google Integration Complete!
+
+You now have access to:
+  📧 Gmail      → "list emails", "send email"
+  📄 Docs       → "create doc", "read doc"
+  📊 Sheets     → "read sheet", "append to sheet"
+  📅 Calendar   → "list events", "create event"
+  📁 Drive      → "list files", "upload file"
+  ✅ Tasks      → "list tasks", "create task"
+  📽️ Slides     → "create presentation", "add slide"
+
+Try: "list my upcoming calendar events"
+```
+
+If failed, check error and refer to `google-master/references/error-handling.md`.
 
 ---
 
-## Cross-References
+## Workflow 4: Already Connected
 
-This skill covers env hygiene and secret detection. For deeper coverage of related domains, see:
+**Triggers**: Config check returns exit 0
 
-| Skill | Path | Relationship |
-|-------|------|-------------|
-| **Secrets Vault Manager** | `engineering/secrets-vault-manager` | Production vault infrastructure, HA deployment, DR |
-| **Senior SecOps** | `engineering/senior-secops` | Security operations perspective, incident response |
-| **CI/CD Pipeline Builder** | `engineering/ci-cd-pipeline-builder` | Pipeline architecture, secret injection patterns |
-| **Infrastructure as Code** | `engineering/infrastructure-as-code` | Terraform/Pulumi secret backend configuration |
-| **Container Orchestration** | `engineering/container-orchestration` | Kubernetes secret mounting, sealed secrets |
+**Purpose**: Show user they're already set up.
+
+Display:
+```
+━━━ GOOGLE ALREADY CONNECTED ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Your Google integration is fully configured!
+
+Available services:
+  📧 Gmail      📄 Docs       📊 Sheets
+  📅 Calendar   📁 Drive      ✅ Tasks      📽️ Slides
+
+Commands:
+  • "list emails"           → Gmail inbox
+  • "create doc [title]"    → New Google Doc
+  • "list calendar events"  → Upcoming events
+  • "list drive files"      → Drive contents
+  • "list tasks"            → Task lists
+  • "create presentation"   → New Slides
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+---
+
+## Workflow 5: Reconnect / Re-authenticate
+
+**Triggers**: "reconnect google", "reauth google", "refresh google token"
+
+**Purpose**: Get new OAuth token (e.g., after scope changes or token expiry).
+
+```bash
+python 00-system/skills/google/google-master/scripts/google_auth.py --login
+```
+
+This removes the old token and initiates a fresh OAuth flow.
+
+---
+
+## Workflow 6: Disconnect
+
+**Triggers**: "disconnect google", "remove google", "logout google"
+
+**Purpose**: Remove stored credentials.
+
+```bash
+python 00-system/skills/google/google-master/scripts/google_auth.py --logout
+```
+
+Display:
+```
+✅ Google disconnected
+
+Token removed. Your .env credentials are still saved.
+To fully remove, delete these lines from .env:
+  GOOGLE_CLIENT_ID
+  GOOGLE_CLIENT_SECRET
+  GOOGLE_PROJECT_ID
+```
+
+---
+
+## Error Handling
+
+| Error | Solution |
+|-------|----------|
+| "Missing credentials" | Run full setup (Workflow 1) |
+| "Invalid client" | Check Client ID/Secret in .env |
+| "Access denied" | Add your email as test user in OAuth consent |
+| "Token expired" | Run reconnect (Workflow 5) |
+| "API not enabled" | Enable the specific API in Google Cloud Console |
+
+Load `google-master/references/error-handling.md` for detailed troubleshooting.
+
+---
+
+## Quick Reference
+
+| Command | Action |
+|---------|--------|
+| `connect google` | Start setup wizard |
+| `google status` | Check connection status |
+| `reconnect google` | Refresh authentication |
+| `disconnect google` | Remove token |
+
+---
+
+## File Locations
+
+| File | Path | Purpose |
+|------|------|---------|
+| Credentials | `.env` | Client ID, Secret, Project ID |
+| Access Token | `01-memory/integrations/google-token.json` | OAuth token |
+
+Both files are in `.gitignore` and will not be committed.
+
+---
+
+*Google Connect v1.0 - Setup wizard for Google Workspace integration*
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
