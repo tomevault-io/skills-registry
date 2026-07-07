@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [pengzhanbo/vuepress-theme-plume](https://github.com/pengzhanbo/vuepress-theme-plume/tree/main/skills/vuepress-plume-config/SKILL.md)
+Original source: [pengzhanbo/vuepress-theme-plume](https://github.com/pengzhanbo/vuepress-theme-plume/tree/main/skills/vuepress-plume-markdown/SKILL.md)
 
 ---
 
