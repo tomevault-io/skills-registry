@@ -1,378 +1,409 @@
 ---
-name: ops-security-audit
-description: | Use when this capability is needed.
+name: hono-authentication
+description: Use this skill whenever the user wants to design, implement, or refactor authentication and authorization in a Hono + TypeScript backend, including JWT, sessions/cookies, middleware, guards-like patterns, and route protection for Node/Edge/Workers runtimes.
 metadata:
   author: majiayu000
 ---
 
-# Security Audit Workflow
+# Hono Authentication Skill
 
-This skill defines the structured process for infrastructure security audits. Use it for systematic security assessment and compliance validation.
+## Purpose
+
+You are a specialized assistant for **authentication and authorization in Hono-based backends**.
+
+Use this skill to:
+
+- Set up or refactor **auth flows** in a Hono + TypeScript project
+- Implement **JWT-based auth** (access tokens, optional refresh)
+- Implement **cookie/session-based auth** when appropriate
+- Add **auth middleware** to protect routes
+- Implement **role/permission checks** in a Hono-friendly way
+- Integrate auth with different runtimes:
+  - Node (`@hono/node-server`)
+  - Cloudflare Workers
+  - Vercel Edge / Bun
+
+Do **not** use this skill for:
+
+- Core Hono project scaffolding → use `hono-app-scaffold`
+- Database design / ORM setup → use TypeORM / Supabase skills
+- Frontend/Next.js auth – that’s a separate concern
+
+If `CLAUDE.md` exists, follow any auth-related decisions there (JWT vs sessions, token lifetime, cookie security, etc.).
 
 ---
 
-## Security Audit Phases
+## When To Apply This Skill
 
-| Phase | Focus | Output |
-|-------|-------|--------|
-| **1. Scope Definition** | Define audit boundaries | Audit plan |
-| **2. Automated Scanning** | Run security tools | Scan results |
-| **3. Manual Review** | Deep-dive analysis | Finding details |
-| **4. Compliance Mapping** | Map to frameworks | Compliance report |
-| **5. Remediation Planning** | Prioritize fixes | Remediation plan |
-| **6. Verification** | Confirm fixes | Closure report |
+Trigger this skill when the user asks for things like:
+
+- “Add auth to this Hono API.”
+- “Protect these Hono routes with JWT.”
+- “Implement login / signup / logout endpoints in Hono.”
+- “Check roles on these Hono routes.”
+- “Use cookies for authentication in a Hono app on Cloudflare/Node.”
+- “Refactor this Hono auth middleware; it’s messy.”
+
+Avoid this skill when:
+
+- The task is purely about routing or performance without security considerations.
+- The app’s auth is handled completely outside Hono (e.g., API gateway layer) and Hono only sees already-authenticated requests.
 
 ---
 
-## Phase 1: Scope Definition
+## Default Auth Approach (Configurable)
 
-### Audit Scope Template
+By default, this skill prefers:
 
-```markdown
-## Security Audit Scope
+- **JWT access tokens** for API auth (stateless)
+- Optional **refresh token** flow (often cookie-based)
+- `Authorization: Bearer <token>` header for protected routes
+- Auth middleware that:
+  - Decodes/validates tokens
+  - Attaches user info to `c.var` (context variables)
+- Role-based checks via helpers/middleware
 
-**Audit ID:** SEC-AUDIT-YYYY-NNN
-**Audit Period:** YYYY-MM-DD to YYYY-MM-DD
-**Auditor:** [name/team]
+Adjust based on project constraints:
 
-### In Scope
+- Cookies (httpOnly, secure) for browser-centric apps
+- External identity providers (OAuth) at a high-level pattern
 
-| Category | Components |
-|----------|------------|
-| **Accounts** | AWS Account 123456789, 987654321 |
-| **Regions** | us-east-1, us-west-2 |
-| **Services** | EC2, RDS, S3, IAM, VPC, EKS |
-| **Environments** | Production, Staging |
-| **Compliance** | SOC2 Type II, PCI-DSS 4.0 |
+---
 
-### Out of Scope
+## High-Level Architecture
 
-| Category | Reason |
-|----------|--------|
-| Development accounts | Covered by separate audit |
-| Application code | Covered by code review process |
-| Third-party SaaS | Covered by vendor assessments |
+Assume Hono app structure like:
 
-### Audit Objectives
-
-1. Validate compliance with [framework]
-2. Identify security vulnerabilities in infrastructure
-3. Assess IAM and access control posture
-4. Review network security configuration
-5. Evaluate logging and monitoring coverage
+```text
+src/
+  app.ts
+  routes/
+    v1/
+      auth.routes.ts
+      users.routes.ts
+  middlewares/
+    auth.ts
+    require-role.ts
+  config/
+    auth.ts
 ```
 
----
+This skill will:
 
-## Phase 2: Automated Scanning
-
-### Security Scanning Tools
-
-| Tool | Purpose | Scope |
-|------|---------|-------|
-| **AWS Security Hub** | Aggregated findings | All AWS services |
-| **AWS Config** | Configuration compliance | Resource configuration |
-| **GuardDuty** | Threat detection | Account activity |
-| **Trivy** | Container vulnerabilities | EKS images |
-| **Checkov** | IaC security | Terraform/CloudFormation |
-| **ScoutSuite** | Cloud security audit | Multi-cloud |
-
-### Scan Execution Template
-
-```bash
-# AWS Security Hub findings
-aws securityhub get-findings --filters '{"SeverityLabel":[{"Value":"CRITICAL","Comparison":"EQUALS"}]}'
-
-# AWS Config compliance
-aws configservice get-compliance-summary-by-config-rule
-
-# Trivy container scan
-trivy image --severity CRITICAL,HIGH [image]
-
-# Checkov IaC scan
-checkov -d /path/to/terraform --framework terraform
-```
-
-### Scan Results Template
-
-```markdown
-## Automated Scan Results
-
-**Scan Date:** YYYY-MM-DD
-**Tools Used:** Security Hub, Trivy, Checkov
-
-### Summary by Severity
-
-| Source | Critical | High | Medium | Low |
-|--------|----------|------|--------|-----|
-| Security Hub | X | X | X | X |
-| Trivy | X | X | X | X |
-| Checkov | X | X | X | X |
-| **Total** | **X** | **X** | **X** | **X** |
-
-### Critical Findings Requiring Immediate Action
-
-| Finding ID | Source | Description |
-|------------|--------|-------------|
-| SEC-001 | Security Hub | [description] |
-| SEC-002 | Trivy | [description] |
-```
+- Create or refine `auth.routes.ts` for login/signup/me endpoints
+- Create or refine `middlewares/auth.ts` (JWT parsing & verification)
+- Optionally create `middlewares/require-role.ts` for roles/permissions
+- Use a configurable secret and token lifetime (env-based)
 
 ---
 
-## Phase 3: Manual Review
+## Config & Environment
 
-### Review Checklist
+Define auth-related config in a dedicated module where possible:
 
-#### IAM Review
+```ts
+// src/config/auth.ts
+export type AuthConfig = {
+  jwtSecret: string;
+  accessTokenTtlSeconds: number;
+};
 
-- [ ] Root account MFA enabled
-- [ ] Root account not used for daily operations
-- [ ] Password policy meets requirements
-- [ ] No users with inline policies
-- [ ] Service accounts use roles, not keys
-- [ ] Access keys rotated <90 days
-- [ ] Unused IAM users/roles identified
-
-#### Network Security Review
-
-- [ ] VPC flow logs enabled
-- [ ] No 0.0.0.0/0 ingress rules (except public ALB)
-- [ ] Security groups follow least privilege
-- [ ] NACLs configured appropriately
-- [ ] VPC endpoints for AWS services
-- [ ] No public RDS instances
-- [ ] No public S3 buckets (unless intended)
-
-#### Data Protection Review
-
-- [ ] S3 buckets encrypted (SSE-S3 or SSE-KMS)
-- [ ] EBS volumes encrypted
-- [ ] RDS instances encrypted
-- [ ] SSL/TLS for data in transit
-- [ ] KMS key rotation enabled
-- [ ] Secrets in Secrets Manager (not code/config)
-
-#### Logging & Monitoring Review
-
-- [ ] CloudTrail enabled (all regions)
-- [ ] CloudTrail logs encrypted
-- [ ] CloudTrail log validation enabled
-- [ ] VPC flow logs enabled
-- [ ] GuardDuty enabled
-- [ ] Security Hub enabled
-- [ ] Alert rules for critical events
-
-### Manual Review Template
-
-```markdown
-## Manual Review Findings
-
-### IAM Security
-
-| Check | Status | Finding |
-|-------|--------|---------|
-| Root MFA | PASS | MFA enabled |
-| Root usage | PASS | No root activity in 90 days |
-| Password policy | PARTIAL | Missing complexity requirement |
-| Access key age | FAIL | 3 keys >90 days |
-
-### Network Security
-
-| Check | Status | Finding |
-|-------|--------|---------|
-| VPC flow logs | PASS | Enabled on all VPCs |
-| SG 0.0.0.0/0 | FAIL | sg-xxx allows SSH from anywhere |
-| Public RDS | PASS | No public instances |
-
-[Continue for all categories...]
+export function getAuthConfig(): AuthConfig {
+  return {
+    jwtSecret: process.env.JWT_SECRET || "dev-secret-change-me",
+    accessTokenTtlSeconds: Number(process.env.JWT_ACCESS_TTL ?? 15 * 60),
+  };
+}
 ```
+
+For Cloudflare Workers, use `c.env` with a typed `Env` interface instead of `process.env`.
+
+Environment variables (example):
+
+```env
+JWT_SECRET=super-secret-key
+JWT_ACCESS_TTL=900
+```
+
+This skill must:
+
+- Avoid hardcoding secrets for production
+- Use correct env access method depending on runtime
 
 ---
 
-## Phase 4: Compliance Mapping
+## JWT Utilities
 
-### SOC2 Control Mapping
+Use a JWT library compatible with the runtime (e.g. `jose` is a good cross-runtime option).
 
-| Control | Requirement | Evidence | Status |
-|---------|-------------|----------|--------|
-| CC6.1 | Logical access controls | IAM policies, MFA | Compliant |
-| CC6.6 | System boundaries | VPC, security groups | Compliant |
-| CC6.7 | Encryption in transit | TLS configuration | Compliant |
-| CC7.1 | System monitoring | CloudTrail, GuardDuty | Compliant |
-| CC7.2 | Anomaly detection | GuardDuty findings | Partial |
+Example helpers (Node/Workers-safe, using `jose`):
 
-### PCI-DSS Mapping
+```ts
+// src/middlewares/jwt-utils.ts
+import { SignJWT, jwtVerify } from "jose";
 
-| Requirement | Description | Evidence | Status |
-|-------------|-------------|----------|--------|
-| 1.3 | Firewall configuration | Security groups | Compliant |
-| 3.4 | Encryption at rest | KMS, S3 encryption | Compliant |
-| 8.3 | Strong authentication | MFA, IAM policies | Partial |
-| 10.2 | Audit logging | CloudTrail | Compliant |
-| 11.3 | Vulnerability scanning | Security Hub | Compliant |
+export type JwtPayload = {
+  sub: string;
+  email?: string;
+  roles?: string[];
+};
 
-### Compliance Summary Template
+export async function signAccessToken(secret: string, payload: JwtPayload, ttlSeconds: number) {
+  const key = new TextEncoder().encode(secret);
+  const now = Math.floor(Date.now() / 1000);
 
-```markdown
-## Compliance Status Report
+  return new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt(now)
+    .setExpirationTime(now + ttlSeconds)
+    .sign(key);
+}
 
-**Assessment Date:** YYYY-MM-DD
-**Frameworks:** SOC2 Type II, PCI-DSS 4.0
-
-### Overall Status
-
-| Framework | Total Controls | Compliant | Partial | Non-Compliant |
-|-----------|---------------|-----------|---------|---------------|
-| SOC2 | 50 | 45 | 3 | 2 |
-| PCI-DSS | 40 | 35 | 4 | 1 |
-
-### Non-Compliant Controls
-
-| Framework | Control | Gap | Remediation |
-|-----------|---------|-----|-------------|
-| SOC2 | CC7.2 | Anomaly alerting incomplete | Enable GuardDuty alerts |
-| PCI-DSS | 8.3 | MFA not enforced for all | Enable MFA requirement |
+export async function verifyAccessToken(secret: string, token: string): Promise<JwtPayload> {
+  const key = new TextEncoder().encode(secret);
+  const { payload } = await jwtVerify<JwtPayload>(token, key);
+  return payload;
+}
 ```
+
+This skill should:
+
+- Choose/correct the JWT library usage based on environment
+- Use async-safe and Edge-compatible APIs where needed
 
 ---
 
-## Phase 5: Remediation Planning
+## Auth Middleware
 
-### Prioritization Matrix
+Add a middleware that:
 
-| Priority | Criteria | SLA |
-|----------|----------|-----|
-| **P1** | Critical vulnerability, compliance blocker | 24 hours |
-| **P2** | High vulnerability, significant risk | 7 days |
-| **P3** | Medium vulnerability, moderate risk | 30 days |
-| **P4** | Low vulnerability, best practice | 90 days |
+1. Extracts JWT from `Authorization` header (or cookie if configured)
+2. Verifies it
+3. Attaches user info to `c.var`
 
-### Remediation Plan Template
+Example:
 
-```markdown
-## Remediation Plan
+```ts
+// src/middlewares/auth.ts
+import type { MiddlewareHandler } from "hono";
+import { getAuthConfig } from "../config/auth";
+import { verifyAccessToken } from "./jwt-utils";
 
-**Plan Created:** YYYY-MM-DD
-**Total Findings:** XX
-**Critical/High:** XX
+export type AuthUser = {
+  id: string;
+  email?: string;
+  roles?: string[];
+};
 
-### Remediation Actions
+declare module "hono" {
+  interface ContextVariableMap {
+    user?: AuthUser;
+  }
+}
 
-| Finding | Priority | Owner | Target Date | Status |
-|---------|----------|-------|-------------|--------|
-| SEC-001 | P1 | @security | YYYY-MM-DD | In Progress |
-| SEC-002 | P2 | @platform | YYYY-MM-DD | Not Started |
-| SEC-003 | P2 | @devops | YYYY-MM-DD | Not Started |
+export const authMiddleware: MiddlewareHandler = async (c, next) => {
+  const authHeader = c.req.header("Authorization");
+  if (!authHeader?.startsWith("Bearer ")) {
+    // unauthenticated, let protected routes handle this
+    return c.json({ message: "Unauthorized" }, 401);
+  }
 
-### Detailed Remediation
+  const token = authHeader.slice("Bearer ".length);
+  const config = getAuthConfig();
 
-#### SEC-001: IAM Access Keys >90 Days
-
-**Finding:** 3 IAM users have access keys older than 90 days
-**Risk:** Credential compromise risk increases over time
-**Remediation:**
-1. Identify key usage patterns
-2. Create rotation schedule
-3. Rotate keys for each user
-4. Update applications using keys
-5. Disable old keys after verification
-
-**Owner:** @security
-**Target Date:** YYYY-MM-DD
+  try {
+    const payload = await verifyAccessToken(config.jwtSecret, token);
+    c.set("user", {
+      id: payload.sub,
+      email: payload.email,
+      roles: payload.roles ?? [],
+    });
+    await next();
+  } catch (err) {
+    console.error("JWT validation failed:", err);
+    return c.json({ message: "Unauthorized" }, 401);
+  }
+};
 ```
+
+**Alternative:** For some apps, you may want a “soft” auth that sets `user` only when token exists, allowing both public and authenticated access. This skill can implement that variant too.
 
 ---
 
-## Phase 6: Verification
+## Role-Based Authorization
 
-### Verification Checklist
+Implement a helper middleware to require certain roles:
 
-- [ ] Remediation implemented
-- [ ] Re-scan with same tools
-- [ ] Finding resolved in scan results
-- [ ] No regression introduced
-- [ ] Documentation updated
+```ts
+// src/middlewares/require-role.ts
+import type { MiddlewareHandler } from "hono";
 
-### Closure Report Template
+export function requireRole(requiredRoles: string[]): MiddlewareHandler {
+  return async (c, next) => {
+    const user = c.get("user");
+    if (!user) {
+      return c.json({ message: "Unauthorized" }, 401);
+    }
 
-```markdown
-## Security Audit Closure Report
+    const hasRole = user.roles?.some((role) => requiredRoles.includes(role));
+    if (!hasRole) {
+      return c.json({ message: "Forbidden" }, 403);
+    }
 
-**Audit ID:** SEC-AUDIT-YYYY-NNN
-**Audit Period:** YYYY-MM-DD to YYYY-MM-DD
-**Closure Date:** YYYY-MM-DD
-
-### Summary
-
-| Metric | Count |
-|--------|-------|
-| Total findings | XX |
-| Remediated | XX |
-| Accepted risk | XX |
-| Deferred | XX |
-
-### Remediation Summary
-
-| Priority | Found | Remediated | Accepted | Deferred |
-|----------|-------|------------|----------|----------|
-| P1 | X | X | 0 | 0 |
-| P2 | X | X | X | 0 |
-| P3 | X | X | X | X |
-| P4 | X | X | X | X |
-
-### Risk Acceptances
-
-| Finding | Risk Description | Accepting Authority | Review Date |
-|---------|------------------|---------------------|-------------|
-| SEC-XXX | [description] | CISO | YYYY-MM-DD |
-
-### Next Audit
-
-**Scheduled:** YYYY-MM-DD
-**Focus Areas:** [areas based on this audit]
+    await next();
+  };
+}
 ```
+
+Usage in routes:
+
+```ts
+import { authMiddleware } from "../../middlewares/auth";
+import { requireRole } from "../../middlewares/require-role";
+
+app.get(
+  "/admin/stats",
+  authMiddleware,
+  requireRole(["admin"]),
+  (c) => c.json({ ok: true }),
+);
+```
+
+This skill should:
+
+- Encourage composition (`authMiddleware` + `requireRole`) per route/route-group
+- Avoid hardcoding roles in many places; centralize where possible
 
 ---
 
-## Anti-Rationalization Table
+## Auth Routes
 
-| Rationalization | Why It's WRONG | Required Action |
-|-----------------|----------------|-----------------|
-| "Internal service, security can be relaxed" | Internal breaches are common | **Apply standards uniformly** |
-| "False positive, ignore it" | All findings need verification | **Document evidence** |
-| "Too many findings to fix" | Prioritize by severity | **Triage systematically** |
-| "Compliance is just checkbox" | Compliance reflects real risk | **Treat as minimum bar** |
-| "Security slows us down" | Breach slows you permanently | **Integrate security in process** |
+Create an `auth.routes.ts` under versioned routes (e.g., `/v1/auth`):
+
+```ts
+// src/routes/v1/auth.routes.ts
+import { Hono } from "hono";
+import { getAuthConfig } from "../../config/auth";
+import { signAccessToken } from "../../middlewares/jwt-utils";
+
+// In a real app, inject or import user storage/service
+async function findUserByEmail(email: string) {
+  // TODO: use real DB lookup (TypeORM, Supabase, etc.)
+  return null as any;
+}
+
+export function authRoutes() {
+  const app = new Hono();
+
+  app.post("/login", async (c) => {
+    const body = await c.req.json<{ email: string; password: string }>();
+
+    // Validate inputs (this skill may integrate with a Hono validation skill later)
+    if (!body.email || !body.password) {
+      return c.json({ message: "Email and password are required" }, 400);
+    }
+
+    const user = await findUserByEmail(body.email);
+    if (!user) {
+      return c.json({ message: "Invalid credentials" }, 401);
+    }
+
+    // TODO: verify password using bcrypt/argon2 library
+    const config = getAuthConfig();
+    const accessToken = await signAccessToken(
+      config.jwtSecret,
+      {
+        sub: user.id,
+        email: user.email,
+        roles: user.roles ?? [],
+      },
+      config.accessTokenTtlSeconds,
+    );
+
+    return c.json({ accessToken });
+  });
+
+  app.get("/me", async (c) => {
+    const user = c.get("user");
+    if (!user) {
+      return c.json({ message: "Unauthorized" }, 401);
+    }
+    return c.json(user);
+  });
+
+  return app;
+}
+```
+
+In `routes/v1/index.ts`, mount them:
+
+```ts
+import { authRoutes } from "./auth.routes";
+
+export function createV1Routes() {
+  const app = new Hono();
+  app.route("/auth", authRoutes());
+  // other routes
+  return app;
+}
+```
+
+This skill should:
+
+- Keep auth routes small and composable.
+- Defer actual user storage to DB/ORM skills.
 
 ---
 
-## Pressure Resistance
+## Cookies & Sessions (Optional Variation)
 
-| User Says | Your Response |
-|-----------|---------------|
-| "Skip security review, deadline tomorrow" | "Security review is mandatory. Cannot release with unreviewed changes. Scheduling expedited review." |
-| "That's a false positive" | "All findings require documented verification. Will assess with evidence." |
-| "Accept all remaining risks" | "Risk acceptance requires proper documentation and authority sign-off. Preparing risk acceptance forms." |
-| "Legacy system, different rules" | "Legacy systems are higher risk. Stricter standards apply." |
+For browser-centric apps, this skill can:
+
+- Set `httpOnly`, `secure` cookies with tokens on login.
+- Read them from `c.req.cookie()` (or `c.req.header('Cookie')`) in middleware.
+
+Example sketch:
+
+```ts
+// login route snippet
+c.header(
+  "Set-Cookie",
+  `access_token=${accessToken}; HttpOnly; Secure; Path=/; Max-Age=${config.accessTokenTtlSeconds}`,
+);
+return c.json({ ok: true });
+```
+
+Middleware variant:
+
+```ts
+const token = c.req.cookie("access_token");
+```
+
+Adjust for runtime (Workers vs Node) and security (HTTPS only, domain, same-site).
 
 ---
 
-## Dispatch Specialist
+## Integration with Other Skills
 
-For security audit tasks, dispatch:
+- `hono-app-scaffold`:
+  - This skill assumes a structured app with `routes/` & `middlewares/` ready to extend.
+- `hono-typeorm-backend` (future):
+  - Provides user entity + repository; this auth skill will call into those.
+- `nestjs-authentication` (conceptual similarities):
+  - Shares patterns for JWT, roles, and password handling.
 
-```
-Task tool:
-  subagent_type: "security-operations"
-  model: "opus"
-  prompt: |
-    SECURITY AUDIT REQUEST
-    Scope: [accounts, regions, services]
-    Compliance Frameworks: [SOC2, PCI-DSS, etc.]
-    Focus Areas: [IAM, network, data, etc.]
-    Previous Findings: [reference if follow-up]
-```
+---
+
+## Example Prompts That Should Use This Skill
+
+- “Add JWT auth middleware and protect `/v1/users` routes.”
+- “Implement login and `GET /me` in this Hono API.”
+- “Use roles and protect admin routes in Hono.”
+- “Switch auth from header-based to cookie-based for browser clients.”
+- “Refactor our ad-hoc Hono auth into a clean middleware + routes setup.”
+
+For these tasks, rely on this skill to build a **clean, composable, runtime-aware auth layer** for Hono,
+integrating with your chosen user storage, ORM, and deployment environment.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
