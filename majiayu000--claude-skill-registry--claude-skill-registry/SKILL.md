@@ -1,356 +1,436 @@
 ---
-name: mtls-configuration
-description: Configure mutual TLS (mTLS) for zero-trust service-to-service communication. Use when implementing zero-trust networking, certificate management, or securing internal service communication. Use when this capability is needed.
+name: skill-developer
+description: Create and manage Claude Code skills following Anthropic best practices. Use when creating new skills, modifying skill-rules.json, understanding trigger patterns, working with hooks, debugging skill activation, or implementing progressive disclosure. Covers skill structure, YAML frontmatter, trigger types (keywords, intent patterns, file paths, content patterns), enforcement levels (block, suggest, warn), hook mechanisms (UserPromptSubmit, PreToolUse), session tracking, and the 500-line rule. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# mTLS Configuration
+# Skill Developer Guide
 
-Comprehensive guide to implementing mutual TLS for zero-trust service mesh communication.
+## Purpose
+
+Comprehensive guide for creating and managing skills in Claude Code with auto-activation system, following Anthropic's official best practices including the 500-line rule and progressive disclosure pattern.
 
 ## When to Use This Skill
 
-- Implementing zero-trust networking
-- Securing service-to-service communication
-- Certificate rotation and management
-- Debugging TLS handshake issues
-- Compliance requirements (PCI-DSS, HIPAA)
-- Multi-cluster secure communication
+Automatically activates when you mention:
+- Creating or adding skills
+- Modifying skill triggers or rules
+- Understanding how skill activation works
+- Debugging skill activation issues
+- Working with skill-rules.json
+- Hook system mechanics
+- Claude Code best practices
+- Progressive disclosure
+- YAML frontmatter
+- 500-line rule
 
-## Core Concepts
-
-### 1. mTLS Flow
-
-```
-┌─────────┐                              ┌─────────┐
-│ Service │                              │ Service │
-│    A    │                              │    B    │
-└────┬────┘                              └────┬────┘
-     │                                        │
-┌────┴────┐      TLS Handshake          ┌────┴────┐
-│  Proxy  │◄───────────────────────────►│  Proxy  │
-│(Sidecar)│  1. ClientHello             │(Sidecar)│
-│         │  2. ServerHello + Cert      │         │
-│         │  3. Client Cert             │         │
-│         │  4. Verify Both Certs       │         │
-│         │  5. Encrypted Channel       │         │
-└─────────┘                              └─────────┘
-```
-
-### 2. Certificate Hierarchy
-
-```
-Root CA (Self-signed, long-lived)
-    │
-    ├── Intermediate CA (Cluster-level)
-    │       │
-    │       ├── Workload Cert (Service A)
-    │       └── Workload Cert (Service B)
-    │
-    └── Intermediate CA (Multi-cluster)
-            │
-            └── Cross-cluster certs
-```
-
-## Templates
-
-### Template 1: Istio mTLS (Strict Mode)
-
-```yaml
-# Enable strict mTLS mesh-wide
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: default
-  namespace: istio-system
-spec:
-  mtls:
-    mode: STRICT
 ---
-# Namespace-level override (permissive for migration)
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: default
-  namespace: legacy-namespace
-spec:
-  mtls:
-    mode: PERMISSIVE
+
+## System Overview
+
+### Two-Hook Architecture
+
+**1. UserPromptSubmit Hook** (Proactive Suggestions)
+- **File**: `.claude/hooks/codanna/skill-activation-prompt.ts`
+- **Trigger**: BEFORE Claude sees user's prompt
+- **Purpose**: Suggest relevant skills based on keywords + intent patterns
+- **Method**: Injects formatted reminder as context (stdout → Claude's input)
+- **Use Cases**: Topic-based skills, implicit work detection
+
+**2. PreToolUse Hook - Read Validation** (Resource Management)
+- **File**: `.claude/hooks/codanna/pre_read_use.js`
+- **Trigger**: BEFORE Read tool executes
+- **Purpose**: Validate Read operations to prevent excessive line reads
+- **Method**: Checks requested line limit against thresholds, blocks/warns on large reads
+- **Use Cases**: Prevent token waste, encourage efficient file reading patterns
+- **Thresholds**:
+  - Allow: ≤400 lines (silent)
+  - Warn: 401-600 lines (logged, shown to Claude)
+  - Block: >600 lines (operation blocked)
+
+### Configuration File
+
+**Location**: `.claude/skills/skill-rules.json`
+
+Defines:
+- All skills and their trigger conditions
+- Enforcement levels (block, suggest, warn)
+- File path patterns (glob)
+- Content detection patterns (regex)
+- Skip conditions (session tracking, file markers, env vars)
+
 ---
-# Workload-specific policy
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: payment-service
-  namespace: production
-spec:
-  selector:
-    matchLabels:
-      app: payment-service
-  mtls:
-    mode: STRICT
-  portLevelMtls:
-    8080:
-      mode: STRICT
-    9090:
-      mode: DISABLE  # Metrics port, no mTLS
+
+## Skill Types
+
+### 1. Guardrail Skills
+
+**Purpose:** Enforce critical best practices that prevent errors
+
+**Characteristics:**
+- Type: `"guardrail"`
+- Enforcement: `"block"`
+- Priority: `"critical"` or `"high"`
+- Block file edits until skill used
+- Prevent common mistakes (column names, critical errors)
+- Session-aware (don't repeat nag in same session)
+
+**Examples:**
+- `database-verification` - Verify table/column names before Prisma queries
+- `frontend-dev-guidelines` - Enforce React/TypeScript patterns
+
+**When to Use:**
+- Mistakes that cause runtime errors
+- Data integrity concerns
+- Critical compatibility issues
+
+### 2. Domain Skills
+
+**Purpose:** Provide comprehensive guidance for specific areas
+
+**Characteristics:**
+- Type: `"domain"`
+- Enforcement: `"suggest"`
+- Priority: `"high"` or `"medium"`
+- Advisory, not mandatory
+- Topic or domain-specific
+- Comprehensive documentation
+
+**Examples:**
+- `backend-dev-guidelines` - Node.js/Express/TypeScript patterns
+- `frontend-dev-guidelines` - React/TypeScript best practices
+- `error-tracking` - Sentry integration guidance
+
+**When to Use:**
+- Complex systems requiring deep knowledge
+- Best practices documentation
+- Architectural patterns
+- How-to guides
+
+---
+
+## Quick Start: Creating a New Skill
+
+### Step 1: Create Skill File
+
+**Location:** `.claude/skills/{skill-name}/SKILL.md`
+
+**Template:**
+```markdown
+---
+name: my-new-skill
+description: Brief description including keywords that trigger this skill. Mention topics, file types, and use cases. Be explicit about trigger terms.
+---
+
+# My New Skill
+
+## Purpose
+What this skill helps with
+
+## When to Use
+Specific scenarios and conditions
+
+## Key Information
+The actual guidance, documentation, patterns, examples
 ```
 
-### Template 2: Istio Destination Rule for mTLS
+**Best Practices:**
+- ✅ **Name**: Lowercase, hyphens, gerund form (verb + -ing) preferred
+- ✅ **Description**: Include ALL trigger keywords/phrases (max 1024 chars)
+- ✅ **Content**: Under 500 lines - use reference files for details
+- ✅ **Examples**: Real code examples
+- ✅ **Structure**: Clear headings, lists, code blocks
 
-```yaml
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: default
-  namespace: istio-system
-spec:
-  host: "*.local"
-  trafficPolicy:
-    tls:
-      mode: ISTIO_MUTUAL
----
-# TLS to external service
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: external-api
-spec:
-  host: api.external.com
-  trafficPolicy:
-    tls:
-      mode: SIMPLE
-      caCertificates: /etc/certs/external-ca.pem
----
-# Mutual TLS to external service
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: partner-api
-spec:
-  host: api.partner.com
-  trafficPolicy:
-    tls:
-      mode: MUTUAL
-      clientCertificate: /etc/certs/client.pem
-      privateKey: /etc/certs/client-key.pem
-      caCertificates: /etc/certs/partner-ca.pem
-```
+### Step 2: Add to skill-rules.json
 
-### Template 3: Cert-Manager with Istio
+See [SKILL_RULES_REFERENCE.md](SKILL_RULES_REFERENCE.md) for complete schema.
 
-```yaml
-# Install cert-manager issuer for Istio
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: istio-ca
-spec:
-  ca:
-    secretName: istio-ca-secret
----
-# Create Istio CA secret
-apiVersion: v1
-kind: Secret
-metadata:
-  name: istio-ca-secret
-  namespace: cert-manager
-type: kubernetes.io/tls
-data:
-  tls.crt: <base64-encoded-ca-cert>
-  tls.key: <base64-encoded-ca-key>
----
-# Certificate for workload
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: my-service-cert
-  namespace: my-namespace
-spec:
-  secretName: my-service-tls
-  duration: 24h
-  renewBefore: 8h
-  issuerRef:
-    name: istio-ca
-    kind: ClusterIssuer
-  commonName: my-service.my-namespace.svc.cluster.local
-  dnsNames:
-    - my-service
-    - my-service.my-namespace
-    - my-service.my-namespace.svc
-    - my-service.my-namespace.svc.cluster.local
-  usages:
-    - server auth
-    - client auth
-```
-
-### Template 4: SPIFFE/SPIRE Integration
-
-```yaml
-# SPIRE Server configuration
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: spire-server
-  namespace: spire
-data:
-  server.conf: |
-    server {
-      bind_address = "0.0.0.0"
-      bind_port = "8081"
-      trust_domain = "example.org"
-      data_dir = "/run/spire/data"
-      log_level = "INFO"
-      ca_ttl = "168h"
-      default_x509_svid_ttl = "1h"
+**Basic Template:**
+```json
+{
+  "my-new-skill": {
+    "type": "domain",
+    "enforcement": "suggest",
+    "priority": "medium",
+    "promptTriggers": {
+      "keywords": ["keyword1", "keyword2"],
+      "intentPatterns": ["(create|add).*?something"]
     }
-
-    plugins {
-      DataStore "sql" {
-        plugin_data {
-          database_type = "sqlite3"
-          connection_string = "/run/spire/data/datastore.sqlite3"
-        }
-      }
-
-      NodeAttestor "k8s_psat" {
-        plugin_data {
-          clusters = {
-            "demo-cluster" = {
-              service_account_allow_list = ["spire:spire-agent"]
-            }
-          }
-        }
-      }
-
-      KeyManager "memory" {
-        plugin_data {}
-      }
-
-      UpstreamAuthority "disk" {
-        plugin_data {
-          key_file_path = "/run/spire/secrets/bootstrap.key"
-          cert_file_path = "/run/spire/secrets/bootstrap.crt"
-        }
-      }
-    }
----
-# SPIRE Agent DaemonSet (abbreviated)
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: spire-agent
-  namespace: spire
-spec:
-  selector:
-    matchLabels:
-      app: spire-agent
-  template:
-    spec:
-      containers:
-        - name: spire-agent
-          image: ghcr.io/spiffe/spire-agent:1.8.0
-          volumeMounts:
-            - name: spire-agent-socket
-              mountPath: /run/spire/sockets
-      volumes:
-        - name: spire-agent-socket
-          hostPath:
-            path: /run/spire/sockets
-            type: DirectoryOrCreate
+  }
+}
 ```
 
-### Template 5: Linkerd mTLS (Automatic)
+### Step 3: Test Triggers
 
-```yaml
-# Linkerd enables mTLS automatically
-# Verify with:
-# linkerd viz edges deployment -n my-namespace
-
-# For external services without mTLS
-apiVersion: policy.linkerd.io/v1beta1
-kind: Server
-metadata:
-  name: external-api
-  namespace: my-namespace
-spec:
-  podSelector:
-    matchLabels:
-      app: my-app
-  port: external-api
-  proxyProtocol: HTTP/1  # or TLS for passthrough
----
-# Skip TLS for specific port
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-service
-  annotations:
-    config.linkerd.io/skip-outbound-ports: "3306"  # MySQL
-```
-
-## Certificate Rotation
-
+**Test UserPromptSubmit:**
 ```bash
-# Istio - Check certificate expiry
-istioctl proxy-config secret deploy/my-app -o json | \
-  jq '.dynamicActiveSecrets[0].secret.tlsCertificate.certificateChain.inlineBytes' | \
-  tr -d '"' | base64 -d | openssl x509 -text -noout
-
-# Force certificate rotation
-kubectl rollout restart deployment/my-app
-
-# Check Linkerd identity
-linkerd identity -n my-namespace
+echo '{"session_id":"test","prompt":"your test prompt"}' | \
+  npx tsx .claude/hooks/codanna/skill-activation-prompt.ts
 ```
 
-## Debugging mTLS Issues
-
+**Test PreToolUse (Read Validation):**
 ```bash
-# Istio - Check if mTLS is enabled
-istioctl authn tls-check my-service.my-namespace.svc.cluster.local
-
-# Verify peer authentication
-kubectl get peerauthentication --all-namespaces
-
-# Check destination rules
-kubectl get destinationrule --all-namespaces
-
-# Debug TLS handshake
-istioctl proxy-config log deploy/my-app --level debug
-kubectl logs deploy/my-app -c istio-proxy | grep -i tls
-
-# Linkerd - Check mTLS status
-linkerd viz edges deployment -n my-namespace
-linkerd viz tap deploy/my-app --to deploy/my-backend
+cat <<'EOF' | npx tsx .claude/hooks/codanna/pre_read_use.js
+{"session_id":"test","tool_name":"Read","tool_input":{"file_path":"test.ts","limit":500}}
+EOF
 ```
 
-## Best Practices
+### Step 4: Refine Patterns
 
-### Do's
-- **Start with PERMISSIVE** - Migrate gradually to STRICT
-- **Monitor certificate expiry** - Set up alerts
-- **Use short-lived certs** - 24h or less for workloads
-- **Rotate CA periodically** - Plan for CA rotation
-- **Log TLS errors** - For debugging and audit
+Based on testing:
+- Add missing keywords
+- Refine intent patterns to reduce false positives
+- Adjust file path patterns
+- Test content patterns against actual files
 
-### Don'ts
-- **Don't disable mTLS** - For convenience in production
-- **Don't ignore cert expiry** - Automate rotation
-- **Don't use self-signed certs** - Use proper CA hierarchy
-- **Don't skip verification** - Verify the full chain
+### Step 5: Follow Anthropic Best Practices
 
-## Resources
+✅ Keep SKILL.md under 500 lines
+✅ Use progressive disclosure with reference files
+✅ Add table of contents to reference files > 100 lines
+✅ Write detailed description with trigger keywords
+✅ Test with 3+ real scenarios before documenting
+✅ Iterate based on actual usage
 
-- [Istio Security](https://istio.io/latest/docs/concepts/security/)
-- [SPIFFE/SPIRE](https://spiffe.io/)
-- [cert-manager](https://cert-manager.io/)
-- [Zero Trust Architecture (NIST)](https://www.nist.gov/publications/zero-trust-architecture)
+---
 
-## How to use this skill
+## Enforcement Levels
 
-Refer to the instructions above or standard agent usage for this skill type.
+### BLOCK (Critical Guardrails)
+
+- Physically prevents Edit/Write tool execution
+- Exit code 2 from hook, stderr → Claude
+- Claude sees message and must use skill to proceed
+- **Use For**: Critical mistakes, data integrity, security issues
+
+**Example:** Database column name verification
+
+### SUGGEST (Recommended)
+
+- Reminder injected before Claude sees prompt
+- Claude is aware of relevant skills
+- Not enforced, just advisory
+- **Use For**: Domain guidance, best practices, how-to guides
+
+**Example:** Frontend development guidelines
+
+### WARN (Optional)
+
+- Low priority suggestions
+- Advisory only, minimal enforcement
+- **Use For**: Nice-to-have suggestions, informational reminders
+
+**Rarely used** - most skills are either BLOCK or SUGGEST.
+
+---
+
+## Skip Conditions & User Control
+
+### 1. Session Tracking
+
+**Purpose:** Don't nag repeatedly in same session
+
+**How it works:**
+- First edit → Hook blocks, updates session state
+- Second edit (same session) → Hook allows
+- Different session → Blocks again
+
+**State File:** `.claude/hooks/codanna/state/skills-used-{session_id}.jsonl`
+
+### 2. File Markers
+
+**Purpose:** Permanent skip for verified files
+
+**Marker:** `// @skip-validation`
+
+**Usage:**
+```typescript
+// @skip-validation
+import { PrismaService } from './prisma';
+// This file has been manually verified
+```
+
+**NOTE:** Use sparingly - defeats the purpose if overused
+
+### 3. Environment Variables
+
+**Purpose:** Emergency disable, temporary override
+
+**Global disable:**
+```bash
+export SKIP_SKILL_GUARDRAILS=true  # Disables ALL PreToolUse blocks
+```
+
+**Skill-specific:**
+```bash
+export SKIP_DB_VERIFICATION=true
+export SKIP_ERROR_REMINDER=true
+```
+
+---
+
+## Testing Checklist
+
+When creating a new skill, verify:
+
+- [ ] Skill file created in `.claude/skills/{name}/SKILL.md`
+- [ ] Proper frontmatter with name and description
+- [ ] Entry added to `skill-rules.json`
+- [ ] Keywords tested with real prompts
+- [ ] Intent patterns tested with variations
+- [ ] File path patterns tested with actual files
+- [ ] Content patterns tested against file contents
+- [ ] Block message is clear and actionable (if guardrail)
+- [ ] Skip conditions configured appropriately
+- [ ] Priority level matches importance
+- [ ] No false positives in testing
+- [ ] No false negatives in testing
+- [ ] Performance is acceptable (<100ms or <200ms)
+- [ ] JSON syntax validated: `jq . skill-rules.json`
+- [ ] **SKILL.md under 500 lines** ⭐
+- [ ] Reference files created if needed
+- [ ] Table of contents added to files > 100 lines
+
+---
+
+## Reference Files
+
+For detailed information on specific topics, see:
+
+### [TRIGGER_TYPES.md](TRIGGER_TYPES.md)
+Complete guide to all trigger types:
+- Keyword triggers (explicit topic matching)
+- Intent patterns (implicit action detection)
+- File path triggers (glob patterns)
+- Content patterns (regex in files)
+- Best practices and examples for each
+- Common pitfalls and testing strategies
+
+### [SKILL_RULES_REFERENCE.md](SKILL_RULES_REFERENCE.md)
+Complete skill-rules.json schema:
+- Full TypeScript interface definitions
+- Field-by-field explanations
+- Complete guardrail skill example
+- Complete domain skill example
+- Validation guide and common errors
+
+### [HOOK_MECHANISMS.md](HOOK_MECHANISMS.md)
+Deep dive into hook internals:
+- UserPromptSubmit flow (detailed)
+- PreToolUse flow (detailed)
+- Exit code behavior table (CRITICAL)
+- Session state management
+- Performance considerations
+
+### [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
+Comprehensive debugging guide:
+- Skill not triggering (UserPromptSubmit)
+- PreToolUse not blocking
+- False positives (too many triggers)
+- Hook not executing at all
+- Performance issues
+
+### [PATTERNS_LIBRARY.md](PATTERNS_LIBRARY.md)
+Ready-to-use pattern collection:
+- Intent pattern library (regex)
+- File path pattern library (glob)
+- Content pattern library (regex)
+- Organized by use case
+- Copy-paste ready
+
+### [ADVANCED.md](ADVANCED.md)
+Future enhancements and ideas:
+- Dynamic rule updates
+- Skill dependencies
+- Conditional enforcement
+- Skill analytics
+- Skill versioning
+
+---
+
+## Quick Reference Summary
+
+### Create New Skill (5 Steps)
+
+1. Create `.claude/skills/{name}/SKILL.md` with frontmatter
+2. Add entry to `.claude/skills/skill-rules.json`
+3. Test with `npx tsx` commands
+4. Refine patterns based on testing
+5. Keep SKILL.md under 500 lines
+
+### Trigger Types
+
+- **Keywords**: Explicit topic mentions
+- **Intent**: Implicit action detection
+- **File Paths**: Location-based activation
+- **Content**: Technology-specific detection
+
+See [TRIGGER_TYPES.md](TRIGGER_TYPES.md) for complete details.
+
+### Enforcement
+
+- **BLOCK**: Exit code 2, critical only
+- **SUGGEST**: Inject context, most common
+- **WARN**: Advisory, rarely used
+
+### Skip Conditions
+
+- **Session tracking**: Automatic (prevents repeated nags)
+- **File markers**: `// @skip-validation` (permanent skip)
+- **Env vars**: `SKIP_SKILL_GUARDRAILS` (emergency disable)
+
+### Anthropic Best Practices
+
+✅ **500-line rule**: Keep SKILL.md under 500 lines
+✅ **Progressive disclosure**: Use reference files for details
+✅ **Table of contents**: Add to reference files > 100 lines
+✅ **One level deep**: Don't nest references deeply
+✅ **Rich descriptions**: Include all trigger keywords (max 1024 chars)
+✅ **Test first**: Build 3+ evaluations before extensive documentation
+✅ **Gerund naming**: Prefer verb + -ing (e.g., "processing-pdfs")
+
+### Troubleshoot
+
+Test hooks manually:
+```bash
+# UserPromptSubmit
+echo '{"prompt":"test"}' | npx tsx .claude/hooks/codanna/skill-activation-prompt.ts
+
+# PreToolUse (Read Validation)
+cat <<'EOF' | npx tsx .claude/hooks/codanna/pre_read_use.js
+{"tool_name":"Read","tool_input":{"file_path":"test.ts","limit":500}}
+EOF
+```
+
+See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for complete debugging guide.
+
+---
+
+## Related Files
+
+**Configuration:**
+- `.claude/skills/skill-rules.json` - Master configuration
+- `.claude/hooks/codanna/state/` - Session tracking
+- `.claude/settings.local.json` - Hook registration
+
+**Hooks:**
+- `.claude/hooks/codanna/skill-activation-prompt.ts` - UserPromptSubmit
+- `.claude/hooks/codanna/pre_read_use.js` - PreToolUse (Read validation)
+- `.claude/hooks/codanna/stop.js` - Stop event (session end)
+- `.claude/hooks/codanna/subagent-stop.js` - Subagent stop event
+- `.claude/hooks/codanna/post_tool_use.js` - PostToolUse
+
+**All Skills:**
+- `.claude/skills/*/SKILL.md` - Skill content files
+
+---
+
+**Skill Status**: COMPLETE - Restructured following Anthropic best practices ✅
+**Line Count**: < 500 (following 500-line rule) ✅
+**Progressive Disclosure**: Reference files for detailed information ✅
+
+**Next**: Create more skills, refine patterns based on usage
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
