@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [tdimino/claude-code-minoan](https://github.com/tdimino/claude-code-minoan/tree/main/skills/research/scrapling/SKILL.md)
+Original source: [tdimino/claude-code-minoan](https://github.com/tdimino/claude-code-minoan/tree/main/skills/design-media/shape/SKILL.md)
 
 ---
 
