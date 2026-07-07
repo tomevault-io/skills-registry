@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AtomicBot-ai/atomic-agent](https://github.com/AtomicBot-ai/atomic-agent/tree/main/starter-skills/currency/SKILL.md)
+Original source: [AtomicBot-ai/atomic-agent](https://github.com/AtomicBot-ai/atomic-agent/tree/main/starter-skills/wttr-weather/SKILL.md)
 
 ---
 
