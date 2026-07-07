@@ -1,173 +1,324 @@
 ---
-name: asyncredux-action-status
-description: Checks an AsyncRedux (Flutter) action's completion status using ActionStatus right after the dispatch returns. Use only when you need to know whether an action completed, whether it failed with an error, what error it produced, or how to navigate based on success or failure. Use when this capability is needed.
+name: ui-styling
+description: Create beautiful, accessible user interfaces with shadcn/ui components (built on Radix UI + Tailwind), Tailwind CSS utility-first styling, and canvas-based visual designs. Use when building user interfaces, implementing design systems, creating responsive layouts, adding accessible components (dialogs, dropdowns, forms, tables), customizing themes and colors, implementing dark mode, generating visual designs and posters, or establishing consistent styling patterns across applications. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# ActionStatus in AsyncRedux
+# UI Styling Skill
 
-The `ActionStatus` object provides information about whether an action completed successfully or encountered errors. It is returned by `dispatchAndWait()` and related methods.
+Comprehensive skill for creating beautiful, accessible user interfaces combining shadcn/ui components, Tailwind CSS utility styling, and canvas-based visual design systems.
 
-## Getting ActionStatus
+## Reference
 
-Use `dispatchAndWait()` to get the status after an action completes:
+- shadcn/ui: https://ui.shadcn.com/llms.txt
+- Tailwind CSS: https://tailwindcss.com/docs
 
-```dart
-var status = await dispatchAndWait(MyAction());
+## When to Use This Skill
+
+Use when:
+- Building UI with React-based frameworks (Next.js, Vite, Remix, Astro)
+- Implementing accessible components (dialogs, forms, tables, navigation)
+- Styling with utility-first CSS approach
+- Creating responsive, mobile-first layouts
+- Implementing dark mode and theme customization
+- Building design systems with consistent tokens
+- Generating visual designs, posters, or brand materials
+- Rapid prototyping with immediate visual feedback
+- Adding complex UI patterns (data tables, charts, command palettes)
+
+## Core Stack
+
+### Component Layer: shadcn/ui
+- Pre-built accessible components via Radix UI primitives
+- Copy-paste distribution model (components live in your codebase)
+- TypeScript-first with full type safety
+- Composable primitives for complex UIs
+- CLI-based installation and management
+
+### Styling Layer: Tailwind CSS
+- Utility-first CSS framework
+- Build-time processing with zero runtime overhead
+- Mobile-first responsive design
+- Consistent design tokens (colors, spacing, typography)
+- Automatic dead code elimination
+
+### Visual Design Layer: Canvas
+- Museum-quality visual compositions
+- Philosophy-driven design approach
+- Sophisticated visual communication
+- Minimal text, maximum visual impact
+- Systematic patterns and refined aesthetics
+
+## Quick Start
+
+### Component + Styling Setup
+
+**Install shadcn/ui with Tailwind:**
+```bash
+npx shadcn@latest init
 ```
 
-From within an action, you can also use:
+CLI prompts for framework, TypeScript, paths, and theme preferences. This configures both shadcn/ui and Tailwind CSS.
 
-```dart
-var status = await dispatchAndWait(SomeOtherAction());
+**Add components:**
+```bash
+npx shadcn@latest add button card dialog form
 ```
 
-## ActionStatus Properties
+**Use components with utility styling:**
+```tsx
+import { Button } from "@/components/ui/button"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 
-### Completion Status
-
-- **`isCompleted`**: Returns `true` if the action has finished executing (whether successful or failed)
-- **`isCompletedOk`**: Returns `true` if the action finished without errors in both `before()` and `reduce()` methods
-- **`isCompletedFailed`**: Returns `true` if the action encountered errors (opposite of `isCompletedOk`)
-
-### Error Information
-
-- **`originalError`**: The error originally thrown by `before()` or `reduce()`, before any modification
-- **`wrappedError`**: The error after processing by the action's `wrapError()` method
-
-### Execution Tracking
-
-These properties track which lifecycle methods have completed:
-
-- **`hasFinishedMethodBefore`**: Returns `true` if the `before()` method completed
-- **`hasFinishedMethodReduce`**: Returns `true` if the `reduce()` method completed
-- **`hasFinishedMethodAfter`**: Returns `true` if the `after()` method completed
-
-Note: The execution tracking properties are primarily meant for testing and debugging. In production code, focus on `isCompletedOk` and `isCompletedFailed`.
-
-## Common Use Cases
-
-### Conditional Navigation After Success
-
-The most common production use is checking if an action succeeded before navigating:
-
-```dart
-// In a widget callback
-Future<void> _onSavePressed() async {
-  var status = await context.dispatchAndWait(SaveFormAction());
-  if (status.isCompletedOk) {
-    Navigator.pop(context);
-  }
+export function Dashboard() {
+  return (
+    <div className="container mx-auto p-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <Card className="hover:shadow-lg transition-shadow">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Analytics</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-muted-foreground">View your metrics</p>
+          <Button variant="default" className="w-full">
+            View Details
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+  )
 }
 ```
 
-Another example with push navigation:
+### Alternative: Tailwind-Only Setup
 
-```dart
-Future<void> _onLoginPressed() async {
-  var status = await context.dispatchAndWait(LoginAction(
-    email: emailController.text,
-    password: passwordController.text,
-  ));
-
-  if (status.isCompletedOk) {
-    Navigator.pushReplacementNamed(context, '/home');
-  }
-  // If failed, the error will be shown via UserExceptionDialog
-}
+**Vite projects:**
+```bash
+npm install -D tailwindcss @tailwindcss/vite
 ```
 
-### Testing Action Errors
-
-Use ActionStatus to verify that actions throw expected errors:
-
-```dart
-test('MyAction fails with invalid input', () async {
-  var store = Store<AppState>(initialState: AppState.initial());
-
-  var status = await store.dispatchAndWait(MyAction(value: -1));
-
-  expect(status.isCompletedFailed, isTrue);
-  expect(status.wrappedError, isA<UserException>());
-  expect((status.wrappedError as UserException).msg, "Value must be positive");
-});
+```javascript
+// vite.config.ts
+import tailwindcss from '@tailwindcss/vite'
+export default { plugins: [tailwindcss()] }
 ```
 
-### Testing Action Success
-
-```dart
-test('SaveAction completes successfully', () async {
-  var store = Store<AppState>(initialState: AppState.initial());
-
-  var status = await store.dispatchAndWait(SaveAction(data: validData));
-
-  expect(status.isCompletedOk, isTrue);
-  expect(store.state.saved, isTrue);
-});
+```css
+/* src/index.css */
+@import "tailwindcss";
 ```
 
-### Checking Original vs Wrapped Error
+## Component Library Guide
 
-When your action uses `wrapError()` to transform errors, you can inspect both:
+**Comprehensive component catalog with usage patterns, installation, and composition examples.**
 
-```dart
-class MyAction extends AppAction {
-  @override
-  Future<AppState?> reduce() async {
-    throw Exception('Network error');
-  }
+See: `references/shadcn-components.md`
 
-  @override
-  Object? wrapError(Object error, StackTrace stackTrace) {
-    return UserException('Could not save. Please try again.');
-  }
-}
+Covers:
+- Form & input components (Button, Input, Select, Checkbox, Date Picker, Form validation)
+- Layout & navigation (Card, Tabs, Accordion, Navigation Menu)
+- Overlays & dialogs (Dialog, Drawer, Popover, Toast, Command)
+- Feedback & status (Alert, Progress, Skeleton)
+- Display components (Table, Data Table, Avatar, Badge)
 
-// In test:
-var status = await store.dispatchAndWait(MyAction());
-expect(status.originalError, isA<Exception>()); // The original Exception
-expect(status.wrappedError, isA<UserException>()); // The wrapped UserException
+## Theme & Customization
+
+**Theme configuration, CSS variables, dark mode implementation, and component customization.**
+
+See: `references/shadcn-theming.md`
+
+Covers:
+- Dark mode setup with next-themes
+- CSS variable system
+- Color customization and palettes
+- Component variant customization
+- Theme toggle implementation
+
+## Accessibility Patterns
+
+**ARIA patterns, keyboard navigation, screen reader support, and accessible component usage.**
+
+See: `references/shadcn-accessibility.md`
+
+Covers:
+- Radix UI accessibility features
+- Keyboard navigation patterns
+- Focus management
+- Screen reader announcements
+- Form validation accessibility
+
+## Tailwind Utilities
+
+**Core utility classes for layout, spacing, typography, colors, borders, and shadows.**
+
+See: `references/tailwind-utilities.md`
+
+Covers:
+- Layout utilities (Flexbox, Grid, positioning)
+- Spacing system (padding, margin, gap)
+- Typography (font sizes, weights, alignment, line height)
+- Colors and backgrounds
+- Borders and shadows
+- Arbitrary values for custom styling
+
+## Responsive Design
+
+**Mobile-first breakpoints, responsive utilities, and adaptive layouts.**
+
+See: `references/tailwind-responsive.md`
+
+Covers:
+- Mobile-first approach
+- Breakpoint system (sm, md, lg, xl, 2xl)
+- Responsive utility patterns
+- Container queries
+- Max-width queries
+- Custom breakpoints
+
+## Tailwind Customization
+
+**Config file structure, custom utilities, plugins, and theme extensions.**
+
+See: `references/tailwind-customization.md`
+
+Covers:
+- @theme directive for custom tokens
+- Custom colors and fonts
+- Spacing and breakpoint extensions
+- Custom utility creation
+- Custom variants
+- Layer organization (@layer base, components, utilities)
+- Apply directive for component extraction
+
+## Visual Design System
+
+**Canvas-based design philosophy, visual communication principles, and sophisticated compositions.**
+
+See: `references/canvas-design-system.md`
+
+Covers:
+- Design philosophy approach
+- Visual communication over text
+- Systematic patterns and composition
+- Color, form, and spatial design
+- Minimal text integration
+- Museum-quality execution
+- Multi-page design systems
+
+## Utility Scripts
+
+**Python automation for component installation and configuration generation.**
+
+### shadcn_add.py
+Add shadcn/ui components with dependency handling:
+```bash
+python scripts/shadcn_add.py button card dialog
 ```
 
-## Action Lifecycle and Status
-
-The action lifecycle runs in this order:
-
-1. `before()` - Runs first, can be used for preconditions
-2. `reduce()` - Runs second (only if `before()` succeeded)
-3. `after()` - Runs last, always executes (like a finally block)
-
-The `isCompletedOk` property is `true` only if both `before()` and `reduce()` completed without errors. Note that errors in `after()` do not affect `isCompletedOk`.
-
-If `before()` throws an error, `reduce()` will not run, but `after()` will still execute.
+### tailwind_config_gen.py
+Generate tailwind.config.js with custom theme:
+```bash
+python scripts/tailwind_config_gen.py --colors brand:blue --fonts display:Inter
+```
 
 ## Best Practices
 
-1. **Use state changes for UI updates**: In production, prefer checking state changes rather than action status. Reserve ActionStatus for cases where you need to perform side effects (like navigation) based on success/failure.
+1. **Component Composition**: Build complex UIs from simple, composable primitives
+2. **Utility-First Styling**: Use Tailwind classes directly; extract components only for true repetition
+3. **Mobile-First Responsive**: Start with mobile styles, layer responsive variants
+4. **Accessibility-First**: Leverage Radix UI primitives, add focus states, use semantic HTML
+5. **Design Tokens**: Use consistent spacing scale, color palettes, typography system
+6. **Dark Mode Consistency**: Apply dark variants to all themed elements
+7. **Performance**: Leverage automatic CSS purging, avoid dynamic class names
+8. **TypeScript**: Use full type safety for better DX
+9. **Visual Hierarchy**: Let composition guide attention, use spacing and color intentionally
+10. **Expert Craftsmanship**: Every detail matters - treat UI as a craft
 
-2. **Use `isCompletedOk` for navigation**: The common pattern is to navigate only after an action succeeds:
-   ```dart
-   if (status.isCompletedOk) Navigator.pop(context);
-   ```
+## Reference Navigation
 
-3. **Use `wrappedError` in tests**: When testing error handling, check `wrappedError` to see what the user will actually see (after `wrapError()` processing).
+**Component Library**
+- `references/shadcn-components.md` - Complete component catalog
+- `references/shadcn-theming.md` - Theming and customization
+- `references/shadcn-accessibility.md` - Accessibility patterns
 
-4. **Use `originalError` for debugging**: When you need to see the underlying error before any transformation, use `originalError`.
+**Styling System**
+- `references/tailwind-utilities.md` - Core utility classes
+- `references/tailwind-responsive.md` - Responsive design
+- `references/tailwind-customization.md` - Configuration and extensions
 
-## References
+**Visual Design**
+- `references/canvas-design-system.md` - Design philosophy and canvas workflows
 
-URLs from the documentation:
-- https://asyncredux.com/flutter/advanced-actions/action-status
-- https://asyncredux.com/flutter/basics/dispatching-actions
-- https://asyncredux.com/flutter/basics/failed-actions
-- https://asyncredux.com/flutter/advanced-actions/errors-thrown-by-actions
-- https://asyncredux.com/flutter/advanced-actions/before-and-after-the-reducer
-- https://asyncredux.com/flutter/advanced-actions/redux-action
-- https://asyncredux.com/flutter/miscellaneous/navigation
-- https://asyncredux.com/flutter/testing/store-tester
-- https://asyncredux.com/flutter/testing/dispatch-wait-and-expect
-- https://asyncredux.com/flutter/testing/testing-user-exceptions
+**Automation**
+- `scripts/shadcn_add.py` - Component installation
+- `scripts/tailwind_config_gen.py` - Config generation
+
+## Common Patterns
+
+**Form with validation:**
+```tsx
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8)
+})
+
+export function LoginForm() {
+  const form = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: { email: "", password: "" }
+  })
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(console.log)} className="space-y-6">
+        <FormField control={form.control} name="email" render={({ field }) => (
+          <FormItem>
+            <FormLabel>Email</FormLabel>
+            <FormControl>
+              <Input type="email" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )} />
+        <Button type="submit" className="w-full">Sign In</Button>
+      </form>
+    </Form>
+  )
+}
+```
+
+**Responsive layout with dark mode:**
+```tsx
+<div className="min-h-screen bg-white dark:bg-gray-900">
+  <div className="container mx-auto px-4 py-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <CardContent className="p-6">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+            Content
+          </h3>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</div>
+```
+
+## Resources
+
+- shadcn/ui Docs: https://ui.shadcn.com
+- Tailwind CSS Docs: https://tailwindcss.com
+- Radix UI: https://radix-ui.com
+- Tailwind UI: https://tailwindui.com
+- Headless UI: https://headlessui.com
+- v0 (AI UI Generator): https://v0.dev
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
