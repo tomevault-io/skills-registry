@@ -1,92 +1,87 @@
 ---
-name: regle
-description: Core skills for using Regle form validation in Vue.js. Provides setup, validation rules, and usage patterns. Use when this capability is needed.
+name: improve-codebase-architecture
+description: Find deepening opportunities in a codebase, informed by the domain language in CONTEXT.md and the decisions in docs/adr/. Use when the user wants to improve architecture, find refactoring opportunities, consolidate tightly-coupled modules, or make a codebase more testable and AI-navigable. Use when this capability is needed.
 metadata:
   author: victorgarciaesgi
 ---
 
-# Regle
+# Improve Codebase Architecture
 
-Regle is a type-safe, model-based, headless form validation library for Vue 3. It provides full TypeScript inference, reactive validation, and works with any UI framework or design system.
+Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
 
+## Glossary
 
-## MCP Server
+Use these terms exactly in every suggestion. Consistent language is the point — don't drift into "component," "service," "API," or "boundary." Full definitions in [LANGUAGE.md](LANGUAGE.md).
 
-Regle provides an MCP server that can be used to get documentation and autocomplete for Regle. If it's available, use it to get up-to-date information on the API.
+- **Module** — anything with an interface and an implementation (function, class, package, slice).
+- **Interface** — everything a caller must know to use the module: types, invariants, error modes, ordering, config. Not just the type signature.
+- **Implementation** — the code inside.
+- **Depth** — leverage at the interface: a lot of behaviour behind a small interface. **Deep** = high leverage. **Shallow** = interface nearly as complex as the implementation.
+- **Seam** — where an interface lives; a place behaviour can be altered without editing in place. (Use this, not "boundary.")
+- **Adapter** — a concrete thing satisfying an interface at a seam.
+- **Leverage** — what callers get from depth.
+- **Locality** — what maintainers get from depth: change, bugs, knowledge concentrated in one place.
 
-```json
-{
-  "mcpServers": {
-    "regle": {
-      "command": "npx",
-      "args": ["@regle/mcp-server"]
-    }
-  }
-}
+Key principles (see [LANGUAGE.md](LANGUAGE.md) for the full list):
 
-## Installation
+- **Deletion test**: imagine deleting the module. If complexity vanishes, it was a pass-through. If complexity reappears across N callers, it was earning its keep.
+- **The interface is the test surface.**
+- **One adapter = hypothetical seam. Two adapters = real seam.**
 
-```sh
-# Core + built-in rules
-pnpm add @regle/core @regle/rules
+This skill is _informed_ by the project's domain model. The domain language gives names to good seams; ADRs record decisions the skill should not re-litigate.
 
-# Optional: schema support (Zod, Valibot, ArkType)
-pnpm add @regle/schemas
-```
+## Process
 
-Requires Vue 3.3+ and TypeScript 5.1+.
+### 1. Explore
 
-## Quick Start
+Read the project's domain glossary and any ADRs in the area you're touching first.
 
-```ts
-import { useRegle } from '@regle/core';
-import { required, email, minLength } from '@regle/rules';
+Then use the Agent tool with `subagent_type=Explore` to walk the codebase. Don't follow rigid heuristics — explore organically and note where you experience friction:
 
-const { r$ } = useRegle(
-  { name: '', email: '' },
-  {
-    name: { required, minLength: minLength(3) },
-    email: { required, email },
-  }
-);
-```
+- Where does understanding one concept require bouncing between many small modules?
+- Where are modules **shallow** — interface nearly as complex as the implementation?
+- Where have pure functions been extracted just for testability, but the real bugs hide in how they're called (no **locality**)?
+- Where do tightly-coupled modules leak across their seams?
+- Which parts of the codebase are untested, or hard to test through their current interface?
 
-```vue
-<template>
-  <input v-model="r$.$value.name" placeholder="Name" />
-  <ul v-if="r$.$errors.name.length">
-    <li v-for="error of r$.$errors.name" :key="error">{{ error }}</li>
-  </ul>
+Apply the **deletion test** to anything you suspect is shallow: would deleting it concentrate complexity, or just move it? A "yes, concentrates" is the signal you want.
 
-  <button @click="r$.$validate()">Submit</button>
-</template>
-```
+### 2. Present candidates as an HTML report
 
-## Key Concepts
+Write a self-contained HTML file to the OS temp directory so nothing lands in the repo. Resolve the temp dir from `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows), and write to `<tmpdir>/architecture-review-<timestamp>.html` so each run gets a fresh file. Open it for the user — `xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows — and tell them the absolute path.
 
-- **State**: first argument -- raw object, `reactive`, `ref`, or single value
-- **Rules**: second argument -- mirrors the data structure, each field gets a rules object
-- **`r$`**: returned reactive object with values, errors, dirty state, and validation methods
-- All rules are optional by default; add `required` to enforce a field
+The report uses **Tailwind via CDN** for layout and styling, and **Mermaid via CDN** for diagrams where a graph/flow/sequence reliably communicates the structure. Mix Mermaid with hand-crafted CSS/SVG visuals — use Mermaid when relationships are graph-shaped (call graphs, dependencies, sequences), and hand-built divs/SVG when you want something more editorial (mass diagrams, cross-sections, collapse animations). Each candidate gets a **before/after visualisation**. Be visual.
 
-## Core
+For each candidate, the same template as before, but rendered as a card:
 
-| Topic | Description | Reference |
-|-------|-------------|-----------|
-| useRegle | State definition, rules declaration, dynamic rules, `r$` object | [core-use-regle](references/core-use-regle.md) |
-| Built-in Rules | All validation rules from `@regle/rules` | [core-built-in-rules](references/core-built-in-rules.md) |
-| Validation Properties | `$invalid`, `$dirty`, `$error`, `$errors`, `$pending`, `$validate`, `$touch`, `$reset` | [core-validation-properties](references/core-validation-properties.md) |
-| Displaying Errors | Showing errors, custom messages, `getErrors`, `flatErrors` | [core-displaying-errors](references/core-displaying-errors.md) |
-| Modifiers | `autoDirty`, `lazy`, `silent`, `rewardEarly`, `disabled`, `validationGroups`, per-field modifiers | [core-modifiers](references/core-modifiers.md) |
+- **Files** — which files/modules are involved
+- **Problem** — why the current architecture is causing friction
+- **Solution** — plain English description of what would change
+- **Benefits** — explained in terms of locality and leverage, and how tests would improve
+- **Before / After diagram** — side-by-side, custom-drawn, illustrating the shallowness and the deepening
+- **Recommendation strength** — one of `Strong`, `Worth exploring`, `Speculative`, rendered as a badge
 
-## Rules
+End the report with a **Top recommendation** section: which candidate you'd tackle first and why.
 
-| Topic | Description | Reference |
-|-------|-------------|-----------|
-| Custom Rules | Inline rules, `createRule`, reactive parameters, async rules, metadata | [core-custom-rules](references/core-custom-rules.md) |
-| Rule Wrappers | `withMessage`, `withParams`, `withAsync`, `withTooltip`, chaining | [core-rule-wrappers](references/core-rule-wrappers.md) |
-| Rule Operators | `and`, `or`, `xor`, `not`, `applyIf`, `assignIf`, `pipe` | [core-rule-operators](references/core-rule-operators.md) |
+**Use CONTEXT.md vocabulary for the domain, and [LANGUAGE.md](LANGUAGE.md) vocabulary for the architecture.** If `CONTEXT.md` defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
+
+**ADR conflicts**: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly in the card (e.g. a warning callout: _"contradicts ADR-0007 — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
+
+See [HTML-REPORT.md](HTML-REPORT.md) for the full HTML scaffold, diagram patterns, and styling guidance.
+
+Do NOT propose interfaces yet. After the file is written, ask the user: "Which of these would you like to explore?"
+
+### 3. Grilling loop
+
+Once the user picks a candidate, drop into a grilling conversation. Walk the design tree with them — constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive.
+
+Side effects happen inline as decisions crystallize:
+
+- **Naming a deepened module after a concept not in `CONTEXT.md`?** Add the term to `CONTEXT.md` — same discipline as `/grill-with-docs` (see [CONTEXT-FORMAT.md](../grill-with-docs/CONTEXT-FORMAT.md)). Create the file lazily if it doesn't exist.
+- **Sharpening a fuzzy term during the conversation?** Update `CONTEXT.md` right there.
+- **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones. See [ADR-FORMAT.md](../grill-with-docs/ADR-FORMAT.md).
+- **Want to explore alternative interfaces for the deepened module?** See [INTERFACE-DESIGN.md](INTERFACE-DESIGN.md).
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/victorgarciaesgi) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [victorgarciaesgi/regle](https://github.com/victorgarciaesgi/regle) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-07 -->
