@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/angular-core-implementation-pluginagentmarketpla-custom-plugin-angula/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/deep-investigation-protocol-bogheorghiu-cognitive-mechanisms-a0a0e8da/SKILL.md)
 
 ---
 
