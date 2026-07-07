@@ -1,379 +1,644 @@
 ---
-name: google-connect
-description: Connect to Google Workspace services (Gmail, Docs, Sheets, Calendar, Drive, Tasks, Slides). Load when user mentions 'connect google', 'setup google', 'configure google', 'google integration', or needs to set up Google OAuth credentials. Use when this capability is needed.
+name: auth-implementation-patterns
+description: Master authentication and authorization patterns including JWT, OAuth2, session management, and RBAC to build secure, scalable access control systems. Use when implementing auth systems, securing APIs, or debugging security issues. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Google Connect
+# Authentication & Authorization Implementation Patterns
 
-**Setup wizard for Google Workspace integration.**
+Build secure, scalable authentication and authorization systems using industry-standard patterns and modern best practices.
 
-## Purpose
+## When to Use This Skill
 
-Guide users through connecting their Google account to Nexus. One OAuth setup grants access to all 7 Google services: Gmail, Docs, Sheets, Calendar, Drive, Tasks, and Slides.
+- Implementing user authentication systems
+- Securing REST or GraphQL APIs
+- Adding OAuth2/social login
+- Implementing role-based access control (RBAC)
+- Designing session management
+- Migrating authentication systems
+- Debugging auth issues
+- Implementing SSO or multi-tenancy
 
----
+## Core Concepts
 
-## Shared Resources
+### 1. Authentication vs Authorization
 
-This skill uses `google-master` shared library:
+**Authentication (AuthN)**: Who are you?
 
-| Resource | When to Load |
-|----------|--------------|
-| `google-master/scripts/check_google_config.py` | Always first (pre-flight) |
-| `google-master/scripts/google_auth.py` | For authentication |
-| `google-master/references/setup-guide.md` | Detailed setup instructions |
-| `google-master/references/error-handling.md` | On any errors |
+- Verifying identity (username/password, OAuth, biometrics)
+- Issuing credentials (sessions, tokens)
+- Managing login/logout
 
----
+**Authorization (AuthZ)**: What can you do?
 
-## Workflow 0: Config Check (ALWAYS FIRST)
+- Permission checking
+- Role-based access control (RBAC)
+- Resource ownership validation
+- Policy enforcement
 
-Every interaction MUST start with config validation:
+### 2. Authentication Strategies
 
-```bash
-python 00-system/skills/google/google-master/scripts/check_google_config.py --json
+**Session-Based:**
+
+- Server stores session state
+- Session ID in cookie
+- Traditional, simple, stateful
+
+**Token-Based (JWT):**
+
+- Stateless, self-contained
+- Scales horizontally
+- Can store claims
+
+**OAuth2/OpenID Connect:**
+
+- Delegate authentication
+- Social login (Google, GitHub)
+- Enterprise SSO
+
+## JWT Authentication
+
+### Pattern 1: JWT Implementation
+
+```typescript
+// JWT structure: header.payload.signature
+import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
+
+interface JWTPayload {
+    userId: string;
+    email: string;
+    role: string;
+    iat: number;
+    exp: number;
+}
+
+// Generate JWT
+function generateTokens(userId: string, email: string, role: string) {
+    const accessToken = jwt.sign(
+        { userId, email, role },
+        process.env.JWT_SECRET!,
+        { expiresIn: '15m' }  // Short-lived
+    );
+
+    const refreshToken = jwt.sign(
+        { userId },
+        process.env.JWT_REFRESH_SECRET!,
+        { expiresIn: '7d' }  // Long-lived
+    );
+
+    return { accessToken, refreshToken };
+}
+
+// Verify JWT
+function verifyToken(token: string): JWTPayload {
+    try {
+        return jwt.verify(token, process.env.JWT_SECRET!) as JWTPayload;
+    } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+            throw new Error('Token expired');
+        }
+        if (error instanceof jwt.JsonWebTokenError) {
+            throw new Error('Invalid token');
+        }
+        throw error;
+    }
+}
+
+// Middleware
+function authenticate(req: Request, res: Response, next: NextFunction) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader?.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+
+    const token = authHeader.substring(7);
+    try {
+        const payload = verifyToken(token);
+        req.user = payload;  // Attach user to request
+        next();
+    } catch (error) {
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+}
+
+// Usage
+app.get('/api/profile', authenticate, (req, res) => {
+    res.json({ user: req.user });
+});
 ```
 
-**Exit code meanings:**
-- **Exit 0**: Fully configured and authenticated - ready to use
-- **Exit 1**: Credentials exist but need to login (run OAuth flow)
-- **Exit 2**: Missing credentials - need full setup
+### Pattern 2: Refresh Token Flow
 
-**Route based on exit code:**
-- Exit 0 → Workflow 4 (Already Connected)
-- Exit 1 → Workflow 3 (Authenticate)
-- Exit 2 → Workflow 1 (Full Setup)
+```typescript
+interface StoredRefreshToken {
+    token: string;
+    userId: string;
+    expiresAt: Date;
+    createdAt: Date;
+}
 
----
+class RefreshTokenService {
+    // Store refresh token in database
+    async storeRefreshToken(userId: string, refreshToken: string) {
+        const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+        await db.refreshTokens.create({
+            token: await hash(refreshToken),  // Hash before storing
+            userId,
+            expiresAt,
+        });
+    }
 
-## Workflow 1: Full Setup (First-Time Users)
+    // Refresh access token
+    async refreshAccessToken(refreshToken: string) {
+        // Verify refresh token
+        let payload;
+        try {
+            payload = jwt.verify(
+                refreshToken,
+                process.env.JWT_REFRESH_SECRET!
+            ) as { userId: string };
+        } catch {
+            throw new Error('Invalid refresh token');
+        }
 
-**Triggers**: "connect google", "setup google", config check returns exit 2
+        // Check if token exists in database
+        const storedToken = await db.refreshTokens.findOne({
+            where: {
+                token: await hash(refreshToken),
+                userId: payload.userId,
+                expiresAt: { $gt: new Date() },
+            },
+        });
 
-**Purpose**: Guide user through complete Google Cloud setup.
+        if (!storedToken) {
+            throw new Error('Refresh token not found or expired');
+        }
 
-### Step 1: Introduction
+        // Get user
+        const user = await db.users.findById(payload.userId);
+        if (!user) {
+            throw new Error('User not found');
+        }
 
-Display:
-```
-━━━ GOOGLE WORKSPACE SETUP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // Generate new access token
+        const accessToken = jwt.sign(
+            { userId: user.id, email: user.email, role: user.role },
+            process.env.JWT_SECRET!,
+            { expiresIn: '15m' }
+        );
 
-This will connect Nexus to your Google account, enabling:
+        return { accessToken };
+    }
 
-  📧 Gmail      - Read, send, manage emails
-  📄 Docs       - Create and edit documents
-  📊 Sheets     - Work with spreadsheets
-  📅 Calendar   - Manage events and schedules
-  📁 Drive      - Upload, download, organize files
-  ✅ Tasks      - Create and manage task lists
-  📽️ Slides     - Create and edit presentations
+    // Revoke refresh token (logout)
+    async revokeRefreshToken(refreshToken: string) {
+        await db.refreshTokens.deleteOne({
+            token: await hash(refreshToken),
+        });
+    }
 
-Time: ~10 minutes (one-time setup)
-You'll need: A Google account and browser access
+    // Revoke all user tokens (logout all devices)
+    async revokeAllUserTokens(userId: string) {
+        await db.refreshTokens.deleteMany({ userId });
+    }
+}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
+// API endpoints
+app.post('/api/auth/refresh', async (req, res) => {
+    const { refreshToken } = req.body;
+    try {
+        const { accessToken } = await refreshTokenService
+            .refreshAccessToken(refreshToken);
+        res.json({ accessToken });
+    } catch (error) {
+        res.status(401).json({ error: 'Invalid refresh token' });
+    }
+});
 
-**Ask**: "Ready to set up Google integration?"
-
-### Step 2: Create Google Cloud Project
-
-Display:
-```
-━━━ STEP 1: CREATE GOOGLE CLOUD PROJECT ━━━━━━━━━━━━━━━━━━━
-
-1. Go to: https://console.cloud.google.com/
-
-2. Click the project dropdown (top-left) → "New Project"
-
-3. Enter project name: "Nexus Integration" (or any name)
-
-4. Click "Create"
-
-5. Wait for project to be created, then select it
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-**Ask**: "Done creating the project? (yes/no)"
-
-### Step 3: Enable APIs
-
-Display:
-```
-━━━ STEP 2: ENABLE GOOGLE APIS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Go to: APIs & Services → Library
-
-Search for and ENABLE each of these APIs:
-
-  ☐ Gmail API
-  ☐ Google Docs API
-  ☐ Google Sheets API
-  ☐ Google Calendar API
-  ☐ Google Drive API
-  ☐ Google Tasks API
-  ☐ Google Slides API
-
-Click each one → Click "Enable"
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-**Ask**: "All 7 APIs enabled? (yes/no)"
-
-### Step 4: Configure OAuth Consent Screen
-
-Display:
-```
-━━━ STEP 3: CONFIGURE OAUTH CONSENT ━━━━━━━━━━━━━━━━━━━━━━━
-
-Go to: APIs & Services → OAuth consent screen
-
-1. Select "External" user type → Create
-
-2. Fill in required fields:
-   • App name: "Nexus"
-   • User support email: (your email)
-   • Developer contact: (your email)
-
-3. Click "Save and Continue"
-
-4. On "Scopes" page → Click "Save and Continue" (skip for now)
-
-5. On "Test users" page:
-   • Click "Add Users"
-   • Add YOUR email address
-   • Click "Save and Continue"
-
-6. Review and go back to dashboard
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+app.post('/api/auth/logout', authenticate, async (req, res) => {
+    const { refreshToken } = req.body;
+    await refreshTokenService.revokeRefreshToken(refreshToken);
+    res.json({ message: 'Logged out successfully' });
+});
 ```
 
-**Ask**: "OAuth consent screen configured? (yes/no)"
+## Session-Based Authentication
 
-### Step 5: Create OAuth Credentials
+### Pattern 1: Express Session
 
-Display:
-```
-━━━ STEP 4: CREATE OAUTH CREDENTIALS ━━━━━━━━━━━━━━━━━━━━━━
+```typescript
+import session from 'express-session';
+import RedisStore from 'connect-redis';
+import { createClient } from 'redis';
 
-Go to: APIs & Services → Credentials
+// Setup Redis for session storage
+const redisClient = createClient({
+    url: process.env.REDIS_URL,
+});
+await redisClient.connect();
 
-1. Click "Create Credentials" → "OAuth client ID"
+app.use(
+    session({
+        store: new RedisStore({ client: redisClient }),
+        secret: process.env.SESSION_SECRET!,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: process.env.NODE_ENV === 'production',  // HTTPS only
+            httpOnly: true,  // No JavaScript access
+            maxAge: 24 * 60 * 60 * 1000,  // 24 hours
+            sameSite: 'strict',  // CSRF protection
+        },
+    })
+);
 
-2. Application type: "Desktop app"
+// Login
+app.post('/api/auth/login', async (req, res) => {
+    const { email, password } = req.body;
 
-3. Name: "Nexus Desktop" (or any name)
+    const user = await db.users.findOne({ email });
+    if (!user || !(await verifyPassword(password, user.passwordHash))) {
+        return res.status(401).json({ error: 'Invalid credentials' });
+    }
 
-4. Click "Create"
+    // Store user in session
+    req.session.userId = user.id;
+    req.session.role = user.role;
 
-5. A popup shows your credentials. Copy these values:
-   • Client ID (ends in .apps.googleusercontent.com)
-   • Client Secret
+    res.json({ user: { id: user.id, email: user.email, role: user.role } });
+});
 
-Also note your Project ID from the project dropdown.
+// Session middleware
+function requireAuth(req: Request, res: Response, next: NextFunction) {
+    if (!req.session.userId) {
+        return res.status(401).json({ error: 'Not authenticated' });
+    }
+    next();
+}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
+// Protected route
+app.get('/api/profile', requireAuth, async (req, res) => {
+    const user = await db.users.findById(req.session.userId);
+    res.json({ user });
+});
 
-**Ask**: "Please paste your Client ID:"
-
-### Step 6: Save Credentials
-
-After user provides Client ID, Client Secret, and Project ID:
-
-1. Check if `.env` file exists at Nexus root
-2. Add or update these lines:
-   ```
-   GOOGLE_CLIENT_ID=<user-provided-client-id>
-   GOOGLE_CLIENT_SECRET=<user-provided-client-secret>
-   GOOGLE_PROJECT_ID=<user-provided-project-id>
-   ```
-
-Display:
-```
-✅ Credentials saved to .env file
-
-Your Google Cloud credentials are now stored securely.
-Next: We'll authenticate with your Google account.
-```
-
-**Proceed to**: Workflow 3 (Authenticate)
-
----
-
-## Workflow 2: Install Dependencies
-
-**Run before authentication if needed:**
-
-```bash
-pip install google-auth google-auth-oauthlib google-api-python-client
-```
-
-Display:
-```
-Installing Google API libraries...
-```
-
----
-
-## Workflow 3: Authenticate
-
-**Triggers**: Config check returns exit 1, or after Workflow 1 completes
-
-**Purpose**: Run OAuth flow to get access token.
-
-### Step 1: Start OAuth Flow
-
-Display:
-```
-━━━ AUTHENTICATION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-A browser window will open for Google sign-in.
-
-1. Select your Google account
-2. Click "Continue" (you may see "unverified app" warning)
-3. Grant access to all requested permissions
-4. Close the browser when done
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Logout
+app.post('/api/auth/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).json({ error: 'Logout failed' });
+        }
+        res.clearCookie('connect.sid');
+        res.json({ message: 'Logged out successfully' });
+    });
+});
 ```
 
-### Step 2: Run Login
+## OAuth2 / Social Login
 
-```bash
-python 00-system/skills/google/google-master/scripts/google_auth.py --login
+### Pattern 1: OAuth2 with Passport.js
+
+```typescript
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as GitHubStrategy } from 'passport-github2';
+
+// Google OAuth
+passport.use(
+    new GoogleStrategy(
+        {
+            clientID: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+            callbackURL: '/api/auth/google/callback',
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            try {
+                // Find or create user
+                let user = await db.users.findOne({
+                    googleId: profile.id,
+                });
+
+                if (!user) {
+                    user = await db.users.create({
+                        googleId: profile.id,
+                        email: profile.emails?.[0]?.value,
+                        name: profile.displayName,
+                        avatar: profile.photos?.[0]?.value,
+                    });
+                }
+
+                return done(null, user);
+            } catch (error) {
+                return done(error, undefined);
+            }
+        }
+    )
+);
+
+// Routes
+app.get('/api/auth/google', passport.authenticate('google', {
+    scope: ['profile', 'email'],
+}));
+
+app.get(
+    '/api/auth/google/callback',
+    passport.authenticate('google', { session: false }),
+    (req, res) => {
+        // Generate JWT
+        const tokens = generateTokens(req.user.id, req.user.email, req.user.role);
+        // Redirect to frontend with token
+        res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${tokens.accessToken}`);
+    }
+);
 ```
 
-### Step 3: Verify Success
+## Authorization Patterns
 
-If successful:
-```
-✅ Google Integration Complete!
+### Pattern 1: Role-Based Access Control (RBAC)
 
-You now have access to:
-  📧 Gmail      → "list emails", "send email"
-  📄 Docs       → "create doc", "read doc"
-  📊 Sheets     → "read sheet", "append to sheet"
-  📅 Calendar   → "list events", "create event"
-  📁 Drive      → "list files", "upload file"
-  ✅ Tasks      → "list tasks", "create task"
-  📽️ Slides     → "create presentation", "add slide"
+```typescript
+enum Role {
+    USER = 'user',
+    MODERATOR = 'moderator',
+    ADMIN = 'admin',
+}
 
-Try: "list my upcoming calendar events"
-```
+const roleHierarchy: Record<Role, Role[]> = {
+    [Role.ADMIN]: [Role.ADMIN, Role.MODERATOR, Role.USER],
+    [Role.MODERATOR]: [Role.MODERATOR, Role.USER],
+    [Role.USER]: [Role.USER],
+};
 
-If failed, check error and refer to `google-master/references/error-handling.md`.
+function hasRole(userRole: Role, requiredRole: Role): boolean {
+    return roleHierarchy[userRole].includes(requiredRole);
+}
 
----
+// Middleware
+function requireRole(...roles: Role[]) {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (!req.user) {
+            return res.status(401).json({ error: 'Not authenticated' });
+        }
 
-## Workflow 4: Already Connected
+        if (!roles.some(role => hasRole(req.user.role, role))) {
+            return res.status(403).json({ error: 'Insufficient permissions' });
+        }
 
-**Triggers**: Config check returns exit 0
+        next();
+    };
+}
 
-**Purpose**: Show user they're already set up.
-
-Display:
-```
-━━━ GOOGLE ALREADY CONNECTED ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✅ Your Google integration is fully configured!
-
-Available services:
-  📧 Gmail      📄 Docs       📊 Sheets
-  📅 Calendar   📁 Drive      ✅ Tasks      📽️ Slides
-
-Commands:
-  • "list emails"           → Gmail inbox
-  • "create doc [title]"    → New Google Doc
-  • "list calendar events"  → Upcoming events
-  • "list drive files"      → Drive contents
-  • "list tasks"            → Task lists
-  • "create presentation"   → New Slides
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
----
-
-## Workflow 5: Reconnect / Re-authenticate
-
-**Triggers**: "reconnect google", "reauth google", "refresh google token"
-
-**Purpose**: Get new OAuth token (e.g., after scope changes or token expiry).
-
-```bash
-python 00-system/skills/google/google-master/scripts/google_auth.py --login
+// Usage
+app.delete('/api/users/:id',
+    authenticate,
+    requireRole(Role.ADMIN),
+    async (req, res) => {
+        // Only admins can delete users
+        await db.users.delete(req.params.id);
+        res.json({ message: 'User deleted' });
+    }
+);
 ```
 
-This removes the old token and initiates a fresh OAuth flow.
+### Pattern 2: Permission-Based Access Control
 
----
+```typescript
+enum Permission {
+    READ_USERS = 'read:users',
+    WRITE_USERS = 'write:users',
+    DELETE_USERS = 'delete:users',
+    READ_POSTS = 'read:posts',
+    WRITE_POSTS = 'write:posts',
+}
 
-## Workflow 6: Disconnect
+const rolePermissions: Record<Role, Permission[]> = {
+    [Role.USER]: [Permission.READ_POSTS, Permission.WRITE_POSTS],
+    [Role.MODERATOR]: [
+        Permission.READ_POSTS,
+        Permission.WRITE_POSTS,
+        Permission.READ_USERS,
+    ],
+    [Role.ADMIN]: Object.values(Permission),
+};
 
-**Triggers**: "disconnect google", "remove google", "logout google"
+function hasPermission(userRole: Role, permission: Permission): boolean {
+    return rolePermissions[userRole]?.includes(permission) ?? false;
+}
 
-**Purpose**: Remove stored credentials.
+function requirePermission(...permissions: Permission[]) {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (!req.user) {
+            return res.status(401).json({ error: 'Not authenticated' });
+        }
 
-```bash
-python 00-system/skills/google/google-master/scripts/google_auth.py --logout
+        const hasAllPermissions = permissions.every(permission =>
+            hasPermission(req.user.role, permission)
+        );
+
+        if (!hasAllPermissions) {
+            return res.status(403).json({ error: 'Insufficient permissions' });
+        }
+
+        next();
+    };
+}
+
+// Usage
+app.get('/api/users',
+    authenticate,
+    requirePermission(Permission.READ_USERS),
+    async (req, res) => {
+        const users = await db.users.findAll();
+        res.json({ users });
+    }
+);
 ```
 
-Display:
+### Pattern 3: Resource Ownership
+
+```typescript
+// Check if user owns resource
+async function requireOwnership(
+    resourceType: 'post' | 'comment',
+    resourceIdParam: string = 'id'
+) {
+    return async (req: Request, res: Response, next: NextFunction) => {
+        if (!req.user) {
+            return res.status(401).json({ error: 'Not authenticated' });
+        }
+
+        const resourceId = req.params[resourceIdParam];
+
+        // Admins can access anything
+        if (req.user.role === Role.ADMIN) {
+            return next();
+        }
+
+        // Check ownership
+        let resource;
+        if (resourceType === 'post') {
+            resource = await db.posts.findById(resourceId);
+        } else if (resourceType === 'comment') {
+            resource = await db.comments.findById(resourceId);
+        }
+
+        if (!resource) {
+            return res.status(404).json({ error: 'Resource not found' });
+        }
+
+        if (resource.userId !== req.user.userId) {
+            return res.status(403).json({ error: 'Not authorized' });
+        }
+
+        next();
+    };
+}
+
+// Usage
+app.put('/api/posts/:id',
+    authenticate,
+    requireOwnership('post'),
+    async (req, res) => {
+        // User can only update their own posts
+        const post = await db.posts.update(req.params.id, req.body);
+        res.json({ post });
+    }
+);
 ```
-✅ Google disconnected
 
-Token removed. Your .env credentials are still saved.
-To fully remove, delete these lines from .env:
-  GOOGLE_CLIENT_ID
-  GOOGLE_CLIENT_SECRET
-  GOOGLE_PROJECT_ID
+## Security Best Practices
+
+### Pattern 1: Password Security
+
+```typescript
+import bcrypt from 'bcrypt';
+import { z } from 'zod';
+
+// Password validation schema
+const passwordSchema = z.string()
+    .min(12, 'Password must be at least 12 characters')
+    .regex(/[A-Z]/, 'Password must contain uppercase letter')
+    .regex(/[a-z]/, 'Password must contain lowercase letter')
+    .regex(/[0-9]/, 'Password must contain number')
+    .regex(/[^A-Za-z0-9]/, 'Password must contain special character');
+
+// Hash password
+async function hashPassword(password: string): Promise<string> {
+    const saltRounds = 12;  // 2^12 iterations
+    return bcrypt.hash(password, saltRounds);
+}
+
+// Verify password
+async function verifyPassword(
+    password: string,
+    hash: string
+): Promise<boolean> {
+    return bcrypt.compare(password, hash);
+}
+
+// Registration with password validation
+app.post('/api/auth/register', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Validate password
+        passwordSchema.parse(password);
+
+        // Check if user exists
+        const existingUser = await db.users.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Email already registered' });
+        }
+
+        // Hash password
+        const passwordHash = await hashPassword(password);
+
+        // Create user
+        const user = await db.users.create({
+            email,
+            passwordHash,
+        });
+
+        // Generate tokens
+        const tokens = generateTokens(user.id, user.email, user.role);
+
+        res.status(201).json({
+            user: { id: user.id, email: user.email },
+            ...tokens,
+        });
+    } catch (error) {
+        if (error instanceof z.ZodError) {
+            return res.status(400).json({ error: error.errors[0].message });
+        }
+        res.status(500).json({ error: 'Registration failed' });
+    }
+});
 ```
 
----
+### Pattern 2: Rate Limiting
 
-## Error Handling
+```typescript
+import rateLimit from 'express-rate-limit';
+import RedisStore from 'rate-limit-redis';
 
-| Error | Solution |
-|-------|----------|
-| "Missing credentials" | Run full setup (Workflow 1) |
-| "Invalid client" | Check Client ID/Secret in .env |
-| "Access denied" | Add your email as test user in OAuth consent |
-| "Token expired" | Run reconnect (Workflow 5) |
-| "API not enabled" | Enable the specific API in Google Cloud Console |
+// Login rate limiter
+const loginLimiter = rateLimit({
+    store: new RedisStore({ client: redisClient }),
+    windowMs: 15 * 60 * 1000,  // 15 minutes
+    max: 5,  // 5 attempts
+    message: 'Too many login attempts, please try again later',
+    standardHeaders: true,
+    legacyHeaders: false,
+});
 
-Load `google-master/references/error-handling.md` for detailed troubleshooting.
+// API rate limiter
+const apiLimiter = rateLimit({
+    windowMs: 60 * 1000,  // 1 minute
+    max: 100,  // 100 requests per minute
+    standardHeaders: true,
+});
 
----
+// Apply to routes
+app.post('/api/auth/login', loginLimiter, async (req, res) => {
+    // Login logic
+});
 
-## Quick Reference
+app.use('/api/', apiLimiter);
+```
 
-| Command | Action |
-|---------|--------|
-| `connect google` | Start setup wizard |
-| `google status` | Check connection status |
-| `reconnect google` | Refresh authentication |
-| `disconnect google` | Remove token |
+## Best Practices
 
----
+1. **Never Store Plain Passwords**: Always hash with bcrypt/argon2
+2. **Use HTTPS**: Encrypt data in transit
+3. **Short-Lived Access Tokens**: 15-30 minutes max
+4. **Secure Cookies**: httpOnly, secure, sameSite flags
+5. **Validate All Input**: Email format, password strength
+6. **Rate Limit Auth Endpoints**: Prevent brute force attacks
+7. **Implement CSRF Protection**: For session-based auth
+8. **Rotate Secrets Regularly**: JWT secrets, session secrets
+9. **Log Security Events**: Login attempts, failed auth
+10. **Use MFA When Possible**: Extra security layer
 
-## File Locations
+## Common Pitfalls
 
-| File | Path | Purpose |
-|------|------|---------|
-| Credentials | `.env` | Client ID, Secret, Project ID |
-| Access Token | `01-memory/integrations/google-token.json` | OAuth token |
+- **Weak Passwords**: Enforce strong password policies
+- **JWT in localStorage**: Vulnerable to XSS, use httpOnly cookies
+- **No Token Expiration**: Tokens should expire
+- **Client-Side Auth Checks Only**: Always validate server-side
+- **Insecure Password Reset**: Use secure tokens with expiration
+- **No Rate Limiting**: Vulnerable to brute force
+- **Trusting Client Data**: Always validate on server
 
-Both files are in `.gitignore` and will not be committed.
+## Resources
 
----
-
-*Google Connect v1.0 - Setup wizard for Google Workspace integration*
+- **references/jwt-best-practices.md**: JWT implementation guide
+- **references/oauth2-flows.md**: OAuth2 flow diagrams and examples
+- **references/session-security.md**: Secure session management
+- **assets/auth-security-checklist.md**: Security review checklist
+- **assets/password-policy-template.md**: Password requirements template
+- **scripts/token-validator.ts**: JWT validation utility
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
