@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/designing-hexagonal-architecture-aucun6352-project-cheat-sheet-e7a8203b/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/openai-chatkit-frontend-embed-hamza123545-todo-giaic-five-phas-9514e0b2/SKILL.md)
 
 ---
 
