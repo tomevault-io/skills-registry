@@ -1,201 +1,125 @@
 ---
-name: winapp-cli
-description: Windows App Development CLI (winapp) for building, packaging, and deploying Windows applications. Use when asked to initialize Windows app projects, create MSIX packages, generate AppxManifest.xml, manage development certificates, add package identity for debugging, sign packages, or access Windows SDK build tools. Supports .NET, C++, Electron, Rust, Tauri, and cross-platform frameworks targeting Windows. Use when this capability is needed.
+name: claude-skill-registry
+description: أفضل الممارسات لكتابة كود TypeScript قوي، آمن، وقابل للصيانة. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
+# TypeScript Development Skill
 
-# Windows App Development CLI
+## نظرة عامة
+أفضل الممارسات لكتابة كود TypeScript قوي، آمن، وقابل للصيانة.
 
-The Windows App Development CLI (`winapp`) is a command-line interface for managing Windows SDKs, MSIX packaging, generating app identity, manifests, certificates, and using build tools with any app framework. It bridges the gap between cross-platform development and Windows-native capabilities.
+---
 
-## When to Use This Skill
+## الأساسيات (Basics)
 
-Use this skill when you need to:
+### تعريف الأنواع (Type Definitions)
 
-- Initialize a Windows app project with SDK setup, manifests, and certificates
-- Create MSIX packages from application directories
-- Generate or manage AppxManifest.xml files
-- Create and install development certificates for signing
-- Add package identity for debugging Windows APIs
-- Sign MSIX packages or executables
-- Access Windows SDK build tools from any framework
-- Build Windows apps using cross-platform frameworks (Electron, Rust, Tauri, Qt)
-- Set up CI/CD pipelines for Windows app deployment
-- Access Windows APIs that require package identity (notifications, Windows AI, shell integration)
+```typescript
+// استخدام Interface للكائنات
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'user';
+  isActive: boolean;
+  createdAt: Date;
+}
 
-## Prerequisites
-
-- Windows 10 or later
-- winapp CLI installed via one of these methods:
-  - **WinGet**: `winget install Microsoft.WinAppCli --source winget`
-  - **NPM** (for Electron): `npm install @microsoft/winappcli --save-dev`
-  - **GitHub Actions/Azure DevOps**: Use [setup-WinAppCli](https://github.com/microsoft/setup-WinAppCli) action
-  - **Manual**: Download from [GitHub Releases](https://github.com/microsoft/WinAppCli/releases/latest)
-
-## Core Capabilities
-
-### 1. Project Initialization (`winapp init`)
-
-Initialize a directory with required assets (manifest, certificates, libraries) for building a modern Windows app. Supports SDK installation modes: `stable`, `preview`, `experimental`, or `none`.
-
-### 2. MSIX Packaging (`winapp pack`)
-
-Create MSIX packages from prepared directories with optional signing, certificate generation, and self-contained deployment bundling.
-
-### 3. Package Identity for Debugging (`winapp create-debug-identity`)
-
-Add temporary package identity to executables for debugging Windows APIs that require identity (notifications, Windows AI, shell integration) without full packaging.
-
-### 4. Manifest Management (`winapp manifest`)
-
-Generate AppxManifest.xml files and update image assets from source images, automatically creating all required sizes and aspect ratios.
-
-### 5. Certificate Management (`winapp cert`)
-
-Generate development certificates and install them to the local machine store for signing packages.
-
-### 6. Package Signing (`winapp sign`)
-
-Sign MSIX packages and executables with PFX certificates, with optional timestamp server support.
-
-### 7. SDK Build Tools Access (`winapp tool`)
-
-Run Windows SDK build tools with properly configured paths from any framework or build system.
-
-## Usage Examples
-
-### Example 1: Initialize and Package a Windows App
-
-```bash
-# Initialize workspace with defaults
-winapp init
-
-# Build your application (framework-specific)
-# ...
-
-# Create signed MSIX package
-winapp pack ./build-output --generate-cert --output MyApp.msix
+// استخدام Type للاتحادات (Unions) والتقاطعات (Intersections)
+type Status = 'pending' | 'approved' | 'rejected';
+type UserResponse = User & { status: Status };
 ```
 
-### Example 2: Debug with Package Identity
+### النمط الصارم (Strict Mode)
+تأكد من تفعيل `strict: true` في `tsconfig.json` لضمان أقصى درجات الأمان.
 
-```bash
-# Add debug identity to executable for testing Windows APIs
-winapp create-debug-identity ./bin/MyApp.exe
+---
 
-# Run your app - it now has package identity
-./bin/MyApp.exe
+## الواجهات والأنواع المتقدمة (Advanced Interfaces & Types)
+
+### Generics
+
+استخدم Generics لإنشاء مكونات ودوال قابلة لإعادة الاستخدام مع الحفاظ على سلامة الأنواع.
+
+```typescript
+interface ApiResponse<T> {
+  data: T;
+  status: number;
+  message: string;
+}
+
+async function fetchData<T>(url: string): Promise<ApiResponse<T>> {
+  const response = await fetch(url);
+  return response.json();
+}
+
+// الاستخدام
+const user = await fetchData<User>('/api/user');
 ```
 
-### Example 3: CI/CD Pipeline Setup
+### Utility Types
 
-```yaml
-# GitHub Actions example
-- name: Setup winapp CLI
-  uses: microsoft/setup-WinAppCli@v1
+استخدم Utility Types المدمجة لتقليل التكرار:
 
-- name: Initialize and Package
-  run: |
-    winapp init --no-prompt
-    winapp pack ./build-output --output MyApp.msix
+- `Partial<T>`: جعل كل الخصائص اختيارية.
+- `Pick<T, K>`: اختيار مجموعة محددة من الخصائص.
+- `Omit<T, K>`: استبعاد مجموعة محددة من الخصائص.
+- `Readonly<T>`: جعل الكائن للقراءة فقط.
+
+```typescript
+type UpdateUserDto = Partial<Omit<User, 'id' | 'createdAt'>>;
 ```
 
-### Example 4: Electron App Integration
+---
 
-```bash
-# Install via npm
-npm install @microsoft/winappcli --save-dev
+## حراس النوع (Type Guards)
 
-# Initialize and add debug identity for Electron
-npx winapp init
-npx winapp node add-electron-debug-identity
+استخدم Type Guards للتحقق من النوع في وقت التشغيل.
 
-# Package for distribution
-npx winapp pack ./out --output MyElectronApp.msix
+```typescript
+function isAdmin(user: User): user is User & { role: 'admin' } {
+  return user.role === 'admin';
+}
+
+if (isAdmin(currentUser)) {
+  // TypeScript يعرف الآن أن currentUser هو admin
+  console.log('Admin Access Granted');
+}
 ```
 
-## Guidelines
+---
 
-1. **Run `winapp init` first** - Always initialize your project before using other commands to ensure SDK setup, manifest, and certificates are configured.
-2. **Re-run `create-debug-identity` after manifest changes** - Package identity must be recreated whenever AppxManifest.xml is modified.
-3. **Use `--no-prompt` for CI/CD** - Prevents interactive prompts in automated pipelines by using default values.
-4. **Use `winapp restore` for shared projects** - Recreates the exact environment state defined in `winapp.yaml` across machines.
-5. **Generate assets from a single image** - Use `winapp manifest update-assets` with one logo to generate all required icon sizes.
+## أفضل الممارسات (Best Practices)
 
-## Common Patterns
+1.  **تجنب `any`**: استخدم `unknown` إذا كنت لا تعرف النوع، ثم قم بالتحقق منه.
+2.  **استخدم `const`**: للمتغيرات التي لا تتغير قيمتها.
+3.  **Async/Await**: استخدم `async/await` بدلاً من `then/catch` لقراءة أفضل.
+4.  **Explicit Return Types**: حدد نوع الإرجاع للدوال المهمة لتوثيق الكود ومنع الأخطاء العرضية.
 
-### Pattern: Initialize New Project
+```typescript
+// سيء
+function getData(id) {
+  return db.find(id);
+}
 
-```bash
-cd my-project
-winapp init
-# Creates: AppxManifest.xml, development certificate, SDK configuration, winapp.yaml
+// جيد
+async function getData(id: string): Promise<User | null> {
+  return await db.find(id);
+}
 ```
 
-### Pattern: Package with Existing Certificate
+---
 
-```bash
-winapp pack ./build-output --cert ./mycert.pfx --cert-password secret --output MyApp.msix
+## اختبار الأنواع (Testing Types)
+
+تأكد من أن الأنواع تعمل كما هو متوقع، خاصة عند استخدام مكتبات خارجية أو أنواع معقدة.
+
+```typescript
+import { expectType } from 'tsd';
+
+expectType<string>(someFunction());
 ```
-
-### Pattern: Self-Contained Deployment
-
-```bash
-# Bundle Windows App SDK runtime with the package
-winapp pack ./my-app --self-contained --generate-cert
-```
-
-### Pattern: Update Package Versions
-
-```bash
-# Update to latest stable SDKs
-winapp update
-
-# Or update to preview SDKs
-winapp update --setup-sdks preview
-```
-
-## Limitations
-
-- Windows 10 or later required (Windows-only CLI)
-- Package identity debugging requires re-running `create-debug-identity` after any manifest changes
-- Self-contained deployment increases package size by bundling the Windows App SDK runtime
-- Development certificates are for testing only; production requires trusted certificates
-- Some Windows APIs require specific capability declarations in the manifest
-- winapp CLI is in public preview and subject to change
-
-## Windows APIs Enabled by Package Identity
-
-Package identity unlocks access to powerful Windows APIs:
-
-| API Category | Examples |
-| ------------ | -------- |
-| **Notifications** | Interactive native notifications, notification management |
-| **Windows AI** | On-device LLM, text/image AI APIs (Phi Silica, Windows ML) |
-| **Shell Integration** | Explorer, Taskbar, Share sheet integration |
-| **Protocol Handlers** | Custom URI schemes (`yourapp://`) |
-| **Device Access** | Camera, microphone, location (with consent) |
-| **Background Tasks** | Run when app is closed |
-| **File Associations** | Open file types with your app |
-
-## Troubleshooting
-
-| Issue | Solution |
-| ----- | -------- |
-| Certificate not trusted | Run `winapp cert install <cert-path>` to install to local machine store |
-| Package identity not working | Run `winapp create-debug-identity` after any manifest changes |
-| SDK not found | Run `winapp restore` or `winapp update` to ensure SDKs are installed |
-| Signing fails | Verify certificate password and ensure cert is not expired |
-
-## References
-
-- [GitHub Repository](https://github.com/microsoft/WinAppCli)
-- [Full CLI Documentation](https://github.com/microsoft/WinAppCli/blob/main/docs/usage.md)
-- [Sample Applications](https://github.com/microsoft/WinAppCli/tree/main/samples)
-- [Windows App SDK](https://learn.microsoft.com/windows/apps/windows-app-sdk/)
-- [MSIX Packaging Overview](https://learn.microsoft.com/windows/msix/overview)
-- [Package Identity Overview](https://learn.microsoft.com/windows/apps/desktop/modernize/package-identity-overview)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
