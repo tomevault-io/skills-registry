@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [AgentSystemLabs/core](https://github.com/AgentSystemLabs/core/tree/main/plugins/agentsystem-core/skills/harden-types/SKILL.md)
+Original source: [AgentSystemLabs/core](https://github.com/AgentSystemLabs/core/tree/main/plugins/agentsystem-core/skills/add-migration/SKILL.md)
 
 ---
 
