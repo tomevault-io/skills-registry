@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mverab/eGEOagents](https://github.com/mverab/eGEOagents/tree/main/.claude/skills/schema-generator/SKILL.md)
+Original source: [mverab/eGEOagents](https://github.com/mverab/eGEOagents/tree/main/.claude/skills/validation-doctor/SKILL.md)
 
 ---
 
