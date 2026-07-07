@@ -1,248 +1,771 @@
 ---
-name: prompt-engineering
-description: Comprehensive prompt engineering framework for designing, optimizing, and iterating LLM prompts. This skill should be used when users request prompt creation, optimization, or improvement for any LLM task, or when users need help translating vague requirements into effective prompts through collaborative dialogue and iterative refinement. Use when this capability is needed.
+name: web-asset-generator
+description: Generate web assets including favicons, app icons (PWA), and social media meta images (Open Graph) for Facebook, Twitter, WhatsApp, and LinkedIn. Use when users need icons, favicons, social sharing images, or Open Graph images from logos or text slogans. Handles image resizing, text-to-image generation, and provides proper HTML meta tags. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Prompt Engineering
+# Web Asset Generator
 
-## Overview
+Generate professional web assets from logos or text slogans, including favicons, app icons, and social media meta images.
 
-This skill transforms vague user requests into precise, effective prompts through collaborative dialogue, systematic analysis, and iterative refinement. It combines proven prompt engineering techniques with a structured development process to create prompts that reliably achieve user objectives.
+## Quick Start
 
-## Workflow Decision Tree
+When a user requests web assets:
 
-When a user requests prompt assistance, follow this decision flow:
+1. **Use AskUserQuestion tool to clarify needs** if not specified:
+   - What type of assets they need (favicons, app icons, social images, or everything)
+   - Whether they have source material (logo image vs text/slogan)
+   - For text-based images: color preferences
+
+2. **Check for source material**:
+   - If user uploaded an image: use it as the source
+   - If user provides text/slogan: generate text-based images
+
+3. **Run the appropriate script(s)**:
+   - Favicons/icons: `scripts/generate_favicons.py`
+   - Social media images: `scripts/generate_og_images.py`
+
+4. **Provide the generated assets and HTML tags** to the user
+
+## Using Interactive Questions
+
+**IMPORTANT**: Always use the AskUserQuestion tool to gather requirements instead of plain text questions. This provides a better user experience with visual selection UI.
+
+### Why Use AskUserQuestion?
+
+✅ **Visual UI**: Users see options as clickable chips/tags instead of typing responses
+✅ **Faster**: Click to select instead of typing out answers
+✅ **Clearer**: Descriptions explain what each option means
+✅ **Fewer errors**: No typos or misunderstandings from free-form text
+✅ **Professional**: Consistent with modern Claude Code experience
+
+### Example Flow
+
+**User request**: "I need web assets"
+
+**Claude uses AskUserQuestion** (not plain text):
+```
+What type of web assets do you need?                    [Asset type]
+○ Favicons only - Browser tab icons (16x16, 32x32, 96x96) and favicon.ico
+○ App icons only - PWA icons for iOS/Android (180x180, 192x192, 512x512)
+○ Social images only - Open Graph images for Facebook, Twitter, WhatsApp, LinkedIn
+● Everything - Complete package: favicons + app icons + social images
+```
+
+User clicks → Claude immediately knows what to generate
+
+### Question Patterns
+
+Below are the standard question patterns to use in various scenarios. Copy the structure and adapt as needed.
+
+### Question Pattern 1: Asset Type Selection
+
+When the user's request is vague (e.g., "create web assets", "I need icons"), use AskUserQuestion:
+
+**Question**: "What type of web assets do you need?"
+**Header**: "Asset type"
+**Options**:
+- **"Favicons only"** - Description: "Browser tab icons (16x16, 32x32, 96x96) and favicon.ico"
+- **"App icons only"** - Description: "PWA icons for iOS/Android (180x180, 192x192, 512x512)"
+- **"Social images only"** - Description: "Open Graph images for Facebook, Twitter, WhatsApp, LinkedIn"
+- **"Everything"** - Description: "Complete package: favicons + app icons + social images"
+
+### Question Pattern 2: Source Material
+
+When the asset type is determined but source is unclear:
+
+**Question**: "What source material will you provide?"
+**Header**: "Source"
+**Options**:
+- **"Logo image"** - Description: "I have or will upload a logo/image file"
+- **"Emoji"** - Description: "Generate favicon from an emoji character"
+- **"Text/slogan"** - Description: "Create images from text only"
+- **"Logo + text"** - Description: "Combine logo with text overlay (for social images)"
+
+### Question Pattern 3: Platform Selection (for social images)
+
+When user requests social images but doesn't specify platforms:
+
+**Question**: "Which social media platforms do you need images for?"
+**Header**: "Platforms"
+**Multi-select**: true
+**Options**:
+- **"Facebook/WhatsApp/LinkedIn"** - Description: "Standard 1200x630 Open Graph format"
+- **"Twitter"** - Description: "1200x675 (16:9 ratio) for large image cards"
+- **"All platforms"** - Description: "Generate all variants including square format"
+
+### Question Pattern 4: Color Preferences (for text-based images)
+
+When generating text-based social images:
+
+**Question**: "What colors should we use for your social images?"
+**Header**: "Colors"
+**Options**:
+- **"I'll provide colors"** - Description: "Let me specify exact hex codes for brand colors"
+- **"Default theme"** - Description: "Use default purple background (#4F46E5) with white text"
+- **"Extract from logo"** - Description: "Auto-detect brand colors from uploaded logo"
+- **"Custom gradient"** - Description: "Let me choose gradient colors"
+
+### Question Pattern 5: Icon Type Clarification
+
+When user says "create icons" or "generate icons" (ambiguous):
+
+**Question**: "What kind of icons do you need?"
+**Header**: "Icon type"
+**Options**:
+- **"Website favicon"** - Description: "Small browser tab icon"
+- **"App icons (PWA)"** - Description: "Mobile home screen icons"
+- **"Both"** - Description: "Favicon + app icons"
+
+### Question Pattern 6: Emoji Selection
+
+When user selects "Emoji" as source material:
+
+**Step 1**: Ask for project description (free text):
+- "What is your website/app about?"
+- Use this to generate emoji suggestions
+
+**Step 2**: Use AskUserQuestion to present the 4 suggested emojis:
+
+**Question**: "Which emoji best represents your project?"
+**Header**: "Emoji"
+**Options**: (Dynamically generated based on project description)
+- Example: **"🚀 Rocket"** - Description: "Rocket, launch, startup, space"
+- Example: **"☕ Coffee"** - Description: "Coffee, cafe, beverage, drink"
+- Example: **"💻 Laptop"** - Description: "Computer, laptop, code, dev"
+- Example: **"🎨 Art"** - Description: "Art, design, creative, paint"
+
+**Implementation**:
+```bash
+# Get suggestions
+python scripts/generate_favicons.py --suggest "coffee shop" output/ all
+
+# Then generate with selected emoji
+python scripts/generate_favicons.py --emoji "☕" output/ all
+```
+
+**Optional**: Ask about background color for app icons:
+
+**Question**: "Do you want a background color for app icons?"
+**Header**: "Background"
+**Options**:
+- **"Transparent"** - Description: "No background (favicons only)"
+- **"White"** - Description: "White background (recommended for app icons)"
+- **"Custom color"** - Description: "I'll provide a color"
+
+### Question Pattern 7: Code Integration Offer
+
+**When to use**: After generating assets and showing HTML tags to the user
+
+**Question**: "Would you like me to add these HTML tags to your codebase?"
+**Header**: "Integration"
+**Options**:
+- **"Yes, auto-detect my setup"** - Description: "Find and update my HTML/framework files automatically"
+- **"Yes, I'll tell you where"** - Description: "I'll specify which file to update"
+- **"No, I'll do it manually"** - Description: "Just show me the code, I'll add it myself"
+
+**If user selects "Yes, auto-detect":**
+1. Search for framework config files (next.config.js, astro.config.mjs, etc.)
+2. Detect framework type
+3. Find appropriate target file (layout.tsx, index.html, etc.)
+4. Show detected file and ask for confirmation
+5. Show diff of proposed changes
+6. Insert tags if user confirms
+
+**If user selects "Yes, I'll tell you where":**
+1. Ask user for file path
+2. Verify file exists
+3. Show diff of proposed changes
+4. Insert tags if user confirms
+
+**Framework Detection Priority:**
+- Next.js: Look for `next.config.js`, update `app/layout.tsx` or `pages/_app.tsx`
+- Astro: Look for `astro.config.mjs`, update layout files in `src/layouts/`
+- SvelteKit: Look for `svelte.config.js`, update `src/app.html`
+- Vue/Nuxt: Look for `nuxt.config.js`, update `app.vue` or `nuxt.config.ts`
+- Plain HTML: Look for `index.html` or `*.html` files
+- Gatsby: Look for `gatsby-config.js`, update `gatsby-ssr.js`
+
+### Question Pattern 8: Testing Links Offer
+
+**When to use**: After code integration (or if user declined integration)
+
+**Question**: "Would you like to test your meta tags now?"
+**Header**: "Testing"
+**Options**:
+- **"Facebook Debugger"** - Description: "Test Open Graph tags on Facebook"
+- **"Twitter Card Validator"** - Description: "Test Twitter card appearance"
+- **"LinkedIn Post Inspector"** - Description: "Test LinkedIn sharing preview"
+- **"All testing tools"** - Description: "Get links to all validators"
+- **"No, skip testing"** - Description: "I'll test later myself"
+
+**Provide appropriate testing URLs:**
+- Facebook: https://developers.facebook.com/tools/debug/
+- Twitter: https://cards-dev.twitter.com/validator
+- LinkedIn: https://www.linkedin.com/post-inspector/
+- Generic OG validator: https://www.opengraph.xyz/
+
+## Workflows
+
+### Generate Favicons and App Icons from Logo
+
+When user has a logo image:
+
+```bash
+python scripts/generate_favicons.py <source_image> <output_dir> [icon_type]
+```
+
+Arguments:
+- `source_image`: Path to the logo/image file
+- `output_dir`: Where to save generated icons
+- `icon_type`: Optional - 'favicon', 'app', or 'all' (default: 'all')
+
+Example:
+```bash
+python scripts/generate_favicons.py /mnt/user-data/uploads/logo.png /home/claude/output all
+```
+
+Generates:
+- `favicon-16x16.png`, `favicon-32x32.png`, `favicon-96x96.png`
+- `favicon.ico` (multi-resolution)
+- `apple-touch-icon.png` (180x180)
+- `android-chrome-192x192.png`, `android-chrome-512x512.png`
+
+### Generate Favicons and App Icons from Emoji
+
+**NEW FEATURE**: Create favicons from emoji characters with smart suggestions!
+
+#### Step 1: Get Emoji Suggestions
+
+When user wants emoji-based icons, first get suggestions:
+
+```bash
+python scripts/generate_favicons.py --suggest "coffee shop" /home/claude/output all
+```
+
+This returns 4 emoji suggestions based on the description:
+```
+1. ☕  Coffee               - coffee, cafe, beverage
+2. 🌐  Globe                - web, website, global
+3. 🏪  Store                - shop, store, retail
+4. 🛒  Cart                 - shopping, cart, ecommerce
+```
+
+#### Step 2: Generate Icons from Selected Emoji
+
+```bash
+python scripts/generate_favicons.py --emoji "☕" <output_dir> [icon_type] [--emoji-bg COLOR]
+```
+
+Arguments:
+- `--emoji`: Emoji character to use
+- `output_dir`: Where to save generated icons
+- `icon_type`: Optional - 'favicon', 'app', or 'all' (default: 'all')
+- `--emoji-bg`: Optional background color (default: transparent for favicons, white for app icons)
+
+Examples:
+```bash
+# Basic emoji favicon (transparent background)
+python scripts/generate_favicons.py --emoji "🚀" /home/claude/output favicon
+
+# Emoji with custom background for app icons
+python scripts/generate_favicons.py --emoji "☕" --emoji-bg "#F5DEB3" /home/claude/output all
+
+# Complete set with white background
+python scripts/generate_favicons.py --emoji "💻" --emoji-bg "white" /home/claude/output all
+```
+
+Generates same files as logo-based generation:
+- All standard favicon sizes (16x16, 32x32, 96x96)
+- favicon.ico
+- App icon sizes (180x180, 192x192, 512x512)
+
+**Note**: Requires `pilmoji` library: `pip install pilmoji`
+
+### Generate Social Media Meta Images from Logo
+
+When user has a logo and needs Open Graph images:
+
+```bash
+python scripts/generate_og_images.py <output_dir> --image <source_image>
+```
+
+Example:
+```bash
+python scripts/generate_og_images.py /home/claude/output --image /mnt/user-data/uploads/logo.png
+```
+
+Generates:
+- `og-image.png` (1200x630 - Facebook, WhatsApp, LinkedIn)
+- `twitter-image.png` (1200x675 - Twitter)
+- `og-square.png` (1200x1200 - Square variant)
+
+### Generate Social Media Meta Images from Text
+
+When user provides a text slogan or tagline:
+
+```bash
+python scripts/generate_og_images.py <output_dir> --text "Your text here" [options]
+```
+
+Options:
+- `--logo <path>`: Include a logo with the text
+- `--bg-color <color>`: Background color (hex or name, default: '#4F46E5')
+- `--text-color <color>`: Text color (default: 'white')
+
+Example:
+```bash
+python scripts/generate_og_images.py /home/claude/output \
+  --text "Transform Your Business with AI" \
+  --logo /mnt/user-data/uploads/logo.png \
+  --bg-color "#4F46E5"
+```
+
+### Generate Everything
+
+For users who want the complete package:
+
+```bash
+# Generate favicons and icons
+python scripts/generate_favicons.py /mnt/user-data/uploads/logo.png /home/claude/output all
+
+# Generate social media images
+python scripts/generate_og_images.py /home/claude/output --image /mnt/user-data/uploads/logo.png
+```
+
+Or for text-based:
+```bash
+# Generate favicons from logo
+python scripts/generate_favicons.py /mnt/user-data/uploads/logo.png /home/claude/output all
+
+# Generate social media images with text + logo
+python scripts/generate_og_images.py /home/claude/output \
+  --text "Your Tagline Here" \
+  --logo /mnt/user-data/uploads/logo.png
+```
+
+## Delivering Assets to User
+
+After generating assets, follow this workflow:
+
+### 1. Move to Outputs Directory
+```bash
+cp /home/claude/output/* /mnt/user-data/outputs/
+```
+
+### 2. Show Generated HTML Tags
+
+Display the HTML tags that were automatically generated by the scripts.
+
+Example output for favicons:
+```html
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+```
+
+Example output for Open Graph images:
+```html
+<!-- Open Graph / Facebook -->
+<meta property="og:image" content="/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Your description here">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/twitter-image.png">
+<meta name="twitter:image:alt" content="Your description here">
+```
+
+### 3. Offer Code Integration (Use AskUserQuestion - Pattern 7)
+
+**IMPORTANT**: Always ask if the user wants help adding the tags to their codebase.
+
+**Question**: "Would you like me to add these HTML tags to your codebase?"
+**Header**: "Integration"
+**Options**:
+- "Yes, auto-detect my setup"
+- "Yes, I'll tell you where"
+- "No, I'll do it manually"
+
+#### If User Selects "Yes, auto-detect my setup":
+
+**A. Detect Framework:**
+```bash
+# Search for framework config files
+find . -maxdepth 2 -name "next.config.js" -o -name "astro.config.mjs" -o -name "svelte.config.js" -o -name "nuxt.config.js" -o -name "gatsby-config.js"
+
+# Or check package.json
+grep -E "next|astro|nuxt|svelte|gatsby" package.json
+```
+
+**B. Find Target Files Based on Framework:**
+
+- **Next.js (App Router)**: `app/layout.tsx` or `app/layout.js`
+- **Next.js (Pages Router)**: `pages/_app.tsx` or `pages/_document.tsx`
+- **Astro**: `src/layouts/*.astro` (typically `BaseLayout.astro` or `Layout.astro`)
+- **SvelteKit**: `src/app.html`
+- **Vue/Nuxt**: `app.vue` or `nuxt.config.ts` (head section)
+- **Gatsby**: `gatsby-ssr.js` or `src/components/seo.tsx`
+- **Plain HTML**: `index.html`, `public/index.html`, or any `*.html` file
+
+**C. Confirm with User:**
+
+Use AskUserQuestion to confirm detected file:
+```
+Question: "I found [Framework Name]. Should I update [file_path]?"
+Header: "Confirm"
+Options:
+- "Yes, update this file"
+- "No, show me other options"
+- "Cancel, I'll do it manually"
+```
+
+**D. Show Diff and Insert:**
+
+1. Read the target file
+2. Prepare the insertion (find `<head>` or appropriate section)
+3. Show the diff to the user
+4. If user confirms, use Edit tool to insert tags
+
+**Framework-Specific Insertion Examples:**
+
+**For Plain HTML** (insert before `</head>`):
+```html
+<head>
+  <meta charset="UTF-8">
+  <!-- INSERT TAGS HERE -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  ...
+</head>
+```
+
+**For Next.js App Router** (add to metadata export):
+```typescript
+export const metadata = {
+  icons: {
+    icon: [
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  openGraph: {
+    images: ['/og-image.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/twitter-image.png'],
+  },
+}
+```
+
+**For Astro** (insert in `<head>` of layout file):
+```astro
+<head>
+  <meta charset="UTF-8">
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  ...
+</head>
+```
+
+#### If User Selects "Yes, I'll tell you where":
+
+1. Ask user for the file path
+2. Verify file exists using Read tool
+3. Show where tags will be inserted
+4. Show diff
+5. Insert if user confirms
+
+#### If User Selects "No, I'll do it manually":
+
+Provide brief instructions:
+- Place asset files in the public/static directory of your website
+- Add the HTML tags to the `<head>` section of your HTML
+- Update placeholder values (title, description, URL, alt text)
+
+### 4. Offer Testing Links (Use AskUserQuestion - Pattern 8)
+
+**Question**: "Would you like to test your meta tags now?"
+**Header**: "Testing"
+**Options**:
+- "Facebook Debugger"
+- "Twitter Card Validator"
+- "LinkedIn Post Inspector"
+- "All testing tools"
+- "No, skip testing"
+
+**Provide Testing URLs:**
+
+- **Facebook Sharing Debugger**: https://developers.facebook.com/tools/debug/
+  - Paste your URL and click "Debug" to see preview
+  - Click "Scrape Again" to refresh cache
+
+- **Twitter Card Validator**: https://cards-dev.twitter.com/validator
+  - Paste your URL to see how Twitter card will appear
+
+- **LinkedIn Post Inspector**: https://www.linkedin.com/post-inspector/
+  - Check how links appear when shared on LinkedIn
+
+- **OpenGraph.xyz**: https://www.opengraph.xyz/
+  - Generic Open Graph validator for quick checks
+
+### 5. Final Instructions
+
+Remind user to:
+- ✅ Copy asset files to their public/static directory
+- ✅ Update dynamic values in meta tags (og:title, og:description, og:url)
+- ✅ Test on actual platforms after deployment
+- ✅ Update alt text to be descriptive and accessible
+
+**Important Notes:**
+- OG images must be accessible via HTTPS URLs (not localhost)
+- URLs in meta tags should be absolute (https://yourdomain.com/og-image.png)
+- Test after deploying to production/staging environment
+
+## Best Practices
+
+### Image Requirements
+- **Logos**: Should be square or nearly square for best results
+- **High resolution**: Provide largest available version (scripts will downscale)
+- **Transparent backgrounds**: PNG with transparency works best for favicons
+- **Solid backgrounds**: Recommended for app icons and social images
+
+### Text Content
+- **Text length affects font size automatically**:
+  - Short text (≤20 chars): 144px font - Large and impactful
+  - Medium text (21-40 chars): 120px font - Standard readable size
+  - Long text (41-60 chars): 102px font - Reduced for fit
+  - Very long text (>60 chars): 84px font - Minimal size
+- Keep text concise for maximum impact
+- Use 2-3 lines of text maximum for social images
+- Avoid special characters that may not render well
+
+### Color Choices
+- Ensure sufficient contrast (4.5:1 minimum for readability)
+- Use brand colors consistently
+- Consider both light and dark mode contexts
+
+## Validation and Quality Checks
+
+Both `generate_og_images.py` and `generate_favicons.py` support automated validation with the `--validate` flag.
+
+### When to Use Validation
+
+**Always recommend validation** when:
+- User is generating for production/deployment
+- User asks about file sizes or quality
+- User mentions platform requirements (Facebook, Twitter, etc.)
+- User is new to web assets and may not know requirements
+
+**Validation is optional** for:
+- Quick prototypes or testing
+- Users who explicitly decline
+- When time is a concern
+
+### What Gets Validated
+
+#### For Social Media Images (OG Images)
+
+**File Size Validation**:
+- Facebook/LinkedIn/WhatsApp: Must be <8MB
+- Twitter: Must be <5MB
+- Warning if within 80% of limit
+
+**Dimension Validation**:
+- Checks against platform-specific recommended sizes:
+  - Facebook/LinkedIn: 1200x630 (1.91:1 ratio)
+  - Twitter: 1200x675 (16:9 ratio)
+  - Square: 1200x1200 (1:1 ratio)
+- Warns if aspect ratio is >10% off target
+- Errors if below minimum dimensions
+
+**Format Validation**:
+- Facebook/LinkedIn: PNG, JPG, JPEG
+- Twitter: PNG, JPG, JPEG, WebP
+- Errors if unsupported format
+
+**Accessibility (Contrast Ratio)**:
+- Only for text-based images
+- Calculates WCAG 2.0 contrast ratio
+- Reports compliance level:
+  - WCAG AAA: 7.0:1 (normal text) or 4.5:1 (large text)
+  - WCAG AA: 4.5:1 (normal text) or 3.0:1 (large text)
+  - Fails if below AA minimum
+
+#### For Favicons and App Icons
+
+**File Size Validation**:
+- Favicons: Warns if >100KB (recommended for fast loading)
+- App icons: Warns if >500KB (recommended for mobile)
+- No hard limits, but warnings help optimize performance
+
+**Dimension Validation**:
+- Verifies each icon matches expected size (16x16, 32x32, etc.)
+- Ensures square aspect ratio
+
+**Format Validation**:
+- Checks all files are PNG (or ICO for favicon.ico)
+
+### How to Use Validation
+
+**In generate_og_images.py**:
+```bash
+python scripts/generate_og_images.py output/ --text "My Site" --validate
+```
+
+**In generate_favicons.py**:
+```bash
+python scripts/generate_favicons.py logo.png output/ all --validate
+```
+
+**Output Format**:
+- ✓ Success (green): All checks passed
+- ⚠ Warning (yellow): Issues to consider but not critical
+- ❌ Error (red): Must be fixed before deployment
+
+### Example Validation Output
 
 ```
-User Request
-├─ "Create a prompt" / "Make a prompt" / Vague request
-│  └─ → Start with EXPLORATION PHASE
-├─ "Optimize this prompt" / Has existing prompt
-│  └─ → Start with SIMPLE OPTIMIZATION
-└─ "Fix this issue with my prompt" / Specific problem
-   └─ → Start with ANALYSIS PHASE (focused on problem)
+======================================================================
+Running validation checks...
+======================================================================
+
+og-image.png:
+
+Facebook Validation:
+======================================================================
+  ✓ File size 0.3MB is within Facebook limits
+  ✓ Dimensions 1200x630 match Facebook recommended size
+  ✓ Format PNG is supported by Facebook
+
+LinkedIn Validation:
+======================================================================
+  ✓ File size 0.3MB is within LinkedIn limits
+  ✓ Dimensions 1200x630 match LinkedIn recommended size
+  ✓ Format PNG is supported by LinkedIn
+
+======================================================================
+Accessibility Checks:
+======================================================================
+  ✓ Contrast ratio 8.6:1 meets WCAG AAA standards (4.5:1 required)
+
+======================================================================
+Summary: 9/9 checks passed
+✓ All validations passed!
 ```
 
-## Core Process
+### Integrating Validation into Workflows
 
-### Phase 1: Exploration - Uncovering True Needs
+**After generating assets**, if validation was NOT run:
+1. Show the tip message: "💡 Tip: Use --validate to check file sizes, dimensions, and accessibility"
+2. Optionally ask: "Would you like me to run validation on these files now?"
 
-Before creating any prompt, deeply understand the user's actual needs through strategic questioning. Start broad, then narrow down systematically.
+**If validation was run and issues found**:
+1. Explain any errors or warnings
+2. Offer to fix issues (e.g., resize, recompress, adjust colors)
+3. Re-run generation with fixes if user agrees
 
-**Initial Context Gathering:**
-- What task will this prompt accomplish?
-- Who will use it and in what environment?
-- How frequently will it be used?
-- What does success look like?
+**If validation passes**:
+1. Confirm: "✅ All validation checks passed!"
+2. Proceed with code integration and testing links
 
-**Deepening Understanding:**
-- Request concrete examples of desired outputs
-- Ask about past failures or attempts
-- Identify critical success factors
-- Uncover unstated assumptions and constraints
+## Specifications and Platform Details
 
-**Technical Requirements:**
-- Model and platform constraints
-- Token limits and cost considerations
-- Response time requirements
-- Integration with other systems
+For detailed platform specifications, size requirements, and implementation guidelines, read:
+- `references/specifications.md`: Comprehensive specs for all platforms
 
-Continue exploration until the core requirements are crystal clear. Never assume—always verify.
+## Handling Common Requests
 
-### Phase 2: Analysis - Choosing the Right Strategy
+### "Create a favicon for my site"
 
-Analyze the task to determine the optimal prompting approach.
+**Use AskUserQuestion**:
+- Question: "Do you have a logo image, or should I create a text-based favicon?"
+- Header: "Source"
+- Options:
+  - "Logo image" - Description: "I have/will upload a logo file"
+  - "Text-based" - Description: "Generate from text or initials"
 
-**Task Classification:**
+**Then ask**:
+- Question: "Do you also need PWA app icons for mobile devices?"
+- Header: "Scope"
+- Options:
+  - "Favicon only" - Description: "Just browser tab icons (16x16, 32x32, 96x96)"
+  - "Include app icons" - Description: "Add iOS/Android icons for home screen (180x180, 192x192, 512x512)"
 
-Classify the task along key dimensions:
-- **Complexity**: Simple directive vs multi-step reasoning
-- **Output Type**: Creative vs analytical vs structured
-- **Error Tolerance**: High-stakes vs experimental
-- **Frequency**: One-time vs repeated use
+**Generate**: Use `generate_favicons.py` with appropriate parameters
 
-**Strategy Selection:**
+### "Make social sharing images"
 
-Based on classification, choose primary techniques:
-- **Simple Tasks**: Direct instructions with clear constraints
-- **Complex Reasoning**: Chain-of-thought with step-by-step breakdown
-- **Creative Tasks**: Role setting with flexible boundaries
-- **Structured Output**: Explicit format specifications with examples
-- **High-Stakes**: Self-consistency checks and validation steps
+**Use AskUserQuestion**:
+- Question: "Which social media platforms do you need images for?"
+- Header: "Platforms"
+- Multi-select: true
+- Options:
+  - "Facebook/WhatsApp/LinkedIn" - Description: "Standard 1200x630 format"
+  - "Twitter" - Description: "1200x675 (16:9 ratio)"
+  - "All platforms" - Description: "Generate all variants"
 
-**Trade-off Analysis:**
+**Then ask**:
+- Question: "What should the images contain?"
+- Header: "Content"
+- Options:
+  - "Logo only" - Description: "Resize my logo for social sharing"
+  - "Text only" - Description: "Create images from text/slogan"
+  - "Logo + text" - Description: "Combine logo with text overlay"
 
-Present multiple approaches with clear trade-offs:
-- Approach A: Detailed but token-heavy
-- Approach B: Concise but requires interpretation
-- Approach C: Balanced with moderate complexity
+**Generate**: Use `generate_og_images.py` with appropriate parameters
 
-Always explain WHY each approach fits the specific context.
+### "I need everything for my website"
 
-### Phase 3: Implementation - Building Iteratively
+**Use AskUserQuestion**:
+- Question: "What source material will you provide?"
+- Header: "Source"
+- Options:
+  - "Logo image" - Description: "I have a logo to use for all assets"
+  - "Logo + tagline" - Description: "Logo for icons, logo+text for social images"
+  - "Text only" - Description: "Generate all assets from text/initials"
 
-Create the prompt through progressive refinement, starting simple and adding complexity as needed.
+**Generate**:
+- Both favicons and Open Graph images with complete HTML implementation
+- Provide instructions for file placement and testing
 
-**Version 1 - Minimal Viable Prompt:**
-- Core instructions only
-- Test basic functionality
-- Identify gaps and ambiguities
+### User provides both logo and tagline
 
-**Version 2 - Enhanced Clarity:**
-- Add specific examples if needed
-- Clarify ambiguous points
-- Include essential constraints
+**Use AskUserQuestion**:
+- Question: "How should I use your logo and tagline?"
+- Header: "Layout"
+- Options:
+  - "Logo above text" - Description: "Logo at top, tagline centered below"
+  - "Logo + text side-by-side" - Description: "Logo on left, text on right"
+  - "Text only on social images" - Description: "Use logo for icons, text-only for social sharing"
+  - "Logo background with text" - Description: "Subtle logo background with prominent text"
 
-**Version 3+ - Optimization:**
-- Refine wording for precision
-- Remove redundancy
-- Balance detail with conciseness
+**Generate**: Use `--text` and `--logo` parameters together in `generate_og_images.py`
 
-Document each version's changes and rationale. Store prompts in markdown files with:
-- Version history
-- Design decisions
-- Known limitations
-- Usage examples
+## Dependencies
 
-### Phase 4: Validation - Critical Evaluation
+The scripts require:
+- Python 3.6+
+- Pillow (PIL): `pip install Pillow --break-system-packages`
+- **Pilmoji** (for emoji support): `pip install pilmoji` (optional, only needed for emoji-based generation)
+- **emoji** (for emoji suggestions): `pip install emoji` (optional, only needed for emoji suggestions)
 
-Rigorously evaluate the prompt against quality criteria.
+Install if needed before running scripts.
 
-**Essential Checks:**
-- **Clarity**: Can the instructions be misunderstood?
-- **Completeness**: Are all necessary elements present?
-- **Consistency**: Do instructions contradict each other?
-- **Efficiency**: Can anything be removed without loss?
-- **Robustness**: How does it handle edge cases?
-
-**Testing Approach:**
-- Run through typical use cases
-- Test boundary conditions
-- Imagine failure modes
-- Check for unwanted behaviors
-
-Be ruthlessly honest about weaknesses. If something isn't working, acknowledge it and iterate.
-
-## Simple Optimization
-
-When optimizing an existing prompt, focus on minimal, targeted improvements:
-
-1. **Identify Specific Issues**: What exactly isn't working?
-2. **Diagnose Root Causes**: Why is the current prompt failing?
-3. **Apply Minimal Edits**: Change only what's necessary
-4. **Preserve Working Elements**: Keep what already works well
-5. **Test Improvements**: Verify fixes don't break other aspects
-
-Common optimization targets:
-- Ambiguous language → Specific instructions
-- Missing constraints → Added boundaries
-- Inconsistent outputs → Format specifications
-- Verbose responses → Length constraints
-- Off-topic responses → Clearer scope definition
-
-## Prompt Creation from Scratch
-
-When creating new prompts, structure them as instructions for an eager but inexperienced assistant who needs clear guidance.
-
-**Essential Components:**
-
-1. **Role/Context** (if beneficial):
-   - Set perspective or expertise level
-   - Establish tone and approach
-   
-2. **Clear Objective**:
-   - State the primary goal explicitly
-   - Define success criteria
-
-3. **Specific Instructions**:
-   - Break complex tasks into steps
-   - Provide decision criteria
-   - Specify constraints and boundaries
-
-4. **Output Format** (when relevant):
-   - Define structure explicitly
-   - Provide format examples
-   - Specify length or detail level
-
-5. **Examples** (when clarifying):
-   - Show desired patterns
-   - Illustrate edge cases
-   - Demonstrate style/tone
-
-## Key Techniques Reference
-
-### Foundation Techniques
-
-**Role Setting**: Establish perspective when expertise or tone matters
-- Effective for: Specialized knowledge, consistent voice
-- Example: "As an experienced code reviewer, analyze..."
-
-**Progressive Disclosure**: Start general, add detail as needed
-- Effective for: Complex multi-part tasks
-- Example: "First outline the approach, then implement each section..."
-
-**Explicit Constraints**: Define boundaries clearly
-- Effective for: Preventing unwanted outputs
-- Example: "Limit response to 3 paragraphs, focus only on technical aspects"
-
-### Advanced Techniques
-
-**Chain-of-Thought**: Request reasoning before conclusions
-- Use when: Logic and transparency matter
-- Trigger: "Think step-by-step" or "Explain your reasoning"
-
-**Few-Shot Learning**: Provide input-output examples
-- Use when: Pattern is easier shown than explained
-- Caution: 2-3 examples usually sufficient
-
-**Self-Consistency**: Have model verify its own outputs
-- Use when: Accuracy is critical
-- Implementation: "Review your answer for errors and inconsistencies"
-
-For detailed technique explanations and examples, consult:
-- `references/techniques.md` - Comprehensive technique catalog
-- `references/patterns.md` - Common prompt patterns
-- `references/antipatterns.md` - What to avoid
-
-## Collaboration Principles
-
-### Be a Thought Partner, Not Just an Executor
-
-- **Bad**: "Here's your prompt" (without understanding needs)
-- **Good**: "Let me understand what you're trying to achieve first..."
-
-### Question Assumptions Constructively
-
-- Surface hidden requirements through dialogue
-- Challenge unclear objectives respectfully
-- Propose alternatives when original approach seems suboptimal
-
-### Iterate Based on Feedback
-
-- Start with minimum viable prompt
-- Test and refine based on actual outputs
-- Document what works and what doesn't
-
-### Teach While Doing
-
-- Explain why certain techniques work
-- Share the reasoning behind design choices
-- Help users understand prompt engineering principles
-
-## References
-
-This skill includes detailed reference documentation:
-
-### references/
-- `techniques.md` - Complete catalog of prompting techniques with examples
-- `patterns.md` - Reusable prompt patterns for common scenarios  
-- `antipatterns.md` - Common mistakes and how to avoid them
-- `evaluation.md` - Comprehensive quality evaluation framework
-- `examples.md` - Library of before/after prompt improvements
-
-Consult these references for in-depth technical details and extensive examples not included in this overview.
+**For emoji features**, install both:
+```bash
+pip install pilmoji emoji --break-system-packages
+```
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
