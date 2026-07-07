@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [termide/termide](https://github.com/termide/termide/tree/main/.agents/skills/commit/SKILL.md)
+Original source: [termide/termide](https://github.com/termide/termide/tree/main/.agents/skills/refactor/SKILL.md)
 
 ---
 
