@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [drvoss/everything-copilot-cli](https://github.com/drvoss/everything-copilot-cli/tree/main/skills/copilot-exclusive/session-management/SKILL.md)
+Original source: [drvoss/everything-copilot-cli](https://github.com/drvoss/everything-copilot-cli/tree/main/skills/development/api-and-interface-design/SKILL.md)
 
 ---
 
