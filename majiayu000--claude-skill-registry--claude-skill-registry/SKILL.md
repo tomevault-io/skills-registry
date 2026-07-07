@@ -1,436 +1,167 @@
 ---
-name: skill-developer
-description: Create and manage Claude Code skills following Anthropic best practices. Use when creating new skills, modifying skill-rules.json, understanding trigger patterns, working with hooks, debugging skill activation, or implementing progressive disclosure. Covers skill structure, YAML frontmatter, trigger types (keywords, intent patterns, file paths, content patterns), enforcement levels (block, suggest, warn), hook mechanisms (UserPromptSubmit, PreToolUse), session tracking, and the 500-line rule. Use when this capability is needed.
+name: ln-621-security-auditor
+description: Security audit worker (L3). Scans codebase for hardcoded secrets, SQL injection, XSS, insecure dependencies, missing input validation. Returns findings with severity (Critical/High/Medium/Low), location, effort, and recommendations. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Skill Developer Guide
+> **Paths:** File paths (`shared/`, `references/`, `../ln-*`) are relative to skills repo root. If not found at CWD, locate this SKILL.md directory and go up one level for repo root.
 
-## Purpose
+# Security Auditor (L3 Worker)
 
-Comprehensive guide for creating and managing skills in Claude Code with auto-activation system, following Anthropic's official best practices including the 500-line rule and progressive disclosure pattern.
+Specialized worker auditing security vulnerabilities in codebase.
 
-## When to Use This Skill
+## Purpose & Scope
 
-Automatically activates when you mention:
-- Creating or adding skills
-- Modifying skill triggers or rules
-- Understanding how skill activation works
-- Debugging skill activation issues
-- Working with skill-rules.json
-- Hook system mechanics
-- Claude Code best practices
-- Progressive disclosure
-- YAML frontmatter
-- 500-line rule
+- **Worker in ln-620 coordinator pipeline** - invoked by ln-620-codebase-auditor
+- Audit codebase for **security vulnerabilities** (Category 1: Critical Priority)
+- Scan for hardcoded secrets, SQL injection, XSS, insecure dependencies, missing input validation
+- Return structured findings to coordinator with severity, location, effort, recommendations
+- Calculate compliance score (X/10) for Security category
 
----
+## Inputs (from Coordinator)
 
-## System Overview
+**MANDATORY READ:** Load `shared/references/task_delegation_pattern.md#audit-coordinator--worker-contract` for contextStore structure.
 
-### Two-Hook Architecture
+Receives `contextStore` with: `tech_stack`, `best_practices`, `principles`, `codebase_root`, `output_dir`.
 
-**1. UserPromptSubmit Hook** (Proactive Suggestions)
-- **File**: `.claude/hooks/codanna/skill-activation-prompt.ts`
-- **Trigger**: BEFORE Claude sees user's prompt
-- **Purpose**: Suggest relevant skills based on keywords + intent patterns
-- **Method**: Injects formatted reminder as context (stdout → Claude's input)
-- **Use Cases**: Topic-based skills, implicit work detection
+## Workflow
 
-**2. PreToolUse Hook - Read Validation** (Resource Management)
-- **File**: `.claude/hooks/codanna/pre_read_use.js`
-- **Trigger**: BEFORE Read tool executes
-- **Purpose**: Validate Read operations to prevent excessive line reads
-- **Method**: Checks requested line limit against thresholds, blocks/warns on large reads
-- **Use Cases**: Prevent token waste, encourage efficient file reading patterns
-- **Thresholds**:
-  - Allow: ≤400 lines (silent)
-  - Warn: 401-600 lines (logged, shown to Claude)
-  - Block: >600 lines (operation blocked)
+1) **Parse Context:** Extract tech stack, best practices, codebase root, output_dir from contextStore
+2) **Scan Codebase:** Run security checks using Glob/Grep patterns (see Audit Rules below)
+3) **Collect Findings:** Record each violation with severity, location (file:line), effort estimate (S/M/L), recommendation
+4) **Calculate Score:** Count violations by severity, calculate compliance score (X/10)
+5) **Write Report:** Build full markdown report in memory per `shared/templates/audit_worker_report_template.md`, write to `{output_dir}/621-security.md` in single Write call
+6) **Return Summary:** Return minimal summary to coordinator (see Output Format)
 
-### Configuration File
+## Audit Rules (Priority: CRITICAL)
 
-**Location**: `.claude/skills/skill-rules.json`
+### 1. Hardcoded Secrets
+**What:** API keys, passwords, tokens, private keys in source code
 
-Defines:
-- All skills and their trigger conditions
-- Enforcement levels (block, suggest, warn)
-- File path patterns (glob)
-- Content detection patterns (regex)
-- Skip conditions (session tracking, file markers, env vars)
+**Detection:**
+- Search patterns: `API_KEY = "..."`, `password = "..."`, `token = "..."`, `SECRET = "..."`
+- File extensions: `.ts`, `.js`, `.py`, `.go`, `.java`, `.cs`
+- Exclude: `.env.example`, `README.md`, test files with mock data
 
----
+**Severity:**
+- **CRITICAL:** Production credentials (AWS keys, database passwords, API tokens)
+- **HIGH:** Development/staging credentials
+- **MEDIUM:** Test credentials in non-test files
 
-## Skill Types
+**Recommendation:** Move to environment variables (.env), use secret management (Vault, AWS Secrets Manager)
 
-### 1. Guardrail Skills
+**Effort:** S (replace hardcoded value with `process.env.VAR_NAME`)
 
-**Purpose:** Enforce critical best practices that prevent errors
+### 2. SQL Injection Patterns
+**What:** String concatenation in SQL queries instead of parameterized queries
 
-**Characteristics:**
-- Type: `"guardrail"`
-- Enforcement: `"block"`
-- Priority: `"critical"` or `"high"`
-- Block file edits until skill used
-- Prevent common mistakes (column names, critical errors)
-- Session-aware (don't repeat nag in same session)
+**Detection:**
+- Patterns: `query = "SELECT * FROM users WHERE id=" + userId`, `db.execute(f"SELECT * FROM {table}")`, `` `SELECT * FROM ${table}` ``
+- Languages: JavaScript, Python, PHP, Java
 
-**Examples:**
-- `database-verification` - Verify table/column names before Prisma queries
-- `frontend-dev-guidelines` - Enforce React/TypeScript patterns
+**Severity:**
+- **CRITICAL:** User input directly concatenated without sanitization
+- **HIGH:** Variable concatenation in production code
+- **MEDIUM:** Concatenation with internal variables only
 
-**When to Use:**
-- Mistakes that cause runtime errors
-- Data integrity concerns
-- Critical compatibility issues
+**Recommendation:** Use parameterized queries (prepared statements), ORM query builders
 
-### 2. Domain Skills
+**Effort:** M (refactor query to use placeholders)
 
-**Purpose:** Provide comprehensive guidance for specific areas
+### 3. XSS Vulnerabilities
+**What:** Unsanitized user input rendered in HTML/templates
 
-**Characteristics:**
-- Type: `"domain"`
-- Enforcement: `"suggest"`
-- Priority: `"high"` or `"medium"`
-- Advisory, not mandatory
-- Topic or domain-specific
-- Comprehensive documentation
+**Detection:**
+- Patterns: `innerHTML = userInput`, `dangerouslySetInnerHTML={{__html: data}}`, `echo $userInput;`
+- Template engines: Check for unescaped output (`{{ var | safe }}`, `<%- var %>`)
 
-**Examples:**
-- `backend-dev-guidelines` - Node.js/Express/TypeScript patterns
-- `frontend-dev-guidelines` - React/TypeScript best practices
-- `error-tracking` - Sentry integration guidance
+**Severity:**
+- **CRITICAL:** User input directly inserted into DOM without sanitization
+- **HIGH:** User input with partial sanitization (insufficient escaping)
+- **MEDIUM:** Internal data with potential XSS if compromised
 
-**When to Use:**
-- Complex systems requiring deep knowledge
-- Best practices documentation
-- Architectural patterns
-- How-to guides
+**Recommendation:** Use framework escaping (React auto-escapes, use `textContent`), sanitize with DOMPurify
 
----
+**Effort:** S-M (replace `innerHTML` with `textContent` or sanitize)
 
-## Quick Start: Creating a New Skill
+### 4. Insecure Dependencies
+**What:** Dependencies with known CVEs (Common Vulnerabilities and Exposures)
 
-### Step 1: Create Skill File
+**Detection:**
+- Run `npm audit` (Node.js), `pip-audit` (Python), `cargo audit` (Rust), `dotnet list package --vulnerable` (.NET)
+- Check for outdated critical dependencies
 
-**Location:** `.claude/skills/{skill-name}/SKILL.md`
+**Severity:**
+- **CRITICAL:** CVE with exploitable vulnerability in production dependencies
+- **HIGH:** CVE in dev dependencies or lower severity production CVEs
+- **MEDIUM:** Outdated packages without known CVEs but security risk
 
-**Template:**
-```markdown
----
-name: my-new-skill
-description: Brief description including keywords that trigger this skill. Mention topics, file types, and use cases. Be explicit about trigger terms.
----
+**Recommendation:** Update to patched versions, replace unmaintained packages
 
-# My New Skill
+**Effort:** S-M (update package.json, test), L (if breaking changes)
 
-## Purpose
-What this skill helps with
+### 5. Missing Input Validation
+**What:** Missing validation at system boundaries (API endpoints, user forms, file uploads)
 
-## When to Use
-Specific scenarios and conditions
+**Detection:**
+- API routes without validation middleware
+- Form handlers without input sanitization
+- File uploads without type/size checks
+- Missing CORS configuration
 
-## Key Information
-The actual guidance, documentation, patterns, examples
+**Severity:**
+- **CRITICAL:** File upload without validation, authentication bypass potential
+- **HIGH:** Missing validation on sensitive endpoints (payment, auth, user data)
+- **MEDIUM:** Missing validation on read-only or internal endpoints
+
+**Recommendation:** Add validation middleware (Joi, Yup, express-validator), implement input sanitization
+
+**Effort:** M (add validation schema and middleware)
+
+## Scoring Algorithm
+
+**MANDATORY READ:** Load `shared/references/audit_scoring.md` for unified scoring formula.
+
+## Output Format
+
+**MANDATORY READ:** Load `shared/templates/audit_worker_report_template.md` for file format.
+
+Write report to `{output_dir}/621-security.md` with `category: "Security"` and checks: hardcoded_secrets, sql_injection, xss_vulnerabilities, insecure_dependencies, missing_input_validation.
+
+Return summary to coordinator:
+```
+Report written: docs/project/.audit/621-security.md
+Score: X.X/10 | Issues: N (C:N H:N M:N L:N)
 ```
 
-**Best Practices:**
-- ✅ **Name**: Lowercase, hyphens, gerund form (verb + -ing) preferred
-- ✅ **Description**: Include ALL trigger keywords/phrases (max 1024 chars)
-- ✅ **Content**: Under 500 lines - use reference files for details
-- ✅ **Examples**: Real code examples
-- ✅ **Structure**: Clear headings, lists, code blocks
+## Critical Rules
 
-### Step 2: Add to skill-rules.json
+- **Do not auto-fix:** Report violations only; coordinator creates task for user to fix
+- **Tech stack aware:** Use contextStore to apply framework-specific patterns (e.g., React XSS vs PHP XSS)
+- **False positive reduction:** Exclude test files, example configs, documentation
+- **Effort realism:** S = <1 hour, M = 1-4 hours, L = >4 hours
+- **Location precision:** Always include `file:line` for programmatic navigation
 
-See [SKILL_RULES_REFERENCE.md](SKILL_RULES_REFERENCE.md) for complete schema.
+## Definition of Done
 
-**Basic Template:**
-```json
-{
-  "my-new-skill": {
-    "type": "domain",
-    "enforcement": "suggest",
-    "priority": "medium",
-    "promptTriggers": {
-      "keywords": ["keyword1", "keyword2"],
-      "intentPatterns": ["(create|add).*?something"]
-    }
-  }
-}
-```
-
-### Step 3: Test Triggers
-
-**Test UserPromptSubmit:**
-```bash
-echo '{"session_id":"test","prompt":"your test prompt"}' | \
-  npx tsx .claude/hooks/codanna/skill-activation-prompt.ts
-```
-
-**Test PreToolUse (Read Validation):**
-```bash
-cat <<'EOF' | npx tsx .claude/hooks/codanna/pre_read_use.js
-{"session_id":"test","tool_name":"Read","tool_input":{"file_path":"test.ts","limit":500}}
-EOF
-```
-
-### Step 4: Refine Patterns
-
-Based on testing:
-- Add missing keywords
-- Refine intent patterns to reduce false positives
-- Adjust file path patterns
-- Test content patterns against actual files
-
-### Step 5: Follow Anthropic Best Practices
-
-✅ Keep SKILL.md under 500 lines
-✅ Use progressive disclosure with reference files
-✅ Add table of contents to reference files > 100 lines
-✅ Write detailed description with trigger keywords
-✅ Test with 3+ real scenarios before documenting
-✅ Iterate based on actual usage
-
----
-
-## Enforcement Levels
-
-### BLOCK (Critical Guardrails)
-
-- Physically prevents Edit/Write tool execution
-- Exit code 2 from hook, stderr → Claude
-- Claude sees message and must use skill to proceed
-- **Use For**: Critical mistakes, data integrity, security issues
-
-**Example:** Database column name verification
-
-### SUGGEST (Recommended)
-
-- Reminder injected before Claude sees prompt
-- Claude is aware of relevant skills
-- Not enforced, just advisory
-- **Use For**: Domain guidance, best practices, how-to guides
-
-**Example:** Frontend development guidelines
-
-### WARN (Optional)
-
-- Low priority suggestions
-- Advisory only, minimal enforcement
-- **Use For**: Nice-to-have suggestions, informational reminders
-
-**Rarely used** - most skills are either BLOCK or SUGGEST.
-
----
-
-## Skip Conditions & User Control
-
-### 1. Session Tracking
-
-**Purpose:** Don't nag repeatedly in same session
-
-**How it works:**
-- First edit → Hook blocks, updates session state
-- Second edit (same session) → Hook allows
-- Different session → Blocks again
-
-**State File:** `.claude/hooks/codanna/state/skills-used-{session_id}.jsonl`
-
-### 2. File Markers
-
-**Purpose:** Permanent skip for verified files
-
-**Marker:** `// @skip-validation`
-
-**Usage:**
-```typescript
-// @skip-validation
-import { PrismaService } from './prisma';
-// This file has been manually verified
-```
-
-**NOTE:** Use sparingly - defeats the purpose if overused
-
-### 3. Environment Variables
-
-**Purpose:** Emergency disable, temporary override
-
-**Global disable:**
-```bash
-export SKIP_SKILL_GUARDRAILS=true  # Disables ALL PreToolUse blocks
-```
-
-**Skill-specific:**
-```bash
-export SKIP_DB_VERIFICATION=true
-export SKIP_ERROR_REMINDER=true
-```
-
----
-
-## Testing Checklist
-
-When creating a new skill, verify:
-
-- [ ] Skill file created in `.claude/skills/{name}/SKILL.md`
-- [ ] Proper frontmatter with name and description
-- [ ] Entry added to `skill-rules.json`
-- [ ] Keywords tested with real prompts
-- [ ] Intent patterns tested with variations
-- [ ] File path patterns tested with actual files
-- [ ] Content patterns tested against file contents
-- [ ] Block message is clear and actionable (if guardrail)
-- [ ] Skip conditions configured appropriately
-- [ ] Priority level matches importance
-- [ ] No false positives in testing
-- [ ] No false negatives in testing
-- [ ] Performance is acceptable (<100ms or <200ms)
-- [ ] JSON syntax validated: `jq . skill-rules.json`
-- [ ] **SKILL.md under 500 lines** ⭐
-- [ ] Reference files created if needed
-- [ ] Table of contents added to files > 100 lines
-
----
+- contextStore parsed successfully (including output_dir)
+- All 5 security checks completed (secrets, SQL injection, XSS, deps, validation)
+- Findings collected with severity, location, effort, recommendation
+- Score calculated using penalty algorithm
+- Report written to `{output_dir}/621-security.md` (atomic single Write call)
+- Summary returned to coordinator
 
 ## Reference Files
 
-For detailed information on specific topics, see:
-
-### [TRIGGER_TYPES.md](TRIGGER_TYPES.md)
-Complete guide to all trigger types:
-- Keyword triggers (explicit topic matching)
-- Intent patterns (implicit action detection)
-- File path triggers (glob patterns)
-- Content patterns (regex in files)
-- Best practices and examples for each
-- Common pitfalls and testing strategies
-
-### [SKILL_RULES_REFERENCE.md](SKILL_RULES_REFERENCE.md)
-Complete skill-rules.json schema:
-- Full TypeScript interface definitions
-- Field-by-field explanations
-- Complete guardrail skill example
-- Complete domain skill example
-- Validation guide and common errors
-
-### [HOOK_MECHANISMS.md](HOOK_MECHANISMS.md)
-Deep dive into hook internals:
-- UserPromptSubmit flow (detailed)
-- PreToolUse flow (detailed)
-- Exit code behavior table (CRITICAL)
-- Session state management
-- Performance considerations
-
-### [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
-Comprehensive debugging guide:
-- Skill not triggering (UserPromptSubmit)
-- PreToolUse not blocking
-- False positives (too many triggers)
-- Hook not executing at all
-- Performance issues
-
-### [PATTERNS_LIBRARY.md](PATTERNS_LIBRARY.md)
-Ready-to-use pattern collection:
-- Intent pattern library (regex)
-- File path pattern library (glob)
-- Content pattern library (regex)
-- Organized by use case
-- Copy-paste ready
-
-### [ADVANCED.md](ADVANCED.md)
-Future enhancements and ideas:
-- Dynamic rule updates
-- Skill dependencies
-- Conditional enforcement
-- Skill analytics
-- Skill versioning
+- **Worker report template:** `shared/templates/audit_worker_report_template.md`
+- **Audit scoring formula:** `shared/references/audit_scoring.md`
+- **Audit output schema:** `shared/references/audit_output_schema.md`
+- Security audit rules: [references/security_rules.md](references/security_rules.md)
 
 ---
-
-## Quick Reference Summary
-
-### Create New Skill (5 Steps)
-
-1. Create `.claude/skills/{name}/SKILL.md` with frontmatter
-2. Add entry to `.claude/skills/skill-rules.json`
-3. Test with `npx tsx` commands
-4. Refine patterns based on testing
-5. Keep SKILL.md under 500 lines
-
-### Trigger Types
-
-- **Keywords**: Explicit topic mentions
-- **Intent**: Implicit action detection
-- **File Paths**: Location-based activation
-- **Content**: Technology-specific detection
-
-See [TRIGGER_TYPES.md](TRIGGER_TYPES.md) for complete details.
-
-### Enforcement
-
-- **BLOCK**: Exit code 2, critical only
-- **SUGGEST**: Inject context, most common
-- **WARN**: Advisory, rarely used
-
-### Skip Conditions
-
-- **Session tracking**: Automatic (prevents repeated nags)
-- **File markers**: `// @skip-validation` (permanent skip)
-- **Env vars**: `SKIP_SKILL_GUARDRAILS` (emergency disable)
-
-### Anthropic Best Practices
-
-✅ **500-line rule**: Keep SKILL.md under 500 lines
-✅ **Progressive disclosure**: Use reference files for details
-✅ **Table of contents**: Add to reference files > 100 lines
-✅ **One level deep**: Don't nest references deeply
-✅ **Rich descriptions**: Include all trigger keywords (max 1024 chars)
-✅ **Test first**: Build 3+ evaluations before extensive documentation
-✅ **Gerund naming**: Prefer verb + -ing (e.g., "processing-pdfs")
-
-### Troubleshoot
-
-Test hooks manually:
-```bash
-# UserPromptSubmit
-echo '{"prompt":"test"}' | npx tsx .claude/hooks/codanna/skill-activation-prompt.ts
-
-# PreToolUse (Read Validation)
-cat <<'EOF' | npx tsx .claude/hooks/codanna/pre_read_use.js
-{"tool_name":"Read","tool_input":{"file_path":"test.ts","limit":500}}
-EOF
-```
-
-See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for complete debugging guide.
-
----
-
-## Related Files
-
-**Configuration:**
-- `.claude/skills/skill-rules.json` - Master configuration
-- `.claude/hooks/codanna/state/` - Session tracking
-- `.claude/settings.local.json` - Hook registration
-
-**Hooks:**
-- `.claude/hooks/codanna/skill-activation-prompt.ts` - UserPromptSubmit
-- `.claude/hooks/codanna/pre_read_use.js` - PreToolUse (Read validation)
-- `.claude/hooks/codanna/stop.js` - Stop event (session end)
-- `.claude/hooks/codanna/subagent-stop.js` - Subagent stop event
-- `.claude/hooks/codanna/post_tool_use.js` - PostToolUse
-
-**All Skills:**
-- `.claude/skills/*/SKILL.md` - Skill content files
-
----
-
-**Skill Status**: COMPLETE - Restructured following Anthropic best practices ✅
-**Line Count**: < 500 (following 500-line rule) ✅
-**Progressive Disclosure**: Reference files for detailed information ✅
-
-**Next**: Create more skills, refine patterns based on usage
+**Version:** 3.0.0
+**Last Updated:** 2025-12-23
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
