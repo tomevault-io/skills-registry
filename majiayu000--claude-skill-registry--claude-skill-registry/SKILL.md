@@ -1,324 +1,357 @@
 ---
-name: ui-styling
-description: Create beautiful, accessible user interfaces with shadcn/ui components (built on Radix UI + Tailwind), Tailwind CSS utility-first styling, and canvas-based visual designs. Use when building user interfaces, implementing design systems, creating responsive layouts, adding accessible components (dialogs, dropdowns, forms, tables), customizing themes and colors, implementing dark mode, generating visual designs and posters, or establishing consistent styling patterns across applications. Use when this capability is needed.
+name: brokle-domain-architecture
+description: Use this skill when working with Brokle's domain-driven architecture, including creating new domains, modifying domain entities, designing cross-domain interactions, refactoring domain boundaries, or implementing complex domain logic. This is a specialized architectural skill.
 metadata:
   author: majiayu000
 ---
 
-# UI Styling Skill
+# Brokle Domain Architecture Skill
 
-Comprehensive skill for creating beautiful, accessible user interfaces combining shadcn/ui components, Tailwind CSS utility styling, and canvas-based visual design systems.
+Expert guidance for Brokle's Domain-Driven Design (DDD) architecture.
 
-## Reference
+## Domains
 
-- shadcn/ui: https://ui.shadcn.com/llms.txt
-- Tailwind CSS: https://tailwindcss.com/docs
+Primary domains in `internal/core/domain/`:
 
-## When to Use This Skill
+| Domain | Purpose |
+|--------|---------|
+| auth | Authentication, sessions, API keys |
+| billing | Usage tracking, subscriptions |
+| common | Shared transaction patterns, utilities |
+| gateway | AI provider routing |
+| observability | Traces, spans, quality scores |
+| organization | Multi-tenant org management |
+| user | User management and profiles |
 
-Use when:
-- Building UI with React-based frameworks (Next.js, Vite, Remix, Astro)
-- Implementing accessible components (dialogs, forms, tables, navigation)
-- Styling with utility-first CSS approach
-- Creating responsive, mobile-first layouts
-- Implementing dark mode and theme customization
-- Building design systems with consistent tokens
-- Generating visual designs, posters, or brand materials
-- Rapid prototyping with immediate visual feedback
-- Adding complex UI patterns (data tables, charts, command palettes)
+**Structure**: Each domain has entities.go, repository.go, service.go, errors.go, types.go
+**Reference**: List domains with `ls -1 internal/core/domain/` to see current implementation status
 
-## Core Stack
+## Domain Layer Structure
 
-### Component Layer: shadcn/ui
-- Pre-built accessible components via Radix UI primitives
-- Copy-paste distribution model (components live in your codebase)
-- TypeScript-first with full type safety
-- Composable primitives for complex UIs
-- CLI-based installation and management
-
-### Styling Layer: Tailwind CSS
-- Utility-first CSS framework
-- Build-time processing with zero runtime overhead
-- Mobile-first responsive design
-- Consistent design tokens (colors, spacing, typography)
-- Automatic dead code elimination
-
-### Visual Design Layer: Canvas
-- Museum-quality visual compositions
-- Philosophy-driven design approach
-- Sophisticated visual communication
-- Minimal text, maximum visual impact
-- Systematic patterns and refined aesthetics
-
-## Quick Start
-
-### Component + Styling Setup
-
-**Install shadcn/ui with Tailwind:**
-```bash
-npx shadcn@latest init
+```go
+internal/core/domain/{domain}/
+├── entities.go          # Domain entities
+├── repository.go        # Repository interfaces
+├── service.go           # Service interfaces
+├── errors.go            # Domain-specific errors
+├── types.go             # Domain types and enums
+└── validators.go        # Domain validation logic
 ```
 
-CLI prompts for framework, TypeScript, paths, and theme preferences. This configures both shadcn/ui and Tailwind CSS.
+## Entity Pattern
 
-**Add components:**
-```bash
-npx shadcn@latest add button card dialog form
+```go
+// internal/core/domain/auth/entities.go
+package auth
+
+import (
+    "time"
+    "brokle/pkg/ulid"
+)
+
+type User struct {
+    ID        ulid.ULID
+    Email     string
+    Name      string
+    Status    UserStatus
+    Role      Role
+    CreatedAt time.Time
+    UpdatedAt time.Time
+}
+
+// Domain enums
+type UserStatus string
+const (
+    UserStatusActive   UserStatus = "active"
+    UserStatusInactive UserStatus = "inactive"
+    UserStatusSuspended UserStatus = "suspended"
+)
+
+type Role string
+const (
+    RoleOwner  Role = "owner"
+    RoleAdmin  Role = "admin"
+    RoleUser   Role = "user"
+    RoleViewer Role = "viewer"
+)
 ```
 
-**Use components with utility styling:**
-```tsx
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+## Domain Errors
 
-export function Dashboard() {
-  return (
-    <div className="container mx-auto p-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      <Card className="hover:shadow-lg transition-shadow">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">Analytics</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-muted-foreground">View your metrics</p>
-          <Button variant="default" className="w-full">
-            View Details
-          </Button>
-        </CardContent>
-      </Card>
-    </div>
-  )
+```go
+// internal/core/domain/auth/errors.go
+package auth
+
+import "errors"
+
+var (
+    ErrNotFound           = errors.New("user not found")
+    ErrAlreadyExists      = errors.New("user already exists")
+    ErrInvalidCredentials = errors.New("invalid credentials")
+    ErrSessionExpired     = errors.New("session expired")
+)
+```
+
+## Repository Interfaces
+
+```go
+// internal/core/domain/auth/repository.go
+package auth
+
+import (
+    "context"
+    "brokle/pkg/ulid"
+)
+
+type UserRepository interface {
+    Create(ctx context.Context, user *User) error
+    GetByID(ctx context.Context, id ulid.ULID) (*User, error)
+    GetByEmail(ctx context.Context, email string) (*User, error)
+    Update(ctx context.Context, user *User) error
+    Delete(ctx context.Context, id ulid.ULID) error
+    List(ctx context.Context, filter UserFilter) ([]*User, error)
 }
 ```
 
-### Alternative: Tailwind-Only Setup
+## Service Interfaces
 
-**Vite projects:**
-```bash
-npm install -D tailwindcss @tailwindcss/vite
-```
+```go
+// internal/core/domain/auth/service.go
+package auth
 
-```javascript
-// vite.config.ts
-import tailwindcss from '@tailwindcss/vite'
-export default { plugins: [tailwindcss()] }
-```
+import "context"
 
-```css
-/* src/index.css */
-@import "tailwindcss";
-```
-
-## Component Library Guide
-
-**Comprehensive component catalog with usage patterns, installation, and composition examples.**
-
-See: `references/shadcn-components.md`
-
-Covers:
-- Form & input components (Button, Input, Select, Checkbox, Date Picker, Form validation)
-- Layout & navigation (Card, Tabs, Accordion, Navigation Menu)
-- Overlays & dialogs (Dialog, Drawer, Popover, Toast, Command)
-- Feedback & status (Alert, Progress, Skeleton)
-- Display components (Table, Data Table, Avatar, Badge)
-
-## Theme & Customization
-
-**Theme configuration, CSS variables, dark mode implementation, and component customization.**
-
-See: `references/shadcn-theming.md`
-
-Covers:
-- Dark mode setup with next-themes
-- CSS variable system
-- Color customization and palettes
-- Component variant customization
-- Theme toggle implementation
-
-## Accessibility Patterns
-
-**ARIA patterns, keyboard navigation, screen reader support, and accessible component usage.**
-
-See: `references/shadcn-accessibility.md`
-
-Covers:
-- Radix UI accessibility features
-- Keyboard navigation patterns
-- Focus management
-- Screen reader announcements
-- Form validation accessibility
-
-## Tailwind Utilities
-
-**Core utility classes for layout, spacing, typography, colors, borders, and shadows.**
-
-See: `references/tailwind-utilities.md`
-
-Covers:
-- Layout utilities (Flexbox, Grid, positioning)
-- Spacing system (padding, margin, gap)
-- Typography (font sizes, weights, alignment, line height)
-- Colors and backgrounds
-- Borders and shadows
-- Arbitrary values for custom styling
-
-## Responsive Design
-
-**Mobile-first breakpoints, responsive utilities, and adaptive layouts.**
-
-See: `references/tailwind-responsive.md`
-
-Covers:
-- Mobile-first approach
-- Breakpoint system (sm, md, lg, xl, 2xl)
-- Responsive utility patterns
-- Container queries
-- Max-width queries
-- Custom breakpoints
-
-## Tailwind Customization
-
-**Config file structure, custom utilities, plugins, and theme extensions.**
-
-See: `references/tailwind-customization.md`
-
-Covers:
-- @theme directive for custom tokens
-- Custom colors and fonts
-- Spacing and breakpoint extensions
-- Custom utility creation
-- Custom variants
-- Layer organization (@layer base, components, utilities)
-- Apply directive for component extraction
-
-## Visual Design System
-
-**Canvas-based design philosophy, visual communication principles, and sophisticated compositions.**
-
-See: `references/canvas-design-system.md`
-
-Covers:
-- Design philosophy approach
-- Visual communication over text
-- Systematic patterns and composition
-- Color, form, and spatial design
-- Minimal text integration
-- Museum-quality execution
-- Multi-page design systems
-
-## Utility Scripts
-
-**Python automation for component installation and configuration generation.**
-
-### shadcn_add.py
-Add shadcn/ui components with dependency handling:
-```bash
-python scripts/shadcn_add.py button card dialog
-```
-
-### tailwind_config_gen.py
-Generate tailwind.config.js with custom theme:
-```bash
-python scripts/tailwind_config_gen.py --colors brand:blue --fonts display:Inter
-```
-
-## Best Practices
-
-1. **Component Composition**: Build complex UIs from simple, composable primitives
-2. **Utility-First Styling**: Use Tailwind classes directly; extract components only for true repetition
-3. **Mobile-First Responsive**: Start with mobile styles, layer responsive variants
-4. **Accessibility-First**: Leverage Radix UI primitives, add focus states, use semantic HTML
-5. **Design Tokens**: Use consistent spacing scale, color palettes, typography system
-6. **Dark Mode Consistency**: Apply dark variants to all themed elements
-7. **Performance**: Leverage automatic CSS purging, avoid dynamic class names
-8. **TypeScript**: Use full type safety for better DX
-9. **Visual Hierarchy**: Let composition guide attention, use spacing and color intentionally
-10. **Expert Craftsmanship**: Every detail matters - treat UI as a craft
-
-## Reference Navigation
-
-**Component Library**
-- `references/shadcn-components.md` - Complete component catalog
-- `references/shadcn-theming.md` - Theming and customization
-- `references/shadcn-accessibility.md` - Accessibility patterns
-
-**Styling System**
-- `references/tailwind-utilities.md` - Core utility classes
-- `references/tailwind-responsive.md` - Responsive design
-- `references/tailwind-customization.md` - Configuration and extensions
-
-**Visual Design**
-- `references/canvas-design-system.md` - Design philosophy and canvas workflows
-
-**Automation**
-- `scripts/shadcn_add.py` - Component installation
-- `scripts/tailwind_config_gen.py` - Config generation
-
-## Common Patterns
-
-**Form with validation:**
-```tsx
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-
-const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8)
-})
-
-export function LoginForm() {
-  const form = useForm({
-    resolver: zodResolver(schema),
-    defaultValues: { email: "", password: "" }
-  })
-
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(console.log)} className="space-y-6">
-        <FormField control={form.control} name="email" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Email</FormLabel>
-            <FormControl>
-              <Input type="email" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )} />
-        <Button type="submit" className="w-full">Sign In</Button>
-      </form>
-    </Form>
-  )
+type AuthService interface {
+    Register(ctx context.Context, req *RegisterRequest) (*RegisterResponse, error)
+    Login(ctx context.Context, req *LoginRequest) (*LoginResponse, error)
+    Logout(ctx context.Context, token string) error
+    ValidateSession(ctx context.Context, token string) (*User, error)
 }
 ```
 
-**Responsive layout with dark mode:**
-```tsx
-<div className="min-h-screen bg-white dark:bg-gray-900">
-  <div className="container mx-auto px-4 py-8">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-        <CardContent className="p-6">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-            Content
-          </h3>
-        </CardContent>
-      </Card>
-    </div>
-  </div>
-</div>
+## Multi-Tenant Scoping Patterns
+
+**NOT all entities have `organization_id`** - scoping depends on entity type:
+
+### 1. Organization-Scoped Entities (Direct `organization_id`)
+```go
+// organization/organization.go:54-57
+type Project struct {
+    ID             ulid.ULID
+    OrganizationID ulid.ULID `json:"organization_id" gorm:"type:char(26);not null"`
+    Name           string
+}
+
+// organization/organization.go:37-39
+type Member struct {
+    OrganizationID ulid.ULID `json:"organization_id" gorm:"type:char(26);not null;primaryKey"`
+    UserID         ulid.ULID
+}
 ```
 
-## Resources
+### 2. Project-Scoped Entities (Organization via Project)
+```go
+// auth/auth.go:94 - APIKey is project-scoped
+type APIKey struct {
+    ID        ulid.ULID
+    ProjectID ulid.ULID `json:"project_id" gorm:"type:char(26);not null;index"`
+    // Organization derived via Project join
+}
+```
 
-- shadcn/ui Docs: https://ui.shadcn.com
-- Tailwind CSS Docs: https://tailwindcss.com
-- Radix UI: https://radix-ui.com
-- Tailwind UI: https://tailwindui.com
-- Headless UI: https://headlessui.com
-- v0 (AI UI Generator): https://v0.dev
+### 3. Scoped Entities (Flexible Scoping)
+```go
+// auth/auth.go:113-114 - Role uses flexible scope_type pattern
+type Role struct {
+    ID        ulid.ULID
+    ScopeType string     `json:"scope_type" gorm:"size:20;not null"`  // "organization", "project", "global"
+    ScopeID   *ulid.ULID `json:"scope_id,omitempty" gorm:"type:char(26);index"`
+}
+```
+
+### 4. Global Entities (No organization_id)
+```go
+// user/user.go:14-39 - User is global with optional org reference
+type User struct {
+    ID    ulid.ULID
+    Email string
+    DefaultOrganizationID *ulid.ULID `json:"default_organization_id,omitempty" gorm:"type:char(26)"`
+    // NOT required - users can belong to multiple orgs via Member table
+}
+
+// organization/organization.go:16 - Organization IS the tenant
+type Organization struct {
+    ID   ulid.ULID
+    Name string
+    // No organization_id - it IS the organization
+}
+```
+
+**Reference Files**:
+- Organization-scoped: `internal/core/domain/organization/organization.go:54-73`
+- Project-scoped: `internal/core/domain/auth/auth.go:94`
+- Scoped (flexible): `internal/core/domain/auth/auth.go:113-114`
+- Global: `internal/core/domain/user/user.go:14-39`
+
+## Cross-Domain Relationships
+
+```go
+// Example: Organization domain referencing User domain
+package organization
+
+import (
+    userDomain "brokle/internal/core/domain/user"
+)
+
+type Member struct {
+    ID             ulid.ULID
+    OrganizationID ulid.ULID
+    UserID         ulid.ULID  // References user domain
+    Role           string
+    Status         MemberStatus
+}
+
+// Service can accept interfaces from other domains
+type OrganizationService struct {
+    orgRepo    OrganizationRepository
+    userRepo   userDomain.UserRepository  // Cross-domain dependency
+    memberRepo MemberRepository
+}
+```
+
+## Creating a New Domain
+
+### Step 1: Create Domain Structure
+
+```bash
+mkdir -p internal/core/domain/my-domain
+touch internal/core/domain/my-domain/{entities,repository,service,errors,types}.go
+```
+
+### Step 2: Define Entities
+
+```go
+// entities.go
+package mydomain
+
+import (
+    "time"
+    "brokle/pkg/ulid"
+)
+
+type MyEntity struct {
+    ID             ulid.ULID
+    OrganizationID ulid.ULID  // Always include for multi-tenancy
+    Name           string
+    Status         MyStatus
+    CreatedAt      time.Time
+    UpdatedAt      time.Time
+}
+```
+
+### Step 3: Define Domain Errors
+
+```go
+// errors.go
+package mydomain
+
+import "errors"
+
+var (
+    ErrNotFound      = errors.New("entity not found")
+    ErrAlreadyExists = errors.New("entity already exists")
+    ErrInvalidInput  = errors.New("invalid input")
+)
+```
+
+### Step 4: Define Repository Interface
+
+```go
+// repository.go
+package mydomain
+
+import (
+    "context"
+    "brokle/pkg/ulid"
+)
+
+type MyEntityRepository interface {
+    Create(ctx context.Context, entity *MyEntity) error
+    GetByID(ctx context.Context, id ulid.ULID) (*MyEntity, error)
+    Update(ctx context.Context, entity *MyEntity) error
+    Delete(ctx context.Context, id ulid.ULID) error
+}
+```
+
+### Step 5: Define Service Interface
+
+```go
+// service.go
+package mydomain
+
+import "context"
+
+type MyDomainService interface {
+    CreateEntity(ctx context.Context, req *CreateEntityRequest) (*CreateEntityResponse, error)
+    GetEntity(ctx context.Context, id ulid.ULID) (*GetEntityResponse, error)
+}
+```
+
+### Step 6: Implement Service
+
+In `internal/core/services/my-domain/`
+
+### Step 7: Implement Repository
+
+In `internal/infrastructure/repository/my-domain/`
+
+### Step 8: Register in DI Container
+
+In `internal/app/app.go`
+
+## Domain Validation
+
+```go
+// validators.go
+package auth
+
+import (
+    "errors"
+    "regexp"
+)
+
+func (u *User) Validate() error {
+    if u.Email == "" {
+        return errors.New("email is required")
+    }
+    if !isValidEmail(u.Email) {
+        return errors.New("invalid email format")
+    }
+    if u.Name == "" {
+        return errors.New("name is required")
+    }
+    return nil
+}
+
+func isValidEmail(email string) bool {
+    return regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`).MatchString(email)
+}
+```
+
+## Key Principles
+
+1. **Domain Purity**: Domain layer has no external dependencies
+2. **Multi-Tenancy**: All entities scoped by organization
+3. **Domain Errors**: Use domain-specific errors
+4. **Validation**: Domain entities validate themselves
+5. **Interfaces**: Define repository and service interfaces in domain
+6. **Cross-Domain**: Use domain aliases for cross-domain references
+
+## References
+
+- Existing domains in `internal/core/domain/` for patterns
+- `CLAUDE.md` - Architecture overview
+- `docs/development/PATTERNS.md` - Domain patterns
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
