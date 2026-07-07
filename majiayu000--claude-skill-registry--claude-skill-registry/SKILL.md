@@ -1,572 +1,389 @@
 ---
-name: vanilla-extract
-description: Implements zero-runtime CSS using vanilla-extract with type-safe styles, themes, recipes, and sprinkles. Use when wanting type-safe CSS, static extraction at build time, or building design system utilities. Use when this capability is needed.
+name: async-python-patterns
+description: Use when implementing asyncio patterns, structured concurrency, async generators, or debugging event loop issues in ML serving and API backends.
 metadata:
   author: majiayu000
 ---
 
-# vanilla-extract
+# Async Python Patterns
 
-Zero-runtime CSS-in-TypeScript with static extraction at build time.
+## When to Use Async Decision Table
 
-## Quick Start
+| Workload Type | Use Async? | Why |
+|--------------|-----------|-----|
+| HTTP API calls (many concurrent) | **Yes** | IO-bound, high concurrency wins |
+| Database queries (connection pool) | **Yes** | IO-bound, pool management natural |
+| File IO (many files) | **Maybe** | OS-level async varies; aiofiles helps |
+| CPU-heavy computation | **No** | GIL blocks; use multiprocessing |
+| ML model inference (GPU) | **Hybrid** | Offload to thread/process, await result |
+| WebSocket server | **Yes** | Long-lived connections, perfect fit |
+| CLI scripts | **Usually no** | Overhead not worth it for sequential tasks |
 
-**Install:**
-```bash
-npm install @vanilla-extract/css
-# Framework integrations
-npm install @vanilla-extract/vite-plugin    # Vite
-npm install @vanilla-extract/next-plugin    # Next.js
+## Core Patterns
+
+### gather -- Run Multiple Coroutines Concurrently
+
+```python
+import asyncio
+import httpx
+
+async def fetch_all(urls: list[str]) -> list[dict]:
+    async with httpx.AsyncClient() as client:
+        tasks = [client.get(url) for url in urls]
+        responses = await asyncio.gather(*tasks, return_exceptions=True)
+
+        results = []
+        for resp in responses:
+            if isinstance(resp, Exception):
+                results.append({"error": str(resp)})
+            else:
+                results.append(resp.json())
+        return results
 ```
 
-**Configure (Vite):**
-```typescript
-// vite.config.ts
-import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
-import { defineConfig } from 'vite';
+### TaskGroup -- Structured Concurrency (Python 3.11+)
 
-export default defineConfig({
-  plugins: [vanillaExtractPlugin()],
-});
+```python
+async def fetch_all_structured(urls: list[str]) -> list[dict]:
+    """TaskGroup cancels all tasks if any raises. Preferred over gather."""
+    results = {}
+
+    async with httpx.AsyncClient() as client:
+        async with asyncio.TaskGroup() as tg:
+            for url in urls:
+                tg.create_task(fetch_one(client, url, results))
+
+    return list(results.values())
+
+async def fetch_one(client: httpx.AsyncClient, url: str, results: dict):
+    resp = await client.get(url)
+    results[url] = resp.json()
 ```
 
-**Create styles:**
-```typescript
-// button.css.ts
-import { style } from '@vanilla-extract/css';
+### TaskGroup Exception Handling
 
-export const button = style({
-  padding: '12px 24px',
-  border: 'none',
-  borderRadius: 8,
-  fontSize: 16,
-  cursor: 'pointer',
-  backgroundColor: '#3b82f6',
-  color: 'white',
-  ':hover': {
-    backgroundColor: '#2563eb',
-  },
-});
+```python
+async def fetch_with_partial_failure(urls: list[str]) -> tuple[list[dict], list[str]]:
+    """Allow partial failures -- don't cancel everything."""
+    results = []
+    errors = []
+
+    async with asyncio.TaskGroup() as tg:
+        for url in urls:
+            tg.create_task(_safe_fetch(url, results, errors))
+
+    return results, errors
+
+async def _safe_fetch(url: str, results: list, errors: list):
+    """Catch inside the task so TaskGroup doesn't cancel siblings."""
+    try:
+        async with httpx.AsyncClient() as client:
+            resp = await client.get(url)
+            results.append(resp.json())
+    except Exception as exc:
+        errors.append(f"{url}: {exc}")
 ```
 
-**Use in component:**
-```tsx
-// Button.tsx
-import { button } from './button.css';
+### Semaphores -- Limit Concurrency
 
-export function Button({ children }: { children: React.ReactNode }) {
-  return <button className={button}>{children}</button>;
-}
+```python
+async def fetch_with_limit(urls: list[str], max_concurrent: int = 10) -> list[dict]:
+    """Prevent overwhelming the target server or exhausting connections."""
+    sem = asyncio.Semaphore(max_concurrent)
+
+    async def bounded_fetch(client: httpx.AsyncClient, url: str) -> dict:
+        async with sem:
+            resp = await client.get(url)
+            return resp.json()
+
+    async with httpx.AsyncClient() as client:
+        tasks = [bounded_fetch(client, url) for url in urls]
+        return await asyncio.gather(*tasks)
 ```
 
-## Style API
+### Timeouts
 
-### Basic Styles
-
-```typescript
-import { style } from '@vanilla-extract/css';
-
-export const container = style({
-  maxWidth: 1200,
-  margin: '0 auto',
-  padding: 16,
-});
-
-// Numbers become pixels (except unitless properties)
-export const box = style({
-  padding: 16,        // 16px
-  margin: 8,          // 8px
-  opacity: 0.5,       // unitless
-  flexGrow: 1,        // unitless
-  lineHeight: 1.5,    // unitless
-});
+```python
+async def fetch_with_timeout(url: str, timeout_s: float = 5.0) -> dict:
+    try:
+        async with asyncio.timeout(timeout_s):  # Python 3.11+
+            async with httpx.AsyncClient() as client:
+                resp = await client.get(url)
+                return resp.json()
+    except TimeoutError:
+        return {"error": f"Timeout after {timeout_s}s"}
 ```
 
-### Pseudo-Selectors
+## Async Context Managers
 
-```typescript
-export const link = style({
-  color: '#3b82f6',
-  textDecoration: 'none',
+```python
+from contextlib import asynccontextmanager
+from typing import AsyncIterator
 
-  ':hover': {
-    textDecoration: 'underline',
-  },
+class DatabasePool:
+    """Async resource that needs setup/teardown."""
 
-  ':focus-visible': {
-    outline: '2px solid #3b82f6',
-    outlineOffset: 2,
-  },
+    async def connect(self):
+        self._pool = await create_pool(dsn="postgres://...")
 
-  '::before': {
-    content: '">"',
-    marginRight: 4,
-  },
-});
+    async def close(self):
+        await self._pool.close()
+
+    async def __aenter__(self):
+        await self.connect()
+        return self
+
+    async def __aexit__(self, *exc):
+        await self.close()
+
+# Or with decorator:
+@asynccontextmanager
+async def get_db_connection() -> AsyncIterator:
+    pool = await create_pool(dsn="postgres://...")
+    try:
+        async with pool.acquire() as conn:
+            yield conn
+    finally:
+        await pool.close()
 ```
 
-### Complex Selectors
+## Async Generators and Iteration
 
-```typescript
-export const card = style({
-  padding: 16,
+```python
+from typing import AsyncIterator
 
-  selectors: {
-    // Target self with conditions
-    '&:first-child': {
-      marginTop: 0,
-    },
+async def stream_records(query: str, batch_size: int = 100) -> AsyncIterator[dict]:
+    """Async generator -- yields items lazily from paginated source."""
+    offset = 0
+    while True:
+        rows = await db.fetch(query, limit=batch_size, offset=offset)
+        if not rows:
+            break
+        for row in rows:
+            yield dict(row)
+        offset += batch_size
 
-    // Adjacent sibling
-    '& + &': {
-      marginTop: 16,
-    },
+# Consuming:
+async for record in stream_records("SELECT * FROM events"):
+    process(record)
 
-    // Parent hover (& must appear in selector)
-    '.dark-mode &': {
-      backgroundColor: '#1f2937',
-    },
-
-    // Direct child - use globalStyle instead
-    // '& > div': { } // Invalid!
-  },
-});
+# Collecting with comprehension:
+results = [r async for r in stream_records("SELECT * FROM events") if r["active"]]
 ```
 
-### Media Queries
+### Async Iterator Protocol
 
-```typescript
-export const responsiveBox = style({
-  padding: 16,
+```python
+class AsyncChunkedReader:
+    """Implements async iterator protocol directly."""
 
-  '@media': {
-    '(min-width: 768px)': {
-      padding: 24,
-    },
-    '(min-width: 1024px)': {
-      padding: 32,
-    },
-    '(prefers-color-scheme: dark)': {
-      backgroundColor: '#1f2937',
-    },
-  },
-});
+    def __init__(self, stream, chunk_size: int = 8192):
+        self._stream = stream
+        self._chunk_size = chunk_size
+
+    def __aiter__(self):
+        return self
+
+    async def __anext__(self) -> bytes:
+        chunk = await self._stream.read(self._chunk_size)
+        if not chunk:
+            raise StopAsyncIteration
+        return chunk
+
+# Usage
+async for chunk in AsyncChunkedReader(response.stream):
+    await output.write(chunk)
 ```
 
-### Container Queries
+## Async in ML Serving
 
-```typescript
-export const containerParent = style({
-  containerType: 'inline-size',
-});
+```python
+import asyncio
+from concurrent.futures import ProcessPoolExecutor
+from fastapi import FastAPI
 
-export const responsiveChild = style({
-  padding: 16,
+app = FastAPI()
 
-  '@container': {
-    '(min-width: 400px)': {
-      padding: 24,
-    },
-  },
-});
+# CPU-bound model inference should NOT run on the event loop
+_executor = ProcessPoolExecutor(max_workers=4)
+
+def _predict_sync(input_data: dict) -> dict:
+    """Runs in a separate process -- no GIL contention."""
+    # Load model (cached per process) and predict
+    model = get_cached_model()
+    result = model.predict(input_data["features"])
+    return {"prediction": result.tolist()}
+
+@app.post("/predict")
+async def predict(input_data: dict) -> dict:
+    loop = asyncio.get_event_loop()
+    # Offload CPU work to process pool
+    result = await loop.run_in_executor(_executor, _predict_sync, input_data)
+    return result
 ```
 
-## CSS Variables
+### Batched Async Inference Server
 
-### createVar
+```python
+import asyncio
+from dataclasses import dataclass, field
 
-```typescript
-import { style, createVar } from '@vanilla-extract/css';
+@dataclass
+class InferenceRequest:
+    input: dict
+    future: asyncio.Future = field(default_factory=lambda: asyncio.get_event_loop().create_future())
 
-const accentColor = createVar();
-const spacing = createVar();
+class AsyncBatchPredictor:
+    """Collects requests, batches them, runs inference on batch."""
 
-export const container = style({
-  vars: {
-    [accentColor]: '#3b82f6',
-    [spacing]: '16px',
-  },
-  padding: spacing,
-  borderColor: accentColor,
-});
+    def __init__(self, model, max_batch: int = 32, max_wait_ms: float = 5):
+        self.model = model
+        self.max_batch = max_batch
+        self.max_wait = max_wait_ms / 1000
+        self._queue: asyncio.Queue[InferenceRequest] = asyncio.Queue()
 
-export const altContainer = style({
-  vars: {
-    [accentColor]: '#10b981', // Override
-  },
-});
+    async def start(self):
+        """Start the background batch processing loop."""
+        asyncio.create_task(self._batch_loop())
+
+    async def predict(self, input_data: dict) -> dict:
+        """Called per-request. Returns when batch containing this request completes."""
+        req = InferenceRequest(input=input_data)
+        await self._queue.put(req)
+        return await req.future
+
+    async def _batch_loop(self):
+        while True:
+            batch: list[InferenceRequest] = []
+
+            # Wait for first request
+            req = await self._queue.get()
+            batch.append(req)
+
+            # Collect more for up to max_wait
+            deadline = asyncio.get_event_loop().time() + self.max_wait
+            while len(batch) < self.max_batch:
+                remaining = deadline - asyncio.get_event_loop().time()
+                if remaining <= 0:
+                    break
+                try:
+                    req = await asyncio.wait_for(self._queue.get(), timeout=remaining)
+                    batch.append(req)
+                except TimeoutError:
+                    break
+
+            # Run batched inference
+            try:
+                inputs = [r.input for r in batch]
+                results = self.model.predict_batch(inputs)
+                for req, result in zip(batch, results):
+                    req.future.set_result(result)
+            except Exception as exc:
+                for req in batch:
+                    if not req.future.done():
+                        req.future.set_exception(exc)
 ```
 
-### Fallback Values
+## Testing Async Code
 
-```typescript
-import { fallbackVar } from '@vanilla-extract/css';
+```python
+import pytest
+import asyncio
 
-export const box = style({
-  color: fallbackVar(accentColor, 'blue'),
-});
+# pytest-asyncio: just decorate with @pytest.mark.asyncio
+@pytest.mark.asyncio
+async def test_fetch():
+    result = await fetch_data("https://api.example.com/data")
+    assert result["status"] == "ok"
+
+# Fixture that provides async resource
+@pytest.fixture
+async def db_conn():
+    conn = await connect_db()
+    yield conn
+    await conn.close()
+
+@pytest.mark.asyncio
+async def test_query(db_conn):
+    rows = await db_conn.fetch("SELECT 1")
+    assert len(rows) == 1
+
+# Testing timeouts
+@pytest.mark.asyncio
+async def test_timeout_behavior():
+    with pytest.raises(TimeoutError):
+        async with asyncio.timeout(0.01):
+            await asyncio.sleep(10)
+
+# Testing concurrent behavior
+@pytest.mark.asyncio
+async def test_semaphore_limits_concurrency():
+    active = 0
+    max_active = 0
+
+    async def track_concurrency(sem: asyncio.Semaphore):
+        nonlocal active, max_active
+        async with sem:
+            active += 1
+            max_active = max(max_active, active)
+            await asyncio.sleep(0.01)
+            active -= 1
+
+    sem = asyncio.Semaphore(3)
+    await asyncio.gather(*[track_concurrency(sem) for _ in range(10)])
+    assert max_active <= 3
 ```
 
-## Style Variants
+### pytest-asyncio Configuration
 
-```typescript
-import { styleVariants } from '@vanilla-extract/css';
-
-// Simple variants
-export const color = styleVariants({
-  primary: { backgroundColor: '#3b82f6', color: 'white' },
-  secondary: { backgroundColor: '#e5e7eb', color: '#1f2937' },
-  danger: { backgroundColor: '#ef4444', color: 'white' },
-});
-
-// With composition
-const base = style({
-  padding: '12px 24px',
-  borderRadius: 8,
-  border: 'none',
-});
-
-export const button = styleVariants({
-  primary: [base, { backgroundColor: '#3b82f6', color: 'white' }],
-  secondary: [base, { backgroundColor: '#e5e7eb', color: '#1f2937' }],
-});
-
-// Usage
-<button className={button.primary}>Primary</button>
-<button className={color['secondary']}>Secondary</button>
+```toml
+# pyproject.toml
+[tool.pytest.ini_options]
+asyncio_mode = "auto"  # No need for @pytest.mark.asyncio on every test
 ```
 
-## Global Styles
+## Common Patterns Cheat Sheet
 
-```typescript
-import { globalStyle, style } from '@vanilla-extract/css';
+```python
+# Run sync function in thread (IO-bound, not async-native)
+result = await asyncio.to_thread(sync_function, arg1, arg2)
 
-// Global reset
-globalStyle('*, *::before, *::after', {
-  boxSizing: 'border-box',
-});
+# Run sync function in process (CPU-bound)
+result = await loop.run_in_executor(process_pool, cpu_function, arg)
 
-globalStyle('body', {
-  margin: 0,
-  fontFamily: 'system-ui, sans-serif',
-});
+# Fire and forget (use sparingly)
+task = asyncio.create_task(background_work())
+task.add_done_callback(lambda t: t.exception() if not t.cancelled() else None)
 
-// Reference scoped classes
-const card = style({ padding: 16 });
+# Wait for first completed
+done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+for task in pending:
+    task.cancel()
 
-globalStyle(`${card} > h2`, {
-  margin: 0,
-  fontSize: 24,
-});
-
-globalStyle(`${card} p`, {
-  color: '#6b7280',
-});
+# Async queue (producer/consumer)
+queue: asyncio.Queue[dict] = asyncio.Queue(maxsize=100)
+await queue.put(item)    # Blocks if full
+item = await queue.get()  # Blocks if empty
 ```
 
-## Theming
+## Gotchas
 
-### Create Theme
+- **Blocking the event loop**: calling `time.sleep()`, `requests.get()`, or any sync IO in an async function freezes all concurrent tasks; use `await asyncio.sleep()`, `httpx.AsyncClient`, or `asyncio.to_thread()`
+- **GIL and CPU work**: async does NOT bypass the GIL; CPU-bound code in async tasks still serializes; use `ProcessPoolExecutor` for CPU work
+- **Forgetting `await`**: `result = async_func()` returns a coroutine object, not the result; always `await` it; enable `RuntimeWarning` for unawaited coroutines
+- **Exception swallowing in `gather`**: `return_exceptions=True` silently returns exceptions as values; always check `isinstance(result, Exception)` afterward
+- **TaskGroup vs gather**: TaskGroup cancels all on first exception (fail-fast); gather with `return_exceptions=True` collects all; choose based on whether partial results are useful
+- **Async generators not closed**: if you break out of `async for` early, the generator may not clean up; use `async with aclosing(gen)` from `contextlib`
+- **Event loop already running**: calling `asyncio.run()` inside an already-running loop (e.g., Jupyter) fails; use `nest_asyncio` or `await` directly
+- **Shared mutable state**: async tasks share memory (unlike processes); no GIL protection between `await` points; use `asyncio.Lock` if tasks mutate shared state between awaits
+- **Too many tasks**: creating 100k tasks is fine for IO, but each has overhead; for extreme fan-out, use semaphores or chunked processing
+- **Mixing sync and async ORMs**: SQLAlchemy async requires `AsyncSession`; you can't use sync session in async code without `run_in_executor`
 
-```typescript
-// theme.css.ts
-import { createTheme } from '@vanilla-extract/css';
+## Cross-References
 
-export const [themeClass, vars] = createTheme({
-  colors: {
-    primary: '#3b82f6',
-    secondary: '#6b7280',
-    background: '#ffffff',
-    text: '#1f2937',
-  },
-  spacing: {
-    sm: '8px',
-    md: '16px',
-    lg: '24px',
-  },
-  borderRadius: {
-    sm: '4px',
-    md: '8px',
-    lg: '16px',
-  },
-});
-```
-
-### Use Theme Variables
-
-```typescript
-// button.css.ts
-import { style } from '@vanilla-extract/css';
-import { vars } from './theme.css';
-
-export const button = style({
-  padding: vars.spacing.md,
-  borderRadius: vars.borderRadius.md,
-  backgroundColor: vars.colors.primary,
-  color: '#fff',
-});
-```
-
-### Multiple Themes
-
-```typescript
-import { createTheme, createThemeContract } from '@vanilla-extract/css';
-
-// Define contract (structure only)
-const themeContract = createThemeContract({
-  colors: {
-    background: null,
-    text: null,
-    primary: null,
-  },
-});
-
-// Light theme
-export const lightTheme = createTheme(themeContract, {
-  colors: {
-    background: '#ffffff',
-    text: '#1f2937',
-    primary: '#3b82f6',
-  },
-});
-
-// Dark theme
-export const darkTheme = createTheme(themeContract, {
-  colors: {
-    background: '#1f2937',
-    text: '#f9fafb',
-    primary: '#60a5fa',
-  },
-});
-
-export { themeContract as vars };
-```
-
-**Apply theme:**
-```tsx
-function App() {
-  const [isDark, setIsDark] = useState(false);
-
-  return (
-    <div className={isDark ? darkTheme : lightTheme}>
-      <button onClick={() => setIsDark(!isDark)}>Toggle</button>
-    </div>
-  );
-}
-```
-
-## Recipes
-
-Multi-variant component styles.
-
-**Install:**
-```bash
-npm install @vanilla-extract/recipes
-```
-
-```typescript
-// button.css.ts
-import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
-
-export const button = recipe({
-  base: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: 'none',
-    borderRadius: 8,
-    cursor: 'pointer',
-    fontWeight: 600,
-  },
-
-  variants: {
-    color: {
-      primary: {
-        backgroundColor: '#3b82f6',
-        color: 'white',
-      },
-      secondary: {
-        backgroundColor: '#e5e7eb',
-        color: '#1f2937',
-      },
-      danger: {
-        backgroundColor: '#ef4444',
-        color: 'white',
-      },
-    },
-    size: {
-      sm: { padding: '8px 16px', fontSize: 14 },
-      md: { padding: '12px 24px', fontSize: 16 },
-      lg: { padding: '16px 32px', fontSize: 18 },
-    },
-  },
-
-  compoundVariants: [
-    {
-      variants: { color: 'primary', size: 'lg' },
-      style: {
-        boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)',
-      },
-    },
-  ],
-
-  defaultVariants: {
-    color: 'primary',
-    size: 'md',
-  },
-});
-
-// Type extraction
-export type ButtonVariants = RecipeVariants<typeof button>;
-```
-
-**Usage:**
-```tsx
-import { button, ButtonVariants } from './button.css';
-
-interface ButtonProps extends ButtonVariants {
-  children: React.ReactNode;
-}
-
-export function Button({ color, size, children }: ButtonProps) {
-  return (
-    <button className={button({ color, size })}>
-      {children}
-    </button>
-  );
-}
-
-// Usage
-<Button color="primary" size="lg">Click me</Button>
-<Button color="danger">Delete</Button>
-```
-
-## Sprinkles
-
-Build atomic CSS utilities.
-
-**Install:**
-```bash
-npm install @vanilla-extract/sprinkles
-```
-
-```typescript
-// sprinkles.css.ts
-import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles';
-
-const space = {
-  none: '0',
-  sm: '4px',
-  md: '8px',
-  lg: '16px',
-  xl: '24px',
-};
-
-const colors = {
-  primary: '#3b82f6',
-  secondary: '#6b7280',
-  white: '#ffffff',
-  black: '#000000',
-};
-
-const responsiveProperties = defineProperties({
-  conditions: {
-    mobile: {},
-    tablet: { '@media': '(min-width: 768px)' },
-    desktop: { '@media': '(min-width: 1024px)' },
-  },
-  defaultCondition: 'mobile',
-  properties: {
-    display: ['none', 'flex', 'block', 'grid'],
-    flexDirection: ['row', 'column'],
-    alignItems: ['stretch', 'center', 'flex-start', 'flex-end'],
-    justifyContent: ['stretch', 'center', 'flex-start', 'flex-end', 'space-between'],
-    gap: space,
-    padding: space,
-    paddingTop: space,
-    paddingBottom: space,
-    paddingLeft: space,
-    paddingRight: space,
-    margin: space,
-  },
-  shorthands: {
-    p: ['padding'],
-    px: ['paddingLeft', 'paddingRight'],
-    py: ['paddingTop', 'paddingBottom'],
-    m: ['margin'],
-  },
-});
-
-const colorProperties = defineProperties({
-  properties: {
-    color: colors,
-    backgroundColor: colors,
-  },
-});
-
-export const sprinkles = createSprinkles(
-  responsiveProperties,
-  colorProperties
-);
-
-export type Sprinkles = Parameters<typeof sprinkles>[0];
-```
-
-**Usage:**
-```tsx
-import { sprinkles } from './sprinkles.css';
-
-function Box() {
-  return (
-    <div className={sprinkles({
-      display: 'flex',
-      gap: 'lg',
-      p: { mobile: 'md', desktop: 'xl' },
-      backgroundColor: 'white',
-    })}>
-      Content
-    </div>
-  );
-}
-```
-
-## Framework Setup
-
-### Next.js
-
-```javascript
-// next.config.js
-const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
-const withVanillaExtract = createVanillaExtractPlugin();
-
-module.exports = withVanillaExtract({
-  // Next.js config
-});
-```
-
-### Vite
-
-```typescript
-// vite.config.ts
-import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
-
-export default defineConfig({
-  plugins: [vanillaExtractPlugin()],
-});
-```
-
-## Best Practices
-
-1. **Use `.css.ts` extension** - Required for processing
-2. **Colocate styles** - Keep near components
-3. **Export vars** - Share theme variables
-4. **Use recipes for variants** - Type-safe component APIs
-5. **Sprinkles for utilities** - Build design system primitives
-
-## Reference Files
-
-- [references/recipes.md](references/recipes.md) - Recipe patterns
-- [references/sprinkles.md](references/sprinkles.md) - Atomic CSS utilities
+- **languages:fastapi-templates** -- async route handlers, lifespan management, background tasks
+- **languages:pydantic-and-data-validation** -- async validators, model serialization in async contexts
+- **architecture:background-job-processing** -- task queues, async worker patterns
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
