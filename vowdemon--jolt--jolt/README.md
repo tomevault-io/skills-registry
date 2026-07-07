@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [vowdemon/jolt](https://github.com/vowdemon/jolt/tree/main/skills/use-jolt-setup/SKILL.md)
+Original source: [vowdemon/jolt](https://github.com/vowdemon/jolt/tree/main/skills/use-jolt-flutter/SKILL.md)
 
 ---
 
