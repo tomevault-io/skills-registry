@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/add-vault-protocol-tradingstrategy-ai-web3-ethereum-defi-5711e6fe/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/frontend-api-client-with-jwt-abdul-haseeb360-hackathon-ii-ai-nati/SKILL.md)
 
 ---
 
