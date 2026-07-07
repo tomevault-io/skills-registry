@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/ideal-direct-sop-assistant-sellersessions-sub-agents-20c40762/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/marketing-page-builder-kowalah-dev-kowalah-marketing-a964dfa6/SKILL.md)
 
 ---
 
