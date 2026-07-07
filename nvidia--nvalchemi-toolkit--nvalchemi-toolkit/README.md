@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [NVIDIA/nvalchemi-toolkit](https://github.com/NVIDIA/nvalchemi-toolkit/tree/main/.claude/skills/nvalchemi-dynamics-hooks/SKILL.md)
+Original source: [NVIDIA/nvalchemi-toolkit](https://github.com/NVIDIA/nvalchemi-toolkit/tree/main/.claude/skills/nvalchemi-model-wrapping/SKILL.md)
 
 ---
 
