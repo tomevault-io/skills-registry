@@ -1,546 +1,105 @@
 ---
-name: tailwind-v4-shadcn
-description: | Use when this capability is needed.
+name: autoregmonkey
+description: 智能计量经济学分析代理。当用户输入以"autoregmonkey："开头时，LLM会解析经济学计量任务，参考RAG数据库知识，动态调用Python和Stata技能执行任务，最后生成中文报告。 Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Tailwind v4 + shadcn/ui Production Stack
+# AutoRegMonkey Skill - 智能计量经济学分析代理
 
-**Production-tested**: WordPress Auditor (https://wordpress-auditor.webfonts.workers.dev)
-**Last Updated**: 2025-12-04
-**Status**: Production Ready ✅
+基于LLM的智能计量经济学分析系统，能够理解用户任务、查询RAG知识库、动态调用Python和Stata工具，并生成专业的中文分析报告。
 
-## Table of Contents
-1. [Before You Start](#-before-you-start-read-this)
-2. [Quick Start](#quick-start-5-minutes---follow-this-exact-order)
-3. [Four-Step Architecture](#the-four-step-architecture-critical)
-4. [Dark Mode Setup](#dark-mode-setup)
-5. [Critical Rules](#critical-rules-must-follow)
-6. [Semantic Color Tokens](#semantic-color-tokens)
-7. [Common Issues & Fixes](#common-issues--quick-fixes)
-8. [File Templates](#file-templates)
-9. [Setup Checklist](#complete-setup-checklist)
-10. [Advanced Topics](#advanced-topics)
-11. [Dependencies](#dependencies)
-12. [Tailwind v4 Plugins](#tailwind-v4-plugins)
-13. [Reference Documentation](#reference-documentation)
-14. [When to Load References](#when-to-load-references)
+## 核心特性
 
----
+1. **智能任务解析**: LLM理解自然语言描述的计量经济学任务
+2. **动态知识检索**: 实时查询Bruce Hansen计量经济学教材RAG数据库
+3. **工具链集成**: 根据需要调用Python和Stata技能
+4. **自适应工作流**: 根据任务复杂度和数据情况动态调整分析流程
+5. **专业报告生成**: 结合计量理论、统计结果和经济解释生成中文报告
 
-## ⚠️ BEFORE YOU START (READ THIS!)
+## 工作模式
 
-**CRITICAL FOR AI AGENTS**: If you're Claude Code helping a user set up Tailwind v4:
+本skill不是固定的脚本，而是一个智能代理框架：
+- **LLM作为协调者**: Claude（我）解析任务、制定计划、协调工具调用
+- **动态工具调用**: 根据任务需要调用Python数据处理和Stata回归分析
+- **实时知识参考**: 每次分析都查询最新的RAG知识库
+- **交互式调整**: 可以在分析过程中与用户交互确认模型选择等关键决策
 
-1. **Explicitly state you're using this skill** at the start of the conversation
-2. **Reference patterns from the skill** rather than general knowledge
-3. **Prevent known issues** listed in `reference/common-gotchas.md`
-4. **Don't guess** - if unsure, check the skill documentation
+## 处理流程
 
-**USER ACTION REQUIRED**: Tell Claude to check this skill first!
+当用户输入以"autoregmonkey："开头时，Claude会执行以下流程：
 
-Say: **"I'm setting up Tailwind v4 + shadcn/ui - check the tailwind-v4-shadcn skill first"**
+### 阶段1: 任务理解与规划
+1. **提取任务描述**: 识别"autoregmonkey："后的计量经济学问题
+2. **初步解析**: 识别关键变量、数据类型、分析方法、潜在问题
+3. **查询RAG知识库**: 检索相关计量经济学理论和方法
+4. **制定分析计划**: 基于RAG知识和任务特点设计分析方案
 
-### Why This Matters (Real-World Results)
+### 阶段2: 数据准备
+1. **检查数据文件**: 查看`data/`目录下的可用数据
+2. **数据处理决策**:
+   - 如果有合适数据：调用Python技能进行清洗和预处理
+   - 如果数据不足：调用Python技能生成符合经济学逻辑的模拟数据
+3. **变量调整**: 根据任务需求创建或转换变量
 
-**Without skill activation:**
-- ❌ Setup time: ~5 minutes
-- ❌ Errors encountered: 2-3 (tw-animate-css, duplicate @layer base)
-- ❌ Manual fixes needed: 2+ commits
-- ❌ Token usage: ~65k
-- ❌ User confidence: Required debugging
+### 阶段3: 模型设定与估计
+1. **模型选择**: 基于RAG知识和任务特点选择合适模型
+2. **Stata分析**: 调用Stata技能执行回归分析
+3. **模型诊断**: 进行异方差、多重共线性等检验
+4. **模型调整**: 根据诊断结果优化模型设定
 
-**With skill activation:**
-- ✅ Setup time: ~1 minute
-- ✅ Errors encountered: 0
-- ✅ Manual fixes needed: 0
-- ✅ Token usage: ~20k (70% reduction)
-- ✅ User confidence: Instant success
+### 阶段4: 结果解释与报告
+1. **结果解析**: 解读Stata输出的统计结果
+2. **经济解释**: 结合计量经济学理论解释实证结果
+3. **报告生成**: 生成结构化的中文分析报告
+4. **结果保存**: 将报告和关键结果保存到`result/`目录
 
-### Known Issues This Skill Prevents
+## 文件组织
 
-1. **tw-animate-css import error** (deprecated in v4)
-2. **Duplicate @layer base blocks** (shadcn init adds its own)
-3. **Wrong template selection** (vanilla TS vs React)
-4. **Missing post-init cleanup** (incompatible CSS rules)
-5. **Wrong plugin syntax** (using @import or require() instead of @plugin directive)
+- **原始数据**: `data/`目录
+- **临时工作文件**: `workspace/`目录（Python脚本、Stata do文件等）
+- **最终结果**: `result/`目录（分析报告、回归结果、图表等）
 
-All of these are handled automatically when the skill is active.
+## 使用示例
 
----
-
-## Quick Start (5 Minutes - Follow This Exact Order)
-
-### 1. Install Dependencies
-
-```bash
-bun add tailwindcss @tailwindcss/vite
-# or: npm install tailwindcss @tailwindcss/vite
-
-bun add -d @types/node
-
-# Note: Using pnpm for shadcn init due to known Bun compatibility issues
-# (bunx has "Script not found" and postinstall/msw problems)
-pnpm dlx shadcn@latest init
+**用户输入**:
+```
+autoregmonkey：分析教育对工资的影响，考虑内生性问题和异方差
 ```
 
-### 2. Configure Vite
+**Claude响应流程**:
+1. 识别任务：教育对工资的影响分析
+2. 查询RAG：获取工具变量法、异方差稳健标准误等知识
+3. 调用Python：检查`data/`目录，处理或生成数据
+4. 调用Stata：执行2SLS回归，使用稳健标准误
+5. 生成报告：包含模型设定、估计结果、内生性检验、经济解释
 
-```typescript
-// vite.config.ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-import path from 'path'
-
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  }
-})
+**用户输入**:
+```
+autoregmonkey：研究GDP增长与环境污染的库兹涅茨曲线关系
 ```
 
-### 3. Update components.json
-
-```json
-{
-  "tailwind": {
-    "config": "",              // ← CRITICAL: Empty for v4
-    "css": "src/index.css",
-    "cssVariables": true
-  }
-}
-```
-
-### 4. Delete tailwind.config.ts
-
-```bash
-rm tailwind.config.ts  # v4 doesn't use this file
-```
-
----
-
-## The Four-Step Architecture (CRITICAL)
-
-This pattern is **mandatory** - skipping steps will break your theme.
-
-### Step 1: Define CSS Variables at Root Level
-
-```css
-/* src/index.css */
-@import "tailwindcss";
-
-:root {
-  --background: hsl(0 0% 100%);      /* ← hsl() wrapper required */
-  --foreground: hsl(222.2 84% 4.9%);
-  --primary: hsl(221.2 83.2% 53.3%);
-  /* ... all light mode colors */
-}
-
-.dark {
-  --background: hsl(222.2 84% 4.9%);
-  --foreground: hsl(210 40% 98%);
-  --primary: hsl(217.2 91.2% 59.8%);
-  /* ... all dark mode colors */
-}
-```
-
-**Critical Rules:**
-- ✅ Define at root level (NOT inside `@layer base`)
-- ✅ Use `hsl()` wrapper on all color values
-- ✅ Use `.dark` for dark mode (NOT `.dark { @theme { } }`)
-
-### Step 2: Map Variables to Tailwind Utilities
-
-```css
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  /* ... map ALL CSS variables */
-}
-```
-
-**Why This Is Required:**
-- Generates utility classes (`bg-background`, `text-primary`)
-- Without this, `bg-primary` etc. won't exist
-
-### Step 3: Apply Base Styles
-
-```css
-@layer base {
-  body {
-    background-color: var(--background);  /* NO hsl() here */
-    color: var(--foreground);
-  }
-}
-```
-
-**Critical Rules:**
-- ✅ Reference variables directly: `var(--background)`
-- ❌ Never double-wrap: `hsl(var(--background))`
-
-### Step 4: Result - Automatic Dark Mode
-
-```tsx
-<div className="bg-background text-foreground">
-  {/* No dark: variants needed - theme switches automatically */}
-</div>
-```
-
----
-
-## Dark Mode Setup
-
-### 1. Create ThemeProvider
-
-See `reference/dark-mode.md` for full implementation or use template:
-
-```typescript
-// Copy from: templates/theme-provider.tsx
-```
-
-### 2. Wrap Your App
-
-```typescript
-// src/main.tsx
-import { ThemeProvider } from '@/components/theme-provider'
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <App />
-    </ThemeProvider>
-  </React.StrictMode>,
-)
-```
-
-### 3. Add Theme Toggle
-
-```bash
-pnpm dlx shadcn@latest add dropdown-menu
-```
-
-See `reference/dark-mode.md` for ModeToggle component code.
-
----
-
-## Critical Rules (MUST FOLLOW)
-
-### ✅ Always Do:
-
-1. **Wrap color values with `hsl()` in `:root` and `.dark`**
-   ```css
-   --background: hsl(0 0% 100%);  /* ✅ Correct */
-   ```
-
-2. **Use `@theme inline` to map all CSS variables**
-   ```css
-   @theme inline {
-     --color-background: var(--background);
-   }
-   ```
-
-3. **Set `"tailwind.config": ""` in components.json**
-   ```json
-   { "tailwind": { "config": "" } }
-   ```
-
-4. **Delete `tailwind.config.ts` if it exists**
-
-5. **Use `@tailwindcss/vite` plugin (NOT PostCSS)**
-
-6. **Use `cn()` for conditional classes**
-   ```typescript
-   import { cn } from "@/lib/utils"
-   <div className={cn("base", isActive && "active")} />
-   ```
-
-### ❌ Never Do:
-
-1. **Put `:root` or `.dark` inside `@layer base`**
-   ```css
-   /* WRONG */
-   @layer base {
-     :root { --background: hsl(...); }
-   }
-   ```
-
-2. **Use `.dark { @theme { } }` pattern**
-   ```css
-   /* WRONG - v4 doesn't support nested @theme */
-   .dark {
-     @theme {
-       --color-primary: hsl(...);
-     }
-   }
-   ```
-
-3. **Double-wrap colors**
-   ```css
-   /* WRONG */
-   body {
-     background-color: hsl(var(--background));
-   }
-   ```
-
-4. **Use `tailwind.config.ts` for theme colors**
-   ```typescript
-   /* WRONG - v4 ignores this */
-   export default {
-     theme: {
-       extend: {
-         colors: { primary: 'hsl(var(--primary))' }
-       }
-     }
-   }
-   ```
-
-5. **Use `@apply` directive (deprecated in v4)**
-
-6. **Use `dark:` variants for semantic colors**
-   ```tsx
-   /* WRONG */
-   <div className="bg-primary dark:bg-primary-dark" />
-
-   /* CORRECT */
-   <div className="bg-primary" />
-   ```
-
----
-
-## Semantic Color Tokens
-
-Always use semantic names for colors:
-
-```css
-:root {
-  --destructive: hsl(0 84.2% 60.2%);        /* Red - errors, critical */
-  --success: hsl(142.1 76.2% 36.3%);        /* Green - success states */
-  --warning: hsl(38 92% 50%);               /* Yellow - warnings */
-  --info: hsl(221.2 83.2% 53.3%);           /* Blue - info, primary */
-}
-```
-
-**Usage:**
-```tsx
-<div className="bg-destructive text-destructive-foreground">Critical</div>
-<div className="bg-success text-success-foreground">Success</div>
-<div className="bg-warning text-warning-foreground">Warning</div>
-<div className="bg-info text-info-foreground">Info</div>
-```
-
----
-
-## Common Issues & Quick Fixes
-
-| Symptom | Cause | Fix |
-|---------|-------|-----|
-| `bg-primary` doesn't work | Missing `@theme inline` mapping | Add `@theme inline` block |
-| Colors all black/white | Double `hsl()` wrapping | Use `var(--color)` not `hsl(var(--color))` |
-| Dark mode not switching | Missing ThemeProvider | Wrap app in `<ThemeProvider>` |
-| Build fails | `tailwind.config.ts` exists | Delete the file |
-| Text invisible | Wrong contrast colors | Check color definitions in `:root`/`.dark` |
-
-See `reference/common-gotchas.md` for complete troubleshooting guide.
-
----
-
-## File Templates
-
-All templates are available in the `templates/` directory:
-
-- **index.css** - Complete CSS setup with all color variables
-- **components.json** - shadcn/ui v4 configuration
-- **vite.config.ts** - Vite + Tailwind plugin setup
-- **tsconfig.app.json** - TypeScript with path aliases
-- **theme-provider.tsx** - Dark mode provider with localStorage
-- **utils.ts** - `cn()` utility for class merging
-
-Copy these files to your project and customize as needed.
-
----
-
-## Complete Setup Checklist
-
-- [ ] Vite + React + TypeScript project created
-- [ ] `@tailwindcss/vite` installed (NOT postcss)
-- [ ] `vite.config.ts` uses `tailwindcss()` plugin
-- [ ] `tsconfig.json` has path aliases configured
-- [ ] `components.json` exists with `"config": ""`
-- [ ] NO `tailwind.config.ts` file exists
-- [ ] `src/index.css` follows v4 pattern:
-  - [ ] `:root` and `.dark` at root level (not in @layer)
-  - [ ] Colors wrapped with `hsl()`
-  - [ ] `@theme inline` maps all variables
-  - [ ] `@layer base` uses unwrapped variables
-- [ ] Theme provider installed and wrapping app
-- [ ] Dark mode toggle component created
-- [ ] Test theme switching works in browser
-
----
-
-## Advanced Topics
-
-Load `references/advanced-usage.md` for advanced patterns including:
-
-- **Custom Colors**: Add semantic colors beyond default palette
-- **v3 Migration**: See `references/migration-guide.md` for complete guide
-- **Component Best Practices**: Semantic tokens, cn() utility, composition patterns
-
-**Quick Example:**
-```css
-:root { --brand: hsl(280 65% 60%); }
-@theme inline { --color-brand: var(--brand); }
-```
-Usage: `<div className="bg-brand">Branded</div>`
-
-For detailed patterns and component composition examples, load `references/advanced-usage.md`.
-
----
-
-## Dependencies
-
-### ✅ Install These
-
-```json
-{
-  "dependencies": {
-    "tailwindcss": "^4.1.17",
-    "@tailwindcss/vite": "^4.1.17",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^3.3.1",
-    "@radix-ui/react-*": "latest",
-    "lucide-react": "^0.554.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
-  },
-  "devDependencies": {
-    "@types/node": "^24.10.1",
-    "@vitejs/plugin-react": "^5.1.1",
-    "vite": "^7.2.4",
-    "typescript": "~5.9.3"
-  }
-}
-```
-
-### ❌ NEVER Install These (Deprecated in v4)
-
-```bash
-# These packages will cause build errors:
-bun add tailwindcss-animate  # ❌ Deprecated
-# or: npm install tailwindcss-animate  # ❌ Deprecated
-
-bun add tw-animate-css      # ❌ Doesn't exist
-```
-
-**If you see import errors for these packages**, remove them and use native CSS animations or `@tailwindcss/motion` instead.
-
----
-
-## Tailwind v4 Plugins
-
-Tailwind v4 supports official plugins using the `@plugin` directive in CSS.
-
-**Quick Example:**
-```css
-@import "tailwindcss";
-@plugin "@tailwindcss/typography";
-@plugin "@tailwindcss/forms";
-```
-
-**Common Error:**
-❌ WRONG: `@import "@tailwindcss/typography"` (doesn't work)
-✅ CORRECT: `@plugin "@tailwindcss/typography"` (use @plugin directive)
-
-**Built-in Features:** Container queries are now core (no `@tailwindcss/container-queries` plugin needed).
-
-Load `references/plugins-reference.md` for complete documentation including Typography plugin (prose classes), Forms plugin, installation steps, and common plugin errors.
-
----
-
-## Reference Documentation
-
-For deeper understanding, see:
-
-- **common-gotchas.md** - All the ways it can break (and fixes)
-- **dark-mode.md** - Complete dark mode implementation
-- **migration-guide.md** - Migrating hardcoded colors to CSS variables
-- **plugins-reference.md** - Official Tailwind v4 plugins (Typography, Forms)
-- **advanced-usage.md** - Custom colors and advanced patterns
-
----
-
-## When to Load References
-
-Load reference files based on user's specific needs:
-
-### Load `references/common-gotchas.md` when:
-- User reports "colors not working" or "bg-primary doesn't exist"
-- Dark mode not switching properly
-- Build fails with Tailwind errors
-- User encounters any CSS/configuration issue
-- Debugging theme problems
-
-### Load `references/dark-mode.md` when:
-- User asks to implement dark mode
-- Theme switching not working
-- Need ThemeProvider component code
-- Questions about system theme detection
-
-### Load `references/migration-guide.md` when:
-- Migrating from Tailwind v3 to v4
-- User has hardcoded colors to migrate
-- Questions about v3 → v4 changes
-- Need migration checklist
-
-### Load `references/plugins-reference.md` when:
-- User needs Typography plugin (prose class)
-- User needs Forms plugin
-- Questions about @plugin directive
-- Plugin installation errors
-
-### Load `references/advanced-usage.md` when:
-- User asks about custom colors beyond defaults
-- Need advanced component patterns
-- Questions about component best practices
-- Component composition questions
-
----
-
-## Official Documentation
-
-- **shadcn/ui Vite Setup**: https://ui.shadcn.com/docs/installation/vite
-- **shadcn/ui Tailwind v4 Guide**: https://ui.shadcn.com/docs/tailwind-v4
-- **shadcn/ui Dark Mode (Vite)**: https://ui.shadcn.com/docs/dark-mode/vite
-- **Tailwind v4 Docs**: https://tailwindcss.com/docs
-- **shadcn/ui Theming**: https://ui.shadcn.com/docs/theming
-
----
-
-## Production Example
-
-This skill is based on the WordPress Auditor project:
-- **Live**: https://wordpress-auditor.webfonts.workers.dev
-- **Stack**: Vite + React 19 + Tailwind v4 + shadcn/ui + Cloudflare Workers
-- **Dark Mode**: Full system/light/dark support
-- **Version**: Tailwind v4.1.17 + shadcn/ui latest (Nov 2025)
-
-All patterns in this skill have been validated in production.
-
----
-
-**Questions? Issues?**
-
-1. Check `reference/common-gotchas.md` first
-2. Verify all steps in the 4-step architecture
-3. Ensure `components.json` has `"config": ""`
-4. Delete `tailwind.config.ts` if it exists
-5. Check official docs: https://ui.shadcn.com/docs/tailwind-v4
+**Claude响应流程**:
+1. 识别任务：环境库兹涅茨曲线检验
+2. 查询RAG：获取多项式回归、面板门槛模型等知识
+3. 调用Python：处理环境经济数据或生成模拟数据
+4. 调用Stata：执行二次项回归或门槛回归
+5. 生成报告：包含倒U型检验、拐点估计、政策建议
+
+## 关键优势
+
+1. **灵活性**: 不是固定脚本，能够适应各种计量任务
+2. **智能性**: LLM理解任务语义，选择合适的分析方法
+3. **知识驱动**: 基于权威计量经济学教材的知识库
+4. **工具集成**: 无缝集成Python数据处理和Stata计量分析
+5. **专业输出**: 生成符合学术规范的中文报告
+
+## 注意事项
+
+1. **数据优先**: 优先使用`data/`目录下的真实数据，仅当缺少数据时生成模拟数据
+2. **模型透明**: 解释选择的计量模型及其假设条件
+3. **结果审慎**: 结合统计显著性和经济意义解释结果
+4. **中文友好**: 所有输出和报告均使用中文
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
