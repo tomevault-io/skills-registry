@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/brainstorming-design-takumiokayasu-dotfile-work-e2e620e4/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/fintech-banking-dylantarre-animation-principles-3001bc60/SKILL.md)
 
 ---
 
