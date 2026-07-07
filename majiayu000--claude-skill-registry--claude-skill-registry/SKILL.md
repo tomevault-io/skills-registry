@@ -1,157 +1,157 @@
 ---
-name: software-security-appsec
-description: Modern application security patterns including OWASP Top 10:2025, zero trust architecture, supply chain security, authentication, authorization, input validation, and cryptography for 2024-2025 Use when this capability is needed.
+name: check-memory-safety
+description: Check Mojo code for memory safety issues (ownership violations, use-after-free, etc.). Use to catch memory bugs. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Software Security & AppSec — Quick Reference
+# Check Memory Safety
 
-Production-grade security patterns for building secure applications in 2024-2025. Covers OWASP Top 10:2025 (including new Supply Chain Failures category), zero trust architecture, modern authentication, and defensive coding.
+Validate Mojo code for memory safety violations and ownership issues.
 
----
+## When to Use
 
-## When to Use This Skill
+- Code review focused on memory safety
+- Testing for use-after-free issues
+- Verifying ownership transfer correctness
+- Catching double-free or segmentation fault sources
+- Validating SIMD memory access patterns
 
-Activate this skill when:
+## Quick Reference
 
-- Implementing authentication or authorization systems
-- Handling user input that could lead to injection attacks (SQL, XSS, command injection)
-- Designing secure APIs or web applications
-- Working with cryptographic operations or sensitive data storage
-- Conducting security reviews, threat modeling, or vulnerability assessments
-- Responding to security incidents or compliance audit requirements
-- Building systems that must comply with OWASP, NIST, PCI DSS, GDPR, HIPAA, or SOC 2
-- Integrating third-party dependencies (supply chain security review)
-- Implementing zero trust architecture or modern cloud-native security patterns
+```bash
+# Find potential use-after-free patterns
+grep -n "var .* = .*\^" *.mojo | head -20
 
----
+# Check for uninitialized access
+grep -n "List\[.*\]()" *.mojo | grep -A 2 "\..*\["
 
-## Quick Reference Table
+# Verify ownership transfer
+grep -n "owned\|var.*=" *.mojo | sort
 
-| Security Task | Tool/Pattern | Implementation | When to Use |
-|---------------|--------------|----------------|-------------|
-| Password Storage | bcrypt/Argon2 | `bcrypt.hash(password, 12)` | Always hash passwords (never store plaintext) |
-| Input Validation | Allowlist regex | `/^[a-zA-Z0-9_]{3,20}$/` | All user input (SQL, XSS, command injection prevention) |
-| SQL Queries | Parameterized queries | `db.execute(query, [userId])` | All database operations (prevent SQL injection) |
-| API Authentication | JWT + OAuth2 | `jwt.sign(payload, secret, options)` | Stateless auth with short-lived tokens (15-30 min) |
-| Data Encryption | AES-256-GCM | `crypto.createCipheriv('aes-256-gcm')` | Sensitive data at rest (PII, financial, health) |
-| HTTPS/TLS | TLS 1.3 | Force HTTPS redirects | All production traffic (data in transit) |
-| Access Control | RBAC/ABAC | `requireRole('admin', 'moderator')` | Resource authorization (APIs, admin panels) |
-| Rate Limiting | express-rate-limit | `limiter({ windowMs: 15min, max: 100 })` | Public APIs, auth endpoints (DoS prevention) |
+# Check pointer operations
+grep -n "DTypePointer\|alloc\|free\|__del__" *.mojo
 
-## Decision Tree: Security Implementation
-
-```text
-Security requirement: [Feature Type]
-    ├─ User Authentication?
-    │   ├─ Session-based? → Cookie sessions + CSRF tokens
-    │   ├─ Token-based? → JWT with refresh tokens (resources/authentication-authorization.md)
-    │   └─ Third-party? → OAuth2/OIDC integration
-    │
-    ├─ User Input?
-    │   ├─ Database query? → Parameterized queries (NEVER string concatenation)
-    │   ├─ HTML output? → DOMPurify sanitization + CSP headers
-    │   ├─ File upload? → Content validation, size limits, virus scanning
-    │   └─ API parameters? → Allowlist validation (resources/input-validation.md)
-    │
-    ├─ Sensitive Data?
-    │   ├─ Passwords? → bcrypt/Argon2 (cost factor 12+)
-    │   ├─ PII/financial? → AES-256-GCM encryption + key rotation
-    │   ├─ API keys/tokens? → Environment variables + secrets manager
-    │   └─ In transit? → TLS 1.3 only
-    │
-    ├─ Access Control?
-    │   ├─ Simple roles? → RBAC (templates/web-application/template-authorization.md)
-    │   ├─ Complex rules? → ABAC with policy engine
-    │   └─ Relationship-based? → ReBAC (owner, collaborator, viewer)
-    │
-    └─ API Security?
-        ├─ Public API? → Rate limiting + API keys
-        ├─ CORS needed? → Strict origin allowlist (never *)
-        └─ Headers? → Helmet.js (CSP, HSTS, X-Frame-Options)
+# Find scope issues
+grep -n "{" *.mojo | wc -l  # Check nesting depth
 ```
 
----
+## Memory Safety Patterns
 
-## .NET/EF Core Crypto Integration Security
+**Safe Ownership Transfer**:
 
-For C#/.NET crypto/fintech services using Entity Framework Core, see:
+- ✅ `fn take(var data: List[Int])` - Caller loses access
+- ✅ `return self.data^` - Transfer from struct field
+- ✅ `var copy = data^` - Move to new variable
+- ❌ `fn take(data: List[Int])` - Ambiguous, use var
+- ❌ `return self.data` - Missing transfer operator
 
-- [resources/dotnet-efcore-crypto-security.md](resources/dotnet-efcore-crypto-security.md) — Security rules and C# patterns
+**Safe Initialization**:
 
-**Key rules summary:**
+- ✅ `var shape = List[Int]()` then `shape.append(dim)`
+- ✅ `var data = DTypePointer[DType.float32].alloc(size)`
+- ✅ Check `size > 0` before allocation
+- ❌ `var list = List[Int]()` then `list[0] = value` (uninitialized)
+- ❌ `alloc(0)` or `alloc(negative)` (invalid size)
 
-- No secrets in code — use configuration/environment variables
-- No sensitive data in logs (tokens, keys, PII)
-- Use `decimal` for financial values, never `double`/`float`
-- EF Core or parameterized queries only — no dynamic SQL
-- Generic error messages to users, detailed logging server-side
+**Safe Pointer Usage**:
 
-## Navigation
+- ✅ Allocate before use: `alloc(size)`
+- ✅ Store size separately for bounds checking
+- ✅ Verify pointer validity before dereference
+- ❌ Use after free (manually deleted pointer)
+- ❌ Out-of-bounds access
+- ❌ Null pointer dereference
 
-### Core Resources (Updated 2024-2025)
+**Safe Scope Management**:
 
-#### 2025 Updates & Modern Architecture
+- ✅ Owned values dropped at scope end
+- ✅ RAII pattern with proper cleanup
+- ✅ Lifetime boundaries clear
+- ❌ Variable used after scope exit
+- ❌ Reference to stack variable returned
+- ❌ Missing ownership transfer between scopes
 
-- [resources/supply-chain-security.md](resources/supply-chain-security.md) — **NEW**: OWASP A03:2025, npm Shai-Hulud attack response, SLSA, Sigstore, trusted publishing
-- [resources/zero-trust-architecture.md](resources/zero-trust-architecture.md) — **NEW**: NIST SP 800-207, CISA maturity model, mTLS, SPIFFE/SPIRE, policy-based access
-- [resources/owasp-top-10.md](resources/owasp-top-10.md) — OWASP Top 10:2025 threats and mitigations with new categories
-- [resources/advanced-xss-techniques.md](resources/advanced-xss-techniques.md) — 2024-2025 XSS: mutation XSS, polyglots, SVG attacks, context-aware encoding
+## Safety Validation Workflow
 
-#### Foundation Security Patterns
+1. **Identify pointers**: Find all pointer operations
+2. **Check allocation**: Verify all pointers allocated before use
+3. **Trace ownership**: Follow ownership transfers
+4. **Verify lifetimes**: Check value scopes
+5. **Find violations**: Identify safety issues
+6. **Suggest fixes**: Provide safety corrections
+7. **Verify fixes**: Compile to confirm safety
 
-- [resources/secure-design-principles.md](resources/secure-design-principles.md) — Defense in depth, least privilege, secure defaults
-- [resources/authentication-authorization.md](resources/authentication-authorization.md) — AuthN/AuthZ flows, OAuth 2.1, JWT best practices, RBAC/ABAC
-- [resources/input-validation.md](resources/input-validation.md) — Allowlist validation, SQL injection, XSS, CSRF prevention, file upload security
-- [resources/cryptography-standards.md](resources/cryptography-standards.md) — AES-256-GCM, Argon2, TLS 1.3, key management
-- [resources/common-vulnerabilities.md](resources/common-vulnerabilities.md) — Path traversal, command injection, deserialization, SSRF
+## Output Format
 
-#### External References
+Report memory safety issues with:
 
-- [data/sources.json](data/sources.json) — 70+ curated security resources (OWASP 2025, supply chain, zero trust, API security, compliance)
+1. **Issue Type** - Use-after-free, double-free, uninitialized, bounds, etc.
+2. **Location** - File and line number
+3. **Code Snippet** - The problematic code
+4. **Root Cause** - Why it's unsafe
+5. **Risk Level** - Segfault, undefined behavior, or warning
+6. **Fix** - How to correct it safely
 
-### Templates by Domain
+## Common Safety Issues & Fixes
 
-#### Web Application Security
+**Uninitialized List Access**:
 
-- [templates/web-application/template-authentication.md](templates/web-application/template-authentication.md) — Secure authentication flows (JWT, OAuth2, sessions, MFA)
-- [templates/web-application/template-authorization.md](templates/web-application/template-authorization.md) — RBAC/ABAC/ReBAC policy patterns
+- Problem: `var list = List[Int](); list[0] = 5`
+- Risk: Out-of-bounds write, segmentation fault
+- Fix: Use `list.append(5)` instead
 
-#### API Security
+**Use After Move**:
 
-- [templates/api/template-secure-api.md](templates/api/template-secure-api.md) — Secure API gateway, rate limiting, CORS, security headers
+- Problem: `var a = list^; print(list)` (list moved, now invalid)
+- Risk: Use-after-free
+- Fix: Don't use list after transfer, or create copy
 
-#### Cloud-Native Security
+**Missing Bounds Check**:
 
-- [templates/cloud-native/crypto-security.md](templates/cloud-native/crypto-security.md) — Cryptography usage, key management, HSM integration
+- Problem: Access `tensor._data[index]` without size check
+- Risk: Out-of-bounds access, segfault
+- Fix: Add `assert index < size` or check in loop
 
-#### Blockchain & Web3 Security
+**Pointer Without Size**:
 
-- [resources/smart-contract-security-auditing.md](resources/smart-contract-security-auditing.md) — **NEW**: Smart contract auditing, vulnerability patterns, formal verification, Solidity security
+- Problem: `var ptr = alloc(size)` but size not tracked
+- Risk: Invalid access, use-after-free
+- Fix: Store size, verify before access
 
-### Related Skills
+**Double-Free**:
 
-#### Security Ecosystem
+- Problem: Manual `free()` called twice on same pointer
+- Risk: Heap corruption, segfault
+- Fix: Use RAII, don't call free manually
 
-- [../software-backend/SKILL.md](../software-backend/SKILL.md) — API implementation patterns and error handling
-- [../software-architecture-design/SKILL.md](../software-architecture-design/SKILL.md) — Secure system decomposition and dependency design
-- [../ops-devops-platform/SKILL.md](../ops-devops-platform/SKILL.md) — DevSecOps pipelines, secrets management, infrastructure hardening
-- [../software-crypto-web3/SKILL.md](../software-crypto-web3/SKILL.md) — Smart contract security, blockchain vulnerabilities, DeFi patterns
-- [../qa-testing-strategy/SKILL.md](../qa-testing-strategy/SKILL.md) — Security testing, SAST/DAST integration, penetration testing
+## Error Handling
 
-#### AI/LLM Security
+| Problem | Solution |
+|---------|----------|
+| Compiler not available | Build with `mojo build` to get errors |
+| Complex ownership | Trace step-by-step through ownership chain |
+| Generic code | Check all type instantiations |
+| External code | Verify contract assumptions |
+| False positives | Verify with test execution |
 
-- [../ai-llm/SKILL.md](../ai-llm/SKILL.md) — LLM security patterns including prompt injection prevention
-- [../ai-mlops/SKILL.md](../ai-mlops/SKILL.md) — ML model security, adversarial attacks, privacy-preserving ML
+## Safety Checklist
 
-#### Quality & Resilience
+Before committing Mojo code:
 
-- [../qa-resilience/SKILL.md](../qa-resilience/SKILL.md) — Resilience, safeguards, failure handling, chaos engineering
-- [../qa-refactoring/SKILL.md](../qa-refactoring/SKILL.md) — Security-focused refactoring patterns
+- [ ] All pointers have size tracked
+- [ ] All List/Dict allocations use append/insert
+- [ ] All ownership transfers use `^`
+- [ ] No variables used after move
+- [ ] All pointer access has bounds check
+- [ ] Scope lifetimes match usage
+- [ ] Compiler produces no errors or warnings
 
-## Operational Playbooks
-- [resources/operational-playbook.md](resources/operational-playbook.md) — Core security principles, OWASP summaries, authentication patterns, and detailed code examples
+## References
+
+- See CLAUDE.md for ownership patterns
+- See validate-mojo-patterns for pattern checking
+- See mojo-lint-syntax for syntax issues
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
