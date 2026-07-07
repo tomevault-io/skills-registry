@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/content-type-modeling-melodic-software-claude-code-plugins-b23c8093/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/mongoose-mongodb-pluginagentmarketpla-custom-plugin-nodejs-c3dff5e1/SKILL.md)
 
 ---
 
