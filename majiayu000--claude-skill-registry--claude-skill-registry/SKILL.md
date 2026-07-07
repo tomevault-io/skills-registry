@@ -1,422 +1,465 @@
 ---
-name: shadcn-ui-setup
-description: shadcn/ui component library setup and customization. Use when building UIs with pre-built components. Use when this capability is needed.
+name: website-ux-audit
+description: This skill should be used when the user asks to "audit this website", "UX review", "analyze user experience", "website modernization report", "evaluate website design", "improve website UX", or provides a URL for comprehensive UX/UI analysis. Produces actionable modernization reports structured for design and implementation handoff. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# shadcn/ui Setup Skill
+# Website UX Audit Skill
 
-This skill covers shadcn/ui component library installation and customization.
+## Overview
 
-## When to Use
+Conduct systematic analysis of a website's user experience and interface design, producing structured reports that feed directly into design and implementation workflows.
 
-Use this skill when:
-- Need pre-styled accessible components
-- Building design systems quickly
-- Want full control over component code
-- Using Tailwind CSS
+The output consists of:
+1. A **main report** with overall findings, cross-cutting issues, and prioritized recommendations
+2. **Section-specific reports** for each major area of the site, with detailed analysis and implementation guidance
 
-## Core Principle
+**Key principle:** All recommendations are categorized by implementation readiness to enable immediate action on what's possible without waiting for additional inputs.
 
-**COPY, DON'T IMPORT** - shadcn/ui components are copied into your codebase. You own and customize them fully.
+---
 
-## Installation
+## Required Inputs
 
-### Initialize Project
+| Input | Source | Purpose |
+|-------|--------|---------|
+| Homepage URL | User provides | Entry point for exploration |
+| Screenshots | User provides OR captured via browser tools | Visual analysis of actual rendering |
+| Site purpose/context | User provides (optional) | Understanding business goals |
 
-```bash
-# For new Next.js project
-npx create-next-app@latest my-app --typescript --tailwind --eslint
+---
 
-# Initialize shadcn/ui
-npx shadcn@latest init
+## Recommendation Tiers
+
+All recommendations MUST be categorized into one of three tiers:
+
+### Tier 1: Implement Now
+Recommendations that can be actioned immediately using:
+- Existing site content (text, images, data)
+- Publicly observable structure and functionality
+- Standard UX patterns and best practices
+
+**No additional information required from site owner.**
+
+Examples:
+- Reorganizing existing navigation items
+- Simplifying category labels using existing terminology
+- Creating wireframes based on current content
+- Fixing broken images/links that are observable
+- Adding search functionality to existing content
+- Improving layout and visual hierarchy
+- Mobile optimization of existing pages
+
+### Tier 2: Requires Information
+Recommendations that need input from the site owner before implementation:
+- Business rules or logic not apparent from the site
+- Access to backend systems or data
+- Brand guidelines or design assets
+- Content that doesn't exist on the current site
+- Metrics, statistics, or claims to be displayed
+- Pricing or product information
+- Legal/compliance requirements
+
+**Document specifically what information is needed.**
+
+Examples:
+- Adding audience metrics (need actual numbers)
+- Testimonials (need permission and content)
+- Integration with external systems (need access)
+- New content sections (need subject matter)
+- Pricing display (need current rates)
+
+### Tier 3: Future Enhancements
+Strategic improvements that require:
+- Significant new functionality development
+- Content creation beyond reorganization
+- Third-party integrations
+- Ongoing operational commitments
+- Major architectural changes
+
+**These inform the product roadmap but aren't immediate implementation candidates.**
+
+Examples:
+- User review/rating systems
+- Personalization engines
+- Advanced search with ML
+- Community features
+- New content programs
+
+---
+
+## Process
+
+### Phase 1: Discovery & Data Gathering
+
+#### 1.1 Explore Site Structure
+
+Start by fetching the homepage:
+
+```
+web_fetch(url=homepage_url)
 ```
 
-### Configuration Options
+Then systematically explore:
+- Main navigation sections
+- Footer links
+- Key landing pages
+- Representative subpages (1-2 per section)
 
-```text
-Would you like to use TypeScript? yes
-Which style would you like to use? Default
-Which color would you like to use as base color? Slate
-Where is your global CSS file? app/globals.css
-Would you like to use CSS variables for colors? yes
-Where is your tailwind.config.ts located? tailwind.config.ts
-Configure the import alias for components: @/components
-Configure the import alias for utils: @/lib/utils
-Are you using React Server Components? yes
+Document the site map as discovered.
+
+#### 1.2 Capture Screenshots
+
+Use browser automation tools to capture:
+- Homepage (desktop and mobile)
+- Mobile navigation (open state)
+- Each major section landing page
+- Key interactive elements (forms, search, filters)
+- Any areas of specific user concern
+
+#### 1.3 Run Performance Analysis
+
+Execute PageSpeed Insights checks:
+```
+https://pagespeed.web.dev/analysis?url={homepage_url}
 ```
 
-### Generated Configuration
+Record:
+- Core Web Vitals scores
+- Performance opportunities
+- Diagnostic findings
+- Mobile vs desktop differences
 
-```json
-// components.json
-{
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "default",
-  "rsc": true,
-  "tsx": true,
-  "tailwind": {
-    "config": "tailwind.config.ts",
-    "css": "app/globals.css",
-    "baseColor": "slate",
-    "cssVariables": true,
-    "prefix": ""
-  },
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils"
-  }
-}
+### Phase 2: Analysis
+
+Analyze across these dimensions:
+
+#### 2.1 Visual Design
+- Typography (fonts, hierarchy, readability)
+- Color palette (cohesion, contrast, accessibility)
+- Layout (whitespace, density, grid usage)
+- Imagery (quality, loading, relevance)
+- Consistency across pages
+
+#### 2.2 Information Architecture
+- Navigation systems (primary, secondary, footer)
+- Content hierarchy and organization
+- Labeling clarity
+- Search and findability
+- Duplicate or conflicting paths
+
+#### 2.3 Content Quality
+- Messaging clarity and tone
+- Value proposition communication
+- Call-to-action effectiveness
+- Content freshness and relevance
+- Grammar, spelling, consistency
+
+#### 2.4 Interaction Design
+- Form design and usability
+- Interactive element clarity
+- Feedback mechanisms
+- Error handling
+- Loading states
+
+#### 2.5 Mobile Experience
+- Responsive design quality
+- Touch target sizing
+- Mobile navigation patterns
+- Content prioritization
+- Performance on mobile
+
+#### 2.6 Accessibility
+- Semantic HTML usage
+- Keyboard navigation
+- Screen reader compatibility
+- Color contrast ratios
+- Alternative text for images
+
+#### 2.7 Performance
+- Page load times
+- Resource optimization
+- Render-blocking resources
+- Image optimization
+- Code efficiency
+
+### Phase 3: Report Generation
+
+#### 3.1 Main Report Structure
+
+Create comprehensive main report with:
+
+**Executive Summary**
+- Overall site assessment (2-3 paragraphs)
+- Most critical issues (top 3-5)
+- Quick wins available
+- Estimated impact of improvements
+
+**Cross-Cutting Issues**
+Issues affecting multiple sections:
+- Pattern-level problems
+- Systemic usability issues
+- Technical debt
+- Brand inconsistencies
+
+**Prioritized Recommendations**
+Group by tier:
+1. **Tier 1 (Implement Now)** - Action immediately
+2. **Tier 2 (Requires Information)** - Note what's needed
+3. **Tier 3 (Future Enhancements)** - Strategic roadmap
+
+For each recommendation:
+- **Issue:** What's wrong
+- **Impact:** User/business consequence
+- **Solution:** Specific fix
+- **Tier:** Implementation category
+- **Effort:** Rough estimate (S/M/L)
+
+**Performance Summary**
+- Core Web Vitals breakdown
+- Top performance issues
+- Quick optimization opportunities
+
+**Next Steps**
+Clear action items:
+- Immediate implementations (Tier 1)
+- Information to gather (Tier 2)
+- Strategic planning items (Tier 3)
+
+#### 3.2 Section-Specific Reports
+
+For each major site section, create focused report:
+
+**Section Overview**
+- Purpose and goals
+- Current state assessment
+- User journey analysis
+
+**Visual Design Assessment**
+- Section-specific visual issues
+- Consistency with site standards
+- Recommendations
+
+**Content & IA Assessment**
+- Content effectiveness
+- Navigation and structure
+- Findability issues
+- Recommendations
+
+**Interaction Design Assessment**
+- Key interactions review
+- Usability issues
+- Recommendations
+
+**Implementation Guidance**
+Tier 1 recommendations only:
+- Specific changes to make
+- Wireframes or mockups (if helpful)
+- Content reorganization specifics
+- Priority order
+
+---
+
+## Quality Standards
+
+### Recommendations Must Be:
+- **Specific**: Clear, actionable instructions
+- **Justified**: Explain impact and reasoning
+- **Tiered**: Correctly categorized for implementation
+- **Prioritized**: Relative importance clear
+- **Measurable**: Success criteria defined where possible
+
+### Reports Must Include:
+- Evidence from actual site (screenshots, URLs)
+- Comparative examples (good vs current)
+- Performance data (when relevant)
+- Accessibility issues (WCAG violations)
+- Mobile-specific concerns
+
+### Avoid:
+- Generic advice applicable to any site
+- Recommendations without justification
+- Mixing tiers (keep clear separation)
+- Assumptions about unavailable information
+- Subjective opinions without UX principles
+
+---
+
+## Output Format
+
+### File Structure
+
+Create organized deliverables:
+
+```
+ux-audit-{site-name}/
+├── 00-main-report.md
+├── 01-homepage.md
+├── 02-section-name.md
+├── 03-section-name.md
+├── screenshots/
+│   ├── homepage-desktop.png
+│   ├── homepage-mobile.png
+│   └── ...
+└── performance/
+    ├── pagespeed-mobile.png
+    └── pagespeed-desktop.png
 ```
 
-## Adding Components
+### Report Formatting
 
-```bash
-# Add individual components
-npx shadcn@latest add button
-npx shadcn@latest add card
-npx shadcn@latest add dialog
-npx shadcn@latest add dropdown-menu
-npx shadcn@latest add form
-npx shadcn@latest add input
-npx shadcn@latest add select
-npx shadcn@latest add tabs
-npx shadcn@latest add toast
+Use consistent markdown structure:
+- H1 for report title
+- H2 for major sections
+- H3 for subsections
+- Tables for structured data
+- Code blocks for specific implementations
+- Bullet lists for recommendations
+- Numbered lists for step-by-step processes
 
-# Add multiple components
-npx shadcn@latest add button card dialog
+---
 
-# Add all components
-npx shadcn@latest add --all
+## Browser Automation Integration
+
+When browser tools are available, leverage them for:
+
+### Screenshot Capture
+```
+computer(action="screenshot", tabId=tab_id)
 ```
 
-## Component Structure
-
+### Mobile Viewport Testing
 ```
-src/
-├── components/
-│   └── ui/
-│       ├── button.tsx
-│       ├── card.tsx
-│       ├── dialog.tsx
-│       └── ...
-├── lib/
-│   └── utils.ts
-└── app/
-    └── globals.css
+resize_window(width=375, height=667)  # iPhone SE
+resize_window(width=414, height=896)  # iPhone 11 Pro Max
 ```
 
-## Utility Function
-
-```typescript
-// lib/utils.ts
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-export function cn(...inputs: ClassValue[]): string {
-  return twMerge(clsx(inputs));
-}
+### Interactive Element Testing
+```
+navigate(url=page_url)
+find(query="search button")
+computer(action="left_click", coordinate=[x, y])
 ```
 
-## Using Components
-
-### Button
-
-```typescript
-import { Button } from '@/components/ui/button';
-
-function App(): React.ReactElement {
-  return (
-    <div className="flex gap-2">
-      <Button variant="default">Default</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="destructive">Destructive</Button>
-      <Button variant="outline">Outline</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="link">Link</Button>
-
-      <Button size="sm">Small</Button>
-      <Button size="lg">Large</Button>
-      <Button size="icon"><Icon /></Button>
-
-      <Button disabled>Disabled</Button>
-      <Button asChild>
-        <a href="/about">Link as Button</a>
-      </Button>
-    </div>
-  );
-}
+### Console Error Checking
+```
+read_console_messages(pattern="error|warning")
 ```
 
-### Card
-
-```typescript
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-
-function UserCard({ user }: { user: User }): React.ReactElement {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{user.name}</CardTitle>
-        <CardDescription>{user.email}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p>{user.bio}</p>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button variant="outline">Cancel</Button>
-        <Button>Save</Button>
-      </CardFooter>
-    </Card>
-  );
-}
+### Network Performance Analysis
+```
+read_network_requests()
 ```
 
-### Dialog
+---
 
-```typescript
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+## Additional Resources
 
-function ConfirmDialog(): React.ReactElement {
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Delete</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Are you sure?</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button variant="outline">Cancel</Button>
-          <Button variant="destructive">Delete</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-}
-```
+### Reference Files
 
-### Form with React Hook Form + Zod
+For detailed workflows and standards:
+- **`references/CHECKLIST.md`** - Comprehensive audit checklist for thorough coverage
 
-```typescript
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+### Example Files
 
-const formSchema = z.object({
-  username: z.string().min(2).max(50),
-  email: z.string().email(),
-});
+Working examples in `examples/`:
+- **`EXAMPLES.md`** - Sample audit reports and recommendation formats
 
-type FormValues = z.infer<typeof formSchema>;
-
-function ProfileForm(): React.ReactElement {
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: '',
-      email: '',
-    },
-  });
-
-  function onSubmit(values: FormValues): void {
-    console.log(values);
-  }
-
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="johndoe" {...field} />
-              </FormControl>
-              <FormDescription>
-                Your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input type="email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
-  );
-}
-```
-
-## Customizing Components
-
-### Adding Variants
-
-```typescript
-// components/ui/button.tsx
-import { cva, type VariantProps } from 'class-variance-authority';
-
-const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50',
-  {
-    variants: {
-      variant: {
-        default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
-        destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
-        outline: 'border border-input bg-background shadow-sm hover:bg-accent',
-        secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
-        // Add custom variants
-        success: 'bg-green-500 text-white hover:bg-green-600',
-        warning: 'bg-yellow-500 text-white hover:bg-yellow-600',
-      },
-      size: {
-        default: 'h-9 px-4 py-2',
-        sm: 'h-8 rounded-md px-3 text-xs',
-        lg: 'h-10 rounded-md px-8',
-        icon: 'h-9 w-9',
-        // Add custom sizes
-        xl: 'h-12 rounded-md px-10 text-base',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-      size: 'default',
-    },
-  }
-);
-```
-
-### Customizing Theme Colors
-
-```css
-/* app/globals.css */
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    /* Add custom colors */
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    /* Dark mode colors */
-  }
-}
-```
+---
 
 ## Best Practices
 
-1. **Don't modify node_modules** - Components are in your codebase
-2. **Use cn() utility** - For conditional classes
-3. **Keep variants consistent** - Follow existing patterns
-4. **Customize at theme level** - Use CSS variables
-5. **Document customizations** - For team consistency
+### During Discovery
+- Capture evidence systematically
+- Document navigation paths taken
+- Note observable user friction
+- Screenshot liberally
+- Record performance metrics
+
+### During Analysis
+- Apply recognized UX principles
+- Reference WCAG standards
+- Compare against modern patterns
+- Prioritize user impact
+- Consider implementation feasibility
+
+### During Reporting
+- Lead with high-impact items
+- Provide clear visual examples
+- Separate what's possible now vs later
+- Make recommendations actionable
+- Include success metrics
+
+### Communication
+- Write for multiple audiences (designers, developers, stakeholders)
+- Balance technical detail with accessibility
+- Use visual aids effectively
+- Organize for easy navigation
+- Enable quick reference
+
+---
 
 ## Common Patterns
 
-### Loading Button
+### Navigation Issues
+- Over-complex menu structures
+- Unclear labeling
+- Inconsistent navigation across sections
+- Missing breadcrumbs
+- Poor mobile navigation
 
-```typescript
-<Button disabled={isLoading}>
-  {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-  {isLoading ? 'Loading...' : 'Submit'}
-</Button>
-```
+**Solution Pattern:** Simplify, clarify labels, add consistent navigation cues
 
-### Responsive Dialog
+### Content Issues
+- Unclear value propositions
+- Weak calls-to-action
+- Outdated information
+- Inconsistent tone
+- Poor content hierarchy
 
-```typescript
-import {
-  Dialog,
-  DialogContent,
-} from '@/components/ui/dialog';
-import {
-  Drawer,
-  DrawerContent,
-} from '@/components/ui/drawer';
-import { useMediaQuery } from '@/hooks/use-media-query';
+**Solution Pattern:** Refine messaging, strengthen CTAs, reorganize hierarchy
 
-function ResponsiveDialog({ open, onOpenChange, children }: Props): React.ReactElement {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+### Visual Issues
+- Inconsistent styling
+- Poor typography hierarchy
+- Low contrast
+- Cluttered layouts
+- Inconsistent spacing
 
-  if (isDesktop) {
-    return (
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent>{children}</DialogContent>
-      </Dialog>
-    );
-  }
+**Solution Pattern:** Create consistent design system, improve visual hierarchy
 
-  return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent>{children}</DrawerContent>
-    </Drawer>
-  );
-}
-```
+### Mobile Issues
+- Non-responsive elements
+- Small touch targets
+- Horizontal scrolling
+- Poor mobile navigation
+- Slow mobile performance
 
-## Notes
+**Solution Pattern:** Implement responsive patterns, optimize mobile experience
 
-- shadcn/ui is built on Radix UI primitives
-- All components are fully accessible
-- Works with React Server Components
-- No runtime dependency (code is yours)
+### Performance Issues
+- Large unoptimized images
+- Render-blocking resources
+- Excessive JavaScript
+- Slow server response
+- No caching strategy
+
+**Solution Pattern:** Optimize assets, defer non-critical resources, implement caching
+
+---
+
+## Success Criteria
+
+Effective audit delivers:
+- ✅ Clear, prioritized action items
+- ✅ Tier 1 recommendations ready for immediate implementation
+- ✅ Evidence-based findings with screenshots
+- ✅ Specific solutions, not just problems
+- ✅ Section-specific implementation guidance
+- ✅ Performance improvement opportunities
+- ✅ Accessibility issue identification
+- ✅ Mobile experience evaluation
+- ✅ Strategic roadmap (Tier 2 & 3)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
