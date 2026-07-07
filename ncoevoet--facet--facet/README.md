@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ncoevoet/facet](https://github.com/ncoevoet/facet/tree/main/.claude/skills/signal-patterns/SKILL.md)
+Original source: [ncoevoet/facet](https://github.com/ncoevoet/facet/tree/main/.claude/skills/code-quality-analyzer/SKILL.md)
 
 ---
 
