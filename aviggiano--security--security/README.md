@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aviggiano/security](https://github.com/aviggiano/security/tree/main/skills/foundry-fuzz-mirrors/SKILL.md)
+Original source: [aviggiano/security](https://github.com/aviggiano/security/tree/main/skills/foundry-test-campaign/SKILL.md)
 
 ---
 
