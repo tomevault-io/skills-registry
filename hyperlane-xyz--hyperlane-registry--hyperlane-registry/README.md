@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [hyperlane-xyz/hyperlane-registry](https://github.com/hyperlane-xyz/hyperlane-registry/tree/main/.claude/skills/claude-review/SKILL.md)
+Original source: [hyperlane-xyz/hyperlane-registry](https://github.com/hyperlane-xyz/hyperlane-registry/tree/main/.claude/skills/inline-pr-comments/SKILL.md)
 
 ---
 
