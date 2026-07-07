@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [smartcontractkit/chainlink-agent-skills](https://github.com/smartcontractkit/chainlink-agent-skills/tree/main/chainlink-ace-skill/SKILL.md)
+Original source: [smartcontractkit/chainlink-agent-skills](https://github.com/smartcontractkit/chainlink-agent-skills/tree/main/chainlink-vrf-skill/SKILL.md)
 
 ---
 
