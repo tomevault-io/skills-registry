@@ -1,334 +1,198 @@
 ---
-name: tuimorphic
-description: Teach agents to design TUIs in the tuimorphic style (Bagels/Calcure/Claude Code/Droid-inspired). Use when this capability is needed.
+name: tailwind-4
+description: > Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Tuimorphic
+## Styling Decision Tree
 
-You are a **tuimorphic TUI designer**.
+```
+Tailwind class exists?  → className="..."
+Dynamic value?          → style={{ width: `${x}%` }}
+Conditional styles?     → cn("base", condition && "variant")
+Static only?            → className="..." (no cn() needed)
+Library can't use class?→ style prop with var() constants
+```
 
-Tuimorphic is a terminal-UI visual language: **soft-rounded containers, layered depth, low-contrast surfaces, and warm↔cool accents** (often orange/peach ↔ lavender/purple). It should feel “modern app UI”, but expressed with terminal primitives.
+## Critical Rules
 
-Tuimorphic is **style-first**. You can apply it to:
+### Never Use var() in className
 
-* a full app shell (header / panes / status)
-* a single panel or table
-* inline terminal output that *resembles* a TUI (no alt-screen)
+```typescript
+// ❌ NEVER: var() in className
+<div className="bg-[var(--color-primary)]" />
+<div className="text-[var(--text-color)]" />
 
-Use this skill when you are asked to:
+// ✅ ALWAYS: Use Tailwind semantic classes
+<div className="bg-primary" />
+<div className="text-slate-400" />
+```
 
-* design a new TUI screen/layout
-* restyle an existing TUI to “look like Bagels / Calcure / Claude Code / Droid”
-* propose Textual / Ratatui / BubbleTea styling tokens
+### Never Use Hex Colors
 
-## 1) Style contract (priorities)
+```typescript
+// ❌ NEVER: Hex colors in className
+<p className="text-[#ffffff]" />
+<div className="bg-[#1e293b]" />
 
-Tuimorphic is not “a mandatory layout”; it’s a set of visual and interaction patterns. The only hard requirement is that the result reads as tuimorphic.
+// ✅ ALWAYS: Use Tailwind color classes
+<p className="text-white" />
+<div className="bg-slate-800" />
+```
 
-### 1.1 Palette + surfaces
+## The cn() Utility
 
-Default tuimorphic palette (inspired by Bagels’ `tokyo-night` / `catppuccin` family):
+```typescript
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
-* **Background**: very dark navy (e.g. `#1A1B26`)
-* **Surface**: slightly lighter navy (e.g. `#24283B`)
-* **Panel**: mid slate / indigo (e.g. `#414868`)
-* **Primary**: lavender (e.g. `#BB9AF7`)
-* **Secondary**: sky/steel blue (e.g. `#7AA2F7`)
-* **Accent**: peach/orange (e.g. `#FF9E64`)
-* **Text**: desaturated periwinkle (e.g. `#A9B1D6`)
-
-Rules:
-
-* Surfaces are **low-contrast**: panel borders are subtle, not high-contrast white.
-* “High contrast” is reserved for **selection, focus, active state, and warnings**.
-* A **dual accent** vocabulary (warm + cool) is common, but optional — place it intentionally (don’t force it into every region).
-
-### 1.2 Geometry + borders
-
-* Prefer **rounded borders** everywhere.
-* The outer app frame can carry a **warm→cool gradient** (top warm, bottom cool).
-* Inner panels use thin rounded borders (sometimes only top/bottom rules) + padding.
-* Avoid heavy box-drawing everywhere; use **spacing + faint rules** for separation.
-
-### 1.3 Depth + micro-textures
-
-* Convey depth via:
-  * slightly different surface shades
-  * faint border tints
-  * occasional subtle hatching / dotted fills for progress bars and charts
-
-### 1.4 Interaction affordances
-
-These are **optional patterns**. Pick what fits the screen and integration mode.
-
-* **Tabs / segmented controls** (when there are multiple views): active is a **filled pill** (lavender) with high-contrast text.
-* **Tables/lists** (when list density matters):
-  * header row can be a **tinted strip** (often lavender)
-  * selection highlight is a tinted bar (usually blue) with stronger text weight
-  * optional zebra striping is very subtle
-* **Key-hints / status bar** (when keyboard-driven): a muted surface line with accent-tinted keys.
-
-## 2) Layout patterns (optional)
-
-Tuimorphic shouldn’t dictate *how* an app lays out its screens. If you need a starting point, these patterns often work well — but treat them as a menu, not a rulebook:
-
-* **Single column cards** (stacked panels; works great for inline output)
-* **Left rail + main** (nav/filters on the left, primary content on the right)
-* **Main + details pane** (table/list plus a right-side detail card)
-
-General spacing guidance:
-
-* Panels have consistent padding (often `1` cell).
-* Align headings and data columns when presenting structured data.
-
-## 3) Component cookbook
-
-### 3.1 Tuimorphic panel
-
-* Rounded border (subtle, panel-tinted)
-* Title in the top border (left-aligned)
-* Inner padding 1
-* Focus ring switches border tint to **accent**
-
-### 3.2 Tab strip
-
-Use tabs only when there are multiple views worth switching between.
-
-* Inactive tabs: minimal outline / ghost text
-* Active tab: filled pill in **primary** with bold text
-* Tab strip often sits near the header/context line (or becomes a segmented control in a panel)
-* Ensure the active pill is clearly visible in screenshots (not clipped or hidden by layout).
-
-Textual implementation note:
-
-* Prefer a plain `Container` with `layout: horizontal` for the tab row (very reliable for screenshots), rather than relying on specialized layout containers.
-
-### 3.3 Tuimorphic table
-
-* Header row: `primary` fill (lavender strip)
-* Body: surface background; alternate rows optional (very low contrast)
-* Selection: `secondary 20–30%` background (blue tint)
-
-### 3.4 Footer key-hints
-
-Optional, but powerful in keyboard-driven TUIs.
-
-* One line, muted surface
-* Keys: accent-tinted, bold
-* Descriptions: muted text
-
-### 3.5 Composer / input footer (embedded panels)
-
-For Claude Code / Droid-like embedded panels, a “composer” footer reads best when it feels like a *single integrated component*.
-
-Suggestions (pick what fits):
-
-* Treat the composer as a **persistent footer region inside the embedded panel** (not a separate “floating” control).
-* Use a subtle divider above it (or a surface shift) to imply persistence.
-* Keep it compact (1–3 lines) and avoid heavy button chrome.
-* Make the prompt glyph feel **integrated with the input**:
-  * Prefer a **single shared border** around the composer row, with the glyph and the input inside that border.
-  * The glyph should read like a **prefix inside the input box** (not a detached label sitting outside).
-  * A small warm accent on the glyph (or a focus tint on the border) is often enough.
-* If you show actions near the composer, keep them lightweight (chips/badges) and align them to the same baseline/height as the input.
-
-Common gotchas to avoid:
-
-* A prompt glyph (`>` / `›`) that sits *outside* the input border tends to look accidental. Either put the glyph inside a shared composer border, or make the glyph part of the input region.
-* “Send / close” as plain text buttons often reads cheap; prefer chips/badges or key-hints.
-
-### 3.6 Action chips (clean, not ugly buttons)
-
-Instead of chunky buttons, use **chips** that match the tuimorphic vocabulary:
-
-* ` SEND ` / ` CLOSE ` rendered as **label badges** (ALL CAPS, dark text on bright fill, `padding: 0 1`).
-* Key-hint chips: `[Enter] send`, `[Esc] close` where the key is accent-tinted and bold.
-* Prefer **one row** of chips (don’t stack unless necessary).
-* Keep chips “quiet” by default; reserve bright fills for the primary action, and use muted/outline chips for secondary actions.
-
-If you want the Droid/Claude look specifically:
-
-* Use label-badge pills like ` SEND ` / ` CLOSE ` (note the spaces), in a bright solid fill with dark text.
-* If you make chips a **single line tall**, avoid adding a border around them (a 1-line bordered widget often leaves no room for text). Prefer just a solid fill + padding.
-
-### 3.7 Embedded interactive panel composition (flexible)
-
-When building an *embedded interactive panel* (not a fullscreen app shell), a clean composition is usually:
-
-* A **centered panel** with breathing room (visible background margin), unless the host UI demands anchoring.
-* A lightweight **header** region (title on the left, optional meta/badges on the right).
-* A primary **content** region (card/table/list) with an obvious focus/selection state.
-* A persistent **composer footer** that feels integrated (prompt glyph inside the input, tidy key-hints/actions).
-
-Polish notes (all optional):
-
-* Use consistent padding so header, content, and composer share a baseline grid.
-* Keep action chips/badges visually “flat” (pills), and align them to the input height.
-* Avoid introducing a second outer frame in embedded mode; let the panel itself carry the structure.
-
-Alignment micro-detail:
-
-* If you include a context line like `Category / Amount / Label`, indent it by ~1–2 cells so it lines up with the table/card’s inner padding.
-
-### 3.8 Label badges (ALL CAPS pill)
-
-This is a signature “Droid/Claude Code-like” component: **ALL CAPS black text on a bright solid accent**, with **one space of padding on each side** so it reads like a clean label.
-
-Use it for:
-
-* roles (`USER`, `DROID`)
-* status (`NEW`, `DONE`, `ERROR`)
-* environment/context (`DEV`, `PROD`)
-
-Guidance:
-
-* Keep it **high-contrast**: dark text on bright fill.
-* Use **single-word** labels; keep widths consistent.
-* Prefer warm/cool accents depending on semantics (warm for attention, cool for active/selected).
-
-Examples:
-
-* ` USER ` on warm accent
-* ` DROID ` on lavender
-
-## 4) Framework mapping (implementation hints)
-
-### Textual (recommended)
-
-Use Bagels patterns:
-
-* Rounded borders: `border: round $panel-lighten-2;` and on focus `border: round $accent;`
-* Inputs: background `$surface`, focus with a subtle border-left indicator
-* Tabs: `. -active` uses “block cursor” variables to produce a filled pill
-* Tables: style `DataTable > .datatable--header` with `$primary` background
-
-Reference code:
-
-* Bagels TCSS: `https://github.com/EnhancedJax/Bagels/blob/main/src/bagels/styles/index.tcss`
-* Bagels DataTable styling: `https://github.com/EnhancedJax/Bagels/blob/main/src/bagels/components/datatable.py` (`DEFAULT_CSS`)
-
-Minimal tab-pill CSS (pattern):
-
-```css
-.tabs {
-  layout: horizontal;
-  width: 1fr;
-  height: 1;
-}
-
-.tab {
-  padding: 0 1;
-  color: $text 70%;
-}
-
-.tab.-active {
-  background: $primary;
-  color: $background;
-  text-style: bold;
-  border: round $primary;
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }
 ```
 
-Badge/label pill (pattern):
+### When to Use cn()
 
-```css
-.badge {
-  padding: 0 1; /* creates the " USER " look */
-  color: $background;
-  background: $accent;
-  text-style: bold;
-}
+```typescript
+// ✅ Conditional classes
+<div className={cn("base-class", isActive && "active-class")} />
+
+// ✅ Merging with potential conflicts
+<button className={cn("px-4 py-2", className)} />  // className might override
+
+// ✅ Multiple conditions
+<div className={cn(
+  "rounded-lg border",
+  variant === "primary" && "bg-blue-500 text-white",
+  variant === "secondary" && "bg-gray-200 text-gray-800",
+  disabled && "opacity-50 cursor-not-allowed"
+)} />
 ```
 
-### Ratatui (Rust)
+### When NOT to Use cn()
 
-* Use `Block::default().borders(Borders::ALL).border_type(BorderType::Rounded)`
-* Define a `Theme` struct with background/surface/panel/primary/secondary/accent
-* Draw an outer frame with a warm→cool gradient effect by varying border color by row
+```typescript
+// ❌ Static classes - unnecessary wrapper
+<div className={cn("flex items-center gap-2")} />
 
-Badge/label pattern:
+// ✅ Just use className directly
+<div className="flex items-center gap-2" />
+```
 
-* Render labels as `Span::styled(" USER ", Style::new().fg(bg).bg(accent).bold())` (note the spaces).
+## Style Constants for Charts/Libraries
 
-### BubbleTea + Lipgloss (Go)
+When libraries don't accept className (like Recharts):
 
-* Use `lipgloss.NewStyle().Border(lipgloss.RoundedBorder())`
-* Use subtle foreground colors and avoid stark borders
-* Simulate the outer gradient via two nested frames (top warm, bottom cool)
+```typescript
+// ✅ Constants with var() - ONLY for library props
+const CHART_COLORS = {
+  primary: "var(--color-primary)",
+  secondary: "var(--color-secondary)",
+  text: "var(--color-text)",
+  gridLine: "var(--color-border)",
+};
 
-Badge/label pattern:
+// Usage with Recharts (can't use className)
+<XAxis tick={{ fill: CHART_COLORS.text }} />
+<CartesianGrid stroke={CHART_COLORS.gridLine} />
+```
 
-* `lipgloss.NewStyle().Bold(true).Foreground(bg).Background(accent).Padding(0,1).Render("USER")`
+## Dynamic Values
 
-## 5) Integration modes
+```typescript
+// ✅ style prop for truly dynamic values
+<div style={{ width: `${percentage}%` }} />
+<div style={{ opacity: isVisible ? 1 : 0 }} />
 
-Tuimorphic can show up in different delivery modes. Choose the mode that fits the product and runtime constraints, then adapt the visuals accordingly.
+// ✅ CSS custom properties for theming
+<div style={{ "--progress": `${value}%` } as React.CSSProperties} />
+```
 
-### 5.0 Embedded vs fullscreen (be explicit)
+## Common Patterns
 
-Tuimorphic supports **two distinct capture boundaries**:
+### Flexbox
 
-* **Embedded (Claude Code / Droid-like):** the TUI is a *panel* inside a larger UI or transcript. There is often **no outermost app frame**; focus on internal cards, tables, and pills.
-* **Fullscreen (alt-screen):** the app *owns the terminal surface*. An outer frame is allowed (and sometimes desirable), but still not mandatory unless the user explicitly wants it.
+```typescript
+<div className="flex items-center justify-between gap-4" />
+<div className="flex flex-col gap-2" />
+<div className="inline-flex items-center" />
+```
 
-If the user hasn’t specified which one they want, **ask**. If you can’t ask (batch/non-interactive), default to **embedded** and state the assumption.
+### Grid
 
-### 5.1 Inline (static)
+```typescript
+<div className="grid grid-cols-3 gap-4" />
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" />
+```
 
-**What it is:** The agent prints a “screen mock” as plain terminal output (no cursor control, no alt-screen). Great for:
+### Spacing
 
-* design reviews and proposals
-* CLI help / onboarding examples
-* logs-friendly output
+```typescript
+// Padding
+<div className="p-4" />           // All sides
+<div className="px-4 py-2" />     // Horizontal, vertical
+<div className="pt-4 pb-2" />     // Top, bottom
 
-**How to keep tuimorphic style inline:**
+// Margin
+<div className="m-4" />
+<div className="mx-auto" />       // Center horizontally
+<div className="mt-8 mb-4" />
+```
 
-* Prioritize **geometry + surfaces**: rounded borders where possible, generous padding, low-contrast separators.
-* Use **warm/cool accents sparingly**: highlight titles, active items, or selection examples with callouts.
-* Keep the mock **snapshot-like**: show a single state (focused element, selected row) instead of trying to simulate interaction.
-* If color isn’t guaranteed, include **token labels** next to elements (e.g., `[primary]`, `[accent]`) rather than relying on ANSI.
+### Typography
 
-### 5.2 Inline (streaming / progressive)
+```typescript
+<h1 className="text-2xl font-bold text-white" />
+<p className="text-sm text-slate-400" />
+<span className="text-xs font-medium uppercase tracking-wide" />
+```
 
-**What it is:** The agent streams incremental output (still logs-friendly) to communicate state transitions over time.
+### Borders & Shadows
 
-**When to use:** long-running operations, multi-step workflows, or when you want “TUI flavor” without taking over the terminal.
+```typescript
+<div className="rounded-lg border border-slate-700" />
+<div className="rounded-full shadow-lg" />
+<div className="ring-2 ring-blue-500 ring-offset-2" />
+```
 
-**Tuimorphic guidance:** keep a stable frame (same headings/sections each update), and only append/refresh the parts that logically change (status lines, progress bars, last action).
+### States
 
-### 5.3 Fullscreen / alt-screen (interactive)
+```typescript
+<button className="hover:bg-blue-600 focus:ring-2 active:scale-95" />
+<input className="focus:border-blue-500 focus:outline-none" />
+<div className="group-hover:opacity-100" />
+```
 
-**What it is:** A real interactive TUI using alt-screen/cursor control (Textual, Ratatui, BubbleTea, etc.).
+### Responsive
 
-**When to use:** high-frequency interaction, keyboard navigation, dense tables, multi-pane workflows.
+```typescript
+<div className="w-full md:w-1/2 lg:w-1/3" />
+<div className="hidden md:block" />
+<div className="text-sm md:text-base lg:text-lg" />
+```
 
-**Tuimorphic guidance:** you can lean into the full shell patterns (header/tabs/status) *when they help*, but they are not mandatory.
+### Dark Mode
 
-## 6) Output requirements when designing a screen
+```typescript
+<div className="bg-white dark:bg-slate-900" />
+<p className="text-gray-900 dark:text-white" />
+```
 
-When asked to design a tuimorphic TUI, output what’s useful for the request (don’t force an app shell). Prefer this structure:
+## Arbitrary Values (Escape Hatch)
 
-1. **UI mode** (**Embedded** vs **Fullscreen**) + **integration mode** (Inline static / Inline streaming / Fullscreen)
-2. **Screen map or module map** (regions/panes if applicable; otherwise a component outline)
-3. **Style tokens** (palette + borders + spacing + focus/selection states)
-4. **Component breakdown** (which cookbook components you used, and why)
-5. **Interaction model** (focus/selection behavior; key-hints only if relevant)
+```typescript
+// ✅ OK for one-off values not in design system
+<div className="w-[327px]" />
+<div className="top-[117px]" />
+<div className="grid-cols-[1fr_2fr_1fr]" />
 
-If asked for code, produce code + a short list of the tokens you implemented.
+// ❌ Don't use for colors - use theme instead
+<div className="bg-[#1e293b]" />  // NO
+```
 
-## 7) Verification checklist (style-oriented)
-
-Before you declare done, ensure:
-
-* Low-contrast surfaces + subtle borders (no stark white boxes everywhere)
-* Rounded geometry where the target framework supports it
-* Warm + cool accents are used intentionally (not everywhere; not missing entirely)
-* Focus/selection states are clearly visible without looking neon
-* Spacing/padding feels consistent (baseline grid; aligned headings/columns)
-* The design fits the chosen **integration mode** (inline mock is snapshot-like; fullscreen can be interactive)
-* Any “shell” elements (tabs/status/key-hints) are present **only when they add value**
+## Keywords
+tailwind, css, styling, cn, utility classes, responsive
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
