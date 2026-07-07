@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cloudnative-co/claude-code-starter-kit](https://github.com/cloudnative-co/claude-code-starter-kit/tree/main/skills/verification-loop/SKILL.md)
+Original source: [cloudnative-co/claude-code-starter-kit](https://github.com/cloudnative-co/claude-code-starter-kit/tree/main/skills/frontend-patterns/SKILL.md)
 
 ---
 
