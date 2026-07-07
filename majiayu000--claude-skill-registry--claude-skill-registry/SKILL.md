@@ -1,287 +1,248 @@
 ---
-name: visual-style-guide
-description: This skill should be used when the user asks about "colors", "hex codes", "path colors", "tile background", "rendering order", "sorting order", "token design", "SVG styling", "stroke width", "line cap", "grid lines", "glow effect", "visual style", or discusses Zero-Day Attack visual design and styling. Use when this capability is needed.
+name: prompt-engineering
+description: Comprehensive prompt engineering framework for designing, optimizing, and iterating LLM prompts. This skill should be used when users request prompt creation, optimization, or improvement for any LLM task, or when users need help translating vague requirements into effective prompts through collaborative dialogue and iterative refinement. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Visual Style Guide
+# Prompt Engineering
 
-Expert knowledge of Zero-Day Attack visual design, color palette, rendering specifications, and SVG styling conventions.
+## Overview
 
-## Color Palette
+This skill transforms vague user requests into precise, effective prompts through collaborative dialogue, systematic analysis, and iterative refinement. It combines proven prompt engineering techniques with a structured development process to create prompts that reliably achieve user objectives.
 
-### Background Elements
+## Workflow Decision Tree
 
-| Element          | Hex       | RGB          | Description                    |
-| ---------------- | --------- | ------------ | ------------------------------ |
-| Tile Background  | `#151820` | (21, 24, 32) | Very dark blue-gray            |
-| Grid Lines       | `#222630` | (34, 38, 48) | Slightly lighter (50% opacity) |
-| Board Background | `#0D0F14` | (13, 15, 20) | Darkest blue-gray              |
+When a user requests prompt assistance, follow this decision flow:
 
-### Path Colors
-
-| Color  | Hex       | RGB             | Purpose           |
-| ------ | --------- | --------------- | ----------------- |
-| Red    | `#FF2244` | (255, 34, 68)   | Red player paths  |
-| Blue   | `#44BBFF` | (68, 187, 255)  | Blue player paths |
-| Purple | `#BB88FF` | (187, 136, 255) | Shared paths      |
-
-### Color Accessibility
-
-Colors tested for color vision deficiencies:
-
-- High contrast between paths and background
-- Red appears brownish but distinct in colorblind view
-- Blue remains clearly visible
-- Purple maintains unique identity
-
-## Path Specifications
-
-### SVG Path Attributes
-
-```svg
-<path d="M [start] C [control1], [control2], [end]"
-      fill="none"
-      stroke="#FF2244"
-      stroke-width="8"
-      stroke-linecap="butt"/>
+```
+User Request
+├─ "Create a prompt" / "Make a prompt" / Vague request
+│  └─ → Start with EXPLORATION PHASE
+├─ "Optimize this prompt" / Has existing prompt
+│  └─ → Start with SIMPLE OPTIMIZATION
+└─ "Fix this issue with my prompt" / Specific problem
+   └─ → Start with ANALYSIS PHASE (focused on problem)
 ```
 
-| Attribute      | Value       | Purpose                       |
-| -------------- | ----------- | ----------------------------- |
-| fill           | none        | Paths are stroked, not filled |
-| stroke         | (color hex) | Path color                    |
-| stroke-width   | **8**       | Path thickness in SVG units   |
-| stroke-linecap | **butt**    | Square end caps               |
+## Core Process
 
-### Path Connections
+### Phase 1: Exploration - Uncovering True Needs
 
-- Paths connect at edge midpoints (100 units from corners on 200×200 tile)
-- Curved paths use bezier curves with consistent radius
-- Paths do NOT connect where they visually cross (gap indicates underpass)
+Before creating any prompt, deeply understand the user's actual needs through strategic questioning. Start broad, then narrow down systematically.
 
-## Grid Line Styling
+**Initial Context Gathering:**
+- What task will this prompt accomplish?
+- Who will use it and in what environment?
+- How frequently will it be used?
+- What does success look like?
 
-### Cyberpunk Glow Effect
+**Deepening Understanding:**
+- Request concrete examples of desired outputs
+- Ask about past failures or attempts
+- Identify critical success factors
+- Uncover unstated assumptions and constraints
 
-Two-layer rendering:
+**Technical Requirements:**
+- Model and platform constraints
+- Token limits and cost considerations
+- Response time requirements
+- Integration with other systems
 
-```csharp
-// Glow layer (sorting order 1)
-Color glowColor = new Color(0.73f, 0.53f, 1f, 0.3f);  // #BB88FF @ 30%
-float glowWidth = 0.2f;
+Continue exploration until the core requirements are crystal clear. Never assume—always verify.
 
-// Core layer (sorting order 2)
-Color coreColor = new Color(0.73f, 0.53f, 1f, 0.9f);  // #BB88FF @ 90%
-float coreWidth = 0.08f;
-```
+### Phase 2: Analysis - Choosing the Right Strategy
 
-### Grid Structure
+Analyze the task to determine the optimal prompting approach.
 
-- 5×5 grid with 40-unit spacing in SVG terms
-- Lines rendered at 50% opacity
-- Reserve zone boundaries: Blue on left, Red on right
+**Task Classification:**
 
-## Token Design
+Classify the task along key dimensions:
+- **Complexity**: Simple directive vs multi-step reasoning
+- **Output Type**: Creative vs analytical vs structured
+- **Error Tolerance**: High-stakes vs experimental
+- **Frequency**: One-time vs repeated use
 
-### Attack Token
+**Strategy Selection:**
 
-```text
-Design: Filled target
-- Three concentric circles (solid fill)
-- Cross pattern overlay
-- Player color fill
-```
+Based on classification, choose primary techniques:
+- **Simple Tasks**: Direct instructions with clear constraints
+- **Complex Reasoning**: Chain-of-thought with step-by-step breakdown
+- **Creative Tasks**: Role setting with flexible boundaries
+- **Structured Output**: Explicit format specifications with examples
+- **High-Stakes**: Self-consistency checks and validation steps
 
-### Exploit Token
+**Trade-off Analysis:**
 
-```text
-Design: Hollow rings
-- Two concentric circles (outline only)
-- Faint crosshair overlay
-- Player color stroke
-```
+Present multiple approaches with clear trade-offs:
+- Approach A: Detailed but token-heavy
+- Approach B: Concise but requires interpretation
+- Approach C: Balanced with moderate complexity
 
-### Ghost Token
+Always explain WHY each approach fits the specific context.
 
-```text
-Design: Gradient opacity
-- Four concentric circles
-- Graduated opacity: 30%, 50%, 70%, 100%
-- Player color with transparency
-```
+### Phase 3: Implementation - Building Iteratively
 
-### Token Dimensions
+Create the prompt through progressive refinement, starting simple and adding complexity as needed.
 
-| Attribute    | Value                   |
-| ------------ | ----------------------- |
-| SVG viewBox  | 80×80 units             |
-| World Size   | 0.4 units (20% of tile) |
-| Texture Size | 40 pixels (at 100 PPU)  |
+**Version 1 - Minimal Viable Prompt:**
+- Core instructions only
+- Test basic functionality
+- Identify gaps and ambiguities
 
-## Tile Dimensions
+**Version 2 - Enhanced Clarity:**
+- Add specific examples if needed
+- Clarify ambiguous points
+- Include essential constraints
 
-| Attribute    | Value            |
-| ------------ | ---------------- |
-| SVG viewBox  | 200×200 units    |
-| World Size   | 2.0×2.0 units    |
-| Texture Size | 200 (at 100 PPU) |
+**Version 3+ - Optimization:**
+- Refine wording for precision
+- Remove redundancy
+- Balance detail with conciseness
 
-### SVG Import Settings (CRITICAL)
+Document each version's changes and rationale. Store prompts in markdown files with:
+- Version history
+- Design decisions
+- Known limitations
+- Usage examples
 
-**Always use PPU = 100. Adjust Texture Size for world size.**
+### Phase 4: Validation - Critical Evaluation
 
-```text
-World Size = Texture Size ÷ 100
-```
+Rigorously evaluate the prompt against quality criteria.
 
-| Asset  | Texture Size | PPU | World Size |
-| ------ | ------------ | --- | ---------- |
-| Tiles  | 200          | 100 | 2.0        |
-| Tokens | 40           | 100 | 0.4        |
+**Essential Checks:**
+- **Clarity**: Can the instructions be misunderstood?
+- **Completeness**: Are all necessary elements present?
+- **Consistency**: Do instructions contradict each other?
+- **Efficiency**: Can anything be removed without loss?
+- **Robustness**: How does it handle edge cases?
 
-## Rendering Order (Sorting Layers)
+**Testing Approach:**
+- Run through typical use cases
+- Test boundary conditions
+- Imagine failure modes
+- Check for unwanted behaviors
 
-Higher sorting order = renders in front.
+Be ruthlessly honest about weaknesses. If something isn't working, acknowledge it and iterate.
 
-| Layer         | Order  | Content               | Component           |
-| ------------- | ------ | --------------------- | ------------------- |
-| Background    | -10    | Board color           | BackgroundRenderer  |
-| Tiles         | 0      | Tile sprites          | TileView            |
-| Grid Glow     | 1      | Wide purple lines     | GridOverlayRenderer |
-| Grid Core     | 2      | Thin purple lines     | GridOverlayRenderer |
-| Reserve Lines | 1      | Zone boundaries       | GridOverlayRenderer |
-| Edge Nodes    | 3      | Connection indicators | (future)            |
-| UI            | Canvas | Text, scores          | Unity UI            |
+## Simple Optimization
 
-### Critical: Grid Above Tiles
+When optimizing an existing prompt, focus on minimal, targeted improvements:
 
-Grid sorting order MUST be higher than tiles:
+1. **Identify Specific Issues**: What exactly isn't working?
+2. **Diagnose Root Causes**: Why is the current prompt failing?
+3. **Apply Minimal Edits**: Change only what's necessary
+4. **Preserve Working Elements**: Keep what already works well
+5. **Test Improvements**: Verify fixes don't break other aspects
 
-- Tiles: 0
-- Grid Glow: 1
-- Grid Core: 2
+Common optimization targets:
+- Ambiguous language → Specific instructions
+- Missing constraints → Added boundaries
+- Inconsistent outputs → Format specifications
+- Verbose responses → Length constraints
+- Off-topic responses → Clearer scope definition
 
-If grid order is lower, tiles cover the grid lines.
+## Prompt Creation from Scratch
 
-## Board Layout
+When creating new prompts, structure them as instructions for an eager but inexperienced assistant who needs clear guidance.
 
-### Display Specifications
+**Essential Components:**
 
-Target: 1920×1080 pixels = 19.2×10.8 world units (100 PPU)
+1. **Role/Context** (if beneficial):
+   - Set perspective or expertise level
+   - Establish tone and approach
+   
+2. **Clear Objective**:
+   - State the primary goal explicitly
+   - Define success criteria
 
-### Horizontal Layout Visual
+3. **Specific Instructions**:
+   - Break complex tasks into steps
+   - Provide decision criteria
+   - Specify constraints and boundaries
 
-```text
-┌─────────┬──────────┬────────────────────────────┬──────────┬─────────┐
-│ Blue UI │ Blue Res │       5×5 PLAYABLE GRID    │ Red Res  │ Red UI  │
-│   2.1   │   2.0    │           10.0             │   2.0    │  2.1    │
-│`#44BBFF`│ `#44BBFF`│    `#BB88FF` (firewall)    │ `#FF2244`│`#FF2244`│
-└─────────┴──────────┴────────────────────────────┴──────────┴─────────┘
-← Blue player sits here                           Red player sits here →
-```
+4. **Output Format** (when relevant):
+   - Define structure explicitly
+   - Provide format examples
+   - Specify length or detail level
 
-### Player Orientation
+5. **Examples** (when clarifying):
+   - Show desired patterns
+   - Illustrate edge cases
+   - Demonstrate style/tone
 
-- **Blue player**: Views from LEFT side (x < 0)
-- **Red player**: Views from RIGHT side (x > 0)
-- UI text rotated appropriately for each player's viewing angle
+## Key Techniques Reference
 
-## SVG Technical Specifications
+### Foundation Techniques
 
-### Tile Template
+**Role Setting**: Establish perspective when expertise or tone matters
+- Effective for: Specialized knowledge, consistent voice
+- Example: "As an experienced code reviewer, analyze..."
 
-```svg
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <!-- Background -->
-  <rect width="200" height="200" fill="#151820"/>
+**Progressive Disclosure**: Start general, add detail as needed
+- Effective for: Complex multi-part tasks
+- Example: "First outline the approach, then implement each section..."
 
-  <!-- Grid (40-unit spacing, 50% opacity) -->
-  <path d="M 0 40 L 200 40 M 0 80 L 200 80 M 0 120 L 200 120 M 0 160 L 200 160"
-        stroke="#222630" stroke-width="1" opacity="0.5"/>
-  <path d="M 40 0 L 40 200 M 80 0 L 80 200 M 120 0 L 120 200 M 160 0 L 160 200"
-        stroke="#222630" stroke-width="1" opacity="0.5"/>
+**Explicit Constraints**: Define boundaries clearly
+- Effective for: Preventing unwanted outputs
+- Example: "Limit response to 3 paragraphs, focus only on technical aspects"
 
-  <!-- Paths -->
-  <path d="M 100 0 C 100 50, 150 100, 200 100"
-        fill="none" stroke="#FF2244" stroke-width="8" stroke-linecap="butt"/>
-</svg>
-```
+### Advanced Techniques
 
-### Edge Node Positions (200×200 viewBox)
+**Chain-of-Thought**: Request reasoning before conclusions
+- Use when: Logic and transparency matter
+- Trigger: "Think step-by-step" or "Explain your reasoning"
 
-| Node   | Position   |
-| ------ | ---------- |
-| Top    | (100, 0)   |
-| Right  | (200, 100) |
-| Bottom | (100, 200) |
-| Left   | (0, 100)   |
+**Few-Shot Learning**: Provide input-output examples
+- Use when: Pattern is easier shown than explained
+- Caution: 2-3 examples usually sufficient
 
-### Path Types
+**Self-Consistency**: Have model verify its own outputs
+- Use when: Accuracy is critical
+- Implementation: "Review your answer for errors and inconsistencies"
 
-**Quarter-curve (adjacent nodes)**:
+For detailed technique explanations and examples, consult:
+- `references/techniques.md` - Comprehensive technique catalog
+- `references/patterns.md` - Common prompt patterns
+- `references/antipatterns.md` - What to avoid
 
-```svg
-<!-- Left to Top -->
-<path d="M 0 100 C 50 100, 100 50, 100 0" .../>
-```
+## Collaboration Principles
 
-**Straight line (opposite nodes)**:
+### Be a Thought Partner, Not Just an Executor
 
-```svg
-<!-- Left to Right -->
-<path d="M 0 100 L 200 100" .../>
-```
+- **Bad**: "Here's your prompt" (without understanding needs)
+- **Good**: "Let me understand what you're trying to achieve first..."
 
-## Unity Color Usage
+### Question Assumptions Constructively
 
-### In C# Code
+- Surface hidden requirements through dialogue
+- Challenge unclear objectives respectfully
+- Propose alternatives when original approach seems suboptimal
 
-```csharp
-// Background
-Color boardBackground = new Color(0.05f, 0.06f, 0.08f);  // #0D0F14
-Color tileBackground = new Color(0.08f, 0.09f, 0.13f);   // #151820
+### Iterate Based on Feedback
 
-// Paths
-Color redPath = new Color(1f, 0.13f, 0.27f);             // #FF2244
-Color bluePath = new Color(0.27f, 0.73f, 1f);            // #44BBFF
-Color purplePath = new Color(0.73f, 0.53f, 1f);          // #BB88FF
+- Start with minimum viable prompt
+- Test and refine based on actual outputs
+- Document what works and what doesn't
 
-// Grid
-Color gridLine = new Color(0.13f, 0.15f, 0.19f, 0.5f);   // #222630 @ 50%
-```
+### Teach While Doing
 
-### In Inspector
+- Explain why certain techniques work
+- Share the reasoning behind design choices
+- Help users understand prompt engineering principles
 
-Enter hex values directly: `#FF2244`, `#44BBFF`, etc.
+## References
 
-## Consistency Rules
+This skill includes detailed reference documentation:
 
-1. **Path width**: Always 8 SVG units
-2. **Line cap**: Always "butt"
-3. **Grid opacity**: Always 50%
-4. **Grid spacing**: Always 40 SVG units
-5. **Token size**: Always 20% of tile size
+### references/
+- `techniques.md` - Complete catalog of prompting techniques with examples
+- `patterns.md` - Reusable prompt patterns for common scenarios  
+- `antipatterns.md` - Common mistakes and how to avoid them
+- `evaluation.md` - Comprehensive quality evaluation framework
+- `examples.md` - Library of before/after prompt improvements
 
-## Additional Resources
-
-### Reference Files
-
-This skill's `references/` folder contains:
-
-| File                    | Contains                           | Read When                           |
-| ----------------------- | ---------------------------------- | ----------------------------------- |
-| `color-system.md`       | Full palette, hex codes, RGB       | Need exact color values             |
-| `rendering-order.md`    | 7 layers, sorting order details    | Fixing z-order/visibility issues    |
-| `svg-specifications.md` | viewBox, stroke widths, path types | Creating or modifying SVG assets    |
-| `token-designs.md`      | Attack/Exploit/Ghost visual specs  | Designing or updating token visuals |
-| `tile-styling.md`       | Tile background, path rendering    | Styling tile graphics               |
-
-### Project Files
-
-- **Assets/Tiles/** - Reference existing tile SVGs
-- **Assets/Tokens/** - Reference existing token SVGs
+Consult these references for in-depth technical details and extensive examples not included in this overview.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
