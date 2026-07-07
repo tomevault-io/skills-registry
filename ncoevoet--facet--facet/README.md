@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ncoevoet/facet](https://github.com/ncoevoet/facet/tree/main/.claude/skills/effect-safety-validator/SKILL.md)
+Original source: [ncoevoet/facet](https://github.com/ncoevoet/facet/tree/main/.claude/skills/chrome-devtools-debugging/SKILL.md)
 
 ---
 
