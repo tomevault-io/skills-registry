@@ -1,365 +1,342 @@
 ---
-name: rust-ms-libraries
-description: Microsoft Pragmatic Rust Library Guidelines. Use when designing library crates, public APIs, managing dependencies, or creating reusable components. Use when this capability is needed.
+name: python-modern-cli
+description: Build professional Python CLIs with modern UX patterns using pyfiglet (ASCII banners), typer (commands), questionary (interactions), and rich (formatting). Use when creating command-line tools, automation scripts with user interaction, data processing pipelines with CLI interfaces, or upgrading existing Python scripts to professional CLIs. Ideal for ETL workflows, GIS tools, data analysis utilities, and civic tech projects requiring reproducible, scriptable interfaces. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Microsoft Pragmatic Rust - Library Guidelines
+# Python Modern CLI
 
-Guidelines for building high-quality, reusable Rust libraries.
+Build professional command-line interfaces in Python combining visual appeal, interactive UX, and clear output formatting.
 
-## Crate Structure
+## Quick Start
 
-### Flat vs Nested Modules
-```rust
-// GOOD - flat structure for small libraries
-// src/lib.rs
-mod error;
-mod types;
-mod client;
+Copy the base template from `assets/cli_template.py` as starting point. Install dependencies:
 
-pub use error::Error;
-pub use types::{Config, Options};
-pub use client::Client;
-
-// GOOD - nested for large libraries
-// src/lib.rs
-pub mod http;
-pub mod storage;
-pub mod auth;
-
-// Re-export common items at root
-pub use http::Client;
-pub use storage::Store;
+```bash
+pip install typer[all] rich questionary pyfiglet --break-system-packages
 ```
 
-### Prelude Pattern
-```rust
-// For libraries with many types
-// src/prelude.rs
-pub use crate::error::{Error, Result};
-pub use crate::types::{Config, Options, Status};
-pub use crate::traits::{Execute, Validate};
+Basic structure:
 
-// Users can import everything
-use my_library::prelude::*;
+```python
+import typer
+from rich.console import Console
+from pyfiglet import figlet_format
+import questionary
+
+app = typer.Typer()
+console = Console()
+
+def show_banner(title: str):
+    console.print(figlet_format(title, font="slant"), style="bold cyan")
+
+@app.command()
+def process(
+    input_file: str = typer.Argument(..., help="Input file path"),
+    output: str = typer.Option("output.csv", "--output", "-o"),
+    verbose: bool = typer.Option(False, "--verbose", "-v")
+):
+    """Process data with clear feedback"""
+    if verbose:
+        show_banner("My Tool")
+    
+    console.print(f"[green]Processing {input_file}...[/green]")
+    # ... processing logic ...
+    console.print("[bold green]✓ Done![/bold green]")
+
+if __name__ == "__main__":
+    app()
 ```
 
-## API Design
+## Core Components
 
-### Accept Generics, Return Concrete
-```rust
-// GOOD - flexible input, concrete output
-pub fn process(input: impl AsRef<str>) -> String {
-    let s = input.as_ref();
-    s.to_uppercase()
-}
+### 1. Pyfiglet - Visual Identity
 
-// Can be called with &str, String, Cow<str>, etc.
-process("hello");
-process(String::from("hello"));
+Create memorable ASCII art banners. Use sparingly for main commands or when `--verbose`.
+
+```python
+from pyfiglet import figlet_format
+from rich.console import Console
+
+console = Console()
+
+# Simple banner
+banner = figlet_format("Tool Name", font="slant")
+console.print(banner, style="bold cyan")
+
+# Common fonts: slant, banner, digital, standard
 ```
 
-### Use Into for Ownership Transfer
-```rust
-impl Client {
-    // Accept anything convertible to String
-    pub fn set_name(&mut self, name: impl Into<String>) {
-        self.name = name.into();
-    }
-}
+### 2. Typer - Command Structure
 
-// Both work
-client.set_name("name");
-client.set_name(string_var);
+Define commands, arguments, options with type hints and validation.
+
+```python
+import typer
+from pathlib import Path
+from typing import Optional
+
+app = typer.Typer()
+
+@app.command()
+def convert(
+    input_file: Path = typer.Argument(..., exists=True, help="Input CSV"),
+    format: str = typer.Option("geojson", "--format", "-f", 
+                               help="Output format"),
+    dry_run: bool = typer.Option(False, "--dry-run")
+):
+    """Convert data to specified format"""
+    pass
+
+# Multiple commands
+data_app = typer.Typer()
+app.add_typer(data_app, name="data")
+
+@data_app.command("import")
+def import_data(source: str):
+    """Import from source"""
+    pass
 ```
 
-### Builder Pattern for Complex Construction
-```rust
-#[derive(Default)]
-pub struct ClientBuilder {
-    host: Option<String>,
-    port: Option<u16>,
-    timeout: Option<Duration>,
-}
+### 3. Questionary - User Interaction
 
-impl ClientBuilder {
-    pub fn new() -> Self {
-        Self::default()
+Interactive prompts when flags/args are insufficient or for confirmations.
+
+```python
+import questionary
+
+# Text input with validation
+def validate_url(text):
+    return text.startswith("http") or "URL must start with http"
+
+url = questionary.text(
+    "API endpoint:",
+    validate=validate_url
+).ask()
+
+# Selection
+operation = questionary.select(
+    "Choose operation:",
+    choices=["Extract", "Transform", "Load"]
+).ask()
+
+# Autocomplete for known values
+dataset = questionary.autocomplete(
+    "Select dataset:",
+    choices=["istat_pop", "anac_contracts", "geo_comuni"]
+).ask()
+
+# Confirmation before destructive operations
+if questionary.confirm("Delete all data?").ask():
+    # proceed
+
+# Multiple selection
+features = questionary.checkbox(
+    'Enable features:',
+    choices=['Cache', 'Logging', 'Validation']
+).ask()
+```
+
+### 4. Rich - Output Formatting
+
+Tables, progress bars, colored messages, panels for structured output.
+
+```python
+from rich.console import Console
+from rich.table import Table
+from rich.progress import Progress
+from rich.panel import Panel
+
+console = Console()
+
+# Tables for data display
+table = Table(title="Processing Results")
+table.add_column("File", style="cyan")
+table.add_column("Records", justify="right", style="green")
+table.add_column("Status", justify="center")
+
+for file in results:
+    table.add_row(file.name, str(file.count), "✓")
+console.print(table)
+
+# Progress for long operations
+with Progress() as progress:
+    task = progress.add_task("[cyan]Processing files...", total=len(files))
+    for file in files:
+        process_file(file)
+        progress.update(task, advance=1)
+
+# Panels for important messages
+console.print(Panel(
+    "[bold]Configuration saved[/bold]\nLocation: ~/.myapp/config.json",
+    title="Success",
+    border_style="green"
+))
+
+# Errors
+console.print(Panel(
+    f"[bold red]Error:[/bold red] Invalid file format",
+    border_style="red"
+))
+```
+
+## Design Patterns
+
+### ETL Pipeline CLI
+
+```python
+@app.command()
+def pipeline(
+    source: str = typer.Argument(..., help="Data source URL"),
+    output_dir: Path = typer.Option("./output", "--output", "-o"),
+    validate: bool = typer.Option(True, "--validate/--no-validate")
+):
+    """Run complete ETL pipeline"""
+    show_banner("ETL Pipeline")
+    
+    steps = ["Extract", "Transform", "Validate", "Load"]
+    with Progress() as progress:
+        task = progress.add_task("[cyan]Pipeline", total=len(steps))
+        
+        # Extract
+        data = extract_data(source)
+        progress.update(task, advance=1, description="[cyan]Extracting...")
+        
+        # Transform
+        transformed = transform(data)
+        progress.update(task, advance=1, description="[cyan]Transforming...")
+        
+        if validate:
+            errors = validate_data(transformed)
+            progress.update(task, advance=1)
+            if errors:
+                console.print(f"[yellow]⚠ {len(errors)} validation errors[/yellow]")
+        
+        # Load
+        save_data(transformed, output_dir)
+        progress.update(task, advance=1)
+    
+    console.print("[bold green]✓ Pipeline completed[/bold green]")
+```
+
+### Interactive Configuration
+
+```python
+@app.command()
+def configure():
+    """Interactive configuration setup"""
+    show_banner("Configuration")
+    
+    config = {
+        "api_url": questionary.text(
+            "API endpoint:",
+            default="https://api.example.com"
+        ).ask(),
+        
+        "format": questionary.select(
+            "Default output format:",
+            choices=["csv", "geojson", "parquet"]
+        ).ask(),
+        
+        "cache": questionary.confirm(
+            "Enable caching?",
+            default=True
+        ).ask()
     }
     
-    pub fn host(mut self, host: impl Into<String>) -> Self {
-        self.host = Some(host.into());
-        self
-    }
+    # Display configuration
+    table = Table(title="Configuration")
+    table.add_column("Setting", style="cyan")
+    table.add_column("Value", style="green")
     
-    pub fn port(mut self, port: u16) -> Self {
-        self.port = Some(port);
-        self
-    }
+    for key, value in config.items():
+        table.add_row(key, str(value))
     
-    pub fn timeout(mut self, timeout: Duration) -> Self {
-        self.timeout = Some(timeout);
-        self
-    }
+    console.print(table)
     
-    pub fn build(self) -> Result<Client, BuildError> {
-        Ok(Client {
-            host: self.host.ok_or(BuildError::MissingHost)?,
-            port: self.port.unwrap_or(8080),
-            timeout: self.timeout.unwrap_or(Duration::from_secs(30)),
-        })
-    }
-}
+    if questionary.confirm("Save configuration?").ask():
+        save_config(config)
+        console.print("[green]✓ Configuration saved[/green]")
 ```
 
-### Sealed Traits for Extension Prevention
-```rust
-mod private {
-    pub trait Sealed {}
-}
+### Batch Processing with Feedback
 
-/// A trait that cannot be implemented outside this crate.
-pub trait MyTrait: private::Sealed {
-    fn method(&self);
-}
-
-// Implement Sealed for allowed types
-impl private::Sealed for MyType {}
-impl MyTrait for MyType {
-    fn method(&self) { ... }
-}
-```
-
-## Error Design
-
-### Library-Specific Error Types
-```rust
-use thiserror::Error;
-
-/// Errors that can occur in this library.
-#[derive(Debug, Error)]
-#[non_exhaustive]  // Allow adding variants
-pub enum Error {
-    #[error("connection failed: {0}")]
-    Connection(String),
+```python
+@app.command()
+def batch(
+    pattern: str = typer.Argument(..., help="File pattern (e.g., '*.csv')"),
+    operation: str = typer.Option("validate", help="Operation to perform")
+):
+    """Process multiple files with detailed feedback"""
+    files = list(Path(".").glob(pattern))
     
-    #[error("invalid configuration: {0}")]
-    Config(String),
+    if not files:
+        console.print(f"[yellow]No files matching '{pattern}'[/yellow]")
+        raise typer.Exit(1)
     
-    #[error("operation timed out after {duration:?}")]
-    Timeout { duration: Duration },
+    console.print(f"Found {len(files)} files")
     
-    #[error(transparent)]
-    Io(#[from] std::io::Error),
-}
-
-/// Result type alias for convenience
-pub type Result<T> = std::result::Result<T, Error>;
-```
-
-### Don't Expose Internal Errors
-```rust
-// BAD - leaks internal dependency
-#[derive(Error)]
-pub enum Error {
-    #[error(transparent)]
-    Database(#[from] sqlx::Error),  // Exposes sqlx
-}
-
-// GOOD - wrap internal errors
-#[derive(Error)]
-pub enum Error {
-    #[error("database error: {0}")]
-    Database(String),
-}
-
-impl From<sqlx::Error> for Error {
-    fn from(e: sqlx::Error) -> Self {
-        Error::Database(e.to_string())
-    }
-}
-```
-
-## Dependency Management
-
-### Minimal Dependencies
-```toml
-# Only depend on what you need
-[dependencies]
-serde = { version = "1.0", optional = true }
-
-[features]
-default = []
-serde = ["dep:serde"]
-```
-
-### Re-export Dependencies Users Need
-```rust
-// If users need types from your dependencies, re-export them
-pub use bytes::Bytes;
-pub use http::StatusCode;
-```
-
-### Version Policy
-```toml
-# Use caret requirements for flexibility
-serde = "1.0"        # ^1.0 - allows 1.x updates
-tokio = "1"          # ^1 - allows 1.x updates
-
-# Pin exact versions only when necessary
-some-crate = "=1.2.3"
-```
-
-## Resilience
-
-### Avoid Global State
-```rust
-// BAD - global mutable state
-static COUNTER: AtomicU64 = AtomicU64::new(0);
-
-// GOOD - instance state
-pub struct Counter {
-    value: AtomicU64,
-}
-
-impl Counter {
-    pub fn new() -> Self {
-        Self { value: AtomicU64::new(0) }
-    }
+    results = []
+    with Progress() as progress:
+        task = progress.add_task("[cyan]Processing", total=len(files))
+        
+        for file in files:
+            try:
+                result = process_file(file, operation)
+                results.append(("✓", file.name, result))
+            except Exception as e:
+                results.append(("✗", file.name, str(e)))
+            progress.update(task, advance=1)
     
-    pub fn increment(&self) -> u64 {
-        self.value.fetch_add(1, Ordering::SeqCst)
-    }
-}
+    # Summary table
+    table = Table(title="Results")
+    table.add_column("Status", justify="center")
+    table.add_column("File", style="cyan")
+    table.add_column("Result")
+    
+    for status, name, result in results:
+        style = "green" if status == "✓" else "red"
+        table.add_row(f"[{style}]{status}[/{style}]", name, result)
+    
+    console.print(table)
 ```
 
-### Avoid Thread-Local Storage
-```rust
-// BAD - hidden state
-thread_local! {
-    static CACHE: RefCell<HashMap<String, Value>> = RefCell::new(HashMap::new());
-}
+## Key Principles
 
-// GOOD - explicit state
-pub struct Cache {
-    data: RwLock<HashMap<String, Value>>,
-}
+1. **Progressive verbosity**: Use banners/formatting only when useful. Support `--verbose`/`--quiet` flags.
+2. **Clear feedback**: Always show progress for operations >2 seconds. Use colors consistently.
+3. **Fail gracefully**: Validate inputs early. Show actionable error messages with suggestions.
+4. **Scriptable**: Support non-interactive mode with all flags. Output machine-readable formats on request.
+5. **Reproducible**: Log commands with full parameters. Support config files for repeated workflows.
+
+## Advanced Patterns
+
+For complex scenarios (multi-command apps, context state, custom styling, testing), see `references/advanced_patterns.md`.
+
+Common advanced needs:
+- Subcommands and command groups
+- Shared state across commands
+- Custom questionary styling
+- Configuration file management
+- Progress for streaming data
+- CLI testing with CliRunner
+
+## Template Usage
+
+The `assets/cli_template.py` provides a working example demonstrating all four components. Copy and adapt:
+
+```bash
+cp assets/cli_template.py my_tool.py
+chmod +x my_tool.py
+./my_tool.py --help
 ```
 
-### Make Types Send + Sync When Possible
-```rust
-// Ensure thread safety
-pub struct Client {
-    inner: Arc<ClientInner>,  // Arc for shared ownership
-}
+Modify the commands, add your logic, keep the UX patterns.
 
-// Verify at compile time
-static_assertions::assert_impl_all!(Client: Send, Sync);
-```
+## Source
 
-## Documentation
-
-### Crate-Level Docs
-```rust
-//! # My Library
-//!
-//! A brief description of what this library does.
-//!
-//! ## Quick Start
-//!
-//! ```rust
-//! use my_library::Client;
-//!
-//! let client = Client::builder()
-//!     .host("localhost")
-//!     .build()?;
-//!
-//! client.connect().await?;
-//! ```
-//!
-//! ## Features
-//!
-//! - Feature 1
-//! - Feature 2
-//!
-//! ## Feature Flags
-//!
-//! - `serde`: Enable serialization support
-```
-
-### Document All Public Items
-Every public item needs:
-- Brief description
-- Examples (that compile and run)
-- Error conditions for fallible functions
-- Panic conditions if applicable
-
-## Versioning
-
-### Semantic Versioning
-- MAJOR: Breaking API changes
-- MINOR: New features, backward compatible
-- PATCH: Bug fixes, backward compatible
-
-### Breaking Changes
-```rust
-// Use #[deprecated] before removing
-#[deprecated(since = "0.5.0", note = "use new_function instead")]
-pub fn old_function() { ... }
-
-// Use #[doc(hidden)] for internal items
-#[doc(hidden)]
-pub fn internal_detail() { ... }
-```
-
-## Testing
-
-### Test Public API
-```rust
-// tests/integration.rs
-use my_library::{Client, Config};
-
-#[test]
-fn client_connects_successfully() {
-    let client = Client::new(Config::default());
-    assert!(client.is_valid());
-}
-```
-
-### Doc Tests Run by Default
-```rust
-/// Creates a new instance.
-///
-/// # Examples
-///
-/// ```
-/// let instance = my_library::Instance::new();
-/// assert!(instance.is_valid());
-/// ```
-pub fn new() -> Self { ... }
-```
-
-## Cargo.toml Best Practices
-
-```toml
-[package]
-name = "my-library"
-version = "0.1.0"
-edition = "2024"
-rust-version = "1.85"  # MSRV - Rust 2024 edition requires 1.85+
-description = "A brief description"
-documentation = "https://docs.rs/my-library"
-repository = "https://github.com/org/my-library"
-license = "MIT OR Apache-2.0"
-keywords = ["keyword1", "keyword2"]
-categories = ["category"]
-
-[package.metadata.docs.rs]
-all-features = true
-rustdoc-args = ["--cfg", "docsrs"]
-```
+Based on the approach shared by Gaël PENESSOT: [LinkedIn post](https://www.linkedin.com/posts/gael-penessot_la-prochaine-fois-que-tu-lances-ton-script-activity-7410212824226058240-WMDh/)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
