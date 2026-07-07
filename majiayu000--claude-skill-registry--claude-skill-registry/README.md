@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/openwebf-security-store-guidelines-archview-ai-webf-plugin-c5b9d84e/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/architecture-discovery-justanotherrepo-justanotherclaudemdf-2b3b7fb8/SKILL.md)
 
 ---
 
