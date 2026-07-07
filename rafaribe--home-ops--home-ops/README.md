@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rafaribe/home-ops](https://github.com/rafaribe/home-ops/tree/main/.kiro/skills/upgrade-app/SKILL.md)
+Original source: [rafaribe/home-ops](https://github.com/rafaribe/home-ops/tree/main/.kiro/skills/cluster-debug/SKILL.md)
 
 ---
 
