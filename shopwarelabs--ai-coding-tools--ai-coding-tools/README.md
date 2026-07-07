@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shopwareLabs/ai-coding-tools](https://github.com/shopwareLabs/ai-coding-tools/tree/main/plugins/test-writing/skills/phpunit-migration-test-reviewing/SKILL.md)
+Original source: [shopwareLabs/ai-coding-tools](https://github.com/shopwareLabs/ai-coding-tools/tree/main/plugins/contributor-writing/skills/feature-branch-pr-writing/SKILL.md)
 
 ---
 
