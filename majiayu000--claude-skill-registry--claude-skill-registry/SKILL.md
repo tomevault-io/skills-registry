@@ -1,357 +1,317 @@
 ---
-name: brokle-domain-architecture
-description: Use this skill when working with Brokle's domain-driven architecture, including creating new domains, modifying domain entities, designing cross-domain interactions, refactoring domain boundaries, or implementing complex domain logic. This is a specialized architectural skill.
+name: pixel-pusher
+description: Comprehensive UI/UX design system for creating professional web interfaces through structured multi-stage process. Use when users request website designs, landing pages, web apps, UI mockups, design systems, or interface prototypes. Guides through requirements gathering, design system creation from references/screenshots, HTML mockup generation, iterative refinement, and final design delivery. Ideal for "design me a website", "create a landing page", "build a UI for X", or providing design inspiration screenshots/URLs. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Brokle Domain Architecture Skill
+# Pixel Pusher Design System
 
-Expert guidance for Brokle's Domain-Driven Design (DDD) architecture.
+Professional UI/UX design skill that transforms vague requirements into polished web interfaces through systematic design thinking and iterative refinement.
 
-## Domains
+## Design Philosophy
 
-Primary domains in `internal/core/domain/`:
+Never accept vague design requests. Transform "make it beautiful" into concrete design systems with specific colors, typography, spacing, and component patterns. Work systematically through discovery, design system creation, mockup generation, and iterative refinement.
 
-| Domain | Purpose |
-|--------|---------|
-| auth | Authentication, sessions, API keys |
-| billing | Usage tracking, subscriptions |
-| common | Shared transaction patterns, utilities |
-| gateway | AI provider routing |
-| observability | Traces, spans, quality scores |
-| organization | Multi-tenant org management |
-| user | User management and profiles |
+## Multi-Stage Design Process
 
-**Structure**: Each domain has entities.go, repository.go, service.go, errors.go, types.go
-**Reference**: List domains with `ls -1 internal/core/domain/` to see current implementation status
+### Stage 1: Discovery & Requirements Gathering
 
-## Domain Layer Structure
+Begin by understanding what the user wants to create and gathering design inspiration.
 
-```go
-internal/core/domain/{domain}/
-├── entities.go          # Domain entities
-├── repository.go        # Repository interfaces
-├── service.go           # Service interfaces
-├── errors.go            # Domain-specific errors
-├── types.go             # Domain types and enums
-└── validators.go        # Domain validation logic
+**Initial questions to ask if not provided:**
+
+1. **Purpose**: What is this interface for? (landing page, web app, dashboard, portfolio, etc.)
+2. **Audience**: Who will use this? (consumers, professionals, internal team, etc.)
+3. **Key features**: What are the 3-5 most important elements? (hero section, forms, data visualization, etc.)
+4. **Inspiration**: Do you have reference designs? (URLs, screenshots, or describe style preferences)
+5. **Brand elements**: Do you have existing brand colors, fonts, or logo?
+6. **Technical constraints**: Any specific frameworks or technologies? (React, Vue, vanilla HTML, etc.)
+
+**Critical assets to request:**
+
+- Screenshots or URLs of designs they like
+- Existing brand guidelines or assets
+- Content examples (copy, images, data)
+- Specific interactions or animations they envision
+
+**Do not proceed to design system creation until you have:**
+- Clear understanding of purpose and audience
+- At least 2-3 reference designs (screenshots or URLs)
+- Key features and content requirements
+- Any brand constraints
+
+### Stage 2: Design System Extraction
+
+Extract a comprehensive JSON design system from reference materials. If user provides URLs, fetch them first to analyze the design patterns.
+
+**For each reference, analyze and extract:**
+
+1. **Color palette** - All colors with hex values, usage context (primary, secondary, accent, surface, text)
+2. **Typography** - Font families, sizes, weights, line heights for each text level
+3. **Spacing system** - Margin/padding patterns (identify the base unit: 4px, 8px, etc.)
+4. **Component styles** - Buttons, cards, inputs, navigation patterns
+5. **Layout patterns** - Grid systems, container widths, breakpoints
+6. **Shadows & effects** - Elevation values, gradients, borders
+7. **Interaction patterns** - Hover states, transitions, animations
+
+**Create design-system.json** (see `assets/design-system-template.json` for structure)
+
+Document decisions with rationale:
+- Why these colors work together
+- How typography creates hierarchy
+- Why this spacing rhythm feels cohesive
+- How components maintain consistency
+
+### Stage 3: Mockup Generation
+
+Generate 2-3 distinct HTML mockups that explore different interpretations of the requirements using the design system.
+
+**Mockup variations should differ in:**
+- Layout approach (single vs multi-column, vertical vs horizontal flow)
+- Visual emphasis (bold vs minimal, playful vs professional)
+- Component styling (rounded vs sharp, flat vs elevated)
+
+**Each mockup must:**
+- Use only colors from the design system
+- Apply typography scale consistently
+- Follow spacing system religiously
+- Include responsive behavior (mobile-first)
+- Show all requested key features
+- Include hover/interaction states
+
+**Technical implementation:**
+- Create standalone HTML files with inline CSS
+- Use modern CSS (Grid, Flexbox, CSS variables)
+- Include minimal JavaScript only if interactions require it
+- Ensure accessibility (semantic HTML, ARIA labels, keyboard navigation)
+
+**File structure:**
+```
+mockup-1-bold.html     - Bold, high-contrast approach
+mockup-2-minimal.html  - Clean, spacious, minimal approach
+mockup-3-playful.html  - Dynamic, engaging approach
 ```
 
-## Entity Pattern
+Save all mockups to `design-outputs/` directory in the current project and present them with:
+- Brief description of each approach
+- Key differentiators
+- Recommended use cases for each style
+- Full file paths so users can open them in their browser
 
-```go
-// internal/core/domain/auth/entities.go
-package auth
+### Stage 4: Feedback & Refinement
 
-import (
-    "time"
-    "brokle/pkg/ulid"
-)
+Present mockups and gather specific feedback:
 
-type User struct {
-    ID        ulid.ULID
-    Email     string
-    Name      string
-    Status    UserStatus
-    Role      Role
-    CreatedAt time.Time
-    UpdatedAt time.Time
-}
+**Ask directed questions:**
+- Which mockup's overall aesthetic resonates most?
+- What specific elements do you like/dislike?
+- Does the color palette feel right? Too bold/muted?
+- Is the typography readable and appropriate?
+- Does the spacing feel comfortable?
+- Any components that need redesign?
 
-// Domain enums
-type UserStatus string
-const (
-    UserStatusActive   UserStatus = "active"
-    UserStatusInactive UserStatus = "inactive"
-    UserStatusSuspended UserStatus = "suspended"
-)
+**Based on feedback:**
+- If user likes one mockup: Refine that design
+- If user likes elements from multiple: Combine best aspects
+- If user dislikes all: Return to Stage 2 with new direction
 
-type Role string
-const (
-    RoleOwner  Role = "owner"
-    RoleAdmin  Role = "admin"
-    RoleUser   Role = "user"
-    RoleViewer Role = "viewer"
-)
+**Refinement iterations:**
+1. Make requested changes
+2. Update design system if patterns change
+3. Generate refined mockup(s)
+4. Gather feedback
+5. Repeat until satisfied
+
+**Maximum 3-4 refinement rounds** before suggesting a consultation about requirements.
+
+### Stage 5: Final Design Delivery
+
+Once design is approved, deliver:
+
+1. **Final HTML/CSS files** - Production-ready code
+2. **Design system documentation** - Complete JSON + visual guide
+3. **Component library** - Reusable HTML components
+4. **Style guide** - Visual reference document (see `references/style-guide-template.md`)
+5. **Assets** - Extracted colors, fonts, spacing variables as CSS/SCSS
+
+**Optional enhancements:**
+- Convert to React components if requested
+- Add advanced animations with Framer Motion
+- Integrate with component libraries (shadcn/ui, React Bits)
+- Provide dark mode variations
+- Create responsive breakpoint variations
+
+## Design System Components
+
+For detailed guidance on each design system layer, read:
+- `references/design-system-layers.md` - Comprehensive component breakdown
+- `references/accessibility-guidelines.md` - WCAG compliance checklist
+- `references/design-best-practices.md` - Professional design principles
+
+## Critical Reminders
+
+**Always create files, never just show code:**
+- Generate actual HTML files users can open in browsers
+- Save all outputs to `design-outputs/` directory in the current project
+- Provide full file paths so users can open files directly in their browser
+
+**Maintain design system integrity:**
+- Every color used must be in the design system
+- Every spacing value must follow the scale
+- Typography must use defined sizes/weights
+- No arbitrary design decisions
+
+**Prioritize user feedback:**
+- Never defend design choices over user preferences
+- Ask clarifying questions before assuming
+- Offer alternatives when users express dissatisfaction
+- Balance professional guidance with user vision
+
+**Professional quality standards:**
+- All designs must be responsive (mobile, tablet, desktop)
+- Accessibility must meet WCAG 2.1 Level AA
+- Performance-conscious (minimize CSS, optimize images)
+- Cross-browser compatible (modern browsers)
+
+## Advanced Features
+
+### Persona Development
+
+When user requests, create user personas to guide design decisions:
+- Demographics and psychographics
+- Goals and pain points
+- Technical proficiency
+- Design preferences
+
+See `references/persona-template.md` for structure.
+
+### User Flow Mapping
+
+For complex applications, map user journeys:
+- Entry points and goals
+- Decision points and paths
+- Pain points and friction
+- Success metrics
+
+See `references/user-flow-template.md` for structure.
+
+### A/B Testing Variations
+
+Generate multiple variations for testing:
+- Different CTA placements
+- Color scheme variations
+- Layout alternatives
+- Copy variations
+
+## Integration with Claude Code Workflow
+
+This skill aligns with Claude Code best practices:
+
+**Use Planning Mode** (Shift+Tab) before generating mockups to:
+- Research current design trends
+- Outline implementation approach
+- Identify technical considerations
+
+**Leverage image analysis** (Control+V) to:
+- Analyze provided screenshots
+- Extract design patterns
+- Identify visual hierarchy
+
+**Create custom commands** for reusable design tasks:
+- Design system validation
+- Accessibility checks
+- Responsive testing
+
+**Use sub-agents** for complex projects:
+- One agent for design system
+- One agent per mockup variation
+- One agent for component library
+
+## Example Workflows
+
+### Example 1: Landing Page from Scratch
+
+```
+User: "Create a landing page for my SaaS product"
+
+1. Ask about product, audience, competitors
+2. Request 2-3 competitor URLs for inspiration
+3. Fetch and analyze competitor designs
+4. Extract design system (colors, typography, components)
+5. Generate 3 mockup variations
+6. Gather feedback
+7. Refine chosen mockup
+8. Deliver final design + system documentation
 ```
 
-## Domain Errors
+### Example 2: Redesign from Screenshot
 
-```go
-// internal/core/domain/auth/errors.go
-package auth
+```
+User: [Provides screenshot] "Make something similar but more modern"
 
-import "errors"
-
-var (
-    ErrNotFound           = errors.New("user not found")
-    ErrAlreadyExists      = errors.New("user already exists")
-    ErrInvalidCredentials = errors.New("invalid credentials")
-    ErrSessionExpired     = errors.New("session expired")
-)
+1. Analyze screenshot (colors, layout, typography)
+2. Ask what "more modern" means to them
+3. Research current design trends
+4. Extract design system from screenshot
+5. Modernize system (updated colors, typography, spacing)
+6. Generate 2-3 modern variations
+7. Iterate based on feedback
+8. Deliver final design
 ```
 
-## Repository Interfaces
+### Example 3: Design System from Brand Guidelines
 
-```go
-// internal/core/domain/auth/repository.go
-package auth
+```
+User: "Create website designs using our brand guidelines" [provides PDF]
 
-import (
-    "context"
-    "brokle/pkg/ulid"
-)
-
-type UserRepository interface {
-    Create(ctx context.Context, user *User) error
-    GetByID(ctx context.Context, id ulid.ULID) (*User, error)
-    GetByEmail(ctx context.Context, email string) (*User, error)
-    Update(ctx context.Context, user *User) error
-    Delete(ctx context.Context, id ulid.ULID) error
-    List(ctx context.Context, filter UserFilter) ([]*User, error)
-}
+1. Extract brand colors, fonts, logo from guidelines
+2. Ask about website purpose and features
+3. Request competitor/inspiration references
+4. Build design system extending brand guidelines
+5. Generate mockups that honor brand identity
+6. Validate brand consistency
+7. Deliver with brand compliance documentation
 ```
 
-## Service Interfaces
+## Quality Checklist
 
-```go
-// internal/core/domain/auth/service.go
-package auth
+Before delivering final designs, verify:
 
-import "context"
+- [ ] All colors from design system only
+- [ ] Typography scale applied consistently
+- [ ] Spacing follows system (no arbitrary values)
+- [ ] Responsive across breakpoints (320px, 768px, 1024px, 1440px)
+- [ ] Accessibility: color contrast, focus states, semantic HTML
+- [ ] Interactive states: hover, active, focus, disabled
+- [ ] Loading states for dynamic content
+- [ ] Error states for forms
+- [ ] Empty states with helpful messaging
+- [ ] Consistent component styling
+- [ ] Browser compatibility (Chrome, Firefox, Safari, Edge)
+- [ ] Performance: optimized CSS, minimal dependencies
 
-type AuthService interface {
-    Register(ctx context.Context, req *RegisterRequest) (*RegisterResponse, error)
-    Login(ctx context.Context, req *LoginRequest) (*LoginResponse, error)
-    Logout(ctx context.Context, token string) error
-    ValidateSession(ctx context.Context, token string) (*User, error)
-}
-```
+## Common Pitfalls to Avoid
 
-## Multi-Tenant Scoping Patterns
+**Don't:**
+- Generate designs without gathering requirements first
+- Use random colors not in the design system
+- Skip the design system extraction phase
+- Provide only one mockup without alternatives
+- Ignore accessibility requirements
+- Assume user technical knowledge
+- Over-complicate simple requests
+- Use heavy frameworks for simple pages
 
-**NOT all entities have `organization_id`** - scoping depends on entity type:
-
-### 1. Organization-Scoped Entities (Direct `organization_id`)
-```go
-// organization/organization.go:54-57
-type Project struct {
-    ID             ulid.ULID
-    OrganizationID ulid.ULID `json:"organization_id" gorm:"type:char(26);not null"`
-    Name           string
-}
-
-// organization/organization.go:37-39
-type Member struct {
-    OrganizationID ulid.ULID `json:"organization_id" gorm:"type:char(26);not null;primaryKey"`
-    UserID         ulid.ULID
-}
-```
-
-### 2. Project-Scoped Entities (Organization via Project)
-```go
-// auth/auth.go:94 - APIKey is project-scoped
-type APIKey struct {
-    ID        ulid.ULID
-    ProjectID ulid.ULID `json:"project_id" gorm:"type:char(26);not null;index"`
-    // Organization derived via Project join
-}
-```
-
-### 3. Scoped Entities (Flexible Scoping)
-```go
-// auth/auth.go:113-114 - Role uses flexible scope_type pattern
-type Role struct {
-    ID        ulid.ULID
-    ScopeType string     `json:"scope_type" gorm:"size:20;not null"`  // "organization", "project", "global"
-    ScopeID   *ulid.ULID `json:"scope_id,omitempty" gorm:"type:char(26);index"`
-}
-```
-
-### 4. Global Entities (No organization_id)
-```go
-// user/user.go:14-39 - User is global with optional org reference
-type User struct {
-    ID    ulid.ULID
-    Email string
-    DefaultOrganizationID *ulid.ULID `json:"default_organization_id,omitempty" gorm:"type:char(26)"`
-    // NOT required - users can belong to multiple orgs via Member table
-}
-
-// organization/organization.go:16 - Organization IS the tenant
-type Organization struct {
-    ID   ulid.ULID
-    Name string
-    // No organization_id - it IS the organization
-}
-```
-
-**Reference Files**:
-- Organization-scoped: `internal/core/domain/organization/organization.go:54-73`
-- Project-scoped: `internal/core/domain/auth/auth.go:94`
-- Scoped (flexible): `internal/core/domain/auth/auth.go:113-114`
-- Global: `internal/core/domain/user/user.go:14-39`
-
-## Cross-Domain Relationships
-
-```go
-// Example: Organization domain referencing User domain
-package organization
-
-import (
-    userDomain "brokle/internal/core/domain/user"
-)
-
-type Member struct {
-    ID             ulid.ULID
-    OrganizationID ulid.ULID
-    UserID         ulid.ULID  // References user domain
-    Role           string
-    Status         MemberStatus
-}
-
-// Service can accept interfaces from other domains
-type OrganizationService struct {
-    orgRepo    OrganizationRepository
-    userRepo   userDomain.UserRepository  // Cross-domain dependency
-    memberRepo MemberRepository
-}
-```
-
-## Creating a New Domain
-
-### Step 1: Create Domain Structure
-
-```bash
-mkdir -p internal/core/domain/my-domain
-touch internal/core/domain/my-domain/{entities,repository,service,errors,types}.go
-```
-
-### Step 2: Define Entities
-
-```go
-// entities.go
-package mydomain
-
-import (
-    "time"
-    "brokle/pkg/ulid"
-)
-
-type MyEntity struct {
-    ID             ulid.ULID
-    OrganizationID ulid.ULID  // Always include for multi-tenancy
-    Name           string
-    Status         MyStatus
-    CreatedAt      time.Time
-    UpdatedAt      time.Time
-}
-```
-
-### Step 3: Define Domain Errors
-
-```go
-// errors.go
-package mydomain
-
-import "errors"
-
-var (
-    ErrNotFound      = errors.New("entity not found")
-    ErrAlreadyExists = errors.New("entity already exists")
-    ErrInvalidInput  = errors.New("invalid input")
-)
-```
-
-### Step 4: Define Repository Interface
-
-```go
-// repository.go
-package mydomain
-
-import (
-    "context"
-    "brokle/pkg/ulid"
-)
-
-type MyEntityRepository interface {
-    Create(ctx context.Context, entity *MyEntity) error
-    GetByID(ctx context.Context, id ulid.ULID) (*MyEntity, error)
-    Update(ctx context.Context, entity *MyEntity) error
-    Delete(ctx context.Context, id ulid.ULID) error
-}
-```
-
-### Step 5: Define Service Interface
-
-```go
-// service.go
-package mydomain
-
-import "context"
-
-type MyDomainService interface {
-    CreateEntity(ctx context.Context, req *CreateEntityRequest) (*CreateEntityResponse, error)
-    GetEntity(ctx context.Context, id ulid.ULID) (*GetEntityResponse, error)
-}
-```
-
-### Step 6: Implement Service
-
-In `internal/core/services/my-domain/`
-
-### Step 7: Implement Repository
-
-In `internal/infrastructure/repository/my-domain/`
-
-### Step 8: Register in DI Container
-
-In `internal/app/app.go`
-
-## Domain Validation
-
-```go
-// validators.go
-package auth
-
-import (
-    "errors"
-    "regexp"
-)
-
-func (u *User) Validate() error {
-    if u.Email == "" {
-        return errors.New("email is required")
-    }
-    if !isValidEmail(u.Email) {
-        return errors.New("invalid email format")
-    }
-    if u.Name == "" {
-        return errors.New("name is required")
-    }
-    return nil
-}
-
-func isValidEmail(email string) bool {
-    return regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`).MatchString(email)
-}
-```
-
-## Key Principles
-
-1. **Domain Purity**: Domain layer has no external dependencies
-2. **Multi-Tenancy**: All entities scoped by organization
-3. **Domain Errors**: Use domain-specific errors
-4. **Validation**: Domain entities validate themselves
-5. **Interfaces**: Define repository and service interfaces in domain
-6. **Cross-Domain**: Use domain aliases for cross-domain references
-
-## References
-
-- Existing domains in `internal/core/domain/` for patterns
-- `CLAUDE.md` - Architecture overview
-- `docs/development/PATTERNS.md` - Domain patterns
+**Do:**
+- Ask clarifying questions upfront
+- Create systematic, reusable design tokens
+- Generate multiple alternatives for comparison
+- Explain design decisions with rationale
+- Make designs accessible by default
+- Provide clear documentation
+- Start simple, add complexity as needed
+- Use vanilla HTML/CSS unless frameworks requested
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
