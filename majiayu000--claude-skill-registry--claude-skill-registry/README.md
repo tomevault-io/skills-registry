@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/composable-svelte-components-linehaul-ai-linehaulai-claude-ma-c03e1dd9/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/jira-ticket-creator-openshift-hyperfleet-hyperfleet-claude-pl-0a1b935d/SKILL.md)
 
 ---
 
