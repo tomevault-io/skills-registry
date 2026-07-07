@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/openai-chatkit-frontend-okashanadeem-giaic-hackathon-ii-1f2c58cc/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/72714e33-102d-4c0a-8f9d-4790c1145f5f-onurkanbakirci-awesome-skil/SKILL.md)
 
 ---
 
