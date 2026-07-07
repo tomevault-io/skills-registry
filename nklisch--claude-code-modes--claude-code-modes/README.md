@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nklisch/claude-code-modes](https://github.com/nklisch/claude-code-modes/tree/main/.claude/skills/stylistic-refactor/SKILL.md)
+Original source: [nklisch/claude-code-modes](https://github.com/nklisch/claude-code-modes/tree/main/.claude/skills/structural-refactor/SKILL.md)
 
 ---
 
