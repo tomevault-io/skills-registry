@@ -1,1015 +1,1131 @@
 ---
-name: axiom-vision
-description: subject segmentation, VNGenerateForegroundInstanceMaskRequest, isolate object from hand, VisionKit subject lifting, image foreground detection, instance masks, class-agnostic segmentation, VNRecognizeTextRequest, OCR, VNDetectBarcodesRequest, DataScannerViewController, document scanning, RecognizeDocumentsRequest Use when this capability is needed.
+name: rtl-right-to-left-support
+description: Supporting right-to-left writing and layout direction for languages like Arabic, Hebrew, Persian, and Urdu using CSS direction, logical properties, and RTL-aware components. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Vision Framework Computer Vision
+# RTL (Right-to-Left) Support
 
-Guides you through implementing computer vision: subject segmentation, hand/body pose detection, person detection, text recognition, barcode detection, document scanning, and combining Vision APIs to solve complex problems.
+> **Current Level:** Intermediate  
+> **Domain:** Internationalization / Frontend
 
-## When to Use This Skill
+---
 
-Use when you need to:
-- ☑ Isolate subjects from backgrounds (subject lifting)
-- ☑ Detect and track hand poses for gestures
-- ☑ Detect and track body poses for fitness/action classification
-- ☑ Segment multiple people separately
-- ☑ Exclude hands from object bounding boxes (combining APIs)
-- ☑ Choose between VisionKit and Vision framework
-- ☑ Combine Vision with CoreImage for compositing
-- ☑ Decide which Vision API solves your problem
-- ☑ Recognize text in images (OCR)
-- ☑ Detect barcodes and QR codes
-- ☑ Scan documents with perspective correction
-- ☑ Extract structured data from documents (iOS 26+)
-- ☑ Build live scanning experiences (DataScannerViewController)
+## Overview
 
-## Example Prompts
+RTL (Right-to-Left) is the writing and layout direction used by languages such as Arabic, Hebrew, Persian, Urdu, and others. Effective RTL support includes CSS direction properties, logical properties, mirrored layouts, and RTL-aware components.
 
-"How do I isolate a subject from the background?"
-"I need to detect hand gestures like pinch"
-"How can I get a bounding box around an object **without including the hand holding it**?"
-"Should I use VisionKit or Vision framework for subject lifting?"
-"How do I segment multiple people separately?"
-"I need to detect body poses for a fitness app"
-"How do I preserve HDR when compositing subjects on new backgrounds?"
-"How do I recognize text in an image?"
-"I need to scan QR codes from camera"
-"How do I extract data from a receipt?"
-"Should I use DataScannerViewController or Vision directly?"
-"How do I scan documents and correct perspective?"
-"I need to extract table data from a document"
+## What is RTL
 
-## Red Flags
+### RTL Languages
 
-Signs you're making this harder than it needs to be:
-- ❌ Manually implementing subject segmentation with CoreML models
-- ❌ Using ARKit just for body pose (Vision works offline)
-- ❌ Writing gesture recognition from scratch (use hand pose + simple distance checks)
-- ❌ Processing on main thread (blocks UI - Vision is resource intensive)
-- ❌ Training custom models when Vision APIs already exist
-- ❌ Not checking confidence scores (low confidence = unreliable landmarks)
-- ❌ Forgetting to convert coordinates (lower-left origin vs UIKit top-left)
-- ❌ Building custom text recognizer when VNRecognizeTextRequest exists
-- ❌ Using AVFoundation + Vision when DataScannerViewController suffices
-- ❌ Processing every camera frame for scanning (skip frames, use region of interest)
-- ❌ Enabling all barcode symbologies when you only need one (performance hit)
-- ❌ Ignoring RecognizeDocumentsRequest when you need table/list structure (iOS 26+)
+| Language | Script | Direction |
+|----------|-------|-----------|
+| **Arabic** | Arabic | RTL |
+| **Hebrew** | Hebrew | RTL |
+| **Persian** | Persian | RTL |
+| **Urdu** | Arabic | RTL |
+| **Yiddish** | Hebrew | RTL |
+| **Aramaic** | Arabic | RTL |
+| **Kurdish** | Arabic | RTL |
 
-## Mandatory First Steps
+### LTR Languages
 
-Before implementing any Vision feature:
+| Language | Script | Direction |
+|----------|-------|-----------|
+| **English** | Latin | LTR |
+| **Spanish** | Latin | LTR |
+| **French** | Latin | LTR |
+| **German** | Latin | LTR |
+| **Thai** | Thai | LTR |
+| **Japanese** | Chinese, Kana | LTR |
+| **Korean** | Hangul | LTR |
 
-### 1. Choose the Right API (Decision Tree)
+## HTML dir Attribute
 
-```
-What do you need to do?
+### Setting Direction
 
-┌─ Isolate subject(s) from background?
-│  ├─ Need system UI + out-of-process → VisionKit
-│  │  └─ ImageAnalysisInteraction (iOS/iPadOS)
-│  │  └─ ImageAnalysisOverlayView (macOS)
-│  ├─ Need custom pipeline / HDR / large images → Vision
-│  │  └─ VNGenerateForegroundInstanceMaskRequest
-│  └─ Need to EXCLUDE hands from object → Combine APIs
-│     └─ Subject mask + Hand pose + custom masking (see Pattern 1)
-│
-├─ Segment people?
-│  ├─ All people in one mask → VNGeneratePersonSegmentationRequest
-│  └─ Separate mask per person (up to 4) → VNGeneratePersonInstanceMaskRequest
-│
-├─ Detect hand pose/gestures?
-│  ├─ Just hand location → VNDetectHumanRectanglesRequest
-│  └─ 21 hand landmarks → VNDetectHumanHandPoseRequest
-│     └─ Gesture recognition → Hand pose + distance checks
-│
-├─ Detect body pose?
-│  ├─ 2D normalized landmarks → VNDetectHumanBodyPoseRequest
-│  ├─ 3D real-world coordinates → VNDetectHumanBodyPose3DRequest
-│  └─ Action classification → Body pose + CreateML model
-│
-├─ Face detection?
-│  ├─ Just bounding boxes → VNDetectFaceRectanglesRequest
-│  └─ Detailed landmarks → VNDetectFaceLandmarksRequest
-│
-├─ Person detection (location only)?
-│  └─ VNDetectHumanRectanglesRequest
-│
-├─ Recognize text in images?
-│  ├─ Real-time from camera + need UI → DataScannerViewController (iOS 16+)
-│  ├─ Processing captured image → VNRecognizeTextRequest
-│  │  ├─ Need speed (real-time camera) → recognitionLevel = .fast
-│  │  └─ Need accuracy (documents) → recognitionLevel = .accurate
-│  └─ Need structured documents (iOS 26+) → RecognizeDocumentsRequest
-│
-├─ Detect barcodes/QR codes?
-│  ├─ Real-time camera + need UI → DataScannerViewController (iOS 16+)
-│  └─ Processing image → VNDetectBarcodesRequest
-│
-└─ Scan documents?
-   ├─ Need built-in UI + perspective correction → VNDocumentCameraViewController
-   ├─ Need structured data (tables, lists) → RecognizeDocumentsRequest (iOS 26+)
-   └─ Custom pipeline → VNDetectDocumentSegmentationRequest + perspective correction
-```
+```html
+<!-- LTR (default) -->
+<html dir="ltr">
+<head>
+    <title>LTR Page</title>
+</head>
+<body>
+    <p>This is left-to-right content.</p>
+</body>
+</html>
 
-### 2. Set Up Background Processing
+<!-- RTL -->
+<html dir="rtl">
+<head>
+    <title>RTL Page</title>
+</head>
+<body>
+    <p>هذا هو المحتوى من اليمين إلى اليمين.</p>
+</body>
+</html>
 
-**NEVER run Vision on main thread**:
-
-```swift
-let processingQueue = DispatchQueue(label: "com.yourapp.vision", qos: .userInitiated)
-
-processingQueue.async {
-    do {
-        let request = VNGenerateForegroundInstanceMaskRequest()
-        let handler = VNImageRequestHandler(cgImage: image)
-        try handler.perform([request])
-
-        // Process observations...
-
-        DispatchQueue.main.async {
-            // Update UI
+<!-- Dynamic direction -->
+<html dir="" id="html-element">
+<head>
+    <script>
+        function setDirection(direction) {
+            document.getElementById('html-element').setAttribute('dir', direction);
         }
-    } catch {
-        // Handle error
-    }
+    </script>
+</head>
+<body>
+    <button onclick="setDirection('ltr')">LTR</button>
+    <button onclick="setDirection('rtl')">RTL</button>
+</body>
+</html>
+```
+
+### Auto-Detection
+
+```javascript
+// Detect RTL languages
+const RTL_LANGUAGES = ['ar', 'he', 'fa', 'ur', 'yi', 'ckb'];
+
+function isRTL(language) {
+    return RTL_LANGUAGES.includes(language.split('-')[0]);
+}
+
+// Detect browser language
+const userLang = navigator.language || 'en-US';
+const isUserRTL = isRTL(userLang);
+
+// Set direction
+document.documentElement.dir = isUserRTL ? 'rtl' : 'ltr';
+```
+
+## CSS for RTL
+
+### Logical Properties
+
+```css
+/* Logical properties instead of physical properties */
+.container {
+    /* Physical (LTR only) */
+    margin-left: 20px;
+    padding-left: 10px;
+    text-align: left;
+    float: left;
+    
+    /* Logical (works for both LTR and RTL) */
+    margin-inline-start: 20px;
+    padding-inline-start: 10px;
+    text-align: start;
+    float: inline-start;
+}
+
+/* Flexbox */
+.flex-container {
+    /* Physical */
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 20px;
+    
+    /* Logical */
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-inline-start: 20px;
+}
+
+/* Grid */
+.grid-container {
+    /* Physical */
+    grid-template-columns: 1fr 2fr 3fr;
+    gap: 20px 0 0 0 0;
+    
+    /* Logical */
+    grid-template-columns: 1fr 2fr 3fr;
+    gap-inline-start: 20px 0 0 0 0;
+}
+
+/* Positioning */
+.element {
+    /* Physical */
+    left: 0;
+    transform: translateX(100px);
+    
+    /* Logical */
+    inset-inline-start: 0;
+    right: 0;
+    transform: translateX(100px);
 }
 ```
 
-### 3. Verify Platform Availability
+### Margin and Padding
 
-| API | Minimum Version |
-|-----|-----------------|
-| Subject segmentation (instance masks) | iOS 17+ |
-| VisionKit subject lifting | iOS 16+ |
-| Hand pose | iOS 14+ |
-| Body pose (2D) | iOS 14+ |
-| Body pose (3D) | iOS 17+ |
-| Person instance segmentation | iOS 17+ |
-| VNRecognizeTextRequest (basic) | iOS 13+ |
-| VNRecognizeTextRequest (accurate, multi-lang) | iOS 14+ |
-| VNDetectBarcodesRequest | iOS 11+ |
-| VNDetectBarcodesRequest (revision 2: Codabar, MicroQR) | iOS 15+ |
-| VNDetectBarcodesRequest (revision 3: ML-based) | iOS 16+ |
-| DataScannerViewController | iOS 16+ |
-| VNDocumentCameraViewController | iOS 13+ |
-| VNDetectDocumentSegmentationRequest | iOS 15+ |
-| RecognizeDocumentsRequest | iOS 26+ |
-
-## Common Patterns
-
-### Pattern 1: Isolate Object While Excluding Hand
-
-**User's original problem**: Getting a bounding box around an object held in hand, **without including the hand**.
-
-**Root cause**: `VNGenerateForegroundInstanceMaskRequest` is class-agnostic and treats hand+object as one subject.
-
-**Solution**: Combine subject mask with hand pose to create exclusion mask.
-
-```swift
-// 1. Get subject instance mask
-let subjectRequest = VNGenerateForegroundInstanceMaskRequest()
-let handler = VNImageRequestHandler(cgImage: sourceImage)
-try handler.perform([subjectRequest])
-
-guard let subjectObservation = subjectRequest.results?.first as? VNInstanceMaskObservation else {
-    fatalError("No subject detected")
+```css
+/* LTR */
+.ltr-container {
+    margin-left: 20px;
+    padding-left: 10px;
 }
 
-// 2. Get hand pose landmarks
-let handRequest = VNDetectHumanHandPoseRequest()
-handRequest.maximumHandCount = 2
-try handler.perform([handRequest])
-
-guard let handObservation = handRequest.results?.first as? VNHumanHandPoseObservation else {
-    // No hand detected - use full subject mask
-    let mask = try subjectObservation.createScaledMask(
-        for: subjectObservation.allInstances,
-        croppedToInstancesContent: false
-    )
-    return mask
+/* RTL */
+.rtl-container {
+    margin-right: 20px;
+    padding-right: 10px;
 }
 
-// 3. Create hand exclusion region from landmarks
-let handPoints = try handObservation.recognizedPoints(.all)
-let handBounds = calculateConvexHull(from: handPoints)  // Your implementation
-
-// 4. Subtract hand region from subject mask using CoreImage
-let subjectMask = try subjectObservation.createScaledMask(
-    for: subjectObservation.allInstances,
-    croppedToInstancesContent: false
-)
-
-let subjectCIMask = CIImage(cvPixelBuffer: subjectMask)
-let handMask = createMaskFromRegion(handBounds, size: sourceImage.size)
-let finalMask = subtractMasks(handMask: handMask, from: subjectCIMask)
-
-// 5. Calculate bounding box from final mask
-let objectBounds = calculateBoundingBox(from: finalMask)
-```
-
-**Helper: Convex Hull**
-
-```swift
-func calculateConvexHull(from points: [VNRecognizedPointKey: VNRecognizedPoint]) -> CGRect {
-    // Get high-confidence points
-    let validPoints = points.values.filter { $0.confidence > 0.5 }
-
-    guard !validPoints.isEmpty else { return .zero }
-
-    // Simple bounding rect (for more accuracy, use actual convex hull algorithm)
-    let xs = validPoints.map { $0.location.x }
-    let ys = validPoints.map { $0.location.y }
-
-    let minX = xs.min()!
-    let maxX = xs.max()!
-    let minY = ys.min()!
-    let maxY = ys.max()!
-
-    return CGRect(
-        x: minX,
-        y: minY,
-        width: maxX - minX,
-        height: maxY - minY
-    )
+/* Logical (both) */
+.container {
+    margin-inline-start: 20px;
+    padding-inline-start: 10px;
 }
 ```
 
-**Cost**: 2-5 hours initial implementation, 30 min ongoing maintenance
+### Text Alignment
 
-### Pattern 2: VisionKit Simple Subject Lifting
-
-**Use case**: Add system-like subject lifting UI with minimal code.
-
-```swift
-// iOS
-let interaction = ImageAnalysisInteraction()
-interaction.preferredInteractionTypes = .imageSubject
-imageView.addInteraction(interaction)
-
-// macOS
-let overlayView = ImageAnalysisOverlayView()
-overlayView.preferredInteractionTypes = .imageSubject
-nsView.addSubview(overlayView)
-```
-
-**When to use**:
-- ✓ Want system behavior (long-press to select, drag to share)
-- ✓ Don't need custom processing pipeline
-- ✓ Image size within VisionKit limits (out-of-process)
-
-**Cost**: 15 min implementation, 5 min ongoing
-
-### Pattern 3: Programmatic Subject Access (VisionKit)
-
-**Use case**: Need subject images/bounds without UI interaction.
-
-```swift
-let analyzer = ImageAnalyzer()
-let configuration = ImageAnalyzer.Configuration([.text, .visualLookUp])
-
-let analysis = try await analyzer.analyze(sourceImage, configuration: configuration)
-
-// Get all subjects
-for subject in analysis.subjects {
-    let subjectImage = subject.image
-    let subjectBounds = subject.bounds
-
-    // Process subject...
+```css
+/* Physical (LTR) */
+.ltr-text {
+    text-align: left;
+    text-indent: 20px;
 }
 
-// Tap-based lookup
-if let subject = try await analysis.subject(at: tapPoint) {
-    let compositeImage = try await analysis.image(for: [subject])
+/* Physical (RTL) */
+.rtl-text {
+    text-align: right;
+    text-indent: 20px;
+}
+
+/* Logical (both) */
+.text {
+    text-align: start;
+    text-indent: 20px;
 }
 ```
 
-**Cost**: 30 min implementation, 10 min ongoing
+### Flexbox Layout
 
-### Pattern 4: Vision Instance Mask for Custom Pipeline
-
-**Use case**: HDR preservation, large images, custom compositing.
-
-```swift
-let request = VNGenerateForegroundInstanceMaskRequest()
-let handler = VNImageRequestHandler(cgImage: sourceImage)
-try handler.perform([request])
-
-guard let observation = request.results?.first as? VNInstanceMaskObservation else {
-    return
+```css
+/* LTR flexbox */
+.ltr-flex {
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 20px;
 }
 
-// Get soft segmentation mask
-let mask = try observation.createScaledMask(
-    for: observation.allInstances,
-    croppedToInstancesContent: false  // Full resolution for compositing
-)
+/* RTL flexbox */
+.rtl-flex {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
 
-// Use with CoreImage for HDR preservation
-let filter = CIFilter(name: "CIBlendWithMask")!
-filter.setValue(CIImage(cgImage: sourceImage), forKey: kCIInputImageKey)
-filter.setValue(CIImage(cvPixelBuffer: mask), forKey: kCIInputMaskImageKey)
-filter.setValue(newBackground, forKey: kCIInputBackgroundImageKey)
-
-let compositedImage = filter.outputImage
-```
-
-**Cost**: 1 hour implementation, 15 min ongoing
-
-### Pattern 5: Tap-to-Select Instance
-
-**Use case**: User taps to select which subject/person to lift.
-
-```swift
-// Get instance at tap point
-let instance = observation.instanceAtPoint(tapPoint)
-
-if instance == 0 {
-    // Background tapped - select all instances
-    let mask = try observation.createScaledMask(
-        for: observation.allInstances,
-        croppedToInstancesContent: false
-    )
-} else {
-    // Specific instance tapped
-    let mask = try observation.createScaledMask(
-        for: IndexSet(integer: instance),
-        croppedToInstancesContent: true
-    )
+/* Logical flexbox */
+.flex {
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-inline-start: 20px;
 }
 ```
 
-**Alternative: Raw pixel buffer access**
+### Grid Layout
 
-```swift
-let instanceMask = observation.instanceMask
-
-CVPixelBufferLockBaseAddress(instanceMask, .readOnly)
-defer { CVPixelBufferUnlockBaseAddress(instanceMask, .readOnly) }
-
-let baseAddress = CVPixelBufferGetBaseAddress(instanceMask)
-let bytesPerRow = CVPixelBufferGetBytesPerRow(instanceMask)
-
-// Convert normalized tap to pixel coordinates
-let pixelPoint = VNImagePointForNormalizedPoint(
-    tapPoint,
-    width: imageWidth,
-    height: imageHeight
-)
-
-let offset = Int(pixelPoint.y) * bytesPerRow + Int(pixelPoint.x)
-let label = UnsafeRawPointer(baseAddress!).load(
-    fromByteOffset: offset,
-    as: UInt8.self
-)
-```
-
-**Cost**: 45 min implementation, 10 min ongoing
-
-### Pattern 6: Hand Gesture Recognition (Pinch)
-
-**Use case**: Detect pinch gesture for custom camera trigger or UI control.
-
-```swift
-let request = VNDetectHumanHandPoseRequest()
-request.maximumHandCount = 1
-
-try handler.perform([request])
-
-guard let observation = request.results?.first as? VNHumanHandPoseObservation else {
-    return
+```css
+/* LTR grid */
+.ltr-grid {
+    grid-template-columns: 1fr 2fr 3fr;
+    gap: 20px 0 0 0 0;
+    margin-left: 20px;
 }
 
-let thumbTip = try observation.recognizedPoint(.thumbTip)
-let indexTip = try observation.recognizedPoint(.indexTip)
-
-// Check confidence
-guard thumbTip.confidence > 0.5, indexTip.confidence > 0.5 else {
-    return
+/* RTL grid */
+.rtl-grid {
+    grid-template-columns: 3fr 2fr 1fr;
+    gap: 20px 0 0 0 0;
+    margin-right: 20px;
 }
 
-// Calculate distance (normalized coordinates)
-let dx = thumbTip.location.x - indexTip.location.x
-let dy = thumbTip.location.y - indexTip.location.y
-let distance = sqrt(dx * dx + dy * dy)
-
-let isPinching = distance < 0.05  // Adjust threshold
-
-// State machine for evidence accumulation
-if isPinching {
-    pinchFrameCount += 1
-    if pinchFrameCount >= 3 {
-        state = .pinched
-    }
-} else {
-    pinchFrameCount = max(0, pinchFrameCount - 1)
-    if pinchFrameCount == 0 {
-        state = .apart
-    }
+/* Logical grid */
+.grid {
+    grid-template-columns: 1fr 2fr 3fr;
+    gap-inline-start: 20px 0 0 0 0;
 }
 ```
 
-**Cost**: 2 hours implementation, 20 min ongoing
+## Layout Flipping
 
-### Pattern 7: Separate Multiple People
+### Navigation
 
-**Use case**: Apply different effects to each person or count people.
+```html
+<!-- LTR navigation -->
+<nav class="ltr-nav">
+    <a href="/home">Home</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+</nav>
 
-```swift
-let request = VNGeneratePersonInstanceMaskRequest()
-try handler.perform([request])
+<!-- RTL navigation -->
+<nav class="rtl-nav">
+    <a href="/home">الرئيسية</a>
+    <a href="/about">عن</a>
+    <a href="/contact">اتصل</a>
+</nav>
+```
 
-guard let observation = request.results?.first as? VNInstanceMaskObservation else {
-    return
+```css
+/* LTR navigation */
+.ltr-nav a {
+    margin-right: 20px;
+    padding-right: 10px;
 }
 
-let peopleCount = observation.allInstances.count  // Up to 4
+/* RTL navigation */
+.rtl-nav a {
+    margin-left: 20px;
+    padding-left: 10px;
+}
 
-for personIndex in observation.allInstances {
-    let personMask = try observation.createScaledMask(
-        for: IndexSet(integer: personIndex),
-        croppedToInstancesContent: false
-    )
-
-    // Apply effect to this person only
-    applyEffect(to: personMask, personIndex: personIndex)
+/* Logical navigation */
+.nav a {
+    margin-inline-end: 20px;
+    padding-inline-end: 10px;
 }
 ```
 
-**Crowded scenes (>4 people)**:
+### Cards and Lists
 
-```swift
-// Count faces to detect crowding
-let faceRequest = VNDetectFaceRectanglesRequest()
-try handler.perform([faceRequest])
+```html
+<!-- LTR card -->
+<div class="ltr-card">
+    <h3>Card Title</h3>
+    <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ul>
+</div>
 
-let faceCount = faceRequest.results?.count ?? 0
+<!-- RTL card -->
+<div class="rtl-card">
+    <h3>عنوان البطاقة</h3>
+    <ul>
+        <li>البند 1</li>
+        <li>البند 2</li>
+    </ul>
+</div>
+```
 
-if faceCount > 4 {
-    // Fallback: Use single mask for all people
-    let singleMaskRequest = VNGeneratePersonSegmentationRequest()
-    try handler.perform([singleMaskRequest])
+```css
+/* LTR card */
+.ltr-card ul {
+    list-style-position: inside;
+    padding-left: 20px;
+}
+
+/* RTL card */
+.rtl-card ul {
+    list-style-position: inside;
+    padding-right: 20px;
+}
+
+/* Logical card */
+.card ul {
+    list-style-position: inside;
+    padding-inline-start: 20px;
 }
 ```
 
-**Cost**: 1.5 hours implementation, 15 min ongoing
+## Icon and Image Flipping
 
-### Pattern 8: Body Pose for Action Classification
+### Icons
 
-**Use case**: Fitness app that recognizes exercises (jumping jacks, squats, etc.)
-
-```swift
-// 1. Collect body pose observations
-var poseObservations: [VNHumanBodyPoseObservation] = []
-
-let request = VNDetectHumanBodyPoseRequest()
-try handler.perform([request])
-
-if let observation = request.results?.first as? VNHumanBodyPoseObservation {
-    poseObservations.append(observation)
+```css
+/* Flip icons for RTL */
+[dir="rtl"] .icon-arrow {
+    transform: scaleX(-1);
 }
 
-// 2. When you have 60 frames of poses, prepare for CreateML model
-if poseObservations.count == 60 {
-    var multiArray = try MLMultiArray(
-        shape: [60, 18, 3],  // 60 frames, 18 joints, (x, y, confidence)
-        dataType: .double
-    )
+/* Logical flip */
+.icon-arrow {
+    transform: scaleX(-1);
+}
 
-    for (frameIndex, observation) in poseObservations.enumerated() {
-        let allPoints = try observation.recognizedPoints(.all)
+[dir="ltr"] .icon-arrow {
+    transform: scaleX(1);
+}
+```
 
-        for (jointIndex, (_, point)) in allPoints.enumerated() {
-            multiArray[[frameIndex, jointIndex, 0] as [NSNumber]] = NSNumber(value: point.location.x)
-            multiArray[[frameIndex, jointIndex, 1] as [NSNumber]] = NSNumber(value: point.location.y)
-            multiArray[[frameIndex, jointIndex, 2] as [NSNumber]] = NSNumber(value: point.confidence)
+### Images
+
+```html
+<!-- LTR image -->
+<img src="arrow-left.png" alt="Arrow" class="ltr-arrow">
+
+<!-- RTL image -->
+<img src="arrow-right.png" alt="Arrow" class="rtl-arrow">
+```
+
+```css
+/* Flip images for RTL */
+[dir="rtl"] .directional-image {
+    transform: scaleX(-1);
+}
+
+/* Logical flip */
+.directional-image {
+    transform: scaleX(-1);
+}
+
+[dir="ltr"] .directional-image {
+    framework: scaleX(1);
+}
+```
+
+## Not Flipping
+
+### Latin Text and Numbers
+
+```css
+/* Don't flip Latin text or numbers */
+.latin-text,
+.latin-numbers {
+    direction: ltr;
+    unicode-bidi: embed;
+}
+```
+
+### URLs and Paths
+
+```css
+/* URLs stay LTR */
+.url,
+.path {
+    direction: ltr;
+    unicode-bidi: embed;
+}
+```
+
+## CSS-in-JS with RTL
+
+### Tailwind CSS
+
+```javascript
+// tailwind.config.js
+module.exports = {
+    content: [
+        './src/**/*.{js,jsx,ts,tsx}',
+    './public/**/*.{png,jpg,jpeg,gif,svg}',
+    ],
+    theme: {
+        extend: {
+            screens: {
+                lg: {
+                    spacing: {
+                        'margin-left': '1.5rem',
+                        'margin-right': '1.5rem',
+                    },
+                    'padding-left': '1rem',
+                    'padding-right': '1rem',
+                    'text-align': 'left',
+                    'flex-direction': 'row',
+                    'gap': '1rem',
+                },
+            },
+        },
+    },
+    plugins: [
+        require('tailwindcss-rtl')({ default: 'ltr' }),
+    ],
+}
+```
+
+### Styled Components
+
+```jsx
+// RTL-aware components
+function Card({ children, className = '' }) {
+    return (
+        <div className={`card ${className}`}>
+            {children}
+        </div>
+    );
+}
+
+function Navigation({ links }) {
+    return (
+        <nav className="nav">
+            {links.map(link => (
+                <a key={link.href} href={link.href} className="nav-link">
+                    {link.text}
+                </a>
+            ))}
+        </nav>
+    );
+}
+```
+
+## React with RTL
+
+### React i18next with RTL
+
+```javascript
+import { useTranslation } from 'react-i18next';
+
+function App() {
+    const { i18n } = useTranslation();
+    const [direction, setDirection] = useState('ltr');
+    
+    const isRTL = direction === 'rtl';
+    
+    return (
+        <html lang={i18n.language} dir={direction}>
+            <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <style>{`
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+                        direction: ${direction};
+                    }
+                    .container {
+                        margin-inline-start: 20px;
+                        padding: 20px;
+                    }
+                    .nav {
+                        display: flex;
+                        gap: 20px;
+                        margin-bottom: 20px;
+                    }
+                    .nav-link {
+                        padding: 10px 20px;
+                        border-radius: 4px;
+                    }
+                `}</style>
+            </head>
+            <body>
+                <Navigation links={[
+                    { href: '/home', text: i18n.t('nav.home') },
+                    { href: '/about', text: i18n.t('nav.about') },
+                    { href: '/contact', text: i18n('nav.contact') }
+                ]} />
+                
+                <button onClick={() => setDirection(direction === 'ltr' ? 'rtl' : 'ltr')}>
+                    {direction === 'ltr' ? '🔄 RTL' : '🔄 LTR'}
+                </button>
+                
+                <div className="container">
+                    <h1>{i18n.t('welcome')}</h1>
+                    <p>{i18n.t('description')}</p>
+                </div>
+            </body>
+        </html>
+    );
+}
+```
+
+### Direction Hook
+
+```javascript
+import { useState, useEffect } from 'react';
+
+function useDirection() {
+    const [direction, setDirection] = useState('ltr');
+    
+    useEffect(() => {
+        // Detect RTL language
+        const userLang = navigator.language || 'en-US';
+        const isRTL = ['ar', 'he', 'fa', 'ur'].includes(userLang.split('-')[0]);
+        
+        if (isRTL && direction === 'ltr') {
+            setDirection('rtl');
         }
-    }
-
-    // 3. Run inference with CreateML model
-    let input = YourActionClassifierInput(poses: multiArray)
-    let output = try actionClassifier.prediction(input: input)
-
-    let action = output.label  // "jumping_jacks", "squats", etc.
+    }, []);
+    
+    return [direction, setDirection];
 }
 ```
 
-**Cost**: 3-4 hours implementation, 1 hour ongoing
+## Vue.js with RTL
 
-### Pattern 9: Text Recognition (OCR)
+### Vue i18n with RTL
 
-**Use case**: Extract text from images, receipts, signs, documents.
+```vue
+<template>
+    <div :dir="direction">
+        <button @click="toggleDirection">
+            {{ direction === 'ltr' ? '🔄 RTL' : '🔄 LTR' }}
+        </button>
+        
+        <nav>
+            <a v-for="link in links" :key="link.href" :href="link.href">
+                {{ link.text }}
+            </a>
+        </nav>
+        <div class="content">
+            <h1>{{ $t('welcome') }}</h1>
+            <p>{{ $t('description') }}</p>
+        </div>
+    </div>
+</template>
 
-```swift
-let request = VNRecognizeTextRequest()
-request.recognitionLevel = .accurate  // Or .fast for real-time
-request.recognitionLanguages = ["en-US"]  // Specify known languages
-request.usesLanguageCorrection = true  // Helps accuracy
+<script>
+import { useI18n } from 'vue-i18n';
 
-let handler = VNImageRequestHandler(cgImage: image)
-try handler.perform([request])
-
-guard let observations = request.results as? [VNRecognizedTextObservation] else {
-    return
-}
-
-for observation in observations {
-    // Get top candidate (most likely)
-    guard let candidate = observation.topCandidates(1).first else { continue }
-
-    let text = candidate.string
-    let confidence = candidate.confidence
-
-    // Get bounding box for specific substring
-    if let range = text.range(of: searchTerm) {
-        if let boundingBox = try? candidate.boundingBox(for: range) {
-            // Use for highlighting
+export default {
+    data() {
+        return {
+            direction: 'ltr',
+            links: [
+                { href: '/home', text: this.$t('nav.home') },
+                { href: '/about', this.$t('nav.about') },
+                { href: /contact', text: this.$t('nav.contact') }
+            ]
+        };
+    },
+    methods: {
+        toggleDirection() {
+            this.direction = this.direction === 'ltr' ? 'rtl' : 'ltr';
         }
-    }
-}
-```
-
-**Fast vs Accurate**:
-- **Fast**: Real-time camera, large legible text (signs, billboards), character-by-character
-- **Accurate**: Documents, receipts, small text, handwriting, ML-based word/line recognition
-
-**Language tips**:
-- Order matters: first language determines ML model for accurate path
-- Use `automaticallyDetectsLanguage = true` only when language unknown
-- Query `supportedRecognitionLanguages` for current revision
-
-**Cost**: 30 min basic implementation, 2 hours with language handling
-
-### Pattern 10: Barcode/QR Code Detection
-
-**Use case**: Scan product barcodes, QR codes, healthcare codes.
-
-```swift
-let request = VNDetectBarcodesRequest()
-request.revision = VNDetectBarcodesRequestRevision3  // ML-based, iOS 16+
-request.symbologies = [.qr, .ean13]  // Specify only what you need!
-
-let handler = VNImageRequestHandler(cgImage: image)
-try handler.perform([request])
-
-guard let observations = request.results as? [VNBarcodeObservation] else {
-    return
-}
-
-for barcode in observations {
-    let payload = barcode.payloadStringValue  // Decoded content
-    let symbology = barcode.symbology  // Type of barcode
-    let bounds = barcode.boundingBox  // Location (normalized)
-
-    print("Found \(symbology): \(payload ?? "no string")")
-}
-```
-
-**Performance tip**: Specifying fewer symbologies = faster scanning
-
-**Revision differences**:
-- **Revision 1**: One code at a time, 1D codes return lines
-- **Revision 2**: Codabar, GS1Databar, MicroPDF, MicroQR, better with ROI
-- **Revision 3**: ML-based, multiple codes at once, better bounding boxes, fewer duplicates
-
-**Cost**: 15 min implementation
-
-### Pattern 11: DataScannerViewController (Live Scanning)
-
-**Use case**: Camera-based text/barcode scanning with built-in UI (iOS 16+).
-
-```swift
-import VisionKit
-
-// Check support
-guard DataScannerViewController.isSupported,
-      DataScannerViewController.isAvailable else {
-    // Not supported or camera access denied
-    return
-}
-
-// Configure what to scan
-let recognizedDataTypes: Set<DataScannerViewController.RecognizedDataType> = [
-    .barcode(symbologies: [.qr]),
-    .text(textContentType: .URL)  // Or nil for all text
-]
-
-// Create and present
-let scanner = DataScannerViewController(
-    recognizedDataTypes: recognizedDataTypes,
-    qualityLevel: .balanced,  // Or .fast, .accurate
-    recognizesMultipleItems: false,  // Center-most if false
-    isHighFrameRateTrackingEnabled: true,  // For smooth highlights
-    isPinchToZoomEnabled: true,
-    isGuidanceEnabled: true,
-    isHighlightingEnabled: true
-)
-
-scanner.delegate = self
-present(scanner, animated: true) {
-    try? scanner.startScanning()
-}
-```
-
-**Delegate methods**:
-```swift
-func dataScanner(_ scanner: DataScannerViewController,
-                 didTapOn item: RecognizedItem) {
-    switch item {
-    case .text(let text):
-        print("Tapped text: \(text.transcript)")
-    case .barcode(let barcode):
-        print("Tapped barcode: \(barcode.payloadStringValue ?? "")")
-    @unknown default: break
-    }
-}
-
-// For custom highlights
-func dataScanner(_ scanner: DataScannerViewController,
-                 didAdd addedItems: [RecognizedItem],
-                 allItems: [RecognizedItem]) {
-    for item in addedItems {
-        let highlight = createHighlight(for: item)
-        scanner.overlayContainerView.addSubview(highlight)
-    }
-}
-```
-
-**Async stream alternative**:
-```swift
-for await items in scanner.recognizedItems {
-    // Process current items
-}
-```
-
-**Cost**: 45 min implementation with custom highlights
-
-### Pattern 12: Document Scanning with VNDocumentCameraViewController
-
-**Use case**: Scan paper documents with automatic edge detection and perspective correction.
-
-```swift
-import VisionKit
-
-let documentCamera = VNDocumentCameraViewController()
-documentCamera.delegate = self
-present(documentCamera, animated: true)
-
-// In delegate
-func documentCameraViewController(_ controller: VNDocumentCameraViewController,
-                                   didFinishWith scan: VNDocumentCameraScan) {
-    controller.dismiss(animated: true)
-
-    // Process each page
-    for pageIndex in 0..<scan.pageCount {
-        let image = scan.imageOfPage(at: pageIndex)
-
-        // Now run text recognition on the corrected image
-        let handler = VNImageRequestHandler(cgImage: image.cgImage!)
-        let textRequest = VNRecognizeTextRequest()
-        try? handler.perform([textRequest])
-    }
-}
-```
-
-**Cost**: 30 min implementation
-
-### Pattern 13: Document Segmentation (Custom Pipeline)
-
-**Use case**: Detect document edges programmatically for custom camera UI.
-
-```swift
-let request = VNDetectDocumentSegmentationRequest()
-let handler = VNImageRequestHandler(ciImage: inputImage)
-try handler.perform([request])
-
-guard let observation = request.results?.first,
-      let document = observation as? VNRectangleObservation else {
-    return
-}
-
-// Get corner points (normalized coordinates)
-let topLeft = document.topLeft
-let topRight = document.topRight
-let bottomLeft = document.bottomLeft
-let bottomRight = document.bottomRight
-
-// Apply perspective correction with CoreImage
-let correctedImage = inputImage
-    .cropped(to: document.boundingBox.scaled(to: imageSize))
-    .applyingFilter("CIPerspectiveCorrection", parameters: [
-        "inputTopLeft": CIVector(cgPoint: topLeft.scaled(to: imageSize)),
-        "inputTopRight": CIVector(cgPoint: topRight.scaled(to: imageSize)),
-        "inputBottomLeft": CIVector(cgPoint: bottomLeft.scaled(to: imageSize)),
-        "inputBottomRight": CIVector(cgPoint: bottomRight.scaled(to: imageSize))
-    ])
-```
-
-**VNDetectDocumentSegmentationRequest vs VNDetectRectanglesRequest**:
-- Document: ML-based, trained on documents, handles non-rectangles, returns one document
-- Rectangle: Edge-based, finds any quadrilateral, returns multiple, CPU-only
-
-**Cost**: 1-2 hours implementation
-
-### Pattern 14: Structured Document Extraction (iOS 26+)
-
-**Use case**: Extract tables, lists, paragraphs with semantic understanding.
-
-```swift
-// iOS 26+
-let request = RecognizeDocumentsRequest()
-let observations = try await request.perform(on: imageData)
-
-guard let document = observations.first?.document else {
-    return
-}
-
-// Extract tables
-for table in document.tables {
-    for row in table.rows {
-        for cell in row {
-            let text = cell.content.text.transcript
-            print("Cell: \(text)")
+    },
+    computed: {
+        isRTL() {
+            return this.direction === 'rtl';
         }
     }
+};
+</script>
+
+<style>
+.container {
+    margin-inline-start: 20px;
+    padding: 20px;
 }
 
-// Get detected data (emails, phones, URLs, dates)
-let allDetectedData = document.text.detectedData
-for data in allDetectedData {
-    switch data.match.details {
-    case .emailAddress(let email):
-        print("Email: \(email.emailAddress)")
-    case .phoneNumber(let phone):
-        print("Phone: \(phone.phoneNumber)")
-    case .link(let url):
-        print("URL: \(url)")
-    default: break
-    }
+.nav {
+    display: flex;
+    gap: 20px;
 }
+
+.nav-link {
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+</style>
 ```
 
-**Document hierarchy**:
-- Document → containers (text, tables, lists, barcodes)
-- Table → rows → cells → content
-- Content → text (transcript, lines, paragraphs, words, detectedData)
+## Angular with RTL
 
-**Cost**: 1 hour implementation
+### Angular with RTL
 
-### Pattern 15: Real-time Phone Number Scanner
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { I18n } from '@ngx-translate/core';
 
-**Use case**: Scan phone numbers from camera like barcode scanner (from WWDC 2019).
-
-```swift
-// 1. Use region of interest to guide user
-let textRequest = VNRecognizeTextRequest { request, error in
-    guard let observations = request.results as? [VNRecognizedTextObservation] else { return }
-
-    for observation in observations {
-        guard let candidate = observation.topCandidates(1).first else { continue }
-
-        // Use domain knowledge to filter
-        if let phoneNumber = self.extractPhoneNumber(from: candidate.string) {
-            self.stringTracker.add(phoneNumber)
+@Component({
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
+})
+export class AppComponent implements OnInit {
+    direction = 'ltr';
+    
+    constructor(private translate: I18n) {}
+    
+    ngOnInit() {
+        // Detect RTL language
+        const userLang = this.translate.currentLang;
+        const isRTL = ['ar', 'he', 'fa', 'ur'].includes(userLang.split('-')[0]);
+        
+        if (isRTL && this.direction === 'ltr') {
+            this.direction = 'rtl';
         }
     }
-
-    // Build evidence over frames
-    if let stableNumber = self.stringTracker.getStableString(threshold: 10) {
-        self.foundPhoneNumber(stableNumber)
-    }
-}
-
-textRequest.recognitionLevel = .fast  // Real-time
-textRequest.usesLanguageCorrection = false  // Codes, not natural text
-textRequest.regionOfInterest = guidanceBox  // Crop to user's focus area
-
-// 2. String tracker for stability
-class StringTracker {
-    private var seenStrings: [String: Int] = [:]
-
-    func add(_ string: String) {
-        seenStrings[string, default: 0] += 1
-    }
-
-    func getStableString(threshold: Int) -> String? {
-        seenStrings.first { $0.value >= threshold }?.key
+    
+    toggleDirection() {
+        this.direction = this.direction === 'ltr' ? 'rtl' : 'ltr';
     }
 }
 ```
 
-**Key techniques from WWDC 2019**:
-- Use `.fast` recognition level for real-time
-- Disable language correction for codes/numbers
-- Use region of interest to improve speed and focus
-- Build evidence over multiple frames (string tracker)
-- Apply domain knowledge (phone number regex)
-
-**Cost**: 2 hours implementation
-
-## Anti-Patterns
-
-### Anti-Pattern 1: Processing on Main Thread
-
-**Wrong**:
-```swift
-let request = VNGenerateForegroundInstanceMaskRequest()
-let handler = VNImageRequestHandler(cgImage: image)
-try handler.perform([request])  // Blocks UI!
+```html
+<div [dir]="direction">
+    <button (click)="toggleDirection()">
+        {{ direction === 'ltr' ? '🔄 RTL' : '🔄 LTR' }}
+    </button>
+    
+    <nav>
+        <a *ngFor="let link of links" [routerLink]="link.href">
+            {{ 'nav.' + link.key | translate }}
+        </a>
+    </nav>
+    
+    <div class="content">
+        <h1>{{ 'welcome' | translate }}</h1>
+        <p>{{ 'description' | translate }}</p>
+    </div>
+</div>
 ```
 
-**Right**:
-```swift
-DispatchQueue.global(qos: .userInitiated).async {
-    let request = VNGenerateForegroundInstanceMaskRequest()
-    let handler = VNImageRequestHandler(cgImage: image)
-    try handler.perform([request])
+```scss
+.container {
+    margin-inline-start: 20px;
+    padding: 20px;
+}
 
-    DispatchQueue.main.async {
-        // Update UI
+.nav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+[dir="rtl"] {
+    .container {
+        margin-inline-start: 20px;
+    }
+    
+    .nav {
+        gap: 20px;
+    margin-inline-end: 20px;
     }
 }
 ```
 
-**Why it matters**: Vision is resource-intensive. Blocking main thread freezes UI.
+## Testing RTL
 
-### Anti-Pattern 2: Ignoring Confidence Scores
+### Visual Testing
 
-**Wrong**:
-```swift
-let thumbTip = try observation.recognizedPoint(.thumbTip)
-let location = thumbTip.location  // May be unreliable!
+| Test | Description |
+|------|-------------|
+| **Layout** | Check alignment in both directions |
+| **Text** | Verify text displays correctly |
+| **Forms** | Test form input and validation |
+| **Navigation** | Check menu and links work |
+| **Responsiveness** | Test on mobile devices |
+
+### Automated Testing
+
+```javascript
+// RTL test suite
+describe('RTL Support', () => {
+    const rtlLanguages = ['ar', 'he', 'fa', 'ur', 'yi', 'ckb'];
+    
+    rtlLanguages.forEach(lang => {
+        describe(`Language: ${lang}`, () => {
+            // Test direction detection
+            expect(isRTL(lang)).toBe(true);
+            
+            // Test CSS logical properties
+            const element = document.createElement('div');
+            document.body.appendChild(element);
+            element.style.marginInlineStart = '20px';
+            const computedStyle = window.getComputedStyle(element);
+            expect(computedStyle.marginInlineStart).toBe('20px');
+            document.body.removeChild(element);
+        });
+    });
+});
 ```
 
-**Right**:
-```swift
-let thumbTip = try observation.recognizedPoint(.thumbTip)
-guard thumbTip.confidence > 0.5 else {
-    // Low confidence - landmark unreliable
-    return
+## Common Issues and Solutions
+
+### Issue: Misaligned Content
+
+**Problem**: Content doesn't align in RTL
+
+**Solution**: Use logical properties
+
+```css
+/* Bad: Physical properties */
+.bad-alignment {
+    margin-left: 20px;  /* Wrong for RTL */
 }
-let location = thumbTip.location
+
+/* Good: Logical properties */
+.good-alignment {
+    margin-inline-start: 20px;  /* Works for both */
+}
 ```
 
-**Why it matters**: Low confidence points are inaccurate (occlusion, blur, edge of frame).
+### Issue: Broken Layout
 
-### Anti-Pattern 3: Forgetting Coordinate Conversion
+**Problem**: Layout breaks in RTL
 
-**Wrong** (mixing coordinate systems):
-```swift
-// Vision uses lower-left origin
-let visionPoint = recognizedPoint.location  // (0, 0) = bottom-left
+**Solution**: Test with both directions
 
-// UIKit uses top-left origin
-let uiPoint = CGPoint(x: axiom-visionPoint.x, y: axiom-visionPoint.y)  // WRONG!
+```css
+/* Test both directions */
+.container {
+    /* Test with LTR */
+    margin-inline-start: 20px;
+}
+
+[dir="rtl"] .container {
+    /* Override for RTL */
+    margin-inline-start: 20px;
+}
 ```
 
-**Right**:
-```swift
-let visionPoint = recognizedPoint.location
+### Issue: Icons Not Flipped
 
-// Convert to UIKit coordinates
-let uiPoint = CGPoint(
-    x: axiom-visionPoint.x * imageWidth,
-    y: (1 - visionPoint.y) * imageHeight  // Flip Y axis
-)
+**Problem**: Icons point wrong direction
+
+**Solution**: Flip icons for RTL
+
+```css
+/* Flip icons for RTL */
+[dir="rtl"] .icon {
+    transform: scaleX(-1);
+}
 ```
 
-**Why it matters**: Mismatched origins cause UI overlays to appear in wrong positions.
+### Issue: URLs Broken
 
-### Anti-Pattern 4: Setting maximumHandCount Too High
+**Problem**: URLs become unclickable
 
-**Wrong**:
-```swift
-let request = VNDetectHumanHandPoseRequest()
-request.maximumHandCount = 10  // "Just in case"
+**Solution**: Keep URLs LTR
+
+```css
+/* Keep URLs LTR */
+.url {
+    direction: ltr;
+    unicode-bidi: embed;
+}
 ```
 
-**Right**:
-```swift
-let request = VNDetectHumanHandPoseRequest()
-request.maximumHandCount = 2  // Only compute what you need
+## Tools
+
+### RTL Testing Tools
+
+| Tool | Description |
+|------|-------------|
+| **Browsers** | Chrome DevTools, Firefox DevTools |
+| **Extensions** | RTL tester extensions |
+| **Online** | RTL preview tools |
+
+### Browser DevTools
+
+```
+1. Open DevTools (F12)
+2. Toggle device toolbar
+3. Select device (iPhone, iPad, etc.)
+4. Test RTL layout
 ```
 
-**Why it matters**: Performance scales with `maximumHandCount`. Pose computed for all detected hands ≤ max.
+### Browser Extensions
 
-### Anti-Pattern 5: Using ARKit When Vision Suffices
+| Extension | Description |
+|-----------|-------------|
+| **RTL Tester** | Test RTL layouts |
+| **Direction** | Switch between LTR/RTL |
+| **Bidi Checker** | Check bidirectional text |
 
-**Wrong** (if you don't need AR):
-```swift
-// Requires AR session just for body pose
-let arSession = ARBodyTrackingConfiguration()
+## Real Examples
+
+### RTL E-commerce
+
+```html
+<div dir="rtl">
+    <nav class="navbar">
+        <a href="/products">المنتجات</a>
+        <a href="/cart">السلة</a>
+        <a href="/checkout">إتمام الطلب</a>
+    </nav>
+    
+    <div class="product">
+        <img src="product.jpg" alt="منتج" />
+        <h1>منتج جديد</h1>
+        <p>منتج جديد مع خصم 10%</p>
+        <button>أضف للسلة</button>
+    </div>
+    
+    <div class="price">
+        <span class="original-price">100 ر.س</span>
+        <span class="discount-price">90 ر.س</span>
+    </div>
+</div>
 ```
 
-**Right**:
-```swift
-// Vision works offline on still images
-let request = VNDetectHumanBodyPoseRequest()
+```css
+.navbar {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.navbar a {
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.price {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.discount-price {
+    color: #e74c3c;
+    font-weight: bold;
+}
 ```
 
-**Why it matters**: ARKit body pose requires rear camera, AR session, supported devices. Vision works everywhere (even offline).
+### RTL Dashboard
 
-## Pressure Scenarios
+```html
+<div dir="rtl">
+    <header class="dashboard-header">
+        <h1>لوحة التحليلات</h1>
+        <p>آخر تحديث: 15 يناير 2024</p>
+    </header>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h2>المستخدمين النشط</h2>
+            <p class="stat-value">12,3456</p>
+            <p class="stat-change">+5.2%</p>
+        </div>
+        <div class="stat-card">
+            <h2>الإيرادات</h2>
+            <p class="stat-value">1,234</p>
+            <p class="stat-change">+8.7%</p>
+        </div>
+        <div class="stat-card">
+            <h2>الدخل</h2>
+            <p class="stat-value">456</p>
+            <p class="stat-change">-2.3%</p>
+        </div>
+    </div>
+</div>
+```
 
-### Scenario 1: "Just Ship the Feature"
+```css
+.dashboard-header {
+    margin-bottom: 30px;
+    padding: 20px;
+}
 
-**Context**: Product manager wants subject lifting "like in Photos app" by Friday. You're considering skipping background processing.
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
 
-**Pressure**: "It's working on my iPhone 15 Pro, let's ship it."
+.stat-card {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
 
-**Reality**: Vision blocks UI on older devices. Users on iPhone 12 will experience frozen app.
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
 
-**Correct action**:
-1. Implement background queue (15 min)
-2. Add loading indicator (10 min)
-3. Test on iPhone 12 or earlier (5 min)
+.stat-change {
+    color: #28a745;
+    font-weight: bold;
+}
+```
 
-**Push-back template**: "Subject lifting works, but it freezes the UI on older devices. I need 30 minutes to add background processing and prevent 1-star reviews."
+### RTL Form
 
-### Scenario 2: "Training Our Own Model"
+```html
+<div dir="rtl">
+    <form class="rtl-form">
+        <div class="form-group">
+            <label for="email">البريد الإلكتروني</label>
+            <input type="email" id="email" placeholder="example@email.com" />
+        </div>
+        
+        <div class="form-group">
+            <label for="password">كلمة المرور</label>
+            <input type="password" id="password" />
+        </div>
+        
+        <div class="form-group">
+            <label for="name">الاسم الكامل</label>
+            <input type="text" id="name" />
+        </div>
+        
+        <button type="submit">تسجيل</button>
+    </form>
+</div>
+```
 
-**Context**: Designer wants to exclude hands from subject bounding box. Engineer suggests training custom CoreML model for specific object detection.
+```css
+.form-group {
+    margin-bottom: 20px;
+}
 
-**Pressure**: "We need perfect bounds, let's train a model."
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
 
-**Reality**: Training requires labeled dataset (weeks), ongoing maintenance, and still won't generalize to new objects. Built-in Vision APIs + hand pose solve it in 2-5 hours.
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
-**Correct action**:
-1. Explain Pattern 1 (combine subject mask + hand pose)
-2. Prototype in 1 hour to demonstrate
-3. Compare against training timeline (weeks vs hours)
+.form-group button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+```
 
-**Push-back template**: "Training a model takes weeks and only works for specific objects. I can combine Vision APIs to solve this in a few hours and it'll work for any object."
+## Summary Checklist
 
-### Scenario 3: "We Can't Wait for iOS 17"
+### Planning
 
-**Context**: You need instance masks but app supports iOS 15+.
+- [ ] RTL languages identified
+- [ ] RTL requirements documented
+- [ ] Design system supports RTL
+- [ ] Translation includes RTL languages
 
-**Pressure**: "Just use iOS 15 person segmentation and ship it."
+### Implementation
 
-**Reality**: `VNGeneratePersonSegmentationRequest` (iOS 15) returns single mask for all people. Doesn't solve multi-person use case.
+- [ ] HTML dir attribute used
+- [ ] Logical CSS properties
+- [ ] Icons and images mirrored
+- [ ] Text alignment handled
+```
 
-**Correct action**:
-1. Raise minimum deployment target to iOS 17 (best UX)
-2. OR implement fallback: use iOS 15 API but disable multi-person features
-3. OR use `@available` to conditionally enable features
+---
 
-**Push-back template**: "Person segmentation on iOS 15 combines all people into one mask. We can either require iOS 17 for the best experience, or disable multi-person features on older OS versions. Which do you prefer?"
+## Quick Start
 
-## Checklist
+### HTML Direction
 
-Before shipping Vision features:
+```html
+<!-- Set direction -->
+<html dir="rtl" lang="ar">
+  <head>
+    <title>My App</title>
+  </head>
+  <body>
+    <!-- Content automatically flows RTL -->
+  </body>
+</html>
+```
 
-**Performance**:
-- ☑ All Vision requests run on background queue
-- ☑ UI shows loading indicator during processing
-- ☑ Tested on iPhone 12 or earlier (not just latest devices)
-- ☑ `maximumHandCount` set to minimum needed value
+### CSS Logical Properties
 
-**Accuracy**:
-- ☑ Confidence scores checked before using landmarks
-- ☑ Fallback behavior for low confidence observations
-- ☑ Handles case where no subjects/hands/people detected
+```css
+/* ❌ Bad - Physical properties */
+.element {
+  margin-left: 10px;
+  padding-right: 20px;
+  border-left: 1px solid black;
+}
 
-**Coordinates**:
-- ☑ Vision coordinates (lower-left origin) converted to UIKit (top-left)
-- ☑ Normalized coordinates scaled to pixel dimensions
-- ☑ UI overlays aligned correctly with image
+/* ✅ Good - Logical properties */
+.element {
+  margin-inline-start: 10px;  /* Left in LTR, Right in RTL */
+  padding-inline-end: 20px;
+  border-inline-start: 1px solid black;
+}
+```
 
-**Platform Support**:
-- ☑ `@available` checks for iOS 17+ APIs (instance masks)
-- ☑ Fallback for iOS 14-16 (or raised deployment target)
-- ☑ Tested on actual devices, not just simulator
+---
 
-**Edge Cases**:
-- ☑ Handles images with no detectable subjects
-- ☑ Handles partially occluded hands/bodies
-- ☑ Handles hands/bodies near image edges
-- ☑ Handles >4 people for person instance segmentation
+## Production Checklist
 
-**CoreImage Integration** (if applicable):
-- ☑ HDR preservation verified with high dynamic range images
-- ☑ Mask resolution matches source image
-- ☑ `croppedToInstancesContent` set appropriately (false for compositing)
+- [ ] **Direction Detection**: Auto-detect RTL languages
+- [ ] **HTML dir**: Set dir attribute correctly
+- [ ] **CSS Logical Properties**: Use logical properties
+- [ ] **Icons**: Mirror icons appropriately
+- [ ] **Images**: Handle image direction
+- [ ] **Text Alignment**: Proper text alignment
+- [ ] **Layout**: RTL-aware layouts
+- [ ] **Testing**: Test with RTL languages
+- [ ] **Documentation**: Document RTL support
+- [ ] **Design System**: RTL-aware design system
+- [ ] **Components**: RTL-aware components
+- [ ] **Accessibility**: Maintain accessibility in RTL
 
-**Text/Barcode Recognition** (if applicable):
-- ☑ Recognition level matches use case (fast for real-time, accurate for documents)
-- ☑ Language correction disabled for codes/serial numbers
-- ☑ Barcode symbologies limited to actual needs (performance)
-- ☑ Region of interest used to focus scanning area
-- ☑ Multiple candidates checked (not just top candidate)
-- ☑ Evidence accumulated over frames for real-time (string tracker)
-- ☑ DataScannerViewController availability checked before presenting
+---
 
-## Resources
+## Anti-patterns
 
-**WWDC**: 2019-234, 2021-10041, 2022-10024, 2022-10025, 2025-272, 2023-10176, 2023-111241, 2020-10653
+### ❌ Don't: Physical Properties Only
 
-**Docs**: /vision, /visionkit, /vision/vnrecognizetextrequest, /vision/vndetectbarcodesrequest
+```css
+/* ❌ Bad - Physical properties */
+.element {
+  margin-left: 10px;  /* Wrong in RTL! */
+  padding-right: 20px;
+}
+```
 
-**Skills**: axiom-vision-ref, axiom-vision-diag
+```css
+/* ✅ Good - Logical properties */
+.element {
+  margin-inline-start: 10px;  /* Adapts to direction */
+  padding-inline-end: 20px;
+}
+```
+
+### ❌ Don't: Hardcoded Directions
+
+```css
+/* ❌ Bad - Hardcoded */
+.text {
+  text-align: left;  /* Wrong in RTL! */
+}
+```
+
+```css
+/* ✅ Good - Direction-aware */
+.text {
+  text-align: start;  /* Adapts to direction */
+}
+```
+
+---
+
+## Integration Points
+
+- **i18n Setup** (`25-internationalization/i18n-setup/`) - Internationalization
+- **Localization** (`25-internationalization/localization/`) - Content translation
+- **Multi-language** (`25-internationalization/multi-language/`) - Multi-language support
+
+---
+
+## Further Reading
+
+- [CSS Logical Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties)
+- [RTL Best Practices](https://rtlstyling.com/)
+- [ ] Icons flip for RTL
+- [ ] URLs remain LTR
+- [ ] Numbers stay LTR
+
+### Testing
+
+- [ ] Test all RTL languages
+- [ ] Visual testing completed
+- [ ] Form testing completed
+- [ ] Navigation testing completed
+- [ ] Responsiveness verified
+
+### Maintenance
+
+- [ ] New content checked for RTL
+- [ ] Translations reviewed
+- [ ] User feedback collected
+- [ ] RTL bugs prioritized
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
