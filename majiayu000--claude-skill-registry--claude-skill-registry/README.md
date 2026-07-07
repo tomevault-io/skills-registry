@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/dh-combat-rjroy-adventure-engine-cor-1c248f71/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/go-workflow-ilude-claude-code-config-44e6f72b/SKILL.md)
 
 ---
 
