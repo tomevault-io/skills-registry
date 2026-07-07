@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dokimos-dev/dokimos](https://github.com/dokimos-dev/dokimos/tree/main/plugins/evaluate-openai/skills/evaluate-openai/SKILL.md)
+Original source: [dokimos-dev/dokimos](https://github.com/dokimos-dev/dokimos/tree/main/plugins/evaluate-embabel/skills/evaluate-embabel/SKILL.md)
 
 ---
 
