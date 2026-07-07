@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [db-lyon/ue-mcp](https://github.com/db-lyon/ue-mcp/tree/main/skills/ue-mcp-blueprint/SKILL.md)
+Original source: [db-lyon/ue-mcp](https://github.com/db-lyon/ue-mcp/tree/main/skills/ue-mcp-native-cpp/SKILL.md)
 
 ---
 
