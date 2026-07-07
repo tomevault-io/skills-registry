@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/hubspot-create-meeting-abdullahbeam-nexus-design-abdulla-0d0e8618/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/hubspot-create-company-abdullahbeam-nexus-design-abdulla-7b8f0881/SKILL.md)
 
 ---
 
