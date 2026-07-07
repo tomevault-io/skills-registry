@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/orchestrator-tech-lead-parallax-ai-llc-claude-orchestrator-b9d669ac/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/klingai-audit-logging-jeremylongshore-claude-code-plugins--44a7d1b0/SKILL.md)
 
 ---
 
