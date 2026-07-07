@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [zapier/gtm-cheat-codes](https://github.com/zapier/gtm-cheat-codes/tree/main/skills/gtm-ops/inbound-lead-audit-cx-map/SKILL.md)
+Original source: [zapier/gtm-cheat-codes](https://github.com/zapier/gtm-cheat-codes/tree/main/skills/marketing/mega-campaign-generator/SKILL.md)
 
 ---
 
