@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [deeleeramone/PyWry](https://github.com/deeleeramone/PyWry/tree/main/pywry/pywry/mcp/skills/styling/SKILL.md)
+Original source: [deeleeramone/PyWry](https://github.com/deeleeramone/PyWry/tree/main/pywry/pywry/mcp/skills/jupyter/SKILL.md)
 
 ---
 
