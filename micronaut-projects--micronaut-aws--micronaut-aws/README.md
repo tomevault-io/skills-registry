@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [micronaut-projects/micronaut-aws](https://github.com/micronaut-projects/micronaut-aws/tree/main/.agents/skills/guides/SKILL.md)
+Original source: [micronaut-projects/micronaut-aws](https://github.com/micronaut-projects/micronaut-aws/tree/main/.agents/skills/gradle/SKILL.md)
 
 ---
 
