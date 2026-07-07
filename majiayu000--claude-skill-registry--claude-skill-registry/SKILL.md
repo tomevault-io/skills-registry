@@ -1,141 +1,92 @@
 ---
-name: validate-idea
-description: Validate idea/project structure, documentation completeness, and readiness for next phase Use when this capability is needed.
+name: worktree-sync
+description: Sync git worktrees with remote and main branch changes. Use to keep long-running feature branches up-to-date. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# /validate-idea
+# Worktree Sync
 
-Comprehensive validation of an idea's documentation structure and readiness.
-
-## Usage
-
-```bash
-/validate-idea coordinatr       # Validate specific idea
-/validate-idea yourbench        # Check another project
-```
-
-## Validation Checklist
-
-### Required Files (Minimum Viable Idea)
-
-| File | Required | Purpose |
-|------|----------|---------|
-| **README.md** | Yes | Status, overview, progress |
-| **project-brief.md** | Yes | Vision, problem, audience, solution |
-
-### Recommended Files (Phase-Dependent)
-
-| File/Directory | When Needed | Purpose |
-|----------------|-------------|---------|
-| **critique.md** | Before planning | Risk assessment |
-| **competitive-analysis.md** | Before MVP | Market positioning |
-| **specs/** | Defining features | Technical specifications |
-| **docs/adrs/** | Major tech decisions | Architecture Decision Records |
-| **issues/** | In development | Work tracking |
-
-## Phase-Aware Validation
-
-**Concept Phase:**
-- README + project-brief.md sufficient
-- critique.md optional (recommend before planning)
-
-**Planning Phase:**
-- Should have critique.md
-- Should have specs/ OR features/
-
-**Development/Implementation Phase:**
-- Must have specs/ (at least one)
-- Must have issues/ with PLAN.md files
-- Should have docs/adrs/ if major decisions made
-
-## Execution Flow
-
-### 1. Locate Project
-```bash
-ls ideas/[project-name]/
-```
-
-### 2. Check Required Files
-- README.md: Has status, last updated date, progress
-- project-brief.md: Vision, problem, audience, solution complete
-
-### 3. Check Recommended Files (Phase-Aware)
-Based on project phase in README.
-
-### 4. Verify Consistency
-- README status matches CLAUDE.md
-- Brief aligns with README description
-- Specs reference features
-- Issues link to specs
-
-### 5. Suggest Next Steps
-
-| Current State | Suggested Next Step |
-|---------------|---------------------|
-| Just README | Run `/brief` |
-| Has brief | Run `/critique` |
-| Has critique | Run `/research` |
-| Has research | Run `/spec` |
-| Has specs | Run `/plan` + `/issue` |
-
-## Validation Report
-
-```markdown
-# Validation Report: [Project Name]
-
-## Status
-- Current phase: [Concept / Planning / Development]
-- Documentation completeness: X/Y files
-
-## Required Files
-✅ README.md - Complete
-✅ project-brief.md - Complete
-
-## Recommended Files
-⚠️  critique.md - Missing (run /critique)
-✅ specs/SPEC-001.md - Present
-
-## Issues Found
-1. README last updated is stale
-2. Status mismatch with CLAUDE.md
-
-## Recommendations
-1. Update README last updated
-2. Run /critique before specs
-
-## Readiness Assessment
-- Ready for specs: ⚠️ After fixing issues
-- Ready for implementation: ❌ No specs yet
-- Overall health: 7/10
-```
-
-## Readiness Criteria
-
-### Ready for /spec
-- project-brief.md complete
-- critique.md present
-- Key research done
-
-### Ready for /plan + /implement
-- At least one spec complete
-- Acceptance criteria clear
-- Technical decisions made
+Keep worktrees synchronized with remote changes.
 
 ## When to Use
 
-- Before starting spec work
-- After long pause in project
-- Monthly project health checks
-- Before presenting to stakeholders
-- When unsure what to do next
+- Long-running feature branches
+- Main branch has new commits
+- Before creating/updating PR
+- Resolving merge conflicts
+- Feature branch is diverged from main
 
-## Integration
+## Quick Reference
 
+```bash
+# Fetch latest from remote (works in any worktree)
+git fetch origin
+
+# Update main worktree
+cd ../ProjectOdyssey && git pull origin main
+
+# Update feature worktree (rebase approach)
+cd ../ProjectOdyssey-42-feature && git rebase origin/main
+
+# Update feature worktree (merge approach)
+cd ../ProjectOdyssey-42-feature && git merge origin/main
+
+# Auto-sync all worktrees
+./scripts/sync_all_worktrees.sh
 ```
-/validate-idea → Fix issues → /validate-idea again → /spec or /plan
+
+## Workflow
+
+1. **Fetch remote** - `git fetch origin` (any worktree)
+2. **Update main** - Navigate to main worktree, `git pull origin main`
+3. **Update feature** - Navigate to feature worktree, `git rebase origin/main` or `git merge`
+4. **Resolve conflicts** - If conflicts occur, fix files and `git rebase --continue`
+5. **Verify** - Check `git log` to confirm main branch changes are included
+
+## Rebase vs Merge
+
+| Approach | Use When | Command |
+|----------|----------|---------|
+| Rebase | Linear history preferred | `git rebase origin/main` |
+| Merge | Preserving branch history | `git merge origin/main` |
+
+## Error Handling
+
+| Error | Solution |
+|-------|----------|
+| Conflicts during rebase | Run `git status`, fix files, `git add .`, `git rebase --continue` |
+| Diverged branches | Use `git pull --rebase origin main` |
+| Uncommitted changes | Commit or stash before syncing |
+| Detached HEAD | Check `git status` and `git checkout <branch>` |
+
+## Conflict Resolution
+
+```bash
+# If conflicts occur
+git status  # See conflicted files
+
+# Edit files to resolve conflicts
+# Then continue
+git add .
+git rebase --continue
+
+# Or abort if something went wrong
+git rebase --abort
 ```
+
+## Best Practices
+
+- Fetch regularly to catch conflicts early
+- Sync before creating PR to avoid merge conflicts
+- Keep feature branches short-lived (2-3 days max)
+- Resolve conflicts immediately
+- Use rebase for linear history (preferred for this project)
+
+## References
+
+- See `worktree-create` skill for creating worktrees
+- [worktree-strategy.md](../../../notes/review/worktree-strategy.md)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
