@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rasengan-dev/rasenganjs](https://github.com/rasengan-dev/rasenganjs/tree/main/.agents/skills/webapp-testing/SKILL.md)
+Original source: [rasengan-dev/rasenganjs](https://github.com/rasengan-dev/rasenganjs/tree/main/.agents/skills/caveman-commit/SKILL.md)
 
 ---
 
