@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GitGuardian/ggmcp](https://github.com/GitGuardian/ggmcp/tree/main/.claude/skills/docker-image-tags/SKILL.md)
+Original source: [GitGuardian/ggmcp](https://github.com/GitGuardian/ggmcp/tree/main/.claude/skills/use-settings-not-environ/SKILL.md)
 
 ---
 
