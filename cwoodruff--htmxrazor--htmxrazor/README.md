@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cwoodruff/htmxRazor](https://github.com/cwoodruff/htmxRazor/tree/main/.squad/templates/skills/ci-validation-gates/SKILL.md)
+Original source: [cwoodruff/htmxRazor](https://github.com/cwoodruff/htmxRazor/tree/main/.squad/templates/skills/agent-collaboration/SKILL.md)
 
 ---
 
