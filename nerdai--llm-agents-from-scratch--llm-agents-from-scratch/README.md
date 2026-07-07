@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [nerdai/llm-agents-from-scratch](https://github.com/nerdai/llm-agents-from-scratch/tree/main/talks/2026/toronto-serverless/.agents/skills/hailstone-sequence/SKILL.md)
+Original source: [nerdai/llm-agents-from-scratch](https://github.com/nerdai/llm-agents-from-scratch/tree/main/talks/2026/acm-educational-talks/.agents/skills/hailstone-sequence/SKILL.md)
 
 ---
 
