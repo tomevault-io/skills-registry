@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [LunCoSim/lunco-sim](https://github.com/LunCoSim/lunco-sim/tree/main/skills/lunco-ui/SKILL.md)
+Original source: [LunCoSim/lunco-sim](https://github.com/LunCoSim/lunco-sim/tree/main/skills/lunco-theme/SKILL.md)
 
 ---
 
