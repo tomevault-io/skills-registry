@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/chaos-engineering-fundamentals-melodic-software-claude-code-plugins-4fa09920/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/implementing-backup-strategies-jeremylongshore-claude-code-plugins--7f6da79a/SKILL.md)
 
 ---
 
