@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/analyzing-query-performance-jeremylongshore-claude-code-plugins--984cfd48/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/obsidian-style-profile-alejandroiglesiascal-coddex-obsidian-skil-bae22c9b/SKILL.md)
 
 ---
 
