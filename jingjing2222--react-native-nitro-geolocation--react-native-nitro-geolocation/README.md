@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [jingjing2222/react-native-nitro-geolocation](https://github.com/jingjing2222/react-native-nitro-geolocation/tree/main/skills/service-migration/SKILL.md)
+Original source: [jingjing2222/react-native-nitro-geolocation](https://github.com/jingjing2222/react-native-nitro-geolocation/tree/main/skills/community-migration/SKILL.md)
 
 ---
 
