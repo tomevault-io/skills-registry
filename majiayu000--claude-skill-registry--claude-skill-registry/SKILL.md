@@ -1,414 +1,156 @@
 ---
-name: react-frontend-development
-description: Build React components with TypeScript, Tailwind CSS, and React Query for the Medellin Spark platform. Use when implementing UI features, creating components, managing state, or optimizing frontend performance. Specializes in React hooks, shadcn/ui components, and Supabase integration. Use when this capability is needed.
+name: axiom-ios-concurrency
+description: Use when writing ANY code with async, actors, threads, or seeing ANY concurrency error. Covers Swift 6 concurrency, @MainActor, Sendable, data races, async/await patterns, performance optimization.
 metadata:
   author: majiayu000
 ---
 
-# React Frontend Development
-
-## Stack Overview
-
-- **Framework**: React 18 + TypeScript + Vite
-- **Styling**: Tailwind CSS + shadcn/ui components
-- **State**: React Query (@tanstack/react-query)
-- **Backend**: Supabase (auth, database, edge functions)
-- **Icons**: Lucide React
-- **Forms**: React Hook Form (when needed)
-
-## Component Patterns
-
-### Standard Component Structure
-
-```typescript
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
-
-export default function MyComponent() {
-  const [state, setState] = useState('');
-  const { toast } = useToast();
-
-  const { data, isLoading } = useQuery({
-    queryKey: ['my-data'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('table_name')
-        .select('*');
-
-      if (error) throw error;
-      return data;
-    },
-  });
-
-  if (isLoading) return <div>Loading...</div>;
-
-  return (
-    <div className="container max-w-4xl mx-auto py-8">
-      <Card>
-        <CardHeader>
-          <CardTitle>Title</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {/* Content here */}
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
-```
-
-## React Query Hooks
-
-### Data Fetching Pattern
-
-```typescript
-// src/hooks/useMyData.ts
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-
-export function useMyData() {
-  return useQuery({
-    queryKey: ['my-data'],
-    queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return [];
-
-      const { data, error } = await supabase
-        .from('table_name')
-        .select('*')
-        .eq('profile_id', user.id)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      return data;
-    },
-  });
-}
-
-export function useCreateData() {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async (payload: any) => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
-
-      const { data, error } = await supabase
-        .from('table_name')
-        .insert({ ...payload, profile_id: user.id })
-        .select()
-        .single();
-
-      if (error) throw error;
-      return data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['my-data'] });
-    },
-  });
-}
-```
-
-## Supabase Integration
-
-### Authentication Check
-
-```typescript
-const { data: { user } } = await supabase.auth.getUser();
-if (!user) throw new Error('Not authenticated');
-```
-
-### Database Queries
-
-```typescript
-// Select with filters
-const { data, error } = await supabase
-  .from('table_name')
-  .select('*')
-  .eq('status', 'active')
-  .order('created_at', { ascending: false });
-
-// Insert
-const { data, error } = await supabase
-  .from('table_name')
-  .insert({ field: 'value' })
-  .select()
-  .single();
-
-// Update
-const { error } = await supabase
-  .from('table_name')
-  .update({ field: 'new_value' })
-  .eq('id', itemId);
-
-// Delete
-const { error } = await supabase
-  .from('table_name')
-  .delete()
-  .eq('id', itemId);
-```
-
-## Tailwind CSS Patterns
-
-### Common Layouts
-
-```tsx
-{/* Container with max width */}
-<div className="container max-w-6xl mx-auto py-8">
-
-{/* Grid responsive */}
-<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-
-{/* Flex spacing */}
-<div className="flex items-center justify-between gap-4">
-
-{/* Card grid */}
-<div className="space-y-4">
-  <Card>...</Card>
-  <Card>...</Card>
-</div>
-```
-
-## shadcn/ui Components
-
-### Button Variants
-
-```tsx
-<Button>Primary</Button>
-<Button variant="outline">Outline</Button>
-<Button variant="ghost">Ghost</Button>
-<Button variant="destructive">Delete</Button>
-<Button size="sm">Small</Button>
-<Button size="lg">Large</Button>
-```
-
-### Form Components
-
-```tsx
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
-<div className="space-y-4">
-  <div>
-    <Label>Name</Label>
-    <Input placeholder="Enter name" value={name} onChange={(e) => setName(e.target.value)} />
-  </div>
-
-  <div>
-    <Label>Description</Label>
-    <Textarea placeholder="Enter description" />
-  </div>
-
-  <div>
-    <Label>Category</Label>
-    <Select value={category} onValueChange={setCategory}>
-      <SelectTrigger>
-        <SelectValue placeholder="Select category" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="option1">Option 1</SelectItem>
-        <SelectItem value="option2">Option 2</SelectItem>
-      </SelectContent>
-    </Select>
-  </div>
-</div>
-```
-
-## Toast Notifications
-
-```typescript
-import { useToast } from '@/hooks/use-toast';
-
-const { toast } = useToast();
-
-// Success
-toast({
-  title: 'Success!',
-  description: 'Item created successfully',
-});
-
-// Error
-toast({
-  title: 'Error',
-  description: 'Failed to create item',
-  variant: 'destructive',
-});
-```
-
-## Performance Optimization
-
-### Lazy Loading
-
-```typescript
-import { lazy, Suspense } from 'react';
-
-const HeavyComponent = lazy(() => import('./HeavyComponent'));
-
-function App() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <HeavyComponent />
-    </Suspense>
-  );
-}
-```
-
-### Memoization
-
-```typescript
-import { useMemo, useCallback } from 'react';
-
-// Expensive computation
-const expensiveValue = useMemo(() => {
-  return items.filter(item => item.active).map(item => item.value);
-}, [items]);
-
-// Callback for child components
-const handleClick = useCallback(() => {
-  doSomething(id);
-}, [id]);
-```
-
-## TypeScript Best Practices
-
-### Type Interfaces
-
-```typescript
-interface User {
-  id: string;
-  email: string;
-  full_name: string | null;
-  created_at: string;
-}
-
-interface Job {
-  id: string;
-  title: string;
-  company_name: string;
-  skills: string[];
-  is_active: boolean;
-}
-```
-
-### Component Props
-
-```typescript
-interface MyComponentProps {
-  title: string;
-  items: Job[];
-  onSelect?: (id: string) => void;
-  className?: string;
-}
-
-export function MyComponent({ title, items, onSelect, className }: MyComponentProps) {
-  // Component implementation
-}
-```
-
-## Common Patterns
-
-### Loading States
-
-```tsx
-if (isLoading) {
-  return <div className="flex items-center justify-center py-8">Loading...</div>;
-}
-
-if (error) {
-  return <div className="text-destructive">Error: {error.message}</div>;
-}
-```
-
-### Empty States
-
-```tsx
-{items.length === 0 ? (
-  <div className="text-center py-12 text-muted-foreground">
-    <p>No items found</p>
-  </div>
-) : (
-  <div className="grid gap-4">
-    {items.map(item => <ItemCard key={item.id} item={item} />)}
-  </div>
-)}
-```
-
-### Responsive Design
-
-```tsx
-{/* Mobile-first responsive */}
-<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-  {/* Cards */}
-</div>
-
-{/* Hide on mobile */}
-<div className="hidden md:block">Desktop only content</div>
-
-{/* Show on mobile only */}
-<div className="md:hidden">Mobile only content</div>
-```
-
-## Icons with Lucide
-
-```tsx
-import { Star, Heart, Trash2, Edit, Plus } from 'lucide-react';
-
-<Button>
-  <Plus className="h-4 w-4 mr-2" />
-  Add Item
-</Button>
-
-<Star className="h-5 w-5 text-yellow-500" />
-```
-
-## File Structure
+# iOS Concurrency Router
+
+**You MUST use this skill for ANY concurrency, async/await, threading, or Swift 6 concurrency work.**
+
+## When to Use
+
+Use this router when:
+- Writing async/await code
+- Seeing concurrency errors (data races, actor isolation)
+- Working with @MainActor
+- Dealing with Sendable conformance
+- Optimizing Swift performance
+- Migrating to Swift 6 concurrency
+- **App freezes during loading** (likely main thread blocking)
+
+## Conflict Resolution
+
+**ios-concurrency vs ios-performance**: When app freezes or feels slow:
+1. **Try ios-concurrency FIRST** — Main thread blocking is the #1 cause of UI freezes. Check for synchronous work on @MainActor before profiling.
+2. **Only use ios-performance** if concurrency fixes don't help — Profile after ruling out obvious blocking.
+
+**ios-concurrency vs ios-build**: When seeing Swift 6 concurrency errors:
+- **Use ios-concurrency, NOT ios-build** — Concurrency errors are CODE issues, not environment issues
+- ios-build is for "No such module", simulator issues, build failures unrelated to Swift language errors
+
+**Rationale**: A 2-second freeze during data loading is almost always `await` on main thread or missing background dispatch. Domain knowledge solves this faster than Time Profiler.
+
+## Routing Logic
+
+### Swift Concurrency Issues
+
+**Swift 6 concurrency patterns** → `/skill axiom-swift-concurrency`
+- async/await patterns
+- @MainActor usage
+- Actor isolation
+- Sendable conformance
+- Data race prevention
+- Swift 6 migration
+
+**Swift performance** → `/skill axiom-swift-performance`
+- Value vs reference types
+- Copy-on-write optimization
+- ARC overhead
+- Generic specialization
+- Collection performance
+
+**Synchronous actor access** → `/skill axiom-assume-isolated`
+- MainActor.assumeIsolated
+- @preconcurrency protocol conformances
+- Legacy delegate callbacks
+- Testing MainActor code synchronously
+
+**Thread-safe primitives** → `/skill axiom-synchronization`
+- Mutex (iOS 18+)
+- OSAllocatedUnfairLock (iOS 16+)
+- Atomic types
+- Lock vs actor decision
+
+**Parameter ownership** → `/skill axiom-ownership-conventions`
+- borrowing/consuming modifiers
+- Noncopyable types (~Copyable)
+- ARC traffic reduction
+- consume operator
+
+**Concurrency profiling** → `/skill axiom-concurrency-profiling`
+- Swift Concurrency Instruments template
+- Actor contention diagnosis
+- Thread pool exhaustion
+- Task visualization
+
+## Decision Tree
 
 ```
-src/
-├── components/       # Reusable UI components
-│   ├── ui/          # shadcn/ui components (auto-generated)
-│   └── *.tsx        # Custom components
-├── pages/           # Route components
-├── hooks/           # Custom React hooks (useMyData, etc.)
-├── lib/             # Utilities, helpers
-├── types/           # TypeScript types/interfaces
-└── integrations/    # Supabase client
+User asks about concurrency
+  ├─ Concurrency errors?
+  │  ├─ Data races? → swift-concurrency
+  │  ├─ Actor isolation? → swift-concurrency
+  │  ├─ @MainActor? → swift-concurrency
+  │  └─ Sendable? → swift-concurrency
+  │
+  ├─ Writing async code? → swift-concurrency
+  │
+  ├─ assumeIsolated questions? → assume-isolated
+  │
+  ├─ Mutex/lock/synchronization? → synchronization
+  │
+  ├─ borrowing/consuming/ownership? → ownership-conventions
+  │
+  ├─ Profile async performance? → concurrency-profiling
+  │
+  └─ Performance optimization? → swift-performance
 ```
 
-## Quick Checklist
+## Critical Patterns
 
-Before creating a component:
-- [ ] Use existing shadcn/ui components
-- [ ] Create custom hook for data fetching
-- [ ] Add loading and error states
-- [ ] Use TypeScript interfaces
-- [ ] Apply Tailwind responsive classes
-- [ ] Add toast notifications for actions
-- [ ] Test on mobile viewport
-- [ ] Verify authentication checks
+**Swift 6 Concurrency** (swift-concurrency):
+- Progressive journey: single-threaded → async → concurrent → actors
+- @concurrent attribute for forced background execution
+- Isolated conformances
+- Main actor mode for approachable concurrency
+- 11 copy-paste patterns
 
-## Common Mistakes to Avoid
+**Swift Performance** (swift-performance):
+- ~Copyable for non-copyable types
+- Copy-on-write (COW) patterns
+- Value vs reference type decisions
+- ARC overhead reduction
+- Generic specialization
 
-1. **Don't use user_id** - Always use `profile_id` for foreign keys
-2. **Don't skip error handling** - Always check `error` from Supabase
-3. **Don't forget auth checks** - Verify user is authenticated
-4. **Don't hardcode values** - Use env variables for URLs/keys
-5. **Don't skip TypeScript** - Define proper interfaces
-6. **Don't ignore RLS** - Ensure Row Level Security is enabled
+## Example Invocations
 
-## Reference
+User: "I'm getting 'data race' errors in Swift 6"
+→ Invoke: `/skill axiom-swift-concurrency`
 
-- shadcn/ui: https://ui.shadcn.com/
-- Tailwind CSS: https://tailwindcss.com/docs
-- React Query: https://tanstack.com/query/latest
-- Lucide Icons: https://lucide.dev/
-- Supabase: https://supabase.com/docs
+User: "How do I use @MainActor correctly?"
+→ Invoke: `/skill axiom-swift-concurrency`
+
+User: "My app is slow due to unnecessary copying"
+→ Invoke: `/skill axiom-swift-performance`
+
+User: "Should I use async/await for this network call?"
+→ Invoke: `/skill axiom-swift-concurrency`
+
+User: "How do I use assumeIsolated?"
+→ Invoke: `/skill axiom-assume-isolated`
+
+User: "My delegate callback runs on main thread, how do I access MainActor state?"
+→ Invoke: `/skill axiom-assume-isolated`
+
+User: "Should I use Mutex or actor?"
+→ Invoke: `/skill axiom-synchronization`
+
+User: "What's the difference between os_unfair_lock and OSAllocatedUnfairLock?"
+→ Invoke: `/skill axiom-synchronization`
+
+User: "What does borrowing do in Swift?"
+→ Invoke: `/skill axiom-ownership-conventions`
+
+User: "How do I use ~Copyable types?"
+→ Invoke: `/skill axiom-ownership-conventions`
+
+User: "My async code is slow, how do I profile it?"
+→ Invoke: `/skill axiom-concurrency-profiling`
+
+User: "I think I have actor contention, how do I diagnose it?"
+→ Invoke: `/skill axiom-concurrency-profiling`
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
