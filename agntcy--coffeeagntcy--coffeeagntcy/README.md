@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agntcy/coffeeAgntcy](https://github.com/agntcy/coffeeAgntcy/tree/main/.agents/skills/generate-release-notes/SKILL.md)
+Original source: [agntcy/coffeeAgntcy](https://github.com/agntcy/coffeeAgntcy/tree/main/.agents/skills/openapi-to-python-lungo/SKILL.md)
 
 ---
 
