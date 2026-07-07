@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [dirkgroenen/hass-evse-load-balancer](https://github.com/dirkgroenen/hass-evse-load-balancer/tree/main/.claude/skills/create-integration/SKILL.md)
+Original source: [dirkgroenen/hass-evse-load-balancer](https://github.com/dirkgroenen/hass-evse-load-balancer/tree/main/.claude/skills/review-integration/SKILL.md)
 
 ---
 
