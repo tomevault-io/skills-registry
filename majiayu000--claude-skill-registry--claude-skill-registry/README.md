@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/index-html-sayali-ingle-pdl-adusa-ai-vuejs-app-t/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/agentuity-cli-auth-ssh-delete-agentuity-examples/SKILL.md)
 
 ---
 
