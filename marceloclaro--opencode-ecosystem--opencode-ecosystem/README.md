@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MarceloClaro/OpenCode_Ecosystem](https://github.com/MarceloClaro/OpenCode_Ecosystem/tree/main/.evolve/ecosystem_backup/skills/science/alphagenome_single_variant_analysis/SKILL.md)
+Original source: [MarceloClaro/OpenCode_Ecosystem](https://github.com/MarceloClaro/OpenCode_Ecosystem/tree/main/.evolve/ecosystem_backup/skills/science/alphafold_database_fetch_and_analyze/SKILL.md)
 
 ---
 
