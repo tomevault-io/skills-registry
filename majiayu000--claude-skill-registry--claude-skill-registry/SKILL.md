@@ -1,213 +1,237 @@
 ---
-name: td-correlation
-description: Signal correlation analysis for similarity and delay detection Use when this capability is needed.
+name: subagent-teams
+description: | Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Teradata Signal Correlation
+# Subagent Teams
 
-| **Skill Name** | Teradata Signal Correlation |
-|----------------|--------------|
-| **Description** | Signal correlation analysis for similarity and delay detection |
-| **Category** | Uaf Digital Signal Processing |
-| **Function** | TD_CORRELATION |
-| **Framework** | Teradata Unbounded Array Framework (UAF) |
+Maintain optimum Claude performance by delegating heavy work to subagent teams, minimizing auto-compact of the main context window.
 
-## Core Capabilities
+## What This Skill Does
 
-- **Advanced UAF implementation** with optimized array processing
-- **Scalable time series analysis** for millions of products or billions of IoT sensors
-- **High-dimensional data support** for complex analytical use cases
-- **Production-ready SQL generation** with proper UAF syntax
-- **Comprehensive error handling** and data validation
-- **Business-focused interpretation** of analytical results
-- **Integration with UAF pipeline** workflows
+- Decomposes complex tasks into independent subtasks for parallel execution
+- Delegates exploration, research, testing, and implementation to specialized subagents
+- Keeps main orchestrator context lean (decision-making and synthesis only)
+- Prevents auto-compact by isolating heavy work in separate context windows
+- Selects optimal model per subtask (Opus for complex, Sonnet for moderate, Haiku for simple)
 
-## Unbounded Array Framework (UAF) Overview
+## What This Skill Does NOT Do
 
-The Unbounded Array Framework is Teradata's analytics framework for:
-- **End-to-end time series forecasting pipelines**
-- **Digital signal processing** for radar, sonar, audio, and video
-- **4D spatial analytics** and image processing
-- **Scalable analysis** of high-dimensional data
-- **Complex use cases** across multiple industries
-
-UAF functions process:
-- **One-dimensional series** indexed by time or space
-- **Two-dimensional arrays** (matrices) indexed by time, space, or both
-- **Large datasets** with robust scalability
-
-## Table Analysis Workflow
-
-This skill automatically analyzes your time series data to generate optimized UAF workflows:
-
-### 1. Time Series Structure Analysis
-- **Temporal Column Detection**: Identifies time/date columns for indexing
-- **Value Column Classification**: Distinguishes between numeric time series values
-- **Frequency Analysis**: Determines sampling frequency and intervals
-- **Seasonality Detection**: Identifies seasonal patterns and cycles
-
-### 2. UAF-Specific Recommendations
-- **Array Dimension Setup**: Configures proper 1D/2D array structures
-- **Time Indexing**: Sets up appropriate temporal indexing
-- **Parameter Optimization**: Suggests optimal parameters for TD_CORRELATION
-- **Pipeline Integration**: Recommends complementary UAF functions
-
-### 3. SQL Generation Process
-- **UAF Syntax Generation**: Creates proper Unbounded Array Framework SQL
-- **Array Processing**: Handles time series arrays and matrices
-- **Parameter Configuration**: Sets function-specific parameters
-- **Pipeline Workflows**: Generates complete analytical pipelines
-
-## How to Use This Skill
-
-1. **Provide Your Time Series Data**:
-   ```
-   "Analyze time series table: database.sensor_data with timestamp column and value columns"
-   ```
-
-2. **The Skill Will**:
-   - Analyze temporal structure and sampling frequency
-   - Identify optimal UAF function parameters
-   - Generate complete TD_CORRELATION workflow
-   - Provide performance optimization recommendations
-
-## Input Requirements
-
-### Data Requirements
-- **Time series table**: Teradata table with temporal data
-- **Timestamp column**: Time/date column for temporal indexing
-- **Value columns**: Numeric columns for analysis
-- **Signal data**: Numeric arrays representing signals
-- **Sampling rate**: Known or consistent sampling frequency
-- **Signal quality**: Preprocessed data with minimal artifacts
-
-### Technical Requirements
-- **Teradata Vantage** with UAF (Unbounded Array Framework) enabled
-- **UAF License**: Access to time series and signal processing functions
-- **Database permissions**: CREATE, DROP, SELECT on working database
-- **Function access**: TD_CORRELATION
-
-## Output Formats
-
-### Generated Results
-- **UAF-processed arrays** with temporal/spatial indexing
-- **Analysis results** specific to TD_CORRELATION functionality
-- **Analytical outputs** from function execution
-- **Diagnostic metrics** and validation results
-
-### SQL Scripts
-- **Complete UAF workflows** ready for execution
-- **Parameterized queries** optimized for your data structure
-- **Array processing** with proper UAF syntax
-
-## Uaf Digital Signal Processing Use Cases Supported
-
-1. **Signal correlation**: Advanced UAF-based analysis
-2. **Delay detection**: Advanced UAF-based analysis
-3. **Similarity analysis**: Advanced UAF-based analysis
-4. **Pattern matching**: Advanced UAF-based analysis
-
-## Key Parameters for TD_CORRELATION
-
-- **CorrelationType**: Function-specific parameter for optimal results
-- **MaxLag**: Function-specific parameter for optimal results
-- **Normalize**: Function-specific parameter for optimal results
-
-## UAF Best Practices Applied
-
-- **Array dimension optimization** for performance
-- **Temporal indexing** with proper time series structure
-- **Parameter tuning** specific to TD_CORRELATION
-- **Memory management** for large-scale data processing
-- **Error handling** for UAF-specific scenarios
-- **Pipeline integration** with other UAF functions
-- **Scalability considerations** for production workloads
-
-## Example Usage
-
-```sql
--- Example TD_CORRELATION workflow
--- Replace parameters with your specific requirements
-
--- 1. Data preparation for UAF processing
-SELECT * FROM TD_UNPIVOT (
-    ON your_database.your_timeseries_table
-    USING
-    TimeColumn ('timestamp_col')
-    ValueColumns ('value1', 'value2', 'value3')
-) AS dt;
-
--- 2. Execute TD_CORRELATION
-SELECT * FROM TD_CORRELATION (
-    ON prepared_data
-    USING
-    -- Function-specific parameters
-    -- (Detailed parameters provided by skill analysis)
-) AS dt;
-```
-
-## Scripts Included
-
-### Core UAF Scripts
-- **`uaf_data_preparation.sql`**: UAF-specific data preparation
-- **`td_correlation_workflow.sql`**: Complete TD_CORRELATION implementation
-- **`table_analysis.sql`**: Time series structure analysis
-- **`parameter_optimization.sql`**: Function parameter tuning
-
-### Integration Scripts
-- **`uaf_pipeline_template.sql`**: Multi-function UAF workflows
-- **`performance_monitoring.sql`**: UAF execution monitoring
-- **`result_interpretation.sql`**: Output analysis and visualization
-
-## Industry Applications
-
-### Supported Domains
-- **Economic forecasting** and financial analysis
-- **Sales forecasting** and demand planning
-- **Medical diagnostic** image analysis
-- **Genomics and biomedical** research
-- **Radar and sonar** analysis
-- **Audio and video** processing
-- **Process monitoring** and quality control
-- **IoT sensor data** analysis
-
-## Limitations and Considerations
-
-- **UAF licensing**: Requires proper Teradata UAF licensing
-- **Memory requirements**: Large arrays may require memory optimization
-- **Computational complexity**: Some operations may be resource-intensive
-- **Data quality**: Results depend on clean, well-structured time series data
-- **Parameter sensitivity**: Function performance depends on proper parameter tuning
-- **Temporal consistency**: Irregular sampling may require preprocessing
-
-## Quality Checks
-
-### Automated Validations
-- **Time series structure** verification
-- **Array dimension** compatibility checks
-- **Parameter validation** for TD_CORRELATION
-- **Memory usage** monitoring
-- **Result quality** assessment
-
-### Manual Review Points
-- **Parameter selection** appropriateness
-- **Result interpretation** accuracy
-- **Performance optimization** opportunities
-- **Integration** with existing workflows
-
-## Updates and Maintenance
-
-- **UAF compatibility**: Tested with latest Teradata UAF releases
-- **Performance optimization**: Regular UAF-specific optimizations
-- **Best practices**: Updated with UAF community recommendations
-- **Documentation**: Maintained with latest UAF features
-- **Examples**: Real-world UAF use cases and scenarios
+- Handle tasks with strict sequential dependencies (use normal flow)
+- Replace the main orchestrator's decision-making role
+- Work for single-step trivial tasks (no delegation needed)
+- Manage persistent state across subagent sessions
 
 ---
 
-*This skill provides production-ready uaf digital signal processing analytics using Teradata's Unbounded Array Framework TD_CORRELATION with industry best practices for scalable time series and signal processing.*
+## Before Implementation
+
+Gather context to ensure successful delegation:
+
+| Source | Gather |
+|--------|--------|
+| **User Request** | Full scope of the task, constraints, preferences |
+| **Codebase** | Project structure, key files, existing patterns |
+| **Skill References** | Delegation patterns from `references/` |
+| **Task Complexity** | Number of independent subtasks, dependencies between them |
+
+Only ask user for THEIR specific requirements (delegation strategy is in this skill).
+
+---
+
+## Core Principle: Context Isolation
+
+```
+WITHOUT subagent-teams:
+  Main Context: [Explore + Search + Read + Analyze + Plan + Implement + Test]
+  Result: Context fills → Auto-compact triggers → Quality degrades
+
+WITH subagent-teams:
+  Main Context: [Decompose → Delegate → Synthesize → Decide]
+  Subagent 1: [Explore codebase] → returns summary
+  Subagent 2: [Run tests] → returns pass/fail
+  Subagent 3: [Implement feature] → returns code
+  Result: Main context stays lean → No auto-compact → Consistent quality
+```
+
+---
+
+## Workflow
+
+### Phase 1: Task Decomposition
+
+Analyze the user's request and break it into independent subtasks:
+
+1. **Identify the full scope** of what needs to be done
+2. **Map dependencies** — which tasks depend on others?
+3. **Group independent tasks** — these can run in parallel
+4. **Identify sequential gates** — tasks that must complete before others start
+
+```
+User Request
+     │
+     ▼
+┌─────────────────────────┐
+│ Dependency Analysis      │
+│ - Independent tasks → parallel batch
+│ - Dependent tasks → sequential order
+│ - Gates → sync points  │
+└─────────────────────────┘
+     │
+     ▼
+[Parallel Batch 1] → [Gate] → [Parallel Batch 2] → [Gate] → [Final Synthesis]
+```
+
+### Phase 2: Team Assignment
+
+For each subtask, select the optimal subagent configuration:
+
+| Subtask Type | subagent_type | Model | Tools |
+|--------------|---------------|-------|-------|
+| Codebase exploration | `Explore` | haiku | Read, Grep, Glob |
+| Architecture design | `Plan` | sonnet | All read tools |
+| Multi-step implementation | `general-purpose` | sonnet/opus | All tools |
+| Simple file search | `Explore` | haiku | Glob, Grep |
+| Code review | `Explore` | sonnet | Read, Grep |
+| Test execution | `general-purpose` | haiku | Bash, Read |
+
+### Phase 3: Parallel Dispatch
+
+Launch independent subagents in a **single message with multiple Task tool calls**:
+
+```
+# CORRECT: Single message, multiple tool calls (parallel)
+Message contains:
+  - Task tool call 1: Explore agent for codebase research
+  - Task tool call 2: Explore agent for pattern analysis
+  - Task tool call 3: General-purpose agent for test execution
+
+# WRONG: Sequential messages (wastes time)
+Message 1: Task tool call 1
+[wait for result]
+Message 2: Task tool call 2
+[wait for result]
+```
+
+### Phase 4: Result Synthesis
+
+After subagents return:
+
+1. **Collect** all subagent outputs (compact summaries only enter main context)
+2. **Analyze** findings for conflicts or gaps
+3. **Synthesize** into unified action plan
+4. **Execute** final decisions in main context (or delegate next batch)
+
+### Phase 5: Sequential Gates (if needed)
+
+When later tasks depend on earlier results:
+
+1. Wait for Batch 1 subagents to complete
+2. Synthesize Batch 1 results
+3. Use synthesized results to inform Batch 2 prompts
+4. Launch Batch 2 subagents in parallel
+5. Repeat until task is complete
+
+---
+
+## Delegation Decision Matrix
+
+| Condition | Action |
+|-----------|--------|
+| Task has 3+ independent subtasks | Use subagent-teams |
+| Context window already large | Delegate ALL exploration |
+| Task involves multiple file reads | Delegate to Explore agents |
+| Task requires testing + implementation | Separate into different agents |
+| Task is single-step and simple | Do NOT delegate (overhead not worth it) |
+| Tasks have strict sequential dependency | Use sequential gates, not parallel |
+| User explicitly requests subagent-teams | Always apply this skill |
+
+---
+
+## Subagent Prompt Engineering
+
+Write clear, focused prompts for each subagent:
+
+### Must Include
+- **Specific goal**: What exactly to find/do/produce
+- **Scope boundary**: What files/areas to focus on
+- **Output format**: How to structure the response
+- **Context**: Relevant information from earlier steps
+
+### Must NOT Include
+- Unnecessary background (wastes subagent context)
+- Multiple unrelated tasks in one agent (breaks specialization)
+- Vague instructions ("look around the codebase")
+
+### Template
+```
+"[Action verb] [specific target] in [scope].
+Focus on [key aspects].
+Return: [structured output format].
+Context: [relevant prior findings if any]."
+```
+
+---
+
+## Anti-Patterns
+
+| Anti-Pattern | Why It's Bad | Correct Approach |
+|--------------|-------------|------------------|
+| Reading 10+ files in main context | Fills context → auto-compact | Delegate to Explore agent |
+| Long grep/search chains in main | Each result adds to context | Single Explore agent does all searching |
+| Explore AND implement in same session | Double context usage | Explore agents first, then implement |
+| One mega-agent for everything | No specialization, bloated context | Multiple focused agents |
+| Not using `run_in_background` | Blocks main session | Use background for long tasks |
+| Asking subagent for info you already have | Wastes subagent context | Pass known context in prompt |
+
+---
+
+## Model Selection Strategy
+
+| Task Complexity | Model | Cost | Use When |
+|-----------------|-------|------|----------|
+| Simple search/grep | `haiku` | Low | Finding files, simple patterns |
+| Moderate analysis | `sonnet` | Medium | Code review, architecture design |
+| Complex reasoning | `opus` | High | Multi-step implementation, critical decisions |
+| Default (unspecified) | inherits | - | When unsure, let it inherit |
+
+---
+
+## Error Handling
+
+| Scenario | Recovery |
+|----------|----------|
+| Subagent returns incomplete results | Re-launch with more specific prompt |
+| Subagent times out | Check with `AgentOutputTool`, adjust scope |
+| Conflicting results from agents | Synthesize manually, prioritize authoritative source |
+| Too many parallel agents | Limit to 3-5 concurrent, batch the rest |
+| Background agent still running | Use `AgentOutputTool` with `block=false` to check status |
+
+---
+
+## Output Checklist
+
+Before completing a subagent-teams workflow, verify:
+
+- [ ] All subtasks identified and categorized (independent vs dependent)
+- [ ] Subagent types correctly matched to task types
+- [ ] Independent tasks launched in parallel (single message)
+- [ ] Sequential gates properly handled
+- [ ] Results synthesized into coherent output
+- [ ] Main context remains lean (no unnecessary file reads)
+- [ ] Model selection optimized for cost/performance
+
+---
+
+## Reference Files
+
+| File | When to Read |
+|------|--------------|
+| `references/delegation-patterns.md` | Complex task decomposition examples |
+| `references/prompt-templates.md` | Subagent prompt engineering patterns |
+| `references/context-management.md` | Context window optimization strategies |
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
