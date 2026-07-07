@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [agntcy/coffeeAgntcy](https://github.com/agntcy/coffeeAgntcy/tree/main/.agents/skills/jsonschema-to-pydantic-lungo/SKILL.md)
+Original source: [agntcy/coffeeAgntcy](https://github.com/agntcy/coffeeAgntcy/tree/main/coffeeAGNTCY/coffee_agents/recruiter/coding-agent-integrations/claude-code/plugin/skills/a2a-protocol/SKILL.md)
 
 ---
 
