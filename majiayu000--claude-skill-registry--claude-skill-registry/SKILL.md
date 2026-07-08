@@ -1,237 +1,483 @@
 ---
-name: weekly-kpi-report
-description: Generate McKinsey-style board presentation PPTs from weekly auto insurance data. Automatically calculates 16+ KPIs, creates executive-level slides with actionable insights, and supports week-over-week comparisons. Use when user uploads insurance cost data (Excel/CSV) and requests board report, weekly presentation, executive briefing, or mentions keywords like 董事会汇报, 周报PPT, 经营分析演示, McKinsey-style reports. Use when this capability is needed.
+name: wpf-mvvm-scaffold
+description: Generate WPF MVVM architecture with ViewModelBase, RelayCommand, INotifyPropertyChanged, and dependency injection setup Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Weekly KPI Report Generator (McKinsey Style)
+# wpf-mvvm-scaffold
 
-## Purpose
+Generate WPF MVVM architecture scaffolding with ViewModelBase, RelayCommand, INotifyPropertyChanged implementation, and dependency injection setup. This skill creates a production-ready MVVM foundation for WPF applications.
 
-Transform weekly auto insurance policy cost data into executive-ready board presentation slides using McKinsey consulting design principles. Generate data-driven insights with conclusion-first structure, professional visualization, and actionable recommendations.
+## Capabilities
 
-## Quick Start
+- Generate ViewModelBase with INotifyPropertyChanged
+- Create RelayCommand/AsyncRelayCommand implementations
+- Set up dependency injection with Microsoft.Extensions.DependencyInjection
+- Generate navigation service pattern
+- Create messenger/event aggregator
+- Set up design-time data support
+- Generate unit test scaffolding for ViewModels
+- Configure MVVM toolkit integration
 
-### Three-Step Generation Process
-
-1. **Upload Data**: Provide weekly insurance cost data file (Excel/CSV)
-2. **Automatic Processing**: Skill validates data, calculates KPIs, and generates insights
-3. **Download PPT**: Receive McKinsey-style board presentation ready for executive meeting
-
-### Basic Usage Example
-
-```
-User: "Generate board report from this week's insurance data"
-
-Assistant (using this skill):
-1. Validates uploaded file and extracts week number
-2. Calculates 16+ KPIs (cost rates, premium progress, loss ratios)
-3. Generates 12-13 slide deck with:
-   - Executive summary with key insights
-   - Institutional and customer segment analysis
-   - Problem-oriented headlines with actionable recommendations
-4. Returns: "{Organization}_Week{N}_McKinsey_Report.pptx"
-```
-
-### Minimal Requirements
-
-- **Input**: Excel/CSV file with insurance policy cost data
-- **Week Number**: Extracted from filename or user-provided
-- **Configuration** (optional): Custom thresholds in `references/config.json`
-- **Output**: Professional PPT with charts, insights, and recommendations
-
-## When to Use This Skill
-
-Trigger this skill when:
-
-- User uploads auto insurance weekly cost data (Excel/CSV format) and requests board presentation
-- User mentions keywords: "董事会汇报", "周报PPT", "经营分析演示", "board report", "executive briefing"
-- User asks to generate presentation slides from insurance data
-- User requests McKinsey-style or consulting-style reports
-
-## Core Workflow
-
-### Step 1: Data Validation
-
-Execute the data validator to ensure data quality:
-
-```bash
-python scripts/data_validator.py <uploaded_file_path>
-```
-
-The validator checks:
-
-- Required field completeness (policy numbers, premium amounts, cost rates)
-- Data type correctness (numeric fields, date formats)
-- Week number extraction from filename (e.g., "第45周" → Week 45)
-- Record count and date range calculation
-
-### Step 2: KPI Calculation
-
-Calculate board-level KPIs (not raw data dumps):
-
-```bash
-python scripts/kpi_calculator.py <file_path> <week_number>
-```
-
-**Four KPI Categories:**
-
-1. **Business Scale**
-   - Weekly premium revenue and growth rate
-   - Policy count and average premium per policy
-   - Business type distribution (truck/passenger/private)
-
-2. **Profitability**
-   - Combined ratio (loss ratio + expense ratio)
-   - Variable cost rate distribution and outliers
-   - Profitability comparison by customer segment
-
-3. **Business Structure**
-   - New energy vehicle (NEV) penetration rate and trend
-   - Renewal rate vs. new policy ratio
-   - Contribution by distribution channel
-
-4. **Risk Management**
-   - Claims frequency and high-risk business proportion
-   - Average claim amount changes
-   - Risk exposure in high-risk segments (e.g., highway freight)
-
-### Step 3: Generate McKinsey-Style PPT
-
-Create presentation slides with consulting-grade design:
-
-```bash
-python scripts/board_ppt_generator.py <week_number> <kpi_data_json>
-```
-
-**Slide Structure (7 slides):**
-
-1. **Cover** - Title, date range, presenter
-2. **Executive Summary** - Core metrics with top 3 highlights/risks
-3. **Premium Analysis** - Revenue trends, business mix, YoY comparison
-4. **Profitability Analysis** - Combined ratio breakdown, cost rate by segment
-5. **NEV Business Focus** - NEV penetration, loss ratio comparison vs. traditional vehicles
-6. **Risk Management** - Claims frequency heatmap, high-risk business list
-7. **Action Items** - Auto-generated recommendations based on data patterns
-
-Refer to [references/mckinsey-style-guide.md](references/mckinsey-style-guide.md) for detailed design principles.
-
-### Step 4 (Optional): Week-over-Week Comparison
-
-When user provides data for two consecutive weeks:
-
-```bash
-python scripts/optional_modules/week_comparator.py <week1_kpis.json> <week2_kpis.json>
-```
-
-Generates additional comparison slide showing WoW changes in key metrics.
-
-## Design Principles
-
-**McKinsey Three Pillars:**
-
-1. **Conclusion-First Titles** - Every slide title answers "So what?"
-   - ❌ Wrong: "Profitability Analysis"
-   - ✅ Right: "Profitability remains healthy with 83.9% combined ratio below industry benchmark"
-
-2. **Minimalist Layout** - Less is more
-   - Large white space (0.8" margins)
-   - Single red accent line at top
-   - No excessive decorations or logo stacking
-
-3. **Left-Aligned Structure** - Professional business style
-   - Title left-aligned (24pt, conclusion statement)
-   - Left column: bullet points
-   - Right column: supporting charts
-   - Bottom: italic recommendations (12pt)
-
-**Color Scheme:**
-Uses client-specific colors extracted from corporate reports:
-
-- Primary: Deep Red (#a02724) - 60% usage for core messages
-- Alert: Bright Red (#c00000) - warnings and risks
-- Text: Black (#000000) - titles and important text
-- Background: White (#FFFFFF) - clean backdrop
-
-Configure colors in [assets/mckinsey_config.json](assets/mckinsey_config.json).
-
-## Configuration
-
-### Alert Thresholds
-
-Customize business rules in [config.json](config.json):
+## Input Schema
 
 ```json
 {
-  "预警阈值": {
-    "综合成本率_上限": 95, // Alert if combined ratio > 95%
-    "新能源车赔付率差距": 10 // Alert if NEV loss ratio > traditional + 10pp
-  }
+  "type": "object",
+  "properties": {
+    "projectPath": {
+      "type": "string",
+      "description": "Path to the WPF project"
+    },
+    "projectName": {
+      "type": "string",
+      "description": "Project name"
+    },
+    "mvvmFramework": {
+      "enum": ["custom", "mvvm-toolkit", "prism", "caliburn"],
+      "default": "mvvm-toolkit"
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "enum": ["navigation", "messenger", "validation", "dialogs", "design-time"]
+      },
+      "default": ["navigation", "validation"]
+    },
+    "diFramework": {
+      "enum": ["microsoft-di", "autofac", "ninject"],
+      "default": "microsoft-di"
+    },
+    "generateViewModels": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Initial ViewModels to generate"
+    }
+  },
+  "required": ["projectPath", "projectName"]
 }
 ```
 
-### Display Parameters
+## Output Schema
 
 ```json
 {
-  "报表参数": {
-    "显示TOP业务类型数": 5, // Show top 5 business types
-    "显示TOP机构数": 5 // Show top 5 distribution channels
-  }
+  "type": "object",
+  "properties": {
+    "success": { "type": "boolean" },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string" },
+          "type": { "enum": ["base", "viewmodel", "service", "command"] }
+        }
+      }
+    },
+    "nugetPackages": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "required": ["success"]
 }
 ```
 
-Refer to [references/config-guide.md](references/config-guide.md) for full configuration options.
-
-## Usage Examples
-
-**Example 1: Basic Usage**
+## Project Structure
 
 ```
-User: 我上传了第45周的车险数据,帮我生成董事会汇报PPT
-
-Execution:
-1. Identify file: "车险保单变动成本清单__第45周_.xlsx"
-2. Run data_validator.py
-3. Run kpi_calculator.py with config.json thresholds
-4. Run board_ppt_generator.py using assets/mckinsey_board_template.pptx
-5. Output: "华安车险周报_第45周_麦肯锡版.pptx"
-6. Return download link with brief data summary
+MyApp/
+├── App.xaml
+├── App.xaml.cs
+├── ViewModels/
+│   ├── Base/
+│   │   ├── ViewModelBase.cs
+│   │   └── RelayCommand.cs
+│   ├── MainViewModel.cs
+│   ├── ShellViewModel.cs
+│   └── Settings/
+│       └── SettingsViewModel.cs
+├── Views/
+│   ├── MainView.xaml
+│   ├── ShellView.xaml
+│   └── Settings/
+│       └── SettingsView.xaml
+├── Services/
+│   ├── INavigationService.cs
+│   ├── NavigationService.cs
+│   ├── IDialogService.cs
+│   └── DialogService.cs
+├── Models/
+│   └── ...
+└── Infrastructure/
+    ├── Bootstrapper.cs
+    ├── ServiceLocator.cs
+    └── Messenger.cs
 ```
 
-## Error Handling
+## Generated Code Examples
 
-- **Missing week number in filename** → Prompt user to confirm week number
-- **Missing required fields** → List missing columns and ask whether to proceed
-- **All cost rates abnormal (>100%)** → Warning that data may be incorrect
-- **Invalid JSON config** → Use default values and notify user
+### ViewModelBase.cs
 
-## Technical Stack
+```csharp
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
-- **Data processing:** pandas, numpy
-- **Visualization:** matplotlib (Chinese font handling), seaborn
-- **PPT generation:** python-pptx
-- **Template:** assets/mckinsey_board_template.pptx
-- **Field Mapping:** field_mapping.json (支持中英文字段自动适配)
-- **Supported Data Formats:**
-  - Excel files (.xlsx, .xls) with Chinese field names
-  - CSV files (.csv) with English field names (e.g., from transformed data)
+namespace MyApp.ViewModels.Base;
 
-## Output Location
+public abstract class ViewModelBase : INotifyPropertyChanged
+{
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-Generated PPT files saved to: `/mnt/user-data/outputs/`
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 
-Filename format: `华安车险周报_第{week_number}周_麦肯锡版.pptx`
+    protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value))
+            return false;
 
-## Version Information
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
 
-- **Version:** v2.0.0 (Field Mapping Support)
-- **Last Updated:** 2025-12-08
-- **Maintainer:** Alongor
-- **Data Source:** Hua'an Insurance Sichuan Branch weekly auto insurance reports
-- **Supported Formats:** Excel (.xlsx, .xls), CSV (.csv)
-- **Supported Field Names:** Chinese (跟单保费, 业务类型分类) and English (signed_premium_yuan, business_type_category)
+    protected bool SetProperty<T>(ref T field, T value, Action onChanged,
+        [CallerMemberName] string? propertyName = null)
+    {
+        if (SetProperty(ref field, value, propertyName))
+        {
+            onChanged?.Invoke();
+            return true;
+        }
+        return false;
+    }
+
+    // Design-time support
+    public static bool IsInDesignMode =>
+        DesignerProperties.GetIsInDesignMode(new DependencyObject());
+}
+```
+
+### RelayCommand.cs
+
+```csharp
+using System.Windows.Input;
+
+namespace MyApp.ViewModels.Base;
+
+public class RelayCommand : ICommand
+{
+    private readonly Action<object?> _execute;
+    private readonly Predicate<object?>? _canExecute;
+
+    public RelayCommand(Action<object?> execute, Predicate<object?>? canExecute = null)
+    {
+        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        _canExecute = canExecute;
+    }
+
+    public RelayCommand(Action execute, Func<bool>? canExecute = null)
+        : this(_ => execute(), canExecute != null ? _ => canExecute() : null)
+    {
+    }
+
+    public event EventHandler? CanExecuteChanged
+    {
+        add => CommandManager.RequerySuggested += value;
+        remove => CommandManager.RequerySuggested -= value;
+    }
+
+    public bool CanExecute(object? parameter) => _canExecute?.Invoke(parameter) ?? true;
+
+    public void Execute(object? parameter) => _execute(parameter);
+
+    public void RaiseCanExecuteChanged() => CommandManager.InvalidateRequerySuggested();
+}
+
+public class AsyncRelayCommand : ICommand
+{
+    private readonly Func<object?, Task> _execute;
+    private readonly Predicate<object?>? _canExecute;
+    private bool _isExecuting;
+
+    public AsyncRelayCommand(Func<object?, Task> execute, Predicate<object?>? canExecute = null)
+    {
+        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        _canExecute = canExecute;
+    }
+
+    public AsyncRelayCommand(Func<Task> execute, Func<bool>? canExecute = null)
+        : this(_ => execute(), canExecute != null ? _ => canExecute() : null)
+    {
+    }
+
+    public event EventHandler? CanExecuteChanged
+    {
+        add => CommandManager.RequerySuggested += value;
+        remove => CommandManager.RequerySuggested -= value;
+    }
+
+    public bool CanExecute(object? parameter) =>
+        !_isExecuting && (_canExecute?.Invoke(parameter) ?? true);
+
+    public async void Execute(object? parameter)
+    {
+        if (!CanExecute(parameter)) return;
+
+        _isExecuting = true;
+        RaiseCanExecuteChanged();
+
+        try
+        {
+            await _execute(parameter);
+        }
+        finally
+        {
+            _isExecuting = false;
+            RaiseCanExecuteChanged();
+        }
+    }
+
+    public void RaiseCanExecuteChanged() => CommandManager.InvalidateRequerySuggested();
+}
+```
+
+### MainViewModel.cs
+
+```csharp
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
+namespace MyApp.ViewModels;
+
+public partial class MainViewModel : ViewModelBase
+{
+    private readonly INavigationService _navigationService;
+    private readonly IDataService _dataService;
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    private string _title = string.Empty;
+
+    [ObservableProperty]
+    private bool _isLoading;
+
+    [ObservableProperty]
+    private ObservableCollection<ItemViewModel> _items = new();
+
+    public MainViewModel(INavigationService navigationService, IDataService dataService)
+    {
+        _navigationService = navigationService;
+        _dataService = dataService;
+
+        if (IsInDesignMode)
+        {
+            LoadDesignTimeData();
+        }
+    }
+
+    public ICommand SaveCommand => new RelayCommand(
+        async () => await SaveAsync(),
+        () => !string.IsNullOrEmpty(Title) && !IsLoading);
+
+    public ICommand NavigateToSettingsCommand => new RelayCommand(
+        () => _navigationService.NavigateTo<SettingsViewModel>());
+
+    private async Task SaveAsync()
+    {
+        IsLoading = true;
+        try
+        {
+            await _dataService.SaveAsync(Title);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    public async Task LoadDataAsync()
+    {
+        IsLoading = true;
+        try
+        {
+            var data = await _dataService.GetItemsAsync();
+            Items = new ObservableCollection<ItemViewModel>(data.Select(d => new ItemViewModel(d)));
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private void LoadDesignTimeData()
+    {
+        Title = "Design Time Title";
+        Items = new ObservableCollection<ItemViewModel>
+        {
+            new("Item 1"),
+            new("Item 2"),
+            new("Item 3")
+        };
+    }
+}
+```
+
+### App.xaml.cs with DI
+
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+
+namespace MyApp;
+
+public partial class App : Application
+{
+    private readonly IServiceProvider _serviceProvider;
+
+    public App()
+    {
+        var services = new ServiceCollection();
+        ConfigureServices(services);
+        _serviceProvider = services.BuildServiceProvider();
+    }
+
+    private void ConfigureServices(IServiceCollection services)
+    {
+        // Services
+        services.AddSingleton<INavigationService, NavigationService>();
+        services.AddSingleton<IDialogService, DialogService>();
+        services.AddTransient<IDataService, DataService>();
+
+        // ViewModels
+        services.AddTransient<MainViewModel>();
+        services.AddTransient<SettingsViewModel>();
+        services.AddSingleton<ShellViewModel>();
+
+        // Views
+        services.AddTransient<MainView>();
+        services.AddTransient<SettingsView>();
+        services.AddSingleton<ShellView>();
+    }
+
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        var shell = _serviceProvider.GetRequiredService<ShellView>();
+        shell.DataContext = _serviceProvider.GetRequiredService<ShellViewModel>();
+        shell.Show();
+
+        base.OnStartup(e);
+    }
+}
+```
+
+### NavigationService.cs
+
+```csharp
+namespace MyApp.Services;
+
+public interface INavigationService
+{
+    void NavigateTo<TViewModel>() where TViewModel : ViewModelBase;
+    void NavigateTo<TViewModel>(object parameter) where TViewModel : ViewModelBase;
+    void GoBack();
+    bool CanGoBack { get; }
+}
+
+public class NavigationService : ViewModelBase, INavigationService
+{
+    private readonly IServiceProvider _serviceProvider;
+    private readonly Stack<ViewModelBase> _navigationStack = new();
+
+    public NavigationService(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
+
+    private ViewModelBase? _currentViewModel;
+    public ViewModelBase? CurrentViewModel
+    {
+        get => _currentViewModel;
+        private set => SetProperty(ref _currentViewModel, value);
+    }
+
+    public bool CanGoBack => _navigationStack.Count > 1;
+
+    public void NavigateTo<TViewModel>() where TViewModel : ViewModelBase
+    {
+        NavigateTo<TViewModel>(null);
+    }
+
+    public void NavigateTo<TViewModel>(object? parameter) where TViewModel : ViewModelBase
+    {
+        var viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+
+        if (viewModel is INavigationAware navigationAware)
+        {
+            navigationAware.OnNavigatedTo(parameter);
+        }
+
+        if (CurrentViewModel is INavigationAware currentNavigationAware)
+        {
+            currentNavigationAware.OnNavigatedFrom();
+        }
+
+        _navigationStack.Push(viewModel);
+        CurrentViewModel = viewModel;
+    }
+
+    public void GoBack()
+    {
+        if (!CanGoBack) return;
+
+        if (CurrentViewModel is INavigationAware currentNavigationAware)
+        {
+            currentNavigationAware.OnNavigatedFrom();
+        }
+
+        _navigationStack.Pop();
+        CurrentViewModel = _navigationStack.Peek();
+
+        if (CurrentViewModel is INavigationAware navigationAware)
+        {
+            navigationAware.OnNavigatedTo(null);
+        }
+    }
+}
+```
+
+## NuGet Packages
+
+```xml
+<ItemGroup>
+  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+</ItemGroup>
+```
+
+## Best Practices
+
+1. **Keep ViewModels UI-agnostic**: No references to WPF types
+2. **Use async commands**: For long-running operations
+3. **Implement INotifyDataErrorInfo**: For validation
+4. **Design-time data**: Support Blend/VS designer
+5. **Single responsibility**: One ViewModel per View
+6. **Unit test ViewModels**: Mock services
+
+## Related Skills
+
+- `wpf-xaml-style-generator` - UI styling
+- `msix-package-generator` - Packaging
+- `desktop-unit-testing` process - Testing
+
+## Related Agents
+
+- `wpf-dotnet-expert` - WPF expertise
+- `architecture-pattern-advisor` - MVVM patterns
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
