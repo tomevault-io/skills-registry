@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wado-lang/wado](https://github.com/wado-lang/wado/tree/main/.claude/skills/git-upstream-sync/SKILL.md)
+Original source: [wado-lang/wado](https://github.com/wado-lang/wado/tree/main/.claude/skills/vendor-submodules/SKILL.md)
 
 ---
 
