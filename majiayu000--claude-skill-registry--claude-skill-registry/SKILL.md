@@ -1,246 +1,213 @@
 ---
-name: spec-authoring
-description: Use this skill when proposing new features or changes via the Spec PR process. Manages the creation, refinement, and approval of feature specifications before any code is written. Triggers include "create spec", "propose change", "start spec PR", or beginning feature definition.
+name: slash-commands
+description: Best practices for creating Claude Code slash commands. Use this skill when creating, editing, or improving custom slash commands for Claude Code. Covers frontmatter configuration, dynamic features ($ARGUMENTS, bash execution, file references), command patterns (git workflows, multi-agent orchestration, code review), and helps decide when to use slash commands vs skills vs subagents. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Spec Authoring Skill
+# Claude Code Slash Commands
 
-## Purpose
+This skill provides guidance for creating effective custom slash commands in Claude Code.
 
-Manage the creation and refinement of feature specifications through the Spec PR process. This skill enables spec-driven development where all changes are defined, reviewed, and approved before implementation begins. Specifications are proposed in the `docs/changes/` directory, reviewed via Pull Request, and merged to `docs/specs/` upon approval.
+## Quick Reference
 
-## When to Use
+**Locations:**
+- Project commands: `.claude/commands/` (shared via git)
+- Personal commands: `~/.claude/commands/` (user-specific)
 
-Use this skill in the following situations:
+**File format:** Markdown (`.md`) with optional YAML frontmatter
 
-- Proposing a new feature or significant change
-- Defining requirements before implementation
-- Creating a Spec PR for team review
-- Updating a proposal based on review feedback
-- Following the spec-driven development workflow
+**Command name:** Derived from filename (`commit.md` → `/commit`)
 
-## Prerequisites
+## Frontmatter Options
 
-- Project initialized with SynthesisFlow structure (docs/specs, docs/changes directories exist)
-- GitHub repository set up
-- `gh` CLI tool installed and authenticated
+See `references/frontmatter.md` for complete documentation.
 
-## Spec PR Philosophy
-
-**Specs as Code**: All specification changes follow the same rigor as code changes - proposed via branches, reviewed via PRs, and merged upon approval.
-
-**Benefits**:
-- **Review before implementation**: Catch design issues early when changes are cheap
-- **Clear requirements**: Implementation has explicit acceptance criteria
-- **Historical record**: Approved specs document what was intended and why
-- **Team alignment**: Stakeholders review and approve before development starts
-
-**Workflow**:
-1. Changes proposed in `docs/changes/` directory (isolated from source-of-truth)
-2. Spec PR opened for review
-3. Team reviews and provides feedback
-4. Proposal refined based on feedback
-5. Spec PR approved and merged
-6. Approved spec moves to `docs/specs/` (via change-integrator skill)
-
-## The `propose` Command
-
-### Purpose
-
-Create a new change proposal with the necessary file structure.
-
-### Workflow
-
-#### Step 1: Define the Proposal Name
-
-Discuss with the user what feature or change to propose. Choose a clear, descriptive name:
-- "User Authentication System"
-- "Real-time Notifications"
-- "Performance Optimization"
-
-#### Step 2: Run the Helper Script
-
-Execute the script to create the proposal directory structure:
-
-```bash
-bash scripts/spec-authoring.sh propose "Feature Name"
+Essential fields:
+```yaml
+---
+allowed-tools: Bash(git add:*), Bash(git commit:*)  # Tool permissions
+description: Brief description shown in /help        # Required for model invocation
+argument-hint: "[branch-name] [commit-type]"        # Shown in autocomplete
+model: claude-haiku-4-5                             # Override session model
+disable-model-invocation: true                      # Prevent auto-invocation
+---
 ```
 
-The script will:
-- Convert the name to kebab-case (e.g., "Feature Name" → "feature-name")
-- Create `docs/changes/feature-name/` directory
-- Create three empty files:
-  - `proposal.md` - High-level overview and problem statement
-  - `spec-delta.md` - Detailed specifications and requirements
-  - `tasks.md` - Breakdown of implementation tasks
+## Dynamic Features
 
-#### Step 3: Populate proposal.md
+### Arguments
 
-Work with the user to create a clear proposal:
-
+**All arguments:** `$ARGUMENTS` captures everything after the command
 ```markdown
-# Proposal: Feature Name
-
-## Problem Statement
-[What problem does this solve? Why is it needed?]
-
-## Proposed Solution
-[High-level approach to solving the problem]
-
-## Benefits
-[What value does this provide?]
-
-## Success Criteria
-[How do we know this is successful?]
+Fix issue #$ARGUMENTS following our coding standards
+# /fix-issue 123 high-priority → "123 high-priority"
 ```
 
-#### Step 4: Populate spec-delta.md
-
-Define detailed specifications:
-
+**Positional:** `$1`, `$2`, `$3`... for specific arguments
 ```markdown
-# Spec Delta: Feature Name
-
-## Overview
-[Detailed description of what's being added/modified/removed]
-
-## Requirements
-[Specific, testable requirements]
-
-## Design Decisions
-[Key architectural or design choices]
-
-## Migration Path
-[How to transition from current state if applicable]
+Review PR #$1 with priority $2 and assign to $3
+# /review-pr 456 high alice → $1="456", $2="high", $3="alice"
 ```
 
-#### Step 5: Populate tasks.md
+### Bash Context Injection
 
-Break down implementation into atomic tasks:
-
+Use `!` prefix to execute bash and inject output as context:
 ```markdown
-# Tasks: Feature Name
-
-## Task 1: Component A
-- [ ] Subtask 1
-- [ ] Subtask 2
-
-**Acceptance Criteria**:
-- Criteria 1
-- Criteria 2
-
-## Task 2: Component B
-...
+## Context
+- Current git status: !`git status`
+- Current branch: !`git branch --show-current`
+- Recent commits: !`git log --oneline -10`
 ```
 
-#### Step 6: Create Spec PR
+**Important:** Requires `allowed-tools` with `Bash` tool in frontmatter.
 
-After populating files:
+### File References
 
-1. Create feature branch: `git checkout -b spec/feature-name`
-2. Add files: `git add docs/changes/feature-name/`
-3. Commit: `git commit -m "spec: Propose Feature Name"`
-4. Push: `git push -u origin spec/feature-name`
-5. Create PR: `gh pr create --title "Spec: Feature Name" --body "..."`
-
-Label as "spec" or "proposal" if labels are available.
-
-## The `update` Command
-
-### Purpose
-
-Fetch review comments from a Spec PR to incorporate feedback.
-
-### Workflow
-
-#### Step 1: Identify the PR Number
-
-Determine which Spec PR needs updates based on review feedback.
-
-#### Step 2: Fetch Review Comments
-
-Run the helper script to view all comments:
-
-```bash
-bash scripts/spec-authoring.sh update PR_NUMBER
+Use `@` prefix to include file contents:
+```markdown
+Review the implementation in @src/utils/helpers.js
+Compare @src/old-version.js with @src/new-version.js
 ```
 
-This displays:
-- All PR comments with context
-- Review feedback from team members
-- Suggestions and questions
+## Command Patterns
 
-#### Step 3: Discuss Feedback with User
+See `references/patterns.md` for detailed patterns with full examples.
 
-Review the comments together and determine:
-- Which suggestions to incorporate
-- What clarifications are needed
-- What changes to make to the proposal
+### Pattern 1: Simple Task
 
-#### Step 4: Update Proposal Files
+For quick, focused operations:
+```markdown
+---
+description: Analyze code for performance issues
+---
 
-Edit the files in `docs/changes/feature-name/` based on feedback:
-- Clarify unclear sections
-- Add missing requirements
-- Adjust design decisions
-- Refine task breakdown
-
-#### Step 5: Push Updates
-
-Commit and push changes to the same branch:
-
-```bash
-git add docs/changes/feature-name/
-git commit -m "spec: Address review feedback for Feature Name"
-git push
+Analyze this code for performance issues and suggest optimizations.
+Focus on: time complexity, memory usage, unnecessary operations.
 ```
 
-The Spec PR automatically updates with new changes.
+### Pattern 2: Git Workflow
 
-#### Step 6: Request Re-review
+For git operations with context:
+```markdown
+---
+allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*)
+description: Create a git commit
+---
 
-If needed, request reviewers take another look at the updated proposal.
+## Context
+- Current git status: !`git status`
+- Current git diff: !`git diff HEAD`
+- Current branch: !`git branch --show-current`
 
-## Error Handling
+## Your task
+Based on the above changes, create a single commit with an appropriate message.
+```
 
-### Proposal Directory Already Exists
+### Pattern 3: Multi-Agent Orchestration
 
-**Symptom**: Script reports directory already exists
+For complex tasks requiring parallel work:
+```markdown
+---
+allowed-tools: Bash(gh:*), TodoWrite
+description: Find duplicate GitHub issues
+---
 
-**Solution**:
-- Check if proposal is already in progress: `ls docs/changes/`
-- Either use a different name or work with existing proposal
-- Consider if this is an update to existing proposal
+Find duplicates for issue $ARGUMENTS.
 
-### Missing GitHub CLI
+Follow these steps precisely:
+1. Use an agent to view the issue and return a summary
+2. Launch 5 parallel agents to search for duplicates using diverse keywords
+3. Feed results into another agent to filter false positives
+4. Comment on the issue with up to 3 likely duplicates
 
-**Symptom**: `gh: command not found` when using update command
+Notes (tell your agents too):
+- Use `gh` for GitHub interactions
+- Do not use other tools beyond `gh`
+```
 
-**Solution**:
-- Install GitHub CLI: https://cli.github.com/
-- Authenticate: `gh auth login`
-- Verify: `gh auth status`
+### Pattern 4: Structured Review
 
-### No Review Comments
+For comprehensive analysis workflows:
+```markdown
+---
+description: "Comprehensive code review"
+argument-hint: "[review-aspects]"
+allowed-tools: ["Bash", "Glob", "Grep", "Read", "Task"]
+---
 
-**Symptom**: Update command shows no comments
+# Code Review
 
-**Solution**:
-- Verify PR number is correct
-- Check if PR has any comments yet
-- Wait for reviewers to provide feedback
+**Review Aspects (optional):** "$ARGUMENTS"
 
-## Notes
+## Workflow:
+1. **Determine Scope** - Check git status for changed files
+2. **Run Reviews** - Execute applicable review agents
+3. **Aggregate Results** - Summarize findings by severity
+4. **Provide Action Plan** - Organize fixes by priority
+```
 
-- **Spec PRs are lightweight**: Focus on clarity over perfection - they can be refined
-- **Iterate on feedback**: Multiple rounds of review are normal and healthy
-- **Keep proposals focused**: One feature/change per proposal makes review easier
-- **Link related work**: Reference existing specs or issues in the proposal
-- **The `propose` command only creates structure**: You must populate the files with content
-- **Spec PRs merge to main**: After approval, specs become source-of-truth in `docs/specs/`
-- **Use change-integrator**: After code PR merges, run change-integrator to move approved specs
+## Writing Guidelines
+
+1. **Use imperative language:** "Create", "Execute", "Based on..."
+2. **Be explicit about constraints:** Include what NOT to do
+3. **Specify output format:** Provide templates for structured output
+4. **Enable multi-tool efficiency:** Tell Claude it can use multiple tools in one response
+5. **Include a Notes section:** For edge cases and important constraints
+
+## When to Use Slash Commands vs Skills vs Subagents
+
+See `references/decision-guide.md` for detailed comparison.
+
+**Quick decision framework:**
+
+| Use Case | Best Choice |
+|----------|-------------|
+| Quick, repeatable task you trigger manually | Slash Command |
+| Complex workflow with scripts/templates | Skill |
+| Parallel execution with isolated context | Subagent |
+| Team-shared workflow checked into git | Slash Command |
+| Domain expertise Claude should auto-discover | Skill |
+| Specialized role (security auditor, etc.) | Subagent |
+
+**Key distinctions:**
+- **Commands:** User-invoked (`/command`), simple prompts, manual trigger
+- **Skills:** Model-invoked (Claude decides), rich context, scripts/assets
+- **Subagents:** Own context window, parallel work, delegated tasks
+
+## Templates
+
+Use templates in `assets/templates/` as starting points:
+- `simple-command.md` - Basic single-purpose command
+- `git-workflow.md` - Git operations with context injection
+- `multi-agent.md` - Orchestration with parallel agents
+- `review-command.md` - Comprehensive review workflow
+
+## Best Practices from Anthropic
+
+1. **Granular tool permissions:** Use wildcards for flexibility
+   ```yaml
+   allowed-tools: Bash(git add:*), Bash(git commit:*)
+   ```
+
+2. **Context injection:** Pre-load relevant state with bash execution
+
+3. **Clear task structure:** Use `## Your task` or `## Your Task` section
+
+4. **Explicit constraints:** Include prohibitions
+   ```markdown
+   Do not use any other tools or do anything else.
+   Do not send any other text or messages besides these tool calls.
+   ```
+
+5. **Output format specification:** Provide exact templates for structured output
+
+6. **Agent instructions:** When using subagents, include notes they should follow
+   ```markdown
+   Notes (be sure to tell this to your agents, too):
+   - Use `gh` for GitHub interactions
+   - Make a todo list first
+   ```
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
