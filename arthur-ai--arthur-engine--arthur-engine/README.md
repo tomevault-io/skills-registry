@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [arthur-ai/arthur-engine](https://github.com/arthur-ai/arthur-engine/tree/main/arthur-observability-sdk/.claude/skills/test-integration/SKILL.md)
+Original source: [arthur-ai/arthur-engine](https://github.com/arthur-ai/arthur-engine/tree/main/integrations/claude-code-skills/arthur-onboard/arthur-skills-upgrade/SKILL.md)
 
 ---
 
