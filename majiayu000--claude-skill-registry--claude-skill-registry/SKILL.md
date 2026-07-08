@@ -1,217 +1,498 @@
 ---
-name: updating-documentation-for-changes
-description: Use before committing staged changes when you need to verify all related documentation is current - systematically checks README, CLAUDE.md, CHANGELOG, API docs, package metadata, and cross-references rather than spot-checking only obvious files Use when this capability is needed.
+name: using-prisma
+description: Prisma 5+ ORM with schema-first design, type-safe client, migrations, and database integrations (Supabase, PlanetScale, Neon). Use for TypeScript/JavaScript database access. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Updating Documentation for Changes
+# Prisma ORM Development Skill
+
+**Version**: 1.1.0 | **Target**: <500 lines | **Purpose**: Fast reference for Prisma operations
+
+---
 
 ## Overview
 
-**Before committing staged changes, systematically verify ALL documentation that might reference those changes.**
+**What is Prisma**: Type-safe ORM with schema-first design for TypeScript/JavaScript. Auto-generates client from schema with full IntelliSense support.
 
-The problem: We naturally check the "obvious" doc (README.md) but miss CLAUDE.md, CHANGELOG, API documentation, package metadata, and cross-references in related docs.
+**When to Use This Skill**:
+- Database schema design and migrations
+- Type-safe CRUD operations
+- Relation handling and query optimization
+- Integration with Supabase, PlanetScale, Neon
 
-## When to Use
+**Auto-Detection Triggers**:
+- `schema.prisma` file present
+- `@prisma/client` in dependencies
+- `prisma` in devDependencies
+- User mentions "Prisma", "ORM", or database models
 
-Use this skill when:
+**Progressive Disclosure**:
+- **This file (SKILL.md)**: Quick reference for immediate use
+- **[REFERENCE.md](REFERENCE.md)**: Comprehensive patterns, advanced queries, production deployment
 
-- You have staged changes ready to commit
-- You're about to create a PR
-- You've modified functionality, added features, or changed behavior
-- Any code change that users or other agents interact with
+---
 
-**Required trigger**: Before every commit with functional changes.
+## Table of Contents
 
-## Core Principle
+1. [Project Structure](#project-structure)
+2. [Schema Basics](#schema-basics)
+3. [CLI Commands](#cli-commands)
+4. [Client Operations](#client-operations)
+5. [Relations](#relations)
+6. [Transactions](#transactions)
+7. [Database Integrations](#database-integrations)
+8. [Error Handling](#error-handling)
+9. [Testing Patterns](#testing-patterns)
+10. [Quick Reference Card](#quick-reference-card)
 
-**This skill checks documentation consistency for STAGED changes only.**
+---
 
-Do NOT stage additional files during this process. Only verify if documentation for your staged changes is current.
+## Project Structure
 
-## The Systematic Documentation Sweep
-
-Follow this checklist in order. No skipping "obvious" items.
-
-### 1. Identify What's Staged
-
-```bash
-git diff --staged --name-only
-git diff --staged
+```
+my_project/
+├── prisma/
+│   ├── schema.prisma          # Schema definition
+│   ├── migrations/            # Migration history
+│   └── seed.ts                # Database seeding
+├── src/
+│   └── lib/prisma.ts          # Client singleton
+└── package.json
 ```
 
-Note: What was added? Modified? What does it affect?
+---
 
-**If nothing is staged:** Stop. Tell user to stage their changes first, then return to this skill.
+## Schema Basics
 
-### 2. Core Documentation Files (Check if they exist)
+### Datasource Configuration
 
-Check EVERY one that exists in the repo (no rationalization):
+```prisma
+// PostgreSQL (local)
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
-- [ ] **README.md** (root and subdirectories)
-- [ ] **CLAUDE.md** (project conventions, architecture, patterns)
-- [ ] **DESIGN_DOC.md** or **ARCHITECTURE.md** (system design)
-- [ ] **CONTRIBUTING.md** (contribution guidelines)
-- [ ] **API.md** or **docs/api/** (API documentation)
-- [ ] **CHANGELOG.md** or **HISTORY.md** (version history)
+// Supabase (with pooling) - see Database Integrations
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")      // Pooled connection
+  directUrl = env("DIRECT_URL")        // Direct for migrations
+}
 
-**This list is not comprehensive.** If the project has other documentation, check those too. Examples: TESTING.md, DEPLOYMENT.md, SECURITY.md, project-specific guides.
-
-**If a core doc doesn't exist:** Note its absence but don't create it as part of this commit.
-
-### 3. Project-Specific Documentation
-
-Check documentation specific to this project type:
-
-**For libraries/packages:**
-
-- [ ] **Package metadata** (package.json, pyproject.toml, setup.py, Cargo.toml - check if exports/APIs changed)
-- [ ] **docs/** directory (API docs, guides, examples)
-
-**For web services:**
-
-- [ ] **OpenAPI/Swagger specs** (if API changed)
-- [ ] **docker-compose.yaml** comments (if deployment changed)
-- [ ] **Config examples** (if config structure changed)
-
-**For other projects:**
-
-- Identify key documentation by searching for \*.md files
-- Check files in `docs/`, `documentation/`, or similar directories
-
-**Consistency check:** If you find multiple related files (like `package.json` and `README.md` version numbers), verify they're consistent.
-
-### 4. Related Documentation Search
-
-Search for files that might reference your changes:
-
-```bash
-# Search for direct feature name
-grep -r "exact-feature-name" --include="*.md" --include="*.json"
-
-# Search for related terms (if changing auth, search: auth, login, session)
-grep -r "related-concept" --include="*.md" --include="*.json"
-
-# Search for command names if you modified commands
-grep -r "command-name" --include="*.md" --include="*.json"
+generator client {
+  provider = "prisma-client-js"
+}
 ```
 
-Check cross-references:
+### Model Definition
 
-- Do other documentation files reference this feature?
-- Does the architecture documentation describe this pattern?
-- Do examples or tutorials use this functionality?
-- Are there related features that should be updated together?
+```prisma
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  bio       String?                    // Optional
+  role      Role     @default(USER)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]                     // Relation
 
-**Search depth limit**: Check one level of cross-references. If doc A references feature B, check doc B. Don't recursively check doc B's references.
+  @@index([email])
+}
 
-### 5. Determine Update Significance
+enum Role {
+  USER
+  ADMIN
+}
+```
 
-Update higher-level docs (README, package metadata, CHANGELOG) if your change:
+### Common Field Types
 
-- **Adds** new user-facing commands, flags, features, or APIs
-- **Changes** existing behavior in a way users will notice
-- **Removes** functionality mentioned in high-level descriptions
-- **Expands** core capabilities described in the summary
-- **Modifies** configuration structure or deployment steps
+| Type | Example | Notes |
+|------|---------|-------|
+| `String` | `name String` | Text |
+| `String?` | `bio String?` | Optional text |
+| `Int` | `count Int` | Integer |
+| `Float` | `price Float` | Decimal |
+| `Boolean` | `active Boolean` | true/false |
+| `DateTime` | `createdAt DateTime` | Timestamp |
+| `Json` | `metadata Json` | JSON object |
+| `String[]` | `tags String[]` | PostgreSQL array |
 
-Do NOT update higher-level docs if your change:
+> **More patterns**: See [REFERENCE.md - Schema Design Patterns](REFERENCE.md#2-schema-design-patterns) for soft delete, audit fields, polymorphic relations, and multi-tenancy patterns.
 
-- Adds implementation details or internal techniques
-- Improves existing behavior without changing interface
-- Refactors internal code without external impact
-- Adds examples or clarifications to existing docs
-- Fixes bugs without changing documented behavior
+---
 
-**When in doubt:** Check if a user relying on current high-level docs would be surprised by your change. Surprised = update needed.
+## CLI Commands
 
-### 6. Update What's Outdated
+### Development Workflow
 
-For each outdated doc:
+```bash
+npx prisma init                      # Initialize Prisma
+npx prisma generate                  # Generate client after schema changes
+npx prisma db push                   # Push schema (no migrations)
+npx prisma migrate dev --name init   # Create migration
+npx prisma migrate reset             # Reset database
+npx prisma studio                    # Open GUI
+```
 
-1. Read the full section (not just the line that mentions it)
-2. Update to match new behavior
-3. Check examples still work
-4. Verify cross-references are accurate
+### Production Workflow
 
-**Stage updates after sweep:** Note what needs updating during the sweep, then stage those documentation changes after you've completed the full checklist.
+```bash
+npx prisma generate                  # Generate client (required in CI)
+npx prisma migrate deploy            # Apply pending migrations
+npx prisma migrate status            # Check migration status
+```
 
-### 7. Handle Unrelated Outdated Documentation
+### Database Inspection
 
-If you discover unrelated outdated docs during your sweep:
+```bash
+npx prisma db pull                   # Pull schema from existing DB
+npx prisma validate                  # Validate schema
+npx prisma format                    # Format schema file
+```
 
-- **Note it** for later (mention to user after sweep)
-- **Don't fix it** in this commit (keeps changes focused)
-- **Don't skip the rest of the sweep** (finding one issue doesn't mean you're done)
+---
 
-## Common Rationalizations - STOP
+## Client Operations
 
-If you're thinking any of these, you're about to skip necessary docs:
+### Client Singleton
 
-| Rationalization                                       | Reality                                                                  |
-| ----------------------------------------------------- | ------------------------------------------------------------------------ |
-| "It's just a small change"                            | Small changes break outdated examples. Check anyway.                     |
-| "Nothing actually changed"                            | Even if smaller than expected, complete the sweep to verify consistency. |
-| "If related docs existed, I'd know"                   | You don't know until you search. Search systematically.                  |
-| "That file is technical config"                       | Plugin manifests ARE user-facing. Check them.                            |
-| "User is waiting"                                     | 3 minutes now saves 30 minutes debugging confusion later.                |
-| "I already checked the main README"                   | README ≠ all documentation. Follow the full checklist.                   |
-| "Other skills wouldn't reference this"                | They might. Search, don't assume.                                        |
-| "The change is in the code itself"                    | Code ≠ documentation. Users read docs, not your diff.                    |
-| "I found unrelated outdated docs, I should fix those" | Note for later. Stay focused on staged changes.                          |
-| "Found one issue, good enough"                        | One issue doesn't mean you're done. Complete the sweep.                  |
+```typescript
+// src/lib/prisma.ts
+import { PrismaClient } from "@prisma/client";
 
-**All of these mean: Continue with the systematic sweep.**
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
 
-## Red Flags - You're Skipping Something
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
-- Checked only README.md
-- Didn't search for cross-references
-- Skipped plugin manifest as "just config"
-- Assumed other skills are independent
-- Used time pressure to justify incomplete check
-- Thought "minor change doesn't need full sweep"
-- Started staging additional documentation before completing the sweep
-- Stopped after finding first inconsistency
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
+}
+```
 
-**Any red flag = Start over with full checklist.**
+### CRUD Operations
 
-## Real-World Impact
+```typescript
+// Create
+const user = await prisma.user.create({
+  data: { email: "user@example.com", name: "John" },
+});
 
-**Without systematic sweep:**
+// Read
+const user = await prisma.user.findUnique({
+  where: { id: "user_id" },
+});
 
-- Users miss new features (not in README)
-- API consumers hit undocumented breaking changes (package metadata stale)
-- Examples break (outdated patterns in docs)
-- Cross-references dangle (related docs out of sync)
-- Inconsistent information across README, CHANGELOG, and package files
-- Support burden increases (users confused by outdated docs)
+// Update
+const updated = await prisma.user.update({
+  where: { id: "user_id" },
+  data: { name: "New Name" },
+});
 
-**With systematic sweep:**
+// Upsert
+const upserted = await prisma.user.upsert({
+  where: { email: "user@example.com" },
+  update: { name: "Updated" },
+  create: { email: "user@example.com", name: "New" },
+});
 
-- All entry points updated (README, API docs, CHANGELOG)
-- Discovery works (accurate package metadata, search results)
-- Examples current and runnable
-- Cross-references intact
-- Consistent information across all documentation
-- Reduced support questions and confusion
+// Delete
+const deleted = await prisma.user.delete({
+  where: { id: "user_id" },
+});
+```
 
-## Summary Checklist
+### Filtering
 
-Before committing, have you:
+```typescript
+const users = await prisma.user.findMany({
+  where: {
+    email: { contains: "@example.com" },
+    role: { in: ["ADMIN", "USER"] },
+    createdAt: { gte: new Date("2024-01-01") },
+    OR: [
+      { name: { startsWith: "John" } },
+      { name: { startsWith: "Jane" } },
+    ],
+  },
+});
+```
 
-- [ ] Identified what's staged (`git diff --staged`)
-- [ ] Checked all core documentation files that exist (README, CLAUDE.md/AGENTS.md, DESIGN_DOC, CONTRIBUTING, API docs, CHANGELOG)
-- [ ] Checked project-specific documentation (package metadata, API specs, config examples, etc.)
-- [ ] Verified consistency between related files (e.g., package.json version vs README version)
-- [ ] Searched for cross-references (grep with feature name and related terms)
-- [ ] Determined update significance (does behavior change warrant high-level doc updates?)
-- [ ] Updated outdated docs (or noted what needs updating)
-- [ ] Noted any unrelated outdated docs for later
-- [ ] Completed the full sweep without rationalizing shortcuts
+### Pagination
 
-**All checked?** You're ready to commit or stage documentation updates.
+```typescript
+// Offset pagination
+const users = await prisma.user.findMany({
+  skip: (page - 1) * pageSize,
+  take: pageSize,
+  orderBy: { createdAt: "desc" },
+});
+
+// Cursor pagination (more efficient)
+const users = await prisma.user.findMany({
+  take: 10,
+  cursor: { id: "last_seen_id" },
+  skip: 1,
+});
+```
+
+### Select and Include
+
+```typescript
+// Select specific fields
+const users = await prisma.user.findMany({
+  select: { id: true, name: true, email: true },
+});
+
+// Include relations
+const users = await prisma.user.findMany({
+  include: { posts: { where: { published: true }, take: 5 } },
+});
+```
+
+> **More patterns**: See [REFERENCE.md - Query Optimization](REFERENCE.md#6-query-optimization) for N+1 prevention, cursor pagination, and aggregation patterns.
+
+---
+
+## Relations
+
+### One-to-Many
+
+```prisma
+model User {
+  id    String @id @default(cuid())
+  posts Post[]
+}
+
+model Post {
+  id       String @id @default(cuid())
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+  @@index([authorId])
+}
+```
+
+### Many-to-Many (Implicit)
+
+```prisma
+model Post {
+  id         String     @id @default(cuid())
+  categories Category[]
+}
+
+model Category {
+  id    String @id @default(cuid())
+  posts Post[]
+}
+```
+
+### Relation Queries
+
+```typescript
+// Create with relation
+const user = await prisma.user.create({
+  data: {
+    email: "author@example.com",
+    posts: { create: { title: "First Post" } },
+  },
+  include: { posts: true },
+});
+
+// Filter by relation
+const usersWithPosts = await prisma.user.findMany({
+  where: { posts: { some: { published: true } } },
+});
+```
+
+> **More patterns**: See [REFERENCE.md - Advanced Relations](REFERENCE.md#3-advanced-relations) for self-relations, polymorphic patterns, and explicit many-to-many.
+
+---
+
+## Transactions
+
+### Interactive Transaction
+
+```typescript
+const result = await prisma.$transaction(async (tx) => {
+  const order = await tx.order.create({ data: orderData });
+  await tx.inventory.update({
+    where: { id: productId },
+    data: { stock: { decrement: 1 } },
+  });
+  if ((await tx.inventory.findUnique({ where: { id: productId } }))!.stock < 0) {
+    throw new Error("Insufficient stock");
+  }
+  return order;
+});
+```
+
+### Sequential Transaction
+
+```typescript
+const [users, posts] = await prisma.$transaction([
+  prisma.user.findMany(),
+  prisma.post.findMany(),
+]);
+```
+
+> **More patterns**: See [REFERENCE.md - Transactions & Concurrency](REFERENCE.md#7-transactions--concurrency) for isolation levels, optimistic locking, and deadlock prevention.
+
+---
+
+## Database Integrations
+
+### Supabase
+
+```prisma
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")      // Transaction pooler
+  directUrl = env("DIRECT_URL")        // Direct for migrations
+}
+```
+
+```env
+DATABASE_URL="postgres://postgres.[ref]:password@aws-0-region.pooler.supabase.com:6543/postgres?pgbouncer=true"
+DIRECT_URL="postgres://postgres.[ref]:password@aws-0-region.supabase.com:5432/postgres"
+```
+
+### PlanetScale
+
+```prisma
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"  // Required: no foreign keys
+}
+```
+
+### Neon
+
+```prisma
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+```
+
+> **More patterns**: See [REFERENCE.md - Database Integrations](REFERENCE.md#4-database-integrations) for Supabase Auth integration, connection pooling, and edge runtime setup.
+
+---
+
+## Error Handling
+
+### Common Error Codes
+
+| Code | Description | Resolution |
+|------|-------------|------------|
+| P2002 | Unique constraint failed | Duplicate value |
+| P2003 | Foreign key constraint failed | Missing relation |
+| P2025 | Record not found | Update/delete on missing record |
+| P2024 | Connection pool timeout | Too many connections |
+
+### Error Handling Pattern
+
+```typescript
+import { Prisma } from "@prisma/client";
+
+try {
+  await prisma.user.create({ data });
+} catch (error) {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    if (error.code === "P2002") {
+      throw new ConflictError("Email already exists");
+    }
+    if (error.code === "P2025") {
+      throw new NotFoundError("Record not found");
+    }
+  }
+  throw error;
+}
+```
+
+> **More patterns**: See [REFERENCE.md - Error Handling](REFERENCE.md#9-security--row-level-security) for comprehensive error mapping and retry strategies.
+
+---
+
+## Testing Patterns
+
+### Mock Client
+
+```typescript
+import { mockDeep, DeepMockProxy } from "jest-mock-extended";
+import { PrismaClient } from "@prisma/client";
+
+export const prismaMock = mockDeep<PrismaClient>();
+
+jest.mock("./lib/prisma", () => ({
+  prisma: prismaMock,
+}));
+
+// In tests
+prismaMock.user.create.mockResolvedValue(mockUser);
+```
+
+### Test Database Setup
+
+```typescript
+beforeEach(async () => {
+  await prisma.$executeRaw`TRUNCATE TABLE "User" CASCADE`;
+});
+
+afterAll(async () => {
+  await prisma.$disconnect();
+});
+```
+
+> **More patterns**: See [REFERENCE.md - Testing Strategies](REFERENCE.md#10-production-deployment) for integration testing, test containers, and CI/CD setup.
+
+---
+
+## Quick Reference Card
+
+```bash
+# Development
+npx prisma generate          # Regenerate client
+npx prisma db push           # Push schema changes
+npx prisma migrate dev       # Create migration
+npx prisma studio            # GUI browser
+
+# Production
+npx prisma generate          # Required in CI
+npx prisma migrate deploy    # Apply migrations
+```
+
+```typescript
+// CRUD
+prisma.model.create({ data })
+prisma.model.findUnique({ where })
+prisma.model.findMany({ where, orderBy, take, skip })
+prisma.model.update({ where, data })
+prisma.model.delete({ where })
+prisma.model.upsert({ where, create, update })
+
+// Relations
+include: { relation: true }
+include: { relation: { where, take } }
+where: { relation: { some: {} } }
+
+// Transactions
+prisma.$transaction(async (tx) => { ... })
+prisma.$transaction([query1, query2])
+```
+
+---
+
+**Progressive Disclosure**: Start here for quick reference. Load [REFERENCE.md](REFERENCE.md) for comprehensive patterns, advanced configurations, and production deployment.
+
+**Skill Version**: 1.1.0
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
