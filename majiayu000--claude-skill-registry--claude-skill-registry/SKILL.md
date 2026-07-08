@@ -1,564 +1,807 @@
 ---
-name: validation
-description: Validate code quality, test coverage, performance, and security. Use Use when this capability is needed.
+name: stinkysnake
+description: Progressive Python quality improvement with static analysis, type refinement, modernization planning, plan review, and test-driven implementation. Use when addressing technical debt, eliminating Any types, applying modern Python patterns, or refactoring for better design. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Feature Validation Skill
+# Python Quality Improvement System
 
-## Purpose
+Systematic Python code quality improvement through static analysis, type refinement, modernization planning with review, and test-driven implementation.
 
-This skill provides systematic validation of implemented features, ensuring code quality, test coverage, performance, security, and requirement fulfillment before marking work complete.
+## Arguments
 
-## When to Use
+$ARGUMENTS
 
-- After implementation and testing are complete
-- Before creating pull request
-- Before marking feature as done
-- When verifying all acceptance criteria met
-- Final quality gate before deployment
+## Workflow Overview
 
-## Validation Workflow
-
-### 1. Code Quality Validation
-
-**Run Quality Checks:**
-```bash
-# Format check (Black)
-black --check src/ tests/
-
-# Type checking (mypy)
-mypy src/
-
-# Linting (flake8, if configured)
-flake8 src/ tests/
-
-# All checks together
-make lint  # If Makefile configured
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         STINKYSNAKE WORKFLOW                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Phase 1: STATIC ANALYSIS                                                   │
+│  ├── Run formatters (ruff format)                                           │
+│  ├── Run linters (ruff check --fix)                                         │
+│  ├── Run type checkers (mypy, pyright)                                      │
+│  └── Auto-fix all resolvable issues                                         │
+│           │                                                                 │
+│           ▼                                                                 │
+│  Phase 2: TYPE ANALYSIS                                                     │
+│  ├── Determine minimum Python version                                       │
+│  ├── Inventory all `Any` types                                              │
+│  ├── Map type dependencies                                                  │
+│  └── Identify typing gaps                                                   │
+│           │                                                                 │
+│           ▼                                                                 │
+│  Phase 3: MODERNIZATION PLANNING                                            │
+│  ├── Plan Protocol usage for duck typing                                    │
+│  ├── Plan Generic type parameters                                           │
+│  ├── Plan TypeGuard narrowing                                               │
+│  ├── Plan TypeAlias definitions                                             │
+│  ├── Plan TypedDict for dict shapes                                         │
+│  ├── Plan dataclass/Pydantic models                                         │
+│  └── Plan library modernization (httpx, orjson, etc.)                       │
+│           │                                                                 │
+│           ▼                                                                 │
+│  Phase 4: PLAN REVIEW (context: fork)                                       │
+│  ├── Review against pythonic best practices                                 │
+│  ├── Verify against online references                                       │
+│  ├── Check feasibility                                                      │
+│  ├── Identify breaking changes                                              │
+│  └── Produce review report                                                  │
+│           │                                                                 │
+│           ▼                                                                 │
+│  Phase 5: PLAN REFINEMENT                                                   │
+│  └── Update plan based on review feedback                                   │
+│           │                                                                 │
+│           ▼                                                                 │
+│  Phase 6: DOCUMENTATION DISCOVERY                                           │
+│  ├── Find docs requiring updates                                            │
+│  └── Note what changes are needed                                           │
+│           │                                                                 │
+│           ▼                                                                 │
+│  Phase 7: INTERFACE DESIGN                                                  │
+│  └── Create interfaces/protocols first                                      │
+│           │                                                                 │
+│           ▼                                                                 │
+│  Phase 8: TEST-FIRST (context: fork, python-pytest-architect)               │
+│  ├── Write failing tests against interfaces                                 │
+│  └── Stop after tests written                                               │
+│           │                                                                 │
+│           ▼                                                                 │
+│  Phase 9: IMPLEMENTATION (/snakepolish)                                     │
+│  ├── context: fork with python-cli-architect                                │
+│  ├── Follow plans and implement functions                                   │
+│  └── Run tests until passing                                                │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-**Quality Checklist:**
-Refer to `quality-checklist.md` for comprehensive review
+## Companion Plugins
 
-**Key Quality Metrics:**
-- [ ] All functions have type hints
-- [ ] All public functions have docstrings (Google style)
-- [ ] No files exceed 500 lines
-- [ ] No lint errors or warnings
-- [ ] Code formatted with Black
-- [ ] Type checking passes with mypy
-- [ ] No code duplication (DRY principle)
-- [ ] Single responsibility principle followed
+This skill integrates with plugins in the same marketplace:
 
-**Automated Script:**
-```bash
-# Use validation script
-python scripts/run_checks.py --quality
-```
+### holistic-linting Plugin
 
-**Deliverable:** Quality report with pass/fail
+**Activation**: `Skill(command: "holistic-linting")`
+
+Provides: Linting rules knowledge base, `linting-root-cause-resolver` agent, automatic linter detection.
+
+### pre-commit Plugin
+
+**Activation**: `Skill(command: "pre-commit")`
+
+Provides: Git hook automation for quality gates.
 
 ---
 
-### 2. Test Coverage Validation
+## Phase 1: Static Analysis
 
-**Run Tests with Coverage:**
+Run automated tools to fix all resolvable issues before manual work begins.
+
+### Step 1.1: Format Code
+
 ```bash
-# Run all tests with coverage
-pytest --cov=src --cov-report=html --cov-report=term-missing
+# Format all Python files
+uv run ruff format $ARGUMENTS
 
-# Check coverage threshold
-pytest --cov=src --cov-fail-under=80
-
-# View HTML coverage report
-open htmlcov/index.html
+# Verify formatting
+uv run ruff format --check $ARGUMENTS
 ```
 
-**Coverage Checklist:**
-- [ ] Overall coverage ≥ 80%
-- [ ] Core business logic ≥ 90%
-- [ ] Utilities and helpers ≥ 85%
-- [ ] No critical paths untested
-- [ ] All branches covered
-- [ ] Edge cases tested
-- [ ] Error conditions tested
+### Step 1.2: Auto-Fix Linting Issues
 
-**Identify Coverage Gaps:**
 ```bash
-# Show untested lines
-pytest --cov=src --cov-report=term-missing
+# Fix all auto-fixable issues
+uv run ruff check --fix $ARGUMENTS
 
-# Generate detailed HTML report
-pytest --cov=src --cov-report=html
+# Fix unsafe fixes if appropriate
+uv run ruff check --fix --unsafe-fixes $ARGUMENTS
 ```
 
-**Deliverable:** Coverage report with gaps identified
+### Step 1.3: Run Type Checkers
+
+```bash
+# Run mypy
+uv run mypy $ARGUMENTS
+
+# Run pyright if configured
+uv run pyright $ARGUMENTS
+```
+
+### Step 1.4: Document Remaining Issues
+
+Create inventory of issues that cannot be auto-fixed:
+
+```text
+## Static Analysis Results
+
+### Auto-Fixed
+- [X] Formatting issues: N fixed
+- [X] Import sorting: N fixed
+- [X] Safe linting fixes: N fixed
+
+### Requires Manual Resolution
+| File:Line | Rule | Issue | Complexity |
+|-----------|------|-------|------------|
+| src/api.py:45 | ANN001 | Missing type annotation | Low |
+| src/models.py:120 | B006 | Mutable default | Medium |
+```
 
 ---
 
-### 3. Test Quality Validation
+## Phase 2: Type Analysis
 
-**Review Test Suite:**
-- [ ] All tests passing
-- [ ] No skipped tests (without justification)
-- [ ] No flaky tests (intermittent failures)
-- [ ] Tests run quickly (unit tests < 1 min)
-- [ ] Tests are independent (no order dependency)
-- [ ] Tests clean up after themselves
-- [ ] Mock external dependencies properly
-- [ ] Test names are clear and descriptive
+Determine Python compatibility and inventory typing gaps.
 
-**Run Tests Multiple Times:**
+### Step 2.1: Determine Minimum Python Version
+
+Check project configuration:
+
 ```bash
-# Run tests 10 times to check for flaky tests
-for i in {1..10}; do pytest || break; done
+# Check pyproject.toml
+grep -E "requires-python|python_requires" pyproject.toml
 
-# Run in random order
-pytest --random-order
+# Check setup.py if exists
+grep -E "python_requires" setup.py
 ```
 
-**Test Markers:**
-```bash
-# Verify no slow tests in unit tests
-pytest tests/unit/ -m "not slow"
+**Document the constraint**:
 
-# Run integration tests separately
-pytest tests/integration/
+```text
+## Python Version Constraint
+
+Minimum Version: Python 3.11
+Reason: [from pyproject.toml requires-python = ">=3.11"]
+
+Available Language Features:
+- Native generics (list[str], dict[str, int])
+- Union syntax (str | None)
+- Pattern matching (match/case)
+- Exception groups
+- Self type
+- TypeVarTuple
+- Required/NotRequired in TypedDict
 ```
 
-**Deliverable:** Test quality assessment
+### Step 2.2: Inventory All `Any` Types
+
+Search for explicit and implicit `Any` usage:
+
+```bash
+# Find explicit Any imports and usage
+uv run rg "from typing import.*Any|: Any|-> Any" $ARGUMENTS
+
+# Run mypy with strict mode to find implicit Any
+uv run mypy --strict $ARGUMENTS 2>&1 | grep -E "has type.*Any|Implicit.*Any"
+```
+
+**Create inventory**:
+
+```text
+## Any Type Inventory
+
+### Explicit Any Usage
+| Location | Variable | Current Type | Proposed Type |
+|----------|----------|--------------|---------------|
+| api.py:23 | response | Any | dict[str, JSONValue] |
+| utils.py:45 | callback | Any | Callable[[str], None] |
+
+### Implicit Any (from untyped libraries)
+| Location | Source | Mitigation |
+|----------|--------|------------|
+| client.py:12 | third_party.get() | Add type stub or cast |
+```
+
+### Step 2.3: Map Type Dependencies
+
+Understand how types flow through the codebase:
+
+```text
+## Type Dependency Map
+
+Entry Points (public API):
+- cli.main() -> int
+- api.fetch_data(url: str) -> ???  # Needs typing
+
+Internal Flow:
+fetch_data() -> parse_response() -> validate() -> Model
+
+Type Gaps:
+- parse_response returns Any
+- validate accepts Any
+```
 
 ---
 
-### 4. Performance Validation
+## Phase 3: Modernization Planning
 
-**Performance Checklist:**
-Refer to `performance-benchmarks.md` for target metrics
+Plan how to apply modern Python features to eliminate type gaps and improve design.
 
-**Key Performance Metrics:**
-- [ ] Response time < target (e.g., < 200ms for p95)
-- [ ] Throughput meets requirements (e.g., 1000 req/s)
-- [ ] Memory usage within bounds (e.g., < 100MB)
-- [ ] CPU usage reasonable (e.g., < 50%)
-- [ ] No memory leaks detected
-- [ ] Database queries optimized (< 5 queries per operation)
+### Step 3.1: Load modernpython Skill
 
-**Performance Testing:**
-```bash
-# Run performance tests
-pytest tests/performance/ -v
-
-# Profile code
-python -m cProfile -o profile.stats script.py
-python -m pstats profile.stats
-
-# Memory profiling
-python -m memory_profiler script.py
+```text
+Skill(command: "modernpython")
 ```
 
-**Benchmark Against Requirements:**
+### Step 3.2: Plan Type System Improvements
+
+For each `Any` in the inventory, plan the replacement using appropriate constructs:
+
+#### Protocol (Structural Subtyping)
+
+Use when: Multiple unrelated classes share behavior but not inheritance.
+
 ```python
-# Example performance test
-def test_performance_requirement():
-    """Verify operation meets performance requirement."""
-    start = time.time()
-    result = expensive_operation()
-    duration = time.time() - start
+# Before: Any for duck-typed objects
+def process(handler: Any) -> None:
+    handler.handle(data)
 
-    assert duration < 1.0, f"Took {duration}s, required < 1.0s"
+# After: Protocol defines required interface
+class Handler(Protocol):
+    def handle(self, data: bytes) -> None: ...
+
+def process(handler: Handler) -> None:
+    handler.handle(data)
 ```
 
-**Deliverable:** Performance report with metrics
+#### Generic (Parameterized Types)
+
+Use when: Container or function works with multiple types while preserving type info.
+
+```python
+# Before: Any loses type information
+def first(items: list[Any]) -> Any:
+    return items[0]
+
+# After: Generic preserves type
+T = TypeVar("T")
+def first(items: list[T]) -> T:
+    return items[0]
+```
+
+#### TypeGuard (Type Narrowing)
+
+Use when: Runtime check should narrow type for type checker.
+
+```python
+# Before: Type checker doesn't understand the check
+def process(data: str | dict[str, Any]) -> None:
+    if isinstance(data, dict):
+        # data still str | dict here without TypeGuard
+
+# After: TypeGuard narrows the type
+def is_dict_response(data: str | dict[str, Any]) -> TypeGuard[dict[str, Any]]:
+    return isinstance(data, dict)
+
+def process(data: str | dict[str, Any]) -> None:
+    if is_dict_response(data):
+        # data is dict[str, Any] here
+```
+
+#### TypeAlias (Named Types)
+
+Use when: Complex type is repeated or needs documentation.
+
+```python
+# Before: Repeated complex type
+def fetch(url: str) -> dict[str, str | int | list[str] | None]: ...
+def parse(data: dict[str, str | int | list[str] | None]) -> Model: ...
+
+# After: Named alias
+JSONValue: TypeAlias = str | int | float | bool | None | list["JSONValue"] | dict[str, "JSONValue"]
+APIResponse: TypeAlias = dict[str, JSONValue]
+
+def fetch(url: str) -> APIResponse: ...
+def parse(data: APIResponse) -> Model: ...
+```
+
+#### TypedDict (Dict Shape)
+
+Use when: Dict has known keys with specific types.
+
+```python
+# Before: dict[str, Any]
+def get_user() -> dict[str, Any]:
+    return {"name": "Alice", "age": 30, "active": True}
+
+# After: TypedDict defines shape
+class User(TypedDict):
+    name: str
+    age: int
+    active: bool
+
+def get_user() -> User:
+    return {"name": "Alice", "age": 30, "active": True}
+```
+
+#### Dataclass / Pydantic
+
+Use when: Need structured data with validation.
+
+```python
+# Before: Plain dict or untyped class
+user = {"name": "Alice", "email": "alice@example.com"}
+
+# After: Dataclass for internal data
+@dataclass
+class User:
+    name: str
+    email: str
+
+# After: Pydantic for external/validated data
+class UserInput(BaseModel):
+    name: str
+    email: EmailStr
+```
+
+### Step 3.3: Plan Library Modernization
+
+| Legacy     | Modern    | Benefit                           |
+| ---------- | --------- | --------------------------------- |
+| `requests` | `httpx`   | Async support, HTTP/2, type hints |
+| `json`     | `orjson`  | 10x faster, better types          |
+| `toml`     | `tomlkit` | Preserves formatting, comments    |
+| `argparse` | `typer`   | Type-driven CLI, auto-help        |
+| `print()`  | `rich`    | Formatted output, progress bars   |
+| `curses`   | `textual` | Modern TUI framework              |
+
+### Step 3.4: Create Modernization Plan Document
+
+```text
+## Modernization Plan
+
+### Type System Changes
+
+1. **Eliminate Any in api.py**
+   - Line 23: response: Any → response: APIResponse (TypeAlias)
+   - Line 45: callback: Any → callback: Callable[[Event], None]
+   - Line 67: data: Any → data: UserData (TypedDict)
+
+2. **Add Protocols for duck typing**
+   - Create Handler protocol for plugin system
+   - Create Serializable protocol for export functions
+
+3. **Add Generics for containers**
+   - Cache[T] generic class
+   - Result[T, E] for error handling
+
+### Library Migrations
+
+1. **requests → httpx**
+   - Files affected: api.py, client.py
+   - Breaking changes: Session → Client, response.json() typing
+   - Async opportunity: Yes
+
+2. **json → orjson**
+   - Files affected: serialization.py
+   - Breaking changes: orjson.dumps returns bytes
+   - Performance gain: ~10x
+
+### Estimated Impact
+- Files to modify: 12
+- New type definitions: 8
+- Breaking changes: 3 (internal only)
+```
 
 ---
 
-### 5. Security Validation
+## Phase 4: Plan Review
 
-**Security Checklist Review:**
-Review `security-checklist.md` from analysis phase and verify:
+Delegate to a review agent with context fork to critique the plan.
 
-**Input Validation:**
-- [ ] All user inputs validated and sanitized
-- [ ] SQL injection prevented (parameterized queries)
-- [ ] Command injection prevented (no shell=True with user input)
-- [ ] Path traversal prevented (sanitized file paths)
-- [ ] XSS prevented (escaped output)
+### Step 4.1: Launch Plan Review Agent
 
-**Authentication & Authorization:**
-- [ ] Authentication required for protected endpoints
-- [ ] Authorization checks at every access point
-- [ ] Session management secure
-- [ ] Credentials not hardcoded
+```text
+Task(
+  agent="python-code-reviewer",
+  prompt="Review the modernization plan at .claude/plans/stinkysnake-plan.md
 
-**Data Protection:**
-- [ ] Sensitive data encrypted in transit
-- [ ] Sensitive data encrypted at rest (if applicable)
-- [ ] PII handling compliant
-- [ ] Secrets in environment variables (not code)
-- [ ] Error messages don't leak sensitive info
+REVIEW CRITERIA:
 
-**Dependency Security:**
+1. **Pythonic Best Practices**
+   - Are the proposed patterns idiomatic Python?
+   - Do they follow PEP guidelines?
+   - Are simpler solutions available?
+
+2. **Online Verification**
+   - Verify type patterns against mypy/pyright docs
+   - Check library recommendations against current best practices
+   - Confirm version compatibility claims
+
+3. **Feasibility Assessment**
+   - Are the proposed changes realistic?
+   - What is the effort vs benefit ratio?
+   - Are there hidden dependencies?
+
+4. **Breaking Change Analysis**
+   - What interfaces change?
+   - What downstream code is affected?
+   - Is backward compatibility needed?
+
+5. **Risk Assessment**
+   - What could go wrong?
+   - What tests are needed?
+   - What rollback plan exists?
+
+OUTPUT:
+Create review report at .claude/reports/plan-review-{timestamp}.md with:
+- Issues found (blocking, warning, suggestion)
+- Verification results with sources
+- Feasibility scores per change
+- Breaking change inventory
+- Recommended modifications"
+)
+```
+
+### Step 4.2: Review Report Structure
+
+The reviewer produces:
+
+```text
+## Plan Review Report
+
+### Summary
+- Blocking Issues: N
+- Warnings: N
+- Suggestions: N
+- Overall Feasibility: High/Medium/Low
+
+### Blocking Issues
+
+#### Issue 1: Protocol misuse in Handler
+**Location**: Plan section 2.1
+**Problem**: Protocol used where ABC is more appropriate
+**Evidence**: [link to mypy docs on Protocol vs ABC]
+**Recommendation**: Use ABC with @abstractmethod
+
+### Warnings
+
+#### Warning 1: orjson bytes return
+**Location**: Library migration section
+**Risk**: Downstream code expects str from json.dumps
+**Mitigation**: Add .decode() or update all callers
+
+### Verification Results
+
+| Claim | Verified | Source |
+|-------|----------|--------|
+| TypeGuard narrows in if blocks | ✓ | mypy docs |
+| httpx is drop-in for requests | ✗ | API differs |
+| orjson 10x faster | ✓ | benchmark link |
+
+### Breaking Change Inventory
+
+| Change | Affected Code | Severity |
+|--------|--------------|----------|
+| APIResponse type | 5 functions | Medium |
+| httpx migration | 12 call sites | High |
+
+### Recommended Modifications
+
+1. Split httpx migration into separate PR
+2. Add compatibility shim for json.dumps
+3. Use ABC instead of Protocol for Handler
+```
+
+---
+
+## Phase 5: Plan Refinement
+
+Update the plan based on review feedback.
+
+### Step 5.1: Address Blocking Issues
+
+For each blocking issue:
+
+1. Understand the concern
+2. Research alternatives
+3. Update the plan
+4. Document the change
+
+### Step 5.2: Acknowledge Warnings
+
+For each warning:
+
+1. Add mitigation to the plan
+2. Or accept risk with justification
+
+### Step 5.3: Consider Suggestions
+
+For each suggestion:
+
+1. Evaluate effort vs benefit
+2. Include if beneficial, defer if not
+
+### Step 5.4: Update Plan Document
+
+```text
+## Modernization Plan (Revised)
+
+### Changes from Review
+
+1. **Handler: Protocol → ABC**
+   - Reason: Plugin system requires inheritance
+   - Evidence: [reviewer's mypy docs link]
+
+2. **httpx migration: Deferred**
+   - Reason: High breaking change risk
+   - Alternative: Create separate PR after core changes
+
+3. **orjson: Added decode shim**
+   - Added: compat.dumps() wrapper returning str
+
+### Updated Implementation Order
+
+1. Type aliases and TypedDicts (no breaking changes)
+2. Protocol/ABC additions (additive)
+3. Generic containers (additive)
+4. Any elimination (may require caller updates)
+5. [DEFERRED] httpx migration
+```
+
+---
+
+## Phase 6: Documentation Discovery
+
+Find documentation that needs updating after code changes.
+
+### Step 6.1: Inventory Documentation
+
 ```bash
-# Check for vulnerable dependencies
-pip-audit
+# Find all documentation files
+fd -e md -e rst -e txt . docs/ README.md CHANGELOG.md
 
-# Or use safety
-safety check --json
-
-# Check for outdated dependencies
-pip list --outdated
+# Find docstrings in affected files
+uv run rg "^\s+\"\"\"" $ARGUMENTS
 ```
 
-**Deliverable:** Security validation report
+### Step 6.2: Map Code to Docs
+
+```text
+## Documentation Update Plan
+
+### Files to Update
+
+| Doc File | Section | Change Needed |
+|----------|---------|---------------|
+| README.md | Installation | Add orjson dependency |
+| docs/api.md | fetch_data() | Update return type |
+| CHANGELOG.md | Unreleased | Add type improvements |
+
+### Docstrings to Update
+
+| Code File | Function | Docstring Change |
+|-----------|----------|------------------|
+| api.py | fetch_data | Update return type docs |
+| models.py | User | Add field descriptions |
+
+### New Documentation Needed
+
+- docs/types.md: Document TypeAliases
+- docs/migration.md: Breaking change guide
+```
 
 ---
 
-### 6. Requirements Validation
+## Phase 7: Interface Design
 
-**Verify Acceptance Criteria:**
-Review original requirements from analysis phase:
-- [ ] All functional requirements implemented
-- [ ] All acceptance criteria met
-- [ ] User stories fulfilled
-- [ ] Edge cases handled
-- [ ] Error scenarios handled
+Create interfaces and protocols before implementation.
 
-**Manual Testing:**
-```bash
-# Test CLI (if applicable)
-python -m src.tools.feature.main --help
-python -m src.tools.feature.main create --name test
+### Step 7.1: Define Type Aliases
 
-# Test with sample data
-python -m src.tools.feature.main --input samples/test.json
+```python
+# src/types.py
+from typing import TypeAlias
 
-# Test error cases
-python -m src.tools.feature.main --invalid-option
+JSONValue: TypeAlias = str | int | float | bool | None | list["JSONValue"] | dict[str, "JSONValue"]
+APIResponse: TypeAlias = dict[str, JSONValue]
 ```
 
-**Regression Testing:**
-- [ ] Existing functionality not broken
-- [ ] No breaking changes to public APIs
-- [ ] Backward compatibility maintained (if required)
+### Step 7.2: Define Protocols
 
-**Deliverable:** Requirements validation checklist
+```python
+# src/protocols.py
+from typing import Protocol
+
+class Handler(Protocol):
+    def handle(self, data: bytes) -> None: ...
+
+class Serializable(Protocol):
+    def to_dict(self) -> dict[str, Any]: ...
+```
+
+### Step 7.3: Define TypedDicts
+
+```python
+# src/schemas.py
+from typing import TypedDict, NotRequired
+
+class UserData(TypedDict):
+    name: str
+    email: str
+    age: NotRequired[int]
+```
+
+### Step 7.4: Define Data Classes
+
+```python
+# src/models.py
+from dataclasses import dataclass
+
+@dataclass
+class User:
+    name: str
+    email: str
+    age: int | None = None
+```
 
 ---
 
-### 7. Documentation Validation
+## Phase 8: Test-First Implementation
 
-**Code Documentation:**
-- [ ] All public functions have docstrings
-- [ ] Docstrings follow Google style
-- [ ] Complex logic has inline comments
-- [ ] Type hints present and accurate
-- [ ] README updated (if applicable)
+Delegate to python-pytest-architect to write failing tests against the interfaces.
 
-**Technical Documentation:**
-- [ ] Architecture documented
-- [ ] API contracts documented
-- [ ] Configuration documented
-- [ ] Setup instructions complete
-- [ ] Known issues documented
+### Step 8.1: Launch Test Writing Agent
 
-**User Documentation:**
-- [ ] Usage guide written (if applicable)
-- [ ] Examples provided
-- [ ] Troubleshooting guide included
-- [ ] FAQ updated
+```text
+Task(
+  agent="python-pytest-architect",
+  prompt="Write failing tests for the interfaces defined in the modernization plan.
 
-**CHANGELOG Update:**
-- [ ] Changes documented in CHANGELOG.md
-- [ ] Version bumped appropriately
-- [ ] Breaking changes highlighted
+CONTEXT:
+- Plan: .claude/plans/stinkysnake-plan.md
+- Interfaces: src/types.py, src/protocols.py, src/schemas.py
 
-**Deliverable:** Documentation review checklist
+REQUIREMENTS:
 
----
+1. **Test Each Protocol**
+   - Test that protocol can be satisfied
+   - Test that non-conforming types are rejected
+   - Test protocol runtime behavior if applicable
 
-### 8. Integration Validation
+2. **Test Each TypedDict**
+   - Test required keys
+   - Test optional keys (NotRequired)
+   - Test type validation
 
-**Integration Testing:**
-```bash
-# Run integration tests
-pytest tests/integration/ -v
+3. **Test Each Function Signature**
+   - Test return type matches TypeAlias
+   - Test parameter types
+   - Test edge cases
 
-# Test with real dependencies (in test environment)
-pytest tests/integration/ --no-mock
+4. **Test Behavioral Expectations**
+   - Test that refactored code maintains behavior
+   - Test error handling patterns
+   - Test async behavior if applicable
+
+OUTPUT:
+- Create test files in tests/
+- Tests MUST fail (implementations don't exist yet)
+- Stop after tests are written
+- Report test file locations"
+)
 ```
 
-**Integration Checklist:**
-- [ ] Integrates correctly with existing code
-- [ ] No circular dependencies
-- [ ] Module imports work correctly
-- [ ] Configuration loads correctly
-- [ ] External services connect (if applicable)
-
-**End-to-End Testing:**
-```bash
-# Test complete workflows
-pytest tests/e2e/ -v
-
-# Manual E2E testing
-./scripts/manual_test.sh
-```
-
-**Deliverable:** Integration test report
-
----
-
-### 9. Final Validation
-
-**Run Complete Validation Suite:**
-```bash
-# Use automated validation script
-python scripts/run_checks.py --all
-
-# Or run individual checks
-python scripts/run_checks.py --quality
-python scripts/run_checks.py --tests
-python scripts/run_checks.py --coverage
-python scripts/run_checks.py --security
-```
-
-**Pre-PR Checklist:**
-- [ ] All quality checks passing
-- [ ] Test coverage ≥ 80%
-- [ ] All tests passing
-- [ ] Performance requirements met
-- [ ] Security validated
-- [ ] Requirements fulfilled
-- [ ] Documentation complete
-- [ ] Integration verified
-- [ ] No known critical bugs
-
-**Create Validation Report:**
-```markdown
-# Validation Report: [Feature Name]
-
-## Quality ✅
-- Black: PASS
-- mypy: PASS
-- flake8: PASS (0 errors, 0 warnings)
-
-## Testing ✅
-- Unit tests: 45 passed
-- Integration tests: 12 passed
-- Coverage: 87% (target: 80%)
-
-## Performance ✅
-- Response time (p95): 145ms (target: < 200ms)
-- Throughput: 1200 req/s (target: 1000 req/s)
-- Memory usage: 75MB (target: < 100MB)
-
-## Security ✅
-- No vulnerable dependencies
-- Input validation: Complete
-- Secrets management: Secure
-
-## Requirements ✅
-- All acceptance criteria met
-- No regressions detected
-
-## Documentation ✅
-- Code documentation: Complete
-- Technical docs: Complete
-- CHANGELOG: Updated
-
-## Status: READY FOR PR ✅
-```
-
-**Deliverable:** Final validation report
-
----
-
-## Quality Standards
-
-### Code Quality Metrics
-
-**Complexity:**
-- Cyclomatic complexity < 10 per function
-- Max nesting depth: 4 levels
-
-**Maintainability:**
-- Files < 500 lines
-- Functions < 50 lines
-- Classes < 300 lines
-
-**Documentation:**
-- 100% public API documented
-- Docstring coverage ≥ 90%
-
-### Test Quality Metrics
-
-**Coverage:**
-- Overall: ≥ 80%
-- Critical paths: 100%
-- Core logic: ≥ 90%
-
-**Test Quality:**
-- No flaky tests
-- Unit tests < 1 minute total
-- Integration tests < 5 minutes total
-
-### Performance Benchmarks
-
-Refer to `performance-benchmarks.md` for detailed criteria
-
-**Response Time:**
-- p50: < 50ms
-- p95: < 200ms
-- p99: < 500ms
-
-**Resource Usage:**
-- Memory: < 100MB
-- CPU: < 50% single core
-
----
-
-## Automated Validation Script
-
-The `scripts/run_checks.py` script automates validation:
+### Step 8.2: Verify Tests Fail
 
 ```bash
-# Run all checks
-python scripts/run_checks.py --all
+# Run tests - they should fail
+uv run pytest tests/ -v
 
-# Run specific checks
-python scripts/run_checks.py --quality
-python scripts/run_checks.py --tests
-python scripts/run_checks.py --coverage
-python scripts/run_checks.py --security
-python scripts/run_checks.py --performance
-
-# Generate report
-python scripts/run_checks.py --all --report validation-report.md
+# Expected output: X failed, 0 passed
 ```
 
 ---
 
-## Supporting Resources
+## Phase 9: Implementation
 
-- **quality-checklist.md**: Comprehensive code quality standards
-- **performance-benchmarks.md**: Performance criteria and targets
-- **scripts/run_checks.py**: Automated validation runner
+Use the `/snakepolish` skill to implement until tests pass.
 
----
+### Step 9.1: Launch Implementation Skill
 
-## Integration with Feature Implementation Flow
+```text
+/snakepolish $ARGUMENTS
+```
 
-**Input:** Completed implementation with tests
-**Process:** Systematic validation against all criteria
-**Output:** Validation report + approval for PR
-**Next Step:** Create pull request or deploy
+This skill:
 
----
+- Has `context: fork` to work in isolation
+- Uses `agent: python-cli-architect` for implementation
+- Follows the refined plan
+- Runs tests after each change
+- Continues until all tests pass
 
-## Validation Checklist Summary
+### Step 9.2: Verify All Tests Pass
 
-### Quality ✓
-- [ ] Code formatted (Black)
-- [ ] Type checked (mypy)
-- [ ] Linted (no errors/warnings)
-- [ ] Files < 500 lines
-- [ ] Functions documented
-- [ ] Quality checklist complete
-
-### Testing ✓
-- [ ] All tests passing
-- [ ] Coverage ≥ 80%
-- [ ] Core logic ≥ 90% coverage
-- [ ] No flaky tests
-- [ ] Tests run quickly
-
-### Performance ✓
-- [ ] Response time < target
-- [ ] Throughput meets requirements
-- [ ] Memory usage reasonable
-- [ ] No performance regressions
-
-### Security ✓
-- [ ] Input validation complete
-- [ ] No hardcoded secrets
-- [ ] Dependencies scanned
-- [ ] Security checklist complete
-
-### Requirements ✓
-- [ ] Acceptance criteria met
-- [ ] User stories fulfilled
-- [ ] Edge cases handled
-- [ ] No regressions
-
-### Documentation ✓
-- [ ] Code documented
-- [ ] Technical docs complete
-- [ ] User docs (if applicable)
-- [ ] CHANGELOG updated
-
-### Integration ✓
-- [ ] Integration tests passing
-- [ ] No breaking changes
-- [ ] Backward compatible
-
-### Final Approval ✓
-- [ ] All checklists complete
-- [ ] Validation report generated
-- [ ] Ready for pull request
-- [ ] Stakeholder approval (if required)
+```bash
+# Final verification
+uv run pytest tests/ -v
+uv run mypy $ARGUMENTS --strict
+uv run ruff check $ARGUMENTS
+```
 
 ---
 
-## Sign-off
+## Output Artifacts
 
-**Feature:** [Feature Name]
-**Validated By:** [Your Name]
-**Date:** [YYYY-MM-DD]
+The complete workflow produces:
 
-**Status:** ☐ Approved ☐ Needs Work
-
-**Notes:**
-[Any additional notes or concerns]
+| Artifact                | Location                                  | Purpose             |
+| ----------------------- | ----------------------------------------- | ------------------- |
+| Static Analysis Results | `.claude/reports/static-analysis-{ts}.md` | Auto-fix summary    |
+| Type Inventory          | `.claude/reports/type-inventory-{ts}.md`  | Any types found     |
+| Modernization Plan      | `.claude/plans/stinkysnake-plan.md`       | Implementation plan |
+| Plan Review             | `.claude/reports/plan-review-{ts}.md`     | Review feedback     |
+| Revised Plan            | `.claude/plans/stinkysnake-plan.md`       | Updated plan        |
+| Doc Update Plan         | `.claude/reports/doc-updates-{ts}.md`     | Docs to change      |
+| Test Files              | `tests/test_*.py`                         | Failing tests       |
+| Implementation          | `src/`                                    | Passing code        |
 
 ---
 
-## What to Do If Validation Fails
+## Quick Reference
 
-**Quality Issues:**
-1. Fix formatting: `black src/ tests/`
-2. Fix type errors: Review mypy output
-3. Fix lint errors: Review flake8 output
-4. Refactor large files/functions
+### Skill Activations
 
-**Coverage Issues:**
-1. Identify untested code: `pytest --cov-report=html`
-2. Add missing tests
-3. Review edge cases
-4. Add error condition tests
+```text
+Skill(command: "holistic-linting")     # Linting workflows
+Skill(command: "pre-commit")           # Git hooks
+Skill(command: "modernpython")         # Python 3.11+ patterns
+Skill(command: "python3-development")  # Core patterns
+```
 
-**Performance Issues:**
-1. Profile code: `python -m cProfile`
-2. Optimize hot paths
-3. Add caching where appropriate
-4. Optimize database queries
+### Agent Delegations
 
-**Security Issues:**
-1. Address vulnerabilities: `pip-audit`
-2. Review input validation
-3. Check secrets management
-4. Run security checklist again
+```text
+Task(agent="linting-root-cause-resolver", ...)  # Phase 1 linting
+Task(agent="python-code-reviewer", ...)          # Phase 4 review
+Task(agent="python-pytest-architect", ...)       # Phase 8 tests
+```
 
-**Requirement Issues:**
-1. Review acceptance criteria
-2. Implement missing functionality
-3. Test edge cases
-4. Verify with stakeholders
+### Related Skills
 
-**After Fixes:**
-- Re-run validation
-- Update validation report
-- Verify all checks pass
-- Proceed to PR
+```text
+/snakepolish  # Phase 9 implementation (context: fork)
+```
+
+---
+
+## References
+
+### External Documentation
+
+- [Typing Module](https://docs.python.org/3/library/typing.html)
+- [PEP 544 - Protocols](https://peps.python.org/pep-0544/)
+- [PEP 589 - TypedDict](https://peps.python.org/pep-0589/)
+- [PEP 647 - TypeGuard](https://peps.python.org/pep-0647/)
+- [mypy Cheat Sheet](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html)
+
+### Companion Plugins
+
+- **holistic-linting** - Linting rules knowledge base
+- **pre-commit** - Git hook automation
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
