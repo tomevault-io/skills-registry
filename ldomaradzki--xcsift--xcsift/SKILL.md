@@ -118,5 +118,5 @@ failed_tests[2]{suite,test,file,line,message,duration}:
 - Flaky test detection is automatic (no flag needed) — detects tests that both pass and fail
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io/claim/ldomaradzki) — claim your Tome and manage your conversions.
-<!-- tomevault:4.0:skill_md:2026-04-11 -->
+> Source: [ldomaradzki/xcsift](https://github.com/ldomaradzki/xcsift) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:skill_md:2026-07-08 -->
