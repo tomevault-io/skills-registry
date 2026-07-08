@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [rwjdk/AgentFrameworkToolkit](https://github.com/rwjdk/AgentFrameworkToolkit/tree/main/development/Sandbox/TestData/AgentSkills/employee-handbook/SKILL.md)
+Original source: [rwjdk/AgentFrameworkToolkit](https://github.com/rwjdk/AgentFrameworkToolkit/tree/main/development/Sandbox/TestData/AgentSkills/speak-like-a-pirate/SKILL.md)
 
 ---
 
