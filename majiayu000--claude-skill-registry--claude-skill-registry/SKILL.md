@@ -1,390 +1,127 @@
 ---
-name: storybook-creation
-description: Creating Storybook documentation with proper stories, argTypes, model instances, and variations Use when this capability is needed.
+name: secure-development
+description: Security best practices for production applications including PII protection, input validation, SQL injection prevention, XSS mitigation, and secure logging. Apply when handling user data, authentication, or external inputs. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Storybook Creation Skill
+# Secure Development Skill
 
-## Purpose
+Implement security best practices to protect user data and prevent common vulnerabilities.
 
-Create interactive documentation and examples for components using Storybook.
+## What This Skill Provides
 
-## Basic Template
+- **PII Protection**: Hash sensitive data in logs, GDPR compliance
+- **Input Validation**: Prevent SQL injection, XSS, command injection
+- **Authentication**: Secure password storage, session management
+- **Logging Security**: What to log, what to redact
+- **OWASP Top 10**: Prevention strategies for common vulnerabilities
 
+## When to Use
+
+- Handling user authentication or authorization
+- Logging user inputs (search queries, form data)
+- Processing external data (API requests, file uploads)
+- Storing sensitive information (passwords, tokens, PII)
+- Regulatory compliance (GDPR, HIPAA, SOC 2)
+- When user mentions: "security", "authentication", "PII", "GDPR", "vulnerability"
+
+## Primitives Included
+
+- **Instructions**: `pii-protection.instructions.md` - Hashing, redaction, compliance
+- **Instructions**: `input-validation.instructions.md` - Prevent injection attacks
+- **Instructions**: `secure-authentication.instructions.md` - Password storage, sessions
+
+## Key Security Principles
+
+### 1. Defense in Depth
+Multiple layers of security - don't rely on single control
+
+### 2. Fail Securely
+When errors occur, fail to secure state (deny access, don't leak info)
+
+### 3. Principle of Least Privilege
+Grant minimum necessary permissions
+
+### 4. Never Trust User Input
+Validate, sanitize, and escape ALL external data
+
+### 5. Security by Design
+Build security in from the start, not as afterthought
+
+## Critical: PII in Logs
+
+**NEVER log raw user inputs that may contain PII.**
+
+**Examples of PII**:
+- Names, email addresses, phone numbers
+- Search queries (may contain names/locations)
+- IP addresses (GDPR considers PII)
+- Credit card numbers, SSNs
+- Medical information
+- Location data
+
+**Safe Logging Pattern**:
 ```typescript
-import { Store } from "@/models/store/Store";
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ComponentName } from "./ComponentName";
+import { createHash } from 'crypto';
 
-const meta: Meta<typeof ComponentName> = {
-  title: "{Category}/Components/{Path}/ComponentName",
-  component: ComponentName,
-  argTypes: {
-    // Type definitions here
-  },
-};
+// ❌ NEVER do this
+logger.log({ query: userQuery, email: user.email });
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+// ✅ Hash PII, log metadata
+const queryHash = createHash('sha256')
+  .update(userQuery)
+  .digest('hex')
+  .substring(0, 16);
 
-export const Default: Story = {
-  args: {
-    // Default args
-  },
-};
-```
-
-## Title Categories
-
-Use these categories for organizing stories:
-
-- `Customer/Components/{path}` - Customer-facing components
-- `Common/Components/{path}` - Shared components
-- `Admin/Components/{path}` - Admin-specific components
-
-Example paths:
-```
-"Customer/Components/Table/DataTable"
-"Common/Components/Form/FormFieldText"
-"Admin/Components/Dashboard/StatsCard"
-```
-
-## Creating Model Instances
-
-Use Store to create model instances (snake_case model names):
-
-```typescript
-import { Store } from "@/models/store/Store";
-
-// Correct - snake_case
-const account = Store.account.create({
-  id: "123",
-  name: "Test Account",
-  email: "test@example.com",
+logger.log({ 
+  queryHash,  // Can correlate same queries
+  queryLength: userQuery.length,  // Metadata OK
+  userId: user.id  // Non-PII identifier OK
 });
+```
 
-const organization = Store.organization.create({
-  id: "456",
-  name: "Test Org",
+## Example: Secure Search Endpoint
+
+```typescript
+router.post('/search', async (req, res) => {
+  // 1. Validate input
+  const schema = z.object({
+    query: z.string().min(1).max(500),
+    limit: z.number().int().min(1).max(100).optional()
+  });
+  
+  const validated = schema.parse(req.body);
+  
+  // 2. Sanitize for SQL (use parameterized queries)
+  const results = await db.query(
+    'SELECT * FROM items WHERE name LIKE $1 LIMIT $2',
+    [`%${validated.query}%`, validated.limit || 10]
+  );
+  
+  // 3. Log securely (hash PII)
+  logger.info({
+    event: 'search',
+    queryHash: hash(validated.query),
+    resultCount: results.length,
+    userId: req.user?.id
+  });
+  
+  // 4. Return results (no sensitive internal data)
+  res.json({ results });
 });
-
-// Incorrect - not account_model
-const account = Store.account_model.create({...}); // Wrong!
 ```
 
-## Simple Component Story
+## Dependencies
 
-```typescript
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button } from "./Button";
+- Validation library: Zod, Joi, or class-validator
+- Hashing: Node crypto module (SHA256)
+- Password hashing: bcrypt or Argon2
+- Session management: express-session with secure store
 
-const meta: Meta<typeof Button> = {
-  title: "Common/Components/UI/Button",
-  component: Button,
-  argTypes: {
-    variant: {
-      control: "select",
-      options: ["primary", "secondary", "outline", "ghost"],
-    },
-    size: {
-      control: "select",
-      options: ["sm", "default", "lg"],
-    },
-  },
-};
+---
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  args: {
-    children: "Click Me",
-    variant: "primary",
-    size: "default",
-  },
-};
-
-export const Secondary: Story = {
-  args: {
-    children: "Secondary Button",
-    variant: "secondary",
-  },
-};
-
-export const Outline: Story = {
-  args: {
-    children: "Outline Button",
-    variant: "outline",
-  },
-};
-```
-
-## Story with Model Data
-
-```typescript
-import { Store } from "@/models/store/Store";
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { AssetCard } from "./AssetCard";
-
-const meta: Meta<typeof AssetCard> = {
-  title: "Customer/Components/Asset/AssetCard",
-  component: AssetCard,
-};
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  args: {
-    asset: Store.asset.create({
-      id: "1",
-      name: "Test Asset",
-      description: "This is a test asset",
-      status: 1,
-      organization_id: "org-1",
-    }),
-  },
-};
-
-export const WithOrganization: Story = {
-  args: {
-    asset: Store.asset.create({
-      id: "2",
-      name: "Asset with Org",
-      description: "Asset with organization data",
-      status: 1,
-      organization_id: "org-1",
-      organization: Store.organization.create({
-        id: "org-1",
-        name: "Acme Corp",
-      }),
-    }),
-  },
-};
-```
-
-## Story with Render Function (Stateful)
-
-Only use render when the component needs state updates:
-
-```typescript
-import { Store } from "@/models/store/Store";
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { observer } from "mobx-react-lite";
-import { AssetForm } from "./AssetForm";
-
-const meta: Meta<typeof AssetForm> = {
-  title: "Customer/Components/Asset/AssetForm",
-  component: AssetForm,
-};
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const CreateNew: Story = {
-  render: () => {
-    const asset = Store.asset.create({
-      name: "",
-      description: "",
-      status: 1,
-    });
-
-    return <AssetForm asset={asset} />;
-  },
-};
-
-export const EditExisting: Story = {
-  render: () => {
-    const asset = Store.asset.create({
-      id: "123",
-      name: "Existing Asset",
-      description: "Edit this asset",
-      status: 1,
-    });
-
-    return <AssetForm asset={asset} />;
-  },
-};
-```
-
-## ArgTypes Examples
-
-```typescript
-argTypes: {
-  // String
-  label: {
-    control: "text",
-    description: "Label text",
-  },
-
-  // Number
-  size: {
-    control: "number",
-    description: "Size in pixels",
-  },
-
-  // Boolean
-  disabled: {
-    control: "boolean",
-    description: "Whether the component is disabled",
-  },
-
-  // Select
-  variant: {
-    control: "select",
-    options: ["primary", "secondary", "outline"],
-    description: "Visual variant",
-  },
-
-  // Radio
-  alignment: {
-    control: "radio",
-    options: ["left", "center", "right"],
-  },
-
-  // Color
-  color: {
-    control: "color",
-  },
-
-  // Date
-  date: {
-    control: "date",
-  },
-
-  // Range
-  opacity: {
-    control: { type: "range", min: 0, max: 1, step: 0.1 },
-  },
-
-  // Object
-  config: {
-    control: "object",
-  },
-
-  // Action (for callbacks)
-  onClick: {
-    action: "clicked",
-  },
-}
-```
-
-## What NOT to Include
-
-1. **Don't add variants to the component** - Only create Storybook file
-2. **Don't create mock services** - Use real Store methods
-3. **Don't wrap with state unless asked** - Keep it simple
-4. **Don't add implicit variations** - Only explicit prop variations
-5. **Don't use Modal service** - Display component directly
-6. **Don't handle loading states** unless asked
-
-## Story Variations
-
-Only create variations for:
-- Explicit prop differences (primary vs secondary)
-- Different data states (empty, with data, error)
-- Meaningful visual differences
-- Common use cases
-
-Don't create variations for:
-- className differences (not explicit)
-- Generic styling changes
-- Every possible prop combination
-
-## Complete Example
-
-```typescript
-import { Store } from "@/models/store/Store";
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { DataTable } from "./DataTable";
-import { assetColumns } from "./columns";
-import { assetFilters } from "./filters";
-
-const meta: Meta<typeof DataTable> = {
-  title: "Common/Components/Table/DataTable",
-  component: DataTable,
-  argTypes: {
-    showFilters: {
-      control: "boolean",
-      description: "Show filter panel",
-    },
-    showActions: {
-      control: "boolean",
-      description: "Show action buttons",
-    },
-  },
-};
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-const assets = [
-  Store.asset.create({
-    id: "1",
-    name: "Asset One",
-    description: "First asset",
-    status: 1,
-    organization_id: "org-1",
-  }),
-  Store.asset.create({
-    id: "2",
-    name: "Asset Two",
-    description: "Second asset",
-    status: 2,
-    organization_id: "org-1",
-  }),
-];
-
-export const Default: Story = {
-  args: {
-    data: assets,
-    columns: assetColumns,
-    showFilters: true,
-    showActions: true,
-  },
-};
-
-export const WithoutFilters: Story = {
-  args: {
-    data: assets,
-    columns: assetColumns,
-    showFilters: false,
-    showActions: true,
-  },
-};
-
-export const Empty: Story = {
-  args: {
-    data: [],
-    columns: assetColumns,
-    showFilters: true,
-    showActions: true,
-  },
-};
-```
-
-## Key Rules
-
-1. **Use Store for model creation** - `Store.{snake_case_model}.create()`
-2. **Don't modify the component** - Only create Storybook file
-3. **Use clear, descriptive story names** - Default, WithData, Empty, etc.
-4. **Only add render when state is needed** - Most stories don't need it
-5. **Organize by category** - Customer/Common/Admin
-6. **Document argTypes** - Add descriptions for controls
-7. **Create meaningful variations** - Not every possible combination
-8. **Don't use mock services** - Use real Store/model instances
-9. **Keep it simple** - Complexity should match component complexity
-
-## Checklist Before Creating
-
-- [ ] Is render function needed? (Only for stateful components)
-- [ ] Are model instances using Store with snake_case?
-- [ ] Are variations meaningful and explicit?
-- [ ] Is the title categorized correctly?
-- [ ] Are argTypes documented?
-- [ ] Am I only creating the story file (not modifying component)?
+**Related Skills**: `claude-framework` (Security S-1 through S-5), `fullstack-expertise`
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
