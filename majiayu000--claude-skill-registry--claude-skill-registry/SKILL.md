@@ -1,693 +1,507 @@
 ---
-name: schema-design
-description: Design or modify Drizzle ORM schemas with proper relationships, constraints, and indexes. Use when adding new tables, modifying existing schemas, or optimizing database structure. Use when this capability is needed.
+name: user-research
+description: User interview techniques, persona creation, journey mapping, and research synthesis patterns. Use when planning research studies, conducting interviews, creating personas, or translating research findings into actionable design recommendations. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Schema Design Skill
+# User Research Methodology
 
-This skill helps you design and modify database schemas using Drizzle ORM in `packages/database/`.
+Systematic approaches for understanding user needs, behaviors, and motivations to inform product decisions.
 
-## When to Use This Skill
+## When to Activate
 
-- Creating new database tables
-- Adding columns to existing tables
-- Defining relationships between tables
-- Creating indexes for query optimization
-- Adding constraints (unique, not null, default values)
-- Renaming or dropping tables/columns
-- Optimizing schema for performance
+- Planning user research studies
+- Conducting user interviews
+- Creating personas and journey maps
+- Synthesizing research findings
+- Translating insights into design recommendations
+- Validating product concepts with users
 
-## Database Architecture
+## Research Methods
+
+### Method Selection Guide
+
+| Method | Best For | Sample Size | Time Investment |
+|--------|----------|-------------|-----------------|
+| **User Interviews** | Deep understanding, "why" | 5-12 users | 2-3 weeks |
+| **Contextual Inquiry** | Understanding environment | 3-6 users | 1-2 weeks |
+| **Usability Testing** | Interface validation | 5 users | 1 week |
+| **Surveys** | Quantitative validation | 100+ users | 1-2 weeks |
+| **Card Sorting** | Information architecture | 15-30 users | 1 week |
+| **Diary Studies** | Longitudinal behavior | 10-15 users | 2-4 weeks |
+
+### User Interviews
+
+One-on-one conversations to understand user perspectives.
+
+#### Interview Structure (60 min)
 
 ```
-packages/database/
-├── src/
-│   ├── db/
-│   │   └── schema/
-│   │       ├── cars.ts         # Car registration data
-│   │       ├── coe.ts          # COE bidding results
-│   │       ├── pqp.ts          # PQP data
-│   │       ├── posts.ts        # Blog posts
-│   │       ├── analytics.ts    # Analytics events
-│   │       └── index.ts        # Schema exports
-│   ├── index.ts                # Database client export
-│   └── migrate.ts              # Migration runner
-├── migrations/                  # Migration files
-└── drizzle.config.ts           # Drizzle configuration
+1. INTRODUCTION (5 min)
+   - Thank them for participating
+   - Explain purpose (learning, not testing)
+   - Request permission to record
+   - Emphasize no right/wrong answers
+
+2. WARM-UP (5 min)
+   - Easy, open questions
+   - Build rapport
+   - "Tell me about your role..."
+
+3. CONTEXT (10 min)
+   - Current situation
+   - Tools and processes
+   - Goals and challenges
+   - "Walk me through a typical day..."
+
+4. DEEP DIVE (30 min)
+   - Specific experiences
+   - Pain points in detail
+   - Workarounds and adaptations
+   - "Tell me about a time when..."
+
+5. EXPLORATION (5 min)
+   - Reactions to concepts (if applicable)
+   - Ideal scenarios
+   - "If you could wave a magic wand..."
+
+6. WRAP-UP (5 min)
+   - Summary of key points
+   - Anything else to add
+   - Thank you and next steps
 ```
 
-## Naming Conventions
+#### Question Techniques
 
-The project uses **camelCase** for column names:
+| Technique | Purpose | Example |
+|-----------|---------|---------|
+| **Open-ended** | Encourage stories | "Tell me about..." |
+| **Follow-up** | Dig deeper | "Can you say more about that?" |
+| **Clarification** | Ensure understanding | "When you say X, what do you mean?" |
+| **Contrast** | Explore differences | "How does that compare to...?" |
+| **Projection** | Uncover desires | "What would ideal look like?" |
+| **Silence** | Let them think | [Wait 5-10 seconds after answers] |
 
-```typescript
-// ✅ Correct
-export const cars = pgTable("cars", {
-  vehicleClass: text("vehicle_class"),
-  fuelType: text("fuel_type"),
-  registrationDate: timestamp("registration_date"),
-});
+#### Questions to Avoid
 
-// ❌ Wrong
-export const cars = pgTable("cars", {
-  vehicle_class: text("vehicle_class"),  // snake_case
-  FuelType: text("fuel_type"),            // PascalCase
-});
+| Avoid | Problem | Better |
+|-------|---------|--------|
+| "Do you like...?" | Yes/no answer | "How do you feel about...?" |
+| "Would you use...?" | Hypothetical behavior ≠ real | "When did you last...?" |
+| "Don't you think...?" | Leading | "What do you think about...?" |
+| "What features...?" | Solution-focused | "What problems do you face?" |
+
+### Contextual Inquiry
+
+Observe users in their natural environment.
+
+#### Protocol
+
+```
+PREPARATION:
+- Define focus areas
+- Prepare observation guide
+- Get necessary permissions
+- Test recording equipment
+
+DURING OBSERVATION:
+1. Arrive early, set up quietly
+2. Start with brief introduction
+3. Observe first, ask questions after
+4. Note everything (actions, environment, emotions)
+5. Use "teach me" framing
+
+OBSERVATION GUIDE:
+- What are they trying to accomplish?
+- What tools are they using?
+- What workarounds do they employ?
+- What frustrates them?
+- What's in their physical environment?
+- Who do they interact with?
+
+DEBRIEF:
+- Review observations with participant
+- Ask clarifying questions
+- Confirm interpretations
 ```
 
-## Basic Schema Patterns
+#### Observation Notes Template
 
-### Simple Table
-
-```typescript
-// packages/database/src/db/schema/example.ts
-import { pgTable, text, integer, timestamp, boolean } from "drizzle-orm/pg-core";
-
-export const examples = pgTable("examples", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  description: text("description"),
-  count: integer("count").default(0).notNull(),
-  isActive: boolean("is_active").default(true).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Participant: [ID]     Date: [Date]     Location: [Where]    │
+├─────────────────────────────────────────────────────────────┤
+│ Task: [What they were doing]                                │
+│ Time: [How long it took]                                    │
+├─────────────────────────────────────────────────────────────┤
+│ Actions Observed:                                           │
+│ - [Step 1]                                                  │
+│ - [Step 2]                                                  │
+├─────────────────────────────────────────────────────────────┤
+│ Tools Used:                                                 │
+│ - [Tool 1]: [How used]                                      │
+│ - [Tool 2]: [How used]                                      │
+├─────────────────────────────────────────────────────────────┤
+│ Pain Points:                                                │
+│ - [Frustration observed]                                    │
+├─────────────────────────────────────────────────────────────┤
+│ Quotes:                                                     │
+│ - "[Direct quote]"                                          │
+├─────────────────────────────────────────────────────────────┤
+│ Opportunities:                                              │
+│ - [Potential improvement]                                   │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-### Table with Relationships
+### Think-Aloud Protocol
 
-```typescript
-import { pgTable, text, integer, timestamp } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
-import { users } from "./users";
+Have users verbalize thoughts while performing tasks.
 
-export const posts = pgTable("posts", {
-  id: text("id").primaryKey(),
-  title: text("title").notNull(),
-  content: text("content").notNull(),
-  authorId: text("author_id").notNull().references(() => users.id),
-  publishedAt: timestamp("published_at"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+```
+SETUP:
+"I'd like you to complete some tasks while telling me what you're
+thinking. There are no wrong answers - I'm testing the design,
+not you. Please say out loud whatever you're looking at, thinking,
+or feeling as you go through."
 
-// Define relations
-export const postsRelations = relations(posts, ({ one }) => ({
-  author: one(users, {
-    fields: [posts.authorId],
-    references: [users.id],
-  }),
-}));
+PROMPTS DURING SESSION:
+- "What are you thinking right now?"
+- "What do you expect to happen?"
+- "What are you looking for?"
+- "Why did you click there?"
+- "How does this compare to what you expected?"
+
+AVOID:
+- Helping them complete tasks
+- Confirming if they're right/wrong
+- Explaining how things work
+- Interrupting their flow too much
 ```
 
-### Table with Indexes
+## Research Synthesis
 
-```typescript
-import { pgTable, text, integer, timestamp, index, uniqueIndex } from "drizzle-orm/pg-core";
+### Affinity Mapping
 
-export const cars = pgTable("cars", {
-  id: text("id").primaryKey(),
-  make: text("make").notNull(),
-  model: text("model").notNull(),
-  year: integer("year").notNull(),
-  registrationDate: timestamp("registration_date").notNull(),
-}, (table) => ({
-  // Single column index
-  makeIdx: index("cars_make_idx").on(table.make),
+Group observations to find patterns.
 
-  // Composite index
-  makeModelIdx: index("cars_make_model_idx").on(table.make, table.model),
+```
+PROCESS:
 
-  // Unique index
-  registrationIdx: uniqueIndex("cars_registration_idx").on(table.registrationDate),
-}));
+1. CAPTURE (Individual)
+   - Write one observation per sticky note
+   - Use participant quotes
+   - Include source identifier
+
+2. CLUSTER (Group)
+   - Spread all notes on wall/board
+   - Group by similarity
+   - Don't pre-define categories
+   - Move notes until clusters emerge
+
+3. NAME (Group)
+   - Label each cluster
+   - Labels should describe the theme
+   - Not too broad, not too specific
+
+4. PRIORITIZE
+   - Which themes appear most frequently?
+   - Which have highest impact?
+   - Which are most actionable?
+
+EXAMPLE CLUSTERS:
+┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+│ Trust       │ │ Efficiency  │ │ Support     │
+│ Concerns    │ │ Pain Points │ │ Needs       │
+├─────────────┤ ├─────────────┤ ├─────────────┤
+│ "I don't    │ │ "Takes too  │ │ "Wish I     │
+│ know if     │ │ many clicks"│ │ could ask   │
+│ it's safe"  │ │             │ │ someone"    │
+│             │ │ "Have to    │ │             │
+│ "Where's    │ │ enter same  │ │ "Help docs  │
+│ my data?"   │ │ info twice" │ │ are useless"│
+└─────────────┘ └─────────────┘ └─────────────┘
 ```
 
-## Existing Schema Examples
+### Insight Generation
 
-### Cars Table
+Transform observations into actionable insights.
 
-```typescript
-// packages/database/src/db/schema/cars.ts
-import { pgTable, text, integer, timestamp, index } from "drizzle-orm/pg-core";
+```
+INSIGHT FORMULA:
 
-export const cars = pgTable("cars", {
-  id: text("id").primaryKey(),
-  make: text("make").notNull(),
-  model: text("model"),
-  vehicleClass: text("vehicle_class"),
-  fuelType: text("fuel_type"),
-  month: text("month").notNull(),
-  number: integer("number").default(0).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-}, (table) => ({
-  monthIdx: index("cars_month_idx").on(table.month),
-  makeIdx: index("cars_make_idx").on(table.make),
-}));
+[User group] needs [need] because [motivation/context],
+but currently [pain point], which means [consequence].
+
+EXAMPLE:
+
+First-time users need clear guidance during setup because
+they're unfamiliar with the product, but currently the
+onboarding is overwhelming with too many options, which
+means they abandon before experiencing value.
+
+VALIDATION CHECKLIST:
+- [ ] Based on evidence from multiple participants
+- [ ] Identifies a real need (not a solution)
+- [ ] Explains the underlying motivation
+- [ ] Connects to business impact
+- [ ] Is actionable
 ```
 
-### COE Table
+## Personas
 
-```typescript
-// packages/database/src/db/schema/coe.ts
-import { pgTable, text, integer, timestamp, numeric, index } from "drizzle-orm/pg-core";
+### Persona Creation
 
-export const coe = pgTable("coe", {
-  id: text("id").primaryKey(),
-  biddingNo: integer("bidding_no").notNull(),
-  month: text("month").notNull(),
-  vehicleClass: text("vehicle_class").notNull(),
-  quota: integer("quota").default(0).notNull(),
-  bidsReceived: integer("bids_received").default(0).notNull(),
-  premium: numeric("premium", { precision: 10, scale: 2 }).default("0").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-}, (table) => ({
-  biddingNoIdx: index("coe_bidding_no_idx").on(table.biddingNo),
-  monthIdx: index("coe_month_idx").on(table.month),
-}));
+Research-based archetypes representing user segments.
+
+#### Persona Template
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [PHOTO PLACEHOLDER]                                          │
+│                                                              │
+│ NAME: [Fictional name]                                       │
+│ TITLE: [Role/context]                                        │
+│ ARCHETYPE: [2-3 word descriptor]                            │
+├─────────────────────────────────────────────────────────────┤
+│ QUOTE:                                                       │
+│ "[Characteristic quote from research]"                       │
+├─────────────────────────────────────────────────────────────┤
+│ DEMOGRAPHICS:                                                │
+│ Age: [Range]     Experience: [Level]                        │
+│ Context: [Work/home environment]                            │
+├─────────────────────────────────────────────────────────────┤
+│ GOALS:                                                       │
+│ - Primary: [Main objective]                                  │
+│ - Secondary: [Supporting objective]                          │
+├─────────────────────────────────────────────────────────────┤
+│ PAIN POINTS:                                                 │
+│ - [Frustration 1]                                           │
+│ - [Frustration 2]                                           │
+│ - [Frustration 3]                                           │
+├─────────────────────────────────────────────────────────────┤
+│ BEHAVIORS:                                                   │
+│ - [How they approach problems]                              │
+│ - [Tools/resources they use]                                │
+│ - [Decision-making patterns]                                │
+├─────────────────────────────────────────────────────────────┤
+│ SCENARIO:                                                    │
+│ [Brief story of them using your product]                    │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-### Posts Table
+#### Persona Development Process
 
-```typescript
-// packages/database/src/db/schema/posts.ts
-import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+```
+1. IDENTIFY VARIABLES
+   - What attributes differentiate users?
+   - Goals, behaviors, pain points, context
 
-export const posts = pgTable("posts", {
-  id: text("id").primaryKey(),
-  title: text("title").notNull(),
-  slug: text("slug").notNull().unique(),
-  content: text("content").notNull(),
-  excerpt: text("excerpt"),
-  published: boolean("published").default(false).notNull(),
-  publishedAt: timestamp("published_at"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-}, (table) => ({
-  slugIdx: index("posts_slug_idx").on(table.slug),
-  publishedAtIdx: index("posts_published_at_idx").on(table.publishedAt),
-}));
+2. ANALYZE PATTERNS
+   - Cluster research participants
+   - Find natural groupings
+   - Validate with quantitative data if available
+
+3. CREATE PERSONAS
+   - 3-5 personas is typical
+   - Each represents a distinct segment
+   - Include primary, secondary, negative persona
+
+4. VALIDATE
+   - Review with stakeholders
+   - Check against additional research
+   - Refine based on feedback
+
+5. ACTIVATE
+   - Share widely
+   - Reference in design discussions
+   - Update as you learn more
 ```
 
-## Column Types
+#### Persona Types
 
-### Text Types
+| Type | Purpose | When to Create |
+|------|---------|----------------|
+| **Primary** | Main design target | Always |
+| **Secondary** | Important but not primary focus | When segments differ significantly |
+| **Negative** | Who we're NOT designing for | When edge cases distract |
+| **Proto-persona** | Hypothesis before research | Early exploration |
 
-```typescript
-import { pgTable, text, varchar, char } from "drizzle-orm/pg-core";
+## Journey Mapping
 
-export const examples = pgTable("examples", {
-  // Unlimited text
-  description: text("description"),
+### Journey Map Structure
 
-  // Limited varchar
-  email: varchar("email", { length: 255 }),
-
-  // Fixed length
-  code: char("code", { length: 10 }),
-});
+```
+┌─────────────────────────────────────────────────────────────┐
+│ JOURNEY MAP: [User Type] - [Scenario]                       │
+├─────────────────────────────────────────────────────────────┤
+│ STAGE      │ Awareness │ Consider │ Purchase │ Use │ Renew │
+├─────────────────────────────────────────────────────────────┤
+│ ACTIONS    │           │          │          │     │       │
+│ What they  │ • Sees ad │ • Visits │ • Selects│     │       │
+│ do         │ • Asks    │   site   │   plan   │     │       │
+│            │   friend  │ • Reads  │ • Enters │     │       │
+│            │           │   reviews│   payment│     │       │
+├─────────────────────────────────────────────────────────────┤
+│ THOUGHTS   │           │          │          │     │       │
+│ What they  │ "I need   │ "Is this │ "This    │     │       │
+│ think      │ to solve  │ the right│ better be│     │       │
+│            │ this      │ choice?" │ worth it"│     │       │
+│            │ problem"  │          │          │     │       │
+├─────────────────────────────────────────────────────────────┤
+│ EMOTIONS   │    😊     │    😐    │    😟    │     │       │
+│ How they   │ Hopeful   │ Confused │ Anxious  │     │       │
+│ feel       │           │          │          │     │       │
+├─────────────────────────────────────────────────────────────┤
+│ TOUCH-     │ Social    │ Website  │ Checkout │     │       │
+│ POINTS     │ media     │ Reviews  │ Email    │     │       │
+├─────────────────────────────────────────────────────────────┤
+│ PAIN       │           │ Too many │ Payment  │     │       │
+│ POINTS     │           │ options  │ issues   │     │       │
+├─────────────────────────────────────────────────────────────┤
+│ OPPORT-    │           │ Compare  │ Guest    │     │       │
+│ UNITIES    │           │ feature  │ checkout │     │       │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-### Numeric Types
+### Journey Mapping Process
 
-```typescript
-import { pgTable, integer, bigint, numeric, real, doublePrecision } from "drizzle-orm/pg-core";
+```
+1. DEFINE SCOPE
+   - Which persona?
+   - Which scenario?
+   - Start and end points?
 
-export const examples = pgTable("examples", {
-  // Integer types
-  count: integer("count"),
-  bigCount: bigint("big_count", { mode: "number" }),  // or "bigint" for BigInt
+2. GATHER DATA
+   - Interview transcripts
+   - Analytics data
+   - Support tickets
+   - Observation notes
 
-  // Decimal types
-  price: numeric("price", { precision: 10, scale: 2 }),  // 10 digits, 2 decimal
+3. MAP THE STAGES
+   - What are the major phases?
+   - What triggers transitions?
 
-  // Floating point
-  rating: real("rating"),
-  coordinate: doublePrecision("coordinate"),
-});
+4. FILL IN LAYERS
+   - Actions at each stage
+   - Thoughts and questions
+   - Emotional state
+   - Touchpoints
+
+5. IDENTIFY OPPORTUNITIES
+   - Where are the pain points?
+   - Where can we improve?
+   - What's the priority?
+
+6. VALIDATE & SHARE
+   - Review with stakeholders
+   - Share findings
+   - Define action items
 ```
 
-### Date/Time Types
+## Research Planning
 
-```typescript
-import { pgTable, timestamp, date, time } from "drizzle-orm/pg-core";
+### Research Plan Template
 
-export const examples = pgTable("examples", {
-  // Timestamp with timezone
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+```markdown
+# Research Plan: [Study Name]
 
-  // Timestamp without timezone
-  scheduledAt: timestamp("scheduled_at", { withTimezone: false }),
+## Objectives
+- Primary: [Main question to answer]
+- Secondary: [Additional questions]
 
-  // Date only
-  birthDate: date("birth_date"),
+## Participants
+- Target: [User segment]
+- Sample size: [Number]
+- Recruitment: [How to find them]
+- Screener criteria: [Inclusion/exclusion]
 
-  // Time only
-  openingTime: time("opening_time"),
-});
+## Methodology
+- Method: [Interview/observation/testing]
+- Duration: [Session length]
+- Location: [Remote/in-person]
+- Facilitator: [Who]
+
+## Discussion Guide
+- [Link to guide]
+
+## Timeline
+| Phase | Dates |
+|-------|-------|
+| Recruitment | [Dates] |
+| Sessions | [Dates] |
+| Analysis | [Dates] |
+| Reporting | [Date] |
+
+## Deliverables
+- [ ] Raw notes
+- [ ] Synthesis document
+- [ ] Presentation
+- [ ] Recommendations
 ```
 
-### Boolean and JSON
+## Reporting Research
 
-```typescript
-import { pgTable, boolean, json, jsonb } from "drizzle-orm/pg-core";
+### Research Report Structure
 
-export const examples = pgTable("examples", {
-  // Boolean
-  isActive: boolean("is_active").default(true),
+```markdown
+# Research Findings: [Study Name]
 
-  // JSON (slower, stores as text)
-  settings: json("settings"),
+## Executive Summary
+[1-paragraph overview for stakeholders who won't read details]
 
-  // JSONB (faster, binary format)
-  metadata: jsonb("metadata").$type<{ key: string; value: any }>(),
-});
+## Background
+- Objectives
+- Methodology
+- Participants (demographics, no PII)
+
+## Key Findings
+
+### Finding 1: [Headline]
+**Evidence**: [3+ supporting data points]
+**Impact**: [Why this matters]
+**Recommendation**: [What to do]
+
+### Finding 2: [Headline]
+...
+
+## Detailed Observations
+[Supporting details, quotes, examples]
+
+## Recommendations Summary
+| Priority | Finding | Recommendation | Effort |
+|----------|---------|----------------|--------|
+| 1 | [Finding] | [Action] | [Est.] |
+
+## Appendix
+- Screener
+- Discussion guide
+- Participant list (anonymized)
 ```
 
-### Array Types
-
-```typescript
-import { pgTable, text } from "drizzle-orm/pg-core";
-
-export const examples = pgTable("examples", {
-  tags: text("tags").array(),
-  emails: text("emails").array().notNull().default([]),
-});
-```
-
-## Relationships
-
-### One-to-Many
-
-```typescript
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
-
-// Users table
-export const users = pgTable("users", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-});
-
-// Posts table (many posts belong to one user)
-export const posts = pgTable("posts", {
-  id: text("id").primaryKey(),
-  title: text("title").notNull(),
-  authorId: text("author_id").notNull().references(() => users.id),
-});
-
-// Define relations
-export const usersRelations = relations(users, ({ many }) => ({
-  posts: many(posts),
-}));
-
-export const postsRelations = relations(posts, ({ one }) => ({
-  author: one(users, {
-    fields: [posts.authorId],
-    references: [users.id],
-  }),
-}));
-```
-
-### Many-to-Many
-
-```typescript
-import { pgTable, text, primaryKey } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
-
-// Posts table
-export const posts = pgTable("posts", {
-  id: text("id").primaryKey(),
-  title: text("title").notNull(),
-});
-
-// Tags table
-export const tags = pgTable("tags", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-});
-
-// Junction table
-export const postsToTags = pgTable("posts_to_tags", {
-  postId: text("post_id").notNull().references(() => posts.id),
-  tagId: text("tag_id").notNull().references(() => tags.id),
-}, (table) => ({
-  pk: primaryKey({ columns: [table.postId, table.tagId] }),
-}));
-
-// Define relations
-export const postsRelations = relations(posts, ({ many }) => ({
-  postsToTags: many(postsToTags),
-}));
-
-export const tagsRelations = relations(tags, ({ many }) => ({
-  postsToTags: many(postsToTags),
-}));
-
-export const postsToTagsRelations = relations(postsToTags, ({ one }) => ({
-  post: one(posts, {
-    fields: [postsToTags.postId],
-    references: [posts.id],
-  }),
-  tag: one(tags, {
-    fields: [postsToTags.tagId],
-    references: [tags.id],
-  }),
-}));
-```
-
-## Constraints
-
-### Primary Keys
-
-```typescript
-import { pgTable, text, integer, primaryKey } from "drizzle-orm/pg-core";
-
-// Single column primary key
-export const users = pgTable("users", {
-  id: text("id").primaryKey(),
-});
-
-// Composite primary key
-export const userRoles = pgTable("user_roles", {
-  userId: text("user_id").notNull(),
-  roleId: text("role_id").notNull(),
-}, (table) => ({
-  pk: primaryKey({ columns: [table.userId, table.roleId] }),
-}));
-```
-
-### Unique Constraints
-
-```typescript
-import { pgTable, text, unique } from "drizzle-orm/pg-core";
-
-export const users = pgTable("users", {
-  id: text("id").primaryKey(),
-  email: text("email").notNull().unique(),  // Column-level unique
-  username: text("username").notNull(),
-}, (table) => ({
-  // Table-level unique constraint
-  uniqueUsername: unique("users_username_unique").on(table.username),
-}));
-```
-
-### Foreign Keys
-
-```typescript
-import { pgTable, text, foreignKey } from "drizzle-orm/pg-core";
-
-export const posts = pgTable("posts", {
-  id: text("id").primaryKey(),
-  authorId: text("author_id").notNull(),
-}, (table) => ({
-  // Inline foreign key
-  authorFk: foreignKey({
-    columns: [table.authorId],
-    foreignColumns: [users.id],
-  }).onDelete("cascade"),  // Options: cascade, set null, restrict, no action
-}));
-
-// Or use references() shorthand
-export const posts2 = pgTable("posts", {
-  id: text("id").primaryKey(),
-  authorId: text("author_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-});
-```
-
-### Check Constraints
-
-```typescript
-import { pgTable, integer, check, sql } from "drizzle-orm/pg-core";
-
-export const products = pgTable("products", {
-  id: text("id").primaryKey(),
-  price: integer("price").notNull(),
-  discount: integer("discount").notNull(),
-}, (table) => ({
-  // Ensure discount is less than price
-  priceCheck: check("price_check", sql`${table.price} > ${table.discount}`),
-}));
-```
-
-## Indexes
-
-### Single Column Index
-
-```typescript
-import { pgTable, text, index } from "drizzle-orm/pg-core";
-
-export const cars = pgTable("cars", {
-  id: text("id").primaryKey(),
-  make: text("make").notNull(),
-}, (table) => ({
-  makeIdx: index("cars_make_idx").on(table.make),
-}));
-```
-
-### Composite Index
-
-```typescript
-export const cars = pgTable("cars", {
-  id: text("id").primaryKey(),
-  make: text("make").notNull(),
-  model: text("model").notNull(),
-}, (table) => ({
-  makeModelIdx: index("cars_make_model_idx").on(table.make, table.model),
-}));
-```
-
-### Unique Index
-
-```typescript
-import { uniqueIndex } from "drizzle-orm/pg-core";
-
-export const users = pgTable("users", {
-  id: text("id").primaryKey(),
-  email: text("email").notNull(),
-}, (table) => ({
-  emailIdx: uniqueIndex("users_email_idx").on(table.email),
-}));
-```
-
-### Partial Index
-
-```typescript
-import { sql } from "drizzle-orm";
-
-export const posts = pgTable("posts", {
-  id: text("id").primaryKey(),
-  published: boolean("published").default(false),
-  publishedAt: timestamp("published_at"),
-}, (table) => ({
-  // Index only published posts
-  publishedIdx: index("posts_published_idx")
-    .on(table.publishedAt)
-    .where(sql`${table.published} = true`),
-}));
-```
-
-## Schema Workflow
-
-### 1. Create Schema File
-
-```typescript
-// packages/database/src/db/schema/my-table.ts
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
-
-export const myTable = pgTable("my_table", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-```
-
-### 2. Export from Index
-
-```typescript
-// packages/database/src/db/schema/index.ts
-export * from "./cars";
-export * from "./coe";
-export * from "./posts";
-export * from "./my-table";  // Add new export
-```
-
-### 3. Generate Migration
-
-```bash
-cd packages/database
-
-# Generate migration from schema changes
-pnpm db:generate
-
-# This creates a new migration file in migrations/
-```
-
-### 4. Review Migration
-
-Check generated SQL in `migrations/XXXX_migration_name.sql`:
-
-```sql
-CREATE TABLE IF NOT EXISTS "my_table" (
-  "id" text PRIMARY KEY NOT NULL,
-  "name" text NOT NULL,
-  "created_at" timestamp DEFAULT now() NOT NULL
-);
-```
-
-### 5. Run Migration
-
-```bash
-# Apply migration to database
-pnpm db:migrate
-```
-
-## Common Schema Patterns
-
-### Soft Delete
-
-```typescript
-export const posts = pgTable("posts", {
-  id: text("id").primaryKey(),
-  title: text("title").notNull(),
-  deletedAt: timestamp("deleted_at"),  // null = not deleted
-});
-
-// Query only non-deleted posts
-const activePosts = await db.query.posts.findMany({
-  where: isNull(posts.deletedAt),
-});
-```
-
-### Timestamps
-
-```typescript
-export const posts = pgTable("posts", {
-  id: text("id").primaryKey(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
-
-// Update updatedAt on every change
-await db.update(posts)
-  .set({
-    title: "New Title",
-    updatedAt: new Date(),
-  })
-  .where(eq(posts.id, postId));
-```
-
-### Enum Types
-
-```typescript
-import { pgTable, text, pgEnum } from "drizzle-orm/pg-core";
-
-// Define enum
-export const roleEnum = pgEnum("role", ["admin", "user", "guest"]);
-
-export const users = pgTable("users", {
-  id: text("id").primaryKey(),
-  role: roleEnum("role").default("user").notNull(),
-});
-```
-
-### UUID Primary Keys
-
-```typescript
-import { pgTable, uuid, text } from "drizzle-orm/pg-core";
-
-export const users = pgTable("users", {
-  id: uuid("id").defaultRandom().primaryKey(),  // Auto-generate UUID
-  name: text("name").notNull(),
-});
-```
-
-## Performance Optimization
-
-### Choose Appropriate Indexes
-
-```typescript
-// ✅ Index frequently queried columns
-export const cars = pgTable("cars", {
-  make: text("make").notNull(),
-  registrationDate: timestamp("registration_date").notNull(),
-}, (table) => ({
-  makeIdx: index().on(table.make),              // For: WHERE make = 'Toyota'
-  dateIdx: index().on(table.registrationDate),  // For: WHERE registrationDate > '2024-01-01'
-}));
-
-// ❌ Don't index every column
-// Only index columns used in WHERE, JOIN, ORDER BY
-```
-
-### Use Appropriate Data Types
-
-```typescript
-// ✅ Use smallest appropriate type
-count: integer("count"),              // -2B to 2B
-price: numeric("price", { precision: 10, scale: 2 }),  // $99,999,999.99
-
-// ❌ Don't use text for everything
-count: text("count"),  // Wastes space, slower queries
-```
-
-### Denormalization for Performance
-
-```typescript
-// Store computed values to avoid expensive joins
-export const posts = pgTable("posts", {
-  id: text("id").primaryKey(),
-  authorId: text("author_id").notNull(),
-  authorName: text("author_name").notNull(),  // Denormalized from users table
-  commentsCount: integer("comments_count").default(0),  // Denormalized count
-});
-```
-
-## Testing Schemas
-
-```typescript
-// packages/database/src/db/schema/__tests__/cars.test.ts
-import { describe, it, expect } from "vitest";
-import { db } from "../../index";
-import { cars } from "../cars";
-
-describe("Cars Schema", () => {
-  it("inserts and queries car data", async () => {
-    const [car] = await db.insert(cars).values({
-      id: "test-1",
-      make: "Toyota",
-      model: "Camry",
-      month: "2024-01",
-      number: 100,
-    }).returning();
-
-    expect(car.make).toBe("Toyota");
-    expect(car.number).toBe(100);
-  });
-});
-```
-
-## References
-
-- Drizzle ORM Documentation: Use Context7 for latest docs
-- Related files:
-  - `packages/database/src/db/schema/` - All schema files
-  - `packages/database/drizzle.config.ts` - Drizzle configuration
-  - `packages/database/CLAUDE.md` - Database package documentation
+## Anti-Patterns
+
+| Anti-Pattern | Problem | Solution |
+|--------------|---------|----------|
+| **Confirmation Bias** | Seeking data that confirms beliefs | Ask open questions, look for disconfirming evidence |
+| **Leading Questions** | Influencing responses | Review questions for bias |
+| **Recency Effect** | Overweighting last interview | Synthesize across all participants |
+| **Sample Bias** | Wrong participants | Carefully screen, diverse recruitment |
+| **Hypothetical Questions** | "Would you...?" | Ask about past behavior instead |
+| **Shelf Research** | No action on findings | Include action items, follow up |
 
 ## Best Practices
 
-1. **Naming**: Use camelCase for columns, snake_case for table names
-2. **Not Null**: Use .notNull() for required fields
-3. **Defaults**: Provide sensible defaults where appropriate
-4. **Indexes**: Index columns used in WHERE, JOIN, ORDER BY
-5. **Relationships**: Define relations for type-safe queries
-6. **Timestamps**: Always include createdAt/updatedAt
-7. **Constraints**: Use unique, foreign key constraints
-8. **Migrations**: Always review generated migrations before running
+1. **Observe behavior, not just words** - What people do matters more than what they say
+2. **Ask about the past** - "When did you last..." not "Would you..."
+3. **Follow the emotion** - Pain points reveal opportunities
+4. **Triangulate** - Validate findings across methods
+5. **Share broadly** - Research only has value if it influences decisions
+
+## References
+
+- [Interview Question Bank](examples/interview-questions.md) - Sample questions by topic
+- [Persona Examples](examples/personas.md) - Well-crafted persona examples
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
