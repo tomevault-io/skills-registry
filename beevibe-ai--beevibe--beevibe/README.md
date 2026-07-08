@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [beevibe-ai/beevibe](https://github.com/beevibe-ai/beevibe/tree/main/skills/beevibe-use-repo/SKILL.md)
+Original source: [beevibe-ai/beevibe](https://github.com/beevibe-ai/beevibe/tree/main/skills/beevibe-verify-pr/SKILL.md)
 
 ---
 
