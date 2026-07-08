@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [EliasOulkadi/shokunin](https://github.com/EliasOulkadi/shokunin/tree/main/.pack/skills/db-sculptor/SKILL.md)
+Original source: [EliasOulkadi/shokunin](https://github.com/EliasOulkadi/shokunin/tree/main/.pack/skills/motion-craft/SKILL.md)
 
 ---
 
