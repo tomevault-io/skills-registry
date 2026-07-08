@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [deepgram/deepgram-go-sdk](https://github.com/deepgram/deepgram-go-sdk/tree/main/.agents/skills/deepgram-go-conversational-stt/SKILL.md)
+Original source: [deepgram/deepgram-go-sdk](https://github.com/deepgram/deepgram-go-sdk/tree/main/.agents/skills/deepgram-go-audio-intelligence/SKILL.md)
 
 ---
 
