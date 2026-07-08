@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [leboncoin/spark-web](https://github.com/leboncoin/spark-web/tree/main/.cursor/skills/nx-generate/SKILL.md)
+Original source: [leboncoin/spark-web](https://github.com/leboncoin/spark-web/tree/main/.cursor/skills/nx-workspace/SKILL.md)
 
 ---
 
