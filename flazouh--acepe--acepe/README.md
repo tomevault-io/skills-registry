@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [flazouh/acepe](https://github.com/flazouh/acepe/tree/main/.github/skills/svelte-core-bestpractices/SKILL.md)
+Original source: [flazouh/acepe](https://github.com/flazouh/acepe/tree/main/.github/skills/refactor-method-complexity-reduce/SKILL.md)
 
 ---
 
