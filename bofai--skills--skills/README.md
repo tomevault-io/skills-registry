@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [BofAI/skills](https://github.com/BofAI/skills/tree/main/usdd-skill/SKILL.md)
+Original source: [BofAI/skills](https://github.com/BofAI/skills/tree/main/x402-payment/SKILL.md)
 
 ---
 
