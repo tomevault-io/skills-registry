@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [GoogleCloudPlatform/secops-toolkit](https://github.com/GoogleCloudPlatform/secops-toolkit/tree/main/blueprints/secops-ai-migration-helper/.agents/skills/migration_helper_author_notes/SKILL.md)
+Original source: [GoogleCloudPlatform/secops-toolkit](https://github.com/GoogleCloudPlatform/secops-toolkit/tree/main/blueprints/secops-ai-migration-helper/.agents/skills/migration_helper_generate_rule/SKILL.md)
 
 ---
 
