@@ -1,682 +1,228 @@
 ---
-name: skill-orchestrator
-version: 1.0.0
-author: claude-command-control
-created: 2025-11-22
-status: active
-complexity: complex
+name: uploading-to-imgur
+description: Upload images to Imgur via API and get shareable links. Supports anonymous upload (Client ID) and authenticated upload (Access Token). Returns detailed JSON with image URLs, delete links, dimensions, and metadata. Use when the user needs to upload images to Imgur, share images publicly, or get image hosting URLs. Use when this capability is needed.
+metadata:
+  author: majiayu000
 ---
 
-# Skill Orchestrator
+# Uploading to Imgur
 
-## Description
-Coordinates execution of multiple specialized skills in complex workflows, managing dependencies, parallel execution, and result synthesis.
+Upload images to Imgur and get shareable links with detailed metadata. Supports both anonymous and authenticated uploads.
 
-## When to Use This Skill
-- When workflow requires 3+ different specialized skills
-- When skills have dependencies on each other's outputs
-- When parallel skill execution would improve performance
-- When complex multi-phase workflow needs coordination
+## Quick start
 
-## When NOT to Use This Skill
-- For simple single-skill workflows
-- For agent-only workflows (use MULTI_AGENT_PLAN.md)
-- For simple sequential skill calls (just call them directly)
+### Upload a single image
 
-## Prerequisites
-- All required skills available and tested
-- Understanding of skill dependencies
-- Clear workflow requirements
-- Performance targets defined
-
-## Workflow
-
-### Phase 1: Workflow Analysis
-
-#### Step 1.1: Decompose Requirements
-
-Create workflow specification:
-
+```bash
+python scripts/upload.py image.png
 ```
 
+Returns:
+- Public image URL
+- Delete link (for removing the image later)
+- Image metadata (size, dimensions, type)
 
-## Workflow Spec: [Workflow Name]
+### Upload multiple images
 
-**Goal**: [High-level objective]
-
-**Skills Involved:**
-
-1. 
-2. 
-3. 
-4. 
-
-**Dependency Graph:**
-
-```
-skill-1 (start)
-    ↓
-skill-2 (depends on skill-1)
-    ├→ skill-3 (parallel A, depends on skill-2)
-    └→ skill-4 (parallel B, depends on skill-2)
-        ↓
-skill-5 (depends on skill-3 AND skill-4)
-    ↓
-skill-6 (finalization)
+```bash
+python scripts/upload.py photo1.png photo2.jpg photo3.gif
 ```
 
-**Success Criteria:**
+All results are returned as JSON with detailed information for each upload.
 
-- [Criterion 1]
-- [Criterion 2]
+## Configuration
 
+### Initial setup
+
+Set your Imgur Client ID as environment variable:
+
+```bash
+export IMGUR_CLIENT_ID="your_client_id_here"
 ```
 
-#### Step 1.2: Identify Parallelization Opportunities
+### Get your Client ID
 
-Analyze dependency graph for:
-- Independent skills that can run parallel
-- Blocking dependencies
-- Resource constraints
+See [AUTHENTICATION.md](AUTHENTICATION.md) for step-by-step guide to:
+1. Register an Imgur application
+2. Get your Client ID
+3. (Optional) Get Access Token for authenticated uploads
 
-**Parallelization Plan:**
+**Quick link:** https://api.imgur.com/oauth2/addclient
+
+## Upload modes
+
+### Anonymous upload (Client ID)
+
+Default mode. Images are not associated with your account.
+
+```bash
+export IMGUR_CLIENT_ID="your_client_id"
+python scripts/upload.py image.png
 ```
 
-**Parallel Groups:**
+**Pros:**
+- Simple setup
+- Client ID never expires
+- No account management needed
 
-- Group 1: [skill-3, skill-4] (both depend only on skill-2)
-- Group 2: [skill-7, skill-8] (independent of each other)
+**Cons:**
+- Cannot manage images in your account
+- Can only delete via delete link
 
-**Sequential Constraints:**
+### Authenticated upload (Access Token)
 
-- skill-5 MUST wait for Group 1 completion
-- skill-6 MUST wait for skill-5
+Images are uploaded to your Imgur account.
 
+```bash
+export IMGUR_ACCESS_TOKEN="your_access_token"
+python scripts/upload.py image.png
 ```
 
-### Phase 2: Execution Planning
+**Pros:**
+- Images appear in your Imgur account
+- Manage images through Imgur web interface
+- Can edit title, description, etc.
 
-#### Step 2.1: Create Execution Plan
+**Cons:**
+- Token expires after 28 days
+- More complex OAuth setup
 
-```
+## Output format
 
-
-## Execution Plan
-
-### Phase 1: Initialization
-
-**Skills**: [skill-1](%5BPurpose%5D)
-**Estimated Duration**: [X min]
-**Output**: [Description]
-
-### Phase 2: Parallel Processing
-
-**Skills**: [skill-3, skill-4] (parallel)
-**Dependencies**: Phase 1 complete
-**Estimated Duration**: max([skill-3 duration], [skill-4 duration])
-**Outputs**:
-
-- skill-3: [output]
-- skill-4: [output]
-
-
-### Phase 3: Synthesis
-
-**Skills**: [skill-5]
-**Dependencies**: Phase 2 complete
-**Inputs**: Outputs from skill-3 AND skill-4
-**Estimated Duration**: [Y min]
-**Output**: [Description]
-
-### Phase 4: Finalization
-
-**Skills**: [skill-6]
-**Dependencies**: Phase 3 complete
-**Estimated Duration**: [Z min]
-**Output**: [Final deliverable]
-
-**Total Estimated Duration**: [X + max(skill-3,skill-4) + Y + Z] min
-
-```
-
-#### Step 2.2: Resource Allocation
-
-```
-
-
-## Resource Budget
-
-**Token Budget**: [Total tokens]
-
-- skill-1: [tokens]
-- skill-2: [tokens]
-- ...
-- Orchestration overhead: [tokens]
-
-**Time Budget**: [Total time]
-
-- Sequential time: [sum of sequential]
-- Parallelization savings: [time saved]
-- Net time: [actual estimated time]
-
-**External Resources:**
-
-- MCP Server calls: [count]
-- Agent invocations: [count]
-
-```
-
-### Phase 3: Orchestrated Execution
-
-#### Step 3.1: Execute Sequential Skills
-
-For each sequential skill:
-
-```
-
-
-### Execute: [skill-name]
-
-1. **Prepare Input:**
+The script returns JSON with complete information:
 
 ```json
 {
-  "parameter1": "value from previous skill or requirement",
-  "parameter2": "value",
-  "context": {
-    // Context from previous steps
-  }
-}
-```
-
-2. **Invoke Skill:**
-"Use [skill-name] skill with the input above"
-3. **Capture Output:**
-
-```json
-{
-  "execution_id": "[skill-exec-id]",
-  "status": "success | failure",
-  "output": {
-    // Skill output
-  },
-  "metadata": {
-    "duration": "[X min]",
-    "tokens_used": "[Y]"
-  }
-}
-```
-
-4. **Validate Output:**
-    - [ ] Status = success
-    - [ ] Output format matches expected
-    - [ ] Quality criteria met
-5. **Store for Next Phase:**
-Save output to orchestration context:
-
-```json
-{
-  "workflow_context": {
-    "[skill-name]_output": {
-      // Output data
-    }
-  }
-}
-```
-
-```
-
-#### Step 3.2: Execute Parallel Skills
-
-For parallel skill groups:
-
-```
-
-
-### Execute Parallel Group: [group-name]
-
-**Skills in Group:** [skill-A, skill-B, skill-C]
-
-**Launch All:**
-
-1. Prepare inputs for each skill
-2. Invoke all skills concurrently:
-    - "Use skill-A with input-A"
-    - "Use skill-B with input-B"
-    - "Use skill-C with input-C"
-
-**Track Completion:**
-
-```json
-{
-  "parallel_group_status": {
-    "skill-A": "running",
-    "skill-B": "running",
-    "skill-C": "running"
-  }
-}
-```
-
-**Wait for All Completions:**
-Monitor each skill until all complete
-
-**Collect Results:**
-
-```json
-{
-  "parallel_group_results": {
-    "skill-A": {
-      "status": "success",
-      "output": {},
-      "duration": "X min"
-    },
-    "skill-B": {
-      "status": "success",
-      "output": {},
-      "duration": "Y min"
-    },
-    "skill-C": {
-      "status": "success",
-      "output": {},
-      "duration": "Z min"
-    }
-  },
-  "group_duration": "max(X,Y,Z) min"
-}
-```
-
-**Validate All Outputs:**
-
-- [ ] All skills completed successfully
-- [ ] All outputs valid
-- [ ] Ready for next phase
-
-```
-
-#### Step 3.3: Handle Errors and Recovery
-
-```
-
-
-### Error Handling
-
-**IF any skill fails:**
-
-1. **Assess Impact:**
-    - Critical skill? (blocks entire workflow)
-    - Optional skill? (can proceed without)
-2. **Attempt Recovery:**
-
-```
-IF retryable error:
-    Retry skill (max 2 retries)
-    IF retry succeeds:
-        Continue workflow
-    ELSE:
-        Proceed to Step 3
-```
-
-3. **Decide Path Forward:**
-
-```
-IF critical skill failed:
-    - Use fallback approach if available
-    - Request human intervention
-    - Abort workflow with detailed error report
-
-IF optional skill failed:
-    - Log warning
-    - Continue with partial results
-    - Note limitation in final output
-```
-
-4. **Document Failure:**
-
-```json
-{
-  "workflow_errors": [
+  "total": 2,
+  "successful": 2,
+  "failed": 0,
+  "uploads": [
     {
-      "skill": "skill-name",
-      "phase": "phase-N",
-      "error": "error message",
-      "recovery_attempted": true,
-      "recovery_successful": false,
-      "impact": "critical | degraded | minimal"
+      "original_path": "photo.png",
+      "filename": "photo.png",
+      "success": true,
+      "upload_type": "anonymous",
+      "imgur_data": {
+        "id": "abc123",
+        "link": "https://i.imgur.com/abc123.png",
+        "delete_link": "https://imgur.com/delete/xyz789",
+        "width": 1920,
+        "height": 1080,
+        "size": 256789,
+        "type": "image/png"
+      }
     }
   ]
 }
 ```
 
+## Advanced usage
+
+### Save results to file
+
+```bash
+python scripts/upload.py image.png --output result.json --pretty
 ```
 
-### Phase 4: Result Synthesis
+### Specify authentication
 
-#### Step 4.1: Aggregate Outputs
+```bash
+# Use specific Client ID
+python scripts/upload.py image.png --client-id "your_client_id"
 
+# Use Access Token instead
+python scripts/upload.py image.png --access-token "your_token"
 ```
 
+### Supported formats
 
-### Synthesize Results
+- PNG (`.png`)
+- JPEG (`.jpg`, `.jpeg`)
+- GIF (`.gif`)
+- BMP (`.bmp`)
+- WebP (`.webp`)
+- TIFF (`.tiff`)
 
-Collect all skill outputs:
+## Rate limits
 
-```json
-{
-  "workflow_results": {
-    "skill-1": { "output": {} },
-    "skill-2": { "output": {} },
-    "skill-3": { "output": {} },
-    "skill-4": { "output": {} },
-    "skill-5": { "output": {} }
-  }
-}
+Imgur API limits:
+- **~1,250 uploads per day**
+- **~12,500 API requests per day**
+
+Sufficient for most personal use cases.
+
+## More information
+
+- **Examples**: See [EXAMPLES.md](EXAMPLES.md) for common usage patterns
+- **Authentication**: See [AUTHENTICATION.md](AUTHENTICATION.md) for detailed setup guide
+
+## Scripts reference
+
+### upload.py
+
+Main upload script.
+
+**Usage:**
+```bash
+python scripts/upload.py [OPTIONS] IMAGE [IMAGE ...]
 ```
 
-Synthesize into final deliverable:
+**Required:**
+- `IMAGE`: One or more image file paths
 
-1. Extract key components from each skill
-2. Combine according to workflow spec
-3. Resolve any conflicts or overlaps
-4. Format per requirements
+**Options:**
+- `--client-id ID`: Imgur Client ID (or use IMGUR_CLIENT_ID env)
+- `--access-token TOKEN`: Access Token for authenticated upload
+- `--output FILE`: Save JSON results to file
+- `--pretty`: Pretty-print JSON output
+- `--help`: Show help message
+
+**Environment variables:**
+- `IMGUR_CLIENT_ID`: Client ID for anonymous upload
+- `IMGUR_ACCESS_TOKEN`: Access Token for authenticated upload
+
+**Exit codes:**
+- `0`: All uploads succeeded
+- `1`: One or more uploads failed
+
+**Examples:**
+
+Basic upload:
+```bash
+export IMGUR_CLIENT_ID="your_client_id"
+python scripts/upload.py photo.png
 ```
 
-#### Step 4.2: Quality Validation
-
+Multiple images with output:
+```bash
+python scripts/upload.py img1.png img2.jpg --output results.json --pretty
 ```
 
-
-### Validate Final Output
-
-Run validation checks:
-
-**Completeness:**
-
-- [ ] All required components present
-- [ ] No missing data from any skill
-
-**Consistency:**
-
-- [ ] Outputs from different skills align
-- [ ] No contradictions
-- [ ] Unified format
-
-**Quality:**
-
-- [ ] Meets acceptance criteria
-- [ ] Performance within targets
-- [ ] No errors or warnings
-
-**IF validation fails:**
-
-- Identify which skill output is problematic
-- Re-run that skill with adjustments
-- Re-synthesize
-- Re-validate
-
+Authenticated upload:
+```bash
+export IMGUR_ACCESS_TOKEN="your_token"
+python scripts/upload.py photo.png
 ```
 
-### Phase 5: Reporting and Handoff
+## Error handling
 
-```
+The script handles common errors gracefully:
 
+- **File not found**: Reports which files don't exist
+- **Invalid format**: Checks file extensions before upload
+- **Network errors**: Reports connection issues with retry suggestions
+- **Authentication errors**: Clear messages about invalid credentials
+- **Rate limit exceeded**: Informs when daily limit is reached
 
-## Orchestration Summary Report
+Each failed upload includes an `error` field in the JSON output with details.
 
-**Workflow**: [Workflow Name]
-**Execution ID**: [unique-id]
-**Timestamp**: [ISO 8601]
-**Total Duration**: [X min]
-**Total Tokens**: [Y tokens]
+## Tips
 
-**Execution Trace:**
-
-
-| Phase | Skills | Status | Duration | Tokens |
-| :-- | :-- | :-- | :-- | :-- |
-| 1 | skill-1 | ✅ Success | X min | Y tokens |
-| 2 | skill-3, skill-4 | ✅ Success | Z min | W tokens |
-| 3 | skill-5 | ✅ Success | A min | B tokens |
-| 4 | skill-6 | ✅ Success | C min | D tokens |
-
-**Parallelization Savings**: [Time saved by parallel execution]
-
-**Quality Metrics:**
-
-- Success Rate: [100%]
-- Average Quality Score: [95%]
-- Performance: [Within targets]
-
-**Outputs:**
-
-- Primary Deliverable: [Location/description]
-- Supporting Artifacts: [List]
-
-**Issues Encountered:**
-
-- [Issue 1](%5BResolution%5D): [How resolved]
-- [Issue 2](%5BResolution%5D): [How resolved]
-
-**Recommendations:**
-
-- [Recommendation for future runs]
-- [Optimization opportunity]
-
-```
-
-## Examples
-
-### Example 1: Multi-Skill Content Generation Workflow
-
-**Workflow**: Generate technical blog post with code examples, diagrams, and SEO optimization
-
-**Skills Involved:**
-1. `research-skill`: Gather technical information
-2. `code-example-generator`: Create code snippets
-3. `diagram-generator`: Create architecture diagrams
-4. `content-writer`: Write blog post content
-5. `seo-optimizer`: Optimize for search engines
-6. `proofreader`: Final quality check
-
-**Execution:**
-
-```
-
-
-## Phase 1: Research (Sequential)
-
-Execute: research-skill
-Input: "Gather information on microservices architecture patterns"
-Output: research-notes.md (3500 words of research)
-
-## Phase 2: Parallel Content Creation
-
-Execute in parallel:
-
-- code-example-generator (uses research output)
-Output: code-examples/ (5 code snippets)
-- diagram-generator (uses research output)
-Output: diagrams/ (3 architecture diagrams)
-
-Wait for both to complete
-Duration: max(code gen: 8min, diagrams: 12min) = 12min
-
-## Phase 3: Content Writing (Sequential)
-
-Execute: content-writer
-Inputs:
-
-- research-notes.md
-- code-examples/
-- diagrams/
-Output: blog-draft.md (2000 word article)
-
-
-## Phase 4: Parallel Optimization (Parallel)
-
-Execute in parallel:
-
-- seo-optimizer (optimize blog-draft.md)
-Output: blog-seo-optimized.md
-- proofreader (review blog-draft.md)
-Output: proofreading-notes.md
-
-Wait for both
-Duration: max(SEO: 5min, proof: 7min) = 7min
-
-## Phase 5: Finalization (Sequential)
-
-Synthesize:
-
-- Merge SEO optimizations
-- Apply proofreading corrections
-- Generate metadata
-
-Final Output: published-blog-post.md
-
-- 2000 words
-- 5 code examples
-- 3 diagrams
-- SEO optimized
-- Proofread
-
-Total Duration:
-
-- Sequential: research(10) + writing(15) + synthesis(3) = 28min
-- Parallel savings: Would be 40min without parallelization
-- Actual: 28 + max(12,7) = 40min vs 55min = 15min saved
-
-```
-
-### Example 2: Code Review Orchestration
-
-**Workflow**: Comprehensive PR review using multiple specialized skills
-
-**Skills:**
-1. `pr-analyzer`: Extract PR metadata
-2. `security-scanner`: Security vulnerability scan
-3. `performance-profiler`: Performance analysis
-4. `test-coverage-checker`: Test coverage validation
-5. `code-quality-checker`: Code quality metrics
-6. `review-synthesizer`: Compile final review
-
-**Orchestration:**
-
-```
-
-
-## Phase 1: Analysis
-
-skill-1 (pr-analyzer)
-Output: PR metadata, changed files, commit history
-
-## Phase 2: Parallel Checks (All independent)
-
-Parallel execution:
-├─ skill-2 (security-scanner)
-├─ skill-3 (performance-profiler)
-├─ skill-4 (test-coverage-checker)
-└─ skill-5 (code-quality-checker)
-
-All use PR metadata from Phase 1
-Wait for all 4 to complete
-
-## Phase 3: Synthesis
-
-skill-6 (review-synthesizer)
-Inputs: All 4 reports from Phase 2
-Output: Comprehensive review document
-
-Result:
-
-## PR Review Summary
-
-**Security**: ⚠️ 1 medium vulnerability found
-
-- CVE-2024-XXXX in dependency X
-- Recommendation: Upgrade to v2.3.1
-
-**Performance**: ✅ No issues
-
-- No N+1 queries
-- Response times within targets
-
-**Test Coverage**: ✅ 94%
-
-- Exceeds 90% requirement
-- All critical paths covered
-
-**Code Quality**: ✅ High
-
-- Complexity within limits
-- No code smells
-- Follows style guide
-
-**Overall**: APPROVED WITH COMMENTS
-Merge after addressing security finding
-
-```
-
-## Quality Standards
-
-- All skill invocations must include unique execution_id
-- Parallel skills must be truly independent (no hidden dependencies)
-- Token budget must account for orchestration overhead (+20%)
-- Error recovery must be implemented for each skill
-- Final synthesis must resolve conflicts between skill outputs
-
-## Common Pitfalls
-
-### Pitfall 1: Hidden Dependencies in "Parallel" Skills
-**Issue**: Skills marked as parallel actually depend on each other
-**Example**: skill-A modifies file that skill-B reads
-**Solution**: Carefully analyze data dependencies before parallelizing
-
-### Pitfall 2: No Timeout for Long-Running Skills
-**Issue**: Workflow hangs waiting for stuck skill
-**Solution**: Implement timeout for each skill with fallback
-
-```
-
-
-## Execute with Timeout
-
-timeout = 15 minutes
-start_time = now()
-
-invoke skill-X
-
-while skill-X not complete:
-if (now() - start_time) > timeout:
-log error
-attempt graceful degradation
-break
-
-```
-
-### Pitfall 3: Poor Error Aggregation
-**Issue**: One skill failure causes unclear error
-**Solution**: Aggregate errors with context
-
-```
-
-{
-"workflow_status": "partial_failure",
-"successful_skills": ["skill-1", "skill-3", "skill-5"],
-"failed_skills": [
-{
-"skill": "skill-4",
-"error": "API timeout",
-"impact": "missing performance analysis in final report",
-"workaround": "manual performance review recommended"
-}
-],
-"final_output": "available with noted limitations"
-}
-
-```
-
-## Version History
-- 1.0.0 (2025-11-22): Initial release
+1. **Save delete links**: You'll need them to remove images later
+2. **Use environment variables**: More secure than hardcoding credentials
+3. **Pretty print for debugging**: Use `--pretty` to inspect results
+4. **Batch uploads**: Upload multiple images in one command for efficiency
+5. **Check rate limits**: Monitor your daily usage if uploading frequently
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
