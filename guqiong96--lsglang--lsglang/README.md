@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [guqiong96/Lsglang](https://github.com/guqiong96/Lsglang/tree/main/python/sglang/multimodal_gen/.claude/skills/sglang-diffusion-performance/SKILL.md)
+Original source: [guqiong96/Lsglang](https://github.com/guqiong96/Lsglang/tree/main/python/sglang/multimodal_gen/.claude/skills/sglang-diffusion-modelopt-quant/SKILL.md)
 
 ---
 
