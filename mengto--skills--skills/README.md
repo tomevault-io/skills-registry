@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MengTo/Skills](https://github.com/MengTo/Skills/tree/main/agent-skills/web-design/css-alpha-masking/SKILL.md)
+Original source: [MengTo/Skills](https://github.com/MengTo/Skills/tree/main/agent-skills/web-design/framed-grid-layout/SKILL.md)
 
 ---
 
