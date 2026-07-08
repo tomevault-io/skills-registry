@@ -1,13 +1,13 @@
 # xcsift
 
-> Skill by [ldomaradzki](https://github.com/ldomaradzki/xcsift) — distributed by [TomeVault](https://tomevault.io/claim/ldomaradzki)
+> Skill by [ldomaradzki](https://github.com/ldomaradzki/xcsift) — distributed by [TomeVault](https://tomevault.io)
 
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [ldomaradzki/xcsift](https://github.com/ldomaradzki/xcsift/tree/main/plugins/claude-code/skills/xcsift)
+Original source: [ldomaradzki/xcsift](https://github.com/ldomaradzki/xcsift/tree/main/plugins/codex/SKILL.md)
 
 ---
 
 Converted and distributed by [TomeVault](https://tomevault.io) — AI instruction files for every platform.
-Is this your repo? [Claim it](https://tomevault.io/claim/ldomaradzki) to manage distribution.
+Own this repo? Install the TomeVault Relay to manage distribution: [https://tomevault.io/install](https://tomevault.io/install).
