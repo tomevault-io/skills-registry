@@ -1,537 +1,237 @@
 ---
-name: verify-governance
-description: Verify integrity and completeness of governance framework using workspace-schema.json as single source of truth - checks directories, files, and .gitignore against schema Use when this capability is needed.
+name: weekly-kpi-report
+description: Generate McKinsey-style board presentation PPTs from weekly auto insurance data. Automatically calculates 16+ KPIs, creates executive-level slides with actionable insights, and supports week-over-week comparisons. Use when user uploads insurance cost data (Excel/CSV) and requests board report, weekly presentation, executive briefing, or mentions keywords like 董事会汇报, 周报PPT, 经营分析演示, McKinsey-style reports. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Verify Governance Framework
-
-## Skill Usage Announcement
-
-**MANDATORY**: When using this skill, announce it at the start with:
-
-```
-Using Skill: verify-governance | [brief purpose based on context]
-```
-
-**Example:**
-```
-Using Skill: verify-governance | Checking .wrangler/ structure compliance
-```
-
-This creates an audit trail showing which skills were applied during the session.
+# Weekly KPI Report Generator (McKinsey Style)
 
 ## Purpose
 
-Governance frameworks can drift over time:
-- Directories get renamed or go missing
-- Files end up in wrong locations
-- .gitignore patterns become incomplete
-- Structure diverges from canonical schema
+Transform weekly auto insurance policy cost data into executive-ready board presentation slides using McKinsey consulting design principles. Generate data-driven insights with conclusion-first structure, professional visualization, and actionable recommendations.
 
-This skill performs systematic verification to detect and fix structural drift using `workspace-schema.json` as the single source of truth.
+## Quick Start
 
-## What This Skill Checks
+### Three-Step Generation Process
 
-**IN SCOPE** (Structure and Existence):
-- Directory structure matches `workspace-schema.json`
-- Subdirectories exist where schema defines them
-- Governance files exist at correct paths
-- Files are in correct locations (not legacy paths)
-- `.wrangler/.gitignore` exists with all required patterns
+1. **Upload Data**: Provide weekly insurance cost data file (Excel/CSV)
+2. **Automatic Processing**: Skill validates data, calculates KPIs, and generates insights
+3. **Download PPT**: Receive McKinsey-style board presentation ready for executive meeting
 
-**OUT OF SCOPE** (Content Quality):
-- File content/template compliance (future enhancement)
-- Governance file sections/structure validation
-- Cross-document link validation
-- Template version mismatches
-- Metrics staleness
+### Basic Usage Example
 
-This simplification focuses on answering: "Is the structure correct?" not "Is the content good?"
+```
+User: "Generate board report from this week's insurance data"
 
-## Verification Workflow
+Assistant (using this skill):
+1. Validates uploaded file and extracts week number
+2. Calculates 16+ KPIs (cost rates, premium progress, loss ratios)
+3. Generates 12-13 slide deck with:
+   - Executive summary with key insights
+   - Institutional and customer segment analysis
+   - Problem-oriented headlines with actionable recommendations
+4. Returns: "{Organization}_Week{N}_McKinsey_Report.pptx"
+```
 
-### Phase 1: Load Schema
+### Minimal Requirements
 
-**Load workspace-schema.json as canonical structure:**
+- **Input**: Excel/CSV file with insurance policy cost data
+- **Week Number**: Extracted from filename or user-provided
+- **Configuration** (optional): Custom thresholds in `references/config.json`
+- **Output**: Professional PPT with charts, insights, and recommendations
+
+## When to Use This Skill
+
+Trigger this skill when:
+
+- User uploads auto insurance weekly cost data (Excel/CSV format) and requests board presentation
+- User mentions keywords: "董事会汇报", "周报PPT", "经营分析演示", "board report", "executive briefing"
+- User asks to generate presentation slides from insurance data
+- User requests McKinsey-style or consulting-style reports
+
+## Core Workflow
+
+### Step 1: Data Validation
+
+Execute the data validator to ensure data quality:
 
 ```bash
-# Find wrangler installation (usually in current project or ~/.local/share/wrangler/)
-WRANGLER_ROOT=$(pwd)
-SCHEMA_PATH="$WRANGLER_ROOT/.wrangler/config/workspace-schema.json"
-
-# Check if schema exists
-if [ ! -f "$SCHEMA_PATH" ]; then
-  echo "ERROR: workspace-schema.json not found at $SCHEMA_PATH"
-  echo "This project may not have wrangler initialized."
-  exit 1
-fi
-
-# Read schema (you'll parse this to extract directories, files, gitignore patterns)
-cat "$SCHEMA_PATH"
+python scripts/data_validator.py <uploaded_file_path>
 ```
 
-**Parse key sections:**
-- `directories` - Canonical directory structure
-- `governanceFiles` - Required governance files
-- `readmeFiles` - Directory README files
-- `gitignorePatterns` - Patterns for .wrangler/.gitignore
+The validator checks:
 
-### Phase 2: Detect Directory Drift
+- Required field completeness (policy numbers, premium amounts, cost rates)
+- Data type correctness (numeric fields, date formats)
+- Week number extraction from filename (e.g., "第45周" → Week 45)
+- Record count and date range calculation
 
-**Check each directory in schema:**
+### Step 2: KPI Calculation
+
+Calculate board-level KPIs (not raw data dumps):
 
 ```bash
-# For each directory in schema.directories:
-# Example: .wrangler/issues, .wrangler/specifications, etc.
-
-echo "=== Checking Directories ==="
-
-# From schema, check all directories
-for dir in .wrangler/issues .wrangler/specifications .wrangler/ideas .wrangler/memos \
-           .wrangler/plans .wrangler/docs .wrangler/cache .wrangler/config .wrangler/logs; do
-  if [ -d "$dir" ]; then
-    echo "✓ $dir exists"
-  else
-    echo "✗ MISSING: $dir"
-  fi
-done
-
-# Check subdirectories (from schema.directories[].subdirectories)
-echo "=== Checking Subdirectories ==="
-if [ -d ".wrangler/issues/completed" ]; then
-  echo "✓ .wrangler/issues/completed exists"
-else
-  echo "✗ MISSING: .wrangler/issues/completed"
-fi
+python scripts/kpi_calculator.py <file_path> <week_number>
 ```
 
-**Detect legacy renamed directories:**
+**Four KPI Categories:**
 
-Common v1.0 → v1.2 migrations to detect:
-- `.wrangler/issues/complete/` → `.wrangler/issues/completed/` (note: schema uses "completed", user may have "complete")
-- `.wrangler/specifications/done/` → `.wrangler/specifications/archived/`
-- `.wrangler/templates/` → (removed, templates now in skills/)
+1. **Business Scale**
+   - Weekly premium revenue and growth rate
+   - Policy count and average premium per policy
+   - Business type distribution (truck/passenger/private)
+
+2. **Profitability**
+   - Combined ratio (loss ratio + expense ratio)
+   - Variable cost rate distribution and outliers
+   - Profitability comparison by customer segment
+
+3. **Business Structure**
+   - New energy vehicle (NEV) penetration rate and trend
+   - Renewal rate vs. new policy ratio
+   - Contribution by distribution channel
+
+4. **Risk Management**
+   - Claims frequency and high-risk business proportion
+   - Average claim amount changes
+   - Risk exposure in high-risk segments (e.g., highway freight)
+
+### Step 3: Generate McKinsey-Style PPT
+
+Create presentation slides with consulting-grade design:
 
 ```bash
-# Detect renamed directories
-echo "=== Detecting Legacy Directory Names ==="
-
-if [ -d ".wrangler/issues/complete" ]; then
-  echo "⚠️ LEGACY: .wrangler/issues/complete/ should be renamed to .wrangler/issues/completed/"
-fi
-
-if [ -d ".wrangler/specifications/done" ]; then
-  echo "⚠️ LEGACY: .wrangler/specifications/done/ should be renamed to .wrangler/specifications/archived/"
-fi
-
-if [ -d ".wrangler/templates" ]; then
-  echo "⚠️ LEGACY: .wrangler/templates/ no longer used (templates in skills/*/templates/)"
-fi
+python scripts/board_ppt_generator.py <week_number> <kpi_data_json>
 ```
 
-### Phase 3: Detect File Drift
+**Slide Structure (7 slides):**
 
-**Check governance files from schema:**
+1. **Cover** - Title, date range, presenter
+2. **Executive Summary** - Core metrics with top 3 highlights/risks
+3. **Premium Analysis** - Revenue trends, business mix, YoY comparison
+4. **Profitability Analysis** - Combined ratio breakdown, cost rate by segment
+5. **NEV Business Focus** - NEV penetration, loss ratio comparison vs. traditional vehicles
+6. **Risk Management** - Claims frequency heatmap, high-risk business list
+7. **Action Items** - Auto-generated recommendations based on data patterns
+
+Refer to [references/mckinsey-style-guide.md](references/mckinsey-style-guide.md) for detailed design principles.
+
+### Step 4 (Optional): Week-over-Week Comparison
+
+When user provides data for two consecutive weeks:
 
 ```bash
-echo "=== Checking Governance Files ==="
-
-# From schema.governanceFiles
-for file in .wrangler/CONSTITUTION.md .wrangler/ROADMAP.md .wrangler/ROADMAP_NEXT_STEPS.md; do
-  if [ -f "$file" ]; then
-    echo "✓ $file exists"
-  else
-    echo "ℹ️  OPTIONAL: $file (not required, but recommended)"
-  fi
-done
-
-# From schema.readmeFiles
-for file in .wrangler/issues/README.md .wrangler/specifications/README.md \
-            .wrangler/memos/README.md .wrangler/plans/README.md; do
-  if [ -f "$file" ]; then
-    echo "✓ $file exists"
-  else
-    echo "ℹ️  MISSING: $file (consider creating)"
-  fi
-done
+python scripts/optional_modules/week_comparator.py <week1_kpis.json> <week2_kpis.json>
 ```
 
-**Detect files in wrong locations:**
-
-Common legacy file locations:
-- `.wrangler/hooks-config.json` → `.wrangler/config/hooks-config.json`
-- `.wrangler/workspace-schema.json` → `.wrangler/config/workspace-schema.json`
-
-```bash
-echo "=== Detecting Legacy File Locations ==="
-
-if [ -f ".wrangler/hooks-config.json" ]; then
-  echo "⚠️ LEGACY: .wrangler/hooks-config.json should be at .wrangler/config/hooks-config.json"
-fi
-
-if [ -f ".wrangler/workspace-schema.json" ]; then
-  echo "⚠️ LEGACY: .wrangler/workspace-schema.json should be at .wrangler/config/workspace-schema.json"
-fi
-```
-
-### Phase 4: Detect .gitignore Drift
-
-**Check .wrangler/.gitignore:**
-
-```bash
-echo "=== Checking .wrangler/.gitignore ==="
-
-if [ ! -f ".wrangler/.gitignore" ]; then
-  echo "✗ MISSING: .wrangler/.gitignore"
-  echo "   Required patterns: cache/, config/, logs/"
-else
-  echo "✓ .wrangler/.gitignore exists"
-
-  # Check each pattern from schema.gitignorePatterns
-  echo "=== Checking gitignore patterns ==="
-
-  for pattern in "cache/" "config/" "logs/"; do
-    if grep -q "^${pattern}$" .wrangler/.gitignore; then
-      echo "✓ Pattern present: $pattern"
-    else
-      echo "✗ MISSING PATTERN: $pattern"
-    fi
-  done
-fi
-```
-
-### Phase 5: Report Drift
-
-**Compile findings into clear report:**
-
-```markdown
-# Governance Structure Verification Report
-
-**Date**: [YYYY-MM-DD HH:MM]
-**Schema Version**: [from workspace-schema.json version field]
-
----
-
-## Summary
-
-- **Status**: [✅ COMPLIANT / ⚠️ DRIFT DETECTED / ❌ CRITICAL ISSUES]
-- **Missing Directories**: [N]
-- **Missing Files**: [N]
-- **Wrong Locations**: [N]
-- **Missing Gitignore Patterns**: [N]
-
----
-
-## Detailed Findings
-
-### Missing Directories ([N])
-
-- `.wrangler/issues/completed/` (required by schema)
-- `.wrangler/cache/` (required by schema)
-
-**Fix**: `mkdir -p .wrangler/issues/completed .wrangler/cache`
-
-### Legacy Directory Names ([N])
-
-- `.wrangler/issues/complete/` exists but schema expects `.wrangler/issues/completed/`
-  - **Impact**: 12 files in old location
-  - **Fix**: `mv .wrangler/issues/complete .wrangler/issues/completed`
-
-- `.wrangler/specifications/done/` exists but schema expects `.wrangler/specifications/archived/`
-  - **Impact**: 5 files in old location
-  - **Fix**: `mv .wrangler/specifications/done .wrangler/specifications/archived`
-
-### Wrong File Locations ([N])
-
-- `.wrangler/hooks-config.json` should be at `.wrangler/config/hooks-config.json`
-  - **Fix**: `mv .wrangler/hooks-config.json .wrangler/config/hooks-config.json`
-
-### Missing Files ([N])
-
-- `.wrangler/.gitignore` (required for proper git tracking)
-  - **Fix**: Create with patterns: cache/, config/, logs/
-
-**Note**: Governance files (CONSTITUTION.md, ROADMAP.md) are optional per schema.
-
-### Missing Gitignore Patterns ([N])
-
-- Pattern `sessions/` missing from `.wrangler/.gitignore`
-  - **Fix**: Add to .gitignore
-
----
-
-## Recommended Actions
-
-[List specific commands to fix each issue, grouped by type]
-```
-
-### Phase 6: Get Permission
-
-**Present user with 4 options:**
-
-```
-## How would you like to proceed?
-
-1. **Fix all automatically** (recommended)
-   - I'll apply all fixes shown above
-   - Affected files will be moved/renamed
-   - Directories will be created
-   - .gitignore will be updated
-
-2. **Show me the commands**
-   - I'll display bash commands
-   - You run them manually
-   - Good for reviewing changes first
-
-3. **Let me choose**
-   - I'll ask about each fix individually
-   - You approve or skip each one
-   - Good for selective fixes
-
-4. **Cancel**
-   - No changes made
-   - Exit verification
-
-Please choose: [1/2/3/4]
-```
-
-**Wait for user response before proceeding.**
-
-### Phase 7: Apply Fixes
-
-**Option 1: Fix All Automatically**
-
-```bash
-echo "=== Applying All Fixes ==="
-
-# Create missing directories
-mkdir -p .wrangler/issues/completed
-mkdir -p .wrangler/cache
-echo "✓ Created missing directories"
-
-# Rename legacy directories (only if they exist)
-if [ -d ".wrangler/issues/complete" ]; then
-  mv .wrangler/issues/complete .wrangler/issues/completed
-  echo "✓ Renamed .wrangler/issues/complete/ → .wrangler/issues/completed/"
-fi
-
-# Move misplaced files
-if [ -f ".wrangler/hooks-config.json" ]; then
-  mkdir -p .wrangler/config
-  mv .wrangler/hooks-config.json .wrangler/config/hooks-config.json
-  echo "✓ Moved hooks-config.json to config/"
-fi
-
-# Create/update .gitignore
-if [ ! -f ".wrangler/.gitignore" ]; then
-  cat > .wrangler/.gitignore << 'EOF'
-cache/
-config/
-logs/
-EOF
-  echo "✓ Created .wrangler/.gitignore"
-else
-  # Append missing patterns
-  for pattern in "cache/" "config/" "logs/"; do
-    if ! grep -q "^${pattern}$" .wrangler/.gitignore; then
-      echo "$pattern" >> .wrangler/.gitignore
-      echo "✓ Added pattern to .gitignore: $pattern"
-    fi
-  done
-fi
-
-echo "=== All Fixes Applied ==="
-```
-
-**Option 2: Show Commands**
-
-Display the bash commands without executing:
-
-```bash
-echo "=== Commands to Fix Drift ==="
-echo ""
-echo "# Create missing directories"
-echo "mkdir -p .wrangler/issues/completed"
-echo "mkdir -p .wrangler/cache"
-echo ""
-echo "# Rename legacy directories"
-echo "mv .wrangler/issues/complete .wrangler/issues/completed"
-echo ""
-echo "# Move misplaced files"
-echo "mkdir -p .wrangler/config"
-echo "mv .wrangler/hooks-config.json .wrangler/config/hooks-config.json"
-echo ""
-echo "# Create .gitignore"
-echo "cat > .wrangler/.gitignore << 'EOF'"
-echo "cache/"
-echo "config/"
-echo "logs/"
-echo "EOF"
-```
-
-**Option 3: Let Me Choose**
-
-Ask about each fix individually:
-
-```
-Fix: Create .wrangler/issues/completed/ directory
-Apply this fix? [y/n]: _
-
-[wait for user response]
-
-Fix: Rename .wrangler/issues/complete/ → .wrangler/issues/completed/ (12 files)
-Apply this fix? [y/n]: _
-
-[and so on...]
-```
-
-**Option 4: Cancel**
-
-```
-No changes made. Verification report saved for reference.
-Run /wrangler:verify-governance again when ready to fix drift.
-```
-
-### Phase 8: Re-Verify
-
-**After applying fixes, run verification again:**
-
-```bash
-echo "=== Re-Running Verification ==="
-echo ""
-
-# Run Phases 2-4 again to confirm all drift resolved
-
-echo "=== Final Status ==="
-
-if [ all checks pass ]; then
-  echo "✅ All drift resolved! Governance structure now compliant."
-else
-  echo "⚠️ Some issues remain:"
-  # List remaining issues
-fi
-```
-
-## Legacy Migration Detection
-
-This skill specifically handles v1.0 → v1.2 migration drift:
-
-| Legacy Location | Current Location | Detection Method |
-|-----------------|------------------|------------------|
-| `.wrangler/issues/complete/` | `.wrangler/issues/completed/` | Directory exists check |
-| `.wrangler/specifications/done/` | `.wrangler/specifications/archived/` | Directory exists check |
-| `.wrangler/hooks-config.json` | `.wrangler/config/hooks-config.json` | File exists check |
-| `.wrangler/workspace-schema.json` | `.wrangler/config/workspace-schema.json` | File exists check |
-| `.wrangler/templates/` | `skills/*/templates/` | Directory exists check (now unused) |
-
-When detected, offer to migrate automatically.
-
-## Edge Cases
-
-### No workspace-schema.json
-
-**Situation**: Schema file doesn't exist
-
-**Response**:
-```
-ERROR: workspace-schema.json not found at .wrangler/config/workspace-schema.json
-
-This project may not have wrangler v1.2+ initialized.
-
-Options:
-1. Run /wrangler:initialize-governance to set up governance
-2. Manually create .wrangler/config/workspace-schema.json from template
-3. Update wrangler to latest version
-```
-
-### Partial .wrangler/ Setup
-
-**Situation**: Some directories exist, others don't
-
-**Response**: Report exactly what's missing, offer to create all at once.
-
-### .gitignore Has Extra Patterns
-
-**Situation**: .gitignore has more patterns than schema requires
-
-**Response**: This is fine. Only report MISSING patterns, never complain about extras.
-
-### Schema Version Mismatch
-
-**Situation**: Schema version field doesn't match wrangler version
-
-**Response**: Report version mismatch as informational only, don't block.
-
-### Empty Directories
-
-**Situation**: Required directory exists but is empty
-
-**Response**: Directory exists = success. Empty is fine (issues/specs may not exist yet).
-
-## Success Criteria
-
-Verification is complete when:
-
-- [ ] workspace-schema.json loaded successfully
-- [ ] All directories checked against schema
-- [ ] All subdirectories checked against schema
-- [ ] All governance files checked against schema
-- [ ] All README files checked against schema
-- [ ] .gitignore existence and patterns validated
-- [ ] Legacy directory/file locations detected
-- [ ] Drift report generated with specific fixes
-- [ ] User permission obtained (or cancelled)
-- [ ] Fixes applied (if approved)
-- [ ] Re-verification confirmed success (if fixes applied)
-
-## Output Format
-
-Always provide:
-
-1. **Executive Summary**: Quick status (✅/⚠️/❌) with counts
-2. **Detailed Findings**: Broken down by category
-3. **Specific Fixes**: Exact commands or actions for each issue
-4. **Permission Prompt**: 4 clear options
-5. **Confirmation**: Re-verification results after fixes
-
-## Related Skills
-
-- **initialize-governance** - For creating governance files from scratch
-- **refresh-metrics** - For updating metrics in README files (content, not structure)
+Generates additional comparison slide showing WoW changes in key metrics.
 
 ## Design Principles
 
-**Single Source of Truth**:
-- Structure defined ONLY in workspace-schema.json
-- Skill reads schema, never hardcodes structure
-- When wrangler structure changes, only schema updates
+**McKinsey Three Pillars:**
 
-**Simplicity**:
-- Focus on "does it exist?" and "is it in the right place?"
-- No content/quality validation (future enhancement)
-- Clear binary checks, no ambiguity
+1. **Conclusion-First Titles** - Every slide title answers "So what?"
+   - ❌ Wrong: "Profitability Analysis"
+   - ✅ Right: "Profitability remains healthy with 83.9% combined ratio below industry benchmark"
 
-**User Agency**:
-- Always ask permission before changes
-- Provide multiple options (auto, manual, selective, cancel)
-- Show exactly what will happen before it happens
+2. **Minimalist Layout** - Less is more
+   - Large white space (0.8" margins)
+   - Single red accent line at top
+   - No excessive decorations or logo stacking
 
-**Idempotency**:
-- Can run multiple times safely
-- Re-verification confirms fixes worked
-- No harm if run on compliant structure
+3. **Left-Aligned Structure** - Professional business style
+   - Title left-aligned (24pt, conclusion statement)
+   - Left column: bullet points
+   - Right column: supporting charts
+   - Bottom: italic recommendations (12pt)
 
-## Remember
+**Color Scheme:**
+Uses client-specific colors extracted from corporate reports:
 
-This skill validates STRUCTURE ONLY. It doesn't care about:
-- Whether CONSTITUTION.md is well-written
-- Whether metrics are up to date
-- Whether links between docs work
-- Whether templates match current versions
+- Primary: Deep Red (#a02724) - 60% usage for core messages
+- Alert: Bright Red (#c00000) - warnings and risks
+- Text: Black (#000000) - titles and important text
+- Background: White (#FFFFFF) - clean backdrop
 
-Those are future enhancements. Focus: "Is the directory structure and file organization correct per the schema?"
+Configure colors in [assets/mckinsey_config.json](assets/mckinsey_config.json).
+
+## Configuration
+
+### Alert Thresholds
+
+Customize business rules in [config.json](config.json):
+
+```json
+{
+  "预警阈值": {
+    "综合成本率_上限": 95, // Alert if combined ratio > 95%
+    "新能源车赔付率差距": 10 // Alert if NEV loss ratio > traditional + 10pp
+  }
+}
+```
+
+### Display Parameters
+
+```json
+{
+  "报表参数": {
+    "显示TOP业务类型数": 5, // Show top 5 business types
+    "显示TOP机构数": 5 // Show top 5 distribution channels
+  }
+}
+```
+
+Refer to [references/config-guide.md](references/config-guide.md) for full configuration options.
+
+## Usage Examples
+
+**Example 1: Basic Usage**
+
+```
+User: 我上传了第45周的车险数据,帮我生成董事会汇报PPT
+
+Execution:
+1. Identify file: "车险保单变动成本清单__第45周_.xlsx"
+2. Run data_validator.py
+3. Run kpi_calculator.py with config.json thresholds
+4. Run board_ppt_generator.py using assets/mckinsey_board_template.pptx
+5. Output: "华安车险周报_第45周_麦肯锡版.pptx"
+6. Return download link with brief data summary
+```
+
+## Error Handling
+
+- **Missing week number in filename** → Prompt user to confirm week number
+- **Missing required fields** → List missing columns and ask whether to proceed
+- **All cost rates abnormal (>100%)** → Warning that data may be incorrect
+- **Invalid JSON config** → Use default values and notify user
+
+## Technical Stack
+
+- **Data processing:** pandas, numpy
+- **Visualization:** matplotlib (Chinese font handling), seaborn
+- **PPT generation:** python-pptx
+- **Template:** assets/mckinsey_board_template.pptx
+- **Field Mapping:** field_mapping.json (支持中英文字段自动适配)
+- **Supported Data Formats:**
+  - Excel files (.xlsx, .xls) with Chinese field names
+  - CSV files (.csv) with English field names (e.g., from transformed data)
+
+## Output Location
+
+Generated PPT files saved to: `/mnt/user-data/outputs/`
+
+Filename format: `华安车险周报_第{week_number}周_麦肯锡版.pptx`
+
+## Version Information
+
+- **Version:** v2.0.0 (Field Mapping Support)
+- **Last Updated:** 2025-12-08
+- **Maintainer:** Alongor
+- **Data Source:** Hua'an Insurance Sichuan Branch weekly auto insurance reports
+- **Supported Formats:** Excel (.xlsx, .xls), CSV (.csv)
+- **Supported Field Names:** Chinese (跟单保费, 业务类型分类) and English (signed_premium_yuan, business_type_category)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
