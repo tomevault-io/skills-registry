@@ -1,813 +1,351 @@
 ---
-name: websockets-realtime
-description: Real-time communication with WebSockets, Server-Sent Events, and related technologies. Use when building chat, live updates, collaborative features, or any real-time functionality. Use when this capability is needed.
+name: weaviate-connection
+description: Connect to local Weaviate vector database and verify connection health Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# WebSockets & Real-Time
+# Weaviate Connection Skill
 
-Comprehensive guide for building real-time applications.
+This skill helps you connect to a **local Weaviate database** instance running in Docker and verify the connection is healthy.
 
-## Real-Time Technologies
+## Important Note
 
-### Comparison
+**This skill is designed for LOCAL Weaviate instances only.** Claude Desktop and Claude Web have network restrictions that prevent connections to external services like Weaviate Cloud.
 
-| Technology             | Direction               | Use Case                    |
-| ---------------------- | ----------------------- | --------------------------- |
-| **WebSocket**          | Bidirectional           | Chat, gaming, collaboration |
-| **Server-Sent Events** | Server → Client         | Live feeds, notifications   |
-| **Long Polling**       | Simulated bidirectional | Fallback, simple updates    |
-| **WebRTC**             | Peer-to-peer            | Video calls, file sharing   |
+**To use these skills, you must run Weaviate locally using Docker.** See the `weaviate-local-setup` skill first.
 
-### When to Use What
+## Purpose
 
+Establish and test connections to local Weaviate vector databases running on localhost.
+
+## When to Use This Skill
+
+- User wants to connect to their local Weaviate database
+- User needs to verify their Weaviate connection is working
+- User asks to check Weaviate health or status
+- After starting Weaviate with Docker
+
+## Prerequisites Check
+
+**BEFORE proceeding, Claude should verify:**
+
+1. **Python environment is set up** (from `weaviate-local-setup` skill)
+   - Virtual environment exists at `.venv/`
+   - Dependencies are installed
+
+2. **Weaviate Docker container is running**
+   - Check with `docker ps | grep weaviate`
+   - If not running, guide user to start it
+
+3. **Environment file exists**
+   - `.env` file is present
+   - Has required variables set
+
+### Automated Prerequisites Check
+
+```python
+import subprocess
+import sys
+import os
+from pathlib import Path
+
+def check_prerequisites():
+    """Check all prerequisites before connecting to Weaviate"""
+    print("🔍 Checking prerequisites...\n")
+
+    all_checks_passed = True
+
+    # Check 1: Virtual environment
+    venv_path = Path(".venv")
+    if venv_path.exists():
+        print("✅ Virtual environment found")
+    else:
+        print("⚠️  No virtual environment found")
+        print("   Creating virtual environment...")
+        subprocess.run([sys.executable, "-m", "venv", ".venv"])
+        print("✅ Virtual environment created")
+
+    # Check 2: Dependencies
+    try:
+        import weaviate
+        from dotenv import load_dotenv
+        print("✅ Python dependencies installed")
+    except ImportError:
+        print("⚠️  Missing dependencies")
+        print("   Installing weaviate-client and python-dotenv...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q",
+                              "weaviate-client", "python-dotenv"])
+        print("✅ Dependencies installed")
+
+    # Check 3: Docker container
+    result = subprocess.run(["docker", "ps"], capture_output=True, text=True)
+    if "weaviate" in result.stdout:
+        print("✅ Weaviate Docker container is running")
+    else:
+        print("❌ Weaviate Docker container not found")
+        print("   Please start Weaviate first:")
+        print("   cd weaviate-local-setup && docker-compose up -d")
+        all_checks_passed = False
+
+    # Check 4: .env file
+    if Path(".env").exists():
+        print("✅ .env file found")
+    else:
+        print("⚠️  .env file not found")
+        print("   Creating .env from template...")
+        if Path(".env.example").exists():
+            import shutil
+            shutil.copy(".env.example", ".env")
+            print("✅ .env file created")
+            print("   Please edit .env and add your API keys if needed")
+        else:
+            print("❌ No .env.example found")
+            all_checks_passed = False
+
+    print("\n" + "="*50)
+    if all_checks_passed:
+        print("✅ All prerequisites met! Ready to connect.")
+    else:
+        print("❌ Some prerequisites missing. Please resolve them first.")
+    print("="*50 + "\n")
+
+    return all_checks_passed
+
+# Run the check
+if __name__ == "__main__":
+    check_prerequisites()
 ```
-WEBSOCKETS:
-✓ Chat applications
-✓ Real-time collaboration
-✓ Gaming
-✓ Financial trading
-✓ IoT dashboards
-✓ Any bidirectional communication
 
-SERVER-SENT EVENTS (SSE):
-✓ Live feeds (news, sports)
-✓ Notifications
-✓ Progress updates
-✓ Server-initiated updates only
+**Claude should run this check automatically when this skill is loaded.**
 
-LONG POLLING:
-✓ Fallback when WebSocket unavailable
-✓ Simple, infrequent updates
-✓ Behind strict firewalls
+## Requirements
 
-WEBRTC:
-✓ Video/audio calls
-✓ Screen sharing
-✓ Peer-to-peer file transfer
+- Python 3.8+
+- weaviate-client library (`pip install weaviate-client`)
+- **Local Weaviate instance running in Docker** (see `weaviate-local-setup` skill)
+- Docker Desktop running
+
+## Connection Instructions
+
+### Step 1: Ensure Weaviate is Running Locally
+
+Before connecting, verify Weaviate Docker container is running:
+
+```bash
+# Check if Weaviate is running
+docker ps | grep weaviate
+
+# If not running, start it with docker-compose
+cd weaviate-local-setup
+docker-compose up -d
+
+# Verify Weaviate is ready
+curl http://localhost:8080/v1/.well-known/ready
 ```
 
----
+### Step 2: Install Dependencies
 
-## WebSocket Fundamentals
-
-### How WebSockets Work
-
-```
-HTTP Upgrade Handshake:
-┌──────┐                      ┌──────┐
-│Client│  GET /ws HTTP/1.1    │Server│
-│      │  Upgrade: websocket  │      │
-│      │ ──────────────────>  │      │
-│      │                      │      │
-│      │  HTTP/1.1 101        │      │
-│      │  Switching Protocols │      │
-│      │ <──────────────────  │      │
-└──────┘                      └──────┘
-
-After handshake:
-┌──────┐                      ┌──────┐
-│Client│ <═══════════════════>│Server│
-│      │  Full-duplex TCP     │      │
-│      │  Binary or text      │      │
-└──────┘                      └──────┘
+```bash
+pip install weaviate-client python-dotenv
 ```
 
-### Client Implementation
+### Step 3: Configure Environment Variables
 
-```typescript
-// Basic WebSocket client
-const ws = new WebSocket("wss://api.example.com/ws");
+Update your `.env` file for local connection:
 
-ws.onopen = () => {
-  console.log("Connected");
-  ws.send(JSON.stringify({ type: "subscribe", channel: "updates" }));
-};
+```bash
+# .env file
+WEAVIATE_URL=localhost:8080
+WEAVIATE_API_KEY=  # Leave empty for local instances
 
-ws.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  console.log("Received:", data);
-};
-
-ws.onerror = (error) => {
-  console.error("WebSocket error:", error);
-};
-
-ws.onclose = (event) => {
-  console.log("Disconnected:", event.code, event.reason);
-};
-
-// Send message
-ws.send(JSON.stringify({ type: "message", content: "Hello!" }));
-
-// Close connection
-ws.close(1000, "Normal closure");
+# Optional: Only needed if using these vectorizers
+OPENAI_API_KEY=your-openai-key
+COHERE_API_KEY=your-cohere-key
 ```
 
-### Reconnection Logic
+### Step 4: Create Connection Code
 
-```typescript
-class ReconnectingWebSocket {
-  private ws: WebSocket | null = null;
-  private reconnectAttempts = 0;
-  private maxReconnectAttempts = 10;
-  private reconnectDelay = 1000;
+**Basic Connection (Recommended):**
 
-  constructor(private url: string) {
-    this.connect();
-  }
+```python
+import weaviate
+import os
+from dotenv import load_dotenv
 
-  private connect() {
-    this.ws = new WebSocket(this.url);
+# Load environment variables
+load_dotenv()
 
-    this.ws.onopen = () => {
-      console.log("Connected");
-      this.reconnectAttempts = 0;
-    };
+# Connect to local Weaviate
+client = weaviate.connect_to_local(
+    host="localhost",
+    port=8080,
+    grpc_port=50051
+)
 
-    this.ws.onclose = (event) => {
-      if (event.code !== 1000) {
-        this.reconnect();
-      }
-    };
+# Test the connection
+try:
+    # Check if client is ready
+    if client.is_ready():
+        print("✅ Connected to local Weaviate successfully!")
 
-    this.ws.onerror = () => {
-      this.ws?.close();
-    };
-  }
+        # Get cluster metadata
+        meta = client.get_meta()
+        print(f"📦 Weaviate version: {meta.get('version', 'unknown')}")
 
-  private reconnect() {
-    if (this.reconnectAttempts >= this.maxReconnectAttempts) {
-      console.error("Max reconnection attempts reached");
-      return;
+        # List collections
+        collections = client.collections.list_all()
+        print(f"\n📚 Found {len(collections)} collections:")
+        for name, config in collections.items():
+            print(f"  - {name}")
+    else:
+        print("❌ Connection failed - Weaviate not ready")
+
+except Exception as e:
+    print(f"❌ Error connecting to Weaviate: {str(e)}")
+    print("\n💡 Make sure Weaviate is running:")
+    print("   docker ps | grep weaviate")
+
+finally:
+    # Always close the connection
+    client.close()
+```
+
+**Connection with API Headers (for OpenAI/Cohere vectorizers):**
+
+```python
+import weaviate
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Connect with API key headers
+client = weaviate.connect_to_local(
+    host="localhost",
+    port=8080,
+    grpc_port=50051,
+    headers={
+        "X-OpenAI-Api-Key": os.getenv("OPENAI_API_KEY"),  # Optional
+        "X-Cohere-Api-Key": os.getenv("COHERE_API_KEY")   # Optional
     }
+)
 
-    this.reconnectAttempts++;
-    const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1);
+try:
+    if client.is_ready():
+        print("✅ Connected to local Weaviate with API headers!")
 
-    console.log(
-      `Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts})`,
-    );
+except Exception as e:
+    print(f"❌ Error: {str(e)}")
 
-    setTimeout(() => this.connect(), delay);
-  }
-
-  send(data: unknown) {
-    if (this.ws?.readyState === WebSocket.OPEN) {
-      this.ws.send(JSON.stringify(data));
-    }
-  }
-}
+finally:
+    client.close()
 ```
 
----
-
-## Server Implementation (Node.js)
-
-### ws Library
-
-```typescript
-import { WebSocketServer, WebSocket } from "ws";
-import { createServer } from "http";
-
-const server = createServer();
-const wss = new WebSocketServer({ server });
-
-// Track connected clients
-const clients = new Set<WebSocket>();
-
-wss.on("connection", (ws, request) => {
-  console.log("Client connected");
-  clients.add(ws);
-
-  // Send welcome message
-  ws.send(JSON.stringify({ type: "connected", clientCount: clients.size }));
-
-  ws.on("message", (data) => {
-    try {
-      const message = JSON.parse(data.toString());
-      handleMessage(ws, message);
-    } catch (error) {
-      ws.send(JSON.stringify({ type: "error", message: "Invalid JSON" }));
-    }
-  });
-
-  ws.on("close", () => {
-    clients.delete(ws);
-    console.log("Client disconnected");
-  });
-
-  ws.on("error", (error) => {
-    console.error("WebSocket error:", error);
-  });
-
-  // Heartbeat to detect stale connections
-  ws.isAlive = true;
-  ws.on("pong", () => {
-    ws.isAlive = true;
-  });
-});
-
-// Heartbeat interval
-const heartbeatInterval = setInterval(() => {
-  wss.clients.forEach((ws) => {
-    if (!ws.isAlive) {
-      return ws.terminate();
-    }
-    ws.isAlive = false;
-    ws.ping();
-  });
-}, 30000);
-
-wss.on("close", () => {
-  clearInterval(heartbeatInterval);
-});
-
-function handleMessage(ws: WebSocket, message: any) {
-  switch (message.type) {
-    case "broadcast":
-      broadcast(message.content);
-      break;
-    case "private":
-      // Handle private messages
-      break;
-    default:
-      ws.send(
-        JSON.stringify({ type: "error", message: "Unknown message type" }),
-      );
-  }
-}
-
-function broadcast(content: any) {
-  const message = JSON.stringify({ type: "broadcast", content });
-  clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(message);
-    }
-  });
-}
-
-server.listen(3000);
-```
-
-### Socket.IO
-
-```typescript
-import { Server } from "socket.io";
-import { createServer } from "http";
-
-const httpServer = createServer();
-const io = new Server(httpServer, {
-  cors: {
-    origin: "https://example.com",
-    methods: ["GET", "POST"],
-  },
-});
-
-// Namespace for chat
-const chat = io.of("/chat");
-
-chat.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
-
-  // Join room
-  socket.on("join", (room: string) => {
-    socket.join(room);
-    socket.to(room).emit("user_joined", { userId: socket.id });
-  });
-
-  // Handle message
-  socket.on("message", (data: { room: string; content: string }) => {
-    chat.to(data.room).emit("message", {
-      from: socket.id,
-      content: data.content,
-      timestamp: Date.now(),
-    });
-  });
-
-  // Leave room
-  socket.on("leave", (room: string) => {
-    socket.leave(room);
-    socket.to(room).emit("user_left", { userId: socket.id });
-  });
-
-  socket.on("disconnect", () => {
-    console.log("User disconnected:", socket.id);
-  });
-});
-
-// Authentication middleware
-io.use((socket, next) => {
-  const token = socket.handshake.auth.token;
-  if (validateToken(token)) {
-    socket.data.user = decodeToken(token);
-    next();
-  } else {
-    next(new Error("Authentication error"));
-  }
-});
-
-httpServer.listen(3000);
-```
-
----
-
-## Server-Sent Events (SSE)
-
-### Server Implementation
-
-```typescript
-import express from "express";
-
-const app = express();
-
-app.get("/events", (req, res) => {
-  // Set SSE headers
-  res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache");
-  res.setHeader("Connection", "keep-alive");
-
-  // Send initial event
-  res.write("event: connected\n");
-  res.write('data: {"status": "connected"}\n\n');
-
-  // Send periodic updates
-  const interval = setInterval(() => {
-    const data = JSON.stringify({
-      timestamp: Date.now(),
-      value: Math.random(),
-    });
-    res.write(`data: ${data}\n\n`);
-  }, 1000);
-
-  // Cleanup on disconnect
-  req.on("close", () => {
-    clearInterval(interval);
-    res.end();
-  });
-});
-
-app.listen(3000);
-```
-
-### Client Implementation
-
-```typescript
-const eventSource = new EventSource("/events");
-
-eventSource.onopen = () => {
-  console.log("SSE connection opened");
-};
-
-eventSource.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  console.log("Received:", data);
-};
-
-eventSource.addEventListener("connected", (event) => {
-  console.log("Connected event:", event.data);
-});
-
-eventSource.onerror = (error) => {
-  console.error("SSE error:", error);
-  if (eventSource.readyState === EventSource.CLOSED) {
-    // Reconnect logic if needed
-  }
-};
-
-// Close connection
-eventSource.close();
-```
-
----
-
-## Message Protocols
-
-### JSON Message Format
-
-```typescript
-// Define message types
-interface BaseMessage {
-  type: string;
-  timestamp: number;
-  id: string;
-}
-
-interface ChatMessage extends BaseMessage {
-  type: "chat";
-  room: string;
-  content: string;
-  sender: string;
-}
-
-interface PresenceMessage extends BaseMessage {
-  type: "presence";
-  status: "online" | "offline" | "away";
-  userId: string;
-}
-
-interface ErrorMessage extends BaseMessage {
-  type: "error";
-  code: string;
-  message: string;
-}
-
-type Message = ChatMessage | PresenceMessage | ErrorMessage;
-
-// Type-safe message handling
-function handleMessage(data: string) {
-  const message: Message = JSON.parse(data);
-
-  switch (message.type) {
-    case "chat":
-      displayChatMessage(message);
-      break;
-    case "presence":
-      updateUserPresence(message);
-      break;
-    case "error":
-      handleError(message);
-      break;
-  }
-}
-```
-
-### Binary Protocols
-
-```typescript
-// For high-performance needs, use binary formats
-
-// MessagePack
-import { encode, decode } from "@msgpack/msgpack";
-
-const encoded = encode({ type: "position", x: 100, y: 200 });
-ws.send(encoded);
-
-ws.onmessage = (event) => {
-  const data = decode(event.data);
-};
-
-// Protocol Buffers
-// Define schema in .proto file, generate types
-// Smaller messages, faster serialization
-```
-
----
-
-## Scaling WebSockets
-
-### Architecture
-
-```
-                    Load Balancer
-                   (Sticky Sessions)
-                         │
-        ┌────────────────┼────────────────┐
-        │                │                │
-        ▼                ▼                ▼
-   ┌─────────┐      ┌─────────┐      ┌─────────┐
-   │ Server 1│      │ Server 2│      │ Server 3│
-   │ (Node)  │      │ (Node)  │      │ (Node)  │
-   └────┬────┘      └────┬────┘      └────┬────┘
-        │                │                │
-        └────────────────┼────────────────┘
-                         │
-                    ┌─────────┐
-                    │  Redis  │
-                    │ Pub/Sub │
-                    └─────────┘
-```
-
-### Redis Pub/Sub for Cross-Server Messages
-
-```typescript
-import Redis from "ioredis";
-import { WebSocketServer } from "ws";
-
-const pub = new Redis();
-const sub = new Redis();
-
-const wss = new WebSocketServer({ port: 3000 });
-
-// Subscribe to channel
-sub.subscribe("broadcast");
-
-// Forward Redis messages to local clients
-sub.on("message", (channel, message) => {
-  wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(message);
-    }
-  });
-});
-
-// Publish messages to Redis
-function broadcast(message: object) {
-  pub.publish("broadcast", JSON.stringify(message));
-}
-
-// Receive from WebSocket, publish to Redis
-wss.on("connection", (ws) => {
-  ws.on("message", (data) => {
-    broadcast(JSON.parse(data.toString()));
-  });
-});
-```
-
-### Socket.IO with Redis Adapter
-
-```typescript
-import { Server } from "socket.io";
-import { createAdapter } from "@socket.io/redis-adapter";
-import { createClient } from "redis";
-
-const pubClient = createClient({ url: "redis://localhost:6379" });
-const subClient = pubClient.duplicate();
-
-await Promise.all([pubClient.connect(), subClient.connect()]);
-
-const io = new Server();
-io.adapter(createAdapter(pubClient, subClient));
-
-// Now messages are automatically synchronized across servers
-io.emit("notification", { message: "Hello all servers!" });
-```
-
----
-
-## React Integration
-
-### Custom Hook
-
-```typescript
-import { useEffect, useRef, useState, useCallback } from 'react';
-
-interface UseWebSocketOptions {
-  url: string;
-  onMessage?: (data: any) => void;
-  reconnect?: boolean;
-}
-
-export function useWebSocket(options: UseWebSocketOptions) {
-  const { url, onMessage, reconnect = true } = options;
-  const wsRef = useRef<WebSocket | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
-  const [lastMessage, setLastMessage] = useState<any>(null);
-
-  const connect = useCallback(() => {
-    const ws = new WebSocket(url);
-
-    ws.onopen = () => setIsConnected(true);
-
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setLastMessage(data);
-      onMessage?.(data);
-    };
-
-    ws.onclose = () => {
-      setIsConnected(false);
-      if (reconnect) {
-        setTimeout(connect, 3000);
-      }
-    };
-
-    wsRef.current = ws;
-  }, [url, onMessage, reconnect]);
-
-  useEffect(() => {
-    connect();
-    return () => {
-      wsRef.current?.close();
-    };
-  }, [connect]);
-
-  const send = useCallback((data: any) => {
-    if (wsRef.current?.readyState === WebSocket.OPEN) {
-      wsRef.current.send(JSON.stringify(data));
-    }
-  }, []);
-
-  return { isConnected, lastMessage, send };
-}
-
-// Usage
-function ChatComponent() {
-  const { isConnected, lastMessage, send } = useWebSocket({
-    url: 'wss://api.example.com/chat',
-    onMessage: (data) => {
-      console.log('New message:', data);
-    },
-  });
-
-  return (
-    <div>
-      <span>Status: {isConnected ? 'Connected' : 'Disconnected'}</span>
-      <button onClick={() => send({ type: 'message', content: 'Hello!' })}>
-        Send
-      </button>
-    </div>
-  );
-}
-```
-
-### Socket.IO Client
-
-```typescript
-import { io, Socket } from 'socket.io-client';
-import { createContext, useContext, useEffect, useState } from 'react';
-
-const SocketContext = createContext<Socket | null>(null);
-
-export function SocketProvider({ children }: { children: React.ReactNode }) {
-  const [socket, setSocket] = useState<Socket | null>(null);
-
-  useEffect(() => {
-    const newSocket = io('https://api.example.com', {
-      auth: { token: getAuthToken() },
-    });
-
-    setSocket(newSocket);
-
-    return () => {
-      newSocket.close();
-    };
-  }, []);
-
-  return (
-    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
-  );
-}
-
-export function useSocket() {
-  const socket = useContext(SocketContext);
-  if (!socket) {
-    throw new Error('useSocket must be used within SocketProvider');
-  }
-  return socket;
-}
-
-// Usage
-function ChatRoom({ roomId }: { roomId: string }) {
-  const socket = useSocket();
-  const [messages, setMessages] = useState<Message[]>([]);
-
-  useEffect(() => {
-    socket.emit('join', roomId);
-
-    socket.on('message', (message: Message) => {
-      setMessages((prev) => [...prev, message]);
-    });
-
-    return () => {
-      socket.emit('leave', roomId);
-      socket.off('message');
-    };
-  }, [socket, roomId]);
-
-  const sendMessage = (content: string) => {
-    socket.emit('message', { room: roomId, content });
-  };
-
-  return (/* render messages */);
-}
-```
-
----
-
-## Security
-
-### Authentication
-
-```typescript
-// Token-based authentication
-const ws = new WebSocket("wss://api.example.com/ws");
-
-ws.onopen = () => {
-  // Send auth message immediately
-  ws.send(
-    JSON.stringify({
-      type: "auth",
-      token: localStorage.getItem("token"),
-    }),
-  );
-};
-
-// Server-side validation
-wss.on("connection", (ws, request) => {
-  let authenticated = false;
-  const authTimeout = setTimeout(() => {
-    if (!authenticated) {
-      ws.close(4001, "Authentication timeout");
-    }
-  }, 5000);
-
-  ws.on("message", (data) => {
-    const message = JSON.parse(data.toString());
-
-    if (message.type === "auth") {
-      if (validateToken(message.token)) {
-        authenticated = true;
-        clearTimeout(authTimeout);
-        ws.send(JSON.stringify({ type: "auth_success" }));
-      } else {
-        ws.close(4002, "Invalid token");
-      }
-    } else if (!authenticated) {
-      ws.close(4003, "Not authenticated");
-    }
-  });
-});
-```
-
-### Rate Limiting
-
-```typescript
-const rateLimits = new Map<WebSocket, { count: number; timestamp: number }>();
-
-function checkRateLimit(ws: WebSocket): boolean {
-  const now = Date.now();
-  const limit = rateLimits.get(ws);
-
-  if (!limit || now - limit.timestamp > 1000) {
-    rateLimits.set(ws, { count: 1, timestamp: now });
-    return true;
-  }
-
-  if (limit.count >= 10) {
-    // 10 messages per second
-    return false;
-  }
-
-  limit.count++;
-  return true;
-}
-
-ws.on("message", (data) => {
-  if (!checkRateLimit(ws)) {
-    ws.send(JSON.stringify({ type: "error", message: "Rate limit exceeded" }));
-    return;
-  }
-  // Process message
-});
-```
-
----
+### Step 5: Verify Connection Health
+
+After connecting, check:
+- ✅ Client is ready (`client.is_ready()`)
+- ✅ Can retrieve metadata (`client.get_meta()`)
+- ✅ Can list collections (`client.collections.list_all()`)
 
 ## Best Practices
 
-### DO:
+1. **Start Docker First**: Always ensure Weaviate container is running before connecting
+2. **Use Environment Variables**: Store configuration in `.env` file
+3. **Close Connections**: Always close the client when done to prevent memory leaks
+4. **Error Handling**: Wrap connection code in try/except blocks
+5. **Connection Reuse**: Keep one client instance per session, don't create multiple
+6. **Check Docker Status**: Use `docker ps` to verify Weaviate is running
 
-- Use WSS (WebSocket Secure) in production
-- Implement heartbeat/ping-pong
-- Handle reconnection gracefully
-- Authenticate connections
-- Validate all incoming messages
-- Use message IDs for acknowledgment
-- Implement backpressure handling
-- Monitor connection health
+## Common Issues
 
-### DON'T:
+### Issue: "Connection refused" or "Cannot connect to localhost:8080"
+**Solution**: Weaviate Docker container is not running
+```bash
+# Check if container is running
+docker ps | grep weaviate
 
-- Trust client data without validation
-- Send sensitive data without encryption
-- Keep connections open indefinitely
-- Ignore disconnection handling
-- Block the message handler
-- Send unbounded data
-- Forget about horizontal scaling
+# Start Weaviate
+cd weaviate-local-setup
+docker-compose up -d
 
----
-
-## Troubleshooting
-
-### Common Issues
-
-| Problem              | Cause                | Solution               |
-| -------------------- | -------------------- | ---------------------- |
-| Connection drops     | Idle timeout         | Implement heartbeat    |
-| Messages lost        | No acknowledgment    | Add message IDs + acks |
-| High latency         | Large messages       | Use binary, compress   |
-| Memory leak          | Unclosed connections | Proper cleanup         |
-| Cross-origin blocked | Missing CORS         | Configure server CORS  |
-
-### Debug Logging
-
-```typescript
-// Development logging
-if (process.env.NODE_ENV === "development") {
-  ws.on("message", (data) => {
-    console.log("← Received:", JSON.parse(data.toString()));
-  });
-
-  const originalSend = ws.send.bind(ws);
-  ws.send = (data: string) => {
-    console.log("→ Sending:", JSON.parse(data));
-    originalSend(data);
-  };
-}
+# Wait 10-15 seconds for startup, then verify
+curl http://localhost:8080/v1/.well-known/ready
 ```
+
+### Issue: "Port 8080 already in use"
+**Solution**: Another service is using port 8080
+```bash
+# Find what's using port 8080
+lsof -i :8080
+
+# Either stop that service, or modify docker-compose.yml to use a different port
+# Change ports: - "8081:8080" in docker-compose.yml
+```
+
+### Issue: "Docker daemon not running"
+**Solution**: Start Docker Desktop application
+
+### Issue: "Module not found: weaviate"
+**Solution**: Install the client library
+```bash
+pip install weaviate-client
+```
+
+## Environment Variables Template
+
+```bash
+# .env file for LOCAL Weaviate
+WEAVIATE_URL=localhost:8080
+WEAVIATE_API_KEY=  # Leave empty for local
+
+# Optional vectorizer API keys
+OPENAI_API_KEY=your-openai-key
+COHERE_API_KEY=your-cohere-key
+ANTHROPIC_API_KEY=your-anthropic-key
+```
+
+## Quick Test Script
+
+Save this as `test_connection.py`:
+
+```python
+import weaviate
+
+# Connect to local Weaviate
+client = weaviate.connect_to_local()
+
+try:
+    if client.is_ready():
+        print("✅ Connected successfully!")
+        meta = client.get_meta()
+        print(f"📦 Version: {meta.get('version')}")
+    else:
+        print("❌ Not ready")
+except Exception as e:
+    print(f"❌ Error: {e}")
+finally:
+    client.close()
+```
+
+Run it:
+```bash
+python test_connection.py
+```
+
+## Next Steps
+
+After establishing connection:
+- Use **weaviate-collection-manager** skill to create and manage collections
+- Use **weaviate-data-ingestion** skill to add data to collections
+- Use **weaviate-query-agent** skill to search and retrieve data
+
+## Additional Resources
+
+- [Weaviate Python Client Docs](https://weaviate.io/developers/weaviate/client-libraries/python)
+- [Weaviate Docker Installation](https://weaviate.io/developers/weaviate/installation/docker-compose)
+- [Local Weaviate Setup Guide](../weaviate-local-setup/SKILL.md)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
