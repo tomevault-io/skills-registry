@@ -1,290 +1,260 @@
 ---
-name: toxic-manager-translator
-description: Transform emotional reactions or venting messages from collaborators into professional, diplomatic responses suitable for difficult workplace situations with toxic managers. Use when this capability is needed.
+name: workflow-integration-git
+description: Git commit workflow with conventional commits, artifact cleanup, and optional push/PR creation Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Toxic Manager Translator
-
-This skill transforms raw emotional reactions, venting messages, or frustrated communications from collaborators into professional, strategic responses appropriate for dealing with difficult or toxic managers. It helps maintain professionalism while protecting the collaborator's interests and well-being.
-
-## When to Use This Skill
-
-Activate when the user:
-- Shares a frustrated message they want to send to their manager
-- Asks to "make this professional" or "tone this down" for a difficult boss
-- Wants to respond to an unreasonable request from management
-- Needs help replying to passive-aggressive or manipulative messages
-- Says something like "my manager said X, how do I respond?"
-- Wants to push back on something without creating conflict
-- Needs to set boundaries with a difficult superior
-- Asks to transform an angry draft into something appropriate
+# CUI Git Workflow Skill
 
-## Core Principles
+Provides git commit workflow following conventional commits specification. Includes artifact cleanup, commit formatting, and optional push/PR creation.
 
-### 1. Protect the Collaborator
-- Never include anything that could be used against them
-- Avoid admitting fault when none exists
-- Don't over-apologize or be self-deprecating
-- Maintain dignity while staying professional
+## What This Skill Provides
 
-### 2. Strategic Communication
-- Document everything implicitly (dates, requests, agreements)
-- Create paper trails without being obvious
-- Use language that's defensible if escalated to HR
-- Keep options open for future actions
+### Commit Workflow (Absorbs commit-changes Agent)
 
-### 3. Emotional Intelligence
-- Acknowledge the collaborator's feelings (privately)
-- Channel frustration into assertiveness
-- Transform anger into clarity
-- Convert defensiveness into confidence
+Complete git commit workflow:
+- Artifact detection and cleanup
+- Commit message generation following conventional commits
+- Optional push to remote
+- Optional PR creation
 
-## Transformation Framework
+### Commit Standards
 
-### Step 1: Identify the Emotional Core
+- **Format:** `<type>(<scope>): <subject>`
+- **Types:** feat, fix, docs, style, refactor, perf, test, chore
+- **Quality:** imperative mood, lowercase, no period, max 50 chars
 
-Common emotions and their professional translations:
+## When to Activate This Skill
 
-| Raw Emotion | Professional Translation |
-|-------------|-------------------------|
-| "This is bullsh*t" | "I have concerns about this approach" |
-| "You never listen" | "I want to ensure we're aligned on..." |
-| "That's not my job" | "This falls outside my current scope" |
-| "You're being unreasonable" | "I'd like to discuss the expectations" |
-| "I'm drowning here" | "I need to discuss workload prioritization" |
-| "Stop micromanaging me" | "I work best with clear goals and autonomy" |
-| "This is unfair" | "I'd like to understand the reasoning behind..." |
-| "I quit (but not really)" | "I need to discuss my role going forward" |
+- Committing changes to repository
+- Generating commit messages from diffs
+- Cleaning build artifacts before commit
+- Creating pull requests after commit
 
-### Step 2: Apply the GRACE Framework
+## Workflow: Commit Changes
 
-**G - Ground in facts**
-- Remove emotional language
-- State observable facts only
-- Include specific dates, numbers, commitments
+**Purpose:** Commit all uncommitted changes following Git Commit Standards.
 
-**R - Reframe the narrative**
-- Position yourself as solution-oriented
-- Focus on outcomes, not personalities
-- Use "we" language when appropriate
+**Input Parameters:**
+- **message** (optional): Custom commit message
+- **push** (optional): Push after committing
+- **create-pr** (optional): Create PR after pushing
 
-**A - Assert boundaries**
-- Be clear about what you can/cannot do
-- State needs without apologizing
-- Use "I" statements for boundaries
+### Steps
 
-**C - Create documentation**
-- Summarize understanding in writing
-- Confirm agreements explicitly
-- Leave a paper trail
+**Step 1: Load Commit Standards**
+```
+Read standards/git-commit-standards.md
+```
 
-**E - Exit strategy**
-- Keep doors open
-- Don't burn bridges
-- Maintain professionalism for future reference
+**Step 2: Check for Uncommitted Changes**
+```bash
+git status --porcelain
+```
 
-### Step 3: Choose the Right Tone
+If no changes → Report "No changes to commit"
 
-**Levels of Assertiveness:**
+**Step 3: Analyze Changes for Artifacts**
 
-1. **Collaborative** (for minor issues)
-   - "I'd love to find a solution that works for both of us"
-   - "Could we explore some alternatives?"
+Use Glob to detect artifacts:
+```
+Glob pattern="**/*.class"
+Glob pattern="**/*.temp"
+```
 
-2. **Firm** (for boundary setting)
-   - "I'm not able to commit to that timeline"
-   - "That's outside what I can deliver this sprint"
+Artifact patterns to clean:
+- `*.class` files in `src/` directories
+- `*.temp` temporary files
+- Files in `target/` or `build/` accidentally staged
 
-3. **Protective** (for serious concerns)
-   - "I want to document our understanding"
-   - "I'd like to loop in [HR/skip-level] on this"
+**Step 4: Clean Artifacts**
 
-4. **Strategic retreat** (when picking battles)
-   - "I'll proceed as discussed and flag any issues"
-   - "Let me try this approach and we can reassess"
+**Safe Deletions (automatic):**
+- `*.class` in `src/main/java` or `src/test/java`
+- `*.temp` anywhere
+- Delete using `rm <file>`
 
-## Common Scenarios and Templates
+**Uncertain Cases (ask user):**
+- Files >1MB
+- Files outside safe list
+- Files in `target/` that are tracked
 
-### Scenario 1: Unreasonable Deadline
+**Step 5: Generate Commit Message**
 
-**Original (emotional):**
-> "Are you kidding me? There's no way I can finish this by Friday. You keep dumping stuff on me with zero notice and expect miracles. I'm not a machine!"
+If custom message provided:
+- Validate format
+- Use provided message
 
-**Transformed (professional):**
-> "I want to make sure we deliver quality work. To meet the Friday deadline, I'd need to deprioritize [X and Y]. Could we discuss which items are highest priority, or explore adjusting the timeline? I want to set us up for success."
+If no message:
+- Analyze diff using script:
 
----
+  ```bash
+  python3 .plan/execute-script.py pm-workflow:workflow-integration-git:git-workflow analyze-diff --file <diff-file>
+  ```
+- Generate message following standards
 
-### Scenario 2: Credit Taking
+**Multi-type priority:** fix > feat > perf > refactor > docs > style > test > chore
 
-**Original (emotional):**
-> "I can't believe you presented MY work as yours in that meeting. Everyone saw me build that entire feature and you didn't even mention my name. This is so typical."
+**Step 6: Stage and Commit**
+```bash
+git add .
+git commit -m "$(cat <<'EOF'
+{commit_message}
 
-**Transformed (professional):**
-> "I noticed the presentation covered the [feature] work. For future projects, I'd appreciate being included in stakeholder presentations for work I've led. It helps with my visibility and growth. Could we discuss how to handle attribution going forward?"
-
----
-
-### Scenario 3: Passive-Aggressive Message
-
-**Manager's message:**
-> "I noticed you left at 5pm yesterday. I hope everything is okay and you're managing your workload appropriately."
-
-**Original (emotional):**
-> "I left at 5 because that's when work ENDS. I've been here until 8pm three nights this week. Maybe if you didn't pile on last-minute requests I wouldn't need to work late at all. Not everyone lives at the office."
-
-**Transformed (professional):**
-> "Thanks for checking in. Yes, everything is on track. I've been putting in extra hours earlier this week (stayed until 8pm Mon-Wed) to hit our deadlines, so I balanced that yesterday. Happy to discuss workload if you have concerns about deliverables."
-
----
-
-### Scenario 4: Scope Creep
-
-**Original (emotional):**
-> "NO. I'm not doing that too. You keep adding things and the deadline stays the same. This project was supposed to be X and now it's X, Y, Z, and probably the whole alphabet. Figure it out yourself or give me more time."
-
-**Transformed (professional):**
-> "I want to make sure I understand the full scope. The project has expanded to include [Y and Z] in addition to the original [X]. To maintain quality, I'd recommend either: (A) extending the deadline to [date], or (B) phasing the additional items for a follow-up release. Which approach works better for the team's priorities?"
-
----
-
-### Scenario 5: Public Criticism
-
-**Original (emotional):**
-> "How dare you call me out in front of everyone? That was humiliating. If you had a problem you should have talked to me privately like a normal person. I've lost all respect for you."
-
-**Transformed (professional):**
-> "I'd like to discuss the feedback from today's meeting. I'm always open to improving, and I find I can best incorporate feedback in one-on-one conversations. Could we set up time to discuss your concerns? I want to make sure I'm meeting expectations."
-
----
-
-### Scenario 6: Gaslighting Response
-
-**Manager's message:**
-> "We never agreed to that. I don't know where you got that idea."
-
-**Original (emotional):**
-> "YES WE DID. I have it in writing! Are you serious right now? You literally said this in our meeting on Tuesday. I'm not crazy!"
-
-**Transformed (professional):**
-> "I want to make sure we're aligned. Based on our Tuesday meeting and the follow-up email I sent on [date] (attached), my understanding was [X]. Could you help me understand if something has changed? I want to make sure I'm working toward the right goals."
-
----
-
-### Scenario 7: Setting Boundaries
-
-**Original (emotional):**
-> "Stop Slacking me at 10pm! I have a life! I'm not your personal assistant on call 24/7. This is insane and I'm done responding after hours."
-
-**Transformed (professional):**
-> "I want to discuss communication expectations. To maintain sustainable productivity, I keep notifications off outside business hours and respond to messages the next morning. For true emergencies, [phone/text] works best. Does this approach work for the team's needs?"
-
----
-
-### Scenario 8: Unfair Performance Review
-
-**Original (emotional):**
-> "This review is complete garbage. You've ignored everything I've accomplished and focused on one mistake. Everyone else gets praised for less. This is discrimination and I'm going to HR."
-
-**Transformed (professional):**
-> "Thank you for the review. I'd like to discuss a few points where my perspective differs. I've documented my key accomplishments this period [list briefly]. I want to understand the evaluation criteria better so I can ensure alignment going forward. Could we schedule time to discuss?"
-
-## Power Phrases for Difficult Situations
-
-### For Pushback Without Conflict:
-- "Help me understand the priority of this relative to..."
-- "I want to make sure I'm focusing on what matters most"
-- "That's outside my current bandwidth, but I can revisit in [timeframe]"
-- "I'd like to discuss the expectations for this"
-
-### For Documentation:
-- "Just to confirm my understanding..."
-- "Per our conversation..."
-- "I want to make sure we're aligned on..."
-- "To summarize what we discussed..."
-
-### For Boundary Setting:
-- "I'm not in a position to commit to that"
-- "That doesn't work for me, but here's what I can do..."
-- "I need to prioritize [X] first"
-- "My capacity is currently allocated to..."
-
-### For Self-Advocacy:
-- "I'd like to discuss my contributions to..."
-- "For my growth, I'd appreciate..."
-- "I want to ensure visibility on..."
-- "This is important to me because..."
-
-### For De-escalation:
-- "I appreciate you sharing that perspective"
-- "Let me think about that and follow up"
-- "I hear your concern about..."
-- "Let's find a path forward"
-
-## What to Avoid
-
-### Never Include:
-- Accusations or blame
-- Emotional language ("frustrated," "disappointed," "upset")
-- Threats (even implied)
-- Sarcasm or passive-aggression
-- Over-apologizing
-- Admissions of fault when none exists
-- References to looking for other jobs
-- Complaints about the manager to the manager
-
-### Red Flags to Remove:
-- ALL CAPS
-- Exclamation points (limit to one, if any)
-- "Always" and "never" statements
-- Personal attacks
-- Comparisons to other employees
-- Mentions of unfairness or favoritism
-- Rhetorical questions
-
-## Additional Guidance
-
-### When to Escalate
-Sometimes the right answer isn't a better-worded message. Suggest escalation when:
-- There's potential harassment or discrimination
-- Documentation shows a pattern of abuse
-- The collaborator's mental health is suffering
-- Legal or HR involvement may be needed
-
-### Self-Care Reminder
-Remind collaborators that:
-- Their feelings are valid, even if the message needs editing
-- Professional communication is a skill, not a personality change
-- Setting boundaries is healthy
-- Sometimes the best response is no response
-- Documenting everything protects them
-
-## Example Transformation Process
-
-**Input from collaborator:**
-> "My manager just told me I need to work this weekend AGAIN even though I already worked the last two weekends. I have plans! I'm so sick of this. Every time I try to have a life something 'urgent' comes up. I want to tell him to shove it but I need this job."
-
-**Step 1 - Acknowledge:**
-"That sounds really frustrating, especially after working the last two weekends. Let me help you respond professionally while protecting your time."
-
-**Step 2 - Transform:**
-> "I want to discuss the weekend work request. I've worked the past two weekends and have commitments this weekend that I'm not able to move. To help with the urgent items, I can [offer alternative: come in early Monday / prioritize first thing Monday / see if someone else can cover]. Going forward, could we discuss how to plan for urgent work so I can better manage my schedule?"
-
-**Step 3 - Explain the strategy:**
-"This response: (1) documents the pattern of weekend work, (2) sets a boundary without apologizing, (3) offers an alternative showing you're solution-oriented, and (4) opens a conversation about preventing this pattern."
-
-## Remember
-
-The goal isn't to suppress emotions or accept mistreatment. It's to communicate in a way that:
-- Protects the collaborator's interests
-- Maintains their professional reputation
-- Creates useful documentation
-- Keeps doors open for escalation if needed
-- Preserves their dignity and mental health
-
-Every transformed message should leave the collaborator feeling empowered, not diminished.
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+```
+
+**Step 7: Push (Optional)**
+
+If `push` parameter:
+```bash
+git push
+```
+
+**Step 8: Create PR (Optional)**
+
+If `create-pr` parameter:
+```bash
+python3 .plan/execute-script.py plan-marshall:tools-integration-ci:github pr create \
+  --title "{title}" \
+  --body "## Summary
+{summary}
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+```
+
+### Output
+
+```json
+{
+  "status": "success",
+  "commit_hash": "abc123",
+  "commit_message": "feat(http): add retry configuration",
+  "files_changed": 5,
+  "artifacts_cleaned": 2,
+  "pushed": true,
+  "pr_url": "https://github.com/..."
+}
+```
+
+## Scripts
+
+**Script**: `pm-workflow:workflow-integration-git:git-workflow`
+
+| Command | Parameters | Description |
+|---------|------------|-------------|
+| `format-commit` | `--type --subject [--scope] [--body] [--breaking] [--footer]` | Format commit message |
+| `analyze-diff` | `--file` | Analyze diff for commit suggestions |
+
+### format-commit
+
+Format commit message following conventional commits.
+
+```bash
+python3 .plan/execute-script.py pm-workflow:workflow-integration-git:git-workflow format-commit \
+  --type feat \
+  --scope http \
+  --subject "add retry config" \
+  [--body "Extended description..."] \
+  [--breaking "API changed"] \
+  [--footer "Fixes #123"]
+```
+
+**Parameters**:
+- `--type` (required): Commit type (feat, fix, docs, style, refactor, perf, test, chore)
+- `--subject` (required): Commit subject line
+- `--scope`: Optional component scope
+- `--body`: Optional commit body
+- `--breaking`: Optional breaking change description
+- `--footer`: Optional additional footer
+
+**Output** (JSON):
+```json
+{
+  "type": "feat",
+  "scope": "http",
+  "subject": "add retry config",
+  "formatted_message": "feat(http): add retry config\n\n🤖 Generated...",
+  "validation": {"valid": true, "warnings": []},
+  "status": "success"
+}
+```
+
+### analyze-diff
+
+Analyze diff file to suggest commit message parameters.
+
+```bash
+python3 .plan/execute-script.py pm-workflow:workflow-integration-git:git-workflow analyze-diff \
+  --file changes.diff
+```
+
+**Parameters**:
+- `--file` (required): Path to diff file to analyze
+
+**Output** (JSON):
+```json
+{
+  "mode": "analysis",
+  "suggestions": {
+    "type": "feat",
+    "scope": "auth",
+    "subject": null,
+    "detected_changes": ["Significant new code added"],
+    "files_changed": ["src/main/java/auth/Login.java"]
+  },
+  "status": "success"
+}
+```
+
+## Standards (Load On-Demand)
+
+### Git Commit Standards
+```
+Read standards/git-commit-standards.md
+```
+
+Provides:
+- Conventional commits format specification
+- Commit type definitions and usage
+- Subject, body, and footer guidelines
+- Best practices and anti-patterns
+
+## Critical Rules
+
+**Artifacts:** NEVER commit `*.class`, `*.temp`, `*.backup*`
+**Permissions:** NEVER push without `push` param, NEVER create PR without `create-pr` param
+**Standards:** Follow conventional commits format, add Co-Authored-By footer
+**Safety:** Ask user if uncertain about file deletion
+
+## Integration
+
+### Skills Using This Skill
+- **plan-finalize** - Commits and creates PR after plan execution
+- **plan-execute** - May commit after task completion
+
+### Related Skills
+- **manage-lifecycle** - Phase transitions that trigger finalize
+
+## Quality Verification
+
+- [x] Self-contained with relative path pattern
+- [x] Progressive disclosure (standards loaded on-demand)
+- [x] Script outputs JSON for machine processing
+- [x] commit-changes agent functionality absorbed
+- [x] Clear workflow definition
+- [x] Standards documentation maintained
+
+## References
+
+- Conventional Commits: https://www.conventionalcommits.org/
+- Git Commit Best Practices: https://cbea.ms/git-commit/
+- Angular Commit Guidelines: https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
