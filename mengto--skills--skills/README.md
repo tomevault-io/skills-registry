@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [MengTo/Skills](https://github.com/MengTo/Skills/tree/main/agent-skills/web-design/mesh-gradient-dark-blue-clean/SKILL.md)
+Original source: [MengTo/Skills](https://github.com/MengTo/Skills/tree/main/agent-skills/web-design/cinematic-gsap-lenis-motion-system/SKILL.md)
 
 ---
 
