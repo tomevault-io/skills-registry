@@ -1,81 +1,214 @@
 ---
-name: rust-borrow-checker
-description: Debug Rust ownership, borrowing, and lifetime errors. Use when encountering borrow checker errors (E0382, E0502, E0597, etc.) or when code won't compile due to ownership issues. Use when this capability is needed.
+name: tech-stack-selection
+description: 技術スタック確認ヒアリングのフレームワーク（レイヤー別選択肢、提案形式、確定フォーマット） Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-<essential_principles>
-The Rust borrow checker enforces memory safety at compile time through three rules:
+# 技術スタック確認ヒアリング
 
-1. **Each value has exactly one owner** - When the owner goes out of scope, the value is dropped
-2. **You can have either one mutable reference OR any number of immutable references** - Never both simultaneously
-3. **References must always be valid** - No dangling references, lifetimes must be sufficient
+> **参照元**: basic-design-writer, basic-design-workflow
 
-Understanding these rules is the key to fixing borrow checker errors.
-</essential_principles>
+---
 
-<intake>
-What would you like help with?
+## 実行タイミング
 
-1. Diagnose a borrow checker error (paste the error)
-2. Fix a lifetime annotation issue
-3. Fix an ownership transfer problem
-4. Fix a mutable/immutable borrow conflict
-5. Understand a specific error code
+**常に実行**。要件定義書の技術スタックが定義済みでも、ユーザーに確認を行う。
 
-**Paste the compiler error or describe the issue, then I'll route to the appropriate workflow.**
-</intake>
+**目的**: 
+- 技術選定の認識齟齬を防ぐ
+- 未定義レイヤーを明確にする
+- ユーザーの意図しない技術選定を防止する
 
-<routing>
-| Response | Workflow |
-|----------|----------|
-| Error message pasted, "diagnose", "error", "E0XXX" | `workflows/diagnose-error.md` |
-| "lifetime", "'a", "outlives", "E0597", "E0621" | `workflows/fix-lifetime.md` |
-| "move", "moved", "ownership", "E0382", "E0507" | `workflows/fix-ownership.md` |
-| "borrow", "mutable", "immutable", "E0502", "E0499" | `workflows/fix-borrowing.md` |
-| Other | Clarify, then select appropriate workflow |
-</routing>
+---
 
-<quick_fixes>
-Common solutions for frequent errors:
+## Phase H1: 現状サマリー提示
 
-**E0382 (use of moved value)**: Clone, use references, or restructure to avoid the move
-**E0502 (cannot borrow as mutable, already borrowed as immutable)**: Separate the borrows into different scopes, or use interior mutability (RefCell, Mutex)
-**E0499 (cannot borrow as mutable more than once)**: Split into separate scopes or use indices instead of references
-**E0597 (borrowed value does not live long enough)**: Extend the lifetime of the owner, or use owned types instead
-**E0506 (cannot assign, already borrowed)**: Complete borrow before assignment, or use Cell/RefCell
-</quick_fixes>
+### 1.1 要件分析
 
-<reference_index>
-Domain knowledge in `references/`:
+要件定義書から以下を特定：
 
-**Core Rules:**
-- ownership-rules.md - The three ownership rules with examples
-- borrowing-rules.md - Borrowing and reference rules
-- lifetime-syntax.md - Lifetime annotation patterns and elision
+| 抽出項目 | 確認観点 |
+|---------|---------|
+| パフォーマンス要件 | 同時接続数、レスポンス時間 |
+| セキュリティ要件 | 認証方式、暗号化 |
+| 可用性要件 | 稼働率、障害復旧 |
+| ユーザー層 | 利用デバイス、地域 |
+| データ特性 | 構造化/非構造化、規模 |
 
-**Problem Solving:**
-- common-errors.md - Detailed breakdown of E0XXX errors
-- patterns.md - Clone, Rc, Arc, RefCell, Cow patterns
-</reference_index>
+### 1.2 定義済み/未定義の一覧表示
 
-<workflows_index>
-| Workflow | Purpose |
-|----------|---------|
-| diagnose-error.md | Systematically diagnose any borrow checker error |
-| fix-lifetime.md | Resolve lifetime annotation issues |
-| fix-ownership.md | Fix ownership transfer problems |
-| fix-borrowing.md | Handle borrow conflicts |
-</workflows_index>
+```markdown
+## 技術スタック確認
 
-<success_criteria>
-A fix is complete when:
-- `cargo check` passes without borrow checker errors
-- The solution doesn't introduce unnecessary cloning
-- The fix maintains the original intent of the code
-- Lifetimes are as simple as possible (rely on elision when possible)
-</success_criteria>
+### 定義済み（要件定義書より）
+| レイヤー | 技術 | 確認 |
+|---------|------|------|
+| フロントエンド | Next.js | ✅ このまま進めてよいですか？ |
+| バックエンド | Node.js | ✅ このまま進めてよいですか？ |
+
+### 未定義（提案します）
+| レイヤー | 推奨 | 理由 |
+|---------|------|------|
+| UIライブラリ | shadcn/ui | カスタマイズ性、軽量 |
+| ORM | Prisma | 型安全、マイグレーション管理 |
+| 認証 | NextAuth.js | Next.js統合 |
+```
+
+### 1.3 ユーザー選択
+
+```markdown
+**対応を選択してください**:
+
+1. 承認 → 提案内容を確認して続行
+2. 変更 → 変更したい技術を指定
+3. スキップ → 確認不要で続行
+
+> 番号を選択してください（1-3）:
+```
+
+---
+
+## Phase H2: 技術スタック提案
+
+### レイヤー別選択肢
+
+#### 1. フロントエンド
+
+| 選択肢 | 特徴 | 適合度 |
+|--------|------|--------|
+| **Next.js + React** | SSR/SSG対応、大規模エコシステム | 推奨 |
+| Nuxt.js + Vue | 学習コスト低、中小規模向き | ○ |
+| SvelteKit | 軽量・高速 | △ |
+
+#### 2. UIライブラリ
+
+| 選択肢 | 特徴 | 適合度 |
+|--------|------|--------|
+| **shadcn/ui + Tailwind** | カスタマイズ性高、軽量 | 推奨 |
+| MUI | 豊富なコンポーネント | ○ |
+| Chakra UI | アクセシビリティ重視 | ○ |
+
+#### 3. 状態管理
+
+| 選択肢 | 特徴 | 適合度 |
+|--------|------|--------|
+| **TanStack Query + Zustand** | サーバー/クライアント状態分離 | 推奨 |
+| Redux Toolkit | 大規模向け | ○ |
+
+#### 4. バックエンド
+
+| 選択肢 | 特徴 | 適合度 |
+|--------|------|--------|
+| **Node.js + Hono/Express** | JSエコシステム統一 | 推奨 |
+| Go + Echo/Gin | 高パフォーマンス | ○ |
+| Python + FastAPI | ML親和性 | ○ |
+
+#### 5. データベース
+
+| 選択肢 | 特徴 | 適合度 |
+|--------|------|--------|
+| **PostgreSQL** | 高機能、JSON対応 | 推奨 |
+| MySQL | 実績豊富 | ○ |
+| MongoDB | スキーマレス | △ |
+
+#### 6. ORM
+
+| 選択肢 | 特徴 | 適合度 |
+|--------|------|--------|
+| **Prisma** | 型安全、マイグレーション管理 | 推奨 |
+| Drizzle | 軽量、SQL寄り | ○ |
+
+#### 7. 認証・認可
+
+| 選択肢 | 特徴 | 適合度 |
+|--------|------|--------|
+| **NextAuth.js / Auth.js** | Next.js統合、OAuth対応 | 推奨 |
+| Clerk | マネージド、有料 | ○ |
+| Supabase Auth | PostgreSQL統合 | ○ |
+
+#### 8. インフラ
+
+| 選択肢 | 特徴 | 適合度 |
+|--------|------|--------|
+| **Vercel + Supabase** | サーバーレス、運用コスト低 | 推奨 |
+| AWS (ECS/Lambda) | フルコントロール | ○ |
+| GCP (Cloud Run) | コンテナベース | ○ |
+
+#### 9. CI/CD
+
+| 選択肢 | 特徴 | 適合度 |
+|--------|------|--------|
+| **GitHub Actions** | GitHub統合、エコシステム豊富 | 推奨 |
+| GitLab CI | オンプレ対応 | ○ |
+
+#### 10. テスト
+
+| レイヤー | 推奨ツール |
+|---------|-----------|
+| 単体/結合 | **Vitest** |
+| E2E | **Playwright** |
+
+#### 11. モニタリング
+
+| 選択肢 | 特徴 | 適合度 |
+|--------|------|--------|
+| **Sentry** | エラー監視 | 推奨 |
+| Datadog | フルスタック監視、有料 | ○ |
+
+---
+
+## ユーザー回答フォーマット
+
+```markdown
+| # | レイヤー | 選択 | コメント |
+|---|---------|------|---------|
+| 1 | フロントエンド | Next.js / Nuxt.js / 他: ___ | |
+| 2 | UIライブラリ | shadcn/ui / MUI / 他: ___ | |
+| 3 | 状態管理 | TanStack Query+Zustand / Redux / 他: ___ | |
+| 4 | バックエンド | Node.js / Go / Python / 他: ___ | |
+| 5 | データベース | PostgreSQL / MySQL / 他: ___ | |
+| 6 | ORM | Prisma / Drizzle / 他: ___ | |
+| 7 | 認証 | NextAuth.js / Clerk / 他: ___ | |
+| 8 | インフラ | Vercel+Supabase / AWS / 他: ___ | |
+| 9 | CI/CD | GitHub Actions / 他: ___ | |
+| 10 | モニタリング | Sentry / Datadog / 他: ___ | |
+```
+
+---
+
+## Phase H3: 選定確定と記録
+
+### 記録フォーマット
+
+```markdown
+### 2.2 技術スタック
+
+| レイヤー | 技術 | 選定理由 | 備考 |
+|---------|------|---------|------|
+| フロントエンド | Next.js 14 | SSR対応、React経験あり | |
+| UIライブラリ | shadcn/ui + Tailwind | カスタマイズ性、軽量 | |
+| 状態管理 | TanStack Query + Zustand | 状態分離 | |
+| バックエンド | Node.js + Hono | TypeScript統一 | |
+| データベース | PostgreSQL | 関係データ、JSON対応 | Supabase |
+| ORM | Prisma | 型安全 | |
+| 認証 | NextAuth.js | OAuth対応 | |
+| インフラ | Vercel + Supabase | サーバーレス | |
+| CI/CD | GitHub Actions | GitHub統合 | |
+| テスト | Vitest + Playwright | 高速、E2E | |
+| モニタリング | Sentry | エラー監視 | |
+```
+
+---
+
+## スキップ条件
+
+以下の場合**のみ**ヒアリングをスキップ：
+
+1. ユーザーが選択肢「3. スキップ」を選択した場合
+
+> **注意**: 「要件定義書で定義済み」「既存コードベースあり」だけではスキップしない。
+> 必ずユーザーに確認サマリーを提示し、明示的な承認を得る。
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
