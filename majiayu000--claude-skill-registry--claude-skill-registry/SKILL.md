@@ -1,46 +1,98 @@
 ---
-name: webshop-product-detail-check
-description: This skill examines a specific product's detailed page to verify it matches the user's requirements, checking price, description, features, and reviews. Trigger when a candidate product is selected from search results. It confirms alignment with constraints and provides a final suitability assessment before purchase. Use when this capability is needed.
+name: writing-clearly-and-concisely
+description: Use when writing prose humans will read—documentation, commit messages, error messages, explanations, reports, or UI text. Applies Strunk's timeless rules for clearer, stronger, more professional writing.
 metadata:
   author: majiayu000
 ---
-# Skill: Product Detail Verification
 
-## Trigger
-Activate this skill when the agent has navigated to a specific product's detailed page from a search results list. The agent should have a user query containing specific requirements (e.g., product type, attributes, price constraints).
+# Writing Clearly and Concisely
 
-## Core Objective
-Analyze the product detail page to confirm if the product meets all user-specified constraints. Provide a clear "Proceed" or "Reject" recommendation.
+## Overview
 
-## Execution Workflow
+Write with clarity and force. This skill covers what to do (Strunk) and what not to do (AI patterns).
 
-1.  **Parse User Requirements:** Extract key constraints from the user's instruction. Primary constraints are typically **Price** and **Key Attributes** (e.g., "long", "clip-in", "natural looking"). Store these in a structured format.
+## When to Use This Skill
 
-2.  **Scrape Product Page Data:** Systematically extract the following information from the current page observation:
-    *   **Product Title**
-    *   **Price**
-    *   **Key Description Snippets** (from Description/Features sections)
-    *   **Rating** (if available)
-    *   **Availability of "Buy Now"** action.
+Use this skill whenever you write prose for humans:
 
-3.  **Constraint Verification:** Compare the scraped data against the user's requirements.
-    *   **Price Check:** Is the product price strictly less than the user's maximum? (e.g., < $40.00).
-    *   **Attribute Check:** Do the title and description contain terms matching the user's key attributes? (e.g., confirm "clip-in" and "natural looking" are present).
-    *   **Suitability Flag:** Product is suitable only if **ALL** hard constraints (price, mandatory attributes) are satisfied.
+- Documentation, README files, technical explanations
+- Commit messages, pull request descriptions
+- Error messages, UI copy, help text, comments
+- Reports, summaries, or any explanation
+- Editing to improve clarity
 
-4.  **Decision & Action:**
-    *   **If SUITABLE:** Conclude the product matches requirements. The recommended action is `click[buy now]`.
-    *   **If NOT SUITABLE:** Conclude the product fails one or more constraints. The recommended action is to return to search (`click[back to search]`) to find another candidate.
+**If you're writing sentences for a human to read, use this skill.**
 
-## Output Format
-Your response must use the following format:
+## Limited Context Strategy
 
-**Thought:** [Your reasoning, summarizing the user's constraints, the product details found, and the result of the verification check.]
-**Action:** [The single, valid action to take: `click[buy now]` or `click[back to search]`]
+When context is tight:
 
-## Notes
-*   Prioritize information explicitly on the product page. Assume missing information (like a Rating of "N.A.") does not disqualify a product unless specified by the user.
-*   The "Buy Now" button must be present in the available actions list for the purchase action to be valid.
+1. Write your draft using judgment
+2. Dispatch a subagent with your draft and the relevant section file
+3. Have the subagent copyedit and return the revision
+
+Loading a single section (~1,000-4,500 tokens) instead of everything saves significant context.
+
+## Elements of Style
+
+William Strunk Jr.'s *The Elements of Style* (1918) teaches you to write clearly and cut ruthlessly.
+
+### Rules
+
+**Elementary Rules of Usage (Grammar/Punctuation)**:
+
+1. Form possessive singular by adding 's
+2. Use comma after each term in series except last
+3. Enclose parenthetic expressions between commas
+4. Comma before conjunction introducing co-ordinate clause
+5. Don't join independent clauses by comma
+6. Don't break sentences in two
+7. Participial phrase at beginning refers to grammatical subject
+
+**Elementary Principles of Composition**:
+
+8. One paragraph per topic
+9. Begin paragraph with topic sentence
+10. **Use active voice**
+11. **Put statements in positive form**
+12. **Use definite, specific, concrete language**
+13. **Omit needless words**
+14. Avoid succession of loose sentences
+15. Express co-ordinate ideas in similar form
+16. **Keep related words together**
+17. Keep to one tense in summaries
+18. **Place emphatic words at end of sentence**
+
+### Reference Files
+
+The rules above are summarized from Strunk's original text. For complete explanations with examples:
+
+| Section | File | ~Tokens |
+|---------|------|---------|
+| Grammar, punctuation, comma rules | `02-elementary-rules-of-usage.md` | 2,500 |
+| Paragraph structure, active voice, concision | `03-elementary-principles-of-composition.md` | 4,500 |
+| Headings, quotations, formatting | `04-a-few-matters-of-form.md` | 1,000 |
+| Word choice, common errors | `05-words-and-expressions-commonly-misused.md` | 4,000 |
+
+**Most tasks need only `03-elementary-principles-of-composition.md`** — it covers active voice, positive form, concrete language, and omitting needless words.
+
+## AI Writing Patterns to Avoid
+
+LLMs regress to statistical means, producing generic, puffy prose. Avoid:
+
+- **Puffery:** pivotal, crucial, vital, testament, enduring legacy
+- **Empty "-ing" phrases:** ensuring reliability, showcasing features, highlighting capabilities
+- **Promotional adjectives:** groundbreaking, seamless, robust, cutting-edge
+- **Overused AI vocabulary:** delve, leverage, multifaceted, foster, realm, tapestry
+- **Formatting overuse:** excessive bullets, emoji decorations, bold on every other word
+
+Be specific, not grandiose. Say what it actually does.
+
+For comprehensive research on why these patterns occur, see `signs-of-ai-writing.md`. Wikipedia editors developed this guide to detect AI-generated submissions — their patterns are well-documented and field-tested.
+
+## Bottom Line
+
+Writing for humans? Load the relevant section from `elements-of-style/` and apply the rules. For most tasks, `03-elementary-principles-of-composition.md` covers what matters most.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
