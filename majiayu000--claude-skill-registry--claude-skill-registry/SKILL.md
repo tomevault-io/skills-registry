@@ -1,260 +1,215 @@
 ---
-name: workflow-integration-git
-description: Git commit workflow with conventional commits, artifact cleanup, and optional push/PR creation Use when this capability is needed.
+name: video-script-collaborial
+description: 将视频脚本转换为更适合实际录制的口语化表达，去除书面化语言，增加自然感和亲和力。当用户提到"视频脚本"、"录制"、"口语化"、"自然一点"、"像说话一样"、"太书面了"时使用此技能。 Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# CUI Git Workflow Skill
+# 视频脚本口语化审校
 
-Provides git commit workflow following conventional commits specification. Includes artifact cleanup, commit formatting, and optional push/PR creation.
+## 何时使用此Skill
+当用户出现以下任一需求时，使用此技能：
+- 审校"视频脚本"、"录制脚本"
+- 要求"口语化"、"自然一点"、"像说话一样"
+- 觉得脚本"太书面了"、"太正式"、"不自然"
+- 希望脚本"更适合录制"、"说出来更顺"
+- 需要增加"亲和力"、"生活化"的表达
 
-## What This Skill Provides
+## 核心目标
+将正式的书面脚本转换为自然流畅的口语化表达，让视频听起来更像是真实对话而不是照本宣科，显著提升视频的亲和力和观看体验。
 
-### Commit Workflow (Absorbs commit-changes Agent)
+## 执行流程
 
-Complete git commit workflow:
-- Artifact detection and cleanup
-- Commit message generation following conventional commits
-- Optional push to remote
-- Optional PR creation
+### 第一遍：书面化词汇替换 (P0级转换)
+**目标**：去除明显的书面化表达
 
-### Commit Standards
+**重点替换**：
+1. **动词替换**
+   - ❌ "进行" → ✅ "做"、"搞"、"弄"
+   - ❌ "实现" → ✅ "做到"、"完成"
+   - ❌ "提供" → ✅ "给"、"提供给大家"
+   - ❌ "导致" → ✅ "造成"、"所以"
+   - ❌ "面临" → ✅ "遇到"、"碰到"
 
-- **Format:** `<type>(<scope>): <subject>`
-- **Types:** feat, fix, docs, style, refactor, perf, test, chore
-- **Quality:** imperative mood, lowercase, no period, max 50 chars
+2. **连接词替换**
+   - ❌ "因此" → ✅ "所以"、"这样"
+   - ❌ "然而" → ✅ "但是"、"不过"
+   - ❌ "此外" → ✅ "而且"、"另外"
+   - ❌ "综上所述" → ✅ "总的来说"、"所以说"
 
-## When to Activate This Skill
+3. **名词替换**
+   - ❌ "该产品" → ✅ "这个产品"、"它"
+   - ❌ "此方法" → ✅ "这个方法"、"这种方法"
+   - ❌ "用户" → ✅ "大家"、"你们"、"我们"
 
-- Committing changes to repository
-- Generating commit messages from diffs
-- Cleaning build artifacts before commit
-- Creating pull requests after commit
+### 第二遍：句式结构调整 (P1级转换)
+**目标**：让句式更符合口语表达习惯
 
-## Workflow: Commit Changes
+**句式优化**：
+1. **长短句结合**
+   - 避免过长的复合句
+   - 使用更多短句表达
+   - 保持自然的说话节奏
 
-**Purpose:** Commit all uncommitted changes following Git Commit Standards.
+2. **倒装和省略**
+   - 使用"是...的"强调结构
+   - 适当省略主语或宾语
+   - 使用插入语增加自然感
 
-**Input Parameters:**
-- **message** (optional): Custom commit message
-- **push** (optional): Push after committing
-- **create-pr** (optional): Create PR after pushing
+3. **语气词添加**
+   - 适当使用"啊"、"呀"、"呢"、"吧"
+   - 增加感叹词"哇"、"哎呀"、"嗯"
+   - 使用"对了"、"其实"、"说真的"等
 
-### Steps
+### 第三遍：对话感增强 (P2级优化)
+**目标**：增加互动感和真实对话感
 
-**Step 1: Load Commit Standards**
+**互动元素**：
+1. **设问句使用**
+   - "大家猜猜看结果怎么样？"
+   - "你们有没有遇到过这种情况？"
+   - "是不是很简单？"
+
+2. **反问句表达**
+   - "这很困难吗？其实一点也不难。"
+   - "你学会了吗？我相信你已经会了。"
+
+3. **直接称呼**
+   - "朋友们"、"大家好"、"各位小伙伴"
+   - "我想告诉大家..."
+   - "你们一定要记住..."
+
+### 第四遍：情感色彩添加 (细节优化)
+**目标**：增加情感表达和个性化色彩
+
+**情感元素**：
+1. **情绪词汇**
+   - "真的很棒"、"超级有用"
+   - "太神奇了"、"简直不敢相信"
+   - "有点小失望"、"挺意外的"
+
+2. **个人表达**
+   - "我觉得"、"在我看来"、"说实话"
+   - "我个人的经验是..."
+   - "让我印象最深的是..."
+
+3. **比喻和拟人**
+   - 使用生活化的比喻
+   - 增加拟人化的表达
+   - 让抽象概念更具体
+
+## 具体转换示例
+
+### 示例1：产品介绍类
+**原文（书面化）**：
 ```
-Read standards/git-commit-standards.md
-```
-
-**Step 2: Check for Uncommitted Changes**
-```bash
-git status --porcelain
-```
-
-If no changes → Report "No changes to commit"
-
-**Step 3: Analyze Changes for Artifacts**
-
-Use Glob to detect artifacts:
-```
-Glob pattern="**/*.class"
-Glob pattern="**/*.temp"
-```
-
-Artifact patterns to clean:
-- `*.class` files in `src/` directories
-- `*.temp` temporary files
-- Files in `target/` or `build/` accidentally staged
-
-**Step 4: Clean Artifacts**
-
-**Safe Deletions (automatic):**
-- `*.class` in `src/main/java` or `src/test/java`
-- `*.temp` anywhere
-- Delete using `rm <file>`
-
-**Uncertain Cases (ask user):**
-- Files >1MB
-- Files outside safe list
-- Files in `target/` that are tracked
-
-**Step 5: Generate Commit Message**
-
-If custom message provided:
-- Validate format
-- Use provided message
-
-If no message:
-- Analyze diff using script:
-
-  ```bash
-  python3 .plan/execute-script.py pm-workflow:workflow-integration-git:git-workflow analyze-diff --file <diff-file>
-  ```
-- Generate message following standards
-
-**Multi-type priority:** fix > feat > perf > refactor > docs > style > test > chore
-
-**Step 6: Stage and Commit**
-```bash
-git add .
-git commit -m "$(cat <<'EOF'
-{commit_message}
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>
-EOF
-)"
-```
-
-**Step 7: Push (Optional)**
-
-If `push` parameter:
-```bash
-git push
+本产品采用了先进的人工智能技术，能够为用户提供高效的解决方案。
+该产品具备以下特点：操作简便、功能强大、性能稳定。
+用户可以通过简单的操作实现复杂的功能需求。
 ```
 
-**Step 8: Create PR (Optional)**
-
-If `create-pr` parameter:
-```bash
-python3 .plan/execute-script.py plan-marshall:tools-integration-ci:github pr create \
-  --title "{title}" \
-  --body "## Summary
-{summary}
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+**转换后（口语化）**：
+```
+今天给大家介绍的这个产品，真的让我很惊喜！
+它用的是最先进的人工智能技术，但是用起来超级简单。
+你们猜怎么着？很多复杂的功能，点几下就搞定了！
+操作简单、功能强大、用起来还很稳定，简直就是神器啊！
 ```
 
-### Output
-
-```json
-{
-  "status": "success",
-  "commit_hash": "abc123",
-  "commit_message": "feat(http): add retry configuration",
-  "files_changed": 5,
-  "artifacts_cleaned": 2,
-  "pushed": true,
-  "pr_url": "https://github.com/..."
-}
+### 示例2：教程类
+**原文（书面化）**：
+```
+首先，我们需要进行准备工作。其次，按照步骤执行操作。
+最后，对结果进行验证。此方法适用于大多数场景。
 ```
 
-## Scripts
+**转换后（口语化）**：
+```
+好，那我们现在就开始！
+第一步，我们先做一些准备工作，这个很重要哦。
+然后呢，跟着我一步一步来操作，很简单的。
+最后，我们看看结果怎么样。这个方法基本上什么情况都能用！```
 
-**Script**: `pm-workflow:workflow-integration-git:git-workflow`
-
-| Command | Parameters | Description |
-|---------|------------|-------------|
-| `format-commit` | `--type --subject [--scope] [--body] [--breaking] [--footer]` | Format commit message |
-| `analyze-diff` | `--file` | Analyze diff for commit suggestions |
-
-### format-commit
-
-Format commit message following conventional commits.
-
-```bash
-python3 .plan/execute-script.py pm-workflow:workflow-integration-git:git-workflow format-commit \
-  --type feat \
-  --scope http \
-  --subject "add retry config" \
-  [--body "Extended description..."] \
-  [--breaking "API changed"] \
-  [--footer "Fixes #123"]
+### 示例3：观点分享类
+**原文（书面化）**：
+```
+根据我的观察，这种现象具有普遍性。
+我认为，解决这个问题需要多方面的努力。
+因此，我们应该采取更加积极的应对策略。
 ```
 
-**Parameters**:
-- `--type` (required): Commit type (feat, fix, docs, style, refactor, perf, test, chore)
-- `--subject` (required): Commit subject line
-- `--scope`: Optional component scope
-- `--body`: Optional commit body
-- `--breaking`: Optional breaking change description
-- `--footer`: Optional additional footer
-
-**Output** (JSON):
-```json
-{
-  "type": "feat",
-  "scope": "http",
-  "subject": "add retry config",
-  "formatted_message": "feat(http): add retry config\n\n🤖 Generated...",
-  "validation": {"valid": true, "warnings": []},
-  "status": "success"
-}
+**转换后（口语化）**：
+```
+说真的，我最近发现这个问题真的很普遍。
+我觉得要解决这个问题，光靠一个人可不行。
+所以啊，我们得换个思路，用更积极的方法来应对。
 ```
 
-### analyze-diff
+## 分场景优化建议
 
-Analyze diff file to suggest commit message parameters.
+### 1. 知识科普类视频
+**口语化重点**：
+- 多用设问和互动
+- 增加生活化比喻
+- 保持专业性的同时增加亲和力
 
-```bash
-python3 .plan/execute-script.py pm-workflow:workflow-integration-git:git-workflow analyze-diff \
-  --file changes.diff
-```
+### 2. 生活分享类视频
+**口语化重点**：
+- 强调个人感受和体验
+- 使用更多语气词和感叹
+- 增加与观众的直接对话
 
-**Parameters**:
-- `--file` (required): Path to diff file to analyze
+### 3. 教程演示类视频
+**口语化重点**：
+- 强调步骤的清晰性
+- 增加鼓励和引导性语言
+- 保持节奏的轻快感
 
-**Output** (JSON):
-```json
-{
-  "mode": "analysis",
-  "suggestions": {
-    "type": "feat",
-    "scope": "auth",
-    "subject": null,
-    "detected_changes": ["Significant new code added"],
-    "files_changed": ["src/main/java/auth/Login.java"]
-  },
-  "status": "success"
-}
-```
+### 4. 产品评测类视频
+**口语化重点**：
+- 突出真实使用感受
+- 增加对比和评价
+- 保持客观性的同时表达观点
 
-## Standards (Load On-Demand)
+## 质量检查标准
 
-### Git Commit Standards
-```
-Read standards/git-commit-standards.md
-```
+### 流畅度检查
+- [ ] 读起来不拗口
+- [ ] 说话节奏自然
+- [ ] 没有长难句
+- [ ] 句式多样化
 
-Provides:
-- Conventional commits format specification
-- Commit type definitions and usage
-- Subject, body, and footer guidelines
-- Best practices and anti-patterns
+### 自然度检查
+- [ ] 像真实对话
+- [ ] 没有书面化痕迹
+- [ ] 语气词使用恰当
+- [ ] 情感表达真实
 
-## Critical Rules
+### 亲和力检查
+- [ ] 有互动感
+- [ ] 有个人特色
+- [ ] 观众容易产生共鸣
+- [ ] 表达有温度
 
-**Artifacts:** NEVER commit `*.class`, `*.temp`, `*.backup*`
-**Permissions:** NEVER push without `push` param, NEVER create PR without `create-pr` param
-**Standards:** Follow conventional commits format, add Co-Authored-By footer
-**Safety:** Ask user if uncertain about file deletion
+## 特殊注意事项
 
-## Integration
+### 1. 保持原意不变
+- 确保核心信息不丢失
+- 关键数据和事实要准确
+- 逻辑关系要保持清晰
 
-### Skills Using This Skill
-- **plan-finalize** - Commits and creates PR after plan execution
-- **plan-execute** - May commit after task completion
+### 2. 避免过度口语化
+- 不要使用过于随意的表达
+- 保持基本的语言规范
+- 避免使用不合适的网络用语
 
-### Related Skills
-- **manage-lifecycle** - Phase transitions that trigger finalize
+### 3. 考虑录制场景
+- 考虑视频的整体风格
+- 适配目标观众的接受度
+- 保持个人风格的一致性
 
-## Quality Verification
-
-- [x] Self-contained with relative path pattern
-- [x] Progressive disclosure (standards loaded on-demand)
-- [x] Script outputs JSON for machine processing
-- [x] commit-changes agent functionality absorbed
-- [x] Clear workflow definition
-- [x] Standards documentation maintained
-
-## References
-
-- Conventional Commits: https://www.conventionalcommits.org/
-- Git Commit Best Practices: https://cbea.ms/git-commit/
-- Angular Commit Guidelines: https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit
+---
+*最后更新：2024年*
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
