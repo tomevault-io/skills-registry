@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [cacheplane/angular-agent-framework](https://github.com/cacheplane/angular-agent-framework/tree/main/marketing/cowork/gtm/SKILL.md)
+Original source: [cacheplane/angular-agent-framework](https://github.com/cacheplane/angular-agent-framework/tree/main/marketing/cowork/marketing/SKILL.md)
 
 ---
 
