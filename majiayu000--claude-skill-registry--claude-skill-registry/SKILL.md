@@ -1,417 +1,390 @@
 ---
-name: terraform-patterns
-description: Terraform infrastructure as code patterns and best practices. Use when writing Terraform configurations, creating modules, managing state, or designing IaC architectures. Use when this capability is needed.
+name: storybook-creation
+description: Creating Storybook documentation with proper stories, argTypes, model instances, and variations Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Terraform Patterns
+# Storybook Creation Skill
 
-Best practices for Terraform infrastructure as code.
+## Purpose
 
-## Project Structure
+Create interactive documentation and examples for components using Storybook.
 
-```
-infrastructure/
-├── modules/
-│   ├── networking/
-│   │   ├── main.tf
-│   │   ├── variables.tf
-│   │   ├── outputs.tf
-│   │   └── README.md
-│   ├── compute/
-│   └── database/
-├── environments/
-│   ├── dev/
-│   │   ├── main.tf
-│   │   ├── terraform.tfvars
-│   │   └── backend.tf
-│   ├── staging/
-│   └── prod/
-├── global/
-│   ├── iam/
-│   └── dns/
-└── scripts/
-    └── init-backend.sh
-```
+## Basic Template
 
-## Module Design
+```typescript
+import { Store } from "@/models/store/Store";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { ComponentName } from "./ComponentName";
 
-### Reusable Module Pattern
+const meta: Meta<typeof ComponentName> = {
+  title: "{Category}/Components/{Path}/ComponentName",
+  component: ComponentName,
+  argTypes: {
+    // Type definitions here
+  },
+};
 
-```hcl
-# modules/vpc/variables.tf
-variable "name" {
-  description = "Name prefix for resources"
-  type        = string
-}
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-variable "environment" {
-  description = "Environment name"
-  type        = string
-  validation {
-    condition     = contains(["dev", "staging", "prod"], var.environment)
-    error_message = "Environment must be dev, staging, or prod."
-  }
-}
-
-variable "cidr_block" {
-  description = "VPC CIDR block"
-  type        = string
-  default     = "10.0.0.0/16"
-  validation {
-    condition     = can(cidrhost(var.cidr_block, 0))
-    error_message = "Must be a valid CIDR block."
-  }
-}
-
-variable "availability_zones" {
-  description = "List of availability zones"
-  type        = list(string)
-}
-
-variable "tags" {
-  description = "Additional tags"
-  type        = map(string)
-  default     = {}
-}
+export const Default: Story = {
+  args: {
+    // Default args
+  },
+};
 ```
 
-```hcl
-# modules/vpc/main.tf
-locals {
-  common_tags = merge(var.tags, {
-    Module      = "vpc"
-    Environment = var.environment
-    ManagedBy   = "terraform"
-  })
-}
+## Title Categories
 
-resource "aws_vpc" "main" {
-  cidr_block           = var.cidr_block
-  enable_dns_hostnames = true
-  enable_dns_support   = true
+Use these categories for organizing stories:
 
-  tags = merge(local.common_tags, {
-    Name = "${var.name}-vpc"
-  })
-}
+- `Customer/Components/{path}` - Customer-facing components
+- `Common/Components/{path}` - Shared components
+- `Admin/Components/{path}` - Admin-specific components
 
-resource "aws_subnet" "public" {
-  count             = length(var.availability_zones)
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = cidrsubnet(var.cidr_block, 8, count.index)
-  availability_zone = var.availability_zones[count.index]
-
-  map_public_ip_on_launch = true
-
-  tags = merge(local.common_tags, {
-    Name = "${var.name}-public-${count.index + 1}"
-    Tier = "public"
-  })
-}
-
-resource "aws_subnet" "private" {
-  count             = length(var.availability_zones)
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = cidrsubnet(var.cidr_block, 8, count.index + 10)
-  availability_zone = var.availability_zones[count.index]
-
-  tags = merge(local.common_tags, {
-    Name = "${var.name}-private-${count.index + 1}"
-    Tier = "private"
-  })
-}
+Example paths:
+```
+"Customer/Components/Table/DataTable"
+"Common/Components/Form/FormFieldText"
+"Admin/Components/Dashboard/StatsCard"
 ```
 
-```hcl
-# modules/vpc/outputs.tf
-output "vpc_id" {
-  description = "VPC ID"
-  value       = aws_vpc.main.id
-}
+## Creating Model Instances
 
-output "public_subnet_ids" {
-  description = "List of public subnet IDs"
-  value       = aws_subnet.public[*].id
-}
+Use Store to create model instances (snake_case model names):
 
-output "private_subnet_ids" {
-  description = "List of private subnet IDs"
-  value       = aws_subnet.private[*].id
-}
+```typescript
+import { Store } from "@/models/store/Store";
 
-output "vpc_cidr_block" {
-  description = "VPC CIDR block"
-  value       = aws_vpc.main.cidr_block
-}
+// Correct - snake_case
+const account = Store.account.create({
+  id: "123",
+  name: "Test Account",
+  email: "test@example.com",
+});
+
+const organization = Store.organization.create({
+  id: "456",
+  name: "Test Org",
+});
+
+// Incorrect - not account_model
+const account = Store.account_model.create({...}); // Wrong!
 ```
 
-## State Management
+## Simple Component Story
 
-### Remote Backend Configuration
+```typescript
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Button } from "./Button";
 
-```hcl
-# backend.tf
-terraform {
-  backend "s3" {
-    bucket         = "company-terraform-state"
-    key            = "environments/prod/terraform.tfstate"
-    region         = "us-east-1"
-    encrypt        = true
-    dynamodb_table = "terraform-locks"
+const meta: Meta<typeof Button> = {
+  title: "Common/Components/UI/Button",
+  component: Button,
+  argTypes: {
+    variant: {
+      control: "select",
+      options: ["primary", "secondary", "outline", "ghost"],
+    },
+    size: {
+      control: "select",
+      options: ["sm", "default", "lg"],
+    },
+  },
+};
 
-    # Assume role for cross-account access
-    role_arn = "arn:aws:iam::ACCOUNT_ID:role/TerraformStateAccess"
-  }
-}
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    children: "Click Me",
+    variant: "primary",
+    size: "default",
+  },
+};
+
+export const Secondary: Story = {
+  args: {
+    children: "Secondary Button",
+    variant: "secondary",
+  },
+};
+
+export const Outline: Story = {
+  args: {
+    children: "Outline Button",
+    variant: "outline",
+  },
+};
 ```
 
-### State Locking Table
+## Story with Model Data
 
-```hcl
-# global/state-backend/main.tf
-resource "aws_s3_bucket" "terraform_state" {
-  bucket = "company-terraform-state"
+```typescript
+import { Store } from "@/models/store/Store";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { AssetCard } from "./AssetCard";
 
-  lifecycle {
-    prevent_destroy = true
-  }
-}
+const meta: Meta<typeof AssetCard> = {
+  title: "Customer/Components/Asset/AssetCard",
+  component: AssetCard,
+};
 
-resource "aws_s3_bucket_versioning" "terraform_state" {
-  bucket = aws_s3_bucket.terraform_state.id
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" {
-  bucket = aws_s3_bucket.terraform_state.id
-  rule {
-    apply_server_side_encryption_by_default {
-      sse_algorithm = "aws:kms"
-    }
-  }
-}
+export const Default: Story = {
+  args: {
+    asset: Store.asset.create({
+      id: "1",
+      name: "Test Asset",
+      description: "This is a test asset",
+      status: 1,
+      organization_id: "org-1",
+    }),
+  },
+};
 
-resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "terraform-locks"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockID"
-
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
-}
+export const WithOrganization: Story = {
+  args: {
+    asset: Store.asset.create({
+      id: "2",
+      name: "Asset with Org",
+      description: "Asset with organization data",
+      status: 1,
+      organization_id: "org-1",
+      organization: Store.organization.create({
+        id: "org-1",
+        name: "Acme Corp",
+      }),
+    }),
+  },
+};
 ```
 
-## Provider Configuration
+## Story with Render Function (Stateful)
 
-### Multi-Region Setup
+Only use render when the component needs state updates:
 
-```hcl
-provider "aws" {
-  region = var.primary_region
+```typescript
+import { Store } from "@/models/store/Store";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { observer } from "mobx-react-lite";
+import { AssetForm } from "./AssetForm";
 
-  default_tags {
-    tags = {
-      Environment = var.environment
-      Project     = var.project_name
-      ManagedBy   = "terraform"
-    }
-  }
-}
+const meta: Meta<typeof AssetForm> = {
+  title: "Customer/Components/Asset/AssetForm",
+  component: AssetForm,
+};
 
-provider "aws" {
-  alias  = "dr"
-  region = var.dr_region
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  default_tags {
-    tags = {
-      Environment = var.environment
-      Project     = var.project_name
-      ManagedBy   = "terraform"
-    }
-  }
-}
+export const CreateNew: Story = {
+  render: () => {
+    const asset = Store.asset.create({
+      name: "",
+      description: "",
+      status: 1,
+    });
+
+    return <AssetForm asset={asset} />;
+  },
+};
+
+export const EditExisting: Story = {
+  render: () => {
+    const asset = Store.asset.create({
+      id: "123",
+      name: "Existing Asset",
+      description: "Edit this asset",
+      status: 1,
+    });
+
+    return <AssetForm asset={asset} />;
+  },
+};
 ```
 
-### Version Constraints
+## ArgTypes Examples
 
-```hcl
-terraform {
-  required_version = ">= 1.5.0"
+```typescript
+argTypes: {
+  // String
+  label: {
+    control: "text",
+    description: "Label text",
+  },
 
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.23"
-    }
-  }
-}
-```
+  // Number
+  size: {
+    control: "number",
+    description: "Size in pixels",
+  },
 
-## Data Sources and Lookups
+  // Boolean
+  disabled: {
+    control: "boolean",
+    description: "Whether the component is disabled",
+  },
 
-```hcl
-# Look up existing resources
-data "aws_vpc" "selected" {
-  filter {
-    name   = "tag:Environment"
-    values = [var.environment]
-  }
-}
+  // Select
+  variant: {
+    control: "select",
+    options: ["primary", "secondary", "outline"],
+    description: "Visual variant",
+  },
 
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-  owners      = ["amazon"]
+  // Radio
+  alignment: {
+    control: "radio",
+    options: ["left", "center", "right"],
+  },
 
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
-  }
-}
+  // Color
+  color: {
+    control: "color",
+  },
 
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
-```
+  // Date
+  date: {
+    control: "date",
+  },
 
-## Conditional Resources
+  // Range
+  opacity: {
+    control: { type: "range", min: 0, max: 1, step: 0.1 },
+  },
 
-```hcl
-# Create resource only in production
-resource "aws_cloudwatch_metric_alarm" "high_cpu" {
-  count = var.environment == "prod" ? 1 : 0
+  // Object
+  config: {
+    control: "object",
+  },
 
-  alarm_name          = "${var.name}-high-cpu"
-  comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = 2
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/EC2"
-  period              = 300
-  statistic           = "Average"
-  threshold           = 80
-}
-
-# Dynamic blocks for optional configurations
-resource "aws_security_group" "main" {
-  name   = "${var.name}-sg"
-  vpc_id = var.vpc_id
-
-  dynamic "ingress" {
-    for_each = var.ingress_rules
-    content {
-      from_port   = ingress.value.from_port
-      to_port     = ingress.value.to_port
-      protocol    = ingress.value.protocol
-      cidr_blocks = ingress.value.cidr_blocks
-    }
-  }
+  // Action (for callbacks)
+  onClick: {
+    action: "clicked",
+  },
 }
 ```
 
-## Lifecycle Rules
+## What NOT to Include
 
-```hcl
-resource "aws_instance" "web" {
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = var.instance_type
+1. **Don't add variants to the component** - Only create Storybook file
+2. **Don't create mock services** - Use real Store methods
+3. **Don't wrap with state unless asked** - Keep it simple
+4. **Don't add implicit variations** - Only explicit prop variations
+5. **Don't use Modal service** - Display component directly
+6. **Don't handle loading states** unless asked
 
-  lifecycle {
-    create_before_destroy = true
-    prevent_destroy       = var.environment == "prod"
+## Story Variations
 
-    ignore_changes = [
-      tags["LastModified"],
-      user_data,
-    ]
-  }
-}
+Only create variations for:
+- Explicit prop differences (primary vs secondary)
+- Different data states (empty, with data, error)
+- Meaningful visual differences
+- Common use cases
+
+Don't create variations for:
+- className differences (not explicit)
+- Generic styling changes
+- Every possible prop combination
+
+## Complete Example
+
+```typescript
+import { Store } from "@/models/store/Store";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { DataTable } from "./DataTable";
+import { assetColumns } from "./columns";
+import { assetFilters } from "./filters";
+
+const meta: Meta<typeof DataTable> = {
+  title: "Common/Components/Table/DataTable",
+  component: DataTable,
+  argTypes: {
+    showFilters: {
+      control: "boolean",
+      description: "Show filter panel",
+    },
+    showActions: {
+      control: "boolean",
+      description: "Show action buttons",
+    },
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+const assets = [
+  Store.asset.create({
+    id: "1",
+    name: "Asset One",
+    description: "First asset",
+    status: 1,
+    organization_id: "org-1",
+  }),
+  Store.asset.create({
+    id: "2",
+    name: "Asset Two",
+    description: "Second asset",
+    status: 2,
+    organization_id: "org-1",
+  }),
+];
+
+export const Default: Story = {
+  args: {
+    data: assets,
+    columns: assetColumns,
+    showFilters: true,
+    showActions: true,
+  },
+};
+
+export const WithoutFilters: Story = {
+  args: {
+    data: assets,
+    columns: assetColumns,
+    showFilters: false,
+    showActions: true,
+  },
+};
+
+export const Empty: Story = {
+  args: {
+    data: [],
+    columns: assetColumns,
+    showFilters: true,
+    showActions: true,
+  },
+};
 ```
 
-## Testing with Terratest
+## Key Rules
 
-```go
-// test/vpc_test.go
-package test
+1. **Use Store for model creation** - `Store.{snake_case_model}.create()`
+2. **Don't modify the component** - Only create Storybook file
+3. **Use clear, descriptive story names** - Default, WithData, Empty, etc.
+4. **Only add render when state is needed** - Most stories don't need it
+5. **Organize by category** - Customer/Common/Admin
+6. **Document argTypes** - Add descriptions for controls
+7. **Create meaningful variations** - Not every possible combination
+8. **Don't use mock services** - Use real Store/model instances
+9. **Keep it simple** - Complexity should match component complexity
 
-import (
-    "testing"
-    "github.com/gruntwork-io/terratest/modules/terraform"
-    "github.com/stretchr/testify/assert"
-)
+## Checklist Before Creating
 
-func TestVpcModule(t *testing.T) {
-    terraformOptions := &terraform.Options{
-        TerraformDir: "../modules/vpc",
-        Vars: map[string]interface{}{
-            "name":               "test",
-            "environment":        "dev",
-            "cidr_block":         "10.0.0.0/16",
-            "availability_zones": []string{"us-east-1a", "us-east-1b"},
-        },
-    }
-
-    defer terraform.Destroy(t, terraformOptions)
-    terraform.InitAndApply(t, terraformOptions)
-
-    vpcId := terraform.Output(t, terraformOptions, "vpc_id")
-    assert.NotEmpty(t, vpcId)
-}
-```
-
-## CI/CD Integration
-
-```yaml
-# .github/workflows/terraform.yml
-name: Terraform
-
-on:
-  pull_request:
-    paths:
-      - 'infrastructure/**'
-  push:
-    branches: [main]
-    paths:
-      - 'infrastructure/**'
-
-jobs:
-  plan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.5.0
-
-      - name: Terraform Init
-        run: terraform init
-        working-directory: infrastructure/environments/${{ github.event.inputs.environment }}
-
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
-        working-directory: infrastructure/environments/${{ github.event.inputs.environment }}
-
-      - name: Upload Plan
-        uses: actions/upload-artifact@v4
-        with:
-          name: tfplan
-          path: infrastructure/environments/${{ github.event.inputs.environment }}/tfplan
-```
-
-## References
-
-- [Terraform Documentation](https://developer.hashicorp.com/terraform/docs)
-- [Terraform Best Practices](https://www.terraform-best-practices.com/)
-- [AWS Provider Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+- [ ] Is render function needed? (Only for stateful components)
+- [ ] Are model instances using Store with snake_case?
+- [ ] Are variations meaningful and explicit?
+- [ ] Is the title categorized correctly?
+- [ ] Are argTypes documented?
+- [ ] Am I only creating the story file (not modifying component)?
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
