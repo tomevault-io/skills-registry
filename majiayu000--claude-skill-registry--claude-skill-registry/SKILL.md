@@ -1,276 +1,693 @@
 ---
-name: write-action
-description: Write server actions following the Epic architecture patterns. Use when creating server-side logic for behaviors, including authentication, validation, and model calls. Triggers on "create an action", "add an action", or "write an action for". Use when this capability is needed.
+name: schema-design
+description: Design or modify Drizzle ORM schemas with proper relationships, constraints, and indexes. Use when adding new tables, modifying existing schemas, or optimizing database structure. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Write Action
+# Schema Design Skill
 
-## Overview
+This skill helps you design and modify database schemas using Drizzle ORM in `packages/database/`.
 
-This skill creates server actions that follow the Epic three-layer architecture. Actions belong to the **Backend layer** and handle authentication, validation, and orchestration of model calls.
+## When to Use This Skill
 
-## Architecture Context
+- Creating new database tables
+- Adding columns to existing tables
+- Defining relationships between tables
+- Creating indexes for query optimization
+- Adding constraints (unique, not null, default values)
+- Renaming or dropping tables/columns
+- Optimizing schema for performance
 
-```
-Frontend: Hooks call actions
-            |
-            v
-Backend: Actions (auth + validation + orchestration)
-            |
-            v
-Infrastructure: Models (database operations)
-```
-
-Actions:
-- Run on the server (Backend layer)
-- Check authentication via `getUser()`
-- Validate inputs with Zod
-- Call models for data operations
-- Return consistent response format
-- NEVER access database directly
-
-## Action Location and Naming
+## Database Architecture
 
 ```
-app/[role]/[page]/behaviors/[behavior-name]/
-  actions/
-    [action-name].action.ts
+packages/database/
+├── src/
+│   ├── db/
+│   │   └── schema/
+│   │       ├── cars.ts         # Car registration data
+│   │       ├── coe.ts          # COE bidding results
+│   │       ├── pqp.ts          # PQP data
+│   │       ├── posts.ts        # Blog posts
+│   │       ├── analytics.ts    # Analytics events
+│   │       └── index.ts        # Schema exports
+│   ├── index.ts                # Database client export
+│   └── migrate.ts              # Migration runner
+├── migrations/                  # Migration files
+└── drizzle.config.ts           # Drizzle configuration
 ```
 
-- File names: `kebab-case.action.ts`
-- Function names: `camelCase`
+## Naming Conventions
 
-## Function Specification Format
-
-Follow the Epic Function specification format from `docs/Epic.md`:
-
-```markdown
-## functionName(input: InputType): ReturnType
-
-[Short description of what the function does]
-
-- Given: [input parameters and assumptions]
-- Returns: [value or outcome returned]
-- Calls: [direct dependencies - models, integrations]
-
-### Example: [Scenario name]
-
-#### PreDB
-[table_name]:
-column1, column2
-value1, value2
-
-#### PostDB
-[table_name]:
-column1, column2
-value1, value2
-new_id, new_val
-```
-
-## Implementation Pattern
+The project uses **camelCase** for column names:
 
 ```typescript
-'use server';
-
-import { getUser } from '@/lib/auth';
-import { Model } from '@/shared/models/model-name';
-import { z } from 'zod';
-
-const InputSchema = z.object({
-  name: z.string().min(1).max(100),
+// ✅ Correct
+export const cars = pgTable("cars", {
+  vehicleClass: text("vehicle_class"),
+  fuelType: text("fuel_type"),
+  registrationDate: timestamp("registration_date"),
 });
 
-type Input = z.infer<typeof InputSchema>;
-
-export async function actionName(input: Input) {
-  try {
-    // 1. Authentication check
-    const user = await getUser();
-    if (!user) {
-      return { success: false, error: 'Unauthorized' };
-    }
-
-    // 2. Validate input
-    const validated = InputSchema.parse(input);
-
-    // 3. Call model (never direct DB access)
-    const result = await Model.create({
-      ...validated,
-      userId: user.id,
-    });
-
-    // 4. Return success response
-    return { success: true, data: result };
-  } catch (error) {
-    console.error('actionName error:', error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : 'An error occurred',
-    };
-  }
-}
+// ❌ Wrong
+export const cars = pgTable("cars", {
+  vehicle_class: text("vehicle_class"),  // snake_case
+  FuelType: text("fuel_type"),            // PascalCase
+});
 ```
 
-## Response Format
+## Basic Schema Patterns
 
-Always return consistent format:
+### Simple Table
 
 ```typescript
-type ActionResponse<T> =
-  | { success: true; data: T }
-  | { success: false; error: string };
+// packages/database/src/db/schema/example.ts
+import { pgTable, text, integer, timestamp, boolean } from "drizzle-orm/pg-core";
+
+export const examples = pgTable("examples", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description"),
+  count: integer("count").default(0).notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
 ```
 
-## Key Patterns
+### Table with Relationships
 
-### 1. Authentication First
 ```typescript
-const user = await getUser();
-if (!user) {
-  return { success: false, error: 'Unauthorized' };
-}
+import { pgTable, text, integer, timestamp } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+import { users } from "./users";
+
+export const posts = pgTable("posts", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  authorId: text("author_id").notNull().references(() => users.id),
+  publishedAt: timestamp("published_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Define relations
+export const postsRelations = relations(posts, ({ one }) => ({
+  author: one(users, {
+    fields: [posts.authorId],
+    references: [users.id],
+  }),
+}));
 ```
 
-### 2. Input Validation
+### Table with Indexes
+
 ```typescript
-const validated = InputSchema.parse(input);
-// or with safeParse for custom error handling
-const result = InputSchema.safeParse(input);
-if (!result.success) {
-  return { success: false, error: result.error.errors[0].message };
-}
+import { pgTable, text, integer, timestamp, index, uniqueIndex } from "drizzle-orm/pg-core";
+
+export const cars = pgTable("cars", {
+  id: text("id").primaryKey(),
+  make: text("make").notNull(),
+  model: text("model").notNull(),
+  year: integer("year").notNull(),
+  registrationDate: timestamp("registration_date").notNull(),
+}, (table) => ({
+  // Single column index
+  makeIdx: index("cars_make_idx").on(table.make),
+
+  // Composite index
+  makeModelIdx: index("cars_make_model_idx").on(table.make, table.model),
+
+  // Unique index
+  registrationIdx: uniqueIndex("cars_registration_idx").on(table.registrationDate),
+}));
 ```
 
-### 3. User-Scoped Operations
+## Existing Schema Examples
+
+### Cars Table
+
 ```typescript
-// Always filter by userId for user-owned resources
-const items = await Model.findByUserId(user.id);
+// packages/database/src/db/schema/cars.ts
+import { pgTable, text, integer, timestamp, index } from "drizzle-orm/pg-core";
+
+export const cars = pgTable("cars", {
+  id: text("id").primaryKey(),
+  make: text("make").notNull(),
+  model: text("model"),
+  vehicleClass: text("vehicle_class"),
+  fuelType: text("fuel_type"),
+  month: text("month").notNull(),
+  number: integer("number").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  monthIdx: index("cars_month_idx").on(table.month),
+  makeIdx: index("cars_make_idx").on(table.make),
+}));
 ```
 
-### 4. Error Handling
+### COE Table
+
 ```typescript
-try {
-  // operation
-} catch (error) {
-  console.error('actionName error:', error);
-  return {
-    success: false,
-    error: error instanceof Error ? error.message : 'An error occurred',
-  };
-}
+// packages/database/src/db/schema/coe.ts
+import { pgTable, text, integer, timestamp, numeric, index } from "drizzle-orm/pg-core";
+
+export const coe = pgTable("coe", {
+  id: text("id").primaryKey(),
+  biddingNo: integer("bidding_no").notNull(),
+  month: text("month").notNull(),
+  vehicleClass: text("vehicle_class").notNull(),
+  quota: integer("quota").default(0).notNull(),
+  bidsReceived: integer("bids_received").default(0).notNull(),
+  premium: numeric("premium", { precision: 10, scale: 2 }).default("0").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  biddingNoIdx: index("coe_bidding_no_idx").on(table.biddingNo),
+  monthIdx: index("coe_month_idx").on(table.month),
+}));
+```
+
+### Posts Table
+
+```typescript
+// packages/database/src/db/schema/posts.ts
+import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+
+export const posts = pgTable("posts", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  content: text("content").notNull(),
+  excerpt: text("excerpt"),
+  published: boolean("published").default(false).notNull(),
+  publishedAt: timestamp("published_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  slugIdx: index("posts_slug_idx").on(table.slug),
+  publishedAtIdx: index("posts_published_at_idx").on(table.publishedAt),
+}));
+```
+
+## Column Types
+
+### Text Types
+
+```typescript
+import { pgTable, text, varchar, char } from "drizzle-orm/pg-core";
+
+export const examples = pgTable("examples", {
+  // Unlimited text
+  description: text("description"),
+
+  // Limited varchar
+  email: varchar("email", { length: 255 }),
+
+  // Fixed length
+  code: char("code", { length: 10 }),
+});
+```
+
+### Numeric Types
+
+```typescript
+import { pgTable, integer, bigint, numeric, real, doublePrecision } from "drizzle-orm/pg-core";
+
+export const examples = pgTable("examples", {
+  // Integer types
+  count: integer("count"),
+  bigCount: bigint("big_count", { mode: "number" }),  // or "bigint" for BigInt
+
+  // Decimal types
+  price: numeric("price", { precision: 10, scale: 2 }),  // 10 digits, 2 decimal
+
+  // Floating point
+  rating: real("rating"),
+  coordinate: doublePrecision("coordinate"),
+});
+```
+
+### Date/Time Types
+
+```typescript
+import { pgTable, timestamp, date, time } from "drizzle-orm/pg-core";
+
+export const examples = pgTable("examples", {
+  // Timestamp with timezone
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+
+  // Timestamp without timezone
+  scheduledAt: timestamp("scheduled_at", { withTimezone: false }),
+
+  // Date only
+  birthDate: date("birth_date"),
+
+  // Time only
+  openingTime: time("opening_time"),
+});
+```
+
+### Boolean and JSON
+
+```typescript
+import { pgTable, boolean, json, jsonb } from "drizzle-orm/pg-core";
+
+export const examples = pgTable("examples", {
+  // Boolean
+  isActive: boolean("is_active").default(true),
+
+  // JSON (slower, stores as text)
+  settings: json("settings"),
+
+  // JSONB (faster, binary format)
+  metadata: jsonb("metadata").$type<{ key: string; value: any }>(),
+});
+```
+
+### Array Types
+
+```typescript
+import { pgTable, text } from "drizzle-orm/pg-core";
+
+export const examples = pgTable("examples", {
+  tags: text("tags").array(),
+  emails: text("emails").array().notNull().default([]),
+});
+```
+
+## Relationships
+
+### One-to-Many
+
+```typescript
+import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+
+// Users table
+export const users = pgTable("users", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+});
+
+// Posts table (many posts belong to one user)
+export const posts = pgTable("posts", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  authorId: text("author_id").notNull().references(() => users.id),
+});
+
+// Define relations
+export const usersRelations = relations(users, ({ many }) => ({
+  posts: many(posts),
+}));
+
+export const postsRelations = relations(posts, ({ one }) => ({
+  author: one(users, {
+    fields: [posts.authorId],
+    references: [users.id],
+  }),
+}));
+```
+
+### Many-to-Many
+
+```typescript
+import { pgTable, text, primaryKey } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+
+// Posts table
+export const posts = pgTable("posts", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+});
+
+// Tags table
+export const tags = pgTable("tags", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+});
+
+// Junction table
+export const postsToTags = pgTable("posts_to_tags", {
+  postId: text("post_id").notNull().references(() => posts.id),
+  tagId: text("tag_id").notNull().references(() => tags.id),
+}, (table) => ({
+  pk: primaryKey({ columns: [table.postId, table.tagId] }),
+}));
+
+// Define relations
+export const postsRelations = relations(posts, ({ many }) => ({
+  postsToTags: many(postsToTags),
+}));
+
+export const tagsRelations = relations(tags, ({ many }) => ({
+  postsToTags: many(postsToTags),
+}));
+
+export const postsToTagsRelations = relations(postsToTags, ({ one }) => ({
+  post: one(posts, {
+    fields: [postsToTags.postId],
+    references: [posts.id],
+  }),
+  tag: one(tags, {
+    fields: [postsToTags.tagId],
+    references: [tags.id],
+  }),
+}));
 ```
 
 ## Constraints
 
-- MUST include `'use server'` directive at top
-- MUST check authentication when required
-- NEVER access database directly - use models
-- NEVER import React, Jotai, or frontend code
-- ALWAYS return consistent response format
-- ALWAYS use try/catch with descriptive errors
-
-## Example Specification
-
-```markdown
-## createProject(input: CreateProjectInput): Promise<ActionResponse<Project>>
-
-Creates a new project for the authenticated user.
-
-- Given: project name (1-100 chars) and authenticated user with "client" role
-- Returns: the newly created project with status "draft"
-- Calls: ProjectModel.findByNameAndUser, ProjectModel.create
-
-### Example: Create project successfully
-
-#### PreDB
-users:
-id, email, role
-1, user@example.com, client
-
-projects:
-id, user_id, name, status
-1, 1, Existing Project, active
-
-#### Steps
-* Call: createProject({ name: "New Project" }) as user 1
-* Returns: { id: 2, name: "New Project", status: "draft" }
-
-#### PostDB
-projects:
-id, user_id, name, status
-1, 1, Existing Project, active
-2, 1, New Project, draft
-
-### Example: Reject duplicate name
-
-#### PreDB
-projects:
-id, user_id, name
-1, 1, My Project
-
-#### Steps
-* Call: createProject({ name: "My Project" }) as user 1
-* Throws: "Project name already exists"
-
-#### PostDB
-projects:
-id, user_id, name
-1, 1, My Project
-```
-
-## Test Generation
-
-Generate test files at `[behavior-path]/tests/[action-name].action.test.ts`.
-
-### Test Structure
+### Primary Keys
 
 ```typescript
-import { describe, it, expect } from 'vitest';
-import { PreDB, PostDB } from '@/lib/db-test';
-import { db } from '@/db';
-import * as schema from '@/db/schema';
-import { actionName } from '../[action-name].action';
+import { pgTable, text, integer, primaryKey } from "drizzle-orm/pg-core";
 
-describe('actionName', () => {
-  it('should [behavior] when [condition]', async () => {
-    // PreDB -> PreDB
-    await PreDB(db, schema, {
-      users: [{ id: '1', email: 'user@example.com' }],
-      projects: [],
-    });
+// Single column primary key
+export const users = pgTable("users", {
+  id: text("id").primaryKey(),
+});
 
-    // Steps -> Execute
-    const result = await actionName({ name: 'New Project' });
+// Composite primary key
+export const userRoles = pgTable("user_roles", {
+  userId: text("user_id").notNull(),
+  roleId: text("role_id").notNull(),
+}, (table) => ({
+  pk: primaryKey({ columns: [table.userId, table.roleId] }),
+}));
+```
 
-    // Returns -> Assertions
-    expect(result.success).toBe(true);
-    expect(result.data?.name).toBe('New Project');
+### Unique Constraints
 
-    // PostDB -> PostDB
-    await PostDB(db, schema, {
-      projects: [{ id: result.data?.id, name: 'New Project', status: 'draft' }],
-    }, { allowExtraRows: true });
+```typescript
+import { pgTable, text, unique } from "drizzle-orm/pg-core";
+
+export const users = pgTable("users", {
+  id: text("id").primaryKey(),
+  email: text("email").notNull().unique(),  // Column-level unique
+  username: text("username").notNull(),
+}, (table) => ({
+  // Table-level unique constraint
+  uniqueUsername: unique("users_username_unique").on(table.username),
+}));
+```
+
+### Foreign Keys
+
+```typescript
+import { pgTable, text, foreignKey } from "drizzle-orm/pg-core";
+
+export const posts = pgTable("posts", {
+  id: text("id").primaryKey(),
+  authorId: text("author_id").notNull(),
+}, (table) => ({
+  // Inline foreign key
+  authorFk: foreignKey({
+    columns: [table.authorId],
+    foreignColumns: [users.id],
+  }).onDelete("cascade"),  // Options: cascade, set null, restrict, no action
+}));
+
+// Or use references() shorthand
+export const posts2 = pgTable("posts", {
+  id: text("id").primaryKey(),
+  authorId: text("author_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+});
+```
+
+### Check Constraints
+
+```typescript
+import { pgTable, integer, check, sql } from "drizzle-orm/pg-core";
+
+export const products = pgTable("products", {
+  id: text("id").primaryKey(),
+  price: integer("price").notNull(),
+  discount: integer("discount").notNull(),
+}, (table) => ({
+  // Ensure discount is less than price
+  priceCheck: check("price_check", sql`${table.price} > ${table.discount}`),
+}));
+```
+
+## Indexes
+
+### Single Column Index
+
+```typescript
+import { pgTable, text, index } from "drizzle-orm/pg-core";
+
+export const cars = pgTable("cars", {
+  id: text("id").primaryKey(),
+  make: text("make").notNull(),
+}, (table) => ({
+  makeIdx: index("cars_make_idx").on(table.make),
+}));
+```
+
+### Composite Index
+
+```typescript
+export const cars = pgTable("cars", {
+  id: text("id").primaryKey(),
+  make: text("make").notNull(),
+  model: text("model").notNull(),
+}, (table) => ({
+  makeModelIdx: index("cars_make_model_idx").on(table.make, table.model),
+}));
+```
+
+### Unique Index
+
+```typescript
+import { uniqueIndex } from "drizzle-orm/pg-core";
+
+export const users = pgTable("users", {
+  id: text("id").primaryKey(),
+  email: text("email").notNull(),
+}, (table) => ({
+  emailIdx: uniqueIndex("users_email_idx").on(table.email),
+}));
+```
+
+### Partial Index
+
+```typescript
+import { sql } from "drizzle-orm";
+
+export const posts = pgTable("posts", {
+  id: text("id").primaryKey(),
+  published: boolean("published").default(false),
+  publishedAt: timestamp("published_at"),
+}, (table) => ({
+  // Index only published posts
+  publishedIdx: index("posts_published_idx")
+    .on(table.publishedAt)
+    .where(sql`${table.published} = true`),
+}));
+```
+
+## Schema Workflow
+
+### 1. Create Schema File
+
+```typescript
+// packages/database/src/db/schema/my-table.ts
+import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+
+export const myTable = pgTable("my_table", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+```
+
+### 2. Export from Index
+
+```typescript
+// packages/database/src/db/schema/index.ts
+export * from "./cars";
+export * from "./coe";
+export * from "./posts";
+export * from "./my-table";  // Add new export
+```
+
+### 3. Generate Migration
+
+```bash
+cd packages/database
+
+# Generate migration from schema changes
+pnpm db:generate
+
+# This creates a new migration file in migrations/
+```
+
+### 4. Review Migration
+
+Check generated SQL in `migrations/XXXX_migration_name.sql`:
+
+```sql
+CREATE TABLE IF NOT EXISTS "my_table" (
+  "id" text PRIMARY KEY NOT NULL,
+  "name" text NOT NULL,
+  "created_at" timestamp DEFAULT now() NOT NULL
+);
+```
+
+### 5. Run Migration
+
+```bash
+# Apply migration to database
+pnpm db:migrate
+```
+
+## Common Schema Patterns
+
+### Soft Delete
+
+```typescript
+export const posts = pgTable("posts", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  deletedAt: timestamp("deleted_at"),  // null = not deleted
+});
+
+// Query only non-deleted posts
+const activePosts = await db.query.posts.findMany({
+  where: isNull(posts.deletedAt),
+});
+```
+
+### Timestamps
+
+```typescript
+export const posts = pgTable("posts", {
+  id: text("id").primaryKey(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// Update updatedAt on every change
+await db.update(posts)
+  .set({
+    title: "New Title",
+    updatedAt: new Date(),
+  })
+  .where(eq(posts.id, postId));
+```
+
+### Enum Types
+
+```typescript
+import { pgTable, text, pgEnum } from "drizzle-orm/pg-core";
+
+// Define enum
+export const roleEnum = pgEnum("role", ["admin", "user", "guest"]);
+
+export const users = pgTable("users", {
+  id: text("id").primaryKey(),
+  role: roleEnum("role").default("user").notNull(),
+});
+```
+
+### UUID Primary Keys
+
+```typescript
+import { pgTable, uuid, text } from "drizzle-orm/pg-core";
+
+export const users = pgTable("users", {
+  id: uuid("id").defaultRandom().primaryKey(),  // Auto-generate UUID
+  name: text("name").notNull(),
+});
+```
+
+## Performance Optimization
+
+### Choose Appropriate Indexes
+
+```typescript
+// ✅ Index frequently queried columns
+export const cars = pgTable("cars", {
+  make: text("make").notNull(),
+  registrationDate: timestamp("registration_date").notNull(),
+}, (table) => ({
+  makeIdx: index().on(table.make),              // For: WHERE make = 'Toyota'
+  dateIdx: index().on(table.registrationDate),  // For: WHERE registrationDate > '2024-01-01'
+}));
+
+// ❌ Don't index every column
+// Only index columns used in WHERE, JOIN, ORDER BY
+```
+
+### Use Appropriate Data Types
+
+```typescript
+// ✅ Use smallest appropriate type
+count: integer("count"),              // -2B to 2B
+price: numeric("price", { precision: 10, scale: 2 }),  // $99,999,999.99
+
+// ❌ Don't use text for everything
+count: text("count"),  // Wastes space, slower queries
+```
+
+### Denormalization for Performance
+
+```typescript
+// Store computed values to avoid expensive joins
+export const posts = pgTable("posts", {
+  id: text("id").primaryKey(),
+  authorId: text("author_id").notNull(),
+  authorName: text("author_name").notNull(),  // Denormalized from users table
+  commentsCount: integer("comments_count").default(0),  // Denormalized count
+});
+```
+
+## Testing Schemas
+
+```typescript
+// packages/database/src/db/schema/__tests__/cars.test.ts
+import { describe, it, expect } from "vitest";
+import { db } from "../../index";
+import { cars } from "../cars";
+
+describe("Cars Schema", () => {
+  it("inserts and queries car data", async () => {
+    const [car] = await db.insert(cars).values({
+      id: "test-1",
+      make: "Toyota",
+      model: "Camry",
+      month: "2024-01",
+      number: 100,
+    }).returning();
+
+    expect(car.make).toBe("Toyota");
+    expect(car.number).toBe(100);
   });
 });
 ```
 
-### Translation Rules
+## References
 
-| Spec | Test |
-|------|------|
-| PreDB (CSV) | `PreDB(db, schema, { table: [...] })` |
-| `Call:` | Action invocation |
-| `Returns:` | `expect(result).toBe(...)` |
-| `Throws:` | `expect(result.error).toBe(...)` |
-| PostDB (CSV) | `PostDB(db, schema, { table: [...] })` |
+- Drizzle ORM Documentation: Use Context7 for latest docs
+- Related files:
+  - `packages/database/src/db/schema/` - All schema files
+  - `packages/database/drizzle.config.ts` - Drizzle configuration
+  - `packages/database/CLAUDE.md` - Database package documentation
 
-### Principles
+## Best Practices
 
-- Test behavior, not implementation
-- Use real database (no mocks)
-- Start with ONE test (happy path)
+1. **Naming**: Use camelCase for columns, snake_case for table names
+2. **Not Null**: Use .notNull() for required fields
+3. **Defaults**: Provide sensible defaults where appropriate
+4. **Indexes**: Index columns used in WHERE, JOIN, ORDER BY
+5. **Relationships**: Define relations for type-safe queries
+6. **Timestamps**: Always include createdAt/updatedAt
+7. **Constraints**: Use unique, foreign key constraints
+8. **Migrations**: Always review generated migrations before running
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
