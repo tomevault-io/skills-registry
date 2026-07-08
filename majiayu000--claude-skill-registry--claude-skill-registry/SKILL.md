@@ -1,131 +1,194 @@
 ---
-name: s-lint
-description: > Use when this capability is needed.
+name: zero-in
+description: | Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Linting WoW Addons
+# Zero In
 
-Expert guidance for code quality and formatting in WoW addon development.
+<purpose>
+The #1 search failure: jumping straight to grep without thinking. You search
+"auth", get 200 results, grep again with "login", still garbage. The problem
+isn't the search - it's that you didn't zero in first. This skill forces the
+targeting that should happen BEFORE you hit enter.
+</purpose>
 
-## Related Commands
+## When To Activate
 
-- [c-lint](../../commands/c-lint.md) - Lint and format workflow
-- [c-review](../../commands/c-review.md) - Full code review (includes lint step)
-- [c-clean](../../commands/c-clean.md) - Cleanup workflow (dead code, stale docs)
+<triggers>
+- "Where is the..."
+- "Find the code that..."
+- "Search for..."
+- "How does X work in this codebase?"
+- About to explore an unfamiliar codebase
+- Previous search returned too many/wrong results
+- User says "I can't find..."
+</triggers>
 
-## MCP Tools
+## Instructions
 
-| Task | MCP Tool |
-|------|----------|
-| Lint Addon | `addon.lint(addon="MyAddon")` |
-| Format Addon | `addon.format(addon="MyAddon")` |
-| Check Format Only | `addon.format(addon="MyAddon", check=true)` |
-| Security Analysis | `addon.security(addon="MyAddon")` |
-| Complexity Analysis | `addon.complexity(addon="MyAddon")` |
+### Before ANY Search
 
-## Capabilities
+Answer these four questions:
 
-1. **Luacheck Linting** — Detect syntax errors, undefined globals, unused variables
-2. **StyLua Formatting** — Consistent code style across all files
-3. **Error Resolution** — Fix common linting issues systematically
-4. **Security Analysis** — Detect combat lockdown violations, secret leaks, taint risks
-5. **Complexity Analysis** — Find deep nesting, long functions, magic numbers
-6. **Dead Code Detection** — For unused function analysis, use `addon.deadcode` (see [s-clean](../s-clean/SKILL.md))
+<scope>
+## 1. What exactly am I looking for?
 
-## Common Luacheck Warnings
+State it in one sentence. Be specific.
 
-| Code | Meaning | Fix |
-|------|---------|-----|
-| W111 | Setting undefined global | Add to `.luacheckrc` globals or fix typo |
-| W112 | Mutating undefined global | Same as W111 |
-| W113 | Accessing undefined global | Check if API exists, add to read_globals |
-| W211 | Unused local variable | Remove or prefix with `_` |
-| W212 | Unused argument | Prefix with `_` (e.g., `_event`) |
-| W213 | Unused loop variable | Prefix with `_` |
-| W311 | Value assigned but never used | Remove assignment or use the value |
-| W431 | Shadowing upvalue | Rename the local variable |
-
-## .luacheckrc Configuration
-
-Standard WoW addon configuration:
-
-```lua
-std = "lua51"
-max_line_length = false
-
-globals = {
-    -- Addon globals
-    "MyAddon",
-}
-
-read_globals = {
-    -- WoW API
-    "C_Timer", "C_Spell", "CreateFrame",
-    -- Ace3
-    "LibStub",
-}
+```
+BAD:  "authentication stuff"
+GOOD: "the function that validates JWT tokens on API requests"
 ```
 
-## StyLua Configuration
+If you can't state it in one sentence, you don't know what you're looking for.
+</scope>
 
-Standard `.stylua.toml`:
+<shape>
+## 2. What would the answer look like?
 
-```toml
-column_width = 120
-line_endings = "Unix"
-indent_type = "Tabs"
-indent_width = 4
-quote_style = "AutoPreferDouble"
-call_parentheses = "Always"
+Describe what you expect to find:
+
+- File type? (`.ts`, `.py`, `.go`, config file?)
+- Function, class, or config?
+- Roughly how big? (one-liner vs module?)
+- What would it import/use?
+
+```
+Example: "Probably a middleware function in TypeScript, imports jsonwebtoken
+or jose, has 'verify' or 'validate' in the name, 20-50 lines"
+```
+</shape>
+
+<where>
+## 3. Where would it live?
+
+Based on project conventions:
+
+- Which directory? (`src/`, `lib/`, `middleware/`, `utils/`?)
+- What would the file be named?
+- Near what other code?
+
+```
+Example: "Likely in src/middleware/ or src/auth/, file probably named
+auth.ts, jwt.ts, or middleware.ts"
 ```
 
-## Quick Reference
+Check the project structure first if unsure:
+```bash
+ls -la src/
+find . -type d -name "*auth*" -o -name "*jwt*"
+```
+</where>
 
-### Lint Then Format
+<aliases>
+## 4. What else might it be called?
+
+List synonyms, abbreviations, variations:
+
+```
+Example for JWT validation:
+- verify, validate, check, authenticate
+- jwt, token, bearer, authorization
+- middleware, handler, guard, interceptor
+```
+
+Your first search term is rarely the one the codebase uses.
+</aliases>
+
+### Then Search
+
+Now search, using insights from scoping:
 
 ```bash
-# Check for issues
-addon.lint(addon="MyAddon")
+# Start with WHERE + ALIASES
+grep -r "verify.*token" src/middleware/
+grep -r "jwt" src/auth/
 
-# Auto-format
-addon.format(addon="MyAddon")
-
-# Verify clean
-addon.lint(addon="MyAddon")
+# If needed, broaden
+grep -r "token" src/ --include="*.ts"
 ```
 
-### Best Practices
+### Verify The Result
 
-1. **Run lint before commit** — Catch issues early
-2. **Format consistently** — Use StyLua for all files
-3. **Configure globals** — Add addon-specific globals to `.luacheckrc`
-4. **Prefix unused** — Use `_` prefix for intentionally unused variables
+Before declaring "found it":
 
-## Security Analysis
+- [ ] Does this match what I described in step 2?
+- [ ] Is this THE thing, or just A thing that mentions it?
+- [ ] If it's a function, trace who calls it
+- [ ] If it's config, trace what uses it
 
-Beyond syntax linting, use `addon.security` to detect runtime safety issues:
+## Output Format
 
-| Category | Description |
-|----------|-------------|
-| `combat_violation` | Protected API calls without `InCombatLockdown()` guard |
-| `secret_leak` | Logging/printing secret values (12.0+) |
-| `taint_risk` | Unsafe global modifications (`_G` without namespace) |
-| `unsafe_eval` | `loadstring`/`RunScript` with unsanitized input |
+```markdown
+## Search Scope
 
-## Complexity Analysis
+**Looking for:** [one sentence]
 
-Use `addon.complexity` to identify maintainability issues:
+**Would look like:** [description]
 
-| Category | Threshold | Description |
-|----------|-----------|-------------|
-| `deep_nesting` | > 5 levels | Excessive if/for/while nesting |
-| `long_function` | > 100 lines | Functions that should be split |
-| `long_file` | > 500 lines | Files that need restructuring |
-| `magic_number` | pattern-based | Unexplained numeric literals |
+**Likely location:** [directories/files]
 
-For comprehensive analysis, use [c-audit](../../commands/c-audit.md).
+**Search terms:** [list of aliases]
+
+## Search Results
+
+Found: [file:line]
+
+Verified: [Yes/No - why]
+```
+
+## NEVER
+
+- Start grepping without answering the four questions
+- Search for vague terms ("stuff", "thing", "code")
+- Stop at the first result without verifying it's THE answer
+- Broaden search before narrowing location
+- Ignore project structure/conventions
+
+## ALWAYS
+
+- State what you're looking for in one sentence first
+- Check project structure before searching
+- List 3+ aliases/synonyms for your search term
+- Verify the result matches your expected shape
+- Narrow by location before broadening by term
+
+## Example
+
+**User:** "Find where we handle rate limiting"
+
+**Scoping:**
+
+> **Looking for:** The middleware or function that tracks request counts and returns 429 when limit exceeded
+>
+> **Would look like:** Middleware function, probably uses Redis or in-memory store, has "rate" or "limit" or "throttle" in name, checks request count, returns 429
+>
+> **Likely location:** `src/middleware/`, maybe `src/api/`, file named `rateLimit.ts` or `throttle.ts`
+>
+> **Search terms:** rate, limit, throttle, 429, tooMany, requests
+
+**Search:**
+```bash
+# Check structure first
+ls src/middleware/
+# Found: auth.ts, cors.ts, rateLimit.ts  <-- bingo
+
+# Verify
+grep -n "429\|rate\|limit" src/middleware/rateLimit.ts
+```
+
+**Result:** `src/middleware/rateLimit.ts:23` - `rateLimiter` middleware using Redis, returns 429 after 100 req/min.
+
+**Verified:** Yes - matches expected shape (middleware, uses Redis, returns 429).
+
+## The Failure That Spawned This Skill
+
+Grepping "auth" in a 50k line codebase. 200+ results. Refined to "login".
+Still 80 results. Spent 20 minutes reading wrong files. Finally found it
+in `src/middleware/session.ts` - wasn't called "auth" or "login" anywhere.
+Should have asked "where would session validation live?" first.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
