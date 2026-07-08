@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [netclaw-dev/netclaw](https://github.com/netclaw-dev/netclaw/tree/main/evals/fixtures/skills/serialization/SKILL.md)
+Original source: [netclaw-dev/netclaw](https://github.com/netclaw-dev/netclaw/tree/main/feeds/skills/.system/files/netclaw-memory/SKILL.md)
 
 ---
 
