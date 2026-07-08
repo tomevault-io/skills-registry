@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [escapeboy/ai-prompts](https://github.com/escapeboy/ai-prompts/tree/main/03-custom-skills/examples/fix-bug/SKILL.md)
+Original source: [escapeboy/ai-prompts](https://github.com/escapeboy/ai-prompts/tree/main/03-custom-skills/examples/module-mcp/SKILL.md)
 
 ---
 
