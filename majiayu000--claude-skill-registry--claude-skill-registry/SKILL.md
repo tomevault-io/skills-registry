@@ -1,507 +1,246 @@
 ---
-name: user-research
-description: User interview techniques, persona creation, journey mapping, and research synthesis patterns. Use when planning research studies, conducting interviews, creating personas, or translating research findings into actionable design recommendations. Use when this capability is needed.
+name: spec-authoring
+description: Use this skill when proposing new features or changes via the Spec PR process. Manages the creation, refinement, and approval of feature specifications before any code is written. Triggers include "create spec", "propose change", "start spec PR", or beginning feature definition.
 metadata:
   author: majiayu000
 ---
 
-# User Research Methodology
+# Spec Authoring Skill
 
-Systematic approaches for understanding user needs, behaviors, and motivations to inform product decisions.
+## Purpose
 
-## When to Activate
+Manage the creation and refinement of feature specifications through the Spec PR process. This skill enables spec-driven development where all changes are defined, reviewed, and approved before implementation begins. Specifications are proposed in the `docs/changes/` directory, reviewed via Pull Request, and merged to `docs/specs/` upon approval.
 
-- Planning user research studies
-- Conducting user interviews
-- Creating personas and journey maps
-- Synthesizing research findings
-- Translating insights into design recommendations
-- Validating product concepts with users
+## When to Use
 
-## Research Methods
+Use this skill in the following situations:
 
-### Method Selection Guide
+- Proposing a new feature or significant change
+- Defining requirements before implementation
+- Creating a Spec PR for team review
+- Updating a proposal based on review feedback
+- Following the spec-driven development workflow
 
-| Method | Best For | Sample Size | Time Investment |
-|--------|----------|-------------|-----------------|
-| **User Interviews** | Deep understanding, "why" | 5-12 users | 2-3 weeks |
-| **Contextual Inquiry** | Understanding environment | 3-6 users | 1-2 weeks |
-| **Usability Testing** | Interface validation | 5 users | 1 week |
-| **Surveys** | Quantitative validation | 100+ users | 1-2 weeks |
-| **Card Sorting** | Information architecture | 15-30 users | 1 week |
-| **Diary Studies** | Longitudinal behavior | 10-15 users | 2-4 weeks |
+## Prerequisites
 
-### User Interviews
+- Project initialized with SynthesisFlow structure (docs/specs, docs/changes directories exist)
+- GitHub repository set up
+- `gh` CLI tool installed and authenticated
 
-One-on-one conversations to understand user perspectives.
+## Spec PR Philosophy
 
-#### Interview Structure (60 min)
+**Specs as Code**: All specification changes follow the same rigor as code changes - proposed via branches, reviewed via PRs, and merged upon approval.
 
-```
-1. INTRODUCTION (5 min)
-   - Thank them for participating
-   - Explain purpose (learning, not testing)
-   - Request permission to record
-   - Emphasize no right/wrong answers
+**Benefits**:
+- **Review before implementation**: Catch design issues early when changes are cheap
+- **Clear requirements**: Implementation has explicit acceptance criteria
+- **Historical record**: Approved specs document what was intended and why
+- **Team alignment**: Stakeholders review and approve before development starts
 
-2. WARM-UP (5 min)
-   - Easy, open questions
-   - Build rapport
-   - "Tell me about your role..."
+**Workflow**:
+1. Changes proposed in `docs/changes/` directory (isolated from source-of-truth)
+2. Spec PR opened for review
+3. Team reviews and provides feedback
+4. Proposal refined based on feedback
+5. Spec PR approved and merged
+6. Approved spec moves to `docs/specs/` (via change-integrator skill)
 
-3. CONTEXT (10 min)
-   - Current situation
-   - Tools and processes
-   - Goals and challenges
-   - "Walk me through a typical day..."
+## The `propose` Command
 
-4. DEEP DIVE (30 min)
-   - Specific experiences
-   - Pain points in detail
-   - Workarounds and adaptations
-   - "Tell me about a time when..."
+### Purpose
 
-5. EXPLORATION (5 min)
-   - Reactions to concepts (if applicable)
-   - Ideal scenarios
-   - "If you could wave a magic wand..."
+Create a new change proposal with the necessary file structure.
 
-6. WRAP-UP (5 min)
-   - Summary of key points
-   - Anything else to add
-   - Thank you and next steps
+### Workflow
+
+#### Step 1: Define the Proposal Name
+
+Discuss with the user what feature or change to propose. Choose a clear, descriptive name:
+- "User Authentication System"
+- "Real-time Notifications"
+- "Performance Optimization"
+
+#### Step 2: Run the Helper Script
+
+Execute the script to create the proposal directory structure:
+
+```bash
+bash scripts/spec-authoring.sh propose "Feature Name"
 ```
 
-#### Question Techniques
+The script will:
+- Convert the name to kebab-case (e.g., "Feature Name" → "feature-name")
+- Create `docs/changes/feature-name/` directory
+- Create three empty files:
+  - `proposal.md` - High-level overview and problem statement
+  - `spec-delta.md` - Detailed specifications and requirements
+  - `tasks.md` - Breakdown of implementation tasks
 
-| Technique | Purpose | Example |
-|-----------|---------|---------|
-| **Open-ended** | Encourage stories | "Tell me about..." |
-| **Follow-up** | Dig deeper | "Can you say more about that?" |
-| **Clarification** | Ensure understanding | "When you say X, what do you mean?" |
-| **Contrast** | Explore differences | "How does that compare to...?" |
-| **Projection** | Uncover desires | "What would ideal look like?" |
-| **Silence** | Let them think | [Wait 5-10 seconds after answers] |
+#### Step 3: Populate proposal.md
 
-#### Questions to Avoid
-
-| Avoid | Problem | Better |
-|-------|---------|--------|
-| "Do you like...?" | Yes/no answer | "How do you feel about...?" |
-| "Would you use...?" | Hypothetical behavior ≠ real | "When did you last...?" |
-| "Don't you think...?" | Leading | "What do you think about...?" |
-| "What features...?" | Solution-focused | "What problems do you face?" |
-
-### Contextual Inquiry
-
-Observe users in their natural environment.
-
-#### Protocol
-
-```
-PREPARATION:
-- Define focus areas
-- Prepare observation guide
-- Get necessary permissions
-- Test recording equipment
-
-DURING OBSERVATION:
-1. Arrive early, set up quietly
-2. Start with brief introduction
-3. Observe first, ask questions after
-4. Note everything (actions, environment, emotions)
-5. Use "teach me" framing
-
-OBSERVATION GUIDE:
-- What are they trying to accomplish?
-- What tools are they using?
-- What workarounds do they employ?
-- What frustrates them?
-- What's in their physical environment?
-- Who do they interact with?
-
-DEBRIEF:
-- Review observations with participant
-- Ask clarifying questions
-- Confirm interpretations
-```
-
-#### Observation Notes Template
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Participant: [ID]     Date: [Date]     Location: [Where]    │
-├─────────────────────────────────────────────────────────────┤
-│ Task: [What they were doing]                                │
-│ Time: [How long it took]                                    │
-├─────────────────────────────────────────────────────────────┤
-│ Actions Observed:                                           │
-│ - [Step 1]                                                  │
-│ - [Step 2]                                                  │
-├─────────────────────────────────────────────────────────────┤
-│ Tools Used:                                                 │
-│ - [Tool 1]: [How used]                                      │
-│ - [Tool 2]: [How used]                                      │
-├─────────────────────────────────────────────────────────────┤
-│ Pain Points:                                                │
-│ - [Frustration observed]                                    │
-├─────────────────────────────────────────────────────────────┤
-│ Quotes:                                                     │
-│ - "[Direct quote]"                                          │
-├─────────────────────────────────────────────────────────────┤
-│ Opportunities:                                              │
-│ - [Potential improvement]                                   │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Think-Aloud Protocol
-
-Have users verbalize thoughts while performing tasks.
-
-```
-SETUP:
-"I'd like you to complete some tasks while telling me what you're
-thinking. There are no wrong answers - I'm testing the design,
-not you. Please say out loud whatever you're looking at, thinking,
-or feeling as you go through."
-
-PROMPTS DURING SESSION:
-- "What are you thinking right now?"
-- "What do you expect to happen?"
-- "What are you looking for?"
-- "Why did you click there?"
-- "How does this compare to what you expected?"
-
-AVOID:
-- Helping them complete tasks
-- Confirming if they're right/wrong
-- Explaining how things work
-- Interrupting their flow too much
-```
-
-## Research Synthesis
-
-### Affinity Mapping
-
-Group observations to find patterns.
-
-```
-PROCESS:
-
-1. CAPTURE (Individual)
-   - Write one observation per sticky note
-   - Use participant quotes
-   - Include source identifier
-
-2. CLUSTER (Group)
-   - Spread all notes on wall/board
-   - Group by similarity
-   - Don't pre-define categories
-   - Move notes until clusters emerge
-
-3. NAME (Group)
-   - Label each cluster
-   - Labels should describe the theme
-   - Not too broad, not too specific
-
-4. PRIORITIZE
-   - Which themes appear most frequently?
-   - Which have highest impact?
-   - Which are most actionable?
-
-EXAMPLE CLUSTERS:
-┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-│ Trust       │ │ Efficiency  │ │ Support     │
-│ Concerns    │ │ Pain Points │ │ Needs       │
-├─────────────┤ ├─────────────┤ ├─────────────┤
-│ "I don't    │ │ "Takes too  │ │ "Wish I     │
-│ know if     │ │ many clicks"│ │ could ask   │
-│ it's safe"  │ │             │ │ someone"    │
-│             │ │ "Have to    │ │             │
-│ "Where's    │ │ enter same  │ │ "Help docs  │
-│ my data?"   │ │ info twice" │ │ are useless"│
-└─────────────┘ └─────────────┘ └─────────────┘
-```
-
-### Insight Generation
-
-Transform observations into actionable insights.
-
-```
-INSIGHT FORMULA:
-
-[User group] needs [need] because [motivation/context],
-but currently [pain point], which means [consequence].
-
-EXAMPLE:
-
-First-time users need clear guidance during setup because
-they're unfamiliar with the product, but currently the
-onboarding is overwhelming with too many options, which
-means they abandon before experiencing value.
-
-VALIDATION CHECKLIST:
-- [ ] Based on evidence from multiple participants
-- [ ] Identifies a real need (not a solution)
-- [ ] Explains the underlying motivation
-- [ ] Connects to business impact
-- [ ] Is actionable
-```
-
-## Personas
-
-### Persona Creation
-
-Research-based archetypes representing user segments.
-
-#### Persona Template
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│ [PHOTO PLACEHOLDER]                                          │
-│                                                              │
-│ NAME: [Fictional name]                                       │
-│ TITLE: [Role/context]                                        │
-│ ARCHETYPE: [2-3 word descriptor]                            │
-├─────────────────────────────────────────────────────────────┤
-│ QUOTE:                                                       │
-│ "[Characteristic quote from research]"                       │
-├─────────────────────────────────────────────────────────────┤
-│ DEMOGRAPHICS:                                                │
-│ Age: [Range]     Experience: [Level]                        │
-│ Context: [Work/home environment]                            │
-├─────────────────────────────────────────────────────────────┤
-│ GOALS:                                                       │
-│ - Primary: [Main objective]                                  │
-│ - Secondary: [Supporting objective]                          │
-├─────────────────────────────────────────────────────────────┤
-│ PAIN POINTS:                                                 │
-│ - [Frustration 1]                                           │
-│ - [Frustration 2]                                           │
-│ - [Frustration 3]                                           │
-├─────────────────────────────────────────────────────────────┤
-│ BEHAVIORS:                                                   │
-│ - [How they approach problems]                              │
-│ - [Tools/resources they use]                                │
-│ - [Decision-making patterns]                                │
-├─────────────────────────────────────────────────────────────┤
-│ SCENARIO:                                                    │
-│ [Brief story of them using your product]                    │
-└─────────────────────────────────────────────────────────────┘
-```
-
-#### Persona Development Process
-
-```
-1. IDENTIFY VARIABLES
-   - What attributes differentiate users?
-   - Goals, behaviors, pain points, context
-
-2. ANALYZE PATTERNS
-   - Cluster research participants
-   - Find natural groupings
-   - Validate with quantitative data if available
-
-3. CREATE PERSONAS
-   - 3-5 personas is typical
-   - Each represents a distinct segment
-   - Include primary, secondary, negative persona
-
-4. VALIDATE
-   - Review with stakeholders
-   - Check against additional research
-   - Refine based on feedback
-
-5. ACTIVATE
-   - Share widely
-   - Reference in design discussions
-   - Update as you learn more
-```
-
-#### Persona Types
-
-| Type | Purpose | When to Create |
-|------|---------|----------------|
-| **Primary** | Main design target | Always |
-| **Secondary** | Important but not primary focus | When segments differ significantly |
-| **Negative** | Who we're NOT designing for | When edge cases distract |
-| **Proto-persona** | Hypothesis before research | Early exploration |
-
-## Journey Mapping
-
-### Journey Map Structure
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│ JOURNEY MAP: [User Type] - [Scenario]                       │
-├─────────────────────────────────────────────────────────────┤
-│ STAGE      │ Awareness │ Consider │ Purchase │ Use │ Renew │
-├─────────────────────────────────────────────────────────────┤
-│ ACTIONS    │           │          │          │     │       │
-│ What they  │ • Sees ad │ • Visits │ • Selects│     │       │
-│ do         │ • Asks    │   site   │   plan   │     │       │
-│            │   friend  │ • Reads  │ • Enters │     │       │
-│            │           │   reviews│   payment│     │       │
-├─────────────────────────────────────────────────────────────┤
-│ THOUGHTS   │           │          │          │     │       │
-│ What they  │ "I need   │ "Is this │ "This    │     │       │
-│ think      │ to solve  │ the right│ better be│     │       │
-│            │ this      │ choice?" │ worth it"│     │       │
-│            │ problem"  │          │          │     │       │
-├─────────────────────────────────────────────────────────────┤
-│ EMOTIONS   │    😊     │    😐    │    😟    │     │       │
-│ How they   │ Hopeful   │ Confused │ Anxious  │     │       │
-│ feel       │           │          │          │     │       │
-├─────────────────────────────────────────────────────────────┤
-│ TOUCH-     │ Social    │ Website  │ Checkout │     │       │
-│ POINTS     │ media     │ Reviews  │ Email    │     │       │
-├─────────────────────────────────────────────────────────────┤
-│ PAIN       │           │ Too many │ Payment  │     │       │
-│ POINTS     │           │ options  │ issues   │     │       │
-├─────────────────────────────────────────────────────────────┤
-│ OPPORT-    │           │ Compare  │ Guest    │     │       │
-│ UNITIES    │           │ feature  │ checkout │     │       │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Journey Mapping Process
-
-```
-1. DEFINE SCOPE
-   - Which persona?
-   - Which scenario?
-   - Start and end points?
-
-2. GATHER DATA
-   - Interview transcripts
-   - Analytics data
-   - Support tickets
-   - Observation notes
-
-3. MAP THE STAGES
-   - What are the major phases?
-   - What triggers transitions?
-
-4. FILL IN LAYERS
-   - Actions at each stage
-   - Thoughts and questions
-   - Emotional state
-   - Touchpoints
-
-5. IDENTIFY OPPORTUNITIES
-   - Where are the pain points?
-   - Where can we improve?
-   - What's the priority?
-
-6. VALIDATE & SHARE
-   - Review with stakeholders
-   - Share findings
-   - Define action items
-```
-
-## Research Planning
-
-### Research Plan Template
+Work with the user to create a clear proposal:
 
 ```markdown
-# Research Plan: [Study Name]
+# Proposal: Feature Name
 
-## Objectives
-- Primary: [Main question to answer]
-- Secondary: [Additional questions]
+## Problem Statement
+[What problem does this solve? Why is it needed?]
 
-## Participants
-- Target: [User segment]
-- Sample size: [Number]
-- Recruitment: [How to find them]
-- Screener criteria: [Inclusion/exclusion]
+## Proposed Solution
+[High-level approach to solving the problem]
 
-## Methodology
-- Method: [Interview/observation/testing]
-- Duration: [Session length]
-- Location: [Remote/in-person]
-- Facilitator: [Who]
+## Benefits
+[What value does this provide?]
 
-## Discussion Guide
-- [Link to guide]
-
-## Timeline
-| Phase | Dates |
-|-------|-------|
-| Recruitment | [Dates] |
-| Sessions | [Dates] |
-| Analysis | [Dates] |
-| Reporting | [Date] |
-
-## Deliverables
-- [ ] Raw notes
-- [ ] Synthesis document
-- [ ] Presentation
-- [ ] Recommendations
+## Success Criteria
+[How do we know this is successful?]
 ```
 
-## Reporting Research
+#### Step 4: Populate spec-delta.md
 
-### Research Report Structure
+Define detailed specifications:
 
 ```markdown
-# Research Findings: [Study Name]
+# Spec Delta: Feature Name
 
-## Executive Summary
-[1-paragraph overview for stakeholders who won't read details]
+## Overview
+[Detailed description of what's being added/modified/removed]
 
-## Background
-- Objectives
-- Methodology
-- Participants (demographics, no PII)
+## Requirements
+[Specific, testable requirements]
 
-## Key Findings
+## Design Decisions
+[Key architectural or design choices]
 
-### Finding 1: [Headline]
-**Evidence**: [3+ supporting data points]
-**Impact**: [Why this matters]
-**Recommendation**: [What to do]
+## Migration Path
+[How to transition from current state if applicable]
+```
 
-### Finding 2: [Headline]
+#### Step 5: Populate tasks.md
+
+Break down implementation into atomic tasks:
+
+```markdown
+# Tasks: Feature Name
+
+## Task 1: Component A
+- [ ] Subtask 1
+- [ ] Subtask 2
+
+**Acceptance Criteria**:
+- Criteria 1
+- Criteria 2
+
+## Task 2: Component B
 ...
-
-## Detailed Observations
-[Supporting details, quotes, examples]
-
-## Recommendations Summary
-| Priority | Finding | Recommendation | Effort |
-|----------|---------|----------------|--------|
-| 1 | [Finding] | [Action] | [Est.] |
-
-## Appendix
-- Screener
-- Discussion guide
-- Participant list (anonymized)
 ```
 
-## Anti-Patterns
+#### Step 6: Create Spec PR
 
-| Anti-Pattern | Problem | Solution |
-|--------------|---------|----------|
-| **Confirmation Bias** | Seeking data that confirms beliefs | Ask open questions, look for disconfirming evidence |
-| **Leading Questions** | Influencing responses | Review questions for bias |
-| **Recency Effect** | Overweighting last interview | Synthesize across all participants |
-| **Sample Bias** | Wrong participants | Carefully screen, diverse recruitment |
-| **Hypothetical Questions** | "Would you...?" | Ask about past behavior instead |
-| **Shelf Research** | No action on findings | Include action items, follow up |
+After populating files:
 
-## Best Practices
+1. Create feature branch: `git checkout -b spec/feature-name`
+2. Add files: `git add docs/changes/feature-name/`
+3. Commit: `git commit -m "spec: Propose Feature Name"`
+4. Push: `git push -u origin spec/feature-name`
+5. Create PR: `gh pr create --title "Spec: Feature Name" --body "..."`
 
-1. **Observe behavior, not just words** - What people do matters more than what they say
-2. **Ask about the past** - "When did you last..." not "Would you..."
-3. **Follow the emotion** - Pain points reveal opportunities
-4. **Triangulate** - Validate findings across methods
-5. **Share broadly** - Research only has value if it influences decisions
+Label as "spec" or "proposal" if labels are available.
 
-## References
+## The `update` Command
 
-- [Interview Question Bank](examples/interview-questions.md) - Sample questions by topic
-- [Persona Examples](examples/personas.md) - Well-crafted persona examples
+### Purpose
+
+Fetch review comments from a Spec PR to incorporate feedback.
+
+### Workflow
+
+#### Step 1: Identify the PR Number
+
+Determine which Spec PR needs updates based on review feedback.
+
+#### Step 2: Fetch Review Comments
+
+Run the helper script to view all comments:
+
+```bash
+bash scripts/spec-authoring.sh update PR_NUMBER
+```
+
+This displays:
+- All PR comments with context
+- Review feedback from team members
+- Suggestions and questions
+
+#### Step 3: Discuss Feedback with User
+
+Review the comments together and determine:
+- Which suggestions to incorporate
+- What clarifications are needed
+- What changes to make to the proposal
+
+#### Step 4: Update Proposal Files
+
+Edit the files in `docs/changes/feature-name/` based on feedback:
+- Clarify unclear sections
+- Add missing requirements
+- Adjust design decisions
+- Refine task breakdown
+
+#### Step 5: Push Updates
+
+Commit and push changes to the same branch:
+
+```bash
+git add docs/changes/feature-name/
+git commit -m "spec: Address review feedback for Feature Name"
+git push
+```
+
+The Spec PR automatically updates with new changes.
+
+#### Step 6: Request Re-review
+
+If needed, request reviewers take another look at the updated proposal.
+
+## Error Handling
+
+### Proposal Directory Already Exists
+
+**Symptom**: Script reports directory already exists
+
+**Solution**:
+- Check if proposal is already in progress: `ls docs/changes/`
+- Either use a different name or work with existing proposal
+- Consider if this is an update to existing proposal
+
+### Missing GitHub CLI
+
+**Symptom**: `gh: command not found` when using update command
+
+**Solution**:
+- Install GitHub CLI: https://cli.github.com/
+- Authenticate: `gh auth login`
+- Verify: `gh auth status`
+
+### No Review Comments
+
+**Symptom**: Update command shows no comments
+
+**Solution**:
+- Verify PR number is correct
+- Check if PR has any comments yet
+- Wait for reviewers to provide feedback
+
+## Notes
+
+- **Spec PRs are lightweight**: Focus on clarity over perfection - they can be refined
+- **Iterate on feedback**: Multiple rounds of review are normal and healthy
+- **Keep proposals focused**: One feature/change per proposal makes review easier
+- **Link related work**: Reference existing specs or issues in the proposal
+- **The `propose` command only creates structure**: You must populate the files with content
+- **Spec PRs merge to main**: After approval, specs become source-of-truth in `docs/specs/`
+- **Use change-integrator**: After code PR merges, run change-integrator to move approved specs
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
