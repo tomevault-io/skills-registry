@@ -1,498 +1,288 @@
 ---
-name: using-prisma
-description: Prisma 5+ ORM with schema-first design, type-safe client, migrations, and database integrations (Supabase, PlanetScale, Neon). Use for TypeScript/JavaScript database access. Use when this capability is needed.
+name: standards-css
+description: Write consistent, maintainable CSS following the project's methodology (Tailwind, BEM, utility classes, CSS modules) with design system adherence and performance optimization. Use this skill when writing or modifying styles, CSS files, utility classes, CSS-in-JS, styled components, or any styling code. Apply when working with .css, .scss, .module.css files, Tailwind utility classes, styled-components, CSS modules, design tokens (colors, spacing, typography), framework-specific styling approaches, optimizing CSS for production, implementing CSS purging or tree-shaking, or avoiding style overrides. Use for any task involving visual styling, layout styling, design system implementation, or CSS organization. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Prisma ORM Development Skill
+# CSS Standards
 
-**Version**: 1.1.0 | **Target**: <500 lines | **Purpose**: Fast reference for Prisma operations
+**Rule:** Follow project CSS methodology consistently, leverage framework patterns, maintain design system tokens.
 
----
+## When to use this skill
 
-## Overview
+- When writing or modifying CSS files (.css, .scss, .sass, .less, .module.css)
+- When applying utility classes in Tailwind CSS or similar utility-first frameworks
+- When implementing CSS-in-JS or styled-components in React/Vue/Svelte components
+- When defining or using design tokens (colors, spacing, typography, shadows)
+- When maintaining consistency with the project's CSS methodology (BEM, OOCSS, SMACSS, utility-first)
+- When optimizing CSS for production with purging or tree-shaking unused styles
+- When avoiding excessive framework style overrides by working with framework patterns
+- When implementing global styles or theme configurations
+- When refactoring inline styles or scattered CSS into organized, maintainable patterns
+- When establishing or following CSS naming conventions for the project
 
-**What is Prisma**: Type-safe ORM with schema-first design for TypeScript/JavaScript. Auto-generates client from schema with full IntelliSense support.
+This Skill provides Claude Code with specific guidance on how to adhere to coding standards as they relate to how it should handle frontend CSS.
 
-**When to Use This Skill**:
-- Database schema design and migrations
-- Type-safe CRUD operations
-- Relation handling and query optimization
-- Integration with Supabase, PlanetScale, Neon
+## Identify Project Methodology First
 
-**Auto-Detection Triggers**:
-- `schema.prisma` file present
-- `@prisma/client` in dependencies
-- `prisma` in devDependencies
-- User mentions "Prisma", "ORM", or database models
+Before writing any styles, check existing codebase for:
 
-**Progressive Disclosure**:
-- **This file (SKILL.md)**: Quick reference for immediate use
-- **[REFERENCE.md](REFERENCE.md)**: Comprehensive patterns, advanced queries, production deployment
-
----
-
-## Table of Contents
-
-1. [Project Structure](#project-structure)
-2. [Schema Basics](#schema-basics)
-3. [CLI Commands](#cli-commands)
-4. [Client Operations](#client-operations)
-5. [Relations](#relations)
-6. [Transactions](#transactions)
-7. [Database Integrations](#database-integrations)
-8. [Error Handling](#error-handling)
-9. [Testing Patterns](#testing-patterns)
-10. [Quick Reference Card](#quick-reference-card)
-
----
-
-## Project Structure
-
-```
-my_project/
-├── prisma/
-│   ├── schema.prisma          # Schema definition
-│   ├── migrations/            # Migration history
-│   └── seed.ts                # Database seeding
-├── src/
-│   └── lib/prisma.ts          # Client singleton
-└── package.json
+**Utility-first (Tailwind/UnoCSS):**
+```jsx
+<div className="flex items-center gap-4 p-6 bg-white rounded-lg shadow-md">
 ```
 
----
-
-## Schema Basics
-
-### Datasource Configuration
-
-```prisma
-// PostgreSQL (local)
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-// Supabase (with pooling) - see Database Integrations
-datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")      // Pooled connection
-  directUrl = env("DIRECT_URL")        // Direct for migrations
-}
-
-generator client {
-  provider = "prisma-client-js"
-}
+**CSS Modules:**
+```jsx
+import styles from './Component.module.css'
+<div className={styles.container}>
 ```
 
-### Model Definition
+**BEM (Block Element Modifier):**
+```css
+.card { }
+.card__header { }
+.card__header--highlighted { }
+```
 
-```prisma
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String
-  bio       String?                    // Optional
-  role      Role     @default(USER)
-  active    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  posts     Post[]                     // Relation
+**CSS-in-JS (styled-components/emotion):**
+```jsx
+const Button = styled.button`
+  padding: 1rem;
+  background: ${props => props.theme.primary};
+`
+```
 
-  @@index([email])
-}
+**Once identified, use that methodology exclusively. Never mix methodologies.**
 
-enum Role {
-  USER
-  ADMIN
+## Design System Tokens
+
+**Always use design tokens instead of hardcoded values:**
+
+Bad:
+```css
+color: #3b82f6;
+padding: 16px;
+font-size: 14px;
+```
+
+Good (Tailwind):
+```jsx
+className="text-blue-500 p-4 text-sm"
+```
+
+Good (CSS variables):
+```css
+color: var(--color-primary);
+padding: var(--spacing-4);
+font-size: var(--text-sm);
+```
+
+**Check for existing tokens before creating new ones:**
+1. Search for color/spacing/typography definitions
+2. Use existing tokens if available
+3. Only create new tokens if genuinely needed
+4. Document new tokens in design system file
+
+## Framework Patterns Over Overrides
+
+**Work with framework, not against it:**
+
+Bad (fighting Tailwind):
+```jsx
+<div className="flex items-center" style={{gap: '17px', padding: '13px'}}>
+```
+
+Good (using framework values):
+```jsx
+<div className="flex items-center gap-4 p-3">
+```
+
+Bad (overriding component library):
+```css
+.MuiButton-root {
+  padding: 12px !important;
+  background: red !important;
 }
 ```
 
-### Common Field Types
-
-| Type | Example | Notes |
-|------|---------|-------|
-| `String` | `name String` | Text |
-| `String?` | `bio String?` | Optional text |
-| `Int` | `count Int` | Integer |
-| `Float` | `price Float` | Decimal |
-| `Boolean` | `active Boolean` | true/false |
-| `DateTime` | `createdAt DateTime` | Timestamp |
-| `Json` | `metadata Json` | JSON object |
-| `String[]` | `tags String[]` | PostgreSQL array |
-
-> **More patterns**: See [REFERENCE.md - Schema Design Patterns](REFERENCE.md#2-schema-design-patterns) for soft delete, audit fields, polymorphic relations, and multi-tenancy patterns.
-
----
-
-## CLI Commands
-
-### Development Workflow
-
-```bash
-npx prisma init                      # Initialize Prisma
-npx prisma generate                  # Generate client after schema changes
-npx prisma db push                   # Push schema (no migrations)
-npx prisma migrate dev --name init   # Create migration
-npx prisma migrate reset             # Reset database
-npx prisma studio                    # Open GUI
+Good (using component API):
+```jsx
+<Button sx={{ padding: 3, bgcolor: 'error.main' }}>
 ```
 
-### Production Workflow
+**If you need `!important` or deep style overrides, reconsider your approach.**
 
-```bash
-npx prisma generate                  # Generate client (required in CI)
-npx prisma migrate deploy            # Apply pending migrations
-npx prisma migrate status            # Check migration status
-```
+## Minimize Custom CSS
 
-### Database Inspection
+**Prefer framework utilities over custom CSS:**
 
-```bash
-npx prisma db pull                   # Pull schema from existing DB
-npx prisma validate                  # Validate schema
-npx prisma format                    # Format schema file
-```
-
----
-
-## Client Operations
-
-### Client Singleton
-
-```typescript
-// src/lib/prisma.ts
-import { PrismaClient } from "@prisma/client";
-
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
-
-export const prisma = globalForPrisma.prisma ?? new PrismaClient();
-
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+Bad:
+```css
+.custom-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 ```
 
-### CRUD Operations
-
-```typescript
-// Create
-const user = await prisma.user.create({
-  data: { email: "user@example.com", name: "John" },
-});
-
-// Read
-const user = await prisma.user.findUnique({
-  where: { id: "user_id" },
-});
-
-// Update
-const updated = await prisma.user.update({
-  where: { id: "user_id" },
-  data: { name: "New Name" },
-});
-
-// Upsert
-const upserted = await prisma.user.upsert({
-  where: { email: "user@example.com" },
-  update: { name: "Updated" },
-  create: { email: "user@example.com", name: "New" },
-});
-
-// Delete
-const deleted = await prisma.user.delete({
-  where: { id: "user_id" },
-});
+Good (Tailwind):
+```jsx
+<div className="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-sm">
 ```
 
-### Filtering
+**Only write custom CSS for:**
+- Complex animations
+- Unique visual effects not in framework
+- Third-party library integration
+- Browser-specific fixes
 
-```typescript
-const users = await prisma.user.findMany({
-  where: {
-    email: { contains: "@example.com" },
-    role: { in: ["ADMIN", "USER"] },
-    createdAt: { gte: new Date("2024-01-01") },
-    OR: [
-      { name: { startsWith: "John" } },
-      { name: { startsWith: "Jane" } },
-    ],
-  },
-});
+## Naming Conventions
+
+**Follow project convention consistently:**
+
+BEM:
+```css
+.block-name { }
+.block-name__element { }
+.block-name--modifier { }
 ```
 
-### Pagination
-
-```typescript
-// Offset pagination
-const users = await prisma.user.findMany({
-  skip: (page - 1) * pageSize,
-  take: pageSize,
-  orderBy: { createdAt: "desc" },
-});
-
-// Cursor pagination (more efficient)
-const users = await prisma.user.findMany({
-  take: 10,
-  cursor: { id: "last_seen_id" },
-  skip: 1,
-});
+CSS Modules (camelCase):
+```css
+.cardContainer { }
+.cardHeader { }
+.isActive { }
 ```
 
-### Select and Include
-
-```typescript
-// Select specific fields
-const users = await prisma.user.findMany({
-  select: { id: true, name: true, email: true },
-});
-
-// Include relations
-const users = await prisma.user.findMany({
-  include: { posts: { where: { published: true }, take: 5 } },
-});
+Utility-first (descriptive class names for custom components):
+```css
+.prose-headings { }
+.custom-scrollbar { }
 ```
 
-> **More patterns**: See [REFERENCE.md - Query Optimization](REFERENCE.md#6-query-optimization) for N+1 prevention, cursor pagination, and aggregation patterns.
+## Organization Patterns
 
----
+**Structure CSS logically:**
 
-## Relations
-
-### One-to-Many
-
-```prisma
-model User {
-  id    String @id @default(cuid())
-  posts Post[]
+```css
+/* 1. Layout */
+.component {
+  display: flex;
+  position: relative;
 }
 
-model Post {
-  id       String @id @default(cuid())
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId String
-  @@index([authorId])
+/* 2. Box model */
+.component {
+  width: 100%;
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+/* 3. Typography */
+.component {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* 4. Visual */
+.component {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border-radius: 0.5rem;
+}
+
+/* 5. Misc */
+.component {
+  cursor: pointer;
+  transition: all 0.2s;
 }
 ```
 
-### Many-to-Many (Implicit)
+**Group related styles, separate concerns with comments.**
 
-```prisma
-model Post {
-  id         String     @id @default(cuid())
-  categories Category[]
-}
+## Performance Optimization
 
-model Category {
-  id    String @id @default(cuid())
-  posts Post[]
-}
-```
+**Production CSS should be optimized:**
 
-### Relation Queries
-
-```typescript
-// Create with relation
-const user = await prisma.user.create({
-  data: {
-    email: "author@example.com",
-    posts: { create: { title: "First Post" } },
-  },
-  include: { posts: true },
-});
-
-// Filter by relation
-const usersWithPosts = await prisma.user.findMany({
-  where: { posts: { some: { published: true } } },
-});
-```
-
-> **More patterns**: See [REFERENCE.md - Advanced Relations](REFERENCE.md#3-advanced-relations) for self-relations, polymorphic patterns, and explicit many-to-many.
-
----
-
-## Transactions
-
-### Interactive Transaction
-
-```typescript
-const result = await prisma.$transaction(async (tx) => {
-  const order = await tx.order.create({ data: orderData });
-  await tx.inventory.update({
-    where: { id: productId },
-    data: { stock: { decrement: 1 } },
-  });
-  if ((await tx.inventory.findUnique({ where: { id: productId } }))!.stock < 0) {
-    throw new Error("Insufficient stock");
-  }
-  return order;
-});
-```
-
-### Sequential Transaction
-
-```typescript
-const [users, posts] = await prisma.$transaction([
-  prisma.user.findMany(),
-  prisma.post.findMany(),
-]);
-```
-
-> **More patterns**: See [REFERENCE.md - Transactions & Concurrency](REFERENCE.md#7-transactions--concurrency) for isolation levels, optimistic locking, and deadlock prevention.
-
----
-
-## Database Integrations
-
-### Supabase
-
-```prisma
-datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")      // Transaction pooler
-  directUrl = env("DIRECT_URL")        // Direct for migrations
+Tailwind (purge unused):
+```js
+// tailwind.config.js
+module.exports = {
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  // Only includes classes actually used
 }
 ```
 
-```env
-DATABASE_URL="postgres://postgres.[ref]:password@aws-0-region.pooler.supabase.com:6543/postgres?pgbouncer=true"
-DIRECT_URL="postgres://postgres.[ref]:password@aws-0-region.supabase.com:5432/postgres"
+CSS Modules (automatic tree-shaking):
+```js
+// Unused styles automatically removed in production
 ```
 
-### PlanetScale
+**Avoid:**
+- Importing entire CSS frameworks when using few components
+- Duplicate style definitions across files
+- Overly specific selectors (`.a .b .c .d .e`)
+- Large inline styles that could be extracted
 
-```prisma
-datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"  // Required: no foreign keys
+## Common Mistakes
+
+**Mixing methodologies:**
+```jsx
+// BAD - mixing Tailwind with inline styles and CSS modules
+<div className={`${styles.card} flex p-4`} style={{gap: '12px'}}>
+```
+
+**Hardcoding values:**
+```css
+/* BAD */
+color: #3b82f6;
+padding: 17px;
+
+/* GOOD */
+color: var(--color-primary);
+padding: var(--spacing-4);
+```
+
+**Fighting framework:**
+```css
+/* BAD */
+.override {
+  margin: 13px !important;
 }
+
+/* GOOD - use framework's spacing scale */
+className="m-3"
 ```
 
-### Neon
+## Verification Checklist
 
-```prisma
-datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
-```
+Before completing CSS work:
 
-> **More patterns**: See [REFERENCE.md - Database Integrations](REFERENCE.md#4-database-integrations) for Supabase Auth integration, connection pooling, and edge runtime setup.
+- [ ] Identified and followed project CSS methodology
+- [ ] Used design tokens instead of hardcoded values
+- [ ] Leveraged framework utilities where possible
+- [ ] Avoided `!important` and deep overrides
+- [ ] Followed project naming conventions
+- [ ] Organized styles logically
+- [ ] Verified no unused styles in production build
+- [ ] Tested visual output in browser
 
----
+## Quick Reference
 
-## Error Handling
-
-### Common Error Codes
-
-| Code | Description | Resolution |
-|------|-------------|------------|
-| P2002 | Unique constraint failed | Duplicate value |
-| P2003 | Foreign key constraint failed | Missing relation |
-| P2025 | Record not found | Update/delete on missing record |
-| P2024 | Connection pool timeout | Too many connections |
-
-### Error Handling Pattern
-
-```typescript
-import { Prisma } from "@prisma/client";
-
-try {
-  await prisma.user.create({ data });
-} catch (error) {
-  if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    if (error.code === "P2002") {
-      throw new ConflictError("Email already exists");
-    }
-    if (error.code === "P2025") {
-      throw new NotFoundError("Record not found");
-    }
-  }
-  throw error;
-}
-```
-
-> **More patterns**: See [REFERENCE.md - Error Handling](REFERENCE.md#9-security--row-level-security) for comprehensive error mapping and retry strategies.
-
----
-
-## Testing Patterns
-
-### Mock Client
-
-```typescript
-import { mockDeep, DeepMockProxy } from "jest-mock-extended";
-import { PrismaClient } from "@prisma/client";
-
-export const prismaMock = mockDeep<PrismaClient>();
-
-jest.mock("./lib/prisma", () => ({
-  prisma: prismaMock,
-}));
-
-// In tests
-prismaMock.user.create.mockResolvedValue(mockUser);
-```
-
-### Test Database Setup
-
-```typescript
-beforeEach(async () => {
-  await prisma.$executeRaw`TRUNCATE TABLE "User" CASCADE`;
-});
-
-afterAll(async () => {
-  await prisma.$disconnect();
-});
-```
-
-> **More patterns**: See [REFERENCE.md - Testing Strategies](REFERENCE.md#10-production-deployment) for integration testing, test containers, and CI/CD setup.
-
----
-
-## Quick Reference Card
-
-```bash
-# Development
-npx prisma generate          # Regenerate client
-npx prisma db push           # Push schema changes
-npx prisma migrate dev       # Create migration
-npx prisma studio            # GUI browser
-
-# Production
-npx prisma generate          # Required in CI
-npx prisma migrate deploy    # Apply migrations
-```
-
-```typescript
-// CRUD
-prisma.model.create({ data })
-prisma.model.findUnique({ where })
-prisma.model.findMany({ where, orderBy, take, skip })
-prisma.model.update({ where, data })
-prisma.model.delete({ where })
-prisma.model.upsert({ where, create, update })
-
-// Relations
-include: { relation: true }
-include: { relation: { where, take } }
-where: { relation: { some: {} } }
-
-// Transactions
-prisma.$transaction(async (tx) => { ... })
-prisma.$transaction([query1, query2])
-```
-
----
-
-**Progressive Disclosure**: Start here for quick reference. Load [REFERENCE.md](REFERENCE.md) for comprehensive patterns, advanced configurations, and production deployment.
-
-**Skill Version**: 1.1.0
+| Situation                      | Action                                |
+| ------------------------------ | ------------------------------------- |
+| New component styling          | Check existing patterns first         |
+| Need specific color            | Use design token, not hex code        |
+| Framework doesn't have utility | Write minimal custom CSS              |
+| Styles not applying            | Check specificity, avoid `!important` |
+| Large CSS file                 | Extract to utilities or components    |
+| Production bundle large        | Enable CSS purging/tree-shaking       |
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
