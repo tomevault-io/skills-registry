@@ -1,214 +1,259 @@
 ---
-name: tech-stack-selection
-description: 技術スタック確認ヒアリングのフレームワーク（レイヤー別選択肢、提案形式、確定フォーマット） Use when this capability is needed.
+name: sdv-mp-gamepad-audit
+description: This skill should be used when the user asks to "check multiplayer support", "audit gamepad navigation", "verify split-screen", or before committing changes to menu code. Also use when working on per-player state, mutex locking, PerScreen usage, controller navigation, or any file in the Managers/ or Menus/ directories. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# 技術スタック確認ヒアリング
+# SDV Multiplayer & Gamepad Audit
 
-> **参照元**: basic-design-writer, basic-design-workflow
+Static analysis for multiplayer and gamepad support. Since runtime testing of these features is difficult, this skill provides comprehensive code auditing to catch issues before manual testing.
 
----
+## When to Run This Audit
 
-## 実行タイミング
+1. Before committing changes to any file in `Managers/` or `Menus/`
+2. After adding new state variables (fields, properties)
+3. When implementing features that affect multiple players
+4. Before PR creation
 
-**常に実行**。要件定義書の技術スタックが定義済みでも、ユーザーに確認を行う。
+## Multiplayer Audit Checklist
 
-**目的**: 
-- 技術選定の認識齟齬を防ぐ
-- 未定義レイヤーを明確にする
-- ユーザーの意図しない技術選定を防止する
+### 1. PerScreen Wrapper Audit
 
----
+All per-player mutable state MUST use `PerScreen<T>`:
 
-## Phase H1: 現状サマリー提示
+```csharp
+// WRONG: Static state shared across split-screen players
+private static MenuManager menuManager;
+private static int currentTab = 0;
 
-### 1.1 要件分析
+// CORRECT: Per-screen state
+private static readonly PerScreen<MenuManager> menuManager = new();
+private static readonly PerScreen<int> currentTab = new(() => 0);
 
-要件定義書から以下を特定：
-
-| 抽出項目 | 確認観点 |
-|---------|---------|
-| パフォーマンス要件 | 同時接続数、レスポンス時間 |
-| セキュリティ要件 | 認証方式、暗号化 |
-| 可用性要件 | 稼働率、障害復旧 |
-| ユーザー層 | 利用デバイス、地域 |
-| データ特性 | 構造化/非構造化、規模 |
-
-### 1.2 定義済み/未定義の一覧表示
-
-```markdown
-## 技術スタック確認
-
-### 定義済み（要件定義書より）
-| レイヤー | 技術 | 確認 |
-|---------|------|------|
-| フロントエンド | Next.js | ✅ このまま進めてよいですか？ |
-| バックエンド | Node.js | ✅ このまま進めてよいですか？ |
-
-### 未定義（提案します）
-| レイヤー | 推奨 | 理由 |
-|---------|------|------|
-| UIライブラリ | shadcn/ui | カスタマイズ性、軽量 |
-| ORM | Prisma | 型安全、マイグレーション管理 |
-| 認証 | NextAuth.js | Next.js統合 |
+// Access via .Value
+menuManager.Value.DoSomething();
+int tab = currentTab.Value;
 ```
 
-### 1.3 ユーザー選択
+**Audit Points:**
+- [ ] All static fields with mutable state use PerScreen<T>
+- [ ] PerScreen fields are `readonly` (prevents clearing all screens)
+- [ ] PerScreen initialized with proper factory if needed: `new(() => defaultValue)`
+- [ ] Manager classes use PerScreen in the entry point
 
-```markdown
-**対応を選択してください**:
+### 2. Context Checks
 
-1. 承認 → 提案内容を確認して続行
-2. 変更 → 変更したい技術を指定
-3. スキップ → 確認不要で続行
+Verify proper context gating:
 
-> 番号を選択してください（1-3）:
+```csharp
+// Required before accessing world state
+if (!Context.IsWorldReady) return;
+
+// Required before player interaction logic
+if (!Context.IsPlayerFree) return;
+
+// Required for host-only operations
+if (!Context.IsMainPlayer) return;
+
+// Required for save operations
+if (Context.IsMainPlayer)
+{
+    Helper.Data.WriteSaveData("key", data);
+}
 ```
 
----
+**Audit Points:**
+- [ ] Event handlers check `Context.IsWorldReady` before accessing `Game1.player`
+- [ ] Save operations check `Context.IsMainPlayer` (farmhands can't use save API)
+- [ ] Menu operations check `Context.IsPlayerFree` when appropriate
 
-## Phase H2: 技術スタック提案
+### 3. Mutex Locking (Shared Furniture)
 
-### レイヤー別選択肢
+Dressers and other shared furniture require mutex:
 
-#### 1. フロントエンド
+```csharp
+// CORRECT: Request lock before opening menu
+if (!dresser.mutex.IsLocked())
+{
+    dresser.mutex.RequestLock(delegate {
+        Game1.activeClickableMenu = new WardrobeMenu();
+    });
+}
 
-| 選択肢 | 特徴 | 適合度 |
-|--------|------|--------|
-| **Next.js + React** | SSR/SSG対応、大規模エコシステム | 推奨 |
-| Nuxt.js + Vue | 学習コスト低、中小規模向き | ○ |
-| SvelteKit | 軽量・高速 | △ |
+// CRITICAL: Release on menu close
+public override void emergencyShutDown()
+{
+    base.emergencyShutDown();
+    dresserObject?.mutex?.ReleaseLock();
+}
 
-#### 2. UIライブラリ
-
-| 選択肢 | 特徴 | 適合度 |
-|--------|------|--------|
-| **shadcn/ui + Tailwind** | カスタマイズ性高、軽量 | 推奨 |
-| MUI | 豊富なコンポーネント | ○ |
-| Chakra UI | アクセシビリティ重視 | ○ |
-
-#### 3. 状態管理
-
-| 選択肢 | 特徴 | 適合度 |
-|--------|------|--------|
-| **TanStack Query + Zustand** | サーバー/クライアント状態分離 | 推奨 |
-| Redux Toolkit | 大規模向け | ○ |
-
-#### 4. バックエンド
-
-| 選択肢 | 特徴 | 適合度 |
-|--------|------|--------|
-| **Node.js + Hono/Express** | JSエコシステム統一 | 推奨 |
-| Go + Echo/Gin | 高パフォーマンス | ○ |
-| Python + FastAPI | ML親和性 | ○ |
-
-#### 5. データベース
-
-| 選択肢 | 特徴 | 適合度 |
-|--------|------|--------|
-| **PostgreSQL** | 高機能、JSON対応 | 推奨 |
-| MySQL | 実績豊富 | ○ |
-| MongoDB | スキーマレス | △ |
-
-#### 6. ORM
-
-| 選択肢 | 特徴 | 適合度 |
-|--------|------|--------|
-| **Prisma** | 型安全、マイグレーション管理 | 推奨 |
-| Drizzle | 軽量、SQL寄り | ○ |
-
-#### 7. 認証・認可
-
-| 選択肢 | 特徴 | 適合度 |
-|--------|------|--------|
-| **NextAuth.js / Auth.js** | Next.js統合、OAuth対応 | 推奨 |
-| Clerk | マネージド、有料 | ○ |
-| Supabase Auth | PostgreSQL統合 | ○ |
-
-#### 8. インフラ
-
-| 選択肢 | 特徴 | 適合度 |
-|--------|------|--------|
-| **Vercel + Supabase** | サーバーレス、運用コスト低 | 推奨 |
-| AWS (ECS/Lambda) | フルコントロール | ○ |
-| GCP (Cloud Run) | コンテナベース | ○ |
-
-#### 9. CI/CD
-
-| 選択肢 | 特徴 | 適合度 |
-|--------|------|--------|
-| **GitHub Actions** | GitHub統合、エコシステム豊富 | 推奨 |
-| GitLab CI | オンプレ対応 | ○ |
-
-#### 10. テスト
-
-| レイヤー | 推奨ツール |
-|---------|-----------|
-| 単体/結合 | **Vitest** |
-| E2E | **Playwright** |
-
-#### 11. モニタリング
-
-| 選択肢 | 特徴 | 適合度 |
-|--------|------|--------|
-| **Sentry** | エラー監視 | 推奨 |
-| Datadog | フルスタック監視、有料 | ○ |
-
----
-
-## ユーザー回答フォーマット
-
-```markdown
-| # | レイヤー | 選択 | コメント |
-|---|---------|------|---------|
-| 1 | フロントエンド | Next.js / Nuxt.js / 他: ___ | |
-| 2 | UIライブラリ | shadcn/ui / MUI / 他: ___ | |
-| 3 | 状態管理 | TanStack Query+Zustand / Redux / 他: ___ | |
-| 4 | バックエンド | Node.js / Go / Python / 他: ___ | |
-| 5 | データベース | PostgreSQL / MySQL / 他: ___ | |
-| 6 | ORM | Prisma / Drizzle / 他: ___ | |
-| 7 | 認証 | NextAuth.js / Clerk / 他: ___ | |
-| 8 | インフラ | Vercel+Supabase / AWS / 他: ___ | |
-| 9 | CI/CD | GitHub Actions / 他: ___ | |
-| 10 | モニタリング | Sentry / Datadog / 他: ___ | |
+protected override void cleanupBeforeExit()
+{
+    base.cleanupBeforeExit();
+    dresserObject?.mutex?.ReleaseLock();
+}
 ```
 
----
+**Audit Points:**
+- [ ] Shared furniture access uses `mutex.RequestLock()`
+- [ ] Menu `emergencyShutDown()` releases mutex
+- [ ] Menu `cleanupBeforeExit()` releases mutex
+- [ ] Null checks on mutex before release
 
-## Phase H3: 選定確定と記録
+### 4. Player Data Keying
 
-### 記録フォーマット
+Per-player save data must be uniquely keyed:
 
-```markdown
-### 2.2 技術スタック
+```csharp
+// CORRECT: Unique key per player, per save, per multiplayer session
+string dataPath = $"data/favoritesData/{Game1.player.Name}_{Constants.SaveFolderName}_{Game1.player.UniqueMultiplayerID}.json";
 
-| レイヤー | 技術 | 選定理由 | 備考 |
-|---------|------|---------|------|
-| フロントエンド | Next.js 14 | SSR対応、React経験あり | |
-| UIライブラリ | shadcn/ui + Tailwind | カスタマイズ性、軽量 | |
-| 状態管理 | TanStack Query + Zustand | 状態分離 | |
-| バックエンド | Node.js + Hono | TypeScript統一 | |
-| データベース | PostgreSQL | 関係データ、JSON対応 | Supabase |
-| ORM | Prisma | 型安全 | |
-| 認証 | NextAuth.js | OAuth対応 | |
-| インフラ | Vercel + Supabase | サーバーレス | |
-| CI/CD | GitHub Actions | GitHub統合 | |
-| テスト | Vitest + Playwright | 高速、E2E | |
-| モニタリング | Sentry | エラー監視 | |
+// Also valid for modData (always prefix with mod ID)
+Game1.player.modData[$"{ModId}/PlayerFlag"] = "true";
 ```
 
----
+**Audit Points:**
+- [ ] Save paths include player identifier AND save folder AND multiplayer ID
+- [ ] modData keys prefixed with mod's UniqueID
+- [ ] No assumptions that data paths are unique without proper keying
 
-## スキップ条件
+### 5. Location Iteration
 
-以下の場合**のみ**ヒアリングをスキップ：
+Use utilities that work for farmhands:
 
-1. ユーザーが選択肢「3. スキップ」を選択した場合
+```csharp
+// WRONG: Misses some locations for farmhands
+foreach (var loc in Game1.locations) { }
 
-> **注意**: 「要件定義書で定義済み」「既存コードベースあり」だけではスキップしない。
-> 必ずユーザーに確認サマリーを提示し、明示的な承認を得る。
+// CORRECT: Works for all players
+Utility.ForAllLocations(loc => {
+    // process location
+});
+```
+
+## Gamepad Audit Checklist
+
+### 1. ClickableComponent Navigation
+
+Every clickable element needs navigation IDs:
+
+```csharp
+var button = new ClickableComponent(bounds, "name");
+button.myID = 1001;                    // REQUIRED: Unique ID
+button.leftNeighborID = 1000;          // Left neighbor (or -99999 for none)
+button.rightNeighborID = 1002;         // Right neighbor
+button.upNeighborID = 900;             // Up neighbor
+button.downNeighborID = 1100;          // Down neighbor
+```
+
+**Audit Points:**
+- [ ] Every ClickableComponent has `myID` set
+- [ ] Every ClickableComponent has all four `neighborID`s set
+- [ ] IDs are unique within the menu
+- [ ] Navigation forms logical grid (no dead ends)
+- [ ] Use -99999 for "no neighbor" (not 0 or -1)
+
+### 2. Component List Population
+
+```csharp
+public override void populateClickableComponentList()
+{
+    base.populateClickableComponentList();
+    allClickableComponents.AddRange(labels);
+    allClickableComponents.AddRange(buttons);
+    allClickableComponents.AddRange(equipmentIcons);
+    // Add ALL clickable elements
+}
+```
+
+**Audit Points:**
+- [ ] `populateClickableComponentList()` adds all components
+- [ ] `snapToDefaultClickableComponent()` called after population
+- [ ] Components not added after initial setup (or list repopulated)
+
+### 3. Focus Management
+
+```csharp
+public override void snapToDefaultClickableComponent()
+{
+    base.snapToDefaultClickableComponent();
+    currentlySnappedComponent = getComponentWithID(defaultFocusId);
+    snapCursorToCurrentSnappedComponent();
+}
+```
+
+**Audit Points:**
+- [ ] Menu has a logical default focus element
+- [ ] Focus returns to sensible element after actions
+- [ ] Child menus properly handle focus transfer
+
+### 4. Button Hints
+
+For important actions, show controller button hints:
+
+```csharp
+// In draw():
+if (Game1.options.gamepadControls)
+{
+    // Draw A button hint next to action button
+    b.Draw(Game1.controllerMaps, position, sourceRect, Color.White);
+}
+```
+
+## Audit Output Format
+
+When running this audit, report findings as:
+
+```
+## Multiplayer Audit Results
+
+### Issues Found
+
+1. **PerScreen Missing** - `Managers/MenuManager.cs:45`
+   - Field `currentCategory` is static but not wrapped in PerScreen<T>
+   - Fix: Change to `private static readonly PerScreen<string> currentCategory = new();`
+
+2. **Mutex Not Released** - `Menus/WardrobeMenu.cs:312`
+   - `emergencyShutDown()` doesn't release mutex
+   - Fix: Add `dresserObject?.mutex?.ReleaseLock();`
+
+### Gamepad Navigation Issues
+
+1. **Missing neighborID** - `Menus/FavoritesMenu.cs:189`
+   - `deleteButton` has no `upNeighborID` set
+   - Fix: Add `deleteButton.upNeighborID = renameButton.myID;`
+
+### Passed Checks
+- [x] All PerScreen fields are readonly
+- [x] Context.IsWorldReady checks present in event handlers
+- [x] Save operations check Context.IsMainPlayer
+```
+
+## Quick Reference
+
+### Split-Screen Player Access
+```csharp
+// Current screen's value
+var current = perScreenField.Value;
+
+// Specific screen's value
+var screen0 = perScreenField.GetValueForScreen(0);
+
+// Current screen ID
+int screenId = Context.ScreenId;
+```
+
+### Common Navigation ID Ranges
+```csharp
+// Use ranges to organize IDs
+const int LABELS = 10000;
+const int BUTTONS = 20000;
+const int CATEGORIES = 30000;
+const int OUTFIT_CARDS = 40000;
+
+// Then: button.myID = BUTTONS + index;
+```
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
