@@ -1,351 +1,415 @@
 ---
-name: weaviate-connection
-description: Connect to local Weaviate vector database and verify connection health Use when this capability is needed.
+name: swiftui-development
+description: Master SwiftUI - Declarative UI, state management, animations, modern iOS development Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Weaviate Connection Skill
+# SwiftUI Development Skill
 
-This skill helps you connect to a **local Weaviate database** instance running in Docker and verify the connection is healthy.
+> Build modern, declarative iOS interfaces with SwiftUI
 
-## Important Note
+## Learning Objectives
 
-**This skill is designed for LOCAL Weaviate instances only.** Claude Desktop and Claude Web have network restrictions that prevent connections to external services like Weaviate Cloud.
+By completing this skill, you will:
+- Create declarative UIs with SwiftUI views
+- Master state management (@State, @Binding, @Observable)
+- Implement complex navigation with NavigationStack
+- Create fluid animations and transitions
+- Build production-ready SwiftUI applications
 
-**To use these skills, you must run Weaviate locally using Docker.** See the `weaviate-local-setup` skill first.
+## Prerequisites
 
-## Purpose
+| Requirement | Level |
+|-------------|-------|
+| iOS Fundamentals | Completed |
+| Swift | Intermediate |
+| Functional programming concepts | Basic |
 
-Establish and test connections to local Weaviate vector databases running on localhost.
+## Curriculum
 
-## When to Use This Skill
+### Module 1: SwiftUI Fundamentals (4 hours)
 
-- User wants to connect to their local Weaviate database
-- User needs to verify their Weaviate connection is working
-- User asks to check Weaviate health or status
-- After starting Weaviate with Docker
+**Topics:**
+- View protocol and body
+- ViewBuilder and composition
+- Modifiers and their order
+- @ViewBuilder for custom containers
+- Environment and preferences
 
-## Prerequisites Check
+**Code Examples:**
+```swift
+// Basic view composition
+struct ProfileView: View {
+    let user: User
 
-**BEFORE proceeding, Claude should verify:**
+    var body: some View {
+        VStack(spacing: 16) {
+            ProfileImage(url: user.avatarURL)
 
-1. **Python environment is set up** (from `weaviate-local-setup` skill)
-   - Virtual environment exists at `.venv/`
-   - Dependencies are installed
+            Text(user.name)
+                .font(.title)
+                .fontWeight(.bold)
 
-2. **Weaviate Docker container is running**
-   - Check with `docker ps | grep weaviate`
-   - If not running, guide user to start it
-
-3. **Environment file exists**
-   - `.env` file is present
-   - Has required variables set
-
-### Automated Prerequisites Check
-
-```python
-import subprocess
-import sys
-import os
-from pathlib import Path
-
-def check_prerequisites():
-    """Check all prerequisites before connecting to Weaviate"""
-    print("🔍 Checking prerequisites...\n")
-
-    all_checks_passed = True
-
-    # Check 1: Virtual environment
-    venv_path = Path(".venv")
-    if venv_path.exists():
-        print("✅ Virtual environment found")
-    else:
-        print("⚠️  No virtual environment found")
-        print("   Creating virtual environment...")
-        subprocess.run([sys.executable, "-m", "venv", ".venv"])
-        print("✅ Virtual environment created")
-
-    # Check 2: Dependencies
-    try:
-        import weaviate
-        from dotenv import load_dotenv
-        print("✅ Python dependencies installed")
-    except ImportError:
-        print("⚠️  Missing dependencies")
-        print("   Installing weaviate-client and python-dotenv...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q",
-                              "weaviate-client", "python-dotenv"])
-        print("✅ Dependencies installed")
-
-    # Check 3: Docker container
-    result = subprocess.run(["docker", "ps"], capture_output=True, text=True)
-    if "weaviate" in result.stdout:
-        print("✅ Weaviate Docker container is running")
-    else:
-        print("❌ Weaviate Docker container not found")
-        print("   Please start Weaviate first:")
-        print("   cd weaviate-local-setup && docker-compose up -d")
-        all_checks_passed = False
-
-    # Check 4: .env file
-    if Path(".env").exists():
-        print("✅ .env file found")
-    else:
-        print("⚠️  .env file not found")
-        print("   Creating .env from template...")
-        if Path(".env.example").exists():
-            import shutil
-            shutil.copy(".env.example", ".env")
-            print("✅ .env file created")
-            print("   Please edit .env and add your API keys if needed")
-        else:
-            print("❌ No .env.example found")
-            all_checks_passed = False
-
-    print("\n" + "="*50)
-    if all_checks_passed:
-        print("✅ All prerequisites met! Ready to connect.")
-    else:
-        print("❌ Some prerequisites missing. Please resolve them first.")
-    print("="*50 + "\n")
-
-    return all_checks_passed
-
-# Run the check
-if __name__ == "__main__":
-    check_prerequisites()
-```
-
-**Claude should run this check automatically when this skill is loaded.**
-
-## Requirements
-
-- Python 3.8+
-- weaviate-client library (`pip install weaviate-client`)
-- **Local Weaviate instance running in Docker** (see `weaviate-local-setup` skill)
-- Docker Desktop running
-
-## Connection Instructions
-
-### Step 1: Ensure Weaviate is Running Locally
-
-Before connecting, verify Weaviate Docker container is running:
-
-```bash
-# Check if Weaviate is running
-docker ps | grep weaviate
-
-# If not running, start it with docker-compose
-cd weaviate-local-setup
-docker-compose up -d
-
-# Verify Weaviate is ready
-curl http://localhost:8080/v1/.well-known/ready
-```
-
-### Step 2: Install Dependencies
-
-```bash
-pip install weaviate-client python-dotenv
-```
-
-### Step 3: Configure Environment Variables
-
-Update your `.env` file for local connection:
-
-```bash
-# .env file
-WEAVIATE_URL=localhost:8080
-WEAVIATE_API_KEY=  # Leave empty for local instances
-
-# Optional: Only needed if using these vectorizers
-OPENAI_API_KEY=your-openai-key
-COHERE_API_KEY=your-cohere-key
-```
-
-### Step 4: Create Connection Code
-
-**Basic Connection (Recommended):**
-
-```python
-import weaviate
-import os
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
-
-# Connect to local Weaviate
-client = weaviate.connect_to_local(
-    host="localhost",
-    port=8080,
-    grpc_port=50051
-)
-
-# Test the connection
-try:
-    # Check if client is ready
-    if client.is_ready():
-        print("✅ Connected to local Weaviate successfully!")
-
-        # Get cluster metadata
-        meta = client.get_meta()
-        print(f"📦 Weaviate version: {meta.get('version', 'unknown')}")
-
-        # List collections
-        collections = client.collections.list_all()
-        print(f"\n📚 Found {len(collections)} collections:")
-        for name, config in collections.items():
-            print(f"  - {name}")
-    else:
-        print("❌ Connection failed - Weaviate not ready")
-
-except Exception as e:
-    print(f"❌ Error connecting to Weaviate: {str(e)}")
-    print("\n💡 Make sure Weaviate is running:")
-    print("   docker ps | grep weaviate")
-
-finally:
-    # Always close the connection
-    client.close()
-```
-
-**Connection with API Headers (for OpenAI/Cohere vectorizers):**
-
-```python
-import weaviate
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-# Connect with API key headers
-client = weaviate.connect_to_local(
-    host="localhost",
-    port=8080,
-    grpc_port=50051,
-    headers={
-        "X-OpenAI-Api-Key": os.getenv("OPENAI_API_KEY"),  # Optional
-        "X-Cohere-Api-Key": os.getenv("COHERE_API_KEY")   # Optional
+            Text(user.bio)
+                .font(.body)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding()
     }
-)
+}
 
-try:
-    if client.is_ready():
-        print("✅ Connected to local Weaviate with API headers!")
+// Custom container with ViewBuilder
+struct Card<Content: View>: View {
+    let content: Content
 
-except Exception as e:
-    print(f"❌ Error: {str(e)}")
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
 
-finally:
-    client.close()
+    var body: some View {
+        content
+            .padding()
+            .background(.background)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .shadow(radius: 4)
+    }
+}
 ```
 
-### Step 5: Verify Connection Health
+**Checkpoint:** Build profile card component
 
-After connecting, check:
-- ✅ Client is ready (`client.is_ready()`)
-- ✅ Can retrieve metadata (`client.get_meta()`)
-- ✅ Can list collections (`client.collections.list_all()`)
+---
 
-## Best Practices
+### Module 2: State Management (6 hours)
 
-1. **Start Docker First**: Always ensure Weaviate container is running before connecting
-2. **Use Environment Variables**: Store configuration in `.env` file
-3. **Close Connections**: Always close the client when done to prevent memory leaks
-4. **Error Handling**: Wrap connection code in try/except blocks
-5. **Connection Reuse**: Keep one client instance per session, don't create multiple
-6. **Check Docker Status**: Use `docker ps` to verify Weaviate is running
+**Topics:**
+- @State for local state
+- @Binding for two-way binding
+- @StateObject vs @ObservedObject
+- @EnvironmentObject for shared state
+- @Observable (iOS 17+)
+- Combine integration
 
-## Common Issues
-
-### Issue: "Connection refused" or "Cannot connect to localhost:8080"
-**Solution**: Weaviate Docker container is not running
-```bash
-# Check if container is running
-docker ps | grep weaviate
-
-# Start Weaviate
-cd weaviate-local-setup
-docker-compose up -d
-
-# Wait 10-15 seconds for startup, then verify
-curl http://localhost:8080/v1/.well-known/ready
+**State Hierarchy:**
+```
+@State → Local, value type
+@Binding → Pass to child, two-way
+@StateObject → Own the object, create once
+@ObservedObject → Don't own, receive from parent
+@EnvironmentObject → Shared globally
+@Observable → Modern replacement (iOS 17+)
 ```
 
-### Issue: "Port 8080 already in use"
-**Solution**: Another service is using port 8080
-```bash
-# Find what's using port 8080
-lsof -i :8080
+**Modern Approach (iOS 17+):**
+```swift
+@Observable
+final class UserViewModel {
+    var user: User?
+    var isLoading = false
+    var error: Error?
 
-# Either stop that service, or modify docker-compose.yml to use a different port
-# Change ports: - "8081:8080" in docker-compose.yml
+    private let service: UserServiceProtocol
+
+    init(service: UserServiceProtocol = UserService()) {
+        self.service = service
+    }
+
+    func loadUser() async {
+        isLoading = true
+        defer { isLoading = false }
+
+        do {
+            user = try await service.fetchCurrentUser()
+        } catch {
+            self.error = error
+        }
+    }
+}
+
+struct UserView: View {
+    @State private var viewModel = UserViewModel()
+
+    var body: some View {
+        Group {
+            if viewModel.isLoading {
+                ProgressView()
+            } else if let user = viewModel.user {
+                UserContent(user: user)
+            }
+        }
+        .task {
+            await viewModel.loadUser()
+        }
+    }
+}
 ```
 
-### Issue: "Docker daemon not running"
-**Solution**: Start Docker Desktop application
+**Checkpoint:** Build stateful form with validation
 
-### Issue: "Module not found: weaviate"
-**Solution**: Install the client library
-```bash
-pip install weaviate-client
+---
+
+### Module 3: Navigation (5 hours)
+
+**Topics:**
+- NavigationStack (iOS 16+)
+- NavigationPath for programmatic navigation
+- NavigationSplitView for iPad
+- Sheet, fullScreenCover, alert
+- Deep linking with URL schemes
+
+**Navigation Stack:**
+```swift
+enum Route: Hashable {
+    case profile(userId: String)
+    case settings
+    case detail(item: Item)
+}
+
+struct ContentView: View {
+    @State private var path = NavigationPath()
+
+    var body: some View {
+        NavigationStack(path: $path) {
+            HomeView(navigate: navigate)
+                .navigationDestination(for: Route.self) { route in
+                    switch route {
+                    case .profile(let userId):
+                        ProfileView(userId: userId)
+                    case .settings:
+                        SettingsView()
+                    case .detail(let item):
+                        DetailView(item: item)
+                    }
+                }
+        }
+    }
+
+    private func navigate(to route: Route) {
+        path.append(route)
+    }
+
+    private func popToRoot() {
+        path.removeLast(path.count)
+    }
+}
 ```
 
-## Environment Variables Template
+**Checkpoint:** Build multi-screen navigation flow
 
-```bash
-# .env file for LOCAL Weaviate
-WEAVIATE_URL=localhost:8080
-WEAVIATE_API_KEY=  # Leave empty for local
+---
 
-# Optional vectorizer API keys
-OPENAI_API_KEY=your-openai-key
-COHERE_API_KEY=your-cohere-key
-ANTHROPIC_API_KEY=your-anthropic-key
+### Module 4: Lists & Grids (4 hours)
+
+**Topics:**
+- List and ForEach
+- LazyVStack and LazyVGrid
+- Swipe actions and context menus
+- Searchable modifier
+- Pull-to-refresh
+
+**Grid Layout:**
+```swift
+struct PhotoGrid: View {
+    let photos: [Photo]
+
+    private let columns = [
+        GridItem(.adaptive(minimum: 100, maximum: 150), spacing: 8)
+    ]
+
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 8) {
+                ForEach(photos) { photo in
+                    AsyncImage(url: photo.thumbnailURL) { phase in
+                        switch phase {
+                        case .empty:
+                            Rectangle()
+                                .fill(.quaternary)
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        case .failure:
+                            Image(systemName: "photo")
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }
+                    .frame(height: 100)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
+            }
+            .padding()
+        }
+    }
+}
 ```
 
-## Quick Test Script
+**Checkpoint:** Build searchable photo grid
 
-Save this as `test_connection.py`:
+---
 
-```python
-import weaviate
+### Module 5: Animations (4 hours)
 
-# Connect to local Weaviate
-client = weaviate.connect_to_local()
+**Topics:**
+- Implicit animations (.animation)
+- Explicit animations (withAnimation)
+- Transitions
+- matchedGeometryEffect
+- Phase animator (iOS 17+)
 
-try:
-    if client.is_ready():
-        print("✅ Connected successfully!")
-        meta = client.get_meta()
-        print(f"📦 Version: {meta.get('version')}")
-    else:
-        print("❌ Not ready")
-except Exception as e:
-    print(f"❌ Error: {e}")
-finally:
-    client.close()
+**Animation Examples:**
+```swift
+// Implicit animation
+struct ExpandableCard: View {
+    @State private var isExpanded = false
+
+    var body: some View {
+        VStack {
+            Text("Title")
+                .font(.headline)
+
+            if isExpanded {
+                Text("Detailed content here...")
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(.background)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .onTapGesture {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                isExpanded.toggle()
+            }
+        }
+    }
+}
+
+// Matched geometry effect
+struct CardTransition: View {
+    @Namespace private var animation
+    @State private var selectedCard: Card?
+
+    var body: some View {
+        ZStack {
+            if let card = selectedCard {
+                DetailView(card: card)
+                    .matchedGeometryEffect(id: card.id, in: animation)
+                    .onTapGesture { selectedCard = nil }
+            } else {
+                LazyVGrid(columns: columns) {
+                    ForEach(cards) { card in
+                        CardView(card: card)
+                            .matchedGeometryEffect(id: card.id, in: animation)
+                            .onTapGesture { selectedCard = card }
+                    }
+                }
+            }
+        }
+        .animation(.spring(response: 0.5), value: selectedCard)
+    }
+}
 ```
 
-Run it:
-```bash
-python test_connection.py
+**Checkpoint:** Create hero animation transition
+
+---
+
+### Module 6: Custom Modifiers & Styles (3 hours)
+
+**Topics:**
+- ViewModifier protocol
+- ButtonStyle, LabelStyle
+- Custom environment values
+- Preference keys
+- View extensions
+
+**Custom Modifier:**
+```swift
+struct CardStyle: ViewModifier {
+    let isHighlighted: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .background(.background)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .shadow(
+                color: isHighlighted ? .accentColor.opacity(0.3) : .black.opacity(0.1),
+                radius: isHighlighted ? 8 : 4
+            )
+            .overlay {
+                if isHighlighted {
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(.accent, lineWidth: 2)
+                }
+            }
+    }
+}
+
+extension View {
+    func cardStyle(isHighlighted: Bool = false) -> some View {
+        modifier(CardStyle(isHighlighted: isHighlighted))
+    }
+}
+
+// Usage
+Text("Content")
+    .cardStyle(isHighlighted: true)
 ```
 
-## Next Steps
+**Checkpoint:** Build custom button style library
 
-After establishing connection:
-- Use **weaviate-collection-manager** skill to create and manage collections
-- Use **weaviate-data-ingestion** skill to add data to collections
-- Use **weaviate-query-agent** skill to search and retrieve data
+---
 
-## Additional Resources
+## Assessment Criteria
 
-- [Weaviate Python Client Docs](https://weaviate.io/developers/weaviate/client-libraries/python)
-- [Weaviate Docker Installation](https://weaviate.io/developers/weaviate/installation/docker-compose)
-- [Local Weaviate Setup Guide](../weaviate-local-setup/SKILL.md)
+| Criteria | Weight |
+|----------|--------|
+| View composition | 25% |
+| State management | 30% |
+| Navigation | 20% |
+| Animation quality | 15% |
+| Code organization | 10% |
+
+## Common Mistakes
+
+1. **@StateObject vs @ObservedObject** → Use @StateObject for creation
+2. **ForEach without id** → Always use identifiable items
+3. **Nested NavigationStack** → Only one per hierarchy
+4. **Heavy body computation** → Extract to computed properties
+5. **Missing .animation value** → Always specify animation trigger
+
+## Debugging Tips
+
+```swift
+// Debug view updates
+var body: some View {
+    let _ = Self._printChanges()
+    // Your view...
+}
+
+// Debug layout
+view.border(.red) // Visual bounds
+```
+
+## Resources
+
+### Official Documentation
+- [SwiftUI Documentation](https://developer.apple.com/documentation/swiftui)
+- [SwiftUI Tutorials](https://developer.apple.com/tutorials/swiftui)
+- [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/)
+
+## Skill Validation
+
+Complete these projects:
+1. **Component Library**: 10 reusable SwiftUI components
+2. **Stateful App**: Todo app with persistence
+3. **Navigation Demo**: Deep-linkable multi-screen app
+4. **Animation Showcase**: Hero transitions and gestures
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
