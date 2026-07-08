@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [guqiong96/Lsglang](https://github.com/guqiong96/Lsglang/tree/main/.claude/skills/sglang-cherrypick/SKILL.md)
+Original source: [guqiong96/Lsglang](https://github.com/guqiong96/Lsglang/tree/main/.claude/skills/speculative-naming/SKILL.md)
 
 ---
 
