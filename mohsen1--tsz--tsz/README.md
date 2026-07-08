@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [mohsen1/tsz](https://github.com/mohsen1/tsz/tree/main/.agents/skills/tsz-pr-coordination/SKILL.md)
+Original source: [mohsen1/tsz](https://github.com/mohsen1/tsz/tree/main/.agents/skills/tsz-iteration-audit/SKILL.md)
 
 ---
 
