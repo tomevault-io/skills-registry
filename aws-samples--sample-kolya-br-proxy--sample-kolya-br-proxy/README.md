@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aws-samples/sample-kolya-br-proxy](https://github.com/aws-samples/sample-kolya-br-proxy/tree/main/.claude/skills/gitnexus/gitnexus-cli/SKILL.md)
+Original source: [aws-samples/sample-kolya-br-proxy](https://github.com/aws-samples/sample-kolya-br-proxy/tree/main/.claude/skills/gitnexus/gitnexus-guide/SKILL.md)
 
 ---
 
