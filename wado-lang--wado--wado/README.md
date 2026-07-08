@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [wado-lang/wado](https://github.com/wado-lang/wado/tree/main/.claude/skills/pull-request/SKILL.md)
+Original source: [wado-lang/wado](https://github.com/wado-lang/wado/tree/main/.claude/skills/optimizer-debug/SKILL.md)
 
 ---
 
