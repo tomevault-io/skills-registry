@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stevehuang0115/crewly](https://github.com/stevehuang0115/crewly/tree/main/config/skills/orchestrator/credential-manager/SKILL.md)
+Original source: [stevehuang0115/crewly](https://github.com/stevehuang0115/crewly/tree/main/config/skills/orchestrator/wiki-process-queue/SKILL.md)
 
 ---
 
