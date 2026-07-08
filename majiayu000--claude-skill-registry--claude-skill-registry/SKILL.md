@@ -1,371 +1,594 @@
 ---
-name: writing-vitest-tests
-description: Write Vitest tests with describe/test blocks, expect assertions, vi mocking, async testing, and parameterized tests. Use when creating or modifying test files. Use when this capability is needed.
+name: vidiq-metadata-skill
+description: Collects vidIQ data via guided copy-paste workflow and generates metadata.md with optimized YouTube title, description, tags, and hashtags. Use after script generation or when preparing video for upload. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Writing Vitest Tests
+# vidIQ Metadata Collection Skill
 
-This skill teaches test structure and patterns for writing effective Vitest tests.
+## Overview
 
-## Quick Start
+This skill guides you through collecting vidIQ data via a structured copy-paste workflow (since vidIQ requires authentication) and generates a complete `metadata.md` file ready for YouTube upload.
 
-### Basic Test
+**Key Features:**
+- Step-by-step vidIQ data collection with parseable formats
+- Graceful fallbacks when vidIQ data is unavailable
+- Generates YouTube-ready metadata (title, description, tags, hashtags)
+- Integrates with existing script workflow
 
-```typescript
-import { test, expect } from 'vitest';
+---
 
-test('adds numbers correctly', () => {
-  expect(1 + 2).toBe(3);
-});
+## When to Use
+
+Triggers:
+- "generate metadata"
+- "create metadata"
+- "vidiq metadata"
+- "prepare for upload"
+- After script generation as part of `/video-research` or `/full-video-workflow`
+- User says "I'm ready to upload"
+
+---
+
+## Step 1: Check for Existing Context
+
+First, check if there's already a script or project context:
+
+```
+Do you have a video script ready, or should we start from scratch?
+
+Options:
+1. I have a script in [project folder] - use that
+2. I'll paste my script/topic now
+3. Just help me with vidIQ keywords (no script yet)
 ```
 
-### Test Suite
+If script exists, extract:
+- Video title (from script header)
+- Primary keywords (from SEO section)
+- Key topics covered
+- Target audience
 
-```typescript
-import { describe, test, expect } from 'vitest';
+---
 
-describe('Math utilities', () => {
-  test('adds numbers', () => {
-    expect(1 + 2).toBe(3);
-  });
+## Step 2: vidIQ Keyword Data Collection
 
-  test('subtracts numbers', () => {
-    expect(5 - 2).toBe(3);
-  });
-});
+### 2a. Keywords Tool Request
+
+Present this structured request to the user:
+
+```
+## vidIQ Keyword Check
+
+Please do the following:
+
+1. Go to: https://app.vidiq.com → Keywords Tool (or use the Chrome extension)
+2. Search for these terms (one at a time):
+
+   PRIMARY: "[main topic keyword]"
+   ALT 1: "[alternative keyword 1]"
+   ALT 2: "[alternative keyword 2]"
+
+3. For EACH keyword, copy-paste this format back to me:
+
+---
+KEYWORD: [the keyword you searched]
+SCORE: [vidIQ score 0-100]
+VOLUME: [monthly search volume, e.g., "12K"]
+COMPETITION: [Low/Medium/High]
+TREND: [Rising/Stable/Declining]
+RELATED: [top 5 related keywords, comma-separated]
+---
+
+Take your time - I'll wait for each one, or you can paste all at once.
+
+(Type "skip vidiq" if you want to proceed without keyword data)
 ```
 
-For complete test organization patterns, see [references/test-organization.md](./references/test-organization.md)
+### 2b. Parse User Response
 
-## Essential Assertions
+When user pastes data, parse into structured format:
 
-### Basic Matchers
+```javascript
+// Expected format from user:
+KEYWORD: claude code tutorial
+SCORE: 67
+VOLUME: 12K
+COMPETITION: Medium
+TREND: Rising
+RELATED: claude ai, anthropic claude, ai coding, claude code setup, cursor vs claude
 
-```typescript
-expect(value).toBe(expected);
-expect(value).toEqual(expected);
-expect(value).toBeTruthy();
-expect(value).toBeFalsy();
+// Parse into:
+{
+  keyword: "claude code tutorial",
+  score: 67,
+  volume: "12K",
+  competition: "Medium",
+  trend: "Rising",
+  related: ["claude ai", "anthropic claude", "ai coding", "claude code setup", "cursor vs claude"]
+}
 ```
 
-### Arrays and Objects
+### 2c. Handle Partial/Failed Data
 
-```typescript
-expect(array).toContain(item);
-expect(array).toHaveLength(3);
-expect(object).toHaveProperty('key');
-expect(object).toMatchObject({ key: 'value' });
+If user provides incomplete data or skips:
+
+```
+No problem! I'll generate metadata based on:
+- Your script content
+- Best practices for your niche
+- Related keywords I can infer
+
+Note: vidIQ validation is recommended before upload for best results.
 ```
 
-### Strings and Numbers
+---
 
-```typescript
-expect(string).toMatch(/pattern/);
-expect(number).toBeGreaterThan(3);
-expect(number).toBeCloseTo(0.3, 5);
+## Step 3: Title Optimization Request
+
+### 3a. Request Title Score
+
+```
+## Title Optimization
+
+Please check your title in vidIQ:
+
+1. Go to: https://app.vidiq.com → AI Title Generator (or paste in extension)
+2. Enter your draft title: "[current title from script]"
+3. Copy-paste the feedback:
+
+---
+TITLE TESTED: [your title]
+SCORE: [0-100]
+SUGGESTED TITLES:
+1. [suggestion 1]
+2. [suggestion 2]
+3. [suggestion 3]
+FEEDBACK: [any notes vidIQ provides]
+---
+
+(Type "skip title check" to use current title)
 ```
 
-For complete assertion API, see [references/assertions.md](./references/assertions.md)
+### 3b. Process Title Feedback
 
-## Mocking with vi
+If user provides vidIQ title feedback:
+- Compare scores of original vs suggested
+- Recommend best option
+- Explain trade-offs (keyword placement vs curiosity)
 
-### Mock Functions
+---
 
-```typescript
-import { vi, test, expect } from 'vitest';
+## Step 4: Description & Tags Generation
 
-test('calls callback', () => {
-  const callback = vi.fn();
+### 4a. Ask for Description Preferences
 
-  callback('arg1', 'arg2');
+```
+## Description Style
 
-  expect(callback).toHaveBeenCalledWith('arg1', 'arg2');
-  expect(callback).toHaveBeenCalledTimes(1);
-});
+Which description format do you prefer?
+
+1. **SEO-Heavy** - Front-load keywords, comprehensive links (Recommended for tutorials)
+2. **Story-Driven** - Narrative hook, then details
+3. **Minimal** - Short and clean, just essentials
+4. **Custom** - I'll paste my template
+
+Also, should I include:
+- [ ] Timestamps (if script has clear sections)
+- [ ] Links section (social, resources)
+- [ ] Related videos section
+- [ ] Affiliate disclosure (if applicable)
 ```
 
-### Mock Return Values
+### 4b. Request Tag Suggestions from vidIQ
 
-```typescript
-const mockFn = vi.fn();
-mockFn.mockReturnValue('result');
+```
+## Tag Optimization
 
-expect(mockFn()).toBe('result');
+For best tags, check vidIQ:
+
+1. Go to: vidIQ extension on any YouTube video in your niche
+2. Look at "Tags" section for top competitors
+3. Or use vidIQ's Tag suggestions tool
+
+Paste back top 10-15 tags you found:
+
+---
+TAGS: tag1, tag2, tag3, tag4, tag5, ...
+---
+
+(Type "generate tags" for me to create them from keywords)
 ```
 
-### Mock Implementation
+---
 
-```typescript
-const mockFn = vi.fn();
-mockFn.mockImplementation((a, b) => a + b);
+## Step 5: Generate metadata.md
 
-expect(mockFn(1, 2)).toBe(3);
+Based on collected data (or fallbacks), generate:
+
+```markdown
+# [Video Title] - YouTube Metadata
+
+**Generated:** [Date]
+**Status:** Ready for Upload
+**vidIQ Data:** [Complete/Partial/Skipped]
+
+---
+
+## TITLE
+
+### Recommended Title
+**"[Best title based on vidIQ + script]"**
+
+| Metric | Value |
+|--------|-------|
+| Character Count | XX/100 |
+| Primary Keyword | [keyword] at position [X] |
+| vidIQ Score | [XX/100 or "Not checked"] |
+
+### Alternative Titles
+1. "[Alt 1]" - [Why this works]
+2. "[Alt 2]" - [Why this works]
+3. "[Alt 3]" - [Why this works]
+
+---
+
+## DESCRIPTION
+
+### Ready-to-Copy Description
+
+```
+[First 150 characters - this appears in search, include primary keyword]
+
+[Main description body - 2-3 paragraphs]
+
+⏱️ TIMESTAMPS
+0:00 - Intro
+[XX:XX] - [Section 1]
+[XX:XX] - [Section 2]
+[XX:XX] - [Section 3]
+[XX:XX] - Conclusion
+
+🔗 LINKS & RESOURCES
+[Resource 1]: [URL]
+[Resource 2]: [URL]
+
+📱 CONNECT
+Twitter: @[handle]
+GitHub: [link]
+Website: [link]
+
+🎬 RELATED VIDEOS
+[Video 1]: [URL]
+[Video 2]: [URL]
+
+#[hashtag1] #[hashtag2] #[hashtag3]
 ```
 
-For testing runtime type validation with Zod, use the using-runtime-checks skill for patterns on schema validation, error handling, and type inference.
+### Description Stats
+- Character count: [XXX]/5000
+- Primary keyword appears: [X] times
+- Links included: [X]
+- Hashtags: [X] (max 3 in description, more in tags)
 
-### Mock Promises
+---
 
-```typescript
-const mockFn = vi.fn();
-mockFn.mockResolvedValue('data');
+## TAGS
 
-const result = await mockFn();
-expect(result).toBe('data');
+### Primary Tags (Use These First)
+```
+[primary keyword], [variation 1], [variation 2], [brand name], [tool name]
 ```
 
-For testing code that validates external data with Zod, use the validating-external-data skill for patterns on API response validation, error handling, and type-safe validation flows.
-
-For complete mocking patterns, see [references/mocking.md](./references/mocking.md)
-
-## Module Mocking
-
-### Basic Module Mock
-
-```typescript
-vi.mock('./module', () => ({
-  method: vi.fn(),
-  constant: 'mocked',
-}));
+### Secondary Tags
+```
+[related topic 1], [related topic 2], [broader category], [audience term]
 ```
 
-### Partial Module Mock
-
-```typescript
-vi.mock(import('./module'), async (importOriginal) => {
-  const mod = await importOriginal();
-  return {
-    ...mod,
-    specificMethod: vi.fn(),
-  };
-});
+### Long-Tail Tags
+```
+[specific phrase 1], [specific phrase 2], [question format]
 ```
 
-For testing Zod validation of database inputs in Vitest, use the validating-query-inputs skill for patterns on Zod schema validation before Prisma operations.
-
-## Async Testing
-
-### Async/Await
-
-```typescript
-test('fetches data', async () => {
-  const data = await fetchData();
-  expect(data).toBeDefined();
-});
+### Full Tag String (Copy-Paste Ready)
+```
+[all tags comma-separated, 500 char limit]
 ```
 
-### Promise Assertions
+**Tag Stats:**
+- Total tags: [X]
+- Character count: [XXX]/500
+- Primary keyword included: ✓/✗
 
-```typescript
-test('promise resolves', async () => {
-  await expect(fetchData()).resolves.toBe('data');
-});
+---
 
-test('promise rejects', async () => {
-  await expect(fetchBadData()).rejects.toThrow('error');
-});
+## HASHTAGS
+
+### For Description (Max 3)
+#[main] #[secondary] #[tertiary]
+
+### For Shorts (If Applicable)
+#Shorts #[topic] #[tool]
+
+---
+
+## THUMBNAIL NOTES
+
+Based on competitor analysis and niche best practices:
+
+**Recommended Elements:**
+- [ ] Face with [expression] emotion
+- [ ] Bold text: "[suggested text]"
+- [ ] Color scheme: [colors]
+- [ ] Background: [suggestion]
+
+**Text Overlay Suggestions:**
+1. "[Short punchy text]"
+2. "[Alternative]"
+3. "[Alternative]"
+
+---
+
+## PRE-UPLOAD CHECKLIST
+
+- [ ] Title copied to YouTube
+- [ ] Description copied to YouTube
+- [ ] Tags copied to YouTube
+- [ ] Thumbnail uploaded
+- [ ] End screen added
+- [ ] Cards added (if applicable)
+- [ ] Playlist assigned
+- [ ] Premiere/Schedule set (if applicable)
+- [ ] Visibility set (Public/Unlisted/Private)
+- [ ] Comments enabled
+- [ ] Age restriction: No (unless needed)
+- [ ] Paid promotion: No (unless applicable)
+
+---
+
+## VIDIQ DATA LOG
+
+### Keywords Checked
+| Keyword | Score | Volume | Competition | Trend |
+|---------|-------|--------|-------------|-------|
+| [kw1] | [X] | [X] | [X] | [X] |
+| [kw2] | [X] | [X] | [X] | [X] |
+| [kw3] | [X] | [X] | [X] | [X] |
+
+### Title Check
+- Original: "[title]" - Score: [X]
+- vidIQ Suggested: "[title]" - Score: [X]
+- **Selected:** "[final title]"
+
+### Data Collection Status
+- [x] Keywords checked
+- [x] Title optimized
+- [x] Tags generated
+- [x] Description written
+- [ ] Thumbnail reviewed
+
+---
+
+## NOTES
+
+[Any additional notes, special considerations, or reminders]
 ```
 
-## Parameterized Tests
+---
 
-### test.each with Arrays
+## Step 6: Save and Summarize
 
-```typescript
-test.each([
-  [1, 1, 2],
-  [1, 2, 3],
-  [2, 1, 3],
-])('add(%i, %i) -> %i', (a, b, expected) => {
-  expect(a + b).toBe(expected);
-});
+Save to: `~/YT/[Project]/01_Script/metadata.md`
+
+Present summary:
+
+```
+## Metadata Generated!
+
+**Saved to:** ~/YT/[Project]/01_Script/metadata.md
+
+### Quick Stats
+- Title: "[title]" (XX chars, vidIQ score: XX)
+- Description: XXX characters
+- Tags: XX tags (XXX/500 chars)
+- Hashtags: #tag1 #tag2 #tag3
+
+### vidIQ Data Used
+- Keywords: [X] checked
+- Title optimized: Yes/No
+- Tags from vidIQ: Yes/No
+
+### Ready for Upload?
+All sections are copy-paste ready. Open metadata.md and copy each section to YouTube Studio.
+
+### Optional Next Steps
+1. Get vidIQ AI review of full package
+2. Create thumbnail in Canva
+3. Schedule upload time
 ```
 
-### test.each with Objects
+---
 
-```typescript
-test.each([
-  { a: 1, b: 1, expected: 2 },
-  { a: 1, b: 2, expected: 3 },
-  { a: 2, b: 1, expected: 3 },
-])('$a + $b should equal $expected', ({ a, b, expected }) => {
-  expect(a + b).toBe(expected);
-});
+## Fallback Mode (No vidIQ Data)
+
+If user skips all vidIQ steps or data collection fails:
+
+```
+## Generating Metadata Without vidIQ
+
+I'll create metadata based on:
+✓ Your script content
+✓ Best practices for [niche] content
+✓ Keyword patterns from your topic
+
+**Recommendations:**
+- Before uploading, spend 2 minutes in vidIQ to verify:
+  - Primary keyword score
+  - Title score
+  - Tag suggestions
+
+This ensures your video is discoverable.
+
+Proceeding with best-effort metadata...
 ```
 
-For testing Zod schema validation in Vitest, use the testing-zod-schemas skill for patterns testing validation logic, error messages, and transformations.
+Generate metadata using:
+1. Keywords extracted from script headers and content
+2. Standard YouTube SEO patterns
+3. Niche-specific best practices from CLAUDE.md
 
-## Lifecycle Hooks
-
-```typescript
-import { describe, test, beforeEach, afterEach, beforeAll, afterAll } from 'vitest';
-
-describe('User service', () => {
-  beforeAll(() => {
-  });
-
-  afterAll(() => {
-  });
-
-  beforeEach(() => {
-  });
-
-  afterEach(() => {
-  });
-
-  test('creates user', () => {
-  });
-});
+Mark in metadata.md:
+```
+**vidIQ Data:** Skipped (recommend validation before upload)
 ```
 
-## Test Modifiers
+---
 
-```typescript
-test.skip('skipped test', () => {});
-test.only('run only this test', () => {});
-test.todo('implement later');
-test.fails('should fail', () => {});
-test.concurrent('runs in parallel', async () => {});
+## Integration Points
+
+### With /video-research and /full-video-workflow
+
+After script generation, prompt:
+```
+Script complete! Would you like me to:
+
+1. Generate YouTube metadata now (title, description, tags)
+2. Skip metadata for now
+3. Just do a quick vidIQ keyword check
+
+Generating metadata takes ~5 minutes and includes a vidIQ validation step.
 ```
 
-For testing Server Actions in isolation with Vitest, use the testing-server-actions skill for patterns on mocking authentication, database, and form data.
+### With /new-youtube-video
 
-For testing form validation in React components with Vitest, use the validating-forms skill for patterns on form validation, useActionState, and error handling.
+Add metadata generation as final step option.
 
-## Timer Mocking
+### Standalone Usage
 
-### Fake Timers
-
-```typescript
-import { vi } from 'vitest';
-
-vi.useFakeTimers();
-
-const callback = vi.fn();
-setTimeout(callback, 1000);
-
-vi.advanceTimersByTime(1000);
-expect(callback).toHaveBeenCalled();
-
-vi.useRealTimers();
+User can invoke directly:
+```
+User: "generate metadata for my [Video Name] project"
+Claude: [Reads script, initiates vidIQ workflow]
 ```
 
-### Date Mocking
+---
 
-```typescript
-vi.setSystemTime(new Date(2022, 0, 1));
+## Error Handling
 
-expect(Date.now()).toBe(new Date(2022, 0, 1).getTime());
+### User Provides Malformed Data
+```
+I couldn't parse that format. Could you try again with this template?
 
-vi.useRealTimers();
+KEYWORD: [keyword]
+SCORE: [number]
+VOLUME: [number with K/M]
+COMPETITION: [Low/Medium/High]
 ```
 
-## Snapshot Testing
+### vidIQ Site Changed/Unavailable
+```
+Looks like vidIQ might have changed their interface. No worries!
 
-```typescript
-test('matches snapshot', () => {
-  const result = generateOutput();
-  expect(result).toMatchSnapshot();
-});
+Let's try this instead:
+1. Use the vidIQ Chrome extension on YouTube
+2. Search for your keyword in YouTube search
+3. Look at the vidIQ overlay for scores
+
+Or just tell me what data you can see and I'll work with it.
 ```
 
-**Update snapshots:** `vitest -u`
+### User Gets Frustrated
+```
+Totally understand - let's skip the detailed vidIQ steps.
 
-## Error Testing
+I'll generate solid metadata based on your script.
+You can always fine-tune in YouTube Studio later.
 
-```typescript
-test('throws error', () => {
-  expect(() => {
-    throw new Error('failed');
-  }).toThrow('failed');
-});
-
-test('async throws', async () => {
-  await expect(async () => {
-    throw new Error('failed');
-  }).rejects.toThrow('failed');
-});
+Proceeding...
 ```
 
-## Fixtures
+---
 
-```typescript
-import { test as baseTest } from 'vitest';
+## Example Interaction
 
-const test = baseTest.extend({
-  todos: async ({}, use) => {
-    const todos = [];
-    await use(todos);
-    todos.length = 0;
-  },
-});
+**User:** "generate metadata"
 
-test('adds item', ({ todos }) => {
-  todos.push('item');
-  expect(todos).toHaveLength(1);
-});
+**Claude:** "Let me help you create optimized YouTube metadata.
+
+First, which project is this for?
+1. [Lists recent projects in Ideas/In Progress]
+2. I'll paste my script/topic"
+
+**User:** "Claude Code Speed Run video"
+
+**Claude:** "Found it! I see your script in ~/YT/Ideas/Claude Code Speed Run.../
+
+Let me extract the key info...
+
+**From your script:**
+- Primary keyword: claude code tutorial (95K volume)
+- Title: "Claude Code Speedrun: 4 Features to 10x Your Speed"
+- Topics: Hooks, Skills, Sub-agents, UltraThink + LSP
+
+Now let's validate with vidIQ:
+
+## vidIQ Keyword Check
+
+Please do the following:
+
+1. Go to: https://app.vidiq.com → Keywords Tool
+2. Search: "claude code tutorial"
+3. Paste back:
+
+---
+KEYWORD: claude code tutorial
+SCORE:
+VOLUME:
+COMPETITION:
+TREND:
+RELATED:
+---"
+
+**User:**
+```
+KEYWORD: claude code tutorial
+SCORE: 67
+VOLUME: 95K
+COMPETITION: Medium
+TREND: Rising
+RELATED: claude ai coding, anthropic claude, cursor vs claude, claude code setup, ai coding assistant
 ```
 
-For testing custom React hooks with Vitest, use the testing-hooks skill for renderHook patterns and hook-specific assertions.
+**Claude:** "Got it! Score of 67 is good. Let me check the title...
 
-## Mock Cleanup
+## Title Check
 
-### Per-Test Cleanup
+Please test your title in vidIQ:
 
-```typescript
-import { afterEach, vi } from 'vitest';
+1. Go to vidIQ → AI Title or extension
+2. Test: 'Claude Code Speedrun: 4 Features to 10x Your Speed'
+3. Paste back the score and suggestions"
 
-afterEach(() => {
-  vi.restoreAllMocks();
-});
-```
+**User:** "skip title check"
 
-### Config-Based Cleanup
+**Claude:** "No problem - your current title looks strong.
 
-```typescript
-export default defineConfig({
-  test: {
-    restoreMocks: true,
-    clearMocks: true,
-  },
-});
-```
+Generating metadata.md now...
 
-## Component Testing
+[Creates and saves metadata.md]
 
-For testing React 19 components with Vitest browser mode, use the testing-components skill for patterns using @testing-library/react and handling useActionState, Server Actions, and React 19 hooks.
+## Metadata Complete!
 
-## Best Practices
+**Saved to:** ~/YT/Ideas/Claude Code Speed Run.../01_Script/metadata.md
 
-1. **One assertion per test**: Keep tests focused
-2. **Descriptive test names**: Explain what is being tested
-3. **AAA pattern**: Arrange, Act, Assert
-4. **Clean up mocks**: Restore after each test
-5. **Test behavior, not implementation**: Focus on public API
-6. **Avoid test interdependence**: Tests should run independently
-7. **Use fixtures for shared setup**: Reduce duplication
+**Summary:**
+- Title: "Claude Code Speedrun: 4 Features to 10x Your Speed" (52 chars)
+- Primary keyword: claude code tutorial (Score: 67, 95K volume)
+- Tags: 15 tags generated (487/500 chars)
+- Description: 1,847 characters with timestamps
 
-## Common Mistakes
-
-1. **Not awaiting async operations**: Use `async/await`
-2. **Not cleaning up mocks**: Use `afterEach` or config options
-3. **Testing implementation details**: Test public behavior
-4. **Overly complex tests**: Break into smaller tests
-5. **Not using parameterized tests**: Reduce duplication
-
-## References
-
-For detailed testing patterns:
-- [Test Organization](./references/test-organization.md) - Structure, hooks, fixtures, patterns
-- [Assertions](./references/assertions.md) - Complete matcher API reference
-- [Mocking](./references/mocking.md) - vi, modules, timers, globals
-
-For configuration options, see `@vitest-4/skills/configuring-vitest-4`
-
-For browser testing, see `@vitest-4/skills/using-browser-mode`
-
-For complete API reference, see `@vitest-4/knowledge/vitest-4-comprehensive.md`
+Ready for upload! Open metadata.md to copy each section to YouTube Studio."
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
