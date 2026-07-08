@@ -1,231 +1,131 @@
 ---
-name: tonic-grpc
-description: gRPC framework for Rust built on Tokio and Tower. Use when this capability is needed.
+name: s-lint
+description: > Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Tonic gRPC Standards
+# Linting WoW Addons
 
-## Proto Definition
+Expert guidance for code quality and formatting in WoW addon development.
 
-```protobuf
-// proto/hello.proto
-syntax = "proto3";
-package hello;
+## Related Commands
 
-service Greeter {
-    rpc SayHello (HelloRequest) returns (HelloReply);
-    rpc SayHelloStream (HelloRequest) returns (stream HelloReply);
+- [c-lint](../../commands/c-lint.md) - Lint and format workflow
+- [c-review](../../commands/c-review.md) - Full code review (includes lint step)
+- [c-clean](../../commands/c-clean.md) - Cleanup workflow (dead code, stale docs)
+
+## MCP Tools
+
+| Task | MCP Tool |
+|------|----------|
+| Lint Addon | `addon.lint(addon="MyAddon")` |
+| Format Addon | `addon.format(addon="MyAddon")` |
+| Check Format Only | `addon.format(addon="MyAddon", check=true)` |
+| Security Analysis | `addon.security(addon="MyAddon")` |
+| Complexity Analysis | `addon.complexity(addon="MyAddon")` |
+
+## Capabilities
+
+1. **Luacheck Linting** — Detect syntax errors, undefined globals, unused variables
+2. **StyLua Formatting** — Consistent code style across all files
+3. **Error Resolution** — Fix common linting issues systematically
+4. **Security Analysis** — Detect combat lockdown violations, secret leaks, taint risks
+5. **Complexity Analysis** — Find deep nesting, long functions, magic numbers
+6. **Dead Code Detection** — For unused function analysis, use `addon.deadcode` (see [s-clean](../s-clean/SKILL.md))
+
+## Common Luacheck Warnings
+
+| Code | Meaning | Fix |
+|------|---------|-----|
+| W111 | Setting undefined global | Add to `.luacheckrc` globals or fix typo |
+| W112 | Mutating undefined global | Same as W111 |
+| W113 | Accessing undefined global | Check if API exists, add to read_globals |
+| W211 | Unused local variable | Remove or prefix with `_` |
+| W212 | Unused argument | Prefix with `_` (e.g., `_event`) |
+| W213 | Unused loop variable | Prefix with `_` |
+| W311 | Value assigned but never used | Remove assignment or use the value |
+| W431 | Shadowing upvalue | Rename the local variable |
+
+## .luacheckrc Configuration
+
+Standard WoW addon configuration:
+
+```lua
+std = "lua51"
+max_line_length = false
+
+globals = {
+    -- Addon globals
+    "MyAddon",
 }
 
-message HelloRequest {
-    string name = 1;
-}
-
-message HelloReply {
-    string message = 1;
+read_globals = {
+    -- WoW API
+    "C_Timer", "C_Spell", "CreateFrame",
+    -- Ace3
+    "LibStub",
 }
 ```
 
-## Build Configuration
+## StyLua Configuration
 
-```rust
-// build.rs
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    tonic_build::compile_protos("proto/hello.proto")?;
-    Ok(())
-}
-```
+Standard `.stylua.toml`:
 
 ```toml
-# Cargo.toml
-[dependencies]
-tonic = "0.10"
-prost = "0.12"
-tokio = { version = "1", features = ["full"] }
-
-[build-dependencies]
-tonic-build = "0.10"
+column_width = 120
+line_endings = "Unix"
+indent_type = "Tabs"
+indent_width = 4
+quote_style = "AutoPreferDouble"
+call_parentheses = "Always"
 ```
 
-## Server Implementation
+## Quick Reference
 
-```rust
-use tonic::{transport::Server, Request, Response, Status};
-use hello::greeter_server::{Greeter, GreeterServer};
-use hello::{HelloReply, HelloRequest};
+### Lint Then Format
 
-pub mod hello {
-    tonic::include_proto!("hello");
-}
+```bash
+# Check for issues
+addon.lint(addon="MyAddon")
 
-#[derive(Default)]
-pub struct MyGreeter {}
+# Auto-format
+addon.format(addon="MyAddon")
 
-#[tonic::async_trait]
-impl Greeter for MyGreeter {
-    async fn say_hello(
-        &self,
-        request: Request<HelloRequest>,
-    ) -> Result<Response<HelloReply>, Status> {
-        let name = request.into_inner().name;
-        let reply = HelloReply {
-            message: format!("Hello, {}!", name),
-        };
-        Ok(Response::new(reply))
-    }
-}
-
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let addr = "[::1]:50051".parse()?;
-    let greeter = MyGreeter::default();
-
-    Server::builder()
-        .add_service(GreeterServer::new(greeter))
-        .serve(addr)
-        .await?;
-
-    Ok(())
-}
+# Verify clean
+addon.lint(addon="MyAddon")
 ```
 
-## Client
+### Best Practices
 
-```rust
-use hello::greeter_client::GreeterClient;
-use hello::HelloRequest;
+1. **Run lint before commit** — Catch issues early
+2. **Format consistently** — Use StyLua for all files
+3. **Configure globals** — Add addon-specific globals to `.luacheckrc`
+4. **Prefix unused** — Use `_` prefix for intentionally unused variables
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut client = GreeterClient::connect("http://[::1]:50051").await?;
+## Security Analysis
 
-    let request = tonic::Request::new(HelloRequest {
-        name: "World".into(),
-    });
+Beyond syntax linting, use `addon.security` to detect runtime safety issues:
 
-    let response = client.say_hello(request).await?;
-    println!("Response: {:?}", response);
+| Category | Description |
+|----------|-------------|
+| `combat_violation` | Protected API calls without `InCombatLockdown()` guard |
+| `secret_leak` | Logging/printing secret values (12.0+) |
+| `taint_risk` | Unsafe global modifications (`_G` without namespace) |
+| `unsafe_eval` | `loadstring`/`RunScript` with unsanitized input |
 
-    Ok(())
-}
-```
+## Complexity Analysis
 
-## Streaming
+Use `addon.complexity` to identify maintainability issues:
 
-```rust
-use tokio_stream::wrappers::ReceiverStream;
-use futures_util::StreamExt;
+| Category | Threshold | Description |
+|----------|-----------|-------------|
+| `deep_nesting` | > 5 levels | Excessive if/for/while nesting |
+| `long_function` | > 100 lines | Functions that should be split |
+| `long_file` | > 500 lines | Files that need restructuring |
+| `magic_number` | pattern-based | Unexplained numeric literals |
 
-#[tonic::async_trait]
-impl Greeter for MyGreeter {
-    // Server streaming
-    type SayHelloStreamStream = ReceiverStream<Result<HelloReply, Status>>;
-
-    async fn say_hello_stream(
-        &self,
-        request: Request<HelloRequest>,
-    ) -> Result<Response<Self::SayHelloStreamStream>, Status> {
-        let (tx, rx) = tokio::sync::mpsc::channel(4);
-        let name = request.into_inner().name;
-
-        tokio::spawn(async move {
-            for i in 0..5 {
-                tx.send(Ok(HelloReply {
-                    message: format!("Hello #{}, {}!", i, name),
-                })).await.unwrap();
-                tokio::time::sleep(Duration::from_secs(1)).await;
-            }
-        });
-
-        Ok(Response::new(ReceiverStream::new(rx)))
-    }
-}
-
-// Client receiving stream
-let mut stream = client.say_hello_stream(request).await?.into_inner();
-while let Some(reply) = stream.next().await {
-    println!("Reply: {:?}", reply?);
-}
-```
-
-## Interceptors
-
-```rust
-use tonic::{Request, Status};
-
-fn auth_interceptor(req: Request<()>) -> Result<Request<()>, Status> {
-    let token = req.metadata()
-        .get("authorization")
-        .ok_or_else(|| Status::unauthenticated("No token"))?
-        .to_str()
-        .map_err(|_| Status::unauthenticated("Invalid token"))?;
-
-    if !validate_token(token) {
-        return Err(Status::unauthenticated("Invalid token"));
-    }
-
-    Ok(req)
-}
-
-// Apply interceptor
-let greeter = GreeterServer::with_interceptor(MyGreeter::default(), auth_interceptor);
-
-// Client with interceptor
-let channel = Channel::from_static("http://[::1]:50051").connect().await?;
-let client = GreeterClient::with_interceptor(channel, |mut req: Request<()>| {
-    req.metadata_mut().insert("authorization", "Bearer token".parse().unwrap());
-    Ok(req)
-});
-```
-
-## Error Handling
-
-```rust
-use tonic::Status;
-
-async fn my_method(&self, request: Request<Req>) -> Result<Response<Resp>, Status> {
-    let data = fetch_data()
-        .await
-        .map_err(|e| Status::internal(format!("DB error: {}", e)))?;
-
-    if data.is_empty() {
-        return Err(Status::not_found("Resource not found"));
-    }
-
-    // Status codes: ok, cancelled, unknown, invalid_argument,
-    // deadline_exceeded, not_found, already_exists, permission_denied,
-    // resource_exhausted, failed_precondition, aborted, out_of_range,
-    // unimplemented, internal, unavailable, data_loss, unauthenticated
-
-    Ok(Response::new(resp))
-}
-```
-
-## TLS
-
-```rust
-use tonic::transport::{Certificate, Identity, ServerTlsConfig};
-
-let cert = std::fs::read_to_string("server.crt")?;
-let key = std::fs::read_to_string("server.key")?;
-let identity = Identity::from_pem(cert, key);
-
-Server::builder()
-    .tls_config(ServerTlsConfig::new().identity(identity))?
-    .add_service(service)
-    .serve(addr)
-    .await?;
-```
-
-## Best Practices
-
-1. **Proto first**: Design API in proto files
-2. **Error codes**: Use appropriate Status codes
-3. **Streaming**: Use for large data or real-time
-4. **Interceptors**: Auth, logging, metrics
-5. **Deadlines**: Set timeouts on client calls
+For comprehensive analysis, use [c-audit](../../commands/c-audit.md).
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
