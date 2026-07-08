@@ -1,194 +1,129 @@
 ---
-name: zero-in
-description: | Use when this capability is needed.
+name: terminal
+description: > Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Zero In
+# terminal - Shell Command Execution
 
-<purpose>
-The #1 search failure: jumping straight to grep without thinking. You search
-"auth", get 200 results, grep again with "login", still garbage. The problem
-isn't the search - it's that you didn't zero in first. This skill forces the
-targeting that should happen BEFORE you hit enter.
-</purpose>
+## Core Concept
 
-## When To Activate
+`mcp__plugin_kg_kodegen__terminal` executes shell commands in persistent VT100 terminal sessions. Terminals maintain environment variables, working directory, and shell state across commands. Use different terminal numbers for parallel work.
 
-<triggers>
-- "Where is the..."
-- "Find the code that..."
-- "Search for..."
-- "How does X work in this codebase?"
-- About to explore an unfamiliar codebase
-- Previous search returned too many/wrong results
-- User says "I can't find..."
-</triggers>
+## Actions
 
-## Instructions
+| Action | Description | Required Parameters |
+|--------|-------------|---------------------|
+| `EXEC` | Execute command (default) | `command` |
+| `READ` | Get current buffer snapshot | None |
+| `LIST` | Show all active terminals | None |
+| `KILL` | Gracefully shutdown terminal | None |
 
-### Before ANY Search
+## Key Parameters
 
-Answer these four questions:
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `action` | string | `"EXEC"` | Action to perform |
+| `terminal` | number | 0 | Terminal instance (0, 1, 2...) |
+| `command` | string | null | Command to execute (EXEC only) |
+| `await_completion_ms` | number | 300000 | Max wait time (5 min default) |
+| `clear` | boolean | true | Clear buffer before command |
+| `tail` | number | 2000 | Max output lines to return |
 
-<scope>
-## 1. What exactly am I looking for?
+## Usage Examples
 
-State it in one sentence. Be specific.
-
-```
-BAD:  "authentication stuff"
-GOOD: "the function that validates JWT tokens on API requests"
+### Execute Command (default action)
+```json
+{ "command": "ls -la" }
 ```
 
-If you can't state it in one sentence, you don't know what you're looking for.
-</scope>
-
-<shape>
-## 2. What would the answer look like?
-
-Describe what you expect to find:
-
-- File type? (`.ts`, `.py`, `.go`, config file?)
-- Function, class, or config?
-- Roughly how big? (one-liner vs module?)
-- What would it import/use?
-
-```
-Example: "Probably a middleware function in TypeScript, imports jsonwebtoken
-or jose, has 'verify' or 'validate' in the name, 20-50 lines"
-```
-</shape>
-
-<where>
-## 3. Where would it live?
-
-Based on project conventions:
-
-- Which directory? (`src/`, `lib/`, `middleware/`, `utils/`?)
-- What would the file be named?
-- Near what other code?
-
-```
-Example: "Likely in src/middleware/ or src/auth/, file probably named
-auth.ts, jwt.ts, or middleware.ts"
+### Execute in Specific Terminal
+```json
+{ "terminal": 1, "command": "cargo build --release" }
 ```
 
-Check the project structure first if unsure:
-```bash
-ls -la src/
-find . -type d -name "*auth*" -o -name "*jwt*"
-```
-</where>
-
-<aliases>
-## 4. What else might it be called?
-
-List synonyms, abbreviations, variations:
-
-```
-Example for JWT validation:
-- verify, validate, check, authenticate
-- jwt, token, bearer, authorization
-- middleware, handler, guard, interceptor
+### Background Execution (fire-and-forget)
+```json
+{
+  "command": "npm run build",
+  "await_completion_ms": 0
+}
 ```
 
-Your first search term is rarely the one the codebase uses.
-</aliases>
-
-### Then Search
-
-Now search, using insights from scoping:
-
-```bash
-# Start with WHERE + ALIASES
-grep -r "verify.*token" src/middleware/
-grep -r "jwt" src/auth/
-
-# If needed, broaden
-grep -r "token" src/ --include="*.ts"
+### Execute with Timeout
+```json
+{
+  "command": "cargo test",
+  "await_completion_ms": 60000
+}
 ```
 
-### Verify The Result
-
-Before declaring "found it":
-
-- [ ] Does this match what I described in step 2?
-- [ ] Is this THE thing, or just A thing that mentions it?
-- [ ] If it's a function, trace who calls it
-- [ ] If it's config, trace what uses it
-
-## Output Format
-
-```markdown
-## Search Scope
-
-**Looking for:** [one sentence]
-
-**Would look like:** [description]
-
-**Likely location:** [directories/files]
-
-**Search terms:** [list of aliases]
-
-## Search Results
-
-Found: [file:line]
-
-Verified: [Yes/No - why]
+### Read Current Buffer
+```json
+{ "action": "READ", "terminal": 0 }
 ```
 
-## NEVER
-
-- Start grepping without answering the four questions
-- Search for vague terms ("stuff", "thing", "code")
-- Stop at the first result without verifying it's THE answer
-- Broaden search before narrowing location
-- Ignore project structure/conventions
-
-## ALWAYS
-
-- State what you're looking for in one sentence first
-- Check project structure before searching
-- List 3+ aliases/synonyms for your search term
-- Verify the result matches your expected shape
-- Narrow by location before broadening by term
-
-## Example
-
-**User:** "Find where we handle rate limiting"
-
-**Scoping:**
-
-> **Looking for:** The middleware or function that tracks request counts and returns 429 when limit exceeded
->
-> **Would look like:** Middleware function, probably uses Redis or in-memory store, has "rate" or "limit" or "throttle" in name, checks request count, returns 429
->
-> **Likely location:** `src/middleware/`, maybe `src/api/`, file named `rateLimit.ts` or `throttle.ts`
->
-> **Search terms:** rate, limit, throttle, 429, tooMany, requests
-
-**Search:**
-```bash
-# Check structure first
-ls src/middleware/
-# Found: auth.ts, cors.ts, rateLimit.ts  <-- bingo
-
-# Verify
-grep -n "429\|rate\|limit" src/middleware/rateLimit.ts
+### List All Terminals
+```json
+{ "action": "LIST" }
 ```
 
-**Result:** `src/middleware/rateLimit.ts:23` - `rateLimiter` middleware using Redis, returns 429 after 100 req/min.
+### Kill Terminal
+```json
+{ "action": "KILL", "terminal": 0 }
+```
 
-**Verified:** Yes - matches expected shape (middleware, uses Redis, returns 429).
+## Response Format
 
-## The Failure That Spawned This Skill
+```json
+{
+  "terminal": 0,
+  "exit_code": 0,
+  "cwd": "/project/path",
+  "duration_ms": 1234,
+  "completed": true
+}
+```
 
-Grepping "auth" in a 50k line codebase. 200+ results. Refined to "login".
-Still 80 results. Spent 20 minutes reading wrong files. Finally found it
-in `src/middleware/session.ts` - wasn't called "auth" or "login" anywhere.
-Should have asked "where would session validation live?" first.
+## Parallel Work Pattern
+
+Use different terminal numbers for concurrent tasks:
+
+```json
+// Terminal 0: Build
+{ "terminal": 0, "command": "cargo build" }
+
+// Terminal 1: Tests (parallel)
+{ "terminal": 1, "command": "cargo test" }
+
+// Terminal 2: Watch logs
+{ "terminal": 2, "command": "tail -f app.log" }
+```
+
+## Background Execution
+
+For long-running commands:
+
+1. **Fire-and-forget**: `await_completion_ms: 0`
+2. **Check progress**: `{ "action": "READ", "terminal": N }`
+3. **Wait with timeout**: If timeout occurs, command continues in background
+
+## Important Notes
+
+- **Persistent sessions**: Environment and working directory preserved
+- **VT100 emulation**: Actual rendered terminal output, not raw bytes
+- **Automatic cleanup**: Terminals cleaned up on connection close
+- **State preservation**: `cd` commands persist across calls
+
+## Remember
+
+- Terminals are numbered 0, 1, 2... - use different numbers for parallel work
+- Default action is EXEC - just provide `command`
+- Use `await_completion_ms: 0` for background tasks
+- Use `action: "READ"` to check on background commands
+- Working directory persists - `cd` works across commands
+- For simple file operations, prefer `fs_*` tools (faster, safer)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
