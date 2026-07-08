@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [aws-samples/sample-multi-agent-orchestration-chat-on-agentcore](https://github.com/aws-samples/sample-multi-agent-orchestration-chat-on-agentcore/tree/main/.agents/skills/coding-style/SKILL.md)
+Original source: [aws-samples/sample-multi-agent-orchestration-chat-on-agentcore](https://github.com/aws-samples/sample-multi-agent-orchestration-chat-on-agentcore/tree/main/.agents/skills/deep-modules/SKILL.md)
 
 ---
 
