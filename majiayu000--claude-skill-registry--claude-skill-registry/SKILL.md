@@ -1,120 +1,217 @@
 ---
-name: videocut
-description: 自更新 skills。记录用户反馈，更新方法论和规则。触发词：更新规则、记录反馈、改进skill Use when this capability is needed.
+name: updating-documentation-for-changes
+description: Use before committing staged changes when you need to verify all related documentation is current - systematically checks README, CLAUDE.md, CHANGELOG, API docs, package metadata, and cross-references rather than spot-checking only obvious files Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-<!--
-input: 用户反馈、错误纠正
-output: 更新后的文档（CLAUDE.md 或 tips/*.md）
-pos: 元 skill，让 Agent 从错误中学习
+# Updating Documentation for Changes
 
-架构守护者：一旦我被修改，请同步更新：
-1. ../README.md 的 Skill 清单
-2. /CLAUDE.md 路由表
--->
+## Overview
 
-# 自更新
+**Before committing staged changes, systematically verify ALL documentation that might reference those changes.**
 
-> 让 Agent 从错误中学习，持续改进
+The problem: We naturally check the "obvious" doc (README.md) but miss CLAUDE.md, CHANGELOG, API documentation, package metadata, and cross-references in related docs.
 
-## 快速使用
+## When to Use
 
-```
-用户: 记录一下刚才的问题
-用户: 更新口误识别的规则
-用户: 这个教训要记下来
-```
+Use this skill when:
 
-## 更新位置
+- You have staged changes ready to commit
+- You're about to create a PR
+- You've modified functionality, added features, or changed behavior
+- Any code change that users or other agents interact with
 
-| 内容类型 | 目标文件 | 示例 |
-|---------|---------|------|
-| 用户画像 | `CLAUDE.md` | 偏好、习惯 |
-| 方法论 + 反馈 | `*/tips/*.md` | 规则、教训 |
+**Required trigger**: Before every commit with functional changes.
 
-## 流程
+## Core Principle
 
-```
-用户触发（"刚才失败了"、"记录一下"）
-    ↓
-【自动】回溯上下文，找出问题点
-    ↓
-【自动】读目标文件全文，理解现有结构
-    ↓
-【自动】整合到正文相应位置（不是只往末尾加！）
-    ↓
-【自动】反馈记录只记事件，不重复规则
-    ↓
-汇报更新结果
+**This skill checks documentation consistency for STAGED changes only.**
+
+Do NOT stage additional files during this process. Only verify if documentation for your staged changes is current.
+
+## The Systematic Documentation Sweep
+
+Follow this checklist in order. No skipping "obvious" items.
+
+### 1. Identify What's Staged
+
+```bash
+git diff --staged --name-only
+git diff --staged
 ```
 
-**关键**：不要问"什么问题"，直接从上下文分析！
+Note: What was added? Modified? What does it affect?
 
-## 更新原则
+**If nothing is staged:** Stop. Tell user to stage their changes first, then return to this skill.
 
-### ❌ 错误做法：往末尾加
+### 2. Core Documentation Files (Check if they exist)
 
-```markdown
-## 反馈记录
-### 2026-01-14
-- 教训：审查稿末尾必须生成删除任务清单
-- 教训：用户确认时要分别确认口误和静音
+Check EVERY one that exists in the repo (no rationalization):
+
+- [ ] **README.md** (root and subdirectories)
+- [ ] **CLAUDE.md** (project conventions, architecture, patterns)
+- [ ] **DESIGN_DOC.md** or **ARCHITECTURE.md** (system design)
+- [ ] **CONTRIBUTING.md** (contribution guidelines)
+- [ ] **API.md** or **docs/api/** (API documentation)
+- [ ] **CHANGELOG.md** or **HISTORY.md** (version history)
+
+**This list is not comprehensive.** If the project has other documentation, check those too. Examples: TESTING.md, DEPLOYMENT.md, SECURITY.md, project-specific guides.
+
+**If a core doc doesn't exist:** Note its absence but don't create it as part of this commit.
+
+### 3. Project-Specific Documentation
+
+Check documentation specific to this project type:
+
+**For libraries/packages:**
+
+- [ ] **Package metadata** (package.json, pyproject.toml, setup.py, Cargo.toml - check if exports/APIs changed)
+- [ ] **docs/** directory (API docs, guides, examples)
+
+**For web services:**
+
+- [ ] **OpenAPI/Swagger specs** (if API changed)
+- [ ] **docker-compose.yaml** comments (if deployment changed)
+- [ ] **Config examples** (if config structure changed)
+
+**For other projects:**
+
+- Identify key documentation by searching for \*.md files
+- Check files in `docs/`, `documentation/`, or similar directories
+
+**Consistency check:** If you find multiple related files (like `package.json` and `README.md` version numbers), verify they're consistent.
+
+### 4. Related Documentation Search
+
+Search for files that might reference your changes:
+
+```bash
+# Search for direct feature name
+grep -r "exact-feature-name" --include="*.md" --include="*.json"
+
+# Search for related terms (if changing auth, search: auth, login, session)
+grep -r "related-concept" --include="*.md" --include="*.json"
+
+# Search for command names if you modified commands
+grep -r "command-name" --include="*.md" --include="*.json"
 ```
 
-只加到反馈记录 = 规则散落在末尾，下次还会犯错
+Check cross-references:
 
-### ✅ 正确做法：整合到正文
+- Do other documentation files reference this feature?
+- Does the architecture documentation describe this pattern?
+- Do examples or tutorials use this functionality?
+- Are there related features that should be updated together?
 
-1. **读全文**，理解章节结构
-2. **找到相应位置**，把规则整合进去
-3. **反馈记录只记事件**：`- 审查稿标记了静音，但剪辑时漏删`
+**Search depth limit**: Check one level of cross-references. If doc A references feature B, check doc B. Don't recursively check doc B's references.
 
-```markdown
-## 四、审查稿格式
-（新增删除任务清单模板）
+### 5. Determine Update Significance
 
-## 五、确认与执行流程  ← 缺这个章节就新增
-（新增分别确认口误和静音的流程）
+Update higher-level docs (README, package metadata, CHANGELOG) if your change:
 
-## 反馈记录
-### 2026-01-14
-- 审查稿标记了静音，但剪辑时漏删（只删了口误）
-```
+- **Adds** new user-facing commands, flags, features, or APIs
+- **Changes** existing behavior in a way users will notice
+- **Removes** functionality mentioned in high-level descriptions
+- **Expands** core capabilities described in the summary
+- **Modifies** configuration structure or deployment steps
 
-## 触发条件
+Do NOT update higher-level docs if your change:
 
-- 用户纠正 AI 错误
-- 用户说"记住这个"、"以后注意"
-- 发现新的通用规律
+- Adds implementation details or internal techniques
+- Improves existing behavior without changing interface
+- Refactors internal code without external impact
+- Adds examples or clarifications to existing docs
+- Fixes bugs without changing documented behavior
 
-## 反例
+**When in doubt:** Check if a user relying on current high-level docs would be surprised by your change. Surprised = update needed.
 
-### 2026-01-13
-```
-❌ 错误：
-用户: 刚才失败了，更新到skills
-AI: 请告诉我你发现了什么问题？  ← 不该问！
+### 6. Update What's Outdated
 
-✅ 正确：
-AI: [自动回溯上下文，找到失败点]
-AI: [执行更新]
-```
+For each outdated doc:
 
-### 2026-01-14
-```
-❌ 错误：
-AI: 已更新，在反馈记录新增3条教训  ← 只加末尾！
+1. Read the full section (not just the line that mentions it)
+2. Update to match new behavior
+3. Check examples still work
+4. Verify cross-references are accurate
 
-✅ 正确：
-AI: [读全文，理解结构]
-AI: [整合到正文相应位置]
-AI: [反馈记录只记事件]
-AI: 已更新：新增第五章"确认与执行流程"，更新第四章模板
-```
+**Stage updates after sweep:** Note what needs updating during the sweep, then stage those documentation changes after you've completed the full checklist.
 
-**原则**：规则要整合到正文，反馈记录只是事件日志
+### 7. Handle Unrelated Outdated Documentation
+
+If you discover unrelated outdated docs during your sweep:
+
+- **Note it** for later (mention to user after sweep)
+- **Don't fix it** in this commit (keeps changes focused)
+- **Don't skip the rest of the sweep** (finding one issue doesn't mean you're done)
+
+## Common Rationalizations - STOP
+
+If you're thinking any of these, you're about to skip necessary docs:
+
+| Rationalization                                       | Reality                                                                  |
+| ----------------------------------------------------- | ------------------------------------------------------------------------ |
+| "It's just a small change"                            | Small changes break outdated examples. Check anyway.                     |
+| "Nothing actually changed"                            | Even if smaller than expected, complete the sweep to verify consistency. |
+| "If related docs existed, I'd know"                   | You don't know until you search. Search systematically.                  |
+| "That file is technical config"                       | Plugin manifests ARE user-facing. Check them.                            |
+| "User is waiting"                                     | 3 minutes now saves 30 minutes debugging confusion later.                |
+| "I already checked the main README"                   | README ≠ all documentation. Follow the full checklist.                   |
+| "Other skills wouldn't reference this"                | They might. Search, don't assume.                                        |
+| "The change is in the code itself"                    | Code ≠ documentation. Users read docs, not your diff.                    |
+| "I found unrelated outdated docs, I should fix those" | Note for later. Stay focused on staged changes.                          |
+| "Found one issue, good enough"                        | One issue doesn't mean you're done. Complete the sweep.                  |
+
+**All of these mean: Continue with the systematic sweep.**
+
+## Red Flags - You're Skipping Something
+
+- Checked only README.md
+- Didn't search for cross-references
+- Skipped plugin manifest as "just config"
+- Assumed other skills are independent
+- Used time pressure to justify incomplete check
+- Thought "minor change doesn't need full sweep"
+- Started staging additional documentation before completing the sweep
+- Stopped after finding first inconsistency
+
+**Any red flag = Start over with full checklist.**
+
+## Real-World Impact
+
+**Without systematic sweep:**
+
+- Users miss new features (not in README)
+- API consumers hit undocumented breaking changes (package metadata stale)
+- Examples break (outdated patterns in docs)
+- Cross-references dangle (related docs out of sync)
+- Inconsistent information across README, CHANGELOG, and package files
+- Support burden increases (users confused by outdated docs)
+
+**With systematic sweep:**
+
+- All entry points updated (README, API docs, CHANGELOG)
+- Discovery works (accurate package metadata, search results)
+- Examples current and runnable
+- Cross-references intact
+- Consistent information across all documentation
+- Reduced support questions and confusion
+
+## Summary Checklist
+
+Before committing, have you:
+
+- [ ] Identified what's staged (`git diff --staged`)
+- [ ] Checked all core documentation files that exist (README, CLAUDE.md/AGENTS.md, DESIGN_DOC, CONTRIBUTING, API docs, CHANGELOG)
+- [ ] Checked project-specific documentation (package metadata, API specs, config examples, etc.)
+- [ ] Verified consistency between related files (e.g., package.json version vs README version)
+- [ ] Searched for cross-references (grep with feature name and related terms)
+- [ ] Determined update significance (does behavior change warrant high-level doc updates?)
+- [ ] Updated outdated docs (or noted what needs updating)
+- [ ] Noted any unrelated outdated docs for later
+- [ ] Completed the full sweep without rationalizing shortcuts
+
+**All checked?** You're ready to commit or stage documentation updates.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
