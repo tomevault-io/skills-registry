@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/omicverse-visualization-for-bulk-color-systems-and-single-cell-d-starlitnightly-omicverse/SKILL.md)
+Original source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry/tree/main/skills/design/filament-resource-generator-majiayu000-claude-skill-regist-majiayu000-claude-skill-registr/SKILL.md)
 
 ---
 
