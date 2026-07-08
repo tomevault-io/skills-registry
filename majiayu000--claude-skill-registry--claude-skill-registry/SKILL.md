@@ -1,338 +1,276 @@
 ---
-name: symfony-ddd
-description: Symfony 7 with Hexagonal Architecture, Domain-Driven Design (DDD), and CQRS patterns. Use this skill when implementing backend features, creating entities, commands, queries, repositories, or working with bounded contexts. Use when this capability is needed.
+name: write-action
+description: Write server actions following the Epic architecture patterns. Use when creating server-side logic for behaviors, including authentication, validation, and model calls. Triggers on "create an action", "add an action", or "write an action for". Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Symfony DDD - Hexagonal Architecture Skill
+# Write Action
 
-This skill provides guidance for implementing features in the Family Plan backend using Hexagonal Architecture, DDD, and CQRS patterns.
+## Overview
 
-## Architecture Overview
+This skill creates server actions that follow the Epic three-layer architecture. Actions belong to the **Backend layer** and handle authentication, validation, and orchestration of model calls.
 
-The backend follows a strict layered architecture within each Bounded Context:
+## Architecture Context
 
 ```
-BoundedContext/
-├── Domain/           # Core business logic (no dependencies)
-│   ├── Entity/       # Domain entities
-│   ├── ValueObject/  # Value objects
-│   ├── Event/        # Domain events
-│   ├── Repository/   # Repository interfaces
-│   └── Exception/    # Domain exceptions
-├── Application/      # Use cases (depends only on Domain)
-│   ├── Command/      # Commands and handlers
-│   ├── Query/        # Queries and handlers
-│   └── Service/      # Application services
-└── Infrastructure/   # External adapters (implements Domain interfaces)
-    ├── Doctrine/     # Database repositories
-    ├── Http/         # External API clients
-    └── Adapter/      # Other infrastructure adapters
+Frontend: Hooks call actions
+            |
+            v
+Backend: Actions (auth + validation + orchestration)
+            |
+            v
+Infrastructure: Models (database operations)
 ```
 
-## Bounded Contexts in This Project
+Actions:
+- Run on the server (Backend layer)
+- Check authentication via `getUser()`
+- Validate inputs with Zod
+- Call models for data operations
+- Return consistent response format
+- NEVER access database directly
 
-- `UserManagement` - Authentication, user accounts, roles
-- `TaskManagement` - Tasks, templates, executions, approvals
-- `PointsManagement` - Points wallets, rewards system
-- `TeamManagement` - Team organization, member invitations
-- `UserSettings` - User preferences
-- `Notifications` - Email/SMS notifications
-- `Shared` - Shared kernel (common value objects, events)
+## Action Location and Naming
 
-## Implementation Patterns
+```
+app/[role]/[page]/behaviors/[behavior-name]/
+  actions/
+    [action-name].action.ts
+```
 
-### 1. Creating an Entity
+- File names: `kebab-case.action.ts`
+- Function names: `camelCase`
 
-```php
-declare(strict_types=1);
+## Function Specification Format
 
-namespace App\TaskManagement\Domain\Entity;
+Follow the Epic Function specification format from `docs/Epic.md`:
 
-use App\Shared\Domain\ValueObject\Uuid;
-use App\TaskManagement\Domain\Event\TaskCreated;
-use Doctrine\ORM\Mapping as ORM;
+```markdown
+## functionName(input: InputType): ReturnType
 
-#[ORM\Entity]
-#[ORM\Table(name: 'tasks')]
-final class Task
-{
-    private array $domainEvents = [];
+[Short description of what the function does]
 
-    private function __construct(
-        #[ORM\Id]
-        #[ORM\Column(type: 'uuid')]
-        private Uuid $id,
+- Given: [input parameters and assumptions]
+- Returns: [value or outcome returned]
+- Calls: [direct dependencies - models, integrations]
 
-        #[ORM\Column(type: 'string', length: 255)]
-        private string $name,
+### Example: [Scenario name]
 
-        #[ORM\Column(type: 'datetime_immutable')]
-        private \DateTimeImmutable $createdAt
-    ) {}
+#### PreDB
+[table_name]:
+column1, column2
+value1, value2
 
-    public static function create(Uuid $id, string $name): self
-    {
-        $task = new self($id, $name, new \DateTimeImmutable());
-        $task->recordEvent(new TaskCreated($id));
-        return $task;
+#### PostDB
+[table_name]:
+column1, column2
+value1, value2
+new_id, new_val
+```
+
+## Implementation Pattern
+
+```typescript
+'use server';
+
+import { getUser } from '@/lib/auth';
+import { Model } from '@/shared/models/model-name';
+import { z } from 'zod';
+
+const InputSchema = z.object({
+  name: z.string().min(1).max(100),
+});
+
+type Input = z.infer<typeof InputSchema>;
+
+export async function actionName(input: Input) {
+  try {
+    // 1. Authentication check
+    const user = await getUser();
+    if (!user) {
+      return { success: false, error: 'Unauthorized' };
     }
 
-    public function id(): Uuid
-    {
-        return $this->id;
-    }
+    // 2. Validate input
+    const validated = InputSchema.parse(input);
 
-    public function name(): string
-    {
-        return $this->name;
-    }
+    // 3. Call model (never direct DB access)
+    const result = await Model.create({
+      ...validated,
+      userId: user.id,
+    });
 
-    private function recordEvent(object $event): void
-    {
-        $this->domainEvents[] = $event;
-    }
-
-    public function pullDomainEvents(): array
-    {
-        $events = $this->domainEvents;
-        $this->domainEvents = [];
-        return $events;
-    }
+    // 4. Return success response
+    return { success: true, data: result };
+  } catch (error) {
+    console.error('actionName error:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'An error occurred',
+    };
+  }
 }
 ```
 
-### 2. Creating a Command and Handler
+## Response Format
 
-```php
-// Command
-declare(strict_types=1);
+Always return consistent format:
 
-namespace App\TaskManagement\Application\Command;
+```typescript
+type ActionResponse<T> =
+  | { success: true; data: T }
+  | { success: false; error: string };
+```
 
-final readonly class CreateTaskCommand
-{
-    public function __construct(
-        public string $id,
-        public string $name,
-        public string $teamId
-    ) {}
-}
+## Key Patterns
 
-// Handler
-declare(strict_types=1);
-
-namespace App\TaskManagement\Application\Command;
-
-use App\Shared\Domain\ValueObject\Uuid;
-use App\TaskManagement\Domain\Entity\Task;
-use App\TaskManagement\Domain\Repository\TaskRepositoryInterface;
-use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-
-#[AsMessageHandler]
-final readonly class CreateTaskHandler
-{
-    public function __construct(
-        private TaskRepositoryInterface $taskRepository
-    ) {}
-
-    public function __invoke(CreateTaskCommand $command): void
-    {
-        $task = Task::create(
-            Uuid::fromString($command->id),
-            $command->name
-        );
-
-        $this->taskRepository->save($task);
-    }
+### 1. Authentication First
+```typescript
+const user = await getUser();
+if (!user) {
+  return { success: false, error: 'Unauthorized' };
 }
 ```
 
-### 3. Creating a Query and Handler
-
-```php
-// Query
-declare(strict_types=1);
-
-namespace App\TaskManagement\Application\Query;
-
-final readonly class GetTaskQuery
-{
-    public function __construct(
-        public string $taskId
-    ) {}
-}
-
-// Handler
-declare(strict_types=1);
-
-namespace App\TaskManagement\Application\Query;
-
-use App\TaskManagement\Domain\Repository\TaskRepositoryInterface;
-use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-
-#[AsMessageHandler]
-final readonly class GetTaskHandler
-{
-    public function __construct(
-        private TaskRepositoryInterface $taskRepository
-    ) {}
-
-    public function __invoke(GetTaskQuery $query): ?TaskDTO
-    {
-        $task = $this->taskRepository->findById(
-            Uuid::fromString($query->taskId)
-        );
-
-        return $task ? TaskDTO::fromEntity($task) : null;
-    }
+### 2. Input Validation
+```typescript
+const validated = InputSchema.parse(input);
+// or with safeParse for custom error handling
+const result = InputSchema.safeParse(input);
+if (!result.success) {
+  return { success: false, error: result.error.errors[0].message };
 }
 ```
 
-### 4. Repository Interface and Implementation
+### 3. User-Scoped Operations
+```typescript
+// Always filter by userId for user-owned resources
+const items = await Model.findByUserId(user.id);
+```
 
-```php
-// Interface (Domain layer)
-declare(strict_types=1);
-
-namespace App\TaskManagement\Domain\Repository;
-
-use App\Shared\Domain\ValueObject\Uuid;
-use App\TaskManagement\Domain\Entity\Task;
-
-interface TaskRepositoryInterface
-{
-    public function save(Task $task): void;
-    public function findById(Uuid $id): ?Task;
-    public function findByTeamId(Uuid $teamId): array;
-}
-
-// Implementation (Infrastructure layer)
-declare(strict_types=1);
-
-namespace App\TaskManagement\Infrastructure\Doctrine;
-
-use App\Shared\Domain\ValueObject\Uuid;
-use App\TaskManagement\Domain\Entity\Task;
-use App\TaskManagement\Domain\Repository\TaskRepositoryInterface;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
-
-final class DoctrineTaskRepository extends ServiceEntityRepository implements TaskRepositoryInterface
-{
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Task::class);
-    }
-
-    public function save(Task $task): void
-    {
-        $this->getEntityManager()->persist($task);
-        $this->getEntityManager()->flush();
-    }
-
-    public function findById(Uuid $id): ?Task
-    {
-        return $this->find($id->toString());
-    }
-
-    public function findByTeamId(Uuid $teamId): array
-    {
-        return $this->findBy(['teamId' => $teamId->toString()]);
-    }
+### 4. Error Handling
+```typescript
+try {
+  // operation
+} catch (error) {
+  console.error('actionName error:', error);
+  return {
+    success: false,
+    error: error instanceof Error ? error.message : 'An error occurred',
+  };
 }
 ```
 
-### 5. Value Object
+## Constraints
 
-```php
-declare(strict_types=1);
+- MUST include `'use server'` directive at top
+- MUST check authentication when required
+- NEVER access database directly - use models
+- NEVER import React, Jotai, or frontend code
+- ALWAYS return consistent response format
+- ALWAYS use try/catch with descriptive errors
 
-namespace App\Shared\Domain\ValueObject;
+## Example Specification
 
-use Symfony\Component\Uid\Uuid as SymfonyUuid;
+```markdown
+## createProject(input: CreateProjectInput): Promise<ActionResponse<Project>>
 
-final readonly class Uuid
-{
-    private function __construct(
-        private string $value
-    ) {}
+Creates a new project for the authenticated user.
 
-    public static function generate(): self
-    {
-        return new self(SymfonyUuid::v4()->toString());
-    }
+- Given: project name (1-100 chars) and authenticated user with "client" role
+- Returns: the newly created project with status "draft"
+- Calls: ProjectModel.findByNameAndUser, ProjectModel.create
 
-    public static function fromString(string $value): self
-    {
-        if (!SymfonyUuid::isValid($value)) {
-            throw new \InvalidArgumentException('Invalid UUID format');
-        }
-        return new self($value);
-    }
+### Example: Create project successfully
 
-    public function toString(): string
-    {
-        return $this->value;
-    }
+#### PreDB
+users:
+id, email, role
+1, user@example.com, client
 
-    public function equals(self $other): bool
-    {
-        return $this->value === $other->value;
-    }
-}
+projects:
+id, user_id, name, status
+1, 1, Existing Project, active
+
+#### Steps
+* Call: createProject({ name: "New Project" }) as user 1
+* Returns: { id: 2, name: "New Project", status: "draft" }
+
+#### PostDB
+projects:
+id, user_id, name, status
+1, 1, Existing Project, active
+2, 1, New Project, draft
+
+### Example: Reject duplicate name
+
+#### PreDB
+projects:
+id, user_id, name
+1, 1, My Project
+
+#### Steps
+* Call: createProject({ name: "My Project" }) as user 1
+* Throws: "Project name already exists"
+
+#### PostDB
+projects:
+id, user_id, name
+1, 1, My Project
 ```
 
-## Dependency Injection Configuration
+## Test Generation
 
-Register repository bindings in `config/services.yaml`:
+Generate test files at `[behavior-path]/tests/[action-name].action.test.ts`.
 
-```yaml
-services:
-    App\TaskManagement\Domain\Repository\TaskRepositoryInterface:
-        class: App\TaskManagement\Infrastructure\Doctrine\DoctrineTaskRepository
+### Test Structure
+
+```typescript
+import { describe, it, expect } from 'vitest';
+import { PreDB, PostDB } from '@/lib/db-test';
+import { db } from '@/db';
+import * as schema from '@/db/schema';
+import { actionName } from '../[action-name].action';
+
+describe('actionName', () => {
+  it('should [behavior] when [condition]', async () => {
+    // PreDB -> PreDB
+    await PreDB(db, schema, {
+      users: [{ id: '1', email: 'user@example.com' }],
+      projects: [],
+    });
+
+    // Steps -> Execute
+    const result = await actionName({ name: 'New Project' });
+
+    // Returns -> Assertions
+    expect(result.success).toBe(true);
+    expect(result.data?.name).toBe('New Project');
+
+    // PostDB -> PostDB
+    await PostDB(db, schema, {
+      projects: [{ id: result.data?.id, name: 'New Project', status: 'draft' }],
+    }, { allowExtraRows: true });
+  });
+});
 ```
 
-## CQRS Bus Usage
+### Translation Rules
 
-```php
-// In Controller
-use Symfony\Component\Messenger\MessageBusInterface;
+| Spec | Test |
+|------|------|
+| PreDB (CSV) | `PreDB(db, schema, { table: [...] })` |
+| `Call:` | Action invocation |
+| `Returns:` | `expect(result).toBe(...)` |
+| `Throws:` | `expect(result.error).toBe(...)` |
+| PostDB (CSV) | `PostDB(db, schema, { table: [...] })` |
 
-#[Route('/api/tasks', methods: ['POST'])]
-public function create(
-    Request $request,
-    MessageBusInterface $commandBus
-): JsonResponse {
-    $data = json_decode($request->getContent(), true);
+### Principles
 
-    $commandBus->dispatch(new CreateTaskCommand(
-        id: Uuid::generate()->toString(),
-        name: $data['name'],
-        teamId: $data['teamId']
-    ));
-
-    return new JsonResponse(['status' => 'created'], 201);
-}
-```
-
-## Key Principles
-
-1. **Domain Layer is Framework-Agnostic** - No Symfony dependencies in Domain
-2. **Always Use Interfaces** - Repository interfaces in Domain, implementations in Infrastructure
-3. **Named Constructors** - Use static factory methods instead of public constructors
-4. **Immutable Value Objects** - Use `readonly` for value objects
-5. **Rich Domain Models** - Business logic belongs in entities, not services
-6. **Domain Events** - Record events in entities for side effects
-
-## Common Mistakes to Avoid
-
-- Putting business logic in controllers or handlers
-- Using Doctrine annotations/attributes in Domain layer
-- Creating anemic domain models (entities with only getters/setters)
-- Skipping the interface for repositories
-- Mixing bounded contexts directly (use domain events instead)
+- Test behavior, not implementation
+- Use real database (no mocks)
+- Start with ONE test (happy path)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
