@@ -1,493 +1,354 @@
 ---
-name: slash-command-builder
-description: Use when creating, improving, or troubleshooting Claude Code slash commands. Expert guidance on command structure, arguments, frontmatter, tool permissions, and best practices for building effective custom commands.
+name: claude-skill-registry
+description: This is an example of a project-specific skill. Use this as a template for your own projects. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
+# Project Guidelines Skill (Example)
 
-# Slash Command Builder - Claude Code Command Expert
+This is an example of a project-specific skill. Use this as a template for your own projects.
 
-Use this skill when creating, improving, or troubleshooting Claude Code slash commands. Provides expert guidance on command structure, syntax, frontmatter configuration, and best practices.
+Based on a real production application: [Zenith](https://zenith.chat) - AI-powered customer discovery platform.
 
-## When to Use This Skill
-
-Activate this skill when:
-- User asks to create a new slash command
-- User wants to improve an existing command
-- User needs help with command arguments or frontmatter
-- User is troubleshooting command invocation issues
-- User wants to understand slash command capabilities
-- User asks about the difference between commands and skills
-
-## Quick Reference
-
-### Command File Structure
-
-```markdown
----
-description: Brief description shown in autocomplete
-argument-hint: [arg1] [arg2] <optional-arg>
-allowed-tools: Bash(git *), Read, Write
-model: claude-3-5-sonnet-20241022
-disable-model-invocation: false
 ---
 
-Your command prompt here with $ARGUMENTS or $1, $2, etc.
+## When to Use
 
-Use !`command` for bash execution
-Use @file.txt for file references
+Reference this skill when working on the specific project it's designed for. Project skills contain:
+- Architecture overview
+- File structure
+- Code patterns
+- Testing requirements
+- Deployment workflow
+
+---
+
+## Architecture Overview
+
+**Tech Stack:**
+- **Frontend**: Next.js 15 (App Router), TypeScript, React
+- **Backend**: FastAPI (Python), Pydantic models
+- **Database**: Supabase (PostgreSQL)
+- **AI**: Claude API with tool calling and structured output
+- **Deployment**: Google Cloud Run
+- **Testing**: Playwright (E2E), pytest (backend), React Testing Library
+
+**Services:**
+```
+┌─────────────────────────────────────────────────────────────┐
+│                         Frontend                            │
+│  Next.js 15 + TypeScript + TailwindCSS                     │
+│  Deployed: Vercel / Cloud Run                              │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                         Backend                             │
+│  FastAPI + Python 3.11 + Pydantic                          │
+│  Deployed: Cloud Run                                       │
+└─────────────────────────────────────────────────────────────┘
+                              │
+              ┌───────────────┼───────────────┐
+              ▼               ▼               ▼
+        ┌──────────┐   ┌──────────┐   ┌──────────┐
+        │ Supabase │   │  Claude  │   │  Redis   │
+        │ Database │   │   API    │   │  Cache   │
+        └──────────┘   └──────────┘   └──────────┘
 ```
 
-### File Locations
-
-**Project commands** (shared with team):
-```
-.claude/commands/my-command.md
-```
-
-**Personal commands** (individual use):
-```
-~/.claude/commands/my-command.md
-```
-
-**Organized commands** (namespaced):
-```
-.claude/commands/frontend/component.md  → /component (project:frontend)
-```
-
-## Creating Effective Slash Commands
-
-### Step 1: Identify the Use Case
-
-**Good candidates for slash commands:**
-- Frequently repeated prompts
-- Simple, single-purpose tasks
-- Quick code reviews or analyses
-- Common git workflows
-- Standard documentation tasks
-
-**NOT good for slash commands (use Skills instead):**
-- Complex multi-step workflows
-- Context-aware behavior
-- Team standardization needs
-- Workflows requiring multiple files
-
-### Step 2: Choose Command Name
-
-**Best practices:**
-- Use lowercase with hyphens: `/review-pr`, `/optimize-code`
-- Make it memorable and intuitive
-- Avoid conflicts with built-in commands
-- Keep it short (2-3 words max)
-
-**Examples:**
-- ✅ `/review-pr` - Clear, concise
-- ✅ `/fix-lint` - Action-oriented
-- ❌ `/review-pull-request-thoroughly` - Too verbose
-- ❌ `/rpr` - Too cryptic
-
-### Step 3: Design the Prompt
-
-**Simple command (no arguments):**
-```markdown
----
-description: Analyze code for performance bottlenecks
 ---
 
-Analyze the current file for performance issues:
-1. Identify O(n²) or worse algorithms
-2. Find unnecessary re-renders or computations
-3. Check for memory leaks
-4. Suggest optimizations with code examples
+## File Structure
+
+```
+project/
+├── frontend/
+│   └── src/
+│       ├── app/              # Next.js app router pages
+│       │   ├── api/          # API routes
+│       │   ├── (auth)/       # Auth-protected routes
+│       │   └── workspace/    # Main app workspace
+│       ├── components/       # React components
+│       │   ├── ui/           # Base UI components
+│       │   ├── forms/        # Form components
+│       │   └── layouts/      # Layout components
+│       ├── hooks/            # Custom React hooks
+│       ├── lib/              # Utilities
+│       ├── types/            # TypeScript definitions
+│       └── config/           # Configuration
+│
+├── backend/
+│   ├── routers/              # FastAPI route handlers
+│   ├── models.py             # Pydantic models
+│   ├── main.py               # FastAPI app entry
+│   ├── auth_system.py        # Authentication
+│   ├── database.py           # Database operations
+│   ├── services/             # Business logic
+│   └── tests/                # pytest tests
+│
+├── deploy/                   # Deployment configs
+├── docs/                     # Documentation
+└── scripts/                  # Utility scripts
 ```
 
-**Command with all arguments:**
-```markdown
----
-description: Generate component boilerplate
-argument-hint: <component-name> <type>
 ---
 
-Create a $ARGUMENTS component following our style guide:
-- Use TypeScript with strict types
-- Include prop interfaces
-- Add JSDoc comments
-- Export as default
+## Code Patterns
+
+### API Response Format (FastAPI)
+
+```python
+from pydantic import BaseModel
+from typing import Generic, TypeVar, Optional
+
+T = TypeVar('T')
+
+class ApiResponse(BaseModel, Generic[T]):
+    success: bool
+    data: Optional[T] = None
+    error: Optional[str] = None
+
+    @classmethod
+    def ok(cls, data: T) -> "ApiResponse[T]":
+        return cls(success=True, data=data)
+
+    @classmethod
+    def fail(cls, error: str) -> "ApiResponse[T]":
+        return cls(success=False, error=error)
 ```
 
-**Command with positional arguments:**
-```markdown
----
-description: Review pull request
-argument-hint: [pr-number] [reviewer]
----
-
-Review PR #$1 and assign to @$2:
-1. Check code quality and style
-2. Verify tests are included
-3. Look for security issues
-4. Suggest improvements
-5. Add comments in GitHub
-```
-
-### Step 4: Add Frontmatter Configuration
-
-See `FRONTMATTER.md` in this skill directory for complete frontmatter options.
-
-**Minimal frontmatter:**
-```yaml
----
-description: What this command does
----
-```
-
-**Full-featured frontmatter:**
-```yaml
----
-description: Complete command with all options
-argument-hint: [required] <optional>
-allowed-tools: Bash(git *), Read(**/*.ts), Write
-model: claude-3-5-sonnet-20241022
-disable-model-invocation: false
----
-```
-
-### Step 5: Test the Command
-
-1. Save the file to `.claude/commands/`
-2. Invoke with `/command-name`
-3. Check argument substitution works
-4. Verify tool permissions if using `allowed-tools`
-5. Test edge cases (missing args, wrong types)
-
-## Advanced Features
-
-### Bash Execution
-
-Execute shell commands inline with `!` prefix:
-
-```markdown
----
-description: Show git status
-allowed-tools: Bash(git status:*)
----
-
-Current repository status:
-
-!`git status`
-
-Recent commits:
-
-!`git log --oneline -5`
-```
-
-### File References
-
-Include file contents with `@` prefix:
-
-```markdown
----
-description: Review specific file
-argument-hint: <file-path>
----
-
-Review this file for code quality:
-
-@$1
-
-Focus on:
-- Type safety
-- Error handling
-- Performance
-- Maintainability
-```
-
-### Tool Permissions
-
-Restrict which tools Claude can use:
-
-```markdown
----
-description: Safe git status check
-allowed-tools: Bash(git status:*), Bash(git diff:*)
----
-
-Show current changes:
-
-!`git status`
-!`git diff --stat`
-```
-
-**Tool permission syntax:**
-- `Bash(command:*)` - Allow specific command with any args
-- `Read(path/to/*.ts)` - Allow reading TypeScript files in path
-- `Write` - Allow writing any file
-- `Glob`, `Grep`, `Edit` - Other available tools
-
-### Model Selection
-
-Override default model for specific commands:
-
-```markdown
----
-description: Quick syntax fix
-model: claude-3-5-haiku-20241022
----
-
-Fix syntax errors in the current file quickly.
-```
-
-**When to use different models:**
-- `claude-3-5-haiku-20241022` - Fast, simple tasks
-- `claude-3-5-sonnet-20241022` - General purpose (default)
-- `claude-opus-4-20250514` - Complex reasoning
-
-### Disable Auto-Invocation
-
-Prevent Claude from calling command automatically:
-
-```markdown
----
-description: Destructive operation
-disable-model-invocation: true
----
-
-!`rm -rf node_modules`
-!`npm install`
-```
-
-## Common Patterns
-
-### Code Review Command
-
-```markdown
----
-description: Review code changes
-argument-hint: [file-or-pr]
-allowed-tools: Bash(git *), Read, Grep
----
-
-Review $ARGUMENTS for:
-
-1. **Code Quality**
-   - Clean, readable code
-   - Proper naming conventions
-   - DRY principle
-
-2. **Security**
-   - Input validation
-   - SQL injection risks
-   - XSS vulnerabilities
-
-3. **Performance**
-   - Inefficient algorithms
-   - Unnecessary computations
-   - Memory leaks
-
-4. **Tests**
-   - Unit test coverage
-   - Edge cases handled
-   - Integration tests
-
-Provide specific file:line references for all issues.
-```
-
-### Git Workflow Command
-
-```markdown
----
-description: Create feature branch
-argument-hint: <feature-name>
-allowed-tools: Bash(git *)
----
-
-Create and switch to feature branch:
-
-!`git checkout -b feature/$1`
-!`git push -u origin feature/$1`
-
-Branch feature/$1 created and pushed to origin.
-```
-
-### Documentation Generator
-
-```markdown
----
-description: Generate API docs
-argument-hint: <file-path>
-allowed-tools: Read
----
-
-Generate comprehensive API documentation for:
-
-@$1
-
-Include:
-- Function signatures with types
-- Parameter descriptions
-- Return value documentation
-- Usage examples
-- Error cases
-```
-
-### Test Generator
-
-```markdown
----
-description: Generate test cases
-argument-hint: <file-to-test>
-allowed-tools: Read, Write
----
-
-Generate test cases for:
-
-@$1
-
-Create tests covering:
-- Happy path scenarios
-- Edge cases
-- Error conditions
-- Boundary values
-
-Use the existing test framework style.
-```
-
-## Troubleshooting
-
-### Command Not Found
-
-**Problem:** `/my-command` doesn't autocomplete
-
-**Solutions:**
-1. Check file is in `.claude/commands/` or `~/.claude/commands/`
-2. Verify filename matches command (`.claude/commands/my-command.md`)
-3. Restart Claude Code to reload commands
-4. Check for syntax errors in frontmatter
-
-### Arguments Not Substituting
-
-**Problem:** `$1` appears literally instead of being replaced
-
-**Solutions:**
-1. Ensure arguments are passed: `/command arg1 arg2`
-2. Check you're using `$1`, `$2` (not `${1}`)
-3. For all args, use `$ARGUMENTS` instead
-4. Verify `argument-hint` frontmatter is correct
-
-### Tool Permission Denied
-
-**Problem:** Command can't execute bash or read files
-
-**Solutions:**
-1. Add `allowed-tools` frontmatter
-2. Use specific tool patterns: `Bash(git *)`
-3. Check tool name capitalization (e.g., `Bash`, not `bash`)
-4. For file operations, use glob patterns: `Read(**/*.ts)`
-
-### Command Invokes at Wrong Time
-
-**Problem:** Claude calls command when you don't want it to
-
-**Solutions:**
-1. Add `disable-model-invocation: true` to frontmatter
-2. Ensure `description` is specific to avoid false triggers
-3. Use more explicit command names
-
-## Commands vs. Skills
-
-### Use Slash Commands When:
-- ✅ Task is simple and focused
-- ✅ Prompt fits in one Markdown file
-- ✅ Need quick, explicit invocation
-- ✅ Personal productivity shortcuts
-
-### Use Skills When:
-- ✅ Complex, multi-step workflows
-- ✅ Context-aware automatic activation
-- ✅ Team needs standardization
-- ✅ Multiple supporting files needed
-- ✅ Sophisticated conditional logic
-
-**Example:**
-- **Command:** `/review-pr` - Quick PR review prompt
-- **Skill:** `code-reviewer` - Comprehensive review framework with security.md, performance.md, style.md, and scripts
-
-## Best Practices
-
-### 1. Keep Commands Focused
-Each command should do ONE thing well. Don't create Swiss Army knife commands.
-
-### 2. Use Clear Argument Hints
-```yaml
-argument-hint: [required] <optional> [choices: a|b|c]
-```
-
-### 3. Document Expected Output
-Tell Claude what format you want:
-```markdown
-Generate a JSON response with this structure:
-{
-  "issues": [],
-  "suggestions": []
+### Frontend API Calls (TypeScript)
+
+```typescript
+interface ApiResponse<T> {
+  success: boolean
+  data?: T
+  error?: string
+}
+
+async function fetchApi<T>(
+  endpoint: string,
+  options?: RequestInit
+): Promise<ApiResponse<T>> {
+  try {
+    const response = await fetch(`/api${endpoint}`, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers,
+      },
+    })
+
+    if (!response.ok) {
+      return { success: false, error: `HTTP ${response.status}` }
+    }
+
+    return await response.json()
+  } catch (error) {
+    return { success: false, error: String(error) }
+  }
 }
 ```
 
-### 4. Include Examples
-Show Claude what good output looks like:
-```markdown
-Example output:
+### Claude AI Integration (Structured Output)
 
-## Security Issues
-- **SQL Injection** (file.ts:42) - Use parameterized queries
+```python
+from anthropic import Anthropic
+from pydantic import BaseModel
+
+class AnalysisResult(BaseModel):
+    summary: str
+    key_points: list[str]
+    confidence: float
+
+async def analyze_with_claude(content: str) -> AnalysisResult:
+    client = Anthropic()
+
+    response = client.messages.create(
+        model="claude-sonnet-4-5-20250514",
+        max_tokens=1024,
+        messages=[{"role": "user", "content": content}],
+        tools=[{
+            "name": "provide_analysis",
+            "description": "Provide structured analysis",
+            "input_schema": AnalysisResult.model_json_schema()
+        }],
+        tool_choice={"type": "tool", "name": "provide_analysis"}
+    )
+
+    # Extract tool use result
+    tool_use = next(
+        block for block in response.content
+        if block.type == "tool_use"
+    )
+
+    return AnalysisResult(**tool_use.input)
 ```
 
-### 5. Be Specific with Tool Permissions
-Don't use `allowed-tools: Bash` - use `allowed-tools: Bash(git *)`
+### Custom Hooks (React)
 
-### 6. Test with Edge Cases
-- Missing arguments
-- Wrong argument types
-- Files that don't exist
-- Empty repositories
+```typescript
+import { useState, useCallback } from 'react'
 
-### 7. Version Control Commands
-Store `.claude/commands/` in git for team collaboration
+interface UseApiState<T> {
+  data: T | null
+  loading: boolean
+  error: string | null
+}
 
-### 8. Organize with Namespaces
-Use subdirectories for related commands:
+export function useApi<T>(
+  fetchFn: () => Promise<ApiResponse<T>>
+) {
+  const [state, setState] = useState<UseApiState<T>>({
+    data: null,
+    loading: false,
+    error: null,
+  })
+
+  const execute = useCallback(async () => {
+    setState(prev => ({ ...prev, loading: true, error: null }))
+
+    const result = await fetchFn()
+
+    if (result.success) {
+      setState({ data: result.data!, loading: false, error: null })
+    } else {
+      setState({ data: null, loading: false, error: result.error! })
+    }
+  }, [fetchFn])
+
+  return { ...state, execute }
+}
 ```
-.claude/commands/
-├── git/
-│   ├── feature.md
-│   ├── fix.md
-│   └── release.md
-└── testing/
-    ├── unit.md
-    └── e2e.md
+
+---
+
+## Testing Requirements
+
+### Backend (pytest)
+
+```bash
+# Run all tests
+poetry run pytest tests/
+
+# Run with coverage
+poetry run pytest tests/ --cov=. --cov-report=html
+
+# Run specific test file
+poetry run pytest tests/test_auth.py -v
 ```
 
-## Related Documentation
+**Test structure:**
+```python
+import pytest
+from httpx import AsyncClient
+from main import app
 
-- **FRONTMATTER.md** - Complete frontmatter reference
-- **EXAMPLES.md** - Real-world command examples
-- **PATTERNS.md** - Common command patterns
+@pytest.fixture
+async def client():
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        yield ac
 
-## Checklist for New Commands
+@pytest.mark.asyncio
+async def test_health_check(client: AsyncClient):
+    response = await client.get("/health")
+    assert response.status_code == 200
+    assert response.json()["status"] == "healthy"
+```
 
-Before finalizing a slash command:
+### Frontend (React Testing Library)
 
-- [ ] Command name is clear and concise
-- [ ] Description frontmatter is specific
-- [ ] Argument hints are provided if needed
-- [ ] Tool permissions are minimal and specific
-- [ ] Prompt is focused on one task
-- [ ] Examples are included in prompt
-- [ ] Expected output format is specified
-- [ ] Edge cases are considered
-- [ ] Command has been tested
-- [ ] File is in correct directory
+```bash
+# Run tests
+npm run test
 
-**Remember:** Great slash commands are simple, focused, and make frequent tasks effortless. If you find yourself adding complexity, consider creating a Skill instead.
+# Run with coverage
+npm run test -- --coverage
+
+# Run E2E tests
+npm run test:e2e
+```
+
+**Test structure:**
+```typescript
+import { render, screen, fireEvent } from '@testing-library/react'
+import { WorkspacePanel } from './WorkspacePanel'
+
+describe('WorkspacePanel', () => {
+  it('renders workspace correctly', () => {
+    render(<WorkspacePanel />)
+    expect(screen.getByRole('main')).toBeInTheDocument()
+  })
+
+  it('handles session creation', async () => {
+    render(<WorkspacePanel />)
+    fireEvent.click(screen.getByText('New Session'))
+    expect(await screen.findByText('Session created')).toBeInTheDocument()
+  })
+})
+```
+
+---
+
+## Deployment Workflow
+
+### Pre-Deployment Checklist
+
+- [ ] All tests passing locally
+- [ ] `npm run build` succeeds (frontend)
+- [ ] `poetry run pytest` passes (backend)
+- [ ] No hardcoded secrets
+- [ ] Environment variables documented
+- [ ] Database migrations ready
+
+### Deployment Commands
+
+```bash
+# Build and deploy frontend
+cd frontend && npm run build
+gcloud run deploy frontend --source .
+
+# Build and deploy backend
+cd backend
+gcloud run deploy backend --source .
+```
+
+### Environment Variables
+
+```bash
+# Frontend (.env.local)
+NEXT_PUBLIC_API_URL=https://api.example.com
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+
+# Backend (.env)
+DATABASE_URL=postgresql://...
+ANTHROPIC_API_KEY=sk-ant-...
+SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_KEY=eyJ...
+```
+
+---
+
+## Critical Rules
+
+1. **No emojis** in code, comments, or documentation
+2. **Immutability** - never mutate objects or arrays
+3. **TDD** - write tests before implementation
+4. **80% coverage** minimum
+5. **Many small files** - 200-400 lines typical, 800 max
+6. **No console.log** in production code
+7. **Proper error handling** with try/catch
+8. **Input validation** with Pydantic/Zod
+
+---
+
+## Related Skills
+
+- `coding-standards.md` - General coding best practices
+- `backend-patterns.md` - API and database patterns
+- `frontend-patterns.md` - React and Next.js patterns
+- `tdd-workflow/` - Test-driven development methodology
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
