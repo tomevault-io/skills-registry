@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [yvanvds/yse-soundengine](https://github.com/yvanvds/yse-soundengine/tree/main/.claude/skills/release/SKILL.md)
+Original source: [yvanvds/yse-soundengine](https://github.com/yvanvds/yse-soundengine/tree/main/.claude/skills/fix-issues/SKILL.md)
 
 ---
 
