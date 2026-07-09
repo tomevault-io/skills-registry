@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [krodak/clickup-cli](https://github.com/krodak/clickup-cli/tree/main/skills/clickup-cli/SKILL.md)
+Original source: [krodak/clickup-cli](https://github.com/krodak/clickup-cli/tree/main/.agents/skills/testing-clickup-cli/SKILL.md)
 
 ---
 
