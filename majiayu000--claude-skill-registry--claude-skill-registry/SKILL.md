@@ -1,442 +1,327 @@
 ---
-name: stakeholder-communication
-description: Manage stakeholder expectations and engagement through targeted communication, regular updates, and relationship building. Tailor messaging for different stakeholder groups and priorities. Use when this capability is needed.
+name: vue-application-structure
+description: Structure Vue 3 applications using Composition API, component organization, and TypeScript. Use when building scalable Vue applications with proper separation of concerns. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Stakeholder Communication
+# Vue Application Structure
 
 ## Overview
 
-Effective stakeholder communication ensures alignment, manages expectations, builds trust, and keeps projects on track by addressing concerns proactively.
+Build well-organized Vue 3 applications using Composition API, proper file organization, and TypeScript for type safety and maintainability.
 
 ## When to Use
 
-- Project kickoff and initiation
-- Weekly/monthly status updates
-- Major milestone achievements
-- Changes to scope, timeline, or budget
-- Risks or issues requiring escalation
-- Stakeholder onboarding
-- Handling difficult conversations
+- Large-scale Vue applications
+- Component library development
+- Reusable composable hooks
+- Complex state management
+- Performance optimization
 
-## Instructions
+## Implementation Examples
 
-### 1. **Stakeholder Analysis**
+### 1. **Vue 3 Composition API Component**
 
-```python
-# Stakeholder identification and engagement planning
+```typescript
+// useCounter.ts (Composable)
+import { ref, computed } from 'vue';
 
-class StakeholderAnalysis:
-    ENGAGEMENT_LEVELS = {
-        'Unaware': 'Provide basic information',
-        'Resistant': 'Address concerns, build trust',
-        'Neutral': 'Keep informed, demonstrate value',
-        'Supportive': 'Engage as advocates',
-        'Champion': 'Leverage for change leadership'
-    }
+export function useCounter(initialValue = 0) {
+  const count = ref(initialValue);
 
-    def __init__(self, project_name):
-        self.project_name = project_name
-        self.stakeholders = []
+  const doubled = computed(() => count.value * 2);
+  const increment = () => count.value++;
+  const decrement = () => count.value--;
+  const reset = () => count.value = initialValue;
 
-    def identify_stakeholders(self):
-        """Common stakeholder categories"""
-        return {
-            'Executive Sponsors': {
-                'interests': ['ROI', 'Strategic alignment', 'Timeline'],
-                'communication': 'Monthly executive summary',
-                'influence': 'High',
-                'impact': 'High'
-            },
-            'Project Team': {
-                'interests': ['Task clarity', 'Resources', 'Support'],
-                'communication': 'Daily standup, weekly planning',
-                'influence': 'High',
-                'impact': 'High'
-            },
-            'End Users': {
-                'interests': ['Usability', 'Value delivery', 'Support'],
-                'communication': 'Beta testing, training, feedback sessions',
-                'influence': 'Medium',
-                'impact': 'High'
-            },
-            'Technical Governance': {
-                'interests': ['Architecture', 'Security', 'Compliance'],
-                'communication': 'Technical reviews, design docs',
-                'influence': 'High',
-                'impact': 'Medium'
-            },
-            'Department Heads': {
-                'interests': ['Resource impact', 'Timeline', 'Business impact'],
-                'communication': 'Bi-weekly updates, resource requests',
-                'influence': 'Medium',
-                'impact': 'Medium'
-            }
-        }
-
-    def create_engagement_plan(self, stakeholder):
-        """Design communication strategy for each stakeholder"""
-        return {
-            'name': stakeholder.name,
-            'role': stakeholder.role,
-            'power': stakeholder.influence_level,  # High/Medium/Low
-            'interest': stakeholder.interest_level,  # High/Medium/Low
-            'strategy': self.determine_strategy(
-                stakeholder.influence_level,
-                stakeholder.interest_level
-            ),
-            'communication_frequency': self.frequency_mapping(stakeholder),
-            'key_messages': self.tailor_messages(stakeholder),
-            'escalation_threshold': self.set_escalation_rules(stakeholder)
-        }
-
-    def determine_strategy(self, power, interest):
-        """Stakeholder power/interest matrix"""
-        if power == 'High' and interest == 'High':
-            return 'Manage closely (key stakeholders)'
-        elif power == 'High' and interest == 'Low':
-            return 'Keep satisfied'
-        elif power == 'Low' and interest == 'High':
-            return 'Keep informed'
-        else:
-            return 'Monitor'
-
-    def frequency_mapping(self, stakeholder):
-        strategies = {
-            'Manage closely': 'Weekly',
-            'Keep satisfied': 'Bi-weekly',
-            'Keep informed': 'Monthly',
-            'Monitor': 'Quarterly'
-        }
-        return strategies.get(stakeholder.strategy, 'Monthly')
-```
-
-### 2. **Communication Planning**
-
-```yaml
-Stakeholder Communication Plan:
-
-Project: Customer Portal Redesign
-Duration: 6 months
-Start Date: January 1
-
----
-
-Stakeholder Group: Executive Leadership
-Members: CEO, CFO, CMO
-Interests: ROI, Timeline, Brand impact
-Engagement: Manage closely
-
-Communication Strategy:
-  Frequency: Monthly (30-min executive briefing)
-  Format: Presentation + 1-page summary
-  Medium: Video conference
-  Owner: Project Manager
-
-Key Messages:
-  - Project progress vs. milestone targets
-  - Budget status and variance
-  - Business value realized/projected
-  - Any critical issues requiring decision
-
-Sample Agenda:
-  5 min: Status summary (Green/Yellow/Red)
-  10 min: Key achievements & milestones
-  5 min: Budget & resource update
-  10 min: Risks & critical decisions needed
-
----
-
-Stakeholder Group: Technical Governance
-Members: Solutions Architect, Security Lead, Infrastructure Lead
-Interests: Architecture, Security, Performance
-Engagement: Manage closely
-
-Communication Strategy:
-  Frequency: Bi-weekly (60-min technical sync)
-  Format: Technical review, design discussions
-  Medium: In-person / Video conference
-  Owner: Technical Lead
-
-Key Messages:
-  - Architecture decisions & trade-offs
-  - Security review status
-  - Performance benchmarks
-  - Technical debt & mitigation
-
----
-
-Stakeholder Group: End Users
-Members: 500+ portal users
-Interests: Functionality, Usability, Support
-Engagement: Keep informed
-
-Communication Strategy:
-  Frequency: Quarterly (user sessions), ongoing feedback
-  Format: Demos, surveys, support channels
-  Medium: In-app notifications, email, forums
-  Owner: Product Manager
-
-Key Messages:
-  - New features and capabilities
-  - Timeline for improvements
-  - How feedback is being used
-  - Support & training resources
-```
-
-### 3. **Status Communication Templates**
-
-```javascript
-// Status report generation and distribution
-
-class StatusReporting {
-  constructor(project) {
-    this.project = project;
-    this.reportDate = new Date();
-  }
-
-  generateExecutiveStatus() {
-    return {
-      projectName: this.project.name,
-      reportDate: this.reportDate,
-      status: 'Green', // Green/Yellow/Red
-      summary: `Project is on track. Completed Phase 1 milestones with 95%
-                budget adherence. Minor delay in vendor integration (handled).`,
-
-      keyMetrics: {
-        schedulePercentComplete: 45,
-        budgetUtilization: 42,
-        scope: 'On track',
-        quality: 'All tests passing'
-      },
-
-      achievements: [
-        'Completed user research and documented requirements',
-        'Finalized system architecture and technology stack',
-        'Established development pipeline and CI/CD',
-        'Delivered Phase 1 prototype to stakeholders'
-      ],
-
-      risks: [
-        {
-          risk: 'Third-party API delay',
-          impact: 'Medium',
-          mitigation: 'Using mock service, 80% contingency time built in'
-        }
-      ],
-
-      nextSteps: [
-        'Begin Phase 2 development (Week 5)',
-        'User acceptance testing planning',
-        'Production environment setup'
-      ],
-
-      decisionsNeeded: [
-        'Approval for enhanced security requirements (+1 week)',
-        'Budget for additional load testing tools'
-      ]
-    };
-  }
-
-  generateDetailedStatus() {
-    return {
-      ...this.generateExecutiveStatus(),
-
-      detailedMetrics: {
-        scheduleVariance: '+0.5 weeks (ahead)',
-        costVariance: '-$5,000 (under)',
-        qualityMetrics: {
-          testCoverage: 85,
-          defectDensity: '0.2 per 1000 lines',
-          codeReviewCompliance: 100
-        }
-      },
-
-      phaseBreakdown: [
-        {
-          phase: 'Phase 1: Planning & Design',
-          status: 'Complete',
-          percentComplete: 100,
-          owner: 'John Smith'
-        },
-        {
-          phase: 'Phase 2: Development',
-          status: 'In Progress',
-          percentComplete: 45,
-          owner: 'Sarah Johnson'
-        }
-      ],
-
-      issueLog: [
-        {
-          id: 'ISS-001',
-          description: 'Vendor API documentation incomplete',
-          severity: 'Medium',
-          owner: 'Tech Lead',
-          targetResolution: '2025-01-15'
-        }
-      ]
-    };
-  }
-
-  sendStatusReport(recipients, format = 'email') {
-    const report = this.generateExecutiveStatus();
-
-    return {
-      to: recipients,
-      subject: `[${report.status}] ${report.projectName} Status - Week of ${this.reportDate}`,
-      body: this.formatReportBody(report),
-      attachments: ['detailed_status.pdf'],
-      scheduledSend: false
-    };
-  }
-
-  formatReportBody(report) {
-    return `
-Project Status: ${report.status}
-Report Date: ${this.reportDate.toISOString().split('T')[0]}
-
-EXECUTIVE SUMMARY
-${report.summary}
-
-KEY METRICS
-- Schedule: ${report.keyMetrics.schedulePercentComplete}% Complete
-- Budget: ${report.keyMetrics.budgetUtilization}% Utilized
-- Quality: ${report.keyMetrics.quality}
-
-ACHIEVEMENTS THIS PERIOD
-${report.achievements.map(a => `• ${a}`).join('\n')}
-
-UPCOMING MILESTONES
-${report.nextSteps.map(s => `• ${s}`).join('\n')}
-
-RISKS & ISSUES
-${report.risks.map(r => `• ${r.risk} (${r.impact} Impact): ${r.mitigation}`).join('\n')}
-
-DECISIONS NEEDED
-${report.decisionsNeeded.map(d => `• ${d}`).join('\n')}
-    `;
-  }
+  return {
+    count,
+    doubled,
+    increment,
+    decrement,
+    reset
+  };
 }
+
+// Counter.vue
+<template>
+  <div class="counter">
+    <p>Count: {{ count }}</p>
+    <p>Doubled: {{ doubled }}</p>
+    <button @click="increment">+</button>
+    <button @click="decrement">-</button>
+    <button @click="reset">Reset</button>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useCounter } from './useCounter';
+
+const { count, doubled, increment, decrement, reset } = useCounter(0);
+</script>
+
+<style scoped>
+.counter {
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+</style>
 ```
 
-### 4. **Difficult Conversations**
+### 2. **Async Data Fetching Composable**
 
-```markdown
-## Handling Difficult Stakeholder Conversations
+```typescript
+// useFetch.ts
+import { ref, computed, onMounted } from 'vue';
 
-### Preparing for Difficult Conversations
+interface UseFetchOptions {
+  immediate?: boolean;
+}
 
-1. **Gather Facts**
-   - Be clear about the issue/change
-   - Have data to support your position
-   - Understand implications for stakeholder
+export function useFetch<T>(
+  url: string,
+  options: UseFetchOptions = {}
+) {
+  const data = ref<T | null>(null);
+  const loading = ref(false);
+  const error = ref<Error | null>(null);
 
-2. **Anticipate Reactions**
-   - What concerns might arise?
-   - What are valid pain points?
-   - What mitigations can you offer?
+  const isLoading = computed(() => loading.value);
+  const hasError = computed(() => error.value !== null);
 
-3. **Plan the Conversation**
-   - One-on-one preferred for sensitive topics
-   - Choose appropriate timing and location
-   - Prepare talking points
-   - Identify decision-maker authority
+  const fetch = async () => {
+    loading.value = true;
+    error.value = null;
 
-### Delivering Bad News
+    try {
+      const response = await globalThis.fetch(url);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      data.value = await response.json();
+    } catch (e) {
+      error.value = e instanceof Error ? e : new Error(String(e));
+    } finally {
+      loading.value = false;
+    }
+  };
 
-Bad News Template:
+  const refetch = () => fetch();
 
-1. **Context** (30 seconds)
-   - What is the situation?
-   - Why are we discussing this?
+  if (options.immediate !== false) {
+    onMounted(fetch);
+  }
 
-2. **The News** (Direct & Clear)
-   - State clearly what's changed
-   - Provide specific impact
-   - Avoid softening language
+  return {
+    data,
+    loading: isLoading,
+    error: hasError,
+    fetch,
+    refetch
+  };
+}
 
-3. **Root Cause** (if applicable)
-   - Explain what happened
-   - Take responsibility if appropriate
-   - Avoid blame
+// UserList.vue
+<template>
+  <div>
+    <button @click="refetch">Refresh</button>
+    <p v-if="loading">Loading...</p>
+    <p v-if="error" class="text-red-500">Error loading users</p>
+    <ul v-else>
+      <li v-for="user in data" :key="user.id">{{ user.name }}</li>
+    </ul>
+  </div>
+</template>
 
-4. **Impact Assessment**
-   - Timeline impact
-   - Budget impact
-   - Scope impact
+<script setup lang="ts">
+import { useFetch } from './useFetch';
 
-5. **Mitigation Plan**
-   - What will you do about it?
-   - Specific actions & timeline
-   - How will you prevent recurrence?
+interface User {
+  id: number;
+  name: string;
+}
 
-6. **Next Steps**
-   - What decisions are needed?
-   - When will you follow up?
-   - How can stakeholder help?
+const { data, loading, error, refetch } = useFetch<User[]>('/api/users');
+</script>
+```
 
-### Example Conversation
+### 3. **Component Organization Structure**
 
-**Issue:** Timeline extension needed (2 weeks)
+```
+src/
+├── components/
+│   ├── common/
+│   │   ├── Button.vue
+│   │   ├── Card.vue
+│   │   └── Modal.vue
+│   ├── forms/
+│   │   ├── FormInput.vue
+│   │   └── FormSelect.vue
+│   └── layouts/
+│       ├── Header.vue
+│       └── Sidebar.vue
+├── composables/
+│   ├── useCounter.ts
+│   ├── useFetch.ts
+│   └── useForm.ts
+├── services/
+│   ├── api.ts
+│   └── auth.ts
+├── stores/
+│   ├── user.ts
+│   └── auth.ts
+├── types/
+│   ├── models.ts
+│   └── api.ts
+├── App.vue
+└── main.ts
+```
 
-"Thank you for your time. I need to share an important update about
-our timeline.
+### 4. **Form Handling Composable**
 
-We've discovered that the integration with the payment system requires
-more extensive security hardening than initially estimated. We've run
-performance tests and determined we need an additional 2 weeks to meet
-our security and compliance requirements.
+```typescript
+// useForm.ts
+import { ref, reactive } from 'vue';
 
-This impacts our delivery date from March 15 to March 29. Budget impact
-is minimal ($8K for additional testing).
+interface UseFormOptions<T> {
+  onSubmit: (data: T) => Promise<void>;
+  initialValues: T;
+}
 
-Here's what we're doing to manage this: We're running security tests
-in parallel with development, we've engaged the security team early,
-and we've built in validation checkpoints to catch issues early.
+export function useForm<T extends Record<string, any>>(
+  options: UseFormOptions<T>
+) {
+  const formData = reactive<T>(options.initialValues);
+  const errors = reactive<Record<string, string>>({});
+  const isSubmitting = ref(false);
 
-The alternative is to launch with reduced security, which we cannot
-recommend given our risk profile.
+  const handleSubmit = async (e?: Event) => {
+    e?.preventDefault();
+    isSubmitting.value = true;
 
-I need your approval to proceed with the extended timeline. Can we
-schedule a 30-minute call with you and the executive team tomorrow
-to discuss?"
+    try {
+      await options.onSubmit(formData);
+    } catch (error) {
+      const err = error as any;
+      if (err.fieldErrors) {
+        Object.assign(errors, err.fieldErrors);
+      }
+    } finally {
+      isSubmitting.value = false;
+    }
+  };
+
+  const reset = () => {
+    Object.assign(formData, options.initialValues);
+    Object.keys(errors).forEach(key => delete errors[key]);
+  };
+
+  return {
+    formData,
+    errors,
+    isSubmitting,
+    handleSubmit,
+    reset
+  };
+}
+
+// LoginForm.vue
+<template>
+  <form @submit="handleSubmit">
+    <input v-model="formData.email" type="email" />
+    <span v-if="errors.email" class="error">{{ errors.email }}</span>
+
+    <input v-model="formData.password" type="password" />
+    <span v-if="errors.password" class="error">{{ errors.password }}</span>
+
+    <button type="submit" :disabled="isSubmitting">Login</button>
+  </form>
+</template>
+
+<script setup lang="ts">
+import { useForm } from './useForm';
+
+const { formData, errors, isSubmitting, handleSubmit } = useForm({
+  initialValues: { email: '', password: '' },
+  onSubmit: async (data) => {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error('Login failed');
+  }
+});
+</script>
+```
+
+### 5. **Pinia Store (State Management)**
+
+```typescript
+// stores/user.ts
+import { defineStore } from 'pinia';
+import { ref, computed } from 'vue';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export const useUserStore = defineStore('user', () => {
+  const user = ref<User | null>(null);
+  const isLoading = ref(false);
+
+  const isLoggedIn = computed(() => user.value !== null);
+
+  const fetchUser = async (id: number) => {
+    isLoading.value = true;
+    try {
+      const response = await fetch(`/api/users/${id}`);
+      user.value = await response.json();
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
+  const logout = () => {
+    user.value = null;
+  };
+
+  return {
+    user,
+    isLoading,
+    isLoggedIn,
+    fetchUser,
+    logout
+  };
+});
+
+// Usage in component
+import { useUserStore } from '@/stores/user';
+
+export default {
+  setup() {
+    const userStore = useUserStore();
+    userStore.fetchUser(1);
+    return { userStore };
+  }
+};
 ```
 
 ## Best Practices
 
-### ✅ DO
-- Tailor messages to stakeholder interests and influence
-- Communicate proactively, not reactively
-- Be transparent about issues and risks
-- Provide regular scheduled updates
-- Document decisions and communication
-- Acknowledge stakeholder concerns
-- Follow up on action items
-- Build relationships outside crisis mode
-- Use multiple communication channels
-- Celebrate wins together
+- Organize by features or domains
+- Use Composition API for logic reuse
+- Extract composables for shared logic
+- Use TypeScript for type safety
+- Implement proper error handling
+- Keep components focused and testable
+- Use Pinia for state management
 
-### ❌ DON'T
-- Overcommunicate or undercommunicate
-- Use jargon stakeholders don't understand
-- Surprise stakeholders with bad news
-- Promise what you can't deliver
-- Make excuses without solutions
-- Communicate through intermediaries for critical issues
-- Ignore feedback or concerns
-- Change communication style inconsistently
-- Share inappropriate confidential details
-- Communicate budget/timeline bad news via email
+## Resources
 
-## Communication Tips
-
-- Schedule communication at consistent times
-- Use visual dashboards for metrics
-- Record important conversations
-- Share why, not just what changed
+- [Vue 3 Documentation](https://vuejs.org)
+- [Vue Composition API](https://vuejs.org/guide/extras/composition-api-faq.html)
+- [Pinia State Management](https://pinia.vuejs.org)
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
