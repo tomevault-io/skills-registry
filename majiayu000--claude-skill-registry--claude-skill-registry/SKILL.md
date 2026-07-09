@@ -1,167 +1,442 @@
 ---
-name: tidy-first
-description: Follow Kent Beck's Tidy First principles by strictly separating structural changes from behavioral changes. Use when refactoring code, restructuring code, making structural changes without changing behavior, renaming variables/functions, extracting methods, separating concerns, preparing code for new features, or need to ensure structural and behavioral changes are in separate commits. Use when this capability is needed.
+name: stakeholder-communication
+description: Manage stakeholder expectations and engagement through targeted communication, regular updates, and relationship building. Tailor messaging for different stakeholder groups and priorities. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# tidy-first
+# Stakeholder Communication
+
+## Overview
+
+Effective stakeholder communication ensures alignment, manages expectations, builds trust, and keeps projects on track by addressing concerns proactively.
+
+## When to Use
+
+- Project kickoff and initiation
+- Weekly/monthly status updates
+- Major milestone achievements
+- Changes to scope, timeline, or budget
+- Risks or issues requiring escalation
+- Stakeholder onboarding
+- Handling difficult conversations
 
 ## Instructions
-Follow Kent Beck's "Tidy First" approach by strictly separating structural changes from behavioral changes in all development work.
 
-### Core Principle
-Separate all changes into two distinct types:
+### 1. **Stakeholder Analysis**
 
-1. **STRUCTURAL CHANGES**: Rearranging code without changing behavior
-   - Renaming variables, functions, classes
-   - Extracting methods or functions
-   - Moving code to different files or modules
-   - Reorganizing code structure
-   - Improving code organization
+```python
+# Stakeholder identification and engagement planning
 
-2. **BEHAVIORAL CHANGES**: Adding or modifying actual functionality
-   - Adding new features
-   - Fixing bugs
-   - Changing business logic
-   - Modifying functionality
+class StakeholderAnalysis:
+    ENGAGEMENT_LEVELS = {
+        'Unaware': 'Provide basic information',
+        'Resistant': 'Address concerns, build trust',
+        'Neutral': 'Keep informed, demonstrate value',
+        'Supportive': 'Engage as advocates',
+        'Champion': 'Leverage for change leadership'
+    }
 
-### Golden Rules
+    def __init__(self, project_name):
+        self.project_name = project_name
+        self.stakeholders = []
 
-#### Never Mix Change Types
-- **Never mix structural and behavioral changes in the same commit**
-- Each commit should be either purely structural OR purely behavioral
-- This makes code review easier and debugging simpler
+    def identify_stakeholders(self):
+        """Common stakeholder categories"""
+        return {
+            'Executive Sponsors': {
+                'interests': ['ROI', 'Strategic alignment', 'Timeline'],
+                'communication': 'Monthly executive summary',
+                'influence': 'High',
+                'impact': 'High'
+            },
+            'Project Team': {
+                'interests': ['Task clarity', 'Resources', 'Support'],
+                'communication': 'Daily standup, weekly planning',
+                'influence': 'High',
+                'impact': 'High'
+            },
+            'End Users': {
+                'interests': ['Usability', 'Value delivery', 'Support'],
+                'communication': 'Beta testing, training, feedback sessions',
+                'influence': 'Medium',
+                'impact': 'High'
+            },
+            'Technical Governance': {
+                'interests': ['Architecture', 'Security', 'Compliance'],
+                'communication': 'Technical reviews, design docs',
+                'influence': 'High',
+                'impact': 'Medium'
+            },
+            'Department Heads': {
+                'interests': ['Resource impact', 'Timeline', 'Business impact'],
+                'communication': 'Bi-weekly updates, resource requests',
+                'influence': 'Medium',
+                'impact': 'Medium'
+            }
+        }
 
-#### Structural Changes First
-- **Always make structural changes first when both are needed**
-- Tidy the code before adding new behavior
-- Prepare the structure to receive new functionality
+    def create_engagement_plan(self, stakeholder):
+        """Design communication strategy for each stakeholder"""
+        return {
+            'name': stakeholder.name,
+            'role': stakeholder.role,
+            'power': stakeholder.influence_level,  # High/Medium/Low
+            'interest': stakeholder.interest_level,  # High/Medium/Low
+            'strategy': self.determine_strategy(
+                stakeholder.influence_level,
+                stakeholder.interest_level
+            ),
+            'communication_frequency': self.frequency_mapping(stakeholder),
+            'key_messages': self.tailor_messages(stakeholder),
+            'escalation_threshold': self.set_escalation_rules(stakeholder)
+        }
 
-#### Validate Structural Changes
-- **Validate structural changes do not alter behavior**
-- Run all tests before making structural changes
-- Run all tests after making structural changes
-- Tests must pass both before and after - same results
-- If behavior changes, it wasn't a pure structural change
+    def determine_strategy(self, power, interest):
+        """Stakeholder power/interest matrix"""
+        if power == 'High' and interest == 'High':
+            return 'Manage closely (key stakeholders)'
+        elif power == 'High' and interest == 'Low':
+            return 'Keep satisfied'
+        elif power == 'Low' and interest == 'High':
+            return 'Keep informed'
+        else:
+            return 'Monitor'
 
-### Workflow
+    def frequency_mapping(self, stakeholder):
+        strategies = {
+            'Manage closely': 'Weekly',
+            'Keep satisfied': 'Bi-weekly',
+            'Keep informed': 'Monthly',
+            'Monitor': 'Quarterly'
+        }
+        return strategies.get(stakeholder.strategy, 'Monthly')
+```
 
-#### When Making Structural Changes
-1. Ensure all tests are currently passing
-2. Make one structural change at a time
-3. Run tests to verify behavior unchanged
-4. Commit the structural change with clear message
-5. Repeat for next structural change if needed
+### 2. **Communication Planning**
 
-#### When Making Behavioral Changes
-1. Complete all structural changes first
-2. Commit all structural changes separately
-3. Now make behavioral changes
-4. Follow TDD cycle (Red → Green → Refactor)
-5. Commit behavioral changes separately
+```yaml
+Stakeholder Communication Plan:
 
-### Commit Discipline
+Project: Customer Portal Redesign
+Duration: 6 months
+Start Date: January 1
 
-#### Commit Message Format
-Use the `commit-message` skill format:
-- Structural changes: ♻️ refactor or 🧹 tidy
-- Behavioral changes: ✨ feat or 🐛 fix
+---
 
-#### Commit Requirements
-Only commit when:
-1. ALL tests are passing
-2. ALL compiler/linter warnings have been resolved
-3. The change represents a single logical unit of work
+Stakeholder Group: Executive Leadership
+Members: CEO, CFO, CMO
+Interests: ROI, Timeline, Brand impact
+Engagement: Manage closely
 
-#### Commit Frequency
-- Use small, frequent commits rather than large, infrequent ones
-- Each structural change gets its own commit
-- Each behavioral change gets its own commit
+Communication Strategy:
+  Frequency: Monthly (30-min executive briefing)
+  Format: Presentation + 1-page summary
+  Medium: Video conference
+  Owner: Project Manager
 
-### Code Quality Standards
+Key Messages:
+  - Project progress vs. milestone targets
+  - Budget status and variance
+  - Business value realized/projected
+  - Any critical issues requiring decision
 
-Apply these principles during structural changes:
+Sample Agenda:
+  5 min: Status summary (Green/Yellow/Red)
+  10 min: Key achievements & milestones
+  5 min: Budget & resource update
+  10 min: Risks & critical decisions needed
 
-- **Eliminate duplication ruthlessly**
-  - Look for repeated code patterns
-  - Extract common functionality
-  - Use DRY (Don't Repeat Yourself) principle
+---
 
-- **Express intent clearly through naming and structure**
-  - Use descriptive names for variables, functions, classes
-  - Make code self-documenting
-  - Structure code to reveal intent
+Stakeholder Group: Technical Governance
+Members: Solutions Architect, Security Lead, Infrastructure Lead
+Interests: Architecture, Security, Performance
+Engagement: Manage closely
 
-- **Make dependencies explicit**
-  - Clearly show what depends on what
-  - Avoid hidden dependencies
-  - Use dependency injection where appropriate
+Communication Strategy:
+  Frequency: Bi-weekly (60-min technical sync)
+  Format: Technical review, design discussions
+  Medium: In-person / Video conference
+  Owner: Technical Lead
 
-- **Keep methods small and focused on a single responsibility**
-  - Each function/method should do one thing well
-  - Follow Single Responsibility Principle
-  - Extract large methods into smaller, focused ones
+Key Messages:
+  - Architecture decisions & trade-offs
+  - Security review status
+  - Performance benchmarks
+  - Technical debt & mitigation
 
-- **Minimize state and side effects**
-  - Prefer pure functions when possible
-  - Make side effects explicit and controlled
-  - Reduce mutable state
+---
 
-### Refactoring Patterns
+Stakeholder Group: End Users
+Members: 500+ portal users
+Interests: Functionality, Usability, Support
+Engagement: Keep informed
 
-Use established refactoring patterns with their proper names:
+Communication Strategy:
+  Frequency: Quarterly (user sessions), ongoing feedback
+  Format: Demos, surveys, support channels
+  Medium: In-app notifications, email, forums
+  Owner: Product Manager
 
-- **Extract Method**: Pull code into a new method
-- **Rename**: Change names to better express intent
-- **Move Method**: Relocate method to more appropriate class
-- **Extract Class**: Split large class into smaller ones
-- **Inline Method**: Replace method call with method body
-- **Replace Temp with Query**: Replace temporary variable with method
-- **Introduce Parameter Object**: Group parameters into object
+Key Messages:
+  - New features and capabilities
+  - Timeline for improvements
+  - How feedback is being used
+  - Support & training resources
+```
 
-### Examples
+### 3. **Status Communication Templates**
 
-#### Structural Change Example
+```javascript
+// Status report generation and distribution
 
-```go
-// Before Refactoring
-func CalculateTotal(price float64, taxRate float64) float64 {
-    tax := price * taxRate
-    return price + tax
-}
-// After Refactoring - Extract Method
-func CalculateTotal(price float64, taxRate float64) float64 {
-    tax := CalculateTax(price, taxRate)
-    return price + tax
-}
-func CalculateTax(price float64, taxRate float64) float64 {
-    return price * taxRate
+class StatusReporting {
+  constructor(project) {
+    this.project = project;
+    this.reportDate = new Date();
+  }
+
+  generateExecutiveStatus() {
+    return {
+      projectName: this.project.name,
+      reportDate: this.reportDate,
+      status: 'Green', // Green/Yellow/Red
+      summary: `Project is on track. Completed Phase 1 milestones with 95%
+                budget adherence. Minor delay in vendor integration (handled).`,
+
+      keyMetrics: {
+        schedulePercentComplete: 45,
+        budgetUtilization: 42,
+        scope: 'On track',
+        quality: 'All tests passing'
+      },
+
+      achievements: [
+        'Completed user research and documented requirements',
+        'Finalized system architecture and technology stack',
+        'Established development pipeline and CI/CD',
+        'Delivered Phase 1 prototype to stakeholders'
+      ],
+
+      risks: [
+        {
+          risk: 'Third-party API delay',
+          impact: 'Medium',
+          mitigation: 'Using mock service, 80% contingency time built in'
+        }
+      ],
+
+      nextSteps: [
+        'Begin Phase 2 development (Week 5)',
+        'User acceptance testing planning',
+        'Production environment setup'
+      ],
+
+      decisionsNeeded: [
+        'Approval for enhanced security requirements (+1 week)',
+        'Budget for additional load testing tools'
+      ]
+    };
+  }
+
+  generateDetailedStatus() {
+    return {
+      ...this.generateExecutiveStatus(),
+
+      detailedMetrics: {
+        scheduleVariance: '+0.5 weeks (ahead)',
+        costVariance: '-$5,000 (under)',
+        qualityMetrics: {
+          testCoverage: 85,
+          defectDensity: '0.2 per 1000 lines',
+          codeReviewCompliance: 100
+        }
+      },
+
+      phaseBreakdown: [
+        {
+          phase: 'Phase 1: Planning & Design',
+          status: 'Complete',
+          percentComplete: 100,
+          owner: 'John Smith'
+        },
+        {
+          phase: 'Phase 2: Development',
+          status: 'In Progress',
+          percentComplete: 45,
+          owner: 'Sarah Johnson'
+        }
+      ],
+
+      issueLog: [
+        {
+          id: 'ISS-001',
+          description: 'Vendor API documentation incomplete',
+          severity: 'Medium',
+          owner: 'Tech Lead',
+          targetResolution: '2025-01-15'
+        }
+      ]
+    };
+  }
+
+  sendStatusReport(recipients, format = 'email') {
+    const report = this.generateExecutiveStatus();
+
+    return {
+      to: recipients,
+      subject: `[${report.status}] ${report.projectName} Status - Week of ${this.reportDate}`,
+      body: this.formatReportBody(report),
+      attachments: ['detailed_status.pdf'],
+      scheduledSend: false
+    };
+  }
+
+  formatReportBody(report) {
+    return `
+Project Status: ${report.status}
+Report Date: ${this.reportDate.toISOString().split('T')[0]}
+
+EXECUTIVE SUMMARY
+${report.summary}
+
+KEY METRICS
+- Schedule: ${report.keyMetrics.schedulePercentComplete}% Complete
+- Budget: ${report.keyMetrics.budgetUtilization}% Utilized
+- Quality: ${report.keyMetrics.quality}
+
+ACHIEVEMENTS THIS PERIOD
+${report.achievements.map(a => `• ${a}`).join('\n')}
+
+UPCOMING MILESTONES
+${report.nextSteps.map(s => `• ${s}`).join('\n')}
+
+RISKS & ISSUES
+${report.risks.map(r => `• ${r.risk} (${r.impact} Impact): ${r.mitigation}`).join('\n')}
+
+DECISIONS NEEDED
+${report.decisionsNeeded.map(d => `• ${d}`).join('\n')}
+    `;
+  }
 }
 ```
 
-#### Behavioral Change Example
+### 4. **Difficult Conversations**
 
-```go
-// Before Behavioral Change
-func CalculateTotal(price float64, taxRate float64) float64 {
-    tax := price * taxRate
-    return price + tax
-}
-// After Behavioral Change - Change Tax Calculation
-func CalculateTotal(price float64, taxRate float64) float64 {
-    tax := price * taxRate * 1.1 // New tax logic
-    return price + tax
-}
+```markdown
+## Handling Difficult Stakeholder Conversations
+
+### Preparing for Difficult Conversations
+
+1. **Gather Facts**
+   - Be clear about the issue/change
+   - Have data to support your position
+   - Understand implications for stakeholder
+
+2. **Anticipate Reactions**
+   - What concerns might arise?
+   - What are valid pain points?
+   - What mitigations can you offer?
+
+3. **Plan the Conversation**
+   - One-on-one preferred for sensitive topics
+   - Choose appropriate timing and location
+   - Prepare talking points
+   - Identify decision-maker authority
+
+### Delivering Bad News
+
+Bad News Template:
+
+1. **Context** (30 seconds)
+   - What is the situation?
+   - Why are we discussing this?
+
+2. **The News** (Direct & Clear)
+   - State clearly what's changed
+   - Provide specific impact
+   - Avoid softening language
+
+3. **Root Cause** (if applicable)
+   - Explain what happened
+   - Take responsibility if appropriate
+   - Avoid blame
+
+4. **Impact Assessment**
+   - Timeline impact
+   - Budget impact
+   - Scope impact
+
+5. **Mitigation Plan**
+   - What will you do about it?
+   - Specific actions & timeline
+   - How will you prevent recurrence?
+
+6. **Next Steps**
+   - What decisions are needed?
+   - When will you follow up?
+   - How can stakeholder help?
+
+### Example Conversation
+
+**Issue:** Timeline extension needed (2 weeks)
+
+"Thank you for your time. I need to share an important update about
+our timeline.
+
+We've discovered that the integration with the payment system requires
+more extensive security hardening than initially estimated. We've run
+performance tests and determined we need an additional 2 weeks to meet
+our security and compliance requirements.
+
+This impacts our delivery date from March 15 to March 29. Budget impact
+is minimal ($8K for additional testing).
+
+Here's what we're doing to manage this: We're running security tests
+in parallel with development, we've engaged the security team early,
+and we've built in validation checkpoints to catch issues early.
+
+The alternative is to launch with reduced security, which we cannot
+recommend given our risk profile.
+
+I need your approval to proceed with the extended timeline. Can we
+schedule a 30-minute call with you and the executive team tomorrow
+to discuss?"
 ```
 
-### Benefits
+## Best Practices
 
-- **Easier code review**: Reviewers can quickly verify structural changes don't alter behavior
-- **Safer refactoring**: Tests guarantee no behavior changed
-- **Better git history**: Clear separation makes debugging easier
-- **Easier rollback**: Can revert behavioral changes without losing structural improvements
-- **Lower risk**: Small, focused changes reduce chance of introducing bugs
+### ✅ DO
+- Tailor messages to stakeholder interests and influence
+- Communicate proactively, not reactively
+- Be transparent about issues and risks
+- Provide regular scheduled updates
+- Document decisions and communication
+- Acknowledge stakeholder concerns
+- Follow up on action items
+- Build relationships outside crisis mode
+- Use multiple communication channels
+- Celebrate wins together
+
+### ❌ DON'T
+- Overcommunicate or undercommunicate
+- Use jargon stakeholders don't understand
+- Surprise stakeholders with bad news
+- Promise what you can't deliver
+- Make excuses without solutions
+- Communicate through intermediaries for critical issues
+- Ignore feedback or concerns
+- Change communication style inconsistently
+- Share inappropriate confidential details
+- Communicate budget/timeline bad news via email
+
+## Communication Tips
+
+- Schedule communication at consistent times
+- Use visual dashboards for metrics
+- Record important conversations
+- Share why, not just what changed
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
