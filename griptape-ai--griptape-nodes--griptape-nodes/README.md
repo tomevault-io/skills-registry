@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [griptape-ai/griptape-nodes](https://github.com/griptape-ai/griptape-nodes/tree/main/docs/skills/griptape-nodes-workflows/SKILL.md)
+Original source: [griptape-ai/griptape-nodes](https://github.com/griptape-ai/griptape-nodes/tree/main/.agents/skills/griptape-nodes-workflows/SKILL.md)
 
 ---
 
