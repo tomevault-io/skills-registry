@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [neo4j-contrib/neo4j-skills](https://github.com/neo4j-contrib/neo4j-skills/tree/main/neo4j-aura-agent-skill/SKILL.md)
+Original source: [neo4j-contrib/neo4j-skills](https://github.com/neo4j-contrib/neo4j-skills/tree/main/neo4j-spring-data-skill/SKILL.md)
 
 ---
 
