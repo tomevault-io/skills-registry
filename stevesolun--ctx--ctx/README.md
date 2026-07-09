@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [stevesolun/ctx](https://github.com/stevesolun/ctx/tree/main/imported-skills/julius-caveman/skills/caveman-compress/SKILL.md)
+Original source: [stevesolun/ctx](https://github.com/stevesolun/ctx/tree/main/imported-skills/mattpocock/improve-codebase-architecture/SKILL.md)
 
 ---
 
