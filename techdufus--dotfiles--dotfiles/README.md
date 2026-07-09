@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [TechDufus/dotfiles](https://github.com/TechDufus/dotfiles/tree/main/roles/claude/files/skills/skill-creator/SKILL.md)
+Original source: [TechDufus/dotfiles](https://github.com/TechDufus/dotfiles/tree/main/roles/omp/files/skills/semantic-compression/SKILL.md)
 
 ---
 
