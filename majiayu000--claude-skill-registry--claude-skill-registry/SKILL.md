@@ -1,770 +1,604 @@
 ---
-name: terraform-registry-inspector
-description: Terraform Registry documentation inspector using Chrome DevTools MCP. Use when validating provider documentation rendering, checking version availability, navigating resource/data-source docs, finding source code links, or comparing documentation quality against the Azure RM gold standard. Triggers on requests to inspect, validate, review, or benchmark Terraform provider documentation on registry.terraform.io. Use when this capability is needed.
+name: websocket
+description: Specialized skill for WebSocket protocol implementation and testing. Generate RFC 6455 compliant implementations, validate handshake and framing, test with Autobahn Test Suite, implement compression, and debug connection issues. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Terraform Registry Documentation Inspector
+# websocket
 
-A specialized skill for investigating Terraform provider documentation rendering on the Terraform Registry using Chrome DevTools MCP server capabilities.
+You are **websocket** - a specialized skill for WebSocket protocol implementation and testing, providing deep expertise in RFC 6455 compliance, real-time messaging, and performance optimization.
 
-## Purpose
+## Overview
 
-This skill enables systematic investigation of:
-- Provider documentation rendering quality
-- Version availability and selection
-- Resource/data-source documentation navigation
-- Subcategory organization
-- Source code repository links
-- Markdown rendering issues
-
-## Gold Standard Reference: Azure RM Provider
-
-The **HashiCorp Azure RM Provider** (`hashicorp/azurerm`) represents the gold standard for professional Terraform provider documentation. All quality assessments should be benchmarked against this reference.
-
-**Gold Standard URL**: `https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs`
-
-### Gold Standard Quality Elements
-
-#### Provider Index Page Excellence
-
-| Element | Azure RM Implementation |
-|---------|------------------------|
-| **Provider Description** | Links to official Microsoft Azure documentation |
-| **Clear Sections** | Data Sources explanation, Resources explanation |
-| **External Links** | Tutorial links, changelog reference |
-| **Authentication** | Multiple auth method guides as separate linked pages |
-| **Note Callouts** | Important warnings with proper formatting |
-| **Issue Reporting** | "Bugs and Feature Requests" section with GitHub links |
-
-#### Subcategory Organization (100+ Subcategories)
-
-Azure RM organizes resources by Azure service domain:
-- AAD B2C, API Management, Active Directory Domain Services
-- App Configuration, App Service (Web Apps), Application Insights
-- Compute, Container, Container Apps, CosmosDB
-- Database, DNS, Key Vault, Load Balancer
-- Machine Learning, Monitor, Network, Storage
-- And 80+ more service-specific categories
-
-**Best Practice**: Group resources by service/domain, not alphabetically.
-
-#### Dedicated Sections
-
-| Section | Purpose |
-|---------|---------|
-| **Guides** | Authentication guides, migration guides, best practices |
-| **Functions** | Provider-defined functions with clear signatures |
-| **Resources** | Organized by subcategory with clear naming |
-| **Data Sources** | Mirror resource organization patterns |
-
-#### Resource Documentation Structure (Gold Standard)
-
-From `azurerm_resource_group`:
-
-```
-1. Title: "azurerm_resource_group" (clean heading)
-2. Description: "Manages a Resource Group." (concise)
-3. Note Callouts: Multiple warnings about behavior
-   - Azure automatic deletion warning
-   - Feature toggle documentation with linked guide
-4. Example Usage: Complete, copyable HCL code
-5. Arguments Reference:
-   - Linked argument names for anchor navigation
-   - (Required)/(Optional) markers
-   - "Changing this forces a new X" warnings
-6. Attributes Reference: Exported attributes list
-7. Timeouts: CRUD operation timeouts with defaults
-   - create (90 minutes)
-   - read (5 minutes)
-   - update (90 minutes)
-   - delete (90 minutes)
-8. Import: Clear import command with example ID format
-9. ON THIS PAGE: Sidebar navigation for long pages
-10. Report an issue: Direct GitHub link
-```
-
-### Gold Standard Quality Checklist
-
-Use this checklist when evaluating any provider against the Azure RM gold standard:
-
-#### Provider-Level Quality
-- [ ] **Index page** links to official service documentation
-- [ ] **Guides section** exists with authentication/setup guides
-- [ ] **Functions section** (if provider has functions)
-- [ ] **Subcategories** group resources by service domain
-- [ ] **100+ subcategories** for large providers (proportional to resource count)
-- [ ] **Issue reporting** section with GitHub links
-- [ ] **Changelog** reference or link
-
-#### Resource Documentation Quality
-- [ ] **Title** is clean resource name (no redundant text)
-- [ ] **Description** is concise (one sentence)
-- [ ] **Note callouts** for important warnings/behavior
-- [ ] **Links within notes** to related guides
-- [ ] **Example Usage** is complete and copyable
-- [ ] **Arguments Reference** has linked argument names
-- [ ] **Required/Optional** markers on all arguments
-- [ ] **Force new** warnings where applicable
-- [ ] **Attributes Reference** section present
-- [ ] **Timeouts section** with CRUD defaults
-- [ ] **Import section** with example command
-- [ ] **ON THIS PAGE** sidebar navigation
-- [ ] **Report an issue** link to GitHub
-
-#### Navigation Quality
-- [ ] **Version dropdown** works correctly
-- [ ] **Search** function available in sidebar
-- [ ] **Breadcrumb** navigation present
-- [ ] **Subcategory collapse/expand** works properly
-
-### Comparing Against Gold Standard
-
-To evaluate a provider against Azure RM:
-
-```
-1. Navigate to target provider
-2. Open Azure RM in second tab for comparison
-3. Walk through Gold Standard Quality Checklist
-4. Document gaps and differences
-5. Score: (items met / total items) × 100%
-```
-
-**Quality Ratings**:
-| Score | Rating | Interpretation |
-|-------|--------|----------------|
-| 90-100% | Excellent | Matches gold standard |
-| 75-89% | Good | Minor improvements needed |
-| 50-74% | Fair | Significant gaps exist |
-| <50% | Needs Work | Major documentation effort required |
+This skill enables AI-powered WebSocket operations including:
+- Generating RFC 6455 compliant implementations
+- Validating WebSocket handshake and framing
+- Testing with Autobahn Test Suite
+- Implementing permessage-deflate compression
+- Debugging WebSocket connection issues
+- Generating subprotocol handlers
+- Analyzing WebSocket traffic
 
 ## Prerequisites
 
-- Chrome DevTools MCP server connected
-- Active browser session available
-- Target provider URL (e.g., `https://registry.terraform.io/providers/robinmordasiewicz/f5xc/latest`)
+- WebSocket-capable runtime (Node.js, Python, Go, etc.)
+- Optional: `wscat` or `websocat` for CLI testing
+- Optional: Autobahn Test Suite for compliance testing
 
-## Workflow Overview
+## Capabilities
 
-```
-1. Navigate to Provider → Take snapshot → Identify UI elements
-2. Check Versions     → Version dropdown → Compare available versions
-3. Explore Docs       → Navigate menu → Inspect resources/data-sources
-4. Find Source Code   → Locate GitHub link → Verify repository access
-5. Validate Rendering → Check markdown → Identify formatting issues
-```
+### 1. WebSocket Handshake
 
-## Phase 1: Initial Provider Navigation
+Implement RFC 6455 compliant handshake:
 
-### Navigate to Provider Page
+```javascript
+const crypto = require('crypto');
+const http = require('http');
 
-```
-Tool: mcp__chrome-devtools__navigate_page
-Parameters:
-  type: "url"
-  url: "https://registry.terraform.io/providers/{org}/{provider}/latest"
-```
+const WS_MAGIC_STRING = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
 
-Wait for page load:
-```
-Tool: mcp__chrome-devtools__wait_for
-Parameters:
-  text: "Documentation"
-  timeout: 10000
-```
-
-### Take Initial Snapshot
-
-Always take a snapshot first to understand the page structure:
-```
-Tool: mcp__chrome-devtools__take_snapshot
-```
-
-The snapshot reveals:
-- Navigation elements with UIDs for interaction
-- Current version displayed
-- Documentation menu structure
-- Links to resources, data-sources, functions, guides
-
-## Phase 2: Version Investigation
-
-### Terraform Registry Version Dropdown
-
-The version dropdown is located in the provider header area. Look for elements like:
-- `combobox` with version number text
-- Elements labeled with semver patterns (e.g., "1.2.3", "0.1.0")
-
-**Finding Version Selector:**
-
-In the snapshot, identify:
-```
-- button/combobox containing current version (e.g., "0.0.15")
-- Dropdown trigger near "Version" label
-```
-
-**Interacting with Version Dropdown:**
-```
-Tool: mcp__chrome-devtools__click
-Parameters:
-  uid: "<version-dropdown-uid>"
-```
-
-After clicking, take another snapshot to see available versions:
-```
-Tool: mcp__chrome-devtools__take_snapshot
-```
-
-**Version Selection Patterns:**
-- Versions are listed in descending order (newest first)
-- "latest" pseudo-version points to most recent release
-- Each version is clickable to navigate to that version's documentation
-
-### Verifying Latest Version
-
-To check if the displayed version matches the actual latest:
-
-1. Note the version shown in the dropdown
-2. Compare with GitHub releases using:
-```
-Tool: mcp__chrome-devtools__navigate_page
-Parameters:
-  type: "url"
-  url: "https://github.com/{org}/{repo}/releases/latest"
-```
-
-## Phase 3: Documentation Navigation
-
-### Registry Documentation Structure
-
-The Terraform Registry organizes documentation into these sections:
-
-| Section | Location | Description |
-|---------|----------|-------------|
-| Overview | `index.md` | Provider introduction and configuration |
-| Resources | `docs/resources/` | Managed resource documentation |
-| Data Sources | `docs/data-sources/` | Read-only data source documentation |
-| Functions | `docs/functions/` | Provider-defined function documentation |
-| Guides | `docs/guides/` | How-to guides and tutorials |
-
-### Navigation Menu Elements
-
-In snapshots, look for:
-```
-navigation/tree elements:
-  - "Resources" expandable section
-  - "Data Sources" expandable section
-  - "Functions" section (if available)
-  - "Guides" section (if available)
-  - Individual resource/data-source links
-```
-
-### Expanding Menu Sections
-
-To expand a collapsed section:
-```
-Tool: mcp__chrome-devtools__click
-Parameters:
-  uid: "<resources-section-uid>"
-```
-
-### Navigating to Specific Resource
-
-After expanding, click on the resource name:
-```
-Tool: mcp__chrome-devtools__click
-Parameters:
-  uid: "<resource-name-uid>"
-```
-
-### Subcategory Navigation
-
-Large providers use subcategories to organize resources. Look for:
-- Nested menu items under main sections
-- Subcategory headers (e.g., "Compute", "Networking", "Storage")
-- "Beta" and "Deprecated" subcategories at bottom of lists
-
-## Phase 4: Source Code Discovery
-
-### Finding GitHub Links
-
-The Terraform Registry includes links to the provider's source repository. Look for:
-
-1. **Header Area**: GitHub icon or "Source Code" link
-2. **Repository Link**: Usually formatted as `github.com/{org}/{repo}`
-3. **Report Issue Link**: Links to GitHub issues page
-
-**Identifying Source Link in Snapshot:**
-```
-Look for:
-  - link elements with "github.com" href
-  - Elements with "Source" text
-  - GitHub icon (octicon)
-```
-
-**Clicking Source Code Link:**
-```
-Tool: mcp__chrome-devtools__click
-Parameters:
-  uid: "<github-link-uid>"
-```
-
-### Verifying GitHub Repository
-
-After navigating to GitHub:
-```
-Tool: mcp__chrome-devtools__take_snapshot
-```
-
-Check for:
-- Repository name matches provider
-- Latest release tag
-- Documentation source in `docs/` directory
-
-## Phase 5: Documentation Rendering Validation
-
-### Key Markdown Elements to Inspect
-
-The Registry renders markdown with specific patterns:
-
-| Element | Registry Rendering | Source Format |
-|---------|-------------------|---------------|
-| Headings | Hierarchical structure | `# ## ###` |
-| Code blocks | Syntax-highlighted HCL | ` ```hcl ``` ` |
-| Tables | Bordered tables | Markdown pipe tables |
-| Callouts | Colored boxes | `->`, `~>`, `!>` sigils |
-| Links | Clickable references | `[text](url)` |
-
-### Callout Rendering Patterns
-
-Terraform Registry supports special callout syntax:
-
-| Sigil | Rendering | Purpose |
-|-------|-----------|---------|
-| `->` | Blue "Note" box | General information |
-| `~>` | Yellow "Note" box | Important warnings |
-| `!>` | Red "Warning" box | Critical warnings |
-
-### Checking Resource Documentation Structure
-
-Navigate to a resource page and verify these sections exist:
-
-1. **Title**: `# resource_name (Resource)` format
-2. **Description**: Overview paragraph with service links
-3. **Example Usage**: HCL code block with working example
-4. **Argument Reference**: Table or list of arguments
-5. **Attribute Reference**: Exported attributes list
-6. **Import**: Import command example (if supported)
-
-### Taking Screenshots for Visual Validation
-
-```
-Tool: mcp__chrome-devtools__take_screenshot
-Parameters:
-  format: "png"
-  fullPage: true
-  filePath: "./registry-docs-{resource}.png"
-```
-
-## Phase 6: Common Inspection Tasks
-
-### Task: Check All Resources Are Documented
-
-1. Navigate to provider page
-2. Expand "Resources" section in navigation
-3. Count listed resources
-4. Compare with `docs/resources/` directory in source repo
-5. Identify missing documentation
-
-### Task: Validate Version Dropdown
-
-1. Click version dropdown
-2. Take snapshot to list all versions
-3. Compare with GitHub releases
-4. Check for version gaps or missing releases
-
-### Task: Inspect Subcategory Organization
-
-1. Navigate to provider page
-2. Expand Resources and Data Sources sections
-3. Identify subcategory groupings
-4. Verify "Beta" and "Deprecated" are at bottom
-5. Check for logical organization
-
-### Task: Verify Import Documentation
-
-1. Navigate to a resource page
-2. Scroll to "Import" section
-3. Verify import command syntax
-4. Check resource identifier format
-
-### Task: Check Example Usage Quality
-
-1. Navigate to resource documentation
-2. Locate "Example Usage" section
-3. Verify code block has HCL syntax highlighting
-4. Check example is complete and functional
-5. Verify required arguments are shown
-
-### Task: Gold Standard Comparison
-
-Compare any provider against the Azure RM gold standard:
-
-1. Open Azure RM in reference tab:
-```
-Tool: mcp__chrome-devtools__new_page
-Parameters:
-  url: "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs"
-```
-
-2. Navigate to target provider in main tab
-3. Walk through **Gold Standard Quality Checklist**:
-
-**Provider-Level Assessment**:
-```
-- Index page quality
-- Guides section presence
-- Subcategory organization
-- Issue reporting links
-```
-
-4. Select matching resources for comparison:
-```
-Azure RM: azurerm_resource_group
-Target: {provider}_namespace (or equivalent base resource)
-```
-
-5. Compare resource documentation:
-```
-- Title format
-- Description conciseness
-- Note callouts present
-- Example Usage quality
-- Arguments Reference format
-- Timeouts section
-- Import section
-```
-
-6. Calculate quality score:
-```
-Score = (items met / total checklist items) × 100%
-```
-
-7. Document findings:
-```
-Strengths: [What matches gold standard]
-Gaps: [What's missing or different]
-Recommendations: [Specific improvements]
-```
-
-### Task: Timeouts Section Audit
-
-Check if resource documentation includes timeout information:
-
-1. Navigate to a resource page
-2. Look for "Timeouts" section after "Attributes Reference"
-3. Gold standard includes:
-   - `create` - timeout for resource creation
-   - `read` - timeout for resource reading
-   - `update` - timeout for resource updates
-   - `delete` - timeout for resource deletion
-4. Each should have default values documented
-5. Link to Terraform timeout configuration docs
-
-## Troubleshooting
-
-### Page Not Loading
-
-```
-Tool: mcp__chrome-devtools__navigate_page
-Parameters:
-  type: "reload"
-  timeout: 30000
-```
-
-### Element Not Found in Snapshot
-
-The Registry uses dynamic loading. Wait for content:
-```
-Tool: mcp__chrome-devtools__wait_for
-Parameters:
-  text: "<expected text>"
-  timeout: 15000
-```
-
-### Version Dropdown Not Responding
-
-The dropdown may require specific interaction patterns:
-1. Take fresh snapshot
-2. Identify exact clickable element
-3. Try hover first, then click
-
-### Navigation Menu Collapsed
-
-Some sections require explicit expansion:
-```
-Tool: mcp__chrome-devtools__click
-Parameters:
-  uid: "<expand-button-uid>"
-```
-
-## Markdown Best Practices Reference
-
-### Provider Index Page (`docs/index.md`)
-
-```markdown
----
-page_title: "Provider: {name}"
-description: |-
-  The {name} provider is used to interact with {service}.
----
-
-# {Name} Provider
-
-Brief description of what the provider does.
-
-## Example Usage
-
-` ` `hcl
-provider "{name}" {
-  # Configuration options
+function computeAcceptKey(secWebSocketKey) {
+  return crypto
+    .createHash('sha1')
+    .update(secWebSocketKey + WS_MAGIC_STRING)
+    .digest('base64');
 }
-` ` `
 
-## Authentication
+function handleUpgrade(req, socket) {
+  // Validate upgrade request
+  if (req.headers['upgrade']?.toLowerCase() !== 'websocket') {
+    socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+    return false;
+  }
 
-How to configure authentication.
+  const key = req.headers['sec-websocket-key'];
+  if (!key) {
+    socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+    return false;
+  }
 
-## Argument Reference
+  // Validate key format (16 bytes base64 encoded)
+  const keyBytes = Buffer.from(key, 'base64');
+  if (keyBytes.length !== 16) {
+    socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+    return false;
+  }
 
-* `argument_name` - (Optional/Required) Description.
-```
+  const acceptKey = computeAcceptKey(key);
 
-### Resource Documentation (`docs/resources/{name}.md`)
+  // Optional: Handle subprotocol negotiation
+  const requestedProtocols = req.headers['sec-websocket-protocol']?.split(',').map(p => p.trim()) || [];
+  const selectedProtocol = negotiateProtocol(requestedProtocols);
 
-```markdown
----
-page_title: "{provider}_{resource} Resource - {Provider}"
-subcategory: "{Category}"  # Optional
-description: |-
-  Manages a {resource}.
----
+  // Build response headers
+  let response = [
+    'HTTP/1.1 101 Switching Protocols',
+    'Upgrade: websocket',
+    'Connection: Upgrade',
+    `Sec-WebSocket-Accept: ${acceptKey}`
+  ];
 
-# {provider}_{resource} (Resource)
+  if (selectedProtocol) {
+    response.push(`Sec-WebSocket-Protocol: ${selectedProtocol}`);
+  }
 
-Description of what this resource manages.
+  // Optional: Handle extensions
+  const extensions = negotiateExtensions(req.headers['sec-websocket-extensions']);
+  if (extensions) {
+    response.push(`Sec-WebSocket-Extensions: ${extensions}`);
+  }
 
-## Example Usage
-
-` ` `hcl
-resource "{provider}_{resource}" "example" {
-  name = "example"
-  # Required and common arguments
+  socket.write(response.join('\r\n') + '\r\n\r\n');
+  return true;
 }
-` ` `
 
-## Argument Reference
-
-The following arguments are supported:
-
-* `name` - (Required) The name of the resource.
-* `optional_arg` - (Optional) Description. Defaults to `value`.
-
-## Attribute Reference
-
-In addition to all arguments above, the following attributes are exported:
-
-* `id` - The ID of the resource.
-* `computed_attr` - Description of computed attribute.
-
-## Import
-
-{resource} can be imported using the `id`:
-
-` ` `shell
-terraform import {provider}_{resource}.example 12345
-` ` `
-```
-
-### Data Source Documentation (`docs/data-sources/{name}.md`)
-
-```markdown
----
-page_title: "{provider}_{data_source} Data Source - {Provider}"
-subcategory: "{Category}"  # Optional
-description: |-
-  Reads a {data_source}.
----
-
-# {provider}_{data_source} (Data Source)
-
-Use this data source to read information about {thing}.
-
-## Example Usage
-
-` ` `hcl
-data "{provider}_{data_source}" "example" {
-  name = "example"
+function negotiateProtocol(requested) {
+  const supported = ['graphql-ws', 'wamp.2.json', 'mqtt'];
+  return requested.find(p => supported.includes(p)) || null;
 }
-` ` `
 
-## Argument Reference
-
-* `name` - (Required) The name to look up.
-
-## Attribute Reference
-
-* `id` - The ID of the {thing}.
-* `attribute` - Description.
-```
-
-### Function Documentation (`docs/functions/{name}.md`)
-
-```markdown
----
-page_title: "{name} Function - {Provider}"
-description: |-
-  {Brief description}
----
-
-# Function: {name}
-
-Description of what the function does.
-
-## Signature
-
-` ` `text
-{name}(arg1 type, arg2 type) return_type
-` ` `
-
-## Arguments
-
-1. `arg1` (Type) - Description
-2. `arg2` (Type) - Description
-
-## Return Value
-
-Description of return value.
-
-## Example Usage
-
-` ` `hcl
-output "result" {
-  value = provider::{provider}::{name}(arg1, arg2)
+function negotiateExtensions(extensionHeader) {
+  // Example: permessage-deflate negotiation
+  if (extensionHeader?.includes('permessage-deflate')) {
+    return 'permessage-deflate; server_no_context_takeover; client_no_context_takeover';
+  }
+  return null;
 }
-` ` `
 ```
 
-## Registry URL Patterns
+### 2. WebSocket Frame Parsing
 
-| URL Pattern | Purpose |
-|-------------|---------|
-| `/providers/{org}/{name}/latest` | Latest version overview |
-| `/providers/{org}/{name}/{version}` | Specific version |
-| `/providers/{org}/{name}/latest/docs` | Documentation index |
-| `/providers/{org}/{name}/latest/docs/resources/{resource}` | Resource docs |
-| `/providers/{org}/{name}/latest/docs/data-sources/{ds}` | Data source docs |
-| `/providers/{org}/{name}/latest/docs/functions/{fn}` | Function docs |
-| `/providers/{org}/{name}/latest/docs/guides/{guide}` | Guide docs |
+Parse and create WebSocket frames:
 
-## Quick Reference Commands
+```javascript
+const OPCODES = {
+  CONTINUATION: 0x0,
+  TEXT: 0x1,
+  BINARY: 0x2,
+  CLOSE: 0x8,
+  PING: 0x9,
+  PONG: 0xA
+};
 
-| Action | Tool | Key Parameters |
-|--------|------|----------------|
-| Navigate to URL | `navigate_page` | `type: "url", url: "..."` |
-| Take snapshot | `take_snapshot` | - |
-| Click element | `click` | `uid: "..."` |
-| Wait for text | `wait_for` | `text: "...", timeout: N` |
-| Take screenshot | `take_screenshot` | `filePath: "..."` |
-| Go back | `navigate_page` | `type: "back"` |
-| Reload page | `navigate_page` | `type: "reload"` |
-| Fill input | `fill` | `uid: "...", value: "..."` |
-| List pages/tabs | `list_pages` | - |
+class WebSocketFrame {
+  constructor() {
+    this.fin = true;
+    this.rsv1 = false;
+    this.rsv2 = false;
+    this.rsv3 = false;
+    this.opcode = OPCODES.TEXT;
+    this.masked = false;
+    this.maskingKey = null;
+    this.payload = Buffer.alloc(0);
+  }
 
-## Example Investigation Session
+  static parse(buffer) {
+    if (buffer.length < 2) return { frame: null, consumed: 0 };
 
+    const frame = new WebSocketFrame();
+    let offset = 0;
+
+    // First byte: FIN, RSV1-3, Opcode
+    const byte0 = buffer[offset++];
+    frame.fin = (byte0 & 0x80) !== 0;
+    frame.rsv1 = (byte0 & 0x40) !== 0;
+    frame.rsv2 = (byte0 & 0x20) !== 0;
+    frame.rsv3 = (byte0 & 0x10) !== 0;
+    frame.opcode = byte0 & 0x0F;
+
+    // Second byte: MASK, Payload length
+    const byte1 = buffer[offset++];
+    frame.masked = (byte1 & 0x80) !== 0;
+    let payloadLength = byte1 & 0x7F;
+
+    // Extended payload length
+    if (payloadLength === 126) {
+      if (buffer.length < offset + 2) return { frame: null, consumed: 0 };
+      payloadLength = buffer.readUInt16BE(offset);
+      offset += 2;
+    } else if (payloadLength === 127) {
+      if (buffer.length < offset + 8) return { frame: null, consumed: 0 };
+      // JavaScript can't handle 64-bit integers precisely
+      const high = buffer.readUInt32BE(offset);
+      const low = buffer.readUInt32BE(offset + 4);
+      payloadLength = high * 0x100000000 + low;
+      offset += 8;
+    }
+
+    // Masking key (if masked)
+    if (frame.masked) {
+      if (buffer.length < offset + 4) return { frame: null, consumed: 0 };
+      frame.maskingKey = buffer.slice(offset, offset + 4);
+      offset += 4;
+    }
+
+    // Payload
+    if (buffer.length < offset + payloadLength) {
+      return { frame: null, consumed: 0 };
+    }
+
+    frame.payload = buffer.slice(offset, offset + payloadLength);
+    offset += payloadLength;
+
+    // Unmask payload if needed
+    if (frame.masked) {
+      frame.payload = Buffer.from(frame.payload); // Create copy
+      for (let i = 0; i < frame.payload.length; i++) {
+        frame.payload[i] ^= frame.maskingKey[i % 4];
+      }
+    }
+
+    return { frame, consumed: offset };
+  }
+
+  serialize(mask = false) {
+    const payloadLength = this.payload.length;
+    let headerLength = 2;
+
+    if (payloadLength > 65535) headerLength += 8;
+    else if (payloadLength > 125) headerLength += 2;
+
+    if (mask) headerLength += 4;
+
+    const buffer = Buffer.alloc(headerLength + payloadLength);
+    let offset = 0;
+
+    // First byte
+    buffer[offset++] = (this.fin ? 0x80 : 0) |
+                       (this.rsv1 ? 0x40 : 0) |
+                       (this.rsv2 ? 0x20 : 0) |
+                       (this.rsv3 ? 0x10 : 0) |
+                       this.opcode;
+
+    // Second byte and extended length
+    let lengthByte = mask ? 0x80 : 0;
+
+    if (payloadLength > 65535) {
+      lengthByte |= 127;
+      buffer[offset++] = lengthByte;
+      buffer.writeUInt32BE(Math.floor(payloadLength / 0x100000000), offset);
+      buffer.writeUInt32BE(payloadLength % 0x100000000, offset + 4);
+      offset += 8;
+    } else if (payloadLength > 125) {
+      lengthByte |= 126;
+      buffer[offset++] = lengthByte;
+      buffer.writeUInt16BE(payloadLength, offset);
+      offset += 2;
+    } else {
+      lengthByte |= payloadLength;
+      buffer[offset++] = lengthByte;
+    }
+
+    // Masking key
+    if (mask) {
+      const maskingKey = crypto.randomBytes(4);
+      maskingKey.copy(buffer, offset);
+      offset += 4;
+
+      // Copy and mask payload
+      for (let i = 0; i < payloadLength; i++) {
+        buffer[offset + i] = this.payload[i] ^ maskingKey[i % 4];
+      }
+    } else {
+      this.payload.copy(buffer, offset);
+    }
+
+    return buffer;
+  }
+}
 ```
-# 1. Start investigation
-navigate_page → registry.terraform.io/providers/robinmordasiewicz/f5xc/latest
-wait_for → "Documentation"
-take_snapshot → Review structure
 
-# 2. Check version
-click → version dropdown uid
-take_snapshot → List available versions
-Verify latest matches expectations
+### 3. WebSocket Server Implementation
 
-# 3. Explore resources
-click → "Resources" navigation section
-take_snapshot → List all resources
-click → specific resource
-take_snapshot → Review resource documentation structure
+Complete WebSocket server:
 
-# 4. Check markdown rendering
-Verify: title format, example code, argument table, attributes
-take_screenshot → Document any rendering issues
+```javascript
+const http = require('http');
+const crypto = require('crypto');
+const EventEmitter = require('events');
 
-# 5. Find source code
-click → GitHub link
-take_snapshot → Verify repository
-navigate_page → back to Registry
+class WebSocketServer extends EventEmitter {
+  constructor(options = {}) {
+    super();
+    this.port = options.port || 8080;
+    this.maxPayload = options.maxPayload || 100 * 1024 * 1024; // 100MB
+    this.clients = new Set();
 
-# 6. Document findings
-Create report with:
-- Version availability
-- Resource documentation completeness
-- Rendering quality assessment
-- Issues found
+    this.server = http.createServer((req, res) => {
+      res.writeHead(426, { 'Content-Type': 'text/plain' });
+      res.end('WebSocket server - upgrade required');
+    });
+
+    this.server.on('upgrade', (req, socket, head) => {
+      this.handleUpgrade(req, socket, head);
+    });
+  }
+
+  handleUpgrade(req, socket, head) {
+    const key = req.headers['sec-websocket-key'];
+    if (!key) {
+      socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+      return;
+    }
+
+    const acceptKey = crypto
+      .createHash('sha1')
+      .update(key + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')
+      .digest('base64');
+
+    socket.write([
+      'HTTP/1.1 101 Switching Protocols',
+      'Upgrade: websocket',
+      'Connection: Upgrade',
+      `Sec-WebSocket-Accept: ${acceptKey}`,
+      '',
+      ''
+    ].join('\r\n'));
+
+    const client = new WebSocketConnection(socket, this);
+    this.clients.add(client);
+
+    client.on('close', () => {
+      this.clients.delete(client);
+    });
+
+    this.emit('connection', client, req);
+  }
+
+  broadcast(message, excludeClient = null) {
+    for (const client of this.clients) {
+      if (client !== excludeClient && client.readyState === 'OPEN') {
+        client.send(message);
+      }
+    }
+  }
+
+  listen(callback) {
+    this.server.listen(this.port, callback);
+  }
+
+  close(callback) {
+    for (const client of this.clients) {
+      client.close(1001, 'Server shutting down');
+    }
+    this.server.close(callback);
+  }
+}
+
+class WebSocketConnection extends EventEmitter {
+  constructor(socket, server) {
+    super();
+    this.socket = socket;
+    this.server = server;
+    this.readyState = 'OPEN';
+    this.buffer = Buffer.alloc(0);
+    this.fragments = [];
+
+    socket.on('data', (data) => this.handleData(data));
+    socket.on('close', () => this.handleClose());
+    socket.on('error', (err) => this.emit('error', err));
+  }
+
+  handleData(data) {
+    this.buffer = Buffer.concat([this.buffer, data]);
+
+    while (this.buffer.length > 0) {
+      const { frame, consumed } = WebSocketFrame.parse(this.buffer);
+      if (!frame) break;
+
+      this.buffer = this.buffer.slice(consumed);
+      this.handleFrame(frame);
+    }
+  }
+
+  handleFrame(frame) {
+    switch (frame.opcode) {
+      case OPCODES.TEXT:
+      case OPCODES.BINARY:
+        if (frame.fin) {
+          const data = frame.opcode === OPCODES.TEXT
+            ? frame.payload.toString('utf8')
+            : frame.payload;
+          this.emit('message', data);
+        } else {
+          this.fragments.push(frame);
+        }
+        break;
+
+      case OPCODES.CONTINUATION:
+        this.fragments.push(frame);
+        if (frame.fin) {
+          const firstFrame = this.fragments[0];
+          const payload = Buffer.concat(this.fragments.map(f => f.payload));
+          const data = firstFrame.opcode === OPCODES.TEXT
+            ? payload.toString('utf8')
+            : payload;
+          this.emit('message', data);
+          this.fragments = [];
+        }
+        break;
+
+      case OPCODES.PING:
+        this.pong(frame.payload);
+        break;
+
+      case OPCODES.PONG:
+        this.emit('pong', frame.payload);
+        break;
+
+      case OPCODES.CLOSE:
+        let code = 1005;
+        let reason = '';
+        if (frame.payload.length >= 2) {
+          code = frame.payload.readUInt16BE(0);
+          reason = frame.payload.slice(2).toString('utf8');
+        }
+        this.close(code, reason);
+        break;
+    }
+  }
+
+  send(data) {
+    if (this.readyState !== 'OPEN') return;
+
+    const frame = new WebSocketFrame();
+    if (typeof data === 'string') {
+      frame.opcode = OPCODES.TEXT;
+      frame.payload = Buffer.from(data, 'utf8');
+    } else {
+      frame.opcode = OPCODES.BINARY;
+      frame.payload = data;
+    }
+
+    this.socket.write(frame.serialize(false)); // Server doesn't mask
+  }
+
+  ping(data = Buffer.alloc(0)) {
+    const frame = new WebSocketFrame();
+    frame.opcode = OPCODES.PING;
+    frame.payload = Buffer.isBuffer(data) ? data : Buffer.from(data);
+    this.socket.write(frame.serialize(false));
+  }
+
+  pong(data = Buffer.alloc(0)) {
+    const frame = new WebSocketFrame();
+    frame.opcode = OPCODES.PONG;
+    frame.payload = Buffer.isBuffer(data) ? data : Buffer.from(data);
+    this.socket.write(frame.serialize(false));
+  }
+
+  close(code = 1000, reason = '') {
+    if (this.readyState === 'CLOSED') return;
+
+    this.readyState = 'CLOSING';
+
+    const frame = new WebSocketFrame();
+    frame.opcode = OPCODES.CLOSE;
+
+    const codeBuffer = Buffer.alloc(2);
+    codeBuffer.writeUInt16BE(code, 0);
+    const reasonBuffer = Buffer.from(reason, 'utf8');
+    frame.payload = Buffer.concat([codeBuffer, reasonBuffer]);
+
+    this.socket.write(frame.serialize(false));
+    this.socket.end();
+  }
+
+  handleClose() {
+    this.readyState = 'CLOSED';
+    this.emit('close');
+  }
+}
 ```
 
-## Example Gold Standard Comparison Session
+### 4. permessage-deflate Compression
 
+Implement WebSocket compression:
+
+```javascript
+const zlib = require('zlib');
+
+class PerMessageDeflate {
+  constructor(options = {}) {
+    this.serverNoContextTakeover = options.serverNoContextTakeover || false;
+    this.clientNoContextTakeover = options.clientNoContextTakeover || false;
+    this.serverMaxWindowBits = options.serverMaxWindowBits || 15;
+    this.clientMaxWindowBits = options.clientMaxWindowBits || 15;
+
+    this.inflateContext = null;
+    this.deflateContext = null;
+  }
+
+  compress(data, callback) {
+    if (!this.deflateContext || this.serverNoContextTakeover) {
+      this.deflateContext = zlib.createDeflateRaw({
+        windowBits: this.serverMaxWindowBits
+      });
+    }
+
+    const chunks = [];
+    this.deflateContext.on('data', (chunk) => chunks.push(chunk));
+    this.deflateContext.on('end', () => {
+      let result = Buffer.concat(chunks);
+      // Remove trailing 0x00 0x00 0xFF 0xFF
+      if (result.length >= 4 &&
+          result[result.length - 4] === 0x00 &&
+          result[result.length - 3] === 0x00 &&
+          result[result.length - 2] === 0xFF &&
+          result[result.length - 1] === 0xFF) {
+        result = result.slice(0, -4);
+      }
+      callback(null, result);
+    });
+
+    this.deflateContext.write(data);
+    this.deflateContext.flush(zlib.Z_SYNC_FLUSH);
+  }
+
+  decompress(data, callback) {
+    if (!this.inflateContext || this.clientNoContextTakeover) {
+      this.inflateContext = zlib.createInflateRaw({
+        windowBits: this.clientMaxWindowBits
+      });
+    }
+
+    // Add trailing bytes for decompression
+    const trailer = Buffer.from([0x00, 0x00, 0xFF, 0xFF]);
+    const input = Buffer.concat([data, trailer]);
+
+    const chunks = [];
+    this.inflateContext.on('data', (chunk) => chunks.push(chunk));
+    this.inflateContext.on('end', () => {
+      callback(null, Buffer.concat(chunks));
+    });
+    this.inflateContext.on('error', (err) => callback(err));
+
+    this.inflateContext.write(input);
+    this.inflateContext.flush();
+  }
+}
 ```
-# 1. Open Azure RM gold standard reference
-new_page → registry.terraform.io/providers/hashicorp/azurerm/latest/docs
-wait_for → "Authentication"
-take_snapshot → Note gold standard structure
 
-# 2. Navigate to gold standard resource
-click → "Base" subcategory
-click → "azurerm_resource_group"
-take_snapshot → Document gold standard resource structure
-Note: Title, Description, Notes, Example, Args, Attrs, Timeouts, Import
+### 5. WebSocket Testing
 
-# 3. Switch to target provider tab
-list_pages → Identify tabs
-select_page → Target provider tab
+Test WebSocket implementations:
 
-# 4. Navigate to equivalent resource
-click → "Namespaces" or base subcategory
-click → "{provider}_namespace"
-take_snapshot → Compare against gold standard
+```bash
+# Using wscat
+wscat -c ws://localhost:8080
 
-# 5. Run quality checklist
-Compare each element:
-□ Title format matches gold standard?
-□ Description is concise?
-□ Note callouts present for warnings?
-□ Example Usage complete and copyable?
-□ Arguments Reference has linked names?
-□ Required/Optional markers present?
-□ Attributes Reference section exists?
-□ Timeouts section with CRUD defaults?
-□ Import section with example?
-□ ON THIS PAGE sidebar navigation?
+# Using websocat
+websocat ws://localhost:8080
 
-# 6. Calculate and document score
-Score: (checked items / 10) × 100%
-Rating: Excellent (90%+) | Good (75-89%) | Fair (50-74%) | Needs Work (<50%)
-
-# 7. Generate improvement report
-Strengths:
-- [List matching elements]
-Gaps:
-- [List missing elements]
-Recommendations:
-- [Specific actionable improvements]
+# Autobahn Test Suite (fuzzing)
+docker run -it --rm \
+  -v "${PWD}/reports:/reports" \
+  -p 9001:9001 \
+  crossbario/autobahn-testsuite \
+  wstest --mode fuzzingclient --spec /config/fuzzingclient.json
 ```
+
+## MCP Server Integration
+
+This skill can leverage the following MCP servers for enhanced capabilities:
+
+| Server | Description | Integration |
+|--------|-------------|-------------|
+| MCP-WebSocket Architecture | WebSocket transport with MCP | Real-time AI integration |
+| claude-agent-server | WebSocket server for Claude Agent SDK | Agent orchestration |
+| Claude-Flow | Multi-agent communication via WebSocket | Distributed agents |
+
+## Best Practices
+
+1. **Handle fragmented messages** - Large messages may be split across frames
+2. **Implement heartbeat** - Use ping/pong for connection health
+3. **Set payload limits** - Prevent memory exhaustion attacks
+4. **Close gracefully** - Send close frame before disconnecting
+5. **Validate UTF-8** - Text frames must be valid UTF-8
+6. **Handle backpressure** - Don't overwhelm slow clients
+
+## Process Integration
+
+This skill integrates with the following processes:
+- `websocket-server.js` - WebSocket server implementation
+- `websocket-client.js` - WebSocket client implementation
+- `realtime-messaging-system.js` - Real-time messaging architecture
+
+## Output Format
+
+When executing operations, provide structured output:
+
+```json
+{
+  "operation": "test",
+  "target": "ws://localhost:8080",
+  "status": "success",
+  "handshake": {
+    "protocol": "graphql-ws",
+    "extensions": ["permessage-deflate"]
+  },
+  "metrics": {
+    "messagesReceived": 1000,
+    "messagesSent": 1000,
+    "avgLatencyMs": 2.5,
+    "compressionRatio": 0.65
+  },
+  "compliance": {
+    "rfc6455": true,
+    "autobahnPassed": 512,
+    "autobahnFailed": 0
+  }
+}
+```
+
+## Constraints
+
+- Follow RFC 6455 strictly for interoperability
+- Server must not mask frames (clients must)
+- Validate close codes (1000-1015, 3000-4999)
+- Handle UTF-8 validation for text frames
+- Limit concurrent connections per client
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
