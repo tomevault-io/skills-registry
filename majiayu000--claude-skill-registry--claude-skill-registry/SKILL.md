@@ -1,364 +1,367 @@
 ---
-name: software-design-principles
-description: Object-oriented design principles including object calisthenics, dependency inversion, fail-fast error handling, feature envy detection, and intention-revealing naming. Activates during code refactoring, design reviews, or when user requests design improvements. Use when this capability is needed.
+name: token-integration-analyzer
+description: Comprehensive token integration and implementation analyzer based on Trail of Bits' token integration checklist. Analyzes token implementations for ERC20/ERC721 conformity, checks for 20+ weird token patterns, assesses contract composition and owner privileges, performs on-chain scarcity analysis, and evaluates how protocols handle non-standard tokens. Context-aware for both token implementations and token integrations. (project, gitignored) Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Software Design Principles
+# Token Integration Analyzer
 
-Professional software design patterns and principles for writing maintainable, well-structured code.
+## Purpose
 
-## Critical Rules
+I will systematically analyze your codebase for token-related security concerns using Trail of Bits' token integration checklist. I help with:
 
-🚨 **Fail-fast over silent fallbacks.** Never use fallback chains (`value ?? backup ?? 'unknown'`). If data should exist, validate and throw a clear error.
+1. **Token Implementations**: Analyze if your token follows ERC20/ERC721 standards or has non-standard behavior
+2. **Token Integrations**: Analyze how your protocol handles arbitrary tokens, including weird/non-standard tokens
+3. **On-chain Analysis**: Query deployed contracts for scarcity, distribution, and configuration
+4. **Security Assessment**: Identify risks from 20+ known weird token patterns
 
-🚨 **Strive for maximum type-safety. No `any`. No `as`.** Type escape hatches defeat TypeScript's purpose. There's always a type-safe solution.
+**Framework**: Building Secure Contracts - Token Integration Checklist + Weird ERC20 Database
 
-🚨 **Make illegal states unrepresentable.** Use discriminated unions, not optional fields. If a state combination shouldn't exist, make the type system forbid it.
+---
 
-🚨 **Inject dependencies, don't instantiate.** No `new SomeService()` inside methods. Pass dependencies through constructors.
+## How This Works
 
-🚨 **Intention-revealing names only.** Never use `data`, `utils`, `helpers`, `handler`, `processor`. Name things for what they do in the domain.
+### Phase 1: Context Discovery
+I'll determine what we're analyzing:
+- **Token implementation**: Are you building a token contract?
+- **Token integration**: Does your protocol interact with external tokens?
+- **Platform**: Ethereum, other EVM chains, or different platform?
+- **Token types**: ERC20, ERC721, or both?
 
-🚨 **No code comments.** Comments are a failure to express intent in code. If you need a comment to explain what code does, the code isn't clear enough—refactor it.
+### Phase 2: Slither Analysis (if Solidity)
+For Solidity projects, I'll help run:
+- `slither-check-erc` - ERC conformity checks
+- `slither --print human-summary` - Complexity and upgrade analysis
+- `slither --print contract-summary` - Function analysis
+- `slither-prop` - Property generation for testing
 
-🚨 **Use Zod for runtime validation.** In TypeScript, use Zod schemas for parsing external data, API responses, and user input. Type inference from schemas keeps types and validation in sync.
+### Phase 3: Code Analysis
+I'll analyze:
+- Contract composition and complexity
+- Owner privileges and centralization risks
+- ERC20/ERC721 conformity
+- Known weird token patterns
+- Integration safety patterns
 
-## When This Applies
+### Phase 4: On-chain Analysis (if deployed)
+If you provide a contract address, I'll query:
+- Token scarcity and distribution
+- Total supply and holder concentration
+- Exchange listings
+- On-chain configuration
 
-- Writing new code (these are defaults, not just refactoring goals)
-- Refactoring existing code
-- Code reviews and design reviews
-- During TDD REFACTOR phase
-- When analyzing coupling and cohesion
+### Phase 5: Risk Assessment
+I'll provide:
+- Identified vulnerabilities
+- Non-standard behaviors
+- Integration risks
+- Prioritized recommendations
 
-## Core Philosophy
+---
 
-Well-designed, maintainable code is far more important than getting things done quickly. Every design decision should favor:
-- **Clarity over cleverness**
-- **Explicit over implicit**
-- **Fail-fast over silent fallbacks**
-- **Loose coupling over tight integration**
-- **Intention-revealing over generic**
+## Assessment Categories
 
-## Code Without Comments
+I check 10 comprehensive categories covering all aspects of token security. For detailed criteria, patterns, and checklists, see [ASSESSMENT_CATEGORIES.md](resources/ASSESSMENT_CATEGORIES.md).
 
-Never write comments - write expressive code instead.
+### Quick Reference:
 
-## Object Calisthenics
+1. **General Considerations** - Security reviews, team transparency, security contacts
+2. **Contract Composition** - Complexity analysis, SafeMath usage, function count, entry points
+3. **Owner Privileges** - Upgradeability, minting, pausability, blacklisting, team accountability
+4. **ERC20 Conformity** - Return values, metadata, decimals, race conditions, Slither checks
+5. **ERC20 Extension Risks** - External calls/hooks, transfer fees, rebasing/yield-bearing tokens
+6. **Token Scarcity Analysis** - Supply distribution, holder concentration, exchange distribution, flash loan/mint risks
+7. **Weird ERC20 Patterns** (24 patterns including):
+   - Reentrant calls (ERC777 hooks)
+   - Missing return values (USDT, BNB, OMG)
+   - Fee on transfer (STA, PAXG)
+   - Balance modifications outside transfers (Ampleforth, Compound)
+   - Upgradable tokens (USDC, USDT)
+   - Flash mintable (DAI)
+   - Blocklists (USDC, USDT)
+   - Pausable tokens (BNB, ZIL)
+   - Approval race protections (USDT, KNC)
+   - Revert on approval/transfer to zero address
+   - Revert on zero value approvals/transfers
+   - Multiple token addresses
+   - Low decimals (USDC: 6, Gemini: 2)
+   - High decimals (YAM-V2: 24)
+   - transferFrom with src == msg.sender
+   - Non-string metadata (MKR)
+   - No revert on failure (ZRX, EURS)
+   - Revert on large approvals (UNI, COMP)
+   - Code injection via token name
+   - Unusual permit function (DAI, RAI, GLM)
+   - Transfer less than amount (cUSDCv3)
+   - ERC-20 native currency representation (Celo, Polygon, zkSync)
+   - [And more...](resources/ASSESSMENT_CATEGORIES.md#7-weird-erc20-patterns)
+8. **Token Integration Safety** - Safe transfer patterns, balance verification, allowlists, wrappers, defensive patterns
+9. **ERC721 Conformity** - Transfer to 0x0, safeTransferFrom, metadata, ownerOf, approval clearing, token ID immutability
+10. **ERC721 Common Risks** - onERC721Received reentrancy, safe minting, burning approval clearing
 
-Apply object calisthenics principles:
+---
 
-### The Nine Rules
+## Example Output
 
-1. **One level of indentation per method**
-    - In practice, I will tolerate upto 3
+When analysis is complete, you'll receive a comprehensive report structured as follows:
 
-2. **Don't use the ELSE keyword**
-   - Use early returns instead
+```
+=== TOKEN INTEGRATION ANALYSIS REPORT ===
 
-3. **Wrap all primitives and strings**
-   - Create value objects
-   - Encapsulate validation logic
-   - Make domain concepts explicit
+Project: MultiToken DEX
+Token Analyzed: Custom Reward Token + Integration Safety
+Platform: Solidity 0.8.20
+Analysis Date: March 15, 2024
 
-4. **First class collections**
-   - Classes with collections should contain nothing else
+---
 
-5. **One dot per line**
+## EXECUTIVE SUMMARY
 
-6. **Don't abbreviate**
-   - Use full, descriptive names
+Token Type: ERC20 Implementation + Protocol Integrating External Tokens
+Overall Risk Level: MEDIUM
+Critical Issues: 2
+High Issues: 3
+Medium Issues: 4
 
-7. **Keep all entities small**
-   - Small classes (< 150 lines)
-   - Small methods (< 10 lines)
-   - Small packages/modules
-   - Easier to understand and maintain
+**Top Concerns:**
+⚠ Fee-on-transfer tokens not handled correctly
+⚠ No validation for missing return values (USDT compatibility)
+⚠ Owner can mint unlimited tokens without cap
 
-8. **Avoid getters/setters/properties on entities**
-   - Tell, don't ask
-   - Objects should do work, not expose data
+**Recommendation:** Address critical/high issues before mainnet launch.
 
-### When to Apply
+---
 
- - **During refactoring:**
+## 1. GENERAL CONSIDERATIONS
 
- - **During code review:**
+✓ Contract audited by CertiK (June 2023)
+✓ Team contactable via security@project.com
+✗ No security mailing list for critical announcements
 
-## Feature Envy Detection
+**Risk:** Users won't be notified of critical issues
+**Action:** Set up security@project.com mailing list
 
-Method uses another class's data more than its own? Move it there.
+---
 
-```typescript
-// ❌ FEATURE ENVY - obsessed with Order's data
-class InvoiceGenerator {
-  generate(order: Order): Invoice {
-    const total = order.getItems().map(i => i.getPrice() * i.getQuantity()).reduce((a,b) => a+b, 0)
-    return new Invoice(total + total * order.getTaxRate() + order.calculateShipping())
-  }
-}
+## 2. CONTRACT COMPOSITION
 
-// ✅ Move logic to the class it envies
-class Order {
-  calculateTotal(): number { /* uses this.items, this.taxRate */ }
-}
-class InvoiceGenerator {
-  generate(order: Order): Invoice { return new Invoice(order.calculateTotal()) }
+### Complexity Analysis
+
+**Slither human-summary Results:**
+- 456 lines of code
+- Cyclomatic complexity: Average 6, Max 14 (transferWithFee())
+- 12 functions, 8 state variables
+- Inheritance depth: 3 (moderate)
+
+✓ Contract complexity is reasonable
+⚠ transferWithFee() complexity high (14) - consider splitting
+
+### SafeMath Usage
+
+✓ Using Solidity 0.8.20 (built-in overflow protection)
+✓ No unchecked blocks found
+✓ All arithmetic operations protected
+
+### Non-Token Functions
+
+**Functions Beyond ERC20:**
+- setFeeCollector() - Admin function ✓
+- setTransferFee() - Admin function ✓
+- withdrawFees() - Admin function ✓
+- pause()/unpause() - Emergency functions ✓
+
+⚠ 4 non-token functions (acceptable but adds complexity)
+
+### Address Entry Points
+
+✓ Single contract address
+✓ No proxy with multiple entry points
+✓ No token migration creating address confusion
+
+**Status:** PASS
+
+---
+
+## 3. OWNER PRIVILEGES
+
+### Upgradeability
+
+⚠ Contract uses TransparentUpgradeableProxy
+**Risk:** Owner can change contract logic at any time
+
+**Current Implementation:**
+- ProxyAdmin: 0x1234... (2/3 multisig) ✓
+- Timelock: None ✗
+
+**Recommendation:** Add 48-hour timelock to all upgrades
+
+### Minting Capabilities
+
+❌ CRITICAL: Unlimited minting
+File: contracts/RewardToken.sol:89
+```solidity
+function mint(address to, uint256 amount) external onlyOwner {
+    _mint(to, amount);  // No cap!
 }
 ```
 
-**Detection:** Count external vs own references. More external? Feature envy.
+**Risk:** Owner can inflate supply arbitrarily
+**Fix:** Add maximum supply cap or rate-limited minting
 
-## Dependency Inversion Principle
+### Pausability
 
-Don't instantiate dependencies inside methods. Inject them.
+✓ Pausable pattern implemented (OpenZeppelin)
+✓ Only owner can pause
+⚠ Paused state affects all transfers (including existing holders)
 
-```typescript
-// ❌ TIGHT COUPLING
-class OrderProcessor {
-  process(order: Order): void {
-    const validator = new OrderValidator()  // Hard to test/change
-    const emailer = new EmailService()      // Hidden dependency
-  }
-}
+**Risk:** Owner can trap all user funds
+**Mitigation:** Use multi-sig for pause function (already implemented ✓)
 
-// ✅ LOOSE COUPLING
-class OrderProcessor {
-  constructor(private validator: OrderValidator, private emailer: EmailService) {}
-  process(order: Order): void {
-    this.validator.isValid(order)  // Injected, mockable
-    this.emailer.send(...)         // Explicit dependency
-  }
-}
+### Blacklisting
+
+✗ No blacklist functionality
+**Assessment:** Good - no centralized censorship risk
+
+### Team Transparency
+
+✓ Team members public (team.md)
+✓ Company registered in Switzerland
+✓ Accountable and contactable
+
+**Status:** ACCEPTABLE
+
+---
+
+## 4. ERC20 CONFORMITY
+
+### Slither-check-erc Results
+
+Command: slither-check-erc . RewardToken --erc erc20
+
+✓ transfer returns bool
+✓ transferFrom returns bool
+✓ name, decimals, symbol present
+✓ decimals returns uint8 (value: 18)
+✓ Race condition mitigated (increaseAllowance/decreaseAllowance)
+
+**Status:** FULLY COMPLIANT
+
+### slither-prop Test Results
+
+Command: slither-prop . --contract RewardToken
+
+**Generated 12 properties, all passed:**
+✓ Transfer doesn't change total supply
+✓ Allowance correctly updates
+✓ Balance updates match transfer amounts
+✓ No balance manipulation possible
+[... 8 more properties ...]
+
+**Echidna fuzzing:** 50,000 runs, no violations ✓
+
+**Status:** EXCELLENT
+
+---
+
+## 5. WEIRD TOKEN PATTERN ANALYSIS
+
+### Integration Safety Check
+
+**Your Protocol Integrates 5 External Tokens:**
+1. USDT (0xdac17f9...)
+2. USDC (0xa0b86991...)
+3. DAI (0x6b175474...)
+4. WETH (0xc02aaa39...)
+5. UNI (0x1f9840a8...)
+
+### Critical Issues Found
+
+❌ **Pattern 7.2: Missing Return Values**
+**Found in:** USDT integration
+File: contracts/Vault.sol:156
+```solidity
+IERC20(usdt).transferFrom(msg.sender, address(this), amount);
+// No return value check! USDT doesn't return bool
 ```
 
-**Scan for:** `new X()` inside methods, static method calls. Extract to constructor.
+**Risk:** Silent failures on USDT transfers
+**Exploit:** User appears to deposit, but no tokens moved
+**Fix:** Use OpenZeppelin SafeERC20 wrapper
 
-## Fail-Fast Error Handling
+---
 
-**NEVER use fallback chains:**
-```typescript
-value ?? backup ?? default ?? 'unknown'  // ❌
+❌ **Pattern 7.3: Fee on Transfer**
+**Risk for:** Any token with transfer fees
+File: contracts/Vault.sol:170
+```solidity
+uint256 balanceBefore = IERC20(token).balanceOf(address(this));
+token.transferFrom(msg.sender, address(this), amount);
+shares = amount * exchangeRate;  // WRONG! Should use actual received amount
 ```
 
-Validate and throw clear errors instead:
+**Risk:** Accounting mismatch if token takes fees
+**Exploit:** User credited more shares than tokens deposited
+**Fix:** Calculate shares from `balanceAfter - balanceBefore`
 
-```typescript
-// ❌ SILENT FAILURE - hides problems
-return content.eventType ?? content.className ?? 'Unknown'
+---
 
-// ✅ FAIL FAST - immediate, debuggable
-if (!content.eventType) {
-  throw new Error(`Expected 'eventType', got undefined. Keys: [${Object.keys(content)}]`)
-}
-return content.eventType
+### Known Non-Standard Token Handling
+
+✓ **USDC:** Properly handled (SafeERC20, 6 decimals accounted for)
+⚠ **DAI:** permit() function not used (opportunity for gas savings)
+✗ **USDT:** Missing return value not handled (CRITICAL)
+✓ **WETH:** Standard wrapper, properly handled
+⚠ **UNI:** Large approval handling not checked (reverts >= 2^96)
+
+---
+
+[... Additional sections for remaining analysis categories ...]
 ```
 
-**Error format:** `Expected [X]. Got [Y]. Context: [debugging info]`
+For complete report template and deliverables format, see [REPORT_TEMPLATES.md](resources/REPORT_TEMPLATES.md).
 
-## Naming Conventions
+---
 
-**Principle:** Use business domain terminology and intention-revealing names. Never use generic programmer jargon.
+## Rationalizations (Do Not Skip)
 
-### Forbidden Generic Names
+| Rationalization | Why It's Wrong | Required Action |
+|-----------------|----------------|-----------------|
+| "Token looks standard, ERC20 checks pass" | 20+ weird token patterns exist beyond ERC20 compliance | Check ALL weird token patterns from database (missing return, revert on zero, hooks, etc.) |
+| "Slither shows no issues, integration is safe" | Slither detects some patterns, misses integration logic | Complete manual analysis of all 5 token integration criteria |
+| "No fee-on-transfer detected, skip that check" | Fee-on-transfer can be owner-controlled or conditional | Test all transfer scenarios, check for conditional fee logic |
+| "Balance checks exist, handling is safe" | Balance checks alone don't protect against all weird tokens | Verify safe transfer wrappers, revert handling, approval patterns |
+| "Token is deployed by reputable team, assume standard" | Reputation doesn't guarantee standard behavior | Analyze actual code and on-chain behavior, don't trust assumptions |
+| "Integration uses OpenZeppelin, must be safe" | OpenZeppelin libraries don't protect against weird external tokens | Verify defensive patterns around all external token calls |
+| "Can't run Slither, skipping automated analysis" | Slither provides critical ERC conformance checks | Manually verify all slither-check-erc criteria or document why blocked |
+| "This pattern seems fine" | Intuition misses subtle token integration bugs | Systematically check all 20+ weird token patterns with code evidence |
 
-**NEVER use these names:**
-- `data`
-- `utils`
-- `helpers`
-- `common`
-- `shared`
-- `manager`
-- `handler`
-- `processor`
+---
 
-These names are meaningless - they tell you nothing about what the code actually does.
+## Deliverables
 
-### Intention-Revealing Names
+When analysis is complete, I'll provide:
 
-**Instead of generic names, use specific domain language:**
+1. **Compliance Checklist** - Checkboxes for all assessment categories
+2. **Weird Token Pattern Analysis** - Presence/absence of all 24 patterns with risk levels and evidence
+3. **On-chain Analysis Report** (if applicable) - Holder distribution, exchange listings, configuration
+4. **Integration Safety Assessment** (if applicable) - Safe transfer usage, defensive patterns, weird token handling
+5. **Prioritized Recommendations** - CRITICAL/HIGH/MEDIUM/LOW issues with specific fixes
 
-```typescript
-// ❌ GENERIC - meaningless
-class DataProcessor {
-  processData(data: any): any {
-    const utils = new DataUtils()
-    return utils.transform(data)
-  }
-}
+Complete deliverable templates available in [REPORT_TEMPLATES.md](resources/REPORT_TEMPLATES.md).
 
-// ✓ INTENTION-REVEALING - clear purpose
-class OrderTotalCalculator {
-  calculateTotal(order: Order): Money {
-    return taxCalculator.applyTax(order.subtotal, order.taxRate)
-  }
-}
-```
+---
 
-### Naming Checklist
+## Ready to Begin
 
-**For classes:**
-- Does the name reveal what the class is responsible for?
-- Is it a noun (or noun phrase) from the domain?
-- Would a domain expert recognize this term?
+**What I'll need**:
+- Your codebase
+- Context: Token implementation or integration?
+- Token type: ERC20, ERC721, or both?
+- Contract address (if deployed and want on-chain analysis)
+- RPC endpoint (if querying on-chain)
 
-**For methods:**
-- Does the name reveal what the method does?
-- Is it a verb (or verb phrase)?
-- Does it describe the business operation?
-
-**For variables:**
-- Does the name reveal what the variable contains?
-- Is it specific to this context?
-- Could someone understand it without reading the code?
-
-### Refactoring Generic Names
-
-When you encounter generic names:
-
-1. **Understand the purpose**: What is this really doing?
-2. **Ask domain experts**: What would they call this?
-3. **Extract domain concept**: Is there a domain term for this?
-4. **Rename comprehensively**: Update all references
-
-
-## Type-Driven Design
-
-**Principle:** Follow Scott Wlaschin's type-driven approach to domain modeling. Express domain concepts using the type system.
-
-### Make Illegal States Unrepresentable
-
-Use types to encode business rules:
-
-```typescript
-// ❌ PRIMITIVE OBSESSION - illegal states possible
-interface Order {
-  status: string  // Could be any string
-  shippedDate: Date | null  // Could be set when status != 'shipped'
-}
-
-// ✓ TYPE-SAFE - illegal states impossible
-type UnconfirmedOrder = { type: 'unconfirmed', items: Item[] }
-type ConfirmedOrder = { type: 'confirmed', items: Item[], confirmationNumber: string }
-type ShippedOrder = { type: 'shipped', items: Item[], confirmationNumber: string, shippedDate: Date }
-
-type Order = UnconfirmedOrder | ConfirmedOrder | ShippedOrder
-```
-
-### Avoid Type Escape Hatches
-
-**STRICTLY FORBIDDEN without explicit user approval:**
-- `any` type
-- `as` type assertions (`as unknown as`, `as any`, `as SomeType`)
-- `@ts-ignore` / `@ts-expect-error`
-
-There is always a better type-safe solution. These make code unsafe and defeat TypeScript's purpose.
-
-### Use the Type System for Validation
-
-```typescript
-// ✓ TYPE-SAFE - validates at compile time
-type PositiveNumber = number & { __brand: 'positive' }
-
-function createPositive(value: number): PositiveNumber {
-  if (value <= 0) {
-    throw new Error(`Expected positive number, got ${value}`)
-  }
-  return value as PositiveNumber
-}
-
-// Can only be called with validated positive numbers
-function calculateDiscount(price: PositiveNumber, rate: number): Money {
-  // price is guaranteed positive by type system
-}
-```
-
-## Prefer Immutability
-
-**Principle:** Default to immutable data. Mutation is a source of bugs—unexpected changes, race conditions, and difficult debugging.
-
-### The Problem: Mutable State
-
-```typescript
-// MUTABLE - hard to reason about
-function processOrder(order: Order): void {
-  order.status = 'processing'  // Mutates input!
-  order.items.push(freeGift)   // Side effect!
-}
-
-// Caller has no idea their object changed
-const myOrder = getOrder()
-processOrder(myOrder)
-// myOrder is now different - surprise!
-```
-
-### The Solution: Return New Values
-
-```typescript
-// IMMUTABLE - predictable
-function processOrder(order: Order): Order {
-  return {
-    ...order,
-    status: 'processing',
-    items: [...order.items, freeGift]
-  }
-}
-
-// Caller controls what happens
-const myOrder = getOrder()
-const processedOrder = processOrder(myOrder)
-// myOrder unchanged, processedOrder is new
-```
-
-### Application Rules
-
-- Prefer `const` over `let`
-- Prefer spread (`...`) over mutation
-- Prefer `map`/`filter`/`reduce` over `forEach` with mutation
-- If you must mutate, make it explicit and contained
-
-## YAGNI - You Aren't Gonna Need It
-
-**Principle:** Don't build features until they're actually needed. Speculative code is waste—it costs time to write, time to maintain, and is often wrong when requirements become clear.
-
-### The Problem: Speculative Generalization
-
-```typescript
-// YAGNI VIOLATION - over-engineered for "future" needs
-interface PaymentProcessor {
-  process(payment: Payment): Result
-  refund(payment: Payment): Result
-  partialRefund(payment: Payment, amount: Money): Result
-  schedulePayment(payment: Payment, date: Date): Result
-  recurringPayment(payment: Payment, schedule: Schedule): Result
-  // ... 10 more methods "we might need"
-}
-
-// Only ONE method is actually used today
-```
-
-
-### Application Rules
-
-- Build the simplest thing that works
-- Add capabilities when requirements demand them, not before
-- "But we might need it" is not a requirement
-
-
-## When Tempted to Cut Corners
-
-**STOP if you're about to:**
-- Use `??` chains → fail fast with clear error instead
-- Use `any` or `as` → fix the types, not the symptoms
-- Use `new X()` inside a method → inject through constructor
-- Name something `data`, `utils`, `handler` → use domain language
-- Add a getter → ask if the object should do the work instead
-- Skip refactor because "it works" → refactor IS part of the work
-- Write a comment → make the code self-explanatory
-- Mutate a parameter → return a new value
-- Build "for later" → build what you need now
+Let's analyze your token implementation or integration for security risks!
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
