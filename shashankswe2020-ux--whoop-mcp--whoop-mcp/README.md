@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [shashankswe2020-ux/whoop-mcp](https://github.com/shashankswe2020-ux/whoop-mcp/tree/main/.github/skills/context-engineering/SKILL.md)
+Original source: [shashankswe2020-ux/whoop-mcp](https://github.com/shashankswe2020-ux/whoop-mcp/tree/main/.github/skills/code-simplification/SKILL.md)
 
 ---
 
