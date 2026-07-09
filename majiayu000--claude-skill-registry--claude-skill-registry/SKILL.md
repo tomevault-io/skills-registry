@@ -1,418 +1,77 @@
 ---
-name: wordpress-master
-description: Use when user needs WordPress development, theme or plugin creation, site optimization, security hardening, multisite management, or scaling WordPress from small sites to enterprise platforms.
+name: working-with-users-and-team
+description: Use when gathering or interpreting requirements, estimating effort, or communicating with stakeholders/customers about what to build
 metadata:
   author: majiayu000
 ---
 
-# WordPress Master
-
-## Purpose
-
-Provides WordPress development and architecture expertise specializing in custom themes, plugins, performance optimization, and enterprise scaling. Builds WordPress solutions from simple sites to enterprise platforms handling millions of visitors.
-
-## When to Use
-
-- Custom WordPress theme or plugin development
-- WordPress site performance optimization
-- Security hardening or audit for WordPress site
-- WordPress multisite setup or management
-- Headless WordPress implementation
-- E-commerce solution development (WooCommerce)
-- WordPress migration or upgrade
-
-This skill provides expert WordPress architecture and development capabilities, specializing in full-stack development, performance optimization, and enterprise solutions. The WordPress master masters custom theme/plugin development, multisite management, security hardening, and scaling WordPress from small sites to enterprise platforms handling millions of visitors.
-
-## When to Use
-
-- User needs custom WordPress theme or plugin development
-- WordPress site performance optimization required
-- Security hardening or audit needed for WordPress site
-- WordPress multisite setup or management
-- Headless WordPress implementation required
-- E-commerce solution development (WooCommerce)
-- WordPress migration or upgrade needed
-- Enterprise WordPress architecture design
-
-## What This Skill Does
-
-The WordPress master designs, develops, and optimizes WordPress solutions, from custom themes and plugins to enterprise-grade platforms. The architect focuses on performance, security, scalability, and clean code while leveraging WordPress's flexibility.
-
-### Architecture Phase
-- Audits existing WordPress infrastructure and codebase
-- Analyzes performance baselines and bottlenecks
-- Assesses security vulnerabilities and compliance needs
-- Plans scalability and infrastructure requirements
-- Designs database schema and caching strategy
-- Plans CDN architecture and backup systems
-
-### Development Phase
-- Writes clean, PSR-12 compliant PHP code
-- Optimizes database queries and reduces queries to < 50 per page
-- Implements object caching with Redis/Memcached
-- Builds custom features with proper architecture
-- Creates admin tools and automation
-- Sets up CI/CD and automation
-- Tests thoroughly before deployment
-
-### Excellence Phase
-- Delivers enterprise-grade WordPress solutions that scale
-- Ensures blazing performance (page load < 1.5s)
-- Maintains security score of 100/100
-- Provides comprehensive monitoring and documentation
-- Ensures 99.99% uptime and reliability
-- Delivers maintainable and extensible code
-
-## Core Capabilities
-
-### Core Development
-- PHP 8.x optimization and modern features
-- MySQL query tuning and optimization
-- Object caching strategy (Redis, Memcached)
-- Transients management and API cache
-- WP_Query mastery and optimization
-- Custom post types and taxonomies
-- Meta programming and custom fields
-- Hook system mastery (actions and filters)
-
-### Theme Development
-- Custom theme framework development
-- Block theme creation and FSE (Full Site Editing)
-- Template hierarchy and conditional tags
-- Child theme architecture and inheritance
-- SASS/PostCSS workflow and build processes
-- Responsive design and mobile-first approach
-- Accessibility WCAG 2.1 compliance
-- Performance optimization (critical CSS, lazy loading)
-
-### Plugin Development
-- OOP architecture and design patterns
-- Namespace implementation and autoloading
-- Hook system mastery (actions and filters)
-- AJAX handling with WordPress AJAX API
-- REST API endpoints and controllers
-- Background processing and WP Cron
-- Queue management and job scheduling
-- Dependency injection and service containers
-
-### Gutenberg/Block Development
-- Custom block creation with block.json
-- Block patterns and block variations
-- InnerBlocks usage for nested blocks
-- Dynamic blocks with server-side rendering
-- Block templates and template parts
-- ServerSideRender component
-- Block store and data management
-- React component integration
-
-### Performance Optimization
-- Database optimization and query analysis
-- Query monitoring and slow query identification
-- Object caching (Redis/Memcached) configuration
-- Page caching strategies (Varnish, NGINX FastCGI Cache)
-- CDN implementation (CloudFlare, AWS CloudFront)
-- Image optimization (WebP, compression, lazy loading)
-- Critical CSS inlining and CSS delivery optimization
-- JavaScript defer/async and code splitting
-
-### Security Hardening
-- File permissions and directory structure hardening
-- Database security and wp-config protection
-- User capabilities and role management
-- Nonce implementation for form security
-- SQL injection prevention via prepared statements
-- XSS protection and escaping
-- CSRF tokens and verification
-- Security headers implementation (CSP, HSTS)
-
-### Multisite Management
-- Network architecture and domain mapping
-- User synchronization across sites
-- Plugin and theme management at network level
-- Theme deployment and distribution
-- Database sharding and table separation
-- Content distribution and aggregation
-- Network administration and site provisioning
-
-### E-commerce Solutions
-- WooCommerce mastery and customization
-- Payment gateway integration and development
-- Inventory management and stock control
-- Tax calculation and multi-tax support
-- Shipping integration and carrier APIs
-- Subscription and recurring billing
-- B2B features and wholesale pricing
-- Performance scaling for high-volume stores
-
-### Headless WordPress
-- REST API optimization and caching
-- GraphQL implementation (WPGraphQL)
-- JAMstack integration with Next.js/Gatsby
-- Authentication via JWT or OAuth
-- CORS configuration for API access
-- API versioning and backward compatibility
-- Cache invalidation strategies
-- Image optimization and CDN integration
-
-### DevOps & Deployment
-- Git workflows for version control
-- CI/CD pipelines (GitHub Actions, GitLab CI)
-- Docker containers for development and production
-- Kubernetes orchestration and scaling
-- Blue-green deployment strategies
-- Database migrations and schema updates
-- Environment management (dev, staging, production)
-- Monitoring setup (New Relic, Datadog)
-
-### Advanced Techniques
-- Custom REST endpoints with proper authentication
-- GraphQL queries with WPGraphQL
-- Elasticsearch integration for advanced search
-- Redis object caching optimization
-- Varnish page caching configuration
-- CloudFlare workers for edge computing
-- Database replication for read scaling
-- Load balancing and traffic distribution
-
-### Troubleshooting Mastery
-- Debug techniques and WP_DEBUG configuration
-- Error logging and analysis
-- Query monitoring with Query Monitor
-- Memory profiling and optimization
-- Plugin conflict identification and resolution
-- Theme debugging and template hierarchy
-- AJAX issues and API troubleshooting
-- Cron problems and task scheduling
-
-### Migration Expertise
-- Site transfers between hosts
-- Domain changes and URL updates
-- Hosting migrations and server changes
-- Database moving and import/export
-- Multisite splits and separations
-- Platform changes and CMS migrations
-- Major version upgrades (WordPress core)
-- Content imports and data migration
-
-## Tool Restrictions
-
-**Primary Tools:**
-- Read, Write, Edit, Bash for WordPress code development
-- Glob, Grep for analyzing existing WordPress code
-- WebFetch, WebSearch for WordPress documentation and updates
-
-**Cannot directly:**
-- Access production WordPress databases or files
-- Modify production sites without authorization
-- Install plugins or themes on production sites
-- Make changes to production infrastructure
-- Access WordPress admin panels without credentials
-
-**Best Practices:**
-- Always follow WordPress coding standards (PSR-12)
-- Use child themes for customization
-- Implement proper escaping and security measures
-- Optimize database queries (aim for < 50 per page load)
-- Test thoroughly in development environment
-- Document custom code and functionality
-- Keep WordPress core, plugins, and themes updated
-
-## Integration with Other Skills
-
-- **seo-specialist**: Collaborate on technical SEO implementation
-- **content-strategist**: Support CMS features and content management
-- **security-auditor**: Work on security hardening and audits
-- **frontend-engineer**: Guide on theme development and block implementation
-- **backend-engineer**: Collaborate on REST API and backend architecture
-- **devops-engineer**: Assist on deployment, CI/CD, and infrastructure
-- **database-administrator**: Partner on database optimization and scaling
-- **ux-designer**: Coordinate on admin experience and user interface
-
-## Example Interactions
-
-### Scenario: Custom Plugin Development
-
-**User Request**: "We need a custom plugin for our business logic"
-
-**Skill Response**:
-1. Analyzes requirements and business logic needs
-2. Designs plugin architecture with proper namespacing
-3. Implements OOP structure with classes and interfaces
-4. Creates REST API endpoints for frontend integration
-5. Implements admin interface with proper permissions
-6. Adds AJAX handling for dynamic features
-7. Implements caching for performance
-8. Creates comprehensive documentation
-
-**Plugin Code Example**:
-```php
-<?php
-/**
- * Plugin Name: Custom Business Logic
- * Description: Business logic plugin for custom functionality
- * Version: 1.0.0
- * Author: Your Company
- */
-
-namespace MyCompany\BusinessLogic;
-
-use MyCompany\BusinessLogic\API\RestController;
-use MyCompany\BusinessLogic\Admin\AdminInterface;
-use MyCompany\BusinessLogic\Services\BusinessService;
-
-class Main {
-    private static $instance = null;
-    private $business_service;
-    private $admin_interface;
-    private $rest_controller;
-
-    private function __construct() {
-        $this->business_service = new BusinessService();
-        $this->admin_interface = new AdminInterface($this->business_service);
-        $this->rest_controller = new RestController($this->business_service);
-
-        $this->init_hooks();
-    }
-
-    public static function get_instance() {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-
-    private function init_hooks() {
-        add_action('rest_api_init', [$this->rest_controller, 'register_routes']);
-        add_action('admin_menu', [$this->admin_interface, 'add_admin_menu']);
-    }
-}
-
-// Initialize plugin
-Main::get_instance();
-```
-
-**Deliverable**: "Custom business logic plugin developed. Implemented OOP architecture with namespacing, REST API endpoints, admin interface, and AJAX handling. Optimized with object caching achieving 45% performance improvement. PSR-12 compliant code with comprehensive documentation. Ready for production deployment."
-
-### Scenario: Performance Optimization
-
-**User Request**: "Our WordPress site is slow, can you optimize it?"
-
-**Skill Response**:
-1. Analyzes current performance metrics and bottlenecks
-2. Uses Query Monitor to identify slow queries
-3. Reviews theme and plugin performance impact
-4. Implements object caching with Redis
-5. Optimizes database queries and adds indexes
-6. Implements page caching with Varnish
-7. Optimizes images and implements lazy loading
-8. Configures CDN and critical CSS
-
-**Deliverable**: "WordPress optimization complete. Load time reduced from 3.2s to 0.8s (75% improvement). Database queries reduced from 120 to 28 per page load. Implemented Redis object caching, Varnish page caching, and CloudFlare CDN. Optimized images with WebP and lazy loading. Security score improved to 100/100. Site now handles 10x traffic with 99.99% uptime."
-
-### Scenario: Headless WordPress Implementation
-
-**User Request**: "We want to use WordPress as a headless CMS"
-
-**Skill Response**:
-1. Analyzes requirements and data structure
-2. Implements REST API optimization with caching
-3. Configures GraphQL with WPGraphQL
-4. Sets up authentication with JWT
-5. Implements CORS configuration
-6. Creates custom endpoints for specific needs
-7. Configures cache invalidation strategies
-8. Sets up Next.js frontend integration
-
-**Deliverable**: "Headless WordPress implementation completed. REST API optimized with Redis caching achieving sub-100ms response times. GraphQL configured with WPGraphQL for flexible querying. JWT authentication implemented with proper security. CORS configured for Next.js frontend. Cache invalidation strategies implemented for content updates. Frontend integration guide provided."
-
-## Best Practices
-
-**WordPress Development:**
-- Follow WordPress coding standards (PSR-12)
-- Use child themes for customization
-- Implement proper namespacing for plugins
-- Use hooks (actions and filters) for extensibility
-- Escape all output for security
-- Validate and sanitize all input
-- Use transients and object caching
-- Write unit tests for critical functionality
-
-**Performance Optimization:**
-- Aim for < 50 database queries per page load
-- Implement object caching (Redis/Memcached)
-- Use page caching for public content
-- Optimize images (WebP, compression, lazy loading)
-- Minimize JavaScript and CSS
-- Use critical CSS and defer non-critical resources
-- Implement CDN for static assets
-- Monitor performance regularly with Query Monitor
-
-**Security Hardening:**
-- Keep WordPress core, plugins, and themes updated
-- Use strong passwords and 2FA
-- Implement proper file permissions (755 for dirs, 644 for files)
-- Use SSL/HTTPS everywhere
-- Implement security headers (CSP, HSTS, X-Frame-Options)
-- Limit login attempts and use security plugins
-- Regular security audits and scans
-- Disable XML-RPC if not needed
-
-**Database Optimization:**
-- Optimize queries and avoid SELECT *
-- Use indexes properly
-- Clean up post revisions and transients
-- Use WP_Query correctly (no query_posts())
-- Implement database caching
-- Monitor slow queries
-- Regularly optimize tables
-- Use read replicas for high-traffic sites
-
-**Plugin Development:**
-- Use proper namespacing and autoloading
-- Implement OOP architecture with classes
-- Use hooks (actions and filters) for extensibility
-- Create REST API endpoints with proper authentication
-- Implement AJAX using WordPress AJAX API
-- Add proper error handling and logging
-- Include comprehensive documentation
-- Follow WordPress plugin directory guidelines
-
-**Theme Development:**
-- Use child themes for customization
-- Implement proper template hierarchy
-- Use WordPress theme APIs (get_header(), get_footer(), etc.)
-- Follow responsive design principles
-- Ensure accessibility (WCAG 2.1 AA)
-- Optimize images and assets
-- Use proper enqueueing for scripts and styles
-- Support Full Site Editing (FSE) and block themes
-
-## Output Format
-
-**Standard Deliverable Structure:**
-
-1. **Custom Plugins**: Fully functional WordPress plugins with proper architecture
-2. **Custom Themes**: Responsive, accessible WordPress themes with child theme support
-3. **Configuration Files**: WP-CLI scripts, Docker configs, CI/CD pipelines
-4. **Documentation**: Setup guides, API documentation, developer resources
-5. **Performance Reports**: Before/after metrics, optimization recommendations
-6. **Security Audits**: Vulnerability assessments and remediation plans
-7. **Migration Guides**: Step-by-step migration procedures and checklists
-
-**Code Quality Standards:**
-- PSR-12 coding standards
-- Proper namespacing and autoloading
-- Comprehensive error handling
-- Security best practices (escaping, validation, nonces)
-- Database optimization (< 50 queries per page)
-- Object caching implementation
-- Performance optimization (page load < 1.5s)
-- Comprehensive documentation
-
-**Completion Notification Example**:
-"WordPress optimization complete. Load time reduced to 0.8s (75% improvement). Database queries optimized by 73%. Security score 100/100. Implemented custom features including headless API, advanced caching, and auto-scaling. Site now handles 10x traffic with 99.99% uptime. All changes documented and tested."
-
-The skill prioritizes performance, security, and maintainability while leveraging WordPress's flexibility to create powerful solutions that scale from simple blogs to enterprise applications.
+# Working With Users and Team
+
+## Overview
+
+Restate requests in *different* words and test reactions, separate estimates from targets from commitments, and start from yes when a request lands. Human-to-human collaboration material (pairing, rotation) lives in `principles.md` for attribution only.
+
+## When to invoke
+
+Invoke when you're about to:
+
+- Write down or interpret a requirement from a customer, PM, designer, or stakeholder
+- Give a number ("how long will this take?", "when can we ship?", "how many users can it handle?")
+- Push back on, accept, or reshape a feature request
+- Talk to a customer, demo a feature, or write a release note that frames the change to non-developers
+
+### Non-triggers — do NOT invoke for
+
+- Fixing an isolated bug whose reproducer is already in a failing test
+- Renaming, formatting, or import-only changes
+- Adding a unit test that pins down already-agreed-on behavior
+- Internal refactor with no user-visible change (use `before-you-refactor`)
+- Routine dependency bump or config tweak
+- Reviewing code for technical quality — domain skills (`clean-code`, `security-and-trust-boundaries`, etc.) handle code review
+
+## Checklist
+
+Run the relevant items. If a request crosses areas (a UX call with an estimate attached), run each.
+
+1. **Restate the request in different words, then ask one clarifying question that distinguishes two competing interpretations.** Do not parrot the user's words back — they did not mean what they told you. Example: user says "I want a customer dashboard." Restate: "So an at-a-glance view a salesperson opens once a day to spot accounts that need attention?" Then ask: "Is this for the salesperson, or for the customer themselves to log into?" *(Jackson, 97/97.)*
+2. **Probe context with vocabulary swaps.** When the user says "client" or "user" or "customer," substitute the other terms in your reply and watch the reaction. A mismatch in the casual term shows where you and the user disagree on what a word means. *(Jackson, 97/97.)*
+3. **Use a visual aid for layout, color, or workflow ordering.** Whiteboard, mockup, or prototype. Verbal descriptions are how the "I said black, I meant white" demo happens. *(Jackson, 97/97.)*
+4. **You are not the user.** *(Colborne, 97/3.)* Users do not share your mental models or care how the software is built. Before adding a UI affordance, list two alternative paths a non-power-user might take and confirm both work. Place help at the point of action (inline hint, tooltip on the control), not in a sidebar a stuck user will not see.
+5. **When surfacing a question or blocker, deliver context.** What you tried, what you expected, the smallest reproducer. Don't just state the problem. *(Brush, 97/36.)*
+6. **Start from yes — ask "why?" before you object.** *(Miller, 97/77.)* Find the underlying need; often the request is achievable as stated, and sometimes voicing the reason makes the original objection look wrong. If after the why the request still cannot work, propose the closest thing that does, or escalate — never silently refuse.
+7. **Before giving a number, name which of three things is being asked for** *(Asproni, 97/50)*: an **estimate** (approximate calculation from data, never spuriously precise), a **target** (a desired business outcome), or a **commitment** (a promise to deliver specified scope at specified quality by a specified date). These are independent. A target is not an estimate. A commitment should be *based on* an estimate, not negotiated against one.
+8. **Refuse to compress an estimate by negotiation.** If you said three weeks and the PM says "I can give you two," that is a target, not a new estimate. Either reduce scope, change the team, or accept that the target will miss — do not relabel.
+
+## Red Flags
+
+| Thought | Reality |
+|---|---|
+| "The user said they want X — I'll just build X." | What users say and what they do diverge. Restate in *different* words and ask one question that distinguishes interpretations. (97/97) |
+| "I'll restate the requirement word-for-word so they know I heard them." | Verbatim restatement confirms the words, not the meaning. Restate in different words to surface the gap. (97/97) |
+| "I know how a user will use this — I designed it." | You are not the user. Walk the non-power-user path before shipping the affordance; place help at the point of action, not the sidebar. (97/3) |
+| "Two weeks is fine — I'll just commit to it." | A target accepted under pressure is not an estimate. Name what's being asked for: estimate, target, or commitment. (97/50) |
+| "I'll give a precise number so it sounds credible." | Spurious precision (4.2 days) signals a target dressed as an estimate. Give a range from data, or say you do not have data yet. (97/50) |
+| "The request is dumb — I'll push back and explain why." | Start from yes. Ask why first. The reason often reveals a real constraint, and sometimes the objection collapses. (97/77) |
+| "I'll just escalate — someone will know." | Without what-you-tried, what-you-expected, and a reproducer, you are asking for magic. Deliver context with the question. (97/36) |
+
+## What "done" looks like
+
+- [ ] You restated each interpreted requirement in *different* words and got confirmation, not just nods.
+- [ ] Any number you gave is labeled as estimate, target, or commitment, and a precise number (e.g., 4.2 days) is replaced by a range or refused.
+- [ ] You started from yes on the request, asked why, and either accepted, reshaped with the asker's agreement, or escalated — you did not silently refuse.
+- [ ] If the change is user-facing, two alternative non-power-user paths through the new affordance have been walked.
+
+## Principles in this skill
+
+| # | Principle | Author |
+|---|---|---|
+| 97/3 | You Are Not the User | Giles Colborne |
+| 97/36 | The Guru Myth | Ryan Brush |
+| 97/50 | Learn to Estimate | Giovanni Asproni |
+| 97/77 | Start from Yes | Alex Miller |
+| 97/97 | Your Customers Do Not Mean What They Say | Nate Jackson |
+
+See `principles.md` for the long-form distillations, citations, and source links.
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
