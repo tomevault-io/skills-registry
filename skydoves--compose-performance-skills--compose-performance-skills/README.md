@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [skydoves/compose-performance-skills](https://github.com/skydoves/compose-performance-skills/tree/main/hot-reload/iterating-with-ai-and-mcp/SKILL.md)
+Original source: [skydoves/compose-performance-skills](https://github.com/skydoves/compose-performance-skills/tree/main/modifiers/migrating-to-modifier-node/SKILL.md)
 
 ---
 
