@@ -1,367 +1,378 @@
 ---
-name: token-integration-analyzer
-description: Comprehensive token integration and implementation analyzer based on Trail of Bits' token integration checklist. Analyzes token implementations for ERC20/ERC721 conformity, checks for 20+ weird token patterns, assesses contract composition and owner privileges, performs on-chain scarcity analysis, and evaluates how protocols handle non-standard tokens. Context-aware for both token implementations and token integrations. (project, gitignored) Use when this capability is needed.
+name: skill-creator
+description: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations. Use when this capability is needed.
 metadata:
   author: majiayu000
 ---
 
-# Token Integration Analyzer
+# Skill Creator
 
-## Purpose
+This skill provides guidance for creating effective skills.
 
-I will systematically analyze your codebase for token-related security concerns using Trail of Bits' token integration checklist. I help with:
+## About Skills
 
-1. **Token Implementations**: Analyze if your token follows ERC20/ERC721 standards or has non-standard behavior
-2. **Token Integrations**: Analyze how your protocol handles arbitrary tokens, including weird/non-standard tokens
-3. **On-chain Analysis**: Query deployed contracts for scarcity, distribution, and configuration
-4. **Security Assessment**: Identify risks from 20+ known weird token patterns
+Skills are modular, self-contained packages that extend Codex's capabilities by providing
+specialized knowledge, workflows, and tools. Think of them as "onboarding guides" for specific
+domains or tasks—they transform Codex from a general-purpose agent into a specialized agent
+equipped with procedural knowledge that no model can fully possess.
 
-**Framework**: Building Secure Contracts - Token Integration Checklist + Weird ERC20 Database
+### What Skills Provide
 
----
+1. Specialized workflows - Multi-step procedures for specific domains
+2. Tool integrations - Instructions for working with specific file formats or APIs
+3. Domain expertise - Company-specific knowledge, schemas, business logic
+4. Bundled resources - Scripts, references, and assets for complex and repetitive tasks
 
-## How This Works
+## Core Principles
 
-### Phase 1: Context Discovery
-I'll determine what we're analyzing:
-- **Token implementation**: Are you building a token contract?
-- **Token integration**: Does your protocol interact with external tokens?
-- **Platform**: Ethereum, other EVM chains, or different platform?
-- **Token types**: ERC20, ERC721, or both?
+### Concise is Key
 
-### Phase 2: Slither Analysis (if Solidity)
-For Solidity projects, I'll help run:
-- `slither-check-erc` - ERC conformity checks
-- `slither --print human-summary` - Complexity and upgrade analysis
-- `slither --print contract-summary` - Function analysis
-- `slither-prop` - Property generation for testing
+The context window is a public good. Skills share the context window with everything else Codex needs: system prompt, conversation history, other Skills' metadata, and the actual user request.
 
-### Phase 3: Code Analysis
-I'll analyze:
-- Contract composition and complexity
-- Owner privileges and centralization risks
-- ERC20/ERC721 conformity
-- Known weird token patterns
-- Integration safety patterns
+**Default assumption: Codex is already very smart.** Only add context Codex doesn't already have. Challenge each piece of information: "Does Codex really need this explanation?" and "Does this paragraph justify its token cost?"
 
-### Phase 4: On-chain Analysis (if deployed)
-If you provide a contract address, I'll query:
-- Token scarcity and distribution
-- Total supply and holder concentration
-- Exchange listings
-- On-chain configuration
+Prefer concise examples over verbose explanations.
 
-### Phase 5: Risk Assessment
-I'll provide:
-- Identified vulnerabilities
-- Non-standard behaviors
-- Integration risks
-- Prioritized recommendations
+### Set Appropriate Degrees of Freedom
 
----
+Match the level of specificity to the task's fragility and variability:
 
-## Assessment Categories
+**High freedom (text-based instructions)**: Use when multiple approaches are valid, decisions depend on context, or heuristics guide the approach.
 
-I check 10 comprehensive categories covering all aspects of token security. For detailed criteria, patterns, and checklists, see [ASSESSMENT_CATEGORIES.md](resources/ASSESSMENT_CATEGORIES.md).
+**Medium freedom (pseudocode or scripts with parameters)**: Use when a preferred pattern exists, some variation is acceptable, or configuration affects behavior.
 
-### Quick Reference:
+**Low freedom (specific scripts, few parameters)**: Use when operations are fragile and error-prone, consistency is critical, or a specific sequence must be followed.
 
-1. **General Considerations** - Security reviews, team transparency, security contacts
-2. **Contract Composition** - Complexity analysis, SafeMath usage, function count, entry points
-3. **Owner Privileges** - Upgradeability, minting, pausability, blacklisting, team accountability
-4. **ERC20 Conformity** - Return values, metadata, decimals, race conditions, Slither checks
-5. **ERC20 Extension Risks** - External calls/hooks, transfer fees, rebasing/yield-bearing tokens
-6. **Token Scarcity Analysis** - Supply distribution, holder concentration, exchange distribution, flash loan/mint risks
-7. **Weird ERC20 Patterns** (24 patterns including):
-   - Reentrant calls (ERC777 hooks)
-   - Missing return values (USDT, BNB, OMG)
-   - Fee on transfer (STA, PAXG)
-   - Balance modifications outside transfers (Ampleforth, Compound)
-   - Upgradable tokens (USDC, USDT)
-   - Flash mintable (DAI)
-   - Blocklists (USDC, USDT)
-   - Pausable tokens (BNB, ZIL)
-   - Approval race protections (USDT, KNC)
-   - Revert on approval/transfer to zero address
-   - Revert on zero value approvals/transfers
-   - Multiple token addresses
-   - Low decimals (USDC: 6, Gemini: 2)
-   - High decimals (YAM-V2: 24)
-   - transferFrom with src == msg.sender
-   - Non-string metadata (MKR)
-   - No revert on failure (ZRX, EURS)
-   - Revert on large approvals (UNI, COMP)
-   - Code injection via token name
-   - Unusual permit function (DAI, RAI, GLM)
-   - Transfer less than amount (cUSDCv3)
-   - ERC-20 native currency representation (Celo, Polygon, zkSync)
-   - [And more...](resources/ASSESSMENT_CATEGORIES.md#7-weird-erc20-patterns)
-8. **Token Integration Safety** - Safe transfer patterns, balance verification, allowlists, wrappers, defensive patterns
-9. **ERC721 Conformity** - Transfer to 0x0, safeTransferFrom, metadata, ownerOf, approval clearing, token ID immutability
-10. **ERC721 Common Risks** - onERC721Received reentrancy, safe minting, burning approval clearing
+Think of Codex as exploring a path: a narrow bridge with cliffs needs specific guardrails (low freedom), while an open field allows many routes (high freedom).
 
----
+### Anatomy of a Skill
 
-## Example Output
-
-When analysis is complete, you'll receive a comprehensive report structured as follows:
+Every skill consists of a required SKILL.md file and optional bundled resources:
 
 ```
-=== TOKEN INTEGRATION ANALYSIS REPORT ===
-
-Project: MultiToken DEX
-Token Analyzed: Custom Reward Token + Integration Safety
-Platform: Solidity 0.8.20
-Analysis Date: March 15, 2024
-
----
-
-## EXECUTIVE SUMMARY
-
-Token Type: ERC20 Implementation + Protocol Integrating External Tokens
-Overall Risk Level: MEDIUM
-Critical Issues: 2
-High Issues: 3
-Medium Issues: 4
-
-**Top Concerns:**
-⚠ Fee-on-transfer tokens not handled correctly
-⚠ No validation for missing return values (USDT compatibility)
-⚠ Owner can mint unlimited tokens without cap
-
-**Recommendation:** Address critical/high issues before mainnet launch.
-
----
-
-## 1. GENERAL CONSIDERATIONS
-
-✓ Contract audited by CertiK (June 2023)
-✓ Team contactable via security@project.com
-✗ No security mailing list for critical announcements
-
-**Risk:** Users won't be notified of critical issues
-**Action:** Set up security@project.com mailing list
-
----
-
-## 2. CONTRACT COMPOSITION
-
-### Complexity Analysis
-
-**Slither human-summary Results:**
-- 456 lines of code
-- Cyclomatic complexity: Average 6, Max 14 (transferWithFee())
-- 12 functions, 8 state variables
-- Inheritance depth: 3 (moderate)
-
-✓ Contract complexity is reasonable
-⚠ transferWithFee() complexity high (14) - consider splitting
-
-### SafeMath Usage
-
-✓ Using Solidity 0.8.20 (built-in overflow protection)
-✓ No unchecked blocks found
-✓ All arithmetic operations protected
-
-### Non-Token Functions
-
-**Functions Beyond ERC20:**
-- setFeeCollector() - Admin function ✓
-- setTransferFee() - Admin function ✓
-- withdrawFees() - Admin function ✓
-- pause()/unpause() - Emergency functions ✓
-
-⚠ 4 non-token functions (acceptable but adds complexity)
-
-### Address Entry Points
-
-✓ Single contract address
-✓ No proxy with multiple entry points
-✓ No token migration creating address confusion
-
-**Status:** PASS
-
----
-
-## 3. OWNER PRIVILEGES
-
-### Upgradeability
-
-⚠ Contract uses TransparentUpgradeableProxy
-**Risk:** Owner can change contract logic at any time
-
-**Current Implementation:**
-- ProxyAdmin: 0x1234... (2/3 multisig) ✓
-- Timelock: None ✗
-
-**Recommendation:** Add 48-hour timelock to all upgrades
-
-### Minting Capabilities
-
-❌ CRITICAL: Unlimited minting
-File: contracts/RewardToken.sol:89
-```solidity
-function mint(address to, uint256 amount) external onlyOwner {
-    _mint(to, amount);  // No cap!
-}
+skill-name/
+├── SKILL.md (required)
+│   ├── YAML frontmatter metadata (required)
+│   │   ├── name: (required)
+│   │   └── description: (required)
+│   └── Markdown instructions (required)
+└── Bundled Resources (optional)
+    ├── scripts/          - Executable code (Python/Bash/etc.)
+    ├── references/       - Documentation intended to be loaded into context as needed
+    └── assets/           - Files used in output (templates, icons, fonts, etc.)
 ```
 
-**Risk:** Owner can inflate supply arbitrarily
-**Fix:** Add maximum supply cap or rate-limited minting
+#### SKILL.md (required)
 
-### Pausability
+Every SKILL.md consists of:
 
-✓ Pausable pattern implemented (OpenZeppelin)
-✓ Only owner can pause
-⚠ Paused state affects all transfers (including existing holders)
+- **Frontmatter** (YAML): Contains `name` and `description` fields. These are the only fields that Codex reads to determine when the skill gets used, thus it is very important to be clear and comprehensive in describing what the skill is, and when it should be used.
+- **Body** (Markdown): Instructions and guidance for using the skill. Only loaded AFTER the skill triggers (if at all).
 
-**Risk:** Owner can trap all user funds
-**Mitigation:** Use multi-sig for pause function (already implemented ✓)
+#### Bundled Resources (optional)
 
-### Blacklisting
+##### Scripts (`scripts/`)
 
-✗ No blacklist functionality
-**Assessment:** Good - no centralized censorship risk
+Executable code (Python/Bash/etc.) for tasks that require deterministic reliability or are repeatedly rewritten.
 
-### Team Transparency
+- **When to include**: When the same code is being rewritten repeatedly or deterministic reliability is needed
+- **Example**: `scripts/rotate_pdf.py` for PDF rotation tasks
+- **Benefits**: Token efficient, deterministic, may be executed without loading into context
+- **Note**: Scripts may still need to be read by Codex for patching or environment-specific adjustments
 
-✓ Team members public (team.md)
-✓ Company registered in Switzerland
-✓ Accountable and contactable
+##### References (`references/`)
 
-**Status:** ACCEPTABLE
+Documentation and reference material intended to be loaded as needed into context to inform Codex's process and thinking.
 
----
+- **When to include**: For documentation that Codex should reference while working
+- **Examples**: `references/finance.md` for financial schemas, `references/mnda.md` for company NDA template, `references/policies.md` for company policies, `references/api_docs.md` for API specifications
+- **Use cases**: Database schemas, API documentation, domain knowledge, company policies, detailed workflow guides
+- **Benefits**: Keeps SKILL.md lean, loaded only when Codex determines it's needed
+- **Best practice**: If files are large (>10k words), include grep search patterns in SKILL.md
+- **Avoid duplication**: Information should live in either SKILL.md or references files, not both. Prefer references files for detailed information unless it's truly core to the skill—this keeps SKILL.md lean while making information discoverable without hogging the context window. Keep only essential procedural instructions and workflow guidance in SKILL.md; move detailed reference material, schemas, and examples to references files.
 
-## 4. ERC20 CONFORMITY
+##### Assets (`assets/`)
 
-### Slither-check-erc Results
+Files not intended to be loaded into context, but rather used within the output Codex produces.
 
-Command: slither-check-erc . RewardToken --erc erc20
+- **When to include**: When the skill needs files that will be used in the final output
+- **Examples**: `assets/logo.png` for brand assets, `assets/slides.pptx` for PowerPoint templates, `assets/frontend-template/` for HTML/React boilerplate, `assets/font.ttf` for typography
+- **Use cases**: Templates, images, icons, boilerplate code, fonts, sample documents that get copied or modified
+- **Benefits**: Separates output resources from documentation, enables Codex to use files without loading them into context
 
-✓ transfer returns bool
-✓ transferFrom returns bool
-✓ name, decimals, symbol present
-✓ decimals returns uint8 (value: 18)
-✓ Race condition mitigated (increaseAllowance/decreaseAllowance)
+#### What to Not Include in a Skill
 
-**Status:** FULLY COMPLIANT
+A skill should only contain essential files that directly support its functionality. Do NOT create extraneous documentation or auxiliary files, including:
 
-### slither-prop Test Results
+- README.md
+- INSTALLATION_GUIDE.md
+- QUICK_REFERENCE.md
+- CHANGELOG.md
+- etc.
 
-Command: slither-prop . --contract RewardToken
+The skill should only contain the information needed for an AI agent to do the job at hand. It should not contain auxiliary context about the process that went into creating it, setup and testing procedures, user-facing documentation, etc. Creating additional documentation files just adds clutter and confusion.
 
-**Generated 12 properties, all passed:**
-✓ Transfer doesn't change total supply
-✓ Allowance correctly updates
-✓ Balance updates match transfer amounts
-✓ No balance manipulation possible
-[... 8 more properties ...]
+### Progressive Disclosure Design Principle
 
-**Echidna fuzzing:** 50,000 runs, no violations ✓
+Skills use a three-level loading system to manage context efficiently:
 
-**Status:** EXCELLENT
+1. **Metadata (name + description)** - Always in context (~100 words)
+2. **SKILL.md body** - When skill triggers (<5k words)
+3. **Bundled resources** - As needed by Codex (Unlimited because scripts can be executed without reading into context window)
 
----
+#### Progressive Disclosure Patterns
 
-## 5. WEIRD TOKEN PATTERN ANALYSIS
+Keep SKILL.md body to the essentials and under 500 lines to minimize context bloat. Split content into separate files when approaching this limit. When splitting out content into other files, it is very important to reference them from SKILL.md and describe clearly when to read them, to ensure the reader of the skill knows they exist and when to use them.
 
-### Integration Safety Check
+**Key principle:** When a skill supports multiple variations, frameworks, or options, keep only the core workflow and selection guidance in SKILL.md. Move variant-specific details (patterns, examples, configuration) into separate reference files.
 
-**Your Protocol Integrates 5 External Tokens:**
-1. USDT (0xdac17f9...)
-2. USDC (0xa0b86991...)
-3. DAI (0x6b175474...)
-4. WETH (0xc02aaa39...)
-5. UNI (0x1f9840a8...)
+**Pattern 1: High-level guide with references**
 
-### Critical Issues Found
+```markdown
+# PDF Processing
 
-❌ **Pattern 7.2: Missing Return Values**
-**Found in:** USDT integration
-File: contracts/Vault.sol:156
-```solidity
-IERC20(usdt).transferFrom(msg.sender, address(this), amount);
-// No return value check! USDT doesn't return bool
+## Quick start
+
+Extract text with pdfplumber:
+[code example]
+
+## Advanced features
+
+- **Form filling**: See [FORMS.md](FORMS.md) for complete guide
+- **API reference**: See [REFERENCE.md](REFERENCE.md) for all methods
+- **Examples**: See [EXAMPLES.md](EXAMPLES.md) for common patterns
 ```
 
-**Risk:** Silent failures on USDT transfers
-**Exploit:** User appears to deposit, but no tokens moved
-**Fix:** Use OpenZeppelin SafeERC20 wrapper
+Codex loads FORMS.md, REFERENCE.md, or EXAMPLES.md only when needed.
 
----
+**Pattern 2: Domain-specific organization**
 
-❌ **Pattern 7.3: Fee on Transfer**
-**Risk for:** Any token with transfer fees
-File: contracts/Vault.sol:170
-```solidity
-uint256 balanceBefore = IERC20(token).balanceOf(address(this));
-token.transferFrom(msg.sender, address(this), amount);
-shares = amount * exchangeRate;  // WRONG! Should use actual received amount
+For Skills with multiple domains, organize content by domain to avoid loading irrelevant context:
+
+```
+bigquery-skill/
+├── SKILL.md (overview and navigation)
+└── reference/
+    ├── finance.md (revenue, billing metrics)
+    ├── sales.md (opportunities, pipeline)
+    ├── product.md (API usage, features)
+    └── marketing.md (campaigns, attribution)
 ```
 
-**Risk:** Accounting mismatch if token takes fees
-**Exploit:** User credited more shares than tokens deposited
-**Fix:** Calculate shares from `balanceAfter - balanceBefore`
+When a user asks about sales metrics, Codex only reads sales.md.
 
----
+Similarly, for skills supporting multiple frameworks or variants, organize by variant:
 
-### Known Non-Standard Token Handling
-
-✓ **USDC:** Properly handled (SafeERC20, 6 decimals accounted for)
-⚠ **DAI:** permit() function not used (opportunity for gas savings)
-✗ **USDT:** Missing return value not handled (CRITICAL)
-✓ **WETH:** Standard wrapper, properly handled
-⚠ **UNI:** Large approval handling not checked (reverts >= 2^96)
-
----
-
-[... Additional sections for remaining analysis categories ...]
+```
+cloud-deploy/
+├── SKILL.md (workflow + provider selection)
+└── references/
+    ├── aws.md (AWS deployment patterns)
+    ├── gcp.md (GCP deployment patterns)
+    └── azure.md (Azure deployment patterns)
 ```
 
-For complete report template and deliverables format, see [REPORT_TEMPLATES.md](resources/REPORT_TEMPLATES.md).
+When the user chooses AWS, Codex only reads aws.md.
 
----
+**Pattern 3: Conditional details**
 
-## Rationalizations (Do Not Skip)
+Show basic content, link to advanced content:
 
-| Rationalization | Why It's Wrong | Required Action |
-|-----------------|----------------|-----------------|
-| "Token looks standard, ERC20 checks pass" | 20+ weird token patterns exist beyond ERC20 compliance | Check ALL weird token patterns from database (missing return, revert on zero, hooks, etc.) |
-| "Slither shows no issues, integration is safe" | Slither detects some patterns, misses integration logic | Complete manual analysis of all 5 token integration criteria |
-| "No fee-on-transfer detected, skip that check" | Fee-on-transfer can be owner-controlled or conditional | Test all transfer scenarios, check for conditional fee logic |
-| "Balance checks exist, handling is safe" | Balance checks alone don't protect against all weird tokens | Verify safe transfer wrappers, revert handling, approval patterns |
-| "Token is deployed by reputable team, assume standard" | Reputation doesn't guarantee standard behavior | Analyze actual code and on-chain behavior, don't trust assumptions |
-| "Integration uses OpenZeppelin, must be safe" | OpenZeppelin libraries don't protect against weird external tokens | Verify defensive patterns around all external token calls |
-| "Can't run Slither, skipping automated analysis" | Slither provides critical ERC conformance checks | Manually verify all slither-check-erc criteria or document why blocked |
-| "This pattern seems fine" | Intuition misses subtle token integration bugs | Systematically check all 20+ weird token patterns with code evidence |
+```markdown
+# DOCX Processing
 
----
+## Creating documents
 
-## Deliverables
+Use docx-js for new documents. See [DOCX-JS.md](DOCX-JS.md).
 
-When analysis is complete, I'll provide:
+## Editing documents
 
-1. **Compliance Checklist** - Checkboxes for all assessment categories
-2. **Weird Token Pattern Analysis** - Presence/absence of all 24 patterns with risk levels and evidence
-3. **On-chain Analysis Report** (if applicable) - Holder distribution, exchange listings, configuration
-4. **Integration Safety Assessment** (if applicable) - Safe transfer usage, defensive patterns, weird token handling
-5. **Prioritized Recommendations** - CRITICAL/HIGH/MEDIUM/LOW issues with specific fixes
+For simple edits, modify the XML directly.
 
-Complete deliverable templates available in [REPORT_TEMPLATES.md](resources/REPORT_TEMPLATES.md).
+**For tracked changes**: See [REDLINING.md](REDLINING.md)
+**For OOXML details**: See [OOXML.md](OOXML.md)
+```
 
----
+Codex reads REDLINING.md or OOXML.md only when the user needs those features.
 
-## Ready to Begin
+**Important guidelines:**
 
-**What I'll need**:
-- Your codebase
-- Context: Token implementation or integration?
-- Token type: ERC20, ERC721, or both?
-- Contract address (if deployed and want on-chain analysis)
-- RPC endpoint (if querying on-chain)
+- **Avoid deeply nested references** - Keep references one level deep from SKILL.md. All reference files should link directly from SKILL.md.
+- **Structure longer reference files** - For files longer than 100 lines, include a table of contents at the top so Codex can see the full scope when previewing.
 
-Let's analyze your token implementation or integration for security risks!
+## Skill Creation Process
+
+Skill creation involves these steps:
+
+1. Understand the skill with concrete examples
+2. Plan reusable skill contents (scripts, references, assets)
+3. Initialize the skill (run init_skill.py)
+4. Edit the skill (implement resources and write SKILL.md)
+5. Package the skill (run package_skill.py)
+6. Iterate based on real usage
+
+Follow these steps in order, skipping only if there is a clear reason why they are not applicable.
+
+### Skill Naming
+
+- Use lowercase letters, digits, and hyphens only; normalize user-provided titles to hyphen-case (e.g., "Plan Mode" -> `plan-mode`).
+- When generating names, generate a name under 64 characters (letters, digits, hyphens).
+- Prefer short, verb-led phrases that describe the action.
+- Namespace by tool when it improves clarity or triggering (e.g., `gh-address-comments`, `linear-address-issue`).
+- Name the skill folder exactly after the skill name.
+
+### Step 1: Understanding the Skill with Concrete Examples
+
+Skip this step only when the skill's usage patterns are already clearly understood. It remains valuable even when working with an existing skill.
+
+To create an effective skill, clearly understand concrete examples of how the skill will be used. This understanding can come from either direct user examples or generated examples that are validated with user feedback.
+
+For example, when building an image-editor skill, relevant questions include:
+
+- "What functionality should the image-editor skill support? Editing, rotating, anything else?"
+- "Can you give some examples of how this skill would be used?"
+- "I can imagine users asking for things like 'Remove the red-eye from this image' or 'Rotate this image'. Are there other ways you imagine this skill being used?"
+- "What would a user say that should trigger this skill?"
+
+To avoid overwhelming users, avoid asking too many questions in a single message. Start with the most important questions and follow up as needed for better effectiveness.
+
+Conclude this step when there is a clear sense of the functionality the skill should support.
+
+### Step 2: Planning the Reusable Skill Contents
+
+To turn concrete examples into an effective skill, analyze each example by:
+
+1. Considering how to execute on the example from scratch
+2. Identifying what scripts, references, and assets would be helpful when executing these workflows repeatedly
+
+Example: When building a `pdf-editor` skill to handle queries like "Help me rotate this PDF," the analysis shows:
+
+1. Rotating a PDF requires re-writing the same code each time
+2. A `scripts/rotate_pdf.py` script would be helpful to store in the skill
+
+Example: When designing a `frontend-webapp-builder` skill for queries like "Build me a todo app" or "Build me a dashboard to track my steps," the analysis shows:
+
+1. Writing a frontend webapp requires the same boilerplate HTML/React each time
+2. An `assets/hello-world/` template containing the boilerplate HTML/React project files would be helpful to store in the skill
+
+Example: When building a `big-query` skill to handle queries like "How many users have logged in today?" the analysis shows:
+
+1. Querying BigQuery requires re-discovering the table schemas and relationships each time
+2. A `references/schema.md` file documenting the table schemas would be helpful to store in the skill
+
+To establish the skill's contents, analyze each concrete example to create a list of the reusable resources to include: scripts, references, and assets.
+
+### Step 3: Initializing the Skill
+
+At this point, it is time to actually create the skill.
+
+Skip this step only if the skill being developed already exists, and iteration or packaging is needed. In this case, continue to the next step.
+
+When creating a new skill from scratch, always run the `init_skill.py` script. The script conveniently generates a new template skill directory that automatically includes everything a skill requires, making the skill creation process much more efficient and reliable.
+
+Usage:
+
+```bash
+scripts/init_skill.py <skill-name> --path <output-directory> [--resources scripts,references,assets] [--examples]
+```
+
+Examples:
+
+```bash
+scripts/init_skill.py my-skill --path skills/public
+scripts/init_skill.py my-skill --path skills/public --resources scripts,references
+scripts/init_skill.py my-skill --path skills/public --resources scripts --examples
+```
+
+The script:
+
+- Creates the skill directory at the specified path
+- Generates a SKILL.md template with proper frontmatter and TODO placeholders
+- Optionally creates resource directories based on `--resources`
+- Optionally adds example files when `--examples` is set
+
+After initialization, customize the SKILL.md and add resources as needed. If you used `--examples`, replace or delete placeholder files.
+
+### Step 4: Edit the Skill
+
+When editing the (newly-generated or existing) skill, remember that the skill is being created for another instance of Codex to use. Include information that would be beneficial and non-obvious to Codex. Consider what procedural knowledge, domain-specific details, or reusable assets would help another Codex instance execute these tasks more effectively.
+
+#### Learn Proven Design Patterns
+
+Consult these helpful guides based on your skill's needs:
+
+- **Multi-step processes**: See references/workflows.md for sequential workflows and conditional logic
+- **Specific output formats or quality standards**: See references/output-patterns.md for template and example patterns
+
+These files contain established best practices for effective skill design.
+
+#### Start with Reusable Skill Contents
+
+To begin implementation, start with the reusable resources identified above: `scripts/`, `references/`, and `assets/` files. Note that this step may require user input. For example, when implementing a `brand-guidelines` skill, the user may need to provide brand assets or templates to store in `assets/`, or documentation to store in `references/`.
+
+Added scripts must be tested by actually running them to ensure there are no bugs and that the output matches what is expected. If there are many similar scripts, only a representative sample needs to be tested to ensure confidence that they all work while balancing time to completion.
+
+If you used `--examples`, delete any placeholder files that are not needed for the skill. Only create resource directories that are actually required.
+
+#### Update SKILL.md
+
+**Writing Guidelines:** Always use imperative/infinitive form.
+
+##### Frontmatter
+
+Write the YAML frontmatter with `name` and `description`:
+
+- `name`: The skill name
+- `description`: This is the primary triggering mechanism for your skill, and helps Codex understand when to use the skill.
+  - Include both what the Skill does and specific triggers/contexts for when to use it.
+  - Include all "when to use" information here - Not in the body. The body is only loaded after triggering, so "When to Use This Skill" sections in the body are not helpful to Codex.
+  - Example description for a `docx` skill: "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. Use when Codex needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks"
+
+Ensure the frontmatter is valid YAML. Keep `name` and `description` as single-line scalars. If either could be interpreted as YAML syntax, wrap it in quotes.
+
+Do not include any other fields in YAML frontmatter.
+
+##### Body
+
+Write instructions for using the skill and its bundled resources.
+
+### Step 5: Packaging a Skill
+
+Once development of the skill is complete, it must be packaged into a distributable .skill file that gets shared with the user. The packaging process automatically validates the skill first to ensure it meets all requirements:
+
+```bash
+scripts/package_skill.py <path/to/skill-folder>
+```
+
+Optional output directory specification:
+
+```bash
+scripts/package_skill.py <path/to/skill-folder> ./dist
+```
+
+The packaging script will:
+
+1. **Validate** the skill automatically, checking:
+
+   - YAML frontmatter format and required fields
+   - Skill naming conventions and directory structure
+   - Description completeness and quality
+   - File organization and resource references
+
+2. **Package** the skill if validation passes, creating a .skill file named after the skill (e.g., `my-skill.skill`) that includes all files and maintains the proper directory structure for distribution. The .skill file is a zip file with a .skill extension.
+
+If validation fails, the script will report the errors and exit without creating a package. Fix any validation errors and run the packaging command again.
+
+### Step 6: Iterate
+
+After testing the skill, users may request improvements. Often this happens right after using the skill, with fresh context of how the skill performed.
+
+**Iteration workflow:**
+
+1. Use the skill on real tasks
+2. Notice struggles or inefficiencies
+3. Identify how SKILL.md or bundled resources should be updated
+4. Implement changes and test again
 
 ---
 > Source: [majiayu000/claude-skill-registry](https://github.com/majiayu000/claude-skill-registry) — distributed by [TomeVault](https://tomevault.io).
