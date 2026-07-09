@@ -5,7 +5,7 @@
 ## About
 
 This is a reusable AI instruction skill (`SKILL.md`) that can be used with Claude Code, Cursor, Copilot, and other AI coding tools.
-Original source: [foldkit/foldkit](https://github.com/foldkit/foldkit/tree/main/skills/foldkit/SKILL.md)
+Original source: [foldkit/foldkit](https://github.com/foldkit/foldkit/tree/main/skills/audit-program/SKILL.md)
 
 ---
 
